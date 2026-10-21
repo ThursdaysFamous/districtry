@@ -78,6 +78,7 @@ import glob
 import json
 import os
 import re
+import subprocess
 import sys
 import urllib.parse
 
@@ -366,6 +367,30 @@ INSTANCES = [
                           "district from the county's own list or from the "
                           "Association of Arkansas Counties' 2024 election "
                           "results"),
+    # MISSISSIPPI NAMES WHAT THE SECRETARY OF STATE'S DIRECTORY PRINTS. Every
+    # county is run by a board of five supervisors, one from each district,
+    # and five counties call their districts beats, so `district_word` is
+    # empty and every label is whole ("District 3", "Beat 3"), the way the
+    # app's cards print them. The directory is published once a year, so the
+    # pages name its edition and never a schedule.
+    dict(tag="ms", state="Mississippi", concept="county-supervisor",
+         index_page="county-supervisor.html",
+         heading="%(county)s County Board of Supervisors",
+         # "Jefferson Davis County Board of Supervisors — districtry
+         # Mississippi" is 68 characters against validate_serp_lengths.py's
+         # 60; "County Supervisors" is what the members are called, and
+         # Jefferson Davis, the longest county name, lands at 59.
+         page_title="%(county)s County Supervisors",
+         phrase="board of supervisors", index_label="Boards of supervisors",
+         all_label="All Mississippi boards of supervisors",
+         app_name="districtry Mississippi", app_url="https://districtry.com/ms/",
+         district_word="", member_word="Supervisor",
+         adapters=("ms_supervisors",),
+         contacts="ms_board_contact",
+         vacancy_phrase="as the Secretary of State's directory lists it",
+         index_provenance="each name as the Mississippi Secretary of State's "
+                          "County Offices and Directory lists it, by district "
+                          "or beat"),
     # NEW YORK IS THE FIRST INSTANCE WHOSE COUNTIES DO NOT ALL HAVE A BODY
     # THESE PAGES CAN BE ABOUT, which is why its `phrase` names one form
     # rather than the county tier: a county legislature is elected from
@@ -1708,6 +1733,13 @@ def tn_commissioners(inst):
         def person(m):
             p = {k: m[k].strip() for k in ("name", "email", "phone", "profileUrl")
                  if isinstance(m.get(k), str) and m[k].strip()}
+            # The further numbers the county prints for the same member (a home
+            # and a cell line), carried since Adam's ruling of 2026-10-17 that a
+            # member's own numbers ship.
+            extra = [x.strip() for x in m.get("phonesExtra") or []
+                     if isinstance(x, str) and x.strip()]
+            if extra:
+                p["phonesExtra"] = extra
             role = ", ".join(x for x in ((m.get("role") or "").strip(),
                                          _tn_seat(m.get("seat"))) if x)
             if role:
@@ -2250,6 +2282,181 @@ def ar_quorum_courts(inst):
     return out, problems, nameless, [path], note
 
 
+# The date style is the one _mn_date() writes for the edition date beside it.
+# The calendar is the directory's own (its 2026 edition, page 127, lists
+# "Supervisors" under the county offices elected in 2027 and the general
+# election on November 2); nothing here states a term or when one starts.
+MS_ELECTION = ("The Secretary of State's election calendar lists county "
+               "supervisors among the offices elected at the general election "
+               "of November 2, 2027.")
+MS_STANDFIRST = ("Who holds each of the five seats on the %(heading)s, as the "
+                 "Mississippi Secretary of State's County Offices and Directory "
+                 "lists them.")
+MS_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above is "
+                 "printed in the Mississippi Secretary of State's County "
+                 "Offices and Directory,\nand where the directory lists a seat "
+                 "as vacant this page says so rather than filling the gap.")
+MS_SEATS = ("1", "2", "3", "4", "5")
+
+
+def ms_supervisors(inst):
+    """Mississippi: ONE file keyed by county GEOID ("28001"), each record that
+    county's page of the Secretary of State's County Offices and Directory
+    (ms/scripts/build_ms_county_officials.py): five supervisors in the county's
+    own word for a district ("District" or "Beat"), a seat the directory prints
+    as vacant marked so, and the board's office where the directory prints one
+    for the board rather than for one supervisor.
+
+    FIVE SEATS EVERYWHERE, numbered 1 to 5, and the builder already refuses a
+    county with any other count; this refuses it again, because a page with four
+    sections would read as a smaller board rather than as a defect.
+
+    THE MAP LINK OPENS WHAT THE APP DRAWS. ms-supervisor-counties.json lists the
+    counties whose current district lines the app has confirmed, and outside
+    them the supervisor district layer does not appear, so those pages open the
+    County layer, whose card lists all five, rather than a layer a reader would
+    find missing. That list is held to the districts file here: a county listed
+    without five drawn districts, or drawn without being listed, fails, and so
+    does a drawn county whose word for a district differs from the directory's.
+
+    THE ELECTION COMMISSIONERS IN THE SAME RECORDS ARE NOT ON THESE PAGES. They
+    are a separate elected body, and listing them on a board of supervisors'
+    page would mark them as its members in the page's structured data."""
+    path = os.path.join(app_data(inst["tag"]), "ms-county-officials.json")
+    listed_path = os.path.join(app_data(inst["tag"]), "ms-supervisor-counties.json")
+    map_path = os.path.join(app_data(inst["tag"]), "ms-supervisor-districts.json")
+    listed = _read(listed_path)
+    drawn = {}
+    for f in _read(map_path).get("features") or []:
+        props = f.get("properties") or {}
+        drawn.setdefault(str(props.get("countyfips")), []).append(props)
+    out, problems, nameless = {}, [], set()
+    for geoid in sorted(set(listed) ^ set(drawn)):
+        problems.append("ms %s: the list of drawn counties and the districts file "
+                        "disagree about whether this county is drawn" % geoid)
+    for geoid, rec in sorted(_read(path).items()):
+        name = re.sub(r"\s+County$", "", (rec.get("county") or "").strip())
+        word = rec.get("label")
+        seats = rec.get("supervisors") or []
+        published = _mn_date(rec.get("published"))
+        edition = re.search(r"\b(\d{4}) edition\b", rec.get("source") or "")
+        if not name or word not in ("District", "Beat") or not published \
+                or not edition:
+            problems.append("ms-county-officials.json %r carries no county, no "
+                            "District or Beat label, no publication date or no "
+                            "edition year" % geoid)
+            continue
+        if sorted(str(s.get("district")) for s in seats) != list(MS_SEATS):
+            problems.append("ms %s County: the directory's supervisors are not "
+                            "numbered 1 to 5" % name)
+            continue
+        districts = []
+        for s in sorted(seats, key=lambda s: int(s["district"])):
+            label = "%s %s" % (word, s["district"])
+            held = (s.get("name") or "").strip()
+            if s.get("vacant") is True:
+                districts.append(district(label, vacancies=1))
+            elif held:
+                member = {"name": held, "role": inst["member_word"]}
+                # The supervisor's own number where the directory prints one
+                # that is not the board's (the board's is in the page's office
+                # block), published since Adam's ruling of 2026-10-17.
+                if (s.get("phone") or "").strip():
+                    member["phone"] = s["phone"].strip()
+                districts.append(district(label, [member]))
+            else:
+                problems.append("ms %s County %s names nobody and is not marked "
+                                "vacant" % (name, label))
+        if len(districts) != len(MS_SEATS):
+            continue
+
+        lower = word.lower()
+        props = drawn.get(geoid)
+        cta_layers = None
+        if props:
+            got = sorted(str(p.get("district")) for p in props)
+            lines = {p.get("lines") for p in props}
+            if got != list(MS_SEATS) or {p.get("label") for p in props} != {word} \
+                    or len(lines) != 1:
+                problems.append("ms %s County: the districts file does not draw "
+                                "five %ss numbered 1 to 5 from one source, in the "
+                                "directory's word" % (name, lower))
+                continue
+            how = lines.pop()
+            source = (props[0].get("source") or "").strip()
+            if how == "census":
+                drawn_note = ("The %s lines are the Census Bureau's map of %s "
+                              "County's supervisor %ss, which the Census changed "
+                              "after the 2020 census." % (lower, name, lower))
+            elif how == "county" and source:
+                drawn_note = ("The %s lines are %s, redrawn along the Census "
+                              "Bureau's 2020 census blocks." % (lower, source))
+            else:
+                problems.append("ms %s County: the districts file says neither "
+                                "where its lines come from nor that they are the "
+                                "Census Bureau's" % name)
+                continue
+            cta_note = ("Opens the map with the county and supervisor district "
+                        "layers on. " + drawn_note)
+        else:
+            cta_layers = "county"
+            cta_note = ("Opens the map with the county layer on, whose card lists "
+                        "all five supervisors. This app has not confirmed %s "
+                        "County's current supervisor %s lines, so the map does "
+                        "not draw them." % (name, lower))
+
+        calls = ("" if word == "District" else
+                 ", which %s County calls beats" % name)
+        lede = esc("Every Mississippi county is run by a board of five "
+                   "supervisors, each elected from one of the county's five "
+                   "districts%s. This page lists each of %s County's five %ss "
+                   "and its supervisor as the Mississippi Secretary of State's "
+                   "County Offices and Directory lists them, and the map's "
+                   "County card reads the same list. %s"
+                   % (calls, name, lower, MS_ELECTION)).replace("%", "%%")
+
+        link = rec.get("sourceUrl") or ""
+        page = rec.get("sourcePage")
+        if link and isinstance(page, int) and page > 0:
+            link += "#page=%d" % page
+        title = (rec.get("source") or "").strip()
+        title = title[:1].upper() + title[1:]
+        cited = ('<a href="%s" rel="noopener" target="_blank">%s</a>'
+                 % (esc(link), esc(title)) if link.startswith("https://")
+                 else esc(title))
+        printed = rec.get("printedPage")
+        source_html = ("Source: %s (dated %s)%s. The Secretary of State publishes "
+                       "it once a year, so a change on a board can take until "
+                       "the next edition to appear here."
+                       % (cited, esc(published),
+                          ", page %d" % printed if isinstance(printed, int)
+                          and printed > 0 else ""))
+        # 155 characters is validate_serp_lengths.py's ceiling, and Jefferson
+        # Davis, the longest county name, lands at 153 with "district".
+        desc = ("Who holds each of the five seats on %(county)s County's board "
+                "of supervisors, by " + lower + ", from the Mississippi Secretary "
+                "of State's " + edition.group(1) + " directory.")
+
+        entry = {"districts": districts, "extras": [], "skipped": [],
+                 "slug": county_slug(name), "at_large": False,
+                 "source_file": path, "lede": lede,
+                 "standfirst": MS_STANDFIRST, "desc": desc,
+                 "disclaimer": MS_DISCLAIMER, "cta_note": cta_note,
+                 "source_html": source_html}
+        if cta_layers:
+            entry["cta_layers"] = cta_layers
+        if not _count_named(districts, []):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("ms %s County names nobody" % name)
+            nameless.add(name)
+            continue
+        out[name] = entry
+    note = ("%d of Mississippi's 82 counties, five supervisors each, %d with "
+            "their districts drawn" % (len(out), len(set(listed) & set(drawn))))
+    return out, problems, nameless, [path, listed_path, map_path], note
+
+
 def _mn_date(iso):
     m = re.match(r"^(\d{4})-(\d{2})-(\d{2})$", str(iso or ""))
     if not m:
@@ -2495,6 +2702,7 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "ky_county_governments": ky_county_governments,
             "tn_commissioners": tn_commissioners,
             "ar_quorum_courts": ar_quorum_courts,
+            "ms_supervisors": ms_supervisors,
             "ny_supervisors": ny_supervisors,
             "ny_legislature": ny_legislature}
 
@@ -2524,6 +2732,145 @@ def party_name(value):
     return PARTY_NAMES.get(v.lower(), v)
 
 
+# A label the source prints before a number ("home (843) 665-7321", "cell
+# 519-3104") rides in the visible text, where a reader needs it to tell two
+# numbers apart, and is left out of the structured data, whose telephone
+# property is the number. A value with no label is unchanged.
+PHONE_LABEL_RE = re.compile(r"^[A-Za-z][A-Za-z .]*?\s+(?=[(+0-9])")
+
+
+def schema_telephone(value):
+    return PHONE_LABEL_RE.sub("", (value or "").strip())
+
+
+# Where an extension begins in a printed number ("ext. 12", "EXT 105",
+# "x 236"). A tel: link dials the number before it: run onto the end of the
+# number, the extension's digits would dial a different number. The extension
+# stays in the text, where a reader sees it. The apps' cardPhoneDial (engine
+# card-helpers) reads a number the same way.
+EXTENSION_RE = re.compile(r"(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d", re.I)
+
+
+def dial_digits(value):
+    """What a tel: link dials for one printed number: its digits (and a
+    leading +), stopping where an extension begins. Where two numbers are
+    printed as one ("217/555-0100; 217/555-0101") it dials the first, as
+    cardPhoneDial does: seven digits where the text opens with a local number
+    (three digits, then four), eleven where it opens with the country code 1,
+    and ten otherwise; a number written with a leading + is left whole."""
+    value = value or ""
+    m = EXTENSION_RE.search(value)
+    if m:
+        value = value[:m.start() + len(m.group(1))]
+    dial = re.sub(r"[^0-9+]", "", value)
+    if not dial.startswith("+") and len(dial) > 11:
+        g = re.findall(r"\d+", value)
+        dial = dial[:7 if len(g) > 1 and len(g[0]) == 3 and len(g[1]) == 4
+                    else 11 if dial.startswith("1") else 10]
+    return dial
+
+
+# Made-up numbers, each with what its tel: link must dial. "fax" is there for
+# the x a word can end in, which is not an extension. The last five are two
+# numbers printed as one, in the shapes measured on 2026-10-17 (Mason County's
+# municipal officials and Chicago's Ward 2) and three more a source could use.
+DIAL_CASES = (
+    ("(402) 555-0101 ext. 3203", "4025550101"),
+    ("608-555-0102 EXT 105", "6085550102"),
+    ("(217) 555-0103 x 236", "2175550103"),
+    ("(712) 555-0104 x2", "7125550104"),
+    ("555-0105 Ext: 7", "5550105"),
+    ("cell 555-0106", "5550106"),
+    ("+1 608 555 0107", "+16085550107"),
+    ("fax 555-0108", "5550108"),
+    ("217/555-0109; 217/555-0110", "2175550109"),
+    ("(312) 555-0111 / 0112/0113", "3125550111"),
+    ("555-0114 / 555-0115", "5550114"),
+    ("1-800-555-0116 or 1-800-555-0117", "18005550116"),
+    ("Home: (608) 555-0118 Cell: (608) 555-0119", "6085550118"),
+)
+CARD_HELPERS = os.path.join(REPO_ROOT, "engine", "index.html", "card-helpers.txt")
+
+
+def check_dial_rule():
+    """[] or the problems with how a tel: link is built: dial_digits must
+    answer DIAL_CASES, the apps' cardPhoneDial must read an extension with the
+    same pattern, and cardPhoneDial, run as shipped in Node, must answer
+    DIAL_CASES too, so a card and a page cannot dial a number differently."""
+    out = ["dial_digits(%r) gives %r, not %r" % (v, dial_digits(v), want)
+           for v, want in DIAL_CASES if dial_digits(v) != want]
+    try:
+        block = open(CARD_HELPERS, encoding="utf-8").read()
+    except OSError:
+        return out + ["%s is missing: cardPhoneDial cannot be compared with "
+                      "dial_digits" % os.path.relpath(CARD_HELPERS, REPO_ROOT)]
+    m = re.search(r"function cardPhoneDial\(phone\) \{.*?var m = /(.+?)/i\.exec\(s\);",
+                  block, re.S)
+    if not m:
+        out.append("cardPhoneDial in %s no longer reads an extension with one "
+                   "/.../i pattern, so it cannot be compared with dial_digits"
+                   % os.path.relpath(CARD_HELPERS, REPO_ROOT))
+    elif m.group(1) != EXTENSION_RE.pattern:
+        out.append("cardPhoneDial reads an extension as /%s/i and dial_digits as "
+                   "/%s/i: a card and a page would dial a number differently"
+                   % (m.group(1), EXTENSION_RE.pattern))
+    # THE FUNCTION ITSELF, RUN AS SHIPPED, because the extension pattern is not
+    # all of the rule: what a link dials where two numbers are printed as one
+    # is code, and two copies of code agree only when both are run.
+    fn = re.search(r"^( *)function cardPhoneDial\(phone\) \{\n.*?^\1\}$", block,
+                   re.S | re.M)
+    if not fn:
+        out.append("cardPhoneDial in %s cannot be found as one function, so it "
+                   "cannot be run against DIAL_CASES"
+                   % os.path.relpath(CARD_HELPERS, REPO_ROOT))
+        return out
+    src = (fn.group(0) + "\nprocess.stdout.write(JSON.stringify(%s.map(cardPhoneDial)));"
+           % json.dumps([v for v, _ in DIAL_CASES]))
+    try:
+        run = subprocess.run(["node", "-e", src], capture_output=True, text=True,
+                             timeout=60)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        return out + ["cardPhoneDial could not be run in Node (%s), so it cannot be "
+                      "compared with dial_digits" % exc]
+    if run.returncode != 0:
+        said = [ln for ln in run.stderr.splitlines() if "Error" in ln]
+        return out + ["cardPhoneDial failed in Node: %s"
+                      % (said or run.stderr.strip().splitlines() or ["no output"])[0]]
+    for (v, want), got in zip(DIAL_CASES, json.loads(run.stdout)):
+        if got != want:
+            out.append("cardPhoneDial(%r) gives %r, not %r: a card and a page would "
+                       "dial a number differently" % (v, got, want))
+    return out
+
+
+def member_phones(m):
+    """Every number a roster carries for one person, first one first: `phone`,
+    then `phonesExtra`, the further numbers a source prints for the same
+    person (a home and a cell line, say), each with its label in the text.
+    A value with no digit in it is no number: Kankakee County's board page
+    printed four members' telephones as "Coming Soon" until 2026-10-17, each
+    a link that dialled nothing, where the card shows no telephone at all."""
+    extras = m.get("phonesExtra") or []
+    if isinstance(extras, str):
+        extras = [extras]
+    out = []
+    for value in [m.get("phone")] + list(extras):
+        value = (value or "").strip() if isinstance(value, str) else ""
+        if value and re.search(r"\d", value) and value not in out:
+            out.append(value)
+    return out
+
+
+def schema_telephones(m):
+    """The structured-data telephone: one number as a string, several as a
+    list, none as None."""
+    numbers = [schema_telephone(p) for p in member_phones(m)]
+    numbers = [n for n in numbers if n]
+    if not numbers:
+        return None
+    return numbers[0] if len(numbers) == 1 else numbers
+
+
 def member_node(m):
     """One officeholder as a schema.org Person, from the same fields
     member_html renders. Every field is optional: a roster that does not publish
@@ -2535,7 +2882,7 @@ def member_node(m):
     email = (m.get("email") or "").strip()
     if email:
         person["email"] = email
-    phone = (m.get("phone") or "").strip()
+    phone = schema_telephones(m)
     if phone:
         person["telephone"] = phone
     # `url` and `profileUrl` are the same field under two names — Illinois's
@@ -2664,10 +3011,9 @@ def member_html(m):
     email = (m.get("email") or "").strip()
     if email:
         contact.append('<a href="mailto:%s">%s</a>' % (esc(email), esc(email)))
-    phone = (m.get("phone") or "").strip()
-    if phone:
+    for phone in member_phones(m):
         contact.append('<a href="tel:%s">%s</a>'
-                       % (esc(re.sub(r"[^0-9+]", "", phone)), esc(phone)))
+                       % (esc(dial_digits(phone)), esc(phone)))
     for field, label in (("url", "Official profile"),
                          ("profileUrl", "Official profile"),
                          ("documentUrl", "County directory")):
@@ -2802,12 +3148,17 @@ def districted_body(inst, name, rec):
                "holds" if named == 1 else "hold",
                "published" if rec.get("not_read_since") and not app_reads
                else "publishes", same))
-    if inst.get("cta_layers"):
+    # A RECORD MAY OPEN A DIFFERENT LAYER FROM ITS INSTANCE'S: Mississippi
+    # draws supervisor districts only in the counties whose current lines it
+    # has confirmed, so every other county's page opens the County layer,
+    # whose card lists the board. A record without the key is unchanged.
+    cta_layers = rec.get("cta_layers") or inst.get("cta_layers")
+    if cta_layers:
         # An instance whose board has no district layer yet opens the layer
         # whose card lists it, rather than a layer id its app does not register.
         out.append('<a class="cta" href="../#layers=%s">'
                    'See %s County on the map →</a>'
-                   % (esc(inst["cta_layers"]), esc(name)))
+                   % (esc(cta_layers), esc(name)))
     else:
         out.append('<a class="cta" href="../#layers=%s,county">'
                    'Find your %s County district on the map →</a>'
@@ -3543,6 +3894,23 @@ def check_workflows(read_by_instance):
 # are the wrong home for it. Nobody has to remember, and nothing is generated
 # from a guess about a shape nobody has looked at.
 NOT_COUNTY_BOARDS = {
+    "la/data/app/la-parish-officials.json": dict(
+        date="2026-10-20",
+        reason="Louisiana's parish governing bodies — 38 police juries, 25 "
+               "councils and Caddo's commission, every member named from the "
+               "Secretary of State's list. They ARE these pages' subject, and "
+               "are recorded here only while the instance is dark: an adapter "
+               "would write pages for a folder the deploy does not publish. "
+               "Louisiana's go-live writes the adapter and drops this entry.",
+    ),
+    "mn/data/app/mn-county-town-officers.json": dict(
+        date="2026-10-16",
+        reason="the supervisors, clerks and treasurers of 416 Minnesota "
+               "towns, read from the lists of township officers the counties "
+               "publish. Real officeholders, named, and town government rather "
+               "than county government: each record carries its county only "
+               "to say whose list it came from.",
+    ),
     "il/data/app/municipal-officials.json": dict(
         date="2026-09-13",
         reason="mayors, clerks and council members of 1,300 Illinois "
@@ -3563,6 +3931,13 @@ NOT_COUNTY_BOARDS = {
     "wi/data/app/wi-municipal-clerks.json": dict(
         date="2026-09-13",
         reason="municipal clerks, 1,850 of them. Municipal, not county.",
+    ),
+    "wi/data/app/wi-town-boards.json": dict(
+        date="2026-10-15",
+        reason="Wisconsin TOWN boards, a chairperson and supervisors per town, "
+               "read from each county's own directory. A town is a unit below "
+               "the county, not the county board, which is the same reason "
+               "il township-officials.json is recorded here.",
     ),
     "wi/data/app/wi-municipal-boards.json": dict(
         date="2026-10-01",
@@ -3608,6 +3983,14 @@ NOT_COUNTY_BOARDS = {
                "on the app's County card from the same certified results; a "
                "section for them on these pages is its own change.",
     ),
+    "in/data/app/in-township-officials.json": dict(
+        date="2026-10-15",
+        reason="Indiana's township trustees and township boards, about a "
+               "thousand townships' own governments rather than any county's. "
+               "These pages are one per county board; a township is a "
+               "different government below the county, and the app names its "
+               "trustee and board on its own Township card.",
+    ),
     "ca/data/app/sf-supervisor-members.json": dict(
         date="2026-09-13",
         reason="San Francisco's Board of Supervisors is a CITY council that "
@@ -3619,7 +4002,7 @@ NOT_COUNTY_BOARDS = {
 
 _NAME_FIELDS = ("name", "chair", "member", "supervisor", "commissioner")
 _COUNTY_WORDS = re.compile(r"county-board|county-commission|commissioner|"
-                           r"supervisor|county-officer")
+                           r"supervisor|county-officer|parish")
 
 
 def _names_people(obj):
@@ -3680,8 +4063,13 @@ def check_registration(read_paths):
             named = sum(1 for r in recs if _names_people(r))
             if named * 2 < len(recs):
                 continue
+            # LOUISIANA'S COUNTIES ARE PARISHES, and its roster says so: a
+            # record carries `parish`, never `county`, and the file is named
+            # for parish officials. Without this test and the word in
+            # _COUNTY_WORDS the gate let the fleet's first parish roster,
+            # la-parish-officials.json, land unseen (2026-10-20).
             county_keyed = sum(1 for r in recs if isinstance(r, dict)
-                               and (r.get("county") or "").strip())
+                               and (r.get("county") or r.get("parish") or "").strip())
             if not (county_keyed * 2 >= len(recs)
                     or _COUNTY_WORDS.search(os.path.basename(path))):
                 continue
@@ -3846,6 +4234,32 @@ def ia_board_contact(inst):
     return out, [path]
 
 
+def ms_board_contact(inst):
+    """Mississippi: the board's own office, from the same directory page that
+    names the supervisors.
+
+    THE DIRECTORY PRINTS AN ADDRESS AND A TELEPHONE BESIDE EACH SUPERVISOR, and
+    a line printed for one supervisor may be that person's own, so the builder
+    keeps a line only where the directory prints it for at least three of the
+    county's five, which makes it the board's office (build_ms_county_officials.py).
+    A county where no line passes that test carries no board contact rather
+    than one supervisor's. A supervisor's own telephone is on that supervisor's
+    row instead (ms_supervisors), and no supervisor's own address is carried
+    anywhere."""
+    path = os.path.join(app_data("ms"), "ms-county-officials.json")
+    if not os.path.exists(path):
+        return {}, [path]
+    out = {}
+    for rec in _read(path).values():
+        if not isinstance(rec, dict) or not (rec.get("county") or "").strip():
+            continue
+        c = _contact("Board of supervisors' office", None,
+                     [rec.get("boardAddress")], rec.get("boardPhone"))
+        if c:
+            out[_norm_county(rec["county"])] = c
+    return out, [path]
+
+
 def contact_html(c):
     """One contact block. Nothing is invented: a field the county does not
     publish simply does not render."""
@@ -3860,7 +4274,7 @@ def contact_html(c):
     details = []
     if c["phone"]:
         details.append('<a href="tel:%s">%s</a>'
-                       % (esc(re.sub(r"[^0-9+]", "", c["phone"])), esc(c["phone"])))
+                       % (esc(dial_digits(c["phone"])), esc(c["phone"])))
     if c["email"]:
         details.append('<a href="mailto:%s">%s</a>'
                        % (esc(c["email"]), esc(c["email"])))
@@ -3951,6 +4365,7 @@ def main():
         nameless_keys |= {_nobody_key(inst, c) for c in nameless}
         read_by_instance[inst_key(inst)] = {os.path.basename(p) for p in paths}
     problems += check_workflows(read_by_instance)
+    problems += check_dial_rule()
     reg_problems, candidates = check_registration(all_paths)
     problems += reg_problems
     for key, rec in sorted(NAMES_NOBODY.items()):

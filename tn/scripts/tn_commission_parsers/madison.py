@@ -11,21 +11,33 @@ heading names, and the parser checks that page is the one the commission page
 links under that name; nothing is read from order.
 
 PRIVACY: the address and phone in every block are the member's own (some are
-labelled Home, Cell or a business office) and are never recorded. Only an
-e-mail on madisoncountytn.gov whose local part contains the member's surname is
-recorded, because the blocks also carry personal addresses (aol, bellsouth,
-yahoo, a business domain), hidden mailto links left over from a former member
-("Email Luther T. Mercer" inside Tina Mercer's and Mike Bailey's blocks), and
-Julie Wiser's link points to the commission coordinator's address
-(smcclain@), which is read off the commission page and never attached to a
-member. Juanita Jones's link is written "mailto:mailto%20jjones@..." and is
-cleaned to the address it plainly is.
+labelled Home, Cell or a business office). The phones are recorded as printed,
+each label kept in front of its number ("home (731) ...", "office (731) ..."),
+under Adam's ruling of 2026-10-17 that a number a government publishes beside
+an official ships whosever line it is; a number labelled Fax is not kept. Only
+telephone-shaped numbers are read from a block; the address is never read. The
+commission office's line on the commission page and the county's line printed
+at the foot of every page are OFFICE_LINES and never land on a member. Each
+block ends with a visible link "Email <member's name>", and only that link is
+read: some blocks also hold empty mailto links a reader never sees, left over
+from a former member (titled "Email Luther T. Mercer" inside Tina Mercer's and
+Mike Bailey's blocks) or from an earlier address (inside William C. Martin's).
+The address the visible link opens is recorded, a personal or business one
+(aol, bellsouth, yahoo, a business domain) as much as the county's, under
+Adam's choice of 2026-10-17 that a personal address a government page prints
+beside an official is shown ("E-mails too"); a madisoncountytn.gov address
+must contain the member's surname or the parse raises. Julie Wiser's link
+opens the commission coordinator's address (smcclain@), which the commission
+page prints as its own, so no address is recorded for her. Juanita Jones's
+link is written "mailto:mailto%20jjones@..." and is read as the address it
+plainly is.
 
 Currency: the Madison County Election Commission's election-night summary of
 6 August 2026 (scanned, read as an image) gives the same 25 winners by
 district."""
 import re
-from ._common import txt, mailtos, district_number, member
+from ._common import (txt, mailtos, district_number, member, read_phones, member_email,
+                      address_of, MAILTO_A, MAILTO_HREF)
 
 COUNTY = "Madison"; FIPS = "113"
 DOMAINS = ("madisoncountytn.gov",)
@@ -48,12 +60,24 @@ URLS = [
 SEATS = {"1": 2, "2": 3, "3": 2, "4": 3, "5": 3, "6": 2, "7": 2, "8": 2,
          "9": 3, "10": 3}
 AT_LARGE = 0
+# The commission office's line (commission page) and the county's line printed
+# at the foot of every page.
+OFFICE_LINES = ("(731) 988-3110", "731-988-3960")
 
 SUFFIX = {"jr", "sr", "ii", "iii", "iv"}
 
 
-def _clean(addr):
-    return re.sub(r"^(?:mailto(?::|%3a)?(?:%20)*)+", "", addr.strip(), flags=re.I)
+def _named_links(blk, sur):
+    """The addresses of the block's visible links that read "Email <name>" and
+    carry this member's surname; an empty link is never seen and not read."""
+    out = []
+    for a in MAILTO_A.finditer(blk):
+        href = MAILTO_HREF.search(a.group(1))
+        shown = txt(a.group(2))
+        if href and shown.lower().startswith("email ") and sur and \
+                sur in re.sub(r"[^a-z]", "", shown.lower()):
+            out.append(address_of(href.group(1)))
+    return out
 
 
 def _on_domain(addr):
@@ -103,19 +127,21 @@ def parse(pages):
             h3 = re.search(r"<h3\b[^>]*>(.*?)</h3>", blk, re.S)
             if not h3:
                 if txt(blk) and txt(blk) != "District Representatives":
-                    raise ValueError("%s: a text block with no name heading: %r" % (url, txt(blk)[:80]))
+                    # Never quotes the block: a member's can carry an address.
+                    raise ValueError("%s: a text block of %d characters has no name heading"
+                                     % (url, len(txt(blk))))
                 continue
             name = txt(h3.group(1))
             sur = _surname(name)
-            email = None
-            for a in (_clean(x) for x in mailtos(blk)):
-                if not _on_domain(a) or a.lower() in office:
+            mine = []
+            for a in _named_links(blk, sur):
+                if a.lower() in office:
                     continue
-                if sur and sur in a.split("@", 1)[0].lower():
-                    email = a
-                    break
-                raise ValueError("%s: county address %r does not look like %r's" % (url, a, name))
-            found.append(member(name, email=email))
+                if _on_domain(a) and not (sur and sur in a.split("@", 1)[0].lower()):
+                    raise ValueError("%s: the county address under %r does not look like theirs"
+                                     % (url, name))
+                mine.append(a)
+            found.append(member(name, email=member_email(mine, DOMAINS), phones=read_phones(blk)))
         if not found:
             raise ValueError("%s: no members found" % url)
         districts[str(d)] = found

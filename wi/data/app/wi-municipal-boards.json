@@ -1,6 +1,6 @@
 {
   "5511950": {
-    "asOf": "2026-10-08",
+    "asOf": "2026-10-17",
     "atLarge": true,
     "board": [
       {
@@ -50,32 +50,96 @@
     "name": "Caledonia",
     "sourceUrl": "https://www.caledonia-wi.gov/board"
   },
+  "5526275": {
+    "asOf": "2026-10-17",
+    "atLarge": false,
+    "board": [
+      {
+        "email": "kheisler@fdl.wi.gov",
+        "name": "Keith Heisler",
+        "phone": "920-322-5469",
+        "role": "President"
+      },
+      {
+        "email": "tbrault@fdl.wi.gov",
+        "name": "Tiffany Brault",
+        "phone": "920-251-4209",
+        "role": "Council Vice-President"
+      },
+      {
+        "email": "jbiber@fdl.wi.gov",
+        "name": "Joseph Biber",
+        "phone": "407-973-1305",
+        "role": "Council Member"
+      },
+      {
+        "email": "aluehring@fdl.wi.gov",
+        "name": "Angela Luehring",
+        "phone": "920-266-5828",
+        "role": "Council Member"
+      },
+      {
+        "email": "amayweather@fdl.wi.gov",
+        "name": "Andrea Mayweather",
+        "phone": "920-322-7201",
+        "role": "Council Member"
+      },
+      {
+        "email": "pmullen@fdl.wi.gov",
+        "name": "Patrick Mullen",
+        "phone": "920-485-1355",
+        "role": "Council Member"
+      },
+      {
+        "email": "bzimmermann@fdl.wi.gov",
+        "name": "Brett Zimmermann",
+        "phone": "920-979-9963",
+        "role": "Council Member"
+      }
+    ],
+    "county": "Fond du Lac",
+    "howElected": "The city describes a seven-member council elected for two-year terms and gives no member a district. Its pages do not say whether the seats are elected at large.",
+    "name": "Fond du Lac",
+    "sourceUrl": "https://www.fdl.wi.gov/city-council/contact-us/"
+  },
   "5537825": {
-    "asOf": "2026-10-08",
+    "asOf": "2026-10-17",
     "atLarge": true,
     "board": [
       {
         "email": "squirel@janesvillewi.gov",
         "name": "Larry Squire",
         "phone": "(608) 373-6012",
+        "phonesExtra": [
+          "cell (608) 921-5550"
+        ],
         "role": "Council President"
       },
       {
         "email": "cassm@janesvillewi.gov",
         "name": "Michael Cass",
         "phone": "(608) 373-6015",
+        "phonesExtra": [
+          "cell (608) 305-4909"
+        ],
         "role": "Council Vice President"
       },
       {
         "email": "erdmanj@janesvillewi.gov",
         "name": "Joshua Erdman",
         "phone": "(608) 373-6017",
+        "phonesExtra": [
+          "cell (608) 352-3168"
+        ],
         "role": "Councilmember"
       },
       {
         "email": "millerh@ci.janesville.wi.us",
         "name": "Heather Miller",
         "phone": "(608) 373-6013",
+        "phonesExtra": [
+          "cell (608) 289-6555"
+        ],
         "role": "Councilmember"
       },
       {
@@ -88,6 +152,9 @@
         "email": "popec@janesvillewi.gov",
         "name": "Cassandra Pope",
         "phone": "(608) 373-6011",
+        "phonesExtra": [
+          "cell (608) 728-8232"
+        ],
         "role": "Councilmember"
       },
       {
@@ -100,5 +167,144 @@
     "county": "Rock",
     "name": "Janesville",
     "sourceUrl": "https://www.janesvillewi.gov/government/city-council/contact-the-city-council"
+  },
+  "5551000": {
+    "asOf": "2026-10-17",
+    "atLarge": false,
+    "board": [
+      {
+        "name": "Jeremy Walz",
+        "role": "Village President"
+      },
+      {
+        "name": "Katie Kress",
+        "role": "Trustee, Seat 1"
+      },
+      {
+        "name": "Matt Lasowski",
+        "role": "Trustee, Seat 2"
+      },
+      {
+        "name": "Shaune Cook",
+        "role": "Trustee, Seat 3"
+      },
+      {
+        "name": "Joel Stueland",
+        "role": "Trustee, Seat 4"
+      },
+      {
+        "name": "Matthew Hayes",
+        "role": "Trustee, Seat 5"
+      },
+      {
+        "name": "Paul Tadda",
+        "role": "Trustee, Seat 6"
+      }
+    ],
+    "county": "Waukesha",
+    "howElected": "The village says its president is elected at large and its six trustees are elected by numbered seat. It gives no trustee a district, and the map draws none.",
+    "name": "Menomonee Falls",
+    "sourceUrl": "https://www.menomoneefalls.gov/1410/Village-Board-Members"
+  },
+  "5554875": {
+    "asOf": "2026-10-17",
+    "atLarge": true,
+    "board": [
+      {
+        "email": "ddegroot@mtpleasantwi.gov",
+        "name": "David DeGroot",
+        "phone": "(262) 822-4349",
+        "role": "Village President"
+      },
+      {
+        "email": "dkaras@mtpleasantwi.gov",
+        "name": "David Karas",
+        "phone": "(262) 716-1563",
+        "role": "Trustee Seat No. 1"
+      },
+      {
+        "email": "gcefalu-paulick@mtpleasantwi.gov",
+        "name": "Gina Cefalu-Paulick",
+        "phone": "(262) 442-0140",
+        "role": "Trustee Seat No. 2"
+      },
+      {
+        "email": "nwashburn@mtpleasantwi.gov",
+        "name": "Nancy Washburn",
+        "phone": "(262) 818-1836",
+        "role": "Trustee Seat No. 3"
+      },
+      {
+        "email": "danastasio@mtpleasantwi.gov",
+        "name": "Denise Anastasio",
+        "phone": "(262) 498-2298",
+        "role": "Trustee Seat No. 4"
+      },
+      {
+        "email": "rbhatia@mtpleasantwi.gov",
+        "name": "Ram Bhatia",
+        "phone": "(262) 366-6862",
+        "role": "Trustee Seat No. 5"
+      },
+      {
+        "email": "jventurini@mtpleasantwi.gov",
+        "name": "Jim Venturini",
+        "phone": "(262) 705-4756",
+        "role": "Trustee Seat No. 6"
+      }
+    ],
+    "county": "Racine",
+    "name": "Mount Pleasant",
+    "sourceUrl": "https://www.mtpleasantwi.gov/319/Village-Board"
+  },
+  "5560500": {
+    "asOf": "2026-10-17",
+    "atLarge": true,
+    "board": [
+      {
+        "email": "mmugerauer@oshkoshwi.gov",
+        "name": "Matt Mugerauer",
+        "phone": "(920) 216-4947",
+        "role": "Mayor"
+      },
+      {
+        "email": "kbuelow@oshkoshwi.gov",
+        "name": "Karl Buelow",
+        "phone": "(920) 810-1793",
+        "role": "Deputy Mayor"
+      },
+      {
+        "email": "jstephenson@oshkoshwi.gov",
+        "name": "Joseph Stephenson",
+        "phone": "(920) 203-1395",
+        "role": "Council Member"
+      },
+      {
+        "email": "bspanbauer@oshkoshwi.gov",
+        "name": "Brad Spanbauer",
+        "phone": "(920) 379-7286",
+        "role": "Council Member"
+      },
+      {
+        "email": "pesslinger@oshkoshwi.gov",
+        "name": "Paul Esslinger",
+        "phone": "(920) 410-1104",
+        "role": "Council Member"
+      },
+      {
+        "email": "alefeber@oshkoshwi.gov",
+        "name": "Alec Lefeber",
+        "phone": "(920) 312-7887",
+        "role": "Council Member"
+      },
+      {
+        "email": "jamos@oshkoshwi.gov",
+        "name": "Jacob Amos",
+        "role": "Council Member"
+      }
+    ],
+    "county": "Winnebago",
+    "name": "Oshkosh",
+    "sourceUrl": "https://www.oshkoshwi.gov/CityCouncil/"
   }
 }

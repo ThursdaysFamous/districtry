@@ -602,7 +602,6 @@
   "sheriff": {
    "email": "ping@co.carroll.ia.us",
    "name": "Ken Pingrey",
-   "party": "Republican",
    "phone": "(712) 792-4393"
   },
   "supervisorPlan": "PLAN 2",
@@ -1439,6 +1438,7 @@
   "sheriff": {
    "email": "jschultes@emmetcountyia.com",
    "name": "Justin Schultes",
+   "party": "Republican",
    "phone": "(712) 362-2639"
   },
   "supervisorPlan": "PLAN 1",
@@ -1522,7 +1522,7 @@
    "phone": "641-228-7571"
   },
   "recorder": {
-   "email": "aassink@floydcoia.org",
+   "email": "aassink@floydcountyiowa.gov",
    "name": "Amy Assink",
    "party": "Republican",
    "phone": "(641) 257-6154"
@@ -2069,22 +2069,27 @@
   "supervisorSource": "https://www.humboldtcounty.iowa.gov/offices/administrative/board_of_supervisors/index.php",
   "supervisors": [
    {
+    "email": "mcarpenter@humboldtcounty.iowa.gov",
     "name": "Mike Carpenter",
     "phone": "515 332-0596"
    },
    {
+    "email": "rpedersen@humboldtcounty.iowa.gov",
     "name": "Rick Pedersen",
     "phone": "515 779-4591"
    },
    {
+    "email": "brasmussen@humboldtcounty.iowa.gov",
     "name": "Bob Rasmussen",
     "phone": "515 770-0014"
    },
    {
+    "email": "breimers@humboldtcounty.iowa.gov",
     "name": "Bruce Reimers",
     "phone": "515 770-1067"
    },
    {
+    "email": "dthompson@humboldtcounty.iowa.gov",
     "name": "Dennis Thompson",
     "phone": "515 332-0597"
    }
@@ -2240,13 +2245,13 @@
   "countyAttorney": {
    "email": "general@jaspercoatty.org",
    "name": "Scott Nicholson",
-   "party": "Democratic",
    "phone": "641-792-5010"
   },
   "recorderWithheld": "the county directory names Denise Allan and the recorder's own statewide directory names Joseph Otto",
   "sheriff": {
    "email": "bshutts@jaspersheriff.org",
    "name": "Brad Shutts",
+   "party": "Republican",
    "phone": "(641) 792-5912"
   },
   "supervisorPlan": "PLAN 1",
@@ -3529,6 +3534,7 @@
   }
  },
  "19155": {
+  "boardPhone": "(712) 328-5644",
   "county": "Pottawattamie",
   "countyAttorney": {
    "email": "matthew.wilber@pottcounty-ia.gov",
@@ -3547,7 +3553,29 @@
    "party": "Republican",
    "phone": "(712) 890-2200"
   },
-  "supervisorsWithheld": "the county directory lists 6, and Iowa Code 331.201 allows only 3 or 5",
+  "supervisorPlan": "PLAN 1",
+  "supervisorSeats": 5,
+  "supervisors": [
+   {
+    "name": "Keith Jones"
+   },
+   {
+    "name": "Jeff Jorgensen",
+    "party": "Republican"
+   },
+   {
+    "name": "Susan Miller",
+    "party": "Republican"
+   },
+   {
+    "name": "Brian Shea",
+    "party": "Republican"
+   },
+   {
+    "name": "Tim Wichman",
+    "party": "Republican"
+   }
+  ],
   "treasurer": {
    "email": "lea.voss@pottcounty-ia.gov",
    "name": "Lea Voss",
@@ -3634,6 +3662,7 @@
    }
   ],
   "treasurer": {
+   "email": "dcannon@ringgoldcounty.us",
    "name": "Debbie Cannon",
    "party": "Republican",
    "phone": "(641) 464-3230"
@@ -3896,19 +3925,29 @@
   "supervisorSource": "https://www.tamacounty.iowa.gov/supervisors/",
   "supervisors": [
    {
-    "name": "Mark Doland"
+    "email": "mdoland@tamacounty.org",
+    "name": "Mark Doland",
+    "phone": "641-481-2533"
    },
    {
-    "name": "Curt Hilmer"
+    "email": "curthilmer@gmail.com",
+    "name": "Curt Hilmer",
+    "phone": "319-939-3291"
    },
    {
-    "name": "Heather Knebel"
+    "email": "hknebel@tamacounty.org",
+    "name": "Heather Knebel",
+    "phone": "641-481-2532"
    },
    {
-    "name": "Curt Kupka"
+    "email": "ckupka@tamacounty.org",
+    "name": "Curt Kupka",
+    "phone": "641-481-2310"
    },
    {
-    "name": "David Turner"
+    "email": "dturner@tamacounty.org",
+    "name": "David Turner",
+    "phone": "641-481-2456"
    }
   ],
   "treasurer": {
@@ -4439,9 +4478,8 @@
    "phone": "641-324-1291"
   },
   "recorder": {
-   "email": "teresa.olson@worthcountyiowa.gov",
-   "name": "Teresa Olson",
-   "party": "Republican",
+   "email": "jolene.hickle@worthcountyiowa.gov",
+   "name": "Jolene Hickle",
    "phone": "(641) 324-2734"
   },
   "sheriff": {

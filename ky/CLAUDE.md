@@ -28,7 +28,8 @@ file, its routing check gains Louisville as a case that must open `/ky/`, and it
 case moved to Butler County, Ohio. An audit that is re-run rather than trusted is the only
 reason any of that was seen before it broke.
 
-It ships four layers, the national tier every U.S. state can serve from national publishers:
+It arrived with four layers, the national tier every U.S. state can serve from national publishers,
+and ships fifteen now, each later one recorded below:
 **County** (120, from Census TIGERweb, naming its governing body and officers since 2026-10-11), **U.S. House** (6 districts, TIGERweb
 geometry joined to the public-domain unitedstates/congress-legislators roster, refreshed
 weekly), and **Kentucky Senate** / **Kentucky House** (38 and 100 districts, TIGERweb
@@ -109,8 +110,8 @@ the member, and this instance names none.
 
 - Metro: Kentucky (`kentucky`) — https://districtry.com/ky/
 - Geocoders: address Photon (Kentucky-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Kentucky-bounded, serial >=1s queue)
-- Ground truth: 38.25270,-85.75850 (downtown Louisville, Jefferson County) → county Jefferson County; us-house 3; ky-senate 33; ky-house 43. Negative point 38.80000,-83.55000 (near West Union, Adams County, OHIO, about 15 km north of the Ohio River — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (maxLat 39.30) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's state and county layers name Ohio and Adams County STATE 39 (controls: the Louisville anchor returns Kentucky and Jefferson County STATE 21, and Columbus returns Ohio and Franklin County STATE 39, so the query answers rather than failing), and no outline in fleet-outlines.json contains it, with Tennessee's outline in that file (control: the Louisville anchor IS inside Kentucky's outline there). THIS POINT WAS IN SUMNER COUNTY, TENNESSEE UNTIL TENNESSEE'S GO-LIVE, chosen on 2026-09-30 because no instance covered Tennessee; that change put Tennessee's outline in the fleet file with the old point inside it, so a Kentucky selection there would have handed off to districtry.com/tn/. OHIO RATHER THAN ANOTHER NEIGHBOUR: Illinois, Indiana and Tennessee are live, Missouri is on the fleet's new-state list, and the states planned next (Arkansas, Mississippi, Louisiana) do not border Kentucky, so this point should not have to move when they go live. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County.).
-- Layers: 13 registered (political 8, schools 3, geography 2); `registerLayer(` floor 4. Debug namespace `window.KentuckyExplorer`.
+- Ground truth: 38.25270,-85.75850 (downtown Louisville, Jefferson County) → county Jefferson County; us-house 3; ky-senate 33; ky-house 43; voting-precinct Precinct 168 43 District. Negative point 38.80000,-83.55000 (near West Union, Adams County, OHIO, about 15 km north of the Ohio River — outside Kentucky and outside every other instance in the fleet, and inside permalink_gate (maxLat 39.30) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's state and county layers name Ohio and Adams County STATE 39 (controls: the Louisville anchor returns Kentucky and Jefferson County STATE 21, and Columbus returns Ohio and Franklin County STATE 39, so the query answers rather than failing), and no outline in fleet-outlines.json contains it, with Tennessee's outline in that file (control: the Louisville anchor IS inside Kentucky's outline there). THIS POINT WAS IN SUMNER COUNTY, TENNESSEE UNTIL TENNESSEE'S GO-LIVE, chosen on 2026-09-30 because no instance covered Tennessee; that change put Tennessee's outline in the fleet file with the old point inside it, so a Kentucky selection there would have handed off to districtry.com/tn/. OHIO RATHER THAN ANOTHER NEIGHBOUR: Illinois, Indiana and Tennessee are live, Missouri is on the fleet's new-state list, and the states planned next (Arkansas, Mississippi, Louisiana) do not border Kentucky, so this point should not have to move when they go live. THE POINT IS ON LAND, NOT ON WATER: Kentucky's TIGER county fabric follows the Ohio River's north bank, so the river is INSIDE Kentucky rather than outside it, and a point in open water on the northern border would be inside a Kentucky county exactly as Minnesota's Lake Superior candidate was inside Cook County.).
+- Layers: 16 registered (political 8, schools 4, geography 4); `registerLayer(` floor 7. Debug namespace `window.KentuckyExplorer`.
 - Scheduled workflows: `update-ky-congress-roster.yml` (Mon 13:55 UTC); `update-ky-judges-roster.yml` (Tue 14:40 UTC); `update-ky-city-officials.yml` (Wed 14:50 UTC); `update-ky-county-officials.yml` (Thu 14:55 UTC).
 - Source registry: `ky/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -339,9 +340,42 @@ second branch for a level a state does not have.
 
 **Kentucky has no sub-county general-purpose government.** The only sub-county units the Census
 publishes for the state are 493 Census County Divisions — statistical areas drawn for
-tabulation, which govern nobody — so there is no elected sub-county body to draw. That layer is
-deliberately NOT shipped: at 19.91 MB raw / 5.03 MB gzipped it is the heaviest fabric the state
-has, and it would put a card on the map for something that is not a government.
+tabulation, which govern nobody — so there is no elected sub-county body to draw.
+
+**THE COUNTY DIVISIONS ARE DRAWN ANYWAY, SINCE 2026-10-15, AS THE LEVEL-14 MAP.** They were left
+out at arrival because a card for one would sit on the map beside the governments. The done
+standard's level 14 (Adam, 2026-10-14) asks every state to draw its township or county
+subdivision boundaries whether or not they govern anyone, so `county-subdivision` ("Census
+County Division") now draws all 493 live from TIGERweb, North Carolina's layer with its own
+card: the division's name without TIGER's "CCD", its county from the app's own county file, and
+a Government row saying no one is elected from it and that outside a city the county governs.
+That row is read from the Census's functional-status code (all 493 are LSADC 22, FUNCSTAT S,
+measured 2026-10-15), so a code the card does not carry prints no row. A click asks TIGERweb
+about the point alone; the statewide set, 19.9 MB because TIGERweb serves it uncompressed,
+downloads only when the layer is switched on.
+
+**ELECTION PRECINCTS ARE DRAWN SINCE 2026-10-15, FROM THE STATE BOARD OF ELECTIONS' OWN LAYER.**
+`voting-precinct` draws all 3,194 precincts from "Voting Precinct Boundaries in Kentucky", which
+the Board compiles from the files each county board of elections sends it and the Division of
+Geographic Information hosts under CC0 1.0. It is pre-built by `ky/scripts/build_ky_precincts.py`
+through the fleet module `scripts/statewide_precincts.py` at Douglas-Peucker 8 m (10.2 MB, 2.49 MB
+gzipped), so a click is answered from the file and no point leaves the browser. The card names the
+precinct and its county, says a precinct elects no one, says the map is current through the
+November 3, 2026 general election because the layer's own text says so, states the 8 m, and links
+the Board's polling-place page. **THE BUILDER HOLDS THE CARD TO THOSE TWO CLAIMS**: it refuses to
+build, and its `--check` fails, while the card does not say "drawn here to within 8 metres" and
+"current through the November 3, 2026 general election", so a rebuild at another interval or after
+that election cannot leave the card describing the old file. Three things about the source are
+evidence for the state-publishing ask rather than reasons to doubt it: the Board's own site does
+not link the layer (it was found by searching ArcGIS Online); the layer is reloaded whole, with
+one creation and one edit stamp on every record, so nothing in it says when a county last changed
+its precincts; and two other copies sit under an individual's account in the same organisation.
+The magistrate districts (`fiscal-court`, above) are composed from this same layer, so when a
+re-check finds a change, rebuild both; rebuilding one alone can leave a precinct in one district on
+one map and in another on the other.
+The school-division note below says 3,193 precincts; it was written 2026-10-01 and which copy it
+counted is not recorded. The quarterly re-check, and the one after that election, are in
+`ky/WATCH.md`.
 
 **Kentucky has no tribal land.** Measured 2026-10-01 against the Census AIANNHA service over an
 envelope covering the whole state: zero features in federal reservations, off-reservation trust
@@ -432,6 +466,13 @@ answer — the `web.archive.org` pattern — and it wants a runner measurement. 
 division GEOMETRY has been found for any county**, which is an open question and not a measured
 refusal: KRS 160.210(6) requires changes to be filed with the county board of education and the
 county board of elections and published under KRS Chapter 424, and names no central publisher.
+
+**Corrected 2026-10-17: the last sentence above is false for Jefferson County.** LOJIC,
+Louisville's mapping agency, and the Jefferson County school district both publish the five
+divisions as map layers, and LOJIC's precinct layer gives each listed precinct its division.
+None of the three was found on 2026-10-01. The build described in the school board section
+below reads all three as checks and draws the divisions from the statute. No map of any other
+county's divisions has been found.
 
 ## The four court layers, dissolved from statute 2026-10-01
 
@@ -563,6 +604,51 @@ than on a cache bump. A roster that fails to load does NOT take the district ans
 the card still names the court and says the judge list could not be loaded, because the boundary
 is a same-origin file that has already answered. Three silences, three different sentences, and a
 guessed name is never one of them.
+
+## School board divisions, drawn 2026-10-17 for two of the 120 county boards
+
+`ky/scripts/build_ky_school_board_divisions.py` writes the `school-board-district` layer
+(`ky/data/app/ky-school-board-divisions.json`) and the record its offline `--check` holds it to
+(`ky/data/source/ky-school-board-divisions.source.json`). The builder's docstring carries every
+measured figure; this section says what was decided.
+
+**Jefferson County is drawn from the statute.** KRS 160.211 lists 643 precinct codes across the
+five divisions (135, 144, 127, 127 and 110). Every build reads section 9 of 2026 Ky. Acts
+ch. 154 from the Legislature's site and stops if its lists differ from the kept
+`krs160.211.txt`. Each division is the union of its listed precincts on the State Board of
+Elections' current precinct map, cut to the Census boundary of the Jefferson County School
+District, so the part of the county in the Anchorage Independent School District, whose board
+is elected at large, is in no division. Three current precincts, F154, F155 and F183, are on no
+list: each lies across the line between the two school districts, and KRS 160.211(2) has the
+county board of elections add the part inside the county school district to a contiguous
+division. No such assignment was found published, so each is drawn whole, and its card says it
+is placed in no division and gives its area. The 2026 general's recap sheet should show which
+division's race those precincts' county ballots carried; `WATCH.md` has the row.
+
+**The cut takes 0.1116 km2 from six listed precincts, and the other evidence disagrees with it.**
+The Census map puts that ground in Anchorage's district, so cutting it follows the statute's
+words; both published maps of the divisions keep it in a division, and no 2022 ballot cast in
+those precincts carried Anchorage's board race. Either the Census line and the county's line
+differ there or the ground has no voters, and which is true is not established.
+
+**Rowan County is drawn from election results**: each division is the precincts whose ballots
+carried its race in the 2022 or 2024 general election. A survey of the State Board's recap
+sheets proposed nine counties, and eight fail the builder's tests (codes on a sheet that
+today's precinct map does not carry, a sheet that cannot be read as text, or ground placed in a
+different division from the 2020 voting district carrying the same code); each reason is in the
+record. A county is drawn this way only when every current precinct code is placed and nothing
+suggests its precincts changed after the elections read.
+
+**No card names a member**, because no list of members by division has been found (gap
+`ky-school-board-members`). Each card names the division, says how it was drawn, and links the
+county board of education's own page, which the build checks answers. Ask
+`ky-kde-school-board-divisions`, to the Department of Education's data services, is drafted in
+`docs/ASK_DRAFTS.md` and has not been sent.
+
+**The builder's `--check` is offline and is not yet a CI step**, unlike
+`build_ky_county_districts.py --check`. Adding a step changes the battery's counts, which
+`scripts/validate_gate_counts.py` and the steward skill's mirror hold, so it was left for a
+change that does only that.
 
 ## Growing this instance
 

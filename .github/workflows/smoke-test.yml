@@ -40,21 +40,16 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  smoke:
+  # THREE JOBS, AND THE ONE CALLED `smoke` IS THE ANSWER (2026-10-17).
+  # `static` runs every gate that needs no browser, `browser` runs the browser
+  # gates as five jobs at once, and `smoke` passes only when all of them did.
+  # It keeps the check name every reader of this repo's pull requests looks
+  # for, so a PR still shows one "smoke" result. They were one job until
+  # 2026-10-17, which ran the static gates and then the browser gates and
+  # took about 21 minutes; the browser step's own comment has the figures.
+  static:
+    name: static gates
     runs-on: ubuntu-latest
-    # A CEILING ON THE WHOLE JOB, added 2026-08-18 after three runs in two days
-    # sat "in_progress" long enough to look hung — 57 minutes, then 35, then 16,
-    # every one of them on the Playwright install below. THEY WERE NOT UNBOUNDED
-    # HANGS, which is the thing worth knowing: the install's first retry ladder
-    # was bounded but could stack ~30 minutes of grinding that reports nothing
-    # and, on deploy-pages, holds the Pages concurrency slot so every
-    # later deploy queues behind it. A bounded-but-half-hour step is
-    # indistinguishable from a hang to anyone watching, and the only thing that
-    # caught all three was comparing the live site against the repo by hand.
-    # This makes that state VISIBLE — a red run a human can act on — instead of
-    # silent. The install step now sizes its phase budgets to fail NAMED under
-    # its own 15-minute cap, so this ceiling guards the OTHER steps and true
-    # catastrophes, not the install's ordinary sick days.
     timeout-minutes: 30
     # EVERY STEP BUT THE CHECKOUT CARRIES `if: ${{ !cancelled() }}`, so one
     # red gate no longer hides the other seventy-eight answers.
@@ -112,6 +107,8 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro southcarolina --out sc/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro tennessee --out tn/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro arkansas --out ar/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro mississippi --out ms/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro louisiana --out la/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
           # the weekly fleet-status notice.
@@ -783,6 +780,18 @@ jobs:
         if: ${{ !cancelled() }}
         run: node scripts/map_link_test.mjs
 
+      # A legislator card drops a map pin on the member's district office, and
+      # engine/index.html/office-helpers.txt picks the address the pin is
+      # looked up by. It dropped any line that merely contained something
+      # phone-like, so a ZIP+4 city line and a street named Katella went: 8 of
+      # 693 shipped offices were looked up with no city or with their telephone
+      # numbers until 2026-10-20, and nothing ran the function. This runs it
+      # as shipped over fixtures and over every district office every app
+      # ships, so a roster refresh in a new shape fails on its own pull request.
+      - name: Legislator office pins are looked up by their street address
+        if: ${{ !cancelled() }}
+        run: node scripts/office_address_test.mjs
+
       # THE SOCIAL CARD IS THE ONE PAGE ASSET NOBODY ON THE TEAM EVER LOOKS AT,
       # because it renders in somebody else's app. Adam shared an /il/ permalink
       # into a Signal group on 2026-09-13 and the preview showed "CHICAGO
@@ -845,6 +854,22 @@ jobs:
       - name: Every same-origin asset a page names is in the tree
         if: ${{ !cancelled() }}
         run: python3 scripts/validate_instance_assets.py
+
+      # Every telephone link a page serves dials one whole number, and every
+      # telephone in the apps' data holds at most one. Measured 2026-10-17, the
+      # day officials' own numbers began to ship, three surfaces dialled
+      # something nobody can answer with every gate green: Chicago's Ward 2
+      # link dialled the city's number and two four-digit fragments as one
+      # 18-digit number, Kankakee's board page linked "Coming Soon" as a
+      # telephone, and seven Mason County officials' entries each held two
+      # numbers, which the card dialled as one. Builders hold a value's shape
+      # where they build it and a page generator prints whatever a roster
+      # carries, so this reads what the pages and data files actually ship, on
+      # the surface the asset gate above discovers. Stdlib only; it never
+      # prints a number.
+      - name: Every telephone link dials one number
+        if: ${{ !cancelled() }}
+        run: python3 scripts/validate_telephones.py
 
       # THE COVERAGE WASH IS A CLAIM, AND ITS GATE WAS IN NO WORKFLOW. Each
       # statewide instance ships a dissolved outline of its served counties;
@@ -1134,6 +1159,16 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/il_library_trustees_scraper.py --selftest
 
+      # The builder is the half that decides whose a printed telephone or
+      # e-mail address is, under the fleet's rule of 2026-10-17: a value the
+      # page prints in one trustee's own entry ships on that trustee, and one it
+      # prints beside two trustees, or that another library's board or one of
+      # the Comptroller-filing rosters gives to somebody else, ships on nobody.
+      # Its fixtures are made up. Stdlib only, no network.
+      - name: Library trustees builder still decides whose contacts ship
+        if: ${{ !cancelled() }}
+        run: python3 scripts/build_il_library_trustees.py --selftest
+
       # Peoria's County Board index has now changed shape twice, and each time
       # the roster froze for a week with every member's name in the served
       # bytes: the builder's floor refused the write, correctly, and nothing a
@@ -1283,6 +1318,23 @@ jobs:
       - name: The shipped Iowa city councils still refuse an address and keep their seat counts
         if: ${{ !cancelled() }}
         run: python3 ia/scripts/build_ia_city_councils.py --check
+      # THE 122 CITY COUNCILS OF THE FIVE NEWEST STATES ARE WRITTEN DOWN BY HAND
+      # from each city's own pages (scripts/city_councils.py), so a seats file
+      # edited to record a new member is the one input a person types. --check
+      # is offline and stdlib: it holds each seats file to the cities the done
+      # standard counts and the seat count its builder states, holds the record
+      # of every page read to the names each seat cites, holds the shipped file
+      # to what those two produce, and holds every drawn ward to a seat its own
+      # voters elect. The weekly re-read of the pages themselves is
+      # watch-city-council-pages.yml (Adam's choice of 2026-10-16).
+      - name: The newest states' city councils match their seats files, their page records and their drawn wards
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ar/scripts/build_ar_city_councils.py --check
+          python3 nc/scripts/build_nc_city_councils.py --check
+          python3 ok/scripts/build_ok_city_councils.py --check
+          python3 sc/scripts/build_sc_city_councils.py --check
+          python3 tn/scripts/build_tn_city_councils.py --check
       # Kentucky's magisterial and council districts are composed from precincts
       # and recap sheets the build fetches; --check holds the shipped file to the
       # hash its builder recorded and each drawn county to its Census outline,
@@ -1292,6 +1344,117 @@ jobs:
         run: |
           python3 ky/scripts/build_ky_county_districts.py --selftest
           python3 ky/scripts/build_ky_county_districts.py --check
+      # THE BUILDERS BELOW MADE THE NEWEST STATES' TOWNSHIP, COURT, PRECINCT,
+      # SCHOOL BOARD, SPECIAL DISTRICT, CITY WARD AND CONSERVATION BOARD LAYERS,
+      # and each --check re-derives what it can from the shipped file and the
+      # record its builder wrote, with no network. Until these steps, CI never
+      # compared these shipped files with the records their builders wrote.
+      #
+      # Arkansas's townships come from the Arkansas GIS Office's statewide
+      # layer. --check holds the shipped file to the hash and the townships per
+      # county its builder recorded, checks every name says it is a township,
+      # and checks each county is covered by its own townships.
+      - name: The shipped Arkansas townships match their record and cover their counties
+        if: ${{ !cancelled() }}
+        run: python3 ar/scripts/build_ar_townships.py --check
+      # The court districts of Arkansas, Indiana, Oklahoma, South Carolina and
+      # Tennessee are whole counties (scripts/whole_county_courts.py). --check
+      # holds each shipped file to the county lists its builder reads: every
+      # county in exactly one district, and every district's area equal to its
+      # own counties' area.
+      - name: The newest states' court districts are made of the counties their sources list
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ar/scripts/build_ar_court_districts.py --check
+          python3 in/scripts/build_in_appeals_districts.py --check
+          python3 ok/scripts/build_ok_judicial_districts.py --check
+          python3 sc/scripts/build_sc_judicial_circuits.py --check
+          python3 tn/scripts/build_tn_judicial_districts.py --check
+      # North Carolina's superior and district court districts are read from
+      # the text of G.S. 7A-41 and G.S. 7A-133, kept in nc/data/source/statutes/,
+      # and where the law divides a county, from the 2010 census pieces it
+      # lists. --check (stdlib only) re-parses the kept text, holds each shipped
+      # feature to the parse and to the judge counts the law gives, re-derives
+      # each district's area from the county file and the recorded pieces, asks
+      # both maps which district holds each recorded interior point, and fails
+      # if the county file has changed since the districts were built from it.
+      - name: NC court districts still match the law they are drawn from
+        if: ${{ !cancelled() }}
+        run: python3 nc/scripts/build_nc_court_districts.py --check
+      # Six states' precinct layers are built by scripts/statewide_precincts.py.
+      # --check holds each shipped file to the hash and the precincts per county
+      # its builder recorded, checks every precinct names its county as the
+      # county file does and every county is covered by its own precincts, and
+      # checks the card still says what the builder says it must.
+      - name: The newest states' precincts match their record and cover their counties
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ar/scripts/build_ar_precincts.py --check
+          python3 in/scripts/build_in_precincts.py --check
+          python3 ky/scripts/build_ky_precincts.py --check
+          python3 nc/scripts/build_nc_precincts.py --check
+          python3 sc/scripts/build_sc_precincts.py --check
+          python3 tn/scripts/build_tn_precincts.py --check
+      # School board districts. Arkansas, Indiana, South Carolina and Tennessee
+      # publish theirs as maps, read by scripts/published_district_layers.py,
+      # whose --check holds each file to its record and the card to its stated
+      # wording. North Carolina's are read from the State Board's results and
+      # its --check holds the file to its own rules (every seat drawn once, no
+      # point in two seats of one tier); Kentucky's come from KRS 160.211 and
+      # the results, its --check holds the file to its record and to the act as
+      # kept in the repository, and its --selftest runs its parsers on fixed
+      # cases. Those two use shapely, so this step installs it rather than
+      # relying on an earlier step having done so.
+      - name: The newest states' school board districts match their records and their own rules
+        if: ${{ !cancelled() }}
+        run: |
+          pip install -c scripts/requirements.txt shapely
+          python3 ar/scripts/build_ar_school_board_districts.py --check
+          python3 in/scripts/build_in_school_board_districts.py --check
+          python3 sc/scripts/build_sc_school_board_districts.py --check
+          python3 tn/scripts/build_tn_school_board_districts.py --check
+          python3 nc/scripts/build_nc_school_board_districts.py --check
+          python3 ky/scripts/build_ky_school_board_divisions.py --selftest
+          python3 ky/scripts/build_ky_school_board_divisions.py --check
+      # Special districts. Arkansas's fire districts, Indiana's conservancy
+      # districts and Oklahoma's conservation districts are read from published
+      # maps (scripts/published_district_layers.py) and --check holds each to
+      # its record. Indiana's directors and Oklahoma's district offices come
+      # from each state's directory, and --check holds those files to the
+      # districts the map draws and to their own rules.
+      - name: The newest states' special districts match their records and their directories
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ar/scripts/build_ar_fire_districts.py --check
+          python3 in/scripts/build_in_conservancy_districts.py --check
+          python3 in/scripts/build_in_conservancy_directors.py --check
+          python3 ok/scripts/build_ok_conservation_districts.py --check
+          python3 ok/scripts/build_ok_conservation_offices.py --check
+      # City council wards. Arkansas's come from the GIS Office's statewide map
+      # of municipal wards (scripts/published_district_layers.py), and the other
+      # four states' from each city's own map (scripts/city_ward_maps.py).
+      # --check holds each shipped file to the hash and the maps its builder
+      # recorded and the card to its stated wording; which wards are drawn at
+      # all is the city councils step's question, above.
+      - name: The newest states' city ward maps match their records
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ar/scripts/build_ar_city_wards.py --check
+          python3 nc/scripts/build_nc_city_wards.py --check
+          python3 ok/scripts/build_ok_city_wards.py --check
+          python3 sc/scripts/build_sc_city_wards.py --check
+          python3 tn/scripts/build_tn_city_wards.py --check
+      # The conservation district boards on the County card
+      # (scripts/conservation_boards.py). --check holds each file to its record
+      # of the pages read, requires a board for every county and no field the
+      # card does not show, and checks the County card's wording. Tennessee's
+      # joins this step when its file is built (tn/WATCH.md).
+      - name: The conservation district boards match their records and cover every county
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ky/scripts/build_ky_conservation_boards.py --check
+          python3 nc/scripts/build_nc_conservation_boards.py --check
+          python3 sc/scripts/build_sc_conservation_boards.py --check
       # FOUR COUNTIES WHOSE TWO OUTSIDE PUBLISHERS DISAGREE about their board's
       # size are read from the county's OWN board page instead, and the four
       # pages take four shapes. Three defects are declared here because each
@@ -1423,6 +1586,88 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 wi/scripts/dropped_rings.py --check
 
+      # Mississippi's five supervisors and five election commissioners per
+      # county come from the Secretary of State's directory, which also prints
+      # their own addresses and telephones. This holds the shipped file to the
+      # shape it was built in: five seats of each kind in districts 1 to 5, a
+      # board address or telephone only where three supervisors share it, and
+      # nothing but a name for an election commissioner. Offline.
+      - name: MS county officials keep their shape, and election commissioners carry names only
+        if: ${{ !cancelled() }}
+        run: python3 ms/scripts/build_ms_county_officials.py --check
+
+      # Mississippi draws county supervisor districts only in the counties whose
+      # Census lines are confirmed current: changed after the 2020 census, and
+      # balanced on that census's own blocks. The blocks are not shipped, so the
+      # population cannot be re-measured here; this holds the shipped file to
+      # its build record, every district to a directory seat in the county's own
+      # word, the card to the Census edition the file was built from, and the
+      # drawn counties to the County layer at 4,000 points.
+      - name: MS supervisor districts still match their build record, the directory and the County layer
+        if: ${{ !cancelled() }}
+        run: python3 ms/scripts/build_ms_supervisor_districts.py --check
+
+      # Mississippi's four courts whose judges are elected from districts draw
+      # each district as the counties the court's own page and the 2025 and
+      # 2026 laws list. Those pages and laws are kept as copies, and this
+      # re-hashes every copy, re-reads every list out of it, and holds each of
+      # the six shipped maps to its counties, including the two that take over
+      # on 1 January 2027 and the further moves the same laws make in 2031.
+      - name: MS court districts still match the court's own lists and the laws that redraw them
+        if: ${{ !cancelled() }}
+        run: python3 ms/scripts/build_ms_court_districts.py --check
+
+      # The judges' lists lag the bench by up to fourteen months, so the weekly
+      # build applies the changes since from the court's news and the
+      # Governor's announcements, and fails once a list has caught up with one.
+      # --selftest runs that parse and those tests on literals; --check holds
+      # the shipped file to its shape, its counts and the court maps.
+      - name: MS judges hold to their parse, their change table and the court maps
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ms/scripts/build_ms_judges.py --selftest
+          python3 ms/scripts/build_ms_judges.py --check
+
+      # Mississippi's City card names the mayor and council of the 15 cities of
+      # 25,000 people or more as each city's own website names them, and the City
+      # Ward layer draws nine of those cities' wards. No weekly job re-reads the
+      # cities' pages yet, so these hold the shipped files to their build, offline:
+      # --selftest runs the page readers on literals; the councils' --check holds
+      # every city to its declared seats and every name to the name test; the
+      # wards' --check holds each city's wards to its council's ward seats, the
+      # card's empty state and the sources page to the cities drawn, and the
+      # record of what each ward layer served to the cities the builder reads.
+      - name: MS city councils and wards hold to their readers, their seats and their records
+        if: ${{ !cancelled() }}
+        run: |
+          python3 ms/scripts/build_ms_city_councils.py --selftest
+          python3 ms/scripts/build_ms_city_councils.py --check
+          python3 ms/scripts/build_ms_city_wards.py --check
+
+      # Louisiana's parish governing bodies come from the Secretary of State's
+      # list of elected officials, which also prints each official's mailing
+      # address, race and gender. This holds the shipped file to the shape it
+      # was built in, offline: every one of the 64 parishes, every member named
+      # and seated, the member, telephone and party floors, no telephone on two
+      # members' rows or on a member's row and the body's office both, and no
+      # field the builder does not carry. Whether three members printed a body's
+      # office is decided when the file is built, from the list itself, which is
+      # not kept, so it is not re-checked here.
+      - name: LA parish officials keep their shape and carry no field the builder does not read
+        if: ${{ !cancelled() }}
+        run: python3 la/scripts/build_la_parish_officials.py --check
+
+      # Louisiana draws a police jury or council district only in the parishes
+      # whose Census lines are confirmed current: changed after the 2020 census,
+      # and balanced on that census's own blocks. The blocks are not shipped, so
+      # the population cannot be re-measured here; this holds the shipped file
+      # to its build record, every district to a seat in the Secretary of
+      # State's list in the parish's own word, the card to the Census edition
+      # the file was built from, and the drawn parishes to the Parish layer.
+      - name: LA parish districts still match their build record, the list's seats and the Parish layer
+        if: ${{ !cancelled() }}
+        run: python3 la/scripts/build_la_parish_districts.py --check
+
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.
       # The stamp is right and stays; what the nine builders now print beside it
@@ -1461,7 +1706,16 @@ jobs:
       # 2026-09-27. It drives contact_block over fixture markup and covers the
       # only two places this module overrides a filing: LOCALITY_CORRECTIONS in
       # all three directions, and the middle initial's comma restored to a
-      # period, printed once, with a filed suffix comma left alone. Eight
+      # period, printed once, with a filed suffix comma left alone. Since
+      # 2026-10-17 it also holds which telephone rides an officer (Adam's ruling
+      # that day: "if the official government source uses personal phone
+      # numbers, we publish those"): a number printed beside one officer alone
+      # is that officer's, one another name also filed is the district's, and
+      # two numbers for one person a digit apart ship as neither. Since he
+      # chose "E-mails too" the same day it holds the e-mail address too: one
+      # printed in the officer's own slot rides that officer, and one printed
+      # beside a second person, named for another filer or for the district
+      # itself, or kept by an accountant or a bank rides nobody. Eight
       # scrapers import that parser, so a regression in it reaches eight weekly
       # rosters. Stdlib only, no network.
       - name: The AFR parser still corrects only what it declares
@@ -1538,6 +1792,56 @@ jobs:
           fi
           echo "comparing cache-first data against $BASE"
           python3 scripts/check_cache_version.py --base "$BASE"
+
+
+      # Static merge gate, once per instance. Each instance's validate_index.py
+      # resolves data/app relative to the index it is handed, so every instance runs
+      # from the repo root. Stdlib only, so it runs here beside the browser jobs
+      # rather than ahead of them.
+      - name: Each instance's index validates
+        if: ${{ !cancelled() }}
+        run: |
+          python3 scripts/validate_index.py il/index.html
+          python3 ca/scripts/validate_index.py ca/index.html
+          python3 ny/scripts/validate_index.py ny/index.html
+          python3 wi/scripts/validate_index.py wi/index.html
+          python3 ia/scripts/validate_index.py ia/index.html
+          python3 mi/scripts/validate_index.py mi/index.html
+          python3 mn/scripts/validate_index.py mn/index.html
+          python3 in/scripts/validate_index.py in/index.html
+          python3 nc/scripts/validate_index.py nc/index.html
+          python3 ky/scripts/validate_index.py ky/index.html
+          python3 ok/scripts/validate_index.py ok/index.html
+          python3 sc/scripts/validate_index.py sc/index.html
+          python3 tn/scripts/validate_index.py tn/index.html
+          python3 ar/scripts/validate_index.py ar/index.html
+          python3 ms/scripts/validate_index.py ms/index.html
+          python3 la/scripts/validate_index.py la/index.html
+
+
+  browser:
+    name: browser gates ${{ matrix.shard }}
+    runs-on: ubuntu-latest
+    # A CEILING ON THE WHOLE JOB, added 2026-08-18 after three runs in two days
+    # sat "in_progress" long enough to look hung — 57 minutes, then 35, then 16,
+    # every one of them on the Playwright install below. THEY WERE NOT UNBOUNDED
+    # HANGS, which is the thing worth knowing: the install's first retry ladder
+    # was bounded but could stack ~30 minutes of grinding that reports nothing
+    # and, on deploy-pages, holds the Pages concurrency slot so every
+    # later deploy queues behind it. A bounded-but-half-hour step is
+    # indistinguishable from a hang to anyone watching, and the only thing that
+    # caught all three was comparing the live site against the repo by hand.
+    # This makes that state VISIBLE — a red run a human can act on — instead of
+    # silent. The install step now sizes its phase budgets to fail NAMED under
+    # its own 15-minute cap, so this ceiling guards the OTHER steps and true
+    # catastrophes, not the install's ordinary sick days.
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5]
+    steps:
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         if: ${{ !cancelled() }}
@@ -1627,28 +1931,6 @@ jobs:
             retry 2 300 npx playwright install chromium
           fi
 
-      # Static merge gate, once per instance. Each instance's validate_index.py
-      # resolves data/app relative to the index it is handed, so every instance runs
-      # from the repo root. Stdlib only, so this sits before the browser work
-      # and fails fast.
-      - name: Each instance's index validates
-        if: ${{ !cancelled() }}
-        run: |
-          python3 scripts/validate_index.py il/index.html
-          python3 ca/scripts/validate_index.py ca/index.html
-          python3 ny/scripts/validate_index.py ny/index.html
-          python3 wi/scripts/validate_index.py wi/index.html
-          python3 ia/scripts/validate_index.py ia/index.html
-          python3 mi/scripts/validate_index.py mi/index.html
-          python3 mn/scripts/validate_index.py mn/index.html
-          python3 in/scripts/validate_index.py in/index.html
-          python3 nc/scripts/validate_index.py nc/index.html
-          python3 ky/scripts/validate_index.py ky/index.html
-          python3 ok/scripts/validate_index.py ok/index.html
-          python3 sc/scripts/validate_index.py sc/index.html
-          python3 tn/scripts/validate_index.py tn/index.html
-          python3 ar/scripts/validate_index.py ar/index.html
-
       # ONE server, EVERY instance. Until R3 this ran il alone, which is what
       # the repo had — ca and ny were separate repos with their own CI. They
       # are folders here now, and an ungated folder is worse than an ungated
@@ -1667,7 +1949,25 @@ jobs:
           # this tree, 4,244 server lines against 785 from the probes, 76% of
           # them repeat fetches of six font files. It is still kept, and still
           # printed — on failure, below, which is the only time it says anything.
-          python3 -m http.server 8000 > /tmp/http-server.log 2>&1 &
+          #
+          # The server is http.server with ONE change: a listen queue of 1024
+          # instead of the 5 socketserver uses. Three browsers loading pages at
+          # once open far more than five connections at a time, and http.server
+          # speaks HTTP/1.0, so every request is a new connection. A connection
+          # that finds the queue full is dropped without a reply, and the
+          # browser waits 1, then 3, 7, 15 and 31 seconds before trying again,
+          # which is how a page on localhost came to miss page.goto's
+          # 30-second limit with nothing in the server's log: #1530, #1547 and
+          # #1553 in three days, never on an assertion. Measured 2026-10-16 in
+          # the sandbox, 1,500 requests at once against the stock server: 1,250
+          # connections dropped and the slowest answered in 8.8s; with a queue
+          # of 1024, none dropped and the slowest took 1.3s. Everything else is
+          # the stock server, run through runpy so its command line is
+          # unchanged. The count of dropped connections is printed after the
+          # gates, so a run shows whether this is still happening.
+          listen_overflows() { awk '/^TcpExt:/ { if (!h) { split($0, k); h = 1 } else { split($0, v); for (i in k) if (k[i] == "ListenOverflows") print v[i]; exit } }' /proc/net/netstat; }
+          overflows_before=$(listen_overflows)
+          python3 -c 'import runpy, socketserver, sys; socketserver.TCPServer.request_queue_size = 1024; sys.argv = ["http.server", "8000"]; runpy.run_module("http.server", run_name="__main__", alter_sys=True)' > /tmp/http-server.log 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid" 2>/dev/null || true' EXIT
           for i in $(seq 1 40); do
@@ -1675,16 +1975,27 @@ jobs:
             sleep 0.5
           done
           status=0
-          # The browser gates run THREE AT A TIME, not one after another.
-          # Measured on main on 2026-10-12, running them in sequence took this
-          # step 21 to 24 minutes and the whole job 25 to 28 against its
-          # 30-minute limit, and one doc-only merge was cancelled at the limit
-          # mid-step. Each new state adds a smoke test, so raising the limit
-          # would only move the date it is hit again. The runner has four
-          # cores, no gate shares a port or writes a file another reads, and
-          # http.server answers each request on its own thread. If parallel
-          # runs ever make a gate flaky, lower BROWSER_GATE_JOBS rather than
-          # adding sleeps or retries.
+          # THE BROWSER GATES ARE SPLIT ACROSS FIVE JOBS, AND EACH JOB RUNS ITS
+          # SHARE TWO AT A TIME. Until 2026-10-17 one job ran them all three at
+          # a time after the static gates, and the whole run took about 21
+          # minutes, which with the queue's one-merge-at-a-time rule made a
+          # merge about 27 minutes: measured on run 117462877318, the static
+          # steps took about 6 minutes and this step 889s, of which
+          # page_consistency_test alone was 685s and the rest finished around
+          # it. Now the static gates run in their own job while these run, the
+          # page check opens several pages at once in a job of its own, and
+          # the other gates are dealt into four jobs by those measured times.
+          # A runner has four cores; two gates at a time leaves the server and
+          # each gate's own page work room. If a gate becomes flaky, first read
+          # the dropped-connection count printed below; if it is zero, lower
+          # BROWSER_GATE_JOBS rather than adding sleeps or retries.
+          #
+          # Which job runs a gate is the `# shard N` line above it. Every gate
+          # sits under one, every job checks that no gate is outside one or
+          # under a number past the matrix, and a job that finds no gate of
+          # its own fails, so a gate cannot drop out of the run by being
+          # filed nowhere. To rebalance, move lines between shards using the
+          # per-gate times each job prints.
           #
           # The list below is read by validate_gate_counts.py,
           # validate_steward_mirror.py and validate_instance_registration.py,
@@ -1692,17 +2003,14 @@ jobs:
           # gates ran in sequence. Every gate runs even if an early one fails,
           # so a PR sees every broken instance in one go, and each gate's
           # output is printed whole, in list order, under its own heading.
-          BROWSER_GATE_JOBS=3
+          SHARD=${{ matrix.shard }}
+          SHARDS=${{ strategy.job-total }}
+          BROWSER_GATE_JOBS=2
           gates=/tmp/browser-gates
           rm -rf "$gates"
           mkdir -p "$gates"
           cat > "$gates/list" <<'GATES'
-          # LONGEST FIRST. xargs hands out the list in order, so a long gate
-          # near the end runs alone after the others finish: measured on main
-          # 2026-10-13, page_consistency_test took 547s and started 15th, and
-          # the step took 1023s. Ordered by that run's per-gate times, the
-          # same 17 gates three at a time come to about 765s. Re-order from
-          # the per-gate times this step prints when a gate becomes slow.
+          # shard 1
           # Every page in the sitemap carries the same brand and the same
           # standing links. This exists because three published pages were found
           # on 2026-08-24 still serving the PRE-REBRAND skin — Inter, no theme
@@ -1716,9 +2024,13 @@ jobs:
           # ships and a correct change cannot fail it.
           BASE_URL=http://localhost:8000        node scripts/page_consistency_test.mjs
 
+          # shard 2
           BASE_URL=http://localhost:8000/il/  node scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/mi/  node mi/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/ia/  node ia/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ms/  node ms/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/la/  node la/scripts/smoke_test.mjs
+
+          # shard 3
 
           # Which layers send the reader's SELECTED POINT to a government
           # server. The privacy page publishes that number per app, and until
@@ -1742,11 +2054,26 @@ jobs:
           # browser in its own step — reads the artifact and refuses to publish
           # when the apps have moved under it.
           BASE_URL=http://localhost:8000        node scripts/probe_point_transmission.mjs --check
-
-          BASE_URL=http://localhost:8000/ny/  node ny/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/nc/  node nc/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ar/  node ar/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ia/  node ia/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/ok/  node ok/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ca/  node ca/scripts/smoke_test.mjs
+
+          # shard 4
           BASE_URL=http://localhost:8000/tn/  node tn/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/sc/  node sc/scripts/smoke_test.mjs
+
+          # The root landing page and — the part that matters — its forwarding
+          # guard, which is what keeps every already-distributed share link and
+          # embed snippet built from the OLD root URL reaching the app. A regex
+          # typo there breaks other people's pages silently, on a page that still
+          # looks right and still passes its drift check.
+          BASE_URL=http://localhost:8000        node scripts/landing_test.mjs
+          BASE_URL=http://localhost:8000/nc/  node nc/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ky/  node ky/scripts/smoke_test.mjs
+
+          # shard 5
+          BASE_URL=http://localhost:8000/wi/  node wi/scripts/smoke_test.mjs
 
           # Every text node on every sitemap page, both themes, joined against
           # what validate_contrast.py measures. That gate tests a STATED table
@@ -1769,28 +2096,30 @@ jobs:
           # figure here is per-page cost x a page count that moves whenever a
           # county ships, so re-measure it rather than trust it.
           BASE_URL=http://localhost:8000        node scripts/probe_contrast_pairs.mjs
-
-          BASE_URL=http://localhost:8000/sc/  node sc/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/wi/  node wi/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ny/  node ny/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/in/  node in/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/ky/  node ky/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/mn/  node mn/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/ar/  node ar/scripts/smoke_test.mjs
-          BASE_URL=http://localhost:8000/ca/  node ca/scripts/smoke_test.mjs
-
-          # The root landing page and — the part that matters — its forwarding
-          # guard, which is what keeps every already-distributed share link and
-          # embed snippet built from the OLD root URL reaching the app. A regex
-          # typo there breaks other people's pages silently, on a page that still
-          # looks right and still passes its drift check.
-          BASE_URL=http://localhost:8000        node scripts/landing_test.mjs
           GATES
           n=0
+          shard=
           while IFS= read -r cmd; do
-            case "$cmd" in ""|"#"*) continue ;; esac
+            case "$cmd" in
+              "# shard "*) shard=${cmd#"# shard "}; continue ;;
+              ""|"#"*) continue ;;
+            esac
+            if [ -z "$shard" ] || [ "$shard" -lt 1 ] || [ "$shard" -gt "$SHARDS" ]; then
+              echo "::error::'$cmd' is filed under shard '${shard:-none}', and this matrix runs shards 1 to $SHARDS, so no job would run it"
+              status=1
+              continue
+            fi
+            [ "$shard" = "$SHARD" ] || continue
             n=$((n + 1))
             printf '%s\n' "$cmd" > "$gates/$(printf %02d "$n").cmd"
           done < "$gates/list"
+          if [ "$n" = 0 ]; then
+            echo "::error::shard $SHARD of $SHARDS has no gates; the matrix and the list's '# shard N' lines disagree"
+            exit 1
+          fi
           started=$(date +%s)
           ls "$gates"/*.cmd | xargs -P "$BROWSER_GATE_JOBS" -I{} bash -c '
             f="$1"; t0=$(date +%s)
@@ -1822,6 +2151,23 @@ jobs:
               echo "::error::$(cat "$f") failed (exit $rc); its output is in the group above"
             fi
           done
-          echo "browser gates: $n run, $BROWSER_GATE_JOBS at a time, $(( $(date +%s) - started ))s wall"
+          echo "browser gates, shard $SHARD of $SHARDS: $n run, $BROWSER_GATE_JOBS at a time, $(( $(date +%s) - started ))s wall"
+          echo "connections dropped for a full listen queue during the gates: $(( $(listen_overflows) - overflows_before ))"
 
           exit $status
+
+
+  smoke:
+    name: smoke
+    needs: [static, browser]
+    # Runs when either side failed, so the PR gets a red `smoke` rather than
+    # a skipped one, and is skipped only when the run itself was cancelled.
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Every static and browser gate passed
+        run: |
+          echo "static gates: ${{ needs.static.result }}"
+          echo "browser gates: ${{ needs.browser.result }}"
+          [ "${{ needs.static.result }}" = success ] && [ "${{ needs.browser.result }}" = success ]

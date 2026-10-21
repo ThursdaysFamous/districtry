@@ -567,11 +567,28 @@ def render():
             w("per-app measurement, so the two cannot disagree.")
             w("")
         if kind == "map-link lookup":
+            measured = [a for a in privacy.load_apps() if a.get("tag") in tags]
+            housed = [a["tag"] for a in measured if a.get("house_lookup")]
+            officed = [a["tag"] for a in measured if a.get("office_house_lookup")]
             w("districtry's own service (`services/link-lookup/main.ts`, on Deno")
             w("Deploy). It receives **a short Google Maps or Apple Maps link**, and")
             w("only when a reader pastes one or shares one into the installed app,")
-            w("and answers with the full link it leads to. `build_privacy_page.py`")
-            w("names it as a recipient.")
+            w("and answers with the full link it leads to.")
+            if housed:
+                w("%s also send%s it, at `?a=`, **the street address a reader searches for"
+                  % ("Every app" if set(housed) == set(tags) else ", ".join(housed),
+                     "s" if set(housed) == set(tags) or len(housed) == 1 else ""))
+                w("or a map link carries** when the map's own search can't find the house,")
+                w("and it asks the U.S. Census Bureau's geocoder where that number falls.")
+            if officed:
+                w("The %s app%s it **the public address of an office a card shows** too,"
+                  % (privacy.joined(officed), " sends" if len(officed) == 1 else "s send"))
+                w("when the app's office-pin geocoder can't place that office's pin, which")
+                w("says which district the reader selected.")
+            if housed:
+                w("No served file names the Census host, because only the lookup asks it.")
+            w("`build_privacy_page.py` names the lookup and the Census Bureau as")
+            w("recipients.")
             w("")
         if kind == "library CDN":
             w("Pinned: " + ", ".join("**%s %s**" % (n, v) for n, v in pins) + ".")

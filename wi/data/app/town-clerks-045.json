@@ -39,6 +39,9 @@
     "deputyClerk": "Ann L Schwartz",
     "municipality": "Decatur",
     "phone": "608-897-4965",
+    "phonesExtra": [
+      "815-541-3791"
+    ],
     "recordUpdated": "2023-12-29",
     "url": "https://townofdecatur.com/"
   },
@@ -53,6 +56,9 @@
     "clerk": "Amy McCullough",
     "municipality": "Jefferson",
     "phone": "608-934-5255",
+    "phonesExtra": [
+      "608-426-1848"
+    ],
     "recordUpdated": "2026-01-16",
     "url": "https://jeffersontown-greenwi.gov/"
   },
@@ -66,6 +72,9 @@
     "clerk": "Peggy Murphy",
     "municipality": "Monroe",
     "phone": "608-558-6821",
+    "phonesExtra": [
+      "608-325-3411"
+    ],
     "recordUpdated": "2024-01-09",
     "url": "http://www.monroetownship.info/"
   },
@@ -88,6 +97,9 @@
     "deputyClerk": "Arlinda Faessler",
     "municipality": "Spring Grove",
     "phone": "608-897-4643",
+    "phonesExtra": [
+      "608-558-4798"
+    ],
     "recordUpdated": "2025-04-16",
     "url": "https://www.townofspringgrove.com/"
   },
@@ -95,6 +107,9 @@
     "clerk": "Catrina Bennett",
     "municipality": "Sylvester",
     "phone": "608-862-1884",
+    "phonesExtra": [
+      "608-214-5699"
+    ],
     "recordUpdated": "2024-01-09",
     "url": "https://townofsylvesterwi.com/"
   },

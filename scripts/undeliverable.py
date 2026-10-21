@@ -15,14 +15,24 @@ on. A domain that resolves but publishes no MX has an IMPLICIT MX at its A
 record (RFC 5321 §5.1) and is NOT here; validate_card_links.py reports those
 separately as unverified, because only sending settles them.
 
+A .gov NAME DOES NOT SHOW NXDOMAIN (measured 2026-10-17). The .gov zone answers
+a name that does not exist with NOERROR and no records: a made-up .gov name
+answers that way on Google's and Cloudflare's resolvers, and so does
+washingtonco.illnois.gov, recorded below as NXDOMAIN on 2026-09-04, while a
+made-up .com name answers NXDOMAIN. So for a .gov domain the finding is that it
+answers exactly as a made-up .gov name does: no NS delegation, no MX, no A and
+no AAAA record.
+
 THE CORRECTION IS NEVER APPLIED. Every one of these is one character from a
 domain that does resolve — warrecountyil.gov/warrencountyil.gov,
 yahoo.ocm/yahoo.com — and the obvious fix was measured live for all of them.
 That is evidence for the DIAGNOSIS and nothing more. Douglas County settled
 this in Illinois: its yearbook printed `douglascountuil.gov` and the builder
 dropped the address rather than "silently correcting a character in someone's
-contact detail". Officeholder data is never guessed, and a contact detail is
-officeholder data.
+contact detail" — by a county-domain check until 2026-10-17, and through this
+list since, when Adam's choice that day to publish personal e-mail addresses
+("E-mails too") retired the domain check. Officeholder data is never guessed,
+and a contact detail is officeholder data.
 
 WHAT STILL SHIPS. Only the address is withheld. The name, office, phone, party
 and page URL are untouched, so every contact route that works survives and the
@@ -120,6 +130,16 @@ UNDELIVERABLE = {
         "washington-county-board-members.json",
         "washingtonco.illnois.gov is NXDOMAIN (2026-09-04) — 'illnois' for "
         "'illinois'."),
+    "travis.wilson@douglascountuil.gov": (
+        "douglas-county-board-members.json",
+        "douglascountuil.gov answers exactly as a made-up .gov name does: "
+        "no NS delegation, no MX, no A and no AAAA record, on Google's and "
+        "Cloudflare's resolvers (measured 2026-10-17; a .gov name cannot "
+        "show NXDOMAIN, see the docstring). It is a typo for "
+        "douglascountyil.gov, the domain of the county's other six "
+        "members' addresses; the yearbook prints it beside District 1. The "
+        "Douglas builder dropped it by a county-domain test until "
+        "2026-10-17 and drops it through this list since."),
 
     # ---- Iowa: ia-county-officers.json.
     "fpowless@monroecounty.iowa": (

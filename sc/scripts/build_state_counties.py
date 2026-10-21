@@ -12,8 +12,24 @@ the served area IS the state.
 This is an occasional OPERATOR step, not weekly CI — county lines change
 essentially never; re-run only if TIGERweb corrects a boundary.
 
-Simplification is topology-aware mapshaper (Visvalingam, keep-shapes), the
-same tool + protocol as every other instance's boundary builders.
+Simplification is topology-aware mapshaper (keep-shapes), so a shared county
+line is one arc simplified once and neighbouring counties still meet exactly.
+
+SIMPLIFICATION IS DOUGLAS-PEUCKER AT 5 M WITH A FIDELITY CEILING, AND THAT IS
+A MEASUREMENT (2026-10-15). Until then this file was built with Visvalingam at
+10% retained. Measured against the full-precision TIGERweb lines this script
+fetches, that drew a county line up to 191.7 m from where it really runs, with
+46 of the 46 counties more than 25 m off somewhere, and put 30.1 km2 of the
+state in a different county from the one the source puts it in (per county,
+the drawn polygon minus the source polygon, inside the state), which is ground
+where the County card names the wrong county. Visvalingam thresholds triangle
+AREA, which does not bound how far the drawn line strays; Douglas-Peucker
+thresholds the stray itself. Interval 20 bounds the stray near 25 m but moves
+every line a little, and here put 20.0 km2 in the wrong county. Interval 5
+puts the worst stray at 5.6 m and 3.5 km2 in the wrong county, for a file 2.9
+times the gzipped size. The ceiling below is checked on every build by
+scripts/boundary_fidelity.py, which measures every source vertex's distance to
+the drawn line, because measuring the other way answers ~0 by construction.
 
 Prerequisites: curl (fetch, works through an HTTPS proxy) and Node.js
 (mapshaper via `npx mapshaper@<pinned>`).
@@ -31,6 +47,8 @@ import tempfile
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
+sys.path.append(os.path.join(os.path.dirname(REPO_ROOT), "scripts"))
+import boundary_fidelity  # noqa: E402  (shared and stdlib only; appended, so it shadows nothing here)
 MAPSHAPER = "mapshaper@0.6.102"  # pinned for reproducible output (fleet convention)
 TIGERWEB = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
 SC_FIPS = "45"
@@ -41,7 +59,12 @@ STATE_BBOX = {"minLng": -83.36, "minLat": 31.99, "maxLng": -78.49, "maxLat": 35.
 
 FIELDS = ["NAME", "BASENAME", "GEOID", "STATE", "COUNTY"]
 OUT_FILE = "state-counties.json"
-SIMPLIFY = "10%"
+# Douglas-Peucker interval in METRES. Measured 2026-10-15, interval 5 left a
+# worst stray of 5.6 to 6.7 m across the ten states built this way, so the
+# ceiling is pinned with headroom rather than recomputed: a ceiling derived
+# from the build it checks can never fail.
+SIMPLIFY = "interval=5"
+FIDELITY_MAX_M = 8.0
 MIN_FEATURES = 46  # every South Carolina county — no water pseudo-district on this layer
 VALIDATION_KEY = "GEOID"  # unique per county, preserved through simplification
 PRECISION = "0.000001"  # 6 decimals ~= 0.11 m — the precision the app requests live
@@ -73,7 +96,7 @@ def run_mapshaper(source_path, simplify, out_path):
     subprocess.run(
         [
             "npx", "-y", MAPSHAPER, source_path,
-            "-simplify", "visvalingam", "keep-shapes", simplify,
+            "-simplify", "dp", "keep-shapes", simplify,
             "-o", "precision=" + PRECISION, "format=geojson", out_path,
         ],
         check=True, cwd=REPO_ROOT,
@@ -191,6 +214,11 @@ def main():
     if not ok:
         raise RuntimeError("state-counties validation failed: %s" % msg)
 
+    ok, fmsg = boundary_fidelity.check_fidelity(
+        source["features"], simplified["features"], VALIDATION_KEY, FIDELITY_MAX_M, "NAME")
+    if not ok:
+        raise RuntimeError("state-counties fidelity failed: %s" % fmsg)
+
     compact = json.dumps(simplified, separators=(",", ":"))
     if json.loads(compact) != simplified:
         raise RuntimeError("state-counties round-trip mismatch before writing")
@@ -201,8 +229,8 @@ def main():
         f.write(compact)
 
     print(
-        "state-counties -> data/app/%s: %d features (statewide); %s; %d bytes (%s retain, 6dp)"
-        % (OUT_FILE, n, msg, len(compact), SIMPLIFY),
+        "state-counties -> data/app/%s: %d features (statewide); %s; %s; %d bytes (dp %s, 6dp)"
+        % (OUT_FILE, n, msg, fmsg, len(compact), SIMPLIFY),
         file=sys.stderr,
     )
 

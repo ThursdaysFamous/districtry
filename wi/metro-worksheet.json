@@ -23,6 +23,10 @@
     "minLng": -93.09,
     "maxLng": -86.04
   },
+  "frames": {
+    "milwaukee": ["mps-school-board-districts.json"],
+    "madison": ["madison-outline.json"]
+  },
   "brand": {
     "app_name": "districtry Wisconsin",
     "product_name": "districtry",
@@ -236,7 +240,7 @@
         "answers": "The union high school district serving the point, where elementary and high school districts are separate.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), live",
+            "label": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1"
           }
         ],
@@ -272,7 +276,7 @@
         "answers": "The elementary school district serving the point, where elementary and high school districts are separate.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), live",
+            "label": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
           }
         ],
@@ -403,7 +407,7 @@
         "answers": "The ZIP Code Tabulation Area containing the point — the Census Bureau's approximation of USPS ZIP delivery areas, not the postal boundaries themselves.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — ZCTA, layer 11 (ZIP Code Tabulation Areas), live",
+            "label": "U.S. Census TIGERweb — ZCTA, layer 11 (ZIP Code Tabulation Areas), copied into a tile archive served from this site, re-fetched from the Census weekly",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
           }
         ],
@@ -415,6 +419,7 @@
       "id": "mpd-district",
       "label": "Milwaukee Police District",
       "group": "safety",
+      "frame": "milwaukee",
       "area_rank": 19,
       "rank_note": "Milwaukee's seven police districts — a seventh of the city each, the largest of the city-scoped tier; the fleet's second city police-district layer",
       "source": {
@@ -481,6 +486,7 @@
       "id": "mpd-squad-area",
       "label": "Milwaukee Police Squad Area",
       "group": "safety",
+      "frame": "milwaukee",
       "area_rank": 22,
       "rank_note": "The 25 MPD patrol squad areas — a twenty-fifth of the city each, nested inside the seven police districts (subOf), between the MPS board's eighths and the aldermanic fabric",
       "source": {
@@ -543,6 +549,7 @@
       "id": "milwaukee-neighborhoods",
       "label": "Milwaukee Neighborhood",
       "group": "geography",
+      "frame": "milwaukee",
       "area_rank": 25,
       "rank_note": "The city's 190 named neighborhoods — an identity fabric, not an electing body; below the ward layer's statewide average, above the amenity points",
       "source": {
@@ -599,6 +606,7 @@
       "id": "madison-neighborhood-assoc",
       "label": "Neighborhood Association (Madison)",
       "group": "geography",
+      "frame": "madison",
       "area_rank": 26,
       "rank_note": "116 active city-registered association boundaries averaging 1.1 km² — just below Milwaukee's neighborhood fabric (1.3 km²) and above the TID slices; they nest and overlap by design, so the card collects every association at the point",
       "source": {
@@ -2380,7 +2388,7 @@
       {
         "file": "wi-municipal-clerks.json",
         "min_keys": 608,
-        "note": "The municipal CLERK in all 608 Wisconsin cities and villages, keyed by place GEOID — the one municipal officer the state aggregates statewide, from the Elections Commission's own directory (sent 2026-08-27, ticket 123582; also published at elections.wi.gov/clerks/directory, which refuses automation). wi/scripts/build_wi_municipal_clerks.py joins it to the same TIGERweb place fabric the card reads, 608 of 608. Clerk 608, deputy 361, phone 608, website 545; each row carries the Commission's OWN per-record last-updated date (2017-2026) and the card states it. NO e-mail (withheld at the clerks' request) and NO address (the file cannot tell a village hall from a clerk's house). An OPERATOR build, not a weekly one — there is no fetchable URL."
+        "note": "The municipal CLERK in all 608 Wisconsin cities and villages, keyed by place GEOID — the one municipal officer the state aggregates statewide, from the Elections Commission's own directory (sent 2026-08-27, ticket 123582; also published at elections.wi.gov/clerks/directory, which refuses automation). wi/scripts/build_wi_municipal_clerks.py joins it to the same TIGERweb place fabric the card reads, 608 of 608. Clerk 608, deputy 361, phone 608, second phone 194, website 545 (the second phone is the directory's Phone 2, shipped since 2026-10-17 on Adam's ruling that \"if the official government source uses personal phone numbers, we publish those\"); each row carries the Commission's OWN per-record last-updated date (2017-2026) and the card states it. NO e-mail (withheld at the clerks' request) and NO address (the file cannot tell a village hall from a clerk's house). An OPERATOR build, not a weekly one — there is no fetchable URL."
       },
       {
         "file": "wi-municipal-executives.json",
@@ -2398,6 +2406,11 @@
         "note": "State Senate roster from the Open States current-people export (wi.csv), refreshed weekly by update-wi-legislature-roster.yml; the floor tolerates transient vacancies (33 seats)."
       },
       {
+        "file": "wi-town-boards.json",
+        "min_keys": 700,
+        "note": "Town boards — the chairperson and supervisors of each Wisconsin town — keyed by the town's county-subdivision GEOID, plus `_counties`, which records for every county with towns whether it publishes a list of town officials, the document and edition, and the day it was last read. No state agency lists town boards, so wi/scripts/wi_town_board_scraper.py reads each county's own list (one parser per county under wi/scripts/town_boards/) and build_wi_town_boards.py joins it to the town-clerk files' GEOIDs, failing a county below its floor. Names, roles and the telephone numbers each county prints beside a member (phone, and phonesExtra for any further ones, with the county's label) ship, whosever line they are, under Adam's ruling of 2026-10-17 (\"if the official government source uses personal phone numbers, we publish those\"); so does the one e-mail address a county prints beside a member (email), whatever its domain, under Adam's choice of 2026-10-17 (\"E-mails too\"); a number or an address printed for two officers or for the town hall or its clerk is the town's and is taken off, as is a mailbox named for an office, an address scripts/undeliverable.py lists is withheld, the build fails a value that is not one telephone number or one e-mail address and a county below its floor of members with a number or with an address, and the home addresses the directories print beside the names do not ship. A county whose read fails keeps its last good record and date. Refreshed weekly by update-wi-town-board-roster.yml."
+      },
+      {
         "file": "winnebago-polling-places.json",
         "min_keys": 142,
         "note": "Winnebago County ward → polling place pairing for the 2026 General Election — wi/scripts/build_wi_polling_places.py, from the workbook the Wisconsin Elections Commission sent 2026-08-27 (wi/data/source/wec/). PROVISIONAL until the Commission publishes its November edition; 158 of the county's LTSB wards are paired, and the card names the election, the provisional status and MyVote as the confirmation route.",
@@ -2412,7 +2425,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-wi-shell-v49",
+    "cache_name": "districtry-wi-shell-v50",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
@@ -2490,6 +2503,11 @@
       "file": "update-wi-municipal-executive-roster.yml",
       "purpose": "Milwaukee County municipal executives (mayors and village presidents), each name witnessed against the municipality's own page before it ships",
       "schedule": "Thu 16:30 UTC"
+    },
+    {
+      "file": "update-wi-town-board-roster.yml",
+      "purpose": "Town board chairpersons and supervisors, read from each county's own list of town officials (one parser per county under wi/scripts/town_boards/)",
+      "schedule": "Thu 17:45 UTC"
     }
   ],
   "geocoder": {
@@ -2583,7 +2601,9 @@
     { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
       "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
     { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
-      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } }
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
+    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
+      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } }
   ],
   "history_page": {
     "file": "history.html",

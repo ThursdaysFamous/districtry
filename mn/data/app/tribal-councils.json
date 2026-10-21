@@ -5,6 +5,9 @@
     "name": "Carlos Hernandez",
     "role": "Chairperson",
     "phone": "218-757-3261 x 1260",
+    "phonesExtra": [
+     "cell 218-410-6451"
+    ],
     "email": "carloshernandez@boisforte-nsn.gov"
    },
    {
@@ -12,12 +15,18 @@
     "role": "Vice-Chairperson",
     "district": "District II",
     "phone": "218-753-4542",
+    "phonesExtra": [
+     "218-410-4008"
+    ],
     "email": "rmoyer@boisforte-nsn.gov"
    },
    {
     "name": "David Morrison, Sr.",
     "role": "Secretary Treasurer",
     "phone": "218-757-3261 x 1267",
+    "phonesExtra": [
+     "cell 218-404-9091"
+    ],
     "email": "davidmorrisonsr@boisforte-nsn.gov"
    },
    {
@@ -25,6 +34,9 @@
     "role": "District Representative",
     "district": "District I",
     "phone": "218-757-3261 x 1262",
+    "phonesExtra": [
+     "cell 218-410-5151"
+    ],
     "email": "jgoggleye@boisforte-nsn.gov"
    },
    {
@@ -32,14 +44,17 @@
     "role": "District Representative",
     "district": "District I",
     "phone": "218-757-3261 x 1263",
+    "phonesExtra": [
+     "cell 218-410-5229"
+    ],
     "email": "mildredholmes@boisforte-nsn.gov"
    }
   ],
   "rosterWhy": null,
-  "rosterNote": "From the nation's own council page, read 2026-10-13.",
+  "rosterNote": "From the nation's own council page, read 2026-10-17.",
   "rosterSource": "nation",
   "rosterPage": "https://boisforte.com/departments/tribal-council/",
-  "rosterRead": "2026-10-13",
+  "rosterRead": "2026-10-17",
   "rosterHost": null,
   "rosterMeasured": null
  },
@@ -70,10 +85,10 @@
    }
   ],
   "rosterWhy": null,
-  "rosterNote": "From the nation's own council page, read 2026-10-13.",
+  "rosterNote": "From the nation's own council page, read 2026-10-17.",
   "rosterSource": "nation",
   "rosterPage": "https://www.fdlband.org/government/tribal_council.php",
-  "rosterRead": "2026-10-13",
+  "rosterRead": "2026-10-17",
   "rosterHost": null,
   "rosterMeasured": null
  },
@@ -157,10 +172,10 @@
    }
   ],
   "rosterWhy": null,
-  "rosterNote": "From the nation's own council page, read 2026-10-13.",
+  "rosterNote": "From the nation's own council page, read 2026-10-17.",
   "rosterSource": "nation",
   "rosterPage": "https://ho-chunknation.com/government/legislative-branch/",
-  "rosterRead": "2026-10-13",
+  "rosterRead": "2026-10-17",
   "rosterHost": null,
   "rosterMeasured": null
  },
@@ -191,10 +206,10 @@
    }
   ],
   "rosterWhy": null,
-  "rosterNote": "From the nation's own council page, read 2026-10-13.",
+  "rosterNote": "From the nation's own council page, read 2026-10-17.",
   "rosterSource": "nation",
   "rosterPage": "https://www.llojibwe.org/government/government.html",
-  "rosterRead": "2026-10-13",
+  "rosterRead": "2026-10-17",
   "rosterHost": null,
   "rosterMeasured": null
  },
@@ -231,10 +246,10 @@
    }
   ],
   "rosterWhy": null,
-  "rosterNote": "From the nation's own council page, read 2026-10-13.",
+  "rosterNote": "From the nation's own council page, read 2026-10-17.",
   "rosterSource": "nation",
   "rosterPage": "https://lowersioux.com/community-council/",
-  "rosterRead": "2026-10-13",
+  "rosterRead": "2026-10-17",
   "rosterHost": null,
   "rosterMeasured": null
  },
@@ -302,10 +317,10 @@
    }
   ],
   "rosterWhy": null,
-  "rosterNote": "From the nation's own council page, read 2026-10-13.",
+  "rosterNote": "From the nation's own council page, read 2026-10-17.",
   "rosterSource": "nation",
   "rosterPage": "https://mnchippewatribe.org/governance/tribal-executive-committee/",
-  "rosterRead": "2026-10-13",
+  "rosterRead": "2026-10-17",
   "rosterHost": null,
   "rosterMeasured": null
  },
@@ -325,10 +340,10 @@
    }
   ],
   "rosterWhy": null,
-  "rosterNote": "From the nation's own council page, read 2026-10-13.",
+  "rosterNote": "From the nation's own council page, read 2026-10-17.",
   "rosterSource": "nation",
   "rosterPage": "https://shakopeedakota.org/government/how-we-operate/",
-  "rosterRead": "2026-10-13",
+  "rosterRead": "2026-10-17",
   "rosterHost": null,
   "rosterMeasured": null
  },
@@ -361,10 +376,10 @@
    }
   ],
   "rosterWhy": null,
-  "rosterNote": "From the nation's own council page, last read 2026-10-10; the page could not be read on the most recent weekly run.",
+  "rosterNote": "From the nation's own council page, read 2026-10-17.",
   "rosterSource": "nation",
   "rosterPage": "https://www.uppersiouxcommunity-nsn.gov/page/board-of-trustees",
-  "rosterRead": "2026-10-10",
+  "rosterRead": "2026-10-17",
   "rosterHost": null,
   "rosterMeasured": null
  },
@@ -395,10 +410,10 @@
    }
   ],
   "rosterWhy": null,
-  "rosterNote": "From the nation's own council page, read 2026-10-13.",
+  "rosterNote": "From the nation's own council page, read 2026-10-17.",
   "rosterSource": "nation",
   "rosterPage": "https://www.whiteearth.com/rbc/district-iii",
-  "rosterRead": "2026-10-13",
+  "rosterRead": "2026-10-17",
   "rosterHost": null,
   "rosterMeasured": null
  }

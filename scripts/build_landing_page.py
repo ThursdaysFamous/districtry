@@ -140,6 +140,8 @@ INSTANCE_WORKSHEET = {
     "sc": "sc/metro-worksheet.json",
     "tn": "tn/metro-worksheet.json",
     "ar": "ar/metro-worksheet.json",
+    "ms": "ms/metro-worksheet.json",
+    "la": "la/metro-worksheet.json",
 }
 FONTFACE = os.path.join(REPO_ROOT, "fonts", "barlow-fontface.css")
 THEME_BOOT = os.path.join(REPO_ROOT, "engine", "shared", "theme-boot.txt")
@@ -184,9 +186,24 @@ def shared_map_link():
     compose_app.py, and the address box here reads pasted links with the same
     code, so the front door and the app it opens cannot read one link two
     ways. Returned verbatim, like the theme boot.
+
+    It also carries the state names a link's address is read against
+    (US_STATE_NAMES, for addressStateTag), which must be POSTAL_CODES here:
+    otherwise the state list under the map and the address box above it
+    would disagree about which states there are, so a difference fails.
     """
     with open(MAP_LINK, encoding="utf-8") as fh:
-        return fh.read().rstrip("\n")
+        text = fh.read().rstrip("\n")
+    block = re.search(r"var US_STATE_NAMES = \{(.*?)\};", text, re.S)
+    if not block:
+        fail("engine/shared/map-link.txt has no US_STATE_NAMES table, which the "
+             "address box reads a map link's state from.")
+    names = {k.strip('"').upper(): v
+             for k, v in re.findall(r'("?[a-z]{2}"?):\s*"([^"]+)"', block.group(1))}
+    if names != POSTAL_CODES:
+        fail("US_STATE_NAMES in engine/shared/map-link.txt and POSTAL_CODES here "
+             "disagree: %s" % sorted(set(names.items()) ^ set(POSTAL_CODES.items())))
+    return text
 OUT = os.path.join(REPO_ROOT, "index.html")
 
 # The canonical host TODAY. R5 moves this to districtry.com along with
@@ -232,7 +249,8 @@ QUESTION_ROWS = [
     ("Who is my U.S. representative?", ("congress.html",)),
     ("Who is my state legislator?", ("state-legislature.html",)),
     # SEVEN NAMES FOR ONE READER'S QUESTION. A county's governing body is a
-    # board in Illinois and Wisconsin, a board of supervisors in Iowa, a board
+    # board in Illinois and Wisconsin, a board of supervisors in Iowa and
+    # Mississippi, a board
     # of commissioners in Michigan, a county legislature in New York, a
     # fiscal court (or a merged council) in Kentucky, a county council in
     # South Carolina and a quorum court in Arkansas, and
@@ -325,20 +343,58 @@ CHIP_PLACE = {
 # account is a different entity and is deliberately not listed.
 REPO = "https://github.com/ThursdaysFamous/districtry"
 
-# The rename notice. Data, not markup, so retiring it is deleting a constant
-# rather than editing a page — set NOTICE to None when it has served its time.
-# It is deliberately plain about what happened and what it means for a reader
-# who typed the old name, because that is the only reason they are reading it.
-# Presentation: a dismissible toast that auto-fades after NOTICE_SECONDS (the
-# Claude Design handoff's default), never persisted across visits — every load
-# gets the chance to notice it, exactly like the banner it replaces did.
+# The front page's notice. Data, not markup, so retiring it is deleting a
+# constant rather than editing a page — set NOTICE to None when it has served
+# its time.
+#
+# It invites Android readers into the Google Play app's closed test (Adam,
+# 2026-10-20). It replaced the "chidistricts.com is now districtry.com" notice
+# that had stood here since the R2.3 move. A personal Play developer account
+# made after November 2023 may apply to publish an app only once at least 12
+# testers have each stayed opted in to its closed test for the 14 days before
+# it applies (Play Console help, read 2026-10-17), so the link goes to the
+# steps page the printed sign-up sheet opens, with ref=front-page so the
+# traffic report shows how many readers arrive there from this page
+# (GoatCounter reads ref as the referrer). It is linked as android.html, the
+# way this page links every other page, and not as the printed /android:
+# GitHub Pages answers both, but the server the browser checks run against
+# serves a file only by its own name, and page_consistency_test.mjs fetches
+# every link on the page, hidden or not.
+#
+# WHO SEES IT is "only": "android". The page ships the notice hidden, and its
+# script shows it when the user agent names Android, the window is not an
+# installed copy (display-mode standalone, which the Play app's own window
+# reports as well) and the Play app's mark from engine/shared/play-app.txt is
+# not set. A computer, an iPhone or a browser with no script shows nothing,
+# because what the notice offers exists only on Android.
+#
+# IT STAYS UNTIL THE READER CLOSES IT. The rename notice faded after 15
+# seconds, which suited news and suits an invitation to act much less; and on
+# a phone it sat in the page's flow, so the fade moved the address box up under
+# a reader who had started typing.
+#
+# A CLOSE OR A TAP ON ITS LINK IS REMEMBERED, "remember": "android-test" (Adam,
+# 2026-10-20: a "no" should stay closed). The page writes one word in the
+# browser's localStorage under the key the maps' own invitation to the test
+# uses, and notice_memory() reads both the key and the word from the engine's
+# install-app block, so a reader who closed or followed either invitation is
+# shown neither again, while a reader who only saw the maps' bar still sees
+# this one. localStorage and not a cookie: a cookie goes to the host with every
+# request, and this word never leaves the browser. The privacy page measures
+# the write and says so. The notice cannot outlive the maps' test: once
+# DST_ANDROID_TEST_URL there is null, this build fails until NOTICE changes.
 NOTICE = {
-    "heading": "chidistricts.com is now districtry.com",
-    "body": ("Same map, same data, same answers — a new name, because it now covers "
-             "more than Chicago and more than one state. Illinois lives at "
-             "districtry.com/il, and every link below goes straight there."),
+    "heading": "Help test districtry on Android",
+    "body": ("districtry is coming to Google Play as an app, and Google needs at "
+             "least 12 people to test it for 14 days in a row first. Joining "
+             "takes a few minutes."),
+    "link": {"href": "/android.html?ref=front-page", "text": "See how to join"},
+    "only": "android",
+    "remember": "android-test",
 }
-NOTICE_SECONDS = 15
+NOTICE_ONLY = ("android",)
+NOTICE_REMEMBER = ("android-test",)
+INSTALL_APP = os.path.join(REPO_ROOT, "engine", "index.html", "install-app.txt")
 
 # The independence line, and it earns its place rather than decorating the page.
 # On 2026-08-25 Google Safe Browsing flagged districtry.com under "Deceptive
@@ -542,16 +598,79 @@ def oxford_join(items):
 
 
 def render_notice():
+    """The notice's markup, or nothing when NOTICE is None.
+
+    A notice with an "only" condition ships hidden and the page's script shows
+    it where the condition holds, so a reader it is not for never sees it flash.
+    """
     if not NOTICE:
         return ""
+    only = NOTICE.get("only")
+    if only is not None and only not in NOTICE_ONLY:
+        fail('NOTICE["only"] is %r; the page\'s script knows only %s.'
+             % (only, ", ".join(NOTICE_ONLY)))
+    link = NOTICE.get("link")
+    cta = ""
+    if link:
+        cta = ('      <p class="notice-cta"><a href="%s">%s</a></p>\n'
+               % (html.escape(link["href"], quote=True), html.escape(link["text"])))
+    attrs = ' data-only="%s" hidden' % only if only else ""
     return (
-        '    <aside id="notice" class="notice" role="status" aria-live="polite">\n'
+        '    <aside id="notice" class="notice" aria-labelledby="notice-h"%s>\n'
         '      <p id="notice-h" class="notice-h">%s</p>\n'
         '      <p class="notice-b">%s</p>\n'
+        '%s'
         '      <button type="button" id="notice-dismiss" aria-label="Dismiss this notice">&#x2715;</button>\n'
         '    </aside>\n'
-        % (html.escape(NOTICE["heading"]), html.escape(NOTICE["body"]))
+        % (attrs, html.escape(NOTICE["heading"]), html.escape(NOTICE["body"]), cta)
     )
+
+
+def notice_memory():
+    """The notice's memory, as script: whether it was answered, and the answer.
+
+    "android-test" keeps the answer with the maps' invitation to the Android
+    test, so the key and the word are read from the engine's install-app
+    block, the one copy of both, and this page and the maps cannot come to
+    write two different things. With no "remember" the answer lasts for the
+    page view, and nothing is stored.
+    """
+    remember = NOTICE.get("remember") if NOTICE else None
+    if remember is None:
+        return ("  /* Closing the notice lasts for this page view: it remembers nothing. */\n"
+                "  function noticeAnswered() { return false; }\n"
+                "  function noticeAnswer() {}\n")
+    if remember not in NOTICE_REMEMBER:
+        fail('NOTICE["remember"] is %r; the page\'s script knows only %s.'
+             % (remember, ", ".join(NOTICE_REMEMBER)))
+    src = read(INSTALL_APP, "the maps' install invitation")
+    key = re.search(r'\bvar DST_INSTALL_INVITE_KEY = "([a-z-]+)";', src)
+    word = re.search(r'\bvar DST_TEST_INVITE_ANSWERED = "([a-z-]+)";', src)
+    if not key or not word:
+        fail("NOTICE remembers its answer with the maps' invitation to the Android "
+             "test, and engine/index.html/install-app.txt no longer declares "
+             "DST_INSTALL_INVITE_KEY and DST_TEST_INVITE_ANSWERED as plain strings, "
+             "so this page cannot know what to write.")
+    if not re.search(r'\bvar DST_ANDROID_TEST_URL = "', src):
+        fail("NOTICE remembers its answer with the maps' invitation to the Android "
+             "test, and that test has ended: DST_ANDROID_TEST_URL in "
+             "engine/index.html/install-app.txt is no longer an address. Change or "
+             "retire NOTICE in the same change.")
+    return (
+        "  /* The notice's answer, kept with the maps' own invitation to the Android\n"
+        "     test (engine/index.html/install-app.txt names the key and the word):\n"
+        "     closing the notice or following its link writes the word, and an\n"
+        "     answer on either page keeps both closed. localStorage, not a cookie,\n"
+        "     so the word never leaves the browser. */\n"
+        '  var NOTICE_KEY = "%s";\n'
+        '  var NOTICE_ANSWERED = "%s";\n'
+        "  function noticeAnswered() {\n"
+        "    try { return window.localStorage.getItem(NOTICE_KEY) === NOTICE_ANSWERED; } catch (e) { return false; }\n"
+        "  }\n"
+        "  function noticeAnswer() {\n"
+        "    try { window.localStorage.setItem(NOTICE_KEY, NOTICE_ANSWERED); } catch (e) { /* storage blocked: it shows again next visit */ }\n"
+        "  }\n"
+        % (key.group(1), word.group(1)))
 
 
 def render_independence():
@@ -829,7 +948,12 @@ def render_metros_js(metros):
     discovered, not listed, so a new statewide instance gets it the day it
     ships and the city instances, which publish no such ring, simply keep the
     bbox behaviour. The map in the iframe below already fetches these same
-    files, so nothing new is published to make this work."""
+    files, so nothing new is published to make this work.
+
+    And `whole`, whether the entry answers for its whole state, by the rule
+    the state list under the map uses (state_rows): a landing_name that is a
+    state. A map link's address names its state, and only a whole state's
+    entry can be sent a place on that alone (namedState in the page)."""
     rows = []
     for m in metros:
         b = m["bbox"]
@@ -837,11 +961,11 @@ def render_metros_js(metros):
         outline = ("\n      outline: %s," % json.dumps(rel.replace(os.sep, "/"))
                    if os.path.isfile(os.path.join(REPO_ROOT, rel)) else "")
         rows.append(
-            '    { id: %s, tag: %s, name: %s, url: %s,%s\n'
+            '    { id: %s, tag: %s, name: %s, url: %s, whole: %s,%s\n'
             '      bbox: { minLat: %s, maxLat: %s, minLng: %s, maxLng: %s } }'
             % (json.dumps(m["id"]), json.dumps(m["tag"]), json.dumps(m["landing_name"], ensure_ascii=False),
-               json.dumps(m["url"]), outline, json.dumps(b["minLat"]),
-               json.dumps(b["maxLat"]), json.dumps(b["minLng"]), json.dumps(b["maxLng"]))
+               json.dumps(m["url"]), json.dumps(m["landing_name"] in US_STATES_AND_DC), outline,
+               json.dumps(b["minLat"]), json.dumps(b["maxLat"]), json.dumps(b["minLng"]), json.dumps(b["maxLng"]))
         )
     return ",\n".join(rows)
 
@@ -1009,23 +1133,33 @@ body {
 .shell { position: relative; min-height: 100vh; }
 .wrap { max-width: 940px; margin: 0 auto; padding: 56px 24px 72px; }
 
-/* The rename toast: absolutely positioned against .shell (full viewport
-   width), never against .wrap (the centered 940px column) — it sits near the
-   top-right of the WINDOW, matching where a reader's eye actually lands, not
-   near the top-right of the text measure. */
+/* The notice: a card at the top of the column, in the page's flow, above the
+   masthead. It used to be a toast placed over the top-right of the window
+   that faded after 15 seconds; the notice now asks the reader to do
+   something and stays until it is closed, and a card that stays must not sit
+   over the masthead's links. See NOTICE for who it is shown to. */
 .notice {
-  position: absolute; z-index: 20; top: 18px; right: 24px;
-  width: 480px; max-width: calc(100%% - 48px);
-  padding: 14px 40px 15px 18px;
+  position: relative; margin: 0 0 24px;
+  padding: 14px 44px 15px 18px;
   background: var(--brand-tint); border: 1px solid var(--brand-border);
-  border-radius: var(--radius-card); box-shadow: 0 6px 22px rgba(23, 22, 28, .16);
-  opacity: 1;
+  border-radius: var(--radius-card);
 }
+.notice[hidden] { display: none; }
 .notice-h {
   margin: 0 0 5px; font: var(--font-heading-weight) 17px/1.25 var(--font-heading);
   color: var(--ink);
 }
 .notice-b { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--ink-3); max-width: 52em; }
+/* The one thing in the notice to tap, on a 32px row so it clears WCAG 2.5.8's
+   24px with room to spare on a phone; the colours are the footer support
+   line's, on the same tint. */
+.notice-cta { margin: 6px 0 0; }
+.notice-cta a {
+  display: inline-flex; align-items: center; min-height: 32px;
+  font-size: 15px; font-weight: 600; color: var(--brand-600);
+}
+.notice-cta a:hover { color: var(--brand-700); }
+.notice-cta a:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; border-radius: 4px; }
 .notice #notice-dismiss {
   position: absolute; top: 9px; right: 10px; width: 26px; height: 26px;
   display: flex; align-items: center; justify-content: center; padding: 0;
@@ -1036,9 +1170,6 @@ body {
 .notice #notice-dismiss:hover, .notice #notice-dismiss:focus-visible {
   background: var(--surface); border-color: var(--brand-border); color: var(--ink);
 }
-@keyframes notice-out { from { opacity: 1; } to { opacity: 0; } }
-.notice.is-fading { animation: notice-out 900ms ease forwards; }
-@media (prefers-reduced-motion: reduce) { .notice.is-fading { animation-duration: 1ms; } }
 
 /* The masthead: the mark beside the wordmark, at a size the mark is actually
    drawn for, in a bar the sub-pages already wear. It was a 64px mark over a
@@ -1050,8 +1181,9 @@ body {
    a light ground and screen on a dark one; keep multiply on dark and they go
    muddy and near-black.
 
-   There is no theme toggle here. The sub-pages carry one because they read a
-   stored choice; this page follows the operating system and stores nothing,
+   There is no theme toggle here. The sub-pages carry one because they store a
+   choice; this page stores none of its own (it reads the one an app stored,
+   through the shared theme boot, and otherwise follows the operating system),
    and a control that looks like the sub-pages' but only lasts a page would be
    worse than none. */
 header.mast {
@@ -1351,7 +1483,7 @@ footer .support b { color: var(--ink); }
   h1 { font-size: 31px; }
   h2 { margin-top: 34px; }
   .search-row { flex-direction: column; }
-  .notice { position: static; width: auto; max-width: none; margin: 0 0 26px; }
+  .notice { margin-bottom: 22px; }
   .states { columns: 2; column-gap: 10px; }
   .states-toggle {
     display: flex; align-items: center; justify-content: space-between;
@@ -1379,8 +1511,8 @@ footer .support b { color: var(--ink); }
 <body>
   <a href="#page-main" class="skip-link">Skip to content</a>
   <div class="shell">
-%(notice)s    <div class="wrap">
-    <header class="mast">
+    <div class="wrap">
+%(notice)s    <header class="mast">
       <div class="mast-brand">
         %(mark)s
         <span class="wordmark">districtry</span>
@@ -1512,40 +1644,42 @@ footer .support b { color: var(--ink); }
   </div>
 <script>
 (function () {
-  /* ---------- rename-notice toast: auto-fades, dismissible ---------- */
-  var notice = document.getElementById("notice");
+  /* ---------- the notice: shown where it applies, closed on request ----------
+     A notice with data-only ships hidden (render_notice), and this shows it
+     where its condition holds. "android": a browser on Android, not an
+     installed copy, which is display-mode standalone (the Play app's own
+     window reports it too), and not a window the Play app's mark has set
+     (engine/shared/play-app.txt, run in the head). Not once it has been
+     answered, which noticeAnswered says (notice_memory). */
+%(notice_memory)s  var notice = document.getElementById("notice");
   if (notice) {
-    var fadeTimer = null, cleanupTimer = null, faded = false;
-    function fade() {
-      if (faded) return;
-      faded = true;
-      clearTimeout(fadeTimer);
-      clearTimeout(cleanupTimer);
-      var done = function () {
-        notice.removeEventListener("animationend", done);
-        notice.style.display = "none";
-      };
-      notice.addEventListener("animationend", done);
-      notice.classList.add("is-fading");
-      // belt and braces: some browsers skip animationend for a 0-duration
-      // reduced-motion run, or a tab backgrounded mid-fade.
-      cleanupTimer = setTimeout(done, 3000);
+    var only = notice.getAttribute("data-only");
+    var answered = noticeAnswered();
+    if (only === "android") {
+      var installed = !!((window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+        window.navigator.standalone === true);
+      if (/\\bAndroid\\b/.test(window.navigator.userAgent || "") && !installed &&
+          !document.documentElement.classList.contains("dst-play-app") && !answered) {
+        notice.hidden = false;
+      }
+    } else if (!only && !answered) {
+      notice.hidden = false;
     }
-    fadeTimer = setTimeout(fade, %(notice_seconds)d * 1000);
     var dismiss = document.getElementById("notice-dismiss");
-    if (dismiss) dismiss.addEventListener("click", fade);
-    /* The toast is FIRST in the DOM, so its dismiss button is the page's first
-       tab stop: a keyboard reader lands there before anything else. Auto-fading
-       it out from under them would destroy the focused element and drop focus
-       to <body> mid-navigation. While focus is inside, the timer does not run;
-       it restarts when focus leaves. A click still fades immediately, because
-       that is the reader ASKING for it to go. */
-    notice.addEventListener("focusin", function () { clearTimeout(fadeTimer); });
-    notice.addEventListener("focusout", function () {
-      if (faded) return;
-      clearTimeout(fadeTimer);
-      fadeTimer = setTimeout(fade, %(notice_seconds)d * 1000);
+    if (dismiss) dismiss.addEventListener("click", function () {
+      /* A keyboard reader's focus would drop to <body> with the button gone,
+         so it moves on to the masthead's first link, the next thing in the
+         tab order. A tap leaves focus alone. */
+      var keyboard = false;
+      try { keyboard = dismiss.matches(":focus-visible"); } catch (e) { /* older browser */ }
+      notice.hidden = true;
+      noticeAnswer();
+      var next = document.querySelector(".mast-nav a");
+      if (keyboard && next) next.focus();
     });
+    /* Following the link answers it too; the browser follows it either way. */
+    var follow = notice.querySelector(".notice-cta a");
+    if (follow) follow.addEventListener("click", noticeAnswer);
   }
 
   /* ---------- address box: geocode, then route to the covered instance ----------
@@ -1755,6 +1889,37 @@ footer .support b { color: var(--ink); }
     status.textContent = text;
     status.className = "search-status" + (isError ? " err" : "");
   }
+
+  /* COUNTING A MAP LINK READ HERE. The apps count each Google Maps or Apple
+   * Maps link their search box reads (ENGINE geocoder-search countLinkRead),
+   * and this page counts the ones it reads in the same event, with "front"
+   * where an app puts its tag:
+   *
+   *   map-link-read/front/<source>/<form>/<via>/<outcome>
+   *
+   * <outcome> is where the link went: to-<tag> (the app it opened),
+   * uncovered, none, unreadable, search-failed, or failed-<why> when the
+   * lookup could not read a short link. A place shared into the installed
+   * app reaches this page (as "opened") when no state has been opened yet.
+   * Nothing about the place is in it. It is the one event this page sends,
+   * and the privacy page names it (build_privacy_page.py ROOT_EVENTS). The
+   * counter loads after this script, so a count waits for it, up to ten
+   * seconds, as the apps' do. */
+  var linkRead = null, linkVia = "pasted";
+  function trackEvent(path, tries) {
+    if (window.goatcounter && typeof window.goatcounter.count === "function") {
+      window.goatcounter.count({ path: path, title: path, event: true });
+      return;
+    }
+    if ((tries || 0) < 40) setTimeout(function () { trackEvent(path, (tries || 0) + 1); }, 250);
+  }
+  function countLinkRead(outcome) {
+    var r = linkRead;
+    if (!r) return;
+    linkRead = null;
+    var form = r.short ? (r.retried ? "short-retried" : "short") : "full";
+    trackEvent("map-link-read/front/" + r.source + "/" + form + "/" + r.via + "/" + outcome);
+  }
   function resetButton() {
     button.disabled = false;
     button.textContent = "Show districts";
@@ -1773,12 +1938,16 @@ footer .support b { color: var(--ink); }
     // here by the same parser every app runs (engine/shared/map-link.txt),
     // so nothing it carries goes to the geocoder as address text.
     var link = parseMapLink(q);
+    linkRead = link && (link.source === "google" || link.source === "apple")
+      ? { source: link.source, short: link.kind === "short", retried: false, via: linkVia } : null;
+    linkVia = "pasted";
     if (link && link.kind === "short") {
       var signal = inFlight.signal;
       setStatus("Reading the link\\u2026", false);
       // a failed lookup is tried again (ENGINE map-link), and the reader is
       // told so rather than left watching the same words
       resolveShortMapLink(link, signal, function () {
+        if (linkRead) linkRead.retried = true;
         if (!signal.aborted) setStatus("Reading the link\\u2026 trying again", false);
       }).then(function (full) {
         if (signal.aborted) return;
@@ -1788,6 +1957,7 @@ footer .support b { color: var(--ink); }
         if (err && err.name === "AbortError") return;
         resetButton();
         setStatus(mapLinkMessage(link, err), true);
+        countLinkRead("failed-" + ((err && err.reason) || "other"));
       });
       return;
     }
@@ -1797,20 +1967,92 @@ footer .support b { color: var(--ink); }
   // `typed` is what was put in the box: the link itself, for a link
   function submitLink(link, q, typed) {
     if (link && link.kind === "point") { routePoint(link.lat, link.lng); return; }
-    if (link && link.kind !== "text") { resetButton(); setStatus(mapLinkMessage(link), true); return; }
-    searchAndRoute(q, link ? addressAfterName(q) : null, null, typed);
+    if (link && link.kind !== "text") {
+      resetButton(); setStatus(mapLinkMessage(link), true); countLinkRead("unreadable"); return;
+    }
+    var named = link ? namedState(q) : null;
+    if (named && !named.metro) {
+      countLinkRead("uncovered");
+      resetButton();
+      setStatus("That place is in " + stateInSentence(named.tag) +
+        ", which districtry doesn't cover yet \\u2014 see what's covered below.", true);
+      return;
+    }
+    // a link is handed on rebuilt from its words (ENGINE map-link
+    // mapLinkForText), so a short link read here is not read again there;
+    // an address with no name in front, typed or carried by a link, is held
+    // to its house number (searchAndRoute)
+    var bare = link ? addressAfterName(q) : null;
+    var address = !bare && OPENS_WITH_ADDRESS.test(q) ? q : null;
+    // the state a typed address names, for when the search finds nothing
+    // any app covers (searchAndRoute `home`)
+    var home = !link && address ? namedState(q) : null;
+    searchAndRoute(q, bare, address, link ? mapLinkForText(link) : typed,
+      named && named.metro.whole ? named.metro : null, true,
+      home && home.metro && home.metro.whole ? home.metro : null);
+  }
+
+  /* THE STATE A LINK'S ADDRESS NAMES (ENGINE map-link addressStateTag), with
+   * the entry that answers there, or null when it names none. A place in a
+   * state nothing here covers is said to be, and nothing is searched. A
+   * place in a whole state's app goes to that app and no other: a search's
+   * first covered answer somewhere else is another place of the same name,
+   * and when the search finds nothing there the link is handed to that app,
+   * whose own search tries the address alone, the street and the name
+   * (2026-10-16: a Wisconsin place's short link, read here, said "No
+   * matches"). San Francisco's app carries California's tag and answers for
+   * one city, so an address in California decides nothing and the search
+   * routes by position as before. */
+  function namedState(text) {
+    var tag = addressStateTag(text);
+    if (!tag) return null;
+    for (var i = 0; i < METROS.length; i++) {
+      if (METROS[i].tag === tag) return { tag: tag, metro: METROS[i] };
+    }
+    return { tag: tag, metro: null };
+  }
+
+  // A link or a typed address handed to the app that covers its state, which
+  // searches it there
+  function handTo(metro, typed) {
+    countLinkRead("to-" + metro.tag);
+    setStatus("Opening " + metro.name + "\\u2026", false);
+    window.location.href = metro.url + "#q=" + encodeURIComponent(typed);
   }
 
   /* `bare` is the address without the place's name in front of it, for
    * text a map link carried, tried only when the whole text matches nothing
    * (ENGINE map-link addressAfterName): a place shared from the Google Maps
    * app is its name and its address in one string. Its answers count only
-   * if they carry its house number (labelCarriesNumber), as in the apps.
-   * When none does but one is on the address's street in its town
+   * if they are its house, its number on its street (labelAtHouse), as in
+   * the apps. When none is but one is on the address's street in its town
    * (labelOnStreet), the app covering that street is opened with what was
    * typed, and shows the street there for the reader to tap the place
-   * (routeStreet). */
-  function searchAndRoute(q, bare, mustCarry, typed) {
+   * (routeText).
+   *
+   * AN ADDRESS WITH NO NAME IN FRONT, typed or carried by a link, is held
+   * to its house number from the first try (`mustCarry` with `whole`), as
+   * in the apps (ENGINE geocoder-search runAddressSearch), because an
+   * answer without the number is a street and its point a spot somewhere
+   * along it: until 2026-10-17 a typed Chicago storefront's address, whose
+   * street Photon holds and whose number it does not, opened the Illinois
+   * app with a point on that street selected, a ward or more from the
+   * storefront, and nothing said so. When no answer carries the number, the
+   * app covering an answer on the address's street (addressInTownOf, which
+   * reads a town typed with no comma, or not typed at all, from the
+   * answer), or else the first answer any app covers, is opened with what
+   * was typed, never with a point, and says there what its search knows.
+   * An answer with the number on another street is not the house either:
+   * until 2026-10-19 it opened its app with that house's point selected.
+   *
+   * `want` is the app a link's address names (namedState): only an answer
+   * there is routed, and when there is none the link is handed to it.
+   * `home` is the app of the state a typed address names: when the search
+   * finds nothing any app covers, the address is handed to it, whose own
+   * search asks the Census Bureau's address records about it (ENGINE
+   * geocoder-search), where until 2026-10-19 this page said "No matches" or
+   * that the address was outside every place districtry covers. */
+  function searchAndRoute(q, bare, mustCarry, typed, want, whole, home) {
     fetch("https://photon.komoot.io/api/?q=" + encodeURIComponent(q) + "&lang=en&limit=5",
       { signal: inFlight.signal, headers: { Accept: "application/json" } })
       .then(function (res) {
@@ -1818,29 +2060,35 @@ footer .support b { color: var(--ink); }
         return res.json();
       })
       .then(function (data) {
-        var feats = (data && data.features) || [], street = [];
+        var feats = (data && data.features) || [], street = [], loose = whole ? feats : [];
         if (mustCarry) {
-          street = feats.filter(function (f) { return labelOnStreet(photonParts(f), mustCarry); });
-          feats = feats.filter(function (f) {
-            return labelCarriesNumber(f && f.properties && f.properties.housenumber, mustCarry);
+          street = feats.filter(function (f) {
+            return whole ? !!addressInTownOf(mustCarry, photonParts(f)) : labelOnStreet(photonParts(f), mustCarry);
+          });
+          feats = feats.filter(function (f) { return labelAtHouse(photonParts(f), mustCarry); });
+        }
+        if (!feats.length && bare) { searchAndRoute(bare, null, bare, typed, want); return; }
+        if (want && !feats.length) return handTo(want, typed);
+        if (!feats.length && mustCarry && (street.length || loose.length)) {
+          return routeText(street.length ? street : loose, typed).then(function (went) {
+            if (went) return;
+            if (home) return handTo(home, typed);
+            countLinkRead("uncovered"); resetButton(); setStatus("That address is outside every place districtry covers today \\u2014 see what's covered below.", true);
           });
         }
-        if (!feats.length && bare) { searchAndRoute(bare, null, bare, typed); return; }
-        if (!feats.length && street.length) {
-          return routeStreet(street, typed).then(function (went) {
-            if (!went) { resetButton(); setStatus("That address is outside every place districtry covers today \\u2014 see what's covered below.", true); }
-          });
-        }
+        if (home && !feats.length) return handTo(home, typed);
         return loadFleetOutlines().then(function (outlines) {
-          if (!outlines) return routeByRectangles(feats);
+          if (!outlines) return want ? handTo(want, typed) : routeByRectangles(feats);
           // The FIRST result an instance answers for, not result #1 — a bare
           // place name ambiguous across states gets a fair shot.
           for (var i = 0; i < feats.length; i++) {
             var c = feats[i] && feats[i].geometry && feats[i].geometry.coordinates;
             if (!c || c.length < 2) continue;
             var metro = fleetOwner(c[1], c[0], outlines);
-            if (metro) { go(metro, { lat: c[1], lng: c[0] }); return; }
+            if (metro && (!want || metro === want)) { go(metro, { lat: c[1], lng: c[0] }); return; }
           }
+          if (want) return handTo(want, typed);
+          countLinkRead(feats.length ? "uncovered" : "none");
           resetButton();
           setStatus(
             feats.length
@@ -1852,6 +2100,7 @@ footer .support b { color: var(--ink); }
       })
       ["catch"](function (err) {
         if (err && err.name === "AbortError") return;
+        countLinkRead("search-failed");
         resetButton();
         setStatus("Search failed \\u2014 try again, or pick a place below.", true);
       });
@@ -1865,18 +2114,24 @@ footer .support b { color: var(--ink); }
             p.district, p.city, p.state, p.postcode].filter(Boolean).join(", ");
   }
 
-  /* The street a shared place's address is on, when no answer carries its
-   * house number: the app that covers the street is opened with what was
-   * typed, so it reads the link again and shows the street there (ENGINE
-   * geocoder-search showStreetOnly). It hands over the text and not the
-   * street's position, because a point on a street is not the place. */
-  function routeStreet(street, typed) {
+  /* The street an address is on, or the answers to it, when none is its
+   * house: the app that covers the first of them any app covers is opened
+   * with what was typed, so it reads the link or the address again and
+   * shows the street there (ENGINE geocoder-search showStreetOnly), or
+   * lists the answers for the reader to pick from. It hands over the text
+   * and not a position, because a point on a street is not the place. */
+  function routeText(answers, typed) {
     return loadFleetOutlines().then(function (outlines) {
-      var c = street[0].geometry && street[0].geometry.coordinates;
-      if (!c || c.length < 2) return null;
-      return outlines ? fleetOwner(c[1], c[0], outlines) : resolveMetro(c[1], c[0]);
+      for (var i = 0; i < answers.length; i++) {
+        var c = answers[i] && answers[i].geometry && answers[i].geometry.coordinates;
+        if (!c || c.length < 2) continue;
+        if (outlines) { var m = fleetOwner(c[1], c[0], outlines); if (m) return m; }
+        else if (metrosClaiming(c[1], c[0]).length) return resolveMetro(c[1], c[0]);
+      }
+      return null;
     }).then(function (metro) {
       if (!metro) return false;
+      countLinkRead("to-" + metro.tag);
       setStatus("Opening " + metro.name + "\\u2026", false);
       window.location.href = metro.url + "#q=" + encodeURIComponent(typed);
       return true;
@@ -1890,12 +2145,14 @@ footer .support b { color: var(--ink); }
       if (!outlines) return routeByRectangles(feats);
       var metro = fleetOwner(lat, lng, outlines);
       if (metro) { go(metro, { lat: lat, lng: lng }); return; }
+      countLinkRead("uncovered");
       resetButton();
       setStatus("That place is outside every place districtry covers today \\u2014 see what's covered below.", true);
     });
   }
 
   function go(metro, hit) {
+    countLinkRead("to-" + metro.tag);
     setStatus("Opening " + metro.name + "\\u2026", false);
     window.location.href = metro.url + "#point=" + hit.lat.toFixed(5) + "," + hit.lng.toFixed(5);
   }
@@ -1915,6 +2172,7 @@ footer .support b { color: var(--ink); }
           if (metrosClaiming(c[1], c[0]).length) { hit = { lat: c[1], lng: c[0] }; break; }
         }
         if (!hit) {
+          countLinkRead(feats.length ? "uncovered" : "none");
           resetButton();
           setStatus(
             feats.length
@@ -1925,7 +2183,8 @@ footer .support b { color: var(--ink); }
           return;
         }
         return resolveMetro(hit.lat, hit.lng).then(function (metro) {
-          if (!metro) { resetButton(); setStatus("That address is outside every place districtry covers today \\u2014 see what's covered below.", true); return; }
+          if (!metro) { countLinkRead("uncovered"); resetButton(); setStatus("That address is outside every place districtry covers today \\u2014 see what's covered below.", true); return; }
+          countLinkRead("to-" + metro.tag);
           setStatus("Opening " + metro.name + "\\u2026", false);
           window.location.href = metro.url + "#point=" + hit.lat.toFixed(5) + "," + hit.lng.toFixed(5);
         });
@@ -1946,6 +2205,7 @@ footer .support b { color: var(--ink); }
     try { handedText = decodeURIComponent(handed[1]).trim(); } catch (err) { handedText = ""; }
     if (window.history && history.replaceState) history.replaceState(null, "", location.pathname + location.search);
     if (handedText) {
+      linkVia = "opened";
       input.value = handedText;
       if (form.requestSubmit) form.requestSubmit(); else button.click();
     }
@@ -1973,12 +2233,12 @@ footer .support b { color: var(--ink); }
         "asks": render_asks(metros),
         "mark": load_mark(),
         "notice": render_notice(),
+        "notice_memory": notice_memory(),
         "independence": render_independence(),
         "answer_count": html.escape(answer_count),
         "answer_verb": answer_verb,
         "key_wash": key_wash,
         "metros_js": render_metros_js(metros),
-        "notice_seconds": NOTICE_SECONDS,
     }
 
 

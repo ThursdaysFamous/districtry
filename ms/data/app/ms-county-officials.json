@@ -1,0 +1,4700 @@
+{
+ "28001": {
+  "boardAddress": "314 State St., Natchez 39120",
+  "boardPhone": "601-442-2431",
+  "commissionerLabel": "District",
+  "county": "Adams County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Tracy Meng Gaude"
+   },
+   {
+    "district": "2",
+    "name": "Larry E. Gardner"
+   },
+   {
+    "district": "3",
+    "name": "Frances T. Bailey"
+   },
+   {
+    "district": "4",
+    "name": "Shelly (Shirley) F. Frazier"
+   },
+   {
+    "district": "5",
+    "name": "Doris Marie Rice"
+   }
+  ],
+  "label": "District",
+  "printedPage": 45,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 5,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "John Middleton III"
+   },
+   {
+    "district": "2",
+    "name": "Kevin L. Wilson"
+   },
+   {
+    "district": "3",
+    "name": "Angela Gibson Hutchins"
+   },
+   {
+    "district": "4",
+    "name": "James “Ricky” Gray"
+   },
+   {
+    "district": "5",
+    "name": "Warren Gaines, Sr."
+   }
+  ]
+ },
+ "28003": {
+  "boardAddress": "P.O. Box 69, Corinth 38835-0069",
+  "boardPhone": "662-286-7707",
+  "commissionerLabel": "District",
+  "county": "Alcorn County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Bobby McDaniel"
+   },
+   {
+    "district": "2",
+    "name": "John H. Peebles"
+   },
+   {
+    "district": "3",
+    "name": "Kim M. Ratliff"
+   },
+   {
+    "district": "4",
+    "name": "Keith Conaway"
+   },
+   {
+    "district": "5",
+    "name": "Timmy Wilbanks"
+   }
+  ],
+  "label": "District",
+  "printedPage": 46,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 6,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Lowell Hinton"
+   },
+   {
+    "district": "2",
+    "name": "James Voyles"
+   },
+   {
+    "district": "3",
+    "name": "Tim Mitchell"
+   },
+   {
+    "district": "4",
+    "name": "Steve Glidewell"
+   },
+   {
+    "district": "5",
+    "name": "John Oliver Windsor"
+   }
+  ]
+ },
+ "28005": {
+  "commissionerLabel": "District",
+  "county": "Amite County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Annete Wicker"
+   },
+   {
+    "district": "2",
+    "name": "Vergia Tobias Bradley"
+   },
+   {
+    "district": "3",
+    "name": "Cynthia Whittington Slay"
+   },
+   {
+    "district": "4",
+    "name": "Jeanne Williams"
+   },
+   {
+    "district": "5",
+    "name": "Frank Noto"
+   }
+  ],
+  "label": "District",
+  "printedPage": 47,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 7,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Warren Leake",
+    "phone": "601-657-1024"
+   },
+   {
+    "district": "2",
+    "name": "Earl Guy McNabb, Jr.",
+    "phone": "601-730-4155"
+   },
+   {
+    "district": "3",
+    "name": "J.P. \"Jackie\" Whittington",
+    "phone": "601-597-1638"
+   },
+   {
+    "district": "4",
+    "name": "Melvin Quin (Butch) Graves",
+    "phone": "601-567-2495"
+   },
+   {
+    "district": "5",
+    "name": "Tony Patterson",
+    "phone": "601-248-1003"
+   }
+  ]
+ },
+ "28007": {
+  "boardAddress": "230 W. Washington St., Kosciusko 39090",
+  "boardPhone": "662-289-2898",
+  "commissionerLabel": "District",
+  "county": "Attala County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Kay Chipley"
+   },
+   {
+    "district": "2",
+    "name": "Annie Winters"
+   },
+   {
+    "district": "3",
+    "name": "Theresa Henry"
+   },
+   {
+    "district": "4",
+    "name": "Virginia Clark"
+   },
+   {
+    "district": "5",
+    "name": "Andre Libroth"
+   }
+  ],
+  "label": "District",
+  "printedPage": 48,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 8,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Jesse Crosby, Jr."
+   },
+   {
+    "district": "2",
+    "name": "Billy Joe Coffee"
+   },
+   {
+    "district": "3",
+    "name": "Steven Goss"
+   },
+   {
+    "district": "4",
+    "name": "Willie C. R. Perteet"
+   },
+   {
+    "district": "5",
+    "name": "Brad Whittington"
+   }
+  ]
+ },
+ "28009": {
+  "boardAddress": "P.O. Box 218, Ashland 38603",
+  "boardPhone": "662-224-6300",
+  "commissionerLabel": "District",
+  "county": "Benton County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Leatrice Steward Wooden"
+   },
+   {
+    "district": "2",
+    "name": "Freda Spight"
+   },
+   {
+    "district": "3",
+    "name": "Charlie Walls"
+   },
+   {
+    "district": "4",
+    "name": "Ashley Wilkerson"
+   },
+   {
+    "district": "5",
+    "name": "Lanell Hutchison Poff"
+   }
+  ],
+  "label": "District",
+  "printedPage": 49,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 9,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Chris Shoup"
+   },
+   {
+    "district": "2",
+    "name": "Alonzo Tucker"
+   },
+   {
+    "district": "3",
+    "name": "James Lowry"
+   },
+   {
+    "district": "4",
+    "name": "Tommy Fortner"
+   },
+   {
+    "district": "5",
+    "name": "Craig Briscoe"
+   }
+  ]
+ },
+ "28011": {
+  "boardAddress": "P.O. Box 698, Cleveland 38732-0698",
+  "boardPhone": "662-846-5877",
+  "commissionerLabel": "District",
+  "county": "Bolivar County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Kimberly Green"
+   },
+   {
+    "district": "2",
+    "name": "Dianne Schattner"
+   },
+   {
+    "district": "3",
+    "name": "Eulah Peterson"
+   },
+   {
+    "district": "4",
+    "name": "Kazondria Blockett"
+   },
+   {
+    "district": "5",
+    "name": "Ora Jackson"
+   }
+  ],
+  "label": "District",
+  "printedPage": 50,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 10,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Jacorius O. Liner"
+   },
+   {
+    "district": "2",
+    "name": "William T. (Bill) Quinton"
+   },
+   {
+    "district": "3",
+    "name": "Olanda D. Morton"
+   },
+   {
+    "district": "4",
+    "name": "Ken Howard"
+   },
+   {
+    "district": "5",
+    "name": "Larry L. King"
+   }
+  ]
+ },
+ "28013": {
+  "boardAddress": "P.O. Box 36, Pittsboro 38951",
+  "boardPhone": "662-412-3126",
+  "commissionerLabel": "District",
+  "county": "Calhoun County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Bernadette Coleman"
+   },
+   {
+    "district": "2",
+    "name": "Jerry Brasher"
+   },
+   {
+    "district": "3",
+    "name": "Faye Morris"
+   },
+   {
+    "district": "4",
+    "name": "Phillip Lucius"
+   },
+   {
+    "district": "5",
+    "name": "Robert Easley"
+   }
+  ],
+  "label": "District",
+  "printedPage": 51,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 11,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Charles Bobo"
+   },
+   {
+    "district": "2",
+    "name": "Homer Moore"
+   },
+   {
+    "district": "3",
+    "name": "Gerald Thompson"
+   },
+   {
+    "district": "4",
+    "name": "Barney J. Wade"
+   },
+   {
+    "district": "5",
+    "name": "Tony Morgan"
+   }
+  ]
+ },
+ "28015": {
+  "boardAddress": "P.O. Box 60, Carrollton 38917",
+  "commissionerLabel": "District",
+  "county": "Carroll County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Chris Downs",
+    "phone": "662-229-7700"
+   },
+   {
+    "district": "2",
+    "name": "Rebecca Touchstone",
+    "phone": "662-458-0960"
+   },
+   {
+    "district": "3",
+    "name": "Randy Tackett",
+    "phone": "662-392-0888"
+   },
+   {
+    "district": "4",
+    "name": "David Burkhead",
+    "phone": "662-237-6919"
+   },
+   {
+    "district": "5",
+    "name": "Lesa Clark Fletcher",
+    "phone": "662-464-5476"
+   }
+  ],
+  "label": "Beat",
+  "printedPage": 52,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 12,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Jim Neill",
+    "phone": "662-277-5295"
+   },
+   {
+    "district": "2",
+    "name": "Joshua Hurst",
+    "phone": "662-858-0109"
+   },
+   {
+    "district": "3",
+    "name": "Edward Dill Tucker",
+    "phone": "662-602-0015"
+   },
+   {
+    "district": "4",
+    "name": "Claude Fluker",
+    "phone": "662-458-3053"
+   },
+   {
+    "district": "5",
+    "name": "Randy Browning",
+    "phone": "601-862-8117"
+   }
+  ]
+ },
+ "28017": {
+  "boardAddress": "1 Pinson Sq., Houston 38851",
+  "boardPhone": "662-456-2513",
+  "commissionerLabel": "District",
+  "county": "Chickasaw County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Brenda Crawford"
+   },
+   {
+    "district": "2",
+    "name": "Gary E. Huffman"
+   },
+   {
+    "district": "3",
+    "name": "Dennis Griffin"
+   },
+   {
+    "district": "4",
+    "name": "Amy Anderson"
+   },
+   {
+    "district": "5",
+    "name": "Gus Clark"
+   }
+  ],
+  "label": "District",
+  "printedPage": 53,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 13,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Anderson McFarland"
+   },
+   {
+    "district": "2",
+    "name": "Bill Blissard"
+   },
+   {
+    "district": "3",
+    "name": "Russell Earl Brooks"
+   },
+   {
+    "district": "4",
+    "name": "Robert “Bob” Gergory"
+   },
+   {
+    "district": "5",
+    "name": "Margaret Futral"
+   }
+  ]
+ },
+ "28019": {
+  "boardAddress": "P.O. Box 250, Ackerman 39735",
+  "boardPhone": "662-285-6329",
+  "commissionerLabel": "District",
+  "county": "Choctaw County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Juliette Ashford"
+   },
+   {
+    "district": "2",
+    "name": "Sharon Brooks"
+   },
+   {
+    "district": "3",
+    "name": "Shannon Myers"
+   },
+   {
+    "district": "4",
+    "name": "Willie Mae Guillory"
+   },
+   {
+    "district": "5",
+    "name": "Betty Bruce"
+   }
+  ],
+  "label": "District",
+  "printedPage": 54,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 14,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Joey Stephenson"
+   },
+   {
+    "district": "2",
+    "name": "Greg Fondren"
+   },
+   {
+    "district": "3",
+    "name": "Chris McIntire"
+   },
+   {
+    "district": "4",
+    "name": "John Avery Shumaker"
+   },
+   {
+    "district": "5",
+    "name": "Rodney Bowman",
+    "phone": "662-769-7366"
+   }
+  ]
+ },
+ "28021": {
+  "boardAddress": "P.O. Box 689, Port Gibson 39150",
+  "boardPhone": "601-437-5216",
+  "commissionerLabel": "District",
+  "county": "Claiborne County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Stella Greenwood"
+   },
+   {
+    "district": "2",
+    "name": "Kanika Young"
+   },
+   {
+    "district": "3",
+    "name": "Ava Torrain"
+   },
+   {
+    "district": "4",
+    "name": "Vernester L. Watts"
+   },
+   {
+    "district": "5",
+    "name": "Rita Farmer"
+   }
+  ],
+  "label": "District",
+  "printedPage": 55,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 15,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Kimberly Turner-Jones"
+   },
+   {
+    "district": "2",
+    "name": "George Hudson"
+   },
+   {
+    "district": "3",
+    "name": "Cortez L. Odom"
+   },
+   {
+    "district": "4",
+    "name": "Patricia Ann Crowder-Chambliss"
+   },
+   {
+    "district": "5",
+    "name": "Coney Dorsey"
+   }
+  ]
+ },
+ "28023": {
+  "boardAddress": "P.O. Box 616, Quitman 39355",
+  "boardPhone": "601-776-5873",
+  "commissionerLabel": "District",
+  "county": "Clarke County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Dora Sumrall McKenzie"
+   },
+   {
+    "district": "2",
+    "name": "Viola W. Davis"
+   },
+   {
+    "district": "3",
+    "name": "Troy A Dew"
+   },
+   {
+    "district": "4",
+    "name": "James W. (Bill) Avera, Jr."
+   },
+   {
+    "district": "5",
+    "name": "Dorothy Dikes Rolison"
+   }
+  ],
+  "label": "District",
+  "printedPage": 56,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 16,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Darrick L. Marshall"
+   },
+   {
+    "district": "2",
+    "name": "Lorenzo Carter"
+   },
+   {
+    "district": "3",
+    "name": "Joel Speed"
+   },
+   {
+    "district": "4",
+    "name": "Paul Mosley"
+   },
+   {
+    "district": "5",
+    "name": "Scott Evans"
+   }
+  ]
+ },
+ "28025": {
+  "boardAddress": "P.O. Box 815, West Point 39773",
+  "boardPhone": "662-494-3313",
+  "commissionerLabel": "District",
+  "county": "Clay County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Linda Ivy"
+   },
+   {
+    "district": "2",
+    "name": "Thomas D. (Tommy) Bryan"
+   },
+   {
+    "district": "3",
+    "name": "Julie Campbell Gray"
+   },
+   {
+    "district": "4",
+    "name": "Sonya Orr"
+   },
+   {
+    "district": "5",
+    "name": "Dorothy Heard"
+   }
+  ],
+  "label": "District",
+  "printedPage": 57,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 17,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Lynn Horton"
+   },
+   {
+    "district": "2",
+    "name": "Daryl Thomas"
+   },
+   {
+    "district": "3",
+    "name": "R.B. Davis"
+   },
+   {
+    "district": "4",
+    "name": "Melvin (Mel-Man) Raines"
+   },
+   {
+    "district": "5",
+    "name": "Joe D. Chandler"
+   }
+  ]
+ },
+ "28027": {
+  "commissionerLabel": "District",
+  "county": "Coahoma County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Jo Ann Gates"
+   },
+   {
+    "district": "2",
+    "name": "Andrew Thompson, Jr."
+   },
+   {
+    "district": "3",
+    "name": "Startavian Victory"
+   },
+   {
+    "district": "4",
+    "name": "Eva Cole-Lee"
+   },
+   {
+    "district": "5",
+    "name": "Virginia T. Burchfield"
+   }
+  ],
+  "label": "District",
+  "printedPage": 58,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 18,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Paul Pearson",
+    "phone": "662-624-3028"
+   },
+   {
+    "district": "2",
+    "name": "Pat Davis, Jr.",
+    "phone": "662-302-1761"
+   },
+   {
+    "district": "3",
+    "name": "Derrell Washington",
+    "phone": "662-902-8221"
+   },
+   {
+    "district": "4",
+    "name": "Jesse Harris",
+    "phone": "662-902-5666"
+   },
+   {
+    "district": "5",
+    "name": "Will Young",
+    "phone": "662-902-5276"
+   }
+  ]
+ },
+ "28029": {
+  "boardAddress": "P.O. Box 551, Hazlehurst 39083",
+  "boardPhone": "601-894-1858",
+  "commissionerLabel": "District",
+  "county": "Copiah County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Anne Thrasher"
+   },
+   {
+    "district": "2",
+    "name": "Frances Taylor"
+   },
+   {
+    "district": "3",
+    "name": "Ernest L. Munn"
+   },
+   {
+    "district": "4",
+    "name": "Lydia Claiborne Green"
+   },
+   {
+    "district": "5",
+    "name": "Lisa Rials"
+   }
+  ],
+  "label": "District",
+  "printedPage": 59,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 19,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Daryl McMillian",
+    "phone": "cell 601-953-9901"
+   },
+   {
+    "district": "2",
+    "name": "John Smith",
+    "phone": "cell 601-953-9902"
+   },
+   {
+    "district": "3",
+    "name": "Perry Hood",
+    "phone": "cell 601-953-9903"
+   },
+   {
+    "district": "4",
+    "name": "Kenneth Powell",
+    "phone": "cell 601-953-9904"
+   },
+   {
+    "district": "5",
+    "name": "Judson Jackson",
+    "phone": "cell 601-953-9905"
+   }
+  ]
+ },
+ "28031": {
+  "boardAddress": "P.O. Box 1679, Collins 39428",
+  "boardPhone": "601-765-8605",
+  "commissionerLabel": "District",
+  "county": "Covington County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Mary Glover Walters"
+   },
+   {
+    "district": "2",
+    "name": "Lesia Taormina"
+   },
+   {
+    "district": "3",
+    "name": "Rhonda McCall Purvis"
+   },
+   {
+    "district": "4",
+    "name": "Mary Deloris Thornton"
+   },
+   {
+    "district": "5",
+    "name": "Dorothy A. Magee"
+   }
+  ],
+  "label": "District",
+  "printedPage": 60,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 20,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "John Sterling Craft"
+   },
+   {
+    "district": "2",
+    "name": "John Holifield"
+   },
+   {
+    "district": "3",
+    "name": "Chris Brister"
+   },
+   {
+    "district": "4",
+    "name": "Fenton Pope"
+   },
+   {
+    "district": "5",
+    "name": "Arthur Keys"
+   }
+  ]
+ },
+ "28033": {
+  "boardAddress": "365 Losher St., Hernando 38632",
+  "boardPhone": "662-469-8002",
+  "commissionerLabel": "District",
+  "county": "DeSoto County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Billy Johnson",
+    "phone": "662-469-8072"
+   },
+   {
+    "district": "2",
+    "name": "Tim Snyder",
+    "phone": "662-469-8461"
+   },
+   {
+    "district": "3",
+    "name": "Chad Engelke",
+    "phone": "662-469-8072"
+   },
+   {
+    "district": "4",
+    "name": "Sissie Ferguson",
+    "phone": "662-469-8072"
+   },
+   {
+    "district": "5",
+    "name": "David H. Ross",
+    "phone": "662-469-8072"
+   }
+  ],
+  "label": "District",
+  "printedPage": 61,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 21,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Jessie L. Medlin"
+   },
+   {
+    "district": "2",
+    "name": "Mark Gardner"
+   },
+   {
+    "district": "3",
+    "name": "Ray Denison"
+   },
+   {
+    "district": "4",
+    "name": "Lee P. Caldwell"
+   },
+   {
+    "district": "5",
+    "name": "Robert Foster"
+   }
+  ]
+ },
+ "28035": {
+  "boardAddress": "P.O. Box 1310, Hattiesburg 39403-1310",
+  "boardPhone": "601-545-6000",
+  "commissionerLabel": "District",
+  "county": "Forrest County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Neil Harvison"
+   },
+   {
+    "district": "2",
+    "name": "Johneice Dupree"
+   },
+   {
+    "district": "3",
+    "name": "Lucretia Sug Jenkins"
+   },
+   {
+    "district": "4",
+    "name": "Nancy Faye Noble"
+   },
+   {
+    "district": "5",
+    "name": "Butch Benedict, Jr."
+   }
+  ],
+  "label": "District",
+  "printedPage": 62,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 22,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Gentry Mordica"
+   },
+   {
+    "district": "2",
+    "name": "Sharon A. Thompson"
+   },
+   {
+    "district": "3",
+    "name": "Steven Stringer"
+   },
+   {
+    "district": "4",
+    "name": "Rod Woullard"
+   },
+   {
+    "district": "5",
+    "name": "Terri Bell"
+   }
+  ]
+ },
+ "28037": {
+  "boardAddress": "P.O. Box 297, Meadville 39653",
+  "boardPhone": "601-384-2330",
+  "commissionerLabel": "District",
+  "county": "Franklin County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Gloria Bonds"
+   },
+   {
+    "district": "2",
+    "name": "Hilda Peeler"
+   },
+   {
+    "district": "3",
+    "name": "Margie McNair"
+   },
+   {
+    "district": "4",
+    "name": "Faye Davis Enzman"
+   },
+   {
+    "district": "5",
+    "name": "Jane Coleman"
+   }
+  ],
+  "label": "District",
+  "printedPage": 63,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 23,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Ronald Hunt"
+   },
+   {
+    "district": "2",
+    "name": "Henry (Eddie) Stebbins"
+   },
+   {
+    "district": "3",
+    "name": "Eric Gant"
+   },
+   {
+    "district": "4",
+    "name": "Pat Larkin"
+   },
+   {
+    "district": "5",
+    "name": "Norris (Jack) Jordan"
+   }
+  ]
+ },
+ "28039": {
+  "boardAddress": "355 Cox St., Ste. D, Lucedale 39452",
+  "boardPhone": "601-947-7506",
+  "commissionerLabel": "District",
+  "county": "George County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Joanie Evans"
+   },
+   {
+    "district": "2",
+    "name": "Caleb R. Howell"
+   },
+   {
+    "district": "3",
+    "name": "Darlene Steede"
+   },
+   {
+    "district": "4",
+    "name": "Matthew Lamb"
+   },
+   {
+    "district": "5",
+    "name": "Rebecca (Becky) Berry"
+   }
+  ],
+  "label": "Beat",
+  "printedPage": 64,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 24,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Frankie Massey"
+   },
+   {
+    "district": "2",
+    "name": "Kelly W. Wright"
+   },
+   {
+    "district": "3",
+    "name": "Larry D. McDonald"
+   },
+   {
+    "district": "4",
+    "name": "Larry Havard"
+   },
+   {
+    "district": "5",
+    "name": "William Henry Cochran"
+   }
+  ]
+ },
+ "28041": {
+  "boardAddress": "P.O. Box 460, Leakesville 39451",
+  "boardPhone": "601-394-2394",
+  "commissionerLabel": "District",
+  "county": "Greene County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Stacy Wilson"
+   },
+   {
+    "district": "2",
+    "name": "Jarita Bivens"
+   },
+   {
+    "district": "3",
+    "name": "Deborah Walley"
+   },
+   {
+    "district": "4",
+    "name": "Elizabeth Freeman"
+   },
+   {
+    "district": "5",
+    "name": "Terri Ware Denmark"
+   }
+  ],
+  "label": "District",
+  "printedPage": 65,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 25,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Dillon McInnis"
+   },
+   {
+    "district": "2",
+    "name": "Frederick Johnson"
+   },
+   {
+    "district": "3",
+    "name": "Efird Eubanks"
+   },
+   {
+    "district": "4",
+    "name": "Wayne Barrow"
+   },
+   {
+    "district": "5",
+    "name": "David Tingle"
+   }
+  ]
+ },
+ "28043": {
+  "boardAddress": "P.O. Box 1208, Grenada 38902",
+  "boardPhone": "662-226-1821",
+  "commissionerLabel": "District",
+  "county": "Grenada County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Susan Williams"
+   },
+   {
+    "district": "2",
+    "name": "Karen A. James"
+   },
+   {
+    "district": "3",
+    "name": "James Russel Carver, Sr."
+   },
+   {
+    "district": "4",
+    "name": "Elizabeth Moore"
+   },
+   {
+    "district": "5",
+    "name": "Celina Hayward"
+   }
+  ],
+  "label": "District",
+  "printedPage": 66,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 26,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Michael Lott"
+   },
+   {
+    "district": "2",
+    "name": "Chad Bridges"
+   },
+   {
+    "district": "3",
+    "name": "Jeff Johnson"
+   },
+   {
+    "district": "4",
+    "name": "Darrell K. Robinson"
+   },
+   {
+    "district": "5",
+    "name": "Chad P. Gray"
+   }
+  ]
+ },
+ "28045": {
+  "boardAddress": "854 Hwy. 90, Ste. A, Bay St. Louis 39520",
+  "boardPhone": "228-467-0172",
+  "commissionerLabel": "District",
+  "county": "Hancock County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Reba McCaleb"
+   },
+   {
+    "district": "2",
+    "name": "Tad Shaw"
+   },
+   {
+    "district": "3",
+    "name": "Eugene “E.J.” Bice"
+   },
+   {
+    "district": "4",
+    "name": "Donna Henry"
+   },
+   {
+    "district": "5",
+    "name": "Breezy Bice"
+   }
+  ],
+  "label": "District",
+  "printedPage": 67,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 27,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Donald Graham"
+   },
+   {
+    "district": "2",
+    "name": "Greg Shaw"
+   },
+   {
+    "district": "3",
+    "name": "Chuck Clark"
+   },
+   {
+    "district": "4",
+    "name": "Scotty Adam"
+   },
+   {
+    "district": "5",
+    "name": "Darrin Ladner"
+   }
+  ]
+ },
+ "28047": {
+  "boardAddress": "P.O. Drawer CC, Gulfport 39502",
+  "commissionerLabel": "District",
+  "county": "Harrison County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Toni Jo Kuljis-Diaz"
+   },
+   {
+    "district": "2",
+    "name": "Becky Payne"
+   },
+   {
+    "district": "3",
+    "name": "Jennifer Smith"
+   },
+   {
+    "district": "4",
+    "name": "Christene F. Brice"
+   },
+   {
+    "district": "5",
+    "name": "Carolyn Handler"
+   }
+  ],
+  "label": "District",
+  "printedPage": 68,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 28,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Dan Cuevas",
+    "phone": "228-435-8272"
+   },
+   {
+    "district": "2",
+    "name": "Rebecca Powers",
+    "phone": "228-865-4122"
+   },
+   {
+    "district": "3",
+    "name": "Marlin R. Ladner",
+    "phone": "228-867-6528"
+   },
+   {
+    "district": "4",
+    "name": "Kent Jones",
+    "phone": "228-865-4204"
+   },
+   {
+    "district": "5",
+    "name": "Nathan Barrett",
+    "phone": "228-865-4123"
+   }
+  ]
+ },
+ "28049": {
+  "boardAddress": "P.O. Box 686, Jackson 39205",
+  "commissionerLabel": "District",
+  "county": "Hinds County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Kidada Brown",
+    "phone": "601-968-6685"
+   },
+   {
+    "district": "2",
+    "name": "Bobbie Graves",
+    "phone": "601-968-6557"
+   },
+   {
+    "district": "3",
+    "name": "Jermal Clark",
+    "phone": "601-968-6682"
+   },
+   {
+    "district": "4",
+    "name": "Yvonne Robinson Horton",
+    "phone": "601-668-6556"
+   },
+   {
+    "district": "5",
+    "name": "Felicia McClinton",
+    "phone": "601-968-6684"
+   }
+  ],
+  "label": "District",
+  "printedPage": 70,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 30,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Robert Graham",
+    "phone": "601-968-6689"
+   },
+   {
+    "district": "2",
+    "name": "Tony Smith",
+    "phone": "601-968-6690"
+   },
+   {
+    "district": "3",
+    "name": "Deborah Butler-Dixon",
+    "phone": "601-968-6768"
+   },
+   {
+    "district": "4",
+    "name": "Wanda Evers",
+    "phone": "601-973-5558"
+   },
+   {
+    "district": "5",
+    "name": "Bobby McGowan",
+    "phone": "601-968-6699"
+   }
+  ]
+ },
+ "28051": {
+  "boardAddress": "P.O. Box 239, Lexington 39095",
+  "boardPhone": "662-834-0911",
+  "commissionerLabel": "District",
+  "county": "Holmes County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Elnora Johnson-Patton"
+   },
+   {
+    "district": "2",
+    "name": "Loretta Tidwell"
+   },
+   {
+    "district": "3",
+    "name": "Henry L. Simpson"
+   },
+   {
+    "district": "4",
+    "name": "Augustine Winstead"
+   },
+   {
+    "district": "5",
+    "name": "Kahaliah Hogan-Cook"
+   }
+  ],
+  "label": "District",
+  "printedPage": 71,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 31,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Steve McClellan"
+   },
+   {
+    "district": "2",
+    "name": "James H. Young",
+    "phone": "662-967-0911"
+   },
+   {
+    "district": "3",
+    "name": "Debra Mabry"
+   },
+   {
+    "district": "4",
+    "name": "Leroy Johnson"
+   },
+   {
+    "district": "5",
+    "name": "Derrick Wilson"
+   }
+  ]
+ },
+ "28053": {
+  "commissionerLabel": "District",
+  "county": "Humphreys County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Daliah “Bit” Hooker Randle"
+   },
+   {
+    "district": "2",
+    "name": "Lizzie Powell"
+   },
+   {
+    "district": "3",
+    "name": "Constance Burley"
+   },
+   {
+    "district": "4",
+    "name": "Tina Jones Gullett"
+   },
+   {
+    "district": "5",
+    "name": "Joseph Lee"
+   }
+  ],
+  "label": "District",
+  "printedPage": 72,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 32,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "James Bankhead",
+    "phone": "662-247-2296"
+   },
+   {
+    "district": "2",
+    "name": "Nailon \"Jake\" Lee",
+    "phone": "662-820-4289"
+   },
+   {
+    "district": "3",
+    "name": "Woodrow Johnson, Sr.",
+    "phone": "662-836-6982"
+   },
+   {
+    "district": "4",
+    "name": "Delrick Henderson",
+    "phone": "662-247-2285"
+   },
+   {
+    "district": "5",
+    "name": "Reggie Pinkston",
+    "phone": "662-836-8567"
+   }
+  ]
+ },
+ "28055": {
+  "boardAddress": "P.O. Box 27, Mayersville 39113",
+  "commissionerLabel": "District",
+  "county": "Issaquena County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Jimmy C. Newman"
+   },
+   {
+    "district": "2",
+    "name": "Wanda Fulton"
+   },
+   {
+    "district": "3",
+    "name": "Erma Peterson"
+   },
+   {
+    "district": "4",
+    "name": "Corinder C. Williams"
+   },
+   {
+    "district": "5",
+    "name": "Tommy Boyles"
+   }
+  ],
+  "label": "District",
+  "printedPage": 73,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 33,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Eddie Hatcher",
+    "phone": "662-873-7800"
+   },
+   {
+    "district": "2",
+    "name": "Jerry Wayne Britton",
+    "phone": "662-820-6308"
+   },
+   {
+    "district": "3",
+    "name": "Stallard U. Williams, Sr.",
+    "phone": "662-907-0266"
+   },
+   {
+    "district": "4",
+    "name": "James McFarland III",
+    "phone": "662-873-7100"
+   },
+   {
+    "district": "5",
+    "name": "Eddie Holcomb",
+    "phone": "662-907-7288"
+   }
+  ]
+ },
+ "28057": {
+  "boardAddress": "P.O. Box 776, Fulton 38843",
+  "boardPhone": "662-862-5600",
+  "commissionerLabel": "District",
+  "county": "Itawamba County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "James G. Dickens"
+   },
+   {
+    "district": "2",
+    "name": "Barry Davis"
+   },
+   {
+    "district": "3",
+    "name": "Dennis Farris, Sr."
+   },
+   {
+    "district": "4",
+    "name": "Tommy Gholston"
+   },
+   {
+    "district": "5",
+    "name": "Steve Johnson"
+   }
+  ],
+  "label": "District",
+  "printedPage": 74,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 34,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Donnie Wood"
+   },
+   {
+    "district": "2",
+    "name": "Cecil (Ike) Johnson, Sr."
+   },
+   {
+    "district": "3",
+    "name": "Wally Barnard"
+   },
+   {
+    "district": "4",
+    "name": "Eric (Tiny) Hughes"
+   },
+   {
+    "district": "5",
+    "name": "Bill Sheffield"
+   }
+  ]
+ },
+ "28059": {
+  "boardAddress": "P.O. Box 998, Pascagoula 39568-0998",
+  "commissionerLabel": "District",
+  "county": "Jackson County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Danny Glaskox",
+    "phone": "228-769-3362"
+   },
+   {
+    "district": "2",
+    "name": "Katrina Viverette",
+    "phone": "228-769-3006"
+   },
+   {
+    "district": "3",
+    "name": "Debra Loris Hodges",
+    "phone": "228-769-3008"
+   },
+   {
+    "district": "4",
+    "name": "Kevin Bonner",
+    "phone": "228-471-1355"
+   },
+   {
+    "district": "5",
+    "name": "Deborah J. Parker",
+    "phone": "228-769-3007"
+   }
+  ],
+  "label": "District",
+  "printedPage": 75,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 35,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Barry Cumbest",
+    "phone": "228-769-3403"
+   },
+   {
+    "district": "2",
+    "name": "Ennit Morris",
+    "phone": "228-769-3170"
+   },
+   {
+    "district": "3",
+    "name": "Kenneth Taylor",
+    "phone": "228-762-7641"
+   },
+   {
+    "district": "4",
+    "name": "Troy Ross",
+    "phone": "228-769-3457"
+   },
+   {
+    "district": "5",
+    "name": "Randy Bosarge",
+    "phone": "228-769-3378"
+   }
+  ]
+ },
+ "28061": {
+  "boardAddress": "P.O. Box 406, Bay Springs 39422",
+  "boardPhone": "601-764-3469",
+  "commissionerLabel": "District",
+  "county": "Jasper County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Linda Graham"
+   },
+   {
+    "district": "2",
+    "name": "Vernell Thigpen Lofton"
+   },
+   {
+    "district": "3",
+    "name": "Laura Lee Parker"
+   },
+   {
+    "district": "4",
+    "name": "Larry N. Dykes"
+   },
+   {
+    "district": "5",
+    "name": "Samantha Riley Parker"
+   }
+  ],
+  "label": "Beat",
+  "printedPage": 76,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 36,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Eddie Helms"
+   },
+   {
+    "district": "2",
+    "name": "Sandy Stephens"
+   },
+   {
+    "district": "3",
+    "name": "Doug Rogers"
+   },
+   {
+    "district": "4",
+    "name": "Randy Corley"
+   },
+   {
+    "district": "5",
+    "name": "Jon Raphael Jones"
+   }
+  ]
+ },
+ "28063": {
+  "boardAddress": "P.O. Box 145, Fayette 39069",
+  "boardPhone": "601-786-3021",
+  "commissionerLabel": "District",
+  "county": "Jefferson County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Henry Wilson, Jr."
+   },
+   {
+    "district": "2",
+    "name": "Nicole Davis"
+   },
+   {
+    "district": "3",
+    "name": "Sharon Doss"
+   },
+   {
+    "district": "4",
+    "name": "David Franklin"
+   },
+   {
+    "district": "5",
+    "name": "Shirley S. Brown"
+   }
+  ],
+  "label": "District",
+  "printedPage": 77,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 37,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Cartrell Hammitte"
+   },
+   {
+    "district": "2",
+    "name": "Windell Selmon"
+   },
+   {
+    "district": "3",
+    "name": "Anthony Walton"
+   },
+   {
+    "district": "4",
+    "name": "Kerry V. Pree"
+   },
+   {
+    "district": "5",
+    "name": "Kelvin Trevon King"
+   }
+  ]
+ },
+ "28065": {
+  "boardAddress": "P.O. Box 1317, Prentiss 39474",
+  "boardPhone": "601-792-4336",
+  "commissionerLabel": "District",
+  "county": "Jefferson Davis County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Linda J. Speights"
+   },
+   {
+    "district": "2",
+    "name": "Ann Stringer"
+   },
+   {
+    "district": "3",
+    "name": "Towonder Applewhite"
+   },
+   {
+    "district": "4",
+    "name": "Stephen Abram"
+   },
+   {
+    "district": "5",
+    "name": "Mattie N. Lewis"
+   }
+  ],
+  "label": "District",
+  "printedPage": 78,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 38,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Macon (Corky) Holliman"
+   },
+   {
+    "district": "2",
+    "name": "Ricky Barrett"
+   },
+   {
+    "district": "3",
+    "name": "Demarrio Booth"
+   },
+   {
+    "district": "4",
+    "name": "Michael O. Evans"
+   },
+   {
+    "district": "5",
+    "name": "Jerry P. Gholar, Sr."
+   }
+  ]
+ },
+ "28067": {
+  "boardAddress": "P.O. Box 1468, Laurel 39441",
+  "boardPhone": "601-428-3139",
+  "commissionerLabel": "District",
+  "county": "Jones County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Bart Gavin",
+    "phone": "601-498-2278"
+   },
+   {
+    "district": "2",
+    "name": "Michelle Blackwell",
+    "phone": "601-498-6316"
+   },
+   {
+    "district": "3",
+    "name": "Dione Hodge",
+    "phone": "601-319-6727"
+   },
+   {
+    "district": "4",
+    "name": "John Herrington",
+    "phone": "601-517-5560"
+   },
+   {
+    "district": "5",
+    "name": "Addie Wash Chinn",
+    "phone": "601-428-1604"
+   }
+  ],
+  "label": "Beat",
+  "printedPage": 79,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 39,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "George Walters"
+   },
+   {
+    "district": "2",
+    "name": "T. Larry Dykes"
+   },
+   {
+    "district": "3",
+    "name": "Phil Dickerson"
+   },
+   {
+    "district": "4",
+    "name": "Joey Bradshaw"
+   },
+   {
+    "district": "5",
+    "name": "Stacy Comegys"
+   }
+  ]
+ },
+ "28069": {
+  "boardAddress": "P.O. Box 188, DeKalb 39328",
+  "commissionerLabel": "District",
+  "county": "Kemper County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Roy Boyd"
+   },
+   {
+    "district": "2",
+    "name": "Charles Hollingsworth, Jr."
+   },
+   {
+    "district": "3",
+    "name": "Zac Clay"
+   },
+   {
+    "district": "4",
+    "name": "Kathy W. Clemons"
+   },
+   {
+    "district": "5",
+    "name": "Mary L. Bennamon"
+   }
+  ],
+  "label": "District",
+  "printedPage": 80,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 40,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Roy Vandevender",
+    "phone": "601-504-2125"
+   },
+   {
+    "district": "2",
+    "name": "Johnny B. Whitsett",
+    "phone": "601-917-5636"
+   },
+   {
+    "district": "3",
+    "name": "Scott Johnson",
+    "phone": "601-562-5401"
+   },
+   {
+    "district": "4",
+    "name": "Lee McDonald",
+    "phone": "601-562-9848"
+   },
+   {
+    "district": "5",
+    "name": "Chris Cole",
+    "phone": "601-513-6060"
+   }
+  ]
+ },
+ "28071": {
+  "boardAddress": "P.O. Box 1240, Oxford 38655",
+  "boardPhone": "662-236-2717",
+  "commissionerLabel": "District",
+  "county": "Lafayette County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Faye Phillips"
+   },
+   {
+    "district": "2",
+    "name": "Lisa Barber"
+   },
+   {
+    "district": "3",
+    "name": "Lola M. Pearson"
+   },
+   {
+    "district": "4",
+    "name": "Laura Antonow"
+   },
+   {
+    "district": "5",
+    "name": "Tiffany Babb"
+   }
+  ],
+  "label": "District",
+  "printedPage": 81,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 41,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Brent Larson"
+   },
+   {
+    "district": "2",
+    "name": "John Morgan"
+   },
+   {
+    "district": "3",
+    "name": "Dale T. Gordon"
+   },
+   {
+    "district": "4",
+    "name": "Scott Allen"
+   },
+   {
+    "district": "5",
+    "name": "Greg Bynum"
+   }
+  ]
+ },
+ "28073": {
+  "boardAddress": "P.O. Box 1240, Purvis 39475",
+  "boardPhone": "601-794-8504",
+  "commissionerLabel": "District",
+  "county": "Lamar County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Misty Hood"
+   },
+   {
+    "district": "2",
+    "name": "Carrie Humphries"
+   },
+   {
+    "district": "3",
+    "name": "Melissa Love"
+   },
+   {
+    "district": "4",
+    "name": "Fleetwood Loustalot"
+   },
+   {
+    "district": "5",
+    "name": "Shirley Haddox"
+   }
+  ],
+  "label": "District",
+  "printedPage": 82,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 42,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Steve Lampton"
+   },
+   {
+    "district": "2",
+    "name": "Warren Byrd"
+   },
+   {
+    "district": "3",
+    "name": "Terry Bass"
+   },
+   {
+    "district": "4",
+    "name": "Mitch Brent"
+   },
+   {
+    "district": "5",
+    "name": "Dale Lucus"
+   }
+  ]
+ },
+ "28075": {
+  "boardAddress": "612 22nd Ave. S., Meridian 39301-6116",
+  "boardPhone": "601-482-9746",
+  "commissionerLabel": "District",
+  "county": "Lauderdale County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Chuck Overby",
+    "phone": "601-484-3981"
+   },
+   {
+    "district": "2",
+    "name": "Brenda Faye Harris",
+    "phone": "601-484-3980"
+   },
+   {
+    "district": "3",
+    "name": "Awana Daniels Simmons",
+    "phone": "601-482-9809"
+   },
+   {
+    "district": "4",
+    "name": "Gloria Dancy",
+    "phone": "601-482-9808"
+   },
+   {
+    "district": "5",
+    "name": "Russell Keene",
+    "phone": "601-484-3982"
+   }
+  ],
+  "label": "District",
+  "printedPage": 83,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 43,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Justin \"JJ\" Anders"
+   },
+   {
+    "district": "2",
+    "name": "Craig Houston"
+   },
+   {
+    "district": "3",
+    "name": "Josh Todd"
+   },
+   {
+    "district": "4",
+    "name": "Joe Norwood"
+   },
+   {
+    "district": "5",
+    "name": "Kyle Rutledge"
+   }
+  ]
+ },
+ "28077": {
+  "boardAddress": "P.O. Box 1160, Monticello 39654",
+  "boardPhone": "601-587-7351",
+  "commissionerLabel": "District",
+  "county": "Lawrence County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Angela Buchanan"
+   },
+   {
+    "district": "2",
+    "name": "Tori Martin"
+   },
+   {
+    "district": "3",
+    "name": "Shanta Killingsworth"
+   },
+   {
+    "district": "4",
+    "name": "Pam Melzer"
+   },
+   {
+    "district": "5",
+    "name": "Karen Hartwell"
+   }
+  ],
+  "label": "District",
+  "printedPage": 84,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 44,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Mikell Sandifer"
+   },
+   {
+    "district": "2",
+    "name": "Delane C. Ervin"
+   },
+   {
+    "district": "3",
+    "name": "Jimmy Glenn Ard"
+   },
+   {
+    "district": "4",
+    "name": "Stanely Luther Stephens"
+   },
+   {
+    "district": "5",
+    "name": "Kenny Pay Magee"
+   }
+  ]
+ },
+ "28079": {
+  "boardAddress": "P.O. Box 595, Carthage 39051",
+  "boardPhone": "601-267-8002",
+  "commissionerLabel": "District",
+  "county": "Leake County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Sandra Grundy"
+   },
+   {
+    "district": "2",
+    "name": "Donna Rawson"
+   },
+   {
+    "district": "3",
+    "name": "Margaret Smith"
+   },
+   {
+    "district": "4",
+    "name": "Linda Sanders"
+   },
+   {
+    "district": "5",
+    "name": "Rose Ann Weathers"
+   }
+  ],
+  "label": "District",
+  "printedPage": 85,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 45,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Kirby G. Nazary"
+   },
+   {
+    "district": "2",
+    "name": "Joe Andy Helton"
+   },
+   {
+    "district": "3",
+    "name": "Charlie Luckett"
+   },
+   {
+    "district": "4",
+    "name": "Michael Sherman"
+   },
+   {
+    "district": "5",
+    "name": "Chip Jones"
+   }
+  ]
+ },
+ "28081": {
+  "boardAddress": "P.O. Box 1785, Tupelo 38802",
+  "boardPhone": "662-432-2000",
+  "commissionerLabel": "District",
+  "county": "Lee County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Kristen Buse",
+    "phone": "662-432-2300"
+   },
+   {
+    "district": "2",
+    "name": "Shelia Lansdell",
+    "phone": "662-432-2300"
+   },
+   {
+    "district": "3",
+    "name": "Jamie Gunnells",
+    "phone": "662-432-2300"
+   },
+   {
+    "district": "4",
+    "name": "Jacque Grayson",
+    "phone": "662-432-2300"
+   },
+   {
+    "district": "5",
+    "name": "Jim Armstrong",
+    "phone": "662-432-2300"
+   }
+  ],
+  "label": "District",
+  "printedPage": 86,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 46,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "George Rutledge"
+   },
+   {
+    "district": "2",
+    "name": "Mike Smith"
+   },
+   {
+    "district": "3",
+    "name": "Wesley Webb"
+   },
+   {
+    "district": "4",
+    "name": "Tommie Lee Ivy"
+   },
+   {
+    "district": "5",
+    "name": "Barry Parker"
+   }
+  ]
+ },
+ "28083": {
+  "boardAddress": "P.O. Box 250, Greenwood 38935",
+  "boardPhone": "662-455-3904",
+  "commissionerLabel": "District",
+  "county": "Leflore County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Deveda J. Dillon"
+   },
+   {
+    "district": "2",
+    "name": "Emma F. Baker"
+   },
+   {
+    "district": "3",
+    "name": "Preston Ratliff, Jr."
+   },
+   {
+    "district": "4",
+    "name": "Cora Denise Lowe"
+   },
+   {
+    "district": "5",
+    "name": "Gloria White"
+   }
+  ],
+  "label": "District",
+  "printedPage": 87,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 47,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Sam Abraham"
+   },
+   {
+    "district": "2",
+    "name": "Reginald Moore"
+   },
+   {
+    "district": "3",
+    "name": "Anjuan Brown"
+   },
+   {
+    "district": "4",
+    "name": "Eric Mitchell"
+   },
+   {
+    "district": "5",
+    "name": "Robert L. Collins"
+   }
+  ]
+ },
+ "28085": {
+  "commissionerLabel": "District",
+  "county": "Lincoln County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Vernastine Bryd"
+   },
+   {
+    "district": "2",
+    "name": "Janice Haley"
+   },
+   {
+    "district": "3",
+    "name": "Missy Rhodus"
+   },
+   {
+    "district": "4",
+    "name": "Denise White"
+   },
+   {
+    "district": "5",
+    "name": "Jane James"
+   }
+  ],
+  "label": "District",
+  "printedPage": 88,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 48,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Jerry L. Wilson",
+    "phone": "601-833-7172"
+   },
+   {
+    "district": "2",
+    "name": "Keith Lewis",
+    "phone": "601-757-2037"
+   },
+   {
+    "district": "3",
+    "name": "John David Hart",
+    "phone": "601-835-8761"
+   },
+   {
+    "district": "4",
+    "name": "Eli Ferguson",
+    "phone": "601-757-7117"
+   },
+   {
+    "district": "5",
+    "name": "Doug Falvey",
+    "phone": "601-833-2680"
+   }
+  ]
+ },
+ "28087": {
+  "boardAddress": "P.O. Box 1364, Columbus 39703",
+  "boardPhone": "662-329-5844",
+  "commissionerLabel": "District",
+  "county": "Lowndes County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Donna Egger",
+    "phone": "662-329-5900"
+   },
+   {
+    "district": "2",
+    "name": "Jean N. Bigelow",
+    "phone": "662-329-5900"
+   },
+   {
+    "district": "3",
+    "name": "Yuvonda C. Youngblood",
+    "phone": "662-386-6484"
+   },
+   {
+    "district": "4",
+    "name": "Sherry Guyton Odneal",
+    "phone": "662-329-5900"
+   },
+   {
+    "district": "5",
+    "name": "Frances Olivia Stewart",
+    "phone": "662-329-5900"
+   }
+  ],
+  "label": "District",
+  "printedPage": 89,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 49,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Matt Furnari"
+   },
+   {
+    "district": "2",
+    "name": "Nicholas Hairston"
+   },
+   {
+    "district": "3",
+    "name": "Andy Williamson"
+   },
+   {
+    "district": "4",
+    "name": "Jeff A. Smith"
+   },
+   {
+    "district": "5",
+    "name": "Leroy Brooks"
+   }
+  ]
+ },
+ "28089": {
+  "boardAddress": "P.O. Box 608, Canton 39046",
+  "boardPhone": "601-855-5500",
+  "commissionerLabel": "District",
+  "county": "Madison County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Helen Carney",
+    "phone": "601-790-2541"
+   },
+   {
+    "district": "2",
+    "name": "Barbara Gross",
+    "phone": "601-790-2542"
+   },
+   {
+    "district": "3",
+    "name": "Pat Truesdale",
+    "phone": "601-790-2543"
+   },
+   {
+    "district": "4",
+    "name": "Anthony Denton",
+    "phone": "601-790-2544"
+   },
+   {
+    "district": "5",
+    "name": "Leroy Lacy",
+    "phone": "601-790-2545"
+   }
+  ],
+  "label": "District",
+  "printedPage": 90,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 50,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Casey Brannon"
+   },
+   {
+    "district": "2",
+    "name": "Trey Baxter"
+   },
+   {
+    "district": "3",
+    "name": "Gerald Steen"
+   },
+   {
+    "district": "4",
+    "name": "Karl M. Banks"
+   },
+   {
+    "district": "5",
+    "name": "Paul Griffin"
+   }
+  ]
+ },
+ "28091": {
+  "boardAddress": "215 Broad St., Columbia 39429",
+  "boardPhone": "601-736-7382",
+  "commissionerLabel": "District",
+  "county": "Marion County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Van Lowry, Jr."
+   },
+   {
+    "district": "2",
+    "name": "Mike Bennett"
+   },
+   {
+    "district": "3",
+    "name": "Dale Bracey"
+   },
+   {
+    "district": "4",
+    "name": "Stacy Reagan"
+   },
+   {
+    "district": "5",
+    "name": "Ada Hammond"
+   }
+  ],
+  "label": "District",
+  "printedPage": 91,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 51,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Eugene Green"
+   },
+   {
+    "district": "2",
+    "name": "John N. Moree"
+   },
+   {
+    "district": "3",
+    "name": "Tony Morgan"
+   },
+   {
+    "district": "4",
+    "name": "Raymon Rowell"
+   },
+   {
+    "district": "5",
+    "name": "Calvin Newsom, Sr."
+   }
+  ]
+ },
+ "28093": {
+  "boardAddress": "P.O. Box 219, Holly Springs 38635",
+  "boardPhone": "662-252-7903",
+  "commissionerLabel": "District",
+  "county": "Marshall County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Jamarr (Jack) Walton"
+   },
+   {
+    "district": "2",
+    "name": "Marsha Taylor"
+   },
+   {
+    "district": "3",
+    "name": "Amy Cole"
+   },
+   {
+    "district": "4",
+    "name": "Naomi Thomas Taylor"
+   },
+   {
+    "district": "5",
+    "name": "Betty Whaley"
+   }
+  ],
+  "label": "District",
+  "printedPage": 92,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 52,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Goston Glover",
+    "phone": "662-629-2940"
+   },
+   {
+    "district": "2",
+    "name": "Johnny Walker"
+   },
+   {
+    "district": "3",
+    "name": "Terry Rogers",
+    "phone": "662-216-7706"
+   },
+   {
+    "district": "4",
+    "name": "George Zinn III"
+   },
+   {
+    "district": "5",
+    "name": "Ronnie O’Neil Bennett"
+   }
+  ]
+ },
+ "28095": {
+  "boardAddress": "P.O. Box 578, Aberdeen 39730",
+  "boardPhone": "662-369-8143",
+  "commissionerLabel": "District",
+  "county": "Monroe County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Lowell Worthey"
+   },
+   {
+    "district": "2",
+    "name": "Jason D. Gallop, Jr."
+   },
+   {
+    "district": "3",
+    "name": "Andrew (Drew) Garvin"
+   },
+   {
+    "district": "4",
+    "name": "Earnestine Metcalf"
+   },
+   {
+    "district": "5",
+    "name": "Doris Beans Suggs"
+   }
+  ],
+  "label": "District",
+  "printedPage": 93,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 53,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Chuck Moffett"
+   },
+   {
+    "district": "2",
+    "name": "B.R. Richey"
+   },
+   {
+    "district": "3",
+    "name": "Rubel D. West"
+   },
+   {
+    "district": "4",
+    "name": "Fulton Ware"
+   },
+   {
+    "district": "5",
+    "name": "Hosea Bogan"
+   }
+  ]
+ },
+ "28097": {
+  "boardAddress": "P.O. Box 71, Winona 38967",
+  "boardPhone": "662-283-2333",
+  "commissionerLabel": "District",
+  "county": "Montgomery County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Melodie Corley"
+   },
+   {
+    "district": "2",
+    "name": "Jeanette Pyron"
+   },
+   {
+    "district": "3",
+    "name": "Tracy Campbell"
+   },
+   {
+    "district": "4",
+    "name": "Ken Holifield"
+   },
+   {
+    "district": "5",
+    "name": "Orman Knox"
+   }
+  ],
+  "label": "District",
+  "printedPage": 94,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 54,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Keith McGee"
+   },
+   {
+    "district": "2",
+    "name": "Edwin Taylor"
+   },
+   {
+    "district": "3",
+    "name": "Willie Townsend, Jr."
+   },
+   {
+    "district": "4",
+    "name": "James Ron Wood, Jr."
+   },
+   {
+    "district": "5",
+    "name": "Ronald White"
+   }
+  ]
+ },
+ "28099": {
+  "boardAddress": "401 E. Beacon St., Ste. 201, Philadelphia 39350",
+  "boardPhone": "601-656-6281",
+  "commissionerLabel": "District",
+  "county": "Neshoba County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Sherry Nance"
+   },
+   {
+    "district": "2",
+    "name": "Deaneen Whittle Savell"
+   },
+   {
+    "district": "3",
+    "name": "J. Dewayne Sharp"
+   },
+   {
+    "district": "4",
+    "name": "Melanie Barnett"
+   },
+   {
+    "district": "5",
+    "name": "Charlene Kirksey"
+   }
+  ],
+  "label": "District",
+  "printedPage": 95,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 55,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Mike Snow"
+   },
+   {
+    "district": "2",
+    "name": "Kevin Cumberland"
+   },
+   {
+    "district": "3",
+    "name": "Kinsey Smith"
+   },
+   {
+    "district": "4",
+    "name": "Kevin Wilcher"
+   },
+   {
+    "district": "5",
+    "name": "Obbie Riley"
+   }
+  ]
+ },
+ "28101": {
+  "boardAddress": "P.O. Box 68, Decatur 39327",
+  "boardPhone": "601-635-4150",
+  "commissionerLabel": "District",
+  "county": "Newton County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Nancy Darlene Kidd-Smith"
+   },
+   {
+    "district": "2",
+    "name": "Cindy Alexander"
+   },
+   {
+    "district": "3",
+    "name": "Lesia Taylor"
+   },
+   {
+    "district": "4",
+    "name": "Amy Hollingsworth"
+   },
+   {
+    "district": "5",
+    "name": "Debby Walker"
+   }
+  ],
+  "label": "District",
+  "printedPage": 96,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 56,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Terry Frazier"
+   },
+   {
+    "district": "2",
+    "name": "Jeffery Harrison"
+   },
+   {
+    "district": "3",
+    "name": "Terry Vance"
+   },
+   {
+    "district": "4",
+    "name": "Charles Godwin"
+   },
+   {
+    "district": "5",
+    "name": "Aaron Clark"
+   }
+  ]
+ },
+ "28103": {
+  "boardAddress": "P.O. Box 147, Macon 39341",
+  "boardPhone": "662-726-5181",
+  "commissionerLabel": "District",
+  "county": "Noxubee County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Sylvester Tate"
+   },
+   {
+    "district": "2",
+    "name": "Teretha Rena Conner"
+   },
+   {
+    "district": "3",
+    "name": "Janice Harlan"
+   },
+   {
+    "district": "4",
+    "name": "Nicole Stewart"
+   },
+   {
+    "district": "5",
+    "name": "Margaret Baker"
+   }
+  ],
+  "label": "District",
+  "printedPage": 97,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 57,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Bryan Schimmel"
+   },
+   {
+    "district": "2",
+    "name": "LC Clemens"
+   },
+   {
+    "district": "3",
+    "name": "Lavelle P. Rice"
+   },
+   {
+    "district": "4",
+    "name": "Christopher Mayberry"
+   },
+   {
+    "district": "5",
+    "name": "Bruce Bernard Brooks"
+   }
+  ]
+ },
+ "28105": {
+  "boardAddress": "P.O. Box 80285, Starkville 39760",
+  "boardPhone": "662-323-1520",
+  "commissionerLabel": "District",
+  "county": "Oktibbeha County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Sheryl Elmore"
+   },
+   {
+    "district": "2",
+    "name": "Sissy Smitherman"
+   },
+   {
+    "district": "3",
+    "name": "Dennis Daniels"
+   },
+   {
+    "district": "4",
+    "name": "Dave Holley"
+   },
+   {
+    "district": "5",
+    "name": "Ernest Rogers, Jr."
+   }
+  ],
+  "label": "District",
+  "printedPage": 98,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 58,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Ben Carver"
+   },
+   {
+    "district": "2",
+    "name": "Orlando Trainer"
+   },
+   {
+    "district": "3",
+    "name": "Marvell Howard"
+   },
+   {
+    "district": "4",
+    "name": "Patricia \"Pattie\" Little"
+   },
+   {
+    "district": "5",
+    "name": "Joe Williams"
+   }
+  ]
+ },
+ "28107": {
+  "boardAddress": "P.O. Box 807, Batesville 38606",
+  "boardPhone": "662-563-6200",
+  "commissionerLabel": "District",
+  "county": "Panola County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Dorothy Kerney Wilbourn"
+   },
+   {
+    "district": "2",
+    "name": "Brenda Rucker"
+   },
+   {
+    "district": "3",
+    "name": "Wayne Belk"
+   },
+   {
+    "district": "4",
+    "name": "Wanda Lawrence Carmichael"
+   },
+   {
+    "district": "5",
+    "name": "Kaye Smythe"
+   }
+  ],
+  "label": "District",
+  "printedPage": 99,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 59,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Fred Ira Butts"
+   },
+   {
+    "district": "2",
+    "name": "Earl L. Burdette",
+    "phone": "662-703-0102"
+   },
+   {
+    "district": "3",
+    "name": "John F. Thomas"
+   },
+   {
+    "district": "4",
+    "name": "Chad Weaver"
+   },
+   {
+    "district": "5",
+    "name": "Cole Flint"
+   }
+  ]
+ },
+ "28109": {
+  "boardAddress": "P.O. Box 569, Poplarville 39470",
+  "boardPhone": "601-403-2302",
+  "commissionerLabel": "District",
+  "county": "Pearl River County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Katrina Brown"
+   },
+   {
+    "district": "2",
+    "name": "Jamie Garner"
+   },
+   {
+    "district": "3",
+    "name": "Tommy Breland"
+   },
+   {
+    "district": "4",
+    "name": "Reggie W. Hanberry"
+   },
+   {
+    "district": "5",
+    "name": "Alana Campo"
+   }
+  ],
+  "label": "District",
+  "printedPage": 100,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 60,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Donald Hart"
+   },
+   {
+    "district": "2",
+    "name": "Malcolm Perry"
+   },
+   {
+    "district": "3",
+    "name": "Cruz Russell"
+   },
+   {
+    "district": "4",
+    "name": "Jason Spence"
+   },
+   {
+    "district": "5",
+    "name": "Bryce Lott"
+   }
+  ]
+ },
+ "28111": {
+  "boardAddress": "P.O. Box 345, New Augusta 39462",
+  "boardPhone": "601-964-8370",
+  "commissionerLabel": "District",
+  "county": "Perry County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Sherry Dean Hartfield"
+   },
+   {
+    "district": "2",
+    "name": "Diane Lillian Carter"
+   },
+   {
+    "district": "3",
+    "name": "Janet B. Mayo"
+   },
+   {
+    "district": "4",
+    "name": "Dianne JefcoatTossy"
+   },
+   {
+    "district": "5",
+    "name": "Dianna Cooley Clark"
+   }
+  ],
+  "label": "District",
+  "printedPage": 101,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 61,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Robert Myers"
+   },
+   {
+    "district": "2",
+    "name": "Kevin Shows"
+   },
+   {
+    "district": "3",
+    "name": "Tim Wise"
+   },
+   {
+    "district": "4",
+    "name": "Richard Q. Lott"
+   },
+   {
+    "district": "5",
+    "name": "Cody Walters"
+   }
+  ]
+ },
+ "28113": {
+  "boardAddress": "P.O. Box 431, Magnolia 39652",
+  "boardPhone": "601-783-6569",
+  "commissionerLabel": "District",
+  "county": "Pike County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Jemika Bates"
+   },
+   {
+    "district": "2",
+    "name": "Alicia Forrest"
+   },
+   {
+    "district": "3",
+    "name": "Faye Greer"
+   },
+   {
+    "district": "4",
+    "name": "Julie E. Etheridge"
+   },
+   {
+    "district": "5",
+    "name": "Stacee Ott"
+   }
+  ],
+  "label": "District",
+  "printedPage": 102,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 62,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Justin Lofton"
+   },
+   {
+    "district": "2",
+    "name": "Samuel C. Hall"
+   },
+   {
+    "district": "3",
+    "name": "Robert J. Accardo"
+   },
+   {
+    "district": "4",
+    "name": "Jake Gazzo"
+   },
+   {
+    "district": "5",
+    "name": "Lee Fortenberry"
+   }
+  ]
+ },
+ "28115": {
+  "boardAddress": "P.O. Box 209, Pontotoc 38863",
+  "boardPhone": "662-489-3900",
+  "commissionerLabel": "District",
+  "county": "Pontotoc County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Donna Shoemaker"
+   },
+   {
+    "district": "2",
+    "name": "Nicky Moore"
+   },
+   {
+    "district": "3",
+    "name": "John Logan"
+   },
+   {
+    "district": "4",
+    "name": "Shirley Dillard"
+   },
+   {
+    "district": "5",
+    "name": "Larry E. Poe"
+   }
+  ],
+  "label": "District",
+  "printedPage": 103,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 63,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Beny Moorman"
+   },
+   {
+    "district": "2",
+    "name": "Mike McGregor"
+   },
+   {
+    "district": "3",
+    "name": "Gary Washington"
+   },
+   {
+    "district": "4",
+    "name": "Ernie Wright"
+   },
+   {
+    "district": "5",
+    "name": "Randy Ray"
+   }
+  ]
+ },
+ "28117": {
+  "boardAddress": "P.O. Box 477, Booneville 38829",
+  "boardPhone": "662-728-4610",
+  "commissionerLabel": "District",
+  "county": "Prentiss County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Barbara M. Shackleford"
+   },
+   {
+    "district": "2",
+    "name": "Joe D. Eaton"
+   },
+   {
+    "district": "3",
+    "name": "Cindi Burns"
+   },
+   {
+    "district": "4",
+    "name": "Kay Depoyster Crow"
+   },
+   {
+    "district": "5",
+    "name": "Christine Grove"
+   }
+  ],
+  "label": "District",
+  "printedPage": 104,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 64,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Rick Owen"
+   },
+   {
+    "district": "2",
+    "name": "Richard Tollison"
+   },
+   {
+    "district": "3",
+    "name": "Kyle Murphy"
+   },
+   {
+    "district": "4",
+    "name": "Robert W. Botts"
+   },
+   {
+    "district": "5",
+    "name": "Edward Smith"
+   }
+  ]
+ },
+ "28119": {
+  "boardAddress": "220 Chestnut St., Ste. 2, Marks 38646",
+  "boardPhone": "662-326-2661",
+  "commissionerLabel": "District",
+  "county": "Quitman County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Palestine Presley Flood"
+   },
+   {
+    "district": "2",
+    "name": "Terry L. Williams, Sr."
+   },
+   {
+    "district": "3",
+    "name": "Taylor Flowers"
+   },
+   {
+    "district": "4",
+    "name": "Dwight A. Barfield"
+   },
+   {
+    "district": "5",
+    "name": "Lynette W. Bland"
+   }
+  ],
+  "label": "District",
+  "printedPage": 105,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 65,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Sheridan Boyd"
+   },
+   {
+    "district": "2",
+    "name": "Greg Thomas"
+   },
+   {
+    "district": "3",
+    "name": "Johnny Tullos, Jr."
+   },
+   {
+    "district": "4",
+    "name": "Manuel Killebrew"
+   },
+   {
+    "district": "5",
+    "name": "Jeremy Moore"
+   }
+  ]
+ },
+ "28121": {
+  "boardAddress": "211 E. Government St., Ste. A, Brandon 39042",
+  "boardPhone": "601-825-1475",
+  "commissionerLabel": "District",
+  "county": "Rankin County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Kelly Golf Wedgeworth"
+   },
+   {
+    "district": "2",
+    "name": "Andrew Sorrentino"
+   },
+   {
+    "district": "3",
+    "name": "Tonya Duke Rivers"
+   },
+   {
+    "district": "4",
+    "name": "Madison Hill"
+   },
+   {
+    "district": "5",
+    "name": "Trey Fontaine"
+   }
+  ],
+  "label": "District",
+  "printedPage": 106,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 66,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Sid Scarbrough"
+   },
+   {
+    "district": "2",
+    "name": "Phil Schoggens"
+   },
+   {
+    "district": "3",
+    "name": "Brad Calhoun"
+   },
+   {
+    "district": "4",
+    "name": "Steve Gaines"
+   },
+   {
+    "district": "5",
+    "name": "Jay Bishop"
+   }
+  ]
+ },
+ "28123": {
+  "boardAddress": "P.O. Box 630, Forest 39074",
+  "boardPhone": "601-469-1926",
+  "commissionerLabel": "District",
+  "county": "Scott County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Sherrell Ann Brown"
+   },
+   {
+    "district": "2",
+    "name": "Lois M. Gray"
+   },
+   {
+    "district": "3",
+    "name": "Virginia R. Hannah"
+   },
+   {
+    "district": "4",
+    "name": "Bettye Nelson Wallace"
+   },
+   {
+    "district": "5",
+    "name": "Delie Shepard"
+   }
+  ],
+  "label": "Beat",
+  "printedPage": 107,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 67,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Michael Robinson"
+   },
+   {
+    "district": "2",
+    "name": "Joe McGee"
+   },
+   {
+    "district": "3",
+    "name": "Steven Crotwell"
+   },
+   {
+    "district": "4",
+    "name": "Johnny P. Harrell"
+   },
+   {
+    "district": "5",
+    "name": "Tommy A. Harrison"
+   }
+  ]
+ },
+ "28125": {
+  "boardAddress": "P.O. Box 218, Rolling Fork 39159",
+  "boardPhone": "662-873-2755",
+  "commissionerLabel": "District",
+  "county": "Sharkey County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Bertha Lindsey"
+   },
+   {
+    "district": "2",
+    "name": "Vickey Seaton"
+   },
+   {
+    "district": "3",
+    "name": "Dorothy K. Pearson"
+   },
+   {
+    "district": "4",
+    "name": "Paul A. Alford"
+   },
+   {
+    "district": "5",
+    "name": "Linda Steveson"
+   }
+  ],
+  "label": "District",
+  "printedPage": 108,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 68,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Dean Hatcher"
+   },
+   {
+    "district": "2",
+    "name": "Leroy Smith, Jr."
+   },
+   {
+    "district": "3",
+    "name": "Brandon Anderson"
+   },
+   {
+    "district": "4",
+    "name": "Jessie Mason"
+   },
+   {
+    "district": "5",
+    "name": "Willie Smith"
+   }
+  ]
+ },
+ "28127": {
+  "boardAddress": "P.O. Box 308, Mendenhall 39114",
+  "boardPhone": "601-847-1418",
+  "commissionerLabel": "District",
+  "county": "Simpson County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Calvin Edwards"
+   },
+   {
+    "district": "2",
+    "name": "Eugene Blair"
+   },
+   {
+    "district": "3",
+    "name": "Donna Magee"
+   },
+   {
+    "district": "4",
+    "name": "Diane McPhail"
+   },
+   {
+    "district": "5",
+    "name": "Wanda Bridges"
+   }
+  ],
+  "label": "District",
+  "printedPage": 109,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 69,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "G. Mitchell Chatman"
+   },
+   {
+    "district": "2",
+    "name": "Danny Craft"
+   },
+   {
+    "district": "3",
+    "name": "Wayne Womack"
+   },
+   {
+    "district": "4",
+    "name": "Donny Welch"
+   },
+   {
+    "district": "5",
+    "name": "Charlie Westmoreland"
+   }
+  ]
+ },
+ "28129": {
+  "boardAddress": "P.O. Box 160, Raleigh 39153",
+  "boardPhone": "601-782-4000",
+  "commissionerLabel": "District",
+  "county": "Smith County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Willie Grace Myatt"
+   },
+   {
+    "district": "2",
+    "name": "Perry E. Duckworth"
+   },
+   {
+    "district": "3",
+    "name": "Sherri H. Darden"
+   },
+   {
+    "district": "4",
+    "name": "Jimmy Burns"
+   },
+   {
+    "district": "5",
+    "name": "Glendell O. Webb"
+   }
+  ],
+  "label": "District",
+  "printedPage": 110,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 70,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Jerry Fields"
+   },
+   {
+    "district": "2",
+    "name": "Darron Keyes"
+   },
+   {
+    "district": "3",
+    "name": "Benjie Ford"
+   },
+   {
+    "district": "4",
+    "name": "Danny Arender"
+   },
+   {
+    "district": "5",
+    "name": "Howard Hammons"
+   }
+  ]
+ },
+ "28131": {
+  "boardAddress": "P.O. Drawer 7, Wiggins 39577",
+  "boardPhone": "601-928-5266",
+  "commissionerLabel": "District",
+  "county": "Stone County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Kathi Hilburn"
+   },
+   {
+    "district": "2",
+    "name": "Clifton D. Anderson"
+   },
+   {
+    "district": "3",
+    "name": "Joey Bentz"
+   },
+   {
+    "district": "4",
+    "name": "Penny Naramore"
+   },
+   {
+    "district": "5",
+    "name": "Cindy Breland"
+   }
+  ],
+  "label": "District",
+  "printedPage": 111,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 71,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Jimmy Spring"
+   },
+   {
+    "district": "2",
+    "name": "Daniel Harris"
+   },
+   {
+    "district": "3",
+    "name": "Stevie Lee"
+   },
+   {
+    "district": "4",
+    "name": "Ronald Howard"
+   },
+   {
+    "district": "5",
+    "name": "Nathan Joel Bond"
+   }
+  ]
+ },
+ "28133": {
+  "commissionerLabel": "District",
+  "county": "Sunflower County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Terosa Bradley"
+   },
+   {
+    "district": "2",
+    "name": "Porchia Anthony"
+   },
+   {
+    "district": "3",
+    "name": "Margaret Rushing"
+   },
+   {
+    "district": "4",
+    "name": "David Ruffin"
+   },
+   {
+    "district": "5",
+    "name": "Shirley Meeks"
+   }
+  ],
+  "label": "District",
+  "printedPage": 112,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 72,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Glenn Donald",
+    "phone": "662-303-8877"
+   },
+   {
+    "district": "2",
+    "name": "Riley Rice",
+    "phone": "662-303-5324"
+   },
+   {
+    "district": "3",
+    "vacant": true
+   },
+   {
+    "district": "4",
+    "name": "Anthony Clark",
+    "phone": "662-303-9108"
+   },
+   {
+    "district": "5",
+    "name": "Gloria Dickerson",
+    "phone": "662-303-9049"
+   }
+  ]
+ },
+ "28135": {
+  "boardAddress": "P.O. Box 350, Charleston 38921",
+  "boardPhone": "662-647-5551",
+  "commissionerLabel": "District",
+  "county": "Tallahatchie County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Margaret McIntyre Simmons"
+   },
+   {
+    "district": "2",
+    "name": "Dennis Brown"
+   },
+   {
+    "district": "3",
+    "name": "Yolanda D. Cotton"
+   },
+   {
+    "district": "4",
+    "name": "LaTrenda C. (Trina) Bounds"
+   },
+   {
+    "district": "5",
+    "name": "Charles Huddleston"
+   }
+  ],
+  "label": "District",
+  "printedPage": 113,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 73,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Kenneth (Buck) Havens"
+   },
+   {
+    "district": "2",
+    "name": "Johnny Goodwin"
+   },
+   {
+    "district": "3",
+    "name": "Larry Cole"
+   },
+   {
+    "district": "4",
+    "name": "Marcus Echols"
+   },
+   {
+    "district": "5",
+    "name": "Eddie J. Meeks"
+   }
+  ]
+ },
+ "28137": {
+  "boardAddress": "201 Ward St., Senatobia 38668",
+  "boardPhone": "662-562-5661",
+  "commissionerLabel": "District",
+  "county": "Tate County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Dolores B. Wooten"
+   },
+   {
+    "district": "2",
+    "name": "Tammy F. Johnston"
+   },
+   {
+    "district": "3",
+    "name": "Joycelynn S. Dowl"
+   },
+   {
+    "district": "4",
+    "name": "Edith S. Floate"
+   },
+   {
+    "district": "5",
+    "name": "Ellis Blount"
+   }
+  ],
+  "label": "District",
+  "printedPage": 114,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 74,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Leigh Ann Darby",
+    "phone": "662-562-0013"
+   },
+   {
+    "district": "2",
+    "name": "Ron Williams"
+   },
+   {
+    "district": "3",
+    "name": "Tony M. Sandridge"
+   },
+   {
+    "district": "4",
+    "name": "Zander Billingsley"
+   },
+   {
+    "district": "5",
+    "name": "George W. Stepp"
+   }
+  ]
+ },
+ "28139": {
+  "boardAddress": "101 E. Spring St., Ripley 38663",
+  "boardPhone": "662-837-3655",
+  "commissionerLabel": "District",
+  "county": "Tippah County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Randale Keith Hall"
+   },
+   {
+    "district": "2",
+    "name": "Larry Nabors"
+   },
+   {
+    "district": "3",
+    "name": "Bruce Alt"
+   },
+   {
+    "district": "4",
+    "name": "Mary Hodges"
+   },
+   {
+    "district": "5",
+    "name": "Jimmy Benefield"
+   }
+  ],
+  "label": "District",
+  "printedPage": 115,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 75,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Jimmy W. Gunn"
+   },
+   {
+    "district": "2",
+    "name": "Don Grifin"
+   },
+   {
+    "district": "3",
+    "name": "Mike Graves"
+   },
+   {
+    "district": "4",
+    "name": "Glen Michael"
+   },
+   {
+    "district": "5",
+    "name": "Chad Newby"
+   }
+  ]
+ },
+ "28141": {
+  "boardAddress": "1008 Battleground Dr., Iuka 38852",
+  "boardPhone": "662-423-7032",
+  "commissionerLabel": "District",
+  "county": "Tishomingo County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Robert Dexter"
+   },
+   {
+    "district": "2",
+    "name": "Susan Emmons"
+   },
+   {
+    "district": "3",
+    "name": "Mellissa Henson"
+   },
+   {
+    "district": "4",
+    "name": "Kerri Mitchel"
+   },
+   {
+    "district": "5",
+    "name": "Nancy Collier"
+   }
+  ],
+  "label": "District",
+  "printedPage": 116,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 76,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Eric Booker"
+   },
+   {
+    "district": "2",
+    "name": "Nicky McRae"
+   },
+   {
+    "district": "3",
+    "name": "Michael Busby"
+   },
+   {
+    "district": "4",
+    "name": "Jeff Holt"
+   },
+   {
+    "district": "5",
+    "name": "Greg Collier"
+   }
+  ]
+ },
+ "28143": {
+  "boardAddress": "P.O. Box 217, Tunica 38676",
+  "boardPhone": "662-363-1465",
+  "commissionerLabel": "District",
+  "county": "Tunica County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Jalen Dunn"
+   },
+   {
+    "district": "2",
+    "name": "Evelyn Paige"
+   },
+   {
+    "district": "3",
+    "name": "Virginia Tenia Fullilove"
+   },
+   {
+    "district": "4",
+    "name": "Marilyn Gordon"
+   },
+   {
+    "district": "5",
+    "name": "Lela Powers"
+   }
+  ],
+  "label": "District",
+  "printedPage": 117,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 77,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "James Earl Dunn",
+    "phone": "662-363-1304"
+   },
+   {
+    "district": "2",
+    "name": "Michael E. Johnson, Jr."
+   },
+   {
+    "district": "3",
+    "name": "Phillis Williams"
+   },
+   {
+    "district": "4",
+    "name": "Henry Nickson, Jr."
+   },
+   {
+    "district": "5",
+    "name": "McKinley Daley"
+   }
+  ]
+ },
+ "28145": {
+  "boardAddress": "P.O. Box 847, New Albany 38652",
+  "boardPhone": "662-534-1902",
+  "commissionerLabel": "District",
+  "county": "Union County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Donald Schuman"
+   },
+   {
+    "district": "2",
+    "name": "Wanona Lea Jumper"
+   },
+   {
+    "district": "3",
+    "name": "Mike Conway"
+   },
+   {
+    "district": "4",
+    "name": "T. Michael (Mike) Beam"
+   },
+   {
+    "district": "5",
+    "name": "Wayne Wilhite"
+   }
+  ],
+  "label": "District",
+  "printedPage": 118,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 78,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Sam Taylor"
+   },
+   {
+    "district": "2",
+    "name": "Chad Coffey"
+   },
+   {
+    "district": "3",
+    "name": "C.J. Bright"
+   },
+   {
+    "district": "4",
+    "name": "Randy Owen"
+   },
+   {
+    "district": "5",
+    "name": "Steve Watson"
+   }
+  ]
+ },
+ "28147": {
+  "boardAddress": "P.O. Box 351, Tylertown 39667",
+  "boardPhone": "601-876-4947",
+  "commissionerLabel": "District",
+  "county": "Walthall County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Beth Cowart"
+   },
+   {
+    "district": "2",
+    "name": "Ricky Dowell"
+   },
+   {
+    "district": "3",
+    "name": "William Ratliff"
+   },
+   {
+    "district": "4",
+    "name": "Christy Alford Planche"
+   },
+   {
+    "district": "5",
+    "name": "Paulette Hammond Jackson"
+   }
+  ],
+  "label": "District",
+  "printedPage": 119,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 79,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Roger Ginn"
+   },
+   {
+    "district": "2",
+    "name": "Sherman Smith"
+   },
+   {
+    "district": "3",
+    "name": "Douglas Popwell"
+   },
+   {
+    "district": "4",
+    "name": "Bryan \"Bird\" Martin"
+   },
+   {
+    "district": "5",
+    "name": "Billie Bridges"
+   }
+  ]
+ },
+ "28149": {
+  "boardAddress": "913 Jackson St., Vicksburg 39183",
+  "boardPhone": "601-634-8073",
+  "commissionerLabel": "District",
+  "county": "Warren County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "James Harper"
+   },
+   {
+    "district": "2",
+    "name": "Bobbie Bingham Morrow"
+   },
+   {
+    "district": "3",
+    "name": "Elva A. Smith"
+   },
+   {
+    "district": "4",
+    "name": "Sara Carlson Dionne"
+   },
+   {
+    "district": "5",
+    "name": "Debra Breland Grayson"
+   }
+  ],
+  "label": "District",
+  "printedPage": 120,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 80,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Edward Herring"
+   },
+   {
+    "district": "2",
+    "name": "William H. Banks, Jr."
+   },
+   {
+    "district": "3",
+    "name": "Shawn Jackson"
+   },
+   {
+    "district": "4",
+    "name": "John Carlisle"
+   },
+   {
+    "district": "5",
+    "name": "Kelle Banks Barfield"
+   }
+  ]
+ },
+ "28151": {
+  "boardAddress": "P.O. Box 158, Greenville 38702",
+  "boardPhone": "662-378-8355",
+  "commissionerLabel": "District",
+  "county": "Washington County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Jacqueline Thompson"
+   },
+   {
+    "district": "2",
+    "name": "Sandra L. Reed"
+   },
+   {
+    "district": "3",
+    "name": "Rosie Sturdevant"
+   },
+   {
+    "district": "4",
+    "name": "Sadie Seard-Sheldon"
+   },
+   {
+    "district": "5",
+    "name": "Naomi Curtis"
+   }
+  ],
+  "label": "District",
+  "printedPage": 121,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 81,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Lee Gordon"
+   },
+   {
+    "district": "2",
+    "name": "Tommy Benson III"
+   },
+   {
+    "district": "3",
+    "name": "Carl McGee"
+   },
+   {
+    "district": "4",
+    "name": "Mala U. Brooks"
+   },
+   {
+    "district": "5",
+    "name": "Jerry Redmond, Sr."
+   }
+  ]
+ },
+ "28153": {
+  "boardAddress": "609 Azalea Dr., Waynesboro 39367",
+  "boardPhone": "601-735-3414",
+  "commissionerLabel": "District",
+  "county": "Wayne County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Katrina Bender"
+   },
+   {
+    "district": "2",
+    "name": "Dennis McRae"
+   },
+   {
+    "district": "3",
+    "name": "Kathy McInnis Odom"
+   },
+   {
+    "district": "4",
+    "name": "Avangelia Davis"
+   },
+   {
+    "district": "5",
+    "name": "Imogene Walley"
+   }
+  ],
+  "label": "District",
+  "printedPage": 122,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 82,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Hal Hayes"
+   },
+   {
+    "district": "2",
+    "name": "Joe Dyess"
+   },
+   {
+    "district": "3",
+    "name": "Andrew Chapman"
+   },
+   {
+    "district": "4",
+    "name": "Keith Clay"
+   },
+   {
+    "district": "5",
+    "name": "Henry J. Cooley"
+   }
+  ]
+ },
+ "28155": {
+  "boardAddress": "6333 MS Hwy. 9, Ste. 123, Walthall 39771",
+  "commissionerLabel": "District",
+  "county": "Webster County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Pauline Quinn"
+   },
+   {
+    "district": "2",
+    "name": "Stephanie Langston"
+   },
+   {
+    "district": "3",
+    "name": "Cathy Chandler"
+   },
+   {
+    "district": "4",
+    "name": "Annie Heard"
+   },
+   {
+    "district": "5",
+    "name": "Dianne Wright"
+   }
+  ],
+  "label": "District",
+  "printedPage": 123,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 83,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Curtis C. Morris",
+    "phone": "662-552-0168"
+   },
+   {
+    "district": "2",
+    "name": "Patrick Scott Cummings",
+    "phone": "662-552-2290"
+   },
+   {
+    "district": "3",
+    "name": "Randy Rico",
+    "phone": "662-552-6134"
+   },
+   {
+    "district": "4",
+    "name": "William P. Crowley",
+    "phone": "662-552-2627"
+   },
+   {
+    "district": "5",
+    "name": "Doug Burgess",
+    "phone": "662-418-5742"
+   }
+  ]
+ },
+ "28157": {
+  "boardAddress": "P.O. Box 1284, Woodville 39669",
+  "commissionerLabel": "District",
+  "county": "Wilkinson County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Vicie Rogers"
+   },
+   {
+    "district": "2",
+    "name": "Tracey Smith-Ferguson"
+   },
+   {
+    "district": "3",
+    "name": "Monique Moore-Arbuthnot"
+   },
+   {
+    "district": "4",
+    "name": "Edna Roy Harvey"
+   },
+   {
+    "district": "5",
+    "name": "Carla Rowe"
+   }
+  ],
+  "label": "District",
+  "printedPage": 124,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 84,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Earnest Newman, Jr.",
+    "phone": "601-645-2096"
+   },
+   {
+    "district": "2",
+    "name": "Marvin Tolliver",
+    "phone": "601-888-0242"
+   },
+   {
+    "district": "3",
+    "name": "Terry Sterling",
+    "phone": "601-645-2888"
+   },
+   {
+    "district": "4",
+    "name": "Kenyon Jackson",
+    "phone": "601-888-0452"
+   },
+   {
+    "district": "5",
+    "name": "Bobby Wayne Johnson, Jr.",
+    "phone": "601-639-6385"
+   }
+  ]
+ },
+ "28159": {
+  "boardAddress": "P.O. Drawer 69, Louisville 39339",
+  "boardPhone": "662-773-7170",
+  "commissionerLabel": "District",
+  "county": "Winston County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Tracy McCully"
+   },
+   {
+    "district": "2",
+    "name": "Bryon Foster"
+   },
+   {
+    "district": "3",
+    "name": "Dean Miller"
+   },
+   {
+    "district": "4",
+    "name": "Mattie Cooper"
+   },
+   {
+    "district": "5",
+    "name": "Julia Lovorn"
+   }
+  ],
+  "label": "District",
+  "printedPage": 125,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 85,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "James L. (Burr) Warner, Jr."
+   },
+   {
+    "district": "2",
+    "name": "Luke Lamar Parkes"
+   },
+   {
+    "district": "3",
+    "name": "Ronnie Flake"
+   },
+   {
+    "district": "4",
+    "name": "Floyd Miller"
+   },
+   {
+    "district": "5",
+    "name": "Charlie Wilkes"
+   }
+  ]
+ },
+ "28161": {
+  "commissionerLabel": "District",
+  "county": "Yalobusha County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Colleen Craven"
+   },
+   {
+    "district": "2",
+    "name": "Missy Kimzey"
+   },
+   {
+    "district": "3",
+    "name": "Brad Willingham"
+   },
+   {
+    "district": "4",
+    "name": "Gerald Booker"
+   },
+   {
+    "district": "5",
+    "name": "Vivian Simmons"
+   }
+  ],
+  "label": "District",
+  "printedPage": 126,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 86,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Cayce Washington",
+    "phone": "662-473-6797"
+   },
+   {
+    "district": "2",
+    "name": "Kenneth E. Rogers",
+    "phone": "662-473-6795"
+   },
+   {
+    "district": "3",
+    "name": "Kenny Harmon",
+    "phone": "662-457-1483"
+   },
+   {
+    "district": "4",
+    "name": "Eddie B. Harris",
+    "phone": "662-809-7010"
+   },
+   {
+    "district": "5",
+    "name": "Gaylon Gray",
+    "phone": "662-473-8324"
+   }
+  ]
+ },
+ "28163": {
+  "boardAddress": "P.O. Box 1106, Yazoo City 39194",
+  "boardPhone": "662-746-8668",
+  "commissionerLabel": "District",
+  "county": "Yazoo County",
+  "electionCommissioners": [
+   {
+    "district": "1",
+    "name": "Thad Hood"
+   },
+   {
+    "district": "2",
+    "name": "Chilah Boddy"
+   },
+   {
+    "district": "3",
+    "name": "Gretta Winters"
+   },
+   {
+    "district": "4",
+    "name": "Lynn McCallister III"
+   },
+   {
+    "district": "5",
+    "name": "Claude Collum"
+   }
+  ],
+  "label": "District",
+  "printedPage": 127,
+  "published": "2026-05-06",
+  "source": "the Mississippi Secretary of State's County Offices and Directory, 2026 edition",
+  "sourcePage": 87,
+  "sourceUrl": "https://www.sos.ms.gov/sites/default/files/publications/County%20Offices%20and%20Directory_2026.pdf",
+  "supervisors": [
+   {
+    "district": "1",
+    "name": "Danny Moore, Jr."
+   },
+   {
+    "district": "2",
+    "name": "David Berry"
+   },
+   {
+    "district": "3",
+    "name": "Willie Wright"
+   },
+   {
+    "district": "4",
+    "name": "David Peyton"
+   },
+   {
+    "district": "5",
+    "name": "Joseph Thomas, Jr."
+   }
+  ]
+ }
+}

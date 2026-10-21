@@ -29,7 +29,7 @@
 // template starts at -v1: the app shell, icons, and the starter data
 // files bootstrap_state.py builds.)
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-ar-shell-v2";
+const CACHE_NAME = "districtry-ar-shell-v3";
 
 const SHELL_URLS = [
   "./",
@@ -50,6 +50,13 @@ const GEOMETRY_URLS = [
   "./data/app/ar-senate-districts.json",
   "./data/app/ar-house-districts.json",
   "./data/app/ar-quorum-court-districts.json",
+  "./data/app/ar-townships.json",
+  "./data/app/ar-precincts.json",
+  "./data/app/ar-school-board-zones.json",
+  "./data/app/ar-fire-districts.json",
+  "./data/app/ar-city-wards.json",
+  "./data/app/ar-appeals-districts.json",
+  "./data/app/ar-judicial-circuits.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
@@ -60,6 +67,7 @@ const ROSTER_URLS = [
   "./data/app/ar-senate-members.json",
   "./data/app/ar-house-members.json",
   "./data/app/ar-county-officials.json",
+  "./data/app/ar-city-councils.json",
   "./data/app/coverage-gaps.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */

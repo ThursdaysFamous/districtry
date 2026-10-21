@@ -31,6 +31,9 @@
     "clerk": "Janel Belle Isle",
     "municipality": "Black Brook",
     "phone": "651-245-8929",
+    "phonesExtra": [
+      "715-263-2932"
+    ],
     "recordUpdated": "2023-11-02",
     "url": "https://www.blackbrookwi.gov/"
   },
@@ -52,6 +55,9 @@
     "clerk": "Tracy Lablanc",
     "municipality": "Clayton",
     "phone": "715-948-2564",
+    "phonesExtra": [
+      "715-948-2036"
+    ],
     "recordUpdated": "2023-11-02",
     "url": "http://townofclaytonwi.com"
   },
@@ -73,6 +79,9 @@
     "clerk": "Steven Swanson",
     "municipality": "Farmington",
     "phone": "715-294-2370",
+    "phonesExtra": [
+      "715-220-7380"
+    ],
     "recordUpdated": "2025-05-28",
     "url": "https://www.farmingtontown.com/"
   },
@@ -100,6 +109,9 @@
     "clerk": "Debra Tretsven",
     "municipality": "Laketown",
     "phone": "715-566-1944",
+    "phonesExtra": [
+      "715-566-0026"
+    ],
     "recordUpdated": "2024-12-19"
   },
   "5509544475": {
@@ -113,6 +125,9 @@
     "clerk": "Kathy Hudson",
     "municipality": "Lorain",
     "phone": "715-653-2252",
+    "phonesExtra": [
+      "715-690-9839"
+    ],
     "recordUpdated": "2025-04-16"
   },
   "5509546225": {
@@ -131,6 +146,9 @@
     "clerk": "Cheryl Kloehn",
     "municipality": "Milltown",
     "phone": "715-825-3002",
+    "phonesExtra": [
+      "715-566-0916"
+    ],
     "recordUpdated": "2025-02-27",
     "url": "http://milltowntownship.com/"
   },
@@ -145,6 +163,9 @@
     "clerk": "Janet Krueger",
     "municipality": "St. Croix Falls",
     "phone": "715-483-1851",
+    "phonesExtra": [
+      "715-646-2423"
+    ],
     "recordUpdated": "2025-10-31",
     "url": "https://townofstcroixfallswi.gov/"
   },

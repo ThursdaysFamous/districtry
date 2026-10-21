@@ -16,7 +16,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="districtry Iowa" />
 <meta property="og:title" content="Who is on my city council?" />
-<meta property="og:description" content="Find your city ward in Iowa and the council member who holds it, across 3 cities." />
+<meta property="og:description" content="Find your city ward in Iowa and the council member who holds it, across 12 cities." />
 <meta property="og:url" content="https://districtry.com/ia/city-council.html" />
 <meta property="og:image" content="https://districtry.com/ia/og-image.png" />
 <meta property="og:image:width" content="1200" />
@@ -25,7 +25,7 @@
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Who is on my city council?" />
-<meta name="twitter:description" content="Find your city ward in Iowa and the council member who holds it, across 3 cities." />
+<meta name="twitter:description" content="Find your city ward in Iowa and the council member who holds it, across 12 cities." />
 <meta name="twitter:image" content="https://districtry.com/ia/og-image.png" />
 
 <script type="application/ld+json">
@@ -494,25 +494,26 @@ main details p:first-of-type { margin-top: -2px; }
 
 /* The address box a question page carries above its .cta link. It does not
    geocode: it hands the typed text to the app as `./#q=<address>` and the app
-   runs its own bounded search. See the geocoder-search ENGINE block.
+   runs its own bounded search. See the geocoder-search ENGINE block. Its one
+   button also opens the map when the box is left empty.
 
    IT IS HIDDEN UNTIL ITS SCRIPT UNHIDES IT, so a reader with no JavaScript
-   gets the .cta link below and never an input that cannot submit.
+   gets the .cta link below and never an input that cannot submit. Once it is
+   shown, the .cta link and its note are hidden: the box's own button makes
+   the same trip, and two buttons with the same words read as a mistake.
+   Hidden HERE rather than by the box's script, because that script runs
+   above the link, before the link is in the document.
 
    THE BUTTON FACE FLIPS IN DARK and that is a measurement, not a preference:
    white on --accent-deep reads 1.91:1 there (the shortfall validate_contrast
    already records for .cta), against 9.64:1 for --paper on the same violet.
    The landing page's search button made the same flip for the same reason.
 
-   THE STATUS LINE HAS NO ERROR COLOUR because the sub-page palette carries no
-   error token — the shell speaks --accent/--slate/--panel, and --error is not
-   among the eleven aliases build_brand_tokens.py emits. --accent-warm-deep is
-   this shell's caution hue (the .disclaimer rule below uses its lighter pair)
-   and measures 8.11:1 light / 8.64:1 dark on --panel, so the failure state is
-   painted with it rather than by adding a twelfth token. The message says what
-   went wrong in words either way. */
+   THE STATUS LINE HAS NO ERROR STATE since 2026-10-20: the one failure it
+   reported was an empty box, and an empty box now opens the map. */
 .lookup { margin: 6px 0 14px; max-width: 34rem; }
 .lookup[hidden] { display: none; }
+.lookup:not([hidden]) ~ .cta, .lookup:not([hidden]) ~ .cta-note { display: none; }
 .lookup-card {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -553,15 +554,19 @@ main details p:first-of-type { margin-top: -2px; }
 .lookup-go:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .lookup-go:disabled { opacity: .6; cursor: default; }
 :root[data-theme="dark"] .lookup-go { color: var(--paper); }
-.lookup-status {
+.lookup-hint {
   margin: 10px 0 0;
   font-size: 13.5px;
   line-height: 1.4;
   color: var(--slate);
 }
-.lookup-status.err { color: var(--accent-warm-deep); }
-.lookup-or { font-size: 13px; color: var(--slate); margin: 14px 0 2px; }
-.lookup-or[hidden] { display: none; }
+.lookup-status {
+  margin: 6px 0 0;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--slate);
+}
+.lookup-status:empty { margin: 0; }
 
 .answer-card {
   background: var(--panel);
@@ -640,6 +645,12 @@ table.flow td.who { font-weight: 600; white-space: nowrap; }
 table.flow td.who a { text-decoration: none; }
 table.flow td.who a:hover { text-decoration: underline; }
 table.flow td small { display: block; color: var(--slate-soft); font-size: 12.5px; margin-top: 3px; font-weight: 400; }
+/* A cell holding two or more telephone numbers prints one to a line, 28px
+   apart. At the table's own line height two stacked tel: links sit 23.6px
+   apart (measured 2026-10-17 on a South Carolina member with a home and a
+   business number), under WCAG 2.5.8's 24px spacing floor; 28px is the floor
+   the county pages' .m-contact rows use for the same reason. */
+table.flow td.tels { line-height: 28px; }
 
 .nope { list-style: none; margin: 0 0 18px; padding: 0; }
 .nope li { position: relative; padding: 0 0 0 26px; margin: 0 0 9px; }
@@ -773,57 +784,54 @@ footer.site-footer a { color: var(--accent-deep); }
 <main id="page-main" tabindex="-1">
 
   <section>
-    <p class="lede"><strong>A city council seat is the one on your ballot closest to your street.</strong> Iowa draws the wards of 3 cities, and this names the <strong>22 people</strong> who hold their seats — the members elected by one ward, and the mayor and at-large members elected by the whole city. 24 more sit on the councils of 4 smaller Iowa cities that elect at large and have no wards to draw; their own county publishes the names.</p>
+    <p class="lede"><strong>A city council seat is the one on your ballot closest to your street.</strong> Iowa draws the wards of 12 cities, and this names the <strong>82 people</strong> who hold their seats — the members elected by one ward, and the mayor and at-large members elected by the whole city. The map also draws Mason City, where this app does not name the members yet, so that card gives the ward and a link to the city rather than a name. 24 more sit on the councils of 4 smaller Iowa cities that elect at large and have no wards to draw; their own county publishes the names.</p>
 <!-- ==== GENERATED:BEGIN question-lookup ==== -->
 <!-- GENERATED by scripts/build_question_forms.py — do not hand-edit.
-     The layers and the button label are read from this page's own .cta link
-     below; the place name comes from metros.json. Edit those, then rerun. -->
+     The map link and the button label are read from this page's own .cta
+     link below; the place name comes from metros.json. Edit those, then rerun. -->
 <form class="lookup" id="lookup" hidden>
   <div class="lookup-card">
     <label class="lookup-label" for="lookup-q">Your address or ZIP</label>
     <div class="lookup-row">
       <input class="lookup-input" id="lookup-q" name="q" type="search"
              autocomplete="street-address" enterkeyhint="go" autocapitalize="words"
+             aria-describedby="lookup-hint"
              placeholder="Address or ZIP in Iowa">
       <button class="lookup-go" type="submit">Find your ward</button>
     </div>
+    <p class="lookup-hint" id="lookup-hint">Or leave it blank to open the map and pick your location there.</p>
     <p class="lookup-status" id="lookup-status" role="status"></p>
   </div>
 </form>
-<p class="lookup-or" id="lookup-or" hidden>Or open the map and pick your location on it:</p>
 <script>
 (function () {
   "use strict";
-  // Hands the typed address to the app as a HASH — never a query string, which
-  // count.js would send to the analytics host. The app geocodes; this does not.
-  var LAYERS = "city-ward";
+  // ONE button: with an address typed it opens the map and searches it, with
+  // the box empty it opens the map the page's own link below opens. The
+  // address goes to the app as a HASH, never a query string, which count.js
+  // would send to the analytics host. The app geocodes; this does not.
+  var MAP = "layers=city-ward";
   var form = document.getElementById("lookup");
   var input = document.getElementById("lookup-q");
   var status = document.getElementById("lookup-status");
-  // Both elements sit ABOVE this script on purpose: it runs inline, at parse
-  // time, so anything below it is not in the document yet. The first draft put
-  // the "Or open the map" line after this script and the guard below took
-  // the early return on all eleven pages — the form stayed hidden and looked
-  // exactly like a reader with JavaScript off.
-  var alt = document.getElementById("lookup-or");
-  if (!form || !input || !status || !alt) return;
-  // Both unhide together. Only a reader whose browser runs this can submit the
-  // form, and "Or open the map" is a sentence about a form that is not there
-  // otherwise.
+  // The form sits ABOVE this script on purpose: it runs inline, at parse
+  // time, so anything below it is not in the document yet. A first draft put
+  // a line after this script that the guard below waited for, and the early
+  // return left the form hidden on every page, which looked exactly like a
+  // reader with JavaScript off.
+  if (!form || !input || !status) return;
+  // Shown only here, because only a reader whose browser runs this can submit
+  // it. Showing it also hides the .cta link and its note below (a sibling
+  // rule in the shell's stylesheet): that link is the same trip for a reader
+  // with no script, and two buttons with the same words were one too many.
   form.hidden = false;
-  alt.hidden = false;
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var q = input.value.trim();
-    if (!q) {
-      status.textContent = "Type an address or ZIP first.";
-      status.className = "lookup-status err";
-      input.focus();
-      return;
-    }
     status.textContent = "Opening the map\u2026";
-    status.className = "lookup-status";
-    window.location.href = "./#q=" + encodeURIComponent(q) + "&layers=" + LAYERS;
+    window.location.href = q
+      ? "./#q=" + encodeURIComponent(q) + "&" + MAP
+      : "./#" + MAP;
   });
 })();
 </script>
@@ -926,6 +934,80 @@ footer.site-footer a { color: var(--accent-deep); }
       <tr itemscope itemtype="https://schema.org/Person"><td>Ward 3</td><td class="who"><meta itemprop="jobTitle" content="Council Member, Ward 3"><span itemprop="name">Deb Berry</span></td><td><a href="tel:3195040227">(319) 504-0227</a></td><td>12/31/2029</td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>Ward 4</td><td class="who"><meta itemprop="jobTitle" content="Council Member, Ward 4"><span itemprop="name">Dr. Belinda Creighton-Smith</span></td><td><a href="tel:3192149974">(319) 214-9974</a></td><td>12/31/2027</td></tr>
       <tr itemscope itemtype="https://schema.org/Person"><td>Ward 5</td><td class="who"><meta itemprop="jobTitle" content="Council Member, Ward 5"><span itemprop="name">Hector A. Salamanca-Arroyo</span></td><td><a href="tel:5154471186">(515)-447-1186</a></td><td>12/31/2029</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Who sits on the other ward-electing city councils</h2>
+    <p>All 60 elected officials in the Iowa cities whose wards the map draws from their own council pages, as this site had them on <strong>September 11, 2026</strong>.
+      The map above reads the same roster, so a card and this table cannot disagree — but a table is a claim about a day, and this one names its day. Where the roster names nobody it says so rather than guessing.
+      <a href="sources.html">Where these names come from</a>.</p>
+    <div class="flow-table-wrap">
+    <table class="flow">
+      <thead><tr><th>City</th><th>Council Member</th><th>Office</th><th>Telephone</th></tr></thead>
+      <tbody>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Ames</td><td class="who"><meta itemprop="jobTitle" content="Ward Two Representative, Ames"><span itemprop="name">Tim Gartin</span></td><td>Ward Two Representative</td><td><a href="tel:5152322501">515-232-2501</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Ames</td><td class="who"><meta itemprop="jobTitle" content="At-Large Representative, Ames"><span itemprop="name">Anita Rollins</span></td><td>At-Large Representative</td><td><a href="tel:5154518032">515-451-8032</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Ames</td><td class="who"><meta itemprop="jobTitle" content="At-Large Representative, Ames"><span itemprop="name">Amber Corrieri</span></td><td>At-Large Representative</td><td><a href="tel:5154519275">515-451-9275</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Ames</td><td class="who"><meta itemprop="jobTitle" content="Ward Four Representative, Ames"><span itemprop="name">Rachel Junck</span></td><td>Ward Four Representative</td><td><a href="tel:5155203376">515-520-3376</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Ames</td><td class="who"><meta itemprop="jobTitle" content="Ward One Representative, Ames"><span itemprop="name">Bronwyn Beatty-Hansen</span></td><td>Ward One Representative</td><td><a href="tel:5155200805">515-520-0805</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Ames</td><td class="who"><meta itemprop="jobTitle" content="Ward Three Representative, Ames"><span itemprop="name">Gloria Betcher</span></td><td>Ward Three Representative</td><td><a href="tel:5152925177">515-292-5177</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Ames</td><td class="who"><meta itemprop="jobTitle" content="Mayor, Ames"><span itemprop="name">John Haila</span></td><td>Mayor</td><td><a href="tel:5152905436">515-290-5436</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Bettendorf</td><td class="who"><meta itemprop="jobTitle" content="Mayor, Bettendorf"><span itemprop="name">Robert S. Gallagher</span></td><td>Mayor</td><td><a href="tel:5633702389">(563) 370-2389</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Bettendorf</td><td class="who"><meta itemprop="jobTitle" content="COUNCIL MEMBER - AT LARGE, Bettendorf"><span itemprop="name">Frank Baden</span></td><td>COUNCIL MEMBER - AT LARGE</td><td><a href="tel:5633442442">(563) 344-2442</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Bettendorf</td><td class="who"><meta itemprop="jobTitle" content="COUNCIL MEMBER - AT LARGE, Bettendorf"><span itemprop="name">Lisa Brown</span></td><td>COUNCIL MEMBER - AT LARGE</td><td><a href="tel:5633203849">(563) 320-3849</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Bettendorf</td><td class="who"><meta itemprop="jobTitle" content="COUNCIL MEMBER - 1ST WARD, Bettendorf"><span itemprop="name">Jerry Sechser</span></td><td>COUNCIL MEMBER - 1ST WARD</td><td><a href="tel:5633591534">(563) 359-1534</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Bettendorf</td><td class="who"><meta itemprop="jobTitle" content="COUNCIL MEMBER - 2ND WARD, Bettendorf"><span itemprop="name">Conor Flaherty</span></td><td>COUNCIL MEMBER - 2ND WARD</td><td><a href="tel:5633442440">(563) 344-2440</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Bettendorf</td><td class="who"><meta itemprop="jobTitle" content="COUNCIL MEMBER - 3RD WARD, Bettendorf"><span itemprop="name">Gregory Jager</span></td><td>COUNCIL MEMBER - 3RD WARD</td><td><a href="tel:5638445322">(563) 844-5322</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Bettendorf</td><td class="who"><meta itemprop="jobTitle" content="COUNCIL MEMBER - 4TH WARD, Bettendorf"><span itemprop="name">Scott Naumann</span></td><td>COUNCIL MEMBER - 4TH WARD</td><td><a href="tel:5635057953">(563) 505-7953</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Bettendorf</td><td class="who"><meta itemprop="jobTitle" content="COUNCIL MEMBER - 5TH WARD, Bettendorf"><span itemprop="name">Nick Palczynski</span></td><td>COUNCIL MEMBER - 5TH WARD</td><td><a href="tel:5633442443">(563) 344-2443</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Cedar Falls</td><td class="who"><meta itemprop="jobTitle" content="1st Ward, Cedar Falls"><span itemprop="name">Gil Schultz</span></td><td>1st Ward</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Cedar Falls</td><td class="who"><meta itemprop="jobTitle" content="2nd Ward / Mayor Pro-Tem, Cedar Falls"><span itemprop="name">Chris Latta</span></td><td>2nd Ward / Mayor Pro-Tem</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Cedar Falls</td><td class="who"><meta itemprop="jobTitle" content="3rd Ward, Cedar Falls"><span itemprop="name">Tom Nagle</span></td><td>3rd Ward</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Cedar Falls</td><td class="who"><meta itemprop="jobTitle" content="4th Ward, Cedar Falls"><span itemprop="name">Aaron Hawbaker</span></td><td>4th Ward</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Cedar Falls</td><td class="who"><meta itemprop="jobTitle" content="5th Ward, Cedar Falls"><span itemprop="name">Craig Fairbanks</span></td><td>5th Ward</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Cedar Falls</td><td class="who"><meta itemprop="jobTitle" content="At Large, Cedar Falls"><span itemprop="name">Kelly Dunn</span></td><td>At Large</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Cedar Falls</td><td class="who"><meta itemprop="jobTitle" content="At Large, Cedar Falls"><span itemprop="name">Hannah Crisman</span></td><td>At Large</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Davenport</td><td class="who"><meta itemprop="jobTitle" content="At-Large, Davenport"><span itemprop="name">Kyle Gripp</span></td><td>At-Large</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Davenport</td><td class="who"><meta itemprop="jobTitle" content="At-Large, Davenport"><span itemprop="name">Jazmin Newton</span></td><td>At-Large</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Davenport</td><td class="who"><meta itemprop="jobTitle" content="Ward 1, Davenport"><span itemprop="name">Rick Dunn</span></td><td>Ward 1</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Davenport</td><td class="who"><meta itemprop="jobTitle" content="Ward 2, Davenport"><span itemprop="name">Tim Dunn</span></td><td>Ward 2</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Davenport</td><td class="who"><meta itemprop="jobTitle" content="Ward 3, Davenport"><span itemprop="name">Paul Vasquez</span></td><td>Ward 3</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Davenport</td><td class="who"><meta itemprop="jobTitle" content="Ward 4, Davenport"><span itemprop="name">Jade Burkholder</span></td><td>Ward 4</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Davenport</td><td class="who"><meta itemprop="jobTitle" content="Ward 5, Davenport"><span itemprop="name">John Blunk</span></td><td>Ward 5</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Davenport</td><td class="who"><meta itemprop="jobTitle" content="Ward 6, Davenport"><span itemprop="name">Ben Jobgen</span></td><td>Ward 6</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Davenport</td><td class="who"><meta itemprop="jobTitle" content="Ward 7, Davenport"><span itemprop="name">Mark Holloway</span></td><td>Ward 7</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Davenport</td><td class="who"><meta itemprop="jobTitle" content="Ward 8, Davenport"><span itemprop="name">Matt Lienen</span></td><td>Ward 8</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Dubuque</td><td class="who"><meta itemprop="jobTitle" content="Mayor, Dubuque"><span itemprop="name">Brad M. Cavanagh</span></td><td>Mayor</td><td><a href="tel:5636906502">563.690.6502</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Dubuque</td><td class="who"><meta itemprop="jobTitle" content="Council Member, At-Large Representative, Dubuque"><span itemprop="name">David T. Resnick</span></td><td>Council Member, At-Large Representative</td><td><a href="tel:5636906504">563.690.6504</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Dubuque</td><td class="who"><meta itemprop="jobTitle" content="Council Member, At-Large Representative, Dubuque"><span itemprop="name">Chris T. Staver</span></td><td>Council Member, At-Large Representative</td><td><a href="tel:5636906503">563.690.6503</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Dubuque</td><td class="who"><meta itemprop="jobTitle" content="Council Member, Ward One Representative, Dubuque"><span itemprop="name">Tyson J. Leyendecker</span></td><td>Council Member, Ward One Representative</td><td><a href="tel:5636906505">563.690.6505</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Dubuque</td><td class="who"><meta itemprop="jobTitle" content="Council Member, Ward Two Representative, Dubuque"><span itemprop="name">Laura J. Roussell</span></td><td>Council Member, Ward Two Representative</td><td><a href="tel:5636906506">563.690.6506</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Dubuque</td><td class="who"><meta itemprop="jobTitle" content="Council Member, Ward Three Representative, Dubuque"><span itemprop="name">Danny C. Sprank</span></td><td>Council Member, Ward Three Representative</td><td><a href="tel:5636906507">563.690.6507</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Dubuque</td><td class="who"><meta itemprop="jobTitle" content="Council Member, Ward Four Representative, Dubuque"><span itemprop="name">Katy A. Wethal</span></td><td>Council Member, Ward Four Representative</td><td><a href="tel:5636906508">563.690.6508</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Marion</td><td class="who"><meta itemprop="jobTitle" content="Mayor, Marion"><span itemprop="name">Nicolas AbouAssaly</span></td><td>Mayor</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Marion</td><td class="who"><meta itemprop="jobTitle" content="Ward 1, Marion"><span itemprop="name">Gage Miskimen</span></td><td>Ward 1</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Marion</td><td class="who"><meta itemprop="jobTitle" content="Ward 2, Marion"><span itemprop="name">Grant Harper</span></td><td>Ward 2</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Marion</td><td class="who"><meta itemprop="jobTitle" content="Ward 3, Marion"><span itemprop="name">Will Brandt</span></td><td>Ward 3</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Marion</td><td class="who"><meta itemprop="jobTitle" content="Ward 4, Marion"><span itemprop="name">Sara Mentzer</span></td><td>Ward 4</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Marion</td><td class="who"><meta itemprop="jobTitle" content="At-Large, Marion"><span itemprop="name">Kelvin Unemin</span></td><td>At-Large</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Marion</td><td class="who"><meta itemprop="jobTitle" content="At-Large, Marion"><span itemprop="name">Steve Jensen</span></td><td>At-Large</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Marshalltown</td><td class="who"><meta itemprop="jobTitle" content="Mayor, Marshalltown"><span itemprop="name">Mike Ladehoff</span></td><td>Mayor</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Marshalltown</td><td class="who"><meta itemprop="jobTitle" content="1st Ward, Marshalltown"><span itemprop="name">Marco A. Yepez-Gomez</span></td><td>1st Ward</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Marshalltown</td><td class="who"><meta itemprop="jobTitle" content="2nd Ward, Marshalltown"><span itemprop="name">Mark Mitchell</span></td><td>2nd Ward</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Marshalltown</td><td class="who"><meta itemprop="jobTitle" content="3rd Ward, Marshalltown"><span itemprop="name">Greg Nichols</span></td><td>3rd Ward</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Marshalltown</td><td class="who"><meta itemprop="jobTitle" content="4th Ward, Marshalltown"><span itemprop="name">Melisa Fonseca</span></td><td>4th Ward</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Marshalltown</td><td class="who"><meta itemprop="jobTitle" content="At Large, Marshalltown"><span itemprop="name">Sue Cahill</span></td><td>At Large</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Marshalltown</td><td class="who"><meta itemprop="jobTitle" content="At Large, Marshalltown"><span itemprop="name">Jeff Schneider</span></td><td>At Large</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>Marshalltown</td><td class="who"><meta itemprop="jobTitle" content="At Large, Marshalltown"><span itemprop="name">Gary Thompson</span></td><td>At Large</td><td></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>West Des Moines</td><td class="who"><meta itemprop="jobTitle" content="Councilmember At-Large, West Des Moines"><span itemprop="name">Fannette Elliott</span></td><td>Councilmember At-Large</td><td><a href="tel:5152223559">515-222-3559</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>West Des Moines</td><td class="who"><meta itemprop="jobTitle" content="Councilmember - 2nd Ward, West Des Moines"><span itemprop="name">Greg Hudson</span></td><td>Councilmember - 2nd Ward</td><td><a href="tel:5155180529">515-518-0529</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>West Des Moines</td><td class="who"><meta itemprop="jobTitle" content="Councilmember - 3rd Ward, West Des Moines"><span itemprop="name">Doug Loots</span></td><td>Councilmember - 3rd Ward</td><td><a href="tel:5152730691">515-273-0691</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>West Des Moines</td><td class="who"><meta itemprop="jobTitle" content="Councilmember At-Large, West Des Moines"><span itemprop="name">Matthew McKinney</span></td><td>Councilmember At-Large</td><td><a href="tel:5152080033">515-208-0033</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>West Des Moines</td><td class="who"><meta itemprop="jobTitle" content="Councilmember - 1st Ward, West Des Moines"><span itemprop="name">Kevin Trevillyan</span></td><td>Councilmember - 1st Ward</td><td><a href="tel:5152408786">515-240-8786</a></td></tr>
+      <tr itemscope itemtype="https://schema.org/Person"><td>West Des Moines</td><td class="who"><meta itemprop="jobTitle" content="Mayor, West Des Moines"><span itemprop="name">Russ Trimble</span></td><td>Mayor</td><td><a href="tel:5155548746">515-554-8746</a></td></tr>
       </tbody>
     </table>
     </div>
@@ -1450,12 +1532,709 @@ footer.site-footer a { color: var(--accent-deep); }
     },
     {
       "@type": "GovernmentOrganization",
-      "@id": "https://districtry.com/ia/city-council.html#body-4-moravia",
+      "@id": "https://districtry.com/ia/city-council.html#body-4-ames",
+      "name": "Ames",
+      "member": [
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-ames-role-1",
+          "roleName": "Ward Two Representative",
+          "member": {
+            "@type": "Person",
+            "name": "Tim Gartin",
+            "telephone": "515-232-2501"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-ames-role-2",
+          "roleName": "At-Large Representative",
+          "member": {
+            "@type": "Person",
+            "name": "Anita Rollins",
+            "telephone": "515-451-8032"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-ames-role-3",
+          "roleName": "At-Large Representative",
+          "member": {
+            "@type": "Person",
+            "name": "Amber Corrieri",
+            "telephone": "515-451-9275"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-ames-role-4",
+          "roleName": "Ward Four Representative",
+          "member": {
+            "@type": "Person",
+            "name": "Rachel Junck",
+            "telephone": "515-520-3376"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-ames-role-5",
+          "roleName": "Ward One Representative",
+          "member": {
+            "@type": "Person",
+            "name": "Bronwyn Beatty-Hansen",
+            "telephone": "515-520-0805"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-ames-role-6",
+          "roleName": "Ward Three Representative",
+          "member": {
+            "@type": "Person",
+            "name": "Gloria Betcher",
+            "telephone": "515-292-5177"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-ames-role-7",
+          "roleName": "Mayor",
+          "member": {
+            "@type": "Person",
+            "name": "John Haila",
+            "telephone": "515-290-5436"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "GovernmentOrganization",
+      "@id": "https://districtry.com/ia/city-council.html#body-4-bettendorf",
+      "name": "Bettendorf",
+      "member": [
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-bettendorf-role-1",
+          "roleName": "Mayor",
+          "member": {
+            "@type": "Person",
+            "name": "Robert S. Gallagher",
+            "telephone": "(563) 370-2389"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-bettendorf-role-2",
+          "roleName": "COUNCIL MEMBER - AT LARGE",
+          "member": {
+            "@type": "Person",
+            "name": "Frank Baden",
+            "telephone": "(563) 344-2442"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-bettendorf-role-3",
+          "roleName": "COUNCIL MEMBER - AT LARGE",
+          "member": {
+            "@type": "Person",
+            "name": "Lisa Brown",
+            "telephone": "(563) 320-3849"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-bettendorf-role-4",
+          "roleName": "COUNCIL MEMBER - 1ST WARD",
+          "member": {
+            "@type": "Person",
+            "name": "Jerry Sechser",
+            "telephone": "(563) 359-1534"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-bettendorf-role-5",
+          "roleName": "COUNCIL MEMBER - 2ND WARD",
+          "member": {
+            "@type": "Person",
+            "name": "Conor Flaherty",
+            "telephone": "(563) 344-2440"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-bettendorf-role-6",
+          "roleName": "COUNCIL MEMBER - 3RD WARD",
+          "member": {
+            "@type": "Person",
+            "name": "Gregory Jager",
+            "telephone": "(563) 844-5322"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-bettendorf-role-7",
+          "roleName": "COUNCIL MEMBER - 4TH WARD",
+          "member": {
+            "@type": "Person",
+            "name": "Scott Naumann",
+            "telephone": "(563) 505-7953"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-bettendorf-role-8",
+          "roleName": "COUNCIL MEMBER - 5TH WARD",
+          "member": {
+            "@type": "Person",
+            "name": "Nick Palczynski",
+            "telephone": "(563) 344-2443"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "GovernmentOrganization",
+      "@id": "https://districtry.com/ia/city-council.html#body-4-cedar-falls",
+      "name": "Cedar Falls",
+      "member": [
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-cedar-falls-role-1",
+          "roleName": "1st Ward",
+          "member": {
+            "@type": "Person",
+            "name": "Gil Schultz"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-cedar-falls-role-2",
+          "roleName": "2nd Ward / Mayor Pro-Tem",
+          "member": {
+            "@type": "Person",
+            "name": "Chris Latta"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-cedar-falls-role-3",
+          "roleName": "3rd Ward",
+          "member": {
+            "@type": "Person",
+            "name": "Tom Nagle"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-cedar-falls-role-4",
+          "roleName": "4th Ward",
+          "member": {
+            "@type": "Person",
+            "name": "Aaron Hawbaker"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-cedar-falls-role-5",
+          "roleName": "5th Ward",
+          "member": {
+            "@type": "Person",
+            "name": "Craig Fairbanks"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-cedar-falls-role-6",
+          "roleName": "At Large",
+          "member": {
+            "@type": "Person",
+            "name": "Kelly Dunn"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-cedar-falls-role-7",
+          "roleName": "At Large",
+          "member": {
+            "@type": "Person",
+            "name": "Hannah Crisman"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "GovernmentOrganization",
+      "@id": "https://districtry.com/ia/city-council.html#body-4-davenport",
+      "name": "Davenport",
+      "member": [
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-davenport-role-1",
+          "roleName": "At-Large",
+          "member": {
+            "@type": "Person",
+            "name": "Kyle Gripp"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-davenport-role-2",
+          "roleName": "At-Large",
+          "member": {
+            "@type": "Person",
+            "name": "Jazmin Newton"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-davenport-role-3",
+          "roleName": "Ward 1",
+          "member": {
+            "@type": "Person",
+            "name": "Rick Dunn"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-davenport-role-4",
+          "roleName": "Ward 2",
+          "member": {
+            "@type": "Person",
+            "name": "Tim Dunn"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-davenport-role-5",
+          "roleName": "Ward 3",
+          "member": {
+            "@type": "Person",
+            "name": "Paul Vasquez"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-davenport-role-6",
+          "roleName": "Ward 4",
+          "member": {
+            "@type": "Person",
+            "name": "Jade Burkholder"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-davenport-role-7",
+          "roleName": "Ward 5",
+          "member": {
+            "@type": "Person",
+            "name": "John Blunk"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-davenport-role-8",
+          "roleName": "Ward 6",
+          "member": {
+            "@type": "Person",
+            "name": "Ben Jobgen"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-davenport-role-9",
+          "roleName": "Ward 7",
+          "member": {
+            "@type": "Person",
+            "name": "Mark Holloway"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-davenport-role-10",
+          "roleName": "Ward 8",
+          "member": {
+            "@type": "Person",
+            "name": "Matt Lienen"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "GovernmentOrganization",
+      "@id": "https://districtry.com/ia/city-council.html#body-4-dubuque",
+      "name": "Dubuque",
+      "member": [
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-dubuque-role-1",
+          "roleName": "Mayor",
+          "member": {
+            "@type": "Person",
+            "name": "Brad M. Cavanagh",
+            "telephone": "563.690.6502"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-dubuque-role-2",
+          "roleName": "Council Member, At-Large Representative",
+          "member": {
+            "@type": "Person",
+            "name": "David T. Resnick",
+            "telephone": "563.690.6504"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-dubuque-role-3",
+          "roleName": "Council Member, At-Large Representative",
+          "member": {
+            "@type": "Person",
+            "name": "Chris T. Staver",
+            "telephone": "563.690.6503"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-dubuque-role-4",
+          "roleName": "Council Member, Ward One Representative",
+          "member": {
+            "@type": "Person",
+            "name": "Tyson J. Leyendecker",
+            "telephone": "563.690.6505"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-dubuque-role-5",
+          "roleName": "Council Member, Ward Two Representative",
+          "member": {
+            "@type": "Person",
+            "name": "Laura J. Roussell",
+            "telephone": "563.690.6506"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-dubuque-role-6",
+          "roleName": "Council Member, Ward Three Representative",
+          "member": {
+            "@type": "Person",
+            "name": "Danny C. Sprank",
+            "telephone": "563.690.6507"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-dubuque-role-7",
+          "roleName": "Council Member, Ward Four Representative",
+          "member": {
+            "@type": "Person",
+            "name": "Katy A. Wethal",
+            "telephone": "563.690.6508"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "GovernmentOrganization",
+      "@id": "https://districtry.com/ia/city-council.html#body-4-marion",
+      "name": "Marion",
+      "member": [
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-marion-role-1",
+          "roleName": "Mayor",
+          "member": {
+            "@type": "Person",
+            "name": "Nicolas AbouAssaly"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-marion-role-2",
+          "roleName": "Ward 1",
+          "member": {
+            "@type": "Person",
+            "name": "Gage Miskimen"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-marion-role-3",
+          "roleName": "Ward 2",
+          "member": {
+            "@type": "Person",
+            "name": "Grant Harper"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-marion-role-4",
+          "roleName": "Ward 3",
+          "member": {
+            "@type": "Person",
+            "name": "Will Brandt"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-marion-role-5",
+          "roleName": "Ward 4",
+          "member": {
+            "@type": "Person",
+            "name": "Sara Mentzer"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-marion-role-6",
+          "roleName": "At-Large",
+          "member": {
+            "@type": "Person",
+            "name": "Kelvin Unemin"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-marion-role-7",
+          "roleName": "At-Large",
+          "member": {
+            "@type": "Person",
+            "name": "Steve Jensen"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "GovernmentOrganization",
+      "@id": "https://districtry.com/ia/city-council.html#body-4-marshalltown",
+      "name": "Marshalltown",
+      "member": [
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-marshalltown-role-1",
+          "roleName": "Mayor",
+          "member": {
+            "@type": "Person",
+            "name": "Mike Ladehoff"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-marshalltown-role-2",
+          "roleName": "1st Ward",
+          "member": {
+            "@type": "Person",
+            "name": "Marco A. Yepez-Gomez"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-marshalltown-role-3",
+          "roleName": "2nd Ward",
+          "member": {
+            "@type": "Person",
+            "name": "Mark Mitchell"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-marshalltown-role-4",
+          "roleName": "3rd Ward",
+          "member": {
+            "@type": "Person",
+            "name": "Greg Nichols"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-marshalltown-role-5",
+          "roleName": "4th Ward",
+          "member": {
+            "@type": "Person",
+            "name": "Melisa Fonseca"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-marshalltown-role-6",
+          "roleName": "At Large",
+          "member": {
+            "@type": "Person",
+            "name": "Sue Cahill"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-marshalltown-role-7",
+          "roleName": "At Large",
+          "member": {
+            "@type": "Person",
+            "name": "Jeff Schneider"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-marshalltown-role-8",
+          "roleName": "At Large",
+          "member": {
+            "@type": "Person",
+            "name": "Gary Thompson"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "GovernmentOrganization",
+      "@id": "https://districtry.com/ia/city-council.html#body-4-west-des-moines",
+      "name": "West Des Moines",
+      "member": [
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-west-des-moines-role-1",
+          "roleName": "Councilmember At-Large",
+          "member": {
+            "@type": "Person",
+            "name": "Fannette Elliott",
+            "telephone": "515-222-3559"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-west-des-moines-role-2",
+          "roleName": "Councilmember - 2nd Ward",
+          "member": {
+            "@type": "Person",
+            "name": "Greg Hudson",
+            "telephone": "515-518-0529"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-west-des-moines-role-3",
+          "roleName": "Councilmember - 3rd Ward",
+          "member": {
+            "@type": "Person",
+            "name": "Doug Loots",
+            "telephone": "515-273-0691"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-west-des-moines-role-4",
+          "roleName": "Councilmember At-Large",
+          "member": {
+            "@type": "Person",
+            "name": "Matthew McKinney",
+            "telephone": "515-208-0033"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-west-des-moines-role-5",
+          "roleName": "Councilmember - 1st Ward",
+          "member": {
+            "@type": "Person",
+            "name": "Kevin Trevillyan",
+            "telephone": "515-240-8786"
+          }
+        },
+        {
+          "@type": "OrganizationRole",
+          "@id": "https://districtry.com/ia/city-council.html#body-4-west-des-moines-role-6",
+          "roleName": "Mayor",
+          "member": {
+            "@type": "Person",
+            "name": "Russ Trimble",
+            "telephone": "515-554-8746"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://districtry.com/ia/city-council.html#roster-4",
+      "name": "Who sits on the other ward-electing city councils",
+      "itemListOrder": "https://schema.org/ItemListOrderAscending",
+      "numberOfItems": 8,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Ames",
+          "item": {
+            "@id": "https://districtry.com/ia/city-council.html#body-4-ames"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Bettendorf",
+          "item": {
+            "@id": "https://districtry.com/ia/city-council.html#body-4-bettendorf"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Cedar Falls",
+          "item": {
+            "@id": "https://districtry.com/ia/city-council.html#body-4-cedar-falls"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Davenport",
+          "item": {
+            "@id": "https://districtry.com/ia/city-council.html#body-4-davenport"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Dubuque",
+          "item": {
+            "@id": "https://districtry.com/ia/city-council.html#body-4-dubuque"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "Marion",
+          "item": {
+            "@id": "https://districtry.com/ia/city-council.html#body-4-marion"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "name": "Marshalltown",
+          "item": {
+            "@id": "https://districtry.com/ia/city-council.html#body-4-marshalltown"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "name": "West Des Moines",
+          "item": {
+            "@id": "https://districtry.com/ia/city-council.html#body-4-west-des-moines"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "GovernmentOrganization",
+      "@id": "https://districtry.com/ia/city-council.html#body-5-moravia",
       "name": "Moravia",
       "member": [
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-moravia-role-1",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-moravia-role-1",
           "roleName": "Mayor",
           "member": {
             "@type": "Person",
@@ -1465,7 +2244,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-moravia-role-2",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-moravia-role-2",
           "roleName": "Councilman",
           "member": {
             "@type": "Person",
@@ -1475,7 +2254,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-moravia-role-3",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-moravia-role-3",
           "roleName": "Councilman",
           "member": {
             "@type": "Person",
@@ -1485,7 +2264,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-moravia-role-4",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-moravia-role-4",
           "roleName": "Councilwoman",
           "member": {
             "@type": "Person",
@@ -1495,7 +2274,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-moravia-role-5",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-moravia-role-5",
           "roleName": "Councilman",
           "member": {
             "@type": "Person",
@@ -1505,7 +2284,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-moravia-role-6",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-moravia-role-6",
           "roleName": "Councilman",
           "member": {
             "@type": "Person",
@@ -1517,12 +2296,12 @@ footer.site-footer a { color: var(--accent-deep); }
     },
     {
       "@type": "GovernmentOrganization",
-      "@id": "https://districtry.com/ia/city-council.html#body-4-norwalk",
+      "@id": "https://districtry.com/ia/city-council.html#body-5-norwalk",
       "name": "Norwalk",
       "member": [
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-norwalk-role-1",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-norwalk-role-1",
           "roleName": "Mayor",
           "member": {
             "@type": "Person",
@@ -1532,7 +2311,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-norwalk-role-2",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-norwalk-role-2",
           "roleName": "Mayor Pro Tem",
           "member": {
             "@type": "Person",
@@ -1541,7 +2320,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-norwalk-role-3",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-norwalk-role-3",
           "roleName": "Council Member",
           "member": {
             "@type": "Person",
@@ -1551,7 +2330,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-norwalk-role-4",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-norwalk-role-4",
           "roleName": "Council Member",
           "member": {
             "@type": "Person",
@@ -1560,7 +2339,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-norwalk-role-5",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-norwalk-role-5",
           "roleName": "Council Member",
           "member": {
             "@type": "Person",
@@ -1570,7 +2349,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-norwalk-role-6",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-norwalk-role-6",
           "roleName": "Council Member",
           "member": {
             "@type": "Person",
@@ -1582,12 +2361,12 @@ footer.site-footer a { color: var(--accent-deep); }
     },
     {
       "@type": "GovernmentOrganization",
-      "@id": "https://districtry.com/ia/city-council.html#body-4-riverside",
+      "@id": "https://districtry.com/ia/city-council.html#body-5-riverside",
       "name": "Riverside",
       "member": [
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-riverside-role-1",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-riverside-role-1",
           "roleName": "Mayor",
           "member": {
             "@type": "Person",
@@ -1597,7 +2376,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-riverside-role-2",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-riverside-role-2",
           "roleName": "Council Person",
           "member": {
             "@type": "Person",
@@ -1606,7 +2385,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-riverside-role-3",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-riverside-role-3",
           "roleName": "Council Person",
           "member": {
             "@type": "Person",
@@ -1615,7 +2394,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-riverside-role-4",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-riverside-role-4",
           "roleName": "Council Person",
           "member": {
             "@type": "Person",
@@ -1624,7 +2403,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-riverside-role-5",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-riverside-role-5",
           "roleName": "Council Person",
           "member": {
             "@type": "Person",
@@ -1633,7 +2412,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-riverside-role-6",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-riverside-role-6",
           "roleName": "Council Person",
           "member": {
             "@type": "Person",
@@ -1644,12 +2423,12 @@ footer.site-footer a { color: var(--accent-deep); }
     },
     {
       "@type": "GovernmentOrganization",
-      "@id": "https://districtry.com/ia/city-council.html#body-4-tiffin",
+      "@id": "https://districtry.com/ia/city-council.html#body-5-tiffin",
       "name": "Tiffin",
       "member": [
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-tiffin-role-1",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-tiffin-role-1",
           "roleName": "Mayor",
           "member": {
             "@type": "Person",
@@ -1659,7 +2438,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-tiffin-role-2",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-tiffin-role-2",
           "roleName": "Council Member At Large",
           "member": {
             "@type": "Person",
@@ -1669,7 +2448,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-tiffin-role-3",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-tiffin-role-3",
           "roleName": "Mayor Pro-Tem",
           "member": {
             "@type": "Person",
@@ -1679,7 +2458,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-tiffin-role-4",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-tiffin-role-4",
           "roleName": "Council Member At Large",
           "member": {
             "@type": "Person",
@@ -1689,7 +2468,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-tiffin-role-5",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-tiffin-role-5",
           "roleName": "Council Member At Large",
           "member": {
             "@type": "Person",
@@ -1699,7 +2478,7 @@ footer.site-footer a { color: var(--accent-deep); }
         },
         {
           "@type": "OrganizationRole",
-          "@id": "https://districtry.com/ia/city-council.html#body-4-tiffin-role-6",
+          "@id": "https://districtry.com/ia/city-council.html#body-5-tiffin-role-6",
           "roleName": "Council Member At Large",
           "member": {
             "@type": "Person",
@@ -1711,7 +2490,7 @@ footer.site-footer a { color: var(--accent-deep); }
     },
     {
       "@type": "ItemList",
-      "@id": "https://districtry.com/ia/city-council.html#roster-4",
+      "@id": "https://districtry.com/ia/city-council.html#roster-5",
       "name": "Who holds each office in four more Iowa cities",
       "itemListOrder": "https://schema.org/ItemListOrderAscending",
       "numberOfItems": 4,
@@ -1721,7 +2500,7 @@ footer.site-footer a { color: var(--accent-deep); }
           "position": 1,
           "name": "Moravia",
           "item": {
-            "@id": "https://districtry.com/ia/city-council.html#body-4-moravia"
+            "@id": "https://districtry.com/ia/city-council.html#body-5-moravia"
           }
         },
         {
@@ -1729,7 +2508,7 @@ footer.site-footer a { color: var(--accent-deep); }
           "position": 2,
           "name": "Norwalk",
           "item": {
-            "@id": "https://districtry.com/ia/city-council.html#body-4-norwalk"
+            "@id": "https://districtry.com/ia/city-council.html#body-5-norwalk"
           }
         },
         {
@@ -1737,7 +2516,7 @@ footer.site-footer a { color: var(--accent-deep); }
           "position": 3,
           "name": "Riverside",
           "item": {
-            "@id": "https://districtry.com/ia/city-council.html#body-4-riverside"
+            "@id": "https://districtry.com/ia/city-council.html#body-5-riverside"
           }
         },
         {
@@ -1745,7 +2524,7 @@ footer.site-footer a { color: var(--accent-deep); }
           "position": 4,
           "name": "Tiffin",
           "item": {
-            "@id": "https://districtry.com/ia/city-council.html#body-4-tiffin"
+            "@id": "https://districtry.com/ia/city-council.html#body-5-tiffin"
           }
         }
       ]

@@ -42,6 +42,39 @@ township card names the other the way Michigan's village card must. The subdivis
 1,797 organized towns, 901 city placeholder records standing for 851 distinct cities (50 of
 which cross a county line) and 59 unorganized territories.
 
+**THE TOWNSHIP CARD NAMES THE BOARD OF EVERY TOWN THAT VOTES IN NOVEMBER, AND ONLY THOSE**
+(2026-10-15, `mn/scripts/build_mn_town_boards.py` → `mn-town-boards.json`, rebuilt by
+`update-mn-city-councils.yml`). A town holds its town election in March or, by choice, in
+November; the November contests are in the Secretary of State's `local.txt` files beside the
+city contests, and 704 towns' boards come out of them — 2,813 of 3,115 seats named, each dated,
+292 of the rest won by write-in. A March town runs its own election and its results are in no
+file the state publishes (the March election days answer 404 on the results host). **416 OF
+THEM ARE NAMED FROM THEIR COUNTY'S LIST SINCE 2026-10-16** (`mn/scripts/mn_county_town_officers_scraper.py`
+→ `data/source/mn-county-town-officers.json`, then `build_mn_county_town_officers.py` →
+`mn-county-town-officers.json`): a town clerk certifies its officers to the county after each
+election, 42 counties publish the lists, and 29 are read — 2,018 officers as re-read on
+2026-10-17, with names, offices, terms and, under Adam's ruling of that day ("if the official
+government source uses personal phone numbers, we publish those"), the telephone each list prints
+beside an officer (1,537 carry one, 75 a second), and, under Adam's choice of the same day
+("E-mails too"), the e-mail address a list prints beside one officer (668 carry one, 664 of them
+a personal or business mailbox; Aitkin's pages hide theirs behind Cloudflare's e-mail protection,
+which the scraper decodes as a browser does), never the home addresses the lists also print. A
+number or an address printed beside two people or again away from the officer is the office's
+and stays out, as does a mailbox named for the town itself or for another office, and 180
+numbers printed with no area code ship as printed (gap `mn-township-phone-area-code`). One
+source per town: a town the election results name keeps those names, and the county list is
+compared as a witness (982 of 1,096 winners' surnames, 277 towns). The other 13 counties and
+their reasons are in gap `mn-township-officers`, which still covers about 680 towns, with a
+letter to the Minnesota Association of Townships drafted in `docs/ASK_DRAFTS.md`. **NO WEEKLY
+JOB READS THE LISTS YET** — a new workflow needs the operator's word — so each card names the
+day its list was read. **THE DONE-STANDARD LEVEL STAYS OPEN** while those 13 are unsettled.
+A seat a November town has not had
+on a ballot since 2022 is ABSENT rather than read from 2020: a six-year supervisor term (Minn.
+Stat. 367.03 subd. 4a) or an appointed clerk or treasurer leaves a board short, and the card
+says what a missing seat means. The results key a town by its five-digit county subdivision
+code, joined to exactly one TIGER township whose name matches; Lent and Lima have no TIGER
+record and are declared in `NO_TIGER_TOWNSHIP`.
+
 **THE SECONDARY SCHOOL TILING HAS EXACTLY ONE FEATURE AND SHIPS ANYWAY** — Park Rapids for
 grades 9-12 over the Pine Point district, 13.3 km². Iowa and Michigan both record a measured
 ZERO there and correctly ship nothing; one feature is not zero, and a reader standing inside it
@@ -85,7 +118,7 @@ precincts — in which every precinct carries the districts it sits in as attrib
 layers dissolve out of one source: `ctycomdist` (447 commissioner districts across all 87
 counties — 81 counties elect five and six elect seven), `pctcode` (precincts), `juddist` (10),
 `swcdist_n` (117), `hospdist_n` (16), `parkdist_n` (3) and `ward` (274 wards in 76 cities, the
-layer Illinois assembled county by county). **A single upstream service serving seven layers
+layer Illinois assembled county by county; 268 in 69 cities when re-measured 2026-10-15). **A single upstream service serving seven layers
 is also a single point of failure for seven layers**, which is why `mn/WATCH.md` watches its
 Service Modified stamp and its field names rather than only its endpoint.
 
@@ -149,13 +182,29 @@ rebuilds each district as the precincts that voted in its seat's latest regular 
 rather than today's, clipped to the Census school district, with all 13 boards simplified in
 one shared topology. Where the results cannot place ground the map says so instead of
 guessing: a precinct that voted in two districts is a "split" feature naming both, and ground
-no contest reached is an "unplaced" feature with the reason. Anoka-Hennepin is not drawn,
-because its odd-year results are reported by shared polling place and not by precinct; the gap
-`mn-school-board-election-districts` records it. A board electing every seat in every precinct
+no contest reached is an "unplaced" feature with the reason. Anoka-Hennepin's odd-year results
+are reported by shared polling place and not by precinct, so since 2026-10-15 its six districts
+come from the district's OWN 2022 board election map instead: `mn/scripts/trace_isd11_board_map.py`
+reads the map's six fills, fits the map to the Census school boundary (median 6.1 m off) and
+writes which 2022 precincts each district holds to `mn/data/source/isd11-board-districts.json`
+(every precinct at least 98.9% inside one district), and the builder draws those precincts.
+Duluth's rural townships stay unplaced, recorded in `mn-school-board-election-districts`. A board electing every seat in every precinct
 is a residency board, not an election district, and is excluded by measurement (more than 10%
 shared precincts). Minneapolis's own park district map, which the school board shares, is the
 independent witness, at 1,800 of 1,800 sample points. The card names the seat's member from
 `mn-school-boards.json`.
+
+**`city-ward` (2026-10-15) DRAWS THE WARDS OF THE 22 CITIES WHOSE COUNCILS THE CITY CARD NAMES
+AND WHICH ELECT BY WARD OR DISTRICT** — 101 wards, the precinct layer dissolved on its `ward`
+attribute (`mn/scripts/build_mn_city_wards.py`). The cities are read off `mn-city-councils.json`,
+not listed, and the builder fails unless each city's wards are exactly its roster's ward seats.
+**THE BALLOT IS THE WITNESS**: every ward's precincts must be exactly those that voted in its
+latest council contest in `localPrct.txt`, read in that election's own precinct map, and all 101
+are. An odd-year contest has no map of its own, so it must match the previous general's map or
+today's exactly: Bloomington merged W-4 P-31 into P-30 after the 2024 general, so its 2023
+contest matches 2022's map and not today's. The precinct layer also carries wards for 47 smaller
+cities; they are not drawn, because the card could name nobody in them. The toggle says "City
+Council District" because Duluth and Rochester elect by district, Iowa's reasoning.
 
 **TWO HOSTS ARE MEASURED AND NEITHER CHANGES THE ANSWER.** `www.mngeo.state.mn.us` serves a
 Radware Bot Manager captcha to this project's token — obeyed, never worked around, and it
@@ -191,8 +240,8 @@ generate nothing for an instance that does not ask.
 
 - Metro: Minnesota (`minnesota`) — https://districtry.com/mn/
 - Geocoders: address Photon (Minnesota-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Minnesota-bounded, serial >=1s queue)
-- Ground truth: 44.97440,-93.26550 (downtown Minneapolis, Hennepin County) → county Hennepin County; us-house 5; mn-senate 61; mn-house 61A; mn-judicial-district Fourth Judicial District; voting-precinct Minneapolis W-7 P-6; county-commissioner Hennepin County Commissioner District 3; watershed-district Mississippi Watershed Management Organization; school-board-district District 4. Negative point 46.87720,-97.05000 (inside Cass County, NORTH DAKOTA, about 20 km west of Fargo — outside Minnesota and outside every other instance in the fleet, and inside permalink_gate (minLng -97.40) so the app answers the click and every shipped layer correctly returns nothing. Measured: 0 hits in every shipped geometry file, TIGERweb's county layer names Cass County STATE 38 (control: the anchor returns Hennepin County STATE 27), and no outline in fleet-outlines.json contains it. TWO POINTS WERE TRIED FIRST AND BOTH FAILED FOR REASONS WORTH RECORDING, because each looked obvious. LAKE SUPERIOR: Minnesota's TIGER county fabric is WATER-INCLUSIVE out to the international boundary, so a point in open Lake Superior at 47.6, -90.0 is named Lk Superior by TIGERweb's hydrography and is still INSIDE Cook County, and a point offshore of Duluth is inside the city of Duluth. Water is not outside the state here. WORTH COUNTY, IOWA (43.45, -93.37): correct on every static test — 0 hits in every shipped geometry file, TIGERweb naming Worth County STATE 19 — and it MADE THE BROWSER LEAVE. fleet-outlines.json puts it inside Iowa, so placeOwner hands the selection off to districtry.com/ia/ and the page navigates away; the smoke test's coverage-band probe then timed out looking for a button on a blank document. A NEGATIVE POINT MUST BE OUTSIDE EVERY LIVE INSTANCE, not only outside this one. Iowa's own negative point (43.65, -93.37) sits inside Minnesota and will start handing off the day this instance goes live — recorded in mn/WATCH.md as a go-live item on ia/, not a defect in this change.).
-- Layers: 19 registered (political 6, safety 2, schools 4, geography 7); `registerLayer(` floor 15. Debug namespace `window.MinnesotaExplorer`.
+- Ground truth: 44.97440,-93.26550 (downtown Minneapolis, Hennepin County) → county Hennepin County; us-house 5; mn-senate 61; mn-house 61A; mn-judicial-district Fourth Judicial District; voting-precinct Minneapolis W-7 P-6; county-commissioner Hennepin County Commissioner District 3; watershed-district Mississippi Watershed Management Organization; school-board-district District 4; city-ward Ward 7. Negative point 46.87720,-97.05000 (inside Cass County, NORTH DAKOTA, about 20 km west of Fargo — outside Minnesota and outside every other instance in the fleet, and inside permalink_gate (minLng -97.40) so the app answers the click and every shipped layer correctly returns nothing. Measured: 0 hits in every shipped geometry file, TIGERweb's county layer names Cass County STATE 38 (control: the anchor returns Hennepin County STATE 27), and no outline in fleet-outlines.json contains it. TWO POINTS WERE TRIED FIRST AND BOTH FAILED FOR REASONS WORTH RECORDING, because each looked obvious. LAKE SUPERIOR: Minnesota's TIGER county fabric is WATER-INCLUSIVE out to the international boundary, so a point in open Lake Superior at 47.6, -90.0 is named Lk Superior by TIGERweb's hydrography and is still INSIDE Cook County, and a point offshore of Duluth is inside the city of Duluth. Water is not outside the state here. WORTH COUNTY, IOWA (43.45, -93.37): correct on every static test — 0 hits in every shipped geometry file, TIGERweb naming Worth County STATE 19 — and it MADE THE BROWSER LEAVE. fleet-outlines.json puts it inside Iowa, so placeOwner hands the selection off to districtry.com/ia/ and the page navigates away; the smoke test's coverage-band probe then timed out looking for a button on a blank document. A NEGATIVE POINT MUST BE OUTSIDE EVERY LIVE INSTANCE, not only outside this one. Iowa's own negative point (43.65, -93.37) sits inside Minnesota and will start handing off the day this instance goes live — recorded in mn/WATCH.md as a go-live item on ia/, not a defect in this change.).
+- Layers: 20 registered (political 7, safety 2, schools 4, geography 7); `registerLayer(` floor 16. Debug namespace `window.MinnesotaExplorer`.
 - Scheduled workflows: `update-mn-congress-roster.yml` (Mon 13:40 UTC); `update-mn-commissioner-roster.yml` (Tue 13:40 UTC); `update-mn-city-councils.yml` (Tue 14:10 UTC); `update-mn-school-boards.yml` (Wed 14:10 UTC).
 - Source registry: `mn/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

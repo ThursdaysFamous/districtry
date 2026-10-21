@@ -635,15 +635,22 @@ def parse_greene(page):
 # the document and how old it is. It is never silently folded in with the
 # counties that really were re-read.
 #
-# WHAT IS DELIBERATELY NOT SHIPPED. Knight's letterhead gives each commissioner
-# a HOME address and a personal phone (two of them marked "(h)" and "(c)"). The
-# roster ships neither — the same call every municipal source in this project
-# makes, because a card must not publish a private home. What ships is the name,
-# the office, and the county e-mail address the county itself assigns
-# (commissioner1@…, commissioner2@…), which is a real contact route that belongs
-# to the seat rather than the person. The office block gets the courthouse
-# address only: the phone on the letterhead is the CLERK's line, and printing it
-# under "Board Office" would imply the board answers it.
+# WHAT SHIPS AND WHAT DOES NOT. Knight's letterhead gives each commissioner a
+# HOME address and a phone number (two of them marked "(h)" and "(c)"). The home
+# addresses never ship — a card must not publish a private home. The numbers
+# would ship now: Adam's ruling of 2026-10-17 ("if the official government
+# source uses personal phone numbers, we publish those") covers a number a
+# county clerk's own document prints beside a commissioner, as "home ..." and
+# "cell ..." where the letterhead marks it. They are not in this entry because
+# the document itself is not in this repository — the entry was carried from it
+# on 2026-08-06 without the numbers, and nothing here should retype a number
+# from memory — so adding them needs the Clerk's document again (or a fresh
+# copy from her office). Until then what ships is the name, the office, and the
+# county e-mail address the county itself assigns (commissioner1@…,
+# commissioner2@…), which is a real contact route that belongs to the seat
+# rather than the person. The office block gets the courthouse address only:
+# the phone on the letterhead is the CLERK's line, and printing it under "Board
+# Office" would imply the board answers it.
 def parse_moultrie(page):
     """Moultrie publishes its board as a staff-directory TABLE with a column
     per field — County Board Position, First Name, Last Name, Term Length,
@@ -902,8 +909,8 @@ DOCUMENT_ROSTERS = {
         # serves no web page (measured 5 Aug 2026, re-checked 9 Aug — the
         # wabash-county-board record has the full measurement). Ordered as the
         # Clerk's e-mail orders them. Her e-mail lists each commissioner with a
-        # HOME address and nothing else; per the Edwards rule above none of
-        # that ships, and unlike Edwards this county assigns no per-seat
+        # HOME address and nothing else; per the Edwards rule above no home
+        # address ships, and unlike Edwards this county assigns no per-seat
         # e-mail this project can cite, so each row is a name alone. Her Aug 5
         # reply settled the form (one commissioner elected each General
         # Election, six-year terms). WHICH OF THE THREE CHAIRS was not in that

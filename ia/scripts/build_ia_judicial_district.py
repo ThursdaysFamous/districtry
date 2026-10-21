@@ -250,11 +250,41 @@ def geom_from_rings(rings):
 
 
 def interior_point(feature):
+    """A point inside the county: on a horizontal line through the middle of its
+    largest ring, the midpoint of the widest span that line has inside it.
+
+    NOT the mean of the ring's vertices, which this used to be. The mean lies
+    inside a county only while its vertices are spread evenly round it, and a
+    river edge breaks that: with the county lines drawn at 5 m (2026-10-15) the
+    Big Sioux River sides of Lyon and Sioux carry so many vertices that both
+    means fell west of the river, outside their own counties, and the gate below
+    reported a dissolve defect that did not exist. A span midpoint is checked
+    against the county itself before it is used, so it cannot do that quietly.
+    """
     rings = rings_of(feature)
     ring = max(rings, key=len)
-    xs = [p[0] for p in ring[:-1]]
-    ys = [p[1] for p in ring[:-1]]
-    return (sum(xs) / len(xs), sum(ys) / len(ys))
+    lo = min(p[1] for p in ring)
+    hi = max(p[1] for p in ring)
+    for frac in (0.5, 0.45, 0.55, 0.4, 0.6, 0.35, 0.65, 0.3, 0.7):
+        lat = lo + (hi - lo) * frac
+        xs = []
+        for r in rings:
+            for i in range(len(r) - 1):
+                x1, y1 = r[i][0], r[i][1]
+                x2, y2 = r[i + 1][0], r[i + 1][1]
+                if (y1 > lat) != (y2 > lat):
+                    xs.append(x1 + (lat - y1) * (x2 - x1) / (y2 - y1))
+        xs.sort()
+        best = None
+        for a, b in zip(xs[0::2], xs[1::2]):
+            if best is None or b - a > best[1] - best[0]:
+                best = (a, b)
+        if best is not None:
+            pt = ((best[0] + best[1]) / 2, lat)
+            if point_in_geom(pt[0], pt[1], feature["geometry"]):
+                return pt
+    raise SystemExit("no interior point found for %s"
+                     % (feature.get("properties") or {}).get("BASENAME"))
 
 
 def fetch_real_districts():

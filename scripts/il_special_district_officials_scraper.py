@@ -25,6 +25,16 @@ office block, which is the order it already took when a county's own data named
 an officer. Lake's library entry passes none and is unchanged, as are Kane's
 three.
 
+EACH OFFICER CARRIES THE TELEPHONE AND THE E-MAIL ADDRESS ITS FILING PRINTS
+BESIDE THAT OFFICER ALONE, whosever line or mailbox it is, since Adam's ruling
+of 2026-10-17 ("if the official government source uses personal phone
+numbers, we publish those") and his choice of "E-mails too" the same day.
+comptroller_afr.py decides which values are an officer's own and which are
+the district's; this file adds one rule of its own, for Lake, whose card also
+prints the district's own telephone and e-mail from the county's GIS: an
+officer's value that is one of those is the district's office contact and
+rides nobody (see `office` in BOUNDARIES).
+
 THE KEY IS COUNTY AND LAYER, NOT COUNTY ALONE, and Macon is why. Its fire layer
 and its park layer both draw a district called `BlueMound`, and both draw one
 called `Niantic`; they are four different bodies filing four different reports.
@@ -90,7 +100,8 @@ import urllib.parse
 import urllib.request
 
 from comptroller_afr import (  # noqa: E402  (shared machinery — do not fork)
-    PACE, SEARCH_FORM, WAREHOUSE, contact_block, enumerate_county, new_session)
+    PACE, SEARCH_FORM, WAREHOUSE, contact_block, drop_lines_from_officers,
+    drop_mail_from_officers, enumerate_county, new_session)
 from arcgis_error import (  # noqa: E402  (shared — do not fork)
     ArcGISServiceError, raise_for_arcgis_error, retry_rate_limited)
 from scraper_common import require_robots_once, UA_ROSTER_COMPACT  # noqa: E402  (shared — do not fork)
@@ -212,10 +223,20 @@ BOUNDARIES = {
                          "where": "1=1", "field": "FIRE_DIST", "expand": "monroe"},
     ("madison", "park"): {"service": MADISON_GIS + "MadCo_ParkDistricts/FeatureServer/40",
                           "where": "1=1", "field": "PARK"},
+    # LAKE'S CARD PRINTS THE DISTRICT'S OWN TELEPHONE AND E-MAIL FROM ITS GIS,
+    # so `office` names those two fields and the run reads them beside the
+    # name. An officer's number or address that is one of them is the
+    # district's office line, not the person's, and rides nobody (main) --
+    # the rule set with Adam's ruling of 2026-10-17 on officers' own numbers
+    # and his choice of "E-mails too" the same day. Measured that day: one
+    # officer's filed number, a park district director's, is the number Lake's
+    # GIS prints as that district's own.
     ("lake", "fire"): {"service": LAKE_GIS + "LakeCounty_TaxDistricts/FeatureServer/4",
-                       "where": "ORG_NAME IS NOT NULL", "field": "ORG_NAME"},
+                       "where": "ORG_NAME IS NOT NULL", "field": "ORG_NAME",
+                       "office": {"phone": "PHONE", "email": "EMAIL"}},
     ("lake", "park"): {"service": LAKE_GIS + "LakeCounty_TaxDistricts/FeatureServer/11",
-                       "where": "ORG_NAME IS NOT NULL", "field": "ORG_NAME"},
+                       "where": "ORG_NAME IS NOT NULL", "field": "ORG_NAME",
+                       "office": {"phone": "PHONE", "email": "EMAIL"}},
 }
 
 # The county slug the card belongs to -> the Warehouse's spelling, used to
@@ -336,8 +357,10 @@ def service_names(spec, label):
     `validate_workflow_deps.FLEET_SHARED` exists to prevent, and which nothing
     gates.
     """
+    office = spec.get("office") or {}
     url = (spec["service"] + "/query?where=" + urllib.parse.quote(spec["where"])
-           + "&outFields=" + spec["field"] + "&returnGeometry=false&f=json")
+           + "&outFields=" + ",".join([spec["field"]] + sorted(office.values()))
+           + "&returnGeometry=false&f=json")
 
     def ask():
         require_robots_once(url, UA_ROSTER_COMPACT, headers={"User-Agent": UA_ROSTER_COMPACT},
@@ -357,20 +380,31 @@ def service_names(spec, label):
     rows = payload.get("features") or []
     if not rows:
         fail("%s: the service returned no features" % label)
-    out = []
+    out, contact = [], {}
     for f in rows:
-        value = (f.get("attributes") or {}).get(spec["field"])
+        attrs = f.get("attributes") or {}
+        value = attrs.get(spec["field"])
         if value is not None and str(value).strip():
             out.append(str(value).strip())
+            for kind, field in office.items():
+                held = attrs.get(field)
+                if held is not None and str(held).strip():
+                    contact.setdefault(str(value).strip(), {}).setdefault(
+                        kind, set()).add(str(held).strip())
     if not out:
         fail("%s: no %r values on %d feature(s) — the layer changed shape"
              % (label, spec["field"], len(rows)))
-    return out
+    return out, contact
 
 
 def shipped_cards():
-    """{(county slug, layer): [card name]} the app will look these up by."""
-    cards, monroe = {}, None
+    """The card names the app will look these up by, and each card's own
+    office contact where the county prints one beside the name.
+
+    Returns ({(county slug, layer): [card name]},
+             {(county slug, layer): {card name: {"phone"|"email": {values}}}}).
+    """
+    cards, contacts, monroe = {}, {}, None
     for (county, layer), spec in sorted(BOUNDARIES.items()):
         label = "%s %s" % (county, layer)
         if "file" in spec:
@@ -385,7 +419,9 @@ def shipped_cards():
                      % (spec["file"], spec["key"]))
         else:
             time.sleep(SERVICE_PACE)
-            found = service_names(spec, label)
+            found, contact = service_names(spec, label)
+            if contact:
+                contacts[(county, layer)] = contact
             if spec.get("expand") == "monroe":
                 if monroe is None:
                     monroe = monroe_fire_names()
@@ -397,7 +433,7 @@ def shipped_cards():
                          % ", ".join(missing))
                 found = [monroe[n.strip().upper()] for n in found]
         cards[(county, layer)] = sorted(set(found))
-    return cards
+    return cards, contacts
 
 
 def load_table():
@@ -797,7 +833,7 @@ def propose_table():
     the shipped roster. Rows it cannot resolve are written to `notFiled` with
     the reason the rules gave, for a person to settle or to leave recorded.
     """
-    cards = shipped_cards()
+    cards, _contacts = shipped_cards()
     session = new_session()
     index = build_unit_index(session)
     meta = index[4]
@@ -879,7 +915,7 @@ def main():
     if not args.out:
         ap.error("--out is required unless --propose is given")
 
-    cards = shipped_cards()
+    cards, contacts = shipped_cards()
     districts, not_filed = load_table()
     check_table_against_boundaries(cards, districts, not_filed)
 
@@ -888,6 +924,7 @@ def main():
 
     warnings, unmatched, notes = [], [], []
     blocks, counties = {}, {}
+    taken = {"phone": 0, "email": 0}
     for slug, layer, name, code, label, unit_type, county in districts:
         unit_label = "%s - a %s in %s County" % (label, unit_type, county)
         if code not in blocks:
@@ -906,9 +943,14 @@ def main():
                              ("phone", block["phone"]), ("email", block["email"])):
             if value:
                 entry["office"][field] = value
+        # A COPY PER CARD. One unit's block serves every card that draws it, in
+        # every county, and the line below changes officers in place.
         for bucket, person in drop_refiled_duplicates(
                 name, block["officers"], notes):
-            entry.setdefault(bucket, []).append(person)
+            entry.setdefault(bucket, []).append(dict(person))
+        office = (contacts.get((slug, layer)) or {}).get(name) or {}
+        taken["phone"] += drop_lines_from_officers(entry, sorted(office.get("phone") or ()))
+        taken["email"] += drop_mail_from_officers(entry, sorted(office.get("email") or ()))
         counties.setdefault(slug, {}).setdefault(layer, {})[name] = entry
 
     for (slug, layer, name), reason in sorted(not_filed.items()):
@@ -952,6 +994,9 @@ def main():
           "%d appointed -> %s"
           % (stamped, total, len(counties), board, heads, args.out),
           file=sys.stderr)
+    print("  %d officer number(s) and %d officer address(es) taken off as the "
+          "district's own office contact the county prints"
+          % (taken["phone"], taken["email"]), file=sys.stderr)
 
 
 if __name__ == "__main__":

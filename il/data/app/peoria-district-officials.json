@@ -3,10 +3,12 @@
     "AKRON-PRINCEVLLE FPD (Dist # 070)": {
       "board": [
         {
+          "email": "Gdown@apfd.com",
           "name": "Greg Down",
           "role": "President"
         },
         {
+          "email": "Rwilliams@apfd.com",
           "name": "Ryan Williams",
           "role": "Treasurer"
         }
@@ -29,6 +31,7 @@
           "role": "Director"
         },
         {
+          "email": "Aliesha@alphapark.org",
           "name": "Aliesha Sullivan",
           "role": "Manager"
         }
@@ -44,11 +47,15 @@
     "BRIMFIELD FPD (Dist # 084)": {
       "board": [
         {
+          "email": "ffcapt10@yahoo.com",
           "name": "Ralph Peters",
+          "phone": "(309) 231-4960",
           "role": "President"
         },
         {
+          "email": "jerry@jweaverinc.com",
           "name": "Jerry Weaver",
+          "phone": "(309) 696-7521",
           "role": "Treasurer"
         }
       ],
@@ -60,10 +67,12 @@
     "BRIMFLD PUB LIBRARY (Dist # 166)": {
       "board": [
         {
+          "email": "illex45@gmail.com",
           "name": "Holly More",
           "role": "President"
         },
         {
+          "email": "gstenger2@aol.com",
           "name": "George Stenger",
           "role": "Secretary"
         }
@@ -72,6 +81,7 @@
       "filedFor": "2025",
       "heads": [
         {
+          "email": "trip.barton@gmail.com",
           "name": "Charles Barton III",
           "role": "Treas./Admin."
         }
@@ -87,10 +97,12 @@
     "CHILLICOTHE COMM FPD (Dist # 115)": {
       "board": [
         {
+          "email": "kpeterson@chillifd.com",
           "name": "Kevin Peterson",
           "role": "President"
         },
         {
+          "email": "jsprinkle@chillifd.com",
           "name": "John Sprinkle",
           "role": "Treasurer"
         }
@@ -107,6 +119,7 @@
     "CHILLICOTHE PARK (Dist # 102)": {
       "board": [
         {
+          "email": "chillipark@chillicotheparkdistrict.org",
           "name": "Steve Maurer",
           "role": "President"
         }
@@ -115,7 +128,9 @@
       "filedFor": "2025",
       "heads": [
         {
+          "email": "treasurer@chillicotheparkdistrict.org",
           "name": "Jodi Maybanks",
+          "phone": "(309) 637-3511",
           "role": "Accountant"
         }
       ],
@@ -130,10 +145,12 @@
     "CHILLICOTHE PUB LIBR (Dist # 900)": {
       "board": [
         {
+          "email": "dcody@chillipld.org",
           "name": "Debbie Cody",
           "role": "President"
         },
         {
+          "email": "trazo@chillipld.org",
           "name": "Tom Razo",
           "role": "Treasurer"
         }
@@ -151,6 +168,7 @@
     "DUNLAP FPD (Dist # 148)": {
       "board": [
         {
+          "email": "ajoyce94@hotmail.com",
           "name": "Ann Joyce",
           "role": "President"
         }
@@ -178,6 +196,7 @@
           "role": "President"
         },
         {
+          "email": "RHolohan@DunlapLibrary.org",
           "name": "Ron Holohan",
           "role": "Treasurer"
         }
@@ -195,11 +214,15 @@
     "ELMWOOD FPD (Dist # 165)": {
       "board": [
         {
-          "name": "DAVID WAGNER",
+          "email": "DWAGNER@AGLANDFS.COM",
+          "name": "David Wagner",
+          "phone": "(309) 231-3774",
           "role": "President"
         },
         {
-          "name": "JAY MCKINTY",
+          "email": "jay.i.mckinty@faa.gov",
+          "name": "Jay McKinty",
+          "phone": "(309) 219-3663",
           "role": "Treasurer"
         }
       ],
@@ -211,11 +234,15 @@
     "HANNA CITY PARK DISTRICT (Dist # 461)": {
       "board": [
         {
+          "email": "tevanshcpd@gmail.com",
           "name": "Trace Evans",
+          "phone": "(309) 338-0784",
           "role": "President"
         },
         {
+          "email": "kzaborachcpd@gmail.com",
           "name": "Kathryn Zaborac",
+          "phone": "(309) 303-7460",
           "role": "Treasurer"
         }
       ],
@@ -230,10 +257,12 @@
     "HOLLIS TWP PKD (Dist # 206)": {
       "board": [
         {
+          "email": "jroberts@hollispark.org",
           "name": "Justin Roberts",
           "role": "President"
         },
         {
+          "email": "azeine@hollispark.org",
           "name": "Anita Zeine",
           "role": "Treasurer"
         }
@@ -255,6 +284,7 @@
           "role": "President"
         },
         {
+          "email": "lill@lmelibrary.org",
           "name": "Diane Smith",
           "role": "Treasurer"
         }
@@ -271,6 +301,7 @@
     "LIMESTONE FPD (Dist # 256)": {
       "board": [
         {
+          "email": "keith.steele@limestonefire.net",
           "name": "Keith Steele",
           "role": "President"
         },
@@ -292,6 +323,7 @@
     "LOGAN-TRIVOLI FPD (Dist # 272)": {
       "board": [
         {
+          "email": "Wconner@flco.com",
           "name": "Wendy Conner",
           "role": "President"
         },
@@ -315,11 +347,15 @@
       "filedFor": "2025",
       "heads": [
         {
+          "email": "ecahill@peoriaparks.org",
           "name": "Emily Cahill",
+          "phone": "(309) 681-2803",
           "role": "Director"
         },
         {
+          "email": "kross@peoriaparks.org",
           "name": "Karrie Ross",
+          "phone": "(309) 681-2802 Ext: 1202",
           "role": "Superintendent"
         }
       ],
@@ -332,10 +368,12 @@
     "TIMBER-HOLLIS FPD (Dist # 386)": {
       "board": [
         {
+          "email": "dudleyr1962@gmail.com",
           "name": "Donlad Rudd",
           "role": "President"
         },
         {
+          "email": "g.w.williams@glastel.net",
           "name": "Gary Williams",
           "role": "Treasurer"
         },
@@ -357,6 +395,7 @@
       "board": [
         {
           "name": "Mark Stecher",
+          "phone": "(309) 279-6300",
           "role": "President"
         }
       ],
@@ -368,7 +407,7 @@
       }
     }
   },
-  "generated": "2026-10-12T00:08:39Z",
+  "generated": "2026-10-18T22:42:49Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"

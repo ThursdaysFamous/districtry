@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
-"""Write six Illinois counties' board rosters from their own board pages.
+"""Write eight Illinois counties' board rosters from their own board pages.
 
 The scraper beside this one (`il_county_board_pages_scraper.py`) explains WHY
-these six exist as one pipeline: each was recorded as a county that had been
+these counties exist as one pipeline: each was recorded as a county that had been
 asked about its board and had not replied, while publishing its members on its
 own website the whole time.
 
-WHERE THE FILES GO, AND THE GATE THAT DECIDES IT. `il/data/source/`, not
-`il/data/app/`. `scripts/validate_index.py` requires every file in an instance's
-`data/app` to be referenced by that instance's `index.html`, and none of these
-six is: not one has county-board GEOMETRY, so the map draws no district for them
-and no card reads a roster. That gate is right, so the rosters sit with the other
-build-time inputs, and `scripts/build_county_pages.py`'s `il_districted` adapter
+WHERE THE FILES GO, AND THE GATE THAT DECIDES IT. `il/data/source/` for a
+county with no drawn districts, `il/data/app/` for one with them (`DRAWN`
+below). `scripts/validate_index.py` requires every file in an instance's
+`data/app` to be referenced by that instance's `index.html`, and a county with
+no county-board GEOMETRY has no card reading its roster. That gate is right,
+so those rosters sit with the other build-time inputs, and `scripts/build_county_pages.py`'s `il_districted` adapter
 reads BOTH directories — the Cook and Chicago-ward precedent — so each county
 still gets its own page naming its members for a reader and for a crawler.
 
-The day one of these counties' districts can be drawn, its roster moves to
-`data/app`, gains a worksheet entry and a network-first `sw.js` line, and the
-gate passes. Nothing here has to change for that to happen.
+The day one of these counties' districts can be drawn, it joins `DRAWN`, its
+roster moves to `data/app` and gains a worksheet entry and a network-first
+`sw.js` line, and the gate passes.
 
 ONE FILE PER COUNTY, because that is what the adapter's glob reads and what
 makes a county's roster removable on its own. Each is
@@ -45,6 +45,15 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from il_county_board_pages_scraper import SOURCES  # noqa: E402
 
 OUT_DIR = os.path.join(REPO_ROOT, "il", "data", "source")
+APP_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
+
+# THE COUNTIES WHOSE DISTRICTS ARE DRAWN, whose rosters the app's own cards
+# read and which therefore live in `data/app` (the move the docstring above
+# promised). Fayette, Cumberland, Jersey and Lawrence joined on 2026-10-16,
+# drawn where each county places whole precincts or townships
+# (build_partial_board_districts.py), and Jasper the same day. A county added here also needs a
+# worksheet roster entry and a dispatch entry, or validate_index.py fails.
+DRAWN = frozenset({"fayette", "cumberland", "jersey", "lawrence", "jasper"})
 
 
 def note(msg):
@@ -99,7 +108,8 @@ def main():
                 if not (member.get("name") or "").strip():
                     fail("%s district %s carries a record with no name"
                          % (slug, label))
-        path = os.path.join(OUT_DIR, "%s-county-board-members.json" % slug)
+        path = os.path.join(APP_DIR if slug in DRAWN else OUT_DIR,
+                            "%s-county-board-members.json" % slug)
         with open(path, "w", encoding="utf-8") as fh:
             json.dump(districts, fh, indent=2, sort_keys=True)
             fh.write("\n")

@@ -32,6 +32,14 @@ parser sees a field named `\ufeffuser-agent`, opens no group and answers "no
 group binds this client" for every path. robots_policy._parse strips it, with
 ISBE's own bytes as a selftest fixture — which is why this host reads
 correctly here and would not have before 2026-09-25.
+
+THAT LAST SENTENCE WAS TRUE OF ONE CLIENT AND NOT THE ONE THIS INSTANCE USES
+(corrected 2026-10-20). The host sends `text/plain` with no charset, and
+`requests` decodes that as ISO-8859-1, so through a requests session the mark
+reached the parser as `ï»¿`, which the strip did not remove: no group opened,
+and ncga_member_scraper.py, which reads through a session, never honoured the
+2-second delay. The stdlib client always decoded UTF-8 and read it correctly.
+robots_policy now decodes the bytes itself and strips both forms of the mark.
 """
 import os
 import sys

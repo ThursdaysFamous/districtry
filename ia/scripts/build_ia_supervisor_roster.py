@@ -37,16 +37,25 @@ its supervisors keep the unkeyed listing they already have on the County card.
 NEVER infer a district from the order a page lists people in -- that is the one
 failure mode that produces a complete, confident, wrong answer.
 
-NO PHONE RIDES A SUPERVISOR ROW. Every one of these 17 counties publishes ONE
-number for the whole board -- measured, one distinct value per county across
-all 67 keyed districts -- which is the courthouse board office, not a
-supervisor's line. build_ia_county_officers.py already hoists that number out
-of its own member rows into `boardPhone`; this file carries the same field at
-COUNTY level so the district card can print it as "Board office" instead of
-presenting the switchboard as the direct line of whichever supervisor the
-reader's district elected. A per-person number is a different fact and would
-have to arrive from a source that publishes one; the officer roster this reads
-from carries none, so none can leak through.
+A SHARED NUMBER NEVER RIDES A SUPERVISOR ROW; A SUPERVISOR'S OWN NUMBER DOES.
+Most counties publish ONE number for the whole board, which is the courthouse
+board office and not a supervisor's line. build_ia_county_officers.py already
+hoists that number out of its own member rows into `boardPhone`; this file
+carries the same field at COUNTY level so the district card can print it as
+"Board office" instead of presenting the switchboard as the direct line of
+whichever supervisor the reader's district elected. A number the county prints
+beside ONE supervisor and nobody else is a different fact, and since Adam's
+ruling of 2026-10-17 -- "if the official government source uses personal phone
+numbers, we publish those" -- it ships on that supervisor's row, as the
+county's own page prints it, even where it reads as the person's own mobile.
+Humboldt is the case that ruling settled: its board page prints five DISTINCT
+numbers beside its five supervisors. A row's number is refused if it is the
+board's shared number or if two supervisors in one county carry it, because
+either is a switchboard and must not read as one person's line. A supervisor's
+own E-MAIL rides the same way since the same day (Adam chose "E-mails too"):
+the officer roster carries the address a county's board page prints in that
+supervisor's block, and an address two supervisors in one county share stops
+the build exactly as a shared number does.
 
 A COUNTY MAY ANSWER THE QUESTION IN A LETTER RATHER THAN ON A PAGE. Four
 statewide routes are measured closed and some counties publish no page that
@@ -139,13 +148,31 @@ MIN_DISTRICTS = 16
 # Only places are recorded: a supervisor's street address is never written down
 # here or anywhere else in this repository.
 #
-# BUTLER IS DELIBERATELY ABSENT AND IS THE REASON THIS TABLE DEMANDS A
-# BIJECTION. Thirteen of its fifteen named townships move, consistently, as
-# though county 1 <-> layer 2 with 3 fixed -- but Ripley Township, which the
-# county puts in its District 3, lies WHOLLY inside the layer's district 1,
-# sampled 144 of 144 interior points. A renumbering cannot do that, so the two
-# sides are not describing one plan and the county has to be asked which is
-# current. A partial map would have shipped two wrong districts out of three.
+# BUTLER WAS DELIBERATELY ABSENT UNTIL 2026-10-15, AND IS THE REASON THIS
+# TABLE DEMANDS A BIJECTION. Thirteen of its fifteen named townships move,
+# consistently, as though county 1 <-> layer 2 with 3 fixed -- but Ripley
+# Township, which the county's board page puts in its District 3, lies WHOLLY
+# inside the layer's district 1, sampled 144 of 144 interior points. A
+# renumbering cannot do that, so the two sides were not describing one plan and
+# a partial map would have shipped two wrong districts out of three. What
+# settled it is how the county actually RAN its 2026 primary: the Secretary of
+# State's certified returns list the precincts that voted in each district's
+# contest, and those precincts compose this layer's districts exactly (see the
+# Butler entry). So the county's elections follow this layer's plan, and the
+# township list on its board page is what disagrees.
+#
+# THE CERTIFIED 2026 PRIMARY IS THE ROUTE THAT REACHES THE MOST COUNTIES. Every
+# Plan 3 county has some districts on that ballot, and the Secretary of State's
+# Clarity archive (electionresults.iowa.gov/IA/<County>/<eid>/<ver>/reports/
+# detailxml.zip) lists, per contest, the precincts entitled to vote in it.
+# Matched to this instance's own precinct layer, each district on the ballot is
+# placed directly, and AT MOST ONE district may then be placed by elimination
+# -- the precincts left over after every contest is placed. A county with two
+# or more districts off the ballot is NOT settled this way; the measurement is
+# recorded per county in ia/scripts/check_county_district_numbering.py's
+# PRECINCT_COUNTIES and re-runs offline. The incumbents who ran in that primary
+# are a second witness to the county page's own numbering, since a supervisor
+# must live in the district they hold and run for.
 NUMBERING_CHECKED = {
     "Howard": {
         "map": {"1": "1", "2": "2", "3": "3"},
@@ -324,6 +351,69 @@ NUMBERING_CHECKED = {
                    "the same five groups and puts the county's District 1 "
                    "(precincts 2, 3 and 11) on the west side of Osage, where "
                    "this layer's district 2 is",
+    },
+    "Butler": {
+        "map": {"1": "2", "2": "1", "3": "3"},
+        "checked": "2026-10-15",
+        "witness": ("the Secretary of State's certified 2026 primary returns "
+                   "(electionresults.iowa.gov/IA/Butler/126094/374762) list the "
+                   "precincts voting in each supervisor contest: District 2 in 1-GR, "
+                   "3-DU and 4-AL, all wholly inside this layer's district 1, and "
+                   "District 3 in 5-AP, 7-PB and 8-NH, all inside its district 3; "
+                   "District 1 was not on that ballot, and the two precincts left, "
+                   "2-CL and 6-SR, both lie inside this layer's district 2; the "
+                   "incumbents Wayne Dralle and Rusty Eddy ran in Districts 2 and 3, "
+                   "where the county's own board page lists them. The board page's "
+                   "township list puts Ripley Township in District 3, which the "
+                   "precincts the county voted do not"),
+    },
+    "Madison": {
+        "map": {"1": "1", "2": "2", "3": "3"},
+        "checked": "2026-10-15",
+        "witness": ("the Secretary of State's certified 2026 primary returns "
+                   "(electionresults.iowa.gov/IA/Madison/126143/375499) list the "
+                   "precincts voting in each supervisor contest: District 1's four "
+                   "precincts all lie wholly inside this layer's district 1 and "
+                   "District 3's three inside its district 3; District 2 was not on "
+                   "that ballot, and the three precincts left, Lincoln NE and "
+                   "Winterset's North and South wards, all lie inside this layer's "
+                   "district 2"),
+    },
+    "Sac": {
+        "map": {"1": "1", "2": "2", "3": "3"},
+        "checked": "2026-10-15",
+        "witness": ("the Secretary of State's certified 2026 primary returns "
+                   "(electionresults.iowa.gov/IA/Sac/126163/374521) list the "
+                   "precincts voting in each supervisor contest: District 2's three "
+                   "precincts all lie wholly inside this layer's district 2 and "
+                   "District 3's three inside its district 3; District 1 was not on "
+                   "that ballot, and the three precincts left, Early, Odebolt and "
+                   "Schaller, all lie inside this layer's district 1; the incumbents "
+                   "Mike Fischer and Jim Wissler ran in Districts 2 and 3, where the "
+                   "county's own board page lists them"),
+    },
+    "Taylor": {
+        "map": {"1": "1", "2": "2", "3": "3"},
+        "checked": "2026-10-15",
+        "witness": ("the Secretary of State's certified 2026 primary returns "
+                   "(electionresults.iowa.gov/IA/Taylor/126169/374410) list the "
+                   "precincts voting in each supervisor contest: District 1 in "
+                   "Precincts 1, 4 and 5, all wholly inside this layer's district 1, "
+                   "and District 3 in Precinct 3, inside its district 3; District 2 "
+                   "was not on that ballot, and the one precinct left, Precinct 2, "
+                   "lies inside this layer's district 2; the incumbent Jack Beggs "
+                   "ran in District 3, where the county's own board page lists him"),
+    },
+    "Humboldt": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-16",
+        "witness": ("the county's own 2021 supervisor district map, sent to "
+                   "this project by the county on 2026-10-16 in answer to its "
+                   "letter, colours every section by district and names each "
+                   "district's supervisor, the same five the county's board page "
+                   "names; all twelve townships' and eight towns' census interior "
+                   "points each land in this layer's district with the number "
+                   "the map paints there, every district spoken for"),
     },
     "Cass": {
         "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
@@ -738,46 +828,43 @@ def main():
             row = {"name": name}
             if src.get("party"):
                 row["party"] = src["party"]
-            # A PER-PERSON NUMBER IS DROPPED HERE, DELIBERATELY AND OUT LOUD.
-            # This used to raise, on the reading that src carries no phone by
-            # construction -- the officer builder hoists a shared board number
-            # out of its member rows -- so a number on a member row would be a
-            # new fact nobody had looked at. It stopped being hypothetical on
-            # 2026-10-01, when Humboldt gained a gated roster read off the
-            # county's own board page and that page prints a number beside each
-            # of its five supervisors.
+            # A SUPERVISOR'S OWN NUMBER SHIPS ON THEIR ROW. Until 2026-10-17
+            # it was dropped here and the drop printed on every run: Humboldt's
+            # board page prints a number beside each of its five supervisors,
+            # FIVE DISTINCT numbers, two adjacent office extensions and three
+            # on other exchanges, and three of the five read as personal
+            # mobiles. Whether these cards should carry a supervisor's own line
+            # was the operator's question, and Adam answered it for the whole
+            # fleet: "if the official government source uses personal phone
+            # numbers, we publish those." The number is the county's own page,
+            # carried by the gated officer roster exactly as printed.
             #
-            # IT IS MEASURABLY NOT A SWITCHBOARD, which is the question the
-            # raise asked: the five numbers are FIVE DISTINCT numbers, two
-            # adjacent office extensions and three on other exchanges, where a
-            # shared board line would be one number repeated five times. So it
-            # cannot be hoisted as the board's number either.
+            # A SHARED NUMBER IS STILL NOT ONE PERSON'S LINE. The officer
+            # builder hoists a number every member carries into `boardPhone`,
+            # so a row's number is distinct by construction; the two checks
+            # after this loop refuse a row whose number is the board's, or one
+            # two supervisors share, so a switchboard can never reach a
+            # district card as the direct line of whoever that district elects.
             #
-            # WHAT IT IS DOES NOT SETTLE WHETHER IT SHIPS. This builder
-            # publishes a name and a party and no contact detail for any of its
-            # counties, and three of these five read as personal mobiles rather
-            # than office lines. Shipping them would be a reader-visible change
-            # to the card, for one county, in the class of fact this project is
-            # deliberately cautious with -- so the number is dropped, the drop
-            # is printed on every run, and whether these cards should carry a
-            # supervisor's own line at all is the operator's question rather
-            # than this loop's. The county's own board page is linked from the
-            # card, and it is where the numbers are published.
+            # THE SAME HOLDS FOR AN E-MAIL ADDRESS, since Adam chose "E-mails
+            # too" the same day: the officer roster carries the address the
+            # county's own board page prints in this supervisor's block, and
+            # the check after this loop refuses one two supervisors share.
             #
-            # ANY OTHER NEW FIELD STILL STOPS THE BUILD. The raise below is
-            # what the phone raise was for: a field this builder has never seen
-            # must be looked at by a person rather than inherited or discarded.
+            # ANY OTHER NEW FIELD STILL STOPS THE BUILD: a field this builder
+            # has never seen must be looked at by a person rather than
+            # inherited or discarded.
             extra = sorted(k for k in src
-                           if k not in ("name", "party", "phone"))
+                           if k not in ("name", "party", "phone", "email"))
             if extra:
                 raise RuntimeError(
                     "%s names %s on supervisor %s -- a field this builder has "
                     "never shipped. Look at it before it is inherited or "
                     "dropped." % (county, ", ".join(extra), name))
             if src.get("phone"):
-                print("  phone dropped  %-12s %s -- this builder ships no "
-                      "per-person contact detail; the county's own board page "
-                      "publishes it" % (county, name), file=sys.stderr)
+                row["phone"] = src["phone"]
+            if src.get("email"):
+                row["email"] = src["email"]
             members[dist] = row
         rec = {
             "county": county,
@@ -939,16 +1026,45 @@ def main():
                "dropping it by hand"
                % ", ".join(sorted(set(gone) & set(refused_now)))))
 
-    # Structural refusal: only these two fields may ship on a person. No
-    # address, ever -- and no phone, because the only number any of these
-    # publishers gives is the board office's, which rides the county level.
+    # Structural refusal: only these four fields may ship on a person. No
+    # street address, ever. A phone ships only where the county printed it
+    # beside this one supervisor: a row carrying the board office's number, or
+    # a number another supervisor in the same county also carries, is a
+    # switchboard presented as a direct line, and the build stops. An e-mail
+    # address two supervisors in one county carry stops it the same way.
+    own_phones = own_emails = 0
     for fips, rec in directory.items():
+        seen = {}
+        seen_mail = {}
         for dist, row in rec["districts"].items():
-            extra = set(row) - {"name", "party"}
+            extra = set(row) - {"name", "party", "phone", "email"}
             if extra:
                 raise RuntimeError("%s district %s carries %s -- only "
-                                   "name/party may ship on a supervisor"
-                                   % (fips, dist, sorted(extra)))
+                                   "name/party/phone/email may ship on a "
+                                   "supervisor" % (fips, dist, sorted(extra)))
+            mail = (row.get("email") or "").strip().lower()
+            if mail:
+                if mail in seen_mail:
+                    raise RuntimeError("%s districts %s and %s carry the same "
+                                       "e-mail address -- a shared address is "
+                                       "the board's, not either supervisor's"
+                                       % (fips, seen_mail[mail], dist))
+                seen_mail[mail] = dist
+                own_emails += 1
+            phone = row.get("phone")
+            if not phone:
+                continue
+            if phone == rec.get("boardPhone"):
+                raise RuntimeError("%s district %s carries the board office's "
+                                   "number %s as its supervisor's own line"
+                                   % (fips, dist, phone))
+            if phone in seen:
+                raise RuntimeError("%s districts %s and %s carry the same "
+                                   "number %s -- a shared number is the board's, "
+                                   "not either supervisor's" % (fips, seen[phone],
+                                                                dist, phone))
+            seen[phone] = dist
+            own_phones += 1
 
     # A PRESERVED COUNTY IS NOT SKIPPED AND MUST NOT PRINT AS ONE. It ships
     # its supervisors; what it does not get is a fresh read. The loop above
@@ -957,9 +1073,10 @@ def main():
     held_counties = {c for c, _, _ in preserved}
     skipped = [(c, why) for c, why in skipped if c not in held_counties]
     print("ia-supervisor-members: %d plan 3 counties, %d districts keyed, "
-          "%d preserved, %d skipped | widest name-to-district gap %d chars"
+          "%d preserved, %d skipped | %d supervisor(s) with a number of their "
+          "own, %d with an e-mail address | widest name-to-district gap %d chars"
           % (len(directory) - len(preserved), total_districts, len(preserved),
-             len(skipped), widest), file=sys.stderr)
+             len(skipped), own_phones, own_emails, widest), file=sys.stderr)
     for county, read_on, n in preserved:
         print("  preserved %-13s %d district(s), last read %s -- robots.txt "
               "refuses this client, so the county is not re-read"

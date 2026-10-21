@@ -1383,8 +1383,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
      map, because on a phone the reader has usually scrolled down into the
      cards by the time it appears. Its z-index sits above the skip link (1000)
      and below the share popover (1100), the More menu (1200) and the feedback
-     form (2000), so it never covers any of them. Both buttons are 40px tall,
-     well clear of WCAG 2.5.8's 24px, because a miss lands on the page. */
+     form (2000), so it never covers any of them. Both controls are 40px
+     tall, well clear of WCAG 2.5.8's 24px, because a miss lands on the page;
+     the action is a button for the install and a link for the Android test,
+     drawn alike. */
   .install-invite {
     position: fixed;
     left: 12px;
@@ -1408,8 +1410,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .install-invite-text { flex: 1 1 auto; margin: 0; line-height: 1.4; }
   .install-invite-go {
     flex: none;
+    display: inline-flex;
+    align-items: center;
     min-height: 40px;
     padding: 0 14px;
+    text-decoration: none;
     background: transparent;
     color: var(--accent-deep, #0B5394);
     border: 1px solid var(--accent-deep, #0B5394);
@@ -4215,17 +4220,23 @@ function initArkansasExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "ar-senate": "ars", "county": "co", "ar-house": "arh",
-    "school-district-unified": "su", "zip-code": "zp", "quorum-court": "qc",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+  var LAYER_CODES = { "us-house": "us", "ar-court-of-appeals": "ara", "ar-circuit-court": "arc",
+    "ar-senate": "ars", "county": "co", "ar-house": "arh", "school-district-unified": "su",
+    "zip-code": "zp", "quorum-court": "qc", "county-subdivision": "cs", "fire-district": "fd",
+    "school-board-district": "bd", "voting-precinct": "vp", "municipality": "mu",
+    "city-ward": "cw", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ar-senate"],
-    "state-house": ["ar-house"], "county": ["county"], "county-board": ["quorum-court"],
-    "municipality": ["municipality"], "zip-code": ["zip-code"],
+    "state-house": ["ar-house"], "appellate-court-district": ["ar-court-of-appeals"],
+    "trial-court-district": ["ar-circuit-court"], "county": ["county"],
+    "county-board": ["quorum-court"], "county-subdivision": ["county-subdivision"],
+    "municipality": ["municipality"], "city-council": ["city-ward"],
+    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
     "school-district-unified": ["school-district-unified"],
+    "school-board-district": ["school-board-district"], "fire-district": ["fire-district"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -4290,7 +4301,9 @@ function initArkansasExplorer() {
     { id: "tennessee", label: "Tennessee", url: "https://districtry.com/tn/", emoji: "🎸", explorerName: "districtry Tennessee",
       bbox: { minLng: -90.32, minLat: 34.98, maxLng: -81.64, maxLat: 36.68 } },
     { id: "arkansas", label: "Arkansas", url: "https://districtry.com/ar/", emoji: "💎", explorerName: "districtry Arkansas",
-      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } }
+      bbox: { minLng: -94.62, minLat: 33.0, maxLng: -89.64, maxLat: 36.5 } },
+    { id: "mississippi", label: "Mississippi", url: "https://districtry.com/ms/", emoji: "🧸", explorerName: "districtry Mississippi",
+      bbox: { minLng: -91.66, minLat: 30.13, maxLng: -88.09, maxLat: 35.0 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -6444,7 +6457,8 @@ function initArkansasExplorer() {
   /* ==== ENGINE:END qr-code ==== */
   /* ==== ENGINE:BEGIN permalink ==== */
   /* =========================================================================
-   * SHAREABLE URL — #p=lat,lng&l=code1,code2&c=code&s=1&z=N mirrors the
+   * SHAREABLE URL — #p=lat,lng&l=code1,code2&c=code&s=1&z=N (and f=area on a
+   * link with no point, namedArea below) mirrors the
    * current selection so any view can be copied out of the URL bar (or via the
    * point chip's Copy-link button) and restored on load. replaceState, not
    * location.hash assignment, so clicking around never pollutes the back
@@ -6510,6 +6524,9 @@ function initArkansasExplorer() {
     }
     if (params.layers) params.layers.split(",").forEach(addLayer);
     if (params.l) params.l.split(",").forEach(function (t) { if (t) addLayer(layerFromLinkCode(t)); });
+    // The layers the link itself names, before `carry=` adds any: the ones
+    // linkFrame() opens the map on.
+    var named = layers.slice();
     // `carry=`: the layers a reader had on in the sibling app they just left,
     // named by what they mean. Each concept this app has turns on its own
     // layers for it; one it lacks is dropped, like an unknown id.
@@ -6519,9 +6536,11 @@ function initArkansasExplorer() {
     return {
       point: pick("p", "point"),
       layers: layers,
+      named: named,
       pin: params.c !== undefined ? layerFromLinkCode(params.c) : params.pin,
       stats: pick("s", "stats"),
       zoom: pick("z", "zoom"),
+      frame: pick("f", "frame"),
       q: params.q
     };
   }
@@ -6529,8 +6548,44 @@ function initArkansasExplorer() {
   // The zoom this fork boots at, read from the map rather than configured, so
   // the engine needs no per-metro constant and every fork gets its own default.
   // Safe to capture here: nothing between map creation and this line changes the
-  // zoom, and applyStateFromHash() runs at the end of boot.
+  // zoom, and applyStateFromHash() runs at the end of boot. A link framed on a
+  // city (linkFrame below) moves it to the zoom that city opened at.
   var bootZoom = map.getZoom();
+
+  // Where a link that names layers and no point opens. LAYER_FRAMES, generated
+  // from the worksheet's `frames`, names the city or county a layer answers in;
+  // a statewide app used to open every such link on the whole state, so the
+  // map link on Chicago's school board page showed central Illinois with
+  // Chicago at or past the top edge of the map. Guarded: an app with no table
+  // opens every link at its boot view, exactly as before.
+  var layerFrames = (typeof LAYER_FRAMES === "object" && LAYER_FRAMES) ? LAYER_FRAMES : { areas: {}, layers: {} };
+  // The extent covering every named layer's area, or null when any layer the
+  // app registers has no area, because then the boot view is the one that
+  // shows all of them. An id this app does not register is passed over.
+  function linkFrame(ids) {
+    var has = Object.prototype.hasOwnProperty, w = 180, s = 90, e = -180, n = -90, any = false;
+    for (var i = 0; i < ids.length; i++) {
+      if (!getLayerById(ids[i])) continue;
+      var area = has.call(layerFrames.layers, ids[i]) ? layerFrames.layers[ids[i]] : null;
+      var b = area !== null && has.call(layerFrames.areas, area) ? layerFrames.areas[area] : null;
+      if (!b) return null;
+      w = Math.min(w, b[0]); s = Math.min(s, b[1]); e = Math.max(e, b[2]); n = Math.max(n, b[3]);
+      any = true;
+    }
+    return any ? L.latLngBounds([s, w], [n, e]) : null;
+  }
+  // A link can also name its area itself (`f=`, `frame=` in the long form),
+  // for a page about one city whose layers also answer outside it: Chicago's
+  // ward page opens on Chicago, while its ward layer, which draws suburban
+  // wards too, opens every other link on the state. Only an area this app
+  // declares is read; any other name is ignored and the layers decide.
+  // linkAreaName is the area a link opened on, kept in the hash rewritten
+  // from it until a point is selected, so a reload opens the same way.
+  var linkAreaName = null;
+  function namedArea(name) {
+    var b = name && Object.prototype.hasOwnProperty.call(layerFrames.areas, name) ? layerFrames.areas[name] : null;
+    return b ? L.latLngBounds([b[1], b[0]], [b[3], b[2]]) : null;
+  }
 
   function syncUrlHash() {
     var parts = [];
@@ -6554,6 +6609,9 @@ function initArkansasExplorer() {
       // beside a pin, because the report is OF the pinned district.
       if (statsIsOpen()) parts.push("s=1");
     }
+    // The area a link named (namedArea), while no point is selected; a link
+    // with a point is not framed, so the area would say nothing.
+    if (linkAreaName && !state.selectedPoint) parts.push("f=" + linkAreaName);
     // Zoom rides the permalink because it is part of what was shared: an embed of
     // a whole county answers a different question from an embed of one block, and
     // a refresh should not throw the reader back to the default view. Emitted
@@ -6595,7 +6653,7 @@ function initArkansasExplorer() {
       var wanted = parseFloat(params.zoom);
       if (isFinite(wanted) && wanted >= map.getMinZoom() && wanted <= map.getMaxZoom()) zoom = wanted;
     }
-    var framed = false;
+    var framed = false, selected = false;
     if (params.point) {
       var pieces = params.point.split(",");
       var lat = parseFloat(pieces[0]), lng = parseFloat(pieces[1]);
@@ -6603,6 +6661,7 @@ function initArkansasExplorer() {
       if (isFinite(lat) && isFinite(lng) &&
           lat > PERMALINK_GATE.minLat && lat < PERMALINK_GATE.maxLat &&
           lng > PERMALINK_GATE.minLng && lng < PERMALINK_GATE.maxLng) {
+        selected = true;
         // skipPan when the link carries its own zoom, then frame it here.
         // setSelectedPoint's pan is ANIMATED and animates to at least zoom 15;
         // an animation in flight settles AFTER anything applied synchronously
@@ -6615,6 +6674,27 @@ function initArkansasExplorer() {
           framed = true;
         }
       }
+    }
+    // A link naming layers and no point opens on the area they answer in
+    // (linkFrame): the city, not the state around it. With no zoom of its own
+    // it takes the zoom that fits the area on this screen, never one farther
+    // out than the boot view, and makes that the boot zoom, so the hash it is
+    // rewritten to carries no `z=` and opens the same way again. With one, the
+    // area only places the centre. Measured 2026-10-20: the state view showed
+    // none of Chicago on a 412 by 860 phone and its southern sixth on a 1280 by
+    // 800 desktop; framed, all of it shows, at 9.5 and 10.5. An area the link
+    // names itself (namedArea) comes before the layers' own.
+    var area = selected ? null : namedArea(params.frame);
+    if (area) linkAreaName = params.frame;
+    else if (!selected) area = linkFrame(params.named);
+    if (area) {
+      var areaZoom = zoom !== null ? zoom : Math.max(map.getZoom(),
+        Math.min(map.getBoundsZoom(area, false, L.point(48, 48)), 14));
+      if (zoom === null) bootZoom = areaZoom;
+      map.setView(area.getCenter(), areaZoom, { animate: false });
+      framed = true;
+      // The layer toggles above rewrote the hash before the area was known.
+      if (linkAreaName) syncUrlHash();
     }
     if (zoom !== null && !framed) map.setView(map.getCenter(), zoom, { animate: false });
     // Parsed LAST, after the layers are on and the point is set, because a pin
@@ -7926,7 +8006,9 @@ function initArkansasExplorer() {
     return feats.map(function (f) {
       var c = (f.geometry && f.geometry.coordinates) || [];
       var p = f.properties || {};
-      return { lat: c[1], lon: c[0], display_name: photonLabel(p), extent: p.extent };
+      // source: whose data the answer is; the street-only message offers
+      // OpenStreetMap's note form for its data alone (ENGINE geocoder-search)
+      return { lat: c[1], lon: c[0], display_name: photonLabel(p), extent: p.extent, source: "openstreetmap" };
     }).filter(function (r) {
       return r.lat != null && r.lon != null && r.display_name;
     });
@@ -8133,6 +8215,21 @@ function initArkansasExplorer() {
     return { kind: "unreadable", source: "link" };
   }
 
+  /* ---------- a house number ----------
+   * Digits with an optional letter or a hyphenated second part ("2668",
+   * "123A", "89-11" in Queens), or a Wisconsin grid number: a direction and
+   * digits, once or twice ("N1234", "W123N4567"), which rural Wisconsin and
+   * the counties around Milwaukee use for every address. Photon holds them
+   * as written: asked on 2026-10-16 for Devil's Lake State Park's address,
+   * S5975 Park Rd in Baraboo, and for a two-part number in Menomonee Falls,
+   * it answered both numbers. Until that day only digits were read here, so
+   * a place shared with a grid address had no address to fall back to, and
+   * an answer at one could not count as carrying its number. A grid
+   * number's digits run to three or more, so a place named "N2 Bar" is
+   * still a name. Read with the "i" flag. */
+  var HOUSE_NUMBER = "(?:\\d+[a-z]?(?:-\\d+)?|[nsew]\\d+[nsew]\\d{3,}[a-z]?|[nsew]\\d{3,}[a-z]?)";
+  var OPENS_WITH_ADDRESS = new RegExp("^\\s*" + HOUSE_NUMBER + "\\s+\\S", "i");
+
   /* ---------- a place's name before its address ----------
    * A Google Maps link shared from the Android app carries no position. It
    * names the place as one string, its name and then its address
@@ -8142,12 +8239,13 @@ function initArkansasExplorer() {
    * Lodge string, though it holds the lodge by name. So when text a map link
    * carried matches nothing whole, the app's search box and the front
    * door's both try the address alone. Returns null unless the text opens
-   * with words and a later part, after a comma, opens with a house number. */
+   * with a name (not itself an address) and a later part, after a comma,
+   * opens with a house number. */
   function addressAfterName(q) {
     var parts = String(q).split(",");
-    if (parts.length < 2 || /^\s*\d/.test(parts[0])) return null;
+    if (parts.length < 2 || OPENS_WITH_ADDRESS.test(parts[0])) return null;
     for (var i = 1; i < parts.length; i++) {
-      if (/^\s*\d+[a-z]?(?:-\d+)?\s+\S/i.test(parts[i])) return parts.slice(i).join(",").trim();
+      if (OPENS_WITH_ADDRESS.test(parts[i])) return parts.slice(i).join(",").trim();
     }
     return null;
   }
@@ -8162,7 +8260,7 @@ function initArkansasExplorer() {
    * in the town of Oglesby, about 6 km from the lodge. A single such answer
    * would be selected as the place that was shared. */
   function labelCarriesNumber(label, address) {
-    var m = /^\s*(\d+[a-z]?(?:-\d+)?)\s/i.exec(String(address || ""));
+    var m = new RegExp("^\\s*(" + HOUSE_NUMBER + ")\\s", "i").exec(String(address || ""));
     if (!m) return false;
     return new RegExp("(?:^|[\\s,])" + m[1] + "(?=[\\s,]|$)", "i").test(String(label || ""));
   }
@@ -8187,6 +8285,62 @@ function initArkansasExplorer() {
     expressway: "Expy", freeway: "Fwy", highway: "Hwy", lane: "Ln", parkway: "Pkwy",
     place: "Pl", road: "Rd", square: "Sq", street: "St", terrace: "Ter", trail: "Trl"
   };
+  // The rest of the Postal Service's street types (Publication 28, appendix
+  // C1, read 2026-10-19), for matching names only (streetNameKey): the
+  // boundary-street labels print these words as CARTO does. The Census
+  // Bureau's geocoder writes every street type this way and OpenStreetMap,
+  // which Photon reads, writes it out, so until that day an answer on
+  // "ARROWHEAD TRCE" was not on Arrowhead Trace. A plural the Postal
+  // Service abbreviates as its singular (Parks, Parkways, Spurs, Walks) is
+  // left out, because every word of a name is matched in its abbreviation
+  // and Parks Road is not Park Road.
+  var STREET_SUFFIXES = {
+    alley: "ALY", anex: "ANX", annex: "ANX", arcade: "ARC", bayou: "BYU", beach: "BCH",
+    bend: "BND", bluff: "BLF", bluffs: "BLFS", bottom: "BTM", branch: "BR", bridge: "BRG",
+    brook: "BRK", brooks: "BRKS", burg: "BG", burgs: "BGS", bypass: "BYP", camp: "CP",
+    canyon: "CYN", cape: "CPE", causeway: "CSWY", center: "CTR", centers: "CTRS",
+    circles: "CIRS", cliff: "CLF", cliffs: "CLFS", club: "CLB", common: "CMN",
+    commons: "CMNS", corner: "COR", corners: "CORS", course: "CRSE", courts: "CTS",
+    cove: "CV", coves: "CVS", creek: "CRK", crescent: "CRES", crest: "CRST",
+    crossing: "XING", crossroad: "XRD", crossroads: "XRDS", curve: "CURV", dale: "DL",
+    dam: "DM", divide: "DV", drives: "DRS", estate: "EST", estates: "ESTS",
+    extension: "EXT", extensions: "EXTS", falls: "FLS", ferry: "FRY", field: "FLD",
+    fields: "FLDS", flat: "FLT", flats: "FLTS", ford: "FRD", fords: "FRDS", forest: "FRST",
+    forge: "FRG", forges: "FRGS", fork: "FRK", forks: "FRKS", fort: "FT", garden: "GDN",
+    gardens: "GDNS", gateway: "GTWY", glen: "GLN", glens: "GLNS", green: "GRN",
+    greens: "GRNS", grove: "GRV", groves: "GRVS", harbor: "HBR", harbors: "HBRS",
+    haven: "HVN", heights: "HTS", hill: "HL", hills: "HLS", hollow: "HOLW", inlet: "INLT",
+    island: "IS", islands: "ISS", junction: "JCT", junctions: "JCTS", key: "KY",
+    keys: "KYS", knoll: "KNL", knolls: "KNLS", lake: "LK", lakes: "LKS", landing: "LNDG",
+    light: "LGT", lights: "LGTS", loaf: "LF", lock: "LCK", locks: "LCKS", lodge: "LDG",
+    manor: "MNR", manors: "MNRS", meadow: "MDW", meadows: "MDWS", mill: "ML", mills: "MLS",
+    mission: "MSN", motorway: "MTWY", mount: "MT", mountain: "MTN", mountains: "MTNS",
+    neck: "NCK", orchard: "ORCH", overpass: "OPAS", passage: "PSGE", pine: "PNE",
+    pines: "PNES", plain: "PLN", plains: "PLNS", plaza: "PLZ", point: "PT", points: "PTS",
+    port: "PRT", ports: "PRTS", prairie: "PR", radial: "RADL", ranch: "RNCH", rapid: "RPD",
+    rapids: "RPDS", rest: "RST", ridge: "RDG", ridges: "RDGS", river: "RIV", roads: "RDS",
+    route: "RTE", shoal: "SHL", shoals: "SHLS", shore: "SHR", shores: "SHRS",
+    skyway: "SKWY", spring: "SPG", springs: "SPGS", squares: "SQS", station: "STA",
+    stravenue: "STRA", stream: "STRM", streets: "STS", summit: "SMT", throughway: "TRWY",
+    trace: "TRCE", track: "TRAK", trafficway: "TRFY", trailer: "TRLR", tunnel: "TUNL",
+    turnpike: "TPKE", underpass: "UPAS", union: "UN", unions: "UNS", valley: "VLY",
+    valleys: "VLYS", viaduct: "VIA", view: "VW", views: "VWS", village: "VLG",
+    villages: "VLGS", ville: "VL", vista: "VIS", well: "WL", wells: "WLS"
+  };
+  // Words of a street's name that are not street types and are written two
+  // ways, for matching names only (streetNameKey): a reader and the Census
+  // Bureau's geocoder abbreviate them, and OpenStreetMap's mappers often
+  // write them out, as in Saint Louis Avenue or Doctor Martin Luther King
+  // Junior Drive.
+  var STREET_NAME_WORDS = { saint: "ST", doctor: "DR", junior: "JR" };
+  // Every street type as streetNameKey writes it, the common ones and the
+  // rest of the Postal Service's list
+  var STREET_TYPE_KEYS = (function () {
+    var keys = {}, k;
+    for (k in STREET_TYPES) keys[STREET_TYPES[k].toUpperCase()] = true;
+    for (k in STREET_SUFFIXES) keys[STREET_SUFFIXES[k]] = true;
+    return keys;
+  })();
   function abbreviateStreetName(name) {
     var words = String(name || "").split(/\s+/).filter(Boolean);
     if (words.length < 2) return words.join(" ");
@@ -8222,48 +8376,128 @@ function initArkansasExplorer() {
    * and the reader taps the place (ENGINE geocoder-search showStreetOnly),
    * and the front door opens the app that covers it.
    *
-   * addressParts splits an address into its house number, street, town and
-   * ZIP code, or returns null unless it opens with a house number and has a
-   * part after the street. labelOnStreet says whether a geocoder's answer is
-   * on that street in that town: one part of the answer, less any house
-   * number, must name the same street once both are written in the
-   * abbreviations above, and another part must be the town or the ZIP code,
-   * because most street names are in many towns. A direction written on one
-   * side and not the other still matches; two different directions do not,
-   * because West and East Madison Street are miles apart. */
-  function addressParts(address) {
-    var parts = String(address || "").split(",").map(function (s) { return s.trim(); });
-    var m = /^(\d+[a-z]?(?:-\d+)?)\s+(.+)$/i.exec(parts[0] || "");
-    if (!m || parts.length < 2) return null;
+   * addressStreet reads the house number and the street from an address's
+   * first part, or returns null unless it opens with a house number.
+   * addressParts adds the town and the ZIP code, and returns null unless
+   * there is a part after the street. labelOnStreet says whether a
+   * geocoder's answer is on that street in that town: one part of the
+   * answer, less any house number, must name the same street once both are
+   * written in the abbreviations above, and another part must be the town or
+   * the ZIP code, because most street names are in many towns. A direction
+   * written on one side and not the other still matches; two different
+   * directions do not, because West and East Madison Street are miles
+   * apart. */
+  function addressStreet(address) {
+    var m = new RegExp("^(" + HOUSE_NUMBER + ")\\s+(.+)$", "i").exec(String(address || "").split(",")[0].trim());
+    if (!m) return null;
     // a unit at the end of the street line is not part of the street's name
     var street = m[2].replace(/\s+(?:#|(?:apt|apartment|suite|ste|unit|fl|floor|rm|room|bldg|building)\b\.?)\s*[\w-]*$/i, "");
+    return { number: m[1], street: street };
+  }
+  function addressParts(address) {
+    var parts = String(address || "").split(",").map(function (s) { return s.trim(); });
+    var a = addressStreet(parts[0]);
+    if (!a || parts.length < 2) return null;
     var town = parts[1], zip = "", i, s;
     for (i = 2; i < parts.length; i++) {
       s = /^[a-z]{2}(?:\s+(\d{5})(?:-\d{4})?)?$/i.exec(parts[i]);  // "IL 60559", "IL"
       if (s) { town = parts[i - 1]; zip = s[1] || ""; break; }
     }
     if (!zip) zip = (/(?:^|[\s,])(\d{5})(?:-\d{4})?(?=[\s,]|$)/.exec(parts.slice(1).join(", ")) || [])[1] || "";
-    return { number: m[1], street: street, town: town, zip: zip };
+    return { number: a.number, street: a.street, town: town, zip: zip };
   }
   // A street's name as a matching key: every word in its abbreviation, so
-  // "Drive" and "Dr" agree wherever they stand, then a leading and a
-  // trailing direction set apart when a name is left beside it, so "W North
-  // Ave" keeps North (a street named North) and loses W.
+  // "Drive" and "Dr", or "Trace" and "TRCE" (STREET_SUFFIXES), agree
+  // wherever they stand, then a leading and a trailing direction set apart
+  // when a name is left beside it, so "W North Ave" keeps North (a street
+  // named North) and loses W. `words` are the rest, each without the marks
+  // and accents inside it ("O'Brien" is OBRIEN), and `core` the same words
+  // as one string.
   function streetNameKey(name) {
     var dirs = {}, types = {}, k;
     for (k in STREET_DIRECTIONS) dirs[STREET_DIRECTIONS[k].toUpperCase()] = true;
     for (k in STREET_TYPES) types[STREET_TYPES[k].toUpperCase()] = true;
-    var words = String(name || "").replace(/\./g, "").split(/\s+/).filter(Boolean).map(function (w) {
-      var low = w.toLowerCase();
-      return (STREET_DIRECTIONS[low] || STREET_TYPES[low] || w).toUpperCase();
-    });
+    var text = String(name || "");
+    if (text.normalize) text = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    var words = text.replace(/\./g, "").split(/\s+/).map(function (w) {
+      var low = w.toLowerCase().replace(/[^a-z0-9]/g, "");
+      return (STREET_DIRECTIONS[low] || STREET_TYPES[low] || STREET_SUFFIXES[low] || STREET_NAME_WORDS[low] || low).toUpperCase();
+    }).filter(Boolean);
     var named = function (rest) { return rest.length > 1 || (rest.length === 1 && !types[rest[0]]); };
     var key = { pre: "", post: "" };
     if (words.length > 1 && dirs[words[words.length - 1]] && named(words.slice(0, -1))) key.post = words.pop();
     if (words.length > 1 && dirs[words[0]] && named(words.slice(1))) key.pre = words.shift();
+    key.words = words;
     key.core = words.join(" ");
     return key;
   }
+  /* Whether two streetNameKeys name one street: their directions do not
+   * differ, though either may be left off, and their names are the same
+   * once the spaces in them are taken out, so "N LA SALLE ST", as the
+   * Census Bureau's geocoder wrote City Hall's street on 2026-10-19, is
+   * North LaSalle Street. When the address names its street with no type
+   * ("9 W Eugenie, Chicago"), a name that only adds one is the same
+   * street. */
+  function sameStreet(got, want) {
+    if (!got.words.length || !want.words.length) return false;
+    if ((got.pre && want.pre && got.pre !== want.pre) || (got.post && want.post && got.post !== want.post)) return false;
+    var g = got.words, w = want.words;
+    if (g.join("") === w.join("")) return true;
+    var typed = w.length > 1 && STREET_TYPE_KEYS[w[w.length - 1]];
+    return !typed && g.length > 1 && !!STREET_TYPE_KEYS[g[g.length - 1]] && g.slice(0, -1).join("") === w.join("");
+  }
+  // Whether one part of an answer's label, less any house number, names the
+  // street `want` (a streetNameKey) names
+  function partNamesStreet(part, want) {
+    return sameStreet(streetNameKey(String(part).trim().replace(new RegExp("^" + HOUSE_NUMBER + "\\s+", "i"), "")), want);
+  }
+
+  /* ---------- the house an address names ----------
+   * labelCarriesNumber asks only whether an answer's label carries the
+   * address's house number somewhere, and on 2026-10-19 that let the map
+   * take another street's house with the same number for the house: of 49
+   * Cook County addresses typed into the Illinois map's search box, the one
+   * answer for one of them was that number on a different street, which a
+   * question page's address box selects when it is the only answer (ENGINE
+   * geocoder-search prefillGeocodeSearch). labelAtHouse asks for the house:
+   * a part of the label that opens with the number and goes on to name the
+   * address's street (sameStreet). The town is not read, because Photon
+   * names the Cook County township a Chicago street is in where the city's
+   * name would be (addressInTownOf). An address typed with its town and no
+   * comma ("9 W Eugenie St Chicago") names its street and then the town, so
+   * an answer whose street, ending in its type, is the first words after
+   * the number is the house too, unless a direction straight after it is
+   * another. A street the reader writes with fewer of its words than the
+   * answer does ("S King Dr" for South Doctor Martin Luther King Junior
+   * Drive) is not the house to this test, and the answer is still listed
+   * for the reader to pick: a test that let some of a name's words stand
+   * for all of them would take Oak Avenue for Oak Park Avenue. */
+  function labelAtHouse(label, address) {
+    var a = addressStreet(address);
+    if (!a) return false;
+    var want = streetNameKey(a.street), number = a.number.toLowerCase();
+    var opens = new RegExp("^\\s*(" + HOUSE_NUMBER + ")\\s+(\\S.*)$", "i");
+    return String(label || "").split(",").some(function (part) {
+      var m = opens.exec(part);
+      if (!m || m[1].toLowerCase() !== number) return false;
+      var got = streetNameKey(m[2]);
+      return sameStreet(got, want) || streetThenTown(got, want);
+    });
+  }
+  function streetThenTown(got, want) {
+    var g = got.words, w = want.words, k;
+    if (!g.length || !STREET_TYPE_KEYS[g[g.length - 1]] || (got.pre && want.pre && got.pre !== want.pre)) return false;
+    for (k = 1; k < w.length; k++) {
+      if (w.slice(0, k).join("") !== g.join("")) continue;
+      return !(got.post && STREET_DIRECTION_KEYS[w[k]] && w[k] !== got.post);
+    }
+    return false;
+  }
+  var STREET_DIRECTION_KEYS = (function () {
+    var keys = {}, k;
+    for (k in STREET_DIRECTIONS) keys[STREET_DIRECTIONS[k].toUpperCase()] = true;
+    return keys;
+  })();
   function labelOnStreet(label, address) {
     var a = addressParts(address);
     if (!a) return false;
@@ -8273,11 +8507,220 @@ function initArkansasExplorer() {
     String(label || "").split(",").forEach(function (part) {
       var low = part.trim().toLowerCase();
       if (low && (low === town || low === a.zip)) inTown = true;
-      var got = streetNameKey(part.trim().replace(/^\d+[a-z]?(?:-\d+)?\s+/i, ""));
-      if (got.core === want.core && (!got.pre || !want.pre || got.pre === want.pre) &&
-          (!got.post || !want.post || got.post === want.post)) onStreet = true;
+      if (partNamesStreet(part, want)) onStreet = true;
     });
     return onStreet && inTown;
+  }
+
+  /* ---------- the town an answer puts a typed address in ----------
+   * An address typed into a state's app often names no town ("1600 W
+   * North Ave"), or names it with no comma before it ("1600 W North Ave
+   * Chicago"), and the map's search may answer the street in one town or
+   * in several. addressInTownOf gives the address in a town and the state
+   * of an answer on its street ("1600 W North Ave, Chicago, IL"). When the
+   * address names a town, after a comma (labelOnStreet) or as the words
+   * after the street, and the answer is not in it, the result is null, as
+   * it is for an answer on another street or a label that names no state.
+   *
+   * A ZIP CODE TYPED WITH THE ADDRESS IS KEPT ("1600 W North Ave, Chicago,
+   * IL 60622"), from 2026-10-19, because the Census Bureau's lookup
+   * (ENGINE geocoder-search lookupAddressRanges) finds a house by its ZIP
+   * code as well as by its town: asked that day for the Lincoln Park Zoo's
+   * address with its ZIP code and no town, it found the zoo, and asked
+   * with the Cook County township Photon names and a wrong ZIP code, it
+   * found nothing. Asked with the township alone it found the zoo too, but
+   * for three of 49 Cook County addresses tested that day it found nothing
+   * with the township alone. Until then the ZIP code was left out, so an
+   * address typed with a ZIP code and no town went to the lookup with the
+   * township alone. An answer's own ZIP code is not put in here, because
+   * one long street runs through several and the answer's is the street's,
+   * not the house's; the lookup is asked with it only when every answer on
+   * the street in that town names the same one (ENGINE geocoder-search
+   * showStreetOnly).
+   *
+   * THE TOWN TYPED AFTER A COMMA IS KEPT when the answer is in it only by
+   * its ZIP code (townTypedIn). Otherwise the town is the answer's own, the
+   * part of its label before the state's name, so a neighbourhood typed
+   * where the town would be ("1600 W North Ave, Wicker Park") gives the
+   * city the answer names. Until 2026-10-19 the town was always the
+   * answer's, while labelOnStreet also takes an answer whose only part in
+   * common with the address's town is its ZIP code. Measured that day over
+   * 49 Cook County addresses near county commissioner district lines: of
+   * the 75 answers the map listed for the 26 Chicago addresses, 57 named the
+   * Cook County township a street is in ("North Chicago Township") where
+   * the city's name would be, and an answer on Kemman Avenue in La Grange
+   * shares the ZIP code 60526 with La Grange Park. The township went into
+   * the address the Census Bureau's lookup was asked about (ENGINE
+   * geocoder-search lookupAddressRanges): it found nothing for three of the
+   * 49, and for a fourth it found the house in Chicago, which the app then
+   * refused as not in the township. Asked with the town as typed, it found
+   * all four. Answers naming the city and the township, or La Grange and La
+   * Grange Park, were also listed as two towns for the reader to pick from.
+   * An address that names no town, or only a state or a ZIP code after the
+   * comma, still takes the answer's town, township and all, and the lookup
+   * is then asked with the ZIP code the answers on the street name when
+   * they name one, and takes a match in one of the ZIP codes they name
+   * (ENGINE geocoder-search showStreetOnly, lookupAddressRanges). A town
+   * the Census Bureau does not know, such as a misspelling or a
+   * neighbourhood the answer does not name, is kept too. It is kept only
+   * when the answer has the ZIP code typed with it (labelOnStreet), and
+   * that ZIP code goes to the lookup as well, with which the lookup found
+   * the zoo under the township's name; whether it finds a house typed with
+   * a misspelled town that way was not measured. When the lookup finds
+   * nothing, the map shows the street as it does whenever the lookup finds
+   * none. */
+  function addressInTownOf(address, label) {
+    var a = addressStreet(address), named = addressParts(address);
+    if (!a || (named && !labelOnStreet(label, address))) return null;
+    var parts = String(label || "").split(",").map(function (p) { return p.trim(); });
+    var at = -1, tag = "", j, n, i;
+    for (j = parts.length - 1; j >= 2 && !tag; j--) {
+      tag = stateTagOfName(parts[j]);
+      if (tag) at = j;
+    }
+    if (!tag) return null;
+    var town = parts[at - 1], low = town.toLowerCase();
+    var called = townTypedIn(named, parts, tag) || town;
+    // the ZIP code typed after a comma, or as the last word of an address
+    // typed with no comma ("1600 W North Ave Chicago IL 60622")
+    var zip = named ? named.zip : (/\s(\d{5})(?:-\d{4})?\s*$/.exec(String(address)) || [])[1] || "";
+    var words = a.street.split(/\s+/);
+    for (n = words.length; n >= 1; n--) {
+      var rest = words.slice(n).join(" ").toLowerCase();
+      if (rest && rest !== low && rest.indexOf(low + " ") !== 0) continue;
+      var want = streetNameKey(words.slice(0, n).join(" "));
+      if (!want.core) continue;
+      for (i = 0; i < at - 1; i++) {
+        if (partNamesStreet(parts[i], want)) {
+          return a.number + " " + words.slice(0, n).join(" ") + ", " + called + ", " + tag.toUpperCase() +
+            (zip ? " " + zip : "");
+        }
+      }
+    }
+    return null;
+  }
+  // The town an address names after a comma (addressParts), less a ZIP code
+  // and the state written after it with no comma between ("Chicago IL
+  // 60614"), when no part of the label (`parts`) is that town; "" when one
+  // is, when the address names none, or when the part after its comma is
+  // only a state or a ZIP code ("IL 60614"). `tag` is the label's state.
+  function townTypedIn(named, parts, tag) {
+    var t = named ? named.town.replace(/\s+\d{5}(?:-\d{4})?$/, "") : "";
+    [tag, US_STATE_NAMES[tag]].forEach(function (state) {
+      var end = " " + String(state || "").toLowerCase();
+      if (t.length > end.length && t.slice(-end.length).toLowerCase() === end) t = t.slice(0, -end.length);
+    });
+    var low = t.toLowerCase(), i;
+    if (!/[a-z]/i.test(t) || stateTagOfName(t) || US_STATE_NAMES.hasOwnProperty(low)) return "";
+    for (i = 0; i < parts.length; i++) {
+      if (parts[i].toLowerCase() === low) return "";
+    }
+    return t;
+  }
+
+  /* ---------- the state a place's address names ----------
+   * The installed app's launcher opens a shared place in the state the
+   * reader used last, and until 2026-10-16 that app searched for it there:
+   * a place in Wisconsin shared from a phone whose last map was Illinois's
+   * was looked for in Illinois, where a search bounded to the state either
+   * found nothing and offered a row to tap for Wisconsin, or found an
+   * Illinois street of the same name. An address names its own state, so
+   * the text a map link carries is read for it first (ENGINE
+   * geocoder-search, and the front door's address box): a postal code at
+   * the end, after a comma, in capitals or before a ZIP code ("Baraboo, WI
+   * 53913", "Peoria, IL"), or a state's name there ("Baraboo, Wisconsin").
+   * Only the end is read, so "Wisconsin Dells Inn, 1 Main St, Rockford, IL
+   * 61101" is in Illinois. Returns the code in lower case, which is also
+   * the tag of the app for that state, or "" when the text names none. */
+  var US_STATE_NAMES = {
+    al: "Alabama", ak: "Alaska", az: "Arizona", ar: "Arkansas", ca: "California",
+    co: "Colorado", ct: "Connecticut", de: "Delaware", dc: "District of Columbia",
+    fl: "Florida", ga: "Georgia", hi: "Hawaii", id: "Idaho", il: "Illinois",
+    "in": "Indiana", ia: "Iowa", ks: "Kansas", ky: "Kentucky", la: "Louisiana",
+    me: "Maine", md: "Maryland", ma: "Massachusetts", mi: "Michigan", mn: "Minnesota",
+    ms: "Mississippi", mo: "Missouri", mt: "Montana", ne: "Nebraska", nv: "Nevada",
+    nh: "New Hampshire", nj: "New Jersey", nm: "New Mexico", ny: "New York",
+    nc: "North Carolina", nd: "North Dakota", oh: "Ohio", ok: "Oklahoma", or: "Oregon",
+    pa: "Pennsylvania", ri: "Rhode Island", sc: "South Carolina", sd: "South Dakota",
+    tn: "Tennessee", tx: "Texas", ut: "Utah", vt: "Vermont", va: "Virginia",
+    wa: "Washington", wv: "West Virginia", wi: "Wisconsin", wy: "Wyoming"
+  };
+  function addressStateTag(text) {
+    // a country written after the address ("…, WI 53913, USA") is not a state
+    var t = String(text || "").trim()
+      .replace(/(?:,\s*|\s+)(?:usa|u\.s\.a\.?|u\.s\.?|us|united states(?: of america)?)\s*$/i, "").trim();
+    var m = /,\s*([a-z]{2})(\s+\d{5}(?:-\d{4})?)?$/i.exec(t);
+    if (m && US_STATE_NAMES.hasOwnProperty(m[1].toLowerCase()) && (m[2] || /^[A-Z]{2}$/.test(m[1]))) {
+      return m[1].toLowerCase();
+    }
+    m = /,\s*([a-z][a-z .]*?)(?:\s+\d{5}(?:-\d{4})?)?$/i.exec(t);
+    return m ? stateTagOfName(m[1]) : "";
+  }
+  // The tag of the state a name names ("Wisconsin" -> "wi"), or ""
+  function stateTagOfName(text) {
+    var name = String(text || "").replace(/\s+/g, " ").trim().toLowerCase();
+    for (var k in US_STATE_NAMES) {
+      if (US_STATE_NAMES.hasOwnProperty(k) && US_STATE_NAMES[k].toLowerCase() === name) return k;
+    }
+    return "";
+  }
+  // A state's name as it reads in a sentence: "in Ohio", "in the District
+  // of Columbia".
+  function stateInSentence(tag) {
+    return (tag === "dc" ? "the " : "") + (US_STATE_NAMES[tag] || "");
+  }
+  /* An address as the Census Bureau's lookup is asked about it when the
+   * map's search knows neither the house nor its street (ENGINE
+   * geocoder-search showStreetOnly): the number and the street, then the
+   * town, the state and the ZIP code, each part after a comma, as
+   * addressInTownOf writes one. A state the address does not name is
+   * `tag`'s, the app's own. Until 2026-10-19 the lookup was asked only
+   * about addresses written that way, with the town and state of the
+   * search's answer or as a map link writes them, while an address typed
+   * into the search box often names no state and leaves out the comma
+   * after its town ("9 W Oakley Dr NW, Westmont IL 60559"). Null when it
+   * names no town and no ZIP code. */
+  function addressForLookup(address, tag) {
+    var a = addressParts(address);
+    if (!a) return null;
+    var parts = String(address).split(",").map(function (s) { return s.trim(); });
+    var at = 1, state = "", i, m, p;
+    for (i = 2; i < parts.length; i++) {
+      if (/^[a-z]{2}(?:\s+\d{5}(?:-\d{4})?)?$/i.test(parts[i])) { at = i - 1; break; }
+    }
+    // the state after the town: its code, in either case, or its name
+    for (i = at + 1; i < parts.length && !state; i++) {
+      p = parts[i].replace(/\s+\d{5}(?:-\d{4})?$/, "");
+      state = /^[a-z]{2}$/i.test(p) && US_STATE_NAMES.hasOwnProperty(p.toLowerCase()) ? p.toLowerCase() : stateTagOfName(p);
+    }
+    // or its code after the town with no comma ("Westmont IL"), or in place
+    // of the town ("IL 60559"); a town named for a state (Oregon, Illinois)
+    // is a town
+    var town = a.town.replace(/(?:^|\s+)\d{5}(?:-\d{4})?$/, "").trim();
+    m = /(?:^|\s)([a-z]{2})$/i.exec(town);
+    if (m && US_STATE_NAMES.hasOwnProperty(m[1].toLowerCase())) {
+      state = state || m[1].toLowerCase();
+      town = town.slice(0, -2).trim();
+    }
+    state = state || String(tag || "").toLowerCase();
+    if ((!town && !a.zip) || !US_STATE_NAMES.hasOwnProperty(state)) return null;
+    return a.number + " " + a.street + (town ? ", " + town : "") + ", " + state.toUpperCase() + (a.zip ? " " + a.zip : "");
+  }
+  /* The link handed to another app for a place it should search: the text
+   * rebuilt as a link of the kind it came in, which that app's parseMapLink
+   * reads back as the same text from the same maker, so its search treats it
+   * as a link's text (the address alone, the street, the name), not as
+   * typing, and the short link is not looked up a second time. Spaces are
+   * written "+" and commas as they are, the way the makers write their own
+   * links, so it reads as words in the search box it lands in; punctuation
+   * at the very end is written in % form, since mapLinkUrl drops it from a
+   * link as the end of a sentence. */
+  function mapLinkForText(link) {
+    var q = encodeURIComponent(link.text).replace(/%20/g, "+").replace(/%2C/gi, ",")
+      .replace(/[.,;:!?)\]]+$/, function (tail) {
+        return tail.replace(/[\s\S]/g, function (ch) { return "%" + ch.charCodeAt(0).toString(16).toUpperCase(); });
+      });
+    return (link.source === "apple" ? "https://maps.apple.com/?q=" : "https://www.google.com/maps?q=") + q;
   }
 
   /* A SHORT LINK holds no position: only Google or Apple knows where it
@@ -8285,8 +8728,12 @@ function initArkansasExplorer() {
    * read where another site redirects. MAP_LINK_LOOKUP is districtry's own
    * lookup (services/link-lookup/main.ts, on Deno Deploy), which follows the
    * link and returns the full link it leads to; its own code stores nothing.
-   * Only a short link is ever sent to it, and only when a reader pastes one
-   * or shares one into the installed app.
+   * A short link is sent to it only when a reader pastes one or shares one
+   * into the installed app. An app's search also sends it an address a
+   * reader searched for, typed or carried by a map link, for the Census
+   * Bureau's geocoder, when the map's own search holds the street and not
+   * the house number (ENGINE geocoder-search lookupAddressRanges); the front
+   * door never does.
    * The address is the app's own name on Deno, not the suffixed address
    * Deno also serves it at. The lookup's host receives the short link, so
    * build_privacy_page.py names it (LINK_LOOKUP_HOST), and a change of host
@@ -8427,7 +8874,10 @@ function initArkansasExplorer() {
   /* ==== ENGINE:END map-link ==== */
 
   /* ==== ENGINE:BEGIN geocoder-search ==== */
-  function renderGeocodeResults(results, fromLink) {
+  // `rows`, when given, can name a class for a row (rows.mark) and take a
+  // row's click instead of selecting its point, by returning true
+  // (rows.pick): listHeldAnswers uses both
+  function renderGeocodeResults(results, fromLink, rows) {
     // the district section (district-result / district-hint rows) is owned by
     // renderDistrictSection and stays on top; only address rows are replaced
     clearResultRows(false);
@@ -8442,6 +8892,7 @@ function initArkansasExplorer() {
     }
     results.forEach(function (r) {
       var li = document.createElement("li");
+      if (rows && rows.mark) li.className = rows.mark(r);
       var btn = document.createElement("button");
       btn.type = "button";
       btn.textContent = r.display_name; // textContent — never innerHTML — for untrusted geocoder output
@@ -8450,6 +8901,7 @@ function initArkansasExplorer() {
         // response can't re-open the list over the "Selected:" status
         clearTimeout(debounceTimer);
         if (inFlightController) inFlightController.abort();
+        if (rows && rows.pick && rows.pick(r)) return;
         trackEvent("address-search");
         setSelectedPoint(parseFloat(r.lat), parseFloat(r.lon));
         geoResultsList.innerHTML = "";
@@ -8473,7 +8925,7 @@ function initArkansasExplorer() {
    * row that hands off to that fork with the address pre-selected via its
    * #point= permalink. Only runs after a zero-result home search, so the
    * extra request never fires for normal in-city typing. */
-  function buildSiblingResultRow(metro, r) {
+  function siblingRow(metro, label, go) {
     var li = document.createElement("li");
     li.className = "sibling-result";
     var btn = document.createElement("button");
@@ -8481,7 +8933,7 @@ function initArkansasExplorer() {
     var addr = document.createElement("span");
     addr.className = "sibling-result-addr";
     // textContent — never innerHTML — for untrusted geocoder output
-    addr.textContent = (metro.emoji ? metro.emoji + " " : "") + r.display_name;
+    addr.textContent = (metro.emoji ? metro.emoji + " " : "") + label;
     var hint = document.createElement("span");
     hint.className = "sibling-result-hint";
     hint.textContent = "Open in " + siblingDisplayName(metro) + " →";
@@ -8490,15 +8942,92 @@ function initArkansasExplorer() {
     btn.addEventListener("click", function () {
       clearTimeout(debounceTimer);
       if (inFlightController) inFlightController.abort();
-      trackEvent("metro-portal-go/" + metro.id, "search");
-      window.location.href = metroPortalUrl(metro, { lat: parseFloat(r.lat), lng: parseFloat(r.lon) }, map.getZoom());
+      go();
     });
     li.appendChild(btn);
     return li;
   }
+  function buildSiblingResultRow(metro, r) {
+    return siblingRow(metro, r.display_name, function () {
+      trackEvent("metro-portal-go/" + metro.id, "search");
+      window.location.href = metroPortalUrl(metro, { lat: parseFloat(r.lat), lng: parseFloat(r.lon) }, map.getZoom());
+    });
+  }
+  // An answer that is not the house an address names (isHouse): that app is
+  // opened with the address, as #q=, and searches it there, where such an
+  // answer is never selected (listHeldAnswers); the answer's own point is a
+  // spot somewhere along a street, or another street's house, not the
+  // address
+  function handOnSiblingRow(metro, r, address) {
+    var li = siblingRow(metro, r.display_name, function () {
+      trackEvent("metro-portal-go/" + metro.id, "search");
+      var url = metroPortalUrl(metro);
+      window.location.href = url + (url.indexOf("#") < 0 ? "#" : "&") + "q=" + encodeURIComponent(address);
+    });
+    li.className += " " + houseMark(r, address);
+    return li;
+  }
+
+  /* ---------- a link to a place in another state ----------
+   * A link whose text names another state in its address (ENGINE map-link
+   * addressStateTag) is that state's to search: this app's search is bounded
+   * to its own state, so it would find nothing there, or a street of the same
+   * name here. It draws one row, which opens that state's app with the link
+   * as #q=, where the search reads it as a link and tries the address alone,
+   * the street and the name as it would here; #q= follows the row
+   * (prefillGeocodeSearch), so a place shared into the installed app opens in
+   * its own state whichever state the launcher chose. A state with no app is
+   * named, and nothing is searched.
+   *
+   * ONLY A WHOLE STATE'S APP. San Francisco's app carries California's tag
+   * and answers for one city, so an address in California does not say the
+   * place is in it: such a link is searched here as before, and the sibling
+   * lookup decides by the place's position. It returns false then, and true
+   * when it has answered. */
+  function metroForTag(tag) {
+    for (var i = 0; i < METRO_EXPLORERS.length; i++) {
+      var m = METRO_EXPLORERS[i], path = /\/([a-z]{2})\/?$/.exec(m.url || "");
+      if (m.id !== THIS_METRO && path && path[1] === tag) return m;
+    }
+    return null;
+  }
+  function showLinkElsewhere(link, tag) {
+    var metro = metroForTag(tag);
+    if (metro && metro.label !== US_STATE_NAMES[tag]) return false;
+    var maker = link.source === "apple" ? "Apple Maps" : "Google Maps";
+    if (inFlightController) inFlightController.abort();
+    clearResultRows(true);
+    clearResultRows(false);
+    if (!metro) {
+      geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) +
+        ", which districtry doesn't cover yet.";
+      geoStatus.className = "geo-status err";
+      countLinkRead("uncovered");
+      return true;
+    }
+    var row = siblingRow(metro, link.text, function () {
+      if (metroHandedOff) return;
+      metroHandedOff = true;
+      geoStatus.textContent = "Opening " + siblingDisplayName(metro) + "\u2026";
+      geoStatus.className = "geo-status";
+      trackEvent("metro-portal-go/" + metro.id, "map-link");
+      var url = metroPortalUrl(metro);
+      window.location.href = url + (url.indexOf("#") < 0 ? "#" : "&") + "q=" + encodeURIComponent(mapLinkForText(link));
+    });
+    row.className += " map-link-away";
+    geoResultsList.appendChild(row);
+    geoStatus.textContent = "That " + maker + " link is to a place in " + stateInSentence(tag) + ".";
+    geoStatus.className = "geo-status";
+    countLinkRead("other-state");
+    return true;
+  }
 
   var SIBLING_ROWS_PER_METRO = 2; // keeps a many-metro future from flooding the result list
-  function maybeRenderSiblingMatches(query, mustCarry, seen) {
+  // `handOn` is an address held to its house number (runAddressSearch): when
+  // no answer is the house (isHouse), the answers are listed as rows that
+  // open their app with the address (handOnSiblingRow) instead of being
+  // dropped
+  function maybeRenderSiblingMatches(query, mustCarry, seen, handOn) {
     var anySibling = METRO_EXPLORERS.some(function (m) { return m.id !== THIS_METRO && m.bbox; });
     if (!anySibling) return;
     // share the geocoder's abort slot so a new keystroke/search cancels this
@@ -8524,11 +9053,13 @@ function initArkansasExplorer() {
         // every answer, before any is held back, for a caller looking for
         // the street a shared address is on (runAddressSearch)
         if (seen) seen(got.results);
-        // held to the house number when the query is an address without
-        // the name it was shared with (runAddressSearch)
+        // held to the house when the query is an address without the name
+        // it was shared with (runAddressSearch)
         var results = !mustCarry ? got.results : got.results.filter(function (r) {
-          return labelCarriesNumber(r.display_name, mustCarry);
+          return isHouse(r, mustCarry);
         });
+        var away = !!handOn && !results.length;
+        if (away) results = got.results;
         var perMetro = {}; // id -> rows rendered
         var labels = [];
         results.forEach(function (r) {
@@ -8538,7 +9069,7 @@ function initArkansasExplorer() {
           perMetro[metro.id] = (perMetro[metro.id] || 0) + 1;
           if (perMetro[metro.id] > SIBLING_ROWS_PER_METRO) return;
           if (labels.indexOf(metro.label) === -1) labels.push(metro.label);
-          geoResultsList.appendChild(buildSiblingResultRow(metro, r));
+          geoResultsList.appendChild(away ? handOnSiblingRow(metro, r, handOn) : buildSiblingResultRow(metro, r));
         });
         if (!labels.length) return 0; // leave the standard "no matches" status as-is
         geoStatus.textContent = "Nothing in " + appPlaceName() + " matched — but it looks like you're searching " +
@@ -9024,6 +9555,61 @@ function initArkansasExplorer() {
     });
   }
 
+  /* ---------- counting the map links the search box reads ----------
+   * One event for each Google Maps or Apple Maps link the search box reads,
+   * sent once its result is known, so the report can say how often places
+   * are shared or pasted here and how often the search found them:
+   *
+   *   map-link-read/<tag>/<source>/<form>/<via>/<outcome>
+   *
+   * <tag> is this app's; <source> google or apple; <form> short (a short
+   * link the lookup had to read), short-retried (read only after a retry)
+   * or full; <via> opened (the link came in the page's address, #q=, which
+   * is how a place shared into the installed app arrives) or pasted (put
+   * in the box); and <outcome> what the reader was shown:
+   *   point        a position the link carried, offered as one row
+   *   found        address rows for the place
+   *   pin          the Census Bureau's pin for the address, with the
+   *                street it is on when the search knows that street
+   *                (showStreetOnly)
+   *   street       the street the address is on, framed for a tap, or
+   *                listed to pick (listHeldAnswers)
+   *   name         places with the link's name, listed for the reader
+   *   other-state  the place is another app's, offered there
+   *   uncovered    the place is in a state no app covers
+   *   district     a district name (DISTRICT_SEARCH_URL) answered alone
+   *   none         nothing matched, or only answers on other streets
+   *                without the house number (listHeldAnswers)
+   *   unreadable   the link names no place (a directions link, for one)
+   *   failed-<why> the lookup could not read a short link, and why
+   *                (resolveShortMapLink's reasons, or "other")
+   *
+   * NOTHING ABOUT THE PLACE IS IN IT: no address, name, link or position,
+   * only which kind of link it was and what became of it, so the count says
+   * as much about a reader as the `share-in/` count already does. A typed
+   * coordinate pair is not a map link and is not counted here. A link read
+   * twice with the same result (pasted, then searched again with Enter) is
+   * counted once. */
+  var linkRead = null, linkReadSent = {}, linkVia = "pasted";
+  function beginLinkRead(link) {
+    linkRead = null;
+    if (!link || (link.source !== "google" && link.source !== "apple")) return;
+    linkRead = { key: link.url || link.text || "", source: link.source,
+                 short: link.kind === "short", retried: false, via: linkVia };
+  }
+  function countLinkRead(outcome) {
+    var r = linkRead;
+    if (!r) return;
+    linkRead = null;
+    if (linkReadSent[r.key + "\n" + outcome]) return;
+    linkReadSent[r.key + "\n" + outcome] = true;
+    var form = r.short ? (r.retried ? "short-retried" : "short") : "full";
+    // the counter loads after this script, and a link handed over in the
+    // address can be answered before it has
+    dstCountWhenReady("map-link-read/" + METRO_BRAND.instanceTag + "/" + r.source + "/" + form +
+                      "/" + r.via + "/" + outcome);
+  }
+
   /* ---------- a pasted Google Maps or Apple Maps link ----------
    * parseMapLink (ENGINE map-link) reads it in the browser. A position
    * becomes ONE row, so the reader still confirms it and #q= selects it as
@@ -9034,6 +9620,7 @@ function initArkansasExplorer() {
   var mapLinkController = null;
   function showMapLink(link) {
     var seq = ++districtSearchSeq;  // a newer search owns the list now
+    clearRangePin();
     if (inFlightController) inFlightController.abort();
     if (mapLinkController) mapLinkController.abort();
     clearResultRows(true);
@@ -9041,11 +9628,13 @@ function initArkansasExplorer() {
     if (link.kind === "point") {
       geoResultsList.appendChild(mapLinkRow(link));
       syncResultCount();
+      countLinkRead("point");
       return Promise.resolve();
     }
     if (link.kind !== "short") {
       geoStatus.textContent = mapLinkMessage(link);
       geoStatus.className = "geo-status err";
+      countLinkRead("unreadable");
       return Promise.resolve();
     }
     geoStatus.textContent = "Reading the link\u2026";
@@ -9054,6 +9643,7 @@ function initArkansasExplorer() {
     // a failed lookup is tried again (ENGINE map-link resolveShortMapLink),
     // and the reader is told so rather than left watching the same words
     return resolveShortMapLink(link, mapLinkController.signal, function () {
+      if (linkRead) linkRead.retried = true;
       if (seq === districtSearchSeq) geoStatus.textContent = "Reading the link\u2026 trying again";
     }).then(function (full) {
       if (seq !== districtSearchSeq) return;
@@ -9066,6 +9656,7 @@ function initArkansasExplorer() {
       if (seq !== districtSearchSeq || (err && err.name === "AbortError")) return;
       geoStatus.textContent = mapLinkMessage(link, err);
       geoStatus.className = "geo-status err";
+      countLinkRead("failed-" + ((err && err.reason) || "other"));
     });
   }
   function mapLinkRow(link) {
@@ -9094,11 +9685,18 @@ function initArkansasExplorer() {
     return li;
   }
 
-  function runGeocodeSearch(q, fromLink) {
+  // `submitted` is a search the reader sent (Search or Enter, or #q=), as
+  // against one the box runs while they type (runAddressSearch)
+  function runGeocodeSearch(q, fromLink, submitted) {
     var link = parseMapLink(q);
+    // a search of the text a short link led to is still that link's read
+    if (!fromLink) beginLinkRead(link);
     if (link && link.kind !== "text") return showMapLink(link);
     if (link) { q = link.text; fromLink = link; }
     var seq = ++districtSearchSeq;
+    clearRangePin(); // a pin answers the search before this one
+    var tag = fromLink ? addressStateTag(q) : "";
+    if (tag && tag !== METRO_BRAND.instanceTag && showLinkElsewhere(fromLink, tag)) return Promise.resolve();
     return findDistricts(q).then(function (found) {
       if (seq !== districtSearchSeq) return; // a newer search owns the list now
       renderDistrictSection(found);
@@ -9109,9 +9707,10 @@ function initArkansasExplorer() {
         if (inFlightController) inFlightController.abort();
         clearResultRows(false);
         syncResultCount();
+        countLinkRead("district");
         return;
       }
-      return runAddressSearch(q, fromLink);
+      return runAddressSearch(q, fromLink, submitted);
     });
   }
 
@@ -9130,9 +9729,9 @@ function initArkansasExplorer() {
    * the Google Maps app is its name and its address in one string, which a
    * geocoder often cannot match whole (ENGINE map-link addressAfterName).
    * The address alone is tried here and then in the sibling apps, and an
-   * answer to it counts only if it carries the address's house number
-   * (labelCarriesNumber): without one the geocoder answers with streets that
-   * partly match, and a single such answer would be selected as the place.
+   * answer to it counts only if it is the house (isHouse): without the
+   * house number the geocoder answers with streets that partly match, and a
+   * single such answer would be selected as the place.
    * Last, the place's name alone, whose answers are listed and never
    * selected, since a name can belong to another place; the reader can tell
    * from the address on the row. Typed text gets none of these, so typing
@@ -9142,48 +9741,139 @@ function initArkansasExplorer() {
    * the address's street in its town (labelOnStreet) is kept aside, and when
    * no answer carries the number the map shows that street and asks the
    * reader to tap the place (showStreetOnly), here when this app's own
-   * search found it and after the sibling apps' lookup otherwise. */
-  function runAddressSearch(q, fromLink) {
+   * search found it and after the sibling apps' lookup otherwise.
+   *
+   * AN ADDRESS WITH NO NAME IN FRONT, typed or carried by a link, is held
+   * to its house number as well, from 2026-10-17, because an answer without
+   * the number is a street and a street's point is a spot somewhere along
+   * it. Typed into the front door, such an answer opened its app with that
+   * spot selected, and a question page's address box selected it whenever
+   * it was the only answer, so a reader asking about one address was shown
+   * the cards for another, a ward or more away, with nothing to say so:
+   * Photon holds a Chicago storefront's street and not its number. Every
+   * answer is still listed, and one that is not the house is marked
+   * (listHeldAnswers) so that nothing selects it for the reader. When no
+   * answer is the house but one is on the address's street
+   * (addressInTownOf, which also reads a town typed with no comma, or not
+   * typed at all, from the answer's own label), a search the reader sent
+   * shows that street and the Census Bureau's pin as for a shared link, if
+   * the answers put the street in one town; while the reader is typing, the
+   * street's row does that when it is picked. The geocoder is asked as often
+   * as before, bar one retry without a unit ("Apt 2") when the first answers
+   * are not the house.
+   *
+   * THE HOUSE, NOT ONLY ITS NUMBER, from 2026-10-19: until then an answer
+   * carrying the house number anywhere in its label counted, and of 49
+   * Cook County addresses typed into the Illinois map's search box that day
+   * the one answer for one of them was that number on a different street,
+   * which a question page's address box selects when it is the only answer.
+   *
+   * WHEN THE SEARCH KNOWS NEITHER THE HOUSE NOR ITS STREET THERE, from the
+   * same day, a search the reader sent with the address's town asks the
+   * Census Bureau about the address (showStreetOnly with no street), written
+   * out with this app's state when it names none (addressForLookup, ENGINE
+   * map-link), before the answers are listed and, when there are none,
+   * after the sibling apps' lookup; its pin answers if it has the house,
+   * and otherwise the search ends as it did before. A link's address is
+   * asked about the same way before the place's name is searched. Of the 17 of
+   * those 49 addresses the map's search could not place, 12 had no answer
+   * on the street in its town, or only a stretch more than half a mile
+   * from the house (STREET_NEAR_MILES, no longer applied to the Census
+   * Bureau's answer), and its records put all 12 in the right district;
+   * Adam chose its pin for them ("Use Census"). */
+  function runAddressSearch(q, fromLink, submitted) {
     var seq = districtSearchSeq;
     var bare = fromLink ? addressAfterName(q) : null;
     var name = bare ? q.split(",")[0].trim() : "";
-    var tries = [], held = [], street = [];
+    var numbered = !bare && OPENS_WITH_ADDRESS.test(q) ? q : null;
+    var sent = submitted || !!fromLink; // a link is sent when it is pasted or shared
+    var tries = [], held = [], street = [], loose = null, looseOnStreet = false;
     function add(t, mustCarry) {
       if (t && tries.indexOf(t) < 0) { tries.push(t); held.push(mustCarry || null); }
     }
+    // each answer on the address's street, with the address it is in there
     function keepStreet(results) {
-      (results || []).forEach(function (r) { if (labelOnStreet(r.display_name, bare)) street.push(r); });
+      (results || []).forEach(function (r) {
+        var at = numbered ? addressInTownOf(numbered, r.display_name) : labelOnStreet(r.display_name, bare) ? bare : null;
+        if (at) street.push({ answer: r, at: at });
+      });
     }
-    add(q); add(cleanPoiAddress(q));
+    add(q, numbered); add(cleanPoiAddress(q), numbered);
     if (bare) { add(bare, bare); add(cleanPoiAddress(bare), bare); }
     var i = 0;
     function next(results) {
       if (seq !== districtSearchSeq) return; // a newer search owns the list now
+      var all = results, before = street.length;
       if (results && held[i]) {
         keepStreet(results);
-        results = results.filter(function (r) { return labelCarriesNumber(r.display_name, held[i]); });
+        results = results.filter(function (r) { return isHouse(r, held[i]); });
       }
-      if (results && results.length) return renderGeocodeResults(results);
+      if (results && results.length) {
+        if (numbered) return listHeldAnswers(all, numbered, street, sent);
+        renderGeocodeResults(results);
+        if (bare) markLinkPlace(name, bare);
+        countLinkRead("found");
+        return;
+      }
+      // the answers listed if none is the house: the first try's, or a
+      // later try's that found the street when the first did not
+      if (numbered && all && all.length && (!loose || (!looseOnStreet && street.length > before))) {
+        loose = all;
+        looseOnStreet = street.length > before;
+      }
       if (++i < tries.length) return geocodeAddress(tries[i]).then(next);
-      if (street.length) return showStreetOnly(street, bare, name, geocodeAddress);
+      var towns = streetTowns(street);
+      if (towns.length === 1 && (bare || sent)) {
+        return showStreetOnly(streetIn(street, towns[0]), towns[0], name, geocodeAddress);
+      }
+      // a sent address with its town, whose street the search does not know
+      // there either: the Census Bureau is asked about it, in this app's
+      // state when it names none (addressForLookup)
+      var unknown = sent && numbered && !towns.length ? addressForLookup(numbered, METRO_BRAND.instanceTag) : null;
+      if (loose && unknown) {
+        return showStreetOnly([], unknown, "", geocodeAddress, loose).then(function (shown) {
+          if (!shown && seq === districtSearchSeq) listHeldAnswers(loose, numbered, street, sent);
+        });
+      }
+      if (loose) return listHeldAnswers(loose, numbered, street, sent);
       renderGeocodeResults(results, fromLink);
-      return Promise.resolve(maybeRenderSiblingMatches(q)).then(function (found) {
+      return Promise.resolve(maybeRenderSiblingMatches(q, numbered, null, numbered)).then(function (found) {
+        if (seq !== districtSearchSeq) return;
+        if (found) return countLinkRead("other-state");
+        if (found === 0 && unknown) {
+          return showStreetOnly([], unknown, "", geocodeAddress, []).then(function (shown) {
+            if (!shown && seq === districtSearchSeq) countLinkRead("none");
+          });
+        }
         // 0, never undefined: an aborted or sibling-less lookup tries no more
-        if (found !== 0 || !bare || seq !== districtSearchSeq) return;
+        if (found !== 0 || !bare) return countLinkRead("none");
         return Promise.resolve(maybeRenderSiblingMatches(bare, bare, keepStreet)).then(function (again) {
-          if (again !== 0 || seq !== districtSearchSeq) return;
-          if (street.length) return showStreetOnly(street, bare, name, searchEverywhere);
-          if (name.length < 3) return;
-          return geocodeAddress(name).then(function (named) {
-            if (seq !== districtSearchSeq || !named || !named.length) return;
-            listByName(named);
-            geoStatus.textContent = "No address in " + appPlaceName() + " matched \u201c" + bare + "\u201d. " +
-              "A search for its name, \u201c" + name + "\u201d, found " +
-              (named.length === 1 ? "the place below. Pick it if it's the one you meant."
-                                  : "the places below. Pick the one you meant, if it's there.");
-            geoStatus.className = "geo-status";
+          if (seq !== districtSearchSeq) return;
+          if (again) return countLinkRead("other-state");
+          if (again !== 0) return countLinkRead("none");
+          if (street.length) return showStreetOnly(streetIn(street, bare), bare, name, searchEverywhere);
+          var asked = addressForLookup(bare, METRO_BRAND.instanceTag);
+          if (!asked) return searchName();
+          return showStreetOnly([], asked, name, searchEverywhere, []).then(function (shown) {
+            if (!shown && seq === districtSearchSeq) return searchName();
           });
         });
+      });
+    }
+    // the place's name alone, last of all for a link: its answers are listed
+    // and never selected
+    function searchName() {
+      if (name.length < 3) return countLinkRead("none");
+      return geocodeAddress(name).then(function (named) {
+        if (seq !== districtSearchSeq) return;
+        if (!named || !named.length) return countLinkRead("none");
+        countLinkRead("name");
+        listByName(named);
+        geoStatus.textContent = "No address in " + appPlaceName() + " matched \u201c" + bare + "\u201d. " +
+          "A search for its name, \u201c" + name + "\u201d, found " +
+          (named.length === 1 ? "the place below. Pick it if it's the one you meant."
+                              : "the places below. Pick the one you meant, if it's there.");
+        geoStatus.className = "geo-status";
       });
     }
     return geocodeAddress(tries[0]).then(next);
@@ -9192,6 +9882,101 @@ function initArkansasExplorer() {
   function searchEverywhere(text) {
     inFlightController = new AbortController();
     return geocodeUnbounded(text, inFlightController.signal);
+  }
+
+  // The addresses the answers on a street are in (keepStreet), one per town,
+  // and the answers in one of them
+  function streetTowns(street) {
+    var towns = [];
+    street.forEach(function (s) { if (towns.indexOf(s.at) < 0) towns.push(s.at); });
+    return towns;
+  }
+  function streetIn(street, at) {
+    return street.filter(function (s) { return s.at === at; }).map(function (s) { return s.answer; });
+  }
+
+  /* Whether an answer is the house an address names. Photon's answers are
+   * OpenStreetMap's data, labelled by this app (normalizePhoton), and one is
+   * the house only if a part of its label is the number on the address's
+   * street (labelAtHouse, ENGINE map-link). An answer from another search,
+   * New York City's own address file, is held to the number alone
+   * (labelCarriesNumber), as every answer was until 2026-10-19: the street
+   * test was written for and tried on OpenStreetMap's labels, not that
+   * file's. houseMark is the class a row that is not the house carries:
+   * other-street when it has the number on another street, else no-number. */
+  function isHouse(r, address) {
+    return r.source === "openstreetmap" ? labelAtHouse(r.display_name, address)
+                                        : labelCarriesNumber(r.display_name, address);
+  }
+  function houseMark(r, address) {
+    return isHouse(r, address) ? "" : labelCarriesNumber(r.display_name, address) ? "other-street" : "no-number";
+  }
+
+  /* Answers to an address held to its house number (runAddressSearch).
+   * Every answer is listed, as before, and one that is not the house is
+   * marked (houseMark), which #q= never selects (prefillGeocodeSearch).
+   * When none is the house, a row on the address's street shows that
+   * street when it is picked (showStreetOnly), and the point the Census
+   * Bureau gives the number, instead of selecting a spot somewhere along
+   * the street, and the status says what the map's search knows. */
+  function listHeldAnswers(answers, address, street, sent) {
+    var none = !answers.some(function (r) { return isHouse(r, address); });
+    renderGeocodeResults(answers, null, {
+      mark: function (r) { return houseMark(r, address); },
+      pick: function (r) {
+        var at = none ? addressInTownOf(address, r.display_name) : null;
+        if (!at) return false;
+        showStreetOnly(streetIn(street, at), at, "", geocodeAddress);
+        return true;
+      }
+    });
+    if (!none) return countLinkRead("found");
+    var towns = streetTowns(street.filter(function (s) { return answers.indexOf(s.answer) >= 0; }));
+    if (towns.length) {
+      var names = towns.map(function (at) { return addressParts(at).town; });
+      var a = addressParts(towns[0]);
+      geoStatus.textContent = "The map's search knows " + a.street + " in " +
+        (names.length > 1 ? names.slice(0, -1).join(", ") + " and " + names[names.length - 1] : names[0]) +
+        " but not number " + a.number + " on it. Pick " +
+        (names.length > 1 ? "the street in the town you meant" : "the street") + " to see it on the map.";
+    } else if (sent) {
+      var typed = addressStreet(address);
+      var withNumber = answers.some(function (r) { return labelCarriesNumber(r.display_name, address); });
+      geoStatus.textContent = (withNumber ? "None of these is number " + typed.number + " on the street you typed"
+                                          : "None of these has the house number " + typed.number) +
+        ", so pick one only if it's the place you meant, or tap the place on the map.";
+    }
+    geoStatus.className = "geo-status";
+    countLinkRead(towns.length ? "street" : "none");
+  }
+
+  /* THE PLACE A LINK NAMES, AMONG SEVERAL ANSWERS. A search for a place's
+   * name and address can answer the place and others beside it: on
+   * 2026-10-16 Photon, asked for a Wisconsin state park's name and address,
+   * answered three places, the park first. An answer whose label opens with
+   * the link's name, carries its house number and is on its street in its
+   * town (labelCarriesNumber, labelOnStreet, ENGINE map-link) is the place
+   * itself, so its row is marked, and #q= selects it when it is the only one
+   * (prefillGeocodeSearch). A name alone is not enough: a chain's stores
+   * share one. */
+  function markLinkPlace(name, bare) {
+    var rows = geoResultsList.querySelectorAll("li");
+    for (var k = 0; k < rows.length; k++) {
+      if (rows[k].className) continue; // the address rows just drawn carry no class
+      var label = rows[k].textContent;
+      if (samePlaceName(label.split(",")[0], name) && labelCarriesNumber(label, bare) &&
+          labelOnStreet(label, bare)) rows[k].className = "link-place";
+    }
+  }
+  // "Devil’s Lake" and "Devil's Lake", "A & B" and "A and B", "Café" and
+  // "Cafe": one name
+  function samePlaceName(a, b) {
+    function key(t) {
+      t = String(t || "");
+      if (t.normalize) t = t.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      return t.toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").trim();
+    }
+    return !!key(a) && key(a) === key(b);
   }
 
   /* Places a link's name found. Marked so that #q= never selects one for the
@@ -9204,72 +9989,369 @@ function initArkansasExplorer() {
     }
   }
 
-  /* The street a shared address is on, when no answer carries its house
-   * number (labelOnStreet, ENGINE map-link). The map frames the street, from
-   * the extent the geocoder gives it, and the reader taps the place: nothing
+  /* The street a shared or typed address is on, when no answer is its house
+   * (isHouse, labelOnStreet, addressInTownOf, ENGINE map-link); `bare` is
+   * the address in the street's town. The map frames the street, from the
+   * extent the geocoder gives it, and the reader taps the place: nothing
    * is selected, because a point on a street is not the place and a
    * district's edge can run down the middle of the street. The place's name
    * is searched next, and an answer is listed (never selected) only if it is
    * within STREET_NEAR_MILES of the street, since that is where the place
    * is: on 2026-10-14 a search for the name of a small business shared
    * from the Google Maps app answered three other places with similar
-   * names, 20 to 50 km from its street. */
+   * names, 20 to 50 km from its street. At the same time the Census
+   * Bureau is asked where the house is (lookupAddressRanges), and its
+   * answer is a pin whose point is selected, with the message saying it
+   * can be a block or more from the house, unless another state's app
+   * answers there (placeRangePin).
+   *
+   * WITH NO STREET (`street` empty, from 2026-10-19) the search knows
+   * neither the house nor its street there (runAddressSearch), and the
+   * Census Bureau is asked about the address the reader sent, with its town
+   * (addressForLookup).
+   * Nothing is shown until it answers: its pin and the message when it has
+   * the house, with the name's answers near the pin, and nothing at all
+   * when it has not, so that the caller shows what the search found. The
+   * promise resolves true when the pin is shown. `answers` are what the
+   * search found, which decide whether the message offers OpenStreetMap's
+   * note form. */
   var STREET_NEAR_MILES = 0.5;
-  function showStreetOnly(street, bare, name, search) {
+  function showStreetOnly(street, bare, name, search, answers) {
     var seq = districtSearchSeq;
+    var picked = state.sequence; // a point selected after this answers the message
+    var answered = false;
     var a = addressParts(bare);
-    var bounds = null;
+    var known = street.length > 0; // the search knows the street there
+    var bounds = null, zips = [];
     street.forEach(function (r) {
       var e = r.extent; // [west, north, east, south]
       var lat = parseFloat(r.lat), lng = parseFloat(r.lon);
       var b = e && e.length === 4 ? L.latLngBounds([e[3], e[0]], [e[1], e[2]])
                                   : L.latLngBounds([lat, lng], [lat, lng]);
       bounds = bounds ? bounds.extend(b) : b;
+      var zip = labelZip(r.display_name);
+      if (zip && zips.indexOf(zip) < 0) zips.push(zip);
     });
-    clearResultRows(false);
-    var where = "The map's search knows " + a.street + " in " + a.town + " but not number " + a.number +
-      " on it, so the map is showing that street.";
-    geoStatus.textContent = where + " Tap the place you meant.";
-    geoStatus.className = "geo-status";
-    refreshSearchShellExpanded();
-    map.fitBounds(bounds, { paddingTopLeft: [24, clearOfSearchPanel()], paddingBottomRight: [24, 24], maxZoom: 17 });
+    var pin = null, pinPicked = false, near = [];
+    // every answer came from OpenStreetMap's data (normalizePhoton), so the
+    // message can offer its note form; New York's city search reads the
+    // city's own address file, which OpenStreetMap's volunteers do not keep
+    var from = known ? street : answers || [];
+    var osm = from.length > 0 && from.every(function (r) { return r.source === "openstreetmap"; });
+    function noteAt() {
+      if (pin) return { lat: pin.lat, lng: pin.lng, zoom: 19 };
+      // the middle of the part of the map below the search panel, which is
+      // where the street was framed
+      var size = map.getSize();
+      var c = map.containerPointToLatLng([size.x / 2, (clearOfSearchPanel() + size.y) / 2]);
+      return { lat: c.lat, lng: c.lng, zoom: Math.min(19, Math.max(17, Math.round(map.getZoom()))) };
+    }
+    function current() { return !answered && seq === districtSearchSeq && picked === state.sequence; }
+    function compose() {
+      var text = known ? "The map's search knows " + a.street + " in " + a.town + " but not number " + a.number + " on it"
+                       : "The map's search didn't find that address";
+      var put = known ? "that number" : "it";
+      // the pin's point is selected (pinPicked) unless another state's app
+      // answers there, and then the pin waits for a tap (placeRangePin)
+      var tapPin = !!pin && !pinPicked;
+      text += !pin ? ", so the map is showing that street." : pinPicked ?
+        ". The map has selected the pin, where the Census Bureau's street records put " + put + ". " +
+        "It can be a block or more from the house, and a district line can run between the two." :
+        ". The pin is where the Census Bureau's street records put " + put + ", which can be a block or more from the house.";
+      if (near.length) {
+        text += " A search for its name, \u201c" + name + "\u201d, " + (pin ? "also " : "") + "found " +
+          (near.length === 1 ? "the place below. Pick it if it's the one you meant" : "the places below. Pick the one you meant") +
+          (tapPin ? ", tap the pin, or tap the map." : ", or tap the map.");
+      } else {
+        text += tapPin ? " Tap the pin to use it, or tap the place you meant." :
+          pinPicked ? " If the place is elsewhere, tap it on the map." : " Tap the place you meant.";
+      }
+      geoStatus.textContent = text;
+      geoStatus.className = "geo-status";
+      if (!osm) return;
+      geoStatus.appendChild(document.createTextNode(" The search reads OpenStreetMap's data. If you know where number " +
+        a.number + " is yourself, not from another map, you can "));
+      geoStatus.appendChild(osmNoteLink(noteAt));
+      geoStatus.appendChild(document.createTextNode(" so its volunteers can add it."));
+    }
     // the reader's tap answers the message, which then goes
-    map.once("click", function () {
+    function done() {
+      if (answered) return;
+      answered = true;
       if (seq !== districtSearchSeq) return;
+      clearRangePin();
       clearResultRows(false);
       geoStatus.textContent = "";
       collapseAfterSelect = true;
       refreshSearchShellExpanded();
-    });
-    if (name.length < 3) return Promise.resolve();
-    return search(name).then(function (named) {
-      if (seq !== districtSearchSeq) return;
-      var near = (named || []).filter(function (r) {
-        var lat = parseFloat(r.lat), lng = parseFloat(r.lon);
-        return haversineMiles(lat, lng,
-          Math.max(bounds.getSouth(), Math.min(bounds.getNorth(), lat)),
-          Math.max(bounds.getWest(), Math.min(bounds.getEast(), lng))) <= STREET_NEAR_MILES;
+    }
+    // the street, and the message, as soon as the search knows it
+    function show() {
+      clearResultRows(false);
+      compose();
+      refreshSearchShellExpanded();
+      map.once("click", done);
+    }
+    if (known) {
+      show();
+      map.fitBounds(bounds, { paddingTopLeft: [24, clearOfSearchPanel()], paddingBottomRight: [24, 24], maxZoom: 17 });
+    }
+    // a pin needs far less room below the search panel than a street does
+    function framePin() {
+      map.fitBounds(L.latLngBounds([pin.lat, pin.lng], [pin.lat, pin.lng]),
+        { paddingTopLeft: [24, clearOfSearchPanel(64)], paddingBottomRight: [24, 24], maxZoom: 18 });
+    }
+    // the name's answers near the street, or near the pin with no street
+    function nearHere(r) {
+      var lat = parseFloat(r.lat), lng = parseFloat(r.lon);
+      var b = bounds || L.latLngBounds([pin.lat, pin.lng], [pin.lat, pin.lng]);
+      return haversineMiles(lat, lng,
+        Math.max(b.getSouth(), Math.min(b.getNorth(), lat)),
+        Math.max(b.getWest(), Math.min(b.getEast(), lng))) <= STREET_NEAR_MILES;
+    }
+    function searchName() {
+      return search(name).then(function (found) {
+        if (!current()) return;
+        near = (found || []).filter(nearHere);
+        if (!near.length) return;
+        listByName(near);
+        compose();
+        if (pin) framePin(); // the list grew the panel the pin is framed below
       });
-      if (!near.length) return;
-      listByName(near);
-      geoStatus.textContent = where + " A search for its name, \u201c" + name + "\u201d, found " +
-        (near.length === 1 ? "the place below. Pick it if it's the one you meant, or tap the map."
-                           : "the places below. Pick the one you meant, or tap the map.");
-      geoStatus.className = "geo-status";
+    }
+    // the Census Bureau is asked with the ZIP code of the street's answers
+    // when they name one and the address none (lookupAddressRanges)
+    var ranged = lookupAddressRanges(zips.length === 1 ? withZip(bare, zips[0]) : bare, zips).then(function (m) {
+      // a link's read is counted once the Census answer says what the reader
+      // is shown, the house pinned or the street alone (countLinkRead); with
+      // no street, only a pin is this function's to count
+      if (seq === districtSearchSeq && (known || (m && current()))) countLinkRead(m && current() ? "pin" : "street");
+      if (!m || !current()) return false;
+      // the app that answers at the pin decides whether its point is selected
+      // here (ENGINE metro-portal); an owner that cannot be told leaves it
+      // here, as a tap there would
+      return placeOwner(m.lat, m.lng)["catch"](function () { return null; }).then(function (owner) {
+        if (!current()) return false;
+        pin = m;
+        pinPicked = !owner || owner === "here";
+        if (!known) show();
+        // the reader's tap on the map answers the message (done), and so does
+        // a point selected any other way, which takes the pin
+        placeRangePin(m, a, done, pinPicked);
+        if (pinPicked) picked = state.sequence; // the pin's own selection answers nothing
+        compose();
+        framePin();
+        return true;
+      });
     });
+    if (name.length < 3) return ranged;
+    if (known) return Promise.all([ranged, searchName()]);
+    return ranged.then(function (shown) {
+      return shown && searchName().then(function () { return true; });
+    });
+  }
+
+  /* OPENSTREETMAP'S NOTE FORM, for a reader who knows where a house number
+   * the map's search lacks is. Photon is built from OpenStreetMap's data, so
+   * a number missing there is missing from OpenStreetMap or from Photon's copy
+   * of it, and OpenStreetMap's volunteers add one when a note says where it
+   * is. Added on Adam's choice of 2026-10-17. Its wiki (wiki.openstreetmap.org
+   * /wiki/Notes, read that day) says a note needs no account, that it is a
+   * message from one person to another ("Don't create automated notes"), and
+   * that it must not be copied from another map, "even if they do not cost
+   * money or are from the government"; a reader who arrived with a Google
+   * Maps link is the likeliest to copy one, which is why the message says
+   * "not from another map", and a note is public, which is why the link says
+   * so. So the link only opens the form, with nothing filled in, and
+   * districtry sends OpenStreetMap nothing. The place is in the part of the
+   * address after "#", which a browser never sends to a server: the form's
+   * page reads it to open its map there and puts the new note's marker in
+   * the middle of that map, where the reader drags it, or taps the map, to
+   * move it to the place (read 2026-10-17 in the new-note script
+   * openstreetmap.org serves, which takes ?lat=&lon= instead when given
+   * them; a query string is sent, so it is not used). The link opens at the
+   * pin, or, when there is no pin, at the part of the street the map is
+   * showing, read again each time the map stops moving while the link is on
+   * the page, because the reader may have moved the map to the place.
+   * Following it is counted as osm-note, never by place. */
+  var OSM_NOTE_URL = "https://www.openstreetmap.org/note/new#map=";
+  function osmNoteLink(where) {
+    var link = document.createElement("a");
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "leave OpenStreetMap a public note";
+    function aim() {
+      // a message rewritten or cleared has dropped the link
+      if (link.href && !document.body.contains(link)) { map.off("moveend", aim); return; }
+      var at = where();
+      link.href = OSM_NOTE_URL + at.zoom + "/" + at.lat.toFixed(5) + "/" + at.lng.toFixed(5);
+    }
+    aim();
+    map.on("moveend", aim);
+    link.addEventListener("click", function () { trackEvent("osm-note"); });
+    return link;
+  }
+
+  /* ---------- where the Census Bureau puts a house number ----------
+   * A place shared from the Google Maps app is its name and its address
+   * with no position, and Photon often holds the street and not the number
+   * on it. The Census Bureau's geocoder estimates where a number falls on a
+   * street from the address ranges in its TIGER street file. Measured
+   * 2026-10-17 for a Chicago storefront Photon knew only as its street: the
+   * estimate was on the right side of the street and on the storefront's
+   * block, about 45 m from the building. The Census geocoder sends no CORS
+   * header, so it is asked through districtry's lookup (MAP_LINK_LOOKUP,
+   * ENGINE map-link; services/link-lookup/main.ts), which passes on each
+   * match's address and position: the Census Bureau sees the lookup and
+   * not the reader, and the privacy page names both, measured from the
+   * `?a=` call below (build_privacy_page.py). From the map's search, only an
+   * address the reader searched for is sent: one a shared map link carried,
+   * or one typed and then sent with Search or Enter, handed over as #q=, or
+   * picked from the list by its street (runAddressSearch, listHeldAnswers),
+   * never text while it is being typed. An app's office-pin provider may
+   * also ask about the public address of an office a card shows, when its
+   * own geocoder cannot place it (New York's poiGeocodeRequest, from
+   * 2026-10-20). build_privacy_page.py fails on a call from anywhere else.
+   *
+   * An answer is used only if it is the ONE match that is the house
+   * (labelAtHouse, ENGINE map-link) in the address's town or ZIP code
+   * (labelOnStreet), or in a ZIP code the map's answers on its street carry
+   * (`zips`, showStreetOnly), since one number on one street is one house
+   * in a ZIP code: asked on 2026-10-14 for a Westmont address, the Census
+   * geocoder offered that number on Oakley Ln and on Oakley Ct, two other
+   * streets. The ZIP codes are what take the house when the address names
+   * no town, which the map's answers then give as the Cook County township
+   * a street is in while the Census Bureau names the city (ENGINE map-link
+   * addressInTownOf). When those answers name one ZIP code and the address
+   * none, the lookup is asked with it (showStreetOnly). Measured
+   * 2026-10-19: asked about the Lincoln Park Zoo's address in the township
+   * Photon names, the Census geocoder found the zoo with the zoo's ZIP code
+   * and nothing with another, and asked about City Hall's in Chicago with
+   * another ZIP code, it still found City Hall. So the ZIP code costs
+   * nothing where the town is the city, and a house it misses in the
+   * township for being in another ZIP code would have been refused here
+   * anyway. Whether it finds, typed with no town, the three of 49 Cook
+   * County addresses the township alone found nothing for was not
+   * measured, because those addresses were not kept.
+   *
+   * Until 2026-10-19 the match also had to lie within STREET_NEAR_MILES of
+   * the street the map found, which refused it for 2 of 49 Cook County
+   * addresses tested that day, whose street the map's search knew only more
+   * than half a mile from the house; the Census Bureau had the right
+   * district for both. Adam chose that day to take its answer whenever it
+   * names the number, the street and the town ("Use Census").
+   *
+   * THE PIN'S POINT IS SELECTED AT ONCE, on Adam's choice of 2026-10-18,
+   * and the message says what that can cost (showStreetOnly): an estimate
+   * from address ranges can be a block or more from the house (14 to 296 m
+   * for the 48 of those 49 addresses it found), and in Chicago a ward's
+   * edge often runs down the alley in the middle of a block, so the cards
+   * can name the district next door. For its first day the pin selected
+   * nothing until it was tapped, for that reason; Adam chose the cards at
+   * once, with the warning, over a tap the reader had to know to make
+   * (placeRangePin). Resolves to that match's position, or to null when
+   * there is none, the lookup fails or it takes longer than
+   * ADDRESS_RANGES_TIMEOUT_MS; it never rejects. */
+  var ADDRESS_RANGES_TIMEOUT_MS = 9000;
+  var RANGE_PIN_COLOR = "#1d5fd6"; // the token file's --data-500, the selection's own blue
+  function lookupAddressRanges(address, zips) {
+    if (!MAP_LINK_LOOKUP || typeof AbortController === "undefined") return Promise.resolve(null);
+    var ctl = new AbortController();
+    var timer = setTimeout(function () { ctl.abort(); }, ADDRESS_RANGES_TIMEOUT_MS);
+    return fetch(MAP_LINK_LOOKUP + "?a=" + encodeURIComponent(cleanPoiAddress(address)), { signal: ctl.signal })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (body) {
+        var on = (body && Array.isArray(body.matches) ? body.matches : []).filter(function (m) {
+          if (!m || typeof m.address !== "string" || !isFinite(Number(m.lat)) || !isFinite(Number(m.lng))) return false;
+          return labelAtHouse(m.address, address) && (labelOnStreet(m.address, address) ||
+            (zips || []).some(function (zip) { return labelOnStreet(m.address, withZip(address, zip)); }));
+        });
+        return on.length === 1 ? { lat: Number(on[0].lat), lng: Number(on[0].lng) } : null;
+      })["catch"](function () { return null; })
+      .then(function (m) { clearTimeout(timer); return m; });
+  }
+  // The ZIP code an answer's label ends with, or ""
+  function labelZip(label) {
+    return (/(?:^|,)\s*(\d{5})(?:-\d{4})?\s*$/.exec(String(label || "")) || [])[1] || "";
+  }
+  // The address with `zip` written after it, unless it names a ZIP code of
+  // its own
+  function withZip(address, zip) {
+    var a = addressParts(address);
+    return a && !a.zip ? String(address).trim() + " " + zip : address;
+  }
+  /* The pin, with its point selected (selectNow). That pin ignores a tap,
+   * which would only move the selection a few metres off the estimate and
+   * take the message with it. Where another state's app answers at the pin
+   * (showStreetOnly asks placeOwner), a selection would open that app with
+   * the point and without the message, so the pin waits for a tap, which
+   * selects its point as a tap on the map would, through the map's own
+   * click (ENGINE selection-controls), and so opens that app. Either way
+   * any other selection, a new search or a tap elsewhere removes the pin. */
+  var rangePin = null;
+  function clearRangePin() {
+    if (!rangePin) return;
+    map.off("layeradd", rangePin.watch);
+    map.removeLayer(rangePin.marker);
+    rangePin = null;
+  }
+  function placeRangePin(m, a, onGone, selectNow) {
+    clearRangePin();
+    var at = L.latLng(m.lat, m.lng);
+    var where = "Where the Census Bureau puts " + a.number + " " + a.street;
+    var label = selectNow ? where : where + ". Select this point.";
+    var marker = L.marker(at, { icon: poiPinIcon(RANGE_PIN_COLOR), title: label, zIndexOffset: 1000,
+                                keyboard: !selectNow });
+    function select() {
+      clearRangePin();
+      map.fire("click", { latlng: at });
+    }
+    if (!selectNow) {
+      marker.on("click", select);
+      // Leaflet makes a marker focusable and a button, and leaves Enter and
+      // Space to the page
+      marker.on("keydown", function (e) {
+        var key = e.originalEvent && e.originalEvent.key;
+        if (key !== "Enter" && key !== " ") return;
+        e.originalEvent.preventDefault();
+        select();
+      });
+    }
+    marker.addTo(map);
+    var el = marker.getElement();
+    if (el) {
+      el.setAttribute("aria-label", label);
+      // a picture of where the selected point came from, which a tap leaves
+      // as it is (a marker's click does not reach the map)
+      if (selectNow) { el.setAttribute("role", "img"); el.style.cursor = "default"; }
+    }
+    if (selectNow) setSelectedPoint(at.lat, at.lng, { skipPan: true });
+    var picked = state.sequence;
+    // Every selection adds the selected point's marker (setSelectedPoint), so
+    // a point selected any other way (a result row, the keyboard's select
+    // button, a located point) is seen here, and the pin goes with it, as
+    // does the message about it (onGone).
+    var watch = function () {
+      if (state.sequence === picked) return;
+      clearRangePin();
+      if (onGone) onGone();
+    };
+    map.on("layeradd", watch);
+    rangePin = { marker: marker, watch: watch };
   }
   /* How far below the map's top edge the street is framed. The search panel
    * floats over the top of the map while it holds the message, and on a phone
    * it covers nearly half of it (measured at 412x915: the panel ends 168 px
    * into a 384 px map), so the street is framed in the part below the panel.
-   * Not when that part is too short to frame a street in; the street then
-   * sits at the middle of the map, as any search result does. */
-  function clearOfSearchPanel() {
+   * Not when that part is too short to frame a street in (`room`, 160 px
+   * unless the caller frames something smaller); the street then sits at
+   * the middle of the map, as any search result does. */
+  function clearOfSearchPanel(room) {
     var top = 24;
     var panel = document.getElementById("search-extra");
     var r = panel ? panel.getBoundingClientRect() : null;
     var m = map.getContainer().getBoundingClientRect();
-    if (r && r.height > 0 && r.left < m.right && r.right > m.left && r.bottom > m.top && m.bottom - r.bottom >= 160) {
+    if (r && r.height > 0 && r.left < m.right && r.right > m.left && r.bottom > m.top && m.bottom - r.bottom >= (room || 160)) {
       top = Math.max(top, Math.round(r.bottom - m.top) + 12);
     }
     return top;
@@ -9292,15 +10374,34 @@ function initArkansasExplorer() {
    * officeholder, so the list stays up and the reader picks. A sibling-metro
    * row is never auto-clicked — that button navigates to another instance —
    * and neither is a place found by a shared link's name alone
-   * (listByName), which may be another place of the same name. */
+   * (listByName), which may be another place of the same name. Two
+   * exceptions: among several answers to a link, the one that is the place
+   * the link names (markLinkPlace) is selected when it is the only such
+   * one; and the row a link to a place in another state draws
+   * (showLinkElsewhere) is followed, because the address itself says which
+   * state's app it belongs to, so a place shared into the installed app
+   * opens in its own state.
+   *
+   * NOR IS AN ANSWER THAT IS NOT THE HOUSE the address names
+   * (listHeldAnswers), though it be the only one: an answer without the
+   * house number is a street, and its point a spot somewhere along it, and
+   * one with the number on another street is another house. Until
+   * 2026-10-17 a question page's address box selected the first, and the
+   * cards named the districts of another stretch of the street, and until
+   * 2026-10-19 the second. */
   function prefillGeocodeSearch(q) {
+    linkVia = "opened";
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
     geoStatus.className = "geo-status";
     reengageSearchShell();
-    return runGeocodeSearch(q).then(function () {
+    return runGeocodeSearch(q, null, true).then(function () {
       var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
-      if (own.length === 1) own[0].click();
+      var place = geoResultsList.querySelectorAll("li.link-place > button");
+      var away = geoResultsList.querySelectorAll("li.map-link-away > button");
+      if (own.length === 1) { if (!/\b(?:no-number|other-street)\b/.test(own[0].parentNode.className)) own[0].click(); }
+      else if (place.length === 1) place[0].click();
+      else if (!own.length && away.length === 1) away[0].click();
     })["catch"](function (err) {
       if (err.name === "AbortError") return;
       geoStatus.textContent = "Search failed \u2014 the geocoder may be busy. Try again in a moment.";
@@ -9316,9 +10417,10 @@ function initArkansasExplorer() {
     // and abort/duplicate the very request we're about to make (the same guard
     // the result-click handler already uses)
     clearTimeout(debounceTimer);
+    linkVia = "pasted";
     geoStatus.textContent = "Searching…";
     geoStatus.className = "geo-status";
-    runGeocodeSearch(q)
+    runGeocodeSearch(q, null, true)
       .catch(function (err) {
         if (err.name === "AbortError") return;
         geoStatus.textContent = "Search failed — the geocoder may be busy. Try again in a moment.";
@@ -9335,10 +10437,12 @@ function initArkansasExplorer() {
       if (inFlightController) inFlightController.abort();
       geoResultsList.innerHTML = "";
       geoStatus.textContent = "";
+      clearRangePin();
       return;
     }
     showDistrictsNow(q)["catch"](function () { /* the debounced search below still runs */ });
     debounceTimer = setTimeout(function () {
+      linkVia = "pasted";
       geoStatus.textContent = "Searching…";
       runGeocodeSearch(q).catch(function (err) {
         if (err.name === "AbortError") return;
@@ -9370,13 +10474,20 @@ function initArkansasExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // 4 congressional districts — the largest districts Arkansas carries below the state itself
+    "ar-court-of-appeals", // 7 Court of Appeals districts of whole counties, 19,683 km2 mean area, measured 2026-10-16 on the drawn file — smaller on average than a congressional district (34,445 km2), larger than a judicial circuit (4,921 km2)
+    "ar-circuit-court",  // 28 judicial circuits of whole counties, 4,921 km2 mean area, measured 2026-10-16 on the drawn file — smaller on average than a Court of Appeals district, larger than a State Senate district (3,937 km2)
     "ar-senate",         // 35 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 75 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "ar-house",          // 100 House districts — smaller on average than a county, larger than a school district
-    "school-district-unified", // 234 unified (K-12) districts covering the whole state, live from TIGERweb (no data/app file)
-    "zip-code",          // 942 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside Arkansas
+    "school-district-unified", // 234 unified (K-12) districts covering the whole state, from TIGERweb, drawn from a mirrored tile archive
+    "zip-code",          // 620 ZIP Code Tabulation Areas overlapping Arkansas, of the 942 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside Arkansas
     "quorum-court",      // 775 justice of the peace districts in 75 counties, pre-built from the state's own layer; smaller on average than a ZIP Code area, larger than a city or town
-    "municipality",      // 501 incorporated cities and towns, live from TIGERweb
+    "county-subdivision", // 820 townships in 75 counties, pre-built from the state's own layer — median 103.5 km2 (mean 168.0), measured 2026-10-15: just smaller than a justice of the peace district (median 108.2 km2), larger than a city or town
+    "fire-district",     // 971 fire districts, pre-built from the Arkansas GIS Office's layer — 140.9 km2 mean area (median 123.9), measured 2026-10-16 on the drawn file: smaller on average than a township (168.0), larger than a school board zone (113.9)
+    "school-board-district", // 965 zones on the boards of 176 school districts, pre-built from the Arkansas GIS Office's layer — 113.9 km2 mean area (median 58.4), measured 2026-10-16 on the drawn file: smaller on average than a township (168.0), larger than a voting precinct (47.19)
+    "voting-precinct",   // 2,920 precincts tiling the state, pre-built from the Arkansas GIS Office's layer — 47.19 km2 mean area, land and water (median 7.42), measured 2026-10-15 on the drawn file: smaller on average than a township (168.0), larger than a city or town (13.11 km2 of land)
+    "municipality",      // 501 incorporated cities and towns, from TIGERweb, drawn from a mirrored tile archive
+    "city-ward",         // 56 council wards and districts in the 12 cities above 25,000 people that elect council members by ward, pre-built from the Arkansas GIS Office's layer — 27.2 km2 mean area (median 23.7, from 4.2 in Texarkana to 74.3 in Fort Smith), measured 2026-10-16 on the drawn file — ranked just after City or Town, which each one divides, so a ward draws on top of its city
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -10742,8 +11853,36 @@ function initArkansasExplorer() {
   // The same `(\S)` guard governs all three, so a PO-box-only address (no
   // street) is still left alone: it geocodes to nothing and the card honestly
   // drops its pin, rather than dropping one on a city centroid.
+  //
+  // Two more shapes, measured 2026-10-20 over every district office the apps
+  // ship, lost a house number or kept a box:
+  //   a building or floor named BEFORE the street — "Dulles State Office
+  //     Building 317 Washington St., Watertown"; "Oswego City Hall, Second
+  //     Floor 13 W. Oneida St."; "Room 419, Legislative Office Building 198
+  //     State St., Albany". The number after the word is the house number,
+  //     and the unit rule read it as a building number and removed it, so New
+  //     York Senate 49, 50 and 52 were looked up with no number at all. When
+  //     that number is followed by a street name and a street type, the words
+  //     before it are dropped and the number stays;
+  //   boxes spelled out or lettered — "Post Office Box 188"; "P.O. Box I".
+  var POI_STREET_TYPE = "(?:street|st|avenue|ave|av|road|rd|boulevard|blvd|drive|dr|lane|ln|place|pl|" +
+    "court|ct|highway|hwy|parkway|pkwy|terrace|ter|circle|cir|square|sq|trail|trl|way|turnpike|tpke|" +
+    "plaza|plz|expressway|expy|freeway|fwy|pike|row|alley|aly|loop|crescent|cres|concourse|walk|path)";
+  // "<number> [N|S|E|W] <one to four words> <street type>" or "<number> Broadway",
+  // ending the comma part or followed by a unit
+  var POI_STREET_AHEAD = "\\d+[a-z]?(?:-\\d+[a-z]?)?\\s+(?:broadway|(?:[nsew]\\.?\\s+)?" +
+    "(?:\\d+(?:st|nd|rd|th)\\s+|[a-z][a-z'.-]*\\s+){1,4}" + POI_STREET_TYPE + "\\b\\.?)" +
+    "\\s*(?:,|$|(?:suite|ste|room|rm|unit|apt|floor)\\b|#)";
+  var POI_NAMED_BEFORE_STREET = new RegExp(
+    "^[\\s\\S]*?\\b(?:building|bldg|floor)\\.?\\s+(?=" + POI_STREET_AHEAD + ")", "i");
+  // a street address already in what would be dropped ("28 Wells Ave., Building
+  // 3 5th Floor") means the building is a unit after it, so nothing is dropped
+  var POI_STREET_IN_PREFIX = new RegExp("\\d[^,]*\\b(?:" + POI_STREET_TYPE + "|broadway|route|rte)\\b", "i");
   function cleanPoiAddress(address) {
     var s = String(address);
+    s = s.replace(POI_NAMED_BEFORE_STREET, function (named) {
+      return POI_STREET_IN_PREFIX.test(named) ? named : "";
+    });
     // "<n>th Floor" — the ordinal precedes the token
     s = s.replace(/(\S)[,\s]+\d+(?:st|nd|rd|th)?\s+floors?\b\.?/gi, "$1 ");
     // "<Unit> <number>" — the token precedes the unit number
@@ -10757,7 +11896,8 @@ function initArkansasExplorer() {
     // including the parenthesized form the Kane municipal roster uses
     // ("175 Water St., (P.O. Box 205), Burlington") and a trailing period
     // ("P.O. Box 226. LEWISTOWN"), both of which survived the bare-token rule.
-    s = s.replace(/(\S)[,\s]+\(?\s*p\.?\s*o\.?\s*box\.?\s*#?\s*\d+\s*\.?\s*\)?/gi, "$1 ");
+    // Spelled out ("Post Office Box 188") or lettered ("P.O. Box I") too.
+    s = s.replace(/(\S)[,\s]+\(?\s*(?:p\.?\s*o\.?|post\s+office)\s*box\.?\s*#?\s*(?:\d+|[a-z]\d*(?![\w-]))\s*\.?\s*\)?/gi, "$1 ");
     // collapse the comma/space debris a removal leaves behind
     s = s.replace(/\s+/g, " ").replace(/\s+,/g, ",").replace(/,(?:\s*,)+/g, ",").replace(/^[\s,]+|[\s,]+$/g, "");
     // a separator dash that lost the fragment it introduced ("St. - 6th Floor").
@@ -11692,7 +12832,8 @@ function initArkansasExplorer() {
    *   - mailto:/tel: hrefs are built HERE from a raw address/number — an
    *     email address is never printed (the "Email" label is the link), and
    *     a phone number displays with non-breaking hyphens while its tel:
-   *     href keeps only dialable characters.
+   *     href keeps only dialable characters, and stops where an extension
+   *     begins.
    * A render() returns one wrapper element with class "card-flush"; the
    * styles-card-v2 rules key row padding/borders off that marker. */
   function cardEl(tag, className, text) {
@@ -11711,21 +12852,49 @@ function initArkansasExplorer() {
     a.textContent = String(label || safe);
     return a;
   }
+  function cardPhoneDial(phone) {
+    // What a tel: link dials for one printed number: its digits (and a
+    // leading +), stopping where an extension begins ("ext. 12", "EXT 105",
+    // "x 236"). Run onto the end of the number, an extension's digits would
+    // dial a different number; the extension stays in the text, where the
+    // reader sees it.
+    var s = String(phone);
+    var m = /(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d/i.exec(s);
+    if (m) s = s.slice(0, m.index + m[1].length);
+    var dial = s.replace(/[^\d+]/g, "");
+    // TWO NUMBERS PRINTED AS ONE ("217/555-0100; 217/555-0101", "(312)
+    // 555-0100 / 0101/0102") would run together into a number nobody has. The
+    // link dials the first, the one the text opens with, and the rest stays
+    // in the text: seven digits where the text opens with a local number
+    // (three digits, then four), eleven where it opens with the country code
+    // 1, and ten otherwise. A number written with a leading + is left whole.
+    if (dial.charAt(0) !== "+" && dial.length > 11) {
+      var g = s.match(/\d+/g);
+      dial = dial.slice(0, g.length > 1 && g[0].length === 3 && g[1].length === 4
+        ? 7 : dial.charAt(0) === "1" ? 11 : 10);
+    }
+    return dial;
+  }
   function cardPhoneLink(phone) {
-    var dial = String(phone).replace(/[^\d+]/g, "");
+    var dial = cardPhoneDial(phone);
     if (!dial) return null;
     var a = cardEl("a", "card-phone", String(phone).replace(/-/g, "‑"));
     a.href = "tel:" + dial;
     return a;
   }
   function cardContactLine(spec) {
-    // spec: { phone?, email?, links?: [{label, url}] } -> one wrapping line of
-    // phone / Email / external links separated by middots; null when empty.
+    // spec: { phone?, phonesExtra?: [string], email?, links?: [{label, url}] }
+    // -> one wrapping line of phones / Email / external links separated by
+    // middots; null when empty. phonesExtra are further numbers the source
+    // prints for the same person, each as printed: a label the source gives
+    // ("cell 519-3104") stays in the text, and only the digits reach the
+    // tel: href, so a label never changes the number dialled.
     var items = [];
-    if (spec.phone) {
-      var p = cardPhoneLink(spec.phone);
+    [spec.phone].concat(spec.phonesExtra || []).forEach(function (phone) {
+      if (!phone) return;
+      var p = cardPhoneLink(phone);
       if (p) items.push(p);
-    }
+    });
     if (spec.email) {
       var e = document.createElement("a");
       e.href = "mailto:" + String(spec.email);
@@ -11786,8 +12955,8 @@ function initArkansasExplorer() {
     return el;
   }
   function renderPersonRows(people, opts) {
-    // people: [{ name, badge?, note?, phone?, email?, links?, details?:
-    // {label, items}, detailsOpen? }]. A person with details renders as a
+    // people: [{ name, badge?, note?, phone?, phonesExtra?, email?, links?,
+    // details?: {label, items}, detailsOpen? }]. A person with details renders as a
     // native <details> expander; absent fields render nothing (no
     // placeholders, no guessed officeholders — honesty rules).
     var tinted = opts && opts.tinted;
@@ -12992,15 +14161,71 @@ function initArkansasExplorer() {
   }
 
   // Extract a geocodable street address from an office's address lines (an array
-  // of strings): drop phone/fax lines, keep the street + city/zip. Used by
+  // of strings, exactly as scraped): the FIRST street address in the block, its
+  // street, any building or suite lines and its city/ZIP line. Used by
   // registerIlgaChamber's pointOfInterest when a roster supplies office lines.
+  //
+  // A LINE IS DROPPED FOR WHAT IT IS, NEVER FOR A FRAGMENT IT CONTAINS — the
+  // splitOfficeLines lesson, one block over (2026-10-20). Until that day this
+  // dropped every line matching /phone|fax|tel|\(\d{3}\)|\d{3}[-.\s]\d{4}/i,
+  // and both halves misfired on shipped offices. A ZIP+4 satisfies the last
+  // alternative ("Fort Smith, AR 72903-5083" contains "903-5083"), so the city
+  // line went and the pin was looked up as "6101 Phoenix Ave, Suite 4" with no
+  // city or state; and "tel" sits inside street names ("2400 E. Katella Ave.",
+  // "1 Kattelville Road"), so the whole address went, nothing was left, and the
+  // fallback looked up every line, "Phone: 714-939-8469" included. Measured over
+  // the 693 district offices the fleet's rosters shipped that day: 6 U.S. House
+  // offices lost their city (AR-3, IN-4, MN-8, TN-2, TN-6, WI-1) and 2 assembly
+  // offices were looked up with their telephone numbers (California 68, New
+  // York 121). Those 8 are the only shipped addresses this rule changes. It also
+  // reads the Louisiana legislature's blocks, which put a physical and a mailing
+  // address under headings, sometimes the post office box first, and up to
+  // three offices in one block, all of which the old filter joined into one.
+  //
+  // So a contact line is one LABELLED as a phone, fax or e-mail, or one carrying
+  // a whole telephone number (three, three and four digits, which a ZIP+4 is
+  // not). A line ending in a ZIP code ends an address when the ZIP follows a
+  // two-letter word (the state), a comma, or nothing else on its line, so
+  // "P.O. Box 91245" and "Suite 14800" are not ZIP codes; a heading line
+  // ("Mailing Address:") ends one too, ZIP or not. The first address that is not
+  // only a post office box wins, else the first. Lines after the last address
+  // are a note ("*Not ADA accessible…") and count only when they are all there
+  // is, so a block with no ZIP and no heading is joined as it always was, and a
+  // block with no address line at all gets no pin rather than a lookup of a
+  // telephone number.
+  //
+  // An address with no digit in it, no street number, ZIP code or box, names
+  // no place a pin could go, so it gets no pin either: measured 2026-10-20 over
+  // the same 693 offices, exactly three, Illinois House 13 ("By appointment
+  // only") and Wisconsin Senate 6 and 22 (the bare state, "WI").
   function officeAddressForGeocode(lines) {
     if (!lines || !lines.length) return null;
-    var kept = lines.filter(function (l) {
-      return !/(?:phone|fax|tel|\(\d{3}\)|\d{3}[-.\s]\d{4})/i.test(String(l));
+    var CONTACT = /^\s*(?:phone|telephone|tel|fax|cell|mobile|e-?mail)\s*[:.]/i;
+    var NUMBER = /(?:\(\d{3}\)|\b\d{3})[\s.\-]*\d{3}[\s.\-]\d{4}\b/;
+    var ENDS_IN_ZIP = /(?:^\s*|\b[a-z]{2}\s+|,\s*)\d{5}(?:-\d{4})?[\s.]*$/i;
+    var BOX = /^\s*\(?\s*(?:p\.?\s*o\.?|post\s+office)\s*box\b/i;
+    var addresses = [];
+    var current = [];
+    lines.forEach(function (raw) {
+      var line = String(raw);
+      if (!line.trim() || CONTACT.test(line) || NUMBER.test(line)) return;
+      var heading = /:\s*$/.test(line);
+      if (!heading) current.push(line);
+      if ((heading || ENDS_IN_ZIP.test(line)) && current.length) {
+        addresses.push(current);
+        current = [];
+      }
     });
-    var addr = (kept.length ? kept : lines).join(", ").trim();
-    return addr || null;
+    if (!addresses.length && current.length) addresses.push(current);
+    // only a box: every line but the city line ("P.O. Box 660", "Harrisonburg, LA 71340")
+    function boxOnly(address) {
+      var head = address.length > 1 ? address.slice(0, -1) : address;
+      return head.every(function (l) { return BOX.test(l); });
+    }
+    var picked = addresses.filter(function (a) { return !boxOnly(a); })[0] || addresses[0];
+    if (!picked) return null;
+    var addr = picked.join(", ").trim();
+    return /\d/.test(addr) ? addr : null;
   }
   /* ==== ENGINE:END office-helpers ==== */
   /* ==== ENGINE:BEGIN chamber-factory ==== */
@@ -13009,8 +14234,9 @@ function initArkansasExplorer() {
     // joined to a same-origin roster keyed by district number. opts: { id, label,
     // layerIndex, districtFields, loadRoster, memberLabel, style, directoryUrl,
     // profileLabel?, directoryLabel?, capitolLabel?, districtPrefix? }. Member
-    // rows are { name, party?, url?, districtOffice?, capitolOffice? }; office fields only
-    // render when the roster supplies them (empty placeholder -> just the link).
+    // rows are { name, party?, url?, phone?, phonesExtra?, email?,
+    // districtOffice?, capitolOffice? }; office fields only render when the
+    // roster supplies them (empty placeholder -> just the link).
     // Metro-provided geometry loader wins; forks that haven't pre-built their
     // chamber geometry fall back to the live TIGERweb fetch by layer index,
     // unchanged. (opts.loadDistricts is a metro-specific value passed by the
@@ -13179,6 +14405,25 @@ function initArkansasExplorer() {
         }
         var person = { name: String(member.name) };
         if (member.party) person.badge = String(member.party);
+        // THE MEMBER'S OWN TELEPHONE, where the roster carries one: a number
+        // the chamber prints for the member apart from the office blocks
+        // below, such as a home or cell line. Published since Adam's ruling of
+        // 2026-10-17 that a number a government source prints beside an
+        // official is shown even where it may be the official's own; a label
+        // the source prints ("home 803-555-0100") rides inside the string.
+        if (member.phone) person.phone = String(member.phone);
+        if (member.phonesExtra && member.phonesExtra.length) {
+          person.phonesExtra = member.phonesExtra.map(String);
+        }
+        // THE MEMBER'S E-MAIL ADDRESS, where the roster carries one. Before
+        // 2026-10-17 this card showed no legislator's address at all, though
+        // eight states' rosters carried one for nearly every seat. Measured
+        // that day, every one of them is the chamber's own mailbox except
+        // fifteen Arkansas members' personal addresses, which the
+        // legislature's own member pages print and which Adam chose to show
+        // ("E-mails too"). A roster reads it from the legislature's pages or
+        // from Open States' compilation of them.
+        if (member.email) person.email = String(member.email);
         // Label follows the actual href: only a roster-supplied member URL
         // gets the per-member label — the directory fallback lives in the
         // footer (primaryLink) and must not masquerade as the member's page.
@@ -13308,8 +14553,17 @@ function initArkansasExplorer() {
 
   // Statewide loader with the point-first hook (queryFeatureAt): TIGERweb
   // answers "which feature holds this point" in one small spatial query, so a
-  // first click never waits on a multi-MB statewide download. The full set
-  // still downloads for the map overlay, on toggle.
+  // first click never waits on a multi-MB statewide download.
+  //
+  // SINCE 2026-10-17 THE LAYERS BELOW ARE DRAWN AND ANSWERED FROM TILE
+  // ARCHIVES, copied from TIGERweb into data/app/tiles/ by
+  // scripts/mirror_tiger_tiles.py (each registration's `tiles:` line). A click
+  // reads the tile under the point, so neither this hook nor the whole set is
+  // asked for. The hook still fires in a session whose archive failed to draw
+  // or in a browser that cannot decompress one, and the whole set still
+  // downloads for a comparison or for the overlay on the raster basemap,
+  // which is why the loader keeps both. A TIGER vintage roll reaches these
+  // layers through update-tiger-tiles.yml's weekly pull request.
   //
   // IT IS HERE BECAUSE TWO LAYERS BELOW ACTUALLY USE IT, which is the only
   // reason to carry it: build_privacy_page.py MEASURES point-query layers by
@@ -13585,9 +14839,10 @@ function initArkansasExplorer() {
    * the member's own page. The other three seats are VACANT records: the
    * member list keeps a departed member's row, and only the member's own page
    * says "Resigned" or "Deceased", so the builder reads every page. The
-   * member pages also carry a mailing address and an unlabelled telephone,
-   * which may be a home, and the builder never reads them, so the cards carry
-   * no office.
+   * member pages also carry an unlabelled telephone, which ships on the
+   * member's row as printed even where it is the member's own (Adam,
+   * 2026-10-17), and a mailing address that may be a home, which the builder
+   * never reads, so the cards carry no office.
    * ---------- */
   var loadArSenateDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/ar-senate-districts.json", {}, 2);
@@ -13626,6 +14881,219 @@ function initArkansasExplorer() {
     memberLabel: "Representative", capitolLabel: "Capitol Office",
     profileLabel: "Member profile", directoryLabel: "Arkansas Legislature member list",
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
+  });
+
+  /* ---------- 4b. Court of Appeals District — 7 groups of whole counties ----------
+   * Act 1812 of 2003 divides the state into seven districts "for the
+   * election of judges to the Arkansas Court of Appeals" and names each
+   * one's counties, so no map is traced: ar/scripts/build_ar_court_districts.py
+   * dissolves the county fabric this instance already ships. The act is read
+   * as the state GIS office's metadata quotes it, because the official Code
+   * has no free readable copy, and the state's own district layer must put
+   * every county where the act does (both read 2026-10-16, kept in
+   * data/source/courts/). The court's own district map page lists two
+   * positions in five districts and one in two: twelve judges.
+   *
+   * THE DISTRICT IS WHERE THE JUDGES ARE ELECTED, NOT WHERE THE COURT SITS:
+   * the court hears appeals for the whole state. MEAN AREA 19,683 km2
+   * against a congressional district's 34,445, which puts the layer second
+   * in the area rank.
+   *
+   * NOBODY IS NAMED: the court's pages name every judge, and this app does
+   * not publish them yet (gap ar-appeals-judges). The card links the court's
+   * own district page, which does.
+   * ---------- */
+  var loadArAppealsDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-appeals-districts.json", {}, 2);
+  });
+  var AR_COA_DISTRICTS = "https://arcourts.gov/courts/court-of-appeals/map";
+  var AR_JUDGE_WORDS = ["One", "Two", "Three", "Four", "Five", "Six", "Seven",
+    "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen",
+    "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"];
+
+  // "Pulaski, Perry and Saline Counties" — the county list a card prints
+  // under its own district.
+  function arCountyPhrase(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1
+      ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " County" : " Counties");
+  }
+
+  function arCourtUnit(feature) {
+    var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+    return unit == null ? null : String(unit);
+  }
+
+  function arJudgePhrase(n) {
+    var k = Number(n);
+    return k >= 1 && k <= AR_JUDGE_WORDS.length
+      ? AR_JUDGE_WORDS[k - 1] + (k === 1 ? " judge" : " judges")
+      : null;
+  }
+
+  registerLayer({
+    id: "ar-court-of-appeals",
+    group: "political",
+    label: "Court of Appeals District",
+    overlay: {
+      load: loadArAppealsDistricts,
+      style: { color: "#753B07", weight: 2, fillColor: "#753B07", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = arCourtUnit(feature);
+      return unit == null ? null : "Court of Appeals District " + unit;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadArAppealsDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          unit: arCourtUnit(feature),
+          counties: findPropCI(props, ["counties"]),
+          authority: findPropCI(props, ["authority"]),
+          judges: findPropCI(props, ["judge_count"])
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null
+          ? "Court of Appeals District " + result.unit
+          : "Unknown Court of Appeals district",
+        note: arCountyPhrase(result.counties)
+      }));
+      var n = Number(result.judges);
+      var who = n === 1
+        ? "The district's voters elect one of the court's 12 judges."
+        : n >= 2 && n <= AR_JUDGE_WORDS.length
+          ? "The district's voters elect " + AR_JUDGE_WORDS[n - 1].toLowerCase() +
+            " of the court's 12 judges, one for each of its " +
+            AR_JUDGE_WORDS[n - 1].toLowerCase() + " positions."
+          : "The district's voters elect some of the court's 12 judges.";
+      var rows = [
+        {
+          label: "Judges",
+          value: who + " This app does not name them yet; the link below " +
+            "opens the court's own list by district."
+        },
+        {
+          label: "The court",
+          value: "The Court of Appeals hears appeals for the whole state. The " +
+            "districts are where its judges are elected, not where cases come from."
+        }
+      ];
+      if (result.authority != null) {
+        rows.push({ label: "Drawn from", value: String(result.authority) });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Court of Appeals districts", url: AR_COA_DISTRICTS };
+    }
+  });
+
+  /* ---------- 4c. Judicial Circuit — 28 groups of whole counties ----------
+   * Arkansas's circuit courts, its general trial courts, sit in 28 judicial
+   * circuits (the Code calls them judicial districts). The circuit's voters
+   * elect its judges in nonpartisan elections for six-year terms (the court
+   * system's circuit courts page). The county lists are read from the
+   * Administrative Office of the Courts' circuit judge directory, which lists
+   * every judge under every county the judge serves:
+   * ar/scripts/build_ar_court_districts.py stops if any judge serves only
+   * some of a circuit's counties, and the state's circuit layer must put
+   * every county in the same circuit (both read 2026-10-16).
+   *
+   * FIVE CIRCUITS HAVE ELECTION SUBDISTRICTS THAT ARE NOT DRAWN. A federal
+   * court order (Hunt v. State of Arkansas) created two subdistricts in each
+   * of the 1st, 2nd, 6th, 10th and 11th West circuits, for elections only;
+   * judges elected from them hear cases across the whole circuit. Which
+   * judgeships each subdistrict elects is set by that court and was not read,
+   * so the circuit is drawn whole and its card says so (`subdistricts`).
+   *
+   * MEAN AREA 4,921 km2 against the Senate's 3,937, which puts the layer
+   * third in the area rank, under the Court of Appeals districts.
+   *
+   * NOBODY IS NAMED (gap ar-circuit-judges). The card gives the circuit's
+   * number of judges, from the directory, and links the directory.
+   * ---------- */
+  var loadArJudicialCircuits = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-judicial-circuits.json", {}, 2);
+  });
+  var AR_CIRCUIT_DIRECTORY = "https://arcourts.gov/directories/circuit-judges";
+
+  registerLayer({
+    id: "ar-circuit-court",
+    group: "political",
+    label: "Judicial Circuit",
+    overlay: {
+      load: loadArJudicialCircuits,
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = arCourtUnit(feature);
+      return unit == null ? null : unit + " Judicial Circuit";
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadArJudicialCircuits, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          unit: arCourtUnit(feature),
+          counties: findPropCI(props, ["counties"]),
+          authority: findPropCI(props, ["authority"]),
+          judges: findPropCI(props, ["judge_count"]),
+          subdistricts: findPropCI(props, ["subdistricts"]) === true
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.unit != null
+          ? result.unit + " Judicial Circuit"
+          : "Unknown judicial circuit",
+        note: arCountyPhrase(result.counties)
+      }));
+      var count = arJudgePhrase(result.judges);
+      var rows = [
+        {
+          label: "Circuit judges",
+          value: (count ? count + ", elected" : "Elected") + " by the " +
+            "circuit's voters in nonpartisan elections for six-year terms. " +
+            "This app does not name them yet; the link below opens the " +
+            "court system's directory of circuit judges."
+        }
+      ];
+      if (result.subdistricts) {
+        rows.push({
+          label: "Subdistricts",
+          value: "A federal court order (Hunt v. State of Arkansas) created two " +
+            "election subdistricts in this circuit. Judges elected from them " +
+            "hear cases across the whole circuit. This map does not draw the " +
+            "subdistricts or say which judgeships they elect."
+        });
+      }
+      rows.push({
+        label: "The court",
+        value: "Circuit courts are Arkansas's general trial courts, for civil, " +
+          "criminal, probate, domestic relations and juvenile cases."
+      });
+      if (result.authority != null) {
+        rows.push({ label: "Drawn from", value: String(result.authority) });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Directory of circuit judges", url: AR_CIRCUIT_DIRECTORY };
+    }
   });
 
   /* ---------- 5. Quorum Court District ----------
@@ -13788,16 +15256,85 @@ function initArkansasExplorer() {
     }
   });
 
-  /* No county-subdivision layer, on purpose. Arkansas's townships are legal
-   * subdivisions of each county, and the Census does not count them as
-   * governments: every one of the 1,051 county subdivisions TIGERweb carries
-   * for STATE='05' is FUNCSTAT N (a nonfunctioning legal entity), measured
-   * 2026-10-13 — 951 townships, 82 "District N" and 18 "Township N" in the
-   * counties that number them. A township does elect a constable, and no
-   * source naming constables has been read here, so a township card would
-   * name nobody and claim a government the Census says is not one. A justice
-   * of the peace district is not one of these. Recorded as a drop in the
-   * guidebook. */
+  /* ---------- Township — the state's own township map, pre-built ----------
+   * Which township a point is in: the level-14 map (docs/DONE_STANDARD.md,
+   * Adam's ruling of 2026-10-14), owed in every state whether or not the
+   * units govern anyone. Arkansas's townships are legal subdivisions of
+   * each county, set by the county court (Arkansas Code 14-14-401). A
+   * township has no government of its own (the Census records all of them
+   * as nonfunctioning legal entities, FUNCSTAT N) but its voters elect a
+   * constable (Arkansas Constitution, article 7, section 47), and no source
+   * naming constables by township has been read, so the card says all
+   * three things and names nobody.
+   *
+   * THE LINES ARE THE STATE'S, NOT THE CENSUS'S, AND THAT IS MEASURED.
+   * Every other state's township layer reads TIGERweb live; here TIGERweb is
+   * out of date. The state's TOWNSHIP_POLITICAL_DIVISION layer (820
+   * townships) and TIGERweb's (1,051) disagree about how many townships a
+   * county has in 27 of 75 counties (2026-10-15), and where that was
+   * checked the state is right: TIGERweb still draws 38 townships in
+   * Washington County, where a 2013 county court order upheld in Clowers v.
+   * Edwards (2020) left 3. ar/scripts/build_ar_townships.py builds the file
+   * (Douglas-Peucker at 20 m under a 25 m ceiling, every county's townships
+   * held to cover that county). Same-origin, so nothing about the reader's
+   * point leaves the browser. ---------- */
+  var loadArTownships = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-townships.json", {}, 2);
+  });
+
+  registerLayer({
+    id: "county-subdivision",
+    group: "geography",
+    label: "Township",
+    subOf: "county",
+    overlay: {
+      load: loadArTownships,
+      style: { color: "#7A5C3E", weight: 1.5, fillColor: "#A98B6C", fillOpacity: 0.05 }
+    },
+    // the same value the card's title shows
+    hoverName: function (feature) {
+      var name = findPropCI(feature.properties || {}, ["name"]);
+      return name != null ? String(name) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadArTownships, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          name: findPropCI(props, ["name"]),
+          county: findPropCI(props, ["county"])
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.name != null ? String(result.name) : "Unknown township",
+        note: result.county != null ? String(result.county) + " County" : null
+      }));
+      wrap.appendChild(renderFieldStack([
+        {
+          label: "Government",
+          value: "None of its own. A township is a division of the county, and " +
+            "the county court sets its lines."
+        },
+        {
+          label: "Constable",
+          value: "Under the state constitution, each township's voters elect a " +
+            "constable for a two-year term. This map does not name constables: " +
+            "no list of them by township has been read."
+        },
+        {
+          label: "Where the lines come from",
+          value: "The state's own township map, from the Arkansas GIS Office. " +
+            "The Census Bureau's map of Arkansas townships differs from it in " +
+            "at least 27 of the 75 counties."
+        }
+      ]));
+      return wrap;
+    }
+  });
 
   // The affix TIGER's own NAME carries beyond its BASENAME, as a suffix
   // ("Little Rock" + " city") or a prefix. Returns null when the two are equal
@@ -13812,6 +15349,98 @@ function initArkansasExplorer() {
     if (i > 0 && i + b.length === n.length) return n.slice(0, i).trim().toLowerCase() || null;
     return null;
   }
+
+  /* ---------- Voting precinct — the Arkansas GIS Office's statewide layer ----------
+   * Arkansas's 2,920 precincts as each county reports them to the state,
+   * published by the Arkansas GIS Office with the Secretary of State's
+   * Elections Division. Pre-built by ar/scripts/build_ar_precincts.py
+   * through scripts/statewide_precincts.py (Douglas-Peucker at 4 m;
+   * data/app/ar-precincts.json, same-origin), so a click is answered in the
+   * browser and no point is sent anywhere. Seven precincts the layer
+   * publishes in pieces are joined into one each.
+   *
+   * A PRECINCT ELECTS NO ONE TO PUBLIC OFFICE, so the card has no
+   * officeholder row to be missing and says why (the constable is elected
+   * by township, which the Township card says). The date the card gives is
+   * the last change the county reported, for a precinct in pieces the latest
+   * of its pieces' dates; about half of the records carry none, and those
+   * cards say the state's map gives no date rather than guessing one.
+   * ---------- */
+  var loadArPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-precincts.json", {}, 2);
+  });
+
+  // A precinct elects no one to public office, so the card says so rather
+  // than leaving a reader to wonder which name is missing.
+  var PRECINCT_ELECTS = "No one to public office. A precinct is where you vote " +
+    "and how your ballots are reported, not a district with a representative of its own.";
+
+  // The card's title: a name that is only a number reads "Precinct 025", so
+  // it cannot be taken for a district number; any other name is printed as
+  // the state publishes it.
+  function precinctTitle(props) {
+    var name = props.name != null ? String(props.name).trim() : "";
+    if (!name) return null;
+    return /^[0-9][0-9-]*$/.test(name) ? "Precinct " + name : name;
+  }
+
+  registerLayer({
+    id: "voting-precinct",
+    group: "geography",
+    label: "Voting Precinct",
+    overlay: {
+      load: loadArPrecincts,
+      // the finest tiling on this map: a light stroke, so it reads under the
+      // broader boundaries rather than competing with them
+      style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      return precinctTitle(feature.properties || {});
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadArPrecincts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          title: precinctTitle(props),
+          edited: arReadDate(props.edited),
+          county: props.county != null ? String(props.county) : null
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.title || "Unknown precinct",
+        note: result.county
+      }));
+      var rows = [
+        { label: "Who it elects", value: PRECINCT_ELECTS },
+        {
+          label: "Last change recorded",
+          value: result.edited
+            ? "The county last reported a change to this precinct on " + result.edited + "."
+            : "The state's map gives no date for this precinct."
+        },
+        {
+          label: "How exact this line is",
+          value: "Each county reports its precincts to the state, and the Arkansas GIS Office " +
+            "publishes them as the county's voter registration system holds them. The lines " +
+            "are drawn here to within 4 metres; for a definitive answer, ask your county's " +
+            "election office."
+        }
+      ];
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return {
+        label: "Find your polling place",
+        url: "https://www.voterview.ar-nova.org/voterview"
+      };
+    }
+  });
 
   /* ---------- 5. City or Town — live TIGERweb, incorporated places ----------
    * Arkansas's municipalities are styled cities and towns. Measured
@@ -13828,15 +15457,84 @@ function initArkansasExplorer() {
    * 134,659 km2 by the Census's own AREALAND), and the county is the
    * general-purpose local government everywhere else.
    *
-   * NO OFFICEHOLDER. No statewide source naming Arkansas's mayors and council
-   * members has been read here, so the card names no one rather than
-   * guessing. Recorded as gap ar-municipal-officeholders. ---------- */
+   * THE 19 CITIES ABOVE 25,000 PEOPLE NAME THEIR MAYOR AND COUNCIL, written
+   * down from each city's own pages and proved against those pages on every
+   * build (ar/scripts/build_ar_city_councils.py through
+   * scripts/city_councils.py; data/app/ar-city-councils.json). Every seat
+   * says whether its ward's own voters or the whole city elect it, which was
+   * measured from the ballot because nothing the state publishes records it.
+   * The wards of the twelve of these cities that elect by ward are the City
+   * Council District layer (5b below).
+   *
+   * Arkansas's other 482 cities and towns name nobody: no statewide source
+   * naming their mayors and council members has been read here, so the card
+   * names no one rather than guessing. Recorded as gap
+   * ar-municipal-officeholders. ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT", "incorporated places");
+  // The mayor and council of each city above 25,000 people, keyed by the
+  // city's Census id; every seat says who elects it and which page names it.
+  var loadArCityCouncils = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-city-councils.json", {}, 2);
+  });
+  // The seat as its own body names its members: "Director, Ward 1" on a
+  // board of directors, "Council, Ward 1, Position 1" on a city council.
+  function arSeatBadge(seat) {
+    if (seat.role === "Mayor") return "Mayor";
+    return (seat.role === "Director" ? "Director, " : "Council, ") + String(seat.seat);
+  }
+  // Who elects the seat, unless its own label already says so.
+  function arSeatElectedBy(council, seat) {
+    if (/at large/i.test(String(seat.seat))) return null;
+    if (seat.byWard && seat.ward != null) {
+      return "elected by " + String(council.wardWord || "Ward") + " " + String(seat.ward);
+    }
+    return "elected by the whole city";
+  }
+  function arCouncilPeople(council, seats) {
+    return seats.map(function (seat) {
+      return {
+        name: String(seat.name),
+        badge: arSeatBadge(seat),
+        note: arSeatElectedBy(council, seat),
+        phone: seat.phone,
+        phonesExtra: seat.phonesExtra,
+        email: seat.email
+      };
+    });
+  }
+  // Where the names come from and when they were read. Every city's names
+  // are dated by the oldest read of the pages they come from.
+  function arCouncilSourceRow(council) {
+    var read = arReadDate(council.read);
+    return {
+      label: "Where these names come from",
+      value: (council.note
+        ? String(council.note)
+        : "As listed on " + String(council.name) + "'s own website.") +
+        (read ? " Read on " + read + "." : "") +
+        " If a seat has changed hands since, the city's own website or clerk " +
+        "says who holds it now."
+    };
+  }
+  function arCouncilLink(council) {
+    var seats = (council && council.seats) || [];
+    for (var i = 0; i < seats.length; i++) {
+      if (seats[i].seat !== "Mayor" && seats[i].sourceUrl) {
+        return {
+          label: council.note ? "The page these names come from"
+            : String(council.name) + "'s " + String(council.body),
+          url: String(seats[i].sourceUrl)
+        };
+      }
+    }
+    return null;
+  }
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City or Town",
     // the honest words for "outside every incorporated place in Arkansas",
@@ -13861,7 +15559,7 @@ function initArkansasExplorer() {
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
-        return {
+        var result = {
           seq: seq,
           name: name,
           // NAME minus BASENAME, so the style can never contradict the name
@@ -13871,8 +15569,19 @@ function initArkansasExplorer() {
           // an inactive municipality rather than implying a working one (none
           // in Arkansas today, measured 2026-10-13)
           funcstat: findPropCI(props, ["funcstat"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          council: null
         };
+        // A roster that fails to load leaves the city card standing and says
+        // so, rather than taking the boundary answer down with it.
+        return loadArCityCouncils().then(function (roster) {
+          result.council = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -13900,15 +15609,162 @@ function initArkansasExplorer() {
             "legally in existence, but with no government operating."
         });
       }
+      var council = result.council;
+      if (!council) {
+        rows.push({
+          label: "Your mayor and council",
+          value: result.rosterFailed
+            ? "The list of council members did not load, so no name is shown. " +
+              "This municipality's own website names its mayor and council."
+            : "Not named here. This app names the mayor and council of " +
+              "Arkansas's 19 cities above 25,000 people, from each city's own " +
+              "website, and this municipality is not one of them yet. Its own " +
+              "website is the current source."
+        });
+        wrap.appendChild(renderFieldStack(rows));
+        return wrap;
+      }
+      if (rows.length) wrap.appendChild(renderFieldStack(rows));
+      // Card convention: identity -> officeholders. Each seat names who
+      // elects it, its ward's own voters or the whole city.
+      wrap.appendChild(renderPersonRows(arCouncilPeople(council, council.seats || [])));
+      var after = [
+        { label: "How the seats are elected", value: String(council.how) },
+        arCouncilSourceRow(council)
+      ];
+      if ((council.seats || []).some(function (s) { return s.byWard; })) {
+        after.push({
+          label: "Which " + String(council.wardWord || "ward").toLowerCase() +
+            " this point is in",
+          value: "The City Council District layer draws " + String(council.name) +
+            "'s " + (council.wardWord ? String(council.wardWord).toLowerCase() + "s" : "wards") +
+            " and names the members this point's " +
+            String(council.wardWord || "ward").toLowerCase() + " elects."
+        });
+      }
+      wrap.appendChild(renderFieldStack(after));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      return result && result.council ? arCouncilLink(result.council) : null;
+    }
+  });
+
+  /* ---------- 5b. City council ward or district ----------
+   * The wards of the twelve cities above 25,000 people whose councils or
+   * boards elect members by ward: Little Rock, Fayetteville, Fort Smith,
+   * North Little Rock, Conway, Pine Bluff, Hot Springs, Benton, Sherwood,
+   * Paragould, Texarkana and Russellville, 56 wards in all. The lines are
+   * the Arkansas GIS Office's map of municipal wards (MUNICIPAL_WARDS, layer
+   * 50 of its Boundaries service), pre-built by
+   * ar/scripts/build_ar_city_wards.py through
+   * scripts/published_district_layers.py (Douglas-Peucker at 4 m), so a
+   * click is answered in the browser and no point is sent anywhere. The map
+   * describes itself as not representing exact legal boundaries, and the
+   * card says so.
+   *
+   * The other seven of the 19 cities give every seat a ward and elect it
+   * citywide (Springdale, Jonesboro, Rogers, Bentonville, Bella Vista,
+   * Jacksonville and Cabot), measured from the ballot, so their wards are not
+   * drawn: a reader in one votes for every seat, and the City or Town card
+   * names them all.
+   *
+   * A GENERIC LABEL, as Minnesota's and Iowa's: Hot Springs elects by
+   * DISTRICT and the other eleven by WARD, so the toggle says "City Council
+   * District" and each card names the unit as its city does, off the
+   * feature's own `label`.
+   *
+   * The members are the city council roster the City or Town card reads
+   * (data/app/ar-city-councils.json): the seats its ward's own voters elect,
+   * each proved on the city's own page when the roster was built.
+   * ---------- */
+  var loadArCityWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-city-wards.json", {}, 2);
+  });
+  var AR_SMALL_NUMBERS = ["no", "one", "two", "three", "four", "five", "six",
+    "seven", "eight", "nine", "ten"];
+
+  registerLayer({
+    id: "city-ward",
+    group: "political",
+    label: "City Council District",
+    coverage: inArkansas,
+    emptyNote: "This point is not in a city council ward this map draws. It " +
+      "draws the wards of the 12 Arkansas cities above 25,000 people that " +
+      "elect council members by ward. The other seven elect every seat by " +
+      "the whole city, and the City or Town card names the mayor and council " +
+      "of all 19.",
+    overlay: {
+      load: loadArCityWards,
+      // the fleet's city-council blue (layer-concepts.json `colors` and `lines`)
+      style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.07 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      return p.city != null && p.label != null ? String(p.city) + ", " + String(p.label) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadArCityWards, point).then(function (feature) {
+        if (!feature) return null;
+        var result = { seq: seq, props: feature.properties || {}, council: null };
+        return loadArCityCouncils().then(function (roster) {
+          result.council = roster ? roster[String(result.props.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var p = result.props;
+      var council = result.council;
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: String(p.label),
+        note: council ? String(council.name) + " " + String(council.body) : String(p.city)
+      }));
+      // Card convention: identity -> officeholder. The seats this ward's own
+      // voters elect; the mayor and the citywide seats are named on the City
+      // or Town card.
+      var seats = (council && council.seats) || [];
+      var mine = seats.filter(function (s) { return s.byWard && String(s.ward) === String(p.ward); });
+      var citywide = seats.filter(function (s) { return !s.byWard && s.seat !== "Mayor"; });
+      if (mine.length) wrap.appendChild(renderPersonRows(arCouncilPeople(council, mine)));
+      var rows = [];
+      if (result.rosterFailed) {
+        rows.push({
+          label: "Council member",
+          value: "The list of council members did not load, so no name is shown."
+        });
+      }
+      if (council) {
+        // The rest of the city's elected officials, without saying whether
+        // the mayor sits on the board or council, which differs by city.
+        var n = citywide.length;
+        var noun = n ? String(citywide[0].role).toLowerCase() : "";
+        rows.push({
+          label: "Elected by the whole city",
+          value: "The mayor" + (n
+            ? " and " + (AR_SMALL_NUMBERS[n] || String(n)) + " " + noun +
+              (n === 1 ? "" : "s")
+            : "") + ". The City or Town card names " + (n ? "them" : "the mayor") + "."
+        });
+        rows.push({ label: "How the seats are elected", value: String(council.how) });
+        rows.push(arCouncilSourceRow(council));
+      }
       rows.push({
-        label: "Your mayor and council",
-        value: "Not named here. No statewide source naming Arkansas's " +
-          "mayors and council members has been read yet, and this app " +
-          "does not guess — this municipality's own website is the current " +
-          "source."
+        label: "How this line is drawn",
+        value: "From the Arkansas GIS Office's map of municipal wards, the " +
+          "state's copy of each city's wards, which describes itself as not " +
+          "the exact legal boundaries. The lines are drawn here to within 4 " +
+          "metres; for a definitive answer, ask the city clerk."
       });
       wrap.appendChild(renderFieldStack(rows));
       return wrap;
+    },
+    primaryLink: function (result) {
+      return result && result.council ? arCouncilLink(result.council) : null;
     }
   });
 
@@ -13931,6 +15787,7 @@ function initArkansasExplorer() {
 
   registerPolygonLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District",
     loader: loadSchoolDistrictsUnified,
@@ -13947,6 +15804,122 @@ function initArkansasExplorer() {
     compact: true, compactMetaField: "geoid" // 4b name-only card
   });
 
+  /* ---------- 6b. School board zone — the Secretary of State's statewide map ----------
+   * A school board that elects by zone elects each member from one part of
+   * its district, and the member must live there. The Secretary of State
+   * compiles every board's zones and the Arkansas GIS Office publishes them
+   * (SCHOOL_BOARD_ZONES, layer 32 of its Boundaries service). Pre-built by
+   * ar/scripts/build_ar_school_board_districts.py through
+   * scripts/published_district_layers.py (Douglas-Peucker at 4 m;
+   * data/app/ar-school-board-zones.json, same-origin), so a click is
+   * answered in the browser and no point is sent anywhere.
+   *
+   * 965 zones on 176 of the state's 234 school districts, measured
+   * 2026-10-16. A board not on the map elects its members at large, by the
+   * whole district, which the layer's own description says ("Some School
+   * Districts in Arkansas Elect Members at Large which is the reason not all
+   * school districts are included in the data"); the empty card quotes it.
+   *
+   * EIGHT BOARDS ARE PART WAY TO AT LARGE. Act 424 of 2023 let a board go
+   * back to electing every member at large, and eight boards are doing it a
+   * seat at a time as terms end, so the map keeps only the zones whose terms
+   * had not ended at the GIS Office's update of 9 April 2026. Those zones
+   * carry the date of the board's resolution and the card says what it
+   * resolved; the builder fails when one of those boards' zones moves, so
+   * the sentence is re-read with the map.
+   *
+   * NO MEMBER IS NAMED. No statewide list of Arkansas's school board members
+   * has been read, so the card names no one rather than guessing. Recorded
+   * as gap ar-school-board-members.
+   * ---------- */
+  var loadArSchoolBoardZones = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-school-board-zones.json", {}, 2);
+  });
+
+  // What the board resolved, for a zone on one of the eight boards moving to
+  // at large (the GIS Office's notes of 9 April 2026); null for every other.
+  function arAtLargeNote(props) {
+    var when = arReadDate(props.atLargeSince);
+    if (!when) return null;
+    if (props.atLargeHow === "positions-1-3") {
+      return "On " + when + " the board resolved that its Positions 1, 2 and 3, " +
+        "formerly Zones 1 to 3, are elected at large, by the whole district. " +
+        "This zone was still on the state's map at the Arkansas GIS Office's " +
+        "update of 9 April 2026.";
+    }
+    return "On " + when + " the board resolved to elect all of its members at " +
+      "large, by the whole district, each seat changing when its term ends. " +
+      "This zone was still on the state's map at the Arkansas GIS Office's " +
+      "update of 9 April 2026.";
+  }
+
+  registerLayer({
+    id: "school-board-district",
+    group: "schools",
+    label: "School Board Zone",
+    emptyNote: "This point is not in a school board zone. The Secretary of " +
+      "State's map of them says: “Some School Districts in Arkansas Elect " +
+      "Members at Large”, and a member elected at large is elected by the " +
+      "whole district. Eight boards are changing from zones to at large a seat " +
+      "at a time, and the map keeps only the zones that had not changed yet.",
+    overlay: {
+      load: loadArSchoolBoardZones,
+      // the fleet's school-board indigo and line (layer-concepts.json
+      // `colors` and `lines`)
+      style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.06 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      return p.board != null && p.label != null ? String(p.board) + ", " + String(p.label) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadArSchoolBoardZones, point).then(function (feature) {
+        if (!feature) return null;
+        var p = feature.properties || {};
+        return {
+          seq: seq,
+          board: p.board != null ? String(p.board) : null,
+          label: p.label != null ? String(p.label) : null,
+          note: arAtLargeNote(p)
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.label || "Unknown zone",
+        note: result.board
+      }));
+      var rows = [
+        {
+          label: "Who it elects",
+          value: "A member of the board of directors is elected from this zone " +
+            "and must live in it."
+        }
+      ];
+      if (result.note) rows.push({ label: "Changing to at large", value: result.note });
+      rows.push({
+        label: "Members",
+        value: "Not named here. No statewide list of Arkansas's school board " +
+          "members has been read yet, so this app names no one rather than guessing."
+      });
+      rows.push({
+        label: "How exact this line is",
+        value: "The Secretary of State compiles these zones and the Arkansas GIS " +
+          "Office publishes them. They are drawn here to within 4 metres; for a " +
+          "definitive answer, ask your county clerk."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return {
+        label: "Check your voter registration",
+        url: "https://www.voterview.ar-nova.org/voterview"
+      };
+    }
+  });
+
   /* ---------- 7. ZIP Code — live TIGERweb ZCTAs ----------
    * ZCTAs carry no STATE field (they cross state lines), so unlike every
    * other TIGERweb layer here this one cannot use the STATE='05' filter and
@@ -13960,10 +15933,12 @@ function initArkansasExplorer() {
    * the exact trap loadTigerLayer's own guard exists for.
    *
    * NEIGHBOURING STATES' ZIPS ARE IN THE OVERLAY, AND NO RECTANGLE CAN FIX
-   * THAT: the envelope returns 942 ZCTAs (measured 2026-10-13) and
-   * necessarily reaches into Missouri, Tennessee, Mississippi, Louisiana,
-   * Texas and Oklahoma. The card answers
-   * from a point query, and the coverage test below hides the layer outside
+   * THAT: the envelope returns 942 ZCTAs (measured 2026-10-13) and necessarily
+   * reaches into Missouri, Tennessee, Mississippi, Louisiana, Texas and
+   * Oklahoma. Since 2026-10-17 the card and the overlay read a tile archive
+   * that keeps only the ZCTAs overlapping Arkansas, so the neighbours appear
+   * only where the whole set is drawn (on the raster basemap, or after the
+   * archive fails to load), and the coverage test below hides the layer outside
    * the state.
    *
    * A ZCTA IS NOT A ZIP CODE, which the label cannot say and the concept
@@ -14022,6 +15997,7 @@ function initArkansasExplorer() {
 
   registerPolygonLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     loader: loadZipCodes,
@@ -14164,6 +16140,128 @@ function initArkansasExplorer() {
   });
 
 
+  /* ---------- 9b. Fire District — the Arkansas GIS Office's statewide map ----------
+   * State law has every Arkansas fire district keep a map certified by the
+   * mayor, county judge or county fire coordinator and send it to the
+   * Arkansas GIS Office, which publishes them as one layer (FIRE_DISTRICTS,
+   * layer 59 of its Boundaries service; A.C.A. § 12-10-329, as the layer's
+   * own description puts it, which calls the layer "the fire protection
+   * districts of the State of Arkansas"). It is the "special districts the
+   * state's own law creates" level of the fleet's done standard
+   * (docs/DONE_STANDARD.md, entry 12).
+   * Pre-built by ar/scripts/build_ar_fire_districts.py through
+   * scripts/published_district_layers.py (Douglas-Peucker at 4 m;
+   * data/app/ar-fire-districts.json, same-origin), so a click is answered in
+   * the browser and no point is sent anywhere.
+   *
+   * 971 districts from 973 records, measured 2026-10-16: Siloam Springs is
+   * filed three times and joined into one. The districts overlap in places
+   * and leave 0.75% of the state in no district, so the card reads every
+   * district the map puts the point in and says so when there is more than
+   * one. Six names are used twice, in different counties, so the hover gives
+   * the county as well.
+   *
+   * FOUR RECORDS LABEL GROUND RATHER THAN A DISTRICT ("Unserviced", "Missouri
+   * Serviced", "Unallocated Oklahoma" and "Unallocated"). The builder flags
+   * them `unassigned`, and the card quotes the label and says nothing more
+   * about the ground than the map does.
+   *
+   * WHO RUNS A DISTRICT IS NOT NAMED. The map gives each district's name, its
+   * counties, a date and, for 90 districts, a link to the record the GIS
+   * Office holds for its lines, and nothing about who runs it, so the card
+   * names no one rather than guessing. Recorded as gap ar-fire-district-boards.
+   * The map's type codes (RFD, MFD, FPD, VFD) are defined nowhere the GIS
+   * Office publishes, so the builder leaves them out.
+   * ---------- */
+  var loadArFireDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ar-fire-districts.json", {}, 2);
+  });
+
+  registerLayer({
+    id: "fire-district",
+    group: "safety",
+    label: "Fire District",
+    emptyNote: "No fire district covers this point on the Arkansas GIS Office's " +
+      "map, which leaves less than 1% of the state in no district. A point " +
+      "outside Arkansas is in none.",
+    overlay: {
+      load: loadArFireDistricts,
+      // the fleet's fire-district red and line (layer-concepts.json `colors`
+      // and `lines`)
+      style: { color: "#B0342A", weight: 1.5, fillColor: "#D0564C", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      if (p.label == null) return null;
+      return p.counties != null ? String(p.label) + ", " + String(p.counties) : String(p.label);
+    },
+    query: function (point, seq) {
+      return featureSetAt(loadArFireDistricts, point).then(function (geo) {
+        var feats = (geo && geo.features) ? geo.features : [];
+        var hits = [];
+        for (var i = 0; i < feats.length; i++) {
+          if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+            hits.push(feats[i].properties || {});
+          }
+        }
+        return hits.length ? { seq: seq, districts: hits } : null;
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var districts = result.districts;
+      if (districts.length > 1) {
+        wrap.appendChild(renderFieldStack([{
+          value: "The GIS Office's map puts this point inside " + districts.length +
+            " fire districts, where their lines overlap. The map does not say which " +
+            "one answers here."
+        }]));
+      }
+      districts.forEach(function (p) {
+        var name = p.label != null ? String(p.label) : "Unnamed district";
+        var counties = p.counties != null ? String(p.counties) : null;
+        var when = arReadDate(p.revised);
+        if (p.unassigned) {
+          wrap.appendChild(renderLinkRow({ title: "“" + name + "”", note: counties }));
+          wrap.appendChild(renderFieldStack([{
+            label: "What the map says",
+            value: "The GIS Office's map labels this ground “" + name + "” rather " +
+              "than naming a fire district for it, and says nothing more about it."
+          }]));
+          return;
+        }
+        wrap.appendChild(renderLinkRow({
+          title: name,
+          note: counties,
+          links: p.url ? [{ label: "Record filed for these lines (PDF)", url: String(p.url) }] : []
+        }));
+        var rows = [];
+        if (when) {
+          rows.push({
+            label: "Date on the map",
+            value: when + ", the date the GIS Office's map gives these lines."
+          });
+        }
+        rows.push({
+          label: "Who runs it",
+          value: "Not named here. The GIS Office's map names each fire district and " +
+            "the counties it serves, but not who runs it, so this app names no one " +
+            "rather than guessing."
+        });
+        wrap.appendChild(renderFieldStack(rows));
+      });
+      wrap.appendChild(renderFieldStack([{
+        label: "Where the lines come from",
+        value: "The Arkansas GIS Office's map of fire districts, drawn here to " +
+          "within 4 metres. State law has each fire district keep its map, " +
+          "certified by the mayor, county judge or county fire coordinator, and " +
+          "send it to the GIS Office. For a definitive answer about a property, " +
+          "ask the county."
+      }]));
+      return wrap;
+    }
+  });
+
   /* ---------- 10. Fire & EMS Stations (nearest 3) — USGS National Map ----------
    * structures layer 51, through the same paged envelope loader post-office
    * introduced. 1,619 points in this instance's envelope, measured
@@ -14176,8 +16274,8 @@ function initArkansasExplorer() {
    * carry.
    *
    * A BUILDING, NOT A JURISDICTION, the same caveat police-station carries
-   * and for the same reason — which department is dispatched to a point is a
-   * service-area question this instance has not been researched for.
+   * and for the same reason. Which fire district a point is in is the Fire
+   * District layer's question (9b), from the GIS Office's map of them.
    * ---------- */
   var USGS_FIRE_LAYER = "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51";
   var loadFireStations = usgsStructuresLoader(USGS_FIRE_LAYER, "USGS fire and EMS stations");
@@ -15684,10 +17782,16 @@ function initArkansasExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "ar-senate", "ar-house", "quorum-court",
-    "school-district-unified",
-    "county", "municipality", "zip-code",
-    "police-station", "fire-station", "post-office"];
+  var LAYER_SIDEBAR_RANK = ["us-house", "ar-senate", "ar-house",
+    // The courts follow the chambers, as Kentucky's do: the district's
+    // voters elect the Court of Appeals judges, the circuit's its trial judges.
+    "ar-court-of-appeals", "ar-circuit-court", "quorum-court",
+    // The city council ward sits with the quorum court: members elected by
+    // this ward alone, and it answers only in the 12 cities that elect by ward.
+    "city-ward",
+    "school-district-unified", "school-board-district",
+    "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
+    "fire-district", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
     for (var i = 0; i < LAYER_SIDEBAR_RANK.length; i++) pos[LAYER_SIDEBAR_RANK[i]] = i;
@@ -16169,11 +18273,13 @@ function initArkansasExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6FB2": "#77BBFD",
-    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A5D2FD", "#41B6E6": "#C6EBFE", "#444B54": "#929BA8",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#83DC93", "#6B7280": "#B1BBCE",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FD88B8",
-    "#D06A9C": "#FFBDDA"};
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#14181C": "#696F76",
+    "#1B4F8C": "#5CA0F5", "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
+    "#3B8FD4": "#A2D2FF", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD",
+    "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#6B7280": "#B1BACE",
+    "#753B07": "#D7864B", "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
+    "#9550B2": "#DF9BFE", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
+    "#B0342A": "#FE8B7C", "#D0564C": "#FEB1A7", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
@@ -16813,11 +18919,34 @@ function initArkansasExplorer() {
         embedded map is someone else's page), never once installed, and never
         a second time: showing it records DST_INSTALL_INVITE_KEY.
 
+        WHILE THE ANDROID APP IS IN GOOGLE PLAY'S CLOSED TEST (Adam,
+        2026-10-20), an Android phone is invited to the test instead of being
+        offered the website version to install: Google Play lets a new
+        personal account apply to publish its app only after 12 testers have
+        stayed in its closed test for 14 days, and the steps page at
+        DST_ANDROID_TEST_URL asks testers to remove the website copy. Chrome's
+        install event is still held, so its own mini-infobar does not offer
+        that copy either, and Chrome's menu still does. The test is offered
+        once too, recorded as DST_TEST_INVITE_SEEN under the same key, so a
+        reader who was offered the install before the test began is asked
+        once more, about the test. Closing the bar or following its link
+        records DST_TEST_INVITE_ANSWERED instead, and the front page's own
+        invitation to the test reads and writes that word under the same key
+        (scripts/build_landing_page.py takes both names from this block), so
+        a reader who closed or followed either invitation is not shown the
+        other; only seeing this bar leaves the front page's in place (Adam,
+        2026-10-20: a "no" stays closed). Not in the Play app, whose window
+        carries the mark from engine/shared/play-app.txt. When the app is
+        published, set DST_ANDROID_TEST_URL to null and the install offer
+        returns; the front page's generator then fails until its notice
+        changes too.
+
      3. THE COUNTS, by state and never by place: `app-install/<tag>` when the
         browser reports an install, `app-launch/<tag>` once per launch of the
         installed app (DST_APP_LAUNCH_KEY in session storage marks the window
         as counted), `install-invite/<what>` for the invitation: shown,
-        accepted, declined or closed, and tip-shown or tip-closed on an iPhone,
+        accepted, declined or closed, tip-shown or tip-closed on an iPhone, and
+        test-shown, test-join or test-closed for the Android test,
         and `share-in/<tag>` when a place shared into the installed app opened
         this app (below). A launch is counted at boot, before GoatCounter's
         script has always arrived, so these wait for it rather than being lost.
@@ -16840,6 +18969,9 @@ function initArkansasExplorer() {
   var DST_APP_LAUNCH_KEY = "districtry-app-launch";
   var DST_SHARE_IN_KEY = "districtry-share-in";
   var DST_INVITE_DELAY_MS = 3000;
+  var DST_ANDROID_TEST_URL = "/android.html?ref=map";
+  var DST_TEST_INVITE_SEEN = "test-shown";
+  var DST_TEST_INVITE_ANSWERED = "test-answered";
   var dstFramed = (function () {
     try { return window.top !== window.self; } catch (e) { return true; }
   })();
@@ -16875,6 +19007,18 @@ function initArkansasExplorer() {
   function dstMarkInviteSeen(value) {
     try { window.localStorage.setItem(DST_INSTALL_INVITE_KEY, value); } catch (e) { /* private mode: it may show again */ }
   }
+  function dstTestInviteSeen() {
+    try {
+      var seen = window.localStorage.getItem(DST_INSTALL_INVITE_KEY);
+      return seen === DST_TEST_INVITE_SEEN || seen === DST_TEST_INVITE_ANSWERED;
+    } catch (e) { return true; }
+  }
+  /* A browser on Android while the test runs, outside the Play app. */
+  function dstOnAndroidTest() {
+    return !!DST_ANDROID_TEST_URL &&
+      /\bAndroid\b/.test(window.navigator.userAgent || "") &&
+      !document.documentElement.classList.contains("dst-play-app");
+  }
   /* An iPhone's own Safari. Other iOS browsers and in-app views name
      themselves in the user agent and put Share somewhere else, so the tip's
      directions would be wrong there; an iPad reports itself as a Mac and is
@@ -16899,32 +19043,37 @@ function initArkansasExplorer() {
     if (dstInviteBar && dstInviteBar.parentNode) dstInviteBar.parentNode.removeChild(dstInviteBar);
     dstInviteBar = null;
   }
-  /* Built through the DOM with textContent, the way every card is. */
-  function dstShowInvite(text, onInstall) {
+  /* Built through the DOM with textContent, the way every card is. `go` is
+     the bar's one action, a button (onClick) or a link (href), or null for
+     the iPhone's tip; `closedAs` is what closing it is counted as, and
+     `onClose`, when given, runs after. */
+  function dstShowInvite(label, text, go, closedAs, onClose) {
     if (dstInviteBar || dstInstalledLaunch() || !dstIsPhone()) return false;
     var bar = document.createElement("aside");
     bar.className = "install-invite";
-    bar.setAttribute("aria-label", "Add districtry to your home screen");
+    bar.setAttribute("aria-label", label);
     var p = document.createElement("p");
     p.className = "install-invite-text";
     p.textContent = text;
     bar.appendChild(p);
-    if (onInstall) {
-      var go = document.createElement("button");
-      go.type = "button";
-      go.className = "install-invite-go";
-      go.textContent = "Install";
-      go.addEventListener("click", onInstall);
-      bar.appendChild(go);
+    if (go) {
+      var action = document.createElement(go.href ? "a" : "button");
+      if (go.href) action.href = go.href;
+      else action.type = "button";
+      action.className = "install-invite-go";
+      action.textContent = go.text;
+      action.addEventListener("click", go.onClick);
+      bar.appendChild(action);
     }
     var close = document.createElement("button");
     close.type = "button";
     close.className = "install-invite-close";
-    close.setAttribute("aria-label", onInstall ? "Not now" : "Close");
+    close.setAttribute("aria-label", go ? "Not now" : "Close");
     close.textContent = "✕";
     close.addEventListener("click", function () {
       dstHideInvite();
-      dstInviteEvent(onInstall ? "closed" : "tip-closed");
+      dstInviteEvent(closedAs);
+      if (onClose) onClose();
     });
     bar.appendChild(close);
     document.body.appendChild(bar);
@@ -16969,20 +19118,24 @@ function initArkansasExplorer() {
     if (dstFramed || !dstIsPhone()) return;
     e.preventDefault();
     dstHeldPrompt = e;
-    if (dstInviteQueued || dstInviteSeen()) return;
+    if (dstInviteQueued || dstInviteSeen() || dstOnAndroidTest()) return;
     dstInviteQueued = true;
     dstAfterFirstAnswer(function () {
       if (!dstHeldPrompt || dstInviteSeen()) return;
-      var shown = dstShowInvite("Add districtry to your home screen. It opens to the state you used last.", function () {
-        var held = dstHeldPrompt;
-        dstHeldPrompt = null;
-        dstHideInvite();
-        if (!held) return;
-        held.prompt();
-        held.userChoice.then(function (choice) {
-          dstInviteEvent(choice && choice.outcome === "accepted" ? "accepted" : "declined");
-        }, function () {});
-      });
+      var shown = dstShowInvite("Add districtry to your home screen",
+        "Add districtry to your home screen. It opens to the state you used last.", {
+          text: "Install",
+          onClick: function () {
+            var held = dstHeldPrompt;
+            dstHeldPrompt = null;
+            dstHideInvite();
+            if (!held) return;
+            held.prompt();
+            held.userChoice.then(function (choice) {
+              dstInviteEvent(choice && choice.outcome === "accepted" ? "accepted" : "declined");
+            }, function () {});
+          }
+        }, "closed");
       if (shown) {
         dstMarkInviteSeen("shown");
         dstInviteEvent("shown");
@@ -16993,10 +19146,33 @@ function initArkansasExplorer() {
   if (!dstFramed && !dstInstalledLaunch() && dstIsIphoneSafari() && !dstInviteSeen()) {
     dstAfterFirstAnswer(function () {
       if (dstInviteSeen()) return;
-      var shown = dstShowInvite("Add districtry to your Home Screen: tap Share (in the ⋯ menu if you don’t see it), then Add to Home Screen.", null);
+      var shown = dstShowInvite("Add districtry to your home screen",
+        "Add districtry to your Home Screen: tap Share (in the ⋯ menu if you don’t see it), then Add to Home Screen.", null, "tip-closed");
       if (shown) {
         dstMarkInviteSeen("tip-shown");
         dstInviteEvent("tip-shown");
+      }
+    });
+  }
+
+  if (!dstFramed && !dstInstalledLaunch() && dstOnAndroidTest() && !dstTestInviteSeen()) {
+    dstAfterFirstAnswer(function () {
+      if (dstTestInviteSeen()) return;
+      var shown = dstShowInvite("Help test districtry’s Android app",
+        "Help test districtry’s Android app. Google Play needs 12 testers.", {
+          text: "How to join",
+          href: DST_ANDROID_TEST_URL,
+          onClick: function () {
+            dstMarkInviteSeen(DST_TEST_INVITE_ANSWERED);
+            dstInviteEvent("test-join");
+            /* after the link is followed, so a page brought back by the
+               Back button does not ask again */
+            setTimeout(dstHideInvite, 0);
+          }
+        }, "test-closed", function () { dstMarkInviteSeen(DST_TEST_INVITE_ANSWERED); });
+      if (shown) {
+        dstMarkInviteSeen(DST_TEST_INVITE_SEEN);
+        dstInviteEvent("test-shown");
       }
     });
   }

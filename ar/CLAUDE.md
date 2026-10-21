@@ -8,16 +8,17 @@ districtry Arkansas: a single-file, dependency-light web app. Click a point in A
 search an address) and it reports every civic district containing that point and who represents
 you there. It serves at **districtry.com/ar/** as a folder of the consolidated districtry repo —
 following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. It ships ELEVEN layers, and **IT IS PUBLISHED** since Adam's word of
+root-scripts shape. It ships EIGHTEEN layers, and **IT IS PUBLISHED** since Adam's word of
 2026-10-15 ("turn on arkansas"). It arrived dark on 2026-10-13 (no `metros.json` entry, `ar/**`
 blanket-excluded from the Pages deploy), and the go-live change narrowed that exclude to the build
 inputs the siblings exclude, registered the instance and regenerated every surface that counts the
 fleet. `ar/WATCH.md` keeps the go-live row with its date, and `docs/AR_EXPANSION_PLAN.md` is the
 record of the launch.
 
-**The national tier** — ten of the eleven layers draw their shapes from a national publisher and
-name people from a national roster or the Arkansas State Legislature; the eleventh is the quorum
-court, below. **County** (75, Census TIGERweb, the coverage ring, and the card that names the
+**The national tier** — ten of the eighteen layers draw their shapes from a national publisher and
+name people from a national roster or the Arkansas State Legislature; six, the quorum court, the
+townships, the precincts, the school board zones, the fire districts and the city council wards, below, are drawn from the state's own maps, and the two court layers,
+below, group the Census's counties as the state's own lists do. **County** (75, Census TIGERweb, the coverage ring, and the card that names the
 county judge and lists the justices of the peace), **U.S. House** (4 districts, TIGERweb geometry joined to the public-domain
 unitedstates/congress-legislators roster), **Arkansas Senate** and **Arkansas House** (35 and 100
 districts, TIGERweb geometry joined to the legislature's own member list and member pages), the
@@ -39,16 +40,133 @@ their row, and only the member's own page says why, in bold under the name ("Dec
 VACANCY RECORD naming the page that says so, and a seat with two sitting members fails the build.
 That day three seats read vacant — Senate 1 and 18 and House 8 — so the cards name 33 of 35
 senators and 99 of 100 representatives, each with a party, an e-mail address (the list's) and a
-link to the member's own page. **THE SAME PAGES PRINT A MAILING ADDRESS AND A TELEPHONE, AND THE
-BUILDER NEVER READS THEM**: on a senator's page the bold line under the name is that address,
-sometimes a street address that may be a home, and the telephone is not labelled as to whose line
-it is. A bold line that is neither a known status word nor an address stops the build.
+link to the member's own page. **THE SAME PAGES PRINT A MAILING ADDRESS AND A TELEPHONE; THE
+TELEPHONE SHIPS AND THE ADDRESS NEVER IS READ**: on a senator's page the bold line under the name
+is that address, sometimes a street address that may be a home, and the telephone is not labelled
+as to whose line it is. The builder read neither until Adam's fleet-wide ruling of 2026-10-17 ("if
+the official government source uses personal phone numbers, we publish those"), so the telephone
+now ships on the member's row as printed — 97 of the 132 sitting members on 2026-10-17 — while a
+number two or more members share ships on none of their rows (one that day, a state government line
+printed for four members), and a value in that row that is not a telephone number stops the build.
+A bold line that is neither a known status word nor an address stops the build.
 
-**THERE IS NO TOWNSHIP LAYER, AND THAT IS A MEASUREMENT.** All 1,051 county subdivisions TIGERweb
-carries for STATE='05' are FUNCSTAT N, nonfunctioning legal entities (951 townships, 82 "District
-N" and 18 "Township N"), measured 2026-10-13. A township does elect a constable, and no source
-naming constables has been read, so a township card would name nobody and claim a government the
-Census says is not one. A justice of the peace district is a different line.
+**THE TOWNSHIPS ARE THE STATE'S, NOT THE CENSUS'S, AND THE CARD NAMES NOBODY.** The layer was
+left out at arrival: all 1,051 county subdivisions TIGERweb carries for STATE='05' are FUNCSTAT N,
+nonfunctioning legal entities (951 townships, 82 "District N" and 18 "Township N", measured
+2026-10-13), and no source naming constables had been read. Since 2026-10-15 the done standard's
+level 14 (Adam, 2026-10-14) asks every state to draw its subdivision boundaries whether or not
+they govern anyone, and **THE CENSUS'S MAP OF ARKANSAS IS OUT OF DATE, SO IT IS NOT THE ONE
+DRAWN.** A county court divides its county into townships and changes their lines by order
+(Arkansas Code 14-14-401), and the state's mapping office publishes the current lines as one
+layer, TOWNSHIP_POLITICAL_DIVISION. Measured 2026-10-15 it holds 820 townships in 75 counties
+against TIGERweb's 1,051, the two disagree about how many townships a county has in 27 counties,
+and where that was checked the state is right: TIGERweb still draws 38 townships in Washington
+County, where a 2013 court order (upheld in Clowers v. Edwards, 2020 Ark. 367) left 3, and nine
+numbered districts in Scott County, where constables are elected from named townships that are
+among the state's 25. So `county-subdivision` ("Township") draws the state's map from
+`ar-townships.json`, and its card says a township has no government of its own, that its voters
+elect a constable for a two-year term (article 7, section 47 of the state constitution) whom this
+map does not name, and where the lines come from. A justice of the peace district is a different
+line. The state's layer has no description, no edit date and no record of changes, so
+`ar/scripts/build_ar_townships.py --watch` is the only way to tell that it moved
+(`ar/WATCH.md`).
+
+**ELECTION PRECINCTS ARE DRAWN SINCE 2026-10-15, FROM WHAT EACH COUNTY REPORTS TO THE STATE.**
+`voting-precinct` draws all 2,920 precincts from the Arkansas GIS Office's statewide layer,
+published with the Secretary of State's Elections Division as each county's voter registration
+system holds them. It is pre-built by `ar/scripts/build_ar_precincts.py` through the fleet module
+`scripts/statewide_precincts.py` at Douglas-Peucker 4 m (9.3 MB, 2.44 MB gzipped), so a click is
+answered from the file and no point leaves the browser. **A PRECINCT IN PIECES IS SEVERAL
+RECORDS**: the layer has 2,928 records for 2,920 precincts, seven precincts in Washington,
+Franklin, Sebastian and Pope counties being published one record per piece, and they are joined
+into one precinct each so a reader in any piece gets its card. The card names the precinct and its
+county, says a precinct elects no one, gives the date the county's last change was recorded where
+the layer has one (on about half the records; a precinct with none says the state's map gives no
+date), states the 4 m, and links the state's polling-place lookup. Half the records undated, a layer
+description that still says the data was finalized in 2012, and pieces of one precinct dated more
+than three years apart are evidence for the state-publishing ask. The layer answers 200 records a
+request and the office's open-data host asks for 60 seconds between requests, so a build or a
+re-check takes about fifteen minutes. The quarterly re-check is in `ar/WATCH.md`.
+
+**THE COURT OF APPEALS DISTRICTS AND THE 28 JUDICIAL CIRCUITS ARE DRAWN SINCE 2026-10-16, FROM
+WHOLE COUNTIES, AND NAME NOBODY YET.** `ar-court-of-appeals` and `ar-circuit-court` dissolve the
+county fabric this instance ships, by `ar/scripts/build_ar_court_districts.py` through the fleet
+module `scripts/whole_county_courts.py`, from the sources kept in `ar/data/source/courts/`. The
+seven Court of Appeals districts follow Act 1812 of 2003 as the Arkansas GIS Office's metadata for
+its own Appeals Court Districts layer quotes it, because the official Code is published only by
+LexisNexis behind a page that needs a browser's scripts, and the two free copies tried refuse this
+project's client; the court's own 2023 district map, an image, agrees by eye. The 28 circuits
+follow the Administrative Office of the Courts' circuit judge directory, which lists every judge
+under every county the judge serves: the build stops if any judge serves only some of a circuit's
+counties, pins the statewide count at 126 judges, and holds both lists county by county to the
+state's own court layers, which were drawn on Census 2000 blocks and so disagree with the 2020
+counties by slivers (no county is less than 98.57% inside its own unit). **FIVE CIRCUITS ARE
+DIVIDED INTO ELECTION SUBDISTRICTS THAT ARE NOT DRAWN**: a 1991 federal court order (Hunt v. State
+of Arkansas) created two in each of the 1st, 2nd, 6th, 10th and 11th West, which split fifteen
+counties, and which judgeships each subdistrict elects is set by that court and was not read, so
+those circuits are drawn whole and their cards say so. The Court of Appeals card says how many of
+the court's twelve judges the district elects (two, or one in Districts 5 and 7) and that the
+court hears appeals from the whole state; the circuit card gives the circuit's number of judges,
+says they are elected in nonpartisan elections for six-year terms, and links the directory. Neither
+names a judge (gaps `ar-appeals-judges` and `ar-circuit-judges`): both of the court system's pages
+name them, so that is ours to build, as a weekly roster. The 19th West gains an eighth judge on 1
+January 2027 (Act 220 of 2025), a dated row in `ar/WATCH.md` beside the annual re-check. The two
+rank second and third by area, under the U.S. House: a Court of Appeals district averages 19,683
+km2 and a circuit 4,921, just over a Senate district's 3,937. A law setting court districts that
+has no free copy anyone can read is evidence for the state-publishing ask.
+
+**SCHOOL BOARD ZONES ARE DRAWN SINCE 2026-10-16, FROM THE SECRETARY OF STATE'S STATEWIDE LAYER.**
+`school-board-district` (labelled School Board Zone) draws the 965 zones the boards of 176 school
+districts elect members from, from the Arkansas GIS Office's `SCHOOL_BOARD_ZONES` layer, which the
+Secretary of State compiles for election administration. It is pre-built by
+`ar/scripts/build_ar_school_board_districts.py` through the fleet module
+`scripts/published_district_layers.py`. The card names the zone and its school district, and where
+a board has resolved to elect every member at large and is changing a seat at a time, says when it
+resolved, from the GIS Office's notes of 9 April 2026 read through the Internet Archive because the
+page now redirects. A board elected wholly at large has no zones, and the empty card says so. No
+statewide list of board members has been found, so the card names nobody (gap
+`ar-school-board-members`). The layer states no licence, which is evidence for the publishing ask.
+The quarterly re-check is in `ar/WATCH.md`.
+
+**FIRE DISTRICTS ARE DRAWN SINCE 2026-10-16, FROM THE MAP STATE LAW HAS EACH ONE FILE, AND NAME
+NOBODY.** `fire-district` draws 971 fire districts from the Arkansas GIS Office's `FIRE_DISTRICTS`
+layer, which its own description calls the fire protection districts of the state: A.C.A.
+12-10-329, as that description puts it, has every fire district keep a map certified by the mayor,
+county judge or county fire coordinator and send it to the GIS Office. It is pre-built by
+`ar/scripts/build_ar_fire_districts.py` through `scripts/published_district_layers.py` at
+Douglas-Peucker 4 m (6.6 MB, 1.99 MB gzipped). **THE MAP IS NOT A TILING, SO THE CARD LISTS EVERY
+DISTRICT AT A POINT**: measured 2026-10-16, 134 pairs of districts overlap on 7.3 square miles, and
+0.75% of the state is in no record, in 5,798 pieces, most of them under a tenth of a square mile. Siloam Springs is filed three times, two of
+them overlapping, and is joined into one district dated by the latest record (the shared builder's
+`part_latest`); four records label ground rather than naming a district ("Unserviced" and three
+others), and the card quotes the label and claims nothing more; six names are used twice, in
+different counties, so the card and the hover give each district's counties. The card names the
+district and its counties, the date the map gives its lines and, for 90 districts, links the record
+filed for them, and leaves out the map's type codes, which nothing the GIS Office publishes
+defines. The map names nobody who runs a district (gap `ar-fire-district-boards`), states no
+licence, and dates 699 of its 973 records the same day, all evidence for the publishing ask. The
+quarterly re-check is in `ar/WATCH.md`.
+
+**THE 19 CITIES ABOVE 25,000 PEOPLE NAME THEIR MAYOR AND COUNCIL SINCE 2026-10-16, AND THE TWELVE
+THAT ELECT BY WARD DRAW THEIR WARDS.** No state office publishes who holds Arkansas's city offices,
+so `ar/data/source/ar-city-council-seats.json` writes each city's mayor and council down by hand
+from the city's own pages, and `ar/scripts/build_ar_city_councils.py`, through the fleet module
+`scripts/city_councils.py`, re-reads every page it cites on each build and refuses to write unless
+every name is on its page. The City or Town card lists them. Whether a city elects its council by
+ward or by the whole city is set by its own ordinances and recorded nowhere statewide, so it was
+measured from the ballot: seven of the 19 tie every seat to a ward and elect it citywide, and their
+wards are not drawn, because a reader in one votes for every seat. `city-ward` (labelled City
+Council District) draws the 56 wards of the other twelve from the Arkansas GIS Office's
+`MUNICIPAL_WARDS` layer, pre-built by `ar/scripts/build_ar_city_wards.py` through
+`scripts/published_district_layers.py` at Douglas-Peucker 4 m, and names the members each ward's
+own voters elect; Hot Springs calls its wards districts, and the card does too. Fort Smith's site
+refuses this project's own token, so its board page is read with Chrome and its client hints, and
+the measurement that allows it is in the builder. The Arkansas Municipal League's directory, the
+only statewide list, gives no ward or position and disagreed with five of twelve cities' own pages
+when both were read, so it is not used. The 482 smaller cities and towns name nobody (gap
+`ar-municipal-officeholders`), and the ward map states no voting rule and no licence and says it is
+not the legal boundaries, all evidence for the publishing ask. The quarterly re-checks are in
+`ar/WATCH.md`.
 
 **ONE SCHOOL LAYER, LABELLED WITHOUT A QUALIFIER.** TIGER's unified tiling holds 234 districts
 for Arkansas and its elementary and secondary tilings hold none, and the unified districts' land
@@ -137,8 +255,8 @@ other instance via `scripts/compose_app.py`.
 
 - Metro: Arkansas (`arkansas`) — https://districtry.com/ar/
 - Geocoders: address Photon (Arkansas-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Arkansas-bounded, serial >=1s queue)
-- Ground truth: 34.74650,-92.28960 (the State Capitol, Little Rock, Pulaski County) → county Pulaski County; us-house 2; ar-senate 14; ar-house 74; quorum-court 6. Negative point 33.40000,-94.40000 (near New Boston, Bowie County, TEXAS, south of the Red River that forms the state line there — outside Arkansas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's county layer names Bowie County, Texas at this point (control: the Capitol anchor returns Arkansas), and the Census's ZIP layer answers 75570 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. TEXAS BECAUSE NO INSTANCE SERVES IT and none is planned next; Mississippi and Louisiana, both on the next-states list, were passed over so this point does not have to move when either goes live, and the point sits well west of the Texas–Louisiana line.).
-- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 9. Debug namespace `window.ArkansasExplorer`.
+- Ground truth: 34.74650,-92.28960 (the State Capitol, Little Rock, Pulaski County) → county Pulaski County; us-house 2; ar-senate 14; ar-house 74; quorum-court 6; county-subdivision Big Rock Township; voting-precinct Precinct 098; ar-court-of-appeals 6; ar-circuit-court 6th Judicial Circuit; fire-district Little Rock. Negative point 33.40000,-94.40000 (near New Boston, Bowie County, TEXAS, south of the Red River that forms the state line there — outside Arkansas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's county layer names Bowie County, Texas at this point (control: the Capitol anchor returns Arkansas), and the Census's ZIP layer answers 75570 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. TEXAS BECAUSE NO INSTANCE SERVES IT and none is planned next; Mississippi and Louisiana, both on the next-states list, were passed over so this point does not have to move when either goes live, and the point sits well west of the Texas–Louisiana line.).
+- Layers: 18 registered (political 7, safety 3, schools 2, geography 6); `registerLayer(` floor 16. Debug namespace `window.ArkansasExplorer`.
 - Scheduled workflows: `update-ar-congress-roster.yml` (Mon 17:23 UTC); `update-ar-legislature-roster.yml` (Tue 17:23 UTC); `update-ar-county-officials.yml` (Wed 17:23 UTC); `ar-validate-sources.yml` (1st of month 19:43 UTC).
 - Source registry: `ar/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -202,8 +320,9 @@ vacancy record as a vacant seat with its reason and source), and the three neare
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
 roster source exists, cards link to the official body instead of inventing a name. Both chamber
 cards degrade to the district number + the legislature's own member list on a roster miss, and
-a vacant seat says it is vacant and why; the county, school-district and municipality cards
-carry no roster at all and **say so on the card**. External strings always render through
+a vacant seat says it is vacant and why; the school-district card carries no roster at all and
+**says so on the card**, and the municipality card names the mayor and council of the 19 cities
+above 25,000 people and says so on the card for every other city and town. External strings always render through
 `sanitize()`/`textContent`. Roster refreshes always land as PRs for review — never as direct
 commits to main.
 
@@ -225,7 +344,12 @@ state portal's 60 seconds, refused unless there are 775 districts in 75 counties
 numbered 1..n at one of the four counts state law allows, the agreement gate and fidelity
 ceiling pass, and every county's districts cover that county's own outline; it records a
 fingerprint of the layer's attributes so the weekly workflow's `--watch` can say when a county
-redraws). Rosters:
+redraws), and `ar-townships.json` (`ar/scripts/build_ar_townships.py` — the state's own township
+layer, read at the portal's 60 seconds, refused unless there are 820 townships in 75 counties,
+each name is in one of the four shapes the state writes, the agreement gate and the 25 m fidelity
+ceiling pass, and every county's townships cover that county's own outline; it records a
+fingerprint of the layer's names and areas, which `--watch` compares with the live layer).
+Rosters:
 `congress-roster.json` (`ar/scripts/build_congress_roster.py`, from unitedstates/congress-legislators)
 and `ar-{senate,house}-members.json` (`ar/scripts/build_ar_legislature_roster.py`, from the
 legislature's own pages) and `ar-county-officials.json` (`ar/scripts/build_ar_county_officials.py`

@@ -10,6 +10,9 @@
     "clerk": "Kristin Radde",
     "municipality": "Barre",
     "phone": "608-786-4788",
+    "phonesExtra": [
+      "608-790-1667"
+    ],
     "recordUpdated": "2025-04-22",
     "url": "https://www.townofbarre.org/"
   },
@@ -17,6 +20,9 @@
     "clerk": "Melissa S Hart-Pollack",
     "municipality": "Burns",
     "phone": "608-385-5436",
+    "phonesExtra": [
+      "608-486-1414"
+    ],
     "recordUpdated": "2026-01-05",
     "url": "https://www.townofburnswi.com/"
   },
@@ -31,6 +37,9 @@
     "clerk": "Jill Murphy",
     "municipality": "Greenfield",
     "phone": "608-452-4700",
+    "phonesExtra": [
+      "608-769-4138"
+    ],
     "recordUpdated": "2023-12-11",
     "url": "http://www.townofgreenfieldwi.org/"
   },

@@ -112,6 +112,21 @@ sliver. The layer's district 3 is a STRICT SUBSET of the county's District 3,
 Linn stays withheld. This is the Butler shape reached by a different route, and
 what it wants is the county's own current plan rather than another derivation.
 
+THE NEXT PARAGRAPH IS WRONG AND IS KEPT UNDER ITS CORRECTION (2026-10-15).
+It read the 2026-10-01 sweep as closing the certified-returns route for every
+county but Linn. The sweep read each COUNTY's own election index, and the 2026
+Primary (2 June 2026) is published under the STATE's election id, 126082, with
+a sub-archive per county: electionresults.iowa.gov/IA/<County>/<eid>/<ver>/
+reports/detailxml.zip, the county id and version read from
+/IA/126082/<ver>/json/en/electionsettings.json, county names with underscores.
+Every Plan 3 county has board contests there, broken out per precinct. Each
+contest places one district directly, and one district left off the ballot can
+be placed by elimination; two or more left off cannot. Butler, Madison, Sac and
+Taylor are settled that way in PRECINCT_COUNTIES below. Linn's 2026 contests
+put Cedar Rapids 01, 04, 07 and 27 and Hiawatha 03 in its District 2, where its
+2024 District 3 had them, so its plan moved between the two primaries; Linn
+stays withheld until the county's current plan is read.
+
 THE ROUTE IS EXHAUSTED FOR IOWA AND THAT IS A MEASUREMENT RATHER THAN A GUESS.
 Sweeping all 99 counties' Clarity election indexes on 2026-10-01, FIVE answer
 with any election at all -- Henry, Jasper, Lee, Linn and Page -- and of those
@@ -245,6 +260,55 @@ TOWN_COUNTIES = {
             "Riceville":    ("3", (43.3619761, -92.5538710)),
         },
     },
+    # HUMBOLDT'S OWN TWO MAPS, sent by the county on 2026-10-16 in answer to
+    # this project's letter: "2021 BOS DISTRICT MAP" colours every PLSS
+    # section by supervisor district and names each district's supervisor in
+    # its legend, and "Humboldt County Voting Precincts REVISED", drawn to the
+    # 2020 census, draws the six precincts with each one's population. Neither
+    # names the other's numbers. The points below are TIGERweb's own interior
+    # points, each tested against the colour the district map paints there:
+    # a township's point against its centre sections (Weaver and Vernon are
+    # split townships whose centres the map paints District 4; Renwick sits in
+    # Vernon's south-east corner, which it paints District 5).
+    #
+    # THE PRECINCT ROUTE WAS MEASURED TOO AND IS NOT WHAT DECIDES THIS. Laid
+    # side by side the district map's five colours are the precinct map's six
+    # shapes -- District 1 Precinct 3, 2 Precinct 1, 3 Precinct 2, 4 Precincts
+    # 4 and 5, 5 Precinct 6 -- and the populations agree (1,927, 1,915, 1,904,
+    # 784 + 1,142 = 1,926 and 1,925). Against the shipped layers five of the
+    # six precincts lie inside the same-numbered district, but Precinct 1 puts
+    # 2 of its 964 interior samples inside this layer's district 1, 51 and 57 m
+    # from the district line where both layers follow the city of Humboldt's
+    # ragged edge -- past check_precincts' 30 m sliver allowance, which was
+    # measured on Madison and is not widened here. So the pairing rests on the
+    # twenty points, which speak for all five districts on their own.
+    "Humboldt": {
+        "source": "the county's 2021 supervisor district map, sent by the "
+                  "county 2026-10-16",
+        "districts": 5,
+        "towns": {
+            "Rutland township":  ("1", (42.7823461, -94.2761456)),
+            "Rutland":           ("1", (42.7614016, -94.2951703)),
+            "Corinth township":  ("2", (42.6825145, -94.2718154)),
+            "Beaver township":   ("3", (42.6824016, -94.1415191)),
+            "Wacousta township": ("4", (42.8702791, -94.3644591)),
+            "Delana township":   ("4", (42.8638615, -94.2663708)),
+            "Humboldt township": ("4", (42.8693050, -94.1377566)),
+            "Vernon township":   ("4", (42.8638209, -94.0307378)),
+            "Avery township":    ("4", (42.7815563, -94.4037827)),
+            "Weaver township":   ("4", (42.6886855, -94.3842425)),
+            "Bode":              ("4", (42.8679839, -94.2862414)),
+            "Ottosen":           ("4", (42.8977481, -94.3760040)),
+            "Bradgate":          ("4", (42.8031545, -94.4205702)),
+            "Livermore":         ("4", (42.8678233, -94.1838028)),
+            "Grove township":    ("5", (42.7697232, -94.1460052)),
+            "Lake township":     ("5", (42.7756699, -94.0308067)),
+            "Norway township":   ("5", (42.6881628, -94.0307891)),
+            "Hardy":             ("5", (42.8101695, -94.0511996)),
+            "Renwick":           ("5", (42.8269260, -93.9813427)),
+            "Thor":              ("5", (42.6880998, -94.0496011)),
+        },
+    },
     "Monona": {
         "source": "https://mononacountyiowa.gov/files/supervisors/"
                   "supervisor_district_map_38766.pdf",
@@ -280,6 +344,72 @@ TOWN_COUNTIES = {
 # puts that precinct in. A county's precincts partition it, so unlike the town
 # route this can speak for every district.
 PRECINCT_COUNTIES = {
+    # THE CERTIFIED 2026 PRIMARY (see the module docstring's correction). The
+    # county is not naming these precincts on a page: the Secretary of State's
+    # certified returns list the precincts voting in each supervisor contest,
+    # and the names below are this instance's precinct layer's spelling of
+    # them. `by_elimination` is the one district not on that ballot; its
+    # precincts are the ones no contest named.
+    "Butler": {
+        "source": "https://electionresults.iowa.gov/IA/Butler/126094/374762/reports/detailxml.zip",
+        "districts": 3,
+        "by_elimination": "1",
+        "precincts": {
+            "2-CL":                                  "1",
+            "6-SR":                                  "1",
+            "1-GR":                                  "2",
+            "3-DU":                                  "2",
+            "4-AL":                                  "2",
+            "5-AP":                                  "3",
+            "7-PB":                                  "3",
+            "8-NH":                                  "3",
+        },
+    },
+    "Madison": {
+        "source": "https://electionresults.iowa.gov/IA/Madison/126143/375499/reports/detailxml.zip",
+        "districts": 3,
+        "by_elimination": "2",
+        "precincts": {
+            "Grand River-Monroe-Webster-Lincoln SW": "1",
+            "Jackson-Douglas-Lincoln NW":            "1",
+            "Penn-Madison":                          "1",
+            "Walnut-Ohio":                           "1",
+            "Lincoln NE":                            "2",
+            "Winterset 1 North Ward":                "2",
+            "Winterset 2 South Ward":                "2",
+            "Jefferson-Lee":                         "3",
+            "South":                                 "3",
+            "Union-Crawford-Scott-Lincoln SE":       "3",
+        },
+    },
+    "Sac": {
+        "source": "https://electionresults.iowa.gov/IA/Sac/126163/374521/reports/detailxml.zip",
+        "districts": 3,
+        "by_elimination": "1",
+        "precincts": {
+            "Early Pct 3":                           "1",
+            "Odebolt Pct 6":                         "1",
+            "Schaller Pct 1":                        "1",
+            "Lytton Pct 5":                          "2",
+            "Nemaha Pct 2":                          "2",
+            "Sac City Pct 4":                        "2",
+            "Auburn Pct 8":                          "3",
+            "Lake View Pct 7":                       "3",
+            "Wall Lake Pct 9":                       "3",
+        },
+    },
+    "Taylor": {
+        "source": "https://electionresults.iowa.gov/IA/Taylor/126169/374410/reports/detailxml.zip",
+        "districts": 3,
+        "by_elimination": "2",
+        "precincts": {
+            "Precinct 1":                            "1",
+            "Precinct 4":                            "1",
+            "Precinct 5":                            "1",
+            "Precinct 2":                            "2",
+            "Precinct 3":                            "3",
+        },
+    },
     "Lyon": {
         "source": "https://lyoncounty.iowa.gov/supervisors/",
         "districts": 5,
@@ -448,6 +578,28 @@ def interior_points(geom, grid=GRID):
     return out
 
 
+SLIVER_M = 30
+
+
+def edge_distance(lon, lat, geom):
+    """Metres from a point to the nearest edge of a polygon or multipolygon."""
+    parts = ([geom["coordinates"]] if geom["type"] == "Polygon"
+             else geom["coordinates"])
+    kx = math.cos(math.radians(lat)) * 111320.0
+    ky = 111000.0
+    best = float("inf")
+    for part in parts:
+        for ring in part:
+            for a, b in zip(ring, ring[1:]):
+                ax, ay = (a[0] - lon) * kx, (a[1] - lat) * ky
+                bx, by = (b[0] - lon) * kx, (b[1] - lat) * ky
+                dx, dy = bx - ax, by - ay
+                t = -(ax * dx + ay * dy) / ((dx * dx + dy * dy) or 1.0)
+                t = max(0.0, min(1.0, t))
+                best = min(best, math.hypot(ax + t * dx, ay + t * dy))
+    return best
+
+
 def check_precincts():
     """The precinct route: the county's own page names its precincts per
     district, and both the precincts and the districts are files this instance
@@ -475,17 +627,36 @@ def check_precincts():
         bad = []
         for name in sorted(claimed, key=lambda n: claimed[n]):
             pts = interior_points(shipped[name])
-            hits = {}
+            hits, where = {}, {}
             for x, y in pts:
                 hit = [d for d, g in polys.items() if contains(x, y, g)]
                 key = hit[0] if len(hit) == 1 else "/".join(hit) or "none"
                 hits[key] = hits.get(key, 0) + 1
+                where.setdefault(key, []).append((x, y))
             real = {k: v for k, v in hits.items() if k != "none"}
             got = max(real, key=real.get) if real else "none"
             # A precinct straddling two districts would be the county and the
             # layer describing different plans rather than numbering one -- the
             # Butler case -- so it is reported rather than resolved by majority.
-            spread = sorted(k for k in real if k != got)
+            # EXCEPT A SLIVER ALONG THE DISTRICT LINE: the two layers are
+            # simplified separately, so where a district line follows a
+            # precinct line the two drawings part by metres. Measured on
+            # Madison 2026-10-15, ten stray samples of 4,700, every one within
+            # 19 m of the district line it crossed. A minority every sample of
+            # which is within SLIVER_M of the majority district's own edge is
+            # printed and not counted; one sample farther in is a straddle.
+            spread = []
+            for k in sorted(real):
+                if k == got:
+                    continue
+                far = max(edge_distance(x, y, polys[got])
+                          for x, y in where[k])
+                if far <= SLIVER_M:
+                    print("  %s: %s -- %d sample(s) in this layer's district %s, "
+                          "all within %.0f m of district %s's edge, read as a "
+                          "drawing sliver" % (county, name, real[k], k, far, got))
+                else:
+                    spread.append(k)
             print("  %s: %s lies in this layer's district %s%s; the county puts "
                   "its District %s there (%d interior point(s))"
                   % (county, name, got,
@@ -517,6 +688,10 @@ def check_precincts():
               "number(s) the same (%s)"
               % (county, len(claimed), pairing, same, len(implied),
                  rec["source"]))
+        if rec.get("by_elimination"):
+            print("  %s: the county's District %s was not on the ballot read, so "
+                  "it is placed by elimination -- the precincts no contest named"
+                  % (county, rec["by_elimination"]))
         # The independent half. The towns cannot speak for every district, so
         # they confirm or contradict rather than deciding.
         towns = rec.get("towns") or {}

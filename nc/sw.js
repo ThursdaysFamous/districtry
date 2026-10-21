@@ -29,7 +29,7 @@
 // template starts at -v1: the app shell, icons, and the starter data
 // files bootstrap_state.py builds.)
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-nc-shell-v3";
+const CACHE_NAME = "districtry-nc-shell-v4";
 
 const SHELL_URLS = [
   "./",
@@ -49,7 +49,12 @@ const GEOMETRY_URLS = [
   "./data/app/congress-districts.json",
   "./data/app/nc-senate-districts.json",
   "./data/app/nc-house-districts.json",
+  "./data/app/nc-superior-court-districts.json",
+  "./data/app/nc-district-court-districts.json",
   "./data/app/tribal-areas.json",
+  "./data/app/nc-precincts.json",
+  "./data/app/nc-city-wards.json",
+  "./data/app/nc-school-board-districts.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
@@ -60,7 +65,9 @@ const ROSTER_URLS = [
   "./data/app/nc-senate-members.json",
   "./data/app/nc-house-members.json",
   "./data/app/nc-county-commissioners.json",
+  "./data/app/nc-city-councils.json",
   "./data/app/coverage-gaps.json",
+  "./data/app/nc-conservation-boards.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

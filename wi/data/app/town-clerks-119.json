@@ -9,6 +9,9 @@
     "clerk": "Sharon Noland",
     "municipality": "Browning",
     "phone": "715-748-3653",
+    "phonesExtra": [
+      "715-748-6382"
+    ],
     "recordUpdated": "2026-03-17"
   },
   "5511914200": {
@@ -39,6 +42,9 @@
     "clerk": "Ashley Dahl",
     "municipality": "Goodrich",
     "phone": "715-748-2651",
+    "phonesExtra": [
+      "715-748-6445"
+    ],
     "recordUpdated": "2021-12-27"
   },
   "5511931600": {
@@ -59,6 +65,9 @@
     "deputyClerk": "Joelle Zuelsdorff",
     "municipality": "Hammel",
     "phone": "715-748-9608",
+    "phonesExtra": [
+      "715-965-3655"
+    ],
     "recordUpdated": "2026-02-23",
     "url": "https://www.townofhammel.com/"
   },
@@ -96,6 +105,9 @@
     "clerk": "Jennifer Strama",
     "municipality": "Medford",
     "phone": "715-748-3605",
+    "phonesExtra": [
+      "715-965-2277"
+    ],
     "recordUpdated": "2026-07-30",
     "url": "https://www.townofmedfordwi.com/"
   },
@@ -103,6 +115,9 @@
     "clerk": "Amber Larson",
     "municipality": "Molitor",
     "phone": "715-965-6303",
+    "phonesExtra": [
+      "715-678-2089"
+    ],
     "recordUpdated": "2024-10-10"
   },
   "5511962100": {
@@ -116,6 +131,9 @@
     "clerk": "Karen Schneider",
     "municipality": "Rib Lake",
     "phone": "715-427-3635",
+    "phonesExtra": [
+      "715-965-8421"
+    ],
     "recordUpdated": "2024-12-17"
   },
   "5511969400": {

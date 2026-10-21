@@ -49,6 +49,9 @@
     "deputyClerk": "Molly Smith",
     "municipality": "Linn",
     "phone": "262-275-6300 EXT 10",
+    "phonesExtra": [
+      "262-275-6300 EXT 20"
+    ],
     "recordUpdated": "2023-11-02",
     "url": "https://townoflinn.wi.gov/"
   },
@@ -77,6 +80,9 @@
     "clerk": "Ashley Dewart",
     "municipality": "Spring Prairie",
     "phone": "262-642-7477",
+    "phonesExtra": [
+      "262-441-1721"
+    ],
     "recordUpdated": "2026-03-18",
     "url": "https://townofspringprairiewi.gov/"
   },

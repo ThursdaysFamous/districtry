@@ -63,6 +63,10 @@ Severities (a PUBLISHED link's worst severity is WARN):
     INCOMPLETE certificate chain fails verification for every plain client
     while loading fine in a browser. Listing it stops the report advising that
     a healthy link be treated as dead.
+  * not public yet — a 404 from a URL in NOT_YET_PUBLIC                   [OK]
+    A page that is there for its own readers before it is there for anyone:
+    districtry's Google Play listing answers 404 to everybody not signed in as
+    a tester until the app is published. The day it answers is the WARN.
   * REACHABLE again — a listed host that now answers                     [WARN]
   * rate-limited — 429 twice, eight seconds apart                        [WARN]
     Said softly on purpose: this probe is a plausible cause of a 429, so the
@@ -451,6 +455,19 @@ ROBOTS_DECLINED = {
         "`Disallow: /`. Measured 2026-10-10 with this checker's own token. The tn "
         "chamber cards link members' pages and the chamber directories here for a "
         "reader; the roster is read from the state's TNMap service instead",
+    # THE CITY OF MUSKOGEE, OKLAHOMA. Its robots.txt redirects to
+    # files.muskogeeonline.org and is the Rochester Hills file again,
+    # byte-identical: one content-management vendor's default, published at
+    # the city's host so it binds, and not the city's own choice.
+    "www.muskogeeok.gov":
+        "robots.txt (served via a redirect to files.muskogeeonline.org, 210 bytes, "
+        "Last-Modified 14 December 2022) allows five named bots — Googlebot, "
+        "Bingbot, FacebookBot, LinkedInBot, Twitterbot — and then states "
+        "`User-agent: *` / `Disallow: /`. Measured 2026-10-16; byte-identical to "
+        "Rochester Hills's file, a CMS vendor's default. The ok City or Town card "
+        "links the city's council page for a reader and names Muskogee's council "
+        "from the county election board's official results and news reports, which "
+        "the card says; ok/scripts/build_ok_city_councils.py reads no page of this host",
 }
 
 # A HOST CAN DECLINE ONE DIRECTORY RATHER THAN ITSELF, and the table above
@@ -463,6 +480,27 @@ ROBOTS_DECLINED = {
 # path is not probed, and the day the rule goes is the WARN, because that is the
 # state a human can act on.
 ROBOTS_DECLINED_PATHS = {
+    "play.google.com": [
+        ("/apps/testing/",
+         "the `*` group disallows /apps, allowing only /apps/publish under it, "
+         "and Google Play's closed-test opt-in pages live there. Measured "
+         "2026-10-18 with this checker's own token through scripts/robots_policy.py. "
+         "districtry.com/android links the districtry test's page for testers, who "
+         "are readers following a link rather than crawlers; what this stops is "
+         "this check fetching it"),
+    ],
+    "www.nccourts.gov": [
+        ("/judicial-directory",
+         "the `*` group's section headed \"Custom robot rules\" disallows "
+         "/judicial-directory (line 54 of 1,320 bytes, last-modified 16 October 2026), "
+         "read 2026-10-20 with the Chrome 126 string and client hints on the stdlib "
+         "client, which this host serves. Its robots.txt answers this checker's "
+         "token 403 (CloudFront's error page, 919 bytes, measured the same day), so "
+         "the re-read below cannot see the rule go and nc/WATCH.md's re-read of the "
+         "court pages is where it would be noticed. The nc superior and district court cards link the judicial "
+         "directory and name no judge (gap nc-judges); the court pages they also "
+         "link are permitted and still checked"),
+    ],
     "www.logancountyil.gov": [
         ("/images/",
          "the `*` group disallows /images/, where the County Clerk's Reference & "
@@ -474,6 +512,49 @@ ROBOTS_DECLINED_PATHS = {
          "still read"),
     ],
 }
+
+
+# A PAGE THAT IS THERE FOR ITS OWN READERS BEFORE IT IS THERE FOR ANYONE ELSE.
+# districtry's Google Play listing answered 404 to a visitor who was not signed
+# in while the app was in its closed test, so the monthly run would call a link
+# the testers use DEAD and tell somebody to find its new address. The same
+# inversion as the tables above: a 404 here reads OK, and the day the page
+# answers is the WARN, which for this entry is the news it is waiting for. An
+# entry no page cites any more is warned about too.
+#
+# Keyed by host and then by the whole path and query, matched exactly, because
+# the host serves millions of public pages. It is not written as one URL
+# because scripts/probe_user_agents.py reads a URL written in a script as a
+# host that script fetches by name, and this checker reaches it only through
+# the page that cites it, like every URL it checks.
+NOT_YET_PUBLIC = {
+    "play.google.com": [
+        ("/store/apps/details?id=com.districtry.app",
+         "districtry's own Google Play listing, which districtry.com/android links "
+         "for the closed test's testers. It answered 404 (`Not Found`, 1,673 bytes) "
+         "to this checker's token and to a browser string alike, measured "
+         "2026-10-18 while the app was in closed testing; what a signed-in tester "
+         "sees was not measured. When it answers here it is public: turn the "
+         "android.html entry in scripts/build_redirect_stubs.py's SHORT_LINKS into "
+         "a forward to the listing, regenerate, and delete this entry"),
+    ],
+}
+
+
+def page_key(url):
+    """(host, path and query) — how NOT_YET_PUBLIC names a page."""
+    parts = urllib.parse.urlsplit(url)
+    return ((parts.hostname or "").lower(),
+            parts.path + ("?" + parts.query if parts.query else ""))
+
+
+def not_yet_public(url):
+    """The NOT_YET_PUBLIC reason recorded for exactly this URL, or None."""
+    host, target = page_key(url)
+    for path, reason in NOT_YET_PUBLIC.get(host, ()):
+        if target == path:
+            return reason
+    return None
 
 
 EXPECTED_UNREACHABLE = {
@@ -618,6 +699,29 @@ EXPECTED_UNREACHABLE = {
         "incomplete TLS chain (leaf only, no intermediate) — NOT a block: the site "
         "answers HTTP 200 to a client that supplies the missing issuer, which the "
         "board roster scraper does by AIA with a pinned hash",
+    # THE FOURTH OF THE SAME, and the first outside Illinois. The Mississippi
+    # Legislature's site sends its leaf without the GlobalSign intermediate that
+    # signed it. Measured 2026-10-15: requests with certifi stops at
+    # SSLCertVerificationError on the front page, and the same request with
+    # scripts/aia_bundle.py's pinned "globalsign-rsa-ov-2018" intermediate
+    # answers HTTP 200 with 56 KB. ms/scripts/build_ms_legislature_roster.py
+    # reads the member pages that way; the ms app and its sources page link
+    # the site for readers, whose browsers complete the chain themselves.
+    "legislature.ms.gov":
+        "incomplete TLS chain (leaf only, no intermediate) — NOT a block: the site "
+        "answers HTTP 200 to a client that supplies the missing issuer, which the "
+        "legislature roster scraper does with a pinned intermediate",
+    # THE SAME, one map server further in. The Central Mississippi Planning and
+    # Development District's map server sends its leaf without the GoDaddy
+    # intermediate. Measured 2026-10-15: requests with certifi stops at
+    # SSLCertVerificationError on the folder ms/sources.html links, and with
+    # scripts/aia_bundle.py's pinned "godaddy-g2" intermediate it answers HTTP
+    # 200 with 19,950 bytes. ms/scripts/build_ms_supervisor_districts.py reads
+    # six counties' supervisor districts there that way.
+    "gis.cmpdd.org":
+        "incomplete TLS chain (leaf only, no intermediate) — NOT a block: the server "
+        "answers HTTP 200 to a client that supplies the missing issuer, which the "
+        "Mississippi supervisor district build does with a pinned intermediate",
     # THE FIRST WISCONSIN ENTRY. The wi ward card links MyVote as the honest
     # polling-place answer it cannot carry as data (gap ward-polling-places).
     # Measured 2026-08-25: HTTP 403 with `Cf-Mitigated: challenge` on every
@@ -667,6 +771,173 @@ EXPECTED_UNREACHABLE = {
         "project: the county's board page answers HTTP 200 to the roster "
         "scraper's own urllib fetch with browser navigation headers, and its "
         "sixteen supervisors ship from it weekly",
+    # FORT SMITH, ARKANSAS, IS KENDALL'S SHAPE IN A CITY. The ar City or Town
+    # and City Council District cards name Fort Smith's mayor and Board of
+    # Directors from the board's own page and link it, and that page refuses
+    # this checker's client. Measured 2026-10-16 by scripts/probe_user_agents.py
+    # on the board page itself: the districtry token gets HTTP 403 on both the
+    # requests and the stdlib stacks, Chrome/126 with its client hints gets 403
+    # on requests and HTTP 200 (122,553 bytes) on stdlib. The 403 is the city's
+    # Akamai edge (Server AkamaiGHost, "Access Denied"), not this sandbox's
+    # proxy. ar/scripts/build_ar_city_councils.py reads robots.txt and the page
+    # with that stdlib client and proves every name against it on each build,
+    # so this probe's 403 is not news; the day it answers is the day that
+    # builder could send our own token.
+    "fortsmithar.gov":
+        "Akamai \"Access Denied\" to the districtry token on both stacks and to "
+        "Chrome on requests — the board page answers HTTP 200 to the city council "
+        "builder's stdlib fetch with Chrome and its client hints, which is where "
+        "Fort Smith's eight names come from",
+    # ROCK HILL, SOUTH CAROLINA, IS FORT SMITH'S SHAPE AGAIN. The sc City or
+    # Town and City Council District cards name Rock Hill's mayor and council
+    # from the city's council members page and link it, and that page refuses
+    # this checker's client. Measured 2026-10-16 by scripts/probe_user_agents.py
+    # on the members page itself: the districtry token gets HTTP 403 on both
+    # the requests and the stdlib stacks, Chrome/126 with its client hints gets
+    # 403 on requests and HTTP 200 (168,899 bytes) on stdlib. The 403 is the
+    # city's Akamai edge (Server AkamaiGHost, "Access Denied", 390 bytes), not
+    # this sandbox's proxy. sc/scripts/build_sc_city_councils.py reads
+    # robots.txt and the page with that stdlib client and proves every name
+    # against it on each build, so this probe's 403 is not news; the day it
+    # answers is the day that builder could send our own token.
+    "cityofrockhill.com":
+        "Akamai \"Access Denied\" to the districtry token on both stacks and to "
+        "Chrome on requests — the members page answers HTTP 200 to the city council "
+        "builder's stdlib fetch with Chrome and its client hints, which is where "
+        "Rock Hill's seven names come from",
+    # SIX TENNESSEE CITIES ARE THE SAME SHAPE, behind two different edges.
+    # The tn City or Town card names the mayor and council of Murfreesboro,
+    # Franklin, Bristol, Knoxville, Collierville and Germantown from each
+    # city's own pages and links them (the City Council District card too,
+    # for Franklin), and each page refuses this checker's client. Measured
+    # 2026-10-16 by scripts/probe_user_agents.py on the six pages themselves:
+    # the districtry token gets HTTP 403 on both the requests and the stdlib
+    # stacks, Chrome/126 with its client hints gets 403 on requests and HTTP
+    # 200 on stdlib (126,283, 121,372, 112,358, 109,625, 106,217 and 100,428
+    # bytes). Murfreesboro's, Bristol's and Knoxville's 403 is Cloudflare's
+    # "Sorry, you have been blocked" page (4,547 bytes, and 5,486 at
+    # Knoxville), a block and not a challenge; Franklin's, Collierville's and
+    # Germantown's is their Akamai edges' "Access Denied" (Server AkamaiGHost,
+    # 460, 470 and 473 bytes). tn/scripts/build_tn_city_councils.py reads
+    # robots.txt and each page with that stdlib client and proves every name
+    # against it on each build.
+    "murfreesborotn.gov":
+        "Cloudflare \"Sorry, you have been blocked\" to the districtry token on both "
+        "stacks and to Chrome on requests — the council page answers HTTP 200 to the "
+        "city council builder's stdlib fetch with Chrome and its client hints, which "
+        "is where Murfreesboro's seven names come from",
+    "franklintn.gov":
+        "Akamai \"Access Denied\" to the districtry token on both stacks and to "
+        "Chrome on requests — the board page answers HTTP 200 to the city council "
+        "builder's stdlib fetch with Chrome and its client hints, which is where "
+        "Franklin's nine names come from",
+    "bristoltn.gov":
+        "Cloudflare \"Sorry, you have been blocked\" to the districtry token on both "
+        "stacks and to Chrome on requests — the council page answers HTTP 200 to the "
+        "city council builder's stdlib fetch with Chrome and its client hints, which "
+        "is where Bristol's five names come from",
+    "knoxvilletn.gov":
+        "Cloudflare \"Sorry, you have been blocked\" to the districtry token on both "
+        "stacks and to Chrome on requests — the council and mayor's pages answer HTTP "
+        "200 to the city council builder's stdlib fetch with Chrome and its client "
+        "hints, which is where Knoxville's ten names come from",
+    "colliervilletn.gov":
+        "Akamai \"Access Denied\" to the districtry token on both stacks and to "
+        "Chrome on requests — the board page answers HTTP 200 to the city council "
+        "builder's stdlib fetch with Chrome and its client hints, which is where "
+        "Collierville's six names come from",
+    "germantown-tn.gov":
+        "Akamai \"Access Denied\" to the districtry token on both stacks and to "
+        "Chrome on requests — the board page answers HTTP 200 to the city council "
+        "builder's stdlib fetch with Chrome and its client hints, which is where "
+        "Germantown's six names come from",
+    # SEVEN NORTH CAROLINA CITIES ARE THE SAME SHAPE, behind three kinds of
+    # edge. The nc City or Town card names the mayor and council of Durham,
+    # Greensboro, Cary, Greenville, Rocky Mount, Garner and Wilson from each
+    # city's own council page and links it (the City Council District card
+    # too, for all but Durham and Garner, whose seats are elected by the whole
+    # place), and each page refuses this checker's client. Measured 2026-10-16
+    # by scripts/probe_user_agents.py on the seven pages themselves: the
+    # districtry token gets HTTP 403 on both the requests and the stdlib
+    # stacks, Chrome/126 with its client hints gets 403 on requests and HTTP
+    # 200 on stdlib (165,162, 119,798, 116,871, 113,900, 102,930, 98,454 and
+    # 97,029 bytes). Durham's, Greenville's and Rocky Mount's 403 is
+    # Cloudflare's "Attention Required!" block page (about 5,485 bytes), a
+    # block and not a challenge; Greensboro's, Cary's and Garner's is their
+    # Akamai edges' "Access Denied" (Server AkamaiGHost, 446, 444 and 470
+    # bytes); Wilson's is a 403 of its own. nc/scripts/build_nc_city_councils.py
+    # reads robots.txt and each page with that stdlib client and proves every
+    # name against it on each build.
+    "durhamnc.gov":
+        "Cloudflare \"Attention Required!\" block page to the districtry token on both stacks and to "
+        "Chrome on requests — the council members page answers HTTP 200 to the city council "
+        "builder's stdlib fetch with Chrome and its client hints, which is where "
+        "Durham's seven names come from",
+    "greensboro-nc.gov":
+        "Akamai \"Access Denied\" to the districtry token on both stacks and to "
+        "Chrome on requests — the council page answers HTTP 200 to the city council "
+        "builder's stdlib fetch with Chrome and its client hints, which is where "
+        "Greensboro's nine names come from",
+    "carync.gov":
+        "Akamai \"Access Denied\" to the districtry token on both stacks and to "
+        "Chrome on requests — the council page answers HTTP 200 to the city council "
+        "builder's stdlib fetch with Chrome and its client hints, which is where "
+        "Cary's seven names come from",
+    "greenvillenc.gov":
+        "Cloudflare \"Attention Required!\" block page to the districtry token on both stacks and to "
+        "Chrome on requests — the council page answers HTTP 200 to the city council "
+        "builder's stdlib fetch with Chrome and its client hints, which is where "
+        "Greenville's seven names come from",
+    "rockymountnc.gov":
+        "Cloudflare \"Attention Required!\" block page to the districtry token on both stacks and to "
+        "Chrome on requests — the council page answers HTTP 200 to the city council "
+        "builder's stdlib fetch with Chrome and its client hints, which is where "
+        "Rocky Mount's eight names come from",
+    "garnernc.gov":
+        "Akamai \"Access Denied\" to the districtry token on both stacks and to "
+        "Chrome on requests — the council members page answers HTTP 200 to the city council "
+        "builder's stdlib fetch with Chrome and its client hints, which is where "
+        "Garner's six names come from",
+    "wilsonnc.org":
+        "HTTP 403 to the districtry token on both stacks and to "
+        "Chrome on requests — the council page answers HTTP 200 to the city council "
+        "builder's stdlib fetch with Chrome and its client hints, which is where "
+        "Wilson's seven names come from",
+    # RALEIGH AND MATTHEWS ANSWER WITH A MANAGED CHALLENGE, which is an access
+    # control and not a client fingerprint, so no other client is tried there
+    # and nothing on either host is read. The nc City or Town card links each
+    # place's own council page (`page` in nc/data/app/nc-city-councils.json)
+    # and names its members from the State Board of Elections' precinct
+    # results instead, which the card says. Recorded 2026-10-16 when the
+    # council builder's own read of raleighnc.gov met Cloudflare's "Just a
+    # moment..." page; matthewsnc.gov's council page came from a search engine
+    # after its host met the same challenge, and it has never been fetched from
+    # here. This checker is the first client to ask for that page, so a
+    # refusal reads OK and its answering is the WARN.
+    "raleighnc.gov":
+        "Cloudflare managed challenge (\"Just a moment...\") to this project's "
+        "council reader, 2026-10-16 — an access control, so no other client is "
+        "tried; Raleigh's names come from the State Board of Elections' results",
+    "matthewsnc.gov":
+        "Cloudflare managed challenge (\"Just a moment...\") to this project's "
+        "council reader, 2026-10-16 — an access control, so no other client is "
+        "tried; Matthews's names come from the State Board of Elections' results",
+    # BROKEN ARROW, OKLAHOMA IS THE SAME SHAPE AS GERMANTOWN. The ok City or
+    # Town card names Broken Arrow's mayor and council from the city's own
+    # council page and links it, and the page refuses this checker's client.
+    # Measured 2026-10-16 by scripts/probe_user_agents.py on the page itself:
+    # the districtry token gets HTTP 403 on both the requests and the stdlib
+    # stacks (the Akamai edge's "Access Denied", 406 bytes), Chrome/126 with
+    # its client hints gets 403 on requests and HTTP 200 on stdlib (137,002
+    # bytes). Its robots.txt is the same content-management vendor's default
+    # file Collierville and Germantown serve. ok/scripts/build_ok_city_councils.py
+    # reads robots.txt and the page with that stdlib client and proves every
+    # name against it on each build.
+    "brokenarrowok.gov":
+        "Akamai \"Access Denied\" to the districtry token on both stacks and to "
+        "Chrome on requests — the council page answers HTTP 200 to the city council "
+        "builder's stdlib fetch with Chrome and its client hints, which is where "
+        "Broken Arrow's five names come from",
 }
 
 # Some hosts publish nothing at `/` by design (the tile CDNs cited in the map
@@ -1319,6 +1590,7 @@ def evaluate(cites, origin, results):
         res = results[url]
         host, state, detail = host_of(url), res["state"], res["detail"]
         expected = expected_block(host)
+        waiting = not_yet_public(url)
         who = origin[url]
         where = cite_summary(sorted(set(cites[url])))
 
@@ -1345,6 +1617,13 @@ def evaluate(cites, origin, results):
                 row(OK, "NOT PROBED (robots.txt declined) and its robots.txt could not "
                         "be re-read this run, so the recorded request stands. %s"
                         % detail)
+        elif waiting and state == "gone":
+            row(OK, "not public yet AS EXPECTED (%s) — %s" % (detail, waiting))
+        elif waiting and state == "ok":
+            row(WARN,
+                "ANSWERS now (%s), and NOT_YET_PUBLIC records it as not public yet, "
+                "so the page it was waiting for appears to be public. %s. Cited at %s"
+                % (detail, waiting, where))
         elif state == "ok":
             if expected:
                 row(WARN,
@@ -1463,6 +1742,13 @@ def check_expected_list_still_earned(cites, rows):
                              "listed in ROBOTS_DECLINED_PATHS (%s) but the app no longer "
                              "cites any URL under that prefix on this host — delete the "
                              "entry. Recorded request: %s" % (prefix, reason), AUTHORED))
+    cited_pages = {page_key(u) for u in cites}
+    for host, entries in sorted(NOT_YET_PUBLIC.items()):
+        for path, reason in entries:
+            if (host, path) not in cited_pages:
+                rows.append((WARN, host + path,
+                             "listed in NOT_YET_PUBLIC but no page cites this URL any "
+                             "more — delete the entry. Recorded: %s" % reason, AUTHORED))
 
 
 # ---- reporting ---------------------------------------------------------------

@@ -87,16 +87,18 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 9
+MIN_REGISTER_LAYER = 16
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "ar-senate", "county", "ar-house", "school-district-unified",
-    "zip-code", "quorum-court", "municipality", "police-station",
-    "fire-station", "post-office",
+    "us-house", "ar-court-of-appeals", "ar-circuit-court", "ar-senate",
+    "county", "ar-house", "school-district-unified", "zip-code",
+    "quorum-court", "county-subdivision", "fire-district",
+    "school-board-district", "voting-precinct", "municipality", "city-ward",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -107,6 +109,13 @@ GEOMETRY_FILES = {
     "ar-senate-districts.json": (35, 35),  # The 35 Arkansas Senate districts.
     "ar-house-districts.json": (100, 100),  # The 100 Arkansas House districts.
     "ar-quorum-court-districts.json": (775, 775),  # The 775 justice of the peace districts of all 75 counties, from the state's own layer (ar/scripts/build_ar_quorum_court_districts.py).
+    "ar-townships.json": (820, 820),  # The 820 townships of all 75 counties, from the state's own layer (ar/scripts/build_ar_townships.py).
+    "ar-precincts.json": (2920, 2920),  # Every Arkansas voting precinct, pre-built by ar/scripts/build_ar_precincts.py through scripts/statewide_precincts.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.97% with zero overlaps; an exact 2,920 count on the drawn file, after the eight records that are further pieces of seven precincts are joined into them). 9.3 MB, 2.44 MB gzipped, fetched only when a reader switches the layer on.
+    "ar-school-board-zones.json": (965, 965),  # Every Arkansas school board zone, pre-built by ar/scripts/build_ar_school_board_districts.py through scripts/published_district_layers.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m; a 400-point agreement gate on every board's extent, measured 99.99% with zero overlaps; an exact 965 count, after the Jasper district's zone 3, published in two pieces, is joined into one). 5.1 MB, 1.40 MB gzipped, fetched only when a reader switches the layer on.
+    "ar-fire-districts.json": (971, 971),  # Every Arkansas fire district, pre-built by ar/scripts/build_ar_fire_districts.py through scripts/published_district_layers.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m; a 400-point agreement gate on each set of counties' extent, measured 99.98%, with no point in two drawn districts where the source has one or none; an exact 971 count, after Siloam Springs, filed in three records, is joined into one). 6.6 MB, 1.99 MB gzipped, fetched only when a reader switches the layer on.
+    "ar-city-wards.json": (56, 56),  # The 56 wards of the 12 cities above 25,000 people that elect council members by ward, pre-built by ar/scripts/build_ar_city_wards.py through scripts/published_district_layers.py from the Arkansas GIS Office's layer (Douglas-Peucker at 4 m; a 4,800-point agreement gate over the twelve cities' extents, measured 99.98% with zero overlaps). 300 KB, 82 KB gzipped, fetched only when a reader switches the layer on.
+    "ar-appeals-districts.json": (7, 7),  # The 7 Court of Appeals districts, dissolved from the county fabric by ar/scripts/build_ar_court_districts.py following Act 1812 of 2003's county lists.
+    "ar-judicial-circuits.json": (28, 28),  # The 28 judicial circuits, dissolved from the county fabric by ar/scripts/build_ar_court_districts.py following the circuit judge directory's county lists.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -115,6 +124,7 @@ ROSTER_FILES = {
     "ar-senate-members.json": 35,  # Arkansas Senate roster from the Arkansas State Legislature's own member list and pages, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size; Senate 1 and 18 read vacant on 2026-10-13.
     "ar-house-members.json": 100,  # Arkansas House roster on the same terms; House 8 read vacant on 2026-10-13.
     "ar-county-officials.json": 75,  # Every county's judge (the Arkansas Judiciary's directory) and justices of the peace (the Association of Arkansas Counties), one record per county, built by update-ar-county-officials.yml. That job is scheduled weekly but has not completed since 2026-10-13, because the association's site answers its requests from GitHub's servers with HTTP 403 (measured 2026-10-14 and 2026-10-15), so the file stays as read on 2026-10-13 and every card states that date.
+    "ar-city-councils.json": 19,  # The mayor and council of each of the 19 cities above 25,000 people, keyed by Census place id, written down from each city's own pages and proved against them by ar/scripts/build_ar_city_councils.py, whose --check holds the file to its seats file, its record of every page read and the drawn wards. Every page it cites is re-read weekly (watch-city-council-pages.yml, listed in the North Carolina worksheet because one root workflow belongs to one instance), which opens a tracking issue when a name or a contact has gone from its page and never edits the file; the seats file is changed by hand (ar/WATCH.md).
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 

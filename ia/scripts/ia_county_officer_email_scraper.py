@@ -37,7 +37,10 @@ Two smaller rules, each from a real defect this found:
     is a dead address that looks alive. A run of 7+ digits is stripped; `treas1@`
     is untouched.
   * THE DOMAIN MUST FIT THE COUNTY. See below -- this is what catches the
-    contamination in the second source.
+    contamination in the second source. On the county's own site it applies
+    to an office-form address only since 2026-10-17: an address carrying the
+    officeholder's own name ships there whatever its domain, a personal one
+    included (Adam's ruling that day).
 
 THE SECOND SOURCE, AND THE CONTAMINATION IT CARRIES
 -----------------------------------------------------
@@ -256,7 +259,17 @@ def probe_county_site(base, office, person, county):
             win = page[max(0, m.start() - WINDOW_BEFORE): m.start() + WINDOW_AFTER]
             for e in emails_in(win):
                 why = classify(e, person, office, county)
-                if why != "rejected" and domain_fits(county, e):
+                # On the county's OWN site an address carrying the
+                # officeholder's own name ships whatever its domain: Adam
+                # chose on 2026-10-17 that a personal address a government
+                # page prints beside an official is shown ("E-mails too"),
+                # and the domain test was built for the second source below,
+                # which serves other counties' pages. An OFFICE-form address
+                # still has to fit the county, because a mailbox named for an
+                # office on another county's domain is that county's office.
+                # Measured the same day, this changed no address: every one
+                # the county sites offered was already on a county domain.
+                if why == "witnessed" or (why == "office" and domain_fits(county, e)):
                     return status, {"email": e, "why": why, "source": u}, rejected
                 rejected.append({"email": e, "why": why})
     return status, None, rejected[:4]
