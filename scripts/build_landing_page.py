@@ -73,12 +73,14 @@ never the browser's location).
 import argparse
 import difflib
 import glob
+import gzip
 import html
 import functools
 import json
 import math
 import os
 import re
+import struct
 import sys
 import urllib.parse
 
@@ -1037,13 +1039,16 @@ def concept_layers(tag, concepts):
 # page's text, and a roster that loses a seat shows "Not listed" to a reader,
 # as the map's card does, rather than failing a build first.
 #
-# ONLY OFFICES WHOSE BOUNDARIES SHIP AS FILES. Chicago's ward and the Cook
-# County Board answer at City Hall too, but the map reads both boundaries from
-# the city's and the county's own servers when a reader clicks, and New York
-# City's council districts ship only as a tile archive this generator does not
-# read, so it cannot measure which district the point is in, and a district
-# typed in here would be a claim nothing holds to the map. Each place's link
-# opens those layers too (LINK_CONCEPTS).
+# ONLY OFFICES WHOSE BOUNDARIES SHIP WITH THE APP, as a file or as the tile
+# archive the map draws them from. Chicago's ward and the Cook County Board
+# answer at City Hall too, but the map reads both boundaries from the city's
+# and the county's own servers when a reader clicks, so this generator cannot
+# measure which district the point is in, and a district typed in here would
+# be a claim nothing holds to the map. Each place's link opens those layers
+# too (LINK_CONCEPTS). New York City's council districts ship only as a tile
+# archive, so a card can name `tiles` instead of `boundary` and is measured
+# from the tile under the point at the archive's deepest zoom, which is the
+# tile the map's own card reads (read_tile and tile_features, below).
 #
 # THE POINT MUST NOT SIT NEAR AN EDGE. The shipped boundaries are simplified,
 # and a point a few metres from an edge can fall on one side here and on the
@@ -1157,6 +1162,20 @@ EXAMPLE_PLACES = [
                   "ny-senate-members.json"),
          _chamber("state-assembly", "New York State Assembly", "state-assembly-districts.json",
                   "ny-assembly-members.json"),
+         # The two borough offices share the borough file and one roster,
+         # keyed by borough and then by office, as their cards read it.
+         {"layer": "borough-president", "body": "Borough President",
+          "boundary": "borough-boundaries.json", "roster": "borough-officials.json",
+          "seat": lambda p: [p["boroname"], "bp"],
+          "label": lambda p: p["boroname"]},
+         {"layer": "district-attorney", "body": "District Attorney",
+          "boundary": "borough-boundaries.json", "roster": "borough-officials.json",
+          "seat": lambda p: [p["boroname"], "da"],
+          "label": lambda p: p["boroname"]},
+         {"layer": "council", "body": "New York City Council",
+          "tiles": "council.pmtiles", "roster": "council-members.json",
+          "seat": lambda p: [str(int(p["coundist"]))],
+          "label": lambda p: "District %d" % int(p["coundist"])},
      ]},
     {"id": "san-francisco", "button": "San Francisco", "tag": "ca",
      "place": "San Francisco City Hall",
@@ -1178,6 +1197,213 @@ EXAMPLE_PLACES = [
 # here Chicago's ward and the Cook County Board, and New York City's council.
 LINK_CONCEPTS = ("us-house", "state-senate", "state-house", "county-board",
                  "city-council", "school-board-district")
+
+
+# A PMTiles archive and the vector tiles in it, read with the standard library
+# alone because this generator runs in CI's static job without the `pmtiles`
+# and `mapbox-vector-tile` packages. Only what a card needs: one tile by z/x/y
+# (PMTiles v3, a gzip- or un-compressed directory and tiles), and that tile's
+# polygon features with their properties. Measured 2026-10-21 against those
+# two packages over 3,812 features in every third committed archive: the
+# tile bytes, every property and every ring vertex agree.
+
+def _varint(buf, i):
+    out = shift = 0
+    while True:
+        b = buf[i]
+        i += 1
+        out |= (b & 0x7F) << shift
+        if b < 0x80:
+            return out, i
+        shift += 7
+
+
+def _zigzag(v):
+    return (v >> 1) ^ -(v & 1)
+
+
+def _tile_id(z, x, y):
+    """The archive's id for a tile: the tiles of every lower zoom, then the
+    tile's place along the Hilbert curve at its own zoom."""
+    tid = sum(4 ** k for k in range(z))
+    s = 2 ** z // 2
+    while s > 0:
+        rx = 1 if x & s else 0
+        ry = 1 if y & s else 0
+        tid += s * s * ((3 * rx) ^ ry)
+        if ry == 0:
+            if rx == 1:
+                x, y = s - 1 - x, s - 1 - y
+            x, y = y, x
+        s //= 2
+    return tid
+
+
+def _unzip(raw, kind, path):
+    if kind == 2:
+        return gzip.decompress(raw)
+    if kind in (0, 1):
+        return raw
+    fail("%s uses compression %d, which this reader does not read." % (path, kind))
+
+
+def _directory(raw):
+    n, i = _varint(raw, 0)
+    cols = []
+    for _ in range(4):
+        col = []
+        for _ in range(n):
+            v, i = _varint(raw, i)
+            col.append(v)
+        cols.append(col)
+    ids, runs, lens, offs = [], cols[1], cols[2], []
+    last = 0
+    for k in range(n):
+        last += cols[0][k]
+        ids.append(last)
+        v = cols[3][k]
+        offs.append(offs[k - 1] + lens[k - 1] if v == 0 and k > 0 else v - 1)
+    return list(zip(ids, runs, lens, offs))
+
+
+def read_tile(path, z, x, y):
+    """The decompressed bytes of one tile, or None where the archive has none."""
+    data = open(path, "rb").read()
+    if data[:7] != b"PMTiles" or data[7] != 3:
+        fail("%s is not a PMTiles version 3 archive." % path)
+    root_off, root_len, _, _, leaf_off, _, tile_off, _ = struct.unpack_from("<8Q", data, 8)
+    icomp, tcomp = data[97], data[98]
+    want = _tile_id(z, x, y)
+    off, length = root_off, root_len
+    for _ in range(4):
+        hit = None
+        for entry in _directory(_unzip(data[off:off + length], icomp, path)):
+            if entry[0] > want:
+                break
+            hit = entry
+        if hit is None:
+            return None
+        tid, run, length, rel = hit
+        if run == 0:
+            off = leaf_off + rel
+            continue
+        if want >= tid + run:
+            return None
+        return _unzip(data[tile_off + rel:tile_off + rel + length], tcomp, path)
+    fail("%s nests its directories deeper than PMTiles allows." % path)
+
+
+def _fields(buf):
+    i = 0
+    while i < len(buf):
+        key, i = _varint(buf, i)
+        field, wire = key >> 3, key & 7
+        if wire == 0:
+            v, i = _varint(buf, i)
+        elif wire == 2:
+            n, i = _varint(buf, i)
+            v, i = buf[i:i + n], i + n
+        elif wire == 1:
+            v, i = buf[i:i + 8], i + 8
+        elif wire == 5:
+            v, i = buf[i:i + 4], i + 4
+        else:
+            raise ValueError("protobuf wire type %d" % wire)
+        yield field, v
+
+
+def _packed(buf):
+    out, i = [], 0
+    while i < len(buf):
+        v, i = _varint(buf, i)
+        out.append(v)
+    return out
+
+
+def _tile_value(buf):
+    for field, v in _fields(buf):
+        if field == 1:
+            return v.decode("utf-8")
+        if field == 2:
+            return struct.unpack("<f", v)[0]
+        if field == 3:
+            return struct.unpack("<d", v)[0]
+        if field == 4:
+            return v - 2 ** 64 if v >= 2 ** 63 else v
+        if field == 5:
+            return v
+        if field == 6:
+            return _zigzag(v)
+        if field == 7:
+            return bool(v)
+    return None
+
+
+def tile_features(path, lng, lat):
+    """The polygon features of the tile under a point at the archive's deepest
+    zoom, as GeoJSON-shaped features in longitude and latitude. Each is one
+    Polygon holding all its rings, because the builder tiles a feature as the
+    even-odd region of its rings and the app's tile reader tests it that way.
+    A feature is clipped a few pixels past its tile's edge, so the clip line
+    can only make the edge test below stricter, never looser."""
+    z = open(path, "rb").read(102)[101]
+    n = 2 ** z
+    xf = (lng + 180) / 360 * n
+    yf = (1 - math.asinh(math.tan(math.radians(lat))) / math.pi) / 2 * n
+    tx, ty = int(xf), int(yf)
+    tile = read_tile(path, z, tx, ty)
+    if tile is None:
+        fail("%s has no tile at zoom %d under %s,%s." % (path, z, lat, lng))
+    out = []
+    for field, layer in _fields(tile):
+        if field != 3:
+            continue
+        extent, keys, values, feats = 4096, [], [], []
+        for lf, lv in _fields(layer):
+            if lf == 2:
+                feats.append(lv)
+            elif lf == 3:
+                keys.append(lv.decode("utf-8"))
+            elif lf == 4:
+                values.append(_tile_value(lv))
+            elif lf == 5:
+                extent = lv
+        for fb in feats:
+            tags, geom, kind = [], [], 0
+            for ff, fv in _fields(fb):
+                if ff == 2:
+                    tags = _packed(fv)
+                elif ff == 3:
+                    kind = fv
+                elif ff == 4:
+                    geom = _packed(fv)
+            if kind != 3:
+                continue
+
+            def lnglat(u, v):
+                return [(tx + u / extent) / n * 360 - 180,
+                        math.degrees(math.atan(math.sinh(math.pi * (1 - 2 * (ty + v / extent) / n))))]
+            rings, ring, cx, cy, i = [], [], 0, 0, 0
+            while i < len(geom):
+                cmd, count = geom[i] & 7, geom[i] >> 3
+                i += 1
+                if cmd == 7:
+                    if ring:
+                        rings.append(ring + [ring[0]])
+                        ring = []
+                    continue
+                for _ in range(count):
+                    cx += _zigzag(geom[i])
+                    cy += _zigzag(geom[i + 1])
+                    i += 2
+                    if cmd == 1:
+                        ring = [lnglat(cx, cy)]
+                    else:
+                        ring.append(lnglat(cx, cy))
+            props = {keys[tags[k]]: values[tags[k + 1]] for k in range(0, len(tags), 2)}
+            out.append({"properties": props,
+                        "geometry": {"type": "Polygon", "coordinates": rings}})
+    return out
 
 
 def _parts(geom):
@@ -1286,11 +1512,20 @@ def place_cards(place):
             label = lambda p, prefix=prefix: prefix + str(int(p["BASENAME"]))
         else:
             seat, label = spec["seat"], spec["label"]
-        boundary = os.path.join(base, spec["boundary"])
-        try:
-            feats = json.loads(read(boundary, "an example boundary"))["features"]
-        except (ValueError, KeyError) as e:
-            fail("%s is not a feature collection: %s" % (boundary, e))
+        if spec.get("tiles"):
+            source = "tiles/" + spec["tiles"]
+            if ("data/app/" + source) not in app:
+                fail("%s/index.html never reads data/app/%s, so the example would "
+                     "measure a district from an archive the map does not draw."
+                     % (tag, source))
+            feats = tile_features(os.path.join(base, source), lng, lat)
+        else:
+            source = spec["boundary"]
+            boundary = os.path.join(base, source)
+            try:
+                feats = json.loads(read(boundary, "an example boundary"))["features"]
+            except (ValueError, KeyError) as e:
+                fail("%s is not a feature collection: %s" % (boundary, e))
         hits = {}
         for f in feats:
             if _inside(f.get("geometry"), lng, lat):
@@ -1298,7 +1533,7 @@ def place_cards(place):
         if len(hits) != 1:
             fail("%s: %s answers %d district(s) at %s (%s), not one. Pick a point "
                  "every example layer answers once."
-                 % (spec["layer"], spec["boundary"], len(hits), place["place"],
+                 % (spec["layer"], source, len(hits), place["place"],
                     ", ".join(sorted(hits)) or "none"))
         (key, found), = hits.items()
         edge = min(_edge_metres(f["geometry"], lng, lat) for f in found)
@@ -1306,7 +1541,7 @@ def place_cards(place):
             fail("%s: %s is %.0f m from the edge of its district in %s, nearer "
                  "than EXAMPLE_EDGE_M (%d m), so the map in a reader's browser "
                  "could answer the other side of it. Move the point."
-                 % (spec["layer"], place["place"], edge, spec["boundary"], EXAMPLE_EDGE_M))
+                 % (spec["layer"], place["place"], edge, source, EXAMPLE_EDGE_M))
         try:
             roster = json.loads(read(os.path.join(base, spec["roster"]), "an example roster"))
         except ValueError as e:
