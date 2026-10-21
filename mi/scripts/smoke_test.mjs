@@ -17,6 +17,7 @@ import { chromium } from "playwright";
 import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { stubBasemap } from "../../scripts/basemap_stub.mjs";
 
 // Vendored Leaflet fallback for sandboxed environments (e.g. Claude Code web),
 // where the browser (Chromium) cannot reach cdnjs.cloudflare.com — it does not
@@ -179,7 +180,7 @@ async function cardText(page, id) {
   }, id);
 }
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // 1. App boots and registers every layer.
   {
@@ -821,6 +822,9 @@ try {
         { city: "Muskegon", geoid: "2656320", pt: "43.22525,-86.27361", ward: "3", seat: "Ward 3" },
         { city: "Pontiac", geoid: "2665440", pt: "42.67950,-83.28043", ward: "4", seat: "District 4", pill: "District 4" },
         { city: "Walker", geoid: "2682960", pt: "42.94906,-85.75129", ward: "3", seat: "Ward 3" },
+        // Lansing, drawn 2026-10-20 under the city's CC BY-NC licence; its
+        // ward 4 member is the council president.
+        { city: "Lansing", geoid: "2646000", pt: "42.73367,-84.56588", ward: "4", seat: "Ward 4" },
       ];
       for (const c of CITY_POINTS) {
         const board = boards[c.geoid];

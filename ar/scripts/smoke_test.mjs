@@ -17,6 +17,7 @@ import { chromium } from "playwright";
 import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { stubBasemap } from "../../scripts/basemap_stub.mjs";
 
 // Vendored Leaflet fallback for sandboxed environments (e.g. Claude Code web),
 // where the browser (Chromium) cannot reach cdnjs.cloudflare.com — it does not
@@ -177,7 +178,7 @@ async function cardText(page, id) {
   }, id);
 }
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // 1. App boots and registers every layer.
   {
@@ -388,13 +389,17 @@ try {
   //     Mississippi joined as a case in the change that published it
   //     (2026-10-16): Clarksdale, the Coahoma County seat, sits about 15 km
   //     east of this app's own outline, inside Mississippi's outline in
-  //     fleet-outlines.json and no other.
+  //     fleet-outlines.json and no other. Louisiana joined the same way in
+  //     the change that published it: Farmerville, the Union Parish seat,
+  //     lies inside Louisiana's outline and no other, about 26 km from the
+  //     nearest edge.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Sallisaw, Oklahoma", lat: 35.4604, lng: -94.7875, want: "https://districtry.com/ok/" },
       { name: "Memphis, Tennessee", lat: 35.1440, lng: -89.9930, want: "https://districtry.com/tn/" },
       { name: "Clarksdale, Mississippi", lat: 34.2001, lng: -90.5709, want: "https://districtry.com/ms/" },
+      { name: "Farmerville, Louisiana", lat: 32.7735, lng: -92.4058, want: "https://districtry.com/la/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });

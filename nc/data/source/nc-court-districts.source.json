@@ -1,0 +1,1544 @@
+{
+ "built": "2026-10-20",
+ "census2010": {
+  "blockLayer": 18,
+  "blocks": 3915,
+  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2010/MapServer",
+  "vtdLayer": 72,
+  "vtds": {
+   "Cumberland": 48,
+   "Durham": 55,
+   "Edgecombe": 21,
+   "Forsyth": 101,
+   "Guilford": 158,
+   "Mecklenburg": 195,
+   "New Hanover": 39,
+   "Vance": 16,
+   "Wake": 191,
+   "Wilson": 24
+  }
+ },
+ "countyFile": {
+  "file": "nc/data/app/state-counties.json",
+  "sha256": "38cf6f8b2c6a845fe63057bec97923e280d30330ed77e747d9636515b8061750"
+ },
+ "countyPoints": {
+  "Alamance": [
+   -79.400521,
+   36.046322
+  ],
+  "Alexander": [
+   -81.182041,
+   35.901048
+  ],
+  "Alleghany": [
+   -81.126253,
+   36.470112
+  ],
+  "Anson": [
+   -80.099289,
+   35.008778
+  ],
+  "Ashe": [
+   -81.499908,
+   36.414
+  ],
+  "Avery": [
+   -81.927681,
+   36.099258
+  ],
+  "Beaufort": [
+   -76.877544,
+   35.475696
+  ],
+  "Bertie": [
+   -76.971734,
+   36.02959
+  ],
+  "Bladen": [
+   -78.568977,
+   34.611693
+  ],
+  "Brunswick": [
+   -78.244188,
+   34.062244
+  ],
+  "Buncombe": [
+   -82.539119,
+   35.620368
+  ],
+  "Burke": [
+   -81.752817,
+   35.778996
+  ],
+  "Cabarrus": [
+   -80.546872,
+   35.34163
+  ],
+  "Caldwell": [
+   -81.559597,
+   35.939825
+  ],
+  "Camden": [
+   -76.091911,
+   36.318334
+  ],
+  "Carteret": [
+   -76.461326,
+   34.862801
+  ],
+  "Caswell": [
+   -79.33652,
+   36.358069
+  ],
+  "Catawba": [
+   -81.204518,
+   35.687882
+  ],
+  "Chatham": [
+   -79.259162,
+   35.679428
+  ],
+  "Cherokee": [
+   -84.077191,
+   35.139739
+  ],
+  "Chowan": [
+   -76.658543,
+   36.164897
+  ],
+  "Clay": [
+   -83.749863,
+   35.07385
+  ],
+  "Cleveland": [
+   -81.556805,
+   35.367483
+  ],
+  "Columbus": [
+   -78.628975,
+   34.212954
+  ],
+  "Craven": [
+   -77.096458,
+   35.113992
+  ],
+  "Cumberland": [
+   -78.871781,
+   35.050934
+  ],
+  "Currituck": [
+   -75.84656,
+   36.290228
+  ],
+  "Dare": [
+   -75.721431,
+   35.695593
+  ],
+  "Davidson": [
+   -80.253135,
+   35.765406
+  ],
+  "Davie": [
+   -80.537169,
+   35.90178
+  ],
+  "Duplin": [
+   -77.90887,
+   34.955838
+  ],
+  "Durham": [
+   -78.868761,
+   36.052483
+  ],
+  "Edgecombe": [
+   -77.582336,
+   35.943887
+  ],
+  "Forsyth": [
+   -80.259636,
+   36.117087
+  ],
+  "Franklin": [
+   -78.332274,
+   36.035499
+  ],
+  "Gaston": [
+   -81.182076,
+   35.283822
+  ],
+  "Gates": [
+   -76.709671,
+   36.424606
+  ],
+  "Graham": [
+   -83.834274,
+   35.341653
+  ],
+  "Granville": [
+   -78.655381,
+   36.26794
+  ],
+  "Greene": [
+   -77.667561,
+   35.500076
+  ],
+  "Guilford": [
+   -79.790758,
+   36.046664
+  ],
+  "Halifax": [
+   -77.682947,
+   36.256617
+  ],
+  "Harnett": [
+   -78.838705,
+   35.387526
+  ],
+  "Haywood": [
+   -82.965063,
+   35.54137
+  ],
+  "Henderson": [
+   -82.473879,
+   35.322257
+  ],
+  "Hertford": [
+   -77.029537,
+   36.391526
+  ],
+  "Hoke": [
+   -79.259836,
+   35.023652
+  ],
+  "Hyde": [
+   -76.157175,
+   35.359697
+  ],
+  "Iredell": [
+   -80.921578,
+   35.77487
+  ],
+  "Jackson": [
+   -83.11611,
+   35.263731
+  ],
+  "Johnston": [
+   -78.390209,
+   35.534742
+  ],
+  "Jones": [
+   -77.412154,
+   35.012965
+  ],
+  "Lee": [
+   -79.189467,
+   35.467816
+  ],
+  "Lenoir": [
+   -77.674381,
+   35.203416
+  ],
+  "Lincoln": [
+   -81.217645,
+   35.4842
+  ],
+  "Macon": [
+   -83.479453,
+   35.161937
+  ],
+  "Madison": [
+   -82.665379,
+   35.872084
+  ],
+  "Martin": [
+   -77.195533,
+   35.86511
+  ],
+  "McDowell": [
+   -82.043595,
+   35.73932
+  ],
+  "Mecklenburg": [
+   -80.830935,
+   35.258595
+  ],
+  "Mitchell": [
+   -82.125439,
+   35.990819
+  ],
+  "Montgomery": [
+   -79.89852,
+   35.323653
+  ],
+  "Moore": [
+   -79.461499,
+   35.280403
+  ],
+  "Nash": [
+   -77.977809,
+   35.960634
+  ],
+  "New Hanover": [
+   -77.867935,
+   34.088965
+  ],
+  "Northampton": [
+   -77.369033,
+   36.35599
+  ],
+  "Onslow": [
+   -77.386511,
+   34.691635
+  ],
+  "Orange": [
+   -79.121987,
+   36.056514
+  ],
+  "Pamlico": [
+   -76.682527,
+   35.156211
+  ],
+  "Pasquotank": [
+   -76.282138,
+   36.285742
+  ],
+  "Pender": [
+   -77.901315,
+   34.492981
+  ],
+  "Perquimans": [
+   -76.432066,
+   36.198806
+  ],
+  "Person": [
+   -78.972594,
+   36.386498
+  ],
+  "Pitt": [
+   -77.363458,
+   35.580126
+  ],
+  "Polk": [
+   -82.176451,
+   35.297433
+  ],
+  "Randolph": [
+   -79.802327,
+   35.713848
+  ],
+  "Richmond": [
+   -79.727595,
+   34.99446
+  ],
+  "Robeson": [
+   -79.143284,
+   34.626413
+  ],
+  "Rockingham": [
+   -79.778047,
+   36.373227
+  ],
+  "Rowan": [
+   -80.550378,
+   35.682533
+  ],
+  "Rutherford": [
+   -81.918028,
+   35.397091
+  ],
+  "Sampson": [
+   -78.361203,
+   34.934962
+  ],
+  "Scotland": [
+   -79.484027,
+   34.837139
+  ],
+  "Stanly": [
+   -80.247322,
+   35.323653
+  ],
+  "Stokes": [
+   -80.23965,
+   36.406485
+  ],
+  "Surry": [
+   -80.706632,
+   36.399201
+  ],
+  "Swain": [
+   -83.596747,
+   35.487286
+  ],
+  "Transylvania": [
+   -82.769729,
+   35.225135
+  ],
+  "Tyrrell": [
+   -76.191934,
+   35.846285
+  ],
+  "Union": [
+   -80.56236,
+   35.01126
+  ],
+  "Vance": [
+   -78.400165,
+   36.371363
+  ],
+  "Wake": [
+   -78.609757,
+   35.797802
+  ],
+  "Warren": [
+   -78.10358,
+   36.365398
+  ],
+  "Washington": [
+   -76.559314,
+   35.862101
+  ],
+  "Watauga": [
+   -81.704247,
+   36.25123
+  ],
+  "Wayne": [
+   -77.981658,
+   35.371896
+  ],
+  "Wilkes": [
+   -81.169671,
+   36.217927
+  ],
+  "Wilson": [
+   -77.945871,
+   35.725196
+  ],
+  "Yadkin": [
+   -80.657006,
+   36.166193
+  ],
+  "Yancey": [
+   -82.297427,
+   35.891784
+  ]
+ },
+ "fidelityMaxM": 8.0,
+ "findings": {
+  "continuedLists": [
+   [
+    "14B",
+    "Cumberland",
+    "G11"
+   ]
+  ],
+  "judgeCountsDisagree": {
+   "district": {
+    "12": {
+     "paragraph": 8,
+     "table": 11,
+     "where": "G.S. 7A-133(b1)"
+    },
+    "32": {
+     "paragraph": 5,
+     "table": 6,
+     "where": "G.S. 7A-133(b3)"
+    }
+   },
+   "superior": {
+    "31A": {
+     "paragraph": 1,
+     "table": 2,
+     "where": "G.S. 7A-41(b)"
+    }
+   }
+  },
+  "repealedOn20290101": [
+   "10E",
+   "31D"
+  ],
+  "residence": {
+   "district": {
+    "12": "b1",
+    "15": "b2",
+    "21": "b5",
+    "28": "b6",
+    "29": "b8",
+    "32": "b3",
+    "33": "b4",
+    "36": "b7"
+   },
+   "superior": {
+    "5": "b1"
+   }
+  },
+  "setsOfDistricts": [
+   [
+    "6A",
+    "6B",
+    "6C"
+   ],
+   [
+    "8B",
+    "8C"
+   ],
+   [
+    "10A",
+    "10B",
+    "10C",
+    "10D",
+    "10E",
+    "10F"
+   ],
+   [
+    "14A",
+    "14B",
+    "14C"
+   ],
+   [
+    "16A",
+    "16B"
+   ],
+   [
+    "24A",
+    "24B",
+    "24C",
+    "24D",
+    "24E"
+   ],
+   [
+    "26A",
+    "26B",
+    "26C",
+    "26D",
+    "26E",
+    "26F",
+    "26G",
+    "26H"
+   ],
+   [
+    "31A",
+    "31B",
+    "31C",
+    "31D"
+   ]
+  ],
+  "statuteTypos": [
+   {
+    "printed": "510036004049",
+    "readAs": "0510036004049",
+    "where": "14B Cumberland"
+   }
+  ]
+ },
+ "layers": {
+  "district": {
+   "districts": 47,
+   "dividingLineVertices": [
+    12375,
+    2127
+   ],
+   "fidelity": "worst stray 5.0 m, Wake|10D; ceiling 8.0 m",
+   "file": "nc/data/app/nc-district-court-districts.json",
+   "lostParts": [],
+   "parts": {
+    "Vance|11A": {
+     "deg2": 0.034092531952000425,
+     "km2": 339.807,
+     "point": [
+      -78.405885,
+      36.274228
+     ]
+    },
+    "Vance|11B": {
+     "deg2": 0.03578223817200079,
+     "km2": 355.8975,
+     "point": [
+      -78.407247,
+      36.43958
+     ]
+    },
+    "Wake|10A": {
+     "deg2": 0.05725647697650004,
+     "km2": 573.1603,
+     "point": [
+      -78.537015,
+      35.929502
+     ]
+    },
+    "Wake|10B": {
+     "deg2": 0.03542651098499949,
+     "km2": 355.2779,
+     "point": [
+      -78.345701,
+      35.80082
+     ]
+    },
+    "Wake|10C": {
+     "deg2": 0.010837286248000167,
+     "km2": 108.6176,
+     "point": [
+      -78.631816,
+      35.843948
+     ]
+    },
+    "Wake|10D": {
+     "deg2": 0.06104681716599962,
+     "km2": 612.9264,
+     "point": [
+      -78.803695,
+      35.734643
+     ]
+    },
+    "Wake|10E": {
+     "deg2": 0.017440198824499993,
+     "km2": 175.0452,
+     "point": [
+      -78.701478,
+      35.724685
+     ]
+    },
+    "Wake|10F": {
+     "deg2": 0.03928103747299992,
+     "km2": 394.3792,
+     "point": [
+      -78.884807,
+      35.718041
+     ]
+    }
+   },
+   "points": {
+    "explained": 0,
+    "points": 4000,
+    "same": 4000,
+    "worstM": 0.0
+   },
+   "splitCounties": {
+    "Vance": {
+     "blockRemainderM2": [],
+     "blocksOutsideM2": [],
+     "cuts": 0,
+     "dangles": 0,
+     "dividingLines": 1,
+     "faces": 469,
+     "gapLargest": [
+      {
+       "at": [
+        -78.394857,
+        36.202843
+       ],
+       "dividedAmong": [],
+       "m2": 4239,
+       "touches": [
+        "11A"
+       ]
+      },
+      {
+       "at": [
+        -78.283137,
+        36.336472
+       ],
+       "dividedAmong": [
+        "11A",
+        "11B"
+       ],
+       "m2": 4223,
+       "touches": [
+        "11A",
+        "11B"
+       ]
+      },
+      {
+       "at": [
+        -78.438975,
+        36.542666
+       ],
+       "dividedAmong": [],
+       "m2": 3624,
+       "touches": [
+        "11B"
+       ]
+      }
+     ],
+     "gapM2": 33855.2,
+     "gapPieces": 222,
+     "gapPiecesDivided": 1,
+     "invalidRings": 0,
+     "outsideCountyM2": 57834.3,
+     "overlapFaces": 0,
+     "overlapM2": 0.0,
+     "residualM2": 149.95
+    },
+    "Wake": {
+     "blockRemainderM2": [],
+     "blocksOutsideM2": [],
+     "cuts": 0,
+     "dangles": 0,
+     "dividingLines": 10,
+     "faces": 446,
+     "gapLargest": [
+      {
+       "at": [
+        -78.753691,
+        36.051188
+       ],
+       "dividedAmong": [],
+       "m2": 267640,
+       "touches": [
+        "10A"
+       ]
+      },
+      {
+       "at": [
+        -78.704295,
+        36.012052
+       ],
+       "dividedAmong": [],
+       "m2": 91383,
+       "touches": [
+        "10A"
+       ]
+      },
+      {
+       "at": [
+        -78.932177,
+        35.589979
+       ],
+       "dividedAmong": [],
+       "m2": 51357,
+       "touches": [
+        "10F"
+       ]
+      }
+     ],
+     "gapM2": 567175.2,
+     "gapPieces": 195,
+     "gapPiecesDivided": 1,
+     "invalidRings": 0,
+     "outsideCountyM2": 1054173.7,
+     "overlapFaces": 0,
+     "overlapM2": 0.0,
+     "residualM2": 0.375
+    }
+   },
+   "stateCuts": 0,
+   "stateFaces": 106,
+   "weakestFaceMajority": [
+    0.9995,
+    [
+     "Wake",
+     "10C",
+     [
+      -78.631816,
+      35.843948
+     ],
+     108617635.4
+    ]
+   ]
+  },
+  "superior": {
+   "districts": 73,
+   "dividingLineVertices": [
+    37623,
+    8444
+   ],
+   "fidelity": "worst stray 5.0 m, Guilford|24B; ceiling 8.0 m",
+   "file": "nc/data/app/nc-superior-court-districts.json",
+   "lostParts": [],
+   "parts": {
+    "Cumberland|14A": {
+     "deg2": 0.011392437100000083,
+     "km2": 115.3532,
+     "point": [
+      -78.996058,
+      35.031746
+     ]
+    },
+    "Cumberland|14B": {
+     "deg2": 0.02568734139399965,
+     "km2": 259.7818,
+     "point": [
+      -79.02315,
+      35.120812
+     ]
+    },
+    "Cumberland|14C": {
+     "deg2": 0.13141376818900102,
+     "km2": 1330.3957,
+     "point": [
+      -78.755828,
+      35.050854
+     ]
+    },
+    "Durham|16A": {
+     "deg2": 0.005125811099499894,
+     "km2": 51.3072,
+     "point": [
+      -78.906293,
+      35.940208
+     ]
+    },
+    "Durham|16B": {
+     "deg2": 0.07202269027150031,
+     "km2": 720.0478,
+     "point": [
+      -78.868761,
+      36.052483
+     ]
+    },
+    "Edgecombe|8B": {
+     "deg2": 0.013134217566500487,
+     "km2": 131.5271,
+     "point": [
+      -77.739841,
+      35.907581
+     ]
+    },
+    "Edgecombe|8C": {
+     "deg2": 0.11794140705950074,
+     "km2": 1181.0573,
+     "point": [
+      -77.501491,
+      35.916171
+     ]
+    },
+    "Forsyth|31A": {
+     "deg2": 0.03771313620450005,
+     "km2": 376.7344,
+     "point": [
+      -80.415414,
+      36.117087
+     ]
+    },
+    "Forsyth|31B": {
+     "deg2": 0.013151711270500141,
+     "km2": 131.4482,
+     "point": [
+      -80.177943,
+      36.084175
+     ]
+    },
+    "Forsyth|31C": {
+     "deg2": 0.04446692278100045,
+     "km2": 443.8532,
+     "point": [
+      -80.094057,
+      36.135632
+     ]
+    },
+    "Forsyth|31D": {
+     "deg2": 0.011640965649500037,
+     "km2": 116.2341,
+     "point": [
+      -80.20739,
+      36.133245
+     ]
+    },
+    "Guilford|24A": {
+     "deg2": 0.023064429607500596,
+     "km2": 230.7641,
+     "point": [
+      -79.704647,
+      36.01241
+     ]
+    },
+    "Guilford|24B": {
+     "deg2": 0.025117054177500004,
+     "km2": 251.2099,
+     "point": [
+      -79.990281,
+      36.031835
+     ]
+    },
+    "Guilford|24C": {
+     "deg2": 0.048031501975000244,
+     "km2": 479.4735,
+     "point": [
+      -79.894736,
+      36.105697
+     ]
+    },
+    "Guilford|24D": {
+     "deg2": 0.0148607109500001,
+     "km2": 148.6475,
+     "point": [
+      -79.829676,
+      36.006237
+     ]
+    },
+    "Guilford|24E": {
+     "deg2": 0.0593555637974999,
+     "km2": 592.9809,
+     "point": [
+      -79.634601,
+      36.072682
+     ]
+    },
+    "Mecklenburg|26A": {
+     "deg2": 0.019212995298999964,
+     "km2": 194.2255,
+     "point": [
+      -80.670706,
+      35.149037
+     ]
+    },
+    "Mecklenburg|26B": {
+     "deg2": 0.011003625938999877,
+     "km2": 111.3338,
+     "point": [
+      -80.795457,
+      35.086128
+     ]
+    },
+    "Mecklenburg|26C": {
+     "deg2": 0.032963823884499935,
+     "km2": 332.1902,
+     "point": [
+      -80.886108,
+      35.376918
+     ]
+    },
+    "Mecklenburg|26D": {
+     "deg2": 0.019468327623500675,
+     "km2": 196.8995,
+     "point": [
+      -81.00031,
+      35.097857
+     ]
+    },
+    "Mecklenburg|26E": {
+     "deg2": 0.017447758955999967,
+     "km2": 176.2292,
+     "point": [
+      -80.940117,
+      35.228177
+     ]
+    },
+    "Mecklenburg|26F": {
+     "deg2": 0.014697099419499853,
+     "km2": 148.3084,
+     "point": [
+      -80.923565,
+      35.291464
+     ]
+    },
+    "Mecklenburg|26G": {
+     "deg2": 0.012840999170000283,
+     "km2": 129.5645,
+     "point": [
+      -80.743434,
+      35.307729
+     ]
+    },
+    "Mecklenburg|26H": {
+     "deg2": 0.012427602961499947,
+     "km2": 125.5439,
+     "point": [
+      -80.714739,
+      35.214787
+     ]
+    },
+    "New Hanover|6A": {
+     "deg2": 0.020766719258999894,
+     "km2": 212.0752,
+     "point": [
+      -77.929185,
+      34.306106
+     ]
+    },
+    "New Hanover|6B": {
+     "deg2": 0.031799792959999386,
+     "km2": 325.1313,
+     "point": [
+      -77.801354,
+      34.208315
+     ]
+    },
+    "New Hanover|6C": {
+     "deg2": 0.030730193663500844,
+     "km2": 314.7965,
+     "point": [
+      -77.883144,
+      34.022799
+     ]
+    },
+    "Wake|10A": {
+     "deg2": 0.015725806346999816,
+     "km2": 157.7746,
+     "point": [
+      -78.751475,
+      35.766227
+     ]
+    },
+    "Wake|10B": {
+     "deg2": 0.019507001926999976,
+     "km2": 195.6986,
+     "point": [
+      -78.534934,
+      35.789219
+     ]
+    },
+    "Wake|10C": {
+     "deg2": 0.0474242765869999,
+     "km2": 474.6215,
+     "point": [
+      -78.566377,
+      35.94907
+     ]
+    },
+    "Wake|10D": {
+     "deg2": 0.0254904263405001,
+     "km2": 255.5075,
+     "point": [
+      -78.812466,
+      35.838988
+     ]
+    },
+    "Wake|10E": {
+     "deg2": 0.05876145418249975,
+     "km2": 589.4405,
+     "point": [
+      -78.439326,
+      35.733617
+     ]
+    },
+    "Wake|10F": {
+     "deg2": 0.05437939027499959,
+     "km2": 546.3641,
+     "point": [
+      -78.815503,
+      35.64842
+     ]
+    },
+    "Wilson|8B": {
+     "deg2": 0.026467056957000187,
+     "km2": 265.5849,
+     "point": [
+      -77.809451,
+      35.750614
+     ]
+    },
+    "Wilson|8C": {
+     "deg2": 0.06977113480249933,
+     "km2": 700.6645,
+     "point": [
+      -78.046348,
+      35.716813
+     ]
+    }
+   },
+   "points": {
+    "explained": 2,
+    "points": 18000,
+    "same": 17998,
+    "worstM": 0.91
+   },
+   "splitCounties": {
+    "Cumberland": {
+     "blockRemainderM2": [],
+     "blocksOutsideM2": [],
+     "cuts": 0,
+     "dangles": 0,
+     "dividingLines": 3,
+     "faces": 2196,
+     "gapLargest": [
+      {
+       "at": [
+        -78.99772,
+        34.934438
+       ],
+       "dividedAmong": [],
+       "m2": 1701041,
+       "touches": [
+        "14C"
+       ]
+      },
+      {
+       "at": [
+        -78.966663,
+        35.215613
+       ],
+       "dividedAmong": [],
+       "m2": 891194,
+       "touches": [
+        "14C"
+       ]
+      },
+      {
+       "at": [
+        -79.073288,
+        35.196725
+       ],
+       "dividedAmong": [],
+       "m2": 102666,
+       "touches": [
+        "14C"
+       ]
+      }
+     ],
+     "gapM2": 2971074.8,
+     "gapPieces": 1100,
+     "gapPiecesDivided": 1,
+     "invalidRings": 0,
+     "outsideCountyM2": 1256651.0,
+     "overlapFaces": 0,
+     "overlapM2": 0.0,
+     "residualM2": 551.579
+    },
+    "Durham": {
+     "blockRemainderM2": [],
+     "blocksOutsideM2": [],
+     "cuts": 0,
+     "dangles": 0,
+     "dividingLines": 1,
+     "faces": 203,
+     "gapLargest": [
+      {
+       "at": [
+        -78.817984,
+        35.896703
+       ],
+       "dividedAmong": [],
+       "m2": 219677,
+       "touches": [
+        "16B"
+       ]
+      },
+      {
+       "at": [
+        -78.966655,
+        36.147819
+       ],
+       "dividedAmong": [],
+       "m2": 107781,
+       "touches": [
+        "16B"
+       ]
+      },
+      {
+       "at": [
+        -78.829824,
+        35.868858
+       ],
+       "dividedAmong": [],
+       "m2": 55371,
+       "touches": [
+        "16B"
+       ]
+      }
+     ],
+     "gapM2": 496949.7,
+     "gapPieces": 100,
+     "gapPiecesDivided": 0,
+     "invalidRings": 0,
+     "outsideCountyM2": 557346.8,
+     "overlapFaces": 0,
+     "overlapM2": 0.0,
+     "residualM2": 266.595
+    },
+    "Edgecombe": {
+     "blockRemainderM2": [],
+     "blocksOutsideM2": [],
+     "cuts": 0,
+     "dangles": 0,
+     "dividingLines": 1,
+     "faces": 897,
+     "gapLargest": [
+      {
+       "at": [
+        -77.68331,
+        35.696894
+       ],
+       "dividedAmong": [],
+       "m2": 491865,
+       "touches": [
+        "8C"
+       ]
+      },
+      {
+       "at": [
+        -77.621891,
+        35.70065
+       ],
+       "dividedAmong": [],
+       "m2": 255784,
+       "touches": [
+        "8C"
+       ]
+      },
+      {
+       "at": [
+        -77.742839,
+        35.796779
+       ],
+       "dividedAmong": [],
+       "m2": 53405,
+       "touches": [
+        "8C"
+       ]
+      }
+     ],
+     "gapM2": 893564.5,
+     "gapPieces": 445,
+     "gapPiecesDivided": 1,
+     "invalidRings": 0,
+     "outsideCountyM2": 302635.3,
+     "overlapFaces": 0,
+     "overlapM2": 0.0,
+     "residualM2": 146.618
+    },
+    "Forsyth": {
+     "blockRemainderM2": [],
+     "blocksOutsideM2": [],
+     "cuts": 0,
+     "dangles": 0,
+     "dividingLines": 6,
+     "faces": 337,
+     "gapLargest": [
+      {
+       "at": [
+        -80.452058,
+        36.254596
+       ],
+       "dividedAmong": [],
+       "m2": 54749,
+       "touches": [
+        "31A"
+       ]
+      },
+      {
+       "at": [
+        -80.355237,
+        35.987211
+       ],
+       "dividedAmong": [],
+       "m2": 37463,
+       "touches": [
+        "31A"
+       ]
+      },
+      {
+       "at": [
+        -80.360573,
+        36.260817
+       ],
+       "dividedAmong": [],
+       "m2": 27890,
+       "touches": [
+        "31A"
+       ]
+      }
+     ],
+     "gapM2": 250801.9,
+     "gapPieces": 162,
+     "gapPiecesDivided": 2,
+     "invalidRings": 0,
+     "outsideCountyM2": 649858.5,
+     "overlapFaces": 0,
+     "overlapM2": 0.0,
+     "residualM2": 19.292
+    },
+    "Guilford": {
+     "blockRemainderM2": [],
+     "blocksOutsideM2": [],
+     "cuts": 0,
+     "dangles": 0,
+     "dividingLines": 7,
+     "faces": 205,
+     "gapLargest": [
+      {
+       "at": [
+        -80.038656,
+        36.150847
+       ],
+       "dividedAmong": [
+        "24B",
+        "24C"
+       ],
+       "m2": 42560,
+       "touches": [
+        "24B",
+        "24C"
+       ]
+      },
+      {
+       "at": [
+        -79.977284,
+        35.917939
+       ],
+       "dividedAmong": [],
+       "m2": 26679,
+       "touches": [
+        "24B"
+       ]
+      },
+      {
+       "at": [
+        -79.951907,
+        35.916938
+       ],
+       "dividedAmong": [],
+       "m2": 24627,
+       "touches": [
+        "24B"
+       ]
+      }
+     ],
+     "gapM2": 178704.1,
+     "gapPieces": 83,
+     "gapPiecesDivided": 2,
+     "invalidRings": 0,
+     "outsideCountyM2": 90015.9,
+     "overlapFaces": 0,
+     "overlapM2": 0.0,
+     "residualM2": 6.61
+    },
+    "Mecklenburg": {
+     "blockRemainderM2": [],
+     "blocksOutsideM2": [],
+     "cuts": 0,
+     "dangles": 0,
+     "dividingLines": 14,
+     "faces": 724,
+     "gapLargest": [
+      {
+       "at": [
+        -80.928101,
+        35.498104
+       ],
+       "dividedAmong": [],
+       "m2": 1199548,
+       "touches": [
+        "26C"
+       ]
+      },
+      {
+       "at": [
+        -80.668011,
+        35.271885
+       ],
+       "dividedAmong": [],
+       "m2": 16871,
+       "touches": [
+        "26H"
+       ]
+      },
+      {
+       "at": [
+        -80.836105,
+        35.509779
+       ],
+       "dividedAmong": [],
+       "m2": 15992,
+       "touches": [
+        "26C"
+       ]
+      }
+     ],
+     "gapM2": 1321638.2,
+     "gapPieces": 324,
+     "gapPiecesDivided": 3,
+     "invalidRings": 0,
+     "outsideCountyM2": 482890.1,
+     "overlapFaces": 0,
+     "overlapM2": 0.0,
+     "residualM2": 2.513
+    },
+    "New Hanover": {
+     "blockRemainderM2": [],
+     "blocksOutsideM2": [],
+     "cuts": 0,
+     "dangles": 0,
+     "dividingLines": 3,
+     "faces": 435,
+     "gapLargest": [
+      {
+       "at": [
+        -77.959282,
+        34.213752
+       ],
+       "dividedAmong": [
+        "6A",
+        "6C"
+       ],
+       "m2": 814378,
+       "touches": [
+        "6A",
+        "6C"
+       ]
+      },
+      {
+       "at": [
+        -77.77302,
+        34.322208
+       ],
+       "dividedAmong": [],
+       "m2": 554308,
+       "touches": [
+        "6B"
+       ]
+      },
+      {
+       "at": [
+        -77.715953,
+        34.295434
+       ],
+       "dividedAmong": [],
+       "m2": 396535,
+       "touches": [
+        "6B"
+       ]
+      }
+     ],
+     "gapM2": 2014765.2,
+     "gapPieces": 188,
+     "gapPiecesDivided": 1,
+     "invalidRings": 0,
+     "outsideCountyM2": 82902.4,
+     "overlapFaces": 0,
+     "overlapM2": 0.0,
+     "residualM2": 3.01
+    },
+    "Wake": {
+     "blockRemainderM2": [],
+     "blocksOutsideM2": [],
+     "cuts": 0,
+     "dangles": 0,
+     "dividingLines": 11,
+     "faces": 429,
+     "gapLargest": [
+      {
+       "at": [
+        -78.753691,
+        36.051188
+       ],
+       "dividedAmong": [],
+       "m2": 267640,
+       "touches": [
+        "10C"
+       ]
+      },
+      {
+       "at": [
+        -78.704295,
+        36.012052
+       ],
+       "dividedAmong": [],
+       "m2": 91383,
+       "touches": [
+        "10C"
+       ]
+      },
+      {
+       "at": [
+        -78.932177,
+        35.589979
+       ],
+       "dividedAmong": [],
+       "m2": 51357,
+       "touches": [
+        "10F"
+       ]
+      }
+     ],
+     "gapM2": 567175.2,
+     "gapPieces": 195,
+     "gapPiecesDivided": 1,
+     "invalidRings": 0,
+     "outsideCountyM2": 1054173.7,
+     "overlapFaces": 0,
+     "overlapM2": 0.0,
+     "residualM2": 0.375
+    },
+    "Wilson": {
+     "blockRemainderM2": [],
+     "blocksOutsideM2": [],
+     "cuts": 0,
+     "dangles": 0,
+     "dividingLines": 1,
+     "faces": 221,
+     "gapLargest": [
+      {
+       "at": [
+        -77.729587,
+        35.759163
+       ],
+       "dividedAmong": [],
+       "m2": 141126,
+       "touches": [
+        "8B"
+       ]
+      },
+      {
+       "at": [
+        -77.882695,
+        35.586187
+       ],
+       "dividedAmong": [],
+       "m2": 20227,
+       "touches": [
+        "8C"
+       ]
+      },
+      {
+       "at": [
+        -77.943906,
+        35.58588
+       ],
+       "dividedAmong": [],
+       "m2": 13563,
+       "touches": [
+        "8C"
+       ]
+      }
+     ],
+     "gapM2": 204060.5,
+     "gapPieces": 110,
+     "gapPiecesDivided": 0,
+     "invalidRings": 0,
+     "outsideCountyM2": 705378.9,
+     "overlapFaces": 0,
+     "overlapM2": 0.0,
+     "residualM2": 0.0
+    }
+   },
+   "stateCuts": 0,
+   "stateFaces": 126,
+   "weakestFaceMajority": [
+    0.9992,
+    [
+     "Durham",
+     "16A",
+     [
+      -78.906293,
+      35.940208
+     ],
+     51307171.7
+    ]
+   ]
+  }
+ },
+ "simplify": {
+  "method": "Douglas-Peucker on each dividing line, ends fixed",
+  "toleranceM": 5.0
+ },
+ "statutes": {
+  "GS_7A-133": {
+   "sha256": "38c85b0dbc4c63bb1a03843eb6ddb17ae693c6f68b33bc16e655b3583cf5db20",
+   "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-133.html"
+  },
+  "GS_7A-140": {
+   "sha256": "173afbbc8dafd3442516f79ef0d11857e87d1ecacac0d2d49faddb4d8df64d5a",
+   "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-140.html"
+  },
+  "GS_7A-41": {
+   "sha256": "6c497e3ab52403d753857676609fbb43376a2b6ef26abb096e1b102a1b4f42cc",
+   "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-41.html"
+  },
+  "GS_7A-41.1": {
+   "sha256": "37f14e7ebbac2360fe024a534118ede726e63abe34df5412c7a7fbb01e7ec2aa",
+   "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-41.1.html"
+  }
+ }
+}

@@ -49,6 +49,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { stubBasemap } from "./basemap_stub.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -310,7 +311,7 @@ const contrast = (fg, bg) => {
 // answer. PAGE_JOBS overrides the count; 1 is the old one-at-a-time run.
 const PAGE_JOBS = Math.max(1, parseInt(process.env.PAGE_JOBS || "4", 10) || 1);
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   const queue = [...paths];
   const checkPages = async () => {
@@ -592,9 +593,25 @@ try {
       // wrapped rows, and the map-tile banner's 21x19 dismiss), and the audit
       // that found the first of them had sampled four pages. A sweep is the
       // only honest way to answer "does this hold everywhere".
+      //
+      // THE PAGE MUST HAVE LAID ITSELF OUT FOR THE NEW WIDTH FIRST. An app
+      // moves its masthead links into the results panel from a media-query
+      // `change` listener and folds them into "More" from a frame callback,
+      // and neither runs until the page's next frame. A fixed 150 ms was
+      // usually enough and twice on 2026-10-20 was not: main at 13:11 UTC
+      // (/ok/) and #1661 at 22:10 (/sc/) each measured the state menu button
+      // at 390 beside "What data is missing?", which is where the desktop
+      // layout puts it, and failed a page whose phone layout is fine. A
+      // browser runs media-query listeners before frame callbacks in the same
+      // frame, so two frames after the resize come after them; the 5 s limit
+      // only keeps a page that never draws from holding the gate.
       for (const [label, vw, vh] of [[390, 390, 844], [1280, 1280, 900]]) {
         await p.setViewportSize({ width: vw, height: vh });
         await p.waitForTimeout(150);
+        await p.evaluate(() => new Promise((done) => {
+          const limit = setTimeout(done, 5000);
+          requestAnimationFrame(() => requestAnimationFrame(() => { clearTimeout(limit); done(); }));
+        }));
         const bad = await p.evaluate(TARGETS_FN);
         for (const t of bad) {
           const exc = TARGET_EXCEPTIONS.find((e) => e.page === path && e.sel === t.sel);

@@ -287,7 +287,12 @@ h1 {
 }
 .contact .who { margin: 0; font-weight: 600; }
 .contact .where { margin: 2px 0 0; font-size: 14px; color: var(--ink-3); }
-.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; }
+/* 1.9, not 1.5: when the e-mail wraps at phone width, the telephone and the
+   "County website" link sit on neighbouring lines, and at 1.5 their centres
+   were as little as 20.3px apart across the 353 pages (measured 2026-10-21),
+   under the 24px WCAG 2.5.8 spacing page_consistency_test.mjs holds, which it
+   only samples. At 1.9 the closest pair on any page is 25.6px. */
+.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.9; }
 .disclaimer { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 .foot {
   margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
@@ -611,7 +616,7 @@ h1 {
         "member": {
           "@type": "Person",
           "name": "James McMahon",
-          "affiliation": "Democratic",
+          "affiliation": "Republican",
           "email": "jmcmahon@vercounty.org"
         }
       },
@@ -875,7 +880,7 @@ h1 {
 </section>
 <section class="district" id="district-9">
 <h2>District 9</h2>
-<ul class="members"><li class="member"><span class="m-name">James McMahon</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:jmcmahon@vercounty.org">jmcmahon@vercounty.org</a></span></li><li class="member"><span class="m-name">Nancy O’Kane</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:nancy.okane@vercounty.org">nancy.okane@vercounty.org</a></span></li><li class="member"><span class="m-name">Becky Stark</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:beckystark@vercounty.org">beckystark@vercounty.org</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">James McMahon</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:jmcmahon@vercounty.org">jmcmahon@vercounty.org</a></span></li><li class="member"><span class="m-name">Nancy O’Kane</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:nancy.okane@vercounty.org">nancy.okane@vercounty.org</a></span></li><li class="member"><span class="m-name">Becky Stark</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:beckystark@vercounty.org">beckystark@vercounty.org</a></span></li></ul>
 </section>
 <section class="contact">
 <h2>County Clerk</h2>

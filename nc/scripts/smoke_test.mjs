@@ -17,6 +17,7 @@ import { chromium } from "playwright";
 import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { stubBasemap } from "../../scripts/basemap_stub.mjs";
 
 // Vendored Leaflet fallback for sandboxed environments (e.g. Claude Code web),
 // where the browser (Chromium) cannot reach cdnjs.cloudflare.com — it does not
@@ -49,11 +50,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "35.78040,-78.63910"; // the State Capitol block, downtown Raleigh, Wake County
-const OFFLINE = ["county", "us-house", "nc-senate", "nc-house", "voting-precinct"];
-const EXPECT_DISTRICT = { "county": "Wake County", "us-house": "2", "nc-senate": "14", "nc-house": "38", "voting-precinct": "Precinct 01-14" };
+const OFFLINE = ["county", "us-house", "nc-senate", "nc-house", "voting-precinct", "nc-superior-court", "nc-district-court"];
+const EXPECT_DISTRICT = { "county": "Wake County", "us-house": "2", "nc-senate": "14", "nc-house": "38", "voting-precinct": "Precinct 01-14", "nc-superior-court": "Superior Court District 10A", "nc-district-court": "District Court District 10C" };
 const NEGATIVE_POINT = "35.60000,-75.30000"; // the open Atlantic east of Hatteras Island — outside every North Carolina county, measured 2026-09-29. IT HAS TO BE THE OCEAN: the TIGER county fabric is water-inclusive for the inland sounds, so Pamlico Sound is Hyde County and Albemarle Sound is Tyrrell, and a point picked off a map inside either would make this assertion vacuous. Inside permalink_gate's maxLng (-75.10) so the point is still selectable.
 const APP_NAME = "districtry North Carolina";
-const EXPECT_LAYERS = 15;
+const EXPECT_LAYERS = 17;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -177,7 +178,7 @@ async function cardText(page, id) {
   }, id);
 }
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // 1. App boots and registers every layer.
   {
@@ -1255,6 +1256,75 @@ try {
       !info.error && (c.empty ? info.empty : !info.empty) &&
         missing.length === 0 && present.length === 0 && footerOk,
       `missing=${missing} unwanted=${present} footer=${JSON.stringify(footer)} text=${text.slice(0, 240)}`);
+    await context.close();
+  }
+
+  // ---- Superior Court and District Court, drawn from the districts G.S. 7A-41
+  // and 7A-133 write and answered from the shipped files alone, so nothing
+  // here is stubbed. Each point is shapely's representative point of the
+  // shipped district shrunk by 0.002 degrees, so it is about 200 m or more
+  // from any edge (nc/data/app/nc-*-court-districts.json, 2026-10-20).
+  // Superior 31A is where the law gives two judge counts (two in 7A-41(a), one
+  // in (b)): the card gives both and states neither, and says Forsyth's four
+  // districts share one senior resident judge. Superior 10E is one of the two
+  // districts the law ends on 1 January 2029. Superior 5 is whole counties with
+  // a residence rule. District 12 is the district court's own disagreement
+  // (eleven and eight) with a residence rule and no division, and District 11B
+  // is Warren County with the part of Vance the law lists by voting district.
+  // No card names a judge.
+  for (const c of [
+    { layer: "nc-superior-court", name: "Superior 31A (two judge counts)", point: "36.11752,-80.40641",
+      want: [/Superior Court District 31A/, /Part of Forsyth County · Fourth Division/,
+        /the table in G\.S\. 7A-41\(a\) lists 2 judges, and G\.S\. 7A-41\(b\) gives 1, so this app states neither/,
+        /an eight-year term and must live in the district/, /Who they are Not named here/,
+        /Districts 31A, 31B, 31C and 31D together make up Forsyth County and share one senior resident superior court judge/,
+        /rotate among the districts of their division every six months/,
+        /inside Forsyth County, from the 2010 Census voting districts and blocks G\.S\. 7A-41\(b\) lists, drawn here to within 8 metres/,
+        /Judicial directory/],
+      reject: [/One judge/, /Two judges/, /Seats tied to a county/, /The law ends this district/],
+      footer: ["North Carolina superior courts", "https://www.nccourts.gov/courts/superior-court"] },
+    { layer: "nc-superior-court", name: "Superior 10E (ends in 2029)", point: "35.73410,-78.43984",
+      want: [/Superior Court District 10E/, /One judge, elected by the voters of the whole district to an eight-year term/,
+        /From January 1, 2029 The law ends this district on that day, and as written today it does not say which district its ground joins \(G\.S\. 7A-41\(a\)\)/,
+        /Districts 10A, 10B, 10C, 10D, 10E and 10F together make up Wake County/],
+      reject: [/states neither/] },
+    { layer: "nc-superior-court", name: "Superior 5 (whole counties, a residence rule)", point: "34.85801,-77.80159",
+      want: [/Superior Court District 5\b/, /Duplin, Jones, Onslow and Sampson Counties · Second Division/,
+        /Two judges, each elected by the voters of the whole district to an eight-year term\. Each must live in the district\./,
+        /only people who live in particular counties of the district run \(G\.S\. 7A-41\(b1\)\)/,
+        /From the counties G\.S\. 7A-41\(a\) lists for this district, on the same county lines as the County card/],
+      reject: [/Senior resident judge/, /The law ends this district/, /2010 Census/] },
+    { layer: "nc-district-court", name: "District 12 (two judge counts, a residence rule)", point: "35.50354,-78.72361",
+      want: [/District Court District 12\b/, /Harnett, Johnston and Lee Counties/,
+        /the table in G\.S\. 7A-133\(a\) lists 11 judges, and G\.S\. 7A-133\(b1\) gives 8, so this app states neither/,
+        /a four-year term and must live in the district/,
+        /only people who live in particular counties of the district run \(G\.S\. 7A-133\(b1\)\)/,
+        /district court judges do not rotate between districts/],
+      reject: [/Division/, /Who holds court here/, /Senior resident judge/],
+      footer: ["North Carolina district courts", "https://www.nccourts.gov/courts/district-court"] },
+    { layer: "nc-district-court", name: "District 11B (Warren and part of Vance)", point: "36.37290,-78.16689",
+      want: [/District Court District 11B/, /Warren County and part of Vance County/,
+        /Two judges, each elected by the voters of the whole district to a four-year term/,
+        /inside Vance County, from the 2010 Census voting districts G\.S\. 7A-133\(b\) lists, drawn here to within 8 metres of their 2010 lines/,
+        /the law does not say where such ground belongs/],
+      reject: [/Seats tied to a county/, /blocks/, /G\.S\. 7A-41\(c2\)/] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=${c.layer}`);
+    const info = await cardText(page, c.layer);
+    const text = info.text || "";
+    const footer = await page.evaluate((id) => {
+      const el = document.getElementById("card-" + id);
+      const block = el && el.closest(".layer-block");
+      const a = block && block.querySelector(".card-footer-link");
+      return a ? [a.textContent.trim(), a.getAttribute("href")] : null;
+    }, c.layer);
+    const missing = c.want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    const footerOk = !c.footer || (!!footer && footer[0] === c.footer[0] && footer[1] === c.footer[1]);
+    check(`${c.layer} card at ${c.name} says what the law sets there and names no judge`,
+      !info.error && !info.empty && missing.length === 0 && present.length === 0 && footerOk,
+      `missing=${missing} unwanted=${present} footer=${JSON.stringify(footer)} text=${text.slice(0, 260)}`);
     await context.close();
   }
 } finally {

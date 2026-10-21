@@ -96,6 +96,7 @@ import { appendFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFi
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { ROOT, instances, vendorDir } from "./probe_points.mjs";
+import { stubBasemap } from "./basemap_stub.mjs";
 
 const BASE = (process.env.BASE_URL || "http://localhost:8000").replace(/\/+$/, "") + "/";
 const PAIRS = +(process.env.POINTS || 20);
@@ -143,9 +144,10 @@ function globRe(glob) {
   return new RegExp("^" + glob.split("**").map((part) =>
     part.split("*").map((t) => t.replace(/[.+?^${}()|[\]\\]/g, "\\$&")).join("[^/]*")).join(".*") + "$");
 }
-// The probe's own import is read as a trigger too: it chooses no points of its
-// own today, but a change to it is a change to this probe.
-const PROBE_FILES = ["scripts/probe_points.mjs"];
+// The probe's own imports are read as triggers too: neither chooses the points
+// it probes or answers a card today, but a change to one is a change to this
+// probe.
+const PROBE_FILES = ["scripts/probe_points.mjs", "scripts/basemap_stub.mjs"];
 
 // Which instances this change can reach, or null for every instance.
 function changedTags(all) {
@@ -178,8 +180,8 @@ function changedTags(all) {
   return [...tags].sort();
 }
 
-// The hosts that only paint the map: no card reads them, so they go to the
-// network as they always did rather than through heldAnswers.
+// The hosts that only paint the map: no card reads them, so they are left out
+// of heldAnswers and answered by the basemap stand-in (scripts/basemap_stub.mjs).
 const PAINT_ONLY = /(^|\.)basemaps\.cartocdn\.com$/;
 // statuses worth asking again: a rate limit, and a server's own outage
 const TRANSIENT = new Set([408, 429, 500, 502, 503, 504]);
@@ -463,7 +465,7 @@ if (SCOPE) console.log(`  scope this change reaches ${SCOPE.length ? SCOPE.join(
 
 let problems = 0, compared = 0, answered = 0, layersDone = 0;
 const runStarted = Date.now();
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   for (const tag of TAGS) {
     const layers = tiledLayers(tag);

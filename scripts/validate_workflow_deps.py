@@ -205,10 +205,22 @@ ALWAYS_AVAILABLE = {"setuptools", "pip", "pkg_resources"}
 # apart from one another, `city_councils` and `scraper_common`, which are on
 # this list; `requests`, `shapely` and the `mapshaper` and `pdftotext` programs
 # are reached only when a builder fetches or builds, never by its --check.
+#
+# `boundary_fidelity` (2026-10-20) is the fourteenth, added when the smoke job
+# began running North Carolina's court district builder, the first of its
+# importers that any workflow runs; the ten state county builders that also
+# import it are operator steps. It answers how far a simplified boundary strays
+# from the line it was simplified from, measured from each SOURCE vertex to the
+# drawn line, which is the direction that gates something: measured from the
+# drawn vertices it answers about zero by construction. How far a drawn line
+# strays must not be answered differently per state, which is this list's test.
+# Stdlib-only (math and sys), and the court builder imports it inside its build,
+# which its --check never calls.
 FLEET_SHARED = {"undeliverable", "robots_policy", "arcgis_error", "scraper_common",
                 "workflow_run_evidence", "validate_officeholder_names", "aia_bundle",
                 "city_councils", "statewide_precincts", "published_district_layers",
-                "whole_county_courts", "city_ward_maps", "conservation_boards"}
+                "whole_county_courts", "city_ward_maps", "conservation_boards",
+                "boundary_fidelity"}
 ROOT_SCRIPTS = os.path.join(REPO_ROOT, "scripts")
 
 PIP_RE = re.compile(r"pip3?\s+install\s+([^\n]*)")

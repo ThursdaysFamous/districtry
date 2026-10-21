@@ -54,6 +54,7 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
                                 "scripts"))
 from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+from robots_policy import HostPacer, RobotsGate  # noqa: E402  (FLEET_SHARED)
 
 try:
     import requests
@@ -160,6 +161,34 @@ PROVENANCE = [
             "serves at least one member's name as a numeric character reference "
             "('Erin Par&#xE9;'), so every capture is unescaped -- a scraper that "
             "skips that ships the entity text to a reader."
+        ),
+    },
+    {
+        "layer": "nc-superior-court",
+        "app_file": "nc-superior-court-districts.json",
+        "source_url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-41.html",
+        "note": (
+            "The 73 superior court districts G.S. 7A-41 writes: whole counties, "
+            "and in nine divided counties the 2010 Census voting districts and "
+            "blocks the section lists, drawn from TIGERweb's Census 2010 service "
+            "(layers 72 and 18) by nc/scripts/build_nc_court_districts.py. The "
+            "section's text is kept in nc/data/source/statutes/ and every build "
+            "holds it to this page; its offline --check runs in CI. The General "
+            "Assembly can rewrite the districts in any session, and the table "
+            "it enacted for 1 January 2029 already ends Districts 10E and 31D, "
+            "so nc/WATCH.md carries a row for both."
+        ),
+        "ends_on": "2029-01-01",
+    },
+    {
+        "layer": "nc-district-court",
+        "app_file": "nc-district-court-districts.json",
+        "source_url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-133.html",
+        "note": (
+            "The 47 district court districts G.S. 7A-133 writes: whole counties, "
+            "and Wake's and Vance's districts from the 2010 Census voting "
+            "districts the section lists, by the same builder and held to this "
+            "page the same way."
         ),
     },
     {
@@ -549,11 +578,28 @@ class Findings(object):
         return "ok"
 
 
+USER_AGENT = "districtry source validator (+https://districtry.com/nc/)"
+PACER = None
+
+
+def pacer():
+    """The run's one HostPacer, built on first use, so an --offline run opens
+    no session. www.ncleg.gov states `Crawl-delay: 2` and this registry reads
+    four of its pages (both member lists and the two court statutes), so they
+    are held two seconds apart; a host that states no delay is not slowed."""
+    global PACER
+    if PACER is None:
+        PACER = HostPacer(RobotsGate(requests.Session(), USER_AGENT,
+                                     timeout=HTTP_TIMEOUT,
+                                     headers={"User-Agent": USER_AGENT}))
+    return PACER
+
+
 def http_get(url, want_json=True, params=None):
     """GET with a sane UA; returns (ok, payload_or_error). Never raises."""
     if requests is None:
         return False, "requests not installed"
-    ua = "districtry source validator (+https://districtry.com/nc/)"
+    ua = USER_AGENT
     try:
         require_robots_once(url, ua, headers={"User-Agent": ua},
                             label="nc-validate-sources")
@@ -563,12 +609,13 @@ def http_get(url, want_json=True, params=None):
         # end of the run, and nothing is fetched from the host either way.
         return False, "robots.txt refuses this client or could not be read (the reason is printed above); nothing fetched"
     try:
-        resp = requests.get(
-            url,
-            params=params,
-            timeout=HTTP_TIMEOUT,
-            headers={"User-Agent": ua},
-        )
+        with pacer().hold(url):
+            resp = requests.get(
+                url,
+                params=params,
+                timeout=HTTP_TIMEOUT,
+                headers={"User-Agent": ua},
+            )
     except Exception as e:  # network/TLS/proxy errors are a finding, not a crash
         return False, "request failed: %s" % e
     if resp.status_code >= 400:
@@ -736,6 +783,34 @@ def check_serving_map(findings, today=None):
                          "and bump the cache name." % (p["app_file"], until))
 
 
+# ---- check 3c: a court district the law has ended is no longer drawn --------
+def check_ended_districts(findings, today=None):
+    """Offline. The table G.S. 7A-41 enacted for 1 January 2029 ends superior
+    court Districts 10E and 31D, and the shipped file marks both with `endsOn`.
+    Nothing else would notice the date pass, so once it has this says so every
+    month until the file is rebuilt from the law as it then reads."""
+    import datetime
+    today = today or datetime.date.today().isoformat()
+    for p in PROVENANCE:
+        ends = p.get("ends_on")
+        if not ends or today < ends:
+            continue
+        fpath = os.path.join(APP_DATA_DIR, p["app_file"])
+        try:
+            with open(fpath) as f:
+                features = json.load(f).get("features") or []
+        except (OSError, ValueError):
+            continue
+        ended = [str(ft["properties"].get("unit")) for ft in features
+                 if (ft.get("properties") or {}).get("endsOn", today + "~") <= today]
+        if ended:
+            findings.add(WARN, p["layer"],
+                         "data/app/%s still draws District(s) %s, which the law ended on "
+                         "%s. Read %s for which district their ground joins, rebuild with "
+                         "build_nc_court_districts.py and bump the cache name (nc/WATCH.md)."
+                         % (p["app_file"], ", ".join(ended), ends, p["source_url"]))
+
+
 # ---- check 4: live endpoints reachable --------------------------------------
 def check_endpoints(findings, offline):
     if offline:
@@ -831,7 +906,14 @@ def main():
     check_socrata(findings, args.offline)
     check_provenance(findings, args.offline)
     check_serving_map(findings)
+    check_ended_districts(findings)
     check_endpoints(findings, args.offline)
+
+    # Which hosts asked to be slowed down, and by how much. On stderr, because
+    # stdout is the markdown report that becomes the monthly issue body.
+    if not args.offline and PACER is not None:
+        for line in PACER.report(prefix=""):
+            print(line, file=sys.stderr)
 
     report = render(findings)
     sys.stdout.write(report)

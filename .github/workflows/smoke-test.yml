@@ -108,6 +108,7 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro tennessee --out tn/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro arkansas --out ar/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro mississippi --out ms/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro louisiana --out la/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
           # the weekly fleet-status notice.
@@ -583,6 +584,18 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/build_district_search.py --check
 
+      # The ZIP code index (2026-10-21). A ZIP code typed into the search box
+      # selects a spot inside it and outlines every ward or county board
+      # district it crosses, and each app's data/app/zip-index.json is where
+      # that spot and the ZIP code's extent come from; the root fleet-zips.json
+      # says which app holds each ZIP code. Offline and Node only, about a
+      # minute: it rebuilds every index from the committed ZIP code archives
+      # and outlines and fails on any difference, naming the archive or
+      # outline whose recorded hash moved when that is why.
+      - name: ZIP code index matches the archives it is built from
+        if: ${{ !cancelled() }}
+        run: node scripts/build_zip_index.mjs --check
+
       # The city rosters in the served bytes. build_county_pages.py put 2,650
       # county officeholders where a crawler can read them and left the city
       # seats behind a JSON fetch: measured 2026-09-15, NYC's 51 Council
@@ -778,6 +791,18 @@ jobs:
       - name: Pasted map links are read as expected
         if: ${{ !cancelled() }}
         run: node scripts/map_link_test.mjs
+
+      # A legislator card drops a map pin on the member's district office, and
+      # engine/index.html/office-helpers.txt picks the address the pin is
+      # looked up by. It dropped any line that merely contained something
+      # phone-like, so a ZIP+4 city line and a street named Katella went: 8 of
+      # 693 shipped offices were looked up with no city or with their telephone
+      # numbers until 2026-10-20, and nothing ran the function. This runs it
+      # as shipped over fixtures and over every district office every app
+      # ships, so a roster refresh in a new shape fails on its own pull request.
+      - name: Legislator office pins are looked up by their street address
+        if: ${{ !cancelled() }}
+        run: node scripts/office_address_test.mjs
 
       # THE SOCIAL CARD IS THE ONE PAGE ASSET NOBODY ON THE TEAM EVER LOOKS AT,
       # because it renders in somebody else's app. Adam shared an /il/ permalink
@@ -1357,7 +1382,18 @@ jobs:
           python3 ok/scripts/build_ok_judicial_districts.py --check
           python3 sc/scripts/build_sc_judicial_circuits.py --check
           python3 tn/scripts/build_tn_judicial_districts.py --check
-      # Six states' precinct layers are built by scripts/statewide_precincts.py.
+      # North Carolina's superior and district court districts are read from
+      # the text of G.S. 7A-41 and G.S. 7A-133, kept in nc/data/source/statutes/,
+      # and where the law divides a county, from the 2010 census pieces it
+      # lists. --check (stdlib only) re-parses the kept text, holds each shipped
+      # feature to the parse and to the judge counts the law gives, re-derives
+      # each district's area from the county file and the recorded pieces, asks
+      # both maps which district holds each recorded interior point, and fails
+      # if the county file has changed since the districts were built from it.
+      - name: NC court districts still match the law they are drawn from
+        if: ${{ !cancelled() }}
+        run: python3 nc/scripts/build_nc_court_districts.py --check
+      # Seven states' precinct layers are built by scripts/statewide_precincts.py.
       # --check holds each shipped file to the hash and the precincts per county
       # its builder recorded, checks every precinct names its county as the
       # county file does and every county is covered by its own precincts, and
@@ -1368,6 +1404,7 @@ jobs:
           python3 ar/scripts/build_ar_precincts.py --check
           python3 in/scripts/build_in_precincts.py --check
           python3 ky/scripts/build_ky_precincts.py --check
+          python3 la/scripts/build_la_precincts.py --check
           python3 nc/scripts/build_nc_precincts.py --check
           python3 sc/scripts/build_sc_precincts.py --check
           python3 tn/scripts/build_tn_precincts.py --check
@@ -1620,6 +1657,48 @@ jobs:
           python3 ms/scripts/build_ms_city_councils.py --check
           python3 ms/scripts/build_ms_city_wards.py --check
 
+      # Louisiana's parish governing bodies come from the Secretary of State's
+      # list of elected officials, which also prints each official's mailing
+      # address, race and gender. This holds the shipped file to the shape it
+      # was built in, offline: every one of the 64 parishes, every member named
+      # and seated, the member, telephone and party floors, no telephone on two
+      # members' rows or on a member's row and the body's office both, and no
+      # field the builder does not carry. Whether three members printed a body's
+      # office is decided when the file is built, from the list itself, which is
+      # not kept, so it is not re-checked here.
+      - name: LA parish officials keep their shape and carry no field the builder does not read
+        if: ${{ !cancelled() }}
+        run: python3 la/scripts/build_la_parish_officials.py --check
+
+      # Louisiana draws a police jury or council district only in the parishes
+      # whose Census lines are confirmed current: changed after the 2020 census,
+      # and balanced on that census's own blocks. The blocks are not shipped, so
+      # the population cannot be re-measured here; this holds the shipped file
+      # to its build record, every district to a seat in the Secretary of
+      # State's list in the parish's own word, the card to the Census edition
+      # the file was built from, and the drawn parishes to the Parish layer.
+      - name: LA parish districts still match their build record, the list's seats and the Parish layer
+        if: ${{ !cancelled() }}
+        run: python3 la/scripts/build_la_parish_districts.py --check
+
+      # Louisiana's three courts whose judges are elected by district. The
+      # courts of appeal and the district courts are whole parishes, read from
+      # the text of La. R.S. 13:312 and 13:477 kept in la/data/source/courts/;
+      # the first --check re-reads every parish list out of that text and holds
+      # both maps to it, every parish drawn once and every district's area its
+      # own parishes' area. The Supreme Court's seven districts come from the
+      # Legislature's shapefile for Act 7 of 2024, which is not kept, so the
+      # same --check holds that map to its build record: the file's hash, the
+      # shapefile it was built from, its seven districts, every parish whole in
+      # one or split among two or more as pinned, and the worst stray under its
+      # ceiling. The judges' --check holds the shipped list to its shape, its
+      # floors and shares, and the districts the three maps draw.
+      - name: LA court districts still match the laws they are drawn from, and the judges list the maps
+        if: ${{ !cancelled() }}
+        run: |
+          python3 la/scripts/build_la_court_districts.py --check
+          python3 la/scripts/build_la_judges.py --check
+
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.
       # The stamp is right and stays; what the nine builders now print beside it
@@ -1768,6 +1847,7 @@ jobs:
           python3 tn/scripts/validate_index.py tn/index.html
           python3 ar/scripts/validate_index.py ar/index.html
           python3 ms/scripts/validate_index.py ms/index.html
+          python3 la/scripts/validate_index.py la/index.html
 
 
   browser:
@@ -1979,6 +2059,7 @@ jobs:
           BASE_URL=http://localhost:8000/il/  node scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/mi/  node mi/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/ms/  node ms/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/la/  node la/scripts/smoke_test.mjs
 
           # shard 3
 

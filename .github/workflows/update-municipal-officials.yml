@@ -407,14 +407,15 @@ jobs:
         run: python3 scripts/plano_council_scraper.py --out /tmp/plano_council.json
 
       # Champaign, Decatur, Normal, Quincy and Danville, added 2026-10-01 for
-      # the done standard's fourth test. Each is the only unit above 25,000
-      # people in a county this job has no municipal directory for — four of
-      # those counties publish none at all and McLean's omits the town of
-      # Normal wholesale — so these are the Galesburg and Freeport shapes, not
-      # a sweep. ONE STEP, FIVE PAYLOADS: a single scrape step writes one file
-      # per city into /tmp, and each city carries its own preserve id below, so
-      # a run that cannot reach the five carries all five forward together.
-      - name: Scrape five large cities' own council pages
+      # the done standard's fourth test, and Urbana, added 2026-10-21 once the
+      # city's new website answered. Each is a unit above 25,000 people in a
+      # county this job has no municipal directory for — four of those
+      # counties publish none at all and McLean's omits the town of Normal
+      # wholesale — so these are the Galesburg and Freeport shapes, not a
+      # sweep. ONE STEP, SIX PAYLOADS: a single scrape step writes one file per
+      # city into /tmp, and each city carries its own preserve id below, so a
+      # run that cannot reach the six carries all six forward together.
+      - name: Scrape six large cities' own council pages
         id: scrape_large_cities
         continue-on-error: true
         run: python3 scripts/il_large_city_councils_scraper.py --out-dir /tmp
@@ -579,7 +580,7 @@ jobs:
           if [ "$STEPHENSON_OUTCOME" = "failure" ]; then raise_issue "Stephenson"; fi
           if [ "$CARROLL_OUTCOME" = "failure" ]; then raise_issue "Carroll"; fi
           if [ "$FREEPORT_OUTCOME" = "failure" ]; then raise_issue "Freeport council"; fi
-          if [ "$LARGE_CITIES_OUTCOME" = "failure" ]; then raise_issue "Champaign, Decatur, Normal, Quincy and Danville council"; fi
+          if [ "$LARGE_CITIES_OUTCOME" = "failure" ]; then raise_issue "Champaign, Decatur, Normal, Quincy, Danville and Urbana council"; fi
           if [ "$LAKE_CITIES_OUTCOME" = "failure" ]; then raise_issue "Highland Park, Mundelein, North Chicago, Round Lake Beach, Vernon Hills and Waukegan council"; fi
           if [ "$DEKALB_OUTCOME" = "failure" ]; then raise_issue "DeKalb"; fi
           if [ "$GRUNDY_OUTCOME" = "failure" ]; then raise_issue "Grundy"; fi
@@ -701,6 +702,7 @@ jobs:
           add "${{ steps.scrape_large_cities.outcome }}" normal      enrich /tmp/normal_council.json
           add "${{ steps.scrape_large_cities.outcome }}" quincy      enrich /tmp/quincy_council.json
           add "${{ steps.scrape_large_cities.outcome }}" danville    enrich /tmp/danville_council.json
+          add "${{ steps.scrape_large_cities.outcome }}" urbana      enrich /tmp/urbana_council.json
           add "${{ steps.scrape_lake_cities.outcome }}" gurnee           enrich /tmp/gurnee_council.json
           add "${{ steps.scrape_lake_cities.outcome }}" highland-park    enrich /tmp/highland-park_council.json
           add "${{ steps.scrape_lake_cities.outcome }}" mundelein        enrich /tmp/mundelein_council.json

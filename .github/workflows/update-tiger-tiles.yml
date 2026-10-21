@@ -78,6 +78,31 @@ jobs:
           python3 scripts/mirror_tiger_tiles.py --refresh
           python3 scripts/mirror_tiger_tiles.py --check
 
+      # The ZIP code search reads each app's data/app/zip-index.json, which
+      # scripts/build_zip_index.mjs builds from that app's ZIP code archive, so
+      # a replaced ZIP archive moves its index, and the smoke test's --check
+      # would fail this PR if the index were left behind. The index is
+      # cache-first like the archive, and a ZIP code crossing a state line can
+      # move to another app's index when only the first app's archive was
+      # replaced, so an app whose index changed while its cache name did not
+      # gets the cache name moved on here (scripts/check_cache_version.py).
+      - name: Rebuild the ZIP code index from the archives
+        run: |
+          node scripts/build_zip_index.mjs
+          python3 - <<'PY'
+          import subprocess, sys
+          sys.path.insert(0, "scripts")
+          import tile_mirror_common
+
+          def changed(pattern):
+              out = subprocess.run(["git", "diff", "--name-only", "--", pattern],
+                                   capture_output=True, text=True, check=True).stdout
+              return {path.split("/")[0] for path in out.split()}
+
+          tags = changed("*/data/app/zip-index.json") - changed("*/sw.js")
+          tile_mirror_common.bump_cache(tags, lambda msg: sys.exit("ZIP code index: " + msg))
+          PY
+
       - name: Check for changes
         id: diff
         run: |
@@ -98,6 +123,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -B "$branch"
           git add -A tiger-mirror.json '*/data/app/tiles/*.pmtiles' \
+                    '*/data/app/zip-index.json' fleet-zips.json \
                     metro-worksheet.json '*/metro-worksheet.json' '*/sw.js' '*/index.html' \
                     '*/sources.html' CLAUDE.md README.md
           git commit -m "Update the Census TIGERweb tile archives"

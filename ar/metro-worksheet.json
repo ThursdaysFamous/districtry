@@ -52,6 +52,12 @@
       "goatcounter_url": "https://districtry.goatcounter.com/count"
     }
   },
+  "zip_search": {
+    "file": "zip-index.json",
+    "layers": [
+      {"id": "zip-code", "field": "ZCTA5", "inside": ["metro-outline.json"]}
+    ]
+  },
   "socrata_host": "https://data.invalid",
   "socrata_app_token": "",
   "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
@@ -86,7 +92,9 @@
     { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
       "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
     { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
-      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } }
+      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } },
+    { "id": "louisiana", "label": "Louisiana", "url": "https://districtry.com/la/", "emoji": "🎷", "explorer_name": "districtry Louisiana",
+      "bbox": { "minLng": -94.05, "minLat": 28.85, "maxLng": -89.71, "maxLat": 33.02 } }
   ],
   "hover_number_keys": [
     [
@@ -580,6 +588,12 @@
         "min_features": 28,
         "max_features": 28,
         "note": "The 28 judicial circuits, dissolved from the county fabric by ar/scripts/build_ar_court_districts.py following the circuit judge directory's county lists."
+      },
+      {
+        "file": "zip-index.json",
+        "min_features": 616,
+        "max_features": 616,
+        "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
       }
     ],
     "rosters": [

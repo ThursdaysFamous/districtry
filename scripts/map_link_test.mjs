@@ -17,7 +17,7 @@ import path from "node:path";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const src = readFileSync(path.join(root, "engine/shared/map-link.txt"), "utf8");
-const api = new Function(src + "\nreturn { parseMapLink, mapLinkMessage, resolveShortMapLink, addressAfterName, labelCarriesNumber, labelAtHouse, addressStreet, addressParts, labelOnStreet, addressInTownOf, addressForLookup, addressStateTag, stateTagOfName, stateInSentence, mapLinkForText };")();
+const api = new Function(src + "\nreturn { parseMapLink, mapLinkMessage, resolveShortMapLink, addressAfterName, labelCarriesNumber, labelAtHouse, addressStreet, addressParts, labelOnStreet, addressInTownOf, addressForLookup, addressStateTag, stateTagOfName, stateInSentence, mapLinkForText, zipQuery, zipListed };")();
 
 const near = (a, b) => Math.abs(a - b) < 1e-6;
 const cases = [
@@ -553,8 +553,62 @@ for (const [text, source] of rebuilt) {
   }
 }
 
+// A ZIP code typed alone, with "ZIP" before it or a state beside it, is a
+// search for the whole ZIP code (ENGINE geocoder-search runZipSearch, and the
+// front door's address box); typed with a town or a street it is an address,
+// searched as before.
+const zips = [
+  ["60625", "60625"],
+  [" 60625 ", "60625"],
+  ["ZIP 60625", "60625"],
+  ["zip code 60625", "60625"],
+  ["Zipcode 60625", "60625"],
+  ["postal code 60625", "60625"],
+  ["IL 60625", "60625"],
+  ["60625 IL", "60625"],
+  ["60625, Illinois", "60625"],
+  ["Illinois 60625", "60625"],
+  ["new york 10001", "10001"],
+  ["10001 New York", "10001"],
+  ["in 46204", "46204"],
+  ["60625-1234", "60625"],
+  ["60625 USA", "60625"],
+  ["60625, IL, USA", "60625"],
+  ["60625 united states of america", "60625"],
+  ["60625 chicago", ""],          // a town makes it an address
+  ["Chicago, IL 60625", ""],
+  ["123 Main St 60625", ""],
+  ["21001 S Wolf Rd", ""],        // a house number is not a ZIP code
+  ["district 60625", ""],
+  ["us 60625", ""],
+  ["606250", ""],
+  ["6062", ""],
+  ["zip", ""],
+];
+for (const [text, want] of zips) {
+  const got = api.zipQuery(text);
+  if (got !== want) {
+    failed++;
+    console.error("map-link: FAIL zipQuery(" + JSON.stringify(text) + ")\n  want " + JSON.stringify(want) + "\n  got  " + JSON.stringify(got));
+  }
+}
+// fleet-zips.json lists each app's ZIP codes as one string of five-digit
+// codes in order (scripts/build_zip_index.mjs), and zipListed finds one in it
+// by halving: every code listed is found, and none between or beyond them.
+const LISTED = ["00501", "10001", "53703", "60625", "60626", "70112", "99950"];
+const listed = LISTED.map((zip) => [LISTED.join(""), zip, true]).concat(
+  ["00500", "10000", "53704", "60624", "60627", "99951"].map((zip) => [LISTED.join(""), zip, false]),
+  [["", "60625", false], ["60625", "60625", true], ["60625", "60626", false]]);
+for (const [codes, zip, want] of listed) {
+  if (api.zipListed(codes, zip) !== want) {
+    failed++;
+    console.error("map-link: FAIL zipListed(" + JSON.stringify(codes) + ", " + JSON.stringify(zip) + ") reads " + !want);
+  }
+}
+
 const total = cases.length + 2 + lookups.length + 2 + said.length + bare.length + carry.length + house.length + parts.length + street.length +
-  kept.length + 1 + forLookup.length + states.length + 3 + rebuilt.length * 2;
+  kept.length + 1 + forLookup.length + states.length + 3 + rebuilt.length * 2 +
+  zips.length + listed.length;
 if (failed) { console.error("map-link: " + failed + " of " + total + " checks failed"); process.exit(1); }
 console.log("map-link: OK — " + cases.length + " pasted texts read as expected; a short link is sent only to the lookup; " +
   lookups.length + " lookup answers tried again or not as expected, a cancelled lookup stops, and " + said.length +
@@ -564,4 +618,5 @@ console.log("map-link: OK — " + cases.length + " pasted texts read as expected
   streets.length + " into a number and a street, and " + street.length + " answers held to the address's street as expected; " +
   inTown.length + " addresses put in an answer's town and " + kept.length + " kept in the town typed as expected; " +
   forLookup.length + " written out for the Census lookup as expected; " + states.length +
-  " addresses read for their state and " + rebuilt.length + " links rebuilt from their words as expected");
+  " addresses read for their state, " + rebuilt.length + " links rebuilt from their words, " + zips.length +
+  " searches read for a ZIP code and " + listed.length + " ZIP codes looked for in a list as expected");
