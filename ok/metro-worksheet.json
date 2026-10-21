@@ -295,9 +295,9 @@
       "label": "City Council District",
       "group": "political",
       "area_rank": 14,
-      "rank_note": "56 council wards and districts in the 9 cities above 25,000 people whose wards elect their own members and are drawn, ranked just after City or Town, which each one divides, so a ward draws on top of its city",
+      "rank_note": "64 council wards and districts in the 10 cities above 25,000 people whose wards elect their own members and are drawn, ranked just after City or Town, which each one divides, so a ward draws on top of its city",
       "source": {
-        "answers": "The city council ward or district containing the point, in the 9 Oklahoma cities above 25,000 people whose wards elect their own members and are drawn, and the member or members for it.",
+        "answers": "The city council ward or district containing the point, in the 10 Oklahoma cities above 25,000 people whose wards elect their own members and are drawn, and the member or members for it.",
         "boundary": [
           {
             "label": "City of Oklahoma City — Council Wards, layer 2 of its Government_Boundaries service, served through ArcGIS Online: 8 wards, read 2026-10-16, the ward number alone requested. It states no licence.",
@@ -310,6 +310,10 @@
           {
             "label": "City of Norman — Council Wards, in the city's ArcGIS Online organization, which says it was \"Updated September 13, 2022 by O-2223-8\": 8 wards, read 2026-10-16. Its credit line names the City of Norman GIS Services Division, and it states no licence.",
             "url": "https://services.arcgis.com/rt1leD4Hj3sLGHNL/arcgis/rest/services/Council_Wards/FeatureServer/1"
+          },
+          {
+            "label": "City of Lawton — Council Ward, in the city's ArcGIS Online organization, whose service says \"Updated-05/12/2023\" and whose data was last edited 2 July 2026: 8 wards in 11 records, read 2026-10-21, the ward number alone requested. It does not divide the 2020 census population evenly; it is drawn because the City Clerk's office, asked which map is in force, answered on 2026-10-21 by pointing to the city's public ward map, which draws this layer. It states no licence.",
+            "url": "https://services2.arcgis.com/baoUryRiOxhCY0yb/arcgis/rest/services/CouncilWard/FeatureServer/0"
           },
           {
             "label": "City of Moore — City Wards, layer 20 of its Government_Services service: 3 wards, read 2026-10-16, the ward name alone requested. Its service's credit line names the City of Moore, and it states no licence.",
@@ -337,7 +341,7 @@
           }
         ],
         "people": "The member or members for each ward, from the same city council roster the City or Town card reads (ok/data/app/ok-city-councils.json), written down from each city's own pages and proved against them by ok/scripts/build_ok_city_councils.py. Which seats a ward elects was read from each city's charter, its own pages, a county election board's results or news reports. Its check holds every drawn ward to a seat its voters elect and every such seat to a drawn ward. Bartlesville's and Bixby's councils choose the mayor from among their members, and the card names the mayor as the member for the ward that elected them.",
-        "applies": "The 9 Oklahoma cities above 25,000 people whose wards elect their own members and are drawn: Bartlesville, Bixby, Enid, Midwest City, Moore, Norman, Oklahoma City, Shawnee and Tulsa. Lawton's and Muskogee's wards elect their own members and are not drawn yet; Broken Arrow, Owasso, Jenks and Edmond tie seats to wards and elect every seat by the whole city, and Stillwater's council has no wards. Ground inside a city's Census outline that its map leaves out lies in no ward here."
+        "applies": "The 10 Oklahoma cities above 25,000 people whose wards elect their own members and are drawn: Bartlesville, Bixby, Enid, Lawton, Midwest City, Moore, Norman, Oklahoma City, Shawnee and Tulsa. Muskogee's wards elect their own members and are not drawn yet; Broken Arrow, Owasso, Jenks and Edmond tie seats to wards and elect every seat by the whole city, and Stillwater's council has no wards. Ground inside a city's Census outline that its map leaves out lies in no ward here."
       }
     },
     {
@@ -544,9 +548,9 @@
       },
       {
         "file": "ok-city-wards.json",
-        "min_features": 56,
-        "max_features": 56,
-        "note": "The 56 council wards and districts of the 9 cities above 25,000 people whose wards elect their own members and are drawn, pre-built by ok/scripts/build_ok_city_wards.py through scripts/city_ward_maps.py from the map each city publishes (Douglas-Peucker at 4 m; a 3,600-point agreement gate over the nine cities' extents, measured 100.00%, with no overlap; each map held to its city's Census outline). 123 KB, 30 KB gzipped, fetched only when a reader switches the layer on."
+        "min_features": 64,
+        "max_features": 64,
+        "note": "The 64 council wards and districts of the 10 cities above 25,000 people whose wards elect their own members and are drawn, pre-built by ok/scripts/build_ok_city_wards.py through scripts/city_ward_maps.py from the map each city publishes (Douglas-Peucker at 4 m; a 4,000-point agreement gate over the ten cities' extents, measured 100.00%, with no overlap; each map held to its city's Census outline). 138 KB, 33 KB gzipped (measured 2026-10-21), fetched only when a reader switches the layer on."
       }
     ],
     "rosters": [
@@ -588,7 +592,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ok-shell-v4",
+    "cache_name": "districtry-ok-shell-v5",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

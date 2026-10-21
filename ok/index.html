@@ -10488,7 +10488,7 @@ function initOklahomaExplorer() {
     "zip-code",          // 666 ZIP Code Tabulation Areas overlapping Oklahoma, of the 1,058 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside Oklahoma
     "school-district-elementary", // 91 elementary (dependent) districts, from TIGERweb, drawn from a mirrored tile archive; the ground the unified tiling leaves
     "municipality",      // 600 incorporated cities and towns, from TIGERweb, drawn from a mirrored tile archive
-    "city-ward",         // 56 council wards and districts in the 9 cities above 25,000 people whose wards elect their own members and are drawn, ranked just after City or Town, which each one divides, so a ward draws on top of its city
+    "city-ward",         // 64 council wards and districts in the 10 cities above 25,000 people whose wards elect their own members and are drawn, ranked just after City or Town, which each one divides, so a ward draws on top of its city
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -15510,7 +15510,7 @@ function initOklahomaExplorer() {
    * website does not let this app read it, so its names come from the county
    * election board's official results and from news reports; its `note`
    * says so in place of the sentence naming the city's website, and the card
-   * links the council's own page (`page`). The wards of the nine cities whose
+   * links the council's own page (`page`). The wards of the ten cities whose
    * wards elect their own members and are drawn are the City Council
    * District layer (7b below).
    *
@@ -15582,8 +15582,8 @@ function initOklahomaExplorer() {
   // Where the names come from and when they were read. A city whose names
   // come from somewhere other than its own website (Muskogee) carries a
   // `page`, and its `note` says where they come from in place of the
-  // sentence naming the website; any other city's `note` (Lawton's, on its
-  // wards) follows that sentence.
+  // sentence naming the website; any other city's `note` follows that
+  // sentence.
   function okCouncilSourceRow(council) {
     var name = String(council.name);
     var read = okElectionDate(council.read);
@@ -15732,26 +15732,27 @@ function initOklahomaExplorer() {
   });
 
   /* ---------- 7b. City council ward or district ----------
-   * The 56 council wards and districts of the nine Oklahoma cities above
+   * The 64 council wards and districts of the ten Oklahoma cities above
    * 25,000 people whose wards elect their own members and whose maps are
-   * drawn here: Tulsa 9, Oklahoma City and Norman 8 each, Midwest City, Enid
-   * and Shawnee 6 each, Bartlesville and Bixby 5 each, and Moore 3. Each is
-   * read from the map its city publishes, because no state office
+   * drawn here: Tulsa 9, Oklahoma City, Norman and Lawton 8 each, Midwest
+   * City, Enid and Shawnee 6 each, Bartlesville and Bixby 5 each, and Moore
+   * 3. Each is read from the map its city publishes, because no state office
    * publishes one. Pre-built by ok/scripts/build_ok_city_wards.py through
    * scripts/city_ward_maps.py, which holds each map to the Census outline of
    * its city, so a click is answered in the browser and no point is sent
    * anywhere. Each ward's card says whose map it is drawn from, and that it
    * is drawn here to within 4 metres.
    *
-   * Not drawn: Lawton and Muskogee, whose wards elect their own members.
-   * Lawton's only published ward map does not divide the 2020 census
-   * population evenly between its wards, so it may not be the map in force,
-   * and Muskogee publishes no copy this app may read; the City or Town card
-   * says so for each. Broken Arrow, Owasso, Jenks and Edmond tie their seats
+   * Not drawn: Muskogee, whose wards elect their own members and which
+   * publishes no copy of them this app may read; its City or Town card says
+   * so. Lawton's wards are drawn on the city's word: its map does not divide
+   * the 2020 census population evenly, and asked which map is in force, the
+   * city answered on 2026-10-21 by pointing to its public ward map, which
+   * draws this one. Broken Arrow, Owasso, Jenks and Edmond tie their seats
    * to wards and elect every seat by the whole city, so a ward there would
    * elect no one of its own, and Stillwater's council has no wards.
    *
-   * A GENERIC LABEL, as North Carolina's: eight of the nine elect by WARD and
+   * A GENERIC LABEL, as North Carolina's: nine of the ten elect by WARD and
    * Tulsa by DISTRICT, so the toggle says "City Council District" and each
    * card names the unit as its city does, off the feature's own `label`
    * ("Ward 3", "District 9").
@@ -15778,9 +15779,9 @@ function initOklahomaExplorer() {
     label: "City Council District",
     coverage: inOklahoma,
     emptyNote: "This point is not in a council ward or district this map " +
-      "draws. It draws the wards of the 9 Oklahoma cities above 25,000 " +
+      "draws. It draws the wards of the 10 Oklahoma cities above 25,000 " +
       "people whose wards elect their own members (Tulsa calls them " +
-      "districts). Lawton's and Muskogee's wards are not drawn yet; Broken " +
+      "districts). Muskogee's wards are not drawn yet; Broken " +
       "Arrow, Owasso, Jenks and Edmond elect every seat by the whole city, " +
       "and Stillwater's council has no wards. The City or Town card names " +
       "the mayor and council of all 16. Ground a city has added since its " +
@@ -17691,7 +17692,7 @@ function initOklahomaExplorer() {
     // its voters elect its district judges.
     "ok-judicial-district", "county-commissioner",
     // The city council district sits with the other districts that elect
-    // someone of their own; it answers only in the nine cities whose wards
+    // someone of their own; it answers only in the ten cities whose wards
     // are drawn.
     "city-ward",
     "school-district-unified", "school-district-elementary",
