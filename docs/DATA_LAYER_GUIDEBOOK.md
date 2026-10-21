@@ -66,7 +66,7 @@ in the researched-but-unbuilt backlog.
   "tennessee": ["us-house", "tn-judicial-district", "tn-senate", "county", "tn-house", "school-district-unified", "school-board-district", "county-commissioner", "county-subdivision", "zip-code", "school-district-elementary", "school-district-secondary", "voting-precinct", "municipality", "city-ward", "tribal-government", "police-station", "fire-station", "post-office"],
   "arkansas": ["us-house", "ar-court-of-appeals", "ar-circuit-court", "ar-senate", "county", "ar-house", "school-district-unified", "zip-code", "quorum-court", "county-subdivision", "fire-district", "school-board-district", "voting-precinct", "municipality", "city-ward", "police-station", "fire-station", "post-office"],
   "mississippi": ["us-house", "ms-supreme-court", "ms-court-of-appeals", "ms-senate", "county", "ms-chancery-court", "ms-circuit-court", "ms-house", "county-supervisor", "school-district-unified", "zip-code", "municipality", "city-ward", "tribal-government", "police-station", "fire-station", "post-office"],
-  "louisiana": ["us-house", "la-senate", "county", "school-district-unified", "la-house", "zip-code", "parish-district", "municipality", "tribal-government", "police-station", "fire-station", "post-office"]
+  "louisiana": ["us-house", "la-senate", "county", "school-district-unified", "la-house", "zip-code", "parish-district", "voting-precinct", "municipality", "tribal-government", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->

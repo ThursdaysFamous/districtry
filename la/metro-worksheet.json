@@ -237,10 +237,28 @@
       }
     },
     {
+      "id": "voting-precinct",
+      "label": "Voting Precinct",
+      "group": "geography",
+      "area_rank": 8,
+      "rank_note": "3,569 precincts tiling the state, pre-built from the Louisiana Legislature's statewide precinct file — 37.70 km2 mean area, land and water (median 4.65), measured 2026-10-21 on the drawn file: smaller on average than a police jury or council district (about 212 km2 of land), larger than a city, town or village (about 16 km2 of land)",
+      "source": {
+        "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
+        "boundary": [
+          {
+            "label": "Louisiana Legislature, redistricting office — 2026 Precinct Shapefiles (01-27-2026), one zipped shapefile of every precinct in all 64 parishes, listed on the office's precinct shapefiles page; 3,569 precincts, pre-built for the state by la/scripts/build_la_precincts.py and shipped with the app (Douglas-Peucker at 12 m). The file's five areas of Lake Pontchartrain that it marks as in no voting district, one in each lake parish and with no one living in them, are left out.",
+            "url": "https://redist.legis.la.gov/default_ShapeFiles2020"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent.",
+        "applies": "Louisiana — statewide."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City, Town or Village",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "305 incorporated places, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The city, town or village containing the point, if any.",
@@ -258,7 +276,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "Tribal land — Louisiana has 6 pieces held by four nations, MEASURED by scripts/build_tribal_areas.py on 2026-10-20: the Chitimacha Reservation (1.820 km², St. Mary Parish); the Coushatta Reservation (2.761 km² in 5 parts, Allen Parish) and the Coushatta Off-Reservation Trust Land (8.592 km² in 9 parts, 7.816 km² of it in Allen Parish and the rest in Natchitoches, Calcasieu and Jefferson Davis); the Jena Band of Choctaw Reservation (1.763 km² in 6 parts, Grant and LaSalle parishes); and the Tunica-Biloxi Reservation (1.690 km²) and Off-Reservation Trust Land (4.412 km² in 5 parts), both in Avoyelles Parish. About 3.5 km² a piece on average against about 16 km² for a city, town or village (4,826 km² across 305 places), so ranked after municipalities and before the point layers, as Mississippi's is, and drawn above the larger areas around it. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Louisiana has 6 such areas, held by the Chitimacha Tribe of Louisiana, the Coushatta Tribe of Louisiana, the Jena Band of Choctaw Indians and the Tunica-Biloxi Indian Tribe.",
@@ -276,7 +294,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -294,7 +312,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -312,7 +330,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -327,7 +345,7 @@
       }
     }
   ],
-  "min_register_layer": 10,
+  "min_register_layer": 11,
   "anchor_point": {
     "lat": 29.9524,
     "lng": -90.0767,
@@ -349,6 +367,10 @@
     {
       "layer": "la-house",
       "expected": "93"
+    },
+    {
+      "layer": "voting-precinct",
+      "expected": "Precinct 3-1"
     }
   ],
   "negative_point": {
@@ -397,6 +419,12 @@
         "min_features": 56,
         "max_features": 56,
         "note": "The police jury, council and commission districts of the 6 parishes whose current lines are confirmed (la/scripts/build_la_parish_districts.py)."
+      },
+      {
+        "file": "la-precincts.json",
+        "min_features": 3569,
+        "max_features": 3569,
+        "note": "Every Louisiana voting precinct, pre-built by la/scripts/build_la_precincts.py through scripts/statewide_precincts.py from the Legislature's statewide precinct file, its edition of 27 January 2026 (Douglas-Peucker at 12 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.95% with zero overlaps; an exact 3,569 count, after the five areas of Lake Pontchartrain the file marks as in no voting district are left out). 7.8 MB, 2.31 MB gzipped, fetched only when a reader switches the layer on."
       },
       {
         "file": "tribal-areas.json",
@@ -454,7 +482,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-la-shell-v2",
+    "cache_name": "districtry-la-shell-v3",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

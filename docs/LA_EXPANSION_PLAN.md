@@ -112,6 +112,19 @@ apply.
 go-live with the same answer, and the two live neighbours gained a routing case that must open
 `/la/`: Franklinton in Mississippi's smoke test and Farmerville in Arkansas's.
 
+## After go-live
+
+- **The voting precincts** (2026-10-21, the first change after go-live). The Louisiana
+  Legislature's redistricting office posts every parish's precincts as one statewide shapefile,
+  edition by edition, and the layer draws its edition of 27 January 2026: 3,569 precincts in all
+  64 parishes, drawn to within 12 metres, 2.3 MB to download and fetched only when a reader
+  switches the layer on. The file also carries five areas of Lake Pontchartrain that it marks as
+  in no voting district, one in each lake parish and with no one living in them; they are left
+  out, so a click on the lake says no precinct is there. A precinct elects nobody, so the card
+  says so rather than naming anyone. The builder stops when the Legislature posts a newer edition
+  until a person has read it, and `la/WATCH.md` asks for that check every quarter. The done
+  standard's score moves from 7 to 8 of the 14 levels.
+
 ## What is still owed
 
 - **58 parishes' district lines** (gap `la-parish-district-lines`). No statewide map of the
@@ -130,5 +143,5 @@ go-live with the same answer, and the two live neighbours gained a routing case 
 - **The police juries' presidents**, from each police jury's own page or minutes, parish by parish.
 - **The congressional map on 3 January 2027**, when the 120th Congress's map takes over;
   `la/WATCH.md` has the day's steps, and the monthly source check warns from 1 December 2026.
-- **Courts elected by district, precincts, special districts and the parish district boundaries
-  as a level of their own**, the done standard's open levels for Louisiana.
+- **Courts elected by district, special districts and the parish district boundaries as a level
+  of their own**, the done standard's open levels for Louisiana.

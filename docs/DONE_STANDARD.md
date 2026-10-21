@@ -434,7 +434,9 @@ question.
 - Precincts: Illinois (83 counties), Iowa, Michigan, Minnesota, New York, San
   Francisco and Wisconsin's wards, and since 2026-10-15 Kentucky, Indiana, North
   Carolina, South Carolina, Tennessee and Arkansas, each drawn from the one
-  statewide precinct map a government office in that state publishes. Oklahoma
+  statewide precinct map a government office in that state publishes, and
+  since 2026-10-21 Louisiana, from the Louisiana Legislature's statewide
+  precinct file (its edition of 27 January 2026). Oklahoma
   ships none: its State Election Board sent the question of using its precinct
   maps to the University of Oklahoma's Center for Spatial Analysis, which was
   asked on 2026-10-01 and has not answered, and no precinct layer ships there

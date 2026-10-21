@@ -50,11 +50,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "29.95240,-90.07670"; // New Orleans City Hall, 1300 Perdido Street, Orleans Parish
-const OFFLINE = ["county", "us-house", "la-senate", "la-house"];
-const EXPECT_DISTRICT = { "county": "Orleans Parish", "us-house": "2", "la-senate": "5", "la-house": "93" };
+const OFFLINE = ["county", "us-house", "la-senate", "la-house", "voting-precinct"];
+const EXPECT_DISTRICT = { "county": "Orleans Parish", "us-house": "2", "la-senate": "5", "la-house": "93", "voting-precinct": "Precinct 3-1" };
 const NEGATIVE_POINT = "28.60000,-90.50000"; // open water about 50 km south of the Louisiana coast, past the state's offshore line — outside Louisiana and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-20: TIGERweb's state and county layers name no state or parish here, its legislative layers no district, and its ZIP layer no ZIP code (control: New Orleans City Hall returns Louisiana, Orleans Parish and 70112). OPEN WATER BECAUSE A POINT ON A NEIGHBOUR'S LAND WOULD HAVE TO MOVE: Arkansas and Mississippi are live already, and the fleet is meant to reach every state, Texas included.
 const APP_NAME = "districtry Louisiana";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "LouisianaExplorer";
