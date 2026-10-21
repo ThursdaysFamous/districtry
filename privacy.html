@@ -499,7 +499,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
 <main id="page-main" tabindex="-1">
 
   <section>
-    <p class="updated">Last updated 13 October 2026 &middot; Applies to <strong>districtry.com</strong>
+    <p class="updated">Last updated 20 October 2026 &middot; Applies to <strong>districtry.com</strong>
       and every app under it.</p>
 
     <div class="tldr">
@@ -732,25 +732,25 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
           </tr>
           <tr>
             <td class="who"><a href="https://deno.com/privacy" target="_blank" rel="noopener">Deno Deploy</a><small>short map-link lookup</small></td>
-            <td>Only when you paste a <strong>short</strong> Google Maps or Apple Maps link (maps.app.goo.gl, maps.apple) into a search box, or share one into the installed app: that link, sent to districtry&#39;s own lookup, which runs on Deno&#39;s servers, follows it to the full link and sends that back. Deno receives your IP address and the short link. The lookup&#39;s own code stores neither; Deno, not this project, keeps whatever request logs its platform keeps. A map link or a coordinate pair that carries its position is read in your browser and goes nowhere; a map link that names a place without one is searched like typed text, by the address search below. In every app, when the map&#39;s own search can&#39;t find the house at an address you search for, or at one a map link names, the lookup also receives <strong>that address</strong> and asks the U.S. Census Bureau where the number falls (the next row).</td>
-            <td>Only when you paste or share a short map link, or, in every app, when the map&#x27;s search can&#x27;t find the house at an address you search for.</td>
+            <td>Only when you paste a <strong>short</strong> Google Maps or Apple Maps link (maps.app.goo.gl, maps.apple) into a search box, or share one into the installed app: that link, sent to districtry&#39;s own lookup, which runs on Deno&#39;s servers, follows it to the full link and sends that back. Deno receives your IP address and the short link. The lookup&#39;s own code stores neither; Deno, not this project, keeps whatever request logs its platform keeps. A map link or a coordinate pair that carries its position is read in your browser and goes nowhere; a map link that names a place without one is searched like typed text, by the address search below. In every app, when the map&#39;s own search can&#39;t find the house at an address you search for, or at one a map link names, the lookup also receives <strong>that address</strong> and asks the U.S. Census Bureau where the number falls (the next row). In New York it also receives <strong>the public address of an office a card shows</strong>, when GeoSearch / NYC Planning can&#39;t place that office&#39;s map pin, and asks the Census Bureau the same way. Which office a card shows says which district you selected.</td>
+            <td>Only when you paste or share a short map link, or, in every app, when the map&#x27;s search can&#x27;t find the house at an address you search for. In New York, also when a card places an office pin GeoSearch / NYC Planning can&#x27;t place.</td>
             <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi.</td>
           </tr>
           <tr>
             <td class="who"><a href="https://www.census.gov/about/policies/privacy.html" target="_blank" rel="noopener">U.S. Census Bureau</a><small>house-number lookup</small></td>
-            <td>Only when the map&#39;s own address search can&#39;t find the house at an address you search for, because it knows the street but not the house number on it, or doesn&#39;t know the street in that town at all, and you typed the address and sent the search (with Search or Enter, or by picking its street from the list) or a map link you paste or share carries it: the address, with its state and its street&#39;s ZIP code filled in when you left them out, sent through districtry&#39;s lookup on Deno Deploy, which asks the Census Bureau&#39;s geocoder where that number falls on the street and sends its estimate back. The Census Bureau receives the address and the lookup&#39;s IP address, not yours. Nothing is sent this way while you are still typing.</td>
-            <td>Only when the map&#x27;s search can&#x27;t find the house at an address you search for.</td>
+            <td>Only when the map&#39;s own address search can&#39;t find the house at an address you search for, because it knows the street but not the house number on it, or doesn&#39;t know the street in that town at all, and you typed the address and sent the search (with Search or Enter, or by picking its street from the list) or a map link you paste or share carries it: the address, with its state and its street&#39;s ZIP code filled in when you left them out, sent through districtry&#39;s lookup on Deno Deploy, which asks the Census Bureau&#39;s geocoder where that number falls on the street and sends its estimate back. The Census Bureau receives the address and the lookup&#39;s IP address, not yours. Nothing is sent this way while you are still typing. In New York it also receives, through the same lookup, <strong>the public address of an office a card shows</strong>, when GeoSearch / NYC Planning can&#39;t place that office&#39;s map pin. Which office a card shows says which district you selected.</td>
+            <td>Only when the map&#x27;s search can&#x27;t find the house at an address you search for. In New York, also when a card places an office pin GeoSearch / NYC Planning can&#x27;t place.</td>
             <td class="which">Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi.</td>
           </tr>
           <tr>
             <td class="who"><a href="https://www.nyc.gov/home/privacy-policy.page" target="_blank" rel="noopener">GeoSearch / NYC Planning</a><small>address search, office pins</small></td>
-            <td><strong>The text you type into the search box</strong>, or the place&#39;s name and address from a map link you paste or share, sent as you type so suggestions can appear. It also receives <em>public office addresses from the datasets</em> to place their map pins.</td>
+            <td><strong>The text you type into the search box</strong>, or the place&#39;s name and address from a map link you paste or share, sent as you type so suggestions can appear. It also receives <em>public office addresses from the datasets</em> to place their map pins; which office a card shows says which district you selected.</td>
             <td>Only while you are searching for an address, or when a card places an office pin.</td>
             <td class="which">New York.</td>
           </tr>
           <tr>
             <td class="who"><a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener">Nominatim / OpenStreetMap</a><small>office pins</small></td>
-            <td><em>Public office addresses from the datasets</em> — a clerk's office, a school — to place their map pins; that is data about buildings, not about you. Nothing you type into the search box is sent here.</td>
+            <td><em>Public office addresses from the datasets</em> — a clerk's office, a school — to place their map pins. The addresses are public, but which office a card shows says which district you selected. Nothing you type into the search box is sent here.</td>
             <td>Only when a card places an office pin.</td>
             <td class="which">Illinois, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi.</td>
           </tr>

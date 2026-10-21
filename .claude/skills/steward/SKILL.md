@@ -56,6 +56,7 @@ python3 scripts/build_coverage_gaps.py --check --metro southcarolina --out sc/da
 python3 scripts/build_coverage_gaps.py --check --metro tennessee --out tn/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro arkansas --out ar/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro mississippi --out ms/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro louisiana --out la/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro nyc       --out ny/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro sf        --out ca/data/app/coverage-gaps.json
 python3 scripts/validate_gap_counts.py --selftest                 # the claim/label split, both directions, offline
@@ -172,6 +173,7 @@ python3 in/scripts/build_in_appeals_districts.py --check             # the same 
 python3 ok/scripts/build_ok_judicial_districts.py --check            # the same for Oklahoma's judicial districts
 python3 sc/scripts/build_sc_judicial_circuits.py --check             # the same for South Carolina's judicial circuits
 python3 tn/scripts/build_tn_judicial_districts.py --check            # the same for Tennessee's judicial districts
+python3 nc/scripts/build_nc_court_districts.py --check              # North Carolina's superior and district court districts against the kept text of G.S. 7A-41 and 7A-133: the parse, the judge counts, each district's area from the county file and the 2010 pieces, the interior points, and a county file that has not moved
 python3 ar/scripts/build_ar_precincts.py --check                     # a statewide precinct layer: hash and per-county counts against its record, each county covered by its own precincts, the card's stated wording
 python3 in/scripts/build_in_precincts.py --check                     # the same for Indiana
 python3 ky/scripts/build_ky_precincts.py --check                     # the same for Kentucky
@@ -216,6 +218,8 @@ python3 ms/scripts/build_ms_judges.py --check                    # the shipped j
 python3 ms/scripts/build_ms_city_councils.py --selftest           # the city council page readers, on literals: the four seat shapes, the name test, the seat labels a page prints, each person's own telephone numbers and five refusals of them, and each person's own e-mail address, read by entry and by card, scrambled by Cloudflare's e-mail protection or not, and eleven refusals of it
 python3 ms/scripts/build_ms_city_councils.py --check              # the 15 cities' councils against their declared seats and the name test, Greenville naming nobody with its reason, and each city's telephone numbers and e-mail addresses against the cities that declare them and their floors, with no address carried for two people or as an office's mailbox
 python3 ms/scripts/build_ms_city_wards.py --check                 # the nine cities' wards against their councils' ward seats, the card's empty state, the sources page and the record of what each ward layer served
+python3 la/scripts/build_la_parish_officials.py --check          # Louisiana's parish governing bodies as shipped: all 64 parishes, every member named and seated, the member, telephone and party floors, no telephone on two members' rows, and no field the builder does not read
+python3 la/scripts/build_la_parish_districts.py --check          # Louisiana's parish districts against their build record, the list's seats, the Census edition the card names, and the Parish layer
 python3 wi/scripts/dropped_rings.py --check       # each declaration's `why` prose against its own m2 and verts, and each builder's FIDELITY_MAX_M against its GAP_CLOSED, across every declaring builder
 python3 scripts/scraper_common.py --selftest                # the nine AFR builders' what-moved line, both ways: silent on a stamp-only week, names the record on a real one
 python3 scripts/arcgis_error.py --selftest                   # a rate limit told apart from a shape error, both measured wordings and a 429; the 5/15/45 ladder taken then raised, never waited on a 404
@@ -242,6 +246,7 @@ python3 sc/scripts/validate_index.py sc/index.html
 python3 tn/scripts/validate_index.py tn/index.html
 python3 ar/scripts/validate_index.py ar/index.html
 python3 ms/scripts/validate_index.py ms/index.html
+python3 la/scripts/validate_index.py la/index.html
 
 # --- browser gates: ONE server at the repo root, every instance
 python3 -m http.server 8000 &
@@ -260,6 +265,7 @@ BASE_URL=http://localhost:8000/sc/ node sc/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/tn/ node tn/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/ar/ node ar/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/ms/ node ms/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/la/ node la/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000      node scripts/landing_test.mjs
 BASE_URL=http://localhost:8000      node scripts/page_consistency_test.mjs
 BASE_URL=http://localhost:8000      node scripts/probe_point_transmission.mjs --check

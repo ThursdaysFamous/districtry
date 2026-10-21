@@ -130,7 +130,7 @@
       "id": "nc-senate",
       "label": "NC Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 3,
       "rank_note": "50 Senate districts — larger on average than a county, smaller than a congressional district",
       "source": {
         "answers": "The North Carolina Senate district covering the point, and the senator holding it.",
@@ -148,7 +148,7 @@
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 5,
       "rank_note": "100 counties, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point, who won each seat on its board of commissioners, and who sits on the board of the soil and water conservation district that covers it.",
@@ -166,7 +166,7 @@
       "id": "nc-house",
       "label": "NC House District",
       "group": "political",
-      "area_rank": 4,
+      "area_rank": 6,
       "rank_note": "120 House districts — the smallest of the three chamber tilings",
       "source": {
         "answers": "The North Carolina House district covering the point, and the representative holding it.",
@@ -181,10 +181,62 @@
       }
     },
     {
+      "id": "nc-superior-court",
+      "label": "Superior Court District",
+      "group": "political",
+      "area_rank": 4,
+      "rank_note": "73 superior court districts, 1,909 km2 mean area, measured 2026-10-20 on the drawn file — smaller on average than a State Senate district (2,788 km2), larger than a county (1,394)",
+      "source": {
+        "answers": "The superior court district covering the point: its division, its counties and the parts of the counties the law divides, how many resident superior court judges the law gives it and whether any seat is tied to a county, the districts that share a senior resident judge, and, for the two districts the law ends on 1 January 2029, that date.",
+        "boundary": [
+          {
+            "label": "North Carolina General Statutes — G.S. 7A-41 as the General Assembly publishes it, read 2026-10-20 and kept in nc/data/source/statutes/: subsection (a) lists each district's counties and judges, and subsection (b) the 2010 Census voting districts and blocks of each part of the nine counties it divides. Drawn on the shipped county file by nc/scripts/build_nc_court_districts.py and shipped with the app.",
+            "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-41.html"
+          },
+          {
+            "label": "U.S. Census TIGERweb — Census 2010, voting districts (layer 72) and blocks (layer 18): the 2010 lines G.S. 7A-41(c) and (c1) say govern, read 2026-10-20 for the nine divided counties.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2010/MapServer"
+          },
+          {
+            "label": "G.S. 7A-41.1 — districts that together make up the same counties share one senior resident superior court judge",
+            "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-41.1.html"
+          }
+        ],
+        "people": "NO JUDGE IS NAMED. The court system lists who serves in its judicial directory, and www.nccourts.gov's robots.txt disallows that page for every client (measured 2026-10-20), so the card links it instead; election results cannot stand in for it, because the Governor fills a seat that comes open between elections. Recorded as gap nc-judges. The card gives the number of judges the law sets for the district and, for District 31A, where G.S. 7A-41(a) and (b) give different numbers, gives both and states neither.",
+        "applies": "North Carolina — statewide, all 73 districts (71 from 1 January 2029, when the law ends Districts 10E and 31D)."
+      }
+    },
+    {
+      "id": "nc-district-court",
+      "label": "District Court District",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "47 district court districts, 2,966 km2 mean area, measured 2026-10-20 on the drawn file — larger on average than a State Senate district (2,788 km2), smaller than a congressional district (9,956)",
+      "source": {
+        "answers": "The district court district covering the point: its counties and the parts of the two counties the law divides, how many district judges the law gives it, and whether any seat is tied to a county.",
+        "boundary": [
+          {
+            "label": "North Carolina General Statutes — G.S. 7A-133 as the General Assembly publishes it, read 2026-10-20 and kept in nc/data/source/statutes/: subsection (a) lists each district's counties and judges, and subsection (b) the 2010 Census voting districts of the districts inside Wake and Vance Counties. Drawn on the shipped county file by nc/scripts/build_nc_court_districts.py and shipped with the app.",
+            "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-133.html"
+          },
+          {
+            "label": "U.S. Census TIGERweb — Census 2010, voting districts (layer 72): the 2010 lines G.S. 7A-133(b) says govern, read 2026-10-20 for Wake and Vance Counties.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2010/MapServer"
+          },
+          {
+            "label": "G.S. 7A-140 — each district judge is elected by the voters of the district, lives in it and serves four years",
+            "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-140.html"
+          }
+        ],
+        "people": "NO JUDGE IS NAMED. The court system lists who serves in its judicial directory, and www.nccourts.gov's robots.txt disallows that page for every client (measured 2026-10-20), so the card links it instead; election results cannot stand in for it, because the Governor fills a seat that comes open between elections. Recorded as gap nc-judges. The card gives the number of judges the law sets for the district and, for Districts 12 and 32, where G.S. 7A-133(a) and its residence paragraphs give different numbers, gives both and states neither.",
+        "applies": "North Carolina — statewide, all 47 districts."
+      }
+    },
+    {
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 5,
+      "area_rank": 7,
       "rank_note": "118 unified (K-12) districts covering the whole state, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The public school district covering the point.",
@@ -202,7 +254,7 @@
       "id": "county-subdivision",
       "label": "Township",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 8,
       "rank_note": "1,041 county subdivisions — North Carolina townships, the census fabric below the county",
       "source": {
         "answers": "The township containing the point.",
@@ -220,7 +272,7 @@
       "id": "school-board-district",
       "label": "School Board District",
       "group": "schools",
-      "area_rank": 7,
+      "area_rank": 9,
       "rank_note": "423 pieces on the boards of 38 school districts that elect members by district, pre-built from the State Board of Elections' precinct-level results — the 421 under Durham's two consolidated districts a mean 117.0 km2 (median 74.5), measured 2026-10-17 on the drawn file: smaller on average than a county subdivision (1,041 tiling the state's 139,389 km2, a mean 133.9), larger than a voting precinct (median 25.32)",
       "source": {
         "answers": "The election district of a North Carolina school board that elects members by district, and the school district whose board it is. Where one election's ballots in a precinct carried two of a board's districts, both are named; where different elections put different districts on the ballot, each election's are named and none is chosen; where the results place no current district seat, the card says so.",
@@ -246,7 +298,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 10,
       "rank_note": "853 ZIP Code Tabulation Areas overlapping North Carolina, of the 1,668 the Census counts in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17)",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -264,7 +316,7 @@
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 12,
       "rank_note": "2,625 precincts tiling the state, pre-built from the State Board of Elections' file as NC OneMap serves it — 53.10 km2 mean area, land and water (median 25.32), measured 2026-10-15 on the drawn file: smaller than the Qualla Boundary's pieces (median 107.2 km2), larger on average than a city or town (20.26 km2 of land)",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
@@ -282,7 +334,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 13,
       "rank_note": "552 incorporated places, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The city or town containing the point, if any.",
@@ -300,7 +352,7 @@
       "id": "city-ward",
       "label": "City Council District",
       "group": "political",
-      "area_rank": 12,
+      "area_rank": 14,
       "rank_note": "100 council districts and wards in the 17 cities above 25,000 people that elect council members by district or ward, ranked just after City or Town, which each one divides, so a district draws on top of its city",
       "source": {
         "answers": "The city council district or ward containing the point, in the 17 North Carolina cities above 25,000 people that elect council members by district or ward, and the member for it.",
@@ -382,7 +434,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 13,
+      "area_rank": 15,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -400,7 +452,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 14,
+      "area_rank": 16,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -418,7 +470,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 15,
+      "area_rank": 17,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -436,7 +488,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 9,
+      "area_rank": 11,
       "rank_note": "Tribal land — North Carolina has 2 pieces, the Qualla Boundary's 211.753 km² and its 2.640 km² of trust land, both the Eastern Band of Cherokee Indians', MEASURED by scripts/build_tribal_areas.py; median 107.2 km². Drawn above ZIP codes and below cities and towns. Drawn although no district is drawn on this land by the state, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — North Carolina has 2 such areas, both the Eastern Band of Cherokee Indians'.",
@@ -451,7 +503,7 @@
       }
     }
   ],
-  "min_register_layer": 12,
+  "min_register_layer": 14,
   "anchor_point": {
     "lat": 35.7804,
     "lng": -78.6391,
@@ -477,6 +529,14 @@
     {
       "layer": "voting-precinct",
       "expected": "Precinct 01-14"
+    },
+    {
+      "layer": "nc-superior-court",
+      "expected": "Superior Court District 10A"
+    },
+    {
+      "layer": "nc-district-court",
+      "expected": "District Court District 10C"
     }
   ],
   "negative_point": {
@@ -519,6 +579,18 @@
         "min_features": 120,
         "max_features": 120,
         "note": "The 120 NC House districts. Simplified in the same mapshaper run as the other two chamber files."
+      },
+      {
+        "file": "nc-superior-court-districts.json",
+        "min_features": 73,
+        "max_features": 73,
+        "note": "The 73 superior court districts G.S. 7A-41 writes, pre-built by nc/scripts/build_nc_court_districts.py from the kept statute text: whole counties from state-counties.json, and the nine divided counties from the 2010 Census voting districts and blocks the law lists (Douglas-Peucker at 5 m on each dividing line, and the build refuses a line that strays more than 8 m from the 2010 line it draws). 2.0 MB, 590 KB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "nc-district-court-districts.json",
+        "min_features": 47,
+        "max_features": 47,
+        "note": "The 47 district court districts G.S. 7A-133 writes, pre-built by the same builder: whole counties, and Wake's and Vance's districts from the 2010 Census voting districts the law lists. 1.57 MB, 470 KB gzipped, fetched only when a reader switches the layer on."
       },
       {
         "file": "tribal-areas.json",

@@ -96,13 +96,13 @@ districtry Illinois: a single-file, dependency-light web app. Click a point in I
 This list undercounts what actually runs, and **the figure is stated WITH ITS METHOD AND ITS
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
 them used. MEASURED 2026-10-20 on this branch, AFTER its last edit: a static gate is
-one NAMED step in the `static` job, which is **122**;
-counted instead as script invocations the whole battery is **217 — 198 that need no browser and
-19 that boot Chromium** (a Playwright smoke test per instance
-`il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`/`in`/`nc`/`ky`/`ok`/`sc`/`tn`/`ar`/`ms`, 2 root-page tests, and the two fleet-wide probes
+one NAMED step in the `static` job, which is **125**;
+counted instead as script invocations the whole battery is **223 — 203 that need no browser and
+20 that boot Chromium** (a Playwright smoke test per instance
+`il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`/`in`/`nc`/`ky`/`ok`/`sc`/`tn`/`ar`/`ms`/`la`, 2 root-page tests, and the two fleet-wide probes
 for point transmission and contrast pairs), the per-instance `validate_index.py` runs included, and
 excluding the two `npx playwright install` setup lines and the `http.server` that serves the
-pages to the nineteen.
+pages to the twenty.
 
 The pair moves whenever anything merges, not only when a gate is added. A new instance
 adds invocations without adding a named step; one step can carry a gate and its selftest;
@@ -121,8 +121,8 @@ and how each went wrong are in this section's git history.
 
 Treat the workflow file as the source of truth for the full battery and its order;
 `.claude/skills/steward/SKILL.md` mirrors it as locally-runnable commands with per-gate
-rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-10-20, **217
-invocations for 217**, diffed both ways with each side's trailing rationale comment stripped
+rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-10-20, **223
+invocations for 223**, diffed both ways with each side's trailing rationale comment stripped
 and `$BASE` resolved to the branch point the skill spells `origin/main`,
 after four gates were found missing from it on 2026-09-12 (`build_sitemap.py`,
 `undeliverable.py`, the circuit-court join self-test, and that change's own) and **three more on
@@ -194,8 +194,6 @@ python3 scripts/check_roster_retention.py --base origin/main
 **Sandboxed environments (Claude Code web) — Leaflet/MapLibre CDN egress:** every instance's `index.html` loads Leaflet and MapLibre GL (the vector-basemap renderer; the bridge plugin is committed same-origin at `<instance>/vendor/`) from `cdnjs.cloudflare.com`. In the Claude Code web/sandbox the headless browser cannot reach that CDN — Chromium doesn't use the agent HTTPS proxy, so the request resets (`ERR_CONNECTION_RESET` → `L is not defined` → the app never boots; a MapLibre-only failure is gentler — the app boots on its raster-fallback basemap). This is environmental, **not** a code regression; don't chase it in app code. It's handled automatically: a `SessionStart` hook (`.claude/settings.json`) runs `scripts/vendor_leaflet.sh`, which `curl`s both libraries (curl *does* go through the proxy) into **each instance's own** vendor dir (`scripts/vendor/leaflet/` for `il`, `<tag>/scripts/vendor/leaflet/` for every other instance; the table is `INSTANCES` in the script) — because that is where each instance's `smoke_test.mjs` looks (it resolves `vendor/leaflet` next to itself). All are gitignored; the smoke test then serves them same-origin via `page.route`, so the app boots. Production and GitHub Actions CI are untouched — they reach the CDN directly and the vendor dirs are absent, so the fallback is skipped. To vendor one instance manually, `bash scripts/vendor_leaflet.sh ca`; with no argument it does every instance in its table.
 
 **That script is ONE script, and it fails loudly on a misconfiguration.** Three byte-identical copies used to live in `scripts/`, `ca/scripts/` and `ny/scripts/` — genuinely non-redundant while the instances were separate repos, because each self-located into its own tree, and pure duplication the moment they became folders under one root where only the root copy's hook ever fires. It also used to print a soft note and `exit 0` when it found no Leaflet URL, which is right for an unreachable CDN and wrong for a bad path: R2.3 moved the app to `il/` and left the script reading the repo-root `index.html`, now the redirect stub, so it skipped silently and the smoke test died 45 seconds later at `page.waitForFunction: Timeout` — the exact symptom the paragraph above tells you not to chase into app code. A missing app file or one with no Leaflet URL now exits 1 and names the instance; only a failed fetch stays best-effort.
-
-**No browser test fetches CARTO's basemap but one, and the reason is the quota** (`scripts/basemap_stub.mjs`, 2026-10-20). The site's one CARTO key allows 5,000,000 requests a calendar month, after which CARTO may answer every request with HTTP 429 until the 1st, which is a blank map in every app for every reader. On 2026-10-20 CARTO wrote that the key had used 4,020,049 in twenty days, and readers were a small part of it: measured that day with every CARTO request answered locally and counted, the fifteen smoke tests, the page-consistency gate and the point-transmission probe asked CARTO for 12,948 resources in one run (5,939 of them distinct within their browser context, about what reaches CARTO once the browser's cache answers the repeats), and that battery runs on every push to a pull request and to main, with the Illinois smoke test again in every deploy. It also ran in agent sandboxes, whose Chromium reached CARTO directly on that date though it cannot reach cdnjs. So every script that boots an app in a browser and let CARTO through wraps its browser with `stubBasemap()`: the fifteen smoke tests, the root pages' test, the page-consistency gate, the point-transmission and tile-card probes, and the two operator scripts that boot an app (`dump_layer_districts.mjs`, `probe_arcgis_ring_nesting.mjs`). It answers CARTO in every context the browser opens, with a style that boots both GL maps, empty vector tiles and a blank raster tile, and prints how many requests it answered. The one check that reads real tiles, Illinois's boundary streets on real tiles, opens its own context through `realBasemapContext()`, which routes nothing, so the browser's cache answers its repeats as it does a reader's (Playwright turns the cache off in a context that routes anything); measured the same day it asks CARTO for 28 resources a run. Wrapping the browser rather than each context is deliberate: a check added later cannot spend the quota by forgetting to opt in, so a new browser script wraps its browser the same way. `probe_contrast_pairs.mjs`, `probe_layer_sources.mjs` and `probe_layer_load.mjs` abort CARTO and both `perf_profile.mjs` copies answer it with a tile of their own, so they need nothing, and `shoot_readme_screenshot.mjs` fetches the real map on purpose, because a picture of the stand-in would show no streets. `REAL_BASEMAP=1` turns the stand-in off for a local run against the real map.
 
 `validate_index.py` is the merge gate: it confirms `index.html` passes `node --check`, still registers every layer (a drop in the `registerLayer(` count fails), embeds no dataset inline, that every `data/app/` file is present with the expected feature/roster counts, and that **`sources.html` still carries a matrix row for every registered layer and the app still links to it** — a layer whose provenance row is missing reads to a reader as a layer with no source, and a sources page nothing points at is a page nobody reads.
 

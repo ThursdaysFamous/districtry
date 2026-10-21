@@ -1808,7 +1808,17 @@ ANSWERS = {
         "local-government": depth("city-ward"),
         "school-district-boundaries": answers("school-district-unified"),
         "subdivision-boundaries": answers("county-subdivision"),
-        "courts-by-district": OPEN,
+        # The 73 superior court districts of G.S. 7A-41 and the 47 district
+        # court districts of G.S. 7A-133 (2026-10-20), read from the statutes'
+        # text as the General Assembly publishes it
+        # (nc/scripts/build_nc_court_districts.py): whole counties from the
+        # county file the app ships, and inside the nine counties the superior
+        # court law divides and the two the district court law divides, the
+        # 2010 Census voting districts and blocks the statutes list. Each
+        # district's voters elect its judges. No judge is named: the court
+        # system's judicial directory is disallowed by its robots.txt, gap
+        # nc-judges.
+        "courts-by-district": answers("nc-superior-court", "nc-district-court"),
         # NORTH CAROLINA'S TOWNSHIPS GOVERN NOBODY. The Census carries every
         # one with FUNCSTAT N (non-functioning): the boundaries exist and the
         # governments do not, which is why nc/index.html's township card names

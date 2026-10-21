@@ -10203,11 +10203,14 @@ function initMinnesotaExplorer() {
    * ENGINE map-link; services/link-lookup/main.ts), which passes on each
    * match's address and position: the Census Bureau sees the lookup and
    * not the reader, and the privacy page names both, measured from the
-   * `?a=` call below (build_privacy_page.py). Only an address the reader
-   * searched for is sent: one a shared map link carried, or one typed and
-   * then sent with Search or Enter, handed over as #q=, or picked from the
-   * list by its street (runAddressSearch, listHeldAnswers), never text while
-   * it is being typed.
+   * `?a=` call below (build_privacy_page.py). From the map's search, only an
+   * address the reader searched for is sent: one a shared map link carried,
+   * or one typed and then sent with Search or Enter, handed over as #q=, or
+   * picked from the list by its street (runAddressSearch, listHeldAnswers),
+   * never text while it is being typed. An app's office-pin provider may
+   * also ask about the public address of an office a card shows, when its
+   * own geocoder cannot place it (New York's poiGeocodeRequest, from
+   * 2026-10-20). build_privacy_page.py fails on a call from anywhere else.
    *
    * An answer is used only if it is the ONE match that is the house
    * (labelAtHouse, ENGINE map-link) in the address's town or ZIP code

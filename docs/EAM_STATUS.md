@@ -52,7 +52,7 @@ different thing from one it failed.
 | mi | **EA··** | 83 | 83/83 | 619 | 617 | all | 67 | 1 without a job | 13 of 14 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 20 | all | 13 of 14 levels |
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 23 | all | 8 of 14 levels |
-| nc | **EAM·** | 100 | 100/100 | 373 | 584 | all | 16 | all | 13 of 14 levels |
+| nc | **EAMC** | 100 | 100/100 | 373 | 584 | all | 18 | all | all 14 levels |
 | ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 35 | all | 11 of 14 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 17 | all | 11 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 19 | all | 13 of 14 levels |
@@ -162,14 +162,17 @@ this instance is in maintenance.
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Mississippi has no sub-county general-purpose government — outside a city, town or village the county governs. The 410 sub-county units the Census publishes for Mississippi are its supervisor districts, which the Census records as having no functioning government.
 
-### nc — EAM·
+### nc — **E.A.M.C.**
 
-- **Watched, not rewritten:** `nc/data/app/nc-city-councils.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
-- **Under a WATCH.md plan (10):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `nc-city-wards.json`, `nc-conservation-boards.json`, `nc-house-districts.json`, `nc-precincts.json`, `nc-school-board-districts.json`, `nc-senate-districts.json`, `state-counties.json`
-- **Covered: no.** 1 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
+
+Every test that applies is met. Expansion is finished;
+this instance is in maintenance.
+
+- **Covered: yes.** Every expected level of government is answered.
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — North Carolina's townships are boundaries without governments — the Census marks every one non-functioning — so outside a city or town limit the county governs.
+
+- **Watched, not rewritten:** `nc/data/app/nc-city-councils.json` is refreshed by no job because it cannot safely be — `.github/workflows/watch-city-council-pages.yml` checks its source weekly and opens an issue when it moves. That is a weaker guarantee than a rewrite: it tells you the source changed and a person still has to act.
 
 ### ny — EAM·
 
