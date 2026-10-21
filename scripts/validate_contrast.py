@@ -240,7 +240,8 @@ PAIRS = [
     ("faint",      "dst-brand-tint-soft@surface", "text", ".dpf-support at 11px on all six app pages (styles-districtry-skin) — the one line in the panel foot a reader is asked to act on, as --slate-soft on the skin's own tint over the --panel foot"),
 
     # — links and accents as text —
-    ("brand-700",  "surface",    "text", "links on panels: .dpf-links a, .sibling-result-hint (skin, as --accent-deep); the invitation's .install-invite-go, an outlined button on its --panel bar (styles-app). NOT .dpf-support a — its ground is the skin's own --dst-brand-tint-soft — and NOT footer.site-footer a, which the skin hides"),
+    ("brand-700",  "surface",    "text", "links on panels: .dpf-links a, .sibling-result-hint (skin, as --accent-deep); the invitation's .install-invite-go, an outlined button on its --panel bar (styles-app); .zip-stats-btn, the outlined \"List them\" in a ZIP code's message on the search panel (skin). NOT .dpf-support a — its ground is the skin's own --dst-brand-tint-soft — and NOT footer.site-footer a, which the skin hides"),
+    ("brand-700",  "dst-brand-tint-soft@surface", "text", ".zip-stats-btn:hover and :focus-visible on the search panel, and the panel foot's .footer-link-btn:hover (skin, as --accent-deep on the skin's own tint over --panel)"),
     ("brand-700",  "paper",      "text", "links on the app ground; privacy and history `a`; .locate-btn, .btn-secondary (styles-app, styles-footer)"),
     ("brand-700",  "brand-tint", "text", "landing footer .support a:hover and .notice-cta a:hover (build_landing_page — on body); landing .ex-eyebrow at 12.5px and .ex-open:hover, on the worked example's tinted panel"),
     ("brand-700",  "brand-tint@surface", "text", "privacy .masthead-actions a:hover — the masthead is a --surface panel (build_privacy_page)"),

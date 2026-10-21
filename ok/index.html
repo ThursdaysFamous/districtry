@@ -3103,6 +3103,23 @@ svg.leaflet-image-layer.leaflet-interactive path {
     z-index: 900;
   }
   .masthead .search-shell:not(:hover):not(:focus-within):not(.expanded) .search-extra { padding: 0; border-width: 0; }
+  /* "List them" in a ZIP code's message (geocoder-search showZip), which
+     opens the comparison's numbers: outlined like the panel foot's buttons */
+  .geo-status .zip-stats-btn {
+    display: inline-block;
+    margin: 6px 0 2px;
+    padding: 4px 10px;
+    min-height: 24px;
+    font: inherit;
+    font-weight: 600;
+    color: var(--accent-deep);
+    background: transparent;
+    border: 1px solid var(--dst-brand-line);
+    border-radius: 7px;
+    cursor: pointer;
+  }
+  .geo-status .zip-stats-btn:hover, .geo-status .zip-stats-btn:focus-visible { background: var(--dst-brand-tint-soft); }
+  .geo-status .zip-stats-btn:disabled { cursor: progress; }
   /* The four "about the data" doors (operator-directed, two rounds): emoji
      dropped, and the row is no longer a bordered segmented box — that put a
      second hard rectangle beside the search field and gave four secondary
@@ -4246,6 +4263,9 @@ function initOklahomaExplorer() {
   // clean the address is. Set from the worksheet's poi_geocode_bbox — widen
   // it there whenever a layer's cards start naming farther-away offices.
   var POI_GEOCODE_BBOX = { minLng: -103.15, minLat: 33.5, maxLng: -94.3, maxLat: 37.15 };
+  // ZIP code index (scripts/build_zip_index.mjs): a typed ZIP code selects a
+  // spot inside it, and its ZIP layer is turned on and pinned for comparison.
+  var ZIP_SEARCH_URL = "data/app/zip-index.json";
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -8671,6 +8691,36 @@ function initOklahomaExplorer() {
   function stateInSentence(tag) {
     return (tag === "dc" ? "the " : "") + (US_STATE_NAMES[tag] || "");
   }
+  /* The ZIP code a search is for, or "": five digits, with or without the
+   * four after a hyphen, alone or with "zip", "zip code" or "postal code"
+   * before it and a state, as its code or its name, before or after it
+   * ("60625", "ZIP 60625", "IL 60625", "60625, Illinois", "60625 USA").
+   * Anything else typed with it, a town or a street, makes it an address,
+   * which the search answers as before. The state is not checked against
+   * the ZIP code, which decides on its own (ENGINE geocoder-search, and the
+   * front door's address box). */
+  function zipQuery(text) {
+    var t = String(text || "").toLowerCase().replace(/[.,:;]/g, " ").replace(/\s+/g, " ").trim()
+      .replace(/(?:^| )(?:usa|us|united states(?: of america)?)$/, "").trim();
+    var m = /^(?:(?:zip ?code|postal code|zip) )?(?:([a-z][a-z ]*?) )?(\d{5})(?:-\d{4})?(?: ([a-z][a-z ]*))?$/.exec(t);
+    if (!m) return "";
+    function isState(w) { return !w || US_STATE_NAMES.hasOwnProperty(w) || !!stateTagOfName(w); }
+    return isState(m[1]) && isState(m[3]) ? m[2] : "";
+  }
+  /* Whether `codes`, five-digit ZIP codes in order with nothing between
+   * them, as fleet-zips.json lists each app's (scripts/build_zip_index.mjs),
+   * holds `zip`: the apps' search and the front door's address box read the
+   * file with this one function. */
+  function zipListed(codes, zip) {
+    codes = String(codes || "");
+    var lo = 0, hi = Math.floor(codes.length / 5) - 1;
+    while (lo <= hi) {
+      var mid = (lo + hi) >> 1, at = codes.substr(mid * 5, 5);
+      if (at === zip) return true;
+      if (at < zip) lo = mid + 1; else hi = mid - 1;
+    }
+    return false;
+  }
   /* An address as the Census Bureau's lookup is asked about it when the
    * map's search knows neither the house nor its street (ENGINE
    * geocoder-search showStreetOnly): the number and the street, then the
@@ -8880,6 +8930,8 @@ function initOklahomaExplorer() {
   // row's click instead of selecting its point, by returning true
   // (rows.pick): listHeldAnswers uses both
   function renderGeocodeResults(results, fromLink, rows) {
+    // the answers to a ZIP code no list holds are each one spot (zipAnswerRows)
+    if (!rows && zipAnswers.seq === districtSearchSeq) rows = zipAnswerRows(zipAnswers.zip);
     // the district section (district-result / district-hint rows) is owned by
     // renderDistrictSection and stays on top; only address rows are replaced
     clearResultRows(false);
@@ -9548,6 +9600,13 @@ function initOklahomaExplorer() {
     // a link is read once, by the debounced search; its own words are not a
     // district name
     if (parseMapLink(q)) return Promise.resolve();
+    // a ZIP code a list holds answers alone, as a district name does
+    var zip = zipQuery(q);
+    if (zip) {
+      return findZip(zip).then(function (found) {
+        if (geocodeInputEl.value.trim() === q && found && (found.here || found.away)) renderZipRow(zip, found);
+      });
+    }
     return findDistricts(q).then(function (found) {
       if (geocodeInputEl.value.trim() !== q) return;
       renderDistrictSection(found);
@@ -9555,6 +9614,303 @@ function initOklahomaExplorer() {
       // address rows on screen belong to earlier text: drop them now
       if (found.exact) { clearResultRows(false); syncResultCount(); }
     });
+  }
+
+  /* ---------- a ZIP code: all of it, compared ----------
+   * A ZIP code typed into the box used to be sent to the geocoder like an
+   * address, and its answer selected one spot, so every card named that
+   * spot's districts. A ZIP code is not a spot: Chicago's 60625 crosses four
+   * wards (measured 2026-10-21 against Census 2020 blocks: Ward 33 41%, Ward
+   * 40 30%, Ward 39 16%, Ward 47 13%), and a reader who searched it reported
+   * that the map named one. On Adam's choice of that day the search now
+   * selects a spot inside the ZIP code, turns its ZIP layer on and PINS it
+   * for comparison (ENGINE relationship-pinning), so the map outlines every
+   * district of the other layers on that lies inside the ZIP code or crosses
+   * its edge, and the reader sees the comparison without having to find it.
+   * When no other layer is on, the one turned on to compare with is chosen
+   * at the spot, in the order Adam gave: a city's council districts (the
+   * concept city-council: Chicago's wards) where the spot has one, the
+   * county board's districts where it does not ("Ward then county district
+   * rep if ward isn't present"), and the U.S. House's where neither answers,
+   * which is North Carolina's case outside its cities. A layer already on,
+   * such as one a question page turned on, is compared as it is.
+   *
+   * THE SPOT IS NOT AN ADDRESS, and the message says so: the cards answer
+   * for the selected point, as they always do, and the point is the place in
+   * the ZIP code farthest from its edges (scripts/build_zip_index.mjs, which
+   * also keeps it on the ZIP layer's own ground), nobody's house.
+   *
+   * NOTHING GOES TO A GEOCODER for a ZIP code a list holds: this app's own
+   * (ZIP_SEARCH_URL, the worksheet's zip_search key) or, for a ZIP code
+   * another app holds, the fleet's (../fleet-zips.json), whose row opens
+   * that app with the ZIP code as #q=. A ZIP code no list holds (a post
+   * office box's, one too narrow for a spot clear of its edges, or any in an
+   * app with no ZIP layer, Kentucky's) is searched as before, and its
+   * answers are marked so that #q= never selects one and a reader who picks
+   * one is told the cards are for that spot alone.
+   *
+   * THE COST, stated to Adam before he chose it: a comparison reads the
+   * whole of each layer it compares, so in Illinois a ZIP code search
+   * downloads the ZIP layer's whole file from the Census Bureau (about 4 MB)
+   * and, in Chicago, every county's wards (about 12 MB from about 20
+   * servers). Counted as zip-search/<the ZIP layer>, never by ZIP code,
+   * which says where a reader lives more precisely than the two-decimal
+   * rounding every point event is held to; the pin it makes is not counted
+   * as compare/<layer>, which stays the count of readers who pinned by hand. */
+  var ZIP_COMPARE_CONCEPTS = ["city-council", "county-board", "us-house"];
+  var zipIndexPromise = null;
+  function loadZipIndex() {
+    if (typeof ZIP_SEARCH_URL === "undefined") return Promise.resolve(null);
+    if (!zipIndexPromise) {
+      zipIndexPromise = fetchJSONWithRetry(ZIP_SEARCH_URL, {}, 2).then(function (data) {
+        var byZip = {};
+        ((data && data.features) || []).forEach(function (f) {
+          var p = f && f.properties;
+          if (p && p.zip && getLayerById(p.layer) && f.geometry && f.geometry.coordinates) byZip[p.zip] = f;
+        });
+        return byZip;
+      })["catch"](function (err) {
+        console.warn("ZIP code index unavailable; ZIP codes are searched as addresses:", err);
+        zipIndexPromise = null; // try again on the next search
+        return null;
+      });
+    }
+    return zipIndexPromise;
+  }
+  var FLEET_ZIPS_URL = "../fleet-zips.json";
+  var fleetZipsPromise = null;
+  function loadFleetZips() {
+    if (!fleetZipsPromise) {
+      fleetZipsPromise = fetchJSONWithRetry(FLEET_ZIPS_URL, {}, 1).then(function (data) {
+        return (data && data.zips) || {};
+      })["catch"](function (err) {
+        console.warn("fleet-zips.json unavailable; ZIP codes other apps hold are searched as addresses:", err);
+        fleetZipsPromise = null;
+        return null;
+      });
+    }
+    return fleetZipsPromise;
+  }
+  // { here: the index's feature } when this app holds the ZIP code, { away:
+  // the app } when another live app does, and {} when no list could say
+  function findZip(zip) {
+    return loadZipIndex().then(function (byZip) {
+      if (byZip && byZip[zip]) return { here: byZip[zip] };
+      return loadFleetZips().then(function (fleet) {
+        for (var id in fleet || {}) {
+          if (!fleet.hasOwnProperty(id) || id === THIS_METRO || !zipListed(fleet[id], zip)) continue;
+          for (var i = 0; i < METRO_EXPLORERS.length; i++) {
+            if (METRO_EXPLORERS[i].id === id) return { away: METRO_EXPLORERS[i] };
+          }
+        }
+        return {};
+      });
+    });
+  }
+  // A ZIP code a list holds answers alone: one row, which shows it here or
+  // opens the app that holds it
+  function renderZipRow(zip, found) {
+    if (inFlightController) inFlightController.abort(); // an address lookup from an earlier keystroke
+    clearResultRows(true);
+    clearResultRows(false);
+    if (found.here) {
+      geoResultsList.appendChild(zipResultRow(zip, found.here));
+      syncResultCount();
+      return;
+    }
+    var metro = found.away;
+    var row = siblingRow(metro, "ZIP code " + zip, function () {
+      if (metroHandedOff) return;
+      metroHandedOff = true;
+      geoStatus.textContent = "Opening " + siblingDisplayName(metro) + "…";
+      geoStatus.className = "geo-status";
+      trackEvent("metro-portal-go/" + metro.id, "zip");
+      var url = metroPortalUrl(metro);
+      window.location.href = url + (url.indexOf("#") < 0 ? "#" : "&") + "q=" + zip;
+    });
+    row.className += " zip-away";
+    geoResultsList.appendChild(row);
+    geoStatus.textContent = "ZIP code " + zip + " is in " + metro.label + ".";
+    geoStatus.className = "geo-status";
+  }
+  function zipResultRow(zip, f) {
+    var li = document.createElement("li");
+    li.className = "district-result zip-result";
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.appendChild(document.createTextNode("ZIP code " + zip));
+    var hint = document.createElement("span");
+    hint.className = "district-result-hint";
+    hint.textContent = "All of it, and the districts it crosses";
+    btn.appendChild(hint);
+    btn.addEventListener("click", function () {
+      clearTimeout(debounceTimer);
+      if (inFlightController) inFlightController.abort();
+      districtSearchSeq++; // nothing still in flight may redraw the list now
+      showZip(zip, f);
+    });
+    li.appendChild(btn);
+    return li;
+  }
+  // The search for a ZIP code: a list's row, or the geocoder's answers marked
+  // as one spot each
+  var zipAnswers = { seq: -1, zip: "" };
+  function runZipSearch(zip, submitted) {
+    var seq = districtSearchSeq;
+    return findZip(zip).then(function (found) {
+      if (seq !== districtSearchSeq) return; // a newer search owns the list now
+      if (found.here || found.away) return renderZipRow(zip, found);
+      zipAnswers = { seq: seq, zip: zip };
+      return runAddressSearch(zip, null, submitted);
+    });
+  }
+  // How renderGeocodeResults lists the geocoder's answers to a ZIP code no
+  // list holds: marked, so that #q= selects none (prefillGeocodeSearch), and
+  // picked with a message saying the cards are for that one spot
+  function zipAnswerRows(zip) {
+    return {
+      mark: function () { return "zip-answer"; },
+      pick: function (r) {
+        trackEvent("address-search");
+        geoResultsList.innerHTML = "";
+        setSelectedPoint(parseFloat(r.lat), parseFloat(r.lon));
+        zipMessage("Selected: " + r.display_name + ". This map can't show all of ZIP code " + zip +
+          ", so the cards are for this one spot in it, and a ZIP code can cross several districts.");
+        return true;
+      }
+    };
+  }
+  // A message about the ZIP code, kept on screen until another point is
+  // selected or another search begins; returns a function that rewrites it
+  // while it is still the one on screen
+  function zipMessage(text, extra) {
+    var seq = districtSearchSeq, picked = state.sequence;
+    function current() { return seq === districtSearchSeq && picked === state.sequence; }
+    function write(t, more) {
+      if (!current()) return;
+      geoStatus.textContent = t;
+      geoStatus.className = "geo-status";
+      if (more) geoStatus.appendChild(more);
+      collapseAfterSelect = false;
+      refreshSearchShellExpanded();
+    }
+    write(text, extra);
+    // every selection adds the selected point's marker (setSelectedPoint)
+    var watch = function () {
+      if (state.sequence === picked) return;
+      map.off("layeradd", watch);
+      if (seq !== districtSearchSeq) return; // a newer search wrote its own words
+      geoStatus.textContent = "";
+      collapseAfterSelect = true;
+      refreshSearchShellExpanded();
+    };
+    map.on("layeradd", watch);
+    return write;
+  }
+  // The name a layer's districts go by in a sentence: "City Ward", "County
+  // Board District", "U.S. House district"
+  function zipDistrictWord(mod) {
+    return /\b(?:district|ward)$/i.test(mod.label) ? mod.label : mod.label + " district";
+  }
+  function showZip(zip, f) {
+    var layer = f.properties.layer;
+    var mod = getLayerById(layer);
+    trackEvent("zip-search/" + layer);
+    var lng = f.geometry.coordinates[0], lat = f.geometry.coordinates[1];
+    geoResultsList.innerHTML = "";
+    setSelectedPoint(lat, lng, { skipPan: true });
+    var picked = state.sequence, point = state.selectedPoint;
+    var box = document.getElementById("toggle-" + layer);
+    if (box && !box.checked) box.click(); // a real click, so the layer's handlers run
+    // pinned without being counted as a reader's pin
+    if (pinnedParentId !== layer) setPinnedParent(layer, { quiet: true });
+    var lead = "The map has selected a spot inside ZIP code " + zip + ", not at any address, so the cards below " +
+      "are for that spot. The ZIP code is outlined in bold on the map";
+    var write = zipMessage(lead + ".");
+    var b = f.bbox;
+    // framed below the search panel, with room for the line the comparison
+    // adds to the message (clearOfSearchPanel)
+    if (b && b.length === 4) {
+      map.fitBounds([[b[1], b[0]], [b[3], b[2]]], { paddingTopLeft: [24, clearOfSearchPanel() + 36], paddingBottomRight: [24, 24] });
+    } else {
+      map.setView([lat, lng], Math.max(map.getZoom(), 13));
+    }
+    return zipCompareWith(mod, point, picked).then(function (compared) {
+      if (picked !== state.sequence || !compared) return;
+      var with1 = compared.turnOn || (compared.on.length === 1 ? compared.on[0] : null);
+      if (compared.turnOn) {
+        var other = document.getElementById("toggle-" + compared.turnOn.id);
+        if (other && !other.checked) other.click(); // a real click, as for the ZIP layer
+      }
+      write(lead + ", and so is every " + (with1 ? zipDistrictWord(with1) + " it crosses" :
+        "district it crosses in the layers you have on") + ". ", zipStatsButton(picked));
+    });
+  }
+  // What the ZIP code is compared with: { on: [the polygon layers already
+  // on that answer here] }, or { turnOn: the layer to turn on }, or null
+  function zipCompareWith(zipMod, point, picked) {
+    var zipIds = layerIdsOfConcept["zip-code"] || [];
+    var on = layers.filter(function (mod) {
+      return state.layersOn[mod.id] && mod.id !== zipMod.id && zipIds.indexOf(mod.id) < 0 && mod.overlay && mod.overlay.style;
+    });
+    return Promise.all(on.map(function (mod) { return layerRelevance(mod, picked); })).then(function (relevant) {
+      on = on.filter(function (mod, i) { return relevant[i]; });
+      if (on.length) return { on: on };
+      var candidates = [];
+      ZIP_COMPARE_CONCEPTS.forEach(function (concept) {
+        (layerIdsOfConcept[concept] || []).forEach(function (id) {
+          var mod = getLayerById(id);
+          if (mod && mod.overlay && mod.overlay.style && candidates.indexOf(mod) < 0) candidates.push(mod);
+        });
+      });
+      // the first that has a district at the spot, asked one at a time, so a
+      // layer later in the order downloads nothing when an earlier one answers
+      return candidates.reduce(function (chain, mod) {
+        return chain.then(function (found) {
+          if (found || picked !== state.sequence) return found;
+          return Promise.resolve()
+            .then(function () { return mod.coverage ? mod.coverage(point) : true; })
+            ["catch"](function () { return true; }) // a coverage test that throws fails open, as the cards' does
+            .then(function (inside) { return inside ? mod.query(point, picked) : null; })
+            .then(function (result) { return result ? { turnOn: mod } : null; }, function (err) {
+              console.warn("[" + mod.id + "] no answer at the ZIP code's spot:", err);
+              return null;
+            });
+        });
+      }, Promise.resolve(null));
+    });
+  }
+  // The comparison's numbers (ENGINE compare-stats), opened once the ZIP
+  // code's outline and every compared layer's boundaries and cards are in,
+  // or after the wait a shared report gets, with whatever has arrived
+  function zipStatsButton(picked) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "zip-stats-btn";
+    btn.textContent = "List them";
+    btn.setAttribute("aria-haspopup", "dialog");
+    btn.addEventListener("click", function () {
+      var until = Date.now() + STATS_RESTORE_WAIT_MS;
+      (function tryOpen() {
+        if (picked !== state.sequence || !document.body.contains(btn)) return;
+        var ready = !!relationshipParentFeature();
+        if (ready && (statsLayersSettled() || Date.now() >= until)) {
+          btn.disabled = false;
+          btn.textContent = "List them";
+          openCompareStats();
+          return;
+        }
+        if (Date.now() >= until) {
+          btn.disabled = false;
+          btn.textContent = "The outline hasn't loaded. Try again";
+          return;
+        }
+        btn.disabled = true;
+        btn.textContent = "Loading the outlines…";
+        setTimeout(tryOpen, 500);
+      })();
+    });
+    return btn;
   }
 
   /* ---------- counting the map links the search box reads ----------
@@ -9699,6 +10055,9 @@ function initOklahomaExplorer() {
     clearRangePin(); // a pin answers the search before this one
     var tag = fromLink ? addressStateTag(q) : "";
     if (tag && tag !== METRO_BRAND.instanceTag && showLinkElsewhere(fromLink, tag)) return Promise.resolve();
+    // a ZIP code typed, or handed over as #q= (runZipSearch)
+    var zip = fromLink ? "" : zipQuery(q);
+    if (zip) return runZipSearch(zip, submitted);
     return findDistricts(q).then(function (found) {
       if (seq !== districtSearchSeq) return; // a newer search owns the list now
       renderDistrictSection(found);
@@ -10382,7 +10741,10 @@ function initOklahomaExplorer() {
    * one; and the row a link to a place in another state draws
    * (showLinkElsewhere) is followed, because the address itself says which
    * state's app it belongs to, so a place shared into the installed app
-   * opens in its own state.
+   * opens in its own state. So is the row a ZIP code another app holds
+   * draws (renderZipRow), for the same reason, and a ZIP code this app holds
+   * is one row, which is selected (showZip); an answer to a ZIP code no list
+   * holds is never selected (zipAnswerRows), because it is one spot in it.
    *
    * NOR IS AN ANSWER THAT IS NOT THE HOUSE the address names
    * (listHeldAnswers), though it be the only one: an answer without the
@@ -10400,8 +10762,8 @@ function initOklahomaExplorer() {
     return runGeocodeSearch(q, null, true).then(function () {
       var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
       var place = geoResultsList.querySelectorAll("li.link-place > button");
-      var away = geoResultsList.querySelectorAll("li.map-link-away > button");
-      if (own.length === 1) { if (!/\b(?:no-number|other-street)\b/.test(own[0].parentNode.className)) own[0].click(); }
+      var away = geoResultsList.querySelectorAll("li.map-link-away > button, li.zip-away > button");
+      if (own.length === 1) { if (!/\b(?:no-number|other-street|zip-answer)\b/.test(own[0].parentNode.className)) own[0].click(); }
       else if (place.length === 1) place[0].click();
       else if (!own.length && away.length === 1) away[0].click();
     })["catch"](function (err) {
@@ -16960,7 +17322,10 @@ function initOklahomaExplorer() {
     if (unpin) unpin.addEventListener("click", function () { setPinnedParent(null); });
   }
 
-  function setPinnedParent(id) {
+  // `opts.quiet`: a pin the app makes itself, for a ZIP code search (ENGINE
+  // geocoder-search showZip), which counts zip-search/<layer> instead, so
+  // compare/<layer> stays the count of readers who pinned by hand
+  function setPinnedParent(id, opts) {
     pinnedParentId = (pinnedParentId === id) ? null : id;
     // NOTHING COUNTED THIS UNTIL 2026-09-18, so "nobody uses the comparison"
     // was an inference and never a measurement: the app has instrumented
@@ -16978,7 +17343,8 @@ function initOklahomaExplorer() {
     // that page an undercount is a false statement exactly as an overcount is.
     // The same regex reads COMMENTS as code, so this one deliberately does not
     // spell the function name next to a quote.
-    if (pinnedParentId) trackEvent("compare/" + pinnedParentId);
+    if (opts && opts.quiet) { /* counted by its search */ }
+    else if (pinnedParentId) trackEvent("compare/" + pinnedParentId);
     else trackEvent("compare-stop");
     refreshAllPinButtons();
     refreshRelationshipOutlines();

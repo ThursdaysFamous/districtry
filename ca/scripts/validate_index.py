@@ -100,6 +100,7 @@ GEOMETRY_FILES = {
     "congress-districts.json": (6, 6),
     "ca-senate-districts.json": (4, 4),
     "ca-assembly-districts.json": (8, 8),
+    "zip-index.json": (28, 28),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside san-francisco-county-outline.json (the city: this ZIP layer declares no coverage test, and the city is where this app answers); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -415,6 +416,11 @@ def _point_in_geometry(lng, lat, geom):
                 inside = not inside
             j = i
         return inside
+    # A Point or line encloses nothing, so it cannot contain the negative
+    # point. The ZIP code index (one Point per ZIP code) is a geometry file
+    # for caching purposes and has no polygons to test.
+    if not geom or geom.get("type") not in ("Polygon", "MultiPolygon"):
+        return False
     polys = geom["coordinates"] if geom["type"] == "MultiPolygon" else [geom["coordinates"]]
     return any(ring_hit(p[0]) and not any(ring_hit(h) for h in p[1:]) for p in polys)
 

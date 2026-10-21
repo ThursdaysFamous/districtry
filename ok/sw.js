@@ -54,6 +54,7 @@ const GEOMETRY_URLS = [
   "./data/app/ok-judicial-districts.json",
   "./data/app/ok-conservation-districts.json",
   "./data/app/ok-city-wards.json",
+  "./data/app/zip-index.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI

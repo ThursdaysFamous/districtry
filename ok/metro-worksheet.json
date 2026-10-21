@@ -52,6 +52,12 @@
       "goatcounter_url": "https://districtry.goatcounter.com/count"
     }
   },
+  "zip_search": {
+    "file": "zip-index.json",
+    "layers": [
+      {"id": "zip-code", "field": "ZCTA5", "inside": ["metro-outline.json"]}
+    ]
+  },
   "socrata_host": "https://data.invalid",
   "socrata_app_token": "",
   "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
@@ -551,6 +557,12 @@
         "min_features": 64,
         "max_features": 64,
         "note": "The 64 council wards and districts of the 10 cities above 25,000 people whose wards elect their own members and are drawn, pre-built by ok/scripts/build_ok_city_wards.py through scripts/city_ward_maps.py from the map each city publishes (Douglas-Peucker at 4 m; a 4,000-point agreement gate over the ten cities' extents, measured 100.00%, with no overlap; each map held to its city's Census outline). 138 KB, 33 KB gzipped (measured 2026-10-21), fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "zip-index.json",
+        "min_features": 664,
+        "max_features": 664,
+        "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
       }
     ],
     "rosters": [
