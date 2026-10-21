@@ -95,7 +95,7 @@
      "district": "Cattaraugus"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "0140": {
    "source": "nation",
@@ -134,7 +134,7 @@
      "note": "the same page also spells it Connors"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "0170": {
    "source": "nation",
@@ -164,7 +164,7 @@
      "role": "Treasurer"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "0335": {
    "source": "nation",
@@ -222,7 +222,7 @@
      "email": "mildredholmes@boisforte-nsn.gov"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "0525": {
    "source": "nation",
@@ -252,7 +252,7 @@
      "role": "Executive Committee Member"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "0540": {
    "source": "nation",
@@ -348,7 +348,7 @@
      "district": "Cattaraugus"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "0635": {
    "source": "nation",
@@ -411,7 +411,7 @@
      "district": "District II"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "1135": {
    "source": "nation",
@@ -445,7 +445,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "1370": {
    "source": "nation",
@@ -483,7 +483,7 @@
      "role": "Councilor"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "1450": {
    "source": "nation",
@@ -570,7 +570,7 @@
      "email": "David.Greendeer@ho-chunk.com"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "1550": {
    "source": "nation",
@@ -600,7 +600,7 @@
      "role": "Sergeant-at-Arms"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "1610": {
    "source": "nation",
@@ -727,7 +727,7 @@
      "role": "Member"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "1825": {
    "source": "state-list",
@@ -831,7 +831,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "1940": {
    "source": "nation",
@@ -864,7 +864,7 @@
      "district": "District III"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "1963": {
    "source": "nation",
@@ -946,7 +946,7 @@
      "termEnds": "2027"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2055": {
    "source": "nation",
@@ -985,7 +985,7 @@
      "email": "dawn.pendleton@lowersioux-nsn.gov"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2150": {
    "source": "nation",
@@ -1030,7 +1030,7 @@
      "district": "Bradley District"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2175": {
    "source": "nation",
@@ -1076,7 +1076,7 @@
      "role": "Legislator"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2285": {
    "source": "nation",
@@ -1146,7 +1146,7 @@
      "note": "White Earth Reservation Secretary/Treasurer"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2300": {
    "source": "nation",
@@ -1245,7 +1245,7 @@
      "district": "Tucker"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2535": {
    "source": "nation",
@@ -1341,7 +1341,7 @@
      "district": "Cattaraugus"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2560": {
    "source": "nation",
@@ -1405,7 +1405,7 @@
      "email": "khill@oneidanation.org"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2890": {
    "source": "nation",
@@ -1459,7 +1459,7 @@
      "role": "Member At Large"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "2980": {
    "source": "nation",
@@ -1521,7 +1521,8 @@
      "termEnds": "2028"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-17",
+   "carriedFrom": "2026-10-17"
   },
   "3085": {
    "source": "nation",
@@ -1584,7 +1585,7 @@
      "termEnds": "July 2027"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "3305": {
    "source": "nation",
@@ -1614,7 +1615,7 @@
      "role": "Representative"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "3320": {
    "source": "nation",
@@ -1648,7 +1649,7 @@
      "role": "Sub-Chief"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "3635": {
    "source": "nation",
@@ -1735,7 +1736,7 @@
      "phone": "906-440-8294"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "3680": {
    "source": "nation",
@@ -1757,7 +1758,7 @@
      "role": "Secretary/Treasurer"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "3885": {
    "source": "state-list",
@@ -1790,7 +1791,7 @@
      "role": "Council Member II"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "4015": {
    "source": "nation",
@@ -1828,7 +1829,7 @@
      "role": "Council Member"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "4315": {
    "source": "nation",
@@ -1903,7 +1904,8 @@
      "phone": "(320) 564-6329"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-17",
+   "carriedFrom": "2026-10-17"
   },
   "4595": {
    "source": "nation",
@@ -1940,7 +1942,7 @@
      "district": "District III"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   },
   "4625": {
    "source": "nation",
@@ -2004,7 +2006,7 @@
      "email": "ireta.frazier@winnebagotribe.com"
     }
    ],
-   "read": "2026-10-17"
+   "read": "2026-10-20"
   }
  }
 }
