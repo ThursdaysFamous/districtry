@@ -467,6 +467,12 @@ def measure_address_list(src, name):
 # place shared into the app opened that app, and nothing about the place,
 # which travels in the address hash and reaches analytics only as the
 # rounded `select` any selection sends.
+# `app-shortcut/` joined on 2026-10-21, with the installed app's long-press
+# shortcuts (the manifest's `shortcuts`, scripts/build_manifests.py):
+# `app-shortcut/<tag>/<action>` records that "Use my location" (`locate`) or
+# "Report a problem" (`feedback`) opened that app, by app and action and
+# never by place. The location the first one asks for is the button's own,
+# and reaches analytics only as the rounded `geolocate-success` it sends.
 # `map-link-read/` joined on 2026-10-17, to count how often places are shared
 # or pasted as Google Maps and Apple Maps links and whether the search found
 # them: `map-link-read/<tag>/<source>/<form>/<via>/<outcome>`, sent once per
@@ -491,7 +497,7 @@ def measure_address_list(src, name):
 # that keeps a list of its ZIP codes (ZIP_SEARCH_URL, the worksheet's
 # `zip_search` key) can send it, so the sentence names the apps that cannot,
 # measured off each app's own file, as it does for district-search/.
-EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
+EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "app-shortcut/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
                    "feedback-open/button", "feedback-open/link", "feedback-send/email",
@@ -1248,7 +1254,8 @@ def measure_counter_coverage(apps):
 
 def launcher_keys():
     """The storage keys the installed app's launcher reads (the state used last)
-    and writes (a place shared into the app), established by the gate that
+    and writes (a place shared into the app, a long-press shortcut), established
+    by the gate that
     already holds both (scripts/build_manifests.py --check), so the sentences
     naming the launcher and that gate cannot disagree."""
     try:
@@ -1267,6 +1274,28 @@ def launcher_reads():
 def launcher_shares():
     """The session key the launcher leaves when a place is shared into the app."""
     return launcher_keys()[1]
+
+
+def launcher_shortcuts():
+    """The session key the launcher leaves when a long-press shortcut opens it."""
+    return launcher_keys()[2]
+
+
+def locate_shortcut_clause():
+    """Where else the location is asked for: the installed app's long-press
+    shortcut, when the manifest has one that does what the button does. Read
+    through scripts/build_manifests.py, which writes the manifest, so the
+    sentence goes the day the shortcut does."""
+    try:
+        import build_manifests
+    except ImportError as e:
+        fail("cannot import scripts/build_manifests.py (%s). The sentence about "
+             "where the location is asked for is measured through it." % e)
+    names = [s["name"] for s in build_manifests.SHORTCUTS if s["action"] == "locate"]
+    if not names:
+        return ""
+    return (", or choose <strong>&#34;%s&#34;</strong> from a long press on the installed "
+            "app\u2019s icon" % esc(names[0]))
 
 
 def counter_who():
@@ -1633,6 +1662,23 @@ def render_storage_paragraphs(apps):
                 "so the map it opens can count that a share arrived. The map removes the "
                 "mark as soon as it has counted it. This is on %s. It says nothing about "
                 "the place, and it never leaves your browser.</p>"
+                % (code("/app/"), code(store), code(key), esc(joined(users))))
+        elif key == "districtry-shortcut":
+            # The apps read and remove this key; the launcher writes it, which
+            # the manifest gate holds, as it does the share key.
+            shortcut_key = launcher_shortcuts()
+            if shortcut_key != key:
+                fail("the apps count a long-press shortcut under %r and the installed "
+                     "app's launcher marks it under %r, so the sentence about it would "
+                     "be false" % (key, shortcut_key))
+            out.append(
+                "<p><strong>A shortcut on the app's icon.</strong> When you open the "
+                "installed app from a long press on its icon, with \u201cUse my "
+                "location\u201d or \u201cReport a problem\u201d, its launcher at %s "
+                "leaves a mark in %s under %s naming which, so the map it opens can count "
+                "that the shortcut was used. The map removes the mark as soon as it has "
+                "counted it. This is on %s. It says nothing about where you are, and it "
+                "never leaves your browser.</p>"
                 % (code("/app/"), code(store), code(key), esc(joined(users))))
         elif key == PLACE_KEY:
             # The key is the landing builder's own constant, so this sentence
@@ -2103,9 +2149,10 @@ PRIVACY_BODY = """
   <section>
     <h2>Your location</h2>
     <div class="card">
-      <p>No app here asks for your location on its own. It is offered once, behind the
-        <strong>&#34;Use my current location&#34;</strong> button, and your browser asks your
-        permission before anything happens. Declining costs you nothing else on the page.</p>
+      <p>No app here asks for your location on its own. It is asked for only when you press
+        the <strong>&#34;Use my current location&#34;</strong> button%(locateshortcut)s, and
+        your browser asks your permission before anything happens. Declining costs you nothing
+        else on the page.</p>
       <p>If you allow it, the coordinates your browser reports are used <strong>in the
         page</strong> to drop a point and answer the layer cards. The one thing that goes
         anywhere is a <strong>rounded pair</strong> sent to that app's GoatCounter — %(dp)d
@@ -2310,6 +2357,7 @@ def build():
             "permalink": code("#p=41.8825,-87.6285"),
             "hash": code("#"),
             "dp": COORD_DECIMALS,
+            "locateshortcut": locate_shortcut_clause(),
         })
 
 

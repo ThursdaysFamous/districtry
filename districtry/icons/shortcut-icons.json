@@ -1,0 +1,14 @@
+{
+  "shortcut-locate-192.png": {
+    "source": "shortcut-locate.svg",
+    "source_sha256": "be518c845153c7e37dfa5af21988385024732ebb17ffcfc87320048d58f79cb6",
+    "png_sha256": "266f7ccdc05e841df2dce2e336b0a509f8a626d50de3f118b31e275b327a534a",
+    "px": 192
+  },
+  "shortcut-report-192.png": {
+    "source": "shortcut-report.svg",
+    "source_sha256": "1d7f642accb175ffcfb9f52ba4687e0b3a9d28478e947c8cbc18cbf027546a31",
+    "png_sha256": "a4efef40bf053e5c8edfb6b049a6c79cb494cdc55acf7382ddc444eb2ecbee1d",
+    "px": 192
+  }
+}
