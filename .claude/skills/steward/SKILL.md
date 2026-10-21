@@ -177,6 +177,7 @@ python3 nc/scripts/build_nc_court_districts.py --check              # North Caro
 python3 ar/scripts/build_ar_precincts.py --check                     # a statewide precinct layer: hash and per-county counts against its record, each county covered by its own precincts, the card's stated wording
 python3 in/scripts/build_in_precincts.py --check                     # the same for Indiana
 python3 ky/scripts/build_ky_precincts.py --check                     # the same for Kentucky
+python3 la/scripts/build_la_precincts.py --check                     # the same for Louisiana
 python3 nc/scripts/build_nc_precincts.py --check                     # the same for North Carolina
 python3 sc/scripts/build_sc_precincts.py --check                     # the same for South Carolina
 python3 tn/scripts/build_tn_precincts.py --check                     # the same for Tennessee

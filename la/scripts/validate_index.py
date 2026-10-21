@@ -87,7 +87,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 10
+MIN_REGISTER_LAYER = 11
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -95,8 +95,8 @@ MIN_REGISTER_LAYER = 10
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "la-senate", "county", "school-district-unified", "la-house",
-    "zip-code", "parish-district", "municipality", "tribal-government",
-    "police-station", "fire-station", "post-office",
+    "zip-code", "parish-district", "voting-precinct", "municipality",
+    "tribal-government", "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -107,6 +107,7 @@ GEOMETRY_FILES = {
     "la-senate-districts.json": (39, 39),  # The 39 Louisiana Senate districts.
     "la-house-districts.json": (105, 105),  # The 105 Louisiana House districts.
     "la-parish-districts.json": (56, 56),  # The police jury, council and commission districts of the 6 parishes whose current lines are confirmed (la/scripts/build_la_parish_districts.py).
+    "la-precincts.json": (3569, 3569),  # Every Louisiana voting precinct, pre-built by la/scripts/build_la_precincts.py through scripts/statewide_precincts.py from the Legislature's statewide precinct file, its edition of 27 January 2026 (Douglas-Peucker at 12 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.95% with zero overlaps; an exact 3,569 count, after the five areas of Lake Pontchartrain the file marks as in no voting district are left out). 7.8 MB, 2.31 MB gzipped, fetched only when a reader switches the layer on.
     "tribal-areas.json": (6, 6),  # Louisiana's tribal land (scripts/build_tribal_areas.py) — four reservations and two pieces of off-reservation trust land, held by four nations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-20; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 

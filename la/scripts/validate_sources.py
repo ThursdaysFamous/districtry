@@ -215,6 +215,22 @@ PROVENANCE = [
         "note": "The list of drawn parishes the layer's coverage test reads, written by the same build.",
     },
     {
+        "layer": "voting-precinct",
+        "app_file": "la-precincts.json",
+        "source_url": "https://redist.legis.la.gov/default_ShapeFiles2020",
+        "note": (
+            "Louisiana's 3,569 voting precincts from the Legislature's "
+            "statewide precinct file, its edition of 27 January 2026, listed on "
+            "this page with every earlier edition; pre-built by "
+            "la/scripts/build_la_precincts.py through "
+            "scripts/statewide_precincts.py, which leaves out the file's five "
+            "areas of Lake Pontchartrain in no voting district. The page is "
+            "checked rather than the file because the file is a 16 MB zip; "
+            "the quarterly --watch row in la/WATCH.md reads the page for a "
+            "newer edition and the file for a changed one."
+        ),
+    },
+    {
         "layer": "county",
         "app_file": "metro-outline.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
