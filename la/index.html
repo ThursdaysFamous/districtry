@@ -1670,8 +1670,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .group-safety .dot { background: var(--accent-warm); }
   .group-schools .dot { background: #E8A324; }
   .group-geography .dot { background: #5C8F6B; }
-  /* the compared layer's card, moved to the top of the list on a phone (see
-     placePinnedCard); the dot is the compared outline's own near-black, and
+  /* the compared layer's card, moved to the top of the list (see
+     placePinnedCard); the dot is the compared line's own near-black, and
      the section disappears whenever the card inside it is hidden */
   .group-pinned .dot { background: var(--ink, #14181C); }
   .group-pinned:not(:has(> .group-cards > .layer-block:not([hidden]))) { display: none; }
@@ -3689,9 +3689,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
      stopped describing the same object. Measured at 390px and 1400px, idle
      and expanded: this shadow was the ONLY non-colour difference between
      them; every box in the search bar is otherwise identical. */
-  /* the pinned-parent outline is deliberately near-black (#14181C) so it reads
-     as neutral over a light basemap; over a dark one it is simply gone. */
-  [data-theme="dark"] .rel-parent-outline { stroke: #ece9f4; }
+  /* the pinned district's line is near-black (#14181C) so it reads as neutral
+     over a light basemap; over a dark one it is simply gone. The line itself
+     takes its colour in script (relParentInk); this is its key swatch. */
   [data-theme="dark"] .rel-sw-parent { border-top-color: #ece9f4; }
   [data-theme="dark"] .rel-sw-in { border-top-color: #6ea8ff; }
   [data-theme="dark"] .rel-sw-cross { border-top-color: #6ea8ff; }
@@ -9785,19 +9785,44 @@ function initLouisianaExplorer() {
   function zipMessage(text, extra) {
     var seq = districtSearchSeq, picked = state.sequence;
     function current() { return seq === districtSearchSeq && picked === state.sequence; }
+    // The message stays open while the reader is at the search bar and folds
+    // away once they move off it (the pointer leaves it, a click or a tap
+    // lands elsewhere, or focus moves out), as a picked address's line does
+    // at once; hovering or focusing the bar shows it again. Only a mouse
+    // leaving counts, because a finger "leaves" every time it lifts.
+    var left = false;
     function write(t, more) {
       if (!current()) return;
       geoStatus.textContent = t;
       geoStatus.className = "geo-status";
       if (more) geoStatus.appendChild(more);
-      collapseAfterSelect = false;
+      collapseAfterSelect = left;
+      refreshSearchShellExpanded();
+    }
+    function stopWatchingAway() {
+      searchShellEl.removeEventListener("pointerleave", away);
+      searchShellEl.removeEventListener("focusout", away);
+      document.removeEventListener("pointerdown", away, true);
+    }
+    function away(e) {
+      if (!current()) { stopWatchingAway(); return; }
+      if (e.type === "pointerleave" && e.pointerType !== "mouse") return;
+      if (e.type === "focusout" && searchShellEl.contains(e.relatedTarget)) return;
+      if (e.type === "pointerdown" && searchShellEl.contains(e.target)) return;
+      left = true;
+      stopWatchingAway();
+      collapseAfterSelect = true;
       refreshSearchShellExpanded();
     }
     write(text, extra);
+    searchShellEl.addEventListener("pointerleave", away);
+    searchShellEl.addEventListener("focusout", away);
+    document.addEventListener("pointerdown", away, true);
     // every selection adds the selected point's marker (setSelectedPoint)
     var watch = function () {
       if (state.sequence === picked) return;
       map.off("layeradd", watch);
+      stopWatchingAway();
       if (seq !== districtSearchSeq) return; // a newer search wrote its own words
       geoStatus.textContent = "";
       collapseAfterSelect = true;
@@ -11089,10 +11114,17 @@ function initLouisianaExplorer() {
   // declaration), darkened so the outline pops against that layer's own
   // lighter fill/stroke instead of an unrelated universal gold.
   var HIGHLIGHT_DARKEN_AMOUNT = 0.35;
+  // The district pinned for comparison is lit in the comparison's own ink
+  // instead (relParentInk, in the pin-relationship block), so its own line is
+  // the reference the other districts are outlined against. Until 2026-10-21
+  // the comparison drew a second line on top from the layer's whole file,
+  // which for a layer drawn from tiles is the coarser copy: a ZIP code's
+  // whole set is simplified to about 55 m and its tiles are not, so the two
+  // lines ran side by side.
   function highlightStyleFor(mod) {
     var rt = layerRuntime[mod.id];
     return {
-      color: darkenHexColor(moduleColor(mod), HIGHLIGHT_DARKEN_AMOUNT),
+      color: mod.id === pinnedParentId ? relParentInk() : darkenHexColor(moduleColor(mod), HIGHLIGHT_DARKEN_AMOUNT),
       weight: 4,
       opacity: 1,
       // an outline-only layer keeps no fill even when it's the matched region,
@@ -17679,13 +17711,30 @@ function initLouisianaExplorer() {
     return findFeatureContaining(rt.geojson, state.selectedPoint);
   }
 
-  function drawRelationshipOutlines(parentFeature) {
-    // the pinned parent itself — bold dark frame so it reads as the reference
-    L.geoJSON(parentFeature, {
-      style: { color: "#14181C", weight: 4, opacity: 1, fill: false, className: "rel-parent-outline" },
-      interactive: false
-    }).addTo(relationshipGroup);
+  // The pinned district is not drawn here: its own lit line takes this ink
+  // (highlightStyleFor), so the reference is the line the map already draws
+  // rather than a second copy beside it. Near-black reads as neutral over a
+  // light basemap and is gone over a dark one, hence the light twin.
+  function relParentInk() {
+    return dstDark ? "#ece9f4" : "#14181C";
+  }
+  // Repaint the lit district of the layer that was pinned and of the one that
+  // is now, so each takes or drops the comparison's ink. The full sweep, since
+  // the fast path skips a path whose match has not moved.
+  var relInkedPin = null;
+  function repaintComparedLine() {
+    var was = relInkedPin;
+    relInkedPin = pinnedParentId;
+    if (was === pinnedParentId) return;
+    [was, pinnedParentId].forEach(function (id) {
+      var mod = id && getLayerById(id), rt = mod && layerRuntime[id];
+      if (!rt || !rt.overlayLayer || !state.layersOn[id]) return;
+      rt.highlightApplied = false;
+      updateLayerHighlight(mod);
+    });
+  }
 
+  function drawRelationshipOutlines(parentFeature) {
     var nIn = 0, nCross = 0, drawn = 0, capped = false;
     for (var li = 0; li < layers.length && !capped; li++) {
       var mod = layers[li];
@@ -17862,23 +17911,22 @@ function initLouisianaExplorer() {
       if (rt && rt.pinBtn) stylePinButton(rt.pinBtn, mod.id);
     });
     placePinnedCard(); // every pin change runs through here, including the unpin on toggle-off
+    repaintComparedLine();
   }
 
-  /* ---- the compared layer's card leads the list on a phone ----
-   * On a phone the card list sits below the map, grouped political → safety →
-   * schools → geography, so a compared school or geography district could be
-   * a long scroll away from the map that is outlining it. While a layer is
-   * pinned there, its card is MOVED (never copied: a second copy would break
-   * every binding layerRuntime holds on the first) into a "Comparing to"
-   * section at the top of the list, and put back exactly where it came from
-   * on unpin, on a new pin, or when the viewport widens past the phone
-   * breakpoint — the same 767px the skin's phone layout uses. A pinned
-   * sub-layer (Ward Precinct) moves on its own, out of its parent card. */
+  /* ---- the compared layer's card leads the list ----
+   * The card list is grouped political → safety → schools → geography, so a
+   * compared school or geography district could be a long scroll away from
+   * the map that is outlining it. While a layer is pinned, its card is MOVED
+   * (never copied: a second copy would break every binding layerRuntime
+   * holds on the first) into a "Comparing to" section at the top of the list,
+   * and put back exactly where it came from on unpin or on a new pin. A
+   * pinned sub-layer (Ward Precinct) moves on its own, out of its parent
+   * card. Until 2026-10-21 this was done on a phone only (from 2026-09-22),
+   * so on a computer the compared card stayed in its group, which read as
+   * the feature having stopped working. */
   var relPinnedSlot = null;  // the <section> at the top of #groups-root
   var relPinnedHome = null;  // {block, parent, next}: where the moved card lives
-  function relIsPhone() {
-    return !!(window.matchMedia && window.matchMedia("(max-width: 767px)").matches);
-  }
   function placePinnedCard() {
     if (relPinnedHome) {
       var home = relPinnedHome;
@@ -17888,7 +17936,7 @@ function initLouisianaExplorer() {
     }
     var rt = pinnedParentId ? layerRuntime[pinnedParentId] : null;
     var root = document.getElementById("groups-root");
-    if (!rt || !rt.block || !root || !relIsPhone()) return;
+    if (!rt || !rt.block || !root) return;
     if (!relPinnedSlot) {
       relPinnedSlot = document.createElement("section");
       relPinnedSlot.className = "group-section group-pinned";
@@ -17906,32 +17954,45 @@ function initLouisianaExplorer() {
     relPinnedHome = { block: rt.block, parent: rt.block.parentNode, next: rt.block.nextSibling };
     relPinnedSlot.lastChild.appendChild(rt.block);
   }
-  // After a tap on "Compare to this district" moves the card to the top of
+  // The element the card list scrolls in: the side column on a computer, or
+  // null where the page itself scrolls (a phone).
+  function relScrollParent(el) {
+    for (var n = el.parentElement; n && n !== document.body && n !== document.documentElement; n = n.parentElement) {
+      var oy = window.getComputedStyle(n).overflowY;
+      if ((oy === "auto" || oy === "scroll") && n.scrollHeight > n.clientHeight) return n;
+    }
+    return null;
+  }
+  // After a click on "Compare to this district" moves the card to the top of
   // the list, scroll the list up after it: otherwise the card leaves from
-  // under the reader's finger and a different one takes its place. The
-  // target is the "Comparing to" heading, landed just below the map, which
-  // is sticky on a phone and covers the top ~370px of the viewport (measured
-  // 390x844) — a plain scrollIntoView would park the card underneath it.
-  // Only a TAP does this: a permalink arriving pinned, or a resize across
-  // the breakpoint, leaves the reader's scroll position alone. Moving a
-  // focused button out of the DOM drops its focus, so it is handed back
-  // without scrolling, or a keyboard reader loses their place.
+  // under the reader's pointer and a different one takes its place. The
+  // target is the "Comparing to" heading. On a phone the page scrolls and the
+  // map above the list is sticky, covering the top ~370px of the viewport
+  // (measured 390x844), so the heading is landed just below it; a plain
+  // scrollIntoView would park the card underneath. On a computer the list
+  // scrolls in its own column. Only a CLICK does this: a permalink arriving
+  // pinned, or a search pinning a ZIP code, leaves the reader's scroll
+  // position alone. Moving a focused button out of the DOM drops its focus,
+  // so it is handed back without scrolling, or a keyboard reader loses their
+  // place.
   function followPinnedCard(btn) {
     if (!relPinnedHome || !relPinnedSlot || !relPinnedSlot.parentNode) return;
-    var mapCol = document.querySelector(".map-col");
-    var cover = mapCol && window.getComputedStyle(mapCol).position === "sticky"
-      ? mapCol.getBoundingClientRect().bottom : 0;
-    var delta = relPinnedSlot.getBoundingClientRect().top - Math.max(cover, 0) - 8;
     var still = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-    if (Math.abs(delta) > 1) window.scrollBy({ top: delta, behavior: still ? "auto" : "smooth" });
+    var behavior = still ? "auto" : "smooth";
+    var column = relScrollParent(relPinnedSlot);
+    if (column) {
+      var lift = relPinnedSlot.getBoundingClientRect().top - column.getBoundingClientRect().top - 8;
+      if (Math.abs(lift) > 1) column.scrollBy({ top: lift, behavior: behavior });
+    } else {
+      var mapCol = document.querySelector(".map-col");
+      var cover = mapCol && window.getComputedStyle(mapCol).position === "sticky"
+        ? mapCol.getBoundingClientRect().bottom : 0;
+      var delta = relPinnedSlot.getBoundingClientRect().top - Math.max(cover, 0) - 8;
+      if (Math.abs(delta) > 1) window.scrollBy({ top: delta, behavior: behavior });
+    }
     if (btn && document.activeElement !== btn) {
       try { btn.focus({ preventScroll: true }); } catch (e) { /* focus is a courtesy, never a failure */ }
     }
-  }
-  if (window.matchMedia) {
-    var relPhoneMQ = window.matchMedia("(max-width: 767px)");
-    if (relPhoneMQ.addEventListener) relPhoneMQ.addEventListener("change", placePinnedCard);
-    else if (relPhoneMQ.addListener) relPhoneMQ.addListener(placePinnedCard);
   }
   function stylePinButton(btn, id) {
     var pinned = pinnedParentId === id;
@@ -18973,6 +19034,19 @@ function initLouisianaExplorer() {
       var color = null;
       rt.overlayLayer.eachLayer(function (l) { if (!color && l.options && l.options.color) color = l.options.color; });
       return color;
+    },
+    // the colour the lit district's line is drawn in, so a test can see the
+    // compared district take the comparison's ink (relParentInk)
+    highlightColor: function (id) {
+      var mod = getLayerById(id), rt = layerRuntime[id];
+      if (!mod || !rt || !rt.overlayLayer || !rt.highlightApplied) return null;
+      if (rt.overlayLayer.dxTiles) {
+        var gl = tileGLLayer && tileGLLayer.getMaplibreMap(), ids = tileIds(mod);
+        if (rt.tileLiveSelected) return rt.overlayLayer.liveSelected ? highlightStyleFor(mod).color : null;
+        return gl && gl.getLayer(ids.hl) ? gl.getPaintProperty(ids.hl, "line-color") : null;
+      }
+      var lit = rt.highlightedLayer;
+      return lit && lit.options ? lit.options.color : null;
     },
     loadWholeFile: function (id) {
       var mod = getLayerById(id);

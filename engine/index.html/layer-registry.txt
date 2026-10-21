@@ -232,10 +232,17 @@
   // declaration), darkened so the outline pops against that layer's own
   // lighter fill/stroke instead of an unrelated universal gold.
   var HIGHLIGHT_DARKEN_AMOUNT = 0.35;
+  // The district pinned for comparison is lit in the comparison's own ink
+  // instead (relParentInk, in the pin-relationship block), so its own line is
+  // the reference the other districts are outlined against. Until 2026-10-21
+  // the comparison drew a second line on top from the layer's whole file,
+  // which for a layer drawn from tiles is the coarser copy: a ZIP code's
+  // whole set is simplified to about 55 m and its tiles are not, so the two
+  // lines ran side by side.
   function highlightStyleFor(mod) {
     var rt = layerRuntime[mod.id];
     return {
-      color: darkenHexColor(moduleColor(mod), HIGHLIGHT_DARKEN_AMOUNT),
+      color: mod.id === pinnedParentId ? relParentInk() : darkenHexColor(moduleColor(mod), HIGHLIGHT_DARKEN_AMOUNT),
       weight: 4,
       opacity: 1,
       // an outline-only layer keeps no fill even when it's the matched region,
