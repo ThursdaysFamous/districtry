@@ -3694,10 +3694,12 @@ neither names a person.
 | "we do not publish them" | A refusal, which counts at once towards the done standard's fourth test. Record it with the date and tag the gap record. |
 | no reply after the follow-up cadence | `UNRESPONSIVE` after one follow-up and thirty days, recorded with both dates, and the record is tagged then and not before. |
 
-**Urbana is deliberately NOT here.** It is the other Illinois city above 25,000 that names
-nobody, and its site resets every connection from this project's sandbox — which is a measurement
+**Urbana is deliberately NOT here.** It was the other Illinois city above 25,000 that named
+nobody, and its site reset every connection from this project's sandbox — which is a measurement
 of this vantage and not of the city. Writing to a city to ask for data it may already publish is
-a question we would be asking of ourselves. That one waits on a reading from a build machine.
+a question we would be asking of ourselves. **It needed no letter at all**: on 2026-10-21 the city
+turned out to have moved its site to `www.urbanail.gov`, which serves this project's own client,
+and its mayor, council and clerk ship from there (`urbana-city-wards` carries the story).
 
 ---
 
@@ -3706,7 +3708,21 @@ a question we would be asking of ourselves. That one waits on a reading from a b
 
 > **NAMED RATHER THAN NUMBERED**, for the reason `il-gurnee-board-names` above gives.
 
-> **NOT YET ASKED — DRAFTED 2026-10-01.** One message, to the City Clerk. On send, change
+> **WITHDRAWN 2026-10-21, NEVER SENT, AND THE QUESTION IT ASKS HAD THE WRONG PREMISE.** The
+> city had not blocked anybody: it had moved. Its site is now `www.urbanail.gov`, whose footer
+> names the City of Urbana at 400 South Vine Street and whose council members' addresses are on
+> that domain, and it answers this project's own client with a full page (requests plus the
+> districtry roster token, HTTP 200, robots.txt Drupal's default allowing the pages read). The
+> mayor, the seven ward council members and the elected City Clerk ship from it weekly through
+> `scripts/il_large_city_councils_scraper.py`. The gap record this letter was written for,
+> `urbana-city-council-names`, is retired; its successor `urbana-city-wards` in
+> `docs/DATA_LAYER_GUIDEBOOK.md` keeps what it got wrong, and records the one thing still missing,
+> the wards, which this letter never asked about. **Search for a government that has moved
+> before writing to one that seems to have shut its door.** The text below is kept as written so
+> the mistake stays readable; it must not be sent. The Gmail draft made from it on 2026-10-20 was
+> retitled "WITHDRAWN, do not send" and emptied on 2026-10-21, for the operator to delete.
+>
+> *Was:* **NOT YET ASKED — DRAFTED 2026-10-01.** One message, to the City Clerk. On send, change
 > `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the `urbana-city-council-names` blocker in
 > `docs/DATA_LAYER_GUIDEBOOK.md`.
 
@@ -3942,8 +3958,10 @@ before writing any publisher off.
 
 ## Ask ny-comptroller-local-officials — New York's Comptroller: how current are the names, and are they dated?
 
-**Status: SENT 2026-10-07 at 21:15 UTC — NO REPLY as of 2026-10-11; ONE FOLLOW-UP DUE ON OR
-AFTER 2026-10-21.** Read off the sent folder (subject "Following up: the municipal officials
+**Status: SENT 2026-10-07 at 21:15 UTC; FOLLOWED UP 2026-10-21 at 02:07 UTC, the one follow-up
+it gets (below). No reply is recorded to either. If nothing answers by 2026-11-20, thirty
+days after the follow-up, the outcome is `unresponsive`, and nothing more is sent.** The first
+letter was read off the sent folder (subject "Following up: the municipal officials
 information the Comptroller holds", to `localgov@osc.ny.gov`, its own thread rather than a reply
 on Ask 33's). Named rather than numbered. **This is a FOLLOW-UP, not an opening**:
 `localgov@osc.ny.gov` was copied in on Ask 33 at 16:09 on 2026-10-01 and has not replied, so the
@@ -4031,6 +4049,12 @@ stops.
 Ask 33 gives: there is nothing yet to license. If a file arrives, that is a separate letter.
 
 ### Follow-up — for the Letters thread to draft on or after 2026-10-21, as a reply in the sent thread
+
+**SENT 2026-10-21 at 02:07 UTC**, by the operator, read off the sent folder by the thread that
+drafts the letters, which counts it the second follow-up to that address, since the address
+was first copied on Ask 33 on 2026-10-01. The operator reworded some of that night's letters before sending, so the
+sent copy, not the text below, is the record of what was asked. Gaps `ny-county-governing-body`
+and `ny-local-governing-body` carry the date in their `ask` field as `followedUp`.
 
 Send only if nothing has arrived from `osc.ny.gov` by then; check the inbox first, because a
 reply may have come to a different thread. This is the one follow-up the ask gets: if it goes
@@ -7522,7 +7546,13 @@ found one error of ours.
 
 ## Ask mn-mat-town-officers — Minnesota Association of Townships: a list of each town's supervisors, clerk and treasurer
 
-> **NOT SENT.** Drafted 2026-10-15 by the Minnesota thread, to the association's general address,
+> **ASKED 2026-10-21 at 00:13 UTC**, from the operator's own mailbox to `info@mntownships.org`,
+> read off the sent folder by the thread that drafts the letters. The operator reworded some of
+> that night's letters before sending, so the sent copy, not the text below, is the record of
+> what was asked. A follow-up is due about 2026-11-11 if nothing has come back. Gap
+> `mn-township-officers` carries the date in its `ask` field.
+>
+> Drafted 2026-10-15 by the Minnesota thread, to the association's general address,
 > `info@mntownships.org`, which its own Contact Us page gives for general questions (read
 > 2026-10-15 after its robots.txt, whose `*` group permits that page). The pages read first, so
 > the letter asks only for what is not already public: the home page, About, Contact Us, Township
@@ -7817,20 +7847,27 @@ that needs a change in law, is then the next question; nothing here establishes 
 
 ## Ask mi-city-ward-edges — three Michigan cities: where does each ward map's line run?
 
-> **NOT YET ASKED — DRAFTED 2026-10-15.** Three letters, one per city, each about one ward map
-> this project measured on 2026-10-15 and did not ship. Each city's gap record in
-> `docs/DATA_LAYER_GUIDEBOOK.md` carries the measurement (`annarbor-ward-boundary`,
-> `kentwood-ward-boundary`, `bay-city-ward-boundary`). On send, add `"ask": {"who": "<name>",
-> "asked": "<date>"}` to that record. The four other Michigan cities owed on the done standard
-> (Holland, Midland, Muskegon, Pontiac) shipped the same day and need no letter. Lansing's ward map
+> **ASKED 2026-10-21, all three**, from the operator's own mailbox, read off the sent folder by
+> the thread that drafts the letters: Bay City at 01:41 UTC, Kentwood and Ann Arbor at 01:46
+> UTC. The operator reworded some of that night's letters before sending, so the sent copies,
+> not the text below, are the record of what was asked. A follow-up is due about 2026-11-11 for
+> any that has not answered. Each city's gap record carries the date in its `ask` field and the
+> city in its `covers` field.
+>
+> Drafted 2026-10-15. Three letters, one per city, each about one ward map this project measured
+> on 2026-10-15 and did not ship. Each city's gap record in `docs/DATA_LAYER_GUIDEBOOK.md`
+> carries the measurement (`annarbor-ward-boundary`, `kentwood-ward-boundary`,
+> `bay-city-ward-boundary`). The four other Michigan cities owed on the done standard (Holland,
+> Midland, Muskegon, Pontiac) shipped the same day and need no letter. Lansing's ward map
 > waits on the operator's decision about its licence, and Walker's on his decision about map PDFs
-> that state terms; neither is asked here.
+> that state terms; neither is asked here. DECIDED 2026-10-20 for Lansing: the operator chose to
+> draw its ward map with the credit the city's licence asks for, and it shipped in #1667.
 
 | city | addressed to | address | where the address came from |
 |---|---|---|---|
 | Ann Arbor | Scott Harrod | `sjharrod@a2gov.org` | the maintainer named on the city's own open-data record for the "Wards and Precincts" dataset (ckan.a2gov.org, dataset 8c6a26f9), read 2026-10-15 |
 | Kentwood | Dan Kasunic, City Clerk | `elections@kentwood.us` | the city clerk's election page, which gives this address for elections questions; the clerk's main page names Dan Kasunic and `eclerk@kentwood.us`, read 2026-10-15 |
-| Bay City | the City Clerk's office | **none recorded** | NOT FOUND: the city's website could not be reached from this project's sandbox, so the clerk's name and address must be read in a browser before sending |
+| Bay City | Tema Lucero, City Clerk | `cityclerk@baycitymi.gov` | NOT FOUND on 2026-10-15: the city's website could not be reached from this project's sandbox. Found 2026-10-21 by the thread that drafts the letters, in a voter-information listing of Michigan election offices and not on the city's own website, which that thread reported is behind a Cloudflare block and did not read; the draft was changed to greet the clerk by name. If it bounces, read the city's own clerk page in a browser |
 
 ### Ann Arbor
 
@@ -8118,14 +8155,19 @@ KGIS was asked and did not answer.
 
 ## Ask tn-lebanon-ward-map — Wilson County Election Commission: Lebanon's six wards as a map file
 
-> **NOT YET ASKED — DRAFTED 2026-10-17.** To the Wilson County Election Commission at
+> **ASKED 2026-10-21 at 01:46 UTC**, from the operator's own mailbox to `info@wilsontnvotes.gov`,
+> read off the sent folder by the thread that drafts the letters. The operator reworded some of
+> that night's letters before sending, so the sent copy, not the text below, is the record of
+> what was asked. A follow-up is due about 2026-11-11 if nothing has come back. Gap
+> `tn-municipal-officeholders` records it in its prose only, because that record's `ask` field
+> already holds the KGIS letter about Knoxville.
+>
+> Drafted 2026-10-17. To the Wilson County Election Commission at
 > `info@wilsontnvotes.gov` (telephone (615) 444-0216), the address its own website,
 > wilsontnvotes.gov, gives (read 2026-10-17, after the host's robots.txt). The commission
 > publishes Lebanon's ward maps as PDF files dated 22 October 2025, and Lebanon's own website
 > resets this project's connections, so the commission is the one office found publishing the
-> wards at all. The mailbox has not been searched for earlier correspondence with
-> wilsontnvotes.gov; do that before it goes. On send, change `NOT YET ASKED — DRAFTED 2026-10-17`
-> to `ASKED <date>` in gap `tn-municipal-officeholders` and in the Tennessee row of `tn/WATCH.md`.
+> wards at all.
 
 **Why this is asked.** Lebanon elects its mayor citywide and one council member from each of six
 wards. Its council is named on Tennessee's map and its wards are not drawn, because the only
@@ -8178,13 +8220,18 @@ with its date, and the card keeps saying the wards are not drawn.
 
 ## Ask ok-lawton-ward-map — City of Lawton, City Clerk: which map shows the eight wards in force
 
-> **NOT YET ASKED — DRAFTED 2026-10-17. NO E-MAIL ADDRESS.** The city's website gives the City
+> **ASKED 2026-10-21 at about 02:03 UTC, through the contact form on the city's website**, by
+> the operator, whose own message that minute is the record of it: a form leaves nothing in the
+> sent folder. The operator reworded some of that night's letters before sending, so what went
+> through the form, not the text below, is the record of what was asked. A follow-up is due
+> about 2026-11-11 if nothing has come back, through the form again or by telephone. Gap
+> `ok-municipal-officeholders` carries the date in its `ask` field.
+>
+> Drafted 2026-10-17, with no e-mail address. The city's website gives the City
 > Clerk's office a telephone number, 580-581-3305, and a contact form, and no e-mail address (read
 > 2026-10-16). The draft goes in the operator's mailbox with the address field empty, which stops
 > it being sent by accident, and opens with a bracketed note naming the office, its telephone
-> number and the reason; it can go through the form or by post. The mailbox has not been searched
-> for earlier correspondence with the City of Lawton; do that before it goes. On send, change
-> `NOT YET ASKED — DRAFTED 2026-10-17` to `ASKED <date>` in gap `ok-municipal-officeholders`.
+> number and the reason; it can go through the form or by post.
 
 **Why this is asked.** Lawton elects its mayor citywide and one council member from each of eight
 wards. Its council is named on Oklahoma's map and its wards are not drawn, because the only ward
@@ -8285,15 +8332,24 @@ and the cards keep saying the wards and zones are not drawn.
 
 ## Ask sc-anderson-council-districts — City of Anderson, Planning and Development: the six council districts as a map file
 
-> **NOT YET ASKED — DRAFTED 2026-10-17. NO E-MAIL ADDRESS.** The city's website gives Planning and
+> **ASKED 2026-10-21 at 02:06 UTC, to Mayor Terence Roberts at `troberts@cityofandersonsc.com`**,
+> from the operator's own mailbox, read off the sent folder by the thread that drafts the
+> letters. The operator readdressed it to the mayor that evening on that thread's advice: the
+> map covers all six districts, so it is no one council member's business, and the mayor's
+> office is the likeliest to pass it to the staff who keep the file. The draft was changed to
+> open "Dear Mayor Roberts," where the text below opens to Planning and Development, and its
+> bracketed note was taken out. The operator reworded some of that night's letters before
+> sending, so the sent copy, not the text below, is the record of what was asked. A follow-up is
+> due about 2026-11-11 if nothing has come back. Gap `sc-municipal-officeholders` carries the
+> date in its `ask` field.
+>
+> Drafted 2026-10-17, with no e-mail address. The city's website gives Planning and
 > Development at 601 South Main Street, Anderson, SC 29624, telephone (864) 231-2222, and the City
 > Council's office at 401 South Main Street, telephone (864) 231-1135, and no e-mail address for
 > either (read 2026-10-16). It goes to Planning and Development as the department most likely to
 > keep the city's maps (inferred; the Council's office is the other choice). The draft goes in the operator's mailbox with the address field empty,
 > which stops it being sent by accident, and opens with a bracketed note naming the office, its
-> telephone number and the reason; it can go by post or after a call. The mailbox has not been
-> searched for earlier correspondence with the City of Anderson; do that before it goes. On send,
-> change `NOT YET ASKED — DRAFTED 2026-10-17` to `ASKED <date>` in gap `sc-municipal-officeholders`.
+> telephone number and the reason; it can go by post or after a call.
 
 **Why this is asked.** Anderson elects its mayor and two council members citywide and six from
 districts. Its council is named on South Carolina's map and its districts are not drawn, because the
@@ -8354,15 +8410,18 @@ the districts are not drawn.
 
 ## Ask ky-kde-school-board-divisions — Kentucky Department of Education, KDE Data Services: each county school board's members by division, and the precincts in each division
 
-> **NOT YET ASKED — DRAFTED 2026-10-17.** To KDE Data Services (Office of Education Technology,
+> **ASKED 2026-10-21 at 00:27 UTC**, from the operator's own mailbox to
+> `kdedatarequest@education.ky.gov`, read off the sent folder by the thread that drafts the
+> letters. The operator reworded some of that night's letters before sending, so the sent copy,
+> not the text below, is the record of what was asked. A follow-up is due about 2026-11-11 if
+> nothing has come back. Gap `ky-school-board-members` carries the date in its `ask` field.
+>
+> Drafted 2026-10-17. To KDE Data Services (Office of Education Technology,
 > Division of School Data Services) at `kdedatarequest@education.ky.gov`. That is the address the
 > "KDE Data Services" link in the Page Contact box points to on the Department's "KY K-12 Data
 > Requests and Governance" page (`www.education.ky.gov/districts/tech/Pages/DataRequests.aspx`),
 > read 2026-10-17 after the host's robots.txt, which was served empty and so disallows nothing. The
-> same box gives 300 Sower Blvd., 4th Floor, Frankfort, KY 40601, and (502) 564-2020. The mailbox
-> has not been searched for earlier correspondence with the Department of Education; do that
-> before it goes. On send, change `NOT YET ASKED — DRAFTED 2026-10-17` to `ASKED <date>` in gap
-> `ky-school-board-members` and add the record's `ask` block.
+> same box gives 300 Sower Blvd., 4th Floor, Frankfort, KY 40601, and (502) 564-2020.
 
 **Why this is asked.** Each of Kentucky's 120 county school boards is elected from five
 divisions, and every division is a set of whole voting precincts (KRS 160.210); the boards of
