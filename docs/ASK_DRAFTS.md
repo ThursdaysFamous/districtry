@@ -8669,8 +8669,8 @@ cities that publish none.
 > letters. The operator reworded the opening before sending, so the sent copy, not the text
 > below, is the record of what was asked. It went before the conservation districts were on
 > the map. A follow-up is due about 2026-11-11 if nothing has come back, and can say what the
-> map shows by then. No gap record carries it yet: the record for the districts' supervisors
-> is written by the change that puts the districts' offices on the Parish card.
+> map shows by then. It is the `ask` of gap `la-conservation-district-supervisors`, which
+> the change that put the districts' offices on the Parish card wrote (2026-10-21).
 >
 > Drafted 2026-10-21. To the Office of Soil and Water Conservation at
 > `soilandwater@ldaf.state.la.us`, telephone (225) 922-1269, 5825 Florida Blvd, Baton Rouge,
@@ -8707,6 +8707,17 @@ an "All rights reserved" notice and no terms of use, so the letter asks whether 
 boundaries may be shown. A published list of supervisors by district would let each district's
 card name its board, which is the change in how Louisiana publishes this information that the
 project exists to encourage.
+
+> **CORRECTED 2026-10-21, after the letter went.** The map is not a picture. Page 1 of the PDF
+> is a vector drawing, each district a filled path object with its number inside, and the
+> change that put the districts on the Parish card read those objects and not the pixels
+> (`la/scripts/measure_la_conservation_parishes.py`). The 150-dots-per-inch reading above is
+> kept as it was written. Its finding stands: Ouachita is divided between D'Arbonne and Boeuf
+> River. The objects show six more parishes divided between two districts (Ascension,
+> Caldwell, Iberville, Jefferson, Richland and St. James), and in Jefferson the second district
+> is Lafourche-Terrebonne, which the map gives Grand Isle under a coastline stroke wider than the
+> island, so the picture shows the island as black. The letter's question about the boundaries
+> is unchanged by this.
 
 > Subject: Soil and water conservation district supervisors on districtry.com
 >
@@ -8755,6 +8766,13 @@ boundary file without permission, or none: districts that are whole parishes are
 parish map, and the others wait, recorded in the conservation district gap the layer writes
 when it is built. A no to the list, or no answer after the follow-ups: recorded in that gap
 with its date, and the cards give each district's office and name no one.
+
+> **CORRECTED 2026-10-21.** No layer was built. The change lists each parish's district or
+> districts, with their offices, on the Parish card, as Kentucky, North Carolina and South
+> Carolina list theirs on the County card, because 57 of the 64 parishes lie in one district and
+> a layer drawn from parish lines would say no more than the card does. The gap the change wrote
+> is `la-conservation-district-supervisors`. A boundary file with permission would now let a
+> layer draw all 44 districts, the seven divided parishes included.
 
 **Before sending:**
 

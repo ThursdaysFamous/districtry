@@ -1714,6 +1714,18 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 la/scripts/build_la_city_wards.py --check
 
+      # Louisiana's soil and water conservation districts, listed on the Parish
+      # card from the Department of Agriculture and Forestry's map and list of
+      # district offices (a PDF that is not kept). This holds the shipped file
+      # to its build record offline: all 44 districts and 64 parishes, the
+      # pinned parishes each district covers and the seven the map divides
+      # between two, every office with a town and one telephone number, the
+      # map's fingerprint and dates, and the card's two fixed sentences, about
+      # the board and how it is chosen, to the builder's own copy of them.
+      - name: LA soil and water conservation districts still match their build record and the card's sentences
+        if: ${{ !cancelled() }}
+        run: python3 la/scripts/build_la_conservation_districts.py --check
+
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.
       # The stamp is right and stays; what the nine builders now print beside it
