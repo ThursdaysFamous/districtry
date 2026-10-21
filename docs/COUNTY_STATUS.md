@@ -128,7 +128,7 @@ Counties outside the coverage ring that a research pass has already measured; ea
 | County | FIPS | Gap records |
 |---|---|---|
 | Bureau | 17011 | 1 — `bureau-county-board-districts` (no-source) |
-| Champaign | 17019 | 2 — `champaign-piatt-ccgisc-license` (blocked); `urbana-city-council-names` (no-source) |
+| Champaign | 17019 | 3 — `champaign-city-council-districts` (data-quality); `champaign-piatt-ccgisc-license` (blocked); `urbana-city-wards` (blocked) |
 | Marion | 17121 | 1 — `marion-county-board-districts` (no-source) |
 | Piatt | 17147 | 1 — `champaign-piatt-ccgisc-license` (blocked) |
 | Pope | 17151 | 1 — `pope-county-board` (no-source) |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (2)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 100 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 101 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
