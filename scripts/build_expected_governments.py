@@ -63,7 +63,7 @@ FLOOR = 25000
 STATE_FIPS = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
               "mn": "27", "ky": "21", "ny": "36", "in": "18",
               "nc": "37", "ok": "40", "sc": "45", "tn": "47",
-              "ar": "05", "ms": "28"}
+              "ar": "05", "ms": "28", "la": "22"}
 
 # Is a county subdivision the GENERAL-PURPOSE government for residents outside
 # incorporated places in this state? A fact of that state's law, recorded with
@@ -103,6 +103,13 @@ SUBDIVISION_IS_GENERAL_PURPOSE = {
     # nobody itself, so no active one can reach the floor. Added at its
     # go-live.
     "ms": None,
+    # Louisiana's county subdivisions are its parishes' police jury and council
+    # districts, every one outside Orleans FUNCSTAT N (non-functioning), and
+    # Orleans's single subdivision is the City of New Orleans at FUNCSTAT F,
+    # measured 2026-10-20 in la/CLAUDE.md: a district elects a member of the
+    # parish's governing body and governs nobody itself, so no active one can
+    # reach the floor. Added at its go-live.
+    "la": None,
 }
 
 

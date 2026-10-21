@@ -397,9 +397,10 @@ try {
   //     app's coverage ring. Arkansas is live, so a click on El Dorado must
   //     open THAT app: it is about 21 km north of the state line, inside
   //     Arkansas's outline and no other. This instance answers its own side
-  //     from the coverage ring the wash retained, with no fetch, and it works
-  //     while this instance is dark because the fleet file names only live
-  //     apps. Chicago proves the file is still read for ground far from here.
+  //     from the coverage ring the wash retained, with no fetch, and since
+  //     go-live the fleet file carries this app's own outline too, which is
+  //     asked first, so a point both draw stays here. Chicago proves the file
+  //     is still read for ground far from here.
   //
   //     TEXAS IS DELIBERATELY NOT A CASE. Nobody serves it today, so a click
   //     there stays here; but the fleet is meant to reach every state, and a

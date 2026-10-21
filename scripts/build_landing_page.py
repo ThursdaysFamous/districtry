@@ -254,12 +254,13 @@ TAIL_ROW = "Also answered in one place"
 QUESTION_ROWS = [
     ("Who is my U.S. representative?", ("congress.html",)),
     ("Who is my state legislator?", ("state-legislature.html",)),
-    # SEVEN NAMES FOR ONE READER'S QUESTION. A county's governing body is a
+    # EIGHT NAMES FOR ONE READER'S QUESTION. A county's governing body is a
     # board in Illinois and Wisconsin, a board of supervisors in Iowa and
     # Mississippi, a board
     # of commissioners in Michigan, a county legislature in New York, a
     # fiscal court (or a merged council) in Kentucky, a county council in
-    # South Carolina and a quorum court in Arkansas, and
+    # South Carolina and a quorum court in Arkansas, and a parish's is a
+    # police jury or a council in Louisiana, and
     # somebody asking who sits on it does not know or care which word their
     # state uses. One row, so the front door asks the question once.
     ("Who sits on my county board?", ("county-board.html", "county-supervisor.html",
@@ -267,7 +268,8 @@ QUESTION_ROWS = [
                                       "county-legislature.html",
                                       "county-government.html",
                                       "county-council.html",
-                                      "quorum-court.html")),
+                                      "quorum-court.html",
+                                      "parish-government.html")),
     ("Who represents me on the city council?", ("ward.html", "council-district.html",
                                                 "supervisor-district.html",
                                                 "city-council.html")),
@@ -318,6 +320,7 @@ CHIP_TOPIC = {
     "county-government.html": "fiscal court",
     "county-council.html": "county council",
     "quorum-court.html": "quorum court",
+    "parish-government.html": "police jury or council",
     "county-legislature.html": "county legislature",
     "city-council.html": "city council",
     "county-auditor.html": "county auditor",
