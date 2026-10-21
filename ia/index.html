@@ -17534,14 +17534,23 @@ function initIowaExplorer() {
    * builder refuses to interpolate it, so a point inside that missing district
    * answers with no card rather than with a neighbouring district's number.
    *
-   * IDENTITY-ONLY. Trustees ARE elected per district, but no statewide roster
-   * exists and the 15 colleges publish their boards 15 ways — 6 name a
-   * numbered district on a discoverable page, one sits behind a captcha and
-   * one refuses this client (measured 2026-08-28, per college, in WATCH.md).
-   * Joining 6 of 15 would leave a reader unable to tell a college with no
-   * published district from one this app simply has not read. ---------- */
+   * THE TRUSTEE IS NAMED FROM THE COLLEGE'S OWN BOARD PAGE. No statewide
+   * roster exists, and measured 2026-10-21 all fifteen colleges publish their
+   * boards, fourteen of them by numbered director district
+   * (data/app/ia-cc-trustees.json, ia/scripts/ia_cc_trustee_scraper.py +
+   * build_ia_cc_trustees.py, weekly). The fifteenth, Northeast Iowa, lists
+   * its trustees by the school districts they represent, and four of its nine
+   * list Dubuque Community, so a school district does not identify a seat;
+   * that card says so and names nobody for the district. (Until that date this
+   * card named nobody anywhere, on a 2026-08-28 reading that six colleges named
+   * a district, one sat behind a captcha and one refused this client.)
+   * ---------- */
   var loadCcDirectorDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/ia-cc-director-districts.json", {}, 2);
+  });
+  // Keyed by the same `ddkey` ("<merged area>-<district>") the layer draws.
+  var loadCcTrustees = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ia-cc-trustees.json", {}, 2);
   });
 
   registerLayer({
@@ -17571,9 +17580,13 @@ function initIowaExplorer() {
     // nothing here can tell which boundary is right, so a mismatch answers with
     // no district and says why.
     query: function (point, seq) {
+      // The trustee file is a small same-origin read and its failure is NOT
+      // this layer's failure: the .catch is on that leg alone, so a district
+      // still answers with its number, saying the trustee could not be loaded.
       return Promise.all([
         queryFeatureAt(loadCcDirectorDistricts, point),
-        queryFeatureAt(loadIaCommunityColleges, point).catch(function () { return null; })
+        queryFeatureAt(loadIaCommunityColleges, point).catch(function () { return null; }),
+        loadCcTrustees().catch(function () { return null; })
       ]).then(function (parts) {
         var feature = parts[0];
         if (!feature) return null;
@@ -17581,11 +17594,20 @@ function initIowaExplorer() {
         var parentProps = (parts[1] && parts[1].properties) || null;
         var parentName = parentProps ? findPropCI(parentProps, ["name"]) : null;
         var name = findPropCI(props, ["name"]);
+        var trustees = parts[2];
+        var area = findPropCI(props, ["collegedistrict"]);
+        var ddkey = findPropCI(props, ["ddkey"]);
+        var college = (trustees && trustees.colleges && area != null &&
+                       trustees.colleges[String(area)]) || null;
         return {
           seq: seq,
           label: findPropCI(props, ["label"]),
           name: name,
           population: findPropCI(props, ["population"]),
+          trusteesLoaded: !!trustees,
+          college: college,
+          trustee: (college && college.seats && trustees.seats && ddkey != null &&
+                    trustees.seats[String(ddkey)]) || null,
           // null when the parent could not be read at all — only a real
           // disagreement suppresses the district
           disagrees: (parentName != null && name != null &&
@@ -17615,19 +17637,59 @@ function initIowaExplorer() {
       if (result.population != null) {
         rows.push({ label: "2020 population", value: Number(result.population).toLocaleString() });
       }
-      rows.push({
+      // the district, then the trustee, then how the seat is filled and where
+      // the name comes from (the fleet's card order)
+      var tail = [{
         label: "Election",
         value: "One member of this college's board of trustees is elected from " +
           "this district (Iowa Code 260C.11)."
-      });
-      rows.push({
-        label: "Trustees",
-        value: "Not shown. Iowa publishes no statewide roster of community " +
-          "college trustees, and the 15 colleges publish their boards 15 " +
-          "different ways — naming some and not others would read as a college " +
-          "having no trustees rather than as one this app has not read."
-      });
-      return renderFieldStack(rows);
+      }];
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderFieldStack(rows));
+      var t = result.trustee, c = result.college;
+      if (t) {
+        wrap.appendChild(renderSectionLabel("TRUSTEE"));
+        var row = { name: t.vacant ? "Vacant" : String(t.name) };
+        if (t.role) row.badge = String(t.role);
+        if (t.email) row.email = String(t.email);
+        if (t.phone) row.phone = String(t.phone);
+        var notes = [];
+        // the college said the seat is empty, so the card says it in words as
+        // well as in the name slot
+        if (t.vacant) notes.push("The college lists this seat as vacant");
+        if (t.termEnds) notes.push("Term ends " + String(t.termEnds));
+        if (notes.length) row.note = notes.join(" \u00b7 ");
+        wrap.appendChild(renderPersonRows([row]));
+        tail.push({
+          label: "Source",
+          value: "Named by " + String(c.college) + " Community College's own " +
+            "board page" + (c.asOf ? ", read " + String(c.asOf) : "") +
+            ". Iowa keeps no statewide list of community college trustees."
+        });
+      } else if (c && c.undistricted) {
+        tail.push({
+          label: "Trustee",
+          value: "Not shown. " + String(c.college) + " Community College lists " +
+            "its " + c.undistricted.length + " trustees by the school districts " +
+            "they represent rather than by director district, and several list " +
+            "the same school district, so this app cannot tell which trustee is " +
+            "elected from this district. The college's board page names them all."
+        });
+      } else {
+        tail.push({
+          label: "Trustee",
+          value: result.trusteesLoaded
+            ? "Not shown. This college's board page did not name a trustee for " +
+              "this district when it was last read."
+            : "Not shown. The list of trustees could not be loaded; try again."
+        });
+      }
+      wrap.appendChild(renderFieldStack(tail));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      var url = result.college && safeHttpUrl(result.college.sourceUrl);
+      return url ? { label: String(result.college.college) + " board of trustees", url: url } : null;
     },
     // Frame the parent while this is on (the WI mpd-squad-area contract): a
     // director district only means anything against the college it divides.
