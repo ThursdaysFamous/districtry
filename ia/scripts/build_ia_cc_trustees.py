@@ -149,6 +149,14 @@ def build(raw, previous, today):
             entry["undistricted"] = got["undistricted"]
         else:
             entry["seats"] = {d: got["seats"][d] for d in sorted(got["seats"], key=int)}
+        # A college whose page says exactly what it said last time keeps the
+        # date it was first read that way: a date that moved every week would
+        # open a bot PR every week for no change, and an older date understates
+        # a read rather than claiming one that did not happen.
+        old = prev_colleges.get(area)
+        if old and {k: v for k, v in entry.items() if k != "asOf"} == \
+                {k: v for k, v in old.items() if k != "asOf"}:
+            entry["asOf"] = old["asOf"]
         colleges[area] = entry
     for area, c in colleges.items():
         for d, r in (c.get("seats") or {}).items():
@@ -201,15 +209,6 @@ def main():
     districted = [x for x in out["colleges"] if x not in UNDISTRICTED]
     if len(districted) < MIN_COLLEGES:
         fail("%d districted colleges, floor %d; nothing written" % (len(districted), MIN_COLLEGES))
-    # A college whose page says exactly what it said last time keeps the date it
-    # was first read that way: a date that moved every week would open a bot PR
-    # every week for no change, and an older date understates a read rather
-    # than claiming one that did not happen.
-    for area, c in out["colleges"].items():
-        old_c = ((previous or {}).get("colleges") or {}).get(area)
-        if old_c and {k: v for k, v in c.items() if k != "asOf"} == \
-                {k: v for k, v in old_c.items() if k != "asOf"}:
-            c["asOf"] = old_c["asOf"]
     with open(OUT, "w") as f:
         json.dump(out, f, indent=1, ensure_ascii=False)
         f.write("\n")
