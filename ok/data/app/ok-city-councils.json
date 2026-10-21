@@ -351,7 +351,6 @@
   "body": "City Council",
   "how": "Each of the city's eight wards elects its own council member, and the mayor is elected by the whole city.",
   "name": "Lawton",
-  "note": "The city's eight wards are not drawn on this map yet: the only ward map the city publishes as data does not divide the 2020 census population evenly between its wards, as a map drawn after that census would, so it may not be the map in force.",
   "read": "2026-10-17",
   "seats": [
    {
@@ -425,8 +424,7 @@
     "sourceUrl": "https://www.lawtonok.gov/178/City-Council",
     "ward": "8"
    }
-  ],
-  "wardsDrawn": false
+  ]
  },
  "4048350": {
   "body": "City Council",

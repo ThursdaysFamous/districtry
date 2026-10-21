@@ -38,6 +38,13 @@ What it checks (findings carry a severity — FAIL, WARN, or OK):
      1 December 2026 this check says so every month; it also says so if
      TIGERweb's layer 4 is no longer the 119th Congress's map, since the
      builder would then refuse to rebuild it.                             [WARN]
+  6. The parishes drawn from their own government's map (Orleans and East
+     Baton Rouge): each layer is asked again, the build's way, and its name,
+     description, districts and lines, and the Census Bureau's map of the
+     parish, are compared with what the shipped file was drawn from.      [WARN]
+  7. The cities drawn from their own council district maps (Lafayette,
+     Bossier City, Central and Slidell), the same way, with Bossier City's
+     plan layer's figures.                                                [WARN]
 
 Exit status: 0 when nothing needs a human (OK or WARN only), 1 on any FAIL.
 Newer-edition detection is deliberately WARN, not FAIL — the current dataset
@@ -54,9 +61,11 @@ Usage:
 
 import argparse
 import datetime
+import json
 import os
 import re
 import sys
+import time
 _HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
                                 "scripts"))
@@ -199,14 +208,27 @@ PROVENANCE = [
         "app_file": "la-parish-districts.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22",
         "note": (
-            "The districts of the 6 parishes whose current lines are "
-            "confirmed, pre-built from the Census's county subdivisions "
-            "(January 1, 2026 vintage) by "
-            "la/scripts/build_la_parish_districts.py. A parish is drawn when its "
-            "lines changed after the 2020 census and balance on that census's "
-            "own blocks; --survey re-measures all 64, and a new vintage needs a "
-            "survey and a rebuild."
+            "The districts of the 8 parishes whose current lines are "
+            "confirmed, pre-built by la/scripts/build_la_parish_districts.py: 6 "
+            "from the Census's county subdivisions (January 1, 2026 vintage), "
+            "each drawn because its lines changed after the 2020 census and "
+            "balance on that census's own blocks (--survey re-measures all 64, "
+            "and a new vintage needs a survey and a rebuild), and Orleans and "
+            "East Baton Rouge from the parish government's own layer, which "
+            "check 6 asks again."
         ),
+    },
+    {
+        "layer": "parish-district",
+        "app_file": "la-parish-districts.json",
+        "source_url": "https://maps.nola.gov/server/rest/services/Administrative/Administrative_Layers/MapServer/1",
+        "note": "Orleans Parish's districts, the New Orleans City Council's own layer (check 6).",
+    },
+    {
+        "layer": "parish-district",
+        "app_file": "la-parish-districts.json",
+        "source_url": "https://maps.brla.gov/gis/rest/services/Governmental_Units/Council_District/MapServer/0",
+        "note": "East Baton Rouge Parish's districts, the Metropolitan Council's own layer (check 6).",
     },
     {
         "layer": "parish-district",
@@ -275,6 +297,18 @@ PROVENANCE = [
             "la/scripts/build_la_judges.py. 7, 53 and 212 judges on 2026-10-21, "
             "every district judge's term ending 31 December 2026; the race and "
             "gender columns are never read."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "la-city-wards.json",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4",
+        "note": (
+            "The council districts of Lafayette, Bossier City, Central and "
+            "Slidell, each from the city's own layer and cut at the Census "
+            "Bureau's map of the city (this layer), pre-built by "
+            "la/scripts/build_la_city_wards.py. Check 7 asks each city's layer "
+            "and the Census's map of the city again."
         ),
     },
     {
@@ -643,6 +677,199 @@ def check_congress_map(findings, offline, today=None):
         findings.add(OK, "us-house", "TIGERweb's Legislative layer 4 is still %r" % name)
 
 
+# ---- check 6: the parishes drawn from their own government's map ----------
+def check_parish_own_maps(findings, offline):
+    """Orleans's and East Baton Rouge's districts are drawn from each parish
+    government's own layer (OWN_MAP_PARISHES in build_la_parish_districts.py),
+    cut at the Census Bureau's map of the parish, and the build records a
+    fingerprint of both (data/source/la-parish-districts.source.json). Nothing
+    runs that build on a schedule, and a parish can redraw inside a layer
+    whose name stays the same, so each layer is asked again, the build's way,
+    for its name, the phrases its description must still carry, its districts
+    and its lines. Only the district field is asked for, as in the build."""
+    if offline:
+        return
+    import build_la_parish_districts as pd
+    label = "parish-district"
+    try:
+        with open(pd.RECORD, encoding="utf-8") as fh:
+            record = json.load(fh)
+    except (OSError, ValueError) as e:
+        findings.add(FAIL, label, "the parish district build's record of what it read could "
+                     "not be read (%s), so no parish's own map was checked: %s" % (e, pd.RECORD))
+        return
+    built = record.get("built")
+    for c3, spec in sorted(pd.OWN_MAP_PARISHES.items()):
+        geoid = pd.STATE + c3
+        name = spec["name"]
+        rec = (record.get("parishes") or {}).get(geoid)
+        if not rec or rec.get("lines") != "own":
+            findings.add(FAIL, label, "%s Parish: the build's record names no own map for this "
+                         "parish; rebuild with build_la_parish_districts.py" % name)
+            continue
+        ok, meta = http_get(spec["layer"], params={"f": "json"})
+        time.sleep(pd.MIN_DELAY_S)
+        if not ok or not isinstance(meta, dict) or "error" in meta:
+            findings.add(WARN, label, "%s Parish: its district layer could not be read (%s), so "
+                         "its districts were not checked; it may have been moved or removed: %s"
+                         % (name, meta.get("error") if ok and isinstance(meta, dict) else meta,
+                            spec["layer"]))
+            continue
+        moved = []
+        witness = spec["witness"]
+        if meta.get("name") != witness["layer_name"]:
+            moved.append("the layer is now named %r, not %r, and a renamed district layer is "
+                         "a new plan until a person has read it"
+                         % (meta.get("name"), witness["layer_name"]))
+        lost = [p for p in witness.get("description") or ()
+                if p not in (meta.get("description") or "")]
+        if lost:
+            moved.append("the layer's description no longer says %s"
+                         % " or ".join(repr(p) for p in lost))
+        ok, fc = http_get(spec["layer"] + "/query", params=pd.own_params(spec))
+        time.sleep(pd.MIN_DELAY_S)
+        if not ok or not isinstance(fc, dict) or "error" in fc or fc.get("exceededTransferLimit"):
+            findings.add(WARN, label, "%s Parish: its district layer's districts could not be "
+                         "read (%s), so its lines were not checked: %s"
+                         % (name, (fc.get("error") or "the answer hit its transfer limit")
+                            if ok and isinstance(fc, dict) else fc, spec["layer"]))
+            continue
+        try:
+            have = sorted({spec["read"]((f.get("attributes") or {}).get(spec["field"]))
+                           for f in fc.get("features") or []}, key=pd.district_order)
+        except (TypeError, ValueError):
+            have = None
+        drawn = sorted(spec["people"], key=pd.district_order)
+        if have != drawn:
+            moved.append("the layer now holds districts %s, and the shipped file draws "
+                         "districts %s"
+                         % (have if have is not None else "this check cannot read", drawn))
+        elif pd.lines_sha256(fc, spec) != rec.get("lines_sha256"):
+            moved.append("the layer serves different lines from the ones the shipped file was "
+                         "drawn from on %s" % built)
+        ok, cfc = http_get(pd.COUNTY_LAYER + "/query", params=pd.county_params(geoid))
+        time.sleep(pd.MIN_DELAY_S)
+        if not ok or not isinstance(cfc, dict) or "error" in cfc:
+            findings.add(WARN, label, "%s Parish: the Census Bureau's map of the parish could not "
+                         "be read (%s), so the parish line was not checked: %s"
+                         % (name, cfc.get("error") if ok and isinstance(cfc, dict) else cfc,
+                            pd.COUNTY_LAYER))
+        elif pd.lines_sha256(cfc) != rec.get("county_sha256"):
+            moved.append("the Census Bureau's map of the parish, where the districts are cut, "
+                         "has changed since %s" % built)
+        if moved:
+            findings.add(WARN, label, "%s Parish: %s. Rebuild with "
+                         "la/scripts/build_la_parish_districts.py, which stops if any "
+                         "district's people moved, and read the parish's own page before "
+                         "raising anything it pins: %s" % (name, "; ".join(moved), spec["page"]))
+        else:
+            findings.add(OK, label, "%s Parish: its own layer still serves the lines drawn on "
+                         "%s, districts %s to %s, and the Census map of the parish is unchanged"
+                         % (name, built, drawn[0], drawn[-1]))
+
+
+# ---- check 7: the cities drawn from their own council district maps ---------
+def check_city_wards(findings, offline):
+    """Each drawn city's council districts come from the layer
+    build_la_city_wards.py's CITIES names, cut at the Census Bureau's map of
+    the city, and the build records a fingerprint of both, and of Bossier
+    City's plan layer's figures (data/source/la-city-wards.source.json).
+    Nothing runs that build on a schedule, and a city can redraw inside a
+    layer whose name stays the same, so each layer is asked again, the build's
+    way, for its name, its districts and its lines."""
+    if offline:
+        return
+    import build_la_city_wards as wards
+    label = "city-ward"
+    try:
+        with open(wards.SOURCE_RECORD, encoding="utf-8") as fh:
+            record = json.load(fh)
+    except (OSError, ValueError) as e:
+        findings.add(FAIL, label, "the city district build's record of what it read could not "
+                     "be read (%s), so no city's map was checked: %s" % (e, wards.SOURCE_RECORD))
+        return
+    built = record.get("built")
+    for c in wards.CITIES:
+        city = c["city"]
+        rec = (record.get("cities") or {}).get(c["geoid"])
+        if not rec:
+            findings.add(FAIL, label, "%s: the build's record names no layer for this city; "
+                         "rebuild with build_la_city_wards.py" % city)
+            continue
+        ok, meta = http_get(c["layer"], params={"f": "json"})
+        time.sleep(wards.MIN_DELAY_S)
+        if not ok or not isinstance(meta, dict) or "error" in meta:
+            findings.add(WARN, label, "%s: the district layer could not be read (%s), so its "
+                         "districts were not checked; it may have been moved or removed: %s"
+                         % (city, meta.get("error") if ok and isinstance(meta, dict) else meta,
+                            c["layer"]))
+            continue
+        moved = []
+        pinned = c["witness"]["layer_name"]
+        if meta.get("name") != pinned:
+            moved.append("the layer is now named %r, not %r, and a renamed district layer is "
+                         "a new plan until a person has read it" % (meta.get("name"), pinned))
+        ok, fc = http_get(c["layer"] + "/query", params=wards.layer_params(c))
+        time.sleep(wards.MIN_DELAY_S)
+        if not ok or not isinstance(fc, dict) or "error" in fc or fc.get("exceededTransferLimit"):
+            findings.add(WARN, label, "%s: the district layer's districts could not be read "
+                         "(%s), so its lines were not checked: %s"
+                         % (city, (fc.get("error") or "the answer hit its transfer limit")
+                            if ok and isinstance(fc, dict) else fc, c["layer"]))
+            continue
+        kept = [f.get("attributes") or {} for f in fc.get("features") or []]
+        kept = [a for a in kept if not wards._skipped(a, c)]
+        try:
+            have = sorted({c["read"](a.get(c["field"])) for a in kept}, key=wards._order)
+        except (TypeError, ValueError):
+            have = None
+        drawn = sorted(c["people"], key=wards._order)
+        if have != drawn:
+            moved.append("the layer now holds districts %s, and the shipped file draws "
+                         "districts %s"
+                         % (have if have is not None else "this check cannot read", drawn))
+        elif wards.lines_sha256(fc, c) != rec.get("lines_sha256"):
+            editing = meta.get("editingInfo") or {}
+            moved.append("the layer serves different lines from the ones the shipped file was "
+                         "drawn from on %s (it gives its last edit as %s)"
+                         % (built, wards._date(editing.get("dataLastEditDate")
+                                               or editing.get("lastEditDate")) or "not stated"))
+        plan = c.get("plan")
+        if plan:
+            ok, pmeta = http_get(plan["layer"], params={"f": "json"})
+            time.sleep(wards.MIN_DELAY_S)
+            ok2, pfc = (http_get(plan["layer"] + "/query", params=wards.plan_params(plan))
+                        if ok and isinstance(pmeta, dict) and "error" not in pmeta
+                        else (False, pmeta))
+            time.sleep(wards.MIN_DELAY_S)
+            if not ok2 or not isinstance(pfc, dict) or "error" in pfc:
+                findings.add(WARN, label, "%s: the city's plan layer could not be read (%s), so "
+                             "its figures were not checked: %s" % (city, pfc, plan["layer"]))
+            elif pmeta.get("name") != plan["layer_name"] \
+                    or wards.plan_sha256(pfc, plan) != (rec.get("plan") or {}).get("figures_sha256"):
+                moved.append("the city's plan layer is now named %r or gives other figures than "
+                             "it did on %s" % (pmeta.get("name"), built))
+        ok, pfc = http_get(wards.TIGERWEB_PLACE + "/query", params=wards.place_params(c))
+        time.sleep(wards.MIN_DELAY_S)
+        if not ok or not isinstance(pfc, dict) or "error" in pfc:
+            findings.add(WARN, label, "%s: the Census Bureau's map of the city could not be "
+                         "read (%s), so the city's limits were not checked: %s"
+                         % (city, pfc.get("error") if ok and isinstance(pfc, dict) else pfc,
+                            wards.TIGERWEB_PLACE))
+        elif wards.lines_sha256(pfc) != rec.get("place_sha256"):
+            moved.append("the Census Bureau's map of the city's limits, where the districts are "
+                         "cut, has changed since %s" % built)
+        if moved:
+            findings.add(WARN, label, "%s: %s. Rebuild with la/scripts/build_la_city_wards.py, "
+                         "which stops if any district's people moved, and read the city's map "
+                         "before raising anything it pins: %s"
+                         % (city, "; ".join(moved), c["page"]))
+        else:
+            findings.add(OK, label, "%s: the district layer still serves the lines drawn on %s, "
+                         "districts %s to %s, and the Census map of the city is unchanged"
+                         % (city, built, drawn[0], drawn[-1]))
+
+
 def render(findings):
     order = {FAIL: 0, WARN: 1, OK: 2}
     rows = sorted(findings.rows, key=lambda r: (order[r[0]], r[1]))
@@ -693,6 +920,8 @@ def main():
     check_provenance(findings, args.offline)
     check_endpoints(findings, args.offline)
     check_congress_map(findings, args.offline)
+    check_parish_own_maps(findings, args.offline)
+    check_city_wards(findings, args.offline)
 
     report = render(findings)
     sys.stdout.write(report)

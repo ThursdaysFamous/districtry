@@ -92,8 +92,8 @@ card; the Census records Houma as a place with no government of its own operatin
 done-standard scorer learned a join for this (`COUNTY_GOVERNED_UNITS` in
 `scripts/build_eam_status.py`), so those cities are scored through their parish's governing body
 and its drawn districts rather than counted as unnamed: New Orleans and Baton Rouge through
-Orleans and East Baton Rouge, whose districts are not drawn, and Houma through Terrebonne, whose
-are.
+Orleans and East Baton Rouge, whose districts were not drawn at go-live (they are since the city
+councils change below), and Houma through Terrebonne, whose are.
 
 ## What the go-live change did
 
@@ -138,16 +138,40 @@ go-live with the same answer, and the two live neighbours gained a routing case 
   card names the Chief Justice, and a sitting justice keeps the seat of the same number until the
   term ends, so the Supreme Court card says a justice may have been elected inside different lines.
   The done standard's score moves from 8 to 9 of the 14 levels.
+- **The city councils' districts** (2026-10-21, the third change after go-live). All 13 of
+  Louisiana's cities of 25,000 people or more elect council members by district. New Orleans and
+  Baton Rouge are governed by their parishes, so the Police Jury or Council District layer now
+  draws Orleans and East Baton Rouge from each government's own map layer: New Orleans's City
+  Council Districts, which the layer itself says are in effect from 12 January 2026 and drawn on
+  the 2020 census, and the City-Parish's Metropolitan Council districts, each within 51 people of
+  the figures published for Plan 4B, adopted on 10 August 2022. That layer now draws 73 districts
+  in 8 parishes. A new layer, City Council District, draws the 22 council districts of Lafayette,
+  Bossier City, Central and Slidell, each from the city's own map, which the city's own pages name
+  as its current districts and which balances on the 2020 census and not on the 2010 census, so it
+  is lines drawn after the 2020 census; the outer edge is the Census Bureau's map of the city, so
+  the City card and the district card never disagree about which city a point is in. Houma is
+  Terrebonne Parish's council, drawn already. The other six are not drawn, each for a reason the
+  builder records: Monroe's and New Iberia's only layers are older plans, Kenner's balances on the
+  2010 census, which plan is in force in Alexandria is not established, Lake Charles publishes its
+  plan as a PDF only, and Shreveport's one layer carries a notice that it may not be copied
+  without a written agreement with the regional GIS that publishes it, which is Adam's decision.
+  The monthly source check re-reads all six maps. On the done standard, Louisiana's level 6 moves
+  from 1 to 7 of the 13 cities and level 4 from 6 to 8 of the 64 parishes; the score stays 9 of
+  the 14 levels.
 
 ## What is still owed
 
-- **58 parishes' district lines** (gap `la-parish-district-lines`). No statewide map of the
-  current lines was found, and no letter has been drafted yet. This is evidence for the
+- **56 parishes' district lines** (gap `la-parish-district-lines`). No statewide map of the
+  current lines was found, and no letter has been drafted yet. Lafayette Parish's own council map
+  is published and was not read for the city councils change. This is evidence for the
   state-level publishing ask: one statewide map of every parish's current districts from a state
   office would close it for every parish at once.
 - **The towns' wards and districts and the school boards' election districts** (gaps
   `la-municipal-ward-lines` and `la-school-board-district-lines`). The Census draws neither, so
-  each closes one town's or board's own published map at a time, or with one statewide map.
+  each closes one town's or board's own published map at a time, or with one statewide map. Four
+  cities' council districts are drawn; Shreveport's waits on Adam's decision whether to ask the
+  regional GIS for a written agreement, and the other five cities of 25,000 or more on a current
+  map this project can confirm and copy.
   610 of the 639 school board members' terms, and nearly half the town officials', end on
   31 December 2026, so the list changes in January 2027; the weekly refresh carries it and
   `la/WATCH.md` says when to look.
@@ -164,6 +188,6 @@ go-live with the same answer, and the two live neighbours gained a routing case 
   two justices' and four appeal judges', so the list changes in January 2027; `la/WATCH.md` says
   when to look.
 - **The done standard's other open levels for Louisiana**: the parish governing bodies' districts
-  in every parish (above), the councils of the twelve cities of 25,000 or more whose wards are not
+  in every parish (above), the councils of the six cities of 25,000 or more whose districts are not
   drawn, school boards elected by district (above), special districts, and the parish district
   boundaries as a level of their own.

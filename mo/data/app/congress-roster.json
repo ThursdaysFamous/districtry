@@ -1,0 +1,122 @@
+{
+  "1": {
+    "name": "Wesley Bell",
+    "party": "Democrat",
+    "url": "https://bell.house.gov",
+    "capitolOffice": [
+      "1429 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2406"
+    ],
+    "districtOffice": [
+      "1191 Dr. M.L. King Dr.",
+      "St. Louis, MO 63101",
+      "Phone: 314-955-9980"
+    ]
+  },
+  "2": {
+    "name": "Ann Wagner",
+    "party": "Republican",
+    "url": "https://wagner.house.gov",
+    "capitolOffice": [
+      "2350 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-1621"
+    ],
+    "districtOffice": [
+      "301 Sovereign Ct., Suite 201",
+      "Ballwin, MO 63011",
+      "Phone: 636-779-5449"
+    ]
+  },
+  "3": {
+    "name": "Robert F. Onder, Jr.",
+    "party": "Republican",
+    "url": "https://onder.house.gov",
+    "capitolOffice": [
+      "1113 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2956"
+    ],
+    "districtOffice": [
+      "5330 Highway N",
+      "Cottleville, MO 63304",
+      "Phone: 636-327-7055"
+    ]
+  },
+  "4": {
+    "name": "Mark Alford",
+    "party": "Republican",
+    "url": "https://alford.house.gov",
+    "capitolOffice": [
+      "328 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2876"
+    ],
+    "districtOffice": [
+      "1272 West Foxwood Dr.",
+      "Raymore, MO 64083",
+      "Phone: 816-441-6318"
+    ]
+  },
+  "5": {
+    "name": "Emanuel Cleaver",
+    "party": "Democrat",
+    "url": "https://cleaver.house.gov",
+    "capitolOffice": [
+      "2217 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4535"
+    ],
+    "districtOffice": [
+      "411 W Maple Ave, F",
+      "Independence, MO 64050-2840",
+      "Phone: 816-833-4545"
+    ]
+  },
+  "6": {
+    "name": "Sam Graves",
+    "party": "Republican",
+    "url": "https://graves.house.gov",
+    "capitolOffice": [
+      "1135 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-7041"
+    ],
+    "districtOffice": [
+      "411 Jules St., Room 111",
+      "St. Joseph, MO 64501",
+      "Phone: 816-749-0800"
+    ]
+  },
+  "7": {
+    "name": "Eric Burlison",
+    "party": "Republican",
+    "url": "https://burlison.house.gov",
+    "capitolOffice": [
+      "1108 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6536"
+    ],
+    "districtOffice": [
+      "2727 E. 32nd Street, Suite 2",
+      "Joplin, MO 64804",
+      "Phone: 417-781-1041"
+    ]
+  },
+  "8": {
+    "name": "Jason Smith",
+    "party": "Republican",
+    "url": "https://jasonsmith.house.gov",
+    "capitolOffice": [
+      "1011 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4404"
+    ],
+    "districtOffice": [
+      "2502 Tanner Dr., Suite 205",
+      "Cape Girardeau, MO 63703",
+      "Phone: 573-335-0101"
+    ]
+  }
+}

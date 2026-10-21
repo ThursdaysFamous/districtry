@@ -72,15 +72,18 @@ news reports: eleven cities elect by ward or district, Broken Arrow, Owasso, Jen
 tie seats to wards and elect every seat by the whole city (so nothing is drawn for them), and
 Stillwater's council has no wards. Five councils choose the mayor from among their members, and
 the card says which ward elected that member. `city-ward` (labelled City Council District)
-draws the 56 wards and districts of nine of the eleven, each from the city's own map, pre-built
-by `ok/scripts/build_ok_city_wards.py` through `scripts/city_ward_maps.py`. Each city's wards
-hold its 2020 people within 5.3% of an equal share, which is what a map drawn on that census
+draws the 64 wards and districts of ten of the eleven, each from the city's own map, pre-built
+by `ok/scripts/build_ok_city_wards.py` through `scripts/city_ward_maps.py`. Nine cities' wards
+hold their 2020 people within 5.3% of an equal share, which is what a map drawn on that census
 shows and does not prove it is the map in force (an inference, recorded as one); the precinct
 test North Carolina runs is not available, because the State Election Board's results site
-refuses this project. **LAWTON'S AND MUSKOGEE'S WARDS ARE NOT DRAWN**: Lawton's only published
-ward map does not balance on the 2020 census, so it may not be the map in force, and Muskogee
-publishes none this project may read. The ward layers are asked for the ward field alone: six
-of them carry members' names, Shawnee's beside fields called Contact and Photo. Broken Arrow's
+refuses this project. **LAWTON'S WARDS ARE DRAWN ON THE CITY'S WORD** (2026-10-21): its only
+published ward map does not balance on the 2020 census and carries 2010 census figures, so it
+was left undrawn and the City Clerk's office was asked which map is in force; the office
+answered by pointing to the city's public ward map, whose only layer is that map, and said
+nothing about the population figures. **MUSKOGEE'S WARDS ARE NOT DRAWN**: it publishes none
+this project may read. The ward layers are asked for the ward field alone: seven of them carry
+members' names, Shawnee's beside fields called Contact and Photo. Broken Arrow's
 site refuses this project's own token at its Akamai edge, so that one page is read with Chrome
 and its client hints on the stdlib client, and the measurement that allows it is in the
 builder. The 584 smaller places name nobody (gap `ok-municipal-officeholders`), all evidence for

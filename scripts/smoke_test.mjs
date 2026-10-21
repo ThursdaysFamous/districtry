@@ -2318,6 +2318,91 @@ try {
       check("a reload in the same window counts the share no more", again.length === 0, JSON.stringify(again));
       await context.close();
     }
+    // A LONG-PRESS SHORTCUT. The launcher hands "Use my location" on as
+    // #locate and leaves districtry-shortcut in session storage. The map must
+    // press its own location button, so the browser asks as it does for the
+    // button, select where the reader is, and count the shortcut once, by app
+    // and action. The key must leave the address before the browser answers:
+    // with the location refused the map selects nothing, so only that strip
+    // keeps a reload from asking again. A point in the address wins.
+    const seedShortcut = (context, action) => context.addInitScript((a) => {
+      try {
+        if (!sessionStorage.getItem("__shortcutSeeded")) {
+          sessionStorage.setItem("__shortcutSeeded", "1");
+          sessionStorage.setItem("districtry-shortcut", a);
+        }
+      } catch (e) { /* blocked storage: the count check below reports it */ }
+    }, action);
+    const shortcutEvents = (p) => p.evaluate(() => (window.__gcEvents || [])
+      .filter((v) => v && v.event && /^(geolocate|geolocate-success|locate-fail\/.*|app-shortcut\/.*|feedback-open\/.*)$/.test(v.path))
+      .map((v) => v.path));
+    {
+      const HERE = { latitude: 41.8789, longitude: -87.6359 };
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE,
+        permissions: ["geolocation"], geolocation: HERE });
+      await seedShortcut(context, "locate");
+      const page = await booted(context, `${BASE}#locate`, stubCounter);
+      const sel = await page.waitForFunction((n) => !!window[n].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT })
+        .then(() => page.evaluate((n) => window[n].state.selectedPoint, EXPORTS_NAME), () => null);
+      await page.waitForTimeout(300);
+      const events = await shortcutEvents(page);
+      const mark = await page.evaluate(() => sessionStorage.getItem("districtry-shortcut"));
+      check("the locate shortcut selects where the reader is, through the map's own location button",
+        !!sel && Math.abs(sel.lat - HERE.latitude) < 1e-6 && Math.abs(sel.lng - HERE.longitude) < 1e-6,
+        JSON.stringify(sel));
+      check("the locate shortcut is counted once, by app, beside the button's own counts, and its mark removed",
+        events.slice().sort().join() === [`app-shortcut/${TAG}/locate`, "geolocate", "geolocate-success"].sort().join() && mark === null,
+        JSON.stringify({ events, mark }));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      await seedShortcut(context, "locate");
+      const page = await booted(context, `${BASE}#locate`, stubCounter);
+      await page.waitForTimeout(800);
+      const first = await shortcutEvents(page);
+      const hash = await page.evaluate(() => location.hash);
+      check("with the location refused, the locate shortcut says so once and leaves no #locate in the address",
+        first.slice().sort().join() === [`app-shortcut/${TAG}/locate`, "geolocate", `locate-fail/${TAG}/denied`].sort().join() && hash === "",
+        JSON.stringify({ first, hash }));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      await page.waitForTimeout(800);
+      const again = await shortcutEvents(page);
+      check("a reload after the locate shortcut asks for the location no more", again.length === 0, JSON.stringify(again));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE,
+        permissions: ["geolocation"], geolocation: { latitude: 41.8789, longitude: -87.6359 } });
+      const page = await booted(context, `${BASE}#p=41.8825,-87.6285&locate`, stubCounter);
+      await page.waitForTimeout(800);
+      const sel = await page.evaluate((n) => window[n].state.selectedPoint, EXPORTS_NAME);
+      const events = await shortcutEvents(page);
+      check("a point in the address wins over #locate, and the location is not asked for",
+        !!sel && Math.abs(sel.lat - 41.8825) < 1e-6 && events.length === 0 &&
+          !/locate/.test(await page.evaluate(() => location.hash)),
+        JSON.stringify({ sel, events }));
+      await context.close();
+    }
+    // "Report a problem" is handed on as #feedback, which opens the report
+    // form exactly as a link to it does (check 1h), and is counted once.
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      await seedShortcut(context, "feedback");
+      const page = await booted(context, `${BASE}#feedback`, stubCounter);
+      await page.waitForTimeout(300);
+      const open = await page.evaluate(() => {
+        const m = document.getElementById("feedback-modal");
+        return !!m && !m.hidden;
+      });
+      const events = await shortcutEvents(page);
+      const mark = await page.evaluate(() => sessionStorage.getItem("districtry-shortcut"));
+      check("the report shortcut opens the report form and is counted once, by app",
+        open && events.slice().sort().join() === [`app-shortcut/${TAG}/feedback`, "feedback-open/link"].sort().join() && mark === null,
+        JSON.stringify({ open, events, mark }));
+      await context.close();
+    }
     {
       const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE,
         userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1" });
