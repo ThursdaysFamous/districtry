@@ -74,6 +74,7 @@ STATE_OF_INSTANCE = {
     "tn": "Tennessee",
     "ar": "Arkansas",
     "ms": "Mississippi",
+    "la": "Louisiana",
 }
 
 

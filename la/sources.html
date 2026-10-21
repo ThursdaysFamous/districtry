@@ -1175,7 +1175,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">11 layers — 4 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">12 layers — 5 political and legislative, 2 public safety, 1 schools, 4 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1184,7 +1184,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1235,6 +1235,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">la-parish-officials.json, the roster the Parish card reads: the member elected from each district, from the Louisiana Secretary of State's list of elected officials, joined by district number.</td>
                 <td data-label="Where it applies">6 of Louisiana's 64 parishes; hidden in the other 58, which the Data gaps panel lists and explains.</td>
+              </tr>
+              <tr id="layer-tribal-government">
+                <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
+                <td data-label="What it answers">Whether this address is on tribal land, and which nation's government answers for it — Louisiana has 6 such areas, held by the Chitimacha Tribe of Louisiana, the Coushatta Tribe of Louisiana, the Jena Band of Choctaw Indians and the Tunica-Biloxi Indian Tribe.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer" target="_blank" rel="noopener">US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">Each nation's council from that nation's own page, read weekly by scripts/tribal_council_scraper.py and dated on the card: the Chitimacha Tribal Council's five members (chitimacha.gov), the Jena Band's Tribal Chief and four council members (jenachoctaw.org) and the Tunica-Biloxi Tribal Council's seven members (tunicabiloxi.org). The Coushatta Tribe's own site names its chairman and not the other four members, so its card names nobody and says why. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.</td>
+                <td data-label="Where it applies">Louisiana — the six pieces of land above, in Allen, Avoyelles, Calcasieu, Grant, Jefferson Davis, LaSalle, Natchitoches and St. Mary parishes. Every other point in the state is on no tribal land the Census draws for a government.</td>
               </tr>
             </tbody>
           </table>
@@ -1548,6 +1559,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Louisiana — statewide. A point outside every city, town and village is unincorporated, which the card states"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/la/sources.html#dataset-tribal-government",
+      "identifier": "tribal-government",
+      "name": "Tribal Government",
+      "description": "Whether this address is on tribal land, and which nation's government answers for it — Louisiana has 6 such areas, held by the Chitimacha Tribe of Louisiana, the Coushatta Tribe of Louisiana, the Jena Band of Choctaw Indians and the Tunica-Biloxi Indian Tribe. Each nation's council from that nation's own page, read weekly by scripts/tribal_council_scraper.py and dated on the card: the Chitimacha Tribal Council's five members (chitimacha.gov), the Jena Band's Tribal Chief and four council members (jenachoctaw.org) and the Tunica-Biloxi Tribal Council's seven members (tunicabiloxi.org). The Coushatta Tribe's own site names its chairman and not the other four members, so its card names nobody and says why. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+      "url": "https://districtry.com/la/sources.html#layer-tribal-government",
+      "isPartOf": {
+        "@id": "https://districtry.com/la/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Louisiana — the six pieces of land above, in Allen, Avoyelles, Calcasieu, Grant, Jefferson Davis, LaSalle, Natchitoches and St. Mary parishes. Every other point in the state is on no tribal land the Census draws for a government"
       }
     },
     {

@@ -1,0 +1,105 @@
+{
+ "0635": {
+  "roster": [
+   {
+    "name": "Melissa Darden",
+    "role": "Chairman"
+   },
+   {
+    "name": "Melinda Butaud",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "Kimberly Walden",
+    "role": "Secretary/Treasurer"
+   },
+   {
+    "name": "Kristan Jones",
+    "role": "Councilman-At-Large"
+   },
+   {
+    "name": "Schuylar Vilcan Hebert",
+    "role": "Councilman-At-Large"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-20.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.chitimacha.gov/tribal-government/tribal-council",
+  "rosterRead": "2026-10-20",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "1690": {
+  "roster": [
+   {
+    "name": "Elizabeth \"Libby\" Rogers",
+    "role": "Tribal Chief"
+   },
+   {
+    "name": "Lacy Robbins McGuffee",
+    "role": "Councilwoman"
+   },
+   {
+    "name": "Lillie Williamson",
+    "role": "Councilwoman"
+   },
+   {
+    "name": "Bryan Nugent",
+    "role": "Councilman"
+   },
+   {
+    "name": "Jason Norris",
+    "role": "Councilman"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-20.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.jenachoctaw.org/about-jbci/tribal-leaders",
+  "rosterRead": "2026-10-20",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "4315": {
+  "roster": [
+   {
+    "name": "Marshall Pierite",
+    "role": "Chairman"
+   },
+   {
+    "name": "Marshall Ray Sampson, Sr.",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "Shelbie Lyn Sampson",
+    "role": "Secretary-Treasurer"
+   },
+   {
+    "name": "James Craig, III",
+    "role": "Council Member"
+   },
+   {
+    "name": "Bobby Pierite",
+    "role": "Council Member",
+    "note": "the same page also writes Bobby Pierite, Sr."
+   },
+   {
+    "name": "Harold Pierite",
+    "role": "Council Member",
+    "note": "the same page also writes Harold Pierite, Sr."
+   },
+   {
+    "name": "Dr. Julie Zahn",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-20.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.tunicabiloxi.org/tribal-info/tribal-council/",
+  "rosterRead": "2026-10-20",
+  "rosterHost": null,
+  "rosterMeasured": null
+ }
+}

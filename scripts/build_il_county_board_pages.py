@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Write eight Illinois counties' board rosters from their own board pages.
+"""Write ten Illinois counties' board rosters from their own board pages.
 
 The scraper beside this one (`il_county_board_pages_scraper.py`) explains WHY
 these counties exist as one pipeline: each was recorded as a county that had been
@@ -98,10 +98,12 @@ def main():
             people += len(members)
             # A DISTRICT THAT NAMES NOBODY MUST SAY WHY. Bureau's District 15 is
             # the one in the fleet today and carries the county's own silence as
-            # a note; an empty district with no note is a seat this build has
-            # dropped without telling anybody, which is the shape that put 112
-            # non-names live on Rock Island's cards for fifteen days.
-            if not members and not entry.get("note"):
+            # a note; a district the county prints as vacant says why with its
+            # `vacancies` count (Champaign prints one seat so, beside a named
+            # one, since 2026-10-20). An empty district with neither is a seat
+            # this build has dropped without telling anybody, which is the shape
+            # that put 112 non-names live on Rock Island's cards for fifteen days.
+            if not members and not entry.get("note") and not entry.get("vacancies"):
                 fail("%s district %s names nobody and gives no reason"
                      % (slug, label))
             for member in members:
