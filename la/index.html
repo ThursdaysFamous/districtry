@@ -15048,7 +15048,10 @@ function initLouisianaExplorer() {
    * layer's answer, and it answers only where a parish's current lines are
    * confirmed. This card lists the whole body and claims no district for the
    * point. A roster miss degrades to a sentence naming nobody, never to an
-   * error card. ---------- */
+   * error card.
+   *
+   * THE CARD ALSO LISTS THE PARISH'S SOIL AND WATER CONSERVATION DISTRICT,
+   * with its offices (the section after laListLink below). ---------- */
   var loadStateCounties = makeCached(function () {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
   });
@@ -15177,6 +15180,102 @@ function initLouisianaExplorer() {
     return { label: "The Secretary of State's list of elected officials", url: url };
   }
 
+  /* ---------- The soil and water conservation district, on the Parish card.
+   *
+   * The Department of Agriculture and Forestry publishes one map of
+   * Louisiana's 44 soil and water conservation districts and a list of their
+   * offices (la/scripts/build_la_conservation_districts.py;
+   * data/app/la-conservation-districts.json, keyed by parish GEOID). Each
+   * district is a governmental subdivision of the state governed by five
+   * supervisors, and neither the Department's list nor the Secretary of
+   * State's names any of them, so the card names no one (gap
+   * la-conservation-district-supervisors). Seven parishes are split between
+   * two districts on the map, and this app does not draw the line between
+   * them, so those cards list both, the district covering more of the parish
+   * first. The card says how the statute fills the board (La. R.S. 3:1205 to
+   * 3:1207), and the builder's --check holds LA_CONSERVATION_CHOSEN and
+   * LA_CONSERVATION_BOARD to its own copy. A failed fetch costs only this
+   * section, which says so.
+   * ---------- */
+  var loadLaConservation = makeCached(function () {
+    return fetchJSONWithRetry("data/app/la-conservation-districts.json", {}, 2);
+  });
+  var LA_CONSERVATION_CHOSEN = "Five supervisors, each a landowner or farm " +
+    "operator, serve three-year terms. Three are elected, one each year, with " +
+    "terms that begin on July 1: a candidate is nominated by a petition signed " +
+    "by at least 25 qualified voters in the district, and the Secretary of " +
+    "State holds the election. Where no more candidates are nominated than " +
+    "there are seats to fill, the state Soil and Water Conservation Commission " +
+    "may declare them elected without an election. The Commission appoints the " +
+    "other two, and fills any vacancy for the rest of the term.";
+  var LA_CONSERVATION_BOARD = "Not named here. The Department of Agriculture " +
+    "and Forestry's list gives each district's offices but names none of its " +
+    "five supervisors, and the Secretary of State's list of elected officials " +
+    "names none either, so this app names no one rather than guessing.";
+  function laConservationFor(result) {
+    return loadLaConservation().then(function (r) {
+      result.conservation = (r && result.geoid != null) ? r[String(result.geoid)] || null : null;
+    }, function () {
+      result.conservationFailed = true;
+    });
+  }
+  function laConservationSection(wrap, result) {
+    var c = result.conservation;
+    var districts = (c && c.districts) || [];
+    if (!districts.length) {
+      wrap.appendChild(renderFieldStack([{
+        label: "Soil and water conservation district",
+        value: result.conservationFailed
+          ? "The list of soil and water conservation districts did not load, so " +
+            "none is shown."
+          : "Not shown: this app's list of soil and water conservation districts " +
+            "has no entry for this parish."
+      }]));
+      return;
+    }
+    if (districts.length > 1) {
+      wrap.appendChild(renderFieldStack([{
+        label: "Soil and water conservation districts",
+        value: (result.name != null ? String(result.name) : "This parish") + " has " +
+          (districts.length === 2 ? "two" : String(districts.length)) +
+          " soil and water conservation districts on the Department of " +
+          "Agriculture and Forestry's map, and this app does not draw the line " +
+          "between them, so " + (districts.length === 2 ? "both are" : "all are") +
+          " listed." + (c.note ? " " + String(c.note) : "")
+      }]));
+    }
+    districts.forEach(function (d) {
+      wrap.appendChild(renderSectionLabel(String(d.name)));
+      (d.offices || []).forEach(function (office) {
+        wrap.appendChild(renderLinkRow({
+          title: office.town ? String(office.town) + " office" : "Office",
+          note: office.ext ? "Extension " + String(office.ext) : null,
+          phone: office.phone ? String(office.phone) : null
+        }));
+      });
+    });
+    var edited = laDate(c.mapEdited);
+    var read = laDate(c.read);
+    wrap.appendChild(renderFieldStack([
+      { label: "Board", value: LA_CONSERVATION_BOARD },
+      { label: "How the board is chosen", value: LA_CONSERVATION_CHOSEN },
+      {
+        label: "Where this comes from",
+        value: "The Department of Agriculture and Forestry's map and list of " +
+          "Louisiana's 44 soil and water conservation districts" +
+          (edited ? ", last edited " + edited : "") +
+          (read ? (edited ? " and" : ",") + " read on " + read : "") + ". This app " +
+          "lists the districts that cover each parish and does not draw their lines."
+      }
+    ]));
+    var page = safeHttpUrl(c.pageUrl);
+    if (page) {
+      wrap.appendChild(renderLinkRow({
+        links: [{ label: "The Department's page on these districts ↗", url: page }]
+      }));
+    }
+  }
+
   registerLayer({
     id: "county",
     group: "geography",
@@ -15198,15 +15297,17 @@ function initLouisianaExplorer() {
           seq: seq,
           name: findPropCI(props, ["name"]),
           geoid: findPropCI(props, ["geoid"]),
-          officials: null
+          officials: null,
+          conservation: null
         };
         // the roster's own failure is not this layer's failure: a miss
-        // degrades to the sentence naming nobody
-        return loadLaParishOfficials().then(function (roster) {
+        // degrades to the sentence naming nobody, and the conservation
+        // districts' list failing costs only its own section
+        var officials = loadLaParishOfficials().then(function (roster) {
           result.officials = (roster && result.geoid != null)
             ? roster[String(result.geoid)] || null : null;
-          return result;
-        }, function () {
+        }, function () {});
+        return Promise.all([officials, laConservationFor(result)]).then(function () {
           return result;
         });
       });
@@ -15226,6 +15327,7 @@ function initLouisianaExplorer() {
             "whose members are elected from districts. The list of them did " +
             "not load, so no one is named here."
         }]));
+        laConservationSection(wrap, result);
         return wrap;
       }
       var atLarge = (o.atLarge || []).filter(function (p) { return p && p.name; });
@@ -15276,6 +15378,7 @@ function initLouisianaExplorer() {
       }
       fields.push({ label: "Where these names come from", value: laListCredit(o) });
       wrap.appendChild(renderFieldStack(fields));
+      laConservationSection(wrap, result);
       return wrap;
     },
     primaryLink: function (result) {
