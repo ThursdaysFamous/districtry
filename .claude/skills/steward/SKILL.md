@@ -57,6 +57,7 @@ python3 scripts/build_coverage_gaps.py --check --metro tennessee --out tn/data/a
 python3 scripts/build_coverage_gaps.py --check --metro arkansas --out ar/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro mississippi --out ms/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro louisiana --out la/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro missouri --out mo/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro nyc       --out ny/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro sf        --out ca/data/app/coverage-gaps.json
 python3 scripts/validate_gap_counts.py --selftest                 # the claim/label split, both directions, offline
@@ -130,6 +131,7 @@ python3 scripts/build_metro_outline.py --check           # IL ring + anchor regi
 python3 wi/scripts/build_metro_outline.py --check
 python3 ia/scripts/build_metro_outline.py --check
 python3 mi/scripts/build_metro_outline.py --check
+python3 mo/scripts/build_metro_outline.py --check
 python3 scripts/build_press_list.py --check                # PRESS_LIST.md vs press-list.json
 python3 scripts/validate_doc_counts.py                    # "N layers" in prose vs the worksheets
 python3 scripts/validate_doc_counts.py --selftest         # pattern C reads the one real "N for <instance>" count and not the four sentences sharing its shape
@@ -212,6 +214,7 @@ python3 wi/scripts/build_legislative_boundaries.py --check      # the same relat
 python3 wi/scripts/dropped_rings.py --selftest   # the dropped-ring mechanism, fixtures only
 python3 wi/scripts/build_wi_supervisory_districts.py --check-shipped   # every declared dropped ring's AFTER answer, offline
 python3 ms/scripts/build_ms_county_officials.py --check         # Mississippi's supervisors and election commissioners: five of each per county, a board office only where three share it, and a commissioner carrying nothing but a name
+python3 mo/scripts/build_mo_county_officials.py --check         # Missouri's county governing bodies and officers as shipped: one record per county and the City of St. Louis, every body in the shape the build requires, the recalled Jackson County executive still not named, every seat named or vacant, and no fax number
 python3 ms/scripts/build_ms_supervisor_districts.py --check      # Mississippi's supervisor districts against their build record, the directory's seats, the Census edition the card names, and the County layer
 python3 ms/scripts/build_ms_court_districts.py --check           # Mississippi's six court maps against the court's own county lists and the laws that redraw them in 2027 and 2031, every saved copy re-hashed
 python3 ms/scripts/build_ms_judges.py --selftest                 # the judges' parse and the change table's staleness tests, on literals
@@ -250,6 +253,7 @@ python3 tn/scripts/validate_index.py tn/index.html
 python3 ar/scripts/validate_index.py ar/index.html
 python3 ms/scripts/validate_index.py ms/index.html
 python3 la/scripts/validate_index.py la/index.html
+python3 mo/scripts/validate_index.py mo/index.html
 
 # --- browser gates: ONE server at the repo root, every instance
 python3 -m http.server 8000 &
@@ -269,6 +273,7 @@ BASE_URL=http://localhost:8000/tn/ node tn/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/ar/ node ar/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/ms/ node ms/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/la/ node la/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/mo/ node mo/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000      node scripts/landing_test.mjs
 BASE_URL=http://localhost:8000      node scripts/page_consistency_test.mjs
 BASE_URL=http://localhost:8000      node scripts/probe_point_transmission.mjs --check

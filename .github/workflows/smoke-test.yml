@@ -109,6 +109,7 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro arkansas --out ar/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro mississippi --out ms/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro louisiana --out la/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro missouri --out mo/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
           # the weekly fleet-status notice.
@@ -896,6 +897,7 @@ jobs:
           python3 wi/scripts/build_metro_outline.py --check
           python3 ia/scripts/build_metro_outline.py --check
           python3 mi/scripts/build_metro_outline.py --check
+          python3 mo/scripts/build_metro_outline.py --check
 
       # docs/PRESS_LIST.md carries a --check in its own header calling it the
       # drift gate, and until now nothing ran it — a generated file gated in
@@ -1597,6 +1599,19 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 ms/scripts/build_ms_county_officials.py --check
 
+      # Missouri's county governing bodies and other elected officers come
+      # from the Secretary of State's Missouri Roster, a PDF that also prints
+      # each official's own office address and fax number. This holds the
+      # shipped file to the shape it was built in, offline: one record for
+      # each of the 114 counties and the City of St. Louis under its own
+      # name, every body in the shape the build requires (the four charter
+      # counties, the city and the commission counties, seat counts
+      # included), the recalled Jackson County executive still not named,
+      # every seat and office named or marked vacant, and no fax number.
+      - name: MO county officials keep their shape and carry no fax number
+        if: ${{ !cancelled() }}
+        run: python3 mo/scripts/build_mo_county_officials.py --check
+
       # Mississippi draws county supervisor districts only in the counties whose
       # Census lines are confirmed current: changed after the 2020 census, and
       # balanced on that census's own blocks. The blocks are not shipped, so the
@@ -1836,6 +1851,7 @@ jobs:
           python3 ar/scripts/validate_index.py ar/index.html
           python3 ms/scripts/validate_index.py ms/index.html
           python3 la/scripts/validate_index.py la/index.html
+          python3 mo/scripts/validate_index.py mo/index.html
 
 
   browser:
@@ -2048,6 +2064,7 @@ jobs:
           BASE_URL=http://localhost:8000/mi/  node mi/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/ms/  node ms/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/la/  node la/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/mo/  node mo/scripts/smoke_test.mjs
 
           # shard 3
 

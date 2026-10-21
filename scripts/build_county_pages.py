@@ -4232,6 +4232,17 @@ def check_workflows(read_by_instance):
 # are the wrong home for it. Nobody has to remember, and nothing is generated
 # from a guess about a shape nobody has looked at.
 NOT_COUNTY_BOARDS = {
+    "mo/data/app/mo-county-officials.json": dict(
+        date="2026-10-21",
+        reason="Missouri's county governing bodies — 110 county commissions, "
+               "three charter councils, Jackson County's legislature and the "
+               "City of St. Louis's mayor and Board of Aldermen president, "
+               "named from the Secretary of State's Missouri Roster. They ARE "
+               "these pages' subject, and are recorded here only while the "
+               "instance is dark: an adapter would write pages for a folder "
+               "the deploy does not publish. Missouri's go-live writes the "
+               "adapter and drops this entry.",
+    ),
     "mn/data/app/mn-county-town-officers.json": dict(
         date="2026-10-16",
         reason="the supervisors, clerks and treasurers of 416 Minnesota "

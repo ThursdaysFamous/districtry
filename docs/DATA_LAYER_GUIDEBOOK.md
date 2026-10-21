@@ -66,7 +66,8 @@ in the researched-but-unbuilt backlog.
   "tennessee": ["us-house", "tn-judicial-district", "tn-senate", "county", "tn-house", "school-district-unified", "school-board-district", "county-commissioner", "county-subdivision", "zip-code", "school-district-elementary", "school-district-secondary", "voting-precinct", "municipality", "city-ward", "tribal-government", "police-station", "fire-station", "post-office"],
   "arkansas": ["us-house", "ar-court-of-appeals", "ar-circuit-court", "ar-senate", "county", "ar-house", "school-district-unified", "zip-code", "quorum-court", "county-subdivision", "fire-district", "school-board-district", "voting-precinct", "municipality", "city-ward", "police-station", "fire-station", "post-office"],
   "mississippi": ["us-house", "ms-supreme-court", "ms-court-of-appeals", "ms-senate", "county", "ms-chancery-court", "ms-circuit-court", "ms-house", "county-supervisor", "school-district-unified", "zip-code", "municipality", "city-ward", "tribal-government", "police-station", "fire-station", "post-office"],
-  "louisiana": ["us-house", "la-supreme-court", "la-court-of-appeal", "la-senate", "la-district-court", "county", "school-district-unified", "la-house", "zip-code", "parish-district", "voting-precinct", "municipality", "tribal-government", "police-station", "fire-station", "post-office"]
+  "louisiana": ["us-house", "la-supreme-court", "la-court-of-appeal", "la-senate", "la-district-court", "county", "school-district-unified", "la-house", "zip-code", "parish-district", "voting-precinct", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "missouri": ["us-house", "mo-senate", "county", "mo-house", "school-district-unified", "school-district-elementary", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -3800,6 +3801,69 @@ trusted.
             "why": "State law sets many of those parts by voting precinct. The court of appeal card can say which part a whole parish is in; the district court card cannot say which part you are in.",
             "wanted": "Maps of the election sections of Louisiana's judicial and court of appeal districts, or each section's current list of voting precincts.",
             "blocker": "MEASURED 2026-10-21 by la/scripts/build_la_judges.py on offices 210_1 (District Judge) and 155_1 (Judge of a Court of Appeal) of the Secretary of State's list of elected officials (https://voterportal.sos.la.gov/ElectedOfficials/Office/Index), read that day with requests sending districtry/1.0 (+https://districtry.com/la/) through build_la_parish_officials.py's fetch, robots.txt read first (it permits every path under /ElectedOfficials/). Twelve judicial districts (the 1st, 4th, 9th, 14th, 15th, 16th, 18th, 19th, 23rd, 24th, 27th and 40th) elect some or all of their judges from an election section or subdistrict, and so do eight court of appeal districts (First Circuit Districts 1 and 2, Second Circuit Districts 1, 2 and 3, Third Circuit Districts 2 and 3, and Fifth Circuit District 1), counted on the shipped la/data/app/la-judges.json. The two laws the court maps are drawn from, La. R.S. 13:312 and 13:477 (read 2026-10-21 from legis.la.gov, which publishes no robots.txt, HTTP 404; kept as text in la/data/source/courts/), set many of those sections by naming voting precincts: the word appears 26 times in 13:312's kept text and 31 times in 13:477's. Where 13:312 names a section's parishes whole and the list's judges for each of a district's sections print exactly those parishes, the builder records which parishes lie wholly in each section (15 sections), and the court of appeal card tells a reader in such a parish which section's judges their votes elect; a parish the law divides between sections is recorded as divided, and the card says it cannot tell which side of the line a point is on. The district courts' sections are set by statutes the builder does not read: 13:477 names only some of them, and the list's sections differ from it in the 19th Judicial District, so no district court card says which section a point is in, and each judge's seat names the section as the list prints it. NOT DRAWN. The route not yet taken: la/data/app/la-precincts.json draws the Legislature's precincts, its edition of 27 January 2026, and whether the precinct names these laws list are the names in that file was not measured; a law naming precincts from an older plan would need that plan's lines. NOT YET ASKED."
+      }
+  ],
+  "missouri": [
+      {
+            "id": "mo-county-commission-district-lines",
+            "concept": "County commission district",
+            "area": "Missouri — all 114 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names every member of the county commission, council or legislature, and cannot say which district commissioner or council member represents the spot you picked, because this app has no map of their districts.",
+            "why": "Each county draws its own commission districts, and no statewide map of them has been found. The Census Bureau does not map them, and townships cannot stand in for them, because some districts split a township.",
+            "wanted": "Each county's current commission or council district map, as a map layer or a file of its lines, or one statewide map of every county's districts from a state office.",
+            "blocker": "Measured 2026-10-21. THE NAMES ARE BUILT: mo/scripts/build_mo_county_officials.py reads the Secretary of State's 2025-2026 Missouri Roster (linked from www.sos.mo.gov/pubs, a 256-page PDF), and the County card names every county's governing body: 110 commission counties (a presiding commissioner elected countywide and two district commissioners, RSMo 49.010 and 49.020; Clay County's commission has seven seats, and Cass County calls its district seats associate commissioners), the seven-member councils of St. Louis, St. Charles and Jefferson counties, Jackson County's nine-member legislature (six seats by district, three by groups of districts), and the City of St. Louis's mayor and Board of Aldermen's president (its ward aldermen are gap mo-st-louis-aldermen). THE LINES ARE NOT: RSMo 49.010 has each county commission divide the county into two districts 'without dividing municipal townships', and RSMo 49.020 has each district commissioner elected by the voters of that district, so naming the commissioner for a point needs that county's lines. TIGERweb carries no commission district: its county subdivisions are the state's 1,394 townships and the City of St. Louis. TOWNSHIPS DO NOT STAND IN FOR THE LINES, measured against three counties' own published district maps: Franklin County's 12 townships fall whole inside its two districts, while Buchanan County's map splits 2 of its 12 (Washington township, which holds St. Joseph) and Clay County's 2 of 7 (Chouteau). A district assembled from whole townships would name the wrong commissioner on part of the ground in two of the three counties checked. NO STATEWIDE MAP: the state's map server (gis.mo.gov, no robots.txt, its folders listed 2026-10-21 with the client districtry/1.0 (+https://districtry.com/mo/)) carries the congressional and legislative plans in its LEGIS folder (current, 2010 and 2025 congressional, and the 2021-2022 redistricting drafts) and no county commission or council district; its OA folder holds facilities and parcels. The Secretary of State publishes no district map. NOT YET ASKED: Adam asked the Letters thread on 2026-10-21 to draft a letter to the Secretary of State asking for a statewide map of commission districts and voting precincts, or the table of precincts to districts kept with the voter roll; it is a draft, not an ask, until it is sent. A county joins when its own published map proves its lines, the rule Mississippi's supervisor districts and Louisiana's parish districts follow; mo/WATCH.md carries the measurements."
+      },
+      {
+            "id": "mo-st-louis-aldermen",
+            "concept": "City ward",
+            "area": "The City of St. Louis",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "For the City of St. Louis the County card names the mayor and the president of the Board of Aldermen, and not the alderman elected from the ward you picked.",
+            "why": "The Secretary of State's roster names those two offices and none of the ward aldermen, and this app does not read the city's own list or draw its wards yet.",
+            "wanted": "Nothing from a reader — the city's own list of its ward aldermen and its ward map are ours to read and build.",
+            "blocker": "Measured 2026-10-21 in the Secretary of State's 2025-2026 Missouri Roster, read by mo/scripts/build_mo_county_officials.py: the City of St. Louis's entry names the mayor, the President of the Board of Aldermen and the city's other elected officers, and none of the fourteen ward aldermen, so the County card names those two and its note says the roster does not name the Board's ward members. The city is its own county (GEOID 29510) and its own county subdivision (FUNCSTAT F), so no county layer draws a ward. The city's own list of aldermen, its ward map and its hosts' robots.txt have not been read for this record. ROUTE: read the city's own list of aldermen by ward and its current ward map as their own change, the way the Mississippi and Arkansas instances read their largest cities' own pages and prove them on every build."
+      },
+      {
+            "id": "mo-municipal-officeholders",
+            "concept": "City or town government",
+            "area": "Missouri",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City, Town or Village card names the place and whether the Census records its government as active, and not who your mayor, council or board of aldermen are.",
+            "why": "No statewide list of Missouri's city and town officials has been found. The Secretary of State's roster lists the cities by class and names none of their officials, and no city's own pages have been read yet.",
+            "wanted": "A statewide roster of every city's, town's and village's mayor and council or board members by ward, or each place's own published list.",
+            "blocker": "Measured 2026-10-21. The boundary is TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4), which carries a name, a code and a functional status and no officeholder field: 947 places for STATE='29' (645 cities, 106 towns and 196 villages), 936 recorded as active governments (FUNCSTAT A) and 11 as inactive (FUNCSTAT I), covering about 4.4% of the state's land by the Census's own AREALAND. 27 places had 25,000 people or more in the 2020 census (TIGERweb's POP100). The Secretary of State's 2025-2026 Missouri Roster follows its county officials with a 'Classification of Municipalities' section that lists the places by class and names none of their officials. No statewide roster of mayors, aldermen and council members was found, and no city's own pages have been read: the route the Mississippi and Arkansas instances took, each city's own pages read largest first and proved against them on every build, is the next change here. NOT YET ASKED."
+      },
+      {
+            "id": "mo-school-board-members",
+            "concept": "School board",
+            "area": "Missouri",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "This app names your school district and not the people on its board.",
+            "why": "No statewide list of Missouri's school board members has been read. The boundary this card draws carries the district's name and nothing about its board.",
+            "wanted": "A statewide roster of school board members, or each district's own published list of its board.",
+            "blocker": "Measured 2026-10-21 against TIGERweb's School service for STATE='29': 445 unified districts (layer 0), 71 elementary districts (layer 2) and no secondary district (layer 1 answers zero). The unified and elementary districts tile the state between them: their Census land areas sum to 178,052,694,679 square metres, exactly the 115 counties' AREALAND. The app draws both; each feature carries a name, a GEOID and the grades it serves and nothing about a board. No statewide roster of school board members was read in this pass. Whether the Department of Elementary and Secondary Education publishes one is not measured: the state's map server has a DESE folder that was not opened for this record, and DESE's own directory was not read. NOT YET ASKED."
+      },
+      {
+            "id": "mo-township-officers",
+            "concept": "Township government",
+            "area": "Missouri — the 20 counties organized into townships",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "county-subdivision",
+            "summary": "Where a township has a government of its own, the Township card says so and does not name its officers.",
+            "why": "No statewide list of Missouri's township officers has been found, and no county's or township's own list has been read yet.",
+            "wanted": "A statewide list of township officers, or each township's or county's own published list of them.",
+            "blocker": "Measured 2026-10-21 across all 1,394 county subdivisions TIGERweb carries for STATE='29' (Places_CouSub_ConCity_SubMCD layer 1): 282 townships with FUNCSTAT A, active governments, in the 20 counties organized into townships under RSMo chapter 65; City township in Barton County (FUNCSTAT B, partly consolidated); Dade County's 16 townships (FUNCSTAT I, inactive); 1,094 townships with no government of their own (FUNCSTAT N); and the City of St. Louis (FUNCSTAT F). No active township had 25,000 people or more in the 2020 census. The Secretary of State's 2025-2026 Missouri Roster does not mention townships at all: the word appears nowhere in its text as pdftotext writes it. No statewide list of township officers was found and no county's or township's own list has been read. NOT YET ASKED."
       }
   ]
 }

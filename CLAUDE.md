@@ -96,13 +96,13 @@ districtry Illinois: a single-file, dependency-light web app. Click a point in I
 This list undercounts what actually runs, and **the figure is stated WITH ITS METHOD AND ITS
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
 them used. MEASURED 2026-10-21 on this branch, AFTER its last edit: a static gate is
-one NAMED step in the `static` job, which is **126**;
-counted instead as script invocations the whole battery is **226 — 206 that need no browser and
-20 that boot Chromium** (a Playwright smoke test per instance
-`il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`/`in`/`nc`/`ky`/`ok`/`sc`/`tn`/`ar`/`ms`/`la`, 2 root-page tests, and the two fleet-wide probes
+one NAMED step in the `static` job, which is **127**;
+counted instead as script invocations the whole battery is **231 — 210 that need no browser and
+21 that boot Chromium** (a Playwright smoke test per instance
+`il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`/`in`/`nc`/`ky`/`ok`/`sc`/`tn`/`ar`/`ms`/`la`/`mo`, 2 root-page tests, and the two fleet-wide probes
 for point transmission and contrast pairs), the per-instance `validate_index.py` runs included, and
 excluding the two `npx playwright install` setup lines and the `http.server` that serves the
-pages to the twenty.
+pages to the twenty-one.
 
 The pair moves whenever anything merges, not only when a gate is added. A new instance
 adds invocations without adding a named step; one step can carry a gate and its selftest;
@@ -121,8 +121,8 @@ and how each went wrong are in this section's git history.
 
 Treat the workflow file as the source of truth for the full battery and its order;
 `.claude/skills/steward/SKILL.md` mirrors it as locally-runnable commands with per-gate
-rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-10-21, **226
-invocations for 226**, diffed both ways with each side's trailing rationale comment stripped
+rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-10-21, **231
+invocations for 231**, diffed both ways with each side's trailing rationale comment stripped
 and `$BASE` resolved to the branch point the skill spells `origin/main`,
 after four gates were found missing from it on 2026-09-12 (`build_sitemap.py`,
 `undeliverable.py`, the circuit-court join self-test, and that change's own) and **three more on
