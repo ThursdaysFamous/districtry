@@ -19,7 +19,7 @@ whether the data exists** — a level no publisher offers, that we
 asked about and were refused, counts as covered — so a county
 publisher cannot fail an app on it.
 
-**35 gap-record claims name a level, 9 of which carry a
+**34 gap-record claims name a level, 9 of which carry a
 dated ask that counts.** A level this report calls open and
 that no record claims is still a floor. A claim that earns
 nothing is printed under its level with the reason, rather
@@ -142,7 +142,7 @@ this instance is in maintenance.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 7 of 13 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 6 more name a body elected by ward or district whose wards are not drawn; unanswered: Alexandria city, Kenner city, Lake Charles city, Monroe city, New Iberia city, Shreveport city
   - **10. School boards elected by district** — open (required only where the state has the level). A record declares this level and earns nothing: `la-school-board-district-lines` — Commissioner of Elections Sherri Wharton Hadskey, Louisiana Secretary of State's Elections Division (elections@sos.la.gov) was asked on 2026-10-21 and has not answered; the record earns nothing until a thread writes the outcome
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **14. Township or county subdivision boundaries** — open. A record declares this level and earns nothing: `la-parish-district-lines` — Commissioner of Elections Sherri Wharton Hadskey, Louisiana Secretary of State's Elections Division (elections@sos.la.gov) was asked on 2026-10-21 and has not answered; the record earns nothing until a thread writes the outcome
+  - **14. Township or county subdivision boundaries** — open
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Louisiana has no sub-county general-purpose government — outside a city, town or village the parish governs. The sub-county units the Census publishes for Louisiana are the districts its parishes' governing bodies are elected from, which the Census records as having no functioning government, and one for Orleans Parish, which it records as a placeholder made only to complete its own geography.
 
