@@ -55,6 +55,7 @@ const GEOMETRY_URLS = [
   "./data/app/in-school-board-districts.json",
   "./data/app/in-appeals-districts.json",
   "./data/app/in-conservancy-districts.json",
+  "./data/app/zip-index.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI

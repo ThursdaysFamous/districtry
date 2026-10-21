@@ -372,6 +372,7 @@ const GEOMETRY_URLS = [
   "./data/app/putnam-precincts.json",
   "./data/app/marshall-precincts.json",
   "./data/app/livingston-precincts.json",
+  "./data/app/zip-index.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI

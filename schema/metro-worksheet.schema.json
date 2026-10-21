@@ -71,6 +71,30 @@
       },
       "description": "OPTIONAL. Opts the instance into searching districts by name (\"33rd ward\"). `file` is the data/app index scripts/build_district_search.py writes; it must also be listed under data_files.geometry, because it changes only when boundaries do. Absent = the search box searches addresses only, byte-identically to before."
     },
+    "zip_search": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file", "layers"],
+      "properties": {
+        "file": {"type": "string", "pattern": "^[a-z0-9-]+\\.json$"},
+        "layers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "field", "inside"],
+            "properties": {
+              "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+              "field": {"type": "string", "minLength": 1},
+              "inside": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[a-z0-9-]+\\.json$"}},
+              "outside": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[a-z0-9-]+\\.json$"}}
+            }
+          }
+        }
+      },
+      "description": "OPTIONAL. Opts the instance into showing a typed ZIP code whole and comparing it (ENGINE geocoder-search, showZip, 2026-10-21): the search selects a spot inside the ZIP code, turns its ZIP layer on and pins it for comparison, so every ward or county board district it crosses is outlined, with no geocoder asked. `file` is the data/app index scripts/build_zip_index.mjs writes from the ZIP layers' committed tile archives; it must also be listed under data_files.geometry, because it changes only when those archives do. `layers` names each ZIP layer, the tile field holding its ZIP code (one code, or several separated by commas), and the ground its spots must be on, in the order they answer: a ZIP code an earlier layer draws is that layer's. `inside` names the data/app outlines the layer's coverage test reads (a spot is inside one of them), or the app's own ground for a layer that declares none, and `outside` any it must not be inside (New York's statewide layer stands down inside the city). Absent = a typed ZIP code is searched through the geocoder, whose answer is never selected for the reader, and picking it says it is one spot."
+    },
     "population": {
       "type": "object",
       "additionalProperties": false,
