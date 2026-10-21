@@ -5,9 +5,10 @@
 //
 // It deliberately depends only on the app shell (Leaflet from its CDN) and the
 // same-origin data/app/*.json files — never on the live district APIs, which
-// are flaky/blocked in CI. The four same-origin anchors (Parish, U.S. House,
-// Louisiana Senate and Louisiana House) are the deterministic ground truth,
-// and every live service a check needs is stubbed.
+// are flaky/blocked in CI. The same-origin anchors (Parish, U.S. House, the
+// two chambers, the voting precinct and the three courts elected by district)
+// are the deterministic ground truth, and every live service a check needs is
+// stubbed.
 //
 // Run locally against a static server:
 //     python3 -m http.server 8000 &
@@ -50,11 +51,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "29.95240,-90.07670"; // New Orleans City Hall, 1300 Perdido Street, Orleans Parish
-const OFFLINE = ["county", "us-house", "la-senate", "la-house", "voting-precinct"];
-const EXPECT_DISTRICT = { "county": "Orleans Parish", "us-house": "2", "la-senate": "5", "la-house": "93", "voting-precinct": "Precinct 3-1" };
+const OFFLINE = ["county", "us-house", "la-senate", "la-house", "voting-precinct", "la-supreme-court", "la-court-of-appeal", "la-district-court"];
+const EXPECT_DISTRICT = { "county": "Orleans Parish", "us-house": "2", "la-senate": "5", "la-house": "93", "voting-precinct": "Precinct 3-1", "la-supreme-court": "7", "la-court-of-appeal": "Fourth Circuit, District 1", "la-district-court": "Civil District Court and Criminal District Court" };
 const NEGATIVE_POINT = "28.60000,-90.50000"; // open water about 50 km south of the Louisiana coast, past the state's offshore line — outside Louisiana and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-20: TIGERweb's state and county layers name no state or parish here, its legislative layers no district, and its ZIP layer no ZIP code (control: New Orleans City Hall returns Louisiana, Orleans Parish and 70112). OPEN WATER BECAUSE A POINT ON A NEIGHBOUR'S LAND WOULD HAVE TO MOVE: Arkansas and Mississippi are live already, and the fleet is meant to reach every state, Texas included.
 const APP_NAME = "districtry Louisiana";
-const EXPECT_LAYERS = 13;
+const EXPECT_LAYERS = 16;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "LouisianaExplorer";
@@ -520,7 +521,7 @@ try {
     await context.close();
   }
 
-  // 2. The four same-origin anchors classify a known point against known
+  // 2. The same-origin anchors classify a known point against known
   //    ground truth, fetched from data/app/*.json. Two expected-value shapes:
   //    a NUMERIC expectation asserts the card's own "District N" token exactly
   //    (never a stray digit elsewhere in the card); a NAME expectation (the
@@ -1518,6 +1519,145 @@ try {
         propsAt(areas, POINT).length === 0 &&
           off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("6 tribal areas") !== -1,
         JSON.stringify(off.text.slice(0, 120)));
+    }
+  }
+
+  // 12. THE COURTS ELECTED BY DISTRICT: the Supreme Court, the courts of
+  //     appeal and the district courts. Who is expected is read from the
+  //     shipped la-judges.json, and which district from the shipped court
+  //     files at the point, so a weekly refresh moves the expectation with
+  //     the file; what is asserted is that each card agrees with them.
+  //       - At City Hall the Supreme Court card names District 7's justice
+  //         and party, says Orleans Parish is divided among the districts
+  //         the shipped file gives a part of it, and links the court's site.
+  //       - At City Hall the Court of Appeal card names every judge of the
+  //         Fourth Circuit's First District and both judges the whole circuit
+  //         elects, the court's office, and how many judges the list names.
+  //       - At City Hall the Judicial District card names every judge of the
+  //         Orleans civil and criminal district courts, both courts' offices
+  //         and the one day every term ends.
+  //       - In St. John the Baptist Parish, which the river divides between
+  //         two districts, the Court of Appeal card names both and the judges
+  //         of each.
+  //       - In Iberville Parish, which La. R.S. 13:312 puts wholly in the
+  //         First Circuit's First District's Election Section 1, the card says
+  //         the point is in that section.
+  //       - The judges file is refused: each card still names its district,
+  //         says the names did not load, and names nobody.
+  //     The St. John and Iberville points are each parish's pole of
+  //     inaccessibility on the shipped parish file (shapely polylabel,
+  //     2026-10-21), about 10 and 15 km from its edge.
+  {
+    const judges = shipped("la-judges.json");
+    const sc = shipped("la-supreme-court-districts.json");
+    const coa = shipped("la-court-of-appeal-districts.json");
+    const jdc = shipped("la-district-court-districts.json");
+    const STJOHN = "30.18432,-90.42573";
+    const IBERVILLE = "30.18724,-91.22222";
+    const COURTS = ["la-supreme-court", "la-court-of-appeal", "la-district-court"];
+    const at = async (pt, routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=${COURTS.join(",")}`, routeFn);
+      const out = {};
+      for (const id of COURTS) {
+        const card = await cardText(page, id);
+        const links = await page.evaluate((cid) => {
+          const el = document.getElementById("card-" + cid);
+          const block = el && el.closest(".layer-block");
+          return block ? Array.from(block.querySelectorAll("a[href]")).map((a) => a.getAttribute("href")) : [];
+        }, id);
+        out[id] = { text: card.text || "", error: card.error, links };
+      }
+      await context.close();
+      return out;
+    };
+    const names = (list) => (list || []).filter((p) => p && p.name).map((p) => p.name);
+    const all = (text, list) => list.length > 0 && list.every((n) => text.includes(n));
+    const andList = (l) => l.length === 1 ? l[0] : l.slice(0, -1).join(", ") + " and " + l[l.length - 1];
+
+    {
+      const c = await at(POINT);
+      const here = propsAt(sc, POINT)[0] || {};
+      const justice = ((judges.supreme.districts[here.unit] || {}).members || [])[0] || {};
+      const sharing = sc.features.map((f) => f.properties)
+        .filter((p) => (p.part || []).includes("Orleans")).map((p) => String(p.unit)).sort();
+      const t = c["la-supreme-court"];
+      check("the Supreme Court card names the district's justice and party, the parish's division, and the court's site",
+        here.unit === "7" && !t.error && !!justice.name && t.text.includes(justice.name) &&
+          !!justice.party && t.text.includes(justice.party) && sharing.length === 3 &&
+          t.text.includes("Orleans Parish is divided among Supreme Court Districts " + andList(sharing)) &&
+          t.links.includes("https://www.lasc.org/"),
+        `unit=${here.unit} justice=${justice.name} sharing=${sharing} ${JSON.stringify(t.text.slice(0, 160))}`);
+
+      const unit = (propsAt(coa, POINT)[0] || {}).unit;
+      const members = names((judges.appeal.districts[unit] || {}).members);
+      const circuit = judges.appeal.circuits["4"] || {};
+      const big = names(circuit.atLarge);
+      const office = (circuit.office || {}).address;
+      const a = c["la-court-of-appeal"];
+      check("the Court of Appeal card names every judge of the district, the circuit's at-large judges, the court's office and the count",
+        unit === "4-1" && !a.error && all(a.text, members) && all(a.text, big) &&
+          !!office && a.text.includes(office) &&
+          a.text.includes(`names ${members.length} judges elected from this district, and ` +
+            `${big.length} elected from the whole Fourth Circuit`),
+        `unit=${unit} members=${members.length} big=${big.length} ${JSON.stringify(a.text.slice(0, 160))}`);
+
+      const courts = (judges.district.districts["Orleans"] || {}).courts || [];
+      const each = courts.map((x) => names(x.members));
+      const terms = [...new Set(courts.flatMap((x) => (x.members || []).map((p) => p.termEnds)))];
+      const j = c["la-district-court"];
+      check("the Judicial District card names every judge of both Orleans courts, both offices and the day every term ends",
+        (propsAt(jdc, POINT)[0] || {}).unit === "Orleans" && !j.error && courts.length === 2 &&
+          each.every((n) => all(j.text, n)) &&
+          courts.every((x) => !!(x.office || {}).address && j.text.includes(x.office.address)) &&
+          terms.length === 1 && j.text.includes("ending on " + longDate(terms[0])),
+        `courts=${courts.length} named=${each.map((n) => n.length)} terms=${terms} ${JSON.stringify(j.text.slice(0, 160))}`);
+    }
+
+    {
+      const c = await at(STJOHN);
+      const f = propsAt(coa, STJOHN)[0] || {};
+      const two = (f.units || []).map((u) => names((judges.appeal.districts[u] || {}).members));
+      const a = c["la-court-of-appeal"];
+      check("in St. John the Baptist Parish the Court of Appeal card names both districts the river divides it between, and each one's judges",
+        JSON.stringify(f.units) === JSON.stringify(["5-2", "5-3"]) && !a.error &&
+          a.text.includes("Fifth Circuit, District 2 or 3") && a.text.includes("Which of the two") &&
+          two.length === 2 && two.every((n) => all(a.text, n)),
+        `units=${f.units} ${JSON.stringify(a.text.slice(0, 200))}`);
+    }
+
+    {
+      const c = await at(IBERVILLE);
+      const unit = (propsAt(coa, IBERVILLE)[0] || {}).unit;
+      const secs = (judges.appeal.districts[unit] || {}).sections || {};
+      const mine = Object.keys(secs).filter((s) => (secs[s].whole || []).includes("Iberville"));
+      const a = c["la-court-of-appeal"];
+      check("in Iberville Parish the Court of Appeal card says which election section the point is in, from the law",
+        unit === "1-1" && mine.length === 1 && !a.error &&
+          // a section label is set in capitals by the stylesheet, which
+          // innerText reports, so the label is compared without case
+          a.text.toLowerCase().includes(`judges elected from ${mine[0]}, which this point is in`.toLowerCase()) &&
+          a.text.includes(`puts all of Iberville Parish in ${mine[0]}`),
+        `unit=${unit} mine=${mine} ${JSON.stringify(a.text.slice(0, 200))}`);
+    }
+
+    {
+      const c = await at(POINT, async (pg) => {
+        await pg.route("**/data/app/la-judges.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      });
+      const everyone = [].concat(
+        names((judges.supreme.districts["7"] || {}).members),
+        names((judges.appeal.districts["4-1"] || {}).members),
+        names((judges.appeal.circuits["4"] || {}).atLarge),
+        ...((judges.district.districts["Orleans"] || {}).courts || []).map((x) => names(x.members)));
+      const named = everyone.filter((n) => COURTS.some((id) => c[id].text.includes(n)));
+      check("each court card still names its district, says the names did not load, and names nobody, when the judges file fails",
+        everyone.length > 0 && named.length === 0 &&
+          COURTS.every((id) => !c[id].error && c[id].text.includes("The list of judges did not load just now")) &&
+          c["la-supreme-court"].text.includes("Supreme Court District 7") &&
+          c["la-court-of-appeal"].text.includes("Fourth Circuit, District 1") &&
+          c["la-district-court"].text.includes("Civil District Court and Criminal District Court"),
+        `named=${named.slice(0, 2)} ${COURTS.map((id) => JSON.stringify(c[id].text.slice(0, 80))).join(" | ")}`);
     }
   }
 } finally {

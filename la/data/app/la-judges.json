@@ -1,0 +1,2515 @@
+{
+ "appeal": {
+  "circuits": {
+   "3": {
+    "office": {
+     "address": "1000 Main St., Lake Charles, LA 70615"
+    }
+   },
+   "4": {
+    "atLarge": [
+     {
+      "name": "Karen Herman",
+      "party": "Democratic",
+      "phone": "(504) 712-6054",
+      "seat": "At large",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "Roland Belsome",
+      "party": "Democratic",
+      "phone": "(504) 256-3100",
+      "seat": "At large",
+      "termEnds": "2031-12-31"
+     }
+    ],
+    "office": {
+     "address": "410 Royal St., New Orleans, LA 70130"
+    }
+   },
+   "5": {
+    "office": {
+     "address": "101 Derbigny St., Gretna, LA 70053"
+    }
+   }
+  },
+  "districts": {
+   "1-1": {
+    "members": [
+     {
+      "name": "Mitchell 'Mitch' Theriot",
+      "party": "Republican",
+      "phone": "(985) 537-2285",
+      "seat": "Division B",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "Steven Miller",
+      "party": "Republican",
+      "seat": "Division D",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "Tess Percy Stromberg",
+      "party": "Republican",
+      "phone": "(225) 621-8522",
+      "seat": "Election Section 1, Division C",
+      "section": "Election Section 1",
+      "termEnds": "2034-12-31"
+     },
+     {
+      "name": "Walter 'Walt' Lanier III",
+      "party": "Republican",
+      "phone": "(985) 448-0897",
+      "seat": "Election Section 2, Division A",
+      "section": "Election Section 2",
+      "termEnds": "2028-12-31"
+     }
+    ],
+    "sections": {
+     "Election Section 1": {
+      "parishes": [
+       "Ascension",
+       "Assumption",
+       "Iberville",
+       "Pointe Coupee",
+       "West Baton Rouge"
+      ],
+      "whole": [
+       "Ascension",
+       "Assumption",
+       "Iberville",
+       "Pointe Coupee",
+       "West Baton Rouge"
+      ]
+     },
+     "Election Section 2": {
+      "parishes": [
+       "Lafourche",
+       "St. Mary",
+       "Terrebonne"
+      ],
+      "whole": [
+       "Lafourche",
+       "St. Mary",
+       "Terrebonne"
+      ]
+     }
+    }
+   },
+   "1-2": {
+    "members": [
+     {
+      "name": "Christopher Hester",
+      "party": "Republican",
+      "phone": "(225) 389-3021",
+      "seat": "Subdistrict 1, Division A",
+      "section": "Subdistrict 1",
+      "termEnds": "2030-12-31"
+     },
+     {
+      "name": "Hunter Greene",
+      "party": "Republican",
+      "phone": "(225) 389-4678",
+      "seat": "Subdistrict 1, Division B",
+      "section": "Subdistrict 1",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "Kelly Balfour",
+      "party": "Republican",
+      "phone": "(225) 485-6928",
+      "seat": "Subdistrict 1, Division C",
+      "section": "Subdistrict 1",
+      "termEnds": "2034-12-31"
+     },
+     {
+      "name": "Wilson E. Fields",
+      "party": "Democratic",
+      "phone": "(225) 382-3080",
+      "seat": "Subdistrict 2, Division D",
+      "section": "Subdistrict 2",
+      "termEnds": "2031-12-31"
+     }
+    ],
+    "sections": {
+     "Subdistrict 1": {
+      "parishes": [
+       "East Baton Rouge"
+      ]
+     },
+     "Subdistrict 2": {
+      "parishes": [
+       "East Baton Rouge"
+      ]
+     }
+    }
+   },
+   "1-3": {
+    "members": [
+     {
+      "name": "Blair Downing Edwards",
+      "party": "Republican",
+      "phone": "(985) 517-0910",
+      "seat": "Division A",
+      "termEnds": "2034-12-31"
+     },
+     {
+      "name": "Page McClendon",
+      "party": "Republican",
+      "phone": "(985) 845-2221",
+      "seat": "Division B",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "Allison Hopkins Penzato",
+      "party": "Republican",
+      "phone": "(985) 845-1317",
+      "seat": "Division C",
+      "termEnds": "2034-12-31"
+     },
+     {
+      "name": "Elizabeth 'Beth' Wolfe",
+      "party": "Republican",
+      "phone": "(225) 465-7111",
+      "seat": "Division D",
+      "termEnds": "2032-12-31"
+     }
+    ]
+   },
+   "2-1": {
+    "members": [
+     {
+      "name": "Marcus L. Hunter",
+      "party": "Democratic",
+      "phone": "(318) 303-6213",
+      "seat": "Election Section 1, Division C",
+      "section": "Election Section 1",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "James M. 'Jimbo' Stephens",
+      "party": "Independent",
+      "seat": "Election Section 2, Division A",
+      "section": "Election Section 2",
+      "termEnds": "2028-12-31"
+     },
+     {
+      "name": "'Danny' Ellender",
+      "party": "Republican",
+      "phone": "(318) 647-3311",
+      "seat": "Election Section 2, Division B",
+      "section": "Election Section 2",
+      "termEnds": "2032-12-31"
+     }
+    ],
+    "sections": {
+     "Election Section 1": {
+      "parishes": [
+       "East Carroll",
+       "Madison",
+       "Morehouse",
+       "Ouachita",
+       "Tensas",
+       "West Carroll"
+      ],
+      "whole": [
+       "East Carroll",
+       "Madison",
+       "Tensas"
+      ]
+     },
+     "Election Section 2": {
+      "parishes": [
+       "Franklin",
+       "Morehouse",
+       "Ouachita",
+       "Richland",
+       "West Carroll"
+      ],
+      "whole": [
+       "Franklin",
+       "Richland"
+      ]
+     }
+    }
+   },
+   "2-2": {
+    "members": [
+     {
+      "name": "'Jeff' Cox",
+      "party": "Republican",
+      "phone": "(318) 965-2800",
+      "seat": "Division C",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Jeffrey L. 'Jeff' Robinson",
+      "party": "Republican",
+      "phone": "(318) 251-5121",
+      "seat": "Election Section 1",
+      "section": "Election Section 1",
+      "termEnds": "2028-12-31"
+     },
+     {
+      "name": "'Jeff' Thompson",
+      "party": "Republican",
+      "phone": "(318) 227-3700",
+      "seat": "Election Section 2",
+      "section": "Election Section 2",
+      "termEnds": "2030-12-31"
+     }
+    ],
+    "sections": {
+     "Election Section 1": {
+      "parishes": [
+       "Bienville",
+       "Caldwell",
+       "Claiborne",
+       "Jackson",
+       "Lincoln",
+       "Union",
+       "Winn"
+      ],
+      "whole": [
+       "Bienville",
+       "Caldwell",
+       "Claiborne",
+       "Jackson",
+       "Lincoln",
+       "Union",
+       "Winn"
+      ]
+     },
+     "Election Section 2": {
+      "parishes": [
+       "Bossier",
+       "Webster"
+      ],
+      "whole": [
+       "Bossier",
+       "Webster"
+      ]
+     }
+    }
+   },
+   "2-3": {
+    "members": [
+     {
+      "name": "Shonda Stone",
+      "party": "Democratic",
+      "phone": "(318) 417-7090",
+      "seat": "Election Section 1, Division A",
+      "section": "Election Section 1",
+      "termEnds": "2034-12-31"
+     },
+     {
+      "name": "Frances Pitman",
+      "party": "Republican",
+      "phone": "(318) 227-3750",
+      "seat": "Election Section 2, Division B",
+      "section": "Election Section 2",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "Craig Marcotte",
+      "party": "Republican",
+      "phone": "(318) 226-6836",
+      "seat": "Election Section 2, Division C",
+      "section": "Election Section 2",
+      "termEnds": "2030-12-31"
+     }
+    ],
+    "sections": {
+     "Election Section 1": {
+      "parishes": [
+       "Caddo"
+      ],
+      "whole": []
+     },
+     "Election Section 2": {
+      "parishes": [
+       "Caddo",
+       "De Soto",
+       "Red River"
+      ],
+      "whole": [
+       "De Soto",
+       "Red River"
+      ]
+     }
+    }
+   },
+   "3-1": {
+    "members": [
+     {
+      "name": "Elizabeth Pickett",
+      "party": "Independent",
+      "phone": "(318) 256-4180",
+      "seat": "Division A",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "Van Kyzar",
+      "party": "Democratic",
+      "phone": "(318) 471-9133",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Shannon Gremillion",
+      "party": "Democratic",
+      "phone": "(318) 623-7950",
+      "seat": "Division C",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "3-2": {
+    "members": [
+     {
+      "name": "Sharon Wilson",
+      "party": "Democratic",
+      "phone": "(337) 274-4706",
+      "seat": "Election Section 1, Division C",
+      "section": "Election Section 1",
+      "termEnds": "2030-12-31"
+     },
+     {
+      "name": "Clayton Davis",
+      "party": "Republican",
+      "seat": "Election Section 2, Division A",
+      "section": "Election Section 2",
+      "termEnds": "2034-12-31"
+     },
+     {
+      "name": "Guy Bradberry",
+      "party": "Republican",
+      "seat": "Election Section 2, Division B",
+      "section": "Election Section 2",
+      "termEnds": "2032-12-31"
+     }
+    ],
+    "sections": {
+     "Election Section 1": {
+      "parishes": [
+       "Calcasieu",
+       "Jefferson Davis"
+      ],
+      "whole": []
+     },
+     "Election Section 2": {
+      "parishes": [
+       "Beauregard",
+       "Calcasieu",
+       "Cameron",
+       "Jefferson Davis",
+       "Vernon"
+      ],
+      "whole": [
+       "Beauregard",
+       "Cameron",
+       "Vernon"
+      ]
+     }
+    }
+   },
+   "3-3": {
+    "members": [
+     {
+      "name": "Candyce Perret",
+      "party": "Republican",
+      "phone": "(337) 236-6133",
+      "seat": "Division B",
+      "termEnds": "2034-12-31"
+     },
+     {
+      "name": "Gary J. Ortego",
+      "party": "Republican",
+      "seat": "Election Section 1, Division C",
+      "section": "Election Section 1",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "Ledricka Johnson Thierry",
+      "party": "Democratic",
+      "phone": "(337) 418-7500",
+      "seat": "Election Section 2, Division D",
+      "section": "Election Section 2",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "Wilbur 'Bill' Stiles",
+      "party": "Republican",
+      "phone": "(337) 500-1771",
+      "seat": "Election Section 3, Division E",
+      "section": "Election Section 3",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "Jonathan Perry",
+      "party": "Republican",
+      "phone": "(337) 643-8004",
+      "seat": "Election Section 4, Division F",
+      "section": "Election Section 4",
+      "termEnds": "2028-12-31"
+     },
+     {
+      "name": "'Charlie' Fitzgerald",
+      "party": "Republican",
+      "phone": "(337) 296-8605",
+      "seat": "Election Section 5, Division A",
+      "section": "Election Section 5",
+      "termEnds": "2030-12-31"
+     }
+    ],
+    "sections": {
+     "Election Section 1": {
+      "parishes": [
+       "Acadia",
+       "Allen",
+       "Evangeline",
+       "Lafayette",
+       "St. Landry"
+      ],
+      "whole": [
+       "Allen",
+       "Evangeline"
+      ]
+     },
+     "Election Section 2": {
+      "parishes": [
+       "Iberia",
+       "Lafayette",
+       "St. Landry",
+       "St. Martin"
+      ],
+      "whole": []
+     },
+     "Election Section 3": {
+      "parishes": [
+       "Iberia",
+       "Lafayette",
+       "St. Landry",
+       "St. Martin"
+      ],
+      "whole": []
+     },
+     "Election Section 4": {
+      "parishes": [
+       "Acadia",
+       "Lafayette",
+       "Vermilion"
+      ],
+      "whole": [
+       "Vermilion"
+      ]
+     },
+     "Election Section 5": {
+      "parishes": [
+       "Lafayette"
+      ],
+      "whole": []
+     }
+    }
+   },
+   "4-1": {
+    "members": [
+     {
+      "name": "Nakisha Ervin-Knott",
+      "party": "Democratic",
+      "phone": "(504) 412-6086",
+      "seat": "Division A",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "Tiffany Gautier Chase",
+      "party": "Democratic",
+      "phone": "(504) 412-6092",
+      "seat": "Division B",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "Paula Brown",
+      "party": "Democratic",
+      "phone": "(504) 412-6056",
+      "seat": "Division C",
+      "termEnds": "2028-12-31"
+     },
+     {
+      "name": "Rachael Johnson",
+      "party": "Democratic",
+      "phone": "(504) 264-2708",
+      "seat": "Division D",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Monique G. Morial",
+      "party": "Democratic",
+      "phone": "(504) 412-6068",
+      "seat": "Division E",
+      "termEnds": "2034-12-31"
+     },
+     {
+      "name": "Dale Atkins",
+      "party": "Democratic",
+      "phone": "(504) 286-0229",
+      "seat": "Division F",
+      "termEnds": "2031-12-31"
+     },
+     {
+      "name": "Rosemary Ledet",
+      "party": "Democratic",
+      "phone": "(504) 896-9909",
+      "seat": "Division G",
+      "termEnds": "2031-12-31"
+     },
+     {
+      "name": "Sandra Cabrina Jenkins",
+      "party": "Democratic",
+      "phone": "(504) 412-6042",
+      "seat": "Division H",
+      "termEnds": "2032-12-31"
+     }
+    ]
+   },
+   "4-2": {
+    "members": [
+     {
+      "name": "Joyce Cossich 'Joy' Lobrano",
+      "party": "Republican",
+      "phone": "(504) 433-3100",
+      "seat": "Division A",
+      "termEnds": "2031-12-31"
+     }
+    ]
+   },
+   "4-3": {
+    "members": [
+     {
+      "name": "Daniel L. Dysart",
+      "party": "Independent",
+      "seat": "Division A",
+      "termEnds": "2030-12-31"
+     }
+    ]
+   },
+   "5-1": {
+    "members": [
+     {
+      "name": "Fredericka H. Wicker",
+      "party": "No party",
+      "phone": "(504) 831-9070",
+      "seat": "Election Section 1, Division B",
+      "section": "Election Section 1",
+      "termEnds": "2030-12-31"
+     },
+     {
+      "name": "Susan Chehardy",
+      "party": "Republican",
+      "seat": "Election Section 1, Division D",
+      "section": "Election Section 1",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "Stephen J. 'Steve' Windhorst",
+      "party": "Republican",
+      "phone": "(504) 376-1415",
+      "seat": "Election Section 1, Division E",
+      "section": "Election Section 1",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "Scott Schlegel",
+      "party": "Republican",
+      "phone": "(504) 376-1410",
+      "seat": "Election Section 1, Division F",
+      "section": "Election Section 1",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "John Molaison Jr.",
+      "party": "Republican",
+      "seat": "Election Section 1, Division G",
+      "section": "Election Section 1",
+      "termEnds": "2032-12-31"
+     },
+     {
+      "name": "Marc E. Johnson",
+      "party": "Democratic",
+      "phone": "(504) 468-8949",
+      "seat": "Election Section 2, Division C",
+      "section": "Election Section 2",
+      "termEnds": "2034-12-31"
+     }
+    ],
+    "sections": {
+     "Election Section 1": {
+      "parishes": [
+       "Jefferson"
+      ]
+     },
+     "Election Section 2": {
+      "parishes": [
+       "Jefferson"
+      ]
+     }
+    }
+   },
+   "5-2": {
+    "members": [
+     {
+      "name": "Jude G. Gravois",
+      "party": "Democratic",
+      "phone": "(225) 265-2734",
+      "seat": "Division A",
+      "termEnds": "2030-12-31"
+     }
+    ]
+   },
+   "5-3": {
+    "members": [
+     {
+      "name": "Timothy Marcel",
+      "party": "Democratic",
+      "phone": "(985) 764-9280",
+      "seat": "Division A",
+      "termEnds": "2032-12-31"
+     }
+    ]
+   }
+  }
+ },
+ "district": {
+  "districts": {
+   "1": {
+    "members": [
+     {
+      "name": "Ramona Emanuel",
+      "party": "Democratic",
+      "phone": "(318) 841-5537",
+      "seat": "Election Section 1, Division B",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Karelia R. Stewart",
+      "party": "Democratic",
+      "phone": "(318) 226-6812",
+      "seat": "Election Section 1, Division D",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "John Mosely Jr.",
+      "party": "Democratic",
+      "phone": "(318) 226-6966",
+      "seat": "Election Section 1, Division G",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Ramon Lafitte",
+      "party": "Democratic",
+      "phone": "(318) 226-6823",
+      "seat": "Election Section 1, Division J",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Christopher T. Victory",
+      "party": "Republican",
+      "phone": "(318) 226-6820",
+      "seat": "Election Section 2, Division C",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Brady Dennis O'Callaghan",
+      "party": "Republican",
+      "phone": "(318) 226-6811",
+      "seat": "Election Section 2, Division H",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Edwin Byrd",
+      "party": "Republican",
+      "phone": "(318) 470-8621",
+      "seat": "Election Section 2, Division I",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Donald Hathaway",
+      "party": "Republican",
+      "phone": "(318) 465-8561",
+      "seat": "Election Section 3, Division A",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Michael 'Mike' Pitman",
+      "party": "Republican",
+      "phone": "(318) 226-6810",
+      "seat": "Election Section 3, Division E",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Katherine Clark Dorroh",
+      "party": "Republican",
+      "phone": "(318) 226-6819",
+      "seat": "Election Section 3, Division F",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Erin Leigh Waddell Garrett",
+      "party": "Republican",
+      "phone": "(318) 629-1124",
+      "seat": "Election Section 3, Division K",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "10": {
+    "members": [
+     {
+      "name": "Desiree Duhon Dyess",
+      "party": "Democratic",
+      "phone": "(318) 581-1214",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Lala Brittain Sylvester",
+      "party": "Democratic",
+      "phone": "(318) 357-1788",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "11": {
+    "members": [
+     {
+      "name": "Verity Gentry",
+      "party": "No party",
+      "phone": "(318) 701-8127",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "12": {
+    "members": [
+     {
+      "name": "Kerry L. Spruill",
+      "party": "Democratic",
+      "phone": "(318) 253-9418",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "William J. 'Billy' Bennett",
+      "party": "Democratic",
+      "phone": "(318) 253-8953",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "13": {
+    "members": [
+     {
+      "name": "Marcus L. Fontenot",
+      "party": "Republican",
+      "phone": "(337) 363-5516",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Chuck R. West",
+      "party": "Republican",
+      "phone": "(337) 351-5371",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "14": {
+    "members": [
+     {
+      "name": "Bobby Holmes",
+      "party": "Democratic",
+      "phone": "(337) 884-9679",
+      "seat": "Election Section 1, Division F",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Kendrick J. Guidry",
+      "party": "Democratic",
+      "phone": "(337) 794-1106",
+      "seat": "Election Section 1, Division H",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Cynthia Clay Guillory",
+      "party": "Democratic",
+      "phone": "(337) 842-3475",
+      "seat": "Election Section 1, Division J",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "William J. 'Bill' Cutrera",
+      "party": "Republican",
+      "phone": "(337) 274-9782",
+      "seat": "Election Section 2, Division C",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Hope Wyatt Buford",
+      "party": "Republican",
+      "seat": "Election Section 2, Division D",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "G. Michael Canaday",
+      "party": "Republican",
+      "phone": "(337) 540-5165",
+      "seat": "Election Section 2, Division G",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "William Mitchell 'Mitch' Redd",
+      "party": "Republican",
+      "phone": "(337) 625-5509",
+      "seat": "Election Section 3, Division A",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Lee Hoffoss",
+      "party": "Republican",
+      "seat": "Election Section 3, Division B",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "David A. Ritchie",
+      "party": "Republican",
+      "phone": "(337) 625-4504",
+      "seat": "Election Section 3, Division E",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Tony Fazzio",
+      "party": "Republican",
+      "phone": "(225) 205-2722",
+      "termEnds": "2026-12-31",
+      "title": "Magistrate Judge"
+     }
+    ]
+   },
+   "15": {
+    "members": [
+     {
+      "name": "Valerie Gotch Garrett",
+      "party": "Democratic",
+      "phone": "(337) 232-1620",
+      "seat": "Election Section 1, Division B",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Royal Colbert",
+      "party": "Democratic",
+      "phone": "(337) 232-7239",
+      "seat": "Election Section 1, Division D",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Michelle Breaux",
+      "party": "Republican",
+      "phone": "(337) 269-5702",
+      "seat": "Election Section 2, Division E",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "David Blanchet",
+      "party": "Republican",
+      "phone": "(337) 269-5729",
+      "seat": "Election Section 3, Division H",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Thomas Duplantier",
+      "party": "Independent",
+      "phone": "(337) 288-1394",
+      "seat": "Election Section 3, Division I",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Michele S. Billeaud",
+      "party": "Republican",
+      "phone": "(337) 315-9877",
+      "seat": "Election Section 3, Division K",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Cynthia Simon Spadoni",
+      "party": "Republican",
+      "phone": "(504) 427-1152",
+      "seat": "Election Section 3, Division L",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Susan Theall",
+      "party": "Republican",
+      "phone": "(337) 706-2801",
+      "seat": "Election Section 3, Division M",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Scott J. Privat",
+      "party": "Republican",
+      "phone": "(337) 739-6021",
+      "seat": "Election Section 4, Division A",
+      "section": "Election Section 4",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "David M. Smith",
+      "party": "Democratic",
+      "phone": "(337) 788-8814",
+      "seat": "Election Section 4, Division F",
+      "section": "Election Section 4",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Angela 'Angie' Wagar",
+      "party": "Republican",
+      "phone": "(337) 581-2014",
+      "seat": "Election Section 4, Division J",
+      "section": "Election Section 4",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Thomas J. Frederick",
+      "party": "Republican",
+      "phone": "(337) 988-4678",
+      "seat": "Election Section 5, Division C",
+      "section": "Election Section 5",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Laurie A. Hulin",
+      "party": "Democratic",
+      "phone": "(337) 740-4420",
+      "seat": "Election Section 5, Division G",
+      "section": "Election Section 5",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "16": {
+    "members": [
+     {
+      "name": "Curtis Sigur",
+      "party": "Democratic",
+      "phone": "(337) 394-2253",
+      "seat": "Election Section 1, Division G",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Roger P. Hamilton Jr.",
+      "party": "Independent",
+      "phone": "(337) 369-4410",
+      "seat": "Election Section 1, Division H",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Anthony 'Tony' Thibodeaux",
+      "party": "Republican",
+      "phone": "(337) 394-6133",
+      "seat": "Election Section 2, Division A",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Suzanne de Mahy",
+      "party": "Republican",
+      "phone": "(337) 394-2216",
+      "seat": "Election Section 2, Division B",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Vincent J. Borne",
+      "party": "No party",
+      "seat": "Election Section 2, Division C",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Anthony 'Tony' Saleme",
+      "party": "Republican",
+      "seat": "Election Section 2, Division F",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "17": {
+    "members": [
+     {
+      "name": "Rebecca Robichaux",
+      "party": "Republican",
+      "phone": "(985) 537-5156",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Jennifer Richard",
+      "party": "Republican",
+      "phone": "(985) 438-0490",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Marla Abel",
+      "party": "Republican",
+      "phone": "(985) 446-1381",
+      "seat": "Division C",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Christopher J. Boudreaux",
+      "party": "Republican",
+      "phone": "(985) 448-1291",
+      "seat": "Division D",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Shaun-Philip George",
+      "party": "Republican",
+      "phone": "(985) 242-0094",
+      "seat": "Division E",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "18": {
+    "members": [
+     {
+      "name": "Elizabeth Engolio",
+      "party": "Democratic",
+      "phone": "(225) 776-0670",
+      "seat": "Election Section 2, Division D",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Tonya S. Lurry",
+      "party": "No party",
+      "phone": "(225) 627-6411",
+      "seat": "Election Section 3, Division B",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Kevin Kimball",
+      "party": "Democratic",
+      "phone": "(225) 638-5532",
+      "seat": "Election Section 4, Division A",
+      "section": "Election Section 4",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "19": {
+    "members": [
+     {
+      "name": "'Don' Johnson",
+      "party": "Democratic",
+      "phone": "(225) 389-4734",
+      "seat": "Election Section 1, Division B",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "William 'Will' Jorden",
+      "party": "Democratic",
+      "phone": "(225) 308-1009",
+      "seat": "Election Section 1, Division D",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Colette Greggs",
+      "party": "Democratic",
+      "phone": "(225) 389-4717",
+      "seat": "Election Section 1, Division J",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Eboni Johnson-Rose",
+      "party": "Democratic",
+      "phone": "(225) 356-3408",
+      "seat": "Election Section 1, Division K",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Veronica 'Vicky' Jones",
+      "party": "Democratic",
+      "phone": "(225) 389-8741",
+      "seat": "Election Section 1, Division O",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Tarvald A. Smith",
+      "party": "Democratic",
+      "phone": "(225) 246-2087",
+      "seat": "Election Section 2, Division A",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Gail Horne Ray",
+      "party": "Democratic",
+      "phone": "(225) 389-4700",
+      "seat": "Election Section 2, Division G",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Ronald 'Ron' Johnson",
+      "party": "Democratic",
+      "phone": "(225) 389-8820",
+      "seat": "Election Section 2, Division L",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Richard 'Chip' Moore III",
+      "party": "Republican",
+      "phone": "(225) 389-4787",
+      "seat": "Election Section 2, Division N",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Beau Higginbotham",
+      "party": "Republican",
+      "phone": "(225) 389-4706",
+      "seat": "Election Section 3, Division C",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Brad Myers",
+      "party": "Republican",
+      "phone": "(225) 921-3026",
+      "seat": "Election Section 3, Division E",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Louise Hines Myers",
+      "party": "Republican",
+      "phone": "(225) 389-4728",
+      "seat": "Election Section 3, Division F",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Fred Crifasi",
+      "party": "Republican",
+      "phone": "(225) 389-4722",
+      "seat": "Election Section 3, Division H",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Carson Marcantel",
+      "party": "Republican",
+      "phone": "(225) 389-4259",
+      "seat": "Election Section 3, Division I",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "2": {
+    "members": [
+     {
+      "name": "Walter May",
+      "party": "Republican",
+      "phone": "(318) 259-8695",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Glenn Fallin",
+      "party": "Independent",
+      "phone": "(318) 263-9408",
+      "seat": "Division C",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "20": {
+    "members": [
+     {
+      "name": "'Betsy' Jones",
+      "party": "Democratic",
+      "phone": "(225) 268-0997",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Sydney Picou Walker",
+      "party": "Democratic",
+      "phone": "(225) 721-2942",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "21": {
+    "members": [
+     {
+      "name": "'Jeff' Johnson",
+      "party": "Republican",
+      "phone": "(985) 748-9445",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Charlotte Hughes Foster",
+      "party": "Republican",
+      "phone": "(225) 791-4541",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Erika Williams Sledge",
+      "party": "Republican",
+      "phone": "(985) 351-2810",
+      "seat": "Division C",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Brian Abels",
+      "party": "Republican",
+      "seat": "Division D",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Brenda Bedsole Ricks",
+      "party": "Republican",
+      "phone": "(985) 748-8439",
+      "seat": "Division E",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "William Scott Dykes",
+      "party": "Republican",
+      "phone": "(985) 517-4331",
+      "seat": "Division F",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Jenny Richardson Fore",
+      "party": "Republican",
+      "phone": "(225) 283-6235",
+      "seat": "Division I",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Jeffrey 'Jeff' Cashe",
+      "party": "Republican",
+      "phone": "(985) 340-8177",
+      "seat": "Division J",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Jeffery Thomas Oglesbee",
+      "party": "Republican",
+      "phone": "(985) 687-5333",
+      "seat": "Division K",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Matthew Belser",
+      "party": "Republican",
+      "seat": "Division L",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "22": {
+    "members": [
+     {
+      "name": "Alan Black",
+      "party": "Republican",
+      "phone": "(985) 646-0636",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Tara Farris Zeller",
+      "party": "Republican",
+      "phone": "(985) 630-9073",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Richard A. 'Rick' Swartz",
+      "party": "Republican",
+      "phone": "(985) 641-5091",
+      "seat": "Division C",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "John A. Keller",
+      "party": "Republican",
+      "phone": "(985) 809-5321",
+      "seat": "Division D",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Vincent J. 'Vinny' Lobello",
+      "party": "Republican",
+      "phone": "(985) 809-5300",
+      "seat": "Division F",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Scott Gardner",
+      "party": "Republican",
+      "phone": "(985) 373-6554",
+      "seat": "Division G",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Alan Zaunbrecher",
+      "party": "Republican",
+      "phone": "(985) 893-6119",
+      "seat": "Division H",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "'Reggie' Badeaux",
+      "party": "Republican",
+      "phone": "(985) 809-5345",
+      "seat": "Division I",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Ellen M. Creel",
+      "party": "Republican",
+      "phone": "(985) 839-5757",
+      "seat": "Division J",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Patrice 'Patti' Oppenheim",
+      "party": "Republican",
+      "phone": "(985) 272-2251",
+      "seat": "Division K",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Dawn Amacker",
+      "party": "Republican",
+      "phone": "(985) 809-5420",
+      "seat": "Division L",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "23": {
+    "members": [
+     {
+      "name": "Keyojuan Gant Turner",
+      "party": "Democratic",
+      "phone": "(225) 715-4667",
+      "seat": "Election Section 1, Division E",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Jason Verdigets",
+      "party": "Republican",
+      "seat": "Election Section 2, Division A",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Cody M. Martin",
+      "party": "Republican",
+      "phone": "(225) 206-0685",
+      "seat": "Election Section 2, Division B",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "John Smith",
+      "party": "Republican",
+      "seat": "Election Section 2, Division C",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Toni Falterman Menard",
+      "party": "Republican",
+      "phone": "(985) 856-5867",
+      "seat": "Election Section 2, Division F",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "24": {
+    "members": [
+     {
+      "name": "Frank A. Brindisi",
+      "party": "Republican",
+      "phone": "(504) 362-0860",
+      "seat": "Election Section 1, Division E",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Stephen 'Steve' Grefer",
+      "party": "Republican",
+      "phone": "(504) 364-3916",
+      "seat": "Election Section 1, Division J",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Shayna Beevers Morvant",
+      "party": "Republican",
+      "phone": "(504) 361-4287",
+      "seat": "Election Section 1, Division M",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Danyelle Taylor",
+      "party": "Republican",
+      "phone": "(504) 364-3945",
+      "seat": "Election Section 1, Division O",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Raymond Steib Jr.",
+      "party": "Republican",
+      "phone": "(504) 364-3850",
+      "seat": "Election Section 2, Division A",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "R. Christopher Cox III",
+      "party": "Republican",
+      "phone": "(504) 364-3859",
+      "seat": "Election Section 2, Division B",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Jacqueline 'Jackie' Maloney",
+      "party": "Republican",
+      "phone": "(504) 250-5237",
+      "seat": "Election Section 2, Division D",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Michael Mentz",
+      "party": "Republican",
+      "phone": "(504) 364-3889",
+      "seat": "Election Section 2, Division F",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Donald 'Chick' Foret",
+      "party": "Republican",
+      "phone": "(504) 669-7585",
+      "seat": "Election Section 2, Division H",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Nancy A. Miller",
+      "party": "Republican",
+      "phone": "(504) 780-2284",
+      "seat": "Election Section 2, Division I",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Ellen Shirer Kovach",
+      "party": "Republican",
+      "phone": "(504) 364-3922",
+      "seat": "Election Section 2, Division K",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Donald A. 'Donnie' Rowan Jr.",
+      "party": "Republican",
+      "phone": "(504) 834-5444",
+      "seat": "Election Section 2, Division L",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Stephen 'Steve' Enright Jr.",
+      "party": "Republican",
+      "phone": "(504) 364-3940",
+      "seat": "Election Section 2, Division N",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "June Berry Darensburg",
+      "party": "Democratic",
+      "phone": "(504) 364-3866",
+      "seat": "Election Section 3, Division C",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Adrian Adams",
+      "party": "Democratic",
+      "phone": "(504) 364-3896",
+      "seat": "Election Section 3, Division G",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Lee Faulkner Jr.",
+      "party": "Democratic",
+      "phone": "(504) 364-3975",
+      "seat": "Election Section 3, Division P",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "25": {
+    "members": [
+     {
+      "name": "Kevin D. Conner",
+      "party": "Independent",
+      "phone": "(504) 656-2495",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Michael D. Clement",
+      "party": "Independent",
+      "phone": "(504) 215-3220",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "26": {
+    "members": [
+     {
+      "name": "'Mike' Craig",
+      "party": "Republican",
+      "phone": "(318) 510-8585",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Charles A. Smith",
+      "party": "Republican",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "'Allie' Aiello Stahl",
+      "party": "Republican",
+      "phone": "(318) 469-8761",
+      "seat": "Division C",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "'Doug' Stinson",
+      "party": "Republican",
+      "seat": "Division D",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Michael Nerren",
+      "party": "Republican",
+      "phone": "(318) 965-3600",
+      "seat": "Division E",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Parker Self",
+      "party": "Republican",
+      "phone": "(318) 747-1946",
+      "seat": "Division F",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "27": {
+    "members": [
+     {
+      "name": "Charles Cravins",
+      "party": "Democratic",
+      "phone": "(337) 948-3007",
+      "seat": "Election Section 1, Division C",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Gregory J. Doucet",
+      "party": "Democratic",
+      "phone": "(337) 948-3500",
+      "seat": "Election Section 2, Division A",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Jason Meche",
+      "party": "Democratic",
+      "phone": "(337) 948-0580",
+      "seat": "Election Section 3, Division D",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Laura Rougeau Garcille",
+      "party": "Republican",
+      "phone": "(337) 948-0586",
+      "seat": "Election Section 4, Division B",
+      "section": "Election Section 4",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "28": {
+    "members": [
+     {
+      "name": "J. Christopher Peters",
+      "party": "Republican",
+      "phone": "(318) 992-1950",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "29": {
+    "members": [
+     {
+      "name": "Connie Aucoin",
+      "party": "Republican",
+      "phone": "(985) 783-3209",
+      "seat": "Division C",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Rochelle Champagne Fahrig",
+      "party": "Republican",
+      "phone": "(504) 559-4662",
+      "seat": "Division D",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Lauren Davey Rogers",
+      "party": "Republican",
+      "phone": "(504) 430-6945",
+      "seat": "Division E",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "3": {
+    "members": [
+     {
+      "name": "Monique Babin Clement",
+      "party": "Republican",
+      "phone": "(318) 243-6844",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Thomas W. Rogers Sr.",
+      "party": "Republican",
+      "phone": "(318) 884-5197",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Bruce Hampton",
+      "party": "Republican",
+      "phone": "(318) 243-6044",
+      "seat": "Division C",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "30": {
+    "members": [
+     {
+      "name": "Tony A. Bennett",
+      "party": "Other",
+      "phone": "(337) 239-2147",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "C. Anthony Eaves",
+      "party": "Republican",
+      "phone": "(337) 239-3584",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Scott Westerchil",
+      "party": "Independent",
+      "phone": "(337) 238-3531",
+      "seat": "Division C",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "31": {
+    "members": [
+     {
+      "name": "Steve Gunnell",
+      "party": "Democratic",
+      "phone": "(337) 824-8552",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "32": {
+    "members": [
+     {
+      "name": "'Tim' Ellender",
+      "party": "Republican",
+      "phone": "(985) 223-2889",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Jason Dagate",
+      "party": "Republican",
+      "phone": "(985) 686-9058",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Juan Pickett",
+      "party": "Republican",
+      "phone": "(985) 665-6205",
+      "seat": "Division C",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "David W. Arceneaux",
+      "party": "Republican",
+      "phone": "(985) 868-7465",
+      "seat": "Division D",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Randall L. Bethancourt",
+      "party": "Republican",
+      "phone": "(985) 873-6580",
+      "seat": "Division E",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "33": {
+    "members": [
+     {
+      "name": "Judi Abrusley",
+      "party": "Republican",
+      "phone": "(318) 335-8017",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "E. David Deshotels",
+      "party": "Independent",
+      "phone": "(337) 370-6283",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "34": {
+    "members": [
+     {
+      "name": "William M. 'Billy' McGoey",
+      "party": "Republican",
+      "phone": "(504) 250-3293",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Jeanne Nunez Juneau",
+      "party": "Democratic",
+      "phone": "(504) 723-6102",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Kim Cooper Jones",
+      "party": "Republican",
+      "phone": "(504) 278-4425",
+      "seat": "Division C",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Darren Roy",
+      "party": "Democratic",
+      "phone": "(504) 810-3739",
+      "seat": "Division D",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Eric Bopp",
+      "party": "Democratic",
+      "phone": "(504) 388-6242",
+      "seat": "Division E",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "35": {
+    "members": [
+     {
+      "name": "Warren Daniel 'Danny' Willett",
+      "party": "Republican",
+      "phone": "(318) 627-3244",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "36": {
+    "members": [
+     {
+      "name": "Martha Ann O'Neal",
+      "party": "Democratic",
+      "phone": "(337) 463-3652",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "C. Kerry Anderson",
+      "party": "No party",
+      "phone": "(337) 263-2100",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "37": {
+    "members": [
+     {
+      "name": "Ashley Paul Thomas",
+      "party": "Independent",
+      "phone": "(318) 649-9263",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "38": {
+    "members": [
+     {
+      "name": "Penelope Richard",
+      "party": "Independent",
+      "phone": "(337) 542-4310",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "39": {
+    "members": [
+     {
+      "name": "Luke Mitchell",
+      "party": "Independent",
+      "phone": "(318) 470-7971",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "4": {
+    "members": [
+     {
+      "name": "Frederick 'Fred' Jones",
+      "party": "Democratic",
+      "phone": "(318) 325-2644",
+      "seat": "Election Section 1, Division G",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Larry D. Jefferson",
+      "party": "Democratic",
+      "phone": "(318) 343-1877",
+      "seat": "Election Section 1, Division H",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Robert Johnson",
+      "party": "Democratic",
+      "phone": "(318) 361-0341",
+      "seat": "Election Section 1, Division J",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Scott Leehy",
+      "party": "Republican",
+      "phone": "(318) 388-2103",
+      "seat": "Election Section 2, Division A",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Sharon Marchman",
+      "party": "Republican",
+      "phone": "(318) 361-2291",
+      "seat": "Election Section 2, Division B",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Wilson Rambo",
+      "party": "Independent",
+      "phone": "(318) 361-2286",
+      "seat": "Election Section 2, Division C",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Stephens Winters",
+      "party": "Republican",
+      "phone": "(318) 397-2403",
+      "seat": "Election Section 2, Division D",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Walter M. 'Walt' Caldwell IV",
+      "party": "Republican",
+      "phone": "(318) 396-0540",
+      "seat": "Election Section 2, Division E",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Wendell Manning",
+      "party": "Republican",
+      "phone": "(318) 343-9252",
+      "seat": "Election Section 2, Division F",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Jefferson 'Jeff' Joyce",
+      "party": "Independent",
+      "phone": "(318) 387-1726",
+      "seat": "Election Section 2, Division K",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "40": {
+    "members": [
+     {
+      "name": "Nghana Lewis",
+      "party": "Democratic",
+      "phone": "(504) 782-6564",
+      "seat": "Election Section 1, Division B",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Vercell Fiffie",
+      "party": "Democratic",
+      "phone": "(985) 267-9111",
+      "seat": "Election Section 2, Division A",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Sterling Snowdy",
+      "party": "Democratic",
+      "phone": "(985) 652-8939",
+      "seat": "Election Section 3, Division C",
+      "section": "Election Section 3",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "42": {
+    "members": [
+     {
+      "name": "Amy Burford McCartney",
+      "party": "No party",
+      "phone": "(318) 872-1366",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "'Nick' Gasper",
+      "party": "Republican",
+      "phone": "(318) 872-2291",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "5": {
+    "members": [
+     {
+      "name": "Clay Hamilton",
+      "party": "Republican",
+      "phone": "(318) 428-4936",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Will Rhymes Barham",
+      "party": "Republican",
+      "phone": "(318) 355-3801",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Stephen G. 'Steve' Dean",
+      "party": "Republican",
+      "phone": "(318) 547-7072",
+      "seat": "Division C",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "6": {
+    "members": [
+     {
+      "name": "Angela L. Claxton",
+      "party": "Democratic",
+      "phone": "(318) 308-7474",
+      "seat": "Division A",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Laurie Brister",
+      "party": "No party",
+      "phone": "(318) 559-5800",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "7": {
+    "members": [
+     {
+      "name": "John C. Reeves",
+      "party": "Democratic",
+      "phone": "(318) 744-5414",
+      "seat": "Division B",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "8": {
+    "members": [
+     {
+      "name": "Anastasia 'Staci' Wiley",
+      "party": "Democratic",
+      "phone": "(318) 648-7436",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "9": {
+    "members": [
+     {
+      "name": "Monique Rauls",
+      "party": "Democratic",
+      "seat": "Election Section 1, Division A",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "David Williams",
+      "party": "No party",
+      "phone": "(318) 442-6240",
+      "seat": "Election Section 1, Division F",
+      "section": "Election Section 1",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "'Chris' Hazel",
+      "party": "Republican",
+      "seat": "Election Section 2, Division B",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Mary Lauve Doggett",
+      "party": "Republican",
+      "phone": "(318) 443-8425",
+      "seat": "Election Section 2, Division C",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Loren Lampert",
+      "party": "Republican",
+      "phone": "(318) 305-1080",
+      "seat": "Election Section 2, Division D",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "Brian Cespiva",
+      "party": "Republican",
+      "phone": "(318) 447-1030",
+      "seat": "Election Section 2, Division E",
+      "section": "Election Section 2",
+      "termEnds": "2026-12-31"
+     },
+     {
+      "name": "'Greg' Beard",
+      "party": "Republican",
+      "seat": "Subdistrict 2, Division G",
+      "section": "Subdistrict 2",
+      "termEnds": "2026-12-31"
+     }
+    ],
+    "office": {
+     "phone": "(318) 443-6893"
+    }
+   },
+   "Orleans": {
+    "courts": [
+     {
+      "court": "Civil District Court",
+      "members": [
+       {
+        "name": "Bernadette D'Souza",
+        "party": "Democratic",
+        "phone": "(504) 407-0300",
+        "seat": "Domestic Section 1",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "LaKeisha Jefferson",
+        "party": "Democratic",
+        "phone": "(225) 302-3209",
+        "seat": "Domestic Section 2",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Ellen M. Hazeur",
+        "party": "Democratic",
+        "phone": "(504) 407-0200",
+        "seat": "Division A",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Marissa A. Hutabarat",
+        "party": "Democratic",
+        "phone": "(504) 407-0350",
+        "seat": "Division B",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Sidney H. Cates IV",
+        "party": "Democratic",
+        "phone": "(504) 799-9854",
+        "seat": "Division C",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Monique Barial",
+        "party": "Democratic",
+        "phone": "(504) 407-0230",
+        "seat": "Division D",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Omar Mason",
+        "party": "Democratic",
+        "phone": "(504) 407-0240",
+        "seat": "Division E",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Jennifer M. Medley",
+        "party": "Democratic",
+        "phone": "(504) 495-1385",
+        "seat": "Division F",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Veronica E. Henry",
+        "party": "Democratic",
+        "phone": "(504) 407-0260",
+        "seat": "Division G",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Lori Jupiter",
+        "party": "Democratic",
+        "phone": "(504) 407-0280",
+        "seat": "Division I",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "D. Nicole Sheppard",
+        "party": "Democratic",
+        "phone": "(504) 407-0290",
+        "seat": "Division J",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Kern A. Reese",
+        "party": "Democratic",
+        "phone": "(504) 407-0310",
+        "seat": "Division L",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Stephanie Bridges",
+        "party": "Democratic",
+        "phone": "(504) 407-0320",
+        "seat": "Division M",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Sheryl Howard",
+        "party": "Democratic",
+        "phone": "(504) 407-0330",
+        "seat": "Division N",
+        "termEnds": "2026-12-31"
+       }
+      ],
+      "office": {
+       "address": "421 Loyola Ave., New Orleans, LA 70112"
+      }
+     },
+     {
+      "court": "Criminal District Court",
+      "members": [
+       {
+        "name": "Simone Levine",
+        "party": "Democratic",
+        "phone": "(504) 658-9130",
+        "seat": "Section A",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Tracey Flemings-Davillier",
+        "party": "Democratic",
+        "phone": "(504) 658-9140",
+        "seat": "Section B",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Benedict 'Ben' Willard",
+        "party": "Democratic",
+        "phone": "(504) 658-9150",
+        "seat": "Section C",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Kimya Holmes",
+        "party": "Democratic",
+        "phone": "(504) 957-3303",
+        "seat": "Section D",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Rhonda Goode-Douglas",
+        "party": "Democratic",
+        "phone": "(504) 296-1798",
+        "seat": "Section E",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Robin D. Pittman",
+        "party": "Democratic",
+        "phone": "(504) 658-9180",
+        "seat": "Section F",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Nandi F. Campbell",
+        "party": "Democratic",
+        "phone": "(504) 658-9190",
+        "seat": "Section G",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Camille Buras",
+        "party": "Democratic",
+        "phone": "(504) 884-5832",
+        "seat": "Section H",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Leon Roche II",
+        "party": "Democratic",
+        "phone": "(504) 552-7013",
+        "seat": "Section I",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "John T. Fuller",
+        "party": "Democratic",
+        "phone": "(504) 237-8338",
+        "seat": "Section J",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Marcus DeLarge",
+        "party": "Democratic",
+        "phone": "(504) 235-3096",
+        "seat": "Section K",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Angel Harris",
+        "party": "Democratic",
+        "phone": "(504) 508-0358",
+        "seat": "Section L",
+        "termEnds": "2026-12-31"
+       },
+       {
+        "name": "Juana Marine Lombard",
+        "party": "Democratic",
+        "phone": "(504) 813-2514",
+        "termEnds": "2026-12-31",
+        "title": "Magistrate"
+       }
+      ],
+      "office": {
+       "address": "2700 Tulane Avenue, New Orleans, LA 70119"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "read": "2026-10-21",
+ "source": "the Louisiana Secretary of State's list of elected officials",
+ "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index",
+ "supreme": {
+  "districts": {
+   "1": {
+    "members": [
+     {
+      "name": "William 'Billy' Burris",
+      "party": "Republican",
+      "phone": "(985) 839-7840",
+      "termEnds": "2028-12-31"
+     }
+    ]
+   },
+   "2": {
+    "members": [
+     {
+      "name": "John Michael Guidry",
+      "party": "Democratic",
+      "phone": "(225) 314-5334",
+      "termEnds": "2034-12-31"
+     }
+    ]
+   },
+   "3": {
+    "members": [
+     {
+      "name": "Cade R. Cole",
+      "party": "Republican",
+      "phone": "(337) 429-3478",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "4": {
+    "members": [
+     {
+      "name": "Jay McCallum",
+      "party": "Republican",
+      "phone": "(318) 368-2027",
+      "termEnds": "2026-12-31"
+     }
+    ]
+   },
+   "5": {
+    "members": [
+     {
+      "name": "Jeff Hughes",
+      "party": "Republican",
+      "phone": "(225) 938-7335",
+      "termEnds": "2028-12-31"
+     }
+    ]
+   },
+   "6": {
+    "members": [
+     {
+      "name": "John L. Weimer",
+      "party": "No party",
+      "phone": "(985) 447-9066",
+      "termEnds": "2032-12-31"
+     }
+    ]
+   },
+   "7": {
+    "members": [
+     {
+      "name": "Piper Griffin",
+      "party": "Democratic",
+      "phone": "(504) 407-1235",
+      "termEnds": "2030-12-31"
+     }
+    ]
+   }
+  }
+ }
+}

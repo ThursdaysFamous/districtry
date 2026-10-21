@@ -129,10 +129,50 @@
       }
     },
     {
+      "id": "la-supreme-court",
+      "label": "Supreme Court District",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "7 districts of about 19,380 km2 each on the map (water included), measured 2026-10-21 — smaller than a congressional district, larger than a court of appeal district",
+      "source": {
+        "answers": "The Louisiana Supreme Court district covering the point, and the justice elected from it. Where the point's parish is divided between districts, the card names every district that has a part of it.",
+        "boundary": [
+          {
+            "label": "Louisiana Legislature, redistricting office — the shapefile of the Supreme Court districts that Act 7 of the 2024 Regular Session enacted (La. R.S. 13:101.2), from the office's page for the act; read 2026-10-21 and held to its SHA-256 by la/scripts/build_la_court_districts.py. The districts are drawn from voting precincts, so twelve parishes are divided between two or three of them. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
+            "url": "https://redist.legis.la.gov/2024_Files/2024LASSCAct7.aspx"
+          },
+          {
+            "label": "Louisiana Legislature — Act 7 of the 2024 Regular Session (Senate Bill 255), which enacts the districts and keeps each justice then in office in the district with the same number until the term ends (La. R.S. 13:101.3); read 2026-10-21.",
+            "url": "https://legis.la.gov/legis/ViewDocument.aspx?d=1371415"
+          }
+        ],
+        "people": "la-judges.json, rebuilt weekly by CI from the Louisiana Secretary of State's list of elected officials: each justice's name, party and the day the term ends, and the justice's own telephone where the list prints it for that justice alone. The list names every justice's office Associate Justice, so the card names no Chief Justice. The list also records each official's race and gender, and neither is read.",
+        "applies": "Louisiana — statewide, all 7 districts."
+      }
+    },
+    {
+      "id": "la-court-of-appeal",
+      "label": "Court of Appeal District",
+      "group": "political",
+      "area_rank": 3,
+      "rank_note": "15 districts of about 9,040 km2 each on the map (water included), drawn as 16 features because the Mississippi River divides St. John the Baptist Parish between two, measured 2026-10-21 — smaller than a Supreme Court district, larger than a Senate district",
+      "source": {
+        "answers": "The court of appeal district covering the point and the judges elected from it, grouped as they are elected, with the judges the whole circuit elects and the court's office where one can be kept. Where La. R.S. 13:312 puts the point's whole parish in one election section, the card says which.",
+        "boundary": [
+          {
+            "label": "Louisiana Legislature — La. R.S. 13:312, which names the parishes in each district of the five circuits and puts the part of St. John the Baptist Parish east of the Mississippi River in the Fifth Circuit's Second District and the part west of it in the Third; read 2026-10-21 and kept in la/data/source/courts/ with its SHA-256. Drawn by dissolving this app's own parish outlines, so every line is a parish line. The river is not drawn, so St. John the Baptist is one feature naming both districts.",
+            "url": "https://legis.la.gov/legis/Law.aspx?d=77438"
+          }
+        ],
+        "people": "la-judges.json, from the same weekly read of the Secretary of State's list: each judge's name, party, seat and the day the term ends, and the judge's own telephone where the list prints it for that judge alone. A court's address ships where at least three of its judges print the same one and no other official does.",
+        "applies": "Louisiana — statewide, all 15 districts of the five circuits."
+      }
+    },
+    {
       "id": "la-senate",
       "label": "Louisiana Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 4,
       "rank_note": "39 Senate districts — larger on average than a parish, smaller than a congressional district",
       "source": {
         "answers": "The Louisiana Senate district covering the point, and the senator holding it.",
@@ -147,10 +187,28 @@
       }
     },
     {
+      "id": "la-district-court",
+      "label": "Judicial District",
+      "group": "political",
+      "area_rank": 5,
+      "rank_note": "41 judicial districts and Orleans Parish, about 3,230 km2 each on the map (water included), measured 2026-10-21 — smaller on average than a Senate district (about 3,450 km2), larger than a parish",
+      "source": {
+        "answers": "The judicial district covering the point and the judges of its district court or, in Orleans Parish, of its civil and criminal district courts, with each court's office where one can be kept.",
+        "boundary": [
+          {
+            "label": "Louisiana Legislature — La. R.S. 13:477, which names the parishes of the 41 judicial districts and leaves out Orleans Parish, which has a civil district court and a criminal district court of its own; read 2026-10-21 and kept in la/data/source/courts/ with its SHA-256. Drawn by dissolving this app's own parish outlines, with Orleans Parish drawn as one more unit.",
+            "url": "https://legis.la.gov/legis/Law.aspx?d=149496"
+          }
+        ],
+        "people": "la-judges.json, from the same weekly read: the district judges and the magistrates the list names with them, each with name, party, seat and the day the term ends, and the judge's own telephone where the list prints it for that judge alone. The list can leave a seat out (on 2026-10-21 it named one judge for the 7th Judicial District and three for the 18th), so the card says how many judges the list names, not how many the court has.",
+        "applies": "Louisiana — statewide, all 41 judicial districts and Orleans Parish."
+      }
+    },
+    {
       "id": "county",
       "label": "Parish",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 6,
       "rank_note": "64 parishes, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which parish contains the point, and the members of its police jury, council or commission, with its parish president or mayor where the parish elects one.",
@@ -168,7 +226,7 @@
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 4,
+      "area_rank": 7,
       "rank_note": "69 school districts covering the whole state, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The public school district covering the point.",
@@ -186,7 +244,7 @@
       "id": "la-house",
       "label": "Louisiana House District",
       "group": "political",
-      "area_rank": 5,
+      "area_rank": 8,
       "rank_note": "105 House districts — smaller on average than a school district, larger than a ZIP code",
       "source": {
         "answers": "The Louisiana House district covering the point, and the representative holding it.",
@@ -204,7 +262,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 9,
       "rank_note": "540 ZIP Code Tabulation Areas overlapping Louisiana, of the 831 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-21); about 194 km2 of land on average for the 540 and 244 km2 for the 831, and ranked by the 831, which are what the map draws where the archive is not used (on the raster basemap); the layer hides outside Louisiana",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -222,7 +280,7 @@
       "id": "parish-district",
       "label": "Police Jury or Council District",
       "group": "political",
-      "area_rank": 7,
+      "area_rank": 10,
       "rank_note": "56 districts in the 6 parishes whose current lines are confirmed, about 212 km2 of land on average against 244 km2 for a ZIP code in the state's bounding box; drawn only in those parishes",
       "source": {
         "answers": "Which member of the parish's police jury, council or commission represents the point, in the parishes where this app has confirmed the current district lines. The layer is hidden in the other parishes, where the Parish card still names every member.",
@@ -240,7 +298,7 @@
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 11,
       "rank_note": "3,569 precincts tiling the state, pre-built from the Louisiana Legislature's statewide precinct file — 37.70 km2 mean area, land and water (median 4.65), measured 2026-10-21 on the drawn file: smaller on average than a police jury or council district (about 212 km2 of land), larger than a city, town or village (about 16 km2 of land)",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
@@ -258,7 +316,7 @@
       "id": "municipality",
       "label": "City, Town or Village",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 12,
       "rank_note": "305 incorporated places, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The city, town or village containing the point, if any.",
@@ -276,7 +334,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 10,
+      "area_rank": 13,
       "rank_note": "Tribal land — Louisiana has 6 pieces held by four nations, MEASURED by scripts/build_tribal_areas.py on 2026-10-20: the Chitimacha Reservation (1.820 km², St. Mary Parish); the Coushatta Reservation (2.761 km² in 5 parts, Allen Parish) and the Coushatta Off-Reservation Trust Land (8.592 km² in 9 parts, 7.816 km² of it in Allen Parish and the rest in Natchitoches, Calcasieu and Jefferson Davis); the Jena Band of Choctaw Reservation (1.763 km² in 6 parts, Grant and LaSalle parishes); and the Tunica-Biloxi Reservation (1.690 km²) and Off-Reservation Trust Land (4.412 km² in 5 parts), both in Avoyelles Parish. About 3.5 km² a piece on average against about 16 km² for a city, town or village (4,826 km² across 305 places), so ranked after municipalities and before the point layers, as Mississippi's is, and drawn above the larger areas around it. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Louisiana has 6 such areas, held by the Chitimacha Tribe of Louisiana, the Coushatta Tribe of Louisiana, the Jena Band of Choctaw Indians and the Tunica-Biloxi Indian Tribe.",
@@ -294,7 +352,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 14,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -312,7 +370,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 12,
+      "area_rank": 15,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -330,7 +388,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 13,
+      "area_rank": 16,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -345,7 +403,7 @@
       }
     }
   ],
-  "min_register_layer": 11,
+  "min_register_layer": 14,
   "anchor_point": {
     "lat": 29.9524,
     "lng": -90.0767,
@@ -371,6 +429,18 @@
     {
       "layer": "voting-precinct",
       "expected": "Precinct 3-1"
+    },
+    {
+      "layer": "la-supreme-court",
+      "expected": "7"
+    },
+    {
+      "layer": "la-court-of-appeal",
+      "expected": "Fourth Circuit, District 1"
+    },
+    {
+      "layer": "la-district-court",
+      "expected": "Civil District Court and Criminal District Court"
     }
   ],
   "negative_point": {
@@ -413,6 +483,24 @@
         "min_features": 105,
         "max_features": 105,
         "note": "The 105 Louisiana House districts."
+      },
+      {
+        "file": "la-supreme-court-districts.json",
+        "min_features": 7,
+        "max_features": 7,
+        "note": "The 7 Supreme Court districts Act 7 of 2024 enacted, from the Legislature's own shapefile (la/scripts/build_la_court_districts.py), each carrying its whole parishes and the parishes it shares."
+      },
+      {
+        "file": "la-court-of-appeal-districts.json",
+        "min_features": 16,
+        "max_features": 16,
+        "note": "The 15 court of appeal districts as 16 features, dissolved from state-counties.json: St. John the Baptist Parish, which the Mississippi River divides between the Fifth Circuit's Second and Third Districts, is its own feature naming both."
+      },
+      {
+        "file": "la-district-court-districts.json",
+        "min_features": 42,
+        "max_features": 42,
+        "note": "The 41 judicial districts and Orleans Parish, dissolved from state-counties.json."
       },
       {
         "file": "la-parish-districts.json",
@@ -465,6 +553,11 @@
         "note": "The members of all 69 school boards, keyed by the Census school district id, built in the same run; the builder refuses unless every district has a board."
       },
       {
+        "file": "la-judges.json",
+        "min_keys": 6,
+        "note": "The justices and the judges of the courts of appeal and the district courts by district (la/scripts/build_la_judges.py), from the Secretary of State's list of elected officials, built in the same weekly run as the parish rosters by update-la-parish-officials.yml. Six top-level keys (the three courts, and the list's name, address and read date), so the floor is 6; the builder holds each court's district count exactly."
+      },
+      {
         "file": "la-parish-district-parishes.json",
         "min_keys": 6,
         "note": "The parishes whose districts the Police Jury or Council District layer draws, written by the same build as la-parish-districts.json; the layer's coverage test reads it."
@@ -482,7 +575,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-la-shell-v3",
+    "cache_name": "districtry-la-shell-v4",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
@@ -507,7 +600,7 @@
     },
     {
       "file": "update-la-parish-officials.yml",
-      "purpose": "Louisiana parish governing bodies and parish presidents, mayors, town councils, chiefs of police and school boards (the Secretary of State's list of elected officials)",
+      "purpose": "Louisiana parish governing bodies and parish presidents, mayors, town councils, chiefs of police, school boards and the judges of the courts elected by district (the Secretary of State's list of elected officials)",
       "schedule": "Wed 19:23 UTC"
     },
     {
@@ -560,7 +653,12 @@
       {
         "label": "Louisiana Secretary of State",
         "url": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index",
-        "note": "Every parish's police jury, council or commission by seat and its parish president or mayor, every town's mayor, council and chief of police or marshal, and every school board (list of elected officials)."
+        "note": "Every parish's police jury, council or commission by seat and its parish president or mayor, every town's mayor, council and chief of police or marshal, every school board, and the justices and judges of the courts elected by district (list of elected officials)."
+      },
+      {
+        "label": "Louisiana Legislature",
+        "url": "https://legis.la.gov/",
+        "note": "The laws that name the parishes of each court of appeal district and judicial district (La. R.S. 13:312 and 13:477), and, from its redistricting office, the Supreme Court districts of Act 7 of 2024 and the statewide precinct file."
       },
       {
         "label": "USGS The National Map",

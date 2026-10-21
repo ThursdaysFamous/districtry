@@ -1,6 +1,6 @@
-name: Update Louisiana parish, town and school board officials
+name: Update Louisiana parish, town and school board officials and judges
 
-# Weekly refresh of three rosters from the Secretary of State's list of elected
+# Weekly refresh of four rosters from the Secretary of State's list of elected
 # officials, each opening a PR rather than committing directly to main when it
 # changes — officeholder data gets a look before it ships:
 #   - every parish's governing body and its parish president or mayor
@@ -11,13 +11,19 @@ name: Update Louisiana parish, town and school board officials
 #     and chief of police or marshal (la/data/app/la-municipal-officials.json,
 #     the City, Town or Village card), and every school board's members
 #     (la/data/app/la-school-board-members.json, the School District card),
-#     rebuilt by la/scripts/build_la_local_officials.py.
-# The list is read as eight CSV exports from voterportal.sos.la.gov, one per
+#     rebuilt by la/scripts/build_la_local_officials.py;
+#   - every justice of the Supreme Court and every judge of the courts of
+#     appeal and the district courts, by the district each is elected from
+#     (la/data/app/la-judges.json, the three court cards), rebuilt by
+#     la/scripts/build_la_judges.py.
+# The list is read as eleven CSV exports from voterportal.sos.la.gov, one per
 # office, two seconds apart, by the parish builder, which keeps them in the
-# runner's temporary directory (--save) for the second builder to read
-# (--exports), so the list is fetched once a week. The second builder also
-# asks TIGERweb for Louisiana's incorporated places and school districts, which
-# its records are keyed by.
+# runner's temporary directory (--save) for the other two builders to read
+# (--exports), so the list is fetched once a week. The town and school board
+# builder also asks TIGERweb for Louisiana's incorporated places and school
+# districts, which its records are keyed by; the judges builder fetches
+# nothing more, reading the exports beside the shipped court maps and the two
+# laws kept in la/data/source/courts/.
 #
 # The list is the Secretary of State's live record rather than a dated
 # edition, so the file carries the day it was read, and a run whose records
@@ -32,7 +38,11 @@ name: Update Louisiana parish, town and school board officials
 # and the share of members carrying a telephone and a party; for the towns and
 # school boards, every municipality and board the list names matched to
 # exactly one Census place or school district, all 69 boards, the mayor,
-# member, officer and board-member floors, and the same two shares.
+# member, officer and board-member floors, and the same two shares; and for
+# the judges (measured 2026-10-21), every seat description one the builder
+# knows, every judge's parishes inside the district the court map draws, one
+# justice per Supreme Court district, the justice, appeal and district floors,
+# no telephone on two judges' rows, and the same two shares.
 # A red run is the signal that a person needs to read the list.
 #
 # They read each row's office, seat, name, telephone, party and term, and
@@ -48,9 +58,10 @@ name: Update Louisiana parish, town and school board officials
 # robots.txt: voterportal.sos.la.gov permits every path under
 # /ElectedOfficials/, and tigerweb.geo.census.gov publishes none (it answers
 # that path with a 189-byte HTML page), which permits every path; both read
-# 2026-10-20 with the builders' own client. Each builder reads the policy
-# before its first fetch of a host through scraper_common. www.sos.la.gov and
-# electionstatistics.sos.la.gov refuse every client and are never read.
+# 2026-10-20 with the builders' own client, and the portal's read again
+# 2026-10-21. Each builder reads the policy before its first fetch of a host
+# through scraper_common. www.sos.la.gov and electionstatistics.sos.la.gov
+# refuse every client and are never read.
 #
 # It regenerates the per-parish pages (la/parish-government/<parish>.html)
 # and the files that count them in the same PR, since Louisiana's go-live
@@ -95,18 +106,23 @@ jobs:
       - name: Rebuild the town officials and school boards
         run: python3 la/scripts/build_la_local_officials.py --exports "$RUNNER_TEMP/la-sos"
 
+      - name: Rebuild the judges of the courts elected by district
+        run: python3 la/scripts/build_la_judges.py --exports "$RUNNER_TEMP/la-sos"
+
       - name: Validate app + data files
         run: |
           python3 la/scripts/build_la_parish_officials.py --check
           python3 la/scripts/build_la_parish_districts.py --check
           python3 la/scripts/build_la_local_officials.py --check
+          python3 la/scripts/build_la_judges.py --check
           python3 la/scripts/validate_index.py la/index.html
 
       - name: Check for changes
         id: diff
         run: |
           if git diff --quiet -- la/data/app/la-parish-officials.json \
-              la/data/app/la-municipal-officials.json la/data/app/la-school-board-members.json; then
+              la/data/app/la-municipal-officials.json la/data/app/la-school-board-members.json \
+              la/data/app/la-judges.json; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -137,13 +153,13 @@ jobs:
           # docs/EAM_STATUS.md counts the districts the parish roster names and
           # the towns the town roster names, so either one changing moves it.
           python3 scripts/build_eam_status.py
-          git add la/data/app/la-parish-officials.json la/data/app/la-municipal-officials.json la/data/app/la-school-board-members.json la/parish-government la/parish-government.html about.html sitemap.xml llms.txt docs/EAM_STATUS.md
-          git commit -m "Update Louisiana parish, town and school board officials"
+          git add la/data/app/la-parish-officials.json la/data/app/la-municipal-officials.json la/data/app/la-school-board-members.json la/data/app/la-judges.json la/parish-government la/parish-government.html about.html sitemap.xml llms.txt docs/EAM_STATUS.md
+          git commit -m "Update Louisiana parish, town and school board officials and judges"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
             gh pr create \
-              --title "Update Louisiana parish, town and school board officials" \
-              --body "Automated weekly refresh from the Secretary of State's list of elected officials: every Louisiana parish's police jury, council or commission and its parish president or mayor (\`la/scripts/build_la_parish_officials.py\`), and every city's, town's and village's mayor, council or aldermen and chief of police or marshal, and every school board's members (\`la/scripts/build_la_local_officials.py\`). Please review the diff before merging — this changes data about real officeholders." \
+              --title "Update Louisiana parish, town and school board officials and judges" \
+              --body "Automated weekly refresh from the Secretary of State's list of elected officials: every Louisiana parish's police jury, council or commission and its parish president or mayor (\`la/scripts/build_la_parish_officials.py\`); every city's, town's and village's mayor, council or aldermen and chief of police or marshal, and every school board's members (\`la/scripts/build_la_local_officials.py\`); and every justice of the Supreme Court and judge of the courts of appeal and the district courts (\`la/scripts/build_la_judges.py\`). Please review the diff before merging — this changes data about real officeholders." \
               --base main \
               --head "$branch"
           else

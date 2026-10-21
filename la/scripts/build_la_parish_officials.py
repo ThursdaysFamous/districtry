@@ -32,9 +32,11 @@ and offers each office's list as a CSV export. Three are read:
         and the Mayor of New Orleans.
 Measured 2026-10-20: 563 rows, 10 and 25, covering all 64 parishes. The
 list's five other offices that a city, town, village or school board elects
-are read too (LOCAL_OFFICES), only to learn who prints each telephone and
-address; build_la_local_officials.py builds their own rosters from the same
-exports.
+are read too (LOCAL_OFFICES), and so are its three judicial offices whose
+judges are elected by district (JUDGE_OFFICES: the Supreme Court, the courts
+of appeal and the district courts), only to learn who prints each telephone
+and address; build_la_local_officials.py and build_la_judges.py build their
+own rosters from the same exports.
 
 WHAT IS READ, AND WHAT IS NEVER READ. From each row: the office title and its
 description (the seat), the name, the telephone, the party and the date the
@@ -49,7 +51,7 @@ is wrong: Tensas Parish's seven police jurors all print "701 Murray Street" in
 St. Joseph, the street address Rapides Parish's police jurors print in
 Alexandria. So an address any official outside the body also prints is
 carried for neither body, and the run says so. "Outside the body" is measured
-across all eight of the list's offices (contact_book): a post office box by
+across all eleven offices read (contact_book): a post office box by
 the box and its town, since two towns' post offices number their boxes alike,
 and a street address by its street line alone, which is what catches Tensas's.
 On 2026-10-20 that rule also left out Ascension Parish's office (P.O. Box 1659,
@@ -151,7 +153,10 @@ OFFICES = ("245_0", "244_0", "243_0")
 # Mayor; Alderman / City Council Member; Alderman / City Council at Large;
 # Chief of Police / Marshal; School Board Member (the index's own names).
 LOCAL_OFFICES = ("300_0", "310_0", "308_0", "305_0", "255_0")
-ALL_OFFICES = OFFICES + LOCAL_OFFICES
+# Justice of the Supreme Court; Judge of a Court of Appeal; District Judge
+# (the index's own names), which build_la_judges.py names.
+JUDGE_OFFICES = ("150_1", "155_1", "210_1")
+ALL_OFFICES = OFFICES + LOCAL_OFFICES + JUDGE_OFFICES
 SOURCE = "the Louisiana Secretary of State's list of elected officials"
 
 OUT = os.path.join(INSTANCE, "data", "app", "la-parish-officials.json")

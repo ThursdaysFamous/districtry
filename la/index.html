@@ -4220,7 +4220,8 @@ function initLouisianaExplorer() {
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
-  var LAYER_CODES = { "us-house": "us", "la-senate": "las", "county": "co",
+  var LAYER_CODES = { "us-house": "us", "la-supreme-court": "laj", "la-court-of-appeal": "laa",
+    "la-senate": "las", "la-district-court": "lad", "county": "co",
     "school-district-unified": "su", "la-house": "lah", "zip-code": "zp",
     "parish-district": "pg", "voting-precinct": "vp", "municipality": "mu",
     "tribal-government": "tg", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
@@ -4229,9 +4230,12 @@ function initLouisianaExplorer() {
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
   var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["la-senate"],
-    "state-house": ["la-house"], "county": ["county"], "county-board": ["parish-district"],
-    "municipality": ["municipality"], "voting-precinct": ["voting-precinct"],
-    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "state-house": ["la-house"], "supreme-court-district": ["la-supreme-court"],
+    "appellate-court-district": ["la-court-of-appeal"],
+    "trial-court-district": ["la-district-court"], "county": ["county"],
+    "county-board": ["parish-district"], "municipality": ["municipality"],
+    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
     "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -10471,7 +10475,10 @@ function initLouisianaExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // 6 congressional districts — the largest districts Louisiana carries below the state itself
+    "la-supreme-court",  // 7 districts of about 19,380 km2 each on the map (water included), measured 2026-10-21 — smaller than a congressional district, larger than a court of appeal district
+    "la-court-of-appeal", // 15 districts of about 9,040 km2 each on the map (water included), drawn as 16 features because the Mississippi River divides St. John the Baptist Parish between two, measured 2026-10-21 — smaller than a Supreme Court district, larger than a Senate district
     "la-senate",         // 39 Senate districts — larger on average than a parish, smaller than a congressional district
+    "la-district-court", // 41 judicial districts and Orleans Parish, about 3,230 km2 each on the map (water included), measured 2026-10-21 — smaller on average than a Senate district (about 3,450 km2), larger than a parish
     "county",            // 64 parishes, pre-built from TIGERweb; the instance's offline anchor layer
     "school-district-unified", // 69 school districts covering the whole state, from TIGERweb, drawn from a mirrored tile archive
     "la-house",          // 105 House districts — smaller on average than a school district, larger than a ZIP code
@@ -14679,16 +14686,18 @@ function initLouisianaExplorer() {
     if (!date) return null;
     return (laTermEnded(iso) ? "term ended " : "term ends ") + date;
   }
-  // The Term row for a body whose members' terms all end on one day.
-  function laTermField(iso) {
+  // The Term row for a body whose members' terms all end on one day; `who`
+  // is "judge" on the court cards and "member" everywhere else.
+  function laTermField(iso, who) {
     var date = laDate(iso);
     if (!date) return null;
+    var word = who || "member";
     return {
       label: "Term",
       value: laTermEnded(iso)
-        ? "The list gives every member's term as ending on " + date + ", which " +
-          "has passed. The list may not yet name the members who took office after it."
-        : "The list gives every member's term as ending on " + date + "."
+        ? "The list gives every " + word + "'s term as ending on " + date + ", which " +
+          "has passed. The list may not yet name the " + word + "s who took office after it."
+        : "The list gives every " + word + "'s term as ending on " + date + "."
     };
   }
   // One person row: the name as the list prints it, the party it prints, the
@@ -15232,6 +15241,603 @@ function initLouisianaExplorer() {
     memberLabel: "Representative", capitolLabel: "Capitol Office",
     profileLabel: "Representative's page", directoryLabel: "Louisiana House member list",
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
+  });
+
+  /* ---------- 4a-4c. Supreme Court, Court of Appeal and Judicial District ----------
+   * The three courts whose judges Louisiana elects by district, each a
+   * same-origin file built by la/scripts/build_la_court_districts.py, so a
+   * click is answered in the browser and no point is sent anywhere.
+   *
+   * THE LINES. The Supreme Court's seven districts are the Legislature's own
+   * map of the districts Act 7 of 2024 enacted (La. R.S. 13:101.2), drawn
+   * from voting precincts, so twelve parishes are divided between districts;
+   * it is drawn to within 8 m of that map. The fifteen court of appeal
+   * districts (La. R.S. 13:312) and the 41 judicial districts (La. R.S.
+   * 13:477) are whole parishes, dissolved from the Parish layer's own
+   * outlines, and Orleans Parish, which the law leaves out because it has a
+   * civil and a criminal district court of its own, is drawn as one more
+   * unit. The laws are kept in la/data/source/courts/.
+   *
+   * THE NAMES are the Secretary of State's list of elected officials
+   * (data/app/la-judges.json, built by la/scripts/build_la_judges.py and read
+   * every week with the parish rosters): each judge's seat, party, own
+   * telephone and the day the term ends. A court's address ships only where
+   * at least three of its judges print the same one and no other official
+   * does. The list can leave a seat out (it names one judge for the 7th
+   * Judicial District and three for the 18th, read 2026-10-21), so a card
+   * says how many judges the list names, never how many the court has.
+   *
+   * ELECTION SECTIONS ARE NOT DRAWN. Several districts elect some judges from
+   * sections or subdistricts set by voting precinct, and each judge's seat
+   * names the section. The Court of Appeal card says which section the point
+   * is in only where La. R.S. 13:312 puts the point's whole parish in one
+   * section and the list's judges for every section agree with the law (the
+   * builder's `whole`); the point's parish is read from the Parish layer's
+   * outlines, which these files are dissolved from. Everywhere else, and on
+   * every Judicial District card, the card says it cannot tell.
+   *
+   * ONE PARISH IS DIVIDED BY THE RIVER. La. R.S. 13:312 puts St. John the
+   * Baptist Parish east of the Mississippi in the Fifth Circuit's Second
+   * District and west of it in the Third. The river is not drawn, so the
+   * parish is one feature naming both districts, and its card lists both
+   * districts' judges.
+   *
+   * A JUDGES FILE THAT FAILS TO LOAD is not the layer's failure: the district
+   * is already answered from a file in the browser, and the card says the
+   * names did not load. ---------- */
+  var loadLaSupremeCourtDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/la-supreme-court-districts.json", {}, 2);
+  });
+  var loadLaAppealDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/la-court-of-appeal-districts.json", {}, 2);
+  });
+  var loadLaJudicialDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/la-district-court-districts.json", {}, 2);
+  });
+  var loadLaJudges = makeCached(function () {
+    return fetchJSONWithRetry("data/app/la-judges.json", {}, 2);
+  });
+  function laJudgesOrNull() {
+    return loadLaJudges().then(function (j) { return j || null; }, function () { return null; });
+  }
+  var LA_JUDGES_FAILED = "The list of judges did not load just now, so no one is " +
+    "named here. The district above is still the answer for this point: it " +
+    "comes from a file already in your browser.";
+  var LA_CIRCUITS = { "1": "First", "2": "Second", "3": "Third", "4": "Fourth", "5": "Fifth" };
+  // The courts' own sites, read 2026-10-21 with this project's client after
+  // robots.txt. The Third Circuit's answered with a Cloudflare challenge, so
+  // its card links the Secretary of State's list instead.
+  var LA_COURT_SITES = {
+    supreme: { label: "Louisiana Supreme Court", url: "https://www.lasc.org/" },
+    "1": { label: "Court of Appeal, First Circuit", url: "https://www.la-fcca.org/" },
+    "2": { label: "Court of Appeal, Second Circuit", url: "https://www.la2nd.org/" },
+    "4": { label: "Court of Appeal, Fourth Circuit", url: "https://www.la4th.org/" },
+    "5": { label: "Court of Appeal, Fifth Circuit", url: "https://www.fifthcircuit.org/" }
+  };
+
+  // "Acadia Parish" / "Acadia, Iberia and Lafayette Parishes"
+  function laParishPhrase(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    var joined = list.length === 1 ? list[0]
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+    return joined + (list.length === 1 ? " Parish" : " Parishes");
+  }
+  // "Districts 1 and 6" / "Districts 1, 6 and 7"
+  function laNumberList(list) {
+    return list.length === 1 ? String(list[0])
+      : list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
+  }
+  // 1 -> "1st", 22 -> "22nd": the courts' own way of naming a judicial district.
+  function laOrdinal(n) {
+    var v = Number(n);
+    if (!(v > 0) || Math.floor(v) !== v) return String(n);
+    var t = v % 100, u = v % 10;
+    var suffix = (t >= 11 && t <= 13) ? "th" : u === 1 ? "st" : u === 2 ? "nd" : u === 3 ? "rd" : "th";
+    return String(v) + suffix;
+  }
+  // The parish the point is in, from the Parish layer's outlines, which the
+  // court files are dissolved from; null where none holds it or they fail.
+  function laParishAt(point) {
+    return loadStateCounties().then(function (fc) {
+      var feats = (fc && fc.features) || [];
+      for (var i = 0; i < feats.length; i++) {
+        if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+          var name = findPropCI(feats[i].properties || {}, ["basename"]);
+          return name != null ? String(name) : null;
+        }
+      }
+      return null;
+    }, function () { return null; });
+  }
+  // One judge's row: the name as the list prints it, the party, a
+  // magistrate's title, the seat, and the term where the judges' terms differ.
+  function laJudgeRow(p, withTerm) {
+    var bits = [];
+    if (p.title) bits.push(String(p.title));
+    if (p.seat) bits.push(String(p.seat));
+    var term = withTerm ? laTermPhrase(p.termEnds) : null;
+    if (term) bits.push(term);
+    return { name: String(p.name), badge: p.party ? String(p.party) : null,
+             note: bits.length ? bits.join(", ") : null,
+             phone: p.phone ? String(p.phone) : null };
+  }
+  // A court's office, where the builder could keep one.
+  function laCourtOffice(label, office) {
+    if (!office || !(office.address || office.phone)) return null;
+    return renderOfficeGroup({
+      label: "The court's office",
+      open: true,
+      offices: [{
+        label: label,
+        lines: office.address ? [String(office.address)] : [],
+        phone: office.phone ? String(office.phone) : null
+      }]
+    });
+  }
+  function laJudgesListLink(j) {
+    var url = j && safeHttpUrl(j.sourceUrl);
+    return url ? { label: "The Secretary of State's list of elected officials", url: url } : null;
+  }
+
+  /* ---------- 4a. Supreme Court District ---------- */
+  registerLayer({
+    id: "la-supreme-court",
+    group: "political",
+    label: "Supreme Court District",
+    overlay: {
+      load: loadLaSupremeCourtDistricts,
+      // the supreme-court-district concept's colour and width (root
+      // layer-concepts.json `colors` and `lines`)
+      style: { color: "#8A692C", weight: 2, fillColor: "#8A692C", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = findPropCI(feature.properties || {}, ["unit"]);
+      return unit == null ? null : "Supreme Court District " + String(unit);
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadLaSupremeCourtDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var result = {
+          seq: seq,
+          unit: findPropCI(props, ["unit"]),
+          whole: findPropCI(props, ["whole"]) || [],
+          part: findPropCI(props, ["part"]) || [],
+          parish: null,
+          sharing: [],
+          judges: null
+        };
+        return Promise.all([laJudgesOrNull(), laParishAt(point),
+                            loadLaSupremeCourtDistricts()]).then(function (got) {
+          result.judges = got[0];
+          result.parish = got[1];
+          // Where the point's parish is divided, every district that has a part.
+          if (result.parish && result.part.indexOf(result.parish) >= 0) {
+            ((got[2] && got[2].features) || []).forEach(function (f) {
+              var p = f.properties || {};
+              if ((p.part || []).indexOf(result.parish) >= 0 && p.unit != null) {
+                result.sharing.push(String(p.unit));
+              }
+            });
+            result.sharing.sort(function (a, b) { return Number(a) - Number(b); });
+          }
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var unit = result.unit != null ? String(result.unit) : null;
+      var whole = laParishPhrase(result.whole), part = laParishPhrase(result.part);
+      var partWord = result.part.length === 1 ? "part of " : "parts of ";
+      wrap.appendChild(renderBodyIntro({
+        title: unit ? "Supreme Court District " + unit : "Unknown Supreme Court district",
+        note: whole && part ? whole + ", and " + partWord + part
+          : whole || (part ? partWord.charAt(0).toUpperCase() + partWord.slice(1) + part : null)
+      }));
+      var j = result.judges;
+      var d = j && j.supreme && j.supreme.districts && unit ? j.supreme.districts[unit] : null;
+      var members = laNamed(d && d.members);
+      var rows = [];
+      if (members.length) {
+        wrap.appendChild(renderSectionLabel("Justice elected from this district"));
+        wrap.appendChild(renderPersonRows(members.map(function (p) { return laJudgeRow(p, true); }),
+          { tinted: true }));
+      } else {
+        rows.push({
+          label: "Justice",
+          value: j ? "The Secretary of State's list names no justice for this district, " +
+            "so no one is named here." : LA_JUDGES_FAILED
+        });
+      }
+      if (result.sharing.length > 1) {
+        rows.push({
+          label: "A divided parish",
+          value: result.parish + " Parish is divided " +
+            (result.sharing.length === 2 ? "between" : "among") + " Supreme Court Districts " +
+            laNumberList(result.sharing) + " along voting precinct lines. This map draws " +
+            "those lines to within 8 metres of the Legislature's map; near a line, your " +
+            "parish's registrar of voters can say which district you vote in."
+        });
+      }
+      rows.push({
+        label: "The court",
+        value: "Louisiana's highest court. Its seven justices, one elected from each " +
+          "district, decide cases from the whole state."
+      });
+      rows.push({
+        label: "Lines redrawn in 2024",
+        value: "Act 7 of 2024 redrew the districts. A justice elected before then sits " +
+          "for the district with the same number until the term ends, and the next " +
+          "justice is elected from the district drawn here, so a sitting justice may " +
+          "have been elected by voters inside different lines."
+      });
+      rows.push({
+        label: "Where this line comes from",
+        value: "The Louisiana Legislature's map of the districts Act 7 of 2024 enacted, " +
+          "drawn from voting precincts, which divides twelve parishes between districts. " +
+          "This app draws the lines to within 8 metres of the Legislature's map."
+      });
+      if (members.length) rows.push({ label: "Where the name comes from", value: laListCredit(j) });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return LA_COURT_SITES.supreme;
+    }
+  });
+
+  /* ---------- 4b. Court of Appeal District ---------- */
+  function laAppealUnits(feature) {
+    var props = (feature || {}).properties || {};
+    var units = findPropCI(props, ["units"]);
+    if (units && units.length) return units.map(function (u) { return String(u); });
+    var unit = findPropCI(props, ["unit"]);
+    return unit == null ? [] : [String(unit)];
+  }
+  // "4-1" -> "Fourth Circuit, District 1"
+  function laAppealName(unit) {
+    var m = /^(\d)-(\d)$/.exec(String(unit));
+    return m && LA_CIRCUITS[m[1]] ? LA_CIRCUITS[m[1]] + " Circuit, District " + m[2] : null;
+  }
+  // "Fifth Circuit, District 2 or 3" for the parish two districts share.
+  function laAppealTitle(units) {
+    if (!units.length) return null;
+    var first = laAppealName(units[0]);
+    if (!first || units.length === 1) return first;
+    return first + " or " + units.slice(1).map(function (u) {
+      return String(u).split("-")[1];
+    }).join(" or ");
+  }
+  // One district's judges, grouped the way they are elected: those elected
+  // from the whole district, then each section in the list's order, the one
+  // the point's parish lies wholly in first. `mine` is that section, and
+  // `divided` the sections a parish the law divides is shared by.
+  function laAppealGroups(d, parish) {
+    var members = laNamed(d && d.members);
+    var secs = (d && d.sections) || {};
+    var plain = [], order = [], bySection = {};
+    members.forEach(function (p) {
+      if (!p.section) { plain.push(p); return; }
+      var s = String(p.section);
+      if (!bySection[s]) { bySection[s] = []; order.push(s); }
+      bySection[s].push(p);
+    });
+    var recorded = false, mine = null, divided = [];
+    order.forEach(function (s) {
+      var w = secs[s] && secs[s].whole;
+      if (!w) return;
+      recorded = true;
+      if (parish && w.indexOf(parish) >= 0) mine = s;
+    });
+    if (recorded && !mine && parish) {
+      divided = order.filter(function (s) {
+        return ((secs[s] && secs[s].parishes) || []).indexOf(parish) >= 0;
+      });
+    }
+    if (mine) order = [mine].concat(order.filter(function (s) { return s !== mine; }));
+    return { count: members.length, plain: plain, order: order, bySection: bySection,
+             recorded: recorded, mine: mine, divided: divided };
+  }
+  // ["Election Section 1", "Election Section 2"] -> "Election Sections 1 and 2"
+  function laSectionList(labels) {
+    var m = labels.map(function (s) { return /^(Election Section|Subdistrict) (\S+)$/.exec(String(s)); });
+    var same = m.every(function (x) { return x && x[1] === m[0][1]; });
+    if (labels.length > 1 && same) {
+      return m[0][1] + "s " + laNumberList(m.map(function (x) { return x[2]; }));
+    }
+    return laNumberList(labels.map(String));
+  }
+  // "election sections", "subdistricts", or both, from the sections' own names.
+  function laSectionWord(labels) {
+    var es = false, sub = false;
+    labels.forEach(function (s) {
+      if (/^Subdistrict\b/.test(s)) sub = true; else es = true;
+    });
+    return es && sub ? "election sections or subdistricts" : sub ? "subdistricts" : "election sections";
+  }
+
+  registerLayer({
+    id: "la-court-of-appeal",
+    group: "political",
+    label: "Court of Appeal District",
+    overlay: {
+      load: loadLaAppealDistricts,
+      // the appellate-court-district concept's colour and width
+      style: { color: "#753B07", weight: 2, fillColor: "#753B07", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      return laAppealTitle(laAppealUnits(feature));
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadLaAppealDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var result = {
+          seq: seq,
+          units: laAppealUnits(feature),
+          counties: findPropCI(props, ["counties"]) || [],
+          portions: findPropCI(props, ["portions"]) || null,
+          parish: null,
+          judges: null
+        };
+        return Promise.all([laJudgesOrNull(), laParishAt(point)]).then(function (got) {
+          result.judges = got[0];
+          result.parish = got[1];
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var units = result.units;
+      var split = units.length > 1;
+      var circuit = units.length ? String(units[0]).split("-")[0] : null;
+      var circuitName = circuit && LA_CIRCUITS[circuit] ? LA_CIRCUITS[circuit] + " Circuit" : "circuit";
+      var parishes = laParishPhrase(result.counties);
+      wrap.appendChild(renderBodyIntro({
+        title: laAppealTitle(units) || "Unknown court of appeal district",
+        note: split && parishes ? parishes + ", which the Mississippi River divides " +
+          "between two districts" : parishes
+      }));
+      var j = result.judges;
+      var appeal = j && j.appeal ? j.appeal : null;
+      var rows = [];
+      if (split && result.portions) {
+        rows.push({
+          label: "Which of the two",
+          value: units.map(function (u) {
+            var where = result.portions[u];
+            return where ? "The part of the parish " + String(where) + " is in District " +
+              String(u).split("-")[1] + "." : null;
+          }).filter(Boolean).join(" ") + " This app does not draw the river as a line " +
+            "between them, so it lists the judges of both districts."
+        });
+      }
+      var named = 0, missing = [], sectionNotes = [];
+      units.forEach(function (u) {
+        if (!appeal) return;
+        var g = laAppealGroups((appeal.districts || {})[u], result.parish);
+        var where = split ? "District " + String(u).split("-")[1] : "this district";
+        if (!g.count) { missing.push(String(u).split("-")[1]); return; }
+        named += g.count;
+        if (g.plain.length) {
+          wrap.appendChild(renderSectionLabel(g.order.length
+            ? "Judges elected from the whole of " + where : "Judges elected from " + where));
+          wrap.appendChild(renderPersonRows(g.plain.map(function (p) { return laJudgeRow(p, true); }),
+            { tinted: true }));
+        }
+        g.order.forEach(function (s) {
+          wrap.appendChild(renderSectionLabel("Judges elected from " + s +
+            (split ? " of " + where : "") + (s === g.mine ? ", which this point is in" : "")));
+          wrap.appendChild(renderPersonRows(g.bySection[s].map(function (p) {
+            return laJudgeRow(p, true);
+          }), { tinted: true }));
+        });
+        if (!g.order.length) return;
+        var word = laSectionWord(g.order);
+        if (g.mine) {
+          sectionNotes.push("La. R.S. 13:312 puts all of " + result.parish + " Parish in " +
+            g.mine + ", so voters here elect the judges of " + g.mine +
+            (g.plain.length ? " and those elected from the whole district." : "."));
+        } else if (g.divided.length > 1) {
+          sectionNotes.push(result.parish + " Parish is divided " +
+            (g.divided.length === 2 ? "between " : "among ") + laSectionList(g.divided) +
+            " by voting precinct. This app does not draw the " +
+            word + ", so it cannot tell which one this point is in; each judge's seat " +
+            "names the section.");
+        } else {
+          sectionNotes.push("Some of " + where + "'s judges are elected from " + word +
+            " set by voting precinct, which this app does not draw, so it cannot tell " +
+            "which one this point is in. Each judge's seat names the section.");
+        }
+      });
+      var c = appeal && appeal.circuits && circuit ? appeal.circuits[circuit] : null;
+      var big = laNamed(c && c.atLarge);
+      if (big.length) {
+        wrap.appendChild(renderSectionLabel("Judges elected from the whole " + circuitName));
+        wrap.appendChild(renderPersonRows(big.map(function (p) { return laJudgeRow(p, true); }),
+          { tinted: true }));
+      }
+      var office = laCourtOffice("Court of Appeal, " + circuitName, c && c.office);
+      if (office) wrap.appendChild(office);
+      if (!appeal) {
+        rows.push({ label: "Judges", value: LA_JUDGES_FAILED });
+      } else if (missing.length) {
+        rows.push({
+          label: "Judges",
+          value: "The Secretary of State's list names no judge for District " +
+            missing.join(" or ") + ", so no one is named here."
+        });
+      }
+      if (sectionNotes.length) {
+        rows.push({
+          label: "Election sections",
+          value: sectionNotes.join(" ") + " Every judge of the court hears appeals from " +
+            "the whole circuit, whichever part elected them."
+        });
+      }
+      if (named || big.length) {
+        rows.push({
+          label: "Judges the list names",
+          value: "The Secretary of State's list names " + String(named) + " judge" +
+            (named === 1 ? "" : "s") + " elected from " + (split ? "these districts" : "this district") +
+            (big.length ? ", and " + String(big.length) + " elected from the whole " + circuitName : "") + "."
+        });
+      }
+      rows.push({
+        label: "The court",
+        value: "The Court of Appeal for the " + circuitName + ", one of Louisiana's five. " +
+          "It hears appeals from the district courts of the whole circuit, though each " +
+          "judge is elected from one district" + (big.length ? " or from the whole circuit" : "") + "."
+      });
+      rows.push({
+        label: "Where this line comes from",
+        value: "La. R.S. 13:312 names the parishes in each district, and this app draws " +
+          "the district along those parishes' lines." + (split ? " It does not draw the " +
+          "river, so St. John the Baptist Parish is drawn whole and named in both districts." : "")
+      });
+      if (named || big.length) rows.push({ label: "Where these names come from", value: laListCredit(j) });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      var circuit = result.units.length ? String(result.units[0]).split("-")[0] : null;
+      return (circuit && LA_COURT_SITES[circuit]) || laJudgesListLink(result.judges);
+    }
+  });
+
+  /* ---------- 4c. Judicial District ---------- */
+  // "19th Judicial District", or Orleans Parish's own courts.
+  function laJudicialName(unit) {
+    if (unit == null) return null;
+    return String(unit) === "Orleans" ? "Orleans Parish" : laOrdinal(unit) + " Judicial District";
+  }
+
+  registerLayer({
+    id: "la-district-court",
+    group: "political",
+    label: "Judicial District",
+    overlay: {
+      load: loadLaJudicialDistricts,
+      // the trial-court-district concept's colour and width
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var unit = findPropCI(feature.properties || {}, ["unit"]);
+      if (unit == null) return null;
+      return String(unit) === "Orleans" ? "Orleans Parish district courts" : laJudicialName(unit);
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadLaJudicialDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var result = {
+          seq: seq,
+          unit: findPropCI(props, ["unit"]),
+          counties: findPropCI(props, ["counties"]) || [],
+          judges: null
+        };
+        return laJudgesOrNull().then(function (j) {
+          result.judges = j;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var unit = result.unit != null ? String(result.unit) : null;
+      var orleans = unit === "Orleans";
+      wrap.appendChild(renderBodyIntro({
+        title: laJudicialName(unit) || "Unknown judicial district",
+        note: orleans ? "Civil District Court and Criminal District Court"
+          : laParishPhrase(result.counties)
+      }));
+      var j = result.judges;
+      var d = j && j.district && j.district.districts && unit ? j.district.districts[unit] : null;
+      var groups = !d ? [] : orleans
+        ? (d.courts || []).map(function (c) {
+            return { label: String(c.court), members: laNamed(c.members), office: c.office,
+                     officeLabel: String(c.court) + " for the Parish of Orleans" };
+          })
+        : [{ label: "Judges of the " + laOrdinal(unit) + " Judicial District Court",
+             members: laNamed(d.members), office: d.office,
+             officeLabel: laOrdinal(unit) + " Judicial District Court" }];
+      var all = [];
+      groups.forEach(function (g) { all = all.concat(g.members); });
+      var term = laSharedTerm(all);
+      groups.forEach(function (g) {
+        if (!g.members.length) return;
+        wrap.appendChild(renderSectionLabel(g.label));
+        wrap.appendChild(renderPersonRows(g.members.map(function (p) { return laJudgeRow(p, !term); }),
+          { tinted: true }));
+      });
+      groups.forEach(function (g) {
+        var office = laCourtOffice(g.officeLabel, g.office);
+        if (office) wrap.appendChild(office);
+      });
+      var rows = [];
+      if (!j) {
+        rows.push({ label: "Judges", value: LA_JUDGES_FAILED });
+      } else if (!all.length) {
+        rows.push({
+          label: "Judges",
+          value: "The Secretary of State's list names no judge for this district, so no " +
+            "one is named here."
+        });
+      } else {
+        rows.push({
+          label: "Judges the list names",
+          value: "The Secretary of State's list names " + (orleans
+            ? groups.map(function (g) {
+                return String(g.members.length) + " for the " + g.label;
+              }).join(" and ")
+            : String(all.length) + " judge" + (all.length === 1 ? "" : "s") + " for this court") +
+            ". The list can leave a seat out, so the court may have more judges than are " +
+            "named here."
+        });
+      }
+      var termField = term ? laTermField(term, "judge") : null;
+      if (termField) rows.push(termField);
+      if (all.some(function (p) { return !!p.section; })) {
+        var labels = [];
+        all.forEach(function (p) {
+          if (p.section && labels.indexOf(String(p.section)) < 0) labels.push(String(p.section));
+        });
+        rows.push({
+          label: "Election sections",
+          value: "Some of these judges are elected from " + laSectionWord(labels) + " set " +
+            "by voting precinct, which this app does not draw, so it cannot tell which one " +
+            "this point is in. Each judge's seat names the section, and every judge of the " +
+            "court hears cases from the whole district."
+        });
+      }
+      if (orleans) {
+        rows.push({
+          label: "Orleans Parish's courts",
+          value: "Orleans Parish is not one of the numbered judicial districts: it has a " +
+            "civil district court and a criminal district court of its own. Every Orleans " +
+            "judge is elected by the whole parish, and a court's division or section is " +
+            "one judgeship, not a part of the parish."
+        });
+      }
+      rows.push({
+        label: "Where this line comes from",
+        value: orleans
+          ? "La. R.S. 13:477 names the parishes of the 41 judicial districts and leaves " +
+            "out Orleans Parish, which has courts of its own, so this app draws the " +
+            "parish's own line."
+          : "La. R.S. 13:477 names the parishes of each judicial district, and this app " +
+            "draws the district along those parishes' lines."
+      });
+      if (all.length) rows.push({ label: "Where these names come from", value: laListCredit(j) });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      return laJudgesListLink(result.judges);
+    }
   });
 
   /* No county-subdivision layer, on purpose. Every one of the 575 county
@@ -17576,6 +18182,9 @@ function initLouisianaExplorer() {
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "la-senate", "la-house",
+    // The courts follow the chambers, as Mississippi's do: each district's
+    // voters elect its justice or its judges.
+    "la-supreme-court", "la-court-of-appeal", "la-district-court",
     "parish-district", "school-district-unified",
     "county", "municipality", "voting-precinct", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
@@ -18064,8 +18673,8 @@ function initLouisianaExplorer() {
     "#1F6F6B": "#5DC0BA", "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
     "#3B8FD4": "#A2D2FF", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
     "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FF87B8",
-    "#D06A9C": "#FEBDDA"};
+    "#753B07": "#D7864B", "#88637C": "#DAA7C9", "#8A692C": "#DDB061", "#8C2E4A": "#F47294",
+    "#9550B2": "#DF9BFE", "#A3341F": "#FE8269", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

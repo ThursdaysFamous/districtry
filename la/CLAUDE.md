@@ -30,7 +30,10 @@ no layer sends a reader's selected point to any server — and three nearest-N l
 District** (`parish-district`) draws the districts of each of the 6 parishes whose current lines
 are confirmed, and is hidden in the other 58. **Voting Precinct** (`voting-precinct`, since
 2026-10-21) draws all 3,569 precincts in the 64 parishes from the Legislature's statewide precinct
-file. **Tribal Government** (`tribal-government`) draws the
+file. **Supreme Court District**, **Court of Appeal District** and **Judicial District**
+(`la-supreme-court`, `la-court-of-appeal`, `la-district-court`, since 2026-10-21) draw the three
+courts whose judges are elected by district and name every justice and judge the Secretary of
+State's list names. **Tribal Government** (`tribal-government`) draws the
 6 pieces of tribal land the Census draws in the state — the Chitimacha, Coushatta, Jena Band of
 Choctaw and Tunica-Biloxi reservations, and the Coushatta's and Tunica-Biloxi's off-reservation trust
 land — and names the councils of the three nations whose own pages name them.
@@ -119,6 +122,32 @@ are left out, so those five parishes each carry a lower cover floor of their own
 under what the build measured. Drawn at 12 m, the smallest of the fleet's three intervals that keeps
 the file at or under 2.5 MB gzipped (2.31 MB). The card says a precinct elects no one, names the
 edition and links the Secretary of State's voter portal for the polling place.
+
+**THE THREE COURTS ELECTED BY DISTRICT ARE DRAWN FROM THE LAWS THAT SET THEM, AND NAMED FROM THE
+SECRETARY OF STATE'S LIST** (`la/scripts/build_la_court_districts.py` and
+`la/scripts/build_la_judges.py`, both `--check` in CI). The Supreme Court's seven districts are
+Act 7 of 2024 (La. R.S. 13:101.2), drawn from the Legislature's own shapefile on its page for the
+act, held to the SHA-256 it was read with, and simplified with Douglas-Peucker at 5 m under an 8 m
+ceiling. They follow precincts, so twelve parishes are split between two or three districts, and
+the card tells a reader near a line to ask the parish's registrar of voters. The courts of appeal
+(La. R.S. 13:312, 15 districts drawn as 16 features, because the Mississippi River divides St. John
+the Baptist Parish between the Fifth Circuit's second and third districts) and the judicial
+districts (13:477, numbered 1 to 40 and 42, and Orleans Parish, whose civil and criminal district
+courts are its own) are whole parishes, dissolved from the shipped parish file by
+`scripts/whole_county_courts.py`; both laws' text is kept in `la/data/source/courts/`, whose README
+says how it is read again. The judges come from three offices of the Secretary of State's list
+(150_1, 155_1 and 210_1), read in the weekly parish run from the exports the parish builder saves
+and through that builder's own readers, so the contact rules are the parish cards': a telephone
+printed for one official alone ships on that official's row, and an address only as a court's
+office, where at least three of its judges print it and no official outside the court does. **THE
+LIST PRINTS EVERY JUSTICE AS ASSOCIATE JUSTICE**, so no card names the Chief Justice, and **La.
+R.S. 13:101.3 keeps a sitting justice in the same-numbered district until the term ends**, so the
+Supreme Court card says a sitting justice may have been elected inside different lines. **THE
+ELECTION SECTIONS ARE NOT DRAWN** (gap `la-court-election-sections`): each judge's seat names the
+section, and the court of appeal card says which section a point is in only where 13:312 puts the
+point's whole parish in one section. Every card says how many judges the list names, never how
+many seats a court has. The Third Circuit's own site answered this project's client with a
+Cloudflare challenge on 2026-10-21, so its cards link the list instead.
 
 **ONE SCHOOL LAYER, LABELLED WITHOUT A QUALIFIER.** TIGER's unified tiling holds 69 districts for
 Louisiana and its elementary and secondary tilings hold none — so the layer is "School District",
@@ -221,8 +250,8 @@ legislative seats vacant on 2026-10-21 (Senate 14, House 77 and 92) are listed a
 
 - Metro: Louisiana (`louisiana`) — https://districtry.com/la/
 - Geocoders: address Photon (Louisiana-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Louisiana-bounded, serial >=1s queue)
-- Ground truth: 29.95240,-90.07670 (New Orleans City Hall, 1300 Perdido Street, Orleans Parish) → county Orleans Parish; us-house 2; la-senate 5; la-house 93; voting-precinct Precinct 3-1. Negative point 28.60000,-90.50000 (open water about 50 km south of the Louisiana coast, past the state's offshore line — outside Louisiana and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-20: TIGERweb's state and county layers name no state or parish here, its legislative layers no district, and its ZIP layer no ZIP code (control: New Orleans City Hall returns Louisiana, Orleans Parish and 70112). OPEN WATER BECAUSE A POINT ON A NEIGHBOUR'S LAND WOULD HAVE TO MOVE: Arkansas and Mississippi are live already, and the fleet is meant to reach every state, Texas included.).
-- Layers: 13 registered (political 5, safety 2, schools 1, geography 5); `registerLayer(` floor 11. Debug namespace `window.LouisianaExplorer`.
+- Ground truth: 29.95240,-90.07670 (New Orleans City Hall, 1300 Perdido Street, Orleans Parish) → county Orleans Parish; us-house 2; la-senate 5; la-house 93; voting-precinct Precinct 3-1; la-supreme-court 7; la-court-of-appeal Fourth Circuit, District 1; la-district-court Civil District Court and Criminal District Court. Negative point 28.60000,-90.50000 (open water about 50 km south of the Louisiana coast, past the state's offshore line — outside Louisiana and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-20: TIGERweb's state and county layers name no state or parish here, its legislative layers no district, and its ZIP layer no ZIP code (control: New Orleans City Hall returns Louisiana, Orleans Parish and 70112). OPEN WATER BECAUSE A POINT ON A NEIGHBOUR'S LAND WOULD HAVE TO MOVE: Arkansas and Mississippi are live already, and the fleet is meant to reach every state, Texas included.).
+- Layers: 16 registered (political 8, safety 2, schools 1, geography 5); `registerLayer(` floor 14. Debug namespace `window.LouisianaExplorer`.
 - Scheduled workflows: `update-la-congress-roster.yml` (Mon 19:23 UTC); `update-la-legislature-roster.yml` (Tue 19:23 UTC); `update-la-parish-officials.yml` (Wed 19:23 UTC); `la-validate-sources.yml` (1st of month 20:47 UTC).
 - Source registry: `la/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -252,6 +281,12 @@ python3 la/scripts/build_la_parish_districts.py --check
 # Precincts (offline: the shipped file against its record, every parish
 # covered by its own precincts, and the card's sentences):
 python3 la/scripts/build_la_precincts.py --check
+
+# Courts (offline: the two whole-parish maps against the parish lists in the
+# kept laws, the Supreme Court map against its record, and the judges list's
+# shape, floors and districts):
+python3 la/scripts/build_la_court_districts.py --check
+python3 la/scripts/build_la_judges.py --check
 
 # Generated-region gate: per-instance facts live ONCE in la/metro-worksheet.json;
 # GENERATED regions are emitted from it. NEVER hand-edit a GENERATED region:
@@ -314,7 +349,10 @@ Douglas-Peucker at 5 m, refused unless the 8 m fidelity ceiling passes),
 (`la/scripts/build_la_parish_districts.py`, the 6 confirmed parishes, one mapshaper run so a shared
 line is simplified once), `la-precincts.json` (`la/scripts/build_la_precincts.py`, the
 Legislature's statewide precinct file, Douglas-Peucker at 12 m, refused unless the exact count, the
-6,000-point agreement gate and the per-parish cover check pass), and `congress-districts.json`, `la-senate-districts.json`,
+6,000-point agreement gate and the per-parish cover check pass), the three court maps
+`la-supreme-court-districts.json`, `la-court-of-appeal-districts.json` and
+`la-district-court-districts.json` (`la/scripts/build_la_court_districts.py`, from Act 7's
+shapefile and the parish lists in La. R.S. 13:312 and 13:477), and `congress-districts.json`, `la-senate-districts.json`,
 `la-house-districts.json` (`la/scripts/build_legislative_boundaries.py` — statewide TIGERweb,
 mapshaper-simplified with Douglas-Peucker, refused unless BOTH the 2,000-random-point agreement gate
 and the 8 m fidelity ceiling pass). Rosters: `congress-roster.json`
@@ -323,7 +361,8 @@ and the 8 m fidelity ceiling pass). Rosters: `congress-roster.json`
 own pages), `la-parish-officials.json` (`la/scripts/build_la_parish_officials.py`, from the
 Secretary of State's list) and `la-municipal-officials.json` and `la-school-board-members.json`
 (`la/scripts/build_la_local_officials.py`, from the exports the parish builder fetched in the same
-run) — all count-guarded, all refreshed weekly by CI as reviewed PRs.
+run) and `la-judges.json` (`la/scripts/build_la_judges.py`, from the same run's exports) — all
+count-guarded, all refreshed weekly by CI as reviewed PRs.
 The tribal land is `tribal-areas.json` and its names `tribal-councils.json`, both written by the
 fleet's shared `scripts/build_tribal_areas.py` through the one land-to-government join every
 instance uses (`data/tribal-government-join.json`); the councils are re-read weekly from each
