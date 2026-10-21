@@ -1162,7 +1162,7 @@ table.matrix code {
         </li>
         <li>
           <a href="https://voterportal.sos.la.gov/ElectedOfficials/Office/Index" target="_blank" rel="noopener">Louisiana Secretary of State</a>
-          <span class="credit-note">Every parish's police jury, council or commission by seat, and its parish president or mayor (list of elected officials).</span>
+          <span class="credit-note">Every parish's police jury, council or commission by seat and its parish president or mayor, every town's mayor, council and chief of police or marshal, and every school board (list of elected officials).</span>
         </li>
         <li>
           <a href="https://apps.nationalmap.gov/services/" target="_blank" rel="noopener">USGS The National Map</a>
@@ -1305,7 +1305,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 69 features for Louisiana, measured 2026-10-20.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. Louisiana's school board members are elected, and the Secretary of State's list of elected officials names them under its School Board Member office, which this app has not read yet. Recorded as gap la-school-board-members.</td>
+                <td data-label="Who it names">la-school-board-members.json, rebuilt weekly from the Louisiana Secretary of State's list of elected officials: every member of the 69 school boards by seat, the 64 parish boards and the five city systems' (Baker, Bogalusa, Central, Monroe and Zachary), 639 members on 2026-10-20. A member's own telephone ships where the list prints it for that member alone, and an address only as the board's office, where at least three of its members print the same one and no official outside the board does. The map does not draw school board districts, so the card lists the whole board and does not say which member represents the point (gap la-school-board-district-lines). 610 of the 639 terms end on December 31, 2026. The list also records each member's race and gender, and neither is read.</td>
                 <td data-label="Where it applies">Louisiana — statewide. The label carries no qualifier because there is nothing to distinguish it from: the elementary and secondary tilings TIGERweb serves for other states are EMPTY in Louisiana (0 features each, measured 2026-10-20), and the 69 unified districts' Census land area sums to exactly the 64-parish total (111,943 km2).</td>
               </tr>
             </tbody>
@@ -1352,7 +1352,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 305 features for Louisiana (71 cities, 127 towns and 107 villages), measured 2026-10-20. The Census records two of the cities, Baton Rouge and Lafayette, as partly consolidated with another government, and one, Houma, as having no government of its own, and the card says so.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER YET. Louisiana's cities, towns and villages elect a mayor and a council or board of aldermen, and the Secretary of State's list of elected officials names them under its Mayor and Alderman offices, which this app has not read yet; the card names the place and links nothing it has not verified. Recorded as gap la-municipal-officeholders.</td>
+                <td data-label="Who it names">la-municipal-officials.json, rebuilt weekly from the Louisiana Secretary of State's list of elected officials: the mayor, the council members, aldermen, selectmen or trustees (the list's own words) by seat where the list gives one, and the chief of police, marshal or city prosecutor, of 302 municipalities on 2026-10-20 (298 mayors, 1,308 members and 191 police officers). Every place the Census draws has a record except New Orleans, whose mayor and council the Parish card names as Orleans Parish's government, Baton Rouge, whose government is East Baton Rouge Parish's, and Houma, which has none of its own. An official's own telephone ships where the list prints it for that official alone, and an address only as the town's office, where at least three of its officials print the same one and no official outside the town does. The map does not draw any town's wards or districts, so the card does not say which member represents the point (gap la-municipal-ward-lines). The list also records each official's race and gender, and neither is read.</td>
                 <td data-label="Where it applies">Louisiana — statewide. A point outside every city, town and village is unincorporated, which the card states.</td>
               </tr>
               <tr id="layer-post-office">
@@ -1456,7 +1456,7 @@ table.matrix code {
       "@id": "https://districtry.com/la/sources.html#dataset-school-district-unified",
       "identifier": "school-district-unified",
       "name": "School District",
-      "description": "The public school district covering the point. NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. Louisiana's school board members are elected, and the Secretary of State's list of elected officials names them under its School Board Member office, which this app has not read yet. Recorded as gap la-school-board-members.",
+      "description": "The public school district covering the point. la-school-board-members.json, rebuilt weekly from the Louisiana Secretary of State's list of elected officials: every member of the 69 school boards by seat, the 64 parish boards and the five city systems' (Baker, Bogalusa, Central, Monroe and Zachary), 639 members on 2026-10-20. A member's own telephone ships where the list prints it for that member alone, and an address only as the board's office, where at least three of its members print the same one and no official outside the board does. The map does not draw school board districts, so the card lists the whole board and does not say which member represents the point (gap la-school-board-district-lines). 610 of the 639 terms end on December 31, 2026. The list also records each member's race and gender, and neither is read.",
       "url": "https://districtry.com/la/sources.html#layer-school-district-unified",
       "isPartOf": {
         "@id": "https://districtry.com/la/sources.html#catalog"
@@ -1544,7 +1544,7 @@ table.matrix code {
       "@id": "https://districtry.com/la/sources.html#dataset-municipality",
       "identifier": "municipality",
       "name": "City, Town or Village",
-      "description": "The city, town or village containing the point, if any. NO OFFICEHOLDER YET. Louisiana's cities, towns and villages elect a mayor and a council or board of aldermen, and the Secretary of State's list of elected officials names them under its Mayor and Alderman offices, which this app has not read yet; the card names the place and links nothing it has not verified. Recorded as gap la-municipal-officeholders.",
+      "description": "The city, town or village containing the point, if any. la-municipal-officials.json, rebuilt weekly from the Louisiana Secretary of State's list of elected officials: the mayor, the council members, aldermen, selectmen or trustees (the list's own words) by seat where the list gives one, and the chief of police, marshal or city prosecutor, of 302 municipalities on 2026-10-20 (298 mayors, 1,308 members and 191 police officers). Every place the Census draws has a record except New Orleans, whose mayor and council the Parish card names as Orleans Parish's government, Baton Rouge, whose government is East Baton Rouge Parish's, and Houma, which has none of its own. An official's own telephone ships where the list prints it for that official alone, and an address only as the town's office, where at least three of its officials print the same one and no official outside the town does. The map does not draw any town's wards or districts, so the card does not say which member represents the point (gap la-municipal-ward-lines). The list also records each official's race and gender, and neither is read.",
       "url": "https://districtry.com/la/sources.html#layer-municipality",
       "isPartOf": {
         "@id": "https://districtry.com/la/sources.html#catalog"

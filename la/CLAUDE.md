@@ -63,9 +63,11 @@ elected official by office and exports each office as a CSV; three are read, and
 named 573 members (559 by district, 14 at large) and 25 executives across all 64 parishes. **THE
 ROWS ALSO PRINT A MAILING ADDRESS, THE OFFICIAL'S RACE AND GENDER**: the race and gender are never
 read, and an address ships only as a body's office, where at least three of its members print the
-same one (14 parishes), because three people do not share a home — and never when another parish's
-officials print the same street line, which is how Tensas's police jurors came to print Rapides's
-street address and why neither parish carries one. A telephone printed for one official alone
+same one (13 parishes), because three people do not share a home — and never when an official
+outside the body prints the same street line, which is how Tensas's police jurors came to print
+Rapides's street address and why neither parish carries one, and why Ascension Parish's council
+carries no office: ten of its members print the post office box that all five members of the City
+of Gonzales's council print too. A telephone printed for one official alone
 ships on that official's row (the fleet rule of 2026-10-17); one printed for three or more members
 is the body's office telephone (St. Landry); one printed for two is carried nowhere. **A police
 jury elects its own president, and the list does not say who**, so no card names one. Where a
@@ -98,16 +100,51 @@ runs on a reader's first selection even with the layer off.
 
 **ONE SCHOOL LAYER, LABELLED WITHOUT A QUALIFIER.** TIGER's unified tiling holds 69 districts for
 Louisiana and its elementary and secondary tilings hold none — so the layer is "School District",
-and its id stays `school-district-unified` because a layer id is a public address. No school board
-member is named yet (gap `la-school-board-members`).
+and its id stays `school-district-unified` because a layer id is a public address. **ITS CARD NAMES
+EVERY MEMBER OF THE BOARD AND SAYS IT CANNOT TELL WHICH ONE IS YOURS** (`la-school-board-members.json`,
+`la/scripts/build_la_local_officials.py`, its `--check` in CI). The Secretary of State's list names
+each board's members by seat under its School Board Member office, 639 on 2026-10-20, and the builder
+refuses unless every one of the 69 districts has a board and every row a district: the 64 parish
+systems and the five city and community systems, which the list writes into the seat ("District 1,
+City of Monroe", "Dist. 3, Central Comm."; `CITY_SYSTEMS`). 637 members hold a district or ward seat
+and Iberville's and West Baton Rouge's boards each elect one member at large besides, and the Census
+draws no school board election district, so the card says the member elected from this point's
+district represents it and that the map does not draw the board's districts (gap
+`la-school-board-district-lines`). **610 OF THE 639 TERMS END ON 31 DECEMBER 2026**, and
+`la/WATCH.md` says when to look.
 
 **MOST OF LOUISIANA IS OUTSIDE ANY CITY, TOWN OR VILLAGE.** Incorporated places hold 4,826 of the
 state's 111,943 km² of land (4.3%), so the municipality card's empty state says the parish is the
 general-purpose local government there. Baton Rouge and Lafayette are recorded by the Census as
 partly consolidated with their parish governments (FUNCSTAT B), and Houma as a place with no
 government of its own operating (FUNCSTAT N); the card says each in the Census's own terms and
-claims nothing about the form of government. No mayor or council is named yet (gap
-`la-municipal-officeholders`).
+claims nothing about the form of government.
+
+**THE TOWN CARD NAMES THE MAYOR, THE COUNCIL AND THE CHIEF OF POLICE FROM THE SAME LIST, IN ITS OWN
+WORDS** (`la-municipal-officials.json`, built by `la/scripts/build_la_local_officials.py` in the same
+weekly run as the parish file). Four offices are read — Mayor, Alderman / City Council Member,
+Alderman / City Council at Large and Chief of Police / Marshal — and on 2026-10-20 they named 298
+mayors, 1,308 members and 191 chiefs of police, marshals and one city prosecutor in 302
+municipalities. Each municipality is joined to exactly one Census place by its name, letters only,
+and the build stops when one matches none or two. The three places with no record are New Orleans
+and Baton Rouge, whose governments are their parishes' and are on the Parish card, and Houma. **THE
+LIST'S STYLE IS NOT ALWAYS THE CENSUS'S**: eight places the Census calls a village or a town the
+list calls something else, and the card says what the list calls the place where they differ. **THE
+MEMBERS' WORD IS THE LIST'S**: aldermen in 197 towns, council members in 102, selectmen in Homer and
+Plaquemine and trustees in Jackson. **A MEMBER WITH NO SEAT IS NEVER CALLED ELECTED AT LARGE**: 202
+towns' rows name no seat for any member and nothing in them says how the members are elected, so the
+card says the list names them without a ward or district. 99 towns name a seat for each member and 47
+elect some members at large, and the Census draws no municipal ward or council district, so where
+the seats are all wards or all districts the card says the member elected from this point's ward or
+district represents it and that the map does not draw them, and otherwise that the list names a seat
+but not the ground it covers (gap `la-municipal-ward-lines`). A numbered or lettered run of seats that
+skips one names the skipped seat (Bernice's District 3), as on the Parish card. Lafayette's council is
+named here and its Mayor-President on the Parish card, as Lafayette Parish's executive. A telephone,
+an address and the race and gender columns follow the parish rule above, with a town's mayor, council
+and police as its officials: 81 towns carry an office address and 48 an office telephone. A name is
+the list's first name, last name and suffix with any quoted nickname, except that a nickname with a
+digit in it is left off (one, the City of Baker's mayor, on 2026-10-20), because the fleet's name
+gate reads a digit in a name as a misread row; both builders ask that gate's own test.
 
 **THE ZIP LAYER HIDES OUTSIDE LOUISIANA.** A ZCTA carries no state field, so over the line the live
 service answers with a neighbouring state's ZIP (77630 at Orange, Texas and 39183 at Vicksburg,
@@ -147,7 +184,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Louisiana (`louisiana`) — https://districtry.com/la/
 - Geocoders: address Photon (Louisiana-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Louisiana-bounded, serial >=1s queue)
 - Ground truth: 29.95240,-90.07670 (New Orleans City Hall, 1300 Perdido Street, Orleans Parish) → county Orleans Parish; us-house 2; la-senate 5; la-house 93. Negative point 28.60000,-90.50000 (open water about 50 km south of the Louisiana coast, past the state's offshore line — outside Louisiana and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-20: TIGERweb's state and county layers name no state or parish here, its legislative layers no district, and its ZIP layer no ZIP code (control: New Orleans City Hall returns Louisiana, Orleans Parish and 70112). OPEN WATER BECAUSE A POINT ON A NEIGHBOUR'S LAND WOULD HAVE TO MOVE: Arkansas and Mississippi are live already, and the fleet is meant to reach every state, Texas included.).
-- Layers: 12 registered (political 5, safety 2, schools 1, geography 4); `registerLayer(` floor 9. Debug namespace `window.LouisianaExplorer`.
+- Layers: 12 registered (political 5, safety 2, schools 1, geography 4); `registerLayer(` floor 10. Debug namespace `window.LouisianaExplorer`.
 - Scheduled workflows: `update-la-congress-roster.yml` (Mon 19:23 UTC); `update-la-legislature-roster.yml` (Tue 19:23 UTC); `update-la-parish-officials.yml` (Wed 19:23 UTC); `la-validate-sources.yml` (1st of month 20:47 UTC).
 - Source registry: `la/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -219,8 +256,9 @@ failure isolation** (a layer's failure shows a Retry inside its own card, never 
 roster source exists, cards link to the official body instead of inventing a name. Both chamber
 cards degrade to the district number + the chamber's own member list on a roster miss, and
 a vacant seat says it is vacant; a seat the Secretary of State's list leaves out is said to be left
-out, never called vacant; the school-district and municipality cards carry no roster at all
-and **say so on the card**. External strings always render through `sanitize()`/`textContent`.
+out, never called vacant; a town member the list names with no seat is never called elected at
+large; and where the map does not draw a body's wards or districts, the card names the whole body
+and **says it cannot tell which member represents the point**. External strings always render through `sanitize()`/`textContent`.
 Roster refreshes always land as PRs for review — never as direct commits to main.
 
 ## Data pipeline
@@ -238,8 +276,10 @@ mapshaper-simplified with Douglas-Peucker, refused unless BOTH the 2,000-random-
 and the 8 m fidelity ceiling pass). Rosters: `congress-roster.json`
 (`la/scripts/build_congress_roster.py`, from unitedstates/congress-legislators),
 `la-{senate,house}-members.json` (`la/scripts/build_la_legislature_roster.py`, from each chamber's
-own pages) and `la-parish-officials.json` (`la/scripts/build_la_parish_officials.py`, from the
-Secretary of State's list) — all count-guarded, all refreshed weekly by CI as reviewed PRs.
+own pages), `la-parish-officials.json` (`la/scripts/build_la_parish_officials.py`, from the
+Secretary of State's list) and `la-municipal-officials.json` and `la-school-board-members.json`
+(`la/scripts/build_la_local_officials.py`, from the exports the parish builder fetched in the same
+run) — all count-guarded, all refreshed weekly by CI as reviewed PRs.
 The tribal land is `tribal-areas.json` and its names `tribal-councils.json`, both written by the
 fleet's shared `scripts/build_tribal_areas.py` through the one land-to-government join every
 instance uses (`data/tribal-government-join.json`); the councils are re-read weekly from each

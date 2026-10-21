@@ -166,7 +166,32 @@ PROVENANCE = [
             "la/scripts/build_la_parish_officials.py. The rows also print a "
             "mailing address, the official's race and gender; the race and "
             "gender are never read, and an address ships only as a body's "
-            "office, where three members print it."
+            "office, where three members print it and no official outside the "
+            "body does."
+        ),
+    },
+    {
+        "layer": "municipality",
+        "app_file": "la-municipal-officials.json",
+        "source_url": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index",
+        "note": (
+            "The same list's Mayor, Alderman / City Council Member, Alderman / "
+            "City Council at Large and Chief of Police / Marshal exports, keyed "
+            "by the Census place each municipality's name matches; rebuilt "
+            "weekly from the parish builder's saved exports by "
+            "la/scripts/build_la_local_officials.py. 302 municipalities on "
+            "2026-10-20; the race and gender columns are never read."
+        ),
+    },
+    {
+        "layer": "school-district-unified",
+        "app_file": "la-school-board-members.json",
+        "source_url": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index",
+        "note": (
+            "The same list's School Board Member export, keyed by the Census "
+            "school district; built in the same run, which refuses unless all "
+            "69 districts have a board. 610 of the 639 members' terms end on "
+            "31 December 2026, so read it again in January 2027."
         ),
     },
     {

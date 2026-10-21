@@ -354,7 +354,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
           }
         ],
-        "people": "NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. Louisiana's school board members are elected, and the Secretary of State's list of elected officials names them under its School Board Member office, which this app has not read yet. Recorded as gap la-school-board-members.",
+        "people": "la-school-board-members.json, rebuilt weekly from the Louisiana Secretary of State's list of elected officials: every member of the 69 school boards by seat, the 64 parish boards and the five city systems' (Baker, Bogalusa, Central, Monroe and Zachary), 639 members on 2026-10-20. A member's own telephone ships where the list prints it for that member alone, and an address only as the board's office, where at least three of its members print the same one and no official outside the board does. The map does not draw school board districts, so the card lists the whole board and does not say which member represents the point (gap la-school-board-district-lines). 610 of the 639 terms end on December 31, 2026. The list also records each member's race and gender, and neither is read.",
         "applies": "Louisiana — statewide. The label carries no qualifier because there is nothing to distinguish it from: the elementary and secondary tilings TIGERweb serves for other states are EMPTY in Louisiana (0 features each, measured 2026-10-20), and the 69 unified districts' Census land area sums to exactly the 64-parish total (111,943 km2)."
       }
     },
@@ -426,7 +426,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
-        "people": "NO OFFICEHOLDER YET. Louisiana's cities, towns and villages elect a mayor and a council or board of aldermen, and the Secretary of State's list of elected officials names them under its Mayor and Alderman offices, which this app has not read yet; the card names the place and links nothing it has not verified. Recorded as gap la-municipal-officeholders.",
+        "people": "la-municipal-officials.json, rebuilt weekly from the Louisiana Secretary of State's list of elected officials: the mayor, the council members, aldermen, selectmen or trustees (the list's own words) by seat where the list gives one, and the chief of police, marshal or city prosecutor, of 302 municipalities on 2026-10-20 (298 mayors, 1,308 members and 191 police officers). Every place the Census draws has a record except New Orleans, whose mayor and council the Parish card names as Orleans Parish's government, Baton Rouge, whose government is East Baton Rouge Parish's, and Houma, which has none of its own. An official's own telephone ships where the list prints it for that official alone, and an address only as the town's office, where at least three of its officials print the same one and no official outside the town does. The map does not draw any town's wards or districts, so the card does not say which member represents the point (gap la-municipal-ward-lines). The list also records each official's race and gender, and neither is read.",
         "applies": "Louisiana — statewide. A point outside every city, town and village is unincorporated, which the card states."
       }
     },
@@ -503,7 +503,7 @@
       }
     }
   ],
-  "min_register_layer": 9,
+  "min_register_layer": 10,
   "anchor_point": {
     "lat": 29.9524,
     "lng": -90.0767,
@@ -603,6 +603,16 @@
         "note": "Every parish's governing body by seat and its parish president or mayor, from the Secretary of State's list of elected officials, one record per parish, refreshed weekly by update-la-parish-officials.yml."
       },
       {
+        "file": "la-municipal-officials.json",
+        "min_keys": 290,
+        "note": "The mayor, council or board of aldermen and chief of police or marshal of every municipality the Secretary of State's list names, keyed by the Census place id, built from the same weekly read of the list by la/scripts/build_la_local_officials.py; 302 on 2026-10-20."
+      },
+      {
+        "file": "la-school-board-members.json",
+        "min_keys": 69,
+        "note": "The members of all 69 school boards, keyed by the Census school district id, built in the same run; the builder refuses unless every district has a board."
+      },
+      {
         "file": "la-parish-district-parishes.json",
         "min_keys": 6,
         "note": "The parishes whose districts the Police Jury or Council District layer draws, written by the same build as la-parish-districts.json; the layer's coverage test reads it."
@@ -645,7 +655,7 @@
     },
     {
       "file": "update-la-parish-officials.yml",
-      "purpose": "Louisiana parish governing bodies and parish presidents (the Secretary of State's list of elected officials)",
+      "purpose": "Louisiana parish governing bodies and parish presidents, mayors, town councils, chiefs of police and school boards (the Secretary of State's list of elected officials)",
       "schedule": "Wed 19:23 UTC"
     },
     {
@@ -698,7 +708,7 @@
       {
         "label": "Louisiana Secretary of State",
         "url": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index",
-        "note": "Every parish's police jury, council or commission by seat, and its parish president or mayor (list of elected officials)."
+        "note": "Every parish's police jury, council or commission by seat and its parish president or mayor, every town's mayor, council and chief of police or marshal, and every school board (list of elected officials)."
       },
       {
         "label": "USGS The National Map",
