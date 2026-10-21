@@ -24,7 +24,8 @@ redistricting site (redist.legis.la.gov, its home page read with curl)
 offered maps of the state's own plans only (current plans for Congress,
 the House, the Senate and the Supreme Court; 2011 maps for the House,
 Congress, BESE, the PSC and the 5th Circuit) and none of a parish's. That is two places looked,
-not every state office.
+not every state office. Two parishes are drawn from their own government's
+map instead of the Census's (OWN_MAP_PARISHES, below).
 
 WHY MOST PARISHES ARE NOT DRAWN. The Census has a parish's new lines only if
 the parish sent them after the 2020 census. Measured 2026-10-20 on the 2020
@@ -63,12 +64,57 @@ parish. A parish passing the test is a reason to look, not yet a reason to
 draw, so the list is STATED: `--survey` prints any parish that newly passes
 and a person adds it after looking.
 
-THE NAME IS THE SECRETARY OF STATE'S AND THE LINE IS THE CENSUS'S. The
-district number or letter joins the two, and the build refuses unless the
-Secretary of State's list (data/app/la-parish-officials.json, built by
-build_la_parish_officials.py) has a seat for exactly the districts the
-Census draws, each named in the parish's own word ("District" or, in
-Assumption, "Ward"). Each feature carries that word and the body's name, so
+TWO PARISHES ARE DRAWN FROM THEIR OWN MAPS (OWN_MAP_PARISHES). In Orleans the
+Census files no council districts at all, and in East Baton Rouge its 2026
+lines are older than the 2020 census. Both governments publish their current
+districts as a map layer of their own, and each is drawn from that layer.
+Only the district field is requested (both layers also carry the members'
+names, which are not asked for), and each district is cut at the parish line
+as the Census Bureau maps it (TIGERweb's State_County layer 1, which
+state-counties.json is built from), so this layer and the Parish card agree
+about which parish a point is in. What shows that each layer is the plan in
+force, read 2026-10-21:
+
+  Orleans. The City Council's Councilmembers page links an interactive map
+  whose only layer is this one. The layer's own description says the
+  districts are "effective January 12, 2026" and "based upon the 2020
+  decennial United States Census", and the council's Redistricting page
+  says the PDF maps it posts are effective January 12, 2026. On the 2020
+  census's blocks the five districts hold 383,997 people, the parish's whole
+  count, 6.49% apart.
+
+  East Baton Rouge. The layer states no name or date, so the witness is its
+  people. On the 2020 census's blocks each of its twelve districts is within
+  51 people of the figure the City-Parish published for Plan 4B, the plan
+  the Metropolitan Council adopted on August 10, 2022 (Ordinance 18596,
+  effective January 1, 2025), while Plan 4A, published beside it, differs
+  by up to 982 people and Plan 4 by up to 1,817. The districts are 8.54%
+  apart. A suit filed in June 2024 under the Voting Rights Act (Dunn v. East
+  Baton Rouge Parish) challenges this plan; a search of news reports on
+  2026-10-21 found no ruling, and the court's docket was not read.
+
+Each district's people are pinned (`people`), so a layer that moves a line
+moves people and stops the build until a person has read it, and East Baton
+Rouge's are also held to Plan 4B's published figures (`plan`). The ground
+inside the parish that no district covers is bounded by a ceiling
+(`max_uncovered_km2`), and every resident must be in exactly one district.
+Measured 2026-10-21: in Orleans 395.95 km2 is in no district, and 60 random
+points in it all fell on water on the Census Bureau's water map (57 in Lake
+Pontchartrain, 2 in Lake St. Catherine, 1 in the Rigolets); in East Baton
+Rouge 7.93 km2 is in no district, in strips along the Mississippi and the
+Amite, and 47 of 60 points fell on water. No one counted by the 2020 census
+lived on that ground in either parish, and a reader who clicks there is told
+no district is drawn at that point. The water sample was taken once, after a
+point in open Lake Pontchartrain and one on land in Mid-City New Orleans
+answered as they should, and is not re-taken on each build; the ceilings and
+the people are.
+
+THE NAME IS THE SECRETARY OF STATE'S. The district number or letter joins it
+to the line, and the build refuses unless the Secretary of State's list
+(data/app/la-parish-officials.json, built by build_la_parish_officials.py)
+has a seat for exactly the districts the map draws, each named in the
+parish's own word ("District", "Ward" in Assumption, "Metro District" in
+East Baton Rouge). Each feature carries that word and the body's name, so
 the hover popup can name the district without the roster.
 
 THE SAME DRAWING RULES AS THE PARISH FILE. Every ArcGIS answer is read as
@@ -96,6 +142,7 @@ Usage:
 
 import argparse
 import datetime
+import hashlib
 import json
 import math
 import os
@@ -150,6 +197,82 @@ CENSUS_PARISHES = {
     "109": "Terrebonne",
 }
 
+
+def _letter(v):
+    """A district letter as the layer serves it: 'A' -> 'A'."""
+    s = str(v).strip()
+    if not re.match(r"^[A-Z]$", s):
+        raise ValueError("not a district letter: %r" % (v,))
+    return s
+
+
+def _number(v):
+    """A district number as the layer serves it, a float: 12.0 -> '12'."""
+    f = float(v)
+    if f != int(f) or f < 1:
+        raise ValueError("not a district number: %r" % (v,))
+    return str(int(f))
+
+
+# Every own-map district's card says where its line comes from: the
+# government's map, then the edge it is cut at.
+OWN_EDGE = ", ending at the parish line as the Census Bureau maps it"
+COUNTY_LAYER = TIGERWEB + "State_County/MapServer/1"   # what state-counties.json is built from
+
+# The parishes drawn from their own government's map, by three-digit code.
+# STATED, never derived, with what shows each is the plan in force in the
+# docstring. Each entry: the layer and the one field read from it, how to read
+# that field, the witness the build re-reads (the layer's name, and phrases its
+# description must still carry), the page a reader can open, the sentence the
+# card prints about where the line comes from, each district's people on the
+# 2020 census as cut at the parish line (measured 2026-10-21), a published
+# plan's figures where the plan is the witness, and two ceilings in square
+# kilometres: the ground inside the parish no district covers, and the
+# ground the layer covers outside the parish (which the cut removes). Both
+# are at about 2.5 times what was measured, except Orleans's uncovered ground,
+# most of the parish's share of Lake Pontchartrain, whose ceiling sits just
+# above it because 2.5 times would be more than the whole parish.
+OWN_MAP_PARISHES = {
+    "071": dict(
+        name="Orleans",
+        layer=("https://maps.nola.gov/server/rest/services/Administrative/"
+               "Administrative_Layers/MapServer/1"),
+        field="DISTRICTID", read=_letter,
+        witness=dict(layer_name="City Council Districts",
+                     description=("effective January 12, 2026",
+                                  "based upon the 2020 decennial United States Census")),
+        page="https://council.nola.gov/redistricting/",
+        source=("The City of New Orleans's map of its council districts" + OWN_EDGE +
+                ". The city describes these as the districts in effect from January 12, "
+                "2026, drawn on the 2020 census"),
+        people={"A": 75816, "B": 78266, "C": 73948, "D": 77031, "E": 78936},
+        max_uncovered_km2=400.0, max_outside_km2=7.0),
+    "033": dict(
+        name="East Baton Rouge",
+        layer=("https://maps.brla.gov/gis/rest/services/Governmental_Units/"
+               "Council_District/MapServer/0"),
+        field="DISTRICT_NUM", read=_number,
+        witness=dict(layer_name="Council District", description=()),
+        page="https://www.brla.gov/2723/Redistricting-2022",
+        source=("The City-Parish's map of its Metropolitan Council districts" + OWN_EDGE +
+                ". On the 2020 census each district holds within 60 people of the number "
+                "the City-Parish published for Plan 4B, the plan the council adopted on "
+                "August 10, 2022, which took effect on January 1, 2025"),
+        people={"1": 36218, "2": 38833, "3": 39470, "4": 38228, "5": 37230, "6": 37158,
+                "7": 38049, "8": 38903, "9": 37961, "10": 37382, "11": 39073, "12": 38276},
+        # Plan 4B's people by district as the City-Parish published them with
+        # the plan (Redistricting 2022 page, read 2026-10-21). The source
+        # sentence above states `tolerance`, so the two must change together.
+        plan=dict(name="Plan 4B", tolerance=60, people={
+            "1": 36218, "2": 38833, "3": 39470, "4": 38225, "5": 37230, "6": 37121,
+            "7": 38053, "8": 38888, "9": 37961, "10": 37375, "11": 39124, "12": 38283}),
+        max_uncovered_km2=20.0, max_outside_km2=15.0),
+}
+# A layer polygon that is not valid is repaired only where the repair moves
+# its area by less than this share (Mississippi's builders use the same).
+REPAIR_TOLERANCE = 1e-6
+MIN_DELAY_S = 1.0           # between two requests to one host
+
 MAX_DEVIATION_PCT = 10.0
 # A change smaller than this many residents is not counted as new lines: it is
 # the size of a boundary correction, not of a redistricting plan. Measured
@@ -166,19 +289,35 @@ SEAT_RE = re.compile(r"^(District|Ward|Metro District) ([0-9]+|[A-Z])$")
 
 
 # ---------------------------------------------------------------- fetching --
+_LAST = {}
+
+
+def _open(url, timeout=240):
+    """One GET as this builder's client, after the host's robots.txt, at least
+    MIN_DELAY_S after the last request to the same host; the parsed JSON. An
+    ArcGIS error is an object, not an empty answer, so it raises."""
+    require_robots_once(url, USER_AGENT, headers={"User-Agent": USER_AGENT}, label=LABEL)
+    host = urllib.parse.urlsplit(url).hostname
+    wait = MIN_DELAY_S - (time.time() - _LAST.get(host, 0.0))
+    if wait > 0:
+        time.sleep(wait)
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT,
+                                                   "Accept": "application/json"})
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+    finally:
+        _LAST[host] = time.time()
+    if isinstance(data, dict) and "error" in data:
+        raise RuntimeError("%s answered an error: %r" % (host, data["error"]))
+    return data
+
+
 def _get(url, params):
     q = url + "/query?" + urllib.parse.urlencode(params)
-    require_robots_once(q, USER_AGENT, headers={"User-Agent": USER_AGENT}, label=LABEL)
     for attempt in range(4):
         try:
-            req = urllib.request.Request(q, headers={"User-Agent": USER_AGENT,
-                                                     "Accept": "application/json"})
-            with urllib.request.urlopen(req, timeout=240) as resp:
-                data = json.loads(resp.read().decode("utf-8"))
-            if isinstance(data, dict) and "error" in data:
-                # An ArcGIS error is an object, not an empty answer.
-                raise RuntimeError("TIGERweb answered an error: %r" % (data["error"],))
-            return data
+            return _open(q)
         except Exception as err:  # noqa: BLE001 — retried, then raised
             if attempt == 3:
                 raise
@@ -187,10 +326,7 @@ def _get(url, params):
 
 
 def _layer_name(url):
-    require_robots_once(url, USER_AGENT, headers={"User-Agent": USER_AGENT}, label=LABEL)
-    req = urllib.request.Request(url + "?f=json", headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=120) as resp:
-        meta = json.loads(resp.read().decode("utf-8"))
+    meta = _open(url + "?f=json", timeout=120)
     return meta.get("name"), meta.get("description") or ""
 
 
@@ -284,9 +420,10 @@ def fetch_cousubs(url, parishes):
     return out
 
 
-def fetch_blocks(parish3):
+def fetch_blocks(parish3, detail=False):
     """[(lng, lat, people)] for every populated 2020 block in the parish, at
-    its internal point."""
+    its internal point, or with `detail` [(lng, lat, people, GEOID)] (the city
+    council builder names a block by its GEOID)."""
     out, seen, offset = [], set(), 0
     while True:
         data = _get(BLOCKS, {
@@ -301,7 +438,8 @@ def fetch_blocks(parish3):
             if a["GEOID"] in seen:
                 raise SystemExit("FAIL: block %s returned twice across pages" % a["GEOID"])
             seen.add(a["GEOID"])
-            out.append((float(a["INTPTLON"]), float(a["INTPTLAT"]), int(a["POP100"])))
+            row = (float(a["INTPTLON"]), float(a["INTPTLAT"]), int(a["POP100"]))
+            out.append(row + (a["GEOID"],) if detail else row)
         if len(feats) < PAGE and not data.get("exceededTransferLimit"):
             break
         offset += len(feats)
@@ -316,6 +454,120 @@ def tract_totals():
     data = _get(TRACTS, {"where": "STATE='%s'" % STATE, "groupByFieldsForStatistics": "COUNTY",
                          "outStatistics": stats, "f": "json"})
     return {f["attributes"]["COUNTY"]: int(f["attributes"]["pop"]) for f in data["features"]}
+
+
+# ------------------------------------------------- the parishes' own maps --
+def own_params(spec):
+    """The query the build sends a parish's own district layer, asking for the
+    district field and nothing else. The monthly source check sends the same
+    one, so the two read the same lines."""
+    return {"where": "1=1", "outFields": spec["field"], "returnGeometry": "true",
+            "outSR": "4326", "geometryPrecision": "6", "f": "json"}
+
+
+def county_params(geoid):
+    """The query for the Census Bureau's map of the parish, shared the same way."""
+    return {"where": "GEOID='%s'" % geoid, "outFields": "GEOID,NAME", "returnGeometry": "true",
+            "outSR": "4326", "geometryPrecision": "6", "f": "json"}
+
+
+def lines_sha256(answer, spec=None):
+    """A SHA-256 of the lines in one answer to own_params or county_params:
+    every ring as served, at the six decimals asked for, each feature keyed by
+    its district read this builder's way (the parish by nothing), with the
+    features and each feature's rings put in one order. The build records it
+    (RECORD), and the monthly source check asks the same question and
+    compares, because a parish can move a line inside a layer whose name
+    stays the same."""
+    rows = []
+    for f in answer.get("features") or []:
+        a = f.get("attributes") or {}
+        key = spec["read"](a.get(spec["field"])) if spec else ""
+        rings = sorted([[round(p[0], 6), round(p[1], 6)] for p in ring]
+                       for ring in (f.get("geometry") or {}).get("rings") or [])
+        rows.append([key, rings])
+    rows.sort()
+    return hashlib.sha256(json.dumps(rows, separators=(",", ":")).encode("ascii")).hexdigest()
+
+
+def checked_shape(geom, what):
+    """A shapely geometry for a GeoJSON one, repaired only where the repair
+    leaves what it covers unchanged."""
+    from shapely.geometry import shape
+    from shapely.validation import explain_validity
+    g = shape(geom)
+    if g.is_valid:
+        return g
+    fixed = g.buffer(0)
+    if g.area <= 0 or abs(fixed.area - g.area) > REPAIR_TOLERANCE * g.area:
+        raise SystemExit("FAIL: %s is not a valid polygon (%s), and repairing it would change "
+                         "its area by %.4f%%"
+                         % (what, explain_validity(g),
+                            100.0 * (fixed.area - g.area) / g.area if g.area else 100.0))
+    return fixed
+
+
+def polygonal(g, what):
+    """The polygon parts of a shapely result: cutting can leave lines and
+    points where two edges touch."""
+    from shapely.geometry import MultiPolygon
+    if g.is_empty:
+        raise SystemExit("FAIL: %s is empty" % what)
+    if g.geom_type in ("Polygon", "MultiPolygon"):
+        return g
+    polys = []
+    for part in getattr(g, "geoms", []):
+        if part.geom_type == "Polygon":
+            polys.append(part)
+        elif part.geom_type == "MultiPolygon":
+            polys.extend(part.geoms)
+    if not polys:
+        raise SystemExit("FAIL: %s has no area" % what)
+    return polys[0] if len(polys) == 1 else MultiPolygon(polys)
+
+
+def _km2(g, lat0):
+    """Area in square kilometres by a local plane at lat0."""
+    return g.area * 111320.0 * math.cos(math.radians(lat0)) * 110540.0 / 1e6
+
+
+def _geojson(g):
+    from shapely.geometry import mapping
+    return json.loads(json.dumps(mapping(g)))
+
+
+def fetch_own(c3, spec):
+    """One OWN_MAP_PARISHES parish's own map as served: the layer's name and
+    description, {district: shapely geometry} at full precision, the parish as
+    the Census Bureau maps it, and a fingerprint of each answer."""
+    from shapely.ops import unary_union
+    geoid = STATE + c3
+    name, desc = _layer_name(spec["layer"])
+    answer = _get(spec["layer"], own_params(spec))
+    if answer.get("exceededTransferLimit"):
+        raise SystemExit("FAIL: %s Parish's layer hit its transfer limit" % spec["name"])
+    groups = {}
+    for f in esri_features(answer, spec["layer"], spec["field"]):
+        value = (f.get("properties") or {}).get(spec["field"])
+        try:
+            d = spec["read"](value)
+        except (TypeError, ValueError):
+            raise SystemExit("FAIL: %s Parish's layer has a district this builder does not "
+                             "read: %r" % (spec["name"], value))
+        if not f.get("geometry"):
+            raise SystemExit("FAIL: %s Parish's district %s has no geometry" % (spec["name"], d))
+        groups.setdefault(d, []).append(
+            checked_shape(f["geometry"], "%s Parish district %s" % (spec["name"], d)))
+    county_answer = _get(COUNTY_LAYER, county_params(geoid))
+    cf = esri_features(county_answer, COUNTY_LAYER, "GEOID")
+    if len(cf) != 1 or not cf[0].get("geometry"):
+        raise SystemExit("FAIL: the Census Bureau's county layer answered %d parishes for %s"
+                         % (len(cf), geoid))
+    return dict(layer_name=name, description=desc,
+                districts={d: unary_union(gs) for d, gs in groups.items()},
+                county=checked_shape(cf[0]["geometry"], "%s Parish's line" % spec["name"]),
+                lines_sha256=lines_sha256(answer, spec),
+                county_sha256=lines_sha256(county_answer))
 
 
 # ------------------------------------------------------------- measuring ----
@@ -399,10 +651,11 @@ def roster_seats(o):
     return out
 
 
-def roster_problems(roster, drawn, cur=None):
+def roster_problems(roster, drawn, maps=None):
     """The list must name a seat for exactly the districts the map draws, in
-    one word per parish, and every one of them by name. `cur` (at build time)
-    is the Census's districts; --check reads the shipped file instead."""
+    one word per parish, and every one of them by name. `maps` (at build
+    time) is {parish GEOID: the districts its map draws}, the Census's or the
+    parish's own; --check reads the shipped file instead."""
     problems = []
     for geoid in sorted(drawn):
         o = roster.get(geoid)
@@ -415,12 +668,12 @@ def roster_problems(roster, drawn, cur=None):
         if o.get("unlisted"):
             problems.append("%s: the list names no one for %s, so this parish's districts are "
                             "not drawn until it does" % (geoid, o.get("unlisted")))
-        if cur is not None:
-            census = sorted(cur.get(geoid[2:]) or {}, key=district_order)
+        if maps is not None:
+            drawn_here = sorted(maps.get(geoid) or (), key=district_order)
             listed = sorted(seats, key=district_order)
-            if census != listed:
-                problems.append("%s: the Census draws districts %s and the list has seats for %s"
-                                % (geoid, census, listed))
+            if drawn_here != listed:
+                problems.append("%s: the map draws districts %s and the list has seats for %s"
+                                % (geoid, drawn_here, listed))
         counts = {}
         for s in o.get("seats") or []:
             m = SEAT_RE.match(str(s.get("seat") or ""))
@@ -435,11 +688,16 @@ def roster_problems(roster, drawn, cur=None):
 
 def expected_districts():
     """{parish GEOID: lines}: which parishes are drawn, and from what."""
-    return {STATE + c: "census" for c in CENSUS_PARISHES}
+    out = {STATE + c: "census" for c in CENSUS_PARISHES}
+    out.update({STATE + c: "own" for c in OWN_MAP_PARISHES})
+    return out
 
 
 _ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 FEATURE_KEYS = {"parishfips", "parish", "district", "label", "body", "lines"}
+# A district drawn from the parish's own map also says where its line comes
+# from and links the page that publishes it.
+OWN_FEATURE_KEYS = FEATURE_KEYS | {"source", "sourceUrl"}
 
 
 def structure_problems(features, names, roster, expected):
@@ -450,10 +708,16 @@ def structure_problems(features, names, roster, expected):
         geoid = p.get("parishfips")
         where = "%s district %s" % (geoid, p.get("district"))
         by.setdefault(geoid, []).append(str(p.get("district")))
-        extra = sorted(set(p) - FEATURE_KEYS)
-        missing = sorted(FEATURE_KEYS - set(p))
+        keys = OWN_FEATURE_KEYS if expected.get(geoid) == "own" else FEATURE_KEYS
+        extra = sorted(set(p) - keys)
+        missing = sorted(keys - set(p))
         if extra or missing:
             problems.append("%s: properties carry %s and lack %s" % (where, extra, missing))
+        spec = OWN_MAP_PARISHES.get(str(geoid)[2:]) if expected.get(geoid) == "own" else None
+        if spec and (p.get("source") != spec["source"] or p.get("sourceUrl") != spec["page"]):
+            problems.append("%s: says its line comes from %r at %r, the builder says %r at %r"
+                            % (where, p.get("source"), p.get("sourceUrl"), spec["source"],
+                               spec["page"]))
         if p.get("parish") != names.get(geoid):
             problems.append("%s carries parish name %r, state-counties.json says %r"
                             % (where, p.get("parish"), names.get(geoid)))
@@ -493,9 +757,13 @@ def _near_line(pt, seg_idx, metres):
     return False
 
 
-def parish_witness(features, parishes_fc, drawn, samples=WITNESS_SAMPLES, seed=2026):
+def parish_witness(features, parishes_fc, drawn, samples=WITNESS_SAMPLES, seed=2026,
+                   partial=()):
     """Points over the drawn parishes: the Parish layer and this layer must
-    agree about the parish, except within EDGE_M of a parish line."""
+    agree about the parish, except within EDGE_M of a parish line. In a
+    parish drawn from its own map (`partial`) a point the map leaves in no
+    district is allowed, and counted: that ground is the lake and river the
+    build measured and bounded (max_uncovered_km2)."""
     parish_feats = {f["properties"]["GEOID"]: f for f in parishes_fc["features"]}
     pmodel = [(g, f["geometry"], blb._bbox(f["geometry"])) for g, f in parish_feats.items()]
     dmodel = [((f["properties"]["parishfips"], str(f["properties"]["district"])),
@@ -506,7 +774,7 @@ def parish_witness(features, parishes_fc, drawn, samples=WITNESS_SAMPLES, seed=2
         b = blb._bbox(parish_feats[g]["geometry"])
         box = [min(box[0], b[0]), min(box[1], b[1]), max(box[2], b[2]), max(box[3], b[3])]
     rng = random.Random(seed)
-    inside = agree = edge = 0
+    inside = agree = edge = uncovered = 0
     bad = []
     for _ in range(samples):
         pt = (rng.uniform(box[0], box[2]), rng.uniform(box[1], box[3]))
@@ -523,11 +791,14 @@ def parish_witness(features, parishes_fc, drawn, samples=WITNESS_SAMPLES, seed=2
         if ok:
             agree += 1
             continue
+        if parish in partial and not ds:
+            uncovered += 1
+            continue
         if any(_near_line(pt, edges[g], EDGE_M) for g in drawn):
             edge += 1
         else:
             bad.append((round(pt[1], 5), round(pt[0], 5), parish, ds))
-    return inside, agree, edge, bad
+    return inside, agree, edge, bad, uncovered
 
 
 def agreement(src_feats, out_feats, drawn_box, samples=AGREEMENT_SAMPLES, seed=2024):
@@ -591,12 +862,112 @@ def measure_census_parish(c3, nm, cur, old, tracts):
     return m, blocks, problems
 
 
+def measure_own_parish(c3, spec, got, census, tracts):
+    """One OWN_MAP_PARISHES parish's own map, cut at the parish line and
+    measured: (measurements, the block points they were taken on, {district:
+    GeoJSON feature} as cut, problems). `census` is the Census's current
+    districts in the parish, for the record only."""
+    from shapely.ops import unary_union
+    nm = spec["name"]
+    problems = []
+    w = spec["witness"]
+    if got["layer_name"] != w["layer_name"]:
+        problems.append("the layer is now named %r, not %r. A renamed district layer is a new "
+                        "plan until a person has read it" % (got["layer_name"], w["layer_name"]))
+    for phrase in w.get("description") or ():
+        if phrase not in got["description"]:
+            problems.append("the layer's description no longer says %r" % phrase)
+    raw, county = got["districts"], got["county"]
+    want = sorted(spec["people"], key=district_order)
+    if sorted(raw, key=district_order) != want:
+        problems.append("the layer holds districts %s, not %s. A different set is a "
+                        "redistricting until a person has read it"
+                        % (sorted(raw, key=district_order), want))
+    lat0 = (county.bounds[1] + county.bounds[3]) / 2.0
+    cut = {d: polygonal(g.intersection(county), "%s Parish district %s cut at the parish line"
+                        % (nm, d)) for d, g in raw.items()}
+    union = unary_union(list(raw.values()))
+    uncovered = _km2(county.difference(union), lat0)
+    outside = _km2(union.difference(county), lat0)
+    order = sorted(raw, key=district_order)
+    overlap = sum(_km2(raw[a].intersection(raw[b]), lat0)
+                  for i, a in enumerate(order) for b in order[i + 1:]
+                  if raw[a].intersects(raw[b]))
+    districts = {d: {"type": "Feature", "properties": {}, "geometry": _geojson(g)}
+                 for d, g in cut.items()}
+    blocks = fetch_blocks(c3)
+    pop, none, multi, answers = assign(blocks, districts)
+    m = {
+        "people": sum(n for _, _, n in blocks),
+        "deviation_pct": round(deviation_pct(pop), 2),
+        "people_in_no_district": none,
+        "people_in_two_districts": multi,
+        "district_people": {d: pop[d] for d in sorted(pop, key=district_order)},
+        "layer": spec["layer"],
+        "layer_name": got["layer_name"],
+        "lines_sha256": got["lines_sha256"],
+        "county_sha256": got["county_sha256"],
+        "uncovered_km2": round(uncovered, 2),
+        "outside_km2": round(outside, 3),
+        "overlap_km2": round(overlap, 4),
+        "people_on_another_census_district": None,
+    }
+    # What the Census's own current lines would have told these residents,
+    # where it draws the same districts: the reason this parish is drawn from
+    # its own map. Recorded, not gated.
+    if census and sorted(census, key=district_order) == want:
+        _, _, _, census_answers = assign(blocks, census)
+        m["people_on_another_census_district"] = sum(
+            n for (x, y, n), a, b in zip(blocks, answers, census_answers) if a != b)
+    plan = spec.get("plan")
+    if plan:
+        diff = {d: pop.get(d, 0) - plan["people"][d] for d in plan["people"]}
+        worst = max(abs(v) for v in diff.values())
+        m["plan"] = {"name": plan["name"], "largest_difference": worst}
+        if set(plan["people"]) != set(pop) or worst > plan["tolerance"]:
+            problems.append("the districts are not %s: they differ from its published people by "
+                            "%s, past the %d the source sentence states"
+                            % (plan["name"], diff, plan["tolerance"]))
+    if m["people"] != tracts.get(c3):
+        problems.append("blocks sum to %d, tracts to %s" % (m["people"], tracts.get(c3)))
+    if none or multi:
+        problems.append("%d people in no district and %d in two" % (none, multi))
+    if m["district_people"] != spec["people"]:
+        problems.append("the 2020 census puts %s in the districts, not the pinned %s. A line "
+                        "that moved is a redistricting until a person has read it"
+                        % (m["district_people"], spec["people"]))
+    if m["deviation_pct"] > MAX_DEVIATION_PCT:
+        problems.append("the districts differ by %.2f%% of an equal share on 2020 population "
+                        "(ceiling %.0f%%)" % (m["deviation_pct"], MAX_DEVIATION_PCT))
+    if uncovered > spec["max_uncovered_km2"]:
+        problems.append("%.2f km2 of the parish is in no district, past the %.1f km2 ceiling"
+                        % (uncovered, spec["max_uncovered_km2"]))
+    if outside > spec["max_outside_km2"]:
+        problems.append("the layer covers %.3f km2 outside the parish, past the %.1f km2 ceiling"
+                        % (outside, spec["max_outside_km2"]))
+    print("%-12s %7d people  %2d districts  %5.2f%% apart on its own map; %.2f km2 of the "
+          "parish in no district, %.3f km2 of the map outside it, %.4f km2 in two districts; "
+          "%s people in another district on the Census's lines%s"
+          % (nm, m["people"], len(raw), m["deviation_pct"], uncovered, outside, overlap,
+             m["people_on_another_census_district"],
+             "; %s within %d people of each district" % (plan["name"], m["plan"]["largest_difference"])
+             if plan else ""), file=sys.stderr)
+    feats = {d: {"type": "Feature", "properties": {}, "geometry": f["geometry"]}
+             for d, f in districts.items()}
+    return m, blocks, feats, problems
+
+
 def build():
     names, parishes_fc = parish_names()
     with open(ROSTER_FILE) as fh:
         roster = json.load(fh)
     expected = expected_districts()
-    for c3, nm in sorted(CENSUS_PARISHES.items()):
+    stated = dict(CENSUS_PARISHES)
+    stated.update({c3: spec["name"] for c3, spec in OWN_MAP_PARISHES.items()})
+    if set(CENSUS_PARISHES) & set(OWN_MAP_PARISHES):
+        raise SystemExit("FAIL: %s are both CENSUS_PARISHES and OWN_MAP_PARISHES"
+                         % sorted(set(CENSUS_PARISHES) & set(OWN_MAP_PARISHES)))
+    for c3, nm in sorted(stated.items()):
         if names.get(STATE + c3) != nm + " Parish":
             raise SystemExit("FAIL: %s%s is %r in state-counties.json, this builder says %r"
                              % (STATE, c3, names.get(STATE + c3), nm))
@@ -608,18 +979,30 @@ def build():
                          % (CURRENT, name, desc[:80], CURRENT_VINTAGE, CURRENT_NAME))
 
     built = datetime.date.today().isoformat()
-    cur = fetch_cousubs(CURRENT, CENSUS_PARISHES)
+    # The Census's current lines are read in the own-map parishes too, for the
+    # record of how many residents they would put in another district.
+    cur = fetch_cousubs(CURRENT, set(CENSUS_PARISHES) | set(OWN_MAP_PARISHES))
     old = fetch_cousubs(EDITION_2020, CENSUS_PARISHES)
-    problems = roster_problems(roster, set(expected), cur)
+    own = {c3: fetch_own(c3, spec) for c3, spec in sorted(OWN_MAP_PARISHES.items())}
+    maps = {STATE + c3: list(cur.get(c3) or {}) for c3 in CENSUS_PARISHES}
+    maps.update({STATE + c3: list(got["districts"]) for c3, got in own.items()})
+    problems = roster_problems(roster, set(expected), maps)
     if problems:
         raise SystemExit("FAIL (the Secretary of State's list):\n  " + "\n  ".join(problems))
     tracts = tract_totals()
-    record, pts, failures = {}, {}, []
+    # truth[c3]: each drawn parish's districts at full precision (the
+    # Census's, or the parish's own as cut at the parish line), which the
+    # simplified file is measured against.
+    record, pts, truth, failures = {}, {}, {}, []
     for c3 in sorted(CENSUS_PARISHES):
         m, blocks, found = measure_census_parish(c3, CENSUS_PARISHES[c3], cur, old, tracts)
         failures += ["%s: %s" % (CENSUS_PARISHES[c3], p) for p in found]
         if m is not None:
-            record[c3], pts[c3] = m, blocks
+            record[c3], pts[c3], truth[c3] = m, blocks, cur[c3]
+    for c3, spec in sorted(OWN_MAP_PARISHES.items()):
+        m, blocks, feats, found = measure_own_parish(c3, spec, own[c3], cur.get(c3), tracts)
+        failures += ["%s: %s" % (spec["name"], p) for p in found]
+        record[c3], pts[c3], truth[c3] = m, blocks, feats
     if failures:
         raise SystemExit("FAIL:\n  " + "\n  ".join(failures))
 
@@ -627,12 +1010,15 @@ def build():
     for geoid in sorted(expected):
         c3 = geoid[2:]
         seats = roster_seats(roster[geoid])
-        for d in sorted(cur[c3], key=district_order):
+        spec = OWN_MAP_PARISHES.get(c3)
+        for d in sorted(truth[c3], key=district_order):
             props = {"parishfips": geoid, "parish": names[geoid], "district": d,
                      "label": seats[d], "body": roster[geoid]["body"],
                      "lines": expected[geoid], "key": geoid + "-" + d}
+            if spec:
+                props["source"], props["sourceUrl"] = spec["source"], spec["page"]
             src_feats.append({"type": "Feature", "properties": props,
-                              "geometry": cur[c3][d]["geometry"]})
+                              "geometry": truth[c3][d]["geometry"]})
     with tempfile.TemporaryDirectory() as tmp:
         sp = os.path.join(tmp, "src.geojson")
         with open(sp, "w") as fh:
@@ -668,15 +1054,15 @@ def build():
         by_parish_out.setdefault(p["parishfips"][2:], {})[str(p["district"])] = f
     for c3, m in sorted(record.items()):
         _, _, _, drawn_answers = assign(pts[c3], by_parish_out[c3])
-        _, _, _, true_answers = assign(pts[c3], cur[c3])
+        _, _, _, true_answers = assign(pts[c3], truth[c3])
         shifted = sum(n for (x, y, n), a, b in zip(pts[c3], drawn_answers, true_answers) if a != b)
         m["simplification_people_moved"] = shifted
         if shifted > 0.01 * m["people"]:
             raise SystemExit("FAIL: simplifying moves %d of %s Parish's %d people across a line"
-                             % (shifted, CENSUS_PARISHES[c3], m["people"]))
+                             % (shifted, stated[c3], m["people"]))
     print("parish-districts: simplifying moves %s across a district line"
           % ", ".join("%d of %s's %d people" % (m["simplification_people_moved"],
-                                                CENSUS_PARISHES[c3], m["people"])
+                                                stated[c3], m["people"])
                       for c3, m in sorted(record.items())), file=sys.stderr)
 
     for f in out_feats:
@@ -684,13 +1070,16 @@ def build():
     problems = structure_problems(out_feats, names, roster, expected)
     if problems:
         raise SystemExit("FAIL (structure after simplifying):\n  " + "\n  ".join(problems))
-    inside, agreed, edge, bad = parish_witness(out_feats, parishes_fc, set(expected))
+    partial = {STATE + c3 for c3 in OWN_MAP_PARISHES}
+    inside, agreed, edge, bad, uncovered = parish_witness(out_feats, parishes_fc, set(expected),
+                                                          partial=partial)
     if bad:
         raise SystemExit("FAIL: the Parish layer and this one disagree about the parish at %d "
                          "point(s) away from any parish line, e.g. %s" % (len(bad), bad[:3]))
     print("parish-districts: parish witness %d/%d points agree (%d inside the drawn parishes); "
-          "%d differ within %.0f m of a parish line"
-          % (agreed, WITNESS_SAMPLES, inside, edge, EDGE_M), file=sys.stderr)
+          "%d differ within %.0f m of a parish line; %d fall in a parish's own map's ground "
+          "with no district" % (agreed, WITNESS_SAMPLES, inside, edge, EDGE_M, uncovered),
+          file=sys.stderr)
 
     fc = {"type": "FeatureCollection", "features": sorted(
         out_feats, key=lambda f: (f["properties"]["parishfips"],
@@ -705,13 +1094,17 @@ def build():
     for c3, m in sorted(record.items()):
         geoid = STATE + c3
         parishes[geoid] = dict(parish=names[geoid], lines=expected[geoid],
-                               districts=len(cur[c3]), **m)
+                               districts=len(truth[c3]), **m)
     rec = {
         "_about": ("GENERATED by la/scripts/build_la_parish_districts.py. What each drawn "
                    "parish's lines were measured against when the shipped file was built: "
-                   "the Census's own 2020 blocks, its 2020 edition of the same county "
-                   "subdivisions, and its block total against its tract total. --check holds "
-                   "the shipped file to this record."),
+                   "the Census's own 2020 blocks and its block total against its tract "
+                   "total; for a parish drawn from the Census's lines, its 2020 edition of "
+                   "the same county subdivisions; for one drawn from its own map, that "
+                   "layer's name, a SHA-256 of the lines it and the Census's map of the "
+                   "parish served, and the ground each covers that the other does not. "
+                   "--check holds the shipped file to this record, and the monthly source "
+                   "check asks the own maps' layers again."),
         "built": built,
         "source": CURRENT,
         "vintage": CURRENT_VINTAGE,
@@ -747,6 +1140,45 @@ def write_parish_list(features):
 
 
 # --------------------------------------------------------------- --check ----
+_SHA256 = re.compile(r"^[0-9a-f]{64}$")
+
+
+def own_record_problems(spec, m):
+    """An own-map parish's recorded measurements, held to its entry: the
+    record must say the build read this layer, under this name, and found
+    these people and no more ground than the ceilings allow."""
+    problems = []
+    if m.get("layer") != spec["layer"] or m.get("layer_name") != spec["witness"]["layer_name"]:
+        problems.append("the record read %r (%r), the builder names %r (%r)"
+                        % (m.get("layer"), m.get("layer_name"), spec["layer"],
+                           spec["witness"]["layer_name"]))
+    if m.get("district_people") != spec["people"]:
+        problems.append("the record's people by district %r are not the pinned %r"
+                        % (m.get("district_people"), spec["people"]))
+    if m.get("people_in_no_district") != 0 or m.get("people_in_two_districts") != 0:
+        problems.append("the record puts %r people in no district and %r in two"
+                        % (m.get("people_in_no_district"), m.get("people_in_two_districts")))
+    for key, ceiling in (("uncovered_km2", spec["max_uncovered_km2"]),
+                         ("outside_km2", spec["max_outside_km2"])):
+        if not isinstance(m.get(key), (int, float)) or m[key] > ceiling:
+            problems.append("recorded %s %r, ceiling %s" % (key, m.get(key), ceiling))
+    for key in ("lines_sha256", "county_sha256"):
+        if not _SHA256.match(str(m.get(key) or "")):
+            problems.append("the record's %s %r is not a SHA-256" % (key, m.get(key)))
+    plan = spec.get("plan")
+    if plan and ((m.get("plan") or {}).get("name") != plan["name"] or
+                 not isinstance((m.get("plan") or {}).get("largest_difference"), int) or
+                 m["plan"]["largest_difference"] > plan["tolerance"]):
+        problems.append("the record's plan witness %r does not hold %s to within %d people"
+                        % (m.get("plan"), plan["name"], plan["tolerance"]))
+    if plan and "within %d people" % plan["tolerance"] not in spec["source"]:
+        problems.append("the source sentence does not state the %d-person tolerance it is "
+                        "held to" % plan["tolerance"])
+    if OWN_EDGE not in spec["source"]:
+        problems.append("the source sentence does not say where the line is cut")
+    return problems
+
+
 def record_problems(rec, expected, features):
     """The record's measurements, held to the gates the build applied."""
     problems = []
@@ -764,9 +1196,12 @@ def record_problems(rec, expected, features):
                             % (geoid, m.get("lines"), expected.get(geoid)))
         if m.get("deviation_pct") is None or m["deviation_pct"] > MAX_DEVIATION_PCT:
             problems.append("%s: recorded deviation %r" % (geoid, m.get("deviation_pct")))
-        if (m.get("people_moved_from_2020_edition") or 0) < MIN_PEOPLE_MOVED:
+        spec = OWN_MAP_PARISHES.get(geoid[2:])
+        if spec is None and (m.get("people_moved_from_2020_edition") or 0) < MIN_PEOPLE_MOVED:
             problems.append("%s: recorded %r people moved from the 2020 edition"
                             % (geoid, m.get("people_moved_from_2020_edition")))
+        if spec is not None:
+            problems += ["%s: %s" % (geoid, p) for p in own_record_problems(spec, m)]
         people = m.get("district_people") or {}
         if sum(people.values()) != m.get("people"):
             problems.append("%s: district totals do not sum to the parish's people" % geoid)
@@ -817,7 +1252,8 @@ def check():
         if "(%s edition)" % rec.get("vintage") not in fh.read():
             problems.append("la/index.html's district card does not name the %s edition the "
                             "shipped file was built from" % rec.get("vintage"))
-    inside, agreed, edge, bad = parish_witness(feats, parishes_fc, set(expected))
+    inside, agreed, edge, bad, uncovered = parish_witness(
+        feats, parishes_fc, set(expected), partial={STATE + c3 for c3 in OWN_MAP_PARISHES})
     if bad:
         problems.append("the Parish layer and this one disagree about the parish at %d "
                         "point(s) away from any parish line, e.g. %s" % (len(bad), bad[:3]))
@@ -825,12 +1261,13 @@ def check():
         print("FAIL: la-parish-districts.json\n  " + "\n  ".join(problems))
         return 1
     devs = sorted(m["deviation_pct"] for m in rec["parishes"].values())
-    print("OK: la-parish-districts.json draws %d districts in %d parishes, each with a seat in "
-          "the Secretary of State's list; recorded deviations %.2f%%-%.2f%% on 2020 population "
-          "(ceiling %.0f%%, measured at build, not re-measured here); parish witness %d/%d "
-          "agree, %d differ within %.0f m of a parish line"
-          % (len(feats), len(expected), devs[0], devs[-1], MAX_DEVIATION_PCT, agreed,
-             WITNESS_SAMPLES, edge, EDGE_M))
+    print("OK: la-parish-districts.json draws %d districts in %d parishes (%d from the Census's "
+          "lines, %d from the parish's own map), each with a seat in the Secretary of State's "
+          "list; recorded deviations %.2f%%-%.2f%% on 2020 population (ceiling %.0f%%, measured "
+          "at build, not re-measured here); parish witness %d/%d agree, %d differ within %.0f m "
+          "of a parish line, %d fall in an own map's ground with no district"
+          % (len(feats), len(expected), len(CENSUS_PARISHES), len(OWN_MAP_PARISHES), devs[0],
+             devs[-1], MAX_DEVIATION_PCT, agreed, WITNESS_SAMPLES, edge, EDGE_M, uncovered))
     return 0
 
 
@@ -852,8 +1289,9 @@ def survey():
             seats = [str(e)]
         census = sorted(ds, key=district_order)
         if census != seats:
-            print("%s %-28s the Census draws %s and the list has seats for %s"
-                  % (c3, names[geoid], census, seats))
+            print("%s %-28s the Census draws %s and the list has seats for %s%s"
+                  % (c3, names[geoid], census, seats,
+                     "  (drawn from its own map)" if c3 in OWN_MAP_PARISHES else ""))
             continue
         m = measure_parish(ds, old.get(c3), fetch_blocks(c3))
         current = (m["deviation_pct"] <= MAX_DEVIATION_PCT
@@ -862,7 +1300,9 @@ def survey():
                    "unchanged, balanced" if m["deviation_pct"] <= MAX_DEVIATION_PCT else
                    "changed, unbalanced" if m["people_moved_from_2020_edition"] >= MIN_PEOPLE_MOVED
                    else "stale")
-        listed = ("drawn" if c3 in CENSUS_PARISHES else "NOT LISTED" if current else "")
+        listed = ("drawn" if c3 in CENSUS_PARISHES else
+                  "drawn from its own map" if c3 in OWN_MAP_PARISHES else
+                  "NOT LISTED" if current else "")
         print("%s %-28s %6.2f%% now  %6.2f%% 2020 edition  %6d moved  %-20s %s"
               % (c3, names[geoid], m["deviation_pct"], m["deviation_2020_edition_pct"] or -1,
                  m["people_moved_from_2020_edition"], verdict, listed))

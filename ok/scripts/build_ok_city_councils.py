@@ -10,9 +10,9 @@ pages and proved against them on every build.
 
 The work is scripts/city_councils.py, which says what the proof is and what it
 cannot prove. This file says which places, how many seats each has, which page
-is read with a browser's client and why, and which cities' wards are not
+is read with a browser's client and why, and which city's wards are not
 drawn. The seats themselves are in ok/data/source/ok-city-council-seats.json,
-kept by hand, and the drawn wards and districts of the nine cities whose wards
+kept by hand, and the drawn wards and districts of the ten cities whose wards
 are drawn in ok/data/app/ok-city-wards.json (ok/scripts/build_ok_city_wards.py),
 which --check holds the seats to.
 
@@ -123,15 +123,21 @@ the page, and the council page (HTTP 200, 137,000 bytes, every member named).
 The robots.txt is read with that same client before the page is. Every other
 page here is read with this project's own token, and each served it.
 
-LAWTON'S WARDS ARE NOT DRAWN. The city publishes one ward map as data, in
-three layers that carry the same lines, and on the 2020 census its wards hold
-from 9,180 to 12,570 people leaving out Ward 2, which holds Fort Sill (18,668
-with it), against an even share of 11,296; the layer's own population figures
-disagree with its lines. Wards redrawn after the 2020 census would be close to
-even, so this may not be the map in force, and the card says the wards are not
-drawn yet. MUSKOGEE'S WARDS ARE NOT DRAWN because the city publishes no copy
-this project may read; the University of Oklahoma publishes one, and its
-terms of use are not settled.
+LAWTON'S WARDS ARE DRAWN ON THE CITY'S WORD, since 2026-10-21. The city
+publishes one ward map as data, in three layers that carry the same lines, and
+on the 2020 census its wards hold from 9,180 to 12,570 people leaving out Ward
+2, which holds Fort Sill (18,668 with it), against an even share of 11,296;
+the layer's own population figures are from the 2010 census and disagree with
+its lines. Wards redrawn after the 2020 census would be close to even, so
+until 2026-10-21 this file declared Lawton's wards undrawn, as a map that may
+not be the one in force, and the card said so. Asked which map shows the wards
+in force (docs/ASK_DRAFTS.md, Ask ok-lawton-ward-map), the City Clerk's office
+answered on 2026-10-21 by pointing to the city's public ward map, a web map
+whose only layer is that same ward layer; the answer said nothing about the
+population figures. ok/scripts/build_ok_city_wards.py records the answer in
+place of the balance measurement the map fails. MUSKOGEE'S WARDS ARE NOT DRAWN
+because the city publishes no copy this project may read; the University of
+Oklahoma publishes one, and its terms of use are not settled.
 
 PRIVACY AND CONTACTS. A member's e-mail address and telephone numbers are
 carried where the page the seat cites prints them beside that member alone,
@@ -160,8 +166,10 @@ on a television company's servers, and its website refuses every crawler but
 five named ones; Enid's municipal code and meeting records, a document of
 Shawnee's 2023 charter election and Muskogee's council documents are on sites
 that refuse this project; Broken Arrow's site refuses this project's own
-client; Lawton's published ward map does not balance on the 2020 census;
-and Wikipedia's account of Muskogee's elections is out of date.
+client; Lawton's ward map does not balance on the 2020 census and carries
+2010 census figures, so whether it was the map in force could be learned only
+by asking the city; and Wikipedia's account of Muskogee's elections is out of
+date.
 """
 
 import os
@@ -215,8 +223,6 @@ SPEC = cc.Spec(
     readers={url: muskogee_results.text for url in muskogee_results.RESULTS},
     wards_file="ok-city-wards.json",
     undrawn={
-        "4041850": "the only ward map the city publishes as data does not divide the 2020 "
-                   "census population evenly, so it may not be the map in force",
         "4050050": "the city publishes no copy of its wards this project may read, and the "
                    "University of Oklahoma's copy waits on its terms of use",
     },
