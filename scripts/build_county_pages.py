@@ -2737,9 +2737,12 @@ def la_parish_bodies(inst):
                                                or "the Louisiana Secretary of "
                                                   "State's list of elected "
                                                   "officials"), esc(read)))
-        # 155 characters is validate_serp_lengths.py's ceiling; the longest
-        # heading, East Baton Rouge's, lands at 152.
-        desc = ("Who holds each seat on the %(heading)s, by " + seat_word
+        # 155 characters is validate_serp_lengths.py's ceiling. The longest is
+        # St. John the Baptist's, whose council also has members elected at
+        # large: it lands at 145. "Who holds each seat on the" put it at 156,
+        # one over, because this comment had measured only the longest heading
+        # (East Baton Rouge's, now 141) and not the at-large clause.
+        desc = ("Who sits on the %(heading)s, by " + seat_word
                 + (" and at large" if at_large else "")
                 + ", from the Louisiana Secretary of State's list of elected "
                   "officials.")
