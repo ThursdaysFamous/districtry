@@ -95,8 +95,8 @@ MIN_REGISTER_LAYER = 9
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "la-senate", "county", "school-district-unified", "la-house",
-    "zip-code", "parish-district", "municipality", "police-station",
-    "fire-station", "post-office",
+    "zip-code", "parish-district", "municipality", "tribal-government",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -107,6 +107,7 @@ GEOMETRY_FILES = {
     "la-senate-districts.json": (39, 39),  # The 39 Louisiana Senate districts.
     "la-house-districts.json": (105, 105),  # The 105 Louisiana House districts.
     "la-parish-districts.json": (56, 56),  # The police jury, council and commission districts of the 6 parishes whose current lines are confirmed (la/scripts/build_la_parish_districts.py).
+    "tribal-areas.json": (6, 6),  # Louisiana's tribal land (scripts/build_tribal_areas.py) — four reservations and two pieces of off-reservation trust land, held by four nations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-20; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -116,6 +117,7 @@ ROSTER_FILES = {
     "la-house-members.json": 105,  # Louisiana House roster on the same terms; House Districts 77 and 92 read vacant on 2026-10-20.
     "la-parish-officials.json": 64,  # Every parish's governing body by seat and its parish president or mayor, from the Secretary of State's list of elected officials, one record per parish, refreshed weekly by update-la-parish-officials.yml.
     "la-parish-district-parishes.json": 6,  # The parishes whose districts the Police Jury or Council District layer draws, written by the same build as la-parish-districts.json; the layer's coverage test reads it.
+    "tribal-councils.json": 3,  # The councils of the three Louisiana nations whose own pages name them (the Chitimacha, the Jena Band of Choctaw and the Tunica-Biloxi), keyed by the Census AIANNH code of their land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 

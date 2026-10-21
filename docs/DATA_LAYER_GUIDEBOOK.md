@@ -66,7 +66,7 @@ in the researched-but-unbuilt backlog.
   "tennessee": ["us-house", "tn-judicial-district", "tn-senate", "county", "tn-house", "school-district-unified", "school-board-district", "county-commissioner", "county-subdivision", "zip-code", "school-district-elementary", "school-district-secondary", "voting-precinct", "municipality", "city-ward", "tribal-government", "police-station", "fire-station", "post-office"],
   "arkansas": ["us-house", "ar-court-of-appeals", "ar-circuit-court", "ar-senate", "county", "ar-house", "school-district-unified", "zip-code", "quorum-court", "county-subdivision", "fire-district", "school-board-district", "voting-precinct", "municipality", "city-ward", "police-station", "fire-station", "post-office"],
   "mississippi": ["us-house", "ms-supreme-court", "ms-court-of-appeals", "ms-senate", "county", "ms-chancery-court", "ms-circuit-court", "ms-house", "county-supervisor", "school-district-unified", "zip-code", "municipality", "city-ward", "tribal-government", "police-station", "fire-station", "post-office"],
-  "louisiana": ["us-house", "la-senate", "county", "school-district-unified", "la-house", "zip-code", "parish-district", "municipality", "police-station", "fire-station", "post-office"]
+  "louisiana": ["us-house", "la-senate", "county", "school-district-unified", "la-house", "zip-code", "parish-district", "municipality", "tribal-government", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -2704,18 +2704,6 @@ trusted.
       "wanted": "A district-by-district roster from each intermediate school district's own board page, refreshed weekly."
     },
     {
-      "id": "lansing-ward-boundary",
-      "kind": "blocked",
-      "concept": "City council district",
-      "area": "Lansing",
-      "layer": "city-ward",
-      "counties": [],
-      "summary": "Lansing elects four of its eight council members by ward, and this app does not show you which ward you live in.",
-      "why": "The city publishes its ward map on terms that bar commercial use. That is a condition on the map rather than a technical block, and it has not been resolved instead of being worked around.",
-      "wanted": "Permission to use the city's ward map on a free public site, or the same boundary published on open terms.",
-      "blocker": "MEASURED 2026-09-05. THE GEOMETRY IS FINE AND THE LICENCE IS THE WHOLE BLOCKER. The city's ArcGIS org (services1.arcgis.com/pNPbgWy7hpfFGWoZ) publishes the current plan TWICE. `VotingWards` is the clean one: exactly 4 features, WARDID 1-4, snippet 'Wards for the City of Lansing, updated for the 2022 elections', and its licenseInfo is EMPTY. `City_Wards` carries the SAME plan ('City of Lansing wards, as defined in the 2020 redistricting cycle') and states, verbatim: 'This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.' It also carries 9 features rather than 4 - ward 2 in four parts plus two non-ward features keyed DT and MR - and a third service, `Wards`, repeats that shape with 10 features and no licence. AN UNSTATED LICENCE IS SILENCE, NOT A GRANT: the same publisher states NonCommercial terms on the same plan, so reading the copy that omits the notice as permissive would be choosing the reading that suits us. The operative licence is therefore CC BY-NC 4.0 and the call is the operator's, not this build's. CURRENCY IS NOT IN DOUBT and was measured before the licence was: dissolved by the state's own 2026 precinct WARD column (27 precincts, 7/7/6/7), `VotingWards` agrees with the state on 1860 of 1862 sampled points (99.893%), as the builder itself reports - the same test Grand Rapids passed at 99.575%. mi/scripts/build_mi_lansing_wards.py is written, records the licence clause verbatim, and REFUSES TO WRITE without an explicit --licence-approved flag, so no derived geometry is committed while the question is open; committing the file would itself distribute the data."
-    },
-    {
       "id": "annarbor-ward-boundary",
       "kind": "blocked",
       "concept": "City council district",
@@ -3746,6 +3734,18 @@ trusted.
             "why": "The Secretary of State lists Louisiana's school board members, and this app does not read that list yet. It also has no map of the boards' election districts, so it could not say which member is yours.",
             "wanted": "Each school board's current election district map, as a map layer or a file of its lines.",
             "blocker": "Measured 2026-10-20 against TIGERweb's School service (School/MapServer, STATE='22'): 69 unified districts and no elementary or secondary district, so the layer is labelled School District and names the district; the boundary carries no board field. THE NAMES ARE PUBLISHED. The Secretary of State's list exports office 255_0 (School Board Member), read 2026-10-20 with requests sending districtry/1.0 (+https://districtry.com/la/) through la/scripts/build_la_parish_officials.py's own fetch (robots.txt permits /ElectedOfficials/): 639 rows across the 64 parishes, 633 with a telephone. Most seat descriptions read 'District N' (503 rows); the rest name wards, lettered districts or divisions, and the city and community systems write their name into the seat ('Dist. 1, Zachary Comm.', 'District 1, City of Monroe', 'District 1, City of Bogalusa'). 610 of the 639 terms end on 31 December 2026, so a roster built before then turns over on 1 January 2027 and its weekly refresh has to be working before that. The rows carry mailing address, race and gender columns, which are never to be read. NOTHING HERE READS OFFICE 255_0 YET; the plan of 2026-10-09 (https://claude.ai/artifact/TvGqggesXMHBEtUZsqepcc) put school boards after go-live. WHAT NO PUBLISHER HAS GIVEN: the boards' election district LINES. The Census carries none, so a member could be named on the School District card but not matched to a point. The plan found New Orleans's school board map and three parishes' from a regional planning commission, and no statewide map. NOT YET ASKED."
+      },
+      {
+            "id": "la-tribal-government",
+            "concept": "Tribal government",
+            "area": "The Coushatta Tribe's land, in Allen, Natchitoches, Calcasieu and Jefferson Davis parishes",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the councils of three of Louisiana's four nations, the Chitimacha, the Jena Band of Choctaw and the Tunica-Biloxi, from each nation's own page. It names nobody for the Coushatta Tribe.",
+            "why": "The Coushatta Tribe's own site names its chairman and says the council has five members without naming the other four, and part of a council is not shown as if it were all of it.",
+            "wanted": "A list of the Coushatta Tribe of Louisiana's whole council, from the tribe, that this project may read.",
+            "blocker": "BUILT 2026-10-20 as `tribal-government` while the instance is dark: 6 areas across 4 nations (the Chitimacha, Coushatta, Jena Band of Choctaw and Tunica-Biloxi reservations, and the Coushatta's and Tunica-Biloxi's off-reservation trust land, measured by scripts/build_tribal_areas.py), and the councils of the Chitimacha Tribe of Louisiana (5), the Jena Band of Choctaw Indians (the Tribal Chief and 4) and the Tunica-Biloxi Indian Tribe (7) read weekly from each nation's own page by scripts/tribal_council_scraper.py. MEASURED 2026-10-20 with that scraper's client (requests sending UA_ROSTER_BOT with UA_HEADERS_ROSTER_BOT, robots.txt read first through scraper_common.require_robots_once): GET https://www.coushatta.org/government/ -> HTTP 200, 20,933 bytes, robots.txt (168 bytes) allowing the path; the page names the chairman, David Sickey, says the council has five members, the chairman and four council members, and names the staff of each department, none of whom is a council member. A partial council is not carried (the Oneida and Grand Portage precedent), so nothing is, and the reason is in ROSTER_BLOCKED (0795) in scripts/build_tribal_areas.py with the host and the date. THE BUREAU'S LISTED SITE IS NOT THAT ONE: the Bureau of Indian Affairs lists http://koasatiheritage.org/ for the tribe; robots.txt (73 bytes) allows every path, and GET https://koasatiheritage.org/ with the same client -> HTTP 403 from Cloudflare, so nothing there was read and what it shows a browser was not measured. coushattatribela.org, the tribe's earlier name, serves a parked domain's robots.txt with a second `User-agent: *` group disallowing every path, and https://www.coushattatribela.org/robots.txt reset the connection on three attempts. The tribe's own site was found by a web search, not from any directory. NOT YET ASKED, and no ask is drafted."
       }
   ]
 }
