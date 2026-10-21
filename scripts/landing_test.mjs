@@ -1019,12 +1019,11 @@ try {
   // (EXAMPLE_SCRIPT), so they are held HERE: in every place, each card names
   // what its roster says for its seat, by the rule the officeholder tables
   // print by. Also held: the example beside the box on a computer and after it
-  // on a phone, the independence sentence still on a phone's first screen,
-  // each card in its layer's map colour in both themes, each place's link
-  // opening the app its names come from at a point with layers on and keeping
-  // that point when followed, one place on view at a time with its button
-  // pressed, a visit starting on the place after the last visit's (and on some
-  // place when none is kept or storage is blocked), a press counted once as
+  // on a phone, each card in its layer's map colour in both themes, each place's
+  // link opening the app its names come from at a point with layers on and
+  // keeping that point when followed, one place on view at a time with its
+  // button pressed, a visit starting on the place after the last visit's (and on
+  // some place when none is kept or storage is blocked), a press counted once as
   // example-place/<place> and nothing counted on load, Chicago alone with no
   // buttons and no name lines when there is no script, and a roster that fails
   // to load saying so on its own card only.
@@ -1210,22 +1209,15 @@ try {
     const got = await phone.page.evaluate(() => {
       const a = document.querySelector(".example")?.getBoundingClientRect();
       const s = document.querySelector(".search-card")?.getBoundingClientRect();
-      const p = document.querySelector(".independence");
       return {
         shown: !!document.querySelector(".example")?.checkVisibility(),
         after: !!(a && s && a.top >= s.bottom && a.left < s.right),
         sideways: document.documentElement.scrollWidth > innerWidth,
-        indep: p ? { top: Math.round(p.getBoundingClientRect().top),
-                     line: parseFloat(getComputedStyle(p).lineHeight), screen: innerHeight } : null,
       };
     });
     await phone.ctx.close();
     check("on a phone the example comes after the address box, with no sideways scroll",
       got.shown && got.after && !got.sideways, JSON.stringify(got));
-    // INDEPENDENCE in build_landing_page.py says why that sentence is above
-    // the fold, so two lines of it must show on a phone's first screen.
-    check("on a phone the independence sentence starts on the first screen, at least two lines of it",
-      !!got.indep && got.indep.top + 2 * got.indep.line <= got.indep.screen, JSON.stringify(got.indep));
     const dark = await examplePage({ viewport: { width: 1280, height: 800 }, colorScheme: "dark" });
     await openExample(dark.page);
     const night = await dark.page.evaluate(exampleState);

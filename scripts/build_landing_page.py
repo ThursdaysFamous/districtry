@@ -64,8 +64,7 @@ metro-portal already uses.
 WHAT IS DELIBERATELY ABSENT. No analytics beyond the fleet's existing GoatCounter
 tag (adding a NEW tracker to a new surface is not a build-step decision), and
 no per-visitor geolocation (the address box asks for a query the reader typed,
-never the browser's location — matching the independence paragraph's promise
-that this page does not ask for more than an address).
+never the browser's location).
 
     python3 scripts/build_landing_page.py            # write index.html
     python3 scripts/build_landing_page.py --check    # drift gate; exit 1 on diff
@@ -427,22 +426,16 @@ NOTICE_ONLY = ("android",)
 NOTICE_REMEMBER = ("android-test",)
 INSTALL_APP = os.path.join(REPO_ROOT, "engine", "index.html", "install-app.txt")
 
-# The independence line, and it earns its place rather than decorating the page.
-# On 2026-08-25 Google Safe Browsing flagged districtry.com under "Deceptive
-# pages" — a day-old domain that had just absorbed a mass redirect from an
-# established site, asks for a home address, and renders county seals and
-# "who represents you", while saying NOWHERE who runs it or that it is
-# unofficial. Nothing on the site was deceptive and nothing was compromised
-# (every deployed byte matched the repo), but a classifier had no way to tell
-# an independent civic reference from an impersonation of one, because the page
-# never said. This is the site saying it, above the fold, in its own words.
-INDEPENDENCE = (
-    "districtry is an independent, unofficial project. It is not a government "
-    "service and is not affiliated with, endorsed by, or operated by any "
-    "government agency. It asks for an address only to place a point on the "
-    "map — there is no account, no sign-in, and it never asks for personal "
-    "or financial information."
-)
+# There is no independence line under the address box any more (Adam,
+# 2026-10-21: "It's redundant now and the migration is long past the point of
+# the Google warning"). It went in after Google Safe Browsing flagged
+# districtry.com under "Deceptive pages" on 2026-08-25: a day-old domain that
+# had just absorbed a mass redirect from an established site, asked for a home
+# address and rendered county seals and "who represents you", while saying
+# NOWHERE who runs it or that it is unofficial. Nothing on the site was
+# deceptive, but a classifier had no way to tell an independent civic
+# reference from an impersonation of one. The footer says both things, so it
+# is now the one place this page says them, and it stays.
 
 # Where a forwarded visit goes. The Illinois app is what lived at this root
 # before R2.3, so it is the only instance whose old links can be in the wild.
@@ -702,10 +695,6 @@ def notice_memory():
         "    try { window.localStorage.setItem(NOTICE_KEY, NOTICE_ANSWERED); } catch (e) { /* storage blocked: it shows again next visit */ }\n"
         "  }\n"
         % (key.group(1), word.group(1)))
-
-
-def render_independence():
-    return ('    <p class="independence">%s</p>\n' % html.escape(INDEPENDENCE))
 
 
 def state_rows(metros):
@@ -1934,15 +1923,6 @@ h1 {
 .search-status { margin: 10px 0 0; font-size: 13.5px; line-height: 1.4; min-height: 0; }
 .search-status.err { color: var(--error); }
 
-/* Stated plainly and early, never as a warning banner — it is a fact about who
-   this is, not an alarm. See INDEPENDENCE for why it is above the fold, and it
-   now actually is: it sat at 1,800px down the desktop page, under three other
-   sections, which is not above anything. */
-.independence {
-  margin: 18px 0 0; max-width: 52em; font-size: 13.5px; line-height: 1.55;
-  color: var(--ink-3);
-}
-
 /* THE WORKED EXAMPLE (2026-10-21): a place and who represents it there, one
    of six a reader can switch between, beside the address box on a wide screen
    and under it on a narrow one. Until then the page said what districtry
@@ -2342,7 +2322,7 @@ footer .support b { color: var(--ink); }
              %(answer_verb)s today — an address anywhere else says so instead of guessing.</p>
           <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
         </div>
-    %(independence)s      </div>
+      </div>
 %(example)s    </div>
 
     <h2>Where it answers today</h2>
@@ -3050,7 +3030,6 @@ footer .support b { color: var(--ink); }
         "mark": load_mark(),
         "notice": render_notice(),
         "notice_memory": notice_memory(),
-        "independence": render_independence(),
         "example": example,
         "answer_count": html.escape(answer_count),
         "answer_verb": answer_verb,
