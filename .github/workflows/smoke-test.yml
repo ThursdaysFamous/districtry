@@ -1659,12 +1659,14 @@ jobs:
         run: python3 la/scripts/build_la_parish_officials.py --check
 
       # Louisiana draws a police jury or council district only in the parishes
-      # whose Census lines are confirmed current: changed after the 2020 census,
-      # and balanced on that census's own blocks. The blocks are not shipped, so
-      # the population cannot be re-measured here; this holds the shipped file
-      # to its build record, every district to a seat in the Secretary of
-      # State's list in the parish's own word, the card to the Census edition
-      # the file was built from, and the drawn parishes to the Parish layer.
+      # whose lines are confirmed current: the Census's where they changed after
+      # the 2020 census and balance on that census's own blocks, and Orleans's
+      # and East Baton Rouge's from each parish government's own map. The
+      # blocks are not shipped, so the population cannot be re-measured here;
+      # this holds the shipped file to its build record, every district to a
+      # seat in the Secretary of State's list in the parish's own word, the card
+      # to the Census edition the file was built from, and the drawn parishes to
+      # the Parish layer.
       - name: LA parish districts still match their build record, the list's seats and the Parish layer
         if: ${{ !cancelled() }}
         run: python3 la/scripts/build_la_parish_districts.py --check
@@ -1686,6 +1688,19 @@ jobs:
         run: |
           python3 la/scripts/build_la_court_districts.py --check
           python3 la/scripts/build_la_judges.py --check
+
+      # Louisiana's city council districts, drawn in the four cities whose own
+      # current map is confirmed (Lafayette, Bossier City, Central and Slidell),
+      # each cut at the Census Bureau's map of the city. The census blocks the
+      # plans were confirmed on are not shipped, so this holds the shipped file
+      # to its build record, every city's districts to the council seats the
+      # Secretary of State's list names for it, no ground to two cities, and the
+      # hand-written sentences naming the drawn cities (the card's empty state,
+      # the City card's list and the sources page) to the builder's own lists of
+      # which cities are drawn and why the others are not.
+      - name: LA city council districts still match their build record, the list's seats and the cities the pages name
+        if: ${{ !cancelled() }}
+        run: python3 la/scripts/build_la_city_wards.py --check
 
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.

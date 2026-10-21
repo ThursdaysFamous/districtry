@@ -223,6 +223,7 @@ python3 la/scripts/build_la_parish_officials.py --check          # Louisiana's p
 python3 la/scripts/build_la_parish_districts.py --check          # Louisiana's parish districts against their build record, the list's seats, the Census edition the card names, and the Parish layer
 python3 la/scripts/build_la_court_districts.py --check          # Louisiana's courts of appeal and district courts against the parish lists in the kept text of La. R.S. 13:312 and 13:477, and the Supreme Court map against its build record
 python3 la/scripts/build_la_judges.py --check                   # Louisiana's judges as shipped: their shape, the justice, appeal and district floors, the party and telephone shares, and the districts the three court maps draw
+python3 la/scripts/build_la_city_wards.py --check               # Louisiana's city council districts against their build record, the council seats the list names, and the sentences that name the four drawn cities
 python3 wi/scripts/dropped_rings.py --check       # each declaration's `why` prose against its own m2 and verts, and each builder's FIDELITY_MAX_M against its GAP_CLOSED, across every declaring builder
 python3 scripts/scraper_common.py --selftest                # the nine AFR builders' what-moved line, both ways: silent on a stamp-only week, names the record on a real one
 python3 scripts/arcgis_error.py --selftest                   # a rate limit told apart from a shape error, both measured wordings and a 429; the 5/15/45 ladder taken then raised, never waited on a 404

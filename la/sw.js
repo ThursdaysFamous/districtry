@@ -29,7 +29,7 @@
 // template starts at -v1: the app shell, icons, and the starter data
 // files bootstrap_state.py builds.)
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-la-shell-v4";
+const CACHE_NAME = "districtry-la-shell-v5";
 
 const SHELL_URLS = [
   "./",
@@ -53,6 +53,7 @@ const GEOMETRY_URLS = [
   "./data/app/la-court-of-appeal-districts.json",
   "./data/app/la-district-court-districts.json",
   "./data/app/la-parish-districts.json",
+  "./data/app/la-city-wards.json",
   "./data/app/la-precincts.json",
   "./data/app/tribal-areas.json",
 ];
