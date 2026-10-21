@@ -397,9 +397,10 @@ try {
   //     app's coverage ring. Arkansas is live, so a click on El Dorado must
   //     open THAT app: it is about 21 km north of the state line, inside
   //     Arkansas's outline and no other. This instance answers its own side
-  //     from the coverage ring the wash retained, with no fetch, and it works
-  //     while this instance is dark because the fleet file names only live
-  //     apps. Chicago proves the file is still read for ground far from here.
+  //     from the coverage ring the wash retained, with no fetch, and since
+  //     go-live the fleet file carries this app's own outline too, which is
+  //     asked first, so a point both draw stays here. Chicago proves the file
+  //     is still read for ground far from here.
   //
   //     TEXAS IS DELIBERATELY NOT A CASE. Nobody serves it today, so a click
   //     there stays here; but the fleet is meant to reach every state, and a
@@ -801,10 +802,12 @@ try {
   //    Census live: asserting a card against somebody else's server makes the
   //    test fail on their outage and on any network that intercepts TLS.
   //
-  //    NO TILE ARCHIVE SHIPS FOR THESE LAYERS YET (the mirror is a go-live
-  //    step, la/WATCH.md). Each case refuses its layer's archive anyway, so
-  //    the day one ships, the stub still decides the card and a case that
-  //    exists in no archive (an affix no table carries) keeps working.
+  //    SINCE 2026-10-21 THESE LAYERS ARE ANSWERED FROM SAME-ORIGIN TILE
+  //    ARCHIVES (scripts/mirror_tiger_tiles.py), and the stubs stay anyway:
+  //    several cases below exist in no archive (an affix no table carries, a
+  //    roster refused), so each case refuses its layer's archive and the stub
+  //    decides the card, through the archive-failure path il's smoke check 2d
+  //    also holds.
   //
   //    WHAT IS WORTH TESTING IS THIS INSTANCE'S OWN CODE, and none of it is
   //    exercised by a live fetch that happens to work. Four claims, each wrong
@@ -1122,7 +1125,8 @@ try {
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=zip-code`, async (p) => {
-        // no archive ships yet; refused so the stub decides the day one does
+        // the layer is answered from a tile archive since 2026-10-21; refusing it
+        // sends the card to the census loader, which this stub answers
         await p.route("**/data/app/tiles/zip-code.pmtiles", (r) => r.abort());
         await p.route(`**/${ZCTA}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("70112") }));

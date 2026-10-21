@@ -181,7 +181,7 @@ from validate_instance_registration import (  # noqa: E402  (FLEET_SHARED)
 STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
                   "ky": 120, "ny": 62, "in": 92,
                   "nc": 100, "ok": 77, "sc": 46, "tn": 95, "ar": 75,
-                  "ms": 82}
+                  "ms": 82, "la": 64}
 
 # Instances with no county tier at all. Recorded with a reason rather than
 # skipped, because a silently absent row reads as a passing one.
@@ -2168,6 +2168,65 @@ ANSWERS = {
         # named with the band's Tribal Chief and Tribal Council.
         "tribal-government": answers("tribal-government"),
     },
+    # Louisiana, added at its go-live with the national tier, the parish
+    # governing bodies, the towns' and school boards' officials and the four
+    # nations' land.
+    "la": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("la-senate", "la-house"),
+        "county-boundaries": answers("county"),
+        # Every parish's police jury, council or commission seats its members
+        # by ward or district, and the Secretary of State's list names them.
+        # The layer draws a parish's districts only where its current lines
+        # are confirmed (Adam, "Confirmed only", 2026-10-20), so the other
+        # parishes owe a map. Recorded in la/CLAUDE.md.
+        "county-government": depth("parish-district"),
+        "municipal-boundaries": answers("municipality"),
+        # The 13 places of 25,000 or more. The City card names the mayor and
+        # council of ten from the Secretary of State's list, and all ten seat
+        # members by district, while the map draws no city's districts (gap
+        # la-municipal-ward-lines). New Orleans, Baton Rouge and Houma are
+        # governed by their parishes' bodies, which the Parish card names
+        # (COUNTY_GOVERNED_UNITS), and of those three parishes only
+        # Terrebonne's districts are drawn, so Houma is the one answered.
+        "local-government": depth(),
+        # TIGER's unified tiling holds all 69 districts and the other two hold
+        # none, measured in la/CLAUDE.md, so one layer is the whole level.
+        "school-district-boundaries": answers("school-district-unified"),
+        # LOUISIANA'S COUNTY SUBDIVISIONS ARE THE DISTRICTS ITS PARISHES'
+        # GOVERNING BODIES ARE ELECTED FROM, so this map is the parish-district
+        # layer's, and it is drawn only in the six parishes whose current lines
+        # two measurements confirm. Elsewhere the Census's own copy carries
+        # older lines, more than 10% out of balance on the 2020 blocks, and has
+        # none for the New Orleans City Council, so it is not drawn instead
+        # (la/CLAUDE.md). Open until every parish is drawn.
+        "subdivision-boundaries": OPEN,
+        "courts-by-district": OPEN,
+        # LOUISIANA HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. Every county
+        # subdivision the Census carries outside Orleans is one of those
+        # districts, at FUNCSTAT N, and Orleans's single one is at FUNCSTAT F,
+        # the Census's code for a unit made only to fill its own geographic
+        # hierarchy (measured 2026-10-20, la/CLAUDE.md).
+        "sub-county-government": na(
+            "Louisiana has no sub-county general-purpose government — outside "
+            "a city, town or village the parish governs. The sub-county units "
+            "the Census publishes for Louisiana are the districts its parishes' "
+            "governing bodies are elected from, which the Census records as "
+            "having no functioning government, and one for Orleans Parish, "
+            "which it records as a placeholder made only to complete its own "
+            "geography."),
+        # Every school board's members are named on the School District card,
+        # and nobody maps their election districts (gap
+        # la-school-board-district-lines).
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # SHIPPED 2026-10-21 (#1668): the land of Louisiana's four nations,
+        # each named with its government, and the councils of three named from
+        # the nations' own pages; the Coushatta Tribe's council is the narrower
+        # gap la-tribal-government -- the Wisconsin and Michigan shape.
+        "tribal-government": answers("tribal-government"),
+    },
     "ny": {
         "us-house": answers("congress"),
         "state-legislature": answers("state-senate", "state-assembly"),
@@ -2297,6 +2356,10 @@ CITY_ROSTERS = {
     # Each city's own website, read for the 15 cities of 25,000 or more and
     # keyed by the city's Census id, each seat dated to the day it was read.
     "ms": [("ms/data/app/ms-city-councils.json", "geoid7")],
+    # The Secretary of State's list of elected officials, read weekly, keyed by
+    # the place's Census id: every place but the three whose governments are
+    # their parishes' (COUNTY_GOVERNED_UNITS below).
+    "la": [("la/data/app/la-municipal-officials.json", "geoid7")],
 }
 
 # One file per city, so the unit is declared rather than keyed. A filename is
@@ -2313,6 +2376,25 @@ CITY_FILES = {
            "2634000": "mi/data/app/mi-grand-rapids-council-members.json",
            "2641420": "mi/data/app/mi-jackson-council-members.json"},
     "ny": {"3651000": "ny/data/app/council-members.json"},
+}
+
+# Units whose governing body is their county's, joined to that county's record
+# in the state's county roster. Without the join a unit the city roster leaves
+# out because its county governs it reads as naming nobody, when the app names
+# the body that governs it on another card. Louisiana's three: the Secretary of
+# State's list names the Mayor and the New Orleans City Council as Orleans
+# Parish's governing body and the Metropolitan Council as East Baton Rouge
+# Parish's, and has no record for either city of its own; and the Census
+# records Houma as a legal entity with no government of its own operating
+# (FUNCSTAT N), where the City card says the parish governs. Re-audited every
+# run: the unit must be one the measurement carries, the county record must
+# name somebody, and a unit a city roster names too FAILS, because then one of
+# the two joins is wrong.
+COUNTY_GOVERNED_UNITS = {
+    "la": ("la/data/app/la-parish-officials.json",
+           {"2255000": "22071",    # New Orleans: Orleans Parish
+            "2205000": "22033",    # Baton Rouge: East Baton Rouge Parish
+            "2236255": "22109"}),  # Houma: Terrebonne Parish
 }
 
 
@@ -2503,6 +2585,29 @@ def _ms_county_maps_owed(B, records):
             if re.sub(r" County$", "", name) not in drawn}
 
 
+def _la_county_maps_owed(B, records):
+    """Louisiana parishes whose governing body's districts are not drawn.
+
+    A parish whose record seats its members by ward or district owes a map, and
+    on 2026-10-20 that was all 64: the Secretary of State's list gives a ward or
+    district for every seat but the at-large ones seven councils elect besides.
+    Which parishes the layer draws is read off the shipped districts file, never
+    listed here; build_county_pages' own Louisiana adapter already holds that
+    file to the app's list of drawn parishes, and this holds it to the roster.
+    """
+    rel = "la/data/app/la-parish-districts.json"
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+        drawn = {re.sub(r" Parish$", "",
+                        (f.get("properties") or {}).get("parish") or "")
+                 for f in json.load(fh).get("features") or []}
+    stray = sorted(drawn - set(records))
+    if stray:
+        fail("la: `%s` draws %s, which the parish roster does not name"
+             % (rel, ", ".join(stray)))
+    return {B.slug_of(name) for name, rec in records.items()
+            if rec.get("districts") and name not in drawn}
+
+
 def _no_layer(derive):
     """A state whose county-government level draws no county district."""
     def wrapped(B, records):
@@ -2521,6 +2626,7 @@ COUNTY_MAPS_OWED = {
     "il": _il_county_maps_owed,
     "ia": _ia_county_maps_owed,
     "ms": _ms_county_maps_owed,
+    "la": _la_county_maps_owed,
 }
 
 
@@ -2789,6 +2895,21 @@ WARD_MAPS = {
         owed={"2806220": "Biloxi", "2831020": "Hattiesburg",
               "2833700": "Horn Lake", "2844520": "Madison",
               "2846640": "Meridian"}),
+    # Louisiana's ten that the city roster names all seat members by district,
+    # and no layer draws a city's districts (gap la-municipal-ward-lines). New
+    # Orleans, Baton Rouge and Houma are governed by their parishes' bodies
+    # (COUNTY_GOVERNED_UNITS), and the parish-district layer draws
+    # Terrebonne's districts, which are Houma's, and not Orleans's or East
+    # Baton Rouge's. That half is held to the shipped file, in both directions.
+    "la": dict(
+        drawn={"2236255"},
+        county_drawn=("la/data/app/la-parish-districts.json", "parishfips"),
+        owed={"2200975": "Alexandria", "2205000": "Baton Rouge",
+              "2208920": "Bossier City", "2213960": "Central",
+              "2239475": "Kenner", "2240735": "Lafayette",
+              "2241155": "Lake Charles", "2251410": "Monroe",
+              "2254035": "New Iberia", "2255000": "New Orleans",
+              "2270000": "Shreveport", "2270805": "Slidell"}),
 }
 
 
@@ -2820,6 +2941,24 @@ def ward_maps_owed(tag, units, ward):
                  "draws %s. Correct the table to match the shipped file."
                  % (tag, ", ".join(sorted(drawn)), rel,
                     ", ".join(sorted(shipped))))
+    # A unit its county's body governs is drawn exactly when that county's
+    # districts are, so where the table credits one either way the claim is
+    # held to the shipped districts file.
+    if m.get("county_drawn"):
+        rel, prop = m["county_drawn"]
+        with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+            counties_drawn = {str((f.get("properties") or {}).get(prop))
+                              for f in json.load(fh)["features"]}
+        joins = COUNTY_GOVERNED_UNITS.get(tag, (None, {}))[1]
+        for g, county in sorted(joins.items()):
+            if drawn != "all" and g in drawn and county not in counties_drawn:
+                fail("%s: WARD_MAPS credits %s's districts as drawn and `%s` "
+                     "draws none of county %s's"
+                     % (tag, units[g]["name"], rel, county))
+            if g in owed and county in counties_drawn:
+                fail("%s: WARD_MAPS says %s's districts are owed and `%s` "
+                     "now draws county %s's. Move it to drawn."
+                     % (tag, units[g]["name"], rel, county))
     both = sorted(set(owed) & (set() if drawn == "all" else drawn))
     if both:
         fail("%s: WARD_MAPS lists %s as both drawn and owed"
@@ -3060,6 +3199,33 @@ def city_tier(tag, expected):
             ward.add(geoid)
         print("build-eam-status: %s — city tier: `%s` names %s's governing body"
               % (tag, rel, units[geoid]["name"]))
+    rel, joins = COUNTY_GOVERNED_UNITS.get(tag, (None, {}))
+    if rel:
+        path = os.path.join(REPO_ROOT, rel)
+        if not os.path.exists(path):
+            fail("%s: COUNTY_GOVERNED_UNITS reads `%s` and the file is gone"
+                 % (tag, rel))
+        with open(path, encoding="utf-8") as fh:
+            doc = json.load(fh)
+        for geoid, county in sorted(joins.items()):
+            if geoid not in units:
+                fail("%s: COUNTY_GOVERNED_UNITS declares unit %s and the "
+                     "measurement does not carry it" % (tag, geoid))
+            if geoid in named:
+                fail("%s: COUNTY_GOVERNED_UNITS joins %s to county %s, and a "
+                     "city roster names a governing body for it too. One of "
+                     "the two joins is wrong; re-measure which body governs it."
+                     % (tag, units[geoid]["name"], county))
+            record = doc.get(county)
+            if not isinstance(record, dict) or not _named_anywhere(record):
+                fail("%s: COUNTY_GOVERNED_UNITS joins %s to county %s, and "
+                     "`%s` names nobody there"
+                     % (tag, units[geoid]["name"], county, rel))
+            named.add(geoid)
+            if elects_by_ward(record):
+                ward.add(geoid)
+            print("build-eam-status: %s — city tier: `%s` names %s's governing "
+                  "body, county %s's" % (tag, rel, units[geoid]["name"], county))
     return units, named, ward
 
 
@@ -3161,6 +3327,7 @@ def check_city_rosters(live, expected):
     read = {rel for rows in CITY_ROSTERS.values() for rel, _join in rows}
     read |= {rel for mapping in CITY_FILES.values()
              for rel in mapping.values()}
+    read |= {rel for rel, _joins in COUNTY_GOVERNED_UNITS.values()}
     seen = set()
     for tag in sorted(live):
         found = city_roster_candidates(tag, expected)
