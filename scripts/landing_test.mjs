@@ -977,6 +977,209 @@ try {
     await ctx.close();
   }
 
+  // --- 1h-bis. the question tiles fold, and one tap opens one --------------
+  //
+  // The questions are tiles that open to their places (2026-10-21), and they
+  // follow the state list's rule: they SHIP open and a script folds them, so a
+  // page whose script failed shows every link rather than tiles that hide
+  // them. The shipped half is read off the page as served, before any script
+  // runs; the folded half in the browser, on every width, since unlike the
+  // state list the tiles fold on a computer too.
+  {
+    const raw = await (await fetch(BASE + "/")).text();
+    const tags = raw.match(/<details class="ask"[^>]*>/g) || [];
+    check("every question tile ships open, for a page with no script",
+      tags.length > 3 && tags.every((t) => /\sopen>$/.test(t)), `${tags.length} tile(s)`);
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    const shownChips = () => page.evaluate(() =>
+      [...document.querySelectorAll(".ask-chips a")].filter((a) => a.checkVisibility()).length);
+    const open = await page.evaluate(() =>
+      [...document.querySelectorAll("details.ask")].map((d) => d.open));
+    check("the question tiles start folded, with no place showing",
+      open.length === tags.length && open.every((o) => !o) && (await shownChips()) === 0,
+      JSON.stringify(open) + `, ${await shownChips()} place(s) showing`);
+    const inFirst = await page.evaluate(() =>
+      document.querySelector("details.ask").querySelectorAll(".ask-chips a").length);
+    await page.click("details.ask > summary");
+    check("one tap opens that tile's places and no other's",
+      inFirst > 0 && (await shownChips()) === inFirst, `${await shownChips()} showing, ${inFirst} in the tile`);
+    await ctx.close();
+  }
+
+  // --- 1i. the worked example: one place, and who represents it there ------
+  //
+  // Beside the address box since 2026-10-21: a place, the offices that answer
+  // there and the people who hold them. The districts are measured by the
+  // generator from the boundary files the map draws (render_example) and held
+  // there by build_landing_page.py --check; the names are read by the page's
+  // own script, when it opens, from the rosters the map's cards read
+  // (EXAMPLE_SCRIPT), so they are held HERE: each card names what its roster
+  // says for its seat, by the rule the officeholder tables print by. Also
+  // held: the example beside the box on a computer and after it on a phone,
+  // each card in its layer's map colour in both themes, links that open an app
+  // at a point with layers on and keep that point when followed, the
+  // independence sentence still on a phone's first screen (which is why the
+  // try-it line comes after it), the bodies and districts with no name lines
+  // when there is no script, and a roster that fails to load saying so on its
+  // own card only.
+  const exampleNamed = () => {
+    const lines = [...document.querySelectorAll(".ex-card .ex-name")];
+    return lines.length > 0 && lines.every((l) => !l.hidden && l.textContent.trim());
+  };
+  // The page's rule, restated so the page is held to it: a name, or "Vacant",
+  // or "Not listed", and not named at all where the roster's number and
+  // letter for the seat differ from the district the card shows.
+  const rosterSays = (roster, seat, pill) => {
+    const rec = roster && typeof roster === "object" ? roster[seat] : null;
+    if (!rec || typeof rec !== "object") return "Not listed";
+    if (rec.subDistrict && pill !== "District " + rec.subDistrict) return "Not listed";
+    const n = typeof rec.name === "string" ? rec.name.trim() : "";
+    if (n && n.toUpperCase() !== "VACANT") return n;
+    return rec.vacant || n ? "Vacant" : "Not listed";
+  };
+  {
+    const examples = {};
+    for (const [label, opts] of [
+      ["computer", { viewport: { width: 1280, height: 800 }, colorScheme: "light" }],
+      // iPhone 13's viewport, so "first screen" means a real phone's.
+      ["phone", { viewport: { width: 390, height: 664 }, colorScheme: "light" }],
+      ["dark", { viewport: { width: 1280, height: 800 }, colorScheme: "dark" }],
+    ]) {
+      const ctx = await browser.newContext({ ...opts, serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForFunction(exampleNamed, null, { timeout: 10000 }).catch(() => {});
+      examples[label] = await page.evaluate(() => {
+        const aside = document.querySelector(".example");
+        const search = document.querySelector(".search-card");
+        const a = aside && aside.getBoundingClientRect();
+        const s = search && search.getBoundingClientRect();
+        return {
+          shown: !!aside && aside.checkVisibility(),
+          beside: !!(a && s && a.left >= s.right && a.top < s.bottom),
+          after: !!(a && s && a.top >= s.bottom && a.left < s.right),
+          sideways: document.documentElement.scrollWidth > innerWidth,
+          indep: (() => {
+            const p = document.querySelector(".independence");
+            if (!p) return null;
+            return { top: Math.round(p.getBoundingClientRect().top),
+                     line: parseFloat(getComputedStyle(p).lineHeight), screen: innerHeight };
+          })(),
+          cards: [...document.querySelectorAll(".ex-card")].map((li) => ({
+            body: (li.querySelector(".ex-body")?.textContent || "").trim(),
+            name: (li.querySelector(".ex-name")?.textContent || "").trim(),
+            pill: (li.querySelector(".ex-pill")?.textContent || "").trim(),
+            roster: li.getAttribute("data-roster"),
+            seat: li.getAttribute("data-seat"),
+            lc: getComputedStyle(li).getPropertyValue("--lc").trim().toUpperCase(),
+            light: li.style.getPropertyValue("--lc-l").trim().toUpperCase(),
+            dark: li.style.getPropertyValue("--lc-d").trim().toUpperCase(),
+          })),
+          links: [...document.querySelectorAll(".example a, .try a")].map((l) => l.href),
+        };
+      });
+      await ctx.close();
+    }
+    const { computer, phone, dark } = examples;
+    check("the worked example is on the page, with a name and a district on every card",
+      computer.shown && computer.cards.length >= 3 &&
+        computer.cards.every((c) => c.body && c.name && c.pill),
+      JSON.stringify(computer.cards.map((c) => [c.body, c.name, c.pill])));
+    // Each name against the roster file the page fetched, read here from the
+    // tree the server serves. A roster the map's own app does not read is
+    // build_landing_page.py's to refuse.
+    const rosterSaid = computer.cards.map((c) => {
+      try {
+        return rosterSays(JSON.parse(readFileSync(join(HERE, "..", c.roster), "utf8")), c.seat, c.pill);
+      } catch (e) {
+        return `(${c.roster}: ${e.message})`;
+      }
+    });
+    check("each example card names what its roster says for its seat",
+      computer.cards.length > 0 && computer.cards.every((c, i) => c.name === rosterSaid[i]),
+      JSON.stringify(computer.cards.map((c, i) => [c.roster, c.seat, c.name, rosterSaid[i]])));
+    check("on a computer the example sits beside the address box", computer.beside, JSON.stringify(computer));
+    check("on a phone the example comes after the address box, with no sideways scroll",
+      phone.shown && phone.after && !phone.sideways, JSON.stringify({ ...phone, cards: phone.cards.length }));
+    // INDEPENDENCE in build_landing_page.py says why that sentence is above
+    // the fold. Put under the box, the try-it line pushed it to the last line
+    // of this screen, so two lines of it must show.
+    check("on a phone the independence sentence starts on the first screen, at least two lines of it",
+      !!phone.indep && phone.indep.top + 2 * phone.indep.line <= phone.indep.screen,
+      JSON.stringify(phone.indep));
+    check("each example card takes its layer's map colour, light and dark",
+      computer.cards.every((c) => /^#[0-9A-F]{6}$/.test(c.light) && c.lc === c.light) &&
+        dark.cards.every((c) => /^#[0-9A-F]{6}$/.test(c.dark) && c.lc === c.dark),
+      JSON.stringify([computer.cards.map((c) => c.lc), dark.cards.map((c) => c.lc)]));
+    // A link opens an app with its point and its layers in the short form the
+    // apps write: #p=lat,lng and &l= with the layers' permanent codes.
+    const apps = FLEET.map((m) => m.url);
+    check("every example link opens an app at a point with layers on",
+      computer.links.length >= 3 && computer.links.every((h) =>
+        apps.some((u) => h.startsWith(u + "#")) &&
+        /#p=-?\d+(\.\d+)?,-?\d+(\.\d+)?&l=[a-z][a-z0-9]*(,[a-z][a-z0-9]*)*$/.test(h)),
+      JSON.stringify(computer.links));
+
+    // With no script: the bodies and districts and the link to the map, and
+    // no name line, empty or otherwise.
+    {
+      const ctx = await browser.newContext({ javaScriptEnabled: false, serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      const bare = await page.evaluate(() => ({
+        cards: [...document.querySelectorAll(".ex-card")].map((li) => ({
+          body: (li.querySelector(".ex-body")?.textContent || "").trim(),
+          pill: (li.querySelector(".ex-pill")?.textContent || "").trim(),
+          name: li.querySelector(".ex-name")?.checkVisibility() ?? false,
+        })),
+        link: !!document.querySelector(".example a.ex-open")?.checkVisibility(),
+      }));
+      await ctx.close();
+      check("with no script the example shows its bodies, districts and map link, and no name lines",
+        bare.link && bare.cards.length === computer.cards.length &&
+          bare.cards.every((c) => c.body && c.pill && !c.name),
+        JSON.stringify(bare));
+    }
+    // A roster that fails to load says so on its own card, and the others
+    // still name their seats.
+    {
+      const failing = computer.cards[0]?.roster;
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      if (failing) {
+        await page.route((u) => u.pathname === "/" + failing,
+          (r) => r.fulfill({ status: 404, contentType: "text/plain", body: "not found" }));
+      }
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.waitForFunction(exampleNamed, null, { timeout: 10000 }).catch(() => {});
+      const got = await page.evaluate(() => [...document.querySelectorAll(".ex-card")].map((li) => [
+        li.getAttribute("data-roster"), (li.querySelector(".ex-name")?.textContent || "").trim()]));
+      await ctx.close();
+      check("a roster that fails to load says so on its own card only",
+        !!failing && got.length === computer.cards.length &&
+          got.every(([roster, name], i) => roster === failing ? name === "Name didn't load"
+                                                              : name === computer.cards[i].name),
+        JSON.stringify(got));
+    }
+
+    // Followed, a link keeps its point: the instance is stubbed, so a wrong
+    // route shows as a wrong URL rather than as a failed navigation that
+    // leaves the page on / and reads like a right one.
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    await stubInstances(page);
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    const want = await page.getAttribute(".try a", "href");
+    await page.click(".try a");
+    await page.waitForURL((u) => u.pathname !== "/", { timeout: 10000, waitUntil: "commit" }).catch(() => {});
+    check("following a try-it link opens that app with its point and layers",
+      page.url() === want, `${page.url()} vs ${want}`);
+    await ctx.close();
+  }
+
   // --- 2-4. old app links forward, carrying query AND hash ----------------
   //
   // /il/ IS STUBBED, and that is the point of this block. The guard's whole job
