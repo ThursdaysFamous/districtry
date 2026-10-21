@@ -361,16 +361,19 @@ Oklahoma city council or where its wards run, so each city's mayor and council
 are written down from the city's own pages and proved against them on every
 build, except Muskogee's: the city's website shuts out every crawler but five
 named ones, so its names come from the county election board's official
-results and news reports, and the card says so. The wards of nine of the
+results and news reports, and the card says so. The wards of ten of the
 eleven cities that elect members by ward or district are drawn from each
 city's own map. Broken Arrow, Owasso, Jenks and Edmond tie seats to wards and
 elect every seat by the whole city, and Stillwater has no wards, which was read
 from each city's charter, its own pages and its county's election results
 because no state office records it; nothing is drawn for those five, since a
-reader in one votes for every seat. Lawton and Muskogee elect by ward and their
-wards cannot be drawn yet: the only ward map Lawton publishes as data does not
-divide the 2020 census population evenly, so it may not be the map in force,
-and Muskogee publishes no copy this project may read.
+reader in one votes for every seat. Muskogee elects by ward and its wards
+cannot be drawn yet, because it publishes no copy this project may read.
+Lawton's are drawn on the city's word since 2026-10-21: the only ward map it
+publishes as data does not divide the 2020 census population evenly, so it was
+left undrawn and the city was asked which map is in force, and the City
+Clerk's office answered by pointing to the city's public ward map, which draws
+that same layer.
 
 Illinois already passes Examined, so every county it does not dispatch is either
 served another way or carries a record; the fourth test does not re-ask that

@@ -19,7 +19,7 @@ whether the data exists** — a level no publisher offers, that we
 asked about and were refused, counts as covered — so a county
 publisher cannot fail an app on it.
 
-**34 gap-record claims name a level, 9 of which carry a
+**33 gap-record claims name a level, 9 of which carry a
 dated ask that counts.** A level this report calls open and
 that no record claims is still a floor. A claim that earns
 nothing is printed under its level with the reason, rather
@@ -46,7 +46,7 @@ different thing from one it failed.
 | ar | **EAMC** | 75 | 75/75 | 775 | 737 | all | 20 | all | all 14 levels |
 | ca | **--MC** | — | — | 0 | 0 | — | 15 | all | all 14 levels |
 | ia | **EAM·** | 99 | 99/99 | 94 | 94 | all | 70 | all | 13 of 14 levels |
-| il | **EAM·** | 102 | 102/102 | 660 | 1,156 | all | 423 | all | 12 of 14 levels |
+| il | **EAM·** | 102 | 102/102 | 660 | 1,157 | all | 423 | all | 12 of 14 levels |
 | in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 20 | all | 11 of 14 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 17 | all | 12 of 14 levels |
 | la | **EAM·** | 64 | 64/64 | 560 | 559 | all | 23 | all | 9 of 14 levels |
@@ -198,8 +198,8 @@ this instance is in maintenance.
 
 - **Watched, not rewritten:** `ok/data/app/ok-city-councils.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
 - **Under a WATCH.md plan (12):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ok-city-wards.json`, `ok-commissioner-districts.json`, `ok-conservation-districts.json`, `ok-conservation-offices.json`, `ok-house-districts.json`, `ok-judicial-districts.json`, `ok-senate-districts.json`, `state-counties.json`, `tribal-areas.json`
-- **Covered: no.** 3 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 14 of 16 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 2 more name a body elected by ward or district whose wards are not drawn; unanswered: Lawton city, Muskogee city. A record declares this level and earns nothing: `ok-municipal-officeholders` (4041850) — City Clerk's office, City of Lawton, through the contact form on the city's website (the city publishes no e-mail address for the office) was asked on 2026-10-21 and has not answered; the record earns nothing until a thread writes the outcome
+- **Covered: no.** 3 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 15 of 16 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 1 more names a body elected by ward or district whose wards are not drawn; unanswered: Muskogee city
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
@@ -211,7 +211,7 @@ this instance is in maintenance.
 - **Watched, not rewritten:** `sc/data/app/sc-county-council-districts.json`, by `.github/workflows/update-sc-county-council-roster.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
 - **Under a WATCH.md plan (11):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `sc-city-wards.json`, `sc-conservation-boards.json`, `sc-house-districts.json`, `sc-judicial-circuits.json`, `sc-precincts.json`, `sc-school-board-districts.json`, `sc-senate-districts.json`, `state-counties.json`
 - **Covered: no.** 1 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 16 of 17 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 1 more name a body elected by ward or district whose wards are not drawn; unanswered: Anderson city. A record declares this level and earns nothing: `sc-municipal-officeholders` (4501360) — Mayor Terence Roberts, City of Anderson (troberts@cityofandersonsc.com) was asked on 2026-10-21 and has not answered; the record earns nothing until a thread writes the outcome
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 16 of 17 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 1 more names a body elected by ward or district whose wards are not drawn; unanswered: Anderson city. A record declares this level and earns nothing: `sc-municipal-officeholders` (4501360) — Mayor Terence Roberts, City of Anderson (troberts@cityofandersonsc.com) was asked on 2026-10-21 and has not answered; the record earns nothing until a thread writes the outcome
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — South Carolina has no sub-county general-purpose government — outside a city or town limit the county governs. The 299 sub-county units the Census publishes for South Carolina are census county divisions: statistical areas, not governments.
 

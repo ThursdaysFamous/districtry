@@ -8220,6 +8220,20 @@ with its date, and the card keeps saying the wards are not drawn.
 
 ## Ask ok-lawton-ward-map — City of Lawton, City Clerk: which map shows the eight wards in force
 
+> **ANSWERED 2026-10-21 at 14:23 UTC, by e-mail from a member of the city's staff, with the City
+> Clerk's office (cityclerk@lawtonok.gov) copied.** The reply said only to use the link it gave to
+> view the City of Lawton's ward map: an ArcGIS web app called "Council Ward Members Jurisdiction"
+> (https://experience.arcgis.com/experience/908437ab48874107bb9da49412f16ff0). Read the same day,
+> after each host's robots.txt, that app's web map ("Lawton Council Ward Map", item
+> ad7b2620e1b3427d8ea2e350779e1a08) has one operational layer, and it is the CouncilWard layer this
+> letter asked about. So the map the city shows the public is that layer, and it is drawn as
+> published, under "That layer is current" below: `ok/scripts/build_ok_city_wards.py` draws the
+> eight wards and records the city's answer in place of the balance measurement Lawton fails. The
+> reply said nothing about the 2010 population figures or the uneven 2020 counts, so whether the
+> city means to redraw its wards is not known. No follow-up is owed. Gap
+> `ok-municipal-officeholders` records the answer in its `ask` field. The office's e-mail address,
+> which the city's website did not publish when read on 2026-10-16, is known from the reply.
+>
 > **ASKED 2026-10-21 at about 02:03 UTC, through the contact form on the city's website**, by
 > the operator, whose own message that minute is the record of it: a form leaves nothing in the
 > sent folder. The operator reworded some of that night's letters before sending, so what went
@@ -8304,9 +8318,9 @@ map, from the county election board's results and the Muskogee Phoenix's reports
 not drawn, because the city's website shuts this project out in its robots.txt and the city
 publishes no other copy this project may read. The centre's statewide Municipal_Wards layer, in the
 same ArcGIS Online organisation as the precinct maps, carries Muskogee's wards and those of the ten
-other Oklahoma cities above 25,000 people that elect by ward. Nine of those ten are drawn from their
-own maps and stay that way, and Lawton's question is for the city (Ask ok-lawton-ward-map), so the
-centre's copy would be used for Muskogee alone. The centre's School_District_Wards layer (360 zones
+other Oklahoma cities above 25,000 people that elect by ward. All ten are drawn from their own maps
+and stay that way (nine when this was drafted; Lawton's since 2026-10-21, on the city's answer to
+Ask ok-lawton-ward-map), so the centre's copy would be used for Muskogee alone. The centre's School_District_Wards layer (360 zones
 in 70 school districts, last edited 3 March 2025) is the only map found of the zones Oklahoma's
 school board members are elected from or must live in; in eleven districts, 59 seats, its VOTE_BY
 field reads "Office", which is inferred and not established to mean that only the zone's voters

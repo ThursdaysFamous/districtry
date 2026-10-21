@@ -1937,9 +1937,10 @@ ANSWERS = {
         # 25,000 people, written down from each city's own pages and proved
         # against them (ok/scripts/build_ok_city_councils.py), Muskogee's from
         # the county election board's official results and news reports, and
-        # the wards of nine of the eleven that elect members by ward or
+        # the wards of ten of the eleven that elect members by ward or
         # district, drawn from each city's own map
-        # (ok/scripts/build_ok_city_wards.py). WARD_MAPS says which.
+        # (ok/scripts/build_ok_city_wards.py), Lawton's since 2026-10-21 on
+        # the city's answer to Ask ok-lawton-ward-map. WARD_MAPS says which.
         "local-government": depth("city-ward"),
         # Both tilings, because Oklahoma needs both: unified (415) and
         # elementary (91) districts together cover the state's land exactly,
@@ -2951,18 +2952,20 @@ WARD_MAPS = {
                        "every one by the whole city",
             "3744520": "Morrisville ties four council seats to districts and "
                        "elects every one by the whole town"}),
-    # Oklahoma's nine drawn are drawn by one layer,
+    # Oklahoma's ten drawn are drawn by one layer,
     # ok/scripts/build_ok_city_wards.py, which reads the cities off the seats
-    # file, each from the city's own map. Lawton and Muskogee elect by ward and
-    # their maps cannot be drawn (ok/scripts/build_ok_city_councils.py says why
-    # for each), so they are owed. Broken Arrow, Owasso, Jenks and Edmond tie
-    # seats to wards and elect them by the whole city, read from each city's
-    # charter or council page (2026-10-16). Stillwater's council has no wards,
-    # so the sweep does not find it.
+    # file, each from the city's own map: Lawton's since 2026-10-21, when the
+    # city answered Ask ok-lawton-ward-map by pointing to its public ward map,
+    # which draws the same layer. Muskogee elects by ward and its map cannot
+    # be drawn (ok/scripts/build_ok_city_councils.py says why), so it is owed.
+    # Broken Arrow, Owasso, Jenks and Edmond tie seats to wards and elect them
+    # by the whole city, read from each city's charter or council page
+    # (2026-10-16). Stillwater's council has no wards, so the sweep does not
+    # find it.
     "ok": dict(
-        drawn={"4004450", "4006400", "4023950", "4048350", "4049200",
-               "4052500", "4055000", "4066800", "4075000"},
-        owed={"4041850": "Lawton", "4050050": "Muskogee"},
+        drawn={"4004450", "4006400", "4023950", "4041850", "4048350",
+               "4049200", "4052500", "4055000", "4066800", "4075000"},
+        owed={"4050050": "Muskogee"},
         at_large={
             "4009050": "Broken Arrow ties four council seats to wards and "
                        "elects every seat by the whole city",
@@ -3734,10 +3737,12 @@ def score_covered(tag, counties_named, total_counties, expected, records,
                               % (counties_named, total_counties))
                     if county_maps_owed:
                         detail += (" and draw it where it is elected by "
-                                   "district; %d more name a body elected by "
+                                   "district; %d more %s a body elected by "
                                    "district whose districts are not drawn, "
                                    "or not matched to their members"
-                                   % len(county_maps_owed))
+                                   % (len(county_maps_owed),
+                                      "names" if len(county_maps_owed) == 1
+                                      else "name"))
                     # THE COUNTY UNIVERSE IS A COUNT, NOT A LIST. STATE_COUNTIES
                     # holds a number on purpose (every derivable list is a
                     # coverage list, which would make the denominator vacuous),
@@ -3764,9 +3769,10 @@ def score_covered(tag, counties_named, total_counties, expected, records,
                              "{:,}".format(expected["floor"])))
                 if owed:
                     detail += (" and draw it where it is elected by ward or "
-                               "district; %d more name a body elected by ward "
+                               "district; %d more %s a body elected by ward "
                                "or district whose wards are not drawn"
-                               % len(owed))
+                               % (len(owed),
+                                  "names" if len(owed) == 1 else "name"))
                 if short:
                     rest = sorted((u["name"] for g, u in units.items()
                                    if g not in named))
