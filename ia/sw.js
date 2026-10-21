@@ -118,6 +118,7 @@ const ROSTER_URLS = [
   "./data/app/ia-county-city-officials.json",
   "./data/app/ia-county-board-chairs.json",
   "./data/app/ia-township-officers.json",
+  "./data/app/ia-cc-trustees.json",
   "./data/app/ia-city-councils.json",
   "./data/app/tribal-councils.json",
 ];
