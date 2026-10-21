@@ -3800,9 +3800,21 @@ def score_covered(tag, counties_named, total_counties, expected, records,
         # never in `credited` and falls through to the earns-nothing line below
         # with its own reason.
         if verdict == "open" and claimed and not credited:
+            # One record naming many units for the same reason is said once,
+            # with its units listed, rather than once per unit: a letter
+            # asking about 56 parishes made 56 copies of one sentence.
+            groups = []
+            for gid, _q, note, u in claimed:
+                for g in groups:
+                    if g[0] == gid and g[1] == note:
+                        g[2].append(u)
+                        break
+                else:
+                    groups.append((gid, note, [u]))
             unearned = "; ".join(
-                "`%s`%s — %s" % (gid, " (%s)" % u if u else "", note)
-                for gid, _q, note, u in claimed)
+                "`%s`%s — %s" % (gid, " (%s)" % ", ".join(u for u in units if u)
+                                 if any(units) else "", note)
+                for gid, note, units in groups)
             detail = ((detail.rstrip(". ") + ". " if detail else "")
                       + "A record declares this level and earns nothing: "
                       + unearned)

@@ -8511,7 +8511,14 @@ asked, and nothing changes on the map.
 
 ## Ask la-sos-precinct-districts — Louisiana Secretary of State, Elections Division: publish which precincts make up each parish governing body, school board and town council district
 
-> **NOT YET ASKED — DRAFTED 2026-10-21.** To Sherri Wharton Hadskey, Commissioner of
+> **ASKED 2026-10-21 at 13:58 UTC**, from the operator's own mailbox to `elections@sos.la.gov`,
+> read off the sent folder by the thread that drafts the letters. The operator reworded the
+> opening before sending, so the sent copy, not the text below, is the record of what was asked.
+> A follow-up is due about 2026-11-11 if nothing has come back. Gaps `la-parish-district-lines`,
+> `la-school-board-district-lines` and `la-municipal-ward-lines` carry the date in their `ask`
+> fields.
+>
+> Drafted 2026-10-21. To Sherri Wharton Hadskey, Commissioner of
 > Elections, at `elections@sos.la.gov`. The Department of State's Elections contact page
 > (`www.sos.la.gov/elections-voting/contact-us`) names her as Commissioner and gives
 > 225.922.0900 and 800.883.2805; its office contact page gives the mailing address, P.O.
@@ -8643,7 +8650,15 @@ cities that publish none.
 
 ## Ask la-ldaf-swcd-supervisors — Louisiana Department of Agriculture and Forestry, Office of Soil and Water Conservation: publish each conservation district's five supervisors, and share the district boundaries as a map file
 
-> **NOT YET ASKED — DRAFTED 2026-10-21.** To the Office of Soil and Water Conservation at
+> **ASKED 2026-10-21 at 13:57 UTC**, from the operator's own mailbox to
+> `soilandwater@ldaf.state.la.us`, read off the sent folder by the thread that drafts the
+> letters. The operator reworded the opening before sending, so the sent copy, not the text
+> below, is the record of what was asked. It went before the conservation districts were on
+> the map. A follow-up is due about 2026-11-11 if nothing has come back, and can say what the
+> map shows by then. No gap record carries it yet: the record for the districts' supervisors
+> is written by the change that puts the districts' offices on the Parish card.
+>
+> Drafted 2026-10-21. To the Office of Soil and Water Conservation at
 > `soilandwater@ldaf.state.la.us`, telephone (225) 922-1269, 5825 Florida Blvd, Baton Rouge,
 > LA 70806: the address and number the office's own page on the Department's website gives
 > (`www.ldaf.la.gov/about/organization/oswc`, read 2026-10-21 after the host's robots.txt,
@@ -8735,3 +8750,88 @@ with its date, and the cards give each district's office and name no one.
 - Check "44" against the Department's district list on the day it goes.
 - The sponsorship sentence is there because the letter asks for permission. Keep it as long as
   districtry asks for sponsorship.
+
+## Ask la-shreveport-council-districts — ReGIS at the Northwest Louisiana Council of Governments, with the City of Shreveport: written permission to show the city's council districts, or their open publication
+
+> **ASKED 2026-10-21 at 13:59 UTC**, from the operator's own mailbox to `public_comments@nlcog.org`,
+> copied to `LaTonya.Bogan@shreveportla.gov`, read off the sent folder by the thread that drafts
+> the letters. A follow-up is due about 2026-11-11 if nothing has come back. Gap
+> `la-municipal-ward-lines` records it in its blocker; that record's `ask` field carries the
+> Secretary of State's letter (Ask la-sos-precinct-districts), which asks about all six of the
+> undrawn cities, Shreveport among them.
+>
+> Written and made a Gmail draft on 2026-10-21 by the thread that drafts the letters, on the
+> operator's word that day ("Yes write the letter."), and sent the same hour, so no draft was
+> written here first. It is addressed to Kevin Reeves, whom the Northwest Louisiana Council of
+> Governments' staff page lists as ReGIS Project Manager, at `public_comments@nlcog.org`, the one
+> address the Council publishes, and copied to LaTonya Bogan, Clerk of Council, at the address
+> the City's council directory gives; that thread read both pages on 2026-10-21. It searched the
+> mailbox the same day and found nothing to or from `nlcog.org`, ReGIS or `shreveportla.gov`.
+
+**Why this is asked.** Shreveport elects its seven council members from Districts A to G, and
+it is Louisiana's third-largest city (187,593 people on the 2020 census). Its City card names
+the whole council and cannot say which member represents a point, because the one map of the
+districts found, the `Council_Districts` layer on the regional GIS
+(`services3.arcgis.com/cEsSI6IR59h5UGE4/arcgis/rest/services/Council_Districts/FeatureServer`,
+item `181daa1be5754b8281a9da0d02d24f3a`, modified 2025-08-26), carries this notice in its licence
+field: "No one is permitted to copy, distribute, and/or sell this information except in
+accordance with a written agreement with ReGIS-NLCOG." So `la/scripts/build_la_city_wards.py`
+does not draw Shreveport (`NOT_DRAWN`). The layer's owner account, `cosgisadmin`, names no
+organization on its public profile, and its 36 public items include "High Risk Flood Zones for
+City of Shreveport" (read 2026-10-21), which suggests the account is the City's own; that is why
+the City is copied.
+
+The operator reworded that thread's draft before sending it. The text below is the letter as
+sent, copied from the sent folder by that thread, except the last line of the signature, a
+telephone number, which is not copied into this repository. It paraphrases the layer's licence
+notice rather than quoting it.
+
+> Subject: Permission to show Shreveport's council districts on districtry.com
+>
+> Dear Mr. Reeves,
+>
+> I run districtry (https://districtry.com), a free, non-commercial website that allows users
+> to click a location or enter an address to see their electoral districts and
+> representatives. Louisiana's map is available at https://districtry.com/la/.
+>
+> For Shreveport, the site lists all seven City Council members using data from the Secretary
+> of State, but it cannot currently determine which district a specific address is in. The
+> only map of the seven districts I have found is the City's "Council_Districts" layer hosted
+> by ReGIS on ArcGIS Online. Because the license terms state that a written agreement with
+> ReGIS-NLCOG is required to copy or distribute this information, I have not used it.
+>
+> Would ReGIS-NLCOG be willing to provide written permission for districtry to display these
+> council district lines? The boundaries would be:
+>
+>   - Displayed for free with no advertising
+>   - Credited to ReGIS-NLCOG and the City of Shreveport with a link back
+>   - Re-synced monthly to ensure the data stays current
+>
+> No other data from the layer would be used. Alternatively, if the City and ReGIS were
+> willing to publish the district lines under an open license, it would allow public access
+> and use.
+>
+> I have cc'd the Clerk of Council in case this decision falls under the City's jurisdiction.
+> Any update—including a referral to the appropriate contact—would be greatly appreciated.
+>
+> Thank you for your time and consideration.
+>
+> Best regards,
+>
+> Adam Overberg
+> adam@overberg.co
+
+**What each answer means.** The letter makes three promises, and each answer that lets the
+lines be shown keeps all three: no advertising, a credit to ReGIS-NLCOG and the City of
+Shreveport with a link back, and a monthly re-sync, which would be the monthly source check
+(`la/scripts/validate_sources.py`) re-reading the layer, as it already does for the six maps
+the layer draws, and warning when a line or its edit date moves, with the builder re-run the
+same month. Only the district lines are used, as the letter says.
+
+| answer | what it settles |
+|---|---|
+| written permission | `la/scripts/build_la_city_wards.py` draws Shreveport from the `Council_Districts` layer after the checks every drawn city passes (the districts balance on the 2020 census, every district matches a seat the Secretary of State's list names, and no ground is in two cities), and Shreveport leaves `NOT_DRAWN`. The permission and its date are recorded here and in gap `la-municipal-ward-lines`, whose record then no longer names Shreveport. |
+| the lines published under an open licence | The same, under the published terms, credited as those terms ask. |
+| a referral | A letter to whoever is named, recorded under this ask as its follow-up. |
+| a no | Recorded with its date in gap `la-municipal-ward-lines`, and Shreveport moves to a gap record of its own whose `ask` carries this letter, so the refusal is counted the way the done standard counts one. Shreveport stays undrawn. |
+| no reply | A follow-up about 2026-11-11, a second two weeks after that, and then `UNRESPONSIVE`, which is a claim about the ask and never about the Council or the City. |
