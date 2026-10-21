@@ -173,7 +173,7 @@ which is a claim about the ask and never about the source.
 
 | letter | prior contact | state of the draft |
 |---|---|---|
-| Bureau County GIS (Christine Anderson) | long thread; she sent a user agreement and a $150 invoice 2026-08-12 | correctly written as a reply on her own thread |
+| Bureau County GIS (Christine Anderson) | long thread; she sent a user agreement and a $150 invoice 2026-08-12 | correctly written as a reply on her own thread. Made a Gmail draft 2026-10-07, and still unsent on 2026-10-20 (read in the sent folder that day) |
 | Clark County Clerk | asked 2026-08-05, followed up 08-16, **ANSWERED 08-18** ("The County Board is elected by districts. I do not have maps available") | correctly written as a follow-up |
 | Knox County GIS (Taiwo Agbaje) | long thread; he sent the precinct shapefile 2026-09-08 | correctly written as a continuation, opening with thanks for that file |
 | Christian County Clerk | **asked 2026-08-05, followed up 08-16, 08-21 and 09-04 — four letters, no reply** | REWRITTEN 2026-10-01: cites all four, states that the question they asked is now closed from the county's own 2021 reapportionment plan, and asks only for the sixteen members. **ANSWERED 2026-10-07**: Clerk Jodie L. Badman sent two screenshots of the county's own board member list naming all sixteen by district; they ship on the board card, and the `christian-county-board-roster` gap record is retired |
@@ -1296,6 +1296,12 @@ official's name wrong is the cheapest possible way to lose a reader.
 >
 > **Do not pay the invoice before the answer arrives.** The money is not the obstacle and
 > paying first would buy a file this project could not then publish.
+>
+> **RE-CHECKED 2026-10-20 in the sent folder**: the letter below became a Gmail draft on
+> 2026-10-07, as a reply on Anderson's own thread to her 12 August agreement and invoice, and it
+> has not been sent. Nothing has gone to Bureau since the operator's message of 11 August, so
+> "three weeks" above is now ten. The county's board members are named from its own site, so
+> this letter is about the district map alone.
 
 **To:** Christine Anderson, GIS Technician, Bureau County Assessor's Office —
 `canderson@bureaucounty-il.gov`
@@ -7514,6 +7520,13 @@ found one error of ours.
 > officers. The Update Officer Information page says MAT keeps officer records and asks towns to
 > report changes, and the Township Team page says MAT serves "over 9,000 township officers" in
 > "1,772 of the 1,776 townships".
+>
+> **Made a Gmail draft 2026-10-20**, unsent, on the operator's word that day to draft the
+> letters, with one sentence changed from the version first written here. It read "We would
+> show only each officer's name and office, and never a home address, phone number or e-mail
+> address", and since 2026-10-17 this project publishes an official's own telephone and e-mail
+> wherever a government source prints them beside that official, so the letter says what holds
+> for MAT's list instead. The text below is the draft's.
 
 **Why this is asked.** Minnesota's map draws every one of the state's organized towns, and since
 2026-10-15 the Township or City card names the board of the 704 towns that hold their town
@@ -7545,8 +7558,8 @@ publishes this information that the project exists to encourage.
 > website, where we could read it? Either would let a resident of any township see who serves on
 > their town board.
 >
-> We would show only each officer's name and office, and never a home address, phone number or
-> e-mail address. The map would link to MAT for anyone who wants to know more.
+> From MAT's list we would show only each officer's name and office, and never a home address.
+> The map would link to MAT for anyone who wants to know more.
 >
 > A one-line reply is plenty. If this is not something MAT can do, a "no" is a genuinely useful
 > answer too, and we will keep reading the election results and each town's own website.
