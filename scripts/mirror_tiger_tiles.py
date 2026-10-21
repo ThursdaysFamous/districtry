@@ -2,8 +2,9 @@
 """Mirror the Census TIGERweb layers the apps fetch live into tile archives
 (docs/OPTIMIZATION_PLAYBOOK.md §10, phase 6).
 
-Forty-eight polygon layers across thirteen apps — sixteen in four apps at
-phase 6a, thirty-two in the nine newest at phase 6d (2026-10-17) — download a
+Fifty polygon layers across fourteen apps — sixteen in four apps at phase
+6a, thirty-two in the nine newest at phase 6d (2026-10-17) and Louisiana's two
+before it went live (2026-10-21) — download a
 whole state from tigerweb.geo.census.gov the first time they are switched on —
 Illinois's county subdivisions alone are 14.5 MB — and ask that server about
 the reader's point on every first click; the ZIP layers (ZIP_MIRRORS, phases
@@ -109,7 +110,7 @@ PIP_BLOCK = os.path.join(REPO_ROOT, "engine", "index.html", "point-in-polygon.tx
 SERVICES = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
 STATE_FIPS = {"il": "17", "ia": "19", "mi": "26", "wi": "55", "ny": "36", "ca": "06",
               "mn": "27", "ky": "21", "in": "18", "nc": "37", "ok": "40", "sc": "45",
-              "tn": "47", "ar": "05", "ms": "28"}
+              "tn": "47", "ar": "05", "ms": "28", "la": "22"}
 # WHO THIS FETCHES AS, and it used to be nobody: the first version shelled out to
 # curl with no -A, so the Census saw `curl/8.x` and nothing read robots.txt.
 # Nothing was breached — measured 2026-09-27 as that client, the host's
@@ -181,6 +182,8 @@ MIRRORS = [
     ("ar", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
     ("ms", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
     ("ms", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
+    ("la", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("la", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
 ]
 
 # THE ZIP LAYERS (phase 6b). TIGERweb's ZCTA layer has NO STATE field — a ZCTA
@@ -215,6 +218,7 @@ ZIP_MIRRORS = [
     ("tn", "zip-code", "TN_BBOX_ENVELOPE", (-90.40, 34.90, -81.55, 36.75)),
     ("ar", "zip-code", "AR_BBOX_ENVELOPE", (-94.70, 32.95, -89.55, 36.55)),
     ("ms", "zip-code", "MS_BBOX_ENVELOPE", (-91.75, 30.05, -88.00, 35.10)),
+    ("la", "zip-code", "LA_BBOX_ENVELOPE", (-94.15, 28.75, -88.65, 33.12)),
 ]
 ZCTA_SERVICE, ZCTA_INDEX, ZCTA_FIELDS = "PUMA_TAD_TAZ_UGA_ZCTA", 11, "ZCTA5"
 PAGE_SIZE = 250
@@ -236,7 +240,9 @@ PAGE_SIZE = 250
 # ZCTA that touches the state holds 0.00 m2 of it; measured again 2026-10-17 for
 # the eight phase-6d layers, where 87, 75, 103, 116, 64, 110, 96 and 68 dropped
 # ZCTAs touch Minnesota, Indiana, North Carolina, Oklahoma, South Carolina,
-# Tennessee, Arkansas and Mississippi and none holds more than 0.0000 m2 of it).
+# Tennessee, Arkansas and Mississippi and none holds more than 0.0000 m2 of it;
+# and on 2026-10-21 for Louisiana's, where 51 dropped ZCTAs touch the state and
+# none holds more than 0.0000 m2 of it).
 # FULL DETAIL, the other half of the same change, DOES: the app's own loader
 # asks for a maxAllowableOffset=0.0005 simplification and this archive is the
 # Census's own drawing, so ground near an edge moves to the ZCTA the Census puts

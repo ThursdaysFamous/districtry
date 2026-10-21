@@ -29,11 +29,14 @@ Usage:
 
 import datetime
 import html as html_mod
+import http.client
 import json
 import os
 import re
 import sys
 import time
+import urllib.error
+import urllib.request
 
 import os as _os, sys as _sys
 _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
@@ -1383,6 +1386,78 @@ def parse_scott(page, feed):
     return members, office
 
 
+# ------------------------------------------------------------------- Perry
+def parse_perry(page):
+    """Perry County's three commissioners, from the county's own page.
+
+    The page is built in Elementor and gives each commissioner one block: an
+    <h2> carrying the role ("Chairman" or "Commissioner"), an <h3> carrying the
+    name, and a paragraph of contact lines. Measured 2026-10-20: Chairman Bruce
+    Morgenstern, Commissioner Jennifer Martin and Commissioner Joseph Folden.
+    The county's certified canvasses on results.gbsvote.com (l_id=283) are the
+    independent check that this is the sitting board: Morgenstern won the 2020
+    general's COUNTY COMMISSIONER contest, Martin the 2022 general's and Folden
+    its two-year CO COMMISSIONER 2YR seat, and Folden was the only nominee for
+    the 2024 seat, as Morgenstern is for the 2026 one.
+
+    WHAT SHIPS ON NOBODY, by the fleet's rule for a value printed beside more
+    than one official. Every block prints 618-357-5116, "leave message", which is
+    also the phone the footer gives for the Perry County Government Building, so
+    it is the county's line and ships once, as the office's. Martin's block and
+    Folden's both print jmartin@perrycountyil.gov, so it is nobody's own
+    address and ships on neither of them; it is not the board's mailbox either,
+    so it does not ship as the office's. The footer prints the building's
+    street, 3764 State Routes 13-127, with no town, so no address ships.
+
+    AT-LARGE, proven independently of this page: every one of those contests
+    reports 27 of 27 precincts, Vote for ( 1 ) (the county's gap record carries
+    the full reading)."""
+    start = page.find(">Perry County Commissioners</h1>")
+    if start < 0:
+        return [], None
+    stop = page.find("County Board Meeting Minutes", start)
+    roster = page[start:stop if stop > 0 else len(page)]
+    heads = list(re.finditer(r"(?is)<h([23])[^>]*>(.*?)</h\1>", roster))
+    blocks = []
+    for i, head in enumerate(heads):
+        if head.group(1) != "3":
+            continue
+        role_head = heads[i - 1] if i and heads[i - 1].group(1) == "2" else None
+        end = heads[i + 1].start() if i + 1 < len(heads) else len(roster)
+        blocks.append((clean(head.group(2)),
+                       role_of(clean(role_head.group(2))) if role_head else None,
+                       roster[head.end():end]))
+    read = []
+    for name, role, contact in blocks:
+        if not re.fullmatch(r"[A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*){1,3}", name or ""):
+            return [], None
+        if not role:
+            # A block with no role over its name is a block this reader does
+            # not understand, and the card would print a commissioner without
+            # saying which seat; refuse the page rather than guess.
+            return [], None
+        if any(r[0] == name for r in read):
+            return [], None
+        read.append((name, role, normalize_phone(clean(contact)), email_in(contact)))
+    footer = page[page.find("logo_descr"):] if "logo_descr" in page else ""
+    footer_phone = re.search(r"Phone:\s*(\(?\d{3}\)?[\s.-]*\d{3}[\s.-]*\d{4})", clean(footer))
+    office_phone = normalize_phone(footer_phone.group(1)) if footer_phone else None
+    phones = [r[2] for r in read]
+    emails = [r[3] for r in read]
+    members = []
+    for name, role, phone, email in read:
+        entry = {"name": name, "role": role}
+        if phone and phones.count(phone) == 1 and phone != office_phone:
+            entry["phone"] = phone
+        if email and emails.count(email) == 1:
+            entry["email"] = email
+        members.append(entry)
+    office = {"label": "Perry County Board of Commissioners"}
+    if office_phone and office_phone in phones:
+        office["phone"] = office_phone
+    return members, office
+
+
 # ------------------------------------------------- incomplete TLS chains
 # THE COLES PATTERN, MET A SECOND TIME. gallatinco.illinois.gov answers 200 and
 # renders perfectly in a browser, but serves ONLY its leaf certificate — the
@@ -1536,13 +1611,59 @@ SITES = {
         # feed), and robots.txt is a 404 on the host, so no group binds.
         "headers": UA_HEADERS_ROSTER_BOT,
     },
+    "PERRY": {
+        "name": "Perry County",
+        "url": "https://perrycountyil.gov/perry-county-commissioners/",
+        "structure": "Commission form — 3 commissioners elected countywide",
+        "expect": 3,
+        "parse": parse_perry,
+        # Our own token on the STDLIB client, the client this host served on
+        # 2026-10-20. Its gap record said the site answered every visit with a
+        # 168-byte holding page (HTTP 202, 3 and 20 Aug 2026), and on 6 Oct the
+        # re-check of the Illinois letters found robots.txt and the page behind
+        # SiteGround's security check (HTTP 202, `sg-captcha: challenge`;
+        # docs/ASK_DRAFTS.md, the re-check of 2026-10-06). Neither reading
+        # recorded its HTTP client. A host that has answered with a challenge is
+        # believed again only on a deliberate re-measurement, and one was taken
+        # on 2026-10-20 from a Claude Code sandbox with exactly these headers on
+        # Python's own HTTP client: robots.txt served (175 bytes, no rule
+        # matching this path), then the page three times twenty seconds apart,
+        # HTTP 200 and the same 97,254 bytes each time, naming all three. From a
+        # GitHub runner the same evening robots.txt served the same 175 bytes on
+        # three reads fifteen seconds apart (robots-verdicts.json); the page has
+        # not been read from a runner yet. The requests stack was not tried,
+        # because a second client is never probed on a host that already serves
+        # the first. A run that meets the holding page at the PAGE parses
+        # nobody, and main() then carries the shipped roster forward rather than
+        # writing an empty board; one that meets it at robots.txt cannot read
+        # the policy, which disallows, and the whole run stops there, as it
+        # would for any host in this table. If that happens, delete this entry:
+        # the builder then carries Perry's shipped commissioners forward, saying
+        # so on every run, and every other county refreshes.
+        "headers": UA_HEADERS_ROSTER_BOT,
+        "client": "stdlib",
+    },
 }
 
 
 FETCH_ATTEMPTS = 3
 
 
-def fetch(session, url, verify=True, headers=None):
+class _StdlibResponse(object):
+    """What main() reads off a response, for a page read with the stdlib client."""
+
+    def __init__(self, status_code, text, url):
+        self.status_code, self.text, self.url = status_code, text, url
+
+
+def _get_stdlib(url, headers):
+    req = urllib.request.Request(url, headers=dict(headers))
+    with urllib.request.urlopen(req, timeout=60) as resp:
+        body = resp.read()
+        return _StdlibResponse(resp.status, body.decode("utf-8", "replace"), resp.geturl())
+
+
+def fetch(session, url, verify=True, headers=None, client=None):
     """GET with a bounded retry. Returns (response, error_or_None).
 
     WHY A RETRY EXISTS HERE (added 2026-08-08). There was none, and a single
@@ -1570,6 +1691,13 @@ def fetch(session, url, verify=True, headers=None):
     # A county added since then starts on our own token, the fleet's default,
     # through its SITES entry's `headers`; the browser string stays for the
     # counties that were already read with it.
+    #
+    # `client="stdlib"` reads the page with Python's own HTTP client instead of
+    # this session, for a host that has only ever been read that way. Perry's is
+    # the one (see its SITES entry): it served our token on that client, and a
+    # second client is never tried on a host that already serves the first.
+    # Its robots.txt is read with the stdlib client either way, because a
+    # caller with no CA bundle gets the stdlib reader.
     headers = headers or UA
     require_robots_once(url, headers["User-Agent"], headers=headers,
                         label="il-county-commissioners",
@@ -1577,10 +1705,13 @@ def fetch(session, url, verify=True, headers=None):
     last = None
     for attempt in range(FETCH_ATTEMPTS):
         try:
+            if client == "stdlib":
+                return _get_stdlib(url, headers), None
             resp = session.get(url, headers=headers, timeout=60, verify=verify)
             resp.raise_for_status()
             return resp, None
-        except requests.RequestException as exc:
+        except (requests.RequestException, urllib.error.URLError, OSError,
+                http.client.HTTPException) as exc:
             last = exc
             if attempt + 1 < FETCH_ATTEMPTS:
                 time.sleep(2 * (attempt + 1))
@@ -1666,7 +1797,8 @@ def main():
             if name not in bundles:
                 bundles[name] = aia_bundle.ca_bundle("county-commissioners", name)
             verify = bundles[name]
-        resp, err = fetch(session, spec["url"], verify, spec.get("headers"))
+        resp, err = fetch(session, spec["url"], verify, spec.get("headers"),
+                          spec.get("client"))
         if resp is None:
             print("county-commissioners: WARN — %s unreadable after %d attempts (%s)"
                   % (key, FETCH_ATTEMPTS, err), file=sys.stderr)
@@ -1675,7 +1807,8 @@ def main():
             # A page that fills itself in from a feed: read the feed the way the
             # page does, at the address the page carries, on the page's host.
             feed_path = spec["feed"](resp.text)
-            feed_resp, feed_err = (fetch(session, requests.compat.urljoin(resp.url, feed_path), verify, spec.get("headers"))
+            feed_resp, feed_err = (fetch(session, requests.compat.urljoin(resp.url, feed_path), verify,
+                                         spec.get("headers"), spec.get("client"))
                                    if feed_path else (None, "the page no longer names its feed"))
             if feed_resp is None:
                 print("county-commissioners: WARN — %s feed unreadable (%s)"
@@ -1692,7 +1825,8 @@ def main():
         # refuses to write, exactly as before.
         if not members and spec["expect"]:
             time.sleep(3)
-            retry, _ = fetch(session, spec["url"], verify, spec.get("headers"))
+            retry, _ = fetch(session, spec["url"], verify, spec.get("headers"),
+                             spec.get("client"))
             if retry is not None:
                 members, office = parse(retry.text)
                 if members:

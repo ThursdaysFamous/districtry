@@ -3,20 +3,28 @@
 Build one state's election-precinct file from the one layer that state
 publishes for every precinct, for the app to read same-origin.
 
-Six states use this, each through a short builder of its own
+Seven states use this, each through a short builder of its own
 (<tag>/scripts/build_<tag>_precincts.py): Kentucky, North Carolina, Indiana,
 South Carolina, Arkansas and Tennessee, all measured 2026-10-15 to publish a
 current statewide precinct layer from a government office (the research is
 /mnt/project-files/research/precinct-sources-six-states-2026-10-15.md in the
-project's shared folder). A state's builder says where its layer is, how to
-read one record and what to expect; everything else lives here once, because
-six copies of Minnesota's builder would be six readers of one question.
+project's shared folder), and Louisiana since 2026-10-21. A state's builder
+says where its layer is, how to read one record and what to expect;
+everything else lives here once, because seven copies of Minnesota's builder
+would be seven readers of one question.
 
 THE SHAPE IS MINNESOTA'S (mn/scripts/build_mn_precincts.py): fetch the whole
 layer, check it, simplify it with Douglas-Peucker, refuse to write unless the
 simplified file answers as the source does, and ship it as a data/app file. A
 reader's click is answered from that file, so no point is sent to a state
 server, and the privacy page has nothing to add.
+
+A STATE WHOSE PRECINCTS ARE A FILE (Louisiana, 2026-10-21: the Legislature's
+redistricting office publishes them as one zipped shapefile, edition by
+edition) names a `fetcher` instead of reading an ArcGIS layer. ShapefileZip
+is that fetcher: robots.txt first, the listing page held to the edition the
+builder names, the whole zip read through mapshaper, and the file's own
+digest kept in the record. Everything after the fetch is the same code.
 
 WHAT IS HELD, IN ORDER
   1. robots.txt is read before the first request with the client that crawls,
@@ -56,7 +64,10 @@ WHAT IS HELD, IN ORDER
      source at least 99.5% of the time, with no point in two precincts; and
      points sampled inside each county, as the Census draws it in the
      instance's own county file, land in that county's precincts at the
-     rate the builder sets from its first measured build.
+     rate the builder sets from its first measured build. A county the
+     precinct file leaves partly undefined (Louisiana's five parishes on
+     Lake Pontchartrain) gets a floor of its own, which the builder states
+     with the share it measured; every other county keeps the general one.
   7. A record (data/source/<file>.source.json) keeps the fetch date, the
      layer's own edit date where it publishes one, a fingerprint of what a
      re-precincting changes, the count in every county and the shipped file's
@@ -117,7 +128,8 @@ class Spec(object):
                  identical_duplicates=0, tiling_min_same=0.97,
                  tiling_max_other=0.02, tiling_samples=200, edit_date=None,
                  required=("key", "name", "countyFips"), extra_check=None,
-                 multipart_records=0, part_latest=(), card_claims=()):
+                 multipart_records=0, part_latest=(), card_claims=(),
+                 fetcher=None, tiling_floor_by_county=None):
         self.tag = tag
         self.label = label
         self.layer = layer.rstrip("/")
@@ -150,6 +162,20 @@ class Spec(object):
         # Sentences the card must carry beyond the interval, each stating
         # something this builder knows (an edition, a file's date).
         self.card_claims = tuple(card_claims)
+        # A state whose precincts are a file rather than an ArcGIS layer
+        # supplies fetcher(spec, geometry) -> (records, meta), records shaped
+        # as fetch() returns them; ShapefileZip below is the one in use.
+        self.fetcher = fetcher
+        # A county whose own share is lower for a reason the builder measured
+        # and states (Louisiana's precinct file leaves Lake Pontchartrain
+        # undefined, and the county file carries the lake): GEOID -> its own
+        # floor, each below tiling_min_same. Every other county keeps that.
+        self.tiling_floor_by_county = dict(tiling_floor_by_county or {})
+        for geoid, floor in self.tiling_floor_by_county.items():
+            if not floor < tiling_min_same:
+                raise SystemExit("%s: county %s's tiling floor %r is not below the general "
+                                 "%r, so it declares nothing" % (label, geoid, floor,
+                                                                 tiling_min_same))
         if multipart_records and identical_duplicates:
             raise SystemExit("%s: a builder declares repeated records or records in parts, "
                              "not both" % label)
@@ -272,6 +298,11 @@ class Fetcher(object):
 
 
 def fetch(spec, geometry=True):
+    # getattr: the other fleet modules hand this function spec-like objects
+    # of their own, which carry no fetcher.
+    fetcher = getattr(spec, "fetcher", None)
+    if fetcher is not None:
+        return fetcher(spec, geometry)
     f = Fetcher(spec)
     meta = f.metadata()
     oid = meta.get("objectIdField") or next(
@@ -286,6 +317,111 @@ def fetch(spec, geometry=True):
               .strftime("%Y-%m-%dT%H:%M:%SZ") if edit else None)
     records = f.records(oid, page, geometry)
     return records, {"layer_edited": edited, "item": meta.get("serviceItemId") or None}
+
+
+class ShapefileZip(object):
+    """A spec's fetcher for precincts published as one zipped shapefile, the
+    shape Louisiana's Legislature uses. robots.txt is read first with the
+    client that crawls, for the listing page as well as the file; the zip is
+    read whole (a file has no attribute-only route, so --watch reads it too)
+    and converted to WGS84 GeoJSON through mapshaper. The meta carries the
+    file's Last-Modified as `layer_edited` and its SHA-256 as `source_sha256`.
+
+    `listing`, when given, is the page that links every edition, and
+    `edition_re` a pattern with one group per part of a link's date (year,
+    month, day, named y, m and d). The newest edition listed must be the one
+    `spec.layer` names, or the build stops: a newer edition is read by a person
+    before it ships, never picked up because it appeared."""
+
+    def __init__(self, listing=None, edition_re=None):
+        self.listing = listing
+        self.edition_re = re.compile(edition_re) if edition_re else None
+        if bool(listing) != bool(edition_re):
+            raise SystemExit("ShapefileZip: a listing and its edition pattern come together")
+
+    def _edition(self, spec, text):
+        m = self.edition_re.search(text)
+        if not m:
+            return None
+        return datetime.date(int(m.group("y")), int(m.group("m")), int(m.group("d")))
+
+    def __call__(self, spec, geometry=True):
+        import urllib.parse  # noqa: PLC0415
+        import requests  # noqa: PLC0415  (fleet scraper dependency)
+        import robots_policy  # noqa: PLC0415
+
+        session = requests.Session()
+        session.headers["User-Agent"] = spec.user_agent
+        gate = robots_policy.RobotsGate(session, spec.user_agent)
+
+        def get(url, **kw):
+            ok, why = gate.allows(url)
+            print("robots.txt: %s — %s (%s)" % ("allowed" if ok else "REFUSED", why, url),
+                  file=sys.stderr)
+            if not ok:
+                fail(spec, "the host refuses this client in its robots.txt — not fetching. %s"
+                     % why)
+            delay = max(float(gate.crawl_delay(url) or 0.0), float(spec.pace))
+            last = None
+            for attempt in range(4):
+                if attempt or get.count:
+                    time.sleep(max(delay, 5.0 * attempt))
+                get.count += 1
+                try:
+                    resp = session.get(url, timeout=600, **kw)
+                    resp.raise_for_status()
+                    return resp
+                except Exception as exc:  # noqa: BLE001  (retried, then reported)
+                    last = exc
+            fail(spec, "%s did not answer after four tries: %s" % (url, last))
+        get.count = 0
+
+        pinned = self._edition(spec, urllib.parse.unquote(spec.layer)) if self.edition_re else None
+        if self.listing:
+            if pinned is None:
+                fail(spec, "the file the builder names does not match its own edition pattern")
+            page = get(self.listing).text
+            listed = sorted({d for d in (self._edition(spec, urllib.parse.unquote(h))
+                                         for h in re.findall(r'href="([^"]+)"', page)) if d})
+            if not listed:
+                fail(spec, "%s lists no edition the pattern recognises — the page changed; "
+                     "read it before building" % self.listing)
+            if pinned not in listed:
+                fail(spec, "%s no longer lists the edition of %s that the builder names"
+                     % (self.listing, pinned.isoformat()))
+            if listed[-1] != pinned:
+                fail(spec, "%s lists a newer edition, of %s, than the %s the builder names: "
+                     "read it, then point the builder at it deliberately"
+                     % (self.listing, listed[-1].isoformat(), pinned.isoformat()))
+            print("listing: the newest edition is the one named (%s)" % pinned.isoformat(),
+                  file=sys.stderr)
+        resp = get(spec.layer)
+        body = resp.content
+        stamp = resp.headers.get("Last-Modified")
+        edited = None
+        if stamp:
+            import email.utils  # noqa: PLC0415
+            edited = email.utils.parsedate_to_datetime(stamp).astimezone(
+                datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        with tempfile.TemporaryDirectory() as tmp:
+            src = os.path.join(tmp, "source.zip")
+            dst = os.path.join(tmp, "source.geojson")
+            with open(src, "wb") as fh:
+                fh.write(body)
+            proc = subprocess.run(["npx", "-y", MAPSHAPER, "-i", src, "-proj", "wgs84",
+                                   "-o", "format=geojson", dst],
+                                  capture_output=True, text=True, cwd=spec.instance)
+            if proc.returncode != 0 or not os.path.exists(dst):
+                fail(spec, "mapshaper could not read the zip (%d): %s"
+                     % (proc.returncode, (proc.stderr or "")[-800:]))
+            with open(dst, encoding="utf-8") as fh:
+                doc = json.load(fh)
+        records = [{"properties": f.get("properties") or {},
+                    "geometry": f.get("geometry") if geometry else None}
+                   for f in doc.get("features") or []]
+        print("  read %d records from %d bytes" % (len(records), len(body)), file=sys.stderr)
+        return records, {"layer_edited": edited, "item": None,
+                         "source_sha256": hashlib.sha256(body).hexdigest()}
 
 
 # ---------- read ----------
@@ -561,15 +697,19 @@ def check_tiling(spec, feats, counties, seed=2026):
             else:
                 none += 1
         rows.append((same / float(n), c["name"], same, other, none, n))
-        if same / float(n) < spec.tiling_min_same:
+        floor = spec.tiling_floor_by_county.get(geoid, spec.tiling_min_same)
+        if same / float(n) < floor:
             problems.append("%s: only %d of %d points inside the county land in one of "
-                            "its own precincts (%d in another county's, %d in none)"
-                            % (c["name"], same, n, other, none))
+                            "its own precincts (%d in another county's, %d in none; floor %.2f)"
+                            % (c["name"], same, n, other, none, floor))
         if other / float(n) > spec.tiling_max_other:
             problems.append("%s: %d of %d points inside the county land in another "
                             "county's precinct" % (c["name"], other, n))
     if multi:
         problems.append("%d county sample points fell in more than one precinct" % multi)
+    for geoid in sorted(set(spec.tiling_floor_by_county) - set(counties)):
+        problems.append("a tiling floor is declared for county %s, which is not in the "
+                        "county file" % geoid)
     rows.sort()
     most_other = max(rows, key=lambda r: r[3])
     most_none = max(rows, key=lambda r: r[4])
@@ -581,6 +721,10 @@ def check_tiling(spec, feats, counties, seed=2026):
         "tiling: %d counties, %d points each; floor %.2f own, ceiling %.2f other"
         % (len(rows), spec.tiling_samples, spec.tiling_min_same, spec.tiling_max_other),
     ]
+    if spec.tiling_floor_by_county:
+        lines.append("tiling: declared floors %s" % ", ".join(
+            "%s %.2f" % (counties[g]["name"] if g in counties else g, f)
+            for g, f in sorted(spec.tiling_floor_by_county.items())))
     return problems, lines
 
 
@@ -598,6 +742,10 @@ def write_record(spec, meta, feats, shipped_bytes, dupes):
         "precincts_per_county": per_county(feats),
         "shipped_sha256": hashlib.sha256(shipped_bytes).hexdigest(),
     }
+    # A file source (ShapefileZip) also records the file it read, so --watch
+    # can say whether the publisher replaced it in place.
+    if meta.get("source_sha256"):
+        record["source_sha256"] = meta["source_sha256"]
     with open(spec.record_path, "w", encoding="utf-8") as fh:
         json.dump(record, fh, indent=1, sort_keys=True)
         fh.write("\n")
@@ -705,6 +853,11 @@ def run_watch(spec):
         note = (" The layer's own edit date moved (%s -> %s) without changing any "
                 "precinct's key, name, county or area." % (record["layer_edited"],
                                                           meta["layer_edited"]))
+    if (meta.get("source_sha256") and record.get("source_sha256")
+            and meta["source_sha256"] != record["source_sha256"]):
+        note += (" The file was replaced in place (SHA-256 %s -> %s) without changing any "
+                 "precinct's key, name, county or measure; rebuild to ship its lines."
+                 % (record["source_sha256"][:12], meta["source_sha256"][:12]))
     print("%s --watch: unchanged since %s (%d precincts).%s"
           % (spec.label, record["fetched"], live["precincts"], note))
 

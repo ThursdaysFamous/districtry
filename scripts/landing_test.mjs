@@ -25,6 +25,7 @@ import { chromium, devices } from "playwright";
 import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { stubBasemap } from "./basemap_stub.mjs";
 
 const BASE = process.env.BASE_URL || "http://localhost:8131";
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -66,17 +67,6 @@ async function serveVendoredLeaflet(page) {
   return true;
 }
 
-// A 1x1 transparent GIF for the CARTO basemap tiles. The map's correctness has
-// nothing to do with whether a raster tile painted, and letting real tile
-// requests fly would make this gate depend on a third party's uptime — and
-// spend the fleet's metered CARTO quota on CI.
-const BLANK_TILE = Buffer.from(
-  "R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBTAA7", "base64");
-async function stubTiles(page) {
-  await page.route("**/*.basemaps.cartocdn.com/**", (route) =>
-    route.fulfill({ status: 200, contentType: "image/gif", body: BLANK_TILE }));
-}
-
 // One Photon response, shaped like the real thing. The address box is asserted
 // against a STUB rather than the live geocoder for the same reason /il/ is
 // stubbed below: a gate that needs photon.komoot.io to be up and to keep
@@ -108,7 +98,7 @@ async function textOrNull(page, selector) {
 // block 9b counts the launcher worker's requests to prove a share never
 // leaves the phone. Read at launch, so it is set here rather than in the job.
 process.env.PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS = "1";
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // --- 1. a bare visit renders the landing page, and does NOT forward -------
   {
@@ -870,7 +860,6 @@ try {
     });
     page.on("pageerror", (e) => errs.push(String(e)));
     const vendored = await serveVendoredLeaflet(page);
-    await stubTiles(page);
     const resp = await page.goto(BASE + "/coverage-map.html", { waitUntil: "load" });
     check("coverage map loads", resp.status() === 200, `HTTP ${resp.status()}`);
     await page.waitForTimeout(1500);
@@ -937,7 +926,6 @@ try {
     const ctx = await browser.newContext({ serviceWorkers: "block" });
     const page = await ctx.newPage();
     await serveVendoredLeaflet(page);
-    await stubTiles(page);
     // `domcontentloaded`, NOT `load` — see section 6 for the measurement. This
     // check reads an iframe attribute and fetches the map separately; neither
     // needs the page's subresources, and the landing page carries a
@@ -986,6 +974,353 @@ try {
     await page.setViewportSize({ width: 1024, height: 844 });
     await page.waitForTimeout(100);
     check("widening a folded page opens the list again", (await shown()) === 51, `${await shown()} row(s) shown`);
+    await ctx.close();
+  }
+
+  // --- 1h-bis. the question tiles fold, and one tap opens one --------------
+  //
+  // The questions are tiles that open to their places (2026-10-21), and they
+  // follow the state list's rule: they SHIP open and a script folds them, so a
+  // page whose script failed shows every link rather than tiles that hide
+  // them. The shipped half is read off the page as served, before any script
+  // runs; the folded half in the browser, on every width, since unlike the
+  // state list the tiles fold on a computer too.
+  {
+    const raw = await (await fetch(BASE + "/")).text();
+    const tags = raw.match(/<details class="ask"[^>]*>/g) || [];
+    check("every question tile ships open, for a page with no script",
+      tags.length > 3 && tags.every((t) => /\sopen>$/.test(t)), `${tags.length} tile(s)`);
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    const shownChips = () => page.evaluate(() =>
+      [...document.querySelectorAll(".ask-chips a")].filter((a) => a.checkVisibility()).length);
+    const open = await page.evaluate(() =>
+      [...document.querySelectorAll("details.ask")].map((d) => d.open));
+    check("the question tiles start folded, with no place showing",
+      open.length === tags.length && open.every((o) => !o) && (await shownChips()) === 0,
+      JSON.stringify(open) + `, ${await shownChips()} place(s) showing`);
+    const inFirst = await page.evaluate(() =>
+      document.querySelector("details.ask").querySelectorAll(".ask-chips a").length);
+    await page.click("details.ask > summary");
+    check("one tap opens that tile's places and no other's",
+      inFirst > 0 && (await shownChips()) === inFirst, `${await shownChips()} showing, ${inFirst} in the tile`);
+    await ctx.close();
+  }
+
+  // --- 1i. the worked example: six places, and who represents each --------
+  //
+  // Beside the address box since 2026-10-21: a place, the offices that answer
+  // there and the people who hold them, with a button for each of six places
+  // and a different place first on each visit. The districts are measured by
+  // the generator from the boundary files the map draws (place_cards) and held
+  // there by build_landing_page.py --check; the names are read by the page's
+  // own script, when it shows a place, from the rosters the map's cards read
+  // (EXAMPLE_SCRIPT), so they are held HERE: in every place, each card names
+  // what its roster says for its seat, by the rule the officeholder tables
+  // print by. Also held: the example beside the box on a computer and after it
+  // on a phone, each card in its layer's map colour in both themes, each place's
+  // link opening the app its names come from at a point with layers on and
+  // keeping that point when followed, one place on view at a time with its
+  // button pressed, a visit starting on the place after the last visit's (and on
+  // some place when none is kept or storage is blocked), a press counted once as
+  // example-place/<place> and nothing counted on load, Chicago alone with no
+  // buttons and no name lines when there is no script, and a roster that fails
+  // to load saying so on its own card only.
+  const PLACE_KEY = (/\bvar PLACE_KEY = "([^"]+)"/.exec(
+    readFileSync(join(HERE, "..", "index.html"), "utf8")) || [])[1];
+  // The place on view, once its names have filled in.
+  const exampleNamed = (place) => {
+    const shown = [...document.querySelectorAll(".ex-panel")].filter((p) => !p.hidden);
+    if (shown.length !== 1 || (place && shown[0].getAttribute("data-place") !== place)) return false;
+    const lines = [...shown[0].querySelectorAll(".ex-card .ex-name")];
+    return lines.length > 0 && lines.every((l) => !l.hidden && l.textContent.trim());
+  };
+  const exampleState = () => {
+    const text = (el) => (el?.textContent || "").trim();
+    const shown = [...document.querySelectorAll(".ex-panel")].filter((p) => !p.hidden);
+    return {
+      shown: shown.length === 1 ? shown[0].getAttribute("data-place") : `${shown.length} panels`,
+      picker: !!document.querySelector(".ex-pick")?.checkVisibility(),
+      buttons: [...document.querySelectorAll(".ex-pick button")].map((b) => ({
+        place: b.getAttribute("data-place"), pressed: b.getAttribute("aria-pressed"),
+        controls: b.getAttribute("aria-controls") })),
+      panels: [...document.querySelectorAll(".ex-panel")].map((p) => ({
+        place: p.getAttribute("data-place"), id: p.id, heading: text(p.querySelector(".ex-place")),
+        link: p.querySelector("a.ex-open")?.href || null,
+        linkShown: !!p.querySelector("a.ex-open")?.checkVisibility(),
+        cards: [...p.querySelectorAll(".ex-card")].map((li) => ({
+          body: text(li.querySelector(".ex-body")),
+          name: text(li.querySelector(".ex-name")),
+          nameShown: li.querySelector(".ex-name")?.checkVisibility() ?? false,
+          pill: text(li.querySelector(".ex-pill")),
+          roster: li.getAttribute("data-roster"),
+          seat: li.getAttribute("data-seat"),
+          lc: getComputedStyle(li).getPropertyValue("--lc").trim().toUpperCase(),
+          light: li.style.getPropertyValue("--lc-l").trim().toUpperCase(),
+          dark: li.style.getPropertyValue("--lc-d").trim().toUpperCase(),
+        })),
+      })),
+    };
+  };
+  // The page's rule, restated so the page is held to it: follow the seat's
+  // path into the roster; each member there is a name, or a vacant seat, or
+  // nothing (no record, a withheld one, or one whose number and letter differ
+  // from the district the card shows); a seat names every member, then how
+  // many of its seats are vacant, and with no member it is "Vacant" or "Not
+  // listed".
+  const seatSays = (roster, seatJson, pill) => {
+    let seat = roster;
+    for (const k of JSON.parse(seatJson)) {
+      seat = seat && typeof seat === "object" && Object.prototype.hasOwnProperty.call(seat, k) ? seat[k] : null;
+    }
+    const member = (rec) => {
+      if (!rec || typeof rec !== "object" || rec.withheld) return null;
+      if (rec.subDistrict && pill !== "District " + rec.subDistrict) return null;
+      const n = typeof rec.name === "string" ? rec.name.trim() : "";
+      if (n && n.toUpperCase() !== "VACANT") return n;
+      return rec.vacant || n ? "" : null;
+    };
+    const names = [];
+    let vacant = 0;
+    for (const rec of Array.isArray(seat) ? seat : [seat]) {
+      const n = member(rec);
+      if (n) names.push(n);
+      else if (n === "") vacant++;
+    }
+    if (!names.length) return vacant ? "Vacant" : "Not listed";
+    if (vacant) names.push(vacant === 1 ? "a vacant seat" : `${vacant} vacant seats`);
+    return names.length === 1 ? names[0] : names.slice(0, -1).join(", ") + " and " + names[names.length - 1];
+  };
+  const rosterFiles = new Map();
+  const rosterSaid = (c) => {
+    try {
+      if (!rosterFiles.has(c.roster)) {
+        rosterFiles.set(c.roster, JSON.parse(readFileSync(join(HERE, "..", c.roster), "utf8")));
+      }
+      return seatSays(rosterFiles.get(c.roster), c.seat, c.pill);
+    } catch (e) {
+      return `(${c.roster}: ${e.message})`;
+    }
+  };
+  // A page on the example's own origin, with the counter stubbed: each count
+  // the page hands it is recorded in `counted`, and nothing reaches GoatCounter.
+  async function examplePage(opts, counted) {
+    const ctx = await browser.newContext({ ...opts, serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    await page.route("**/gc.zgo.at/**", (r) => r.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+    if (counted) {
+      await page.exposeFunction("__gcCount", (path) => { counted.push(path); });
+      await page.addInitScript(() => {
+        window.goatcounter = { count: (vars) => { if (vars && vars.event) window.__gcCount(vars.path); } };
+      });
+    }
+    return { ctx, page };
+  }
+  // The last visit's place, as a reader's browser would hold it, set from a
+  // page on the same origin before the front page opens.
+  async function keepPlace(page, place) {
+    await page.goto(BASE + "/robots.txt", { waitUntil: "domcontentloaded" });
+    await page.evaluate(([k, v]) => localStorage.setItem(k, v), [PLACE_KEY, place]);
+  }
+  async function openExample(page) {
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await page.evaluate(() => document.fonts.ready);
+    await page.waitForFunction(exampleNamed, null, { timeout: 10000 }).catch(() => {});
+  }
+  async function showPlace(page, place) {
+    await page.click(`.ex-pick button[data-place="${place}"]`);
+    await page.waitForFunction(exampleNamed, place, { timeout: 10000 }).catch(() => {});
+  }
+  check("the front page's script names the key it keeps the last place under", !!PLACE_KEY, String(PLACE_KEY));
+  {
+    // On a computer: every place, pressed in turn, with the counter stubbed.
+    const counted = [];
+    const { ctx, page } = await examplePage({ viewport: { width: 1280, height: 800 }, colorScheme: "light" }, counted);
+    await openExample(page);
+    const first = await page.evaluate(exampleState);
+    const layout = await page.evaluate(() => {
+      const a = document.querySelector(".example")?.getBoundingClientRect();
+      const s = document.querySelector(".search-card")?.getBoundingClientRect();
+      return { beside: !!(a && s && a.left >= s.right && a.top < s.bottom) };
+    });
+    await page.waitForTimeout(300);
+    const onLoad = counted.slice();
+    const order = first.buttons.map((b) => b.place);
+    check("the example has a button for each of its places, in the order of their panels",
+      order.length >= 2 && order.join() === first.panels.map((p) => p.place).join() &&
+        first.buttons.every((b) => b.controls === "ex-" + b.place) &&
+        first.panels.every((p) => p.id === "ex-" + p.place),
+      JSON.stringify({ buttons: first.buttons, panels: first.panels.map((p) => [p.place, p.id]) }));
+    check("with the script, the buttons show and one place is on view, its button pressed",
+      first.picker && order.includes(first.shown) &&
+        first.buttons.every((b) => b.pressed === String(b.place === first.shown)),
+      JSON.stringify({ picker: first.picker, shown: first.shown, buttons: first.buttons }));
+    check("on a computer the example sits beside the address box", layout.beside, JSON.stringify(layout));
+    check("opening the page counts nothing for the example", onLoad.length === 0, JSON.stringify(onLoad));
+    const pressed = [];
+    const views = {};
+    for (const place of order) {
+      if (place === first.shown) continue;
+      await showPlace(page, place);
+      pressed.push(place);
+      const now = await page.evaluate(exampleState);
+      views[place] = { shown: now.shown, buttons: now.buttons.map((b) => [b.place, b.pressed]) };
+    }
+    // a press of the button already pressed changes nothing and counts nothing
+    const before = await page.evaluate(exampleState);
+    await page.click(`.ex-pick button[data-place="${before.shown}"]`);
+    await page.waitForTimeout(400);
+    const after = await page.evaluate(exampleState);
+    check("each button shows its own place, alone, and presses only itself",
+      pressed.length === order.length - 1 && pressed.every((p) => views[p].shown === p &&
+        views[p].buttons.every(([b, s]) => s === String(b === p))),
+      JSON.stringify(views));
+    check("each press is counted once as example-place/<place>, and a press of the pressed button not at all",
+      counted.join() === pressed.map((p) => "example-place/" + p).join() && after.shown === before.shown,
+      JSON.stringify({ counted, pressed, again: after.shown }));
+    // Every place has now been on view, so every card has its name.
+    const cards = after.panels.flatMap((p) => p.cards.map((c) => ({ place: p.place, ...c })));
+    check("every place names a person or a vacant seat or says Not listed on every card, under a body and a district",
+      after.panels.length === order.length && after.panels.every((p) => p.cards.length >= 3 && p.heading) &&
+        cards.every((c) => c.body && c.name && c.pill),
+      JSON.stringify(after.panels.map((p) => [p.place, p.cards.map((c) => [c.body, c.name, c.pill])])));
+    check("each example card names what its roster says for its seat, in every place",
+      cards.length > 0 && cards.every((c) => c.name === rosterSaid(c)),
+      JSON.stringify(cards.filter((c) => c.name !== rosterSaid(c))
+        .map((c) => [c.place, c.roster, c.seat, c.name, rosterSaid(c)])));
+    check("each example card takes its layer's map colour in light",
+      cards.every((c) => /^#[0-9A-F]{6}$/.test(c.light) && c.lc === c.light),
+      JSON.stringify(cards.map((c) => [c.place, c.lc, c.light])));
+    // A link opens an app with its point and its layers in the short form the
+    // apps write, and it is the app whose rosters the place's names come from.
+    const apps = FLEET.map((m) => m.url);
+    check("every place's link opens the app its names come from, at a point with layers on",
+      after.panels.every((p) => !!p.link && apps.some((u) => p.link.startsWith(u + "#")) &&
+        /#p=-?\d+(\.\d+)?,-?\d+(\.\d+)?&l=[a-z][a-z0-9]*(,[a-z][a-z0-9]*)*$/.test(p.link) &&
+        p.cards.every((c) => p.link.includes("/" + c.roster.split("/")[0] + "/#"))),
+      JSON.stringify(after.panels.map((p) => [p.place, p.link])));
+    await ctx.close();
+  }
+  {
+    // On a phone, and in the dark.
+    const phone = await examplePage({ viewport: { width: 390, height: 664 }, colorScheme: "light" });
+    await openExample(phone.page);
+    const got = await phone.page.evaluate(() => {
+      const a = document.querySelector(".example")?.getBoundingClientRect();
+      const s = document.querySelector(".search-card")?.getBoundingClientRect();
+      return {
+        shown: !!document.querySelector(".example")?.checkVisibility(),
+        after: !!(a && s && a.top >= s.bottom && a.left < s.right),
+        sideways: document.documentElement.scrollWidth > innerWidth,
+      };
+    });
+    await phone.ctx.close();
+    check("on a phone the example comes after the address box, with no sideways scroll",
+      got.shown && got.after && !got.sideways, JSON.stringify(got));
+    const dark = await examplePage({ viewport: { width: 1280, height: 800 }, colorScheme: "dark" });
+    await openExample(dark.page);
+    const night = await dark.page.evaluate(exampleState);
+    await dark.ctx.close();
+    const nightCards = night.panels.flatMap((p) => p.cards.map((c) => ({ place: p.place, ...c })));
+    check("each example card takes its layer's map colour in dark",
+      nightCards.length > 0 && nightCards.every((c) => /^#[0-9A-F]{6}$/.test(c.dark) && c.lc === c.dark),
+      JSON.stringify(nightCards.map((c) => [c.place, c.lc, c.dark])));
+  }
+  {
+    // A visit starts on the place after the last visit's, the last place
+    // goes round to the first, and a visit keeps the place it showed.
+    const { ctx, page } = await examplePage({ viewport: { width: 1280, height: 800 } });
+    await openExample(page);
+    const visit1 = await page.evaluate(exampleState);
+    const kept1 = await page.evaluate((k) => localStorage.getItem(k), PLACE_KEY);
+    await openExample(page);
+    const visit2 = await page.evaluate(exampleState);
+    const kept2 = await page.evaluate((k) => localStorage.getItem(k), PLACE_KEY);
+    const order = visit1.buttons.map((b) => b.place);
+    await keepPlace(page, order[order.length - 1]);
+    await openExample(page);
+    const visit3 = await page.evaluate(exampleState);
+    await ctx.close();
+    check("a first visit shows one of the places and keeps it",
+      order.includes(visit1.shown) && kept1 === visit1.shown, JSON.stringify({ shown: visit1.shown, kept1 }));
+    check("the next visit starts on the place after it, and keeps that one",
+      visit2.shown === order[(order.indexOf(visit1.shown) + 1) % order.length] && kept2 === visit2.shown,
+      JSON.stringify({ first: visit1.shown, next: visit2.shown, kept2 }));
+    check("after the last place, a visit starts on the first", visit3.shown === order[0],
+      JSON.stringify({ last: order[order.length - 1], next: visit3.shown }));
+  }
+  {
+    // Storage the page cannot read or write still shows a place, named.
+    const { ctx, page } = await examplePage({ viewport: { width: 1280, height: 800 } });
+    await page.addInitScript(() => {
+      Object.defineProperty(window, "localStorage", {
+        configurable: true, get() { throw new DOMException("blocked", "SecurityError"); } });
+    });
+    await openExample(page);
+    const blocked = await page.evaluate(exampleState);
+    const named = await page.evaluate(exampleNamed);
+    await ctx.close();
+    check("with storage blocked the example still shows a place, named, and its buttons",
+      blocked.picker && blocked.buttons.some((b) => b.place === blocked.shown) && named,
+      JSON.stringify({ shown: blocked.shown, picker: blocked.picker, named }));
+  }
+  {
+    // With no script: Chicago's bodies and districts and its link to the map,
+    // and no buttons and no name line, empty or otherwise.
+    const ctx = await browser.newContext({ javaScriptEnabled: false, serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    const bare = await page.evaluate(exampleState);
+    await ctx.close();
+    const on = bare.panels.filter((p) => p.linkShown);
+    check("with no script the example shows Chicago's bodies, districts and map link, and no buttons or name lines",
+      !bare.picker && bare.shown === "chicago" && on.length === 1 && on[0].place === "chicago" &&
+        on[0].cards.length >= 3 && on[0].cards.every((c) => c.body && c.pill && !c.nameShown),
+      JSON.stringify({ picker: bare.picker, shown: bare.shown, on: on.map((p) => p.place) }));
+  }
+  {
+    // A roster that fails to load says so on its own card, and the place's
+    // other cards still name their seats. The last place is kept, so the
+    // visit starts on the first, Chicago.
+    const { ctx, page } = await examplePage({ viewport: { width: 1280, height: 800 } });
+    const state = await (async () => {
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      return page.evaluate(exampleState);
+    })();
+    const order = state.buttons.map((b) => b.place);
+    const firstPanel = state.panels.find((p) => p.place === order[0]);
+    const failing = firstPanel?.cards[0]?.roster;
+    if (failing) {
+      await page.route((u) => u.pathname === "/" + failing,
+        (r) => r.fulfill({ status: 404, contentType: "text/plain", body: "not found" }));
+    }
+    await keepPlace(page, order[order.length - 1]);
+    await openExample(page);
+    const got = await page.evaluate(exampleState);
+    await ctx.close();
+    const panel = got.panels.find((p) => p.place === got.shown);
+    check("a roster that fails to load says so on its own card only",
+      !!failing && got.shown === order[0] && !!panel && panel.cards.length === firstPanel.cards.length &&
+        panel.cards.every((c) => c.roster === failing ? c.name === "Name didn't load" : c.name === rosterSaid(c)),
+      JSON.stringify({ failing, shown: got.shown, cards: panel && panel.cards.map((c) => [c.roster, c.name]) }));
+  }
+  {
+    // Followed, a place's link keeps its point. The place is one other than
+    // the first, and the instances are stubbed, so a wrong route shows as a
+    // wrong URL rather than as a failed navigation that leaves the page on /
+    // and reads like a right one.
+    const { ctx, page } = await examplePage({ viewport: { width: 1280, height: 800 } });
+    await stubInstances(page);
+    await openExample(page);
+    const state = await page.evaluate(exampleState);
+    const place = state.buttons[state.buttons.length - 1]?.place;
+    if (place && state.shown !== place) await showPlace(page, place);
+    const want = await page.getAttribute(`#ex-${place} a.ex-open`, "href");
+    await page.click(`#ex-${place} a.ex-open`);
+    await page.waitForURL((u) => u.pathname !== "/", { timeout: 10000, waitUntil: "commit" }).catch(() => {});
+    check("following a place's link opens that place's app with its point and layers",
+      !!want && page.url() === want, `${page.url()} vs ${want}`);
     await ctx.close();
   }
 

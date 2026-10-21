@@ -224,18 +224,17 @@ ALWAYS_ASKED = {
 # it is an ordinary subject and a candidacy that outlived its answer would be a
 # second, quieter list of hosts to measure. `--check` fails on an entry the
 # inventory now carries, naming it, which is the `ACCEPTED_DROPS` property.
-CANDIDATE_HOSTS = {
-    # Measured 2026-10-01 from both addresses, and the answer was NOT a sandbox
-    # artefact: a connection reset here, a timeout on three runner reads
-    # fifteen seconds apart. The candidacy stands because the row has to live
-    # somewhere a subject includes, and because the finding is worth keeping
-    # measured — but nothing is fetched from the host, since an unreadable
-    # robots.txt disallows.
-    "www.urbanaillinois.us":
-        "the only route to Urbana's council — Champaign County publishes no "
-        "municipal officials — and its robots.txt answers neither a sandbox "
-        "nor a runner (gap `urbana-city-council-names`)",
-}
+#
+# AN ENTRY ALSO LEAVES WHEN ITS QUESTION STOPS MATTERING, and the first one did.
+# `www.urbanaillinois.us` sat here from 2026-10-01 as "the only route to
+# Urbana's council": a reset from a sandbox and three runner timeouts fifteen
+# seconds apart, both readings true. On 2026-10-21 the City of Urbana turned out
+# to have MOVED its site to `www.urbanail.gov`, which serves this project's own
+# client and which `il_large_city_councils_scraper.py` now reads, so the old
+# host was a site the city had left and nothing will ever fetch it. Its row left
+# robots-verdicts.json in the same change (gap `urbana-city-wards` keeps the
+# story). A host that stops answering can be a government that has moved.
+CANDIDATE_HOSTS = {}
 
 
 def subject(inventory):

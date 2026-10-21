@@ -367,6 +367,32 @@ INSTANCES = {
             title="Who is my U.S. representative?",
             layer="us-house", roster="congress-roster.json",
             state="Mississippi"),
+    ),
+    # Louisiana joined at its go-live with both chambers named from each
+    # chamber's own member list and every member's own page (the seats either
+    # list prints as vacant print as vacancies: Senate 14 and House 77 and 92
+    # on 2026-10-20). La. Const. art. III, sec. 4(C), as the Senate's own copy
+    # prints it (read 2026-10-21): "A member of the legislature shall be
+    # elected for a four-year term."
+    "la": dict(
+        worksheet="la/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Louisiana legislator?",
+            body="the Louisiana Legislature",
+            short="Louisiana Legislature",
+            term="Senators and representatives both serve four-year terms.",
+            chambers=[
+                dict(layer="la-senate", name="Louisiana Senate", short="Senate",
+                     holder="Senator", roster="la-senate-members.json"),
+                dict(layer="la-house", name="Louisiana House of Representatives", short="House",
+                     holder="Representative", roster="la-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Louisiana"),
     ),}
 
 

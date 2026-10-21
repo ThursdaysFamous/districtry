@@ -1,0 +1,93 @@
+{
+  "1": {
+    "name": "Steve Scalise",
+    "party": "Republican",
+    "url": "https://scalise.house.gov",
+    "capitolOffice": [
+      "266 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3015"
+    ],
+    "districtOffice": [
+      "21454 Koop Drive, Suite 2C",
+      "Mandeville, LA 70471",
+      "Phone: 985-893-9064"
+    ]
+  },
+  "2": {
+    "name": "Troy A. Carter",
+    "party": "Democrat",
+    "url": "https://troycarter.house.gov",
+    "capitolOffice": [
+      "442 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6636"
+    ],
+    "districtOffice": [
+      "200 Derbigny St, Suite 3200",
+      "Gretna Courthouse",
+      "Gretna, LA 70053"
+    ]
+  },
+  "3": {
+    "name": "Clay Higgins",
+    "party": "Republican",
+    "url": "https://clayhiggins.house.gov",
+    "capitolOffice": [
+      "572 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2031"
+    ],
+    "districtOffice": [
+      "600 Jefferson Street, Suite 808",
+      "Chase Building",
+      "Lafayette, LA 70501",
+      "Phone: 337-703-6105"
+    ]
+  },
+  "4": {
+    "name": "Mike Johnson",
+    "party": "Republican",
+    "url": "https://mikejohnson.house.gov",
+    "capitolOffice": [
+      "521 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2777"
+    ],
+    "districtOffice": [
+      "2250 Hospital Dr., Suite 248",
+      "Bossier City, LA 71111",
+      "Phone: 318-840-0309"
+    ]
+  },
+  "5": {
+    "name": "Julia Letlow",
+    "party": "Republican",
+    "url": "https://letlow.house.gov",
+    "capitolOffice": [
+      "142 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-8490"
+    ],
+    "districtOffice": [
+      "109 E. Oak Street",
+      "Amite, LA 70422",
+      "Phone: 985-284-5200"
+    ]
+  },
+  "6": {
+    "name": "Cleo Fields",
+    "party": "Democrat",
+    "url": "https://fields.house.gov",
+    "capitolOffice": [
+      "2349 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3901"
+    ],
+    "districtOffice": [
+      "700 North 10th St, Fourth Floor",
+      "Baton Rouge, LA 70802",
+      "Phone: 225-952-1965"
+    ]
+  }
+}

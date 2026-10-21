@@ -92,7 +92,7 @@
 | Moultrie | 17139 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Ogle | 17141 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 3 — `ogle-lasalle-special-districts` (no-source); `ogle-municipal-wards` (no-source); `statewide-library-officials` (no-source) |
 | Peoria | 17143 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 2 — `pass9-ward-seats-without-maps` (no-source); `peoria-fire-park-library-contact` (data-quality) |
-| Perry | 17145 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 2 — `perry-county-website-blocked` (blocked); `statewide-library-officials` (no-source) |
+| Perry | 17145 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Pike | 17149 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Pulaski | 17153 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Putnam | 17155 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
@@ -128,7 +128,7 @@ Counties outside the coverage ring that a research pass has already measured; ea
 | County | FIPS | Gap records |
 |---|---|---|
 | Bureau | 17011 | 1 — `bureau-county-board-districts` (no-source) |
-| Champaign | 17019 | 2 — `champaign-piatt-ccgisc-license` (blocked); `urbana-city-council-names` (no-source) |
+| Champaign | 17019 | 3 — `champaign-city-council-districts` (data-quality); `champaign-piatt-ccgisc-license` (blocked); `urbana-city-wards` (blocked) |
 | Marion | 17121 | 1 — `marion-county-board-districts` (no-source) |
 | Piatt | 17147 | 1 — `champaign-piatt-ccgisc-license` (blocked) |
 | Pope | 17151 | 1 — `pope-county-board` (no-source) |
