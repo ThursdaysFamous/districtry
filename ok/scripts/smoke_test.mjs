@@ -859,13 +859,13 @@ try {
         reject: [/elected by Ward/, /Not named here/]
       },
       {
-        name: "a city whose wards are not drawn says why",
+        name: "a city whose wards are drawn on the city's word points at them",
         layer: "municipality",
         service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
         props: { GEOID: "4041850", NAME: "Lawton city", BASENAME: "Lawton", STATE: "40", LSADC: "25", FUNCSTAT: "A" },
         want: [/Lawton city/, /Stan Booker/, /elected by Ward 1/,
-          /As listed on Lawton's own website\. The city's eight wards are not drawn on this map yet/],
-        reject: [/this point is in/, /Not named here/]
+          /As listed on Lawton's own website\. Read on/, /Which ward this point is in/],
+        reject: [/not drawn on this map yet/, /Not named here/]
       },
       {
         name: "a city whose website this app cannot read says where its names come from",
@@ -1201,21 +1201,22 @@ try {
     await context.close();
   }
 
-  // ---- City Council District, drawn for the nine cities above 25,000
+  // ---- City Council District, drawn for the ten cities above 25,000
   // people whose wards elect their own members and are drawn, and answered
   // from the shipped files alone, so nothing here is stubbed. In Oklahoma
-  // City, Tulsa, Moore and Enid it names the member or members that ward
-  // elects and no other, in the city's own word for the unit, and says whose
-  // map the line comes from; in Bartlesville's Ward 3 it names the mayor, the
-  // council having chosen that ward's member, and says nobody is elected by
-  // the whole city there; in Edmond, which elects every seat citywide, in
-  // Lawton, whose wards are not drawn, and in Stillwater, whose council has
-  // no wards, there is nothing to answer and the card says why. The
-  // Oklahoma City point is the Capitol; the Tulsa, Moore and Enid points and
-  // the three outside points are the ward builder's own anchors; the
-  // Bartlesville point is shapely's representative point of its Ward 3 pulled
-  // in from the edge. Each lies inside the Census outline of the city named
-  // (TIGERweb, read 2026-10-16).
+  // City, Tulsa, Moore, Enid and Lawton it names the member or members that
+  // ward elects and no other, in the city's own word for the unit, and says
+  // whose map the line comes from; in Bartlesville's Ward 3 it names the
+  // mayor, the council having chosen that ward's member, and says nobody is
+  // elected by the whole city there; in Edmond, which elects every seat
+  // citywide, in Muskogee, whose wards are not drawn, and in Stillwater,
+  // whose council has no wards, there is nothing to answer and the card says
+  // why. The Oklahoma City point is the Capitol; the Tulsa, Moore, Enid and
+  // Lawton points and the three outside points are the ward builder's own
+  // anchors; the Bartlesville point is shapely's representative point of its
+  // Ward 3 pulled in from the edge. Each lies inside the Census outline of
+  // the city named (TIGERweb, read 2026-10-16; the Lawton and Muskogee points
+  // 2026-10-21).
   for (const c of [
     { name: "Oklahoma City", point: POINT,
       want: [/Ward 7\b/, /Oklahoma City City Council/, /Camal Pennington/, /Council, Ward 7/,
@@ -1242,8 +1243,12 @@ try {
       want: [/not in a council ward or district this map draws/, /Broken Arrow, Owasso, Jenks and Edmond/],
       reject: [/Edmond City Council/] },
     { name: "Lawton", point: "34.60360,-98.39590",
-      want: [/not in a council ward or district this map draws/, /Lawton's and Muskogee's wards are not drawn yet/],
-      reject: [/Lawton City Council/] },
+      want: [/Ward 5\b/, /Lawton City Council/, /Allan Hampton/, /elected by Ward 5/,
+        /The mayor\./, /the City of Lawton's own map/],
+      reject: [/Stan Booker/, /Lane Hooton/, /Randy Warren/, /not drawn yet/] },
+    { name: "Muskogee", point: "35.74860,-95.37120",
+      want: [/not in a council ward or district this map draws/, /Muskogee's wards are not drawn yet/],
+      reject: [/Muskogee City Council/, /Lawton's/] },
     { name: "Stillwater", point: "36.11560,-97.05840",
       want: [/not in a council ward or district this map draws/, /Stillwater's council has no wards/,
         /names the mayor and council of all 16/],
