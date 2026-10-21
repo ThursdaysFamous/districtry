@@ -7714,7 +7714,16 @@ the counties' own sites and the next election's results stay the route.
 
 ## Ask ar-adem-fire-districts — ADEM Office of Fire Protection Services: which fire districts elect commissioners, and who they are
 
-> **NOT YET ASKED — DRAFTED 2026-10-21**, to the Office of Fire Protection Services at
+> **SENT 2026-10-21 at 17:36 UTC, ANSWERED 2026-10-21 at 18:07 UTC** by Louis Eckelhoff, Fire & EMS
+> Coordinator, Fire Protection Services (`louis.eckelhoff@adem.arkansas.gov`): "The information you
+> are requesting is all held at the County level. I might be able to provide a list of the
+> Departments that are classified as Fire Protection District, I will have to see what I can pull
+> from my portal. Give me a day or two to retrieve the information." So the commissioners' names
+> are each county's to give, and the state's part may be the list of which districts elect them.
+> The Letters thread passes on the list when it arrives and nudges around 2026-10-24 if it has not.
+> Recorded in gap `ar-fire-district-boards` and in `ar/WATCH.md`'s fire district row.
+>
+> Drafted 2026-10-21, to the Office of Fire Protection Services at
 > `fire.services@adem.arkansas.gov`, the office mailbox on its own Fire Services page
 > (`dps.arkansas.gov/emergency-management/adem/state-fire-marshals-office/fire-services/`, read
 > 2026-10-21 after its robots.txt, which permits every path and asks for 10 seconds between requests;
