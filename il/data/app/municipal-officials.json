@@ -28415,6 +28415,77 @@
     "sourceUrl": "https://www.cookcountyclerkil.gov/elections/directory-elected-officials",
     "url": "https://university-park-il.com"
   },
+  "1777005": {
+    "board": [
+      {
+        "district": "Ward 1",
+        "email": "Maryalice.Wu@UrbanaIL.gov",
+        "name": "Maryalice Wu",
+        "phone": "217-377-6296",
+        "role": "Council Member"
+      },
+      {
+        "district": "Ward 2",
+        "email": "Christopher.Evans@UrbanaIL.gov",
+        "name": "Christopher Evans",
+        "phone": "217-819-7806",
+        "role": "Council Member"
+      },
+      {
+        "district": "Ward 3",
+        "email": "Shirese.Hursey@UrbanaIL.gov",
+        "name": "Shirese Hursey",
+        "phone": "217-721-4176",
+        "role": "Council Member"
+      },
+      {
+        "district": "Ward 4",
+        "email": "Verdell.Jones@UrbanaIL.gov",
+        "name": "Verdell Jones III",
+        "phone": "872-215-2627",
+        "role": "Council Member"
+      },
+      {
+        "district": "Ward 5",
+        "email": "Stephanie.Cockrell@UrbanaIL.gov",
+        "name": "Dr. Stephanie Cockrell",
+        "phone": "773-340-2465",
+        "role": "Council Member"
+      },
+      {
+        "district": "Ward 6",
+        "email": "Ashley.Withers@UrbanaIL.gov",
+        "name": "Ashley Withers",
+        "phone": "815-317-6477",
+        "role": "Council Member"
+      },
+      {
+        "district": "Ward 7",
+        "email": "James.Quisenberry@UrbanaIL.gov",
+        "name": "James Quisenberry",
+        "phone": "217-282-0255",
+        "role": "Council Member"
+      }
+    ],
+    "county": "Champaign",
+    "head": {
+      "name": "DeShawn Williams",
+      "role": "Mayor"
+    },
+    "name": "City of Urbana",
+    "office": {
+      "address": "400 South Vine Street, Urbana IL 61801",
+      "email": "CityCouncil@urbanail.gov",
+      "phone": "217-384-0200"
+    },
+    "officers": [
+      {
+        "name": "Darcy Sandefur",
+        "role": "City Clerk"
+      }
+    ],
+    "sourceUrl": "https://www.urbanail.gov/city-clerk/page/city-council"
+  },
   "1777395": {
     "board": [
       {

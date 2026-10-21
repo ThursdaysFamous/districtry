@@ -3694,10 +3694,12 @@ neither names a person.
 | "we do not publish them" | A refusal, which counts at once towards the done standard's fourth test. Record it with the date and tag the gap record. |
 | no reply after the follow-up cadence | `UNRESPONSIVE` after one follow-up and thirty days, recorded with both dates, and the record is tagged then and not before. |
 
-**Urbana is deliberately NOT here.** It is the other Illinois city above 25,000 that names
-nobody, and its site resets every connection from this project's sandbox — which is a measurement
+**Urbana is deliberately NOT here.** It was the other Illinois city above 25,000 that named
+nobody, and its site reset every connection from this project's sandbox — which is a measurement
 of this vantage and not of the city. Writing to a city to ask for data it may already publish is
-a question we would be asking of ourselves. That one waits on a reading from a build machine.
+a question we would be asking of ourselves. **It needed no letter at all**: on 2026-10-21 the city
+turned out to have moved its site to `www.urbanail.gov`, which serves this project's own client,
+and its mayor, council and clerk ship from there (`urbana-city-wards` carries the story).
 
 ---
 
@@ -3706,7 +3708,21 @@ a question we would be asking of ourselves. That one waits on a reading from a b
 
 > **NAMED RATHER THAN NUMBERED**, for the reason `il-gurnee-board-names` above gives.
 
-> **NOT YET ASKED — DRAFTED 2026-10-01.** One message, to the City Clerk. On send, change
+> **WITHDRAWN 2026-10-21, NEVER SENT, AND THE QUESTION IT ASKS HAD THE WRONG PREMISE.** The
+> city had not blocked anybody: it had moved. Its site is now `www.urbanail.gov`, whose footer
+> names the City of Urbana at 400 South Vine Street and whose council members' addresses are on
+> that domain, and it answers this project's own client with a full page (requests plus the
+> districtry roster token, HTTP 200, robots.txt Drupal's default allowing the pages read). The
+> mayor, the seven ward council members and the elected City Clerk ship from it weekly through
+> `scripts/il_large_city_councils_scraper.py`. The gap record this letter was written for,
+> `urbana-city-council-names`, is retired; its successor `urbana-city-wards` in
+> `docs/DATA_LAYER_GUIDEBOOK.md` keeps what it got wrong, and records the one thing still missing,
+> the wards, which this letter never asked about. **Search for a government that has moved
+> before writing to one that seems to have shut its door.** The text below is kept as written so
+> the mistake stays readable; it must not be sent. The Gmail draft made from it on 2026-10-20 was
+> retitled "WITHDRAWN, do not send" and emptied on 2026-10-21, for the operator to delete.
+>
+> *Was:* **NOT YET ASKED — DRAFTED 2026-10-01.** One message, to the City Clerk. On send, change
 > `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the `urbana-city-council-names` blocker in
 > `docs/DATA_LAYER_GUIDEBOOK.md`.
 
