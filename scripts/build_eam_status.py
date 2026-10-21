@@ -2257,22 +2257,27 @@ ANSWERS = {
         "municipal-boundaries": answers("municipality"),
         # The 13 places of 25,000 or more. The City card names the mayor and
         # council of ten from the Secretary of State's list, and all ten seat
-        # members by district, while the map draws no city's districts (gap
+        # members by district, so a city counts only where its districts are
+        # drawn: four by the City Council District layer, each from the city's
+        # own map confirmed against the 2020 census
+        # (la/scripts/build_la_city_wards.py, 2026-10-21), and six owed (gap
         # la-municipal-ward-lines). New Orleans, Baton Rouge and Houma are
         # governed by their parishes' bodies, which the Parish card names
-        # (COUNTY_GOVERNED_UNITS), and of those three parishes only
-        # Terrebonne's districts are drawn, so Houma is the one answered.
-        "local-government": depth(),
+        # (COUNTY_GOVERNED_UNITS), and the parish-district layer draws all
+        # three parishes' districts. Recorded in la/CLAUDE.md.
+        "local-government": depth("city-ward"),
         # TIGER's unified tiling holds all 69 districts and the other two hold
         # none, measured in la/CLAUDE.md, so one layer is the whole level.
         "school-district-boundaries": answers("school-district-unified"),
         # LOUISIANA'S COUNTY SUBDIVISIONS ARE THE DISTRICTS ITS PARISHES'
         # GOVERNING BODIES ARE ELECTED FROM, so this map is the parish-district
-        # layer's, and it is drawn only in the six parishes whose current lines
-        # two measurements confirm. Elsewhere the Census's own copy carries
-        # older lines, more than 10% out of balance on the 2020 blocks, and has
-        # none for the New Orleans City Council, so it is not drawn instead
-        # (la/CLAUDE.md). Open until every parish is drawn.
+        # layer's, and it is drawn only in the eight parishes whose current
+        # lines are confirmed: six from the Census's copy, which two
+        # measurements confirm, and Orleans and East Baton Rouge from the
+        # parish government's own map (2026-10-21). Elsewhere the Census's own
+        # copy carries older lines, more than 10% out of balance on the 2020
+        # blocks, so it is not drawn instead (la/CLAUDE.md). Open until every
+        # parish is drawn.
         "subdivision-boundaries": OPEN,
         # ANSWERED 2026-10-21: the three courts whose judges Louisiana elects
         # by district, each drawn and its judges named from the Secretary of
@@ -2982,21 +2987,23 @@ WARD_MAPS = {
         owed={"2806220": "Biloxi", "2831020": "Hattiesburg",
               "2833700": "Horn Lake", "2844520": "Madison",
               "2846640": "Meridian"}),
-    # Louisiana's ten that the city roster names all seat members by district,
-    # and no layer draws a city's districts (gap la-municipal-ward-lines). New
-    # Orleans, Baton Rouge and Houma are governed by their parishes' bodies
-    # (COUNTY_GOVERNED_UNITS), and the parish-district layer draws
-    # Terrebonne's districts, which are Houma's, and not Orleans's or East
-    # Baton Rouge's. That half is held to the shipped file, in both directions.
+    # Louisiana's ten that the city roster names all seat members by district.
+    # The City Council District layer draws four of them, la/scripts/
+    # build_la_city_wards.py, only where the city's current plan is
+    # confirmed; its NOT_DRAWN table says why each of the other six is not
+    # (gap la-municipal-ward-lines). New Orleans, Baton Rouge and Houma are
+    # governed by their parishes' bodies (COUNTY_GOVERNED_UNITS), and the
+    # parish-district layer draws Orleans's, East Baton Rouge's and
+    # Terrebonne's districts, which are theirs. Both halves are held to the
+    # shipped files, in both directions.
     "la": dict(
-        drawn={"2236255"},
+        drawn={"2205000", "2208920", "2213960", "2236255", "2240735",
+               "2255000", "2270805"},
+        drawn_file=("la/data/app/la-city-wards.json", "geoid"),
         county_drawn=("la/data/app/la-parish-districts.json", "parishfips"),
-        owed={"2200975": "Alexandria", "2205000": "Baton Rouge",
-              "2208920": "Bossier City", "2213960": "Central",
-              "2239475": "Kenner", "2240735": "Lafayette",
+        owed={"2200975": "Alexandria", "2239475": "Kenner",
               "2241155": "Lake Charles", "2251410": "Monroe",
-              "2254035": "New Iberia", "2255000": "New Orleans",
-              "2270000": "Shreveport", "2270805": "Slidell"}),
+              "2254035": "New Iberia", "2270000": "Shreveport"}),
 }
 
 
@@ -3017,13 +3024,17 @@ def ward_maps_owed(tag, units, ward):
     drawn, owed = m.get("drawn", set()), m.get("owed", {})
     at_large, declared = m.get("at_large", {}), m.get("declared", set())
     # Where one shipped file draws every ward the table credits, the stated set
-    # is held to that file, in both directions.
+    # is held to that file, in both directions. A unit its county's body
+    # governs is drawn by the county's districts file instead, and is held to
+    # that file below, so it is left out of this comparison.
     if m.get("drawn_file"):
         rel, prop = m["drawn_file"]
         with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
             shipped = {str(f["properties"][prop])
                        for f in json.load(fh)["features"]}
-        if drawn != shipped:
+        governed = set(COUNTY_GOVERNED_UNITS.get(tag, (None, {}))[1]) \
+            if m.get("county_drawn") else set()
+        if drawn - governed != shipped:
             fail("%s: WARD_MAPS says the wards drawn are those of %s and `%s` "
                  "draws %s. Correct the table to match the shipped file."
                  % (tag, ", ".join(sorted(drawn)), rel,

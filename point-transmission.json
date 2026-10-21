@@ -282,6 +282,7 @@
       ],
       "atpoint_hooks_fired": 0,
       "layer_ids": [
+        "city-ward",
         "county",
         "fire-station",
         "la-court-of-appeal",

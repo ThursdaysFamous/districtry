@@ -1179,7 +1179,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">16 layers — 8 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">17 layers — 9 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1188,7 +1188,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">8 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">9 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1265,14 +1265,31 @@ table.matrix code {
               </tr>
               <tr id="layer-parish-district">
                 <th scope="row"><span class="layer-name">Police Jury or Council District</span><code>parish-district</code></th>
-                <td data-label="What it answers">Which member of the parish's police jury, council or commission represents the point, in the parishes where this app has confirmed the current district lines. The layer is hidden in the other parishes, where the Parish card still names every member.</td>
+                <td data-label="What it answers">Which member of the parish's police jury, council or commission represents the point, in the parishes where this app has confirmed the current district lines. In New Orleans and Baton Rouge that body is also the city's council. The layer is hidden in the other parishes, where the Parish card still names every member.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22" target="_blank" rel="noopener">U.S. Census TIGERweb — tigerWMS_Current, layer 22 (County Subdivisions, January 1, 2026 vintage), where the Census files each parish's governing-body districts as nonfunctioning county subdivisions; pre-built and shipped with the app for the 6 parishes whose lines the Census changed after the 2020 census and whose districts hold nearly equal numbers of people on that census's own blocks (6.0% to 9.2% apart, measured 2026-10-20): Assumption, Caddo, Lafourche, St. Charles, Tangipahoa and Terrebonne. Elsewhere the Census still carries older lines, which are not drawn.</a></li>
+                    <li><a href="https://maps.nola.gov/server/rest/services/Administrative/Administrative_Layers/MapServer/1" target="_blank" rel="noopener">City of New Orleans — its City Council Districts layer, the only layer of the map the City Council's Councilmembers page links, which the city describes as the districts in effect from January 12, 2026, drawn on the 2020 census (its Redistricting page posts the same districts as PDF maps); pre-built and shipped with the app for Orleans Parish, cut at the parish line on the Census Bureau's map</a></li>
+                    <li><a href="https://maps.brla.gov/gis/rest/services/Governmental_Units/Council_District/MapServer/0" target="_blank" rel="noopener">City of Baton Rouge and Parish of East Baton Rouge — its Council District layer, the Metropolitan Council's districts; on the 2020 census each district holds within 60 people of the number the City-Parish published for Plan 4B, which the council adopted on August 10, 2022 and which took effect on January 1, 2025 (its Redistricting 2022 page); pre-built and shipped with the app for East Baton Rouge Parish, cut at the parish line on the Census Bureau's map</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">la-parish-officials.json, the roster the Parish card reads: the member elected from each district, from the Louisiana Secretary of State's list of elected officials, joined by district number.</td>
-                <td data-label="Where it applies">6 of Louisiana's 64 parishes; hidden in the other 58, which the Data gaps panel lists and explains.</td>
+                <td data-label="Who it names">la-parish-officials.json, the roster the Parish card reads: the member elected from each district, from the Louisiana Secretary of State's list of elected officials, joined by district number or letter.</td>
+                <td data-label="Where it applies">8 of Louisiana's 64 parishes: Assumption, Caddo, East Baton Rouge, Lafourche, Orleans, St. Charles, Tangipahoa and Terrebonne. Hidden in the other 56, which the Data gaps panel lists and explains.</td>
+              </tr>
+              <tr id="layer-city-ward">
+                <th scope="row"><span class="layer-name">City Council District</span><code>city-ward</code></th>
+                <td data-label="What it answers">The council district containing the point, in the four Louisiana cities of 25,000 people or more whose current council district map this app has confirmed, and the council member elected from it.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://maps.lafayettela.gov/arcgis/rest/services/BaseLayers/LCG_LafayetteCityDistricts/FeatureServer/0" target="_blank" rel="noopener">Lafayette Consolidated Government — its map of the Lafayette City Council's districts (LCG.LafayetteCityDistricts), the one its Find Your Council Member map shows, adopted on June 21, 2022</a></li>
+                    <li><a href="https://services1.arcgis.com/jh7pbmmfSzUSNziy/arcgis/rest/services/Council_Districts/FeatureServer/7" target="_blank" rel="noopener">City of Bossier City — its Council_Districts layer, the one its Find Your Councilman map shows; on the 2020 census four of its five districts hold exactly the number of people the city published for its 2022 plan, and the fifth that number plus the 600 people of one block that was outside the city on the Census Bureau's 2020 map and is inside it on today's</a></li>
+                    <li><a href="https://services5.arcgis.com/wATr0UsvWt8807Pv/arcgis/rest/services/COC_COUNCIL_DISTRICTS/FeatureServer/139" target="_blank" rel="noopener">City of Central — its Council Districts 2023 layer, the current map on its City Council page, drawn on the 2020 census for the November 2022 election</a></li>
+                    <li><a href="https://services7.arcgis.com/NbYh5dTYeFoc2wlO/arcgis/rest/services/Slidell_Council_Districts_Map_WFL1/FeatureServer/0" target="_blank" rel="noopener">City of Slidell — its Slidell Council Districts layer, the one the Council Districts tab of its City Council page shows (no adoption date was found; the seven districts are 8.4% apart on the 2020 census)</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places): each city's outer edge, where its districts are cut so the City Council District and City, Town or Village cards agree about which city a point is in</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">la-municipal-officials.json, the roster the City, Town or Village card reads, rebuilt weekly from the Louisiana Secretary of State's list of elected officials: the council member elected from each district, joined by district number or letter, with the member's own telephone where the list prints it for that member alone, and the members the city elects at large.</td>
+                <td data-label="Where it applies">Lafayette, Bossier City, Central and Slidell. New Orleans, Baton Rouge and Houma are governed by their parish's council, whose districts the Police Jury or Council District layer draws. The other six cities of 25,000 people or more (Alexandria, Kenner, Lake Charles, Monroe, New Iberia and Shreveport) are not drawn, each for a reason la/scripts/build_la_city_wards.py records, and the City, Town or Village card still names their council members.</td>
               </tr>
               <tr id="layer-tribal-government">
                 <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
@@ -1401,7 +1418,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 305 features for Louisiana (71 cities, 127 towns and 107 villages), measured 2026-10-20. The Census records two of the cities, Baton Rouge and Lafayette, as partly consolidated with another government, and one, Houma, as having no government of its own, and the card says so.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">la-municipal-officials.json, rebuilt weekly from the Louisiana Secretary of State's list of elected officials: the mayor, the council members, aldermen, selectmen or trustees (the list's own words) by seat where the list gives one, and the chief of police, marshal or city prosecutor, of 302 municipalities on 2026-10-20 (298 mayors, 1,308 members and 191 police officers). Every place the Census draws has a record except New Orleans, whose mayor and council the Parish card names as Orleans Parish's government, Baton Rouge, whose government is East Baton Rouge Parish's, and Houma, which has none of its own. An official's own telephone ships where the list prints it for that official alone, and an address only as the town's office, where at least three of its officials print the same one and no official outside the town does. The map does not draw any town's wards or districts, so the card does not say which member represents the point (gap la-municipal-ward-lines). The list also records each official's race and gender, and neither is read.</td>
+                <td data-label="Who it names">la-municipal-officials.json, rebuilt weekly from the Louisiana Secretary of State's list of elected officials: the mayor, the council members, aldermen, selectmen or trustees (the list's own words) by seat where the list gives one, and the chief of police, marshal or city prosecutor, of 302 municipalities on 2026-10-20 (298 mayors, 1,308 members and 191 police officers). Every place the Census draws has a record except New Orleans, whose mayor and council the Parish card names as Orleans Parish's government, Baton Rouge, whose government is East Baton Rouge Parish's, and Houma, which has none of its own. An official's own telephone ships where the list prints it for that official alone, and an address only as the town's office, where at least three of its officials print the same one and no official outside the town does. In Lafayette, Bossier City, Central and Slidell the City Council District layer draws the council's districts and names the member for each; the map draws no other town's wards or districts, so there the card does not say which member represents the point (gap la-municipal-ward-lines). The list also records each official's race and gender, and neither is read.</td>
                 <td data-label="Where it applies">Louisiana — statewide. A point outside every city, town and village is unincorporated, which the card states.</td>
               </tr>
               <tr id="layer-post-office">
@@ -1642,7 +1659,7 @@ table.matrix code {
       "@id": "https://districtry.com/la/sources.html#dataset-parish-district",
       "identifier": "parish-district",
       "name": "Police Jury or Council District",
-      "description": "Which member of the parish's police jury, council or commission represents the point, in the parishes where this app has confirmed the current district lines. The layer is hidden in the other parishes, where the Parish card still names every member. la-parish-officials.json, the roster the Parish card reads: the member elected from each district, from the Louisiana Secretary of State's list of elected officials, joined by district number.",
+      "description": "Which member of the parish's police jury, council or commission represents the point, in the parishes where this app has confirmed the current district lines. In New Orleans and Baton Rouge that body is also the city's council. The layer is hidden in the other parishes, where the Parish card still names every member. la-parish-officials.json, the roster the Parish card reads: the member elected from each district, from the Louisiana Secretary of State's list of elected officials, joined by district number or letter.",
       "url": "https://districtry.com/la/sources.html#layer-parish-district",
       "isPartOf": {
         "@id": "https://districtry.com/la/sources.html#catalog"
@@ -1652,11 +1669,21 @@ table.matrix code {
           "@type": "Dataset",
           "name": "U.S. Census TIGERweb — tigerWMS_Current, layer 22 (County Subdivisions, January 1, 2026 vintage), where the Census files each parish's governing-body districts as nonfunctioning county subdivisions; pre-built and shipped with the app for the 6 parishes whose lines the Census changed after the 2020 census and whose districts hold nearly equal numbers of people on that census's own blocks (6.0% to 9.2% apart, measured 2026-10-20): Assumption, Caddo, Lafourche, St. Charles, Tangipahoa and Terrebonne. Elsewhere the Census still carries older lines, which are not drawn.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/22"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of New Orleans — its City Council Districts layer, the only layer of the map the City Council's Councilmembers page links, which the city describes as the districts in effect from January 12, 2026, drawn on the 2020 census (its Redistricting page posts the same districts as PDF maps); pre-built and shipped with the app for Orleans Parish, cut at the parish line on the Census Bureau's map",
+          "url": "https://maps.nola.gov/server/rest/services/Administrative/Administrative_Layers/MapServer/1"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Baton Rouge and Parish of East Baton Rouge — its Council District layer, the Metropolitan Council's districts; on the 2020 census each district holds within 60 people of the number the City-Parish published for Plan 4B, which the council adopted on August 10, 2022 and which took effect on January 1, 2025 (its Redistricting 2022 page); pre-built and shipped with the app for East Baton Rouge Parish, cut at the parish line on the Census Bureau's map",
+          "url": "https://maps.brla.gov/gis/rest/services/Governmental_Units/Council_District/MapServer/0"
         }
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "6 of Louisiana's 64 parishes; hidden in the other 58, which the Data gaps panel lists and explains"
+        "name": "8 of Louisiana's 64 parishes: Assumption, Caddo, East Baton Rouge, Lafourche, Orleans, St. Charles, Tangipahoa and Terrebonne. Hidden in the other 56, which the Data gaps panel lists and explains"
       }
     },
     {
@@ -1686,7 +1713,7 @@ table.matrix code {
       "@id": "https://districtry.com/la/sources.html#dataset-municipality",
       "identifier": "municipality",
       "name": "City, Town or Village",
-      "description": "The city, town or village containing the point, if any. la-municipal-officials.json, rebuilt weekly from the Louisiana Secretary of State's list of elected officials: the mayor, the council members, aldermen, selectmen or trustees (the list's own words) by seat where the list gives one, and the chief of police, marshal or city prosecutor, of 302 municipalities on 2026-10-20 (298 mayors, 1,308 members and 191 police officers). Every place the Census draws has a record except New Orleans, whose mayor and council the Parish card names as Orleans Parish's government, Baton Rouge, whose government is East Baton Rouge Parish's, and Houma, which has none of its own. An official's own telephone ships where the list prints it for that official alone, and an address only as the town's office, where at least three of its officials print the same one and no official outside the town does. The map does not draw any town's wards or districts, so the card does not say which member represents the point (gap la-municipal-ward-lines). The list also records each official's race and gender, and neither is read.",
+      "description": "The city, town or village containing the point, if any. la-municipal-officials.json, rebuilt weekly from the Louisiana Secretary of State's list of elected officials: the mayor, the council members, aldermen, selectmen or trustees (the list's own words) by seat where the list gives one, and the chief of police, marshal or city prosecutor, of 302 municipalities on 2026-10-20 (298 mayors, 1,308 members and 191 police officers). Every place the Census draws has a record except New Orleans, whose mayor and council the Parish card names as Orleans Parish's government, Baton Rouge, whose government is East Baton Rouge Parish's, and Houma, which has none of its own. An official's own telephone ships where the list prints it for that official alone, and an address only as the town's office, where at least three of its officials print the same one and no official outside the town does. In Lafayette, Bossier City, Central and Slidell the City Council District layer draws the council's districts and names the member for each; the map draws no other town's wards or districts, so there the card does not say which member represents the point (gap la-municipal-ward-lines). The list also records each official's race and gender, and neither is read.",
       "url": "https://districtry.com/la/sources.html#layer-municipality",
       "isPartOf": {
         "@id": "https://districtry.com/la/sources.html#catalog"
@@ -1701,6 +1728,48 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Louisiana — statewide. A point outside every city, town and village is unincorporated, which the card states"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/la/sources.html#dataset-city-ward",
+      "identifier": "city-ward",
+      "name": "City Council District",
+      "description": "The council district containing the point, in the four Louisiana cities of 25,000 people or more whose current council district map this app has confirmed, and the council member elected from it. la-municipal-officials.json, the roster the City, Town or Village card reads, rebuilt weekly from the Louisiana Secretary of State's list of elected officials: the council member elected from each district, joined by district number or letter, with the member's own telephone where the list prints it for that member alone, and the members the city elects at large.",
+      "url": "https://districtry.com/la/sources.html#layer-city-ward",
+      "isPartOf": {
+        "@id": "https://districtry.com/la/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Lafayette Consolidated Government — its map of the Lafayette City Council's districts (LCG.LafayetteCityDistricts), the one its Find Your Council Member map shows, adopted on June 21, 2022",
+          "url": "https://maps.lafayettela.gov/arcgis/rest/services/BaseLayers/LCG_LafayetteCityDistricts/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Bossier City — its Council_Districts layer, the one its Find Your Councilman map shows; on the 2020 census four of its five districts hold exactly the number of people the city published for its 2022 plan, and the fifth that number plus the 600 people of one block that was outside the city on the Census Bureau's 2020 map and is inside it on today's",
+          "url": "https://services1.arcgis.com/jh7pbmmfSzUSNziy/arcgis/rest/services/Council_Districts/FeatureServer/7"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Central — its Council Districts 2023 layer, the current map on its City Council page, drawn on the 2020 census for the November 2022 election",
+          "url": "https://services5.arcgis.com/wATr0UsvWt8807Pv/arcgis/rest/services/COC_COUNCIL_DISTRICTS/FeatureServer/139"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Slidell — its Slidell Council Districts layer, the one the Council Districts tab of its City Council page shows (no adoption date was found; the seven districts are 8.4% apart on the 2020 census)",
+          "url": "https://services7.arcgis.com/NbYh5dTYeFoc2wlO/arcgis/rest/services/Slidell_Council_Districts_Map_WFL1/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places): each city's outer edge, where its districts are cut so the City Council District and City, Town or Village cards agree about which city a point is in",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Lafayette, Bossier City, Central and Slidell. New Orleans, Baton Rouge and Houma are governed by their parish's council, whose districts the Police Jury or Council District layer draws. The other six cities of 25,000 people or more (Alexandria, Kenner, Lake Charles, Monroe, New Iberia and Shreveport) are not drawn, each for a reason la/scripts/build_la_city_wards.py records, and the City, Town or Village card still names their council members"
       }
     },
     {

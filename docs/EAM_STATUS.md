@@ -19,7 +19,7 @@ whether the data exists** — a level no publisher offers, that we
 asked about and were refused, counts as covered — so a county
 publisher cannot fail an app on it.
 
-**32 gap-record claims name a level, 9 of which carry a
+**33 gap-record claims name a level, 9 of which carry a
 dated ask that counts.** A level this report calls open and
 that no record claims is still a floor. A claim that earns
 nothing is printed under its level with the reason, rather
@@ -49,7 +49,7 @@ different thing from one it failed.
 | il | **EAM·** | 102 | 102/102 | 660 | 1,157 | all | 423 | all | 12 of 14 levels |
 | in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 20 | all | 11 of 14 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 17 | all | 12 of 14 levels |
-| la | **EAM·** | 64 | 64/64 | 560 | 559 | all | 22 | all | 9 of 14 levels |
+| la | **EAM·** | 64 | 64/64 | 560 | 559 | all | 23 | all | 9 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 68 | all | 13 of 14 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 21 | all | 13 of 14 levels |
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 24 | all | 8 of 14 levels |
@@ -136,11 +136,11 @@ this instance is in maintenance.
 
 ### la — EAM·
 
-- **Under a WATCH.md plan (12):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `la-court-of-appeal-districts.json`, `la-district-court-districts.json`, `la-house-districts.json`, `la-parish-district-parishes.json`, `la-parish-districts.json`, `la-precincts.json`, `la-senate-districts.json`, `la-supreme-court-districts.json`, `metro-outline.json`, `state-counties.json`
-- **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **4. The county governing body, in every county of the state** — open. 6 of 64 counties name a governing body and draw it where it is elected by district; 58 more name a body elected by district whose districts are not drawn, or not matched to their members
-  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 1 of 13 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 12 more name a body elected by ward or district whose wards are not drawn; unanswered: Alexandria city, Baton Rouge city, Bossier City city, Central city, Kenner city, Lafayette city, Lake Charles city, Monroe city and 4 more
-  - **10. School boards elected by district** — open (required only where the state has the level)
+- **Under a WATCH.md plan (13):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `la-city-wards.json`, `la-court-of-appeal-districts.json`, `la-district-court-districts.json`, `la-house-districts.json`, `la-parish-district-parishes.json`, `la-parish-districts.json`, `la-precincts.json`, `la-senate-districts.json`, `la-supreme-court-districts.json`, `metro-outline.json`, `state-counties.json`
+- **Covered: no.** 5 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
+  - **4. The county governing body, in every county of the state** — open. 8 of 64 counties name a governing body and draw it where it is elected by district; 56 more name a body elected by district whose districts are not drawn, or not matched to their members
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 7 of 13 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 6 more name a body elected by ward or district whose wards are not drawn; unanswered: Alexandria city, Kenner city, Lake Charles city, Monroe city, New Iberia city, Shreveport city
+  - **10. School boards elected by district** — open (required only where the state has the level). A record declares this level and earns nothing: `la-school-board-district-lines` — Commissioner of Elections Sherri Wharton Hadskey, Louisiana Secretary of State's Elections Division (elections@sos.la.gov) was asked on 2026-10-21 and has not answered; the record earns nothing until a thread writes the outcome
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
   - **14. Township or county subdivision boundaries** — open
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
