@@ -1444,8 +1444,9 @@ def build():
     key_wash = ('          <li><span class="sw sw-wash" aria-hidden="true"></span>'
                 'Statewide layers only</li>\n' if two_tier else "")
 
-    # The worked example beside the address box names people, so a roster
-    # refresh that renames one must rebuild this page in the same run.
+    # The worked example beside the address box. Its districts are measured
+    # here; its names are read by the page when it opens, so a roster refresh
+    # does not touch this page.
     example, tries = render_example(metros)
 
     return """<!DOCTYPE html>
