@@ -1670,8 +1670,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .group-safety .dot { background: var(--accent-warm); }
   .group-schools .dot { background: #E8A324; }
   .group-geography .dot { background: #5C8F6B; }
-  /* the compared layer's card, moved to the top of the list on a phone (see
-     placePinnedCard); the dot is the compared outline's own near-black, and
+  /* the compared layer's card, moved to the top of the list (see
+     placePinnedCard); the dot is the compared line's own near-black, and
      the section disappears whenever the card inside it is hidden */
   .group-pinned .dot { background: var(--ink, #14181C); }
   .group-pinned:not(:has(> .group-cards > .layer-block:not([hidden]))) { display: none; }
@@ -3689,9 +3689,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
      stopped describing the same object. Measured at 390px and 1400px, idle
      and expanded: this shadow was the ONLY non-colour difference between
      them; every box in the search bar is otherwise identical. */
-  /* the pinned-parent outline is deliberately near-black (#14181C) so it reads
-     as neutral over a light basemap; over a dark one it is simply gone. */
-  [data-theme="dark"] .rel-parent-outline { stroke: #ece9f4; }
+  /* the pinned district's line is near-black (#14181C) so it reads as neutral
+     over a light basemap; over a dark one it is simply gone. The line itself
+     takes its colour in script (relParentInk); this is its key swatch. */
   [data-theme="dark"] .rel-sw-parent { border-top-color: #ece9f4; }
   [data-theme="dark"] .rel-sw-in { border-top-color: #6ea8ff; }
   [data-theme="dark"] .rel-sw-cross { border-top-color: #6ea8ff; }
@@ -7140,6 +7140,35 @@ function initOklahomaExplorer() {
     );
   });
 
+  // A LONG-PRESS SHORTCUT. "Use my location" on the installed app's icon
+  // opens the launcher at /app/#locate, which opens this map with `#locate`
+  // in the hash, and that presses the button above once the map has booted,
+  // so the browser asks for the location exactly as it does when the button
+  // is pressed. The key leaves the address first, so a reload, a copied link
+  // or a bookmark of this page never asks again. It does nothing in a frame,
+  // which is someone else's page, or when the address also carries a point,
+  // which the reader chose. scripts/build_manifests.py --check holds this key
+  // to the manifest's shortcut.
+  var LOCATE_LINK_KEY = "locate";
+  (function locateFromLink() {
+    var parts = location.hash.replace(/^#/, "").split("&");
+    if (parts.indexOf(LOCATE_LINK_KEY) < 0) return;
+    var rest = parts.filter(function (kv) { return kv && kv !== LOCATE_LINK_KEY; });
+    try {
+      history.replaceState(null, "", location.pathname + location.search +
+        (rest.length ? "#" + rest.join("&") : ""));
+    } catch (e) { /* the key stays, and a reload asks again */ }
+    var framed = true;
+    try { framed = window.top !== window.self; } catch (e) { framed = true; }
+    if (framed) return;
+    for (var i = 0; i < rest.length; i++) {
+      if (/^(?:p|point)=/.test(rest[i])) return;
+    }
+    // After the rest of this script, so the map has booted and restored the
+    // layers the address names before the browser is asked.
+    setTimeout(function () { locateBtn.click(); }, 0);
+  })();
+
   /* ==== ENGINE:END geolocation ==== */
   /* ---------- "Layers" drawer button — collapses the results rail so the
    * map gets the full width; aria-expanded mirrors the rail state ---------- */
@@ -9786,19 +9815,44 @@ function initOklahomaExplorer() {
   function zipMessage(text, extra) {
     var seq = districtSearchSeq, picked = state.sequence;
     function current() { return seq === districtSearchSeq && picked === state.sequence; }
+    // The message stays open while the reader is at the search bar and folds
+    // away once they move off it (the pointer leaves it, a click or a tap
+    // lands elsewhere, or focus moves out), as a picked address's line does
+    // at once; hovering or focusing the bar shows it again. Only a mouse
+    // leaving counts, because a finger "leaves" every time it lifts.
+    var left = false;
     function write(t, more) {
       if (!current()) return;
       geoStatus.textContent = t;
       geoStatus.className = "geo-status";
       if (more) geoStatus.appendChild(more);
-      collapseAfterSelect = false;
+      collapseAfterSelect = left;
+      refreshSearchShellExpanded();
+    }
+    function stopWatchingAway() {
+      searchShellEl.removeEventListener("pointerleave", away);
+      searchShellEl.removeEventListener("focusout", away);
+      document.removeEventListener("pointerdown", away, true);
+    }
+    function away(e) {
+      if (!current()) { stopWatchingAway(); return; }
+      if (e.type === "pointerleave" && e.pointerType !== "mouse") return;
+      if (e.type === "focusout" && searchShellEl.contains(e.relatedTarget)) return;
+      if (e.type === "pointerdown" && searchShellEl.contains(e.target)) return;
+      left = true;
+      stopWatchingAway();
+      collapseAfterSelect = true;
       refreshSearchShellExpanded();
     }
     write(text, extra);
+    searchShellEl.addEventListener("pointerleave", away);
+    searchShellEl.addEventListener("focusout", away);
+    document.addEventListener("pointerdown", away, true);
     // every selection adds the selected point's marker (setSelectedPoint)
     var watch = function () {
       if (state.sequence === picked) return;
       map.off("layeradd", watch);
+      stopWatchingAway();
       if (seq !== districtSearchSeq) return; // a newer search wrote its own words
       geoStatus.textContent = "";
       collapseAfterSelect = true;
@@ -10850,7 +10904,7 @@ function initOklahomaExplorer() {
     "zip-code",          // 666 ZIP Code Tabulation Areas overlapping Oklahoma, of the 1,058 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside Oklahoma
     "school-district-elementary", // 91 elementary (dependent) districts, from TIGERweb, drawn from a mirrored tile archive; the ground the unified tiling leaves
     "municipality",      // 600 incorporated cities and towns, from TIGERweb, drawn from a mirrored tile archive
-    "city-ward",         // 56 council wards and districts in the 9 cities above 25,000 people whose wards elect their own members and are drawn, ranked just after City or Town, which each one divides, so a ward draws on top of its city
+    "city-ward",         // 64 council wards and districts in the 10 cities above 25,000 people whose wards elect their own members and are drawn, ranked just after City or Town, which each one divides, so a ward draws on top of its city
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -11091,10 +11145,17 @@ function initOklahomaExplorer() {
   // declaration), darkened so the outline pops against that layer's own
   // lighter fill/stroke instead of an unrelated universal gold.
   var HIGHLIGHT_DARKEN_AMOUNT = 0.35;
+  // The district pinned for comparison is lit in the comparison's own ink
+  // instead (relParentInk, in the pin-relationship block), so its own line is
+  // the reference the other districts are outlined against. Until 2026-10-21
+  // the comparison drew a second line on top from the layer's whole file,
+  // which for a layer drawn from tiles is the coarser copy: a ZIP code's
+  // whole set is simplified to about 55 m and its tiles are not, so the two
+  // lines ran side by side.
   function highlightStyleFor(mod) {
     var rt = layerRuntime[mod.id];
     return {
-      color: darkenHexColor(moduleColor(mod), HIGHLIGHT_DARKEN_AMOUNT),
+      color: mod.id === pinnedParentId ? relParentInk() : darkenHexColor(moduleColor(mod), HIGHLIGHT_DARKEN_AMOUNT),
       weight: 4,
       opacity: 1,
       // an outline-only layer keeps no fill even when it's the matched region,
@@ -15872,7 +15933,7 @@ function initOklahomaExplorer() {
    * website does not let this app read it, so its names come from the county
    * election board's official results and from news reports; its `note`
    * says so in place of the sentence naming the city's website, and the card
-   * links the council's own page (`page`). The wards of the nine cities whose
+   * links the council's own page (`page`). The wards of the ten cities whose
    * wards elect their own members and are drawn are the City Council
    * District layer (7b below).
    *
@@ -15944,8 +16005,8 @@ function initOklahomaExplorer() {
   // Where the names come from and when they were read. A city whose names
   // come from somewhere other than its own website (Muskogee) carries a
   // `page`, and its `note` says where they come from in place of the
-  // sentence naming the website; any other city's `note` (Lawton's, on its
-  // wards) follows that sentence.
+  // sentence naming the website; any other city's `note` follows that
+  // sentence.
   function okCouncilSourceRow(council) {
     var name = String(council.name);
     var read = okElectionDate(council.read);
@@ -16094,26 +16155,27 @@ function initOklahomaExplorer() {
   });
 
   /* ---------- 7b. City council ward or district ----------
-   * The 56 council wards and districts of the nine Oklahoma cities above
+   * The 64 council wards and districts of the ten Oklahoma cities above
    * 25,000 people whose wards elect their own members and whose maps are
-   * drawn here: Tulsa 9, Oklahoma City and Norman 8 each, Midwest City, Enid
-   * and Shawnee 6 each, Bartlesville and Bixby 5 each, and Moore 3. Each is
-   * read from the map its city publishes, because no state office
+   * drawn here: Tulsa 9, Oklahoma City, Norman and Lawton 8 each, Midwest
+   * City, Enid and Shawnee 6 each, Bartlesville and Bixby 5 each, and Moore
+   * 3. Each is read from the map its city publishes, because no state office
    * publishes one. Pre-built by ok/scripts/build_ok_city_wards.py through
    * scripts/city_ward_maps.py, which holds each map to the Census outline of
    * its city, so a click is answered in the browser and no point is sent
    * anywhere. Each ward's card says whose map it is drawn from, and that it
    * is drawn here to within 4 metres.
    *
-   * Not drawn: Lawton and Muskogee, whose wards elect their own members.
-   * Lawton's only published ward map does not divide the 2020 census
-   * population evenly between its wards, so it may not be the map in force,
-   * and Muskogee publishes no copy this app may read; the City or Town card
-   * says so for each. Broken Arrow, Owasso, Jenks and Edmond tie their seats
+   * Not drawn: Muskogee, whose wards elect their own members and which
+   * publishes no copy of them this app may read; its City or Town card says
+   * so. Lawton's wards are drawn on the city's word: its map does not divide
+   * the 2020 census population evenly, and asked which map is in force, the
+   * city answered on 2026-10-21 by pointing to its public ward map, which
+   * draws this one. Broken Arrow, Owasso, Jenks and Edmond tie their seats
    * to wards and elect every seat by the whole city, so a ward there would
    * elect no one of its own, and Stillwater's council has no wards.
    *
-   * A GENERIC LABEL, as North Carolina's: eight of the nine elect by WARD and
+   * A GENERIC LABEL, as North Carolina's: nine of the ten elect by WARD and
    * Tulsa by DISTRICT, so the toggle says "City Council District" and each
    * card names the unit as its city does, off the feature's own `label`
    * ("Ward 3", "District 9").
@@ -16140,9 +16202,9 @@ function initOklahomaExplorer() {
     label: "City Council District",
     coverage: inOklahoma,
     emptyNote: "This point is not in a council ward or district this map " +
-      "draws. It draws the wards of the 9 Oklahoma cities above 25,000 " +
+      "draws. It draws the wards of the 10 Oklahoma cities above 25,000 " +
       "people whose wards elect their own members (Tulsa calls them " +
-      "districts). Lawton's and Muskogee's wards are not drawn yet; Broken " +
+      "districts). Muskogee's wards are not drawn yet; Broken " +
       "Arrow, Owasso, Jenks and Edmond elect every seat by the whole city, " +
       "and Stillwater's council has no wards. The City or Town card names " +
       "the mayor and council of all 16. Ground a city has added since its " +
@@ -17184,13 +17246,30 @@ function initOklahomaExplorer() {
     return findFeatureContaining(rt.geojson, state.selectedPoint);
   }
 
-  function drawRelationshipOutlines(parentFeature) {
-    // the pinned parent itself — bold dark frame so it reads as the reference
-    L.geoJSON(parentFeature, {
-      style: { color: "#14181C", weight: 4, opacity: 1, fill: false, className: "rel-parent-outline" },
-      interactive: false
-    }).addTo(relationshipGroup);
+  // The pinned district is not drawn here: its own lit line takes this ink
+  // (highlightStyleFor), so the reference is the line the map already draws
+  // rather than a second copy beside it. Near-black reads as neutral over a
+  // light basemap and is gone over a dark one, hence the light twin.
+  function relParentInk() {
+    return dstDark ? "#ece9f4" : "#14181C";
+  }
+  // Repaint the lit district of the layer that was pinned and of the one that
+  // is now, so each takes or drops the comparison's ink. The full sweep, since
+  // the fast path skips a path whose match has not moved.
+  var relInkedPin = null;
+  function repaintComparedLine() {
+    var was = relInkedPin;
+    relInkedPin = pinnedParentId;
+    if (was === pinnedParentId) return;
+    [was, pinnedParentId].forEach(function (id) {
+      var mod = id && getLayerById(id), rt = mod && layerRuntime[id];
+      if (!rt || !rt.overlayLayer || !state.layersOn[id]) return;
+      rt.highlightApplied = false;
+      updateLayerHighlight(mod);
+    });
+  }
 
+  function drawRelationshipOutlines(parentFeature) {
     var nIn = 0, nCross = 0, drawn = 0, capped = false;
     for (var li = 0; li < layers.length && !capped; li++) {
       var mod = layers[li];
@@ -17367,23 +17446,22 @@ function initOklahomaExplorer() {
       if (rt && rt.pinBtn) stylePinButton(rt.pinBtn, mod.id);
     });
     placePinnedCard(); // every pin change runs through here, including the unpin on toggle-off
+    repaintComparedLine();
   }
 
-  /* ---- the compared layer's card leads the list on a phone ----
-   * On a phone the card list sits below the map, grouped political → safety →
-   * schools → geography, so a compared school or geography district could be
-   * a long scroll away from the map that is outlining it. While a layer is
-   * pinned there, its card is MOVED (never copied: a second copy would break
-   * every binding layerRuntime holds on the first) into a "Comparing to"
-   * section at the top of the list, and put back exactly where it came from
-   * on unpin, on a new pin, or when the viewport widens past the phone
-   * breakpoint — the same 767px the skin's phone layout uses. A pinned
-   * sub-layer (Ward Precinct) moves on its own, out of its parent card. */
+  /* ---- the compared layer's card leads the list ----
+   * The card list is grouped political → safety → schools → geography, so a
+   * compared school or geography district could be a long scroll away from
+   * the map that is outlining it. While a layer is pinned, its card is MOVED
+   * (never copied: a second copy would break every binding layerRuntime
+   * holds on the first) into a "Comparing to" section at the top of the list,
+   * and put back exactly where it came from on unpin or on a new pin. A
+   * pinned sub-layer (Ward Precinct) moves on its own, out of its parent
+   * card. Until 2026-10-21 this was done on a phone only (from 2026-09-22),
+   * so on a computer the compared card stayed in its group, which read as
+   * the feature having stopped working. */
   var relPinnedSlot = null;  // the <section> at the top of #groups-root
   var relPinnedHome = null;  // {block, parent, next}: where the moved card lives
-  function relIsPhone() {
-    return !!(window.matchMedia && window.matchMedia("(max-width: 767px)").matches);
-  }
   function placePinnedCard() {
     if (relPinnedHome) {
       var home = relPinnedHome;
@@ -17393,7 +17471,7 @@ function initOklahomaExplorer() {
     }
     var rt = pinnedParentId ? layerRuntime[pinnedParentId] : null;
     var root = document.getElementById("groups-root");
-    if (!rt || !rt.block || !root || !relIsPhone()) return;
+    if (!rt || !rt.block || !root) return;
     if (!relPinnedSlot) {
       relPinnedSlot = document.createElement("section");
       relPinnedSlot.className = "group-section group-pinned";
@@ -17411,32 +17489,45 @@ function initOklahomaExplorer() {
     relPinnedHome = { block: rt.block, parent: rt.block.parentNode, next: rt.block.nextSibling };
     relPinnedSlot.lastChild.appendChild(rt.block);
   }
-  // After a tap on "Compare to this district" moves the card to the top of
+  // The element the card list scrolls in: the side column on a computer, or
+  // null where the page itself scrolls (a phone).
+  function relScrollParent(el) {
+    for (var n = el.parentElement; n && n !== document.body && n !== document.documentElement; n = n.parentElement) {
+      var oy = window.getComputedStyle(n).overflowY;
+      if ((oy === "auto" || oy === "scroll") && n.scrollHeight > n.clientHeight) return n;
+    }
+    return null;
+  }
+  // After a click on "Compare to this district" moves the card to the top of
   // the list, scroll the list up after it: otherwise the card leaves from
-  // under the reader's finger and a different one takes its place. The
-  // target is the "Comparing to" heading, landed just below the map, which
-  // is sticky on a phone and covers the top ~370px of the viewport (measured
-  // 390x844) — a plain scrollIntoView would park the card underneath it.
-  // Only a TAP does this: a permalink arriving pinned, or a resize across
-  // the breakpoint, leaves the reader's scroll position alone. Moving a
-  // focused button out of the DOM drops its focus, so it is handed back
-  // without scrolling, or a keyboard reader loses their place.
+  // under the reader's pointer and a different one takes its place. The
+  // target is the "Comparing to" heading. On a phone the page scrolls and the
+  // map above the list is sticky, covering the top ~370px of the viewport
+  // (measured 390x844), so the heading is landed just below it; a plain
+  // scrollIntoView would park the card underneath. On a computer the list
+  // scrolls in its own column. Only a CLICK does this: a permalink arriving
+  // pinned, or a search pinning a ZIP code, leaves the reader's scroll
+  // position alone. Moving a focused button out of the DOM drops its focus,
+  // so it is handed back without scrolling, or a keyboard reader loses their
+  // place.
   function followPinnedCard(btn) {
     if (!relPinnedHome || !relPinnedSlot || !relPinnedSlot.parentNode) return;
-    var mapCol = document.querySelector(".map-col");
-    var cover = mapCol && window.getComputedStyle(mapCol).position === "sticky"
-      ? mapCol.getBoundingClientRect().bottom : 0;
-    var delta = relPinnedSlot.getBoundingClientRect().top - Math.max(cover, 0) - 8;
     var still = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-    if (Math.abs(delta) > 1) window.scrollBy({ top: delta, behavior: still ? "auto" : "smooth" });
+    var behavior = still ? "auto" : "smooth";
+    var column = relScrollParent(relPinnedSlot);
+    if (column) {
+      var lift = relPinnedSlot.getBoundingClientRect().top - column.getBoundingClientRect().top - 8;
+      if (Math.abs(lift) > 1) column.scrollBy({ top: lift, behavior: behavior });
+    } else {
+      var mapCol = document.querySelector(".map-col");
+      var cover = mapCol && window.getComputedStyle(mapCol).position === "sticky"
+        ? mapCol.getBoundingClientRect().bottom : 0;
+      var delta = relPinnedSlot.getBoundingClientRect().top - Math.max(cover, 0) - 8;
+      if (Math.abs(delta) > 1) window.scrollBy({ top: delta, behavior: behavior });
+    }
     if (btn && document.activeElement !== btn) {
       try { btn.focus({ preventScroll: true }); } catch (e) { /* focus is a courtesy, never a failure */ }
     }
-  }
-  if (window.matchMedia) {
-    var relPhoneMQ = window.matchMedia("(max-width: 767px)");
-    if (relPhoneMQ.addEventListener) relPhoneMQ.addEventListener("change", placePinnedCard);
-    else if (relPhoneMQ.addListener) relPhoneMQ.addListener(placePinnedCard);
   }
   function stylePinButton(btn, id) {
     var pinned = pinnedParentId === id;
@@ -18057,7 +18148,7 @@ function initOklahomaExplorer() {
     // its voters elect its district judges.
     "ok-judicial-district", "county-commissioner",
     // The city council district sits with the other districts that elect
-    // someone of their own; it answers only in the nine cities whose wards
+    // someone of their own; it answers only in the ten cities whose wards
     // are drawn.
     "city-ward",
     "school-district-unified", "school-district-elementary",
@@ -18487,6 +18578,19 @@ function initOklahomaExplorer() {
       var color = null;
       rt.overlayLayer.eachLayer(function (l) { if (!color && l.options && l.options.color) color = l.options.color; });
       return color;
+    },
+    // the colour the lit district's line is drawn in, so a test can see the
+    // compared district take the comparison's ink (relParentInk)
+    highlightColor: function (id) {
+      var mod = getLayerById(id), rt = layerRuntime[id];
+      if (!mod || !rt || !rt.overlayLayer || !rt.highlightApplied) return null;
+      if (rt.overlayLayer.dxTiles) {
+        var gl = tileGLLayer && tileGLLayer.getMaplibreMap(), ids = tileIds(mod);
+        if (rt.tileLiveSelected) return rt.overlayLayer.liveSelected ? highlightStyleFor(mod).color : null;
+        return gl && gl.getLayer(ids.hl) ? gl.getPaintProperty(ids.hl, "line-color") : null;
+      }
+      var lit = rt.highlightedLayer;
+      return lit && lit.options ? lit.options.color : null;
     },
     loadWholeFile: function (id) {
       var mod = getLayerById(id);
@@ -19178,7 +19282,7 @@ function initOklahomaExplorer() {
      The apps and the front door link the one manifest at /manifest.webmanifest,
      whose scope is the whole site, so an installed districtry crosses state
      lines without leaving its window, and whose start_url is the launcher at
-     /app/. This block is the app's half of that arrangement, in three parts.
+     /app/. This block is the app's half of that arrangement, in five parts.
 
      1. WHICH STATE WAS OPEN LAST. Each boot writes this app's tag under
         DST_LAST_APP_KEY, and the launcher reads it to open that state.
@@ -19223,9 +19327,11 @@ function initOklahomaExplorer() {
         as counted), `install-invite/<what>` for the invitation: shown,
         accepted, declined or closed, tip-shown or tip-closed on an iPhone, and
         test-shown, test-join or test-closed for the Android test,
-        and `share-in/<tag>` when a place shared into the installed app opened
-        this app (below). A launch is counted at boot, before GoatCounter's
-        script has always arrived, so these wait for it rather than being lost.
+        `share-in/<tag>` when a place shared into the installed app opened
+        this app, and `app-shortcut/<tag>/<action>` when one of the installed
+        app's long-press shortcuts did (both below). A launch is counted at
+        boot, before GoatCounter's script has always arrived, so these wait for
+        it rather than being lost.
 
      4. A PLACE SHARED INTO THE APP. The manifest's share_target puts the
         installed districtry in Android's Share menu and sends what was shared
@@ -19239,11 +19345,20 @@ function initOklahomaExplorer() {
         installed app runs, so it is in place before the first share even if
         the installed app has never been opened from its icon.
         scripts/build_manifests.py --check holds the launcher to this key and
-        this block to the launcher's worker. */
+        this block to the launcher's worker.
+
+     5. A LONG-PRESS SHORTCUT. The manifest's shortcuts ("Use my location",
+        "Report a problem") open the launcher with their action in the hash,
+        and the launcher hands the action on to the state it opens, where the
+        geolocation and feedback blocks do it, and leaves the action under
+        DST_SHORTCUT_KEY in session storage. It is counted once, by state and
+        action and never by place, and removed. scripts/build_manifests.py
+        --check holds the launcher to this key. */
   var DST_LAST_APP_KEY = "districtry-last-app";
   var DST_INSTALL_INVITE_KEY = "districtry-install-invite";
   var DST_APP_LAUNCH_KEY = "districtry-app-launch";
   var DST_SHARE_IN_KEY = "districtry-share-in";
+  var DST_SHORTCUT_KEY = "districtry-shortcut";
   var DST_INVITE_DELAY_MS = 3000;
   var DST_ANDROID_TEST_URL = "/android.html?ref=map";
   var DST_TEST_INVITE_SEEN = "test-shown";
@@ -19378,6 +19493,16 @@ function initOklahomaExplorer() {
       if (dstSharedIn) window.sessionStorage.removeItem(DST_SHARE_IN_KEY);
     } catch (e) { dstSharedIn = false; }
     if (dstSharedIn) dstCountWhenReady("share-in/" + METRO_BRAND.instanceTag);
+    var dstShortcut = "";
+    try {
+      dstShortcut = window.sessionStorage.getItem(DST_SHORTCUT_KEY) || "";
+      if (dstShortcut) window.sessionStorage.removeItem(DST_SHORTCUT_KEY);
+    } catch (e) { dstShortcut = ""; }
+    // A bare word, as the launcher writes it, so the count cannot carry
+    // anything else that reached session storage under this key.
+    if (/^[a-z]{1,16}$/.test(dstShortcut)) {
+      dstCountWhenReady("app-shortcut/" + METRO_BRAND.instanceTag + "/" + dstShortcut);
+    }
   }
 
   window.addEventListener("appinstalled", function () {

@@ -204,7 +204,7 @@ All 82 counties and their boards of supervisors: cities and towns, school distri
 
 All 64 parishes and their police juries and councils: cities, towns and villages, voting precincts, school districts, ZIP codes, the land of Louisiana's four federally recognized tribes, and the nearest police station, fire station and post office — plus the Louisiana Senate, House and U.S. House districts, with who holds each seat. Every parish's police jury or council and its president where it elects one, the mayors and councils of 302 cities, towns and villages, and the members of all 69 school boards are named from the Secretary of State's list of elected officials. Parish district lines are drawn in the 6 parishes whose current map is confirmed, and the Data gaps panel says why the other 58 are not.
 
-- [Louisiana district lookup](https://districtry.com/la/): 16 layers, all 64 parishes.
+- [Louisiana district lookup](https://districtry.com/la/): 17 layers, all 64 parishes.
 - [Who is my U.S. representative?](https://districtry.com/la/congress.html)
 - [Who runs my parish?](https://districtry.com/la/parish-government.html): links a page per parish, 64 of them, each naming every member with the telephone the Secretary of State's list prints for a member where it prints one, and the body's office address where three or more members give the same one.
 - [Sources & data layers](https://districtry.com/la/sources.html)

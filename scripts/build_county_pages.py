@@ -2666,18 +2666,31 @@ def la_parish_bodies(inst):
         if props:
             got = sorted("%s %s" % (p.get("label"), p.get("district"))
                          for p in props)
-            if got != sorted(groups) or {p.get("lines") for p in props} != {"census"} \
-                    or {p.get("body") for p in props} != {body}:
+            # A parish is drawn from ONE map: the Census's, or the parish
+            # government's own (Orleans and East Baton Rouge, whose features
+            # each carry the sentence saying whose map it is).
+            lines = {p.get("lines") for p in props}
+            sources = {(p.get("source") or "").strip() for p in props}
+            if got != sorted(groups) or lines not in ({"census"}, {"own"}) \
+                    or {p.get("body") for p in props} != {body} \
+                    or (lines == {"own"} and (len(sources) != 1 or "" in sources)):
                 problems.append("la %s Parish: the districts file does not draw "
-                                "this roster's seats, under this body, from the "
-                                "Census's lines" % name)
+                                "this roster's seats, under this body, from one "
+                                "map it names" % name)
                 continue
-            cta_note = ("Opens the map with the parish and police jury or council "
-                        "district layers on. The %s lines are the Census Bureau's "
-                        "map of the %s's %ss (January 1, 2026 edition), which the "
-                        "Census changed after the 2020 census and which hold "
-                        "nearly equal numbers of people in that census."
-                        % (seat_word, body_word, seat_word))
+            if lines == {"census"}:
+                cta_note = ("Opens the map with the parish and police jury or "
+                            "council district layers on. The %s lines are the "
+                            "Census Bureau's map of the %s's %ss (January 1, 2026 "
+                            "edition), which the Census changed after the 2020 "
+                            "census and which hold nearly equal numbers of people "
+                            "in that census." % (seat_word, body_word, seat_word))
+            else:
+                said_source = sources.pop()
+                cta_note = ("Opens the map with the parish and police jury or "
+                            "council district layers on. The %s lines are %s%s."
+                            % (seat_word, said_source[:1].lower(),
+                               said_source[1:].rstrip(".")))
         else:
             cta_layers = "county"
             cta_note = ("Opens the map with the parish layer on, whose card lists "
@@ -4237,6 +4250,17 @@ def check_workflows(read_by_instance):
 # are the wrong home for it. Nobody has to remember, and nothing is generated
 # from a guess about a shape nobody has looked at.
 NOT_COUNTY_BOARDS = {
+    "mo/data/app/mo-county-officials.json": dict(
+        date="2026-10-21",
+        reason="Missouri's county governing bodies — 110 county commissions, "
+               "three charter councils, Jackson County's legislature and the "
+               "City of St. Louis's mayor and Board of Aldermen president, "
+               "named from the Secretary of State's Missouri Roster. They ARE "
+               "these pages' subject, and are recorded here only while the "
+               "instance is dark: an adapter would write pages for a folder "
+               "the deploy does not publish. Missouri's go-live writes the "
+               "adapter and drops this entry.",
+    ),
     "mn/data/app/mn-county-town-officers.json": dict(
         date="2026-10-16",
         reason="the supervisors, clerks and treasurers of 416 Minnesota "
