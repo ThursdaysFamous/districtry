@@ -15,7 +15,8 @@
 
      It is also where a place SHARED INTO the app arrives: the manifest's
      share_target puts districtry in Android's Share menu and sends what was
-     shared here (the script at the foot of this page). -->
+     shared here (the script at the foot of this page). And it is where the
+     manifest's long-press shortcuts open, with their action in the hash. -->
 <meta name="robots" content="noindex" />
 <meta name="theme-color" content="#6d3fd1" />
 <link rel="manifest" href="/manifest.webmanifest" />
@@ -184,30 +185,52 @@
     try { sessionStorage.setItem("districtry-share-in", "1"); } catch (e) { /* not counted */ }
   }
 
+  // A LONG-PRESS SHORTCUT. The manifest's shortcuts (scripts/build_manifests.py)
+  // open /app/#locate and /app/#feedback, and the action goes on in the hash
+  // to the state the reader used last, where the map asks for the reader's
+  // location (engine/index.html/geolocation.txt) or opens the report form
+  // (engine/index.html/feedback.txt), as its own buttons do. With no state
+  // remembered, "feedback" opens the site's own report form, and "locate"
+  // opens the front page, which asks nobody for a location. Only an action
+  // listed here is passed on, and a share wins over one.
+  var SHORTCUT_ACTIONS = ["locate", "feedback"];
+  var action = shared ? "" : location.hash.replace(/^#/, "");
+  if (SHORTCUT_ACTIONS.indexOf(action) < 0) action = "";
+  if (action && to !== "/") {
+    hash = "#" + action;
+    // The map counts that a shortcut opened it, by state and action and never
+    // by place (engine/index.html/install-app.txt), and removes this mark.
+    try { sessionStorage.setItem("districtry-shortcut", action); } catch (e) { /* not counted */ }
+  } else if (action === "feedback") {
+    to = "/feedback.html";
+  }
+  // Only a state's map keeps an offline copy of itself.
+  var noOfflineCopy = !/^\/[a-z]{2}\/$/.test(to);
+
   var gone = false;
   function go() {
     if (gone) return;
     gone = true;
     location.replace((fromPlay ? to + "?ref=play" : to) + hash);
   }
-  // The front page keeps no offline copy, so with no state remembered and no
-  // connection, going there would end on the browser's own error page. Say so
-  // here instead, and go as soon as the connection is back.
-  if (to === "/" && navigator.onLine === false) {
+  // The front page and the report form keep no offline copy, so with no state
+  // remembered and no connection, going there would end on the browser's own
+  // error page. Say so here instead, and go as soon as the connection is back.
+  if (noOfflineCopy && navigator.onLine === false) {
     document.getElementById("opening").hidden = true;
     document.getElementById("offline").hidden = false;
     if (fromPlay) document.getElementById("retry").setAttribute("href", "/app/?ref=play");
     window.addEventListener("online", go);
   }
   if (!("serviceWorker" in navigator)) {
-    if (!(to === "/" && navigator.onLine === false)) go();
+    if (!(noOfflineCopy && navigator.onLine === false)) go();
     return;
   }
   // This page's own worker keeps a copy of it, so the installed app opens with
   // no connection, and a share is answered from that copy rather than sent to
   // the host (app/sw.js); each state's map has its own worker for the rest.
   var registered = navigator.serviceWorker.register("/app/sw.js", { scope: "/app/" });
-  if (to === "/" && navigator.onLine === false) return;
+  if (noOfflineCopy && navigator.onLine === false) return;
   if (navigator.serviceWorker.controller) { go(); return; }
   // The first launch: give the worker a moment to finish installing, so the
   // next launch works offline, but never hold the reader for long.
