@@ -101,7 +101,7 @@ from build_privacy_page import (  # noqa: E402
     DARK_EXTRA, DARK_TOKENS, LIGHT_TOKENS, esc,
 )
 from build_history_page import shared_footer_byline, shared_goatcounter  # noqa: E402
-from build_county_status import ALL_COUNTIES, slug_of  # noqa: E402
+from build_county_status import ALL_COUNTIES, scan_dispatch_tables, slug_of  # noqa: E402
 
 # A county whose shipped roster names NOBODY. A page for it would be a page
 # about a county board with no officeholder on it, which is the opposite of
@@ -391,6 +391,33 @@ INSTANCES = [
          index_provenance="each name as the Mississippi Secretary of State's "
                           "County Offices and Directory lists it, by district "
                           "or beat"),
+    # LOUISIANA'S COUNTIES ARE PARISHES, and every parish elects its governing
+    # body from districts: a police jury in 38, a council in 25 (two of them
+    # the councils of a city and parish that share one government, New
+    # Orleans's and Baton Rouge's) and Caddo's parish commission. So the concept
+    # path is the parish's government rather than any one body, as Kentucky's
+    # is, and every record names its own body. The names are the Secretary of
+    # State's list of elected officials, the record the app's Parish card
+    # reads, so the pages say the day it was read and never a schedule beyond
+    # the weekly re-read. `county_word` and its two siblings put "Parish"
+    # wherever a page says "County"; `district_layer` is the map layer, which
+    # is not the concept path here.
+    dict(tag="la", state="Louisiana", concept="parish-government",
+         index_page="parish-government.html",
+         # Every record carries its own heading and title; these two are what
+         # a record without them would read.
+         heading="%(county)s Parish governing body",
+         page_title="%(county)s Parish governing body",
+         phrase="police jury or parish council", index_label="Parish governments",
+         all_label="All Louisiana parish governments",
+         app_name="districtry Louisiana", app_url="https://districtry.com/la/",
+         district_word="", member_word="Member",
+         county_word="Parish", county_noun="parish", county_plural="parishes",
+         district_layer="parish-district",
+         adapters=("la_parish_bodies",),
+         contacts="la_board_contact",
+         index_provenance="each name as the Louisiana Secretary of State's list "
+                          "of elected officials prints it, by district or ward"),
     # NEW YORK IS THE FIRST INSTANCE WHOSE COUNTIES DO NOT ALL HAVE A BODY
     # THESE PAGES CAN BE ABOUT, which is why its `phrase` names one form
     # rather than the county tier: a county legislature is elected from
@@ -656,6 +683,21 @@ def il_districted(inst):
     # rest of them; this reads both, because the reader of a county page does
     # not care which of the two the names came from.
     dirs = [data_dir, os.path.join(REPO_ROOT, inst["tag"], "data", "source")]
+    # WHETHER THE MAP DRAWS A COUNTY'S DISTRICTS IS READ OFF THE APP'S OWN
+    # DISPATCH TABLE, because a roster in data/source is not always Cook's case.
+    # Bond, Bureau, Champaign, Marion and Piatt (measured 2026-10-20) have their
+    # members read from their own websites and their districts drawn nowhere, so
+    # their rosters sit in data/source with no county board entry in
+    # il/index.html at all. Their pages said the map's card read the same source
+    # live and offered to find the reader's district on the map, and neither was
+    # true: no card reads those files and the map has no district to find. A
+    # county the table names keeps the wording it had.
+    with open(os.path.join(REPO_ROOT, inst["tag"], "index.html"), encoding="utf-8") as f:
+        drawn = set(scan_dispatch_tables(f.read(), ()).get(inst["concept"], ()))
+    if not drawn:
+        fail("%s/index.html has no %s dispatch entries, so this cannot tell "
+             "which counties' districts the map draws"
+             % (inst["tag"], inst["concept"]))
     paths = sorted(set(
         path
         for d in dirs
@@ -714,10 +756,17 @@ def il_districted(inst):
                     % (os.path.relpath(path, REPO_ROOT), len(data)))
             nameless.add(name)
             continue
-        out[name] = {"districts": districts, "sourceUrl": source, "extras": extras,
-                     "skipped": skipped, "slug": slug, "at_large": False,
-                     "source_file": path,
-                     "not_read_since": (not_read or {}).get("since")}
+        rec = {"districts": districts, "sourceUrl": source, "extras": extras,
+               "skipped": skipped, "slug": slug, "at_large": False,
+               "source_file": path,
+               "not_read_since": (not_read or {}).get("since")}
+        if slug not in drawn:
+            rec["undrawn"] = True
+            rec["cta_layers"] = "county"
+            rec["cta_note"] = ("Opens the map with the county layer on. This "
+                               "board's districts are not on the map yet, so the "
+                               "map cannot find your district.")
+        out[name] = rec
     return out, problems, nameless, used, None
 
 
@@ -2457,6 +2506,271 @@ def ms_supervisors(inst):
     return out, problems, nameless, [path, listed_path, map_path], note
 
 
+# Louisiana's three kinds of parish governing body, as the Secretary of
+# State's list names them (la/scripts/build_la_parish_officials.py): the body
+# in running prose, and what its members are called.
+LA_KINDS = {"police-jury": ("police jury", "Police Juror"),
+            "council": ("council", "Council Member"),
+            "commission": ("commission", "Commissioner")}
+# A body whose name does not say which parish it governs. The heading is the
+# page's h1; the title is shorter, because "East Baton Rouge Parish
+# Metropolitan Council — districtry Louisiana" is 67 characters against
+# validate_serp_lengths.py's 60.
+LA_HEADINGS = {"22033": ("East Baton Rouge Parish Metropolitan Council",
+                         "East Baton Rouge Metropolitan Council")}
+# The two parishes that share one government with a city, whose governing body
+# is that government's council. Said first, because a reader looking for a
+# parish council there finds a city council.
+LA_ONE_GOVERNMENT = {
+    "22033": ("East Baton Rouge Parish and the City of Baton Rouge share one "
+              "government, and its governing body is the Metropolitan Council."),
+    "22071": ("Orleans Parish and the City of New Orleans share one government, "
+              "and its governing body is the New Orleans City Council."),
+}
+LA_STANDFIRST = ("Every member of the %(heading)s, as the Louisiana Secretary of "
+                 "State's list of elected officials prints them.")
+LA_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above is "
+                 "printed in the Louisiana Secretary of State's list of elected "
+                 "officials,\nand where the list names no one for a seat this "
+                 "page says so rather than filling the gap.")
+# Printed after "Not named — " on a seat the list skips (Avoyelles's District 4
+# and LaSalle's District 5 on 2026-10-20).
+LA_UNLISTED_NOTE = ("the Secretary of State's list names no one for this seat. "
+                    "It does not say the seat is vacant, so this page does not "
+                    "either.")
+
+
+def _la_seat_key(label):
+    """District 2 before District 10, and District 1, Place A before District
+    1, Place B: the digits compare as numbers. re.split with one capturing
+    group alternates text and digits, so two labels never compare a number
+    with a word at the same position."""
+    return [int(t) if t.isdigit() else t for t in re.split(r"(\d+)", label)]
+
+
+def la_parish_bodies(inst):
+    """Louisiana: ONE file keyed by parish GEOID ("22001"), each record one
+    parish's governing body as the Secretary of State's list of elected
+    officials names it (la/scripts/build_la_parish_officials.py): its members
+    by district or ward, any elected at large, the parish president or mayor
+    where the parish has one, and the body's office where the list prints one
+    for the body rather than for one member.
+
+    THE BODY NAMES ITSELF ON EVERY PAGE: a police jury in 38 parishes, a
+    council in 25 and Caddo's commission, so each record's own `body` is the
+    heading, and one whose name does not say which parish it governs takes its
+    heading from LA_HEADINGS.
+
+    THE PARISH'S EXECUTIVE IS NAMED IN THE LEDE AND IS NOT LISTED AS A MEMBER.
+    A parish president, a mayor-president or New Orleans's mayor runs the
+    parish government and is not a member of its council, so a section of
+    their own would mark them as one in the page's structured data, the reason
+    ms_supervisors leaves Mississippi's election commissioners off.
+
+    A SEAT THE LIST SKIPS IS SHOWN AND NOT CALLED VACANT. Where a parish's
+    districts are numbered and the list leaves one out (Avoyelles's District 4
+    and LaSalle's District 5 on 2026-10-20), the page lists the seat with the
+    sentence the app's card prints, because the list does not say the seat is
+    vacant.
+
+    THE MAP LINK OPENS WHAT THE APP DRAWS, the Mississippi rule:
+    la-parish-district-parishes.json lists the parishes whose current lines
+    the app has confirmed, and this holds that list to the districts file and
+    each drawn parish's districts to this roster's seats. Every other parish's
+    page opens the Parish layer, whose card lists the whole body."""
+    path = os.path.join(app_data(inst["tag"]), "la-parish-officials.json")
+    listed_path = os.path.join(app_data(inst["tag"]),
+                               "la-parish-district-parishes.json")
+    map_path = os.path.join(app_data(inst["tag"]), "la-parish-districts.json")
+    listed = _read(listed_path)
+    drawn = {}
+    for f in _read(map_path).get("features") or []:
+        props = f.get("properties") or {}
+        drawn.setdefault(str(props.get("parishfips")), []).append(props)
+    out, problems, nameless = {}, [], set()
+    for geoid in sorted(set(listed) ^ set(drawn)):
+        problems.append("la %s: the list of drawn parishes and the districts "
+                        "file disagree about whether this parish is drawn" % geoid)
+    records = _read(path)
+    if len(records) != 64:
+        problems.append("la-parish-officials.json carries %d parishes, not "
+                        "Louisiana's 64" % len(records))
+    for geoid, rec in sorted(records.items()):
+        parish = (rec.get("parish") or "").strip()
+        name = re.sub(r"\s+Parish$", "", parish)
+        body = (rec.get("body") or "").strip()
+        kind = LA_KINDS.get(rec.get("kind"))
+        read = _mn_date(rec.get("read"))
+        link = (rec.get("sourceUrl") or "").strip()
+        if not name or name == parish or not body or not kind or not read \
+                or not link.startswith("https://"):
+            problems.append("la-parish-officials.json %r carries no parish, no "
+                            "body, no kind of body this page knows, no read date "
+                            "or no https source" % geoid)
+            continue
+        body_word, member_word = kind
+
+        def person(s, role):
+            m = {"name": (s.get("name") or "").strip(), "role": role}
+            for key in ("party", "phone"):
+                if (s.get(key) or "").strip():
+                    m[key] = s[key].strip()
+            return m
+
+        groups, terms, bad = {}, [], False
+        for s in rec.get("seats") or []:
+            label = re.sub(r"\s+", " ", (s.get("seat") or "").strip())
+            if not label or not (s.get("name") or "").strip():
+                problems.append("la %s Parish lists a seat with no label or no "
+                                "name" % name)
+                bad = True
+                continue
+            groups.setdefault(label, []).append(person(s, member_word))
+            terms.append(s.get("termEnds"))
+        for label in rec.get("unlisted") or []:
+            if label in groups:
+                problems.append("la %s Parish lists %s as both named and left "
+                                "out" % (name, label))
+                bad = True
+            groups.setdefault(label, [])
+        at_large = []
+        for s in rec.get("atLarge") or []:
+            seat = (s.get("seat") or "").strip()
+            if not (s.get("name") or "").strip() \
+                    or not seat.lower().startswith("at large"):
+                problems.append("la %s Parish lists an at-large seat with no "
+                                "name, or one not marked at large" % name)
+                bad = True
+                continue
+            at_large.append(person(s, "%s, %s" % (member_word,
+                                                  seat[:1].lower() + seat[1:])))
+            terms.append(s.get("termEnds"))
+        if bad or not groups:
+            continue
+        # A skipped seat carries its reason as the district's note, so the
+        # page prints why it names nobody and the done-standard report reads
+        # the seat as answered with a stated reason, as it reads Monroe
+        # County, Michigan's directory row with no commissioner on it.
+        districts = [district(label, members,
+                              note=None if members else LA_UNLISTED_NOTE)
+                     for label, members
+                     in sorted(groups.items(), key=lambda g: _la_seat_key(g[0]))]
+        extras = [("at-large", "Elected at large", at_large)] if at_large else []
+        n_district = sum(len(ms) for ms in groups.values())
+
+        seat_word = ("ward" if all(l.startswith("Ward ") for l in groups)
+                     else "district")
+        props = drawn.get(geoid)
+        cta_layers = None
+        if props:
+            got = sorted("%s %s" % (p.get("label"), p.get("district"))
+                         for p in props)
+            if got != sorted(groups) or {p.get("lines") for p in props} != {"census"} \
+                    or {p.get("body") for p in props} != {body}:
+                problems.append("la %s Parish: the districts file does not draw "
+                                "this roster's seats, under this body, from the "
+                                "Census's lines" % name)
+                continue
+            cta_note = ("Opens the map with the parish and police jury or council "
+                        "district layers on. The %s lines are the Census Bureau's "
+                        "map of the %s's %ss (January 1, 2026 edition), which the "
+                        "Census changed after the 2020 census and which hold "
+                        "nearly equal numbers of people in that census."
+                        % (seat_word, body_word, seat_word))
+        else:
+            cta_layers = "county"
+            cta_note = ("Opens the map with the parish layer on, whose card lists "
+                        "every member of the %s. This app has not confirmed %s "
+                        "Parish's current %s lines, so the map does not draw them."
+                        % (body_word, name, seat_word))
+
+        heading, page_title = LA_HEADINGS.get(geoid, (body, body))
+        whole = "city" if geoid == "22071" else "parish"
+        said = [LA_ONE_GOVERNMENT.get(geoid)
+                or "The %s is %s Parish's governing body." % (body, name)]
+        # A seat the list skips is not a member, so a body with one says how
+        # many seats it has and how many the list names, rather than giving a
+        # member count that disagrees with the seats listed below it.
+        empty = sum(1 for ms in groups.values() if not ms)
+        if empty:
+            said.append("Its members are elected from %d %ss%s, and the list "
+                        "names a member for %d of the %ss."
+                        % (len(groups), seat_word,
+                           ", with %d more elected by the whole %s"
+                           % (len(at_large), whole) if at_large else "",
+                           len(groups) - empty, seat_word)
+                        if at_large else
+                        "Its members are elected from %d %ss, and the list "
+                        "names a member for %d of them."
+                        % (len(groups), seat_word, len(groups) - empty))
+        elif at_large:
+            said.append("Of its %d members, %d are elected from %ss and %d by "
+                        "the whole %s." % (n_district + len(at_large), n_district,
+                                           seat_word, len(at_large), whole))
+        else:
+            said.append("Its %d members are elected from %ss."
+                        % (n_district, seat_word))
+        exe = rec.get("executive") or {}
+        if (exe.get("name") or "").strip() and (exe.get("title") or "").strip():
+            said.append("The %s, %s, is elected by the whole %s and is not a "
+                        "member of the %s." % (exe["title"].strip().lower(),
+                                               exe["name"].strip(), whole,
+                                               body_word))
+        if rec.get("kind") == "police-jury":
+            said.append("A police jury elects its own president from among its "
+                        "members, and the Secretary of State's list does not "
+                        "say who that is, so this page does not either.")
+        said.append("This page lists every %s and the member who holds it as the "
+                    "Louisiana Secretary of State's list of elected officials "
+                    "prints them, and the map's Parish card reads the same list."
+                    % seat_word)
+        if len(set(terms)) == 1 and terms[0] and _mn_date(terms[0]):
+            said.append("The list gives every member's term as ending on %s."
+                        % _mn_date(terms[0]))
+        lede = esc(" ".join(said)).replace("%", "%%")
+
+        source_html = ('Source: <a href="%s" rel="noopener" target="_blank">%s</a>, '
+                       "read on %s. The list is the Secretary of State's own "
+                       "current record, and this project reads it again every "
+                       "week." % (esc(link), esc((rec.get("source") or "").strip()
+                                               or "the Louisiana Secretary of "
+                                                  "State's list of elected "
+                                                  "officials"), esc(read)))
+        # 155 characters is validate_serp_lengths.py's ceiling. The longest is
+        # St. John the Baptist's, whose council also has members elected at
+        # large: it lands at 145. "Who holds each seat on the" put it at 156,
+        # one over, because this comment had measured only the longest heading
+        # (East Baton Rouge's, now 141) and not the at-large clause.
+        desc = ("Who sits on the %(heading)s, by " + seat_word
+                + (" and at large" if at_large else "")
+                + ", from the Louisiana Secretary of State's list of elected "
+                  "officials.")
+        # The at-large members follow the districts, where a reader who found
+        # their own district's member reads on to the members the whole parish
+        # elects.
+        entry = {"districts": districts, "extras": extras,
+                 "after_anchors": {"at-large"}, "skipped": [],
+                 "seat_word": seat_word,
+                 "slug": county_slug(name), "at_large": False,
+                 "source_file": path, "lede": lede, "heading": heading,
+                 "page_title": page_title, "member_word": member_word,
+                 "standfirst": LA_STANDFIRST, "desc": desc,
+                 "disclaimer": LA_DISCLAIMER, "cta_note": cta_note,
+                 "source_html": source_html}
+        if cta_layers:
+            entry["cta_layers"] = cta_layers
+        if not _count_named(districts, extras):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("la %s Parish names nobody" % name)
+            nameless.add(name)
+            continue
+        out[name] = entry
+    note = ("%d of Louisiana's 64 parishes, every governing body named, %d with "
+            "their districts drawn" % (len(out), len(set(listed) & set(drawn))))
+    return out, problems, nameless, [path, listed_path, map_path], note
+
+
 def _mn_date(iso):
     m = re.match(r"^(\d{4})-(\d{2})-(\d{2})$", str(iso or ""))
     if not m:
@@ -2703,6 +3017,7 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "tn_commissioners": tn_commissioners,
             "ar_quorum_courts": ar_quorum_courts,
             "ms_supervisors": ms_supervisors,
+            "la_parish_bodies": la_parish_bodies,
             "ny_supervisors": ny_supervisors,
             "ny_legislature": ny_legislature}
 
@@ -2971,7 +3286,9 @@ def board_graph(rec, inst, canonical, head, name):
            "name": head,
            "url": canonical,
            "areaServed": {"@type": "AdministrativeArea",
-                          "name": "%s County, %s" % (name, inst["state"])}}
+                          "name": "%s %s, %s" % (name,
+                                                 inst.get("county_word", "County"),
+                                                 inst["state"])}}
     if roles:
         org["member"] = roles
     roster = None
@@ -3122,6 +3439,17 @@ def districted_body(inst, name, rec):
                 "then, so these are the names it published before that day; the "
                 "map's %s card asks the same service directly"
                 % (esc(rec["not_read_since"]), esc(inst["phrase"])))
+    # A county whose districts the map does not draw has no card reading
+    # anything, so neither sentence above is true of it (il_districted says
+    # how that is decided).
+    if rec.get("undrawn"):
+        if rec.get("not_read_since") or app_reads:
+            fail("%s is marked undrawn but %s, and this page has no sentence "
+                 "for that" % (heading_of(inst, name, rec),
+                               "its roster is in data/app" if app_reads else
+                               "its roster was kept unread"))
+        same = ("the map does not draw these districts yet, so it cannot show "
+                "which one an address is in")
     # A RECORD MAY STATE WHERE ITS NAMES CAME FROM, and the default below
     # cannot serve one that did not come from the county. "exactly as the
     # county publishes them" is true of every roster scraped from a county's
@@ -3153,16 +3481,23 @@ def districted_body(inst, name, rec):
     # has confirmed, so every other county's page opens the County layer,
     # whose card lists the board. A record without the key is unchanged.
     cta_layers = rec.get("cta_layers") or inst.get("cta_layers")
+    # A LOUISIANA PAGE IS ABOUT A PARISH, and its concept path is the parish's
+    # government rather than the map's district layer, so an instance may name
+    # both words. One that names neither reads exactly as before.
+    word = inst.get("county_word", "County")
     if cta_layers:
         # An instance whose board has no district layer yet opens the layer
         # whose card lists it, rather than a layer id its app does not register.
         out.append('<a class="cta" href="../#layers=%s">'
-                   'See %s County on the map →</a>'
-                   % (esc(cta_layers), esc(name)))
+                   'See %s %s on the map →</a>'
+                   % (esc(cta_layers), esc(name), esc(word)))
     else:
+        # A record may name its seats: an Assumption Parish juror is elected
+        # from a ward, and the link says so. One that does not reads "district".
         out.append('<a class="cta" href="../#layers=%s,county">'
-                   'Find your %s County district on the map →</a>'
-                   % (esc(inst["concept"]), esc(name)))
+                   'Find your %s %s %s on the map →</a>'
+                   % (esc(inst.get("district_layer", inst["concept"])),
+                      esc(name), esc(word), esc(rec.get("seat_word", "district"))))
     out.append('<p class="cta-note">%s</p>'
                % (esc(rec["cta_note"]) if rec.get("cta_note") else
                   "Opens the map with the county and %s layers on. Search your "
@@ -3482,7 +3817,12 @@ h1 {
 }
 .contact .who { margin: 0; font-weight: 600; }
 .contact .where { margin: 2px 0 0; font-size: 14px; color: var(--ink-3); }
-.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; }
+/* 1.9, not 1.5: when the e-mail wraps at phone width, the telephone and the
+   "County website" link sit on neighbouring lines, and at 1.5 their centres
+   were as little as 20.3px apart across the 353 pages (measured 2026-10-21),
+   under the 24px WCAG 2.5.8 spacing page_consistency_test.mjs holds, which it
+   only samples. At 1.9 the closest pair on any page is 25.6px. */
+.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.9; }
 .disclaimer { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 .foot {
   margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
@@ -3656,7 +3996,7 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
                  "name": inst["index_label"],
                  "item": inst["app_url"] + inst["index_page"]},
                 {"@type": "ListItem", "position": 3,
-                 "name": "%s County" % name},
+                 "name": "%s %s" % (name, inst.get("county_word", "County"))},
             ],
         },
     }
@@ -3706,18 +4046,21 @@ def render_index(inst, rows):
     that lists every county at once.
     """
     at_large = sum(1 for r in rows if r[4] == "at-large")
-    out = ['    <p class="matrix-lede">Every %s county whose roster this '
-           'project has: <b>%d counties</b>, <b>%d people</b>, %s.%s</p>'
-           % (esc(inst["state"]), len(rows), sum(r[2] for r in rows),
+    out = ['    <p class="matrix-lede">Every %s %s whose roster this '
+           'project has: <b>%d %s</b>, <b>%d people</b>, %s.%s</p>'
+           % (esc(inst["state"]), esc(inst.get("county_noun", "county")),
+              len(rows), esc(inst.get("county_plural", "counties")),
+              sum(r[2] for r in rows),
               esc(inst.get("index_provenance")
                   or "each name published by the county itself"),
               (" %d elect at large, with no districts." % at_large)
               if at_large else ""),
            '    <ul class="county-index">']
     for name, slug, seats, note, _kind in rows:
-        out.append('      <li><a href="%s/%s.html">%s County</a> '
+        out.append('      <li><a href="%s/%s.html">%s %s</a> '
                    '<span class="county-index-n">%d %s%s</span></li>'
-                   % (esc(inst["concept"]), esc(slug), esc(name), seats,
+                   % (esc(inst["concept"]), esc(slug), esc(name),
+                      esc(inst.get("county_word", "County")), seats,
                       "member" if seats == 1 else "members", esc(note)))
     out.append("    </ul>")
     return "\n".join(out)
@@ -3993,7 +4336,7 @@ NOT_COUNTY_BOARDS = {
 
 _NAME_FIELDS = ("name", "chair", "member", "supervisor", "commissioner")
 _COUNTY_WORDS = re.compile(r"county-board|county-commission|commissioner|"
-                           r"supervisor|county-officer")
+                           r"supervisor|county-officer|parish")
 
 
 def _names_people(obj):
@@ -4054,8 +4397,13 @@ def check_registration(read_paths):
             named = sum(1 for r in recs if _names_people(r))
             if named * 2 < len(recs):
                 continue
+            # LOUISIANA'S COUNTIES ARE PARISHES, and its roster says so: a
+            # record carries `parish`, never `county`, and the file is named
+            # for parish officials. Without this test and the word in
+            # _COUNTY_WORDS the gate let the fleet's first parish roster,
+            # la-parish-officials.json, land unseen (2026-10-20).
             county_keyed = sum(1 for r in recs if isinstance(r, dict)
-                               and (r.get("county") or "").strip())
+                               and (r.get("county") or r.get("parish") or "").strip())
             if not (county_keyed * 2 >= len(recs)
                     or _COUNTY_WORDS.search(os.path.basename(path))):
                 continue
@@ -4243,6 +4591,32 @@ def ms_board_contact(inst):
                      [rec.get("boardAddress")], rec.get("boardPhone"))
         if c:
             out[_norm_county(rec["county"])] = c
+    return out, [path]
+
+
+def la_board_contact(inst):
+    """Louisiana: the governing body's own office, from the same list that
+    names its members.
+
+    THE LIST PRINTS AN ADDRESS AND A TELEPHONE BESIDE EACH OFFICIAL, and a line
+    printed for one official may be that person's own, so the builder keeps an
+    address as the body's only where at least three of its officials print it
+    and no official outside it does, and a telephone only on the same test
+    (build_la_parish_officials.py). A parish where neither passes carries no
+    contact rather than one member's."""
+    path = os.path.join(app_data("la"), "la-parish-officials.json")
+    if not os.path.exists(path):
+        return {}, [path]
+    out = {}
+    for rec in _read(path).values():
+        if not isinstance(rec, dict) or not (rec.get("parish") or "").strip():
+            continue
+        word = LA_KINDS.get(rec.get("kind"), ("governing body",))[0]
+        c = _contact("The %s's office" % word, None,
+                     [rec.get("boardAddress")], rec.get("boardPhone"))
+        if c:
+            name = re.sub(r"\s+Parish$", "", rec["parish"].strip())
+            out[_norm_county(name)] = c
     return out, [path]
 
 

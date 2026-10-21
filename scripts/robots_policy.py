@@ -203,8 +203,33 @@ class RobotsPolicy(object):
         this project had been ignoring, and the only paths any scraper fetches
         there are `/Supervisors` and the bare roots, so no working refresh
         stops. A fix that begins obeying rules must be checked BOTH ways.
+
+        THE SAME MARK ARRIVES A SECOND WAY, AND THE STRIP ABOVE MISSED IT FOR
+        THREE WEEKS (found 2026-10-20). `requests` decodes a `text/plain`
+        response that names no charset as ISO-8859-1, so the three bytes reach
+        `Response.text` as `\u00ef\u00bb\u00bf` rather than `\ufeff`, and the field name is
+        `\u00ef\u00bb\u00bfuser-agent`. All 511 hosts in robots-verdicts.json were asked for
+        their robots.txt that day: eleven serve a BOM, and nine of those send
+        `text/plain` with no charset -- www.elections.il.gov and
+        elections.il.gov, four Dane County hosts and danesheriff.com,
+        www.ncleg.gov and www2.kanecountyil.gov (the two Wikimedia hosts name
+        utf-8). So any caller holding requests' `.text` read ISBE's
+        `Disallow: /` as "no group binds this client":
+        `scripts/validate_card_links.py`'s re-read answered that both ISBE hosts
+        had withdrawn their refusal, which invites somebody to drop them from
+        its ROBOTS_DECLINED and probe them, and
+        nc/scripts/ncga_member_scraper.py, which reads through a requests
+        session, never honoured www.ncleg.gov's `Crawl-delay: 2`. No refresh
+        stops because of the fix: the ISBE scrapers read through the stdlib
+        client and were already refused, the Dane County rule covers only
+        `/Account`, ncleg's covers `/WHPTest/` and `/Ethics/`, and Kane's
+        `Disallow:` is empty. The selftest's fixture is loaded as UTF-8, which
+        is why it passed throughout. `_fetch_once` now decodes the bytes itself;
+        this strip is for the callers that hand in `.text` of their own.
         """
         text = text.lstrip("\ufeff")
+        if text.startswith("\u00ef\u00bb\u00bf"):
+            text = text[3:]
         group = None
         in_agent_run = False
         for lineno, raw in enumerate(text.splitlines(), 1):
@@ -553,7 +578,16 @@ def _fetch_once(robots_url, user_agent, timeout=30, session=None, headers=None):
                     return Verdict("absent", _REDIRECTS_UNRESOLVED % "the client stopped following the chain",
                                    policy=RobotsPolicy(""), final_url=robots_url)
                 raise
-            return classify(r.status_code, r.text, final_url=r.url)
+            # THE BYTES, DECODED AS UTF-8, NOT `r.text`: RFC 9309 2.3 makes the
+            # file UTF-8 whatever its Content-Type says, and requests decodes a
+            # `text/plain` with no charset as ISO-8859-1, which turns a leading
+            # byte-order mark into `ï»¿` and stopped the `*` group opening on
+            # nine hosts (measured 2026-10-20; see `_parse`). The stdlib branch
+            # below has always decoded this way. A response without `content`
+            # (a test double) keeps its `text`.
+            raw = getattr(r, "content", None)
+            body = raw.decode("utf-8", "replace") if isinstance(raw, bytes) else r.text
+            return classify(r.status_code, body, final_url=r.url)
         import urllib.request
         import urllib.error
         req = urllib.request.Request(robots_url, headers=headers)
@@ -1271,6 +1305,54 @@ def _selftest():
     check(v.status == "served", "ISBE: 29 bytes of robots.txt is a served policy")
     check(v.allows(ua, "/ElectionOperations/ElectionVoteTotals.aspx")[0] is False,
           "ISBE: classify() must refuse too — the fetch path is the one that matters")
+
+    # THE SAME BYTES AS `requests` HANDS THEM OVER (added 2026-10-20). ISBE
+    # serves `text/plain` with no charset, which requests decodes as
+    # ISO-8859-1, so its `.text` begins with three Latin-1 characters and not
+    # `﻿`. The fixture above is opened as UTF-8 and so never reached this
+    # shape. Both doors: `.text` handed straight to the parser, as
+    # validate_card_links.py does, and the session branch of the fetch, which
+    # must decode the bytes itself.
+    with open(os.path.join(fixtures, "www.elections.il.gov.txt"), "rb") as f:
+        isbe_bytes = f.read()
+    as_latin = isbe_bytes.decode("iso-8859-1")
+    check(as_latin.startswith("ï»¿"),
+          "ISBE: the fixture must still begin with its byte-order mark")
+    check(not RobotsPolicy(as_latin).allows(ua, "/"),
+          "ISBE read the way requests' .text reads it must still refuse `/`")
+
+    class _BytesResp(object):
+        def __init__(self, raw):
+            self.status_code, self.content, self.url = 200, raw, "https://h/robots.txt"
+            self.text = raw.decode("iso-8859-1")  # what requests does with no charset
+
+    class _BytesSession(object):
+        def __init__(self, raw):
+            self.raw = raw
+
+        def get(self, url, headers=None, timeout=None, allow_redirects=True):
+            return _BytesResp(self.raw)
+
+    v = _fetch_once("https://h/robots.txt", ua, session=_BytesSession(isbe_bytes))
+    check(v.status == "served" and v.allows(ua, "https://h/")[0] is False,
+          "ISBE through a requests session must refuse `/` (%s)" % v.why)
+    # www.ncleg.gov's own 73 bytes, the host that turned this up.
+    ncleg = (b"\xef\xbb\xbfUser-agent: *\r\nDisallow: /WHPTest/\r\n"
+             b"Disallow: /Ethics/\r\nCrawl-delay: 2")
+    v = _fetch_once("https://h/robots.txt", ua, session=_BytesSession(ncleg))
+    check(v.crawl_delay(ua) == 2.0,
+          "ncleg through a requests session must state its 2-second delay (%r)"
+          % v.crawl_delay(ua))
+    check(v.allows(ua, "https://h/Ethics/x")[0] is False
+          and v.allows(ua, "https://h/Members/")[0] is True,
+          "ncleg through a requests session: /Ethics/ refused, /Members/ allowed")
+    # The strip in `_parse` would pass both of those on its own, so this one
+    # holds the decode in `_fetch_once`: a rule naming a non-ASCII path only
+    # matches when the file is read as the UTF-8 RFC 9309 says it is.
+    v = _fetch_once("https://h/robots.txt", ua, session=_BytesSession(
+        "User-agent: *\nDisallow: /café/\n".encode("utf-8")))
+    check(v.allows(ua, "https://h/caf%C3%A9/menu")[0] is False,
+          "a requests session must read robots.txt as UTF-8, not ISO-8859-1")
     # The host is written without a scheme everywhere in this file, and
     # `final_url` uses the placeholder the cases below already use: probe_user_agents
     # reads URL literals out of a source file and fetches them as written, so a real

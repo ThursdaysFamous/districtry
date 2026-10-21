@@ -21,6 +21,7 @@ import { chromium } from "playwright";
 import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { stubBasemap } from "../../scripts/basemap_stub.mjs";
 
 // Vendored Leaflet fallback for sandboxed environments (e.g. Claude Code web),
 // where the browser (Chromium) cannot reach cdnjs.cloudflare.com — it does not
@@ -132,7 +133,7 @@ async function cardText(page, id) {
   }, id);
 }
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // 1. App boots and registers every layer.
   {
@@ -165,6 +166,98 @@ try {
     check("toTitleCase keeps O'Brien's capital and leaves John's alone",
       tc.length === 0,
       tc.length ? tc.map((r) => `${r.input} -> ${r.got} (want ${r.want})`).join("; ") : "9/9 cases");
+
+    // THE OFFICE PIN TAKES ONLY AN ANSWER THAT IS THE ADDRESS, asserted with no
+    // network call. The city's address search answers an office outside the city
+    // with an address inside it, so until 2026-10-20 Senate 49's Watertown office
+    // was pinned on Washington Avenue in Brooklyn. These are answers it gave that
+    // day, as the app receives them: the address after cleanPoiAddress, and the
+    // first answer's postalcode and housenumber.
+    const fits = await page.evaluate(() => {
+      const f = window.NycExplorer.poiAnswerFits;
+      return [
+        // outside the city, answered inside it: no pin
+        ["317 Washington St., Watertown, NY 13601", { postalcode: "11205", housenumber: "317" }, false],
+        ["700 White Plains Road, Scarsdale, NY 10583", { postalcode: "10473", housenumber: "700" }, false],
+        // inside the city, answered on another street in another borough: no pin
+        ["107 and 109 Avenue B, New York, NY 10009", { postalcode: "11411", housenumber: "109-107" }, false],
+        // its own ZIP code: the pin stays
+        ["250 Broadway, New York, NY 10007", { postalcode: "10007", housenumber: "250" }, true],
+        // a building with a ZIP code of its own, answered with its street's: the pin stays
+        ["Queens Borough Hall, 120-55 Queens Blvd, Kew Gardens, NY 11424", { postalcode: "11415", housenumber: "120-55" }, true],
+        // no ZIP code in the address: taken as before
+        ["254 East 4th Street", { postalcode: "10009", housenumber: "254" }, true],
+      ].map(([address, props, want]) => ({ address, want, got: f(address, props) }))
+        .filter((r) => r.got !== r.want);
+    });
+    check("an office pin is placed only where the answer is the office's own address",
+      fits.length === 0,
+      fits.length ? fits.map((r) => `${r.address} -> ${r.got} (want ${r.want})`).join("; ") : "6/6 cases");
+
+    // AN OFFICE THE CITY'S SEARCH CANNOT PLACE IS ASKED ABOUT AT THE CENSUS
+    // BUREAU, through districtry's lookup, and only then (poiGeocodeRequest,
+    // from 2026-10-20). Both services are stubbed, so this holds the order of
+    // the two lookups and which answer each case keeps, never what either
+    // service says today. Watertown's two answers are the ones each gave for
+    // Senate 49's office on 2026-10-20 (the city's search: Washington Avenue in
+    // Brooklyn), and so are the Census Bureau's for Route 32, which names the
+    // road "State Rte 32" and so is not the office's street.
+    const pinAnswers = {
+      "317 Washington St., Watertown, NY 13601": {
+        geo: { features: [{ properties: { postalcode: "11205", housenumber: "317" }, geometry: { coordinates: [-73.965709, 40.689335] } }] },
+        census: { matches: [{ address: "317 WASHINGTON ST, WATERTOWN, NY, 13601", lat: 43.971805849394, lng: -75.911299306989 }] },
+        want: { lat: 43.971805849394, lng: -75.911299306989 }, censusAsked: 1 },
+      "250 Broadway, New York, NY 10007": {
+        geo: { features: [{ properties: { postalcode: "10007", housenumber: "250" }, geometry: { coordinates: [-74.007842, 40.712988] } }] },
+        want: { lat: 40.712988, lng: -74.007842 }, censusAsked: 0 },
+      "615 Route 32, Highland Mills, NY 10930": {
+        geo: { features: [] },
+        census: { matches: [{ address: "615 STATE RTE 32, HIGHLAND MILLS, NY, 10930", lat: 41.352669777191, lng: -74.122172428562 }] },
+        want: null, censusAsked: 1 },
+      // two matches that are both the house: no pin, since one would be a guess
+      "12 Elm St., Albany, NY 12207": {
+        geo: { features: [] },
+        census: { matches: [{ address: "12 ELM ST, ALBANY, NY, 12207", lat: 42.64, lng: -73.76 },
+                            { address: "12 ELM ST, ALBANY, NY, 12207", lat: 42.65, lng: -73.75 }] },
+        want: null, censusAsked: 1 },
+      // the lookup fails: no pin, and nothing thrown
+      "14 Elm St., Albany, NY 12207": { geo: { features: [] }, censusStatus: 502, want: null, censusAsked: 1 },
+      // the city's search fails: the request rejects, so the pin queue does not
+      // keep the miss, and the Census Bureau is not asked
+      "16 Elm St., Albany, NY 12207": { geoStatus: 500, want: "rejected", censusAsked: 0 },
+    };
+    const censusAsked = [];
+    const cors = { "Access-Control-Allow-Origin": "*" };
+    await page.route("**/geosearch.planninglabs.nyc/**", (route) => {
+      const c = pinAnswers[new URL(route.request().url()).searchParams.get("text")];
+      if (!c) return route.fulfill({ status: 404, headers: cors, body: "" });
+      route.fulfill({ status: c.geoStatus || 200, headers: cors, contentType: "application/json",
+        body: JSON.stringify(c.geo || {}) });
+    });
+    await page.route("**/link-lookup.districtry.deno.net/**", (route) => {
+      const a = new URL(route.request().url()).searchParams.get("a");
+      censusAsked.push(a);
+      const c = pinAnswers[a];
+      route.fulfill({ status: (c && c.censusStatus) || 200, headers: cors, contentType: "application/json",
+        body: JSON.stringify((c && c.census) || { matches: [] }) });
+    });
+    const pinGot = await page.evaluate(async (addresses) => {
+      const out = {};
+      for (const a of addresses) {
+        out[a] = await window.NycExplorer.poiGeocodeRequest(a).then((m) => m, () => "rejected");
+      }
+      return out;
+    }, Object.keys(pinAnswers));
+    const pinWrong = Object.keys(pinAnswers).filter((a) => {
+      const want = pinAnswers[a].want, got = pinGot[a];
+      const same = want === null || want === "rejected" ? got === want
+        : !!got && Math.abs(got.lat - want.lat) < 1e-9 && Math.abs(got.lng - want.lng) < 1e-9;
+      return !same || censusAsked.filter((x) => x === a).length !== pinAnswers[a].censusAsked;
+    });
+    check("an office the city's search cannot place is asked about at the Census Bureau, and only then",
+      pinWrong.length === 0,
+      pinWrong.length ? pinWrong.map((a) => `${a} -> ${JSON.stringify(pinGot[a])}, Census asked ` +
+        `${censusAsked.filter((x) => x === a).length}x`).join("; ") : `${Object.keys(pinAnswers).length}/${Object.keys(pinAnswers).length} cases`);
     await context.close();
   }
 

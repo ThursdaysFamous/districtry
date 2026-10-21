@@ -642,8 +642,8 @@ suggests its precincts changed after the elections read.
 **No card names a member**, because no list of members by division has been found (gap
 `ky-school-board-members`). Each card names the division, says how it was drawn, and links the
 county board of education's own page, which the build checks answers. Ask
-`ky-kde-school-board-divisions`, to the Department of Education's data services, is drafted in
-`docs/ASK_DRAFTS.md` and has not been sent.
+`ky-kde-school-board-divisions`, to the Department of Education's data services, is in
+`docs/ASK_DRAFTS.md` and was sent on 2026-10-21.
 
 **The builder's `--check` is offline and is not yet a CI step**, unlike
 `build_ky_county_districts.py --check`. Adding a step changes the battery's counts, which

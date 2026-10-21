@@ -17,6 +17,7 @@ import { chromium } from "playwright";
 import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { stubBasemap, realBasemapContext } from "./basemap_stub.mjs";
 
 // Vendored Leaflet fallback for sandboxed environments (e.g. Claude Code web),
 // where the browser (Chromium) cannot reach cdnjs.cloudflare.com — it does not
@@ -211,7 +212,7 @@ async function cardText(page, id) {
 // A service worker's own requests reach Playwright only behind this flag, and
 // check 2k counts them. Read at launch, so it is set here rather than in the job.
 process.env.PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS = "1";
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // 1. App boots and registers every layer.
   {
@@ -3636,9 +3637,12 @@ try {
     // road and do not collide, which printed both until the invisible
     // stretch blocker (2026-09-25). The fixture above cannot see this; only
     // placed labels can. Needs CARTO's tiles and WebGL, so it is skipped,
-    // and says so, where either is missing.
+    // and says so, where either is missing. It is the one check that fetches
+    // the real basemap (scripts/basemap_stub.mjs says why every other check
+    // gets a stand-in), so it opens a context of its own that routes nothing.
     if (bs.button) {
-      const live = await booted(context, `${BASE}#point=41.9505,-87.7210&layers=il-house,il-senate&zoom=16`);
+      const liveContext = await realBasemapContext(browser, { serviceWorkers: "block" });
+      const live = await booted(liveContext, `${BASE}#point=41.9505,-87.7210&layers=il-house,il-senate&zoom=16`);
       const got = await live.waitForFunction((n) => window[n] && window[n].boundaryStreets &&
         Object.keys(window[n].boundaryStreets().names).length > 0, EXPORTS_NAME, { timeout: QUERY_TIMEOUT })
         .then(() => true).catch(() => false);
@@ -3670,6 +3674,7 @@ try {
           `${dcol} coloured labels after the flip (${coloured} before)` +
             (ddoubled.length ? "; doubled: " + ddoubled.map((r) => r.name).join(", ") : ""));
       }
+      await liveContext.close();
     }
     await context.close();
   }

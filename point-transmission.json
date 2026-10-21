@@ -266,6 +266,40 @@
         "voting-precinct"
       ]
     },
+    "la": {
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
+        "municipality",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 0,
+      "layer_ids": [
+        "county",
+        "fire-station",
+        "la-court-of-appeal",
+        "la-district-court",
+        "la-house",
+        "la-senate",
+        "la-supreme-court",
+        "municipality",
+        "parish-district",
+        "police-station",
+        "post-office",
+        "school-district-unified",
+        "tribal-government",
+        "us-house",
+        "voting-precinct",
+        "zip-code"
+      ]
+    },
     "mi": {
       "layers_sending_point": 0,
       "layers": [],
@@ -403,8 +437,10 @@
         "county-subdivision",
         "fire-station",
         "municipality",
+        "nc-district-court",
         "nc-house",
         "nc-senate",
+        "nc-superior-court",
         "police-station",
         "post-office",
         "school-board-district",

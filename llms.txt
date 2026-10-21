@@ -1,6 +1,6 @@
 # districtry
 
-> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. 15 instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas and Mississippi. Every boundary and every name comes from a published source and is cited to it.
+> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. 16 instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi and Louisiana. Every boundary and every name comes from a published source and is cited to it.
 
 Free, no account, no tracking of individuals. The map runs in the browser; what each page sends to whom is listed at https://districtry.com/privacy.html.
 
@@ -20,7 +20,7 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 
 - [Illinois district lookup](https://districtry.com/il/): 41 layers, 97 counties.
 - [Who is my U.S. representative?](https://districtry.com/il/congress.html)
-- [Who is my county commissioner?](https://districtry.com/il/county-board.html): links a page per county, 97 of them, each naming every member with whatever contact details that county publishes.
+- [Who is my county commissioner?](https://districtry.com/il/county-board.html): links a page per county, 100 of them, each naming every member with whatever contact details that county publishes.
 - [Who runs my fire protection district?](https://districtry.com/il/fire-district.html)
 - [What judicial subcircuit am I in?](https://districtry.com/il/judicial-subcircuit.html)
 - [Who runs my library district?](https://districtry.com/il/library-district.html)
@@ -138,7 +138,7 @@ All 92 counties: each county's commissioners and county council, townships, citi
 
 All 100 counties: each county's board of commissioners, townships, cities and towns, city council districts, voting precincts, school districts and school board districts, ZIP codes, the Eastern Band of Cherokee Indians' land, and the nearest police station, fire station and post office — plus the North Carolina Senate, House and U.S. House districts, with the member named for every seat. County commissioners are named for the winner of each seat's most recent election in the State Board of Elections' results, the mayor and council of each of the 42 cities and towns above 25,000 people from each place's own pages or, for two, the State Board's results, and each county's conservation district board from the Soil and Water Conservation Commission's directory. Nobody is named yet on the councils of smaller cities and towns, the school boards or the Eastern Band's council, and the Data gaps panel says why.
 
-- [North Carolina district lookup](https://districtry.com/nc/): 15 layers, all 100 counties.
+- [North Carolina district lookup](https://districtry.com/nc/): 17 layers, all 100 counties.
 - [Who is my U.S. representative?](https://districtry.com/nc/congress.html)
 - [Who are my county commissioners?](https://districtry.com/nc/county-commissioner.html): links a page per county, 100 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/nc/sources.html)
@@ -199,6 +199,17 @@ All 82 counties and their boards of supervisors: cities and towns, school distri
 - [Sources & data layers](https://districtry.com/ms/sources.html)
 - [Who is my Mississippi legislator?](https://districtry.com/ms/state-legislature.html)
 - [Mississippi district questions](https://districtry.com/ms/faq.html)
+
+## Louisiana
+
+All 64 parishes and their police juries and councils: cities, towns and villages, voting precincts, school districts, ZIP codes, the land of Louisiana's four federally recognized tribes, and the nearest police station, fire station and post office — plus the Louisiana Senate, House and U.S. House districts, with who holds each seat. Every parish's police jury or council and its president where it elects one, the mayors and councils of 302 cities, towns and villages, and the members of all 69 school boards are named from the Secretary of State's list of elected officials. Parish district lines are drawn in the 6 parishes whose current map is confirmed, and the Data gaps panel says why the other 58 are not.
+
+- [Louisiana district lookup](https://districtry.com/la/): 16 layers, all 64 parishes.
+- [Who is my U.S. representative?](https://districtry.com/la/congress.html)
+- [Who runs my parish?](https://districtry.com/la/parish-government.html): links a page per parish, 64 of them, each naming every member with the telephone the Secretary of State's list prints for a member where it prints one, and the body's office address where three or more members give the same one.
+- [Sources & data layers](https://districtry.com/la/sources.html)
+- [Who is my Louisiana legislator?](https://districtry.com/la/state-legislature.html)
+- [Louisiana district questions](https://districtry.com/la/faq.html)
 
 ## Where the answers come from
 

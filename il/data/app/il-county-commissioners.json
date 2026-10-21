@@ -411,6 +411,29 @@
   "sourceUrl": "https://www.moultriecountyil.gov/moultrie_county_board/board_members.php",
   "structure": "9 members elected countywide — no districts"
  },
+ "PERRY": {
+  "county": "Perry County",
+  "members": [
+   {
+    "name": "Bruce Morgenstern",
+    "role": "Chairman"
+   },
+   {
+    "name": "Jennifer Martin",
+    "role": "Commissioner"
+   },
+   {
+    "name": "Joseph Folden",
+    "role": "Commissioner"
+   }
+  ],
+  "office": {
+   "label": "Perry County Board of Commissioners",
+   "phone": "618-357-5116"
+  },
+  "sourceUrl": "https://perrycountyil.gov/perry-county-commissioners/",
+  "structure": "Commission form — 3 commissioners elected countywide"
+ },
  "PIKE": {
   "county": "Pike County",
   "members": [
