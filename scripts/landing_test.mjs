@@ -977,6 +977,37 @@ try {
     await ctx.close();
   }
 
+  // --- 1h-bis. the question tiles fold, and one tap opens one --------------
+  //
+  // The questions are tiles that open to their places (2026-10-21), and they
+  // follow the state list's rule: they SHIP open and a script folds them, so a
+  // page whose script failed shows every link rather than tiles that hide
+  // them. The shipped half is read off the page as served, before any script
+  // runs; the folded half in the browser, on every width, since unlike the
+  // state list the tiles fold on a computer too.
+  {
+    const raw = await (await fetch(BASE + "/")).text();
+    const tags = raw.match(/<details class="ask"[^>]*>/g) || [];
+    check("every question tile ships open, for a page with no script",
+      tags.length > 3 && tags.every((t) => /\sopen>$/.test(t)), `${tags.length} tile(s)`);
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    const shownChips = () => page.evaluate(() =>
+      [...document.querySelectorAll(".ask-chips a")].filter((a) => a.checkVisibility()).length);
+    const open = await page.evaluate(() =>
+      [...document.querySelectorAll("details.ask")].map((d) => d.open));
+    check("the question tiles start folded, with no place showing",
+      open.length === tags.length && open.every((o) => !o) && (await shownChips()) === 0,
+      JSON.stringify(open) + `, ${await shownChips()} place(s) showing`);
+    const inFirst = await page.evaluate(() =>
+      document.querySelector("details.ask").querySelectorAll(".ask-chips a").length);
+    await page.click("details.ask > summary");
+    check("one tap opens that tile's places and no other's",
+      inFirst > 0 && (await shownChips()) === inFirst, `${await shownChips()} showing, ${inFirst} in the tile`);
+    await ctx.close();
+  }
+
   // --- 2-4. old app links forward, carrying query AND hash ----------------
   //
   // /il/ IS STUBBED, and that is the point of this block. The guard's whole job
