@@ -8,16 +8,16 @@ districtry North Carolina: a single-file, dependency-light web app. Click a poin
 Carolina (or search an address) and it reports every civic district containing that point and
 who represents you there. It serves at **districtry.com/nc/** as a folder of the consolidated
 districtry repo — following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not
-the Illinois root-scripts shape. It ships FIFTEEN layers and has been **LIVE since 2026-10-09**,
+the Illinois root-scripts shape. It ships SEVENTEEN layers and has been **LIVE since 2026-10-09**,
 after arriving dark on 2026-09-29. Its go-live generated `congress.html` and
 `state-legislature.html` — both chambers are named, so unlike Minnesota, Kentucky and Indiana
 this instance needed no recorded-absent legislature page — and `nc/WATCH.md` records what that
 change did and the re-check plan for every data file the app reads.
 
 **The national tier** — everything these eleven layers answer comes from a national publisher.
-The other four are Tribal Government (the Eastern Band of Cherokee Indians' land, from the Census,
+The other six are Tribal Government (the Eastern Band of Cherokee Indians' land, from the Census,
 its government from the Bureau of Indian Affairs), the voting precincts, the city council
-districts and the school board districts below.
+districts, the school board districts and the two court layers below.
 **County** (100, Census TIGERweb, identity-only and the coverage ring), **U.S. House** (14
 districts, TIGERweb geometry joined to the public-domain unitedstates/congress-legislators
 roster), **N.C. Senate** and **N.C. House** (50 and 120 districts, TIGERweb geometry joined to
@@ -134,6 +134,37 @@ no results file shows (gap `nc-school-board-members`); the card links each schoo
 website from NCES's Common Core of Data instead. The layer's own limits are gap
 `nc-school-board-districts`, and the re-check after the November general is in `nc/WATCH.md`.
 
+**THE TWO TRIAL COURTS' DISTRICTS ARE DRAWN SINCE 2026-10-20, FROM THE TEXT OF THE LAW, AND NO
+JUDGE IS NAMED.** `nc-superior-court` (73 districts, G.S. 7A-41) and `nc-district-court` (47,
+G.S. 7A-133) are built by `nc/scripts/build_nc_court_districts.py` from the statutes as the
+General Assembly publishes them. The four sections it reads are kept as text in
+`nc/data/source/statutes/`, every build holds them to the live pages and stops on any difference,
+and its offline `--check` runs in CI. A district is a list of whole counties, drawn on the county
+file the app already ships, except where the law divides a county (nine for the superior court,
+Wake and Vance for the district court): there the statute lists the 2010 Census voting districts
+and blocks of each part, and G.S. 7A-41(c1) keeps those 2010 lines where a voting district has
+moved since, so those parts are drawn from the Census Bureau's 2010 lines, Douglas-Peucker at 5 m
+on each dividing line and refused past 8 m from the 2010 line it draws. Ground a current county
+line takes in that no 2010 piece covers goes to the nearest district, and each card says so;
+G.S. 7A-41(c2) names a block file kept by the General Assembly's clerks for that ground, which
+this project has not found published. **THE LAW GIVES TWO JUDGE COUNTS FOR THREE DISTRICTS**:
+superior court 31A (two in the table of (a), one in (b)), and district court 12 (eleven and eight,
+from (b1)) and 32 (six and five, from (b3)). The cards give both numbers and state neither, and
+the builder pins all six. **THE TABLE FOR 1 JANUARY 2029 IS ALREADY ENACTED** and ends superior
+court Districts 10E and 31D without saying which district their ground joins: the file marks the
+two with `endsOn`, their cards give the date, and `nc/scripts/validate_sources.py` warns in the
+monthly issue from that day while the file still draws them. **THE COURT SYSTEM COUNTS 48
+SUPERIOR COURT DISTRICTS** on its superior court page, which matches the statute's 73 when each of
+G.S. 7A-41.1's eight sets of districts, 33 districts that share one senior resident judge, is
+counted once; the cards name the set. The judge count ships as `judgeCount`, not `judges`, for
+the reason South Carolina's `judge_count` records. **NO JUDGE IS NAMED** because the court
+system's judicial directory is disallowed by its robots.txt for every client, and election results
+cannot stand in because the Governor fills a vacant judgeship by appointment; the cards link the
+directory (gap `nc-judges`). The district court is drawn in one olive line with Kentucky's
+(`limited-trial-court-district` in `layer-concepts.json`), so a reader who crosses into Kentucky
+with it on keeps it on. The re-check after each session of the General Assembly is in
+`nc/WATCH.md`.
+
 **THE FLAGSHIP THIS INSTANCE IS BUILDING TOWARD IS `county-commissioner`, AND ITS TWO HALVES
 SEPARATE CLEANLY.** All 100 counties elect a board, 587 commissioners in all, and the
 **form** of every board is answerable today from one document: NCACC's *County Commissioner
@@ -181,8 +212,8 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: North Carolina (`northcarolina`) — https://districtry.com/nc/
 - Geocoders: address Photon (North Carolina-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, North Carolina-bounded, serial >=1s queue)
-- Ground truth: 35.78040,-78.63910 (the State Capitol block, downtown Raleigh, Wake County) → county Wake County; us-house 2; nc-senate 14; nc-house 38; voting-precinct Precinct 01-14. Negative point 35.60000,-75.30000 (the open Atlantic east of Hatteras Island — outside every North Carolina county, measured 2026-09-29. IT HAS TO BE THE OCEAN: the TIGER county fabric is water-inclusive for the inland sounds, so Pamlico Sound is Hyde County and Albemarle Sound is Tyrrell, and a point picked off a map inside either would make this assertion vacuous. Inside permalink_gate's maxLng (-75.10) so the point is still selectable.).
-- Layers: 15 registered (political 5, safety 2, schools 2, geography 6); `registerLayer(` floor 12. Debug namespace `window.NCExplorer`.
+- Ground truth: 35.78040,-78.63910 (the State Capitol block, downtown Raleigh, Wake County) → county Wake County; us-house 2; nc-senate 14; nc-house 38; voting-precinct Precinct 01-14; nc-superior-court Superior Court District 10A; nc-district-court District Court District 10C. Negative point 35.60000,-75.30000 (the open Atlantic east of Hatteras Island — outside every North Carolina county, measured 2026-09-29. IT HAS TO BE THE OCEAN: the TIGER county fabric is water-inclusive for the inland sounds, so Pamlico Sound is Hyde County and Albemarle Sound is Tyrrell, and a point picked off a map inside either would make this assertion vacuous. Inside permalink_gate's maxLng (-75.10) so the point is still selectable.).
+- Layers: 17 registered (political 7, safety 2, schools 2, geography 6); `registerLayer(` floor 14. Debug namespace `window.NCExplorer`.
 - Scheduled workflows: `update-nc-congress-roster.yml` (Mon 15:30 UTC); `update-nc-legislature-roster.yml` (Tue 15:30 UTC); `update-nc-county-commissioners.yml` (Wed 15:30 UTC); `nc-validate-sources.yml` (1st of month 16:00 UTC); `watch-city-council-pages.yml` (Thu 15:30 UTC).
 - Source registry: `nc/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

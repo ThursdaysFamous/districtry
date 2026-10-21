@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Read five large Illinois cities' own council pages into municipal-officials payloads.
+"""Read six large Illinois cities' own council pages into municipal-officials payloads.
 
-WHY FIVE CITIES AND NOT FIVE COUNTIES. The fourth test of the done standard
+WHY SIX CITIES AND NOT SIX COUNTIES. The fourth test of the done standard
 (`docs/DONE_STANDARD.md`) asks that every general-purpose local government above
 25,000 people name a governing body. Measured 2026-10-01 by
 `scripts/build_eam_status.py`, thirteen Illinois units above that line named
-nobody. Five of them are the only unit above the line in a county whose
-municipal directory this project cannot read at all:
+nobody. Six of them are a unit above the line in a county whose municipal
+directory this project cannot read at all:
 
     Champaign  (Champaign County — no county municipal source)
     Decatur    (Macon County     — no county municipal source)
@@ -14,29 +14,40 @@ municipal directory this project cannot read at all:
                                    omits the town wholesale)
     Quincy     (Adams County     — no county municipal source)
     Danville   (Vermilion County — no county municipal source)
+    Urbana     (Champaign County — no county municipal source; added 2026-10-21)
 
 That is the GALESBURG SHAPE and the FREEPORT SHAPE, the two bounded exceptions
 `docs/EXPANSION_GUIDE.md` §3.4 already allows to the rule against scraping
 municipal sites: a county with no municipal source at all, and a municipality a
-county directory omits wholesale. Nothing here is a sweep — the five places are
-named in `PRESERVABLE`, and a sixth city cannot be added by this file alone.
+county directory omits wholesale. Nothing here is a sweep — the six places are
+named in `PRESERVABLE`, and a seventh city cannot be added by this file alone.
 
-THE OTHER EIGHT ARE NOT HERE AND EACH HAS ITS OWN REASON. Seven are in Lake
+THE OTHER SEVEN ARE NOT HERE, AND URBANA WAS THE EIGHTH. Seven are in Lake
 County, which IS in the pipeline but at the contact-only rung: the county's open
 data portal publishes a hall address for all 41 of its municipalities and names
 nobody, and the Lake County Municipal League's member pages were measured on
 2026-10-01 and republish exactly the same address and telephone. Seven city
 sites is past any bounded exception, so Lake wants its own decision rather than
-a quiet seventh entry here. The eighth is Urbana, whose host
+a quiet seventh entry here. (Those seven are now read by
+`scripts/il_lake_cities_councils_scraper.py`, a separate step of the weekly
+job, each named in `PRESERVABLE`.) Urbana's host
 `urbanaillinois.us` reset the connection on every attempt from this project's
-sandbox on 2026-10-01 (stdlib and `requests`, both clients, www and bare). That
-is a measurement of this vantage and not of the city, so it is recorded to be
-re-measured from a GitHub runner rather than written up as a refusal.
+sandbox on 2026-10-01 (stdlib and `requests`, both clients, www and bare), and
+timed out from a GitHub runner the same day. RE-MEASURED 2026-10-21: the city's
+website is now `www.urbanail.gov` (its footer names the City of Urbana at 400
+South Vine Street, and the council members' own addresses are on that domain),
+while the old host still resets every connection from here. So the old host
+was a site the city had left rather than a city refusing this client. The
+letter drafted on 2026-10-01 to ask whether the block was deliberate was never
+sent and is withdrawn: a host that stops answering can be a government that has
+moved, which is worth a search before a letter.
 
 FETCH CLASS, MEASURED 2026-10-01 WITH THE CLIENT THIS FILE SENDS. All five
 hosts answer `requests` + the districtry token with HTTP 200 and a full page
 (champaignil.gov 5,284 bytes of JSON; decaturil.gov 109,440; normalil.gov
-123,796; quincyil.gov 116,904; cityofdanville.org 132,624). No browser string is
+123,796; quincyil.gov 116,904; cityofdanville.org 132,624). Urbana's, measured
+2026-10-21 the same way: www.urbanail.gov 80,180 bytes for the council page,
+73,832 for the mayor's and 74,249 for the clerk's. No browser string is
 needed anywhere here and none is sent. For contrast, and because it is the
 reason Lake stayed contact-only rather than being read from the county site:
 `www.lakecountyil.gov` answers the same token 403 on `requests` and 200 on the
@@ -47,7 +58,10 @@ exact client this file crawls with. Measured 2026-10-01: all five serve a
 robots.txt and none of them disallows the paths read here. Four of the five
 serve the same 801-816 byte CivicPlus/Granicus default, which is one CMS
 vendor's file published at each city's own host — it binds for that reason and
-is never cited as something the city chose.
+is never cited as something the city chose. Urbana's (2026-10-21) is Drupal's
+own 2,005-byte default, the same kind of vendor file, and allows the council,
+mayor and clerk pages read here. It is read once, at the council page: all
+three pages are on one host, which is what `require_robots_once` asks about.
 
 ADDRESSES. Only the city hall is shipped, as the municipality-level office, and
 it is a constant per city read off the city's own contact block. Quincy's
@@ -88,6 +102,18 @@ WHAT EACH PAGE PUBLISHES, AND THE ONE PARSE THAT IS DELIBERATELY SOFT.
              quincyil.gov.
   Danville   One page carrying the mayor and all fourteen aldermen, each with a
              ward and a direct telephone.
+  Urbana     Three pages, each of whose people is a "directory listing" block:
+             the council page (seven members, each "Ward N Council Member"
+             with a direct telephone and the member's own e-mail written
+             beside the seat in Cloudflare's protected form, which every
+             visitor's browser decodes), the mayor's office page and the City
+             Clerk's page (the clerk is elected, the council page says). The
+             mayor's and the clerk's listings print no telephone and link a
+             contact form rather than an address, so they ship by name. A
+             party marker after a name ("[D]") is not part of the name and is
+             dropped. The hall's telephone is the 217-384-0200 every page's
+             footer prints; the council's shared mailbox, which the page
+             spells out as "CityCouncil[at]urbanail.gov", is the hall's e-mail.
 
 Usage:
     python3 scripts/il_large_city_councils_scraper.py --out-dir /tmp
@@ -395,6 +421,103 @@ def read_danville(city, warn):
     return out
 
 
+# ------------------------------------------------------------------- Urbana
+
+URBANA_MAYOR_PAGE = "https://www.urbanail.gov/executive-department/page/office-mayor"
+URBANA_CLERK_PAGE = "https://www.urbanail.gov/city-clerk"
+# The council's shared mailbox, which the council page writes out as
+# "CityCouncil[at]urbanail.gov" in its text rather than as a link.
+URBANA_MAILBOX_RE = re.compile(r"\b(CityCouncil)\s*\[at\]\s*(urbanail\.gov)\b", re.I)
+# A party marker after a member's name, "Maryalice Wu [D]".
+URBANA_PARTY_RE = re.compile(r"\s*\[[A-Z]{1,3}\]\s*$")
+
+
+def cf_email(hexstr):
+    """An address Cloudflare's e-mail protection wrote as hex, or None.
+
+    The first byte is a key and every byte after it is XORed with it. Every
+    visitor's browser decodes the same bytes to show the address, so reading
+    them reads the page as published; il_county_board_pages_scraper.py reads
+    Brown, Henry and Franklin the same way.
+    """
+    try:
+        raw = bytes.fromhex(hexstr)
+    except ValueError:
+        return None
+    if len(raw) < 2:
+        return None
+    return bytes(b ^ raw[0] for b in raw[1:]).decode("utf-8", "replace").strip()
+
+
+def urbana_listings(markup):
+    """Each directory listing on an urbanail.gov page, as (name, position
+    markup, telephone text). A listing is the block the site opens with
+    `data-history-node-id`; its link holds the name, its position span the
+    office and, for a council member, the member's own e-mail."""
+    out = []
+    for chunk in re.split(r'<div data-history-node-id="\d+"', markup)[1:]:
+        name = re.search(r'class="sidebar-photo__link">(.*?)</a>', chunk, re.S)
+        position = re.search(r'sidebar-photo__position">(.*?)</span>', chunk, re.S)
+        tel = re.search(r'sidebar-photo__phone-number">(.*?)</span>', chunk, re.S)
+        if not name or not position:
+            continue
+        out.append((clean(html.unescape(name.group(1))), position.group(1),
+                    clean(html.unescape(tel.group(1))) if tel else None))
+    return out
+
+
+def urbana_position(markup):
+    """A position span's words, with the e-mail link taken out."""
+    text = re.sub(r"(?s)<a\b.*?</a>", " ", markup)
+    return clean(html.unescape(re.sub(r"<[^>]+>", " ", text))) or ""
+
+
+def read_urbana(city, warn):
+    markup = get(city["page"])
+    mailbox = URBANA_MAILBOX_RE.search(visible(markup))
+    office = dict(city["office"], office_email=(
+        "%s@%s" % (mailbox.group(1), mailbox.group(2).lower()) if mailbox else None))
+    if not mailbox:
+        warn("urbana: the council page no longer prints the council's shared "
+             "mailbox — the hall ships without an e-mail")
+    city = dict(city, office=office)
+    out = []
+    for name, position, tel in urbana_listings(markup):
+        seat = re.match(r"^\(?Ward (\d+) Council Member\b",
+                        urbana_position(position))
+        if not seat:
+            warn("urbana: %s names no ward — dropped rather than guessed" % name)
+            continue
+        found = re.findall(r'data-cfemail="([0-9a-f]+)"', position)
+        address = cf_email(found[0]) if len(found) == 1 else None
+        if len(found) > 1:
+            warn("urbana: Ward %s (%s) prints %d addresses beside the seat; none "
+                 "ships rather than one guessed" % (seat.group(1), name, len(found)))
+        if address:
+            problem = person_email_problem(address)
+            if problem:
+                raise SystemExit("il-large-city-councils: Urbana Ward %s (%s): "
+                                 "the e-mail %s" % (seat.group(1), name, problem))
+        out.append(record(
+            city, "Council Member", URBANA_PARTY_RE.sub("", name),
+            district="Ward %d" % int(seat.group(1)),
+            person_phone=phone(tel, city), person_email=address))
+    # The mayor and the elected City Clerk each have a listing of their own on
+    # their office's page. Neither listing prints a telephone or an address of
+    # the person's own (each links a contact form), so they ship by name.
+    for page, office_name in ((URBANA_MAYOR_PAGE, "Mayor"),
+                              (URBANA_CLERK_PAGE, "City Clerk")):
+        listed = [name for name, position, _tel in urbana_listings(get(page))
+                  if urbana_position(position) == office_name]
+        if len(listed) == 1:
+            out.append(record(city, office_name, URBANA_PARTY_RE.sub("", listed[0]),
+                              source_url=page))
+        else:
+            warn("urbana: %d listings on %s read %r — none ships rather than one "
+                 "guessed" % (len(listed), page, office_name))
+    return out
+
+
 # ------------------------------------------------------------------- cities
 
 CITIES = {
@@ -460,6 +583,25 @@ CITIES = {
         "read": read_danville,
         # Mayor and fourteen aldermen, two per ward across seven wards.
         "min_officials": 15, "min_districts": 14, "min_heads": 1,
+    },
+    "urbana": {
+        "jurisdiction": "City of Urbana",
+        "county": "Champaign",
+        "page": "https://www.urbanail.gov/city-clerk/page/city-council",
+        # The hall is the address and switchboard in every page's footer. The
+        # e-mail is the council's shared mailbox, read from the page each run.
+        "office": {"office_address": "400 South Vine Street",
+                   "office_city": "Urbana", "office_state": "IL",
+                   "office_zip": "61801", "office_phone": "217-384-0200",
+                   "office_email": None},
+        "read": read_urbana,
+        # Mayor, seven council members, one per ward, and the elected City
+        # Clerk (2026-10-21: all nine). The clerk is not a floor.
+        "min_officials": 8, "min_districts": 7, "min_heads": 1,
+        # Council members with an e-mail of their own: 7 of 7, measured
+        # 2026-10-21. A page change that stops the address being read fails
+        # the run instead of emptying the e-mails quietly.
+        "min_emails": 5,
     },
 }
 

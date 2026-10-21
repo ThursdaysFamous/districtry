@@ -17,7 +17,7 @@
   "robots-unreadable": 4,
   "stack-not-token": 9,
   "tls-chain": 1,
-  "token-ok": 253,
+  "token-ok": 254,
   "token-refused": 3,
   "token-refused-and-stack": 41
  },
@@ -2753,6 +2753,29 @@
     "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
+  },
+  "perrycountyil.gov": {
+   "host": "perrycountyil.gov",
+   "url": "https://perrycountyil.gov/perry-county-commissioners/",
+   "cells": {
+    "requests+token": {
+     "kind": "not-fetched",
+     "note": "not tried: the stdlib client already served this host, and a second client is never probed on a host that already serves the first"
+    },
+    "stdlib+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 97254 bytes, on three reads 20 s apart (2026-10-20 23:17:10, 23:17:31 and 23:17:51 UTC), the same bytes each time"
+    }
+   },
+   "robots": {
+    "stdlib+token": "read, * group with no rule matching /perry-county-commissioners/ (175 bytes)"
+   },
+   "verdict": "token-ok",
+   "note": "stdlib+token HTTP 200, 97254 bytes; the token is served, on the stdlib client. The county's gap record had this site answering HTTP 202 with a 168-byte holding page on 3 and 20 Aug 2026, and the re-check of the Illinois letters on 2026-10-06 found robots.txt and the page behind SiteGround's security check (HTTP 202, sg-captcha: challenge); neither reading recorded its client. The three reads above are the deliberate re-measurement a host that has answered with a challenge needs, so the scraper reads this host with the stdlib client, the one measured serving it.",
+   "callers": {
+    "scripts/il_county_commissioners_scraper.py": "both"
+   },
+   "measured": "2026-10-20"
   },
   "platinumelectionresults.com": {
    "host": "platinumelectionresults.com",

@@ -1,0 +1,4955 @@
+{
+ "2200030": {
+  "district": "Acadia Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "James Etta David",
+    "party": "Democratic",
+    "phone": "(337) 788-2220",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Glenn Quebedeaux",
+    "party": "Republican",
+    "phone": "(337) 581-0819",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Delo Hebert Jr.",
+    "party": "Republican",
+    "phone": "(337) 250-1007",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Rebecca Foux 'Becky' Atkinson",
+    "party": "Independent",
+    "phone": "(337) 658-8016",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Steve' Jones",
+    "party": "Republican",
+    "phone": "(337) 458-6554",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Ike' Richard",
+    "party": "Republican",
+    "phone": "(337) 344-8407",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "James 'Boz' Higginbotham",
+    "party": "Independent",
+    "phone": "(337) 384-0847",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Milton Simar",
+    "party": "Republican",
+    "phone": "(337) 779-2289",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200039": {
+  "district": "Zachary Community School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Tracey Johnson Taylor-Jarrell",
+    "party": "Democratic",
+    "phone": "(832) 566-9835",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Ryan Talbot",
+    "party": "Republican",
+    "phone": "(225) 276-9788",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Marty' Hughes",
+    "party": "No party",
+    "phone": "(225) 658-2813",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kenneth R. Mackie",
+    "party": "Democratic",
+    "phone": "(225) 772-6235",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Laura Freeman",
+    "party": "Republican",
+    "phone": "(225) 301-1691",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Elecia Brown 'Lisa' Lathon",
+    "party": "Democratic",
+    "phone": "(225) 658-8736",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Andrew Gaines",
+    "party": "Republican",
+    "phone": "(225) 317-0366",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Crystal London",
+    "party": "No party",
+    "phone": "(225) 453-7267",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "David Dayton",
+    "party": "Republican",
+    "phone": "(225) 572-6071",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200040": {
+  "district": "City of Baker School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Linda B. Perkins",
+    "party": "Democratic",
+    "phone": "(225) 301-1067",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Alteen Profit",
+    "party": "Democratic",
+    "phone": "(225) 284-8877",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Joyce Burges",
+    "party": "Democratic",
+    "phone": "(334) 868-2351",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Monique Latay Butler",
+    "party": "Democratic",
+    "phone": "(225) 938-8230",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Clara Joseph",
+    "party": "Democratic",
+    "phone": "(225) 317-3251",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200060": {
+  "district": "Allen Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Sally Evins Moreaux",
+    "party": "Democratic",
+    "phone": "(318) 335-0358",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Cathy' Farris",
+    "party": "Democratic",
+    "phone": "(318) 447-2885",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Karen C. Reed",
+    "party": "Democratic",
+    "phone": "(318) 201-2898",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Robert 'Pete' Cavenah",
+    "party": "Independent",
+    "phone": "(337) 884-7036",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Gregory Monceaux",
+    "party": "Democratic",
+    "phone": "(337) 224-8545",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Carolyn Manuel",
+    "party": "Republican",
+    "phone": "(337) 526-9521",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Kris' LaBuff",
+    "party": "Republican",
+    "phone": "(337) 802-8632",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Carleen Brown Mahaffey",
+    "party": "Republican",
+    "phone": "(337) 977-1101",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200090": {
+  "district": "Ascension Parish School District",
+  "officeAddress": "1100 Webster St., Donaldsonville, LA 70346",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Robyn Penn Delaney",
+    "party": "Democratic",
+    "phone": "(225) 717-1134",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Willie Robinson",
+    "party": "Republican",
+    "phone": "(225) 288-0290",
+    "seat": "District 2",
+    "termEnds": "2032-12-31"
+   },
+   {
+    "name": "Julie Burnett Blouin",
+    "party": "Democratic",
+    "phone": "(225) 910-0864",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Marty J. Bourgeois",
+    "party": "Republican",
+    "phone": "(225) 715-4166",
+    "seat": "District 4, Seat A",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "John D. Murphy",
+    "party": "Republican",
+    "phone": "(225) 910-1380",
+    "seat": "District 4, Seat B",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "John DeFrances",
+    "party": "Republican",
+    "phone": "(225) 288-5722",
+    "seat": "District 5, Seat A",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Taft C. Kleinpeter",
+    "party": "Republican",
+    "phone": "(225) 287-5272",
+    "seat": "District 5, Seat B",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jared 'Boo' Bercegeay",
+    "party": "No party",
+    "phone": "(225) 715-4544",
+    "seat": "District 6, Seat A",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Louis D. Lambert",
+    "party": "Independent",
+    "phone": "(225) 202-9416",
+    "seat": "District 6, Seat B",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Karen Hays Braud",
+    "party": "Republican",
+    "phone": "(225) 954-4960",
+    "seat": "District 7, Seat A",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jake D. Lambert",
+    "party": "Republican",
+    "phone": "(225) 571-0814",
+    "seat": "District 7, Seat B",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200120": {
+  "district": "Assumption Parish School District",
+  "officeAddress": "4901 Hwy 308, Napoleonville, LA 70390",
+  "officePhone": "(985) 369-7251",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Honoray 'Lew' Lewis",
+    "party": "Democratic",
+    "seat": "Ward 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Lee 'Rick' Meyer Jr.",
+    "party": "Republican",
+    "seat": "Ward 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Andrea A. Barras",
+    "party": "No party",
+    "seat": "Ward 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Alexis Monique Boutain",
+    "party": "Democratic",
+    "phone": "(985) 714-0350",
+    "seat": "Ward 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Joshua Hebert",
+    "party": "No party",
+    "seat": "Ward 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Daniel 'Jack' Washington",
+    "party": "Democratic",
+    "seat": "Ward 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Bambi Charlet Hood",
+    "party": "Republican",
+    "seat": "Ward 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jessica 'Kooney' Ourso",
+    "party": "Democratic",
+    "seat": "Ward 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Doris L. Dugas",
+    "party": "Democratic",
+    "seat": "Ward 9",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200125": {
+  "district": "Central Community School District",
+  "officeAddress": "10510 Joor Rd., Ste 300, Baton Rouge, LA 70818",
+  "officePhone": "(225) 262-1919",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Jason Leaphart",
+    "party": "Republican",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Roxanne A. Atkinson",
+    "party": "Republican",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "G. David Walker",
+    "party": "Republican",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Nick' Carmena",
+    "party": "Republican",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Michael Davis",
+    "party": "Republican",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Michael Hooper",
+    "party": "Republican",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Carol Burton-Norwood",
+    "party": "Republican",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200150": {
+  "district": "Avoyelles Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Latisha S. Small",
+    "party": "Democratic",
+    "phone": "(318) 717-0365",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Ronald Lynn Deloach",
+    "party": "Republican",
+    "phone": "(318) 613-5893",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Keith W. Lacombe",
+    "party": "No party",
+    "phone": "(318) 709-4161",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Robin Moreau",
+    "party": "Republican",
+    "phone": "(318) 359-3670",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jason 'Jay' Callegari",
+    "party": "Republican",
+    "phone": "(318) 481-6505",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Christopher Robinson",
+    "party": "No party",
+    "phone": "(318) 305-6726",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Rickey Adams",
+    "party": "Republican",
+    "phone": "(318) 359-2255",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jill Moreau Guidry",
+    "party": "Republican",
+    "phone": "(318) 481-6926",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Aimee Bordelon Dupuy",
+    "party": "Republican",
+    "phone": "(318) 305-1712",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200180": {
+  "district": "Beauregard Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Scott Sandifer",
+    "party": "Republican",
+    "phone": "(337) 499-9480",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kristi Carroll Neely",
+    "party": "Republican",
+    "phone": "(337) 842-5777",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Carlos Archield",
+    "party": "Democratic",
+    "phone": "(337) 348-6054",
+    "seat": "District 3A",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Garrett G. Greene",
+    "party": "Republican",
+    "phone": "(337) 274-8680",
+    "seat": "District 3B",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Cynthia B. LaFitte",
+    "party": "Republican",
+    "phone": "(337) 348-9815",
+    "seat": "District 3C",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Bryan M. Redler",
+    "party": "Republican",
+    "phone": "(337) 348-6895",
+    "seat": "District 3D",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "David P. Shirley",
+    "party": "Republican",
+    "phone": "(337) 375-4747",
+    "seat": "District 3E",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jared Kibodeaux",
+    "party": "Republican",
+    "phone": "(337) 794-8111",
+    "seat": "District 4A",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Ray' Bowman III",
+    "party": "Republican",
+    "phone": "(337) 302-5607",
+    "seat": "District 4B",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Heather 'Nikki' Weldon",
+    "party": "Republican",
+    "phone": "(337) 375-4406",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200210": {
+  "district": "Bienville Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Sharolyn Boston",
+    "party": "No party",
+    "phone": "(318) 235-2927",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Oswald Townsend",
+    "party": "Democratic",
+    "phone": "(318) 278-5100",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Derrika 'Gel' Bailey",
+    "party": "Independent",
+    "phone": "(318) 680-8221",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Darren B. Iverson",
+    "party": "No party",
+    "phone": "(318) 579-3276",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Martha Grigg",
+    "party": "No party",
+    "phone": "(318) 894-9479",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Christopher Colton Guin",
+    "party": "No party",
+    "phone": "(318) 548-0065",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Donald 'Don' Calloway",
+    "party": "Independent",
+    "phone": "(318) 583-2556",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200240": {
+  "district": "City of Bogalusa School District",
+  "officeAddress": "1705 Sullivan Dr., Bogalusa, LA 70427",
+  "officePhone": "(985) 281-2113",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Paul D. Kates",
+    "party": "Democratic",
+    "phone": "(985) 732-7924",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "LaVerne Cook Jr.",
+    "party": "Democratic",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Willie 'Toni' Breaux",
+    "party": "Democratic",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Catherine 'Cathy' Mitchell",
+    "party": "Republican",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Curtis' Creel",
+    "party": "Republican",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Odie Hughes IV",
+    "party": "Republican",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Brad' Williams",
+    "party": "No party",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200270": {
+  "district": "Bossier Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Billie Jo Brotherton",
+    "party": "Republican",
+    "phone": "(318) 987-3337",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kent L. Bockhaus",
+    "party": "Republican",
+    "phone": "(318) 393-4722",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Tammy Armer Smith",
+    "party": "Republican",
+    "phone": "(318) 965-0477",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Sherri Pool",
+    "party": "Republican",
+    "phone": "(318) 364-7401",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Logan McConathy",
+    "party": "Republican",
+    "phone": "(318) 332-3378",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Glenwood L. 'Glen' Bullard",
+    "party": "Republican",
+    "phone": "(318) 752-1371",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Rafe' Jordan",
+    "party": "Republican",
+    "phone": "(318) 364-9779",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Becky Gray",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Eric Newman",
+    "party": "Republican",
+    "phone": "(318) 742-3490",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Sandra 'Samm' Darby",
+    "party": "Independent",
+    "phone": "(318) 453-6864",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Robert Bertrand",
+    "party": "Republican",
+    "phone": "(318) 751-0830",
+    "seat": "District 11",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Erick Falting",
+    "party": "Republican",
+    "phone": "(318) 347-8889",
+    "seat": "District 12",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200300": {
+  "district": "Caddo Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Steve Umling",
+    "party": "Republican",
+    "phone": "(318) 216-5015",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jasmine R. Green",
+    "party": "Democratic",
+    "phone": "(318) 519-5405",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Terence Vinson",
+    "party": "Democratic",
+    "phone": "(318) 595-1015",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Don' Little",
+    "party": "Republican",
+    "phone": "(318) 529-8820",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Bonita Douzart",
+    "party": "Democratic",
+    "phone": "(318) 631-1045",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Mary A. Trammel",
+    "party": "Democratic",
+    "phone": "(318) 840-7813",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jerry Bowman",
+    "party": "Democratic",
+    "phone": "(318) 469-5587",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jeri B. Bowen",
+    "party": "Republican",
+    "phone": "(318) 347-3163",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Barry Rachal",
+    "party": "Republican",
+    "phone": "(318) 469-2277",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Katie McLain",
+    "party": "Republican",
+    "phone": "(318) 751-1145",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jessica Yeates",
+    "party": "Republican",
+    "phone": "(318) 331-5166",
+    "seat": "District 11",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dottie H. Bell",
+    "party": "Democratic",
+    "phone": "(318) 635-4667",
+    "seat": "District 12",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200330": {
+  "district": "Calcasieu Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Aaron P. Natali",
+    "party": "Republican",
+    "phone": "(337) 540-2695",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Karen Hardy McReynolds",
+    "party": "Democratic",
+    "phone": "(337) 802-9791",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Glenda Gay",
+    "party": "Democratic",
+    "phone": "(337) 515-5443",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Mary Fontenot",
+    "party": "Republican",
+    "phone": "(337) 304-2089",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Patrick Pichon",
+    "party": "Republican",
+    "phone": "(337) 764-1474",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dean Roberts",
+    "party": "Republican",
+    "phone": "(337) 477-4710",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Betty Washington",
+    "party": "Democratic",
+    "phone": "(337) 309-1284",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Eric Tarver",
+    "party": "Republican",
+    "phone": "(337) 540-2458",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Damon Hardesty",
+    "party": "Republican",
+    "phone": "(337) 313-8502",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Tony' O'Banion",
+    "party": "Republican",
+    "phone": "(337) 660-7678",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Phyllis Stine Ayo",
+    "party": "Republican",
+    "phone": "(337) 794-8851",
+    "seat": "District 11",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Russell Castille",
+    "party": "Republican",
+    "phone": "(337) 527-6940",
+    "seat": "District 12",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "William 'Billy' Breaux",
+    "party": "Republican",
+    "phone": "(337) 625-9861",
+    "seat": "District 13",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Desmond Wallace",
+    "party": "Democratic",
+    "phone": "(337) 302-6184",
+    "seat": "District 14",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Shawn Baumgarten",
+    "party": "Republican",
+    "phone": "(337) 855-7434",
+    "seat": "District 15",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200360": {
+  "district": "Caldwell Parish School District",
+  "officeAddress": "P.O. Box 1019, Columbia, LA 71418",
+  "officePhone": "(318) 649-2689",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "'Randy' Rentz",
+    "party": "Independent",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Bo' Barton",
+    "party": "Republican",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Melinda Ballard",
+    "party": "Republican",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Baron Glass",
+    "party": "Independent",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Maria Brown Bass",
+    "party": "Republican",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Johnnie Fallin",
+    "party": "Republican",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Gary Cassels",
+    "party": "Independent",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200390": {
+  "district": "Cameron Parish School District",
+  "officeAddress": "510 Marshall St., Cameron, LA 70631",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Marsha Trahan",
+    "party": "No party",
+    "phone": "(337) 569-2661",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Christina LaBove",
+    "party": "No party",
+    "phone": "(337) 802-6908",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Telesha Bertrand",
+    "party": "Republican",
+    "phone": "(337) 540-9449",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Mitchel Kelley",
+    "party": "Democratic",
+    "phone": "(337) 794-8399",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Vickie Kiffe",
+    "party": "Republican",
+    "phone": "(337) 249-1674",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Sharon Picou",
+    "party": "Republican",
+    "phone": "(337) 540-6025",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Joseph Delcambre",
+    "party": "Republican",
+    "phone": "(337) 274-7099",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Randall Faulk",
+    "party": "Republican",
+    "phone": "(337) 802-5403",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200420": {
+  "district": "Catahoula Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Candy Nolen Edmonds",
+    "party": "Republican",
+    "phone": "(318) 789-6214",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "J.M. 'Jimmy' Blaney Jr.",
+    "party": "Republican",
+    "phone": "(318) 481-7515",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dewey Stockman",
+    "party": "Republican",
+    "phone": "(318) 992-2306",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "John Wayne Allbritton",
+    "party": "Republican",
+    "phone": "(318) 744-9333",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Cynthia Brown",
+    "party": "Republican",
+    "phone": "(318) 481-0301",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Laine Neal",
+    "seat": "District 6"
+   },
+   {
+    "name": "Toshiro Fisher",
+    "party": "Democratic",
+    "phone": "(318) 403-8858",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Peggy Beard",
+    "party": "Democratic",
+    "phone": "(318) 403-9033",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Tonya Pardue",
+    "party": "Republican",
+    "phone": "(318) 481-1594",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200450": {
+  "district": "Claiborne Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Patricia Shirey Stevens",
+    "party": "Independent",
+    "phone": "(318) 548-7374",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "William H. Maddox",
+    "party": "No party",
+    "phone": "(318) 548-4870",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Linda W. Knox",
+    "party": "Independent",
+    "phone": "(318) 455-0948",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Yolanda L. Coleman",
+    "party": "Democratic",
+    "phone": "(318) 624-2151",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Perry Anderson",
+    "party": "Independent",
+    "phone": "(318) 243-0562",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Thomas E. Davidson",
+    "party": "No party",
+    "phone": "(318) 548-8431",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "B. Stewart Griffin",
+    "party": "Independent",
+    "phone": "(318) 245-9077",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Roy Mardis",
+    "party": "Democratic",
+    "phone": "(318) 224-1309",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "David Nokes",
+    "party": "Independent",
+    "phone": "(318) 423-1504",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Mark Perot",
+    "party": "No party",
+    "phone": "(318) 564-0752",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200480": {
+  "district": "Concordia Parish School District",
+  "officeAddress": "4358 Hwy. 84 W., Vidalia, LA 71373",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Fred T. Butcher",
+    "party": "Democratic",
+    "phone": "(601) 807-3853",
+    "seat": "District 1, Place A",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dorothy M. Parker",
+    "party": "Democratic",
+    "phone": "(318) 542-0103",
+    "seat": "District 1, Place B",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Fred Marsalis",
+    "party": "Democratic",
+    "phone": "(601) 443-1468",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Vanessa Houck",
+    "party": "Republican",
+    "phone": "(318) 243-7972",
+    "seat": "District 3, Place A",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Lisette Lowry Forman",
+    "party": "No party",
+    "phone": "(318) 758-8401",
+    "seat": "District 3, Place B",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Derrick D. Carson",
+    "party": "No party",
+    "phone": "(318) 719-5359",
+    "seat": "District 4, Place A",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Angela Hayes",
+    "party": "Democratic",
+    "phone": "(318) 719-5812",
+    "seat": "District 4, Place B",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "R. Wayne Wilson Jr.",
+    "party": "Republican",
+    "phone": "(318) 729-8885",
+    "seat": "District 5, Place A",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Nathan Cloessner",
+    "party": "Republican",
+    "phone": "(318) 237-8628",
+    "seat": "District 5, Place B",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200510": {
+  "district": "De Soto Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Dudley M. Glenn",
+    "party": "Republican",
+    "phone": "(318) 426-1234",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Neil Henderson",
+    "party": "Republican",
+    "phone": "(318) 453-9189",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jeffrey Dillard",
+    "party": "Republican",
+    "phone": "(318) 218-4737",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Donald B. 'Donnie' Dufour",
+    "party": "Democratic",
+    "phone": "(318) 470-4753",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Alice Hamiliton Thomas",
+    "party": "Democratic",
+    "phone": "(318) 755-2597",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Phillip Palmer",
+    "party": "Republican",
+    "phone": "(318) 505-7831",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dale E. Morvan",
+    "party": "Republican",
+    "phone": "(318) 697-5484",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "L. Mark Ross",
+    "party": "Republican",
+    "phone": "(318) 465-7160",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Ronnie L. Morris Sr.",
+    "party": "Democratic",
+    "phone": "(318) 481-9200",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Bobby Boyd",
+    "party": "Democratic",
+    "phone": "(318) 872-3657",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Rosie Mae Mayweather",
+    "party": "Democratic",
+    "phone": "(318) 872-4239",
+    "seat": "District 11",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200540": {
+  "district": "East Baton Rouge Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Mark Bellue",
+    "party": "Republican",
+    "phone": "(225) 485-9417",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dadrius Lanus",
+    "party": "Democratic",
+    "phone": "(225) 266-9418",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Carla Powell",
+    "party": "Democratic",
+    "phone": "(225) 443-0180",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Shashonnie Steward",
+    "party": "Democratic",
+    "phone": "(409) 241-5686",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Cliff Lewis",
+    "party": "Democratic",
+    "phone": "(225) 205-8551",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Nathan' Rust",
+    "party": "Republican",
+    "phone": "(225) 235-6221",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Michael Gaudet",
+    "party": "Republican",
+    "phone": "(225) 229-5584",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Emily Soule'",
+    "party": "Republican",
+    "phone": "(225) 341-8037",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Patrick Martin",
+    "party": "Republican",
+    "phone": "(225) 755-9336",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200570": {
+  "district": "East Carroll Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Shirley Fairchild",
+    "party": "Democratic",
+    "phone": "(318) 282-5387",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "John Shoemaker",
+    "party": "Democratic",
+    "phone": "(318) 559-1516",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Wanda 'Ladybug' Jackson",
+    "party": "Democratic",
+    "phone": "(318) 282-8887",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jacqueline 'Jackie' Folks",
+    "party": "Democratic",
+    "phone": "(318) 418-0117",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "David Norris",
+    "party": "No party",
+    "phone": "(318) 282-5919",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200600": {
+  "district": "East Feliciana Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Rufus Nesbitt",
+    "party": "Democratic",
+    "phone": "(225) 629-5125",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Peidera Sims",
+    "party": "Democratic",
+    "phone": "(225) 535-0410",
+    "seat": "District 2, Division 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Patricia C. King",
+    "party": "Democratic",
+    "phone": "(225) 244-0239",
+    "seat": "District 2, Division 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jermi Roy Adams",
+    "party": "Republican",
+    "phone": "(225) 241-0234",
+    "seat": "District 3, Division 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "J.D. Dantzler Jr.",
+    "party": "Democratic",
+    "phone": "(225) 681-0307",
+    "seat": "District 3, Division 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Lillian Drake",
+    "party": "No party",
+    "phone": "(225) 719-7761",
+    "seat": "District 3, Division 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Melissa Davis",
+    "party": "No party",
+    "phone": "(225) 328-6765",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Clayton 'Cisco' Elkins",
+    "party": "Republican",
+    "phone": "(225) 938-7907",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Joyce A. Kent",
+    "party": "Democratic",
+    "phone": "(225) 719-2051",
+    "seat": "District 6, Division 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Richard Terrell",
+    "party": "Democratic",
+    "phone": "(225) 683-5058",
+    "seat": "District 6, Division 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Michael Ray Bradford",
+    "party": "Democratic",
+    "phone": "(225) 278-6532",
+    "seat": "District 6, Division 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Paul Kent",
+    "party": "Independent",
+    "phone": "(225) 683-8785",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200630": {
+  "district": "Evangeline Parish School District",
+  "officeAddress": "1123 Te Mamou Rd., Ville Platte, LA 70586",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Lonnie D. Sonnier",
+    "party": "Democratic",
+    "phone": "(337) 459-5218",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Nicky' Chaumont",
+    "party": "Republican",
+    "phone": "(337) 305-4375",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Karen Vidrine",
+    "party": "Republican",
+    "phone": "(337) 224-4326",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Wayne Dardeau",
+    "party": "Independent",
+    "phone": "(318) 419-2134",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Monica Blood Andrus",
+    "party": "Republican",
+    "phone": "(337) 336-9715",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Micheal 'Mike' Fontenot",
+    "party": "Republican",
+    "phone": "(337) 278-2676",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Sheila Joseph",
+    "party": "Democratic",
+    "phone": "(337) 831-1010",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jerry 'Mr. B' Bottley",
+    "party": "Democratic",
+    "phone": "(337) 363-6653",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kristy Briley",
+    "party": "No party",
+    "phone": "(337) 831-3125",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Fannie Soileau",
+    "party": "Republican",
+    "phone": "(337) 831-1394",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Bobby Max Hamlin",
+    "party": "Republican",
+    "phone": "(337) 831-0087",
+    "seat": "District 11",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Calvin Leday Jr.",
+    "party": "Democratic",
+    "phone": "(337) 336-0623",
+    "seat": "District 12",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Donald R. 'Don' Anderson",
+    "party": "Democratic",
+    "phone": "(337) 459-2506",
+    "seat": "District 13",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200660": {
+  "district": "Franklin Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Tyler Roberts",
+    "party": "Republican",
+    "phone": "(318) 789-2269",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Alaina Wallace Nichols",
+    "party": "Republican",
+    "phone": "(318) 237-9457",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Danny Davis",
+    "party": "Republican",
+    "phone": "(318) 267-1616",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Richard D. Kelly",
+    "party": "Independent",
+    "phone": "(318) 498-0226",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jacqueline Johnson",
+    "party": "Democratic",
+    "phone": "(318) 237-4747",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Matt' Stephens",
+    "party": "Republican",
+    "phone": "(318) 237-8404",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Laquetta Clay Barnes",
+    "party": "Democratic",
+    "phone": "(225) 380-9951",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200690": {
+  "district": "Grant Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "April T. Brouillette",
+    "party": "Democratic",
+    "phone": "(318) 481-5966",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Lloyd Whitman",
+    "party": "Republican",
+    "phone": "(318) 899-5605",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Karen Yvette Layton",
+    "party": "Democratic",
+    "phone": "(318) 233-6029",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Mason Briggs",
+    "party": "Republican",
+    "phone": "(318) 312-3650",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Lisa Roberts",
+    "party": "Republican",
+    "phone": "(318) 613-3494",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Darin Pasche",
+    "phone": "(318) 627-3274",
+    "seat": "District 6"
+   },
+   {
+    "name": "'Debbie' Collins McFarland",
+    "party": "Republican",
+    "phone": "(318) 899-3920",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "William 'Bill' Riggs",
+    "party": "Republican",
+    "phone": "(318) 613-2033",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200720": {
+  "district": "Iberia Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Nursey Ozenne McNeal",
+    "party": "Democratic",
+    "phone": "(337) 380-7902",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Elvin 'Dee' Pradia",
+    "party": "No party",
+    "phone": "(337) 380-6411",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jay McDonald",
+    "party": "No party",
+    "phone": "(337) 519-2653",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Raymond 'Shoe-Do' Lewis",
+    "party": "Democratic",
+    "phone": "(337) 577-7284",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Debra A. Savoie",
+    "party": "Republican",
+    "phone": "(337) 230-6730",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Michael Mayeux",
+    "party": "Republican",
+    "phone": "(337) 380-5907",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dan L. LeBlanc Sr.",
+    "party": "Republican",
+    "phone": "(337) 366-2920",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Brad Norris",
+    "party": "Republican",
+    "phone": "(337) 380-4153",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dana Dugas",
+    "party": "Republican",
+    "phone": "(337) 201-1232",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Suzette Boutte Charpentier",
+    "party": "Republican",
+    "phone": "(337) 465-0233",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kathleen Rosamond",
+    "party": "Republican",
+    "phone": "(337) 519-7649",
+    "seat": "District 11",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Arthur Alexander",
+    "party": "Democratic",
+    "phone": "(337) 967-3368",
+    "seat": "District 12",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Danny D. Segura",
+    "party": "Republican",
+    "phone": "(337) 577-9464",
+    "seat": "District 13",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Rachael Toups",
+    "party": "No party",
+    "phone": "(337) 577-6291",
+    "seat": "District 14",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200750": {
+  "atLarge": [
+   {
+    "name": "Pauline 'Polly' Distefano Higdon",
+    "party": "Independent",
+    "seat": "At large",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "district": "Iberville Parish School District",
+  "officeAddress": "58030 Plaquemine St., Plaquemine, LA 70764",
+  "officePhone": "(225) 687-4341",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Theresa White Roy",
+    "party": "Republican",
+    "phone": "(225) 939-6369",
+    "seat": "District A",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Catherine Williams",
+    "party": "Democratic",
+    "seat": "District B",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Pamela 'Pam' George",
+    "party": "Independent",
+    "seat": "District C",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Daven P. Tullier",
+    "party": "Republican",
+    "seat": "District D",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Mario Migliacio",
+    "party": "Democratic",
+    "seat": "District E",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Yolanda Butler Laws",
+    "party": "Democratic",
+    "seat": "District F",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Yolanda Holmes",
+    "party": "Democratic",
+    "phone": "(225) 685-9400",
+    "seat": "District G",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Michael J. Hebert Jr.",
+    "party": "Democratic",
+    "seat": "District H",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200780": {
+  "district": "Jackson Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Mary 'May' Saulters",
+    "party": "Republican",
+    "phone": "(318) 278-1208",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Calvin 'Bart' Waggoner",
+    "party": "Republican",
+    "phone": "(318) 249-2261",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Richard 'Rick' Barlow",
+    "party": "Other",
+    "phone": "(318) 658-5202",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Gerry Mims",
+    "party": "Democratic",
+    "phone": "(318) 614-7160",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Paulette Belton",
+    "party": "Independent",
+    "phone": "(318) 243-4069",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Wade McBride",
+    "party": "Republican",
+    "phone": "(318) 259-9695",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dennis Clary",
+    "party": "Republican",
+    "phone": "(318) 278-2552",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200810": {
+  "district": "Jefferson Davis Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "'Greg' Bordelon",
+    "party": "No party",
+    "phone": "(337) 329-4486",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Malon Dobson",
+    "party": "No party",
+    "phone": "(337) 774-3024",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Phillip Arceneaux",
+    "party": "Democratic",
+    "phone": "(337) 370-6028",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Summer Lejeune",
+    "party": "No party",
+    "phone": "(337) 329-3064",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Paula LeJeune",
+    "party": "Republican",
+    "phone": "(337) 824-6763",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Janet Jones",
+    "party": "Democratic",
+    "phone": "(337) 636-5020",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Greg' Patterson",
+    "party": "Republican",
+    "phone": "(337) 370-9505",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "David Doise",
+    "party": "Republican",
+    "phone": "(337) 250-1898",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Charles Bruchhaus",
+    "party": "Democratic",
+    "phone": "(337) 584-2937",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Russell Walker",
+    "party": "Republican",
+    "phone": "(337) 391-9242",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Paul Trahan",
+    "party": "Republican",
+    "phone": "(337) 304-4270",
+    "seat": "District 11",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Blake Frey",
+    "party": "Republican",
+    "phone": "(337) 246-1537",
+    "seat": "District 12",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Blake Petry",
+    "party": "Republican",
+    "phone": "(337) 224-0044",
+    "seat": "District 13",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200840": {
+  "district": "Jefferson Parish School District",
+  "officeAddress": "501 Manhattan Blvd., Harvey, LA 70058",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Gerard LeBlanc",
+    "party": "Republican",
+    "phone": "(504) 905-5071",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Ricky Johnson",
+    "party": "Democratic",
+    "phone": "(504) 259-2620",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kriss Fairbairn Fortunato",
+    "party": "Republican",
+    "phone": "(504) 462-6748",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Clay' Moise",
+    "party": "Republican",
+    "phone": "(504) 723-5780",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Derrick Shepherd",
+    "party": "Democratic",
+    "phone": "(504) 215-1102",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Michael Pedalino",
+    "party": "Republican",
+    "phone": "(504) 582-2464",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Ralph 'Rem' Brandt Jr.",
+    "party": "Republican",
+    "phone": "(504) 234-1661",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Chad Nugent",
+    "party": "Republican",
+    "phone": "(504) 734-3370",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kevin Delahoussaye",
+    "phone": "(504) 349-7600",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200870": {
+  "district": "Lafayette Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "David LeJeune",
+    "party": "Republican",
+    "phone": "(337) 288-9802",
+    "seat": "District 1",
+    "termEnds": "2027-12-31"
+   },
+   {
+    "name": "Robert T. Davidson",
+    "phone": "(337) 258-6581",
+    "seat": "District 2"
+   },
+   {
+    "name": "Joshua Edmond",
+    "party": "Democratic",
+    "phone": "(337) 296-9377",
+    "seat": "District 3",
+    "termEnds": "2027-12-31"
+   },
+   {
+    "name": "Amy Trahan",
+    "party": "Democratic",
+    "phone": "(337) 366-1673",
+    "seat": "District 4",
+    "termEnds": "2027-12-31"
+   },
+   {
+    "name": "Britt Latiolais",
+    "party": "Republican",
+    "phone": "(337) 400-8962",
+    "seat": "District 5",
+    "termEnds": "2027-12-31"
+   },
+   {
+    "name": "Roddy Bergeron",
+    "party": "Republican",
+    "phone": "(337) 351-3547",
+    "seat": "District 6",
+    "termEnds": "2027-12-31"
+   },
+   {
+    "name": "Kate Bailey Labue",
+    "party": "Republican",
+    "phone": "(337) 852-3314",
+    "seat": "District 7",
+    "termEnds": "2027-12-31"
+   },
+   {
+    "name": "Hannah Smith Mason",
+    "party": "Republican",
+    "phone": "(337) 366-1497",
+    "seat": "District 8",
+    "termEnds": "2027-12-31"
+   },
+   {
+    "name": "Jeremy Hidalgo",
+    "party": "Republican",
+    "phone": "(337) 780-1915",
+    "seat": "District 9",
+    "termEnds": "2027-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200900": {
+  "district": "Lafourche Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Myron Wright",
+    "party": "No party",
+    "phone": "(504) 559-4321",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dennis J. Guillot",
+    "party": "Republican",
+    "phone": "(985) 414-0764",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Christine 'Tina' Naquin Babin",
+    "party": "No party",
+    "phone": "(985) 665-8557",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Marian B. Fertitta",
+    "party": "Republican",
+    "phone": "(985) 446-5631",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Clyde 'Joey' Duplantis III",
+    "party": "Republican",
+    "phone": "(985) 857-9143",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Valerie Bourgeois",
+    "party": "Republican",
+    "phone": "(985) 258-6420",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Henry J. Lafont Jr.",
+    "phone": "(985) 693-3308",
+    "seat": "District 7"
+   },
+   {
+    "name": "Leslie Gros Wells",
+    "party": "Republican",
+    "phone": "(504) 442-1596",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Buffylynn Charpentier",
+    "party": "Republican",
+    "phone": "(985) 278-8814",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200960": {
+  "district": "La Salle Parish School District",
+  "officeAddress": "P.O. Box 90, Jena, LA 71342",
+  "officePhone": "(318) 992-2161",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Jessica Wood Lasiter",
+    "party": "Republican",
+    "phone": "(318) 436-9927",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jonny Fryar",
+    "party": "No party",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Fred' Book",
+    "party": "Independent",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Marcia Cooksey",
+    "party": "Republican",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "D'Juana McCartney",
+    "party": "Republican",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Alvin J. 'Buddy' Bethard Jr.",
+    "party": "Democratic",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Deborah Mayo",
+    "party": "Independent",
+    "phone": "(318) 452-4987",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dolan Pendarvis",
+    "party": "Republican",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Seth' Corley",
+    "party": "Republican",
+    "phone": "(318) 419-7384",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Melvin Worthington",
+    "party": "Democratic",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2200990": {
+  "district": "Lincoln Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Danielle Williams",
+    "party": "Democratic",
+    "phone": "(318) 614-5663",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "David Ferguson",
+    "party": "Democratic",
+    "phone": "(318) 247-8103",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Clark Canterbury",
+    "party": "Republican",
+    "phone": "(318) 548-9608",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Donna Doss",
+    "party": "No party",
+    "phone": "(318) 245-5511",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Danny R. Hancock",
+    "party": "No party",
+    "phone": "(318) 278-0467",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Joe Mitcham Jr.",
+    "party": "Republican",
+    "phone": "(318) 243-1156",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Stephen Hunter Smith",
+    "party": "Republican",
+    "phone": "(318) 255-2400",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Gregg' Phillips",
+    "party": "Republican",
+    "phone": "(318) 548-6450",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Patricia Mims-Brooks",
+    "phone": "(318) 255-1430",
+    "seat": "District 9"
+   },
+   {
+    "name": "Juan Mesheena Hooper",
+    "seat": "District 10"
+   },
+   {
+    "name": "George Mack Jr.",
+    "party": "Democratic",
+    "phone": "(318) 957-0299",
+    "seat": "District 11",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Debbie' Abrahm",
+    "party": "Independent",
+    "phone": "(318) 245-1486",
+    "seat": "District 12",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201020": {
+  "district": "Livingston Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Brad Sharp",
+    "party": "Republican",
+    "phone": "(225) 202-3648",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Robert A. Seals Jr.",
+    "party": "Republican",
+    "phone": "(225) 235-6147",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Jeff' Frizell",
+    "party": "Republican",
+    "phone": "(225) 278-4525",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Bradley 'Brad' Harris",
+    "party": "Republican",
+    "phone": "(225) 892-9130",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Cecil Harris",
+    "party": "Republican",
+    "phone": "(225) 229-0081",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jeffery Cox",
+    "party": "Republican",
+    "phone": "(225) 939-4749",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Katelyn Lockhart Cockerham",
+    "party": "Republican",
+    "phone": "(225) 287-5849",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Ron' McMorris",
+    "party": "Republican",
+    "phone": "(225) 226-5047",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Steve' Link",
+    "party": "Republican",
+    "phone": "(985) 507-1186",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201050": {
+  "district": "Madison Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "'Jeff' Wilson",
+    "party": "Republican",
+    "phone": "(318) 341-0271",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Shelly Crawford",
+    "party": "Republican",
+    "phone": "(318) 488-1028",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Eddie Fountain",
+    "party": "Democratic",
+    "phone": "(318) 341-6563",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kathy Gultery",
+    "party": "No party",
+    "phone": "(318) 574-2933",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Paula Hamilton",
+    "party": "No party",
+    "phone": "(318) 493-9584",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Rickey' Patterson",
+    "party": "No party",
+    "phone": "(318) 493-1690",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Lisa Johnson",
+    "party": "Democratic",
+    "phone": "(318) 341-2808",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Rita' Hargrave",
+    "party": "Republican",
+    "phone": "(318) 341-7347",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201080": {
+  "district": "City of Monroe School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Michael Sampognaro",
+    "party": "Independent",
+    "phone": "(318) 512-7005",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jennifer Haneline",
+    "party": "No party",
+    "phone": "(318) 537-5023",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "William E. 'Bill' Willson",
+    "party": "Republican",
+    "phone": "(318) 348-1201",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Daryll Berry",
+    "party": "Democratic",
+    "phone": "(318) 307-1750",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Betty Ward-Cooper",
+    "party": "Democratic",
+    "phone": "(318) 547-0606",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Brandon 'BJ' Johnson",
+    "party": "Democratic",
+    "phone": "(318) 381-3789",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Brenda Shelling",
+    "party": "Democratic",
+    "phone": "(318) 547-9515",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201110": {
+  "district": "Morehouse Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Karen Travis Diel",
+    "party": "No party",
+    "phone": "(318) 669-4862",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Louis Edward Melton",
+    "party": "Democratic",
+    "phone": "(318) 974-3867",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "John 'Robert' Johnson Jr.",
+    "party": "Republican",
+    "phone": "(318) 235-8707",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Richard W. 'Rick' Hixon",
+    "party": "Republican",
+    "phone": "(318) 348-1471",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Debra 'Debbie' Wilson",
+    "party": "Republican",
+    "phone": "(318) 348-9786",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Veronica Loche Tappin",
+    "party": "Democratic",
+    "phone": "(318) 801-1107",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Adrin 'Pickle' Williams",
+    "party": "Democratic",
+    "phone": "(318) 789-6323",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201140": {
+  "district": "Natchitoches Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Barbara Page",
+    "party": "No party",
+    "phone": "(318) 471-7014",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Tan'Keia Palmer",
+    "party": "Democratic",
+    "phone": "(318) 527-6800",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dorothy McGaskey",
+    "party": "Democratic",
+    "phone": "(318) 527-1968",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Billy J. Benefield Jr.",
+    "party": "No party",
+    "phone": "(318) 554-9454",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Lela Harvey",
+    "party": "No party",
+    "phone": "(318) 529-0638",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jennifer 'Reba' Phelps",
+    "party": "No party",
+    "phone": "(318) 332-4260",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Chad Fredieu",
+    "party": "No party",
+    "phone": "(318) 452-8305",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Steven R. Harris Sr.",
+    "party": "Democratic",
+    "phone": "(318) 419-0802",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Micah S. Nicholson",
+    "party": "Republican",
+    "phone": "(318) 332-9889",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Russell 'Russ' Danzy",
+    "party": "Republican",
+    "phone": "(318) 472-9637",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Emile E. Metoyer Sr.",
+    "party": "No party",
+    "phone": "(318) 379-2407",
+    "seat": "District 11",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201170": {
+  "district": "Orleans Parish School District",
+  "officeAddress": "2401 Westbend Parkway, New Orleans, LA 70114",
+  "officePhone": "(504) 359-9529",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Leila J. Eames",
+    "party": "Democratic",
+    "seat": "District 1",
+    "termEnds": "2028-12-30"
+   },
+   {
+    "name": "Gabriela Biro",
+    "party": "Democratic",
+    "seat": "District 2",
+    "termEnds": "2028-12-31"
+   },
+   {
+    "name": "Olin G. Parker",
+    "party": "Democratic",
+    "seat": "District 3",
+    "termEnds": "2028-12-31"
+   },
+   {
+    "name": "KaTrina Chantelle Griffin",
+    "party": "Democratic",
+    "seat": "District 4",
+    "termEnds": "2028-12-31"
+   },
+   {
+    "name": "Katherine Baudouin",
+    "party": "Democratic",
+    "seat": "District 5",
+    "termEnds": "2028-12-31"
+   },
+   {
+    "name": "Carlos Luis Zervigon",
+    "party": "Democratic",
+    "seat": "District 6",
+    "termEnds": "2028-12-31"
+   },
+   {
+    "name": "Nolan Marshall",
+    "party": "Democratic",
+    "seat": "District 7",
+    "termEnds": "2028-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201200": {
+  "district": "Ouachita Parish School District",
+  "officeAddress": "1600 North 7th St., West Monroe, LA 71291",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Tommy Comeaux",
+    "party": "Republican",
+    "phone": "(318) 805-4764",
+    "seat": "District A",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Shere May",
+    "party": "Republican",
+    "phone": "(318) 366-8456",
+    "seat": "District B",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Michael Batey",
+    "party": "Republican",
+    "phone": "(318) 307-2440",
+    "seat": "District C",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jerry Hicks",
+    "party": "Republican",
+    "phone": "(318) 791-9340",
+    "seat": "District D",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Harold McCoy",
+    "party": "Democratic",
+    "phone": "(318) 307-2328",
+    "seat": "District E",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dabo Graves",
+    "party": "Republican",
+    "phone": "(318) 791-0047",
+    "seat": "District F",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Greg' Manley",
+    "party": "Republican",
+    "phone": "(318) 355-6652",
+    "seat": "District G",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201230": {
+  "district": "Plaquemines Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Darilyn 'NuNu' Demolle Turner",
+    "party": "Democratic",
+    "phone": "(504) 296-5622",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jaime Sauer",
+    "party": "Republican",
+    "phone": "(760) 390-6995",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Niko Tesvich",
+    "party": "No party",
+    "phone": "(504) 214-8227",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kristee Arbourgh",
+    "party": "Republican",
+    "phone": "(504) 715-4042",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Michelle Johnston Lindner",
+    "party": "Republican",
+    "phone": "(504) 606-9000",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jennifer Shelley",
+    "party": "Republican",
+    "phone": "(504) 450-6144",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Ranada Mackey-St. Ann",
+    "seat": "District 7"
+   },
+   {
+    "name": "Paul Lemaire",
+    "party": "Democratic",
+    "phone": "(504) 912-8562",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jennifer Boudreaux Sanger",
+    "party": "Democratic",
+    "phone": "(504) 307-3416",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201260": {
+  "district": "Pointe Coupee Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Walter Grezaffi",
+    "party": "Democratic",
+    "phone": "(337) 303-5651",
+    "seat": "District A",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Gene Hendricks",
+    "party": "Republican",
+    "phone": "(225) 241-0045",
+    "seat": "District B",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Tom' Nelson",
+    "party": "Democratic",
+    "phone": "(225) 638-6823",
+    "seat": "District C",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Chad Aguillard",
+    "party": "Democratic",
+    "phone": "(225) 405-8198",
+    "seat": "District D",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Frank 'Frankie' Aguillard",
+    "party": "Independent",
+    "phone": "(225) 718-2121",
+    "seat": "District E",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Anita LeJeune",
+    "party": "Democratic",
+    "phone": "(225) 627-6912",
+    "seat": "District F",
+    "termEnds": "2022-12-31"
+   },
+   {
+    "name": "Lisa Loupe D'Aquila",
+    "party": "Republican",
+    "phone": "(225) 638-7188",
+    "seat": "District G",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jason Lemoine",
+    "party": "Independent",
+    "phone": "(225) 718-3408",
+    "seat": "District H",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201290": {
+  "district": "Rapides Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Wilton Barrios Jr.",
+    "party": "Republican",
+    "phone": "(318) 640-4274",
+    "seat": "District A",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Steve Berry",
+    "party": "Republican",
+    "phone": "(318) 613-2710",
+    "seat": "District B",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Mark Dryden",
+    "party": "Republican",
+    "phone": "(318) 715-3680",
+    "seat": "District C",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Willard 'Bubba' McCall",
+    "party": "Democratic",
+    "phone": "(318) 290-8237",
+    "seat": "District D",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Stephen Chapman",
+    "party": "Republican",
+    "phone": "(318) 451-1311",
+    "seat": "District E",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Marie Ashmore",
+    "phone": "(301) 580-2647",
+    "seat": "District F"
+   },
+   {
+    "name": "Walter 'Wally' Fall",
+    "party": "Republican",
+    "phone": "(318) 451-7946",
+    "seat": "District G",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "George Johnson",
+    "party": "Republican",
+    "phone": "(318) 729-5425",
+    "seat": "District H",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Sandra Franklin",
+    "party": "Democratic",
+    "phone": "(318) 657-0414",
+    "seat": "District I",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201320": {
+  "district": "Red River Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Melinda Hardy",
+    "party": "Republican",
+    "phone": "(318) 471-9515",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Richard Cannon",
+    "party": "Democratic",
+    "phone": "(318) 230-4984",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Gary Giddens",
+    "party": "Republican",
+    "phone": "(318) 663-4688",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Cleve Miller",
+    "party": "Democratic",
+    "phone": "(318) 773-2268",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kasandria White",
+    "party": "Democratic",
+    "phone": "(318) 572-3774",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Reginald Prealow",
+    "party": "Democratic",
+    "phone": "(318) 663-3551",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Susan Taylor",
+    "party": "Republican",
+    "phone": "(318) 932-6253",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201350": {
+  "district": "Richland Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Linda Jones",
+    "party": "Republican",
+    "phone": "(318) 265-3939",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "William Cleveland",
+    "party": "Democratic",
+    "phone": "(318) 376-7191",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Reed Trisler",
+    "party": "Republican",
+    "phone": "(318) 334-1266",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "James Hough",
+    "party": "Republican",
+    "phone": "(318) 417-9788",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Georgia 'Peaches' Ineichen",
+    "party": "Independent",
+    "phone": "(318) 267-2412",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Marie Lewis",
+    "party": "Democratic",
+    "phone": "(318) 728-4024",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Scott McKay",
+    "party": "Republican",
+    "phone": "(318) 355-5139",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Emily Ogden",
+    "party": "Republican",
+    "phone": "(318) 537-5485",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Chris' Pruitt",
+    "party": "No party",
+    "phone": "(318) 732-7248",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201380": {
+  "district": "Sabine Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Stacy Stewart Alford",
+    "party": "Republican",
+    "phone": "(318) 508-1211",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Leah V. Byles",
+    "party": "Republican",
+    "phone": "(318) 256-5430",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Josh' Jenkins",
+    "party": "Republican",
+    "phone": "(318) 481-7726",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kowonno Greene",
+    "party": "Democratic",
+    "phone": "(318) 471-4675",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Everett Guidry",
+    "party": "Republican",
+    "phone": "(318) 228-7175",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "John Stewart",
+    "party": "Republican",
+    "phone": "(318) 315-3109",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Terrell D. Snelling",
+    "party": "Republican",
+    "phone": "(318) 567-2319",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Donald H. 'Hootie' Remedies",
+    "party": "Democratic",
+    "phone": "(318) 471-1599",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dean Johnson",
+    "party": "Independent",
+    "phone": "(318) 471-2753",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201410": {
+  "district": "St. Bernard Parish School District",
+  "officeAddress": "200 E. St. Bernard Hwy., Chalmette, LA 70043",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Katherine Karcher Lemoine",
+    "party": "Independent",
+    "phone": "(504) 382-2090",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Henry J. Rodriguez III",
+    "party": "Republican",
+    "phone": "(504) 451-0697",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kelly Le-Bowman",
+    "party": "Republican",
+    "phone": "(985) 774-6592",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Sean K. Warner",
+    "party": "No party",
+    "phone": "(504) 301-2000",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Joe' Long Sr.",
+    "party": "Republican",
+    "phone": "(504) 251-0495",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Carly Janel Creason",
+    "party": "Republican",
+    "phone": "(404) 985-3634",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Diana B. Dysart",
+    "party": "Independent",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Millie' Harris",
+    "party": "Republican",
+    "phone": "(504) 296-0987",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Keisa 'Franklin' Rodney",
+    "party": "Democratic",
+    "phone": "(504) 682-9301",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Rosiland White",
+    "party": "No party",
+    "phone": "(504) 272-0455",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Donald Campbell Sr.",
+    "party": "Republican",
+    "phone": "(504) 615-8867",
+    "seat": "District 11",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201440": {
+  "district": "St. Charles Parish School District",
+  "officeAddress": "13855 River Rd., Luling, LA 70070",
+  "officePhone": "(985) 785-3102",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Ellis Alexander Sr.",
+    "party": "No party",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Raymond 'Ray' Gregson",
+    "party": "Republican",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Scott Cody",
+    "party": "Republican",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Karen Boudreaux",
+    "party": "No party",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "John Smith",
+    "party": "Democratic",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Becky Weber",
+    "party": "Republican",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Arthur 'Art' Aucoin",
+    "party": "Republican",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Alex 'Al' Suffrin",
+    "party": "Republican",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201470": {
+  "district": "St. Helena Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Joyce Porter",
+    "party": "Democratic",
+    "phone": "(985) 514-3140",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Lolita Porter",
+    "party": "Democratic",
+    "phone": "(225) 719-2276",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Linda Chaney",
+    "party": "Democratic",
+    "phone": "(225) 222-3345",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "George Hughes",
+    "party": "Democratic",
+    "phone": "(225) 777-4859",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Virginia Bell",
+    "party": "Democratic",
+    "phone": "(504) 214-2386",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Alton Travis",
+    "party": "Independent",
+    "phone": "(985) 514-3288",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201500": {
+  "district": "St. James Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Diana 'Granny' Cantillo",
+    "party": "Republican",
+    "phone": "(504) 214-4597",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Tim Detillier",
+    "party": "Democratic",
+    "phone": "(225) 869-9503",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Sue Bienvenu Beier",
+    "party": "Democratic",
+    "phone": "(225) 869-5930",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Marty J. Poche",
+    "party": "Democratic",
+    "phone": "(225) 910-0555",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Angela Washington",
+    "party": "Democratic",
+    "phone": "(225) 206-1178",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Nicole Florent",
+    "party": "Democratic",
+    "phone": "(225) 265-7903",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Raymond Gros Jr.",
+    "party": "Democratic",
+    "phone": "(225) 265-8453",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201530": {
+  "district": "St. John the Baptist Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Charo Bossier-Holden",
+    "party": "Democratic",
+    "phone": "(985) 497-8762",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Albert Burl III",
+    "party": "Democratic",
+    "phone": "(504) 628-0010",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Patricia 'Momma Cat' Triche",
+    "party": "Republican",
+    "phone": "(504) 628-2649",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Raydel Morris",
+    "party": "Democratic",
+    "phone": "(504) 329-0594",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Sherry Defrancesch",
+    "party": "Independent",
+    "phone": "(985) 651-5652",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jennifer Frizzell",
+    "party": "Democratic",
+    "phone": "(504) 473-1117",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Samuel Mamou",
+    "party": "Democratic",
+    "phone": "(985) 233-1018",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Debra 'Debbie' Schum",
+    "party": "Democratic",
+    "phone": "(504) 909-4650",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Shawn Wallace",
+    "party": "Democratic",
+    "phone": "(985) 210-2142",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Nia Mitchell-Williams",
+    "party": "Democratic",
+    "phone": "(504) 415-1004",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Lindsey Vicknair",
+    "party": "Republican",
+    "phone": "(504) 495-2988",
+    "seat": "District 11",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201560": {
+  "district": "St. Landry Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Anthony Standberry",
+    "party": "Democratic",
+    "phone": "(337) 278-5720",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Joyce P. Haynes",
+    "party": "Democratic",
+    "phone": "(337) 945-1827",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Janice Henry",
+    "seat": "District 3"
+   },
+   {
+    "name": "Raymond P. Cassimere",
+    "party": "Democratic",
+    "phone": "(337) 351-1919",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Bianca J. Vedell",
+    "party": "No party",
+    "phone": "(337) 331-3004",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Renee Kaiser Aymond",
+    "party": "No party",
+    "phone": "(337) 585-0271",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Robert Gautreaux",
+    "party": "Republican",
+    "phone": "(337) 278-0395",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kyle C. Boss",
+    "party": "Democratic",
+    "phone": "(337) 277-5238",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Randy' Wagley",
+    "party": "No party",
+    "phone": "(337) 948-4504",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Hazel M. Sias",
+    "party": "Democratic",
+    "phone": "(337) 945-0833",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Tiffany Marie Nolan",
+    "party": "Republican",
+    "phone": "(337) 344-8709",
+    "seat": "District 11",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Timmakah Shanay Hardy",
+    "party": "Democratic",
+    "phone": "(337) 550-5694",
+    "seat": "District 12",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Mary Ellen Donatto",
+    "party": "Democratic",
+    "phone": "(337) 580-2750",
+    "seat": "District 13",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201590": {
+  "district": "St. Martin Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Steve Fuselier",
+    "party": "Democratic",
+    "phone": "(337) 394-4436",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Wanda Vital",
+    "party": "Independent",
+    "phone": "(337) 441-0229",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Edna 'Maw Maw' Mitchell-Johnson",
+    "party": "Democratic",
+    "phone": "(337) 519-2721",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jimmy Durio",
+    "party": "Independent",
+    "phone": "(337) 224-9736",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Russel Foti",
+    "party": "Republican",
+    "phone": "(337) 453-6622",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Michael 'Mike' Clay",
+    "party": "Republican",
+    "phone": "(337) 277-4502",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Richard Potier",
+    "party": "Democratic",
+    "phone": "(337) 298-1157",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Frederic Stelly Jr.",
+    "party": "Republican",
+    "phone": "(337) 442-7234",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Marlin d'Augereau",
+    "party": "Republican",
+    "phone": "(337) 962-5146",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Mark Hebert",
+    "party": "Independent",
+    "phone": "(337) 667-7161",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201620": {
+  "district": "St. Mary Parish School District",
+  "officeAddress": "474 Hwy. 317, Centerville, LA 70522",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Guienzy M. Brent",
+    "party": "Democratic",
+    "phone": "(337) 578-0894",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Tammie Lynn Moore",
+    "party": "Democratic",
+    "phone": "(337) 578-7830",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Lindsey Anslem",
+    "party": "Republican",
+    "phone": "(985) 519-9076",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Debra R. Jones",
+    "party": "Democratic",
+    "phone": "(337) 339-1744",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Ginger S. Griffin",
+    "party": "Republican",
+    "phone": "(337) 836-9661",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Marilyn Lasalle",
+    "party": "Democratic",
+    "phone": "(985) 395-3848",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Lawrence Guillory",
+    "party": "Republican",
+    "phone": "(337) 258-9560",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Chad Paradee",
+    "party": "Republican",
+    "phone": "(985) 518-2677",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Alaina L. Black",
+    "party": "Republican",
+    "phone": "(985) 312-8257",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Andrew V. Mancuso",
+    "party": "No party",
+    "phone": "(985) 397-2718",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Rhonda Dennis",
+    "party": "Republican",
+    "phone": "(985) 519-1913",
+    "seat": "District 11",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201650": {
+  "district": "St. Tammany Parish School District",
+  "officeAddress": "321 N. Theard St., Covington, LA 70433",
+  "officePhone": "(985) 898-3216",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "'Matt' Greene",
+    "party": "Republican",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Roslyn Hanson",
+    "party": "Republican",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Adaline Villneurve Rutherford",
+    "party": "Republican",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kalinda Fauntleroy",
+    "party": "Republican",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Charles Brandon Harrell",
+    "party": "Republican",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Amanda Reed Martin",
+    "party": "Republican",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Isabelle Moore",
+    "party": "Republican",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Mike' Peterson",
+    "party": "Republican",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Gia R. Baker",
+    "party": "Republican",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Deborah McCollum",
+    "party": "Republican",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Tammy Lamy",
+    "party": "Republican",
+    "seat": "District 11",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Michelle Hirstius",
+    "party": "Republican",
+    "seat": "District 12",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "James Braud",
+    "party": "Republican",
+    "seat": "District 13",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dennis S. Cousin",
+    "party": "Democratic",
+    "seat": "District 14",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Michelle Ruffino Gallaher",
+    "party": "Republican",
+    "seat": "District 15",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201680": {
+  "district": "Tangipahoa Parish School District",
+  "officeAddress": "59656 Puleston Rd., Amite, LA 70422",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Janice Fultz Richards",
+    "party": "Democratic",
+    "phone": "(985) 229-7754",
+    "seat": "District A",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Tom' Tolar",
+    "party": "Republican",
+    "phone": "(985) 969-1843",
+    "seat": "District B",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Robin Taylor Abrams",
+    "party": "Republican",
+    "phone": "(985) 878-3890",
+    "seat": "District C",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Glenn Westmoreland",
+    "party": "Republican",
+    "phone": "(225) 305-5542",
+    "seat": "District D",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Brett K. Duncan",
+    "party": "Republican",
+    "phone": "(985) 345-0660",
+    "seat": "District E",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Trent Anthony",
+    "party": "Republican",
+    "phone": "(985) 969-3960",
+    "seat": "District F",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jerry Moore",
+    "party": "Democratic",
+    "phone": "(985) 974-3329",
+    "seat": "District G",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Joseph 'Joey' Piazza II",
+    "party": "Republican",
+    "phone": "(985) 969-2513",
+    "seat": "District H",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Rose Quave Dominguez",
+    "party": "Republican",
+    "phone": "(985) 845-4912",
+    "seat": "District I",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201710": {
+  "district": "Tensas Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Jennifer Burnside",
+    "party": "Republican",
+    "phone": "(318) 467-5215",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Knola Faye Ransome",
+    "party": "Democratic",
+    "phone": "(318) 498-9314",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "George Matthews",
+    "party": "Republican",
+    "phone": "(504) 228-3428",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Annice Miller",
+    "party": "Democratic",
+    "phone": "(318) 282-2791",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Esaw Turner",
+    "party": "Democratic",
+    "phone": "(318) 341-0826",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Joseph Tarver",
+    "party": "Republican",
+    "phone": "(318) 301-9155",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "John L. Turner",
+    "party": "Democratic",
+    "phone": "(318) 749-5250",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201740": {
+  "district": "Terrebonne Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Michael 'Mike' Lagarde",
+    "party": "Democratic",
+    "phone": "(985) 688-6988",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Gregory 'Dut' Harding",
+    "party": "Democratic",
+    "phone": "(985) 688-0052",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Matthew J. Ford",
+    "party": "Republican",
+    "phone": "(985) 665-3288",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Debi' Benoit",
+    "party": "Republican",
+    "phone": "(985) 493-2563",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "George Crowdus Jr.",
+    "party": "Republican",
+    "phone": "(985) 381-5537",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Louis 'Budd' Cloutier Jr.",
+    "party": "Republican",
+    "phone": "(985) 790-1141",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Roger Dale Dehart",
+    "party": "Republican",
+    "phone": "(985) 860-1071",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "MayBelle Trahan",
+    "party": "Republican",
+    "phone": "(985) 594-4890",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dane Voisin",
+    "party": "Republican",
+    "phone": "(985) 232-4644",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201770": {
+  "district": "Union Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Sharon I. Dixson",
+    "party": "Democratic",
+    "phone": "(318) 243-3111",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Roger 'Little Rock' Reeves Jr.",
+    "party": "No party",
+    "phone": "(318) 381-2825",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Tommy Bennett",
+    "party": "Republican",
+    "phone": "(318) 548-3500",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Judy Mabry",
+    "party": "Democratic",
+    "phone": "(318) 548-6493",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Shannon Barkley",
+    "party": "Republican",
+    "phone": "(318) 376-9646",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Linda B. Evans",
+    "phone": "(318) 368-9715",
+    "seat": "District 6"
+   },
+   {
+    "name": "Sharon Stewart",
+    "party": "Republican",
+    "phone": "(318) 368-5708",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Eula Collins",
+    "party": "Democratic",
+    "phone": "(318) 726-4228",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Gail' Neal",
+    "party": "Democratic",
+    "phone": "(318) 478-1673",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201800": {
+  "district": "Vermilion Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "David Dupuis",
+    "party": "No party",
+    "phone": "(337) 536-7197",
+    "seat": "District A",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kevin Meyers",
+    "party": "Republican",
+    "phone": "(337) 781-0007",
+    "seat": "District B",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Gregg Meaux",
+    "party": "Independent",
+    "phone": "(337) 643-3894",
+    "seat": "District C",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dale Stelly",
+    "party": "No party",
+    "phone": "(337) 652-8964",
+    "seat": "District D",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Charlotte Detraz",
+    "party": "Republican",
+    "phone": "(337) 893-7058",
+    "seat": "District E",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kibbie P. Pillette",
+    "party": "No party",
+    "phone": "(337) 257-0473",
+    "seat": "District F",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jason A. Roy",
+    "party": "No party",
+    "phone": "(337) 523-1989",
+    "seat": "District G",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Chris' Hebert",
+    "party": "Republican",
+    "phone": "(337) 319-1300",
+    "seat": "District H",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Nick' Touchet",
+    "party": "Republican",
+    "phone": "(337) 789-1742",
+    "seat": "District I",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201830": {
+  "district": "Vernon Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Kelly Kaiama-Goodwin",
+    "party": "Republican",
+    "phone": "(337) 208-4299",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Robert Pynes Jr.",
+    "party": "Republican",
+    "phone": "(337) 397-2930",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Jim' Seaman",
+    "party": "Republican",
+    "phone": "(337) 208-6087",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Rhonda H. Morrison",
+    "party": "Republican",
+    "phone": "(337) 208-4906",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Mark Smith",
+    "seat": "District 1"
+   },
+   {
+    "name": "Angela 'Angie' Davis",
+    "party": "Independent",
+    "phone": "(337) 397-6780",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Deidra Shell",
+    "party": "Republican",
+    "phone": "(337) 208-5051",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Randy Martin",
+    "party": "Republican",
+    "phone": "(337) 238-8917",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Shad Stewart",
+    "party": "Republican",
+    "phone": "(337) 396-0399",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Vernon Travis Jr.",
+    "party": "Democratic",
+    "phone": "(337) 718-8876",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "John David Blankenbaker",
+    "party": "Republican",
+    "phone": "(337) 348-6750",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Candace Smith Black",
+    "party": "Republican",
+    "phone": "(337) 499-8694",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201860": {
+  "district": "Washington Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Keith R. Giles",
+    "party": "Republican",
+    "phone": "(985) 515-7852",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Chad' Dorsett",
+    "party": "Republican",
+    "phone": "(985) 295-1624",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Bruce L. Brown Sr.",
+    "party": "Democratic",
+    "phone": "(985) 795-2766",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kendall McKenzie",
+    "party": "Republican",
+    "phone": "(985) 335-7123",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Robert W. Boone",
+    "party": "No party",
+    "phone": "(985) 516-4816",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Scott Breland",
+    "party": "Republican",
+    "phone": "(985) 335-8528",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "David 'Big Dave' Pettit",
+    "party": "No party",
+    "phone": "(985) 323-3318",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Amanda Dillon",
+    "party": "Democratic",
+    "phone": "(985) 515-7571",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Lesley D. McKinley",
+    "party": "Democratic",
+    "phone": "(985) 516-5774",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201890": {
+  "district": "Webster Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Margaret Edens",
+    "party": "Republican",
+    "phone": "(318) 465-3172",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Debbie W. Thomas",
+    "party": "Democratic",
+    "phone": "(318) 465-9983",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Charles Strong",
+    "party": "Independent",
+    "phone": "(318) 578-2069",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Robyn Guthrie",
+    "phone": "(318) 617-4842",
+    "seat": "District 4"
+   },
+   {
+    "name": "Ronald Rhymes",
+    "party": "Republican",
+    "phone": "(318) 832-4871",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jana Watson",
+    "party": "Republican",
+    "phone": "(318) 422-2579",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Linda Kinsey",
+    "party": "Democratic",
+    "phone": "(318) 393-5269",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Glenda Sherrill Broughton",
+    "party": "Other",
+    "phone": "(318) 377-4575",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jerri Lee",
+    "party": "Democratic",
+    "phone": "(318) 377-0896",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Johnnye' Kennon",
+    "party": "Democratic",
+    "phone": "(318) 377-3935",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Jerry Lott",
+    "party": "Independent",
+    "phone": "(318) 564-9559",
+    "seat": "District 11",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Susan Addington",
+    "party": "Republican",
+    "phone": "(318) 745-3212",
+    "seat": "District 12",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201920": {
+  "atLarge": [
+   {
+    "name": "Teri B. Bergeron",
+    "party": "No party",
+    "phone": "(225) 278-9515",
+    "seat": "At large",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "district": "West Baton Rouge Parish School District",
+  "officeAddress": "3761 Rosedale Rd., Port Allen, LA 70767",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Burke R. Fiscus",
+    "party": "Independent",
+    "phone": "(225) 776-2324",
+    "seat": "District I",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Hayley Gauthreaux Clouatre",
+    "party": "Independent",
+    "phone": "(225) 776-2659",
+    "seat": "District II",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Atley D. Walker",
+    "party": "Democratic",
+    "phone": "(225) 749-3036",
+    "seat": "District III",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Ronald 'Blue' LeBlanc",
+    "party": "No party",
+    "phone": "(225) 610-0108",
+    "seat": "District IV",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Michael A. 'Mike' Maranto",
+    "party": "No party",
+    "phone": "(225) 627-5689",
+    "seat": "District IX",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Sonceria Brown Evans",
+    "party": "Democratic",
+    "phone": "(214) 493-3895",
+    "seat": "District V",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Chareeka Grace",
+    "party": "Democratic",
+    "phone": "(225) 806-1830",
+    "seat": "District VI",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "G. Alden Chustz Jr.",
+    "party": "Republican",
+    "phone": "(225) 405-0039",
+    "seat": "District VII",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Matthew Daigrepont",
+    "party": "Independent",
+    "phone": "(225) 229-1699",
+    "seat": "District VIII",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201950": {
+  "district": "West Carroll Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "'Johnny' Smith",
+    "party": "Republican",
+    "phone": "(318) 355-4114",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Charles Townsend",
+    "party": "Republican",
+    "phone": "(318) 282-8997",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Todd Smith",
+    "party": "No party",
+    "phone": "(318) 418-5302",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Shane Ray",
+    "party": "Republican",
+    "phone": "(318) 732-7588",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Laura Beth Martin Perkins",
+    "party": "Republican",
+    "phone": "(318) 669-0901",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "R. Kent Davis",
+    "party": "Independent",
+    "phone": "(318) 428-4283",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Deborah Allen",
+    "party": "Republican",
+    "phone": "(318) 669-9218",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2201980": {
+  "district": "West Feliciana Parish School District",
+  "officeAddress": "P.O. Box 1910, St. Francisville, LA 70775",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Amanda Temple McKinney",
+    "party": "Independent",
+    "phone": "(225) 635-9753",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Scotty Owens",
+    "party": "Independent",
+    "phone": "(225) 235-9374",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Helen Whitfield",
+    "party": "Democratic",
+    "phone": "(225) 721-3555",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Angelia 'Angie' Norwood",
+    "party": "Republican",
+    "phone": "(225) 655-4434",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Milton Coats",
+    "party": "Democratic",
+    "phone": "(225) 635-6007",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Kelly O'Brien",
+    "party": "Republican",
+    "phone": "(225) 978-1659",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Sara Wilson-Rogers",
+    "party": "Democratic",
+    "phone": "(225) 937-3004",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ },
+ "2202010": {
+  "district": "Winn Parish School District",
+  "read": "2026-10-21",
+  "seats": [
+   {
+    "name": "Lacy McManus",
+    "party": "No party",
+    "phone": "(318) 607-8861",
+    "seat": "District 1",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Harry Scott",
+    "party": "No party",
+    "phone": "(318) 542-6294",
+    "seat": "District 2",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Amber Cox",
+    "party": "No party",
+    "phone": "(318) 471-7783",
+    "seat": "District 3",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Michelle Carpenter",
+    "party": "Democratic",
+    "phone": "(318) 413-2757",
+    "seat": "District 4",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Steve' Vines",
+    "party": "Republican",
+    "phone": "(318) 413-1253",
+    "seat": "District 5",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Carnesha Willis",
+    "party": "Democratic",
+    "phone": "(318) 332-5448",
+    "seat": "District 6",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Joe Llaine Long",
+    "party": "Republican",
+    "phone": "(318) 413-4614",
+    "seat": "District 7",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Patrick J. Howell",
+    "party": "Republican",
+    "phone": "(318) 623-8612",
+    "seat": "District 8",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Dan Taylor",
+    "party": "Republican",
+    "phone": "(318) 451-0456",
+    "seat": "District 9",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "Joe Lynn Browning",
+    "party": "Republican",
+    "phone": "(318) 471-0192",
+    "seat": "District 10",
+    "termEnds": "2026-12-31"
+   },
+   {
+    "name": "'Lance' Underwood",
+    "party": "Republican",
+    "phone": "(318) 374-0505",
+    "seat": "District 11",
+    "termEnds": "2026-12-31"
+   }
+  ],
+  "source": "the Louisiana Secretary of State's list of elected officials",
+  "sourceUrl": "https://voterportal.sos.la.gov/ElectedOfficials/Office/Index"
+ }
+}

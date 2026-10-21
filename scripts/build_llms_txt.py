@@ -88,11 +88,23 @@ SUMMARY_TEMPLATE = ("Click a point, or type an address, and see every civic "
 # member's own contact details: the directory prints an address and telephone
 # beside each supervisor, which may be a home, so a page carries only the one
 # it prints for at least three of the five, which is the board's office.
+#
+# Louisiana's take their names from the Secretary of State's list of elected
+# officials, and a page carries a member's telephone where the list prints it
+# for that member alone, and an address only where three or more of a body's
+# members print the same one, which is the body's office. Its pages are one
+# per PARISH, so the line says so.
 CONTACT_NOTE = {
     "ms": "with the board of supervisors' office address and telephone where "
           "the Secretary of State's directory prints them",
+    "la": "with the telephone the Secretary of State's list prints for a member "
+          "where it prints one, and the body's office address where three or "
+          "more members give the same one",
 }
 DEFAULT_CONTACT_NOTE = "with whatever contact details that county publishes"
+# The unit each instance's per-county pages are one per, where it is not a
+# county.
+UNIT_NOUN = {"la": "parish"}
 
 # Written out to twelve because "6 instances" reads as a log line; past that the
 # digit is used, which is honest rather than wrong.
@@ -320,9 +332,10 @@ def render():
                         m["scope"]))
         for rel in by_tag.get(tag, []):
             if rel in indexes:
-                lines.append("- [%s](%s/%s): links a page per county, %d of "
+                lines.append("- [%s](%s/%s): links a page per %s, %d of "
                              "them, each naming every member %s."
-                             % (title_of(rel), SITE, rel, indexes[rel],
+                             % (title_of(rel), SITE, rel,
+                                UNIT_NOUN.get(tag, "county"), indexes[rel],
                                 CONTACT_NOTE.get(tag, DEFAULT_CONTACT_NOTE)))
             else:
                 lines.append("- [%s](%s/%s)" % (title_of(rel), SITE, rel))

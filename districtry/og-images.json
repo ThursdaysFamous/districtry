@@ -55,6 +55,14 @@
     "height": 630,
     "rendered": "2026-09-30"
   },
+  "la": {
+    "path": "la/og-image.png",
+    "label": "la",
+    "sha256": "9838954fa88d1424f6fc21e9793dc0815300dff10115a2b9adfdb7d7af2415d8",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-10-20"
+  },
   "mi": {
     "path": "mi/og-image.png",
     "label": "mi",

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Scrape eight Illinois counties' own board-member pages.
+"""Scrape ten Illinois counties' own board-member pages.
 
 WHY EIGHT COUNTIES IN ONE SCRAPER AND NOT EIGHT SCRAPERS. These are not eight
 unrelated sources; they are one finding. On 2026-10-01 Illinois named a
@@ -33,12 +33,31 @@ Macoupin's board page is county information — a district map link, the rules, 
 budget — with its members somewhere else. Both are recorded as work still to do
 rather than quietly dropped.
 
+CHAMPAIGN AND MARION JOINED ON 2026-10-20, AND BOTH WERE AMONG THE NINETEEN.
+Each publishes its board on its own website, Champaign at champaigncountyil.gov
+and Marion at marioncountyil.gov, and the 2026-10-01 probe above found neither.
+Why is not established: no list of the hosts that probe asked is in this
+repository. The two sites were not equally unknown here. Champaign's is named in
+no file. Marion's was named on 3 Aug 2026, in the `pass10-frontier-unasked` gap
+record ("the county is actually at marioncountyil.gov"), and nobody read its
+board page. What found both was reading each county's own site during the done
+standard's re-score of 2026-10-20, before deciding whether the letter on its
+record fits what is missing. A record that names a county's website is not a
+reading of it.
+
 WHAT EACH COUNTY PUBLISHES, measured 2026-10-01 at the exact url this scraper
 fetches:
 
   bond        tablepress, 3 columns — district, name, county e-mail. 5 members.
   bureau      an lsvr person-list widget — "Name (Party)" linked, "District N"
               as the subtitle. 18 members in 18 single-member districts.
+  champaign   a `<h3>District N</h3>` per district, then one bold line per seat,
+              "R - Name - Term Ending 11/30/2026", with an address, a telephone
+              and a Cloudflare-hidden e-mail under it. 22 seats in 11
+              districts, two apiece; one seat vacant (2026-10-20).
+  marion      a WPBakery page, `<h3>District #N</h3>` and then one paragraph
+              per member, the name in `<strong>`, a role line, and a `mailto:`.
+              15 members in 5 districts, three apiece (2026-10-20).
   cumberland  tablepress, 2 columns — a block of name/party/role/address/phone/
               e-mail, and the district. 6 members over three compass districts.
   fayette     a Beaver Builder post grid, one `fl-post-column` per member —
@@ -119,6 +138,14 @@ SOURCES = {
     "bureau": dict(
         url="https://bureaucounty-il.gov/county-board/",
         members=17, districts=17),
+    # CHAMPAIGN SEATS TWO MEMBERS PER DISTRICT AND PRINTS ONE OF ITS 22 SEATS AS
+    # VACANT, so the member floor is twenty-one. Measured 2026-10-20: eleven
+    # district headings, and under District 1 a seat reading "R - Vacant" beside
+    # Ben Crane's. The vacant seat ships as a count on its district, which the
+    # county page prints as the county reports it.
+    "champaign": dict(
+        url="https://champaigncountyil.gov/countyboard/cbmembers.php",
+        members=21, districts=11),
     "cumberland": dict(
         url="https://cumberlandcoil.gov/county-board-members-committees/",
         members=6, districts=3),
@@ -141,6 +168,9 @@ SOURCES = {
     "lawrence": dict(
         url="https://lawrencecounty.illinois.gov/boards/county-board",
         members=7, districts=7),
+    "marion": dict(
+        url="https://marioncountyil.gov/county-board/",
+        members=15, districts=5),
     "piatt": dict(
         url="https://piatt.gov/government/county_board/index.php",
         members=6, districts=3),
@@ -221,6 +251,58 @@ def email_from(fragment):
         return href
     bare = re.search(r"[\w.+-]+@[\w-]+\.[\w.-]+", strip_tags(fragment))
     return bare.group(0) if bare else None
+
+
+def cf_email(hexstr):
+    """An address Cloudflare's e-mail protection wrote as hex, or None.
+
+    The first byte is a key and every byte after it is XORed with it. Every
+    visitor's browser decodes the same bytes to show the address, so reading
+    them reads the page as published; Brown, Henry and Franklin are read the
+    same way.
+    """
+    try:
+        raw = bytes.fromhex(hexstr)
+    except ValueError:
+        return None
+    if len(raw) < 2:
+        return None
+    return bytes(b ^ raw[0] for b in raw[1:]).decode("utf-8", "replace").strip()
+
+
+def drop_shared(slug, seats, office_phones=(), office_mail=()):
+    """THE COOK COUNTY RULE, applied to what a page prints under each member.
+
+    A telephone or e-mail address printed under two or more members, or equal
+    to the board office's own line or mailbox, is the office's and ships on
+    nobody. Anything printed under one member alone is that member's, whatever
+    its domain, by Adam's ruling of 2026-10-17. `seats` is (district, record)
+    pairs; the run names the district and the member and never the value.
+    """
+    def key(field, value):
+        return re.sub(r"\D", "", value) if field == "phone" else value.lower()
+
+    office = {"phone": {re.sub(r"\D", "", v) for v in office_phones},
+              "email": {v.lower() for v in office_mail}}
+    for field in ("phone", "email"):
+        counts = {}
+        for _number, rec in seats:
+            if rec.get(field):
+                k = key(field, rec[field])
+                counts[k] = counts.get(k, 0) + 1
+        for number, rec in seats:
+            if not rec.get(field):
+                continue
+            k = key(field, rec[field])
+            if k in office[field]:
+                why = "the board office's own"
+            elif counts[k] > 1:
+                why = "printed under another member too"
+            else:
+                continue
+            note("%s District %s, %s: the %s printed here is %s, so it goes on "
+                 "nobody" % (slug, number, rec["name"], field, why))
+            del rec[field]
 
 
 def split_role(name):
@@ -639,14 +721,207 @@ def parse_jersey(body, url):
     return out
 
 
+def parse_champaign(body, url):
+    """One `<h3>District N</h3>` per district, then each seat under it: a bold
+    line "R - Name - Term Ending 11/30/2026", then an address, a telephone and
+    an e-mail, with an `<hr>` between a district's two seats.
+
+    A SEAT IS CUT AT THE `<hr>`, NOT AT THE BOLD SPAN, because the page does not
+    always close its spans: District 1's vacant seat reads `<span
+    class="bold">R - Vacant</splan>`, so a pattern running to `</span>` reads
+    the vacant seat and Ben Crane's as one line. Each seat's line runs to the
+    end of its own paragraph instead.
+
+    A VACANT SEAT SHIPS AS A COUNT, NOT A PERSON. "R - Vacant" names the party
+    that held the seat and nobody who holds it, so the district carries its one
+    member and `vacancies: 1`, and the party letter goes nowhere.
+
+    THE ADDRESS NEVER SHIPS. Every seat prints one — measured 2026-10-20, ten of
+    the twenty-one the administrative center's and eleven another street
+    address — and a street address is withheld everywhere, the Wabash rule. The
+    telephone and the e-mail printed under one member's own name ship on that
+    member, whatever the domain; `drop_shared` takes off any value printed under
+    two members or equal to the board office's line or mailbox in the page's
+    footer. Measured 2026-10-20, none is either.
+
+    THE E-MAILS ARE CLOUDFLARE-HIDDEN and read with `cf_email`. A seat whose
+    hidden address does not decode to one address fails the run rather than
+    shipping without it: Brown County's seven addresses were nearly lost the
+    day its site switched this obfuscation on and a parser read none of them.
+
+    THE CHAIR AND VICE-CHAIR ARE STATED ONCE, at the top of the page ("Jennifer
+    Locke, Chair"), and each role goes on the district member of that name. An
+    officer the districts do not name fails the run.
+    """
+    at = body.find("County Board Members</h2>")
+    if at < 0:
+        fail("Champaign's page no longer carries its County Board Members heading")
+    stop = body.find("</article>", at)
+    roster = body[at:stop if stop > 0 else len(body)]
+    footer_at = body.find("<footer")
+    footer = body[footer_at:] if footer_at > 0 else ""
+    office_phones = re.findall(r'href="tel:([^"]+)"', footer)
+    office_mail = [a for a in (cf_email(h) for h in
+                               re.findall(r'data-cfemail="([0-9a-fA-F]+)"', footer))
+                   if a]
+    marks = [(m.group(1), m.start(), m.end()) for m in
+             re.finditer(r"(?is)<h3>\s*District\s+(\d+)\s*</h3>", roster)]
+    out, seats = {}, []
+    for i, (number, _start, end) in enumerate(marks):
+        chunk = roster[end:marks[i + 1][1] if i + 1 < len(marks) else len(roster)]
+        district = out.setdefault(number, {"members": [], "sourceUrl": url})
+        for block in re.split(r"(?i)<hr\b[^>]*>", chunk):
+            line = re.search(r'(?is)<span class="bold">(.*?)</p>', block)
+            if not line:
+                continue
+            text = one_line(strip_tags(line.group(1)))
+            m = re.match(r"([RDI])\s*-\s*(.+?)(?:\s*-\s*(Term Ending\s+"
+                         r"\d{1,2}/\d{1,2}/\d{4}))?$", text)
+            if not m:
+                fail("Champaign District %s: a seat reads %r, which is not "
+                     "'party - name - Term Ending date'" % (number, text))
+            letter, name, term = m.groups()
+            if name.lower() == "vacant":
+                district["vacancies"] = district.get("vacancies", 0) + 1
+                continue
+            rec = {"name": name, "party": PARTY[letter]}
+            if term:
+                rec["term"] = term
+            phone = re.search(r'(?is)Phone:\s*<a[^>]*href="tel:[^"]*"[^>]*>(.*?)</a>',
+                              block)
+            if phone:
+                value = one_line(strip_tags(phone.group(1)))
+                problem = SC.person_phone_problem(value)
+                if problem:
+                    fail("Champaign District %s, %s: the telephone %s"
+                         % (number, name, problem))
+                rec["phone"] = value
+            hidden = re.search(r'data-cfemail="([0-9a-fA-F]+)"', block)
+            email = cf_email(hidden.group(1)) if hidden else email_from(block)
+            if email or hidden:
+                problem = SC.person_email_problem(email)
+                if problem:
+                    fail("Champaign District %s, %s: the e-mail address %s"
+                         % (number, name, problem))
+                rec["email"] = email
+                check_email_name(name, email)
+            district["members"].append(rec)
+            seats.append((number, rec))
+    drop_shared("champaign", seats, office_phones, office_mail)
+    stated = {}
+    for line in strip_tags(body[:at]).split("\n"):
+        m = re.match(r"\s*([A-Z][A-Za-z.'’ -]+?),\s*(Vice-Chair|Chair)\s*$", line)
+        if m:
+            stated[m.group(2)] = one_line(m.group(1))
+    if "Chair" not in stated:
+        note("Champaign: the page no longer states its Chair, so no member "
+             "carries the role")
+    for role, who in sorted(stated.items()):
+        held = [rec for _number, rec in seats if rec["name"] == who]
+        if len(held) != 1:
+            fail("Champaign: the page states %s %s and %d district member(s) "
+                 "carry that name" % (role, who, len(held)))
+        held[0]["role"] = role
+    return out
+
+
+def parse_marion(body, url):
+    """A WPBakery page: `<h3>District #N</h3>`, then one text block per member,
+    the name in `<strong>`, an optional role line, and a "Send Message" link
+    whose `mailto:` is the member's own address.
+
+    THE PAGE NAMES THREE PEOPLE ABOVE THE DISTRICTS AND ONE OF THEM IS ON THE
+    BOARD: the Chairman, "(District #3)", who is listed again under District 3,
+    then the County Clerk & Recorder and the Board Secretary. The parse reads
+    members from the first district heading on, so neither of the other two is
+    read as a member, and the Chairman's block above is a CHECK on his district
+    listing — the two must agree, the Jersey rule. The other two blocks'
+    addresses are the offices' and are handed to `drop_shared` as such.
+
+    THE LINK TEXT IS "Send Message", so the address is the `mailto:` itself;
+    `email_from` falls back to the link when its text holds no address.
+    Measured 2026-10-20, thirteen of the fifteen members are linked and two are
+    not, and every linked address is distinct. A member with no link ships
+    without an e-mail.
+
+    A NAME SHIPS AS THE PAGE PRINTS IT, title included: "Dr. Michael Douglas",
+    as this fleet carries every doctor a county prints that way.
+    """
+    first = re.search(r"(?is)<h3>\s*District\s*#\s*1\s*</h3>", body)
+    if not first:
+        fail("Marion's page no longer carries a District #1 heading")
+    above, roster = body[:first.start()], body[first.start():]
+    stop = roster.find("</article>")
+    roster = roster[:stop] if stop > 0 else roster
+    block_re = r"(?is)<p>\s*<strong>(.*?)</strong>(.*?)</p>"
+
+    def lines_of(rest):
+        return [l for l in (one_line(x) for x in strip_tags(rest).split("\n"))
+                if l and not re.match(r"(?i)send mes|view committees", l)]
+
+    chair, office_mail = None, []
+    for block in re.finditer(block_re, above):
+        name = one_line(strip_tags(block.group(1)))
+        text = " ".join(lines_of(block.group(2)))
+        seat = re.search(r"\(District\s*#\s*(\d+)\)", text)
+        if seat and re.search(r"(?i)\bchair", text):
+            chair = (name, seat.group(1))
+        elif name:
+            office_mail += re.findall(r'(?i)mailto:([^"?]+)', block.group(2))
+    marks = [(m.group(1), m.start(), m.end()) for m in
+             re.finditer(r"(?is)<h3>\s*District\s*#\s*(\d+)\s*</h3>", roster)]
+    out, seats = {}, []
+    for i, (number, _start, end) in enumerate(marks):
+        chunk = roster[end:marks[i + 1][1] if i + 1 < len(marks) else len(roster)]
+        for block in re.finditer(block_re, chunk):
+            name = one_line(strip_tags(block.group(1)))
+            if not name:
+                continue
+            rec = {"name": name}
+            role = next((l for l in lines_of(block.group(2))
+                         if re.search(r"(?i)\bchair", l)), None)
+            if role:
+                rec["role"] = role
+            email = email_from(block.group(2))
+            if email:
+                problem = SC.person_email_problem(email)
+                if problem:
+                    fail("Marion District %s, %s: the e-mail address %s"
+                         % (number, name, problem))
+                rec["email"] = email
+                check_email_name(name, email)
+            out.setdefault(number, {"members": [], "sourceUrl": url})
+            out[number]["members"].append(rec)
+            seats.append((number, rec))
+    names = {rec["name"] for _number, rec in seats}
+    if len(names) != len(seats):
+        fail("Marion: %d member block(s) resolved to %d distinct name(s) — two "
+             "members are being read as one" % (len(seats), len(names)))
+    drop_shared("marion", seats, (), office_mail)
+    if not chair:
+        note("Marion: the page no longer states its Chairman above the "
+             "districts, so that cross-check did not run")
+    else:
+        who, number = chair
+        held = [rec for n, rec in seats if n == number and rec["name"] == who
+                and "chair" in (rec.get("role") or "").lower()
+                and "vice" not in rec["role"].lower()]
+        if not held:
+            fail("Marion: the page states %s as Chairman for District %s and "
+                 "District %s's listing does not say so" % (who, number, number))
+    return out
+
+
 PARSERS = {
     "bond": parse_bond,
     "bureau": parse_bureau,
+    "champaign": parse_champaign,
     "cumberland": parse_cumberland,
     "fayette": parse_fayette,
     "jasper": parse_jasper,
     "jersey": parse_jersey,
     "lawrence": parse_lawrence,
+    "marion": parse_marion,
     "piatt": parse_piatt,
 }
 
@@ -674,7 +949,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", required=True)
     ap.add_argument("--county", action="append", choices=sorted(SOURCES),
-                    help="scrape only these counties (default: all eight)")
+                    help="scrape only these counties (default: all ten)")
     args = ap.parse_args()
     want = args.county or sorted(SOURCES)
     out = {slug: scrape(slug) for slug in want}

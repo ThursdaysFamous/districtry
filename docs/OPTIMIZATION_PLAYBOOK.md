@@ -1895,3 +1895,12 @@ any host but TIGERweb, so their census hooks and whole-set loaders are now
 only the fallback; their station and post-office layers download a whole
 state's points from the USGS by the app's bounding box and send no reader's
 point.
+
+**Louisiana's three followed on 2026-10-21, before it went live**: its
+municipality and school district layers as two `MIRRORS` rows and its ZIP
+layer as one `ZIP_MIRRORS` row, the same three Mississippi and Arkansas
+carry. 305 places, 69 school districts and 540 of the 831 ZCTAs in its box
+(51 of the 291 dropped touch the state and none holds more than 0.0000 m2 of
+it) became 6.2 MB of archives, `scripts/probe_tile_cards.mjs` found no card
+that differs at 150 points, and `point-transmission.json` reads 0 of 12
+layers sending the point where it read 3.

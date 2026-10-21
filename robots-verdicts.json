@@ -4,9 +4,9 @@
  "subject": "robots.txt of every host the tree fetches, read with the client user-agent-measurements.json records as serving it",
  "summary": {
   "hosts": 511,
-  "allow": 480,
-  "refuse": 31,
-  "unreadable": 8
+  "allow": 481,
+  "refuse": 30,
+  "unreadable": 7
  },
  "hosts": {
   "adamscounty.iowa.gov": {
@@ -2203,6 +2203,39 @@
    "status": "served",
    "url": "https://pekinpubliclibrary.org/library-board/",
    "why": "robots.txt served (180 bytes): no rule in 1 binding group(s) matches /library-board/"
+  },
+  "perrycountyil.gov": {
+   "host": "perrycountyil.gov",
+   "url": "https://perrycountyil.gov/perry-county-commissioners/",
+   "client": "token",
+   "status": "served",
+   "why": "robots.txt served (175 bytes): no rule in 1 binding group(s) matches /perry-county-commissioners/",
+   "allows": true,
+   "http_status": 200,
+   "reads": 3,
+   "gap_seconds": 15,
+   "readings": [
+    {
+     "status": "served",
+     "why": "robots.txt served (175 bytes): no rule in 1 binding group(s) matches /perry-county-commissioners/",
+     "allows": true,
+     "http_status": 200
+    },
+    {
+     "status": "served",
+     "why": "robots.txt served (175 bytes): no rule in 1 binding group(s) matches /perry-county-commissioners/",
+     "allows": true,
+     "http_status": 200
+    },
+    {
+     "status": "served",
+     "why": "robots.txt served (175 bytes): no rule in 1 binding group(s) matches /perry-county-commissioners/",
+     "allows": true,
+     "http_status": 200
+    }
+   ],
+   "measured": "2026-10-20",
+   "vantage": "GitHub Actions runner on runnervmxehtw"
   },
   "photon.komoot.io": {
    "allows": false,
@@ -4733,39 +4766,6 @@
    "status": "served",
    "url": "https://www.tompkinscountyny.gov/Government-Resources/County-Legislature/Tompkins-County-Legislators",
    "why": "robots.txt served (6960 bytes): no rule in 1 binding group(s) matches /Government-Resources/County-Legislature/Tompkins-County-Legislators"
-  },
-  "www.urbanaillinois.us": {
-   "host": "www.urbanaillinois.us",
-   "url": "https://www.urbanaillinois.us/",
-   "client": "token",
-   "status": "unreachable",
-   "why": "robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)",
-   "allows": false,
-   "http_status": null,
-   "reads": 3,
-   "gap_seconds": 15,
-   "readings": [
-    {
-     "status": "unreachable",
-     "why": "robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)",
-     "allows": false,
-     "http_status": null
-    },
-    {
-     "status": "unreachable",
-     "why": "robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)",
-     "allows": false,
-     "http_status": null
-    },
-    {
-     "status": "unreachable",
-     "why": "robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)",
-     "allows": false,
-     "http_status": null
-    }
-   ],
-   "measured": "2026-10-01",
-   "vantage": "GitHub Actions runner on runnervmtr4k5"
   },
   "www.vercounty.org": {
    "allows": true,
