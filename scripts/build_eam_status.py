@@ -1608,10 +1608,13 @@ ANSWERS = {
         # the boards of its member school districts and no voter elects them
         # (Iowa Code 273.8), so the AEA layer meets the test by being drawn.
         # A community college's trustees ARE elected, one from each director
-        # district by its own voters (Iowa Code 260C.11), and the card names
-        # none, because Iowa publishes no statewide list and the 15 colleges
-        # publish their boards 15 ways. The layers are named here so the
-        # unclaimed-layer print does not list them.
+        # district by its own voters (Iowa Code 260C.11). Iowa keeps no
+        # statewide list, so the level stays open until the card names the
+        # trustee for every college's districts; a college whose own page
+        # does not say which trustee holds which numbered district (Northeast
+        # Iowa's, measured 2026-10-21) keeps it open whatever the other
+        # fourteen name. The layers are named here so the unclaimed-layer
+        # print does not list them.
         "special-districts": Entry("open", ("community-college", "cc-director-district", "iowa-aea")),
         # SHIPPED 2026-10-10 (#1496) by the fleet-wide tribal thread: four
         # areas across three nations, each named with the town its government
