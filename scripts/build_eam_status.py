@@ -2219,7 +2219,10 @@ ANSWERS = {
         # and nobody maps their election districts (gap
         # la-school-board-district-lines).
         "school-boards-by-district": OPEN,
-        "precincts": OPEN,
+        # The Legislature's statewide precinct file carries all 3,569
+        # precincts in all 64 parishes, its edition of 27 January 2026, and
+        # the app draws them (2026-10-21, la/scripts/build_la_precincts.py).
+        "precincts": answers("voting-precinct"),
         "special-districts": OPEN,
         # SHIPPED 2026-10-21 (#1668): the land of Louisiana's four nations,
         # each named with its government, and the councils of three named from

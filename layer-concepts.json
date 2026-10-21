@@ -119,7 +119,7 @@
       "il": ["ward-precinct", "county-precinct"], "ny": "election-district", "ca": "election-precinct",
       "wi": "ward", "ia": "precinct", "mi": "precinct", "mn": "voting-precinct", "ky": "voting-precinct",
       "in": "voting-precinct", "nc": "voting-precinct", "sc": "voting-precinct", "tn": "voting-precinct",
-      "ar": "voting-precinct"
+      "ar": "voting-precinct", "la": "voting-precinct"
     },
     "early-voting": { "il": "early-voting", "ny": "early-voting", "ca": "early-voting" },
     "zip-code": {

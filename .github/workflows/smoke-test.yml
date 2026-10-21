@@ -1381,7 +1381,7 @@ jobs:
       - name: NC court districts still match the law they are drawn from
         if: ${{ !cancelled() }}
         run: python3 nc/scripts/build_nc_court_districts.py --check
-      # Six states' precinct layers are built by scripts/statewide_precincts.py.
+      # Seven states' precinct layers are built by scripts/statewide_precincts.py.
       # --check holds each shipped file to the hash and the precincts per county
       # its builder recorded, checks every precinct names its county as the
       # county file does and every county is covered by its own precincts, and
@@ -1392,6 +1392,7 @@ jobs:
           python3 ar/scripts/build_ar_precincts.py --check
           python3 in/scripts/build_in_precincts.py --check
           python3 ky/scripts/build_ky_precincts.py --check
+          python3 la/scripts/build_la_precincts.py --check
           python3 nc/scripts/build_nc_precincts.py --check
           python3 sc/scripts/build_sc_precincts.py --check
           python3 tn/scripts/build_tn_precincts.py --check
