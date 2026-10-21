@@ -7712,6 +7712,71 @@ with it or the build fails as it does today, and the 2024 results rule is retire
 association gives a district. A no to that: recorded in gap `ar-quorum-court` with its date, and
 the counties' own sites and the next election's results stay the route.
 
+## Ask ar-adem-fire-districts — ADEM Office of Fire Protection Services: which fire districts elect commissioners, and who they are
+
+> **NOT YET ASKED — DRAFTED 2026-10-21**, to the Office of Fire Protection Services at
+> `fire.services@adem.arkansas.gov`, the office mailbox on its own Fire Services page
+> (`dps.arkansas.gov/emergency-management/adem/state-fire-marshals-office/fire-services/`, read
+> 2026-10-21 after its robots.txt, which permits every path and asks for 10 seconds between requests;
+> the page hides the address behind Cloudflare's e-mail protection, which a browser decodes for every
+> visitor). No person is named on the page, so the letter is addressed to the office. Adam said
+> "Yes write it" on 2026-10-21 to the card proposing it. The mailbox was searched the same day for
+> any message to or from `adem.arkansas.gov` or `dps.arkansas.gov`: none. This ask is recorded in gap
+> `ar-fire-district-boards` and in `ar/WATCH.md`'s fire district row; record the send and any reply
+> in both.
+
+**Why this is asked.** Arkansas's map draws all 971 fire districts from the Arkansas GIS Office's
+layer and names nobody who runs them. Read in the Association of Arkansas Counties' Fire Department
+Guidebook, which quotes the code, only one kind of district has an elected board: a fire protection
+district formed under A.C.A. 14-284 subchapter 2, whose commissioners are elected by the district's
+voters at a public meeting the county court calls (14-284-208(b)). Nonprofit departments have
+private boards, subordinate service districts have boards the county judge appoints, and city
+departments answer to the city. That is a county meeting, not a ballot, so no election
+commission's results name the commissioners, and no state office publishes them. The GIS layer
+codes 63 records `FPD`, but defines none of its codes and does not match one county's own notice.
+This office certifies every department each year, and certification requires a department to be
+organized as one of the four kinds, so it is the one office that could say which districts are fire
+protection districts. Whether it holds their commissioners' names is not known, and the letter does
+not assume it does. A list of the districts alone is useful; a "no" is a complete answer.
+
+> Subject: Which Arkansas fire districts elect commissioners, for a free district map
+>
+> Dear Office of Fire Protection Services,
+>
+> I run districtry (https://districtry.com), a free, non-commercial website where anyone can click
+> a point on a map, or type an address, and see every district that covers it and who represents
+> them there. Our Arkansas map went live last week at https://districtry.com/ar/. It draws all of
+> Arkansas's fire districts from the Arkansas GIS Office's fire district map, and for each one it
+> says which district a point is in and which counties the district serves. It does not yet say who
+> runs any of them.
+>
+> As we read the state's fire protection district law, most fire departments in Arkansas do not have
+> an elected board. Nonprofit departments have their own boards and city departments answer to their
+> city. Fire protection districts formed since 1989 elect commissioners, chosen by the district's
+> voters at a public meeting the county court calls (older districts' commissioners are appointed by
+> the county court). Those are the boards we would like to name, because they are
+> elected to represent the people who live in the district. We have not found a published list of
+> them anywhere.
+>
+> Your office certifies Arkansas's fire departments and records whether each is a nonprofit, a
+> subordinate service district, a fire protection district or a municipal department, so I am writing
+> with two questions:
+>
+> 1. Could you share a list of the certified departments that are organized as fire protection
+>    districts, ideally with each one's department ID number so we can match it to the state's map?
+> 2. If your office holds the names of those districts' commissioners, or a contact for each board,
+>    could you share those too? If someone else keeps them, such as each county clerk, telling us
+>    that would help just as much.
+>
+> If neither is something you can share, a "no" is a genuinely useful answer and we will record it.
+> We would show only each commissioner's name and office, never a home address or personal contact
+> details, and every card would credit the source and link back to it.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+
 ## Ask ms-maris-supervisor-districts — MARIS, Mississippi's state GIS clearinghouse: collect and publish each county's current supervisor district map
 
 > **ASKED 2026-10-16 — DRAFTED 2026-10-15.** The operator rewrote this draft and sent it on
