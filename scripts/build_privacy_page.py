@@ -133,7 +133,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # a failure in any of the three therefore surfaces under `build-landing-page:`,
 # which is the module that owns those files rather than a mislabelled error.
 from build_landing_page import (  # noqa: E402
-    FALLBACK_FACE, FAVICON, FONTFACE, MANIFEST, TOKENS,
+    FALLBACK_FACE, FAVICON, FONTFACE, MANIFEST, PLACE_KEY, TOKENS,
     load_mark, parse_token_block, read, token_css,
 )
 
@@ -144,7 +144,7 @@ OUT = os.path.join(REPO_ROOT, "privacy.html")
 POINT_TRANSMISSION = os.path.join(REPO_ROOT, "point-transmission.json")
 CANONICAL = "https://districtry.com/privacy.html"
 SITE = "https://districtry.com/"
-UPDATED = "20 October 2026"
+UPDATED = "21 October 2026"
 CONTACT = "adam@overberg.co"
 REPO_URL = "https://github.com/ThursdaysFamous/districtry"
 
@@ -490,9 +490,13 @@ EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "boundary-st
                    "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link-read/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "osm-note", "select",
                    "share-in/", "share-native", "share-open", "share-permalink", "share-qr"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
-# What the front page (the one untagged surface) sends: only the map-link
-# count above, from its address box. Gated, because the page says so.
-ROOT_EVENTS = ["map-link-read/front/"]
+# What the front page (the one untagged surface) sends: the map-link count
+# above, from its address box, and since 2026-10-21 `example-place/<place>`
+# when a reader picks a place in the worked example beside that box
+# (scripts/build_landing_page.py EXAMPLE_PLACES), which names one of the
+# page's own example places and nothing about the reader. Gated, because the
+# page says so.
+ROOT_EVENTS = ["example-place/", "map-link-read/front/"]
 
 
 def event_phrase(event, apps):
@@ -1440,7 +1444,8 @@ def render_recipient_rows(apps):
             "A page count and a few named events. See "
             '<a href="#analytics">Analytics, precisely</a>.',
             "Every visit to any page. The named events come from an app\u2019s map, "
-            "and one from the front page\u2019s address box.", counter_who(), once=True))
+            "and two from the front page: its address box and its worked example.",
+            counter_who(), once=True))
     ga_users = [a["name"] for a in apps if a["ga"]]
     if ga_users:
         rows.append(recipient_row(
@@ -1592,6 +1597,18 @@ def render_storage_paragraphs(apps):
                 "mark as soon as it has counted it. This is on %s. It says nothing about "
                 "the place, and it never leaves your browser.</p>"
                 % (code("/app/"), code(store), code(key), esc(joined(users))))
+        elif key == PLACE_KEY:
+            # The key is the landing builder's own constant, so this sentence
+            # names the key that page's example actually keeps.
+            out.append(
+                "<p><strong>Which example the front door showed.</strong> The worked example "
+                "beside the front door\u2019s address box starts on a different place each "
+                "visit. The place it showed is kept in %s under %s on %s, so the next visit "
+                "starts on the one after it. It is one word, and it never leaves your "
+                "browser.</p>"
+                # "The front door" heads a table cell; in the middle of this
+                # sentence it takes a small letter.
+                % (code(store), code(key), esc(re.sub(r"^The ", "the ", joined(users)))))
         elif key == "districtry-boundary-streets":
             out.append(
                 "<p><strong>Boundary street names.</strong> If you switch the map's "
@@ -1672,8 +1689,10 @@ def render_analytics_section(apps):
         "two the link came from, whether it was a short link, whether it was pasted or "
         "arrived in the page\u2019s address (as a place shared into the installed app does), "
         "and what the search showed; it never carries the link, the place or its position. "
-        "The front page sends that one event, as map-link-read/front/, when its address box "
-        "reads such a link. Any other page that is not an app — a county list, a question "
+        "The front page sends that event too, as map-link-read/front/, when its address box "
+        "reads such a link, and one more, example-place/ followed by the place\u2019s name, "
+        "when you pick one of the places in the example beside that box; it names the "
+        "example you picked and nothing about where you are. Any other page that is not an app — a county list, a question "
         "page, this one — sends the page view and nothing else. <strong>Nothing you type is "
         "ever sent to it.</strong></p>"
         % (where,
