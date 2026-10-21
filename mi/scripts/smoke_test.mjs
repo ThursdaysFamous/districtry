@@ -17,6 +17,7 @@ import { chromium } from "playwright";
 import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { stubBasemap } from "../../scripts/basemap_stub.mjs";
 
 // Vendored Leaflet fallback for sandboxed environments (e.g. Claude Code web),
 // where the browser (Chromium) cannot reach cdnjs.cloudflare.com — it does not
@@ -179,7 +180,7 @@ async function cardText(page, id) {
   }, id);
 }
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // 1. App boots and registers every layer.
   {
@@ -806,11 +807,21 @@ try {
         "mi-municipal-officials.json"), "utf8"));
       const CITY_POINTS = [
         { city: "Warren", geoid: "2684000", pt: "42.50057,-83.00112", ward: "3", seat: "District 3" },
-        // Flint is the furthest down the dispatcher's OR, so this is also the
-        // check that the table has not started shadowing its tail. Its page
+        // Flint's page
         // carries an In Memoriam for a First Ward councilman who died in 2024,
         // and the parser stops before it; the card must never name him.
         { city: "Flint", geoid: "2629000", pt: "43.02123,-83.70302", ward: "5", seat: "Ward 5" },
+        // The four drawn on 2026-10-15 and Walker, drawn 2026-10-16; Walker is
+        // last in the dispatcher's OR, so it is also the check that the table
+        // is not shadowing its tail. Each point is a ward's interior point
+        // pulled 0.002 degrees in from its edges in the shipped file. Pontiac
+        // calls its seats districts, so its pill reads "District N" (Warren's
+        // roster says District while its card says Ward, hence a separate field).
+        { city: "Holland", geoid: "2638640", pt: "42.78440,-86.12727", ward: "3", seat: "Ward 3" },
+        { city: "Midland", geoid: "2653780", pt: "43.61238,-84.25517", ward: "2", seat: "Ward 2" },
+        { city: "Muskegon", geoid: "2656320", pt: "43.22525,-86.27361", ward: "3", seat: "Ward 3" },
+        { city: "Pontiac", geoid: "2665440", pt: "42.67950,-83.28043", ward: "4", seat: "District 4", pill: "District 4" },
+        { city: "Walker", geoid: "2682960", pt: "42.94906,-85.75129", ward: "3", seat: "Ward 3" },
       ];
       for (const c of CITY_POINTS) {
         const board = boards[c.geoid];
@@ -825,7 +836,7 @@ try {
           };
         });
         check(`city-ward resolves a ${c.city} point to its own ward`,
-          got.pill === `Ward ${c.ward}`, `pill=${JSON.stringify(got.pill)}`);
+          got.pill === (c.pill || `Ward ${c.ward}`), `pill=${JSON.stringify(got.pill)}`);
         const mine = board ? board.members.filter((m) => m.seat === c.seat).map((m) => m.name) : [];
         const atLarge = board ? board.members.filter((m) => m.seat === "At Large").map((m) => m.name) : [];
         const others = board ? board.members.filter((m) => m.seat && m.seat !== c.seat && m.seat !== "At Large").map((m) => m.name) : [];
@@ -835,6 +846,18 @@ try {
         check(`${c.city}'s card names no other seat's member`,
           !others.some((n) => got.names.includes(n)) && !/Mays/.test(card.text || ""),
           JSON.stringify(got.names));
+        // Flint prints each member's own "Cell" (or "Phone") row beside the
+        // council office's line, and both ship since Adam's ruling of
+        // 2026-10-17. The card writes hyphens as U+2011, so they are put back
+        // before comparing; the wanted numbers come from the shipped roster.
+        if (c.city === "Flint") {
+          const want = board.members.filter((m) => m.seat === c.seat)
+            .flatMap((m) => [m.phone].concat(m.phonesExtra || [])).filter(Boolean);
+          const text = (card.text || "").replace(/\u2011/g, "-");
+          check("Flint Ward 5's card shows the office line and the member's own number",
+            want.length >= 2 && want.every((n) => text.includes(n)),
+            `want ${want.length} numbers; got ${text.slice(0, 160)}`);
+        }
         await page.close();
       }
 

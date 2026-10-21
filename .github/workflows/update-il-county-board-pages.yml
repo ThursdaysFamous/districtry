@@ -9,11 +9,13 @@ name: Update eight Illinois counties' board rosters
 # ask was for a MAP FILE, and nobody went back to the site to ask who sits on
 # the board. `scripts/il_county_board_pages_scraper.py` records the measurement.
 #
-# WHY data/SOURCE. None of the eight has county-board geometry, so no card reads
-# these rosters and `validate_index.py` would rightly refuse a file in data/app
-# that index.html does not reference. What they are for is the eight
-# il/county-board/<county>.html pages, which name the members for a reader and a
-# crawler.
+# WHERE THE FILES GO. Fayette, Cumberland, Jasper, Jersey and Lawrence have
+# drawn board districts (2026-10-16), so their map cards read their rosters and
+# those five live in data/app. The other three have no county-board geometry, so no card
+# reads them and `validate_index.py` would rightly refuse them in data/app; they
+# stay in data/source and serve the il/county-board/<county>.html pages, which
+# name the members for a reader and a crawler. `DRAWN` in
+# scripts/build_il_county_board_pages.py decides which is which.
 
 on:
   schedule:
@@ -55,7 +57,7 @@ jobs:
       - name: Check for changes
         id: diff
         run: |
-          git diff --quiet -- il/data/source/ \
+          git diff --quiet -- il/data/source/ il/data/app/ \
             && echo "changed=false" >> "$GITHUB_OUTPUT" \
             || echo "changed=true" >> "$GITHUB_OUTPUT"
       - name: Open or update pull request
@@ -87,11 +89,11 @@ jobs:
           # county gaining or losing a member moves it and the smoke gate's
           # `build_eam_status.py --check` fails on this PR.
           python3 scripts/build_eam_status.py
-          git add il/data/source il/county-board il/county-board.html about.html sitemap.xml docs/EAM_STATUS.md
+          git add il/data/source il/data/app/fayette-county-board-members.json il/data/app/cumberland-county-board-members.json il/data/app/jersey-county-board-members.json il/data/app/lawrence-county-board-members.json il/data/app/jasper-county-board-members.json il/county-board il/county-board.html about.html sitemap.xml docs/EAM_STATUS.md
           git commit -m "Update eight Illinois counties' board rosters from their own board pages"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
             gh pr create --title "Update eight Illinois counties' board rosters" \
-              --body "Automated weekly refresh of the Bond, Bureau, Cumberland, Fayette, Jasper, Jersey, Lawrence and Piatt county boards from each county's own board page (\`scripts/il_county_board_pages_scraper.py\` + \`build_il_county_board_pages.py\`), with the eight \`il/county-board/<county>.html\` pages regenerated from them. None of these counties has board-district geometry, so no map card is affected. Review before merging." \
+              --body "Automated weekly refresh of the Bond, Bureau, Cumberland, Fayette, Jasper, Jersey, Lawrence and Piatt county boards from each county's own board page (\`scripts/il_county_board_pages_scraper.py\` + \`build_il_county_board_pages.py\`), with the eight \`il/county-board/<county>.html\` pages regenerated from them. Fayette, Cumberland, Jasper, Jersey and Lawrence have drawn board districts, so their map cards read these rosters; the other three have no district geometry. Review before merging." \
               --base main --head "$branch"
           fi

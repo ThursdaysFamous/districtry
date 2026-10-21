@@ -1,0 +1,788 @@
+{
+ "courts": {
+  "supreme": {
+   "readFrom": "https://courts.ms.gov/appellatecourts/sc/scjustices.php",
+   "districts": {
+    "1": {
+     "members": [
+      {
+       "name": "T. Kenneth Griffis",
+       "role": "Associate Justice",
+       "seat": "Place 1",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justicegriffis.php"
+      },
+      {
+       "name": "Leslie D. King",
+       "role": "Presiding Justice",
+       "seat": "Place 2",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justiceking.php"
+      },
+      {
+       "name": "Jenifer B. Branning",
+       "role": "Associate Justice",
+       "seat": "Place 3",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justicebranning.php"
+      }
+     ]
+    },
+    "2": {
+     "members": [
+      {
+       "name": "David M. Ishee",
+       "role": "Associate Justice",
+       "seat": "Place 1",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justiceishee.php"
+      },
+      {
+       "name": "David P. Sullivan",
+       "role": "Associate Justice",
+       "seat": "Place 2",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justicesullivan.php"
+      },
+      {
+       "name": "Michael K. Randolph",
+       "role": "Chief Justice",
+       "seat": "Place 3",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justicerandolph.php"
+      }
+     ]
+    },
+    "3": {
+     "members": [
+      {
+       "name": "Celeste Embrey Wilson",
+       "role": "Associate Justice",
+       "seat": "Place 1",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justicewilson.php"
+      },
+      {
+       "name": "Amanda Jones Tollison",
+       "role": "Associate Justice",
+       "seat": "Place 2",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justicetollison.php"
+      },
+      {
+       "name": "Josiah D. Coleman",
+       "role": "Presiding Justice",
+       "seat": "Place 3",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/sc/bios/justicecoleman.php"
+      }
+     ]
+    }
+   }
+  },
+  "appeals": {
+   "readFrom": "https://courts.ms.gov/appellatecourts/coa/coajudges.php",
+   "districts": {
+    "1": {
+     "members": [
+      {
+       "name": "John D. Weddle",
+       "role": "Judge",
+       "seat": "Position 1",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgeWeddle.php"
+      },
+      {
+       "name": "Donna M. Barnes",
+       "role": "Chief Judge",
+       "seat": "Position 2",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgebarnes.php"
+      }
+     ]
+    },
+    "2": {
+     "members": [
+      {
+       "name": "Deborah McDonald",
+       "role": "Judge",
+       "seat": "Position 1",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgeMcDonald.php"
+      },
+      {
+       "name": "Latrice A. Westbrooks",
+       "role": "Judge",
+       "seat": "Position 2",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgewestbrooks.php"
+      }
+     ]
+    },
+    "3": {
+     "members": [
+      {
+       "name": "Jack L. Wilson",
+       "role": "Presiding Judge",
+       "seat": "Position 1",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgewilson.php"
+      },
+      {
+       "name": "John H. Emfinger",
+       "role": "Judge",
+       "seat": "Position 2",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgeEmfinger.php"
+      }
+     ]
+    },
+    "4": {
+     "members": [
+      {
+       "name": "Virginia C. Carlton",
+       "role": "Presiding Judge",
+       "seat": "Position 1",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgecarlton.php"
+      },
+      {
+       "name": "David Neil McCarty",
+       "role": "Judge",
+       "seat": "Position 2",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgeMcCarty.php"
+      }
+     ]
+    },
+    "5": {
+     "members": [
+      {
+       "name": "Anthony N. Lawrence III",
+       "role": "Judge",
+       "seat": "Position 1",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgeLawrence.php"
+      },
+      {
+       "name": "Amy Lassitter St. Pé",
+       "role": "Judge",
+       "seat": "Position 2",
+       "profileUrl": "https://courts.ms.gov/appellatecourts/coa/bios/judgeSt.%20Pe%27.php"
+      }
+     ]
+    }
+   }
+  },
+  "chancery": {
+   "readFrom": "https://courts.ms.gov/trialcourts/chancerycourt/chanjud.pdf",
+   "listUpdated": "2025-08-01",
+   "structure": "until-2027",
+   "districts": {
+    "1": {
+     "members": [
+      {
+       "name": "Jacqueline Mask"
+      },
+      {
+       "name": "Michael Malski"
+      },
+      {
+       "name": "Stephen T. Bailey"
+      },
+      {
+       "name": "Bradley D. Tennison",
+       "phone": "(662)728-2366"
+      }
+     ]
+    },
+    "2": {
+     "members": [
+      {
+       "name": "Robert M. Logan Jr.",
+       "phone": "(601)627-0154"
+      }
+     ]
+    },
+    "3": {
+     "members": [
+      {
+       "name": "Mitchell M. Lundy Jr.",
+       "phone": "(662)226-1343"
+      },
+      {
+       "name": "Sabrina D. Howell",
+       "note": "Appointed by the Governor from 1 July 2026, after Chancellor Percy L. Lynchard Jr. retired.",
+       "source": {
+        "label": "Mississippi Judiciary news",
+        "url": "https://courts.ms.gov/news/view_news_page.php?article=3145"
+       }
+      },
+      {
+       "name": "Vicki B. Daniels",
+       "phone": "(662)563-8715"
+      }
+     ]
+    },
+    "4": {
+     "members": [
+      {
+       "name": "Debbra K. Halford",
+       "phone": "(601)384-3833"
+      },
+      {
+       "name": "Wayne Smith",
+       "phone": "(601)657-8588"
+      }
+     ]
+    },
+    "5": {
+     "members": [
+      {
+       "name": "Tametrice E. Hodges",
+       "phone": "(601)968-6545"
+      },
+      {
+       "name": "Crystal Wise Martin",
+       "phone": "(601)968-6549"
+      },
+      {
+       "name": "Tiffany Grove",
+       "phone": "(601)968-6547"
+      }
+     ],
+     "notes": [
+      {
+       "text": "Chancellor Dewayne Thomas died on 16 September 2026. The court expects the Governor to fill the seat by appointment until a special election, expected on 2 November 2027; the Governor's office had announced no appointment by 15 October 2026.",
+       "label": "Mississippi Judiciary news",
+       "url": "https://courts.ms.gov/news/view_news_page.php?article=3162"
+      }
+     ]
+    },
+    "6": {
+     "members": [
+      {
+       "name": "Doug S. Crosby",
+       "phone": "(662)289-0800"
+      },
+      {
+       "name": "Kiley Kirk",
+       "phone": "(662)773-6686"
+      }
+     ]
+    },
+    "7": {
+     "members": [
+      {
+       "name": "Willie J. Perkins Sr.",
+       "phone": "(662)453-1432"
+      },
+      {
+       "name": "Catherine Farris-Carter",
+       "phone": "(662)843-2111"
+      },
+      {
+       "name": "W. M. Sanders",
+       "phone": "(662)451-7289"
+      }
+     ]
+    },
+    "8": {
+     "members": [
+      {
+       "name": "Margaret Alfonso"
+      },
+      {
+       "name": "Jim Persons"
+      },
+      {
+       "name": "Jennifer Schloegel"
+      },
+      {
+       "name": "Carter Bise"
+      }
+     ]
+    },
+    "9": {
+     "members": [
+      {
+       "name": "Bennie L. Richard",
+       "phone": "(662)334-2685"
+      },
+      {
+       "name": "Debra M. Giles",
+       "phone": "(662)887-7070"
+      }
+     ],
+     "notes": [
+      {
+       "text": "Chancellor Vicki R. Barnes died on 27 September 2026. The Governor's office had announced no appointment to the seat by 15 October 2026.",
+       "label": "Mississippi Judiciary news",
+       "url": "https://courts.ms.gov/news/view_news_page.php?article=3166"
+      }
+     ]
+    },
+    "10": {
+     "members": [
+      {
+       "name": "Rhea H. Sheldon"
+      },
+      {
+       "name": "Sheila Havard Smallwood"
+      },
+      {
+       "name": "Chad Smith"
+      },
+      {
+       "name": "Renee McBride Porter",
+       "note": "Appointed by the Governor from 17 August 2026, after Chancellor Chase Ford Morgan retired.",
+       "source": {
+        "label": "Governor's announcement",
+        "url": "https://governorreeves.ms.gov/governor-reeves-appoints-renee-mcbride-porter-chancellor-for-the-10th-chancery-court-district/"
+       }
+      }
+     ]
+    },
+    "11": {
+     "members": [
+      {
+       "name": "Robert G. Clark III",
+       "phone": "(662)834-1285"
+      },
+      {
+       "name": "Cynthia Brewer",
+       "phone": "(601)855-5512"
+      },
+      {
+       "name": "James C. Walker",
+       "phone": "(601)855-5707"
+      }
+     ]
+    },
+    "12": {
+     "members": [
+      {
+       "name": "Amanda Rainey"
+      },
+      {
+       "name": "Austin Terry"
+      }
+     ]
+    },
+    "13": {
+     "members": [
+      {
+       "name": "David Shoemake",
+       "phone": "(601)765-8284"
+      },
+      {
+       "name": "Gerald Martin",
+       "phone": "(601)822-5017"
+      }
+     ]
+    },
+    "14": {
+     "members": [
+      {
+       "name": "Paula Drungole-Ellis"
+      },
+      {
+       "name": "Rodney Faver"
+      },
+      {
+       "name": "Joseph N. (Joe) Studdard",
+       "phone": "(662)329-5844"
+      }
+     ]
+    },
+    "15": {
+     "members": [
+      {
+       "name": "Joseph Durr",
+       "phone": "(601)835-3437"
+      }
+     ]
+    },
+    "16": {
+     "members": [
+      {
+       "name": "Mark Maples",
+       "phone": "(228)769-3035"
+      },
+      {
+       "name": "Ashlee Cole",
+       "phone": "(228)769-3036"
+      },
+      {
+       "name": "D. Neil Harris Sr.",
+       "phone": "(228)769-3034"
+      }
+     ]
+    },
+    "17": {
+     "members": [
+      {
+       "name": "E. Vincent Davis"
+      },
+      {
+       "name": "George Ward"
+      }
+     ]
+    },
+    "18": {
+     "members": [
+      {
+       "name": "Lawrence L. (Larry) Little",
+       "phone": "(662)236-0232"
+      },
+      {
+       "name": "Robert Q. Whitwell",
+       "phone": "(662)236-0233"
+      }
+     ]
+    },
+    "19": {
+     "members": [
+      {
+       "name": "Jerry Sharp",
+       "phone": "(601)428-7625"
+      }
+     ]
+    },
+    "20": {
+     "members": [
+      {
+       "name": "Troy Odom",
+       "phone": "(601)825-9208"
+      },
+      {
+       "name": "John C. McLaurin Jr.",
+       "phone": "(601)591-4722"
+      },
+      {
+       "name": "Haydn J. Roberts",
+       "phone": "(601)824-2448"
+      }
+     ]
+    }
+   }
+  },
+  "circuit": {
+   "readFrom": "https://courts.ms.gov/trialcourts/circuitcourt/cirjud.pdf",
+   "listUpdated": "2026-02-04",
+   "structure": "until-2027",
+   "districts": {
+    "1": {
+     "members": [
+      {
+       "name": "Paul S. Funderburk"
+      },
+      {
+       "name": "Michael P. Mills Jr."
+      },
+      {
+       "name": "John R. White"
+      },
+      {
+       "name": "Kelly L. Mims"
+      }
+     ]
+    },
+    "2": {
+     "members": [
+      {
+       "name": "Lisa P. Dodson",
+       "phone": "(228)865-4220"
+      },
+      {
+       "name": "Randi P. Mueller",
+       "phone": "(228)865-4158"
+      },
+      {
+       "name": "Christopher L. Schmidt",
+       "phone": "(228)865-4104"
+      },
+      {
+       "name": "Lawrence Bourgeois Jr.",
+       "phone": "(228)865-4262"
+      }
+     ]
+    },
+    "3": {
+     "members": [
+      {
+       "name": "Grady F. Tollison III",
+       "phone": "(662)234-3013"
+      },
+      {
+       "name": "Kent E. Smith",
+       "phone": "(662)252-6311"
+      },
+      {
+       "name": "J. Kelly Luther",
+       "phone": "(662)837-7884"
+      }
+     ]
+    },
+    "4": {
+     "members": [
+      {
+       "name": "Carol White-Richard",
+       "phone": "(662)445-1996"
+      },
+      {
+       "name": "Richard A. Smith",
+       "phone": "(662)453-1429"
+      },
+      {
+       "name": "Margaret Carey-McCray",
+       "phone": "(662)334-2797"
+      },
+      {
+       "name": "W. Ashley Hines",
+       "phone": "(662)334-2652"
+      }
+     ]
+    },
+    "5": {
+     "members": [
+      {
+       "name": "Alan \"Devo\" Lancaster",
+       "phone": "(662)283-2134"
+      },
+      {
+       "name": "Joseph H. Loper Jr.",
+       "phone": "(662)285-3818"
+      }
+     ]
+    },
+    "6": {
+     "members": [
+      {
+       "name": "Carmen Brooks Drake",
+       "phone": "(601)445-7933"
+      },
+      {
+       "name": "Debra W. Blackwell",
+       "phone": "(601)442-8363"
+      }
+     ]
+    },
+    "7": {
+     "members": [
+      {
+       "name": "Adrienne H. Wooten",
+       "phone": "(601)968-6679"
+      },
+      {
+       "name": "Winston Kidd",
+       "phone": "(601)968-6677"
+      },
+      {
+       "name": "Faye Peterson",
+       "phone": "(601)714-6222"
+      },
+      {
+       "name": "Debra Gibbs",
+       "phone": "(601)968-6658"
+      },
+      {
+       "name": "Damon Stevenson",
+       "phone": "(601)968-0441"
+      }
+     ]
+    },
+    "8": {
+     "members": [
+      {
+       "name": "Christopher M. Posey",
+       "phone": "(601)656-5776"
+      },
+      {
+       "name": "Caleb E. May",
+       "phone": "(601)656-4830"
+      }
+     ]
+    },
+    "9": {
+     "members": [
+      {
+       "name": "M. James Chaney Jr.",
+       "phone": "(601)638-8981"
+      },
+      {
+       "name": "Toni Walker Terrett",
+       "phone": "(601)634-8042"
+      }
+     ]
+    },
+    "10": {
+     "members": [
+      {
+       "name": "Robert T. (Bo) Bailey",
+       "phone": "(601)482-9742"
+      },
+      {
+       "name": "Charles W. Wright Jr.",
+       "phone": "(601)482-9741"
+      }
+     ]
+    },
+    "11": {
+     "members": [
+      {
+       "name": "Charles E. Webster",
+       "phone": "(662)624-3039"
+      },
+      {
+       "name": "W. Hunter Nowell",
+       "phone": "(662)843-3346"
+      },
+      {
+       "name": "Linda F. Coleman",
+       "phone": "(662)846-2939"
+      }
+     ]
+    },
+    "12": {
+     "members": [
+      {
+       "name": "T. Michael Reed",
+       "phone": "(601)544-5495"
+      },
+      {
+       "name": "Burnice Wesley Curry IV",
+       "phone": "(601)544-8230"
+      }
+     ]
+    },
+    "13": {
+     "members": [
+      {
+       "name": "Matthew Sullivan",
+       "phone": "(601)782-4413"
+      },
+      {
+       "name": "Stanley Sorey",
+       "phone": "(601)782-9999"
+      }
+     ]
+    },
+    "14": {
+     "members": [
+      {
+       "name": "Michael M. Taylor",
+       "phone": "(601)835-1576"
+      },
+      {
+       "name": "David H. Strong Jr.",
+       "phone": "(601)684-3400"
+      }
+     ]
+    },
+    "15": {
+     "members": [
+      {
+       "name": "Brad A. Touchstone",
+       "phone": "(601)794-1051"
+      },
+      {
+       "name": "Prentiss G. Harrell",
+       "phone": "(601)794-3482"
+      },
+      {
+       "name": "Richelle Lumpkin",
+       "phone": "(601)749-7722"
+      }
+     ]
+    },
+    "16": {
+     "members": [
+      {
+       "name": "Lee \"Jay\" Howard",
+       "phone": "(662)323-6765"
+      },
+      {
+       "name": "James T. Kitchens Jr.",
+       "phone": "(662)329-5919"
+      },
+      {
+       "name": "Michelle Easterling",
+       "phone": "(662)391-1070"
+      }
+     ]
+    },
+    "17": {
+     "members": [
+      {
+       "name": "Smith Murphey",
+       "phone": "(662)385-4261"
+      },
+      {
+       "name": "James McClure III",
+       "phone": "(662)487-2072"
+      }
+     ]
+    },
+    "18": {
+     "members": [
+      {
+       "name": "Dal Williamson",
+       "phone": "(601)428-4572"
+      }
+     ]
+    },
+    "19": {
+     "members": [
+      {
+       "name": "Keith Miller",
+       "phone": "(228)769-3438"
+      },
+      {
+       "name": "Calvin D. Taylor",
+       "phone": "(228)769-3434"
+      },
+      {
+       "name": "Kathy King Jackson",
+       "phone": "(228)769-3244"
+      }
+     ]
+    },
+    "20": {
+     "members": [
+      {
+       "name": "Dewey Arthur",
+       "phone": "(601)855-5555"
+      },
+      {
+       "name": "M. Bradley Mills",
+       "phone": "(601)824-6529"
+      },
+      {
+       "name": "Steve Ratcliff",
+       "phone": "(601)855-5570"
+      }
+     ]
+    },
+    "21": {
+     "members": [
+      {
+       "name": "Craig Treadway",
+       "note": "Appointed by the Governor from 1 September 2026, after Judge Celeste Embrey Wilson joined the Mississippi Supreme Court.",
+       "source": {
+        "label": "Governor's announcement",
+        "url": "https://governorreeves.ms.gov/governor-reeves-appoints-craig-treadway-circuit-judge-for-the-21st-circuit-court-district-and-reopens-qualifying/"
+       }
+      },
+      {
+       "name": "Gerald Chatham",
+       "phone": "(662)469-8315"
+      },
+      {
+       "name": "Wayne Douglas Hollowell III",
+       "phone": "(662)469-8263"
+      }
+     ]
+    },
+    "22": {
+     "members": [
+      {
+       "name": "Jannie M. Lewis-Blackmon",
+       "phone": "(662)834-1452"
+      }
+     ]
+    },
+    "23": {
+     "members": [
+      {
+       "name": "Tomika Harris-Irving",
+       "phone": "(601)786-9600"
+      }
+     ]
+    }
+   }
+  }
+ }
+}

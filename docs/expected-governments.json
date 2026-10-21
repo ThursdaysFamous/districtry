@@ -1,17 +1,19 @@
 {
  "built_by": "scripts/build_expected_governments.py",
  "floor": 25000,
- "measured": "2026-10-11",
+ "measured": "2026-10-16",
  "read_by": "scripts/build_eam_status.py",
  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer",
  "source": "U.S. Census Bureau TIGERweb, tigerWMS_Census2020 \u2014 layer 26 (Incorporated Places) and layer 20 (County Subdivisions, FUNCSTAT='A'); POP100 is the 2020 decennial count.",
  "subdivision_is_general_purpose": {
+  "ar": null,
   "ia": null,
   "il": false,
   "in": false,
   "ky": null,
   "mi": true,
   "mn": null,
+  "ms": null,
   "nc": null,
   "ny": true,
   "ok": null,
@@ -20,6 +22,141 @@
   "wi": null
  },
  "units": {
+  "ar": [
+   {
+    "geoid": "0541000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Little Rock city",
+    "pop": 202591
+   },
+   {
+    "geoid": "0523290",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fayetteville city",
+    "pop": 93949
+   },
+   {
+    "geoid": "0524550",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fort Smith city",
+    "pop": 89142
+   },
+   {
+    "geoid": "0566080",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Springdale city",
+    "pop": 84161
+   },
+   {
+    "geoid": "0535710",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Jonesboro city",
+    "pop": 78576
+   },
+   {
+    "geoid": "0560410",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Rogers city",
+    "pop": 69908
+   },
+   {
+    "geoid": "0550450",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "North Little Rock city",
+    "pop": 64591
+   },
+   {
+    "geoid": "0515190",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Conway city",
+    "pop": 64134
+   },
+   {
+    "geoid": "0505320",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bentonville city",
+    "pop": 54164
+   },
+   {
+    "geoid": "0555310",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Pine Bluff city",
+    "pop": 41253
+   },
+   {
+    "geoid": "0533400",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hot Springs city",
+    "pop": 37930
+   },
+   {
+    "geoid": "0505290",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Benton city",
+    "pop": 35014
+   },
+   {
+    "geoid": "0563800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Sherwood city",
+    "pop": 32731
+   },
+   {
+    "geoid": "0504840",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bella Vista city",
+    "pop": 30104
+   },
+   {
+    "geoid": "0553390",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Paragould city",
+    "pop": 29537
+   },
+   {
+    "geoid": "0534750",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Jacksonville city",
+    "pop": 29477
+   },
+   {
+    "geoid": "0568810",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Texarkana city",
+    "pop": 29387
+   },
+   {
+    "geoid": "0561670",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Russellville city",
+    "pop": 28940
+   },
+   {
+    "geoid": "0510300",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Cabot city",
+    "pop": 26569
+   }
+  ],
   "ia": [
    {
     "geoid": "1921000",
@@ -2046,6 +2183,113 @@
     "lsadc": "25",
     "name": "Rosemount city",
     "pop": 25650
+   }
+  ],
+  "ms": [
+   {
+    "geoid": "2836000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Jackson city",
+    "pop": 153701
+   },
+   {
+    "geoid": "2829700",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Gulfport city",
+    "pop": 72926
+   },
+   {
+    "geoid": "2869280",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Southaven city",
+    "pop": 54648
+   },
+   {
+    "geoid": "2806220",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Biloxi city",
+    "pop": 49449
+   },
+   {
+    "geoid": "2831020",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hattiesburg city",
+    "pop": 48730
+   },
+   {
+    "geoid": "2854040",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Olive Branch city",
+    "pop": 39711
+   },
+   {
+    "geoid": "2874840",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Tupelo city",
+    "pop": 37923
+   },
+   {
+    "geoid": "2846640",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Meridian city",
+    "pop": 35052
+   },
+   {
+    "geoid": "2829180",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Greenville city",
+    "pop": 29670
+   },
+   {
+    "geoid": "2814420",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Clinton city",
+    "pop": 28100
+   },
+   {
+    "geoid": "2844520",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Madison city",
+    "pop": 27747
+   },
+   {
+    "geoid": "2855760",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Pearl city",
+    "pop": 27115
+   },
+   {
+    "geoid": "2833700",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Horn Lake city",
+    "pop": 26736
+   },
+   {
+    "geoid": "2854840",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Oxford city",
+    "pop": 25416
+   },
+   {
+    "geoid": "2808300",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Brandon city",
+    "pop": 25138
    }
   ],
   "nc": [

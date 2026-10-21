@@ -1455,7 +1455,10 @@
     "county": "Mason",
     "head": {
       "name": "Jason DeFord",
-      "phone": "309/357-9196; 309/546-2524",
+      "phone": "309-357-9196",
+      "phonesExtra": [
+        "309-546-2524"
+      ],
       "role": "President",
       "termExpires": "2029"
     },
@@ -1464,13 +1467,19 @@
       {
         "appointed": true,
         "name": "Wendy Deford",
-        "phone": "309-267-2841; 309/546-2663",
+        "phone": "309-267-2841",
+        "phonesExtra": [
+          "309-546-2663"
+        ],
         "role": "Clerk"
       },
       {
         "appointed": true,
         "name": "Kim Whitehead",
-        "phone": "309/546-2409 or 217-415-6154",
+        "phone": "309-546-2409",
+        "phonesExtra": [
+          "217-415-6154"
+        ],
         "role": "Treasurer"
       }
     ],
@@ -8226,11 +8235,13 @@
   "1721852": {
     "board": [
       {
+        "email": "bradbuckner@frontiernet.net",
         "name": "Bradley Buckner",
         "nextElection": "2029",
         "role": "Trustee"
       },
       {
+        "email": "tumahedrick@yahoo.com",
         "name": "Bruce Hedrick",
         "nextElection": "2029",
         "role": "Trustee"
@@ -8271,6 +8282,7 @@
         "role": "Treasurer"
       },
       {
+        "email": "bengelke@frontiernet.net",
         "name": "Brian Engelke",
         "nextElection": "2029",
         "role": "Village Clerk"
@@ -8447,7 +8459,10 @@
     "county": "Mason",
     "head": {
       "name": "Donald Mustered III",
-      "phone": "217/737-7699 309/208-7924",
+      "phone": "217-737-7699",
+      "phonesExtra": [
+        "309-208-7924"
+      ],
       "role": "President",
       "termExpires": "2029"
     },
@@ -8455,7 +8470,10 @@
     "officers": [
       {
         "name": "Joanna Mustered",
-        "phone": "217/737-7699; 309/562-7459",
+        "phone": "217-737-7699",
+        "phonesExtra": [
+          "309-562-7459"
+        ],
         "role": "Clerk",
         "termExpires": "2029"
       },
@@ -11530,7 +11548,50 @@
     "sourceUrl": "https://www.mchenrycountyil.gov/county-government/county-yearbook/cities-villages"
   },
   "1732018": {
+    "board": [
+      {
+        "district": "At Large",
+        "name": "Cheryl Ross",
+        "role": "Trustee",
+        "termExpires": "2027"
+      },
+      {
+        "district": "At Large",
+        "name": "Greg Garner",
+        "role": "Trustee",
+        "termExpires": "2027"
+      },
+      {
+        "district": "At Large",
+        "name": "Karen Thorstenson",
+        "role": "Trustee",
+        "termExpires": "2029"
+      },
+      {
+        "district": "At Large",
+        "name": "Kevin Woodside",
+        "role": "Trustee",
+        "termExpires": "2029"
+      },
+      {
+        "district": "At Large",
+        "name": "Liliana Ware",
+        "role": "Trustee",
+        "termExpires": "2027"
+      },
+      {
+        "district": "At Large",
+        "name": "Quin O'Brien",
+        "role": "Trustee",
+        "termExpires": "2027"
+      }
+    ],
     "county": "Lake",
+    "head": {
+      "name": "Thomas B. Hood",
+      "role": "Mayor",
+      "termExpires": "2029"
+    },
     "name": "Village of Gurnee",
     "office": {
       "address": "325 N O'Plaine Rd, Gurnee IL 60031",
@@ -12090,7 +12151,10 @@
     "county": "Mason",
     "head": {
       "name": "Denis Bryant",
-      "phone": "309/543-6874 309/258-6454",
+      "phone": "309-543-6874",
+      "phonesExtra": [
+        "309-258-6454"
+      ],
       "role": "Mayor",
       "termExpires": "2029"
     },
@@ -28050,7 +28114,10 @@
     "county": "Mason",
     "head": {
       "name": "Terry G. Gathman",
-      "phone": "309/360-7869; 309-535-2105",
+      "phone": "309-360-7869",
+      "phonesExtra": [
+        "309-535-2105"
+      ],
       "role": "President",
       "termExpires": "2029"
     },

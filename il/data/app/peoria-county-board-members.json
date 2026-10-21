@@ -5,7 +5,10 @@
     "email": "swilliams@peoriacounty.org",
     "name": "Sharon K. Williams",
     "party": "Democratic",
-    "phone": "309-264-1119",
+    "phone": "cell 309-264-1119",
+    "phonesExtra": [
+     "work 309-674-9715"
+    ],
     "role": "Vice-Chairperson",
     "url": "https://www.peoriacounty.gov/565/Sharon-K-Williams"
    }
@@ -30,6 +33,10 @@
     "email": "ldaley@peoriacounty.org",
     "name": "Linda E. Daley",
     "party": "Republican",
+    "phone": "business 309-690-7373",
+    "phonesExtra": [
+     "cell 309-453-0321"
+    ],
     "url": "https://www.peoriacounty.gov/627/Linda-Daley"
    }
   ],
@@ -88,6 +95,10 @@
     "email": "mwindish@peoriacounty.org",
     "name": "Matthew Windish",
     "party": "Republican",
+    "phone": "home 309-446-9293",
+    "phonesExtra": [
+     "cell 309-303-1190"
+    ],
     "url": "https://peoriacounty.gov/637/Matt-Windish"
    }
   ],
@@ -112,6 +123,9 @@
     "name": "Paul Rosenbohm",
     "party": "Republican",
     "phone": "309-256-6818",
+    "phonesExtra": [
+     "work 309-697-0963"
+    ],
     "url": "https://www.peoriacounty.gov/654/Paul-Rosenbohm"
    }
   ],
@@ -132,7 +146,7 @@
  "3": {
   "members": [
    {
-    "email": "brobinson@peoriacounty.org",
+    "email": "bduncan@peoriacounty.org",
     "name": "Betty Duncan",
     "party": "Democratic",
     "url": "https://www.peoriacounty.gov/593/Betty-Duncan"
@@ -146,6 +160,7 @@
     "email": "bbryant@peoriacounty.org",
     "name": "Brandy Bryant",
     "party": "Democratic",
+    "phone": "cell 309-280-0022",
     "url": "https://www.peoriacounty.gov/602/Brandy-Bryant"
    }
   ],
@@ -170,7 +185,10 @@
     "email": "eblair@peoriacounty.org",
     "name": "Eden S. Blair",
     "party": "Democratic",
-    "phone": "309-677-3715",
+    "phone": "work 309-677-3715",
+    "phonesExtra": [
+     "cell 309-363-0802"
+    ],
     "url": "https://www.peoriacounty.gov/605/Eden-S-Blair"
    }
   ],

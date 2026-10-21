@@ -50,12 +50,20 @@ label most likely belongs to the previous term; it is not recorded, and no
 other member carries an office.
 
 PRIVACY: every member record in the bundle carries a home street address,
-one or two personal phones and, for 12 of 14, a personal or business e-mail
-(gmail, hotmail, aol, bellsouth, charter, outlook, claytonhomes.com,
-wilesdriveshaft.com). None is read: only "name", "role" and "district" are.
-An e-mail would be kept only on henrycountytn.gov or henrycountytn.org, and
-no member has one. The Mayor's record and the county staff records elsewhere
-in the bundle are not read.
+one or two phones ("phone", and "phone2" for three members) and, for 12 of 14,
+a personal or business e-mail (gmail, hotmail, aol, bellsouth, charter,
+outlook, claytonhomes.com, wilesdriveshaft.com). The phones are recorded as
+printed, "phone" first and "phone2" after it, under Adam's ruling of
+2026-10-17 that a number a government publishes beside an official ships
+whosever line it is; the two field names say nothing about what kind of line
+each is, so no label is written. The "address" field is never read. The
+"email" field is recorded as the bundle gives it, under Adam's choice of
+2026-10-17 that a personal address a government page prints beside an
+official is shown ("E-mails too"); no member has one on henrycountytn.gov or
+henrycountytn.org. Each field is read from inside its own member's record,
+one record cut from the next at "{name:", and a record with no "email" field
+or two raises. The Mayor's record and the county staff records elsewhere in
+the bundle are not read.
 
 Names are kept as the bundle prints them ("Rick Parker", whose ballot name is
 "Ricky D Parker"; "Charles Elizondo", "Chuck Elizondo" in the county's
@@ -82,12 +90,12 @@ clear winners, Wiles and Elizondo, are the two names here; its third seat
 goes to the 3 November 2026 ballot described above, and until a winner is
 certified and seated it is vacant on the county's own count of 14."""
 import re
-from ._common import member, vacant, county_email, ROLE
+from ._common import member, vacant, member_email, ROLE, read_phones, Withheld
 
 COUNTY = "Henry"; FIPS = "079"
 DOMAINS = ("henrycountytn.gov", "henrycountytn.org")
 URLS = ["https://henrycountytn.gov/government?tab=commissioners",
-        "https://henrycountytn.gov/assets/index-tLEML3W0.js"]
+        "https://henrycountytn.gov/assets/index-CH_jWSsR.js"]
 SEATS = {str(i): 3 for i in range(1, 6)}
 AT_LARGE = 0
 
@@ -96,6 +104,7 @@ ARRAY = re.compile(r"\[\{district:1,members:\[")
 DIST = re.compile(r"\{district:(\d{1,2}),members:\[")
 PERSON = re.compile(r'\{name:"([^"]*)",role:"([^"]*)",phone:')
 EMAIL = re.compile(r'email:(?:null|"([^"]*)")')
+PHONES = re.compile(r'\bphone:(null|"[^"]*"),phone2:(null|"[^"]*"),')
 TOTAL = re.compile(r"for a total of (\d{1,2}) County Commissioners")
 NAME = re.compile(r"^[A-Z][A-Za-z.'’ -]+$")
 SEAT_ROLE = "County Commissioner"
@@ -123,15 +132,34 @@ def parse(pages):
         people = PERSON.findall(seg)
         if len(people) != seg.count("{name:"):
             raise ValueError("District %s: a member record is not {name, role, phone, ...}" % d)
+        numbers = PHONES.findall(seg)
+        if len(numbers) != len(people):
+            numbers = [None] * len(people)     # the fields changed shape: keep every number off
+        cuts = [m.start() for m in re.finditer(r"\{name:", seg)] + [len(seg)]
+        mails = []
+        for a, b in zip(cuts, cuts[1:]):
+            got = EMAIL.findall(seg[a:b])
+            if len(got) != 1:
+                raise ValueError("District %s: a member record carries %d e-mail fields" % (d, len(got)))
+            mails.append(got[0])
         seats = []
-        for (name, role), mail in zip(people, EMAIL.findall(seg)):
+        for (name, role), mail, nums in zip(people, mails, numbers):
             if re.search(r"\bvacan", name, re.I) or not NAME.match(name):
                 raise ValueError("District %s: %r does not look like a name" % (d, name))
             if role != SEAT_ROLE and not ROLE.search(role):
                 raise ValueError("District %s: %r carries the role %r" % (d, name, role))
-            seats.append(member(name, email=county_email([mail] if mail else [], DOMAINS)))
-        if len(people) != len(EMAIL.findall(seg)):
-            raise ValueError("District %s: members and e-mail fields do not pair up" % d)
+            if nums is None:
+                phones = Withheld("the bundle's phone fields are not phone, phone2")
+            else:
+                phones = []
+                for v in nums:
+                    got = read_phones(v[1:-1], strict=True) if v != "null" else []
+                    if isinstance(got, Withheld):
+                        phones = got
+                        break
+                    phones += got
+            seats.append(member(name, email=member_email([mail] if mail else [], DOMAINS),
+                                phones=phones))
         districts[d] = seats
     if set(districts) != set(SEATS):
         raise ValueError("the array names districts %s, not 1..5" % sorted(districts, key=int))

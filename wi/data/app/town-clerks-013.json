@@ -3,6 +3,9 @@
     "clerk": "Annette Bethke",
     "municipality": "Anderson",
     "phone": "715-488-2911",
+    "phonesExtra": [
+      "715-557-1774"
+    ],
     "recordUpdated": "2023-11-21",
     "url": "https://townofanderson.org/"
   },
@@ -10,6 +13,9 @@
     "clerk": "Ryan W Brennan",
     "municipality": "Blaine",
     "phone": "715-718-6213",
+    "phonesExtra": [
+      "715-817-8479"
+    ],
     "recordUpdated": "2026-01-05",
     "url": "https://www.townofblainewi.com/"
   },
@@ -17,6 +23,9 @@
     "clerk": "Liz Simonsen",
     "municipality": "Daniels",
     "phone": "715-349-2291",
+    "phonesExtra": [
+      "715-689-2360"
+    ],
     "recordUpdated": "2025-04-09",
     "url": "https://townofdaniels.com/"
   },
@@ -54,6 +63,9 @@
     "deputyClerk": "Linda Isaacson",
     "municipality": "Lincoln",
     "phone": "715-566-0467",
+    "phonesExtra": [
+      "715-410-7671"
+    ],
     "recordUpdated": "2025-04-10",
     "url": "http://townoflincolnbc.com/"
   },
@@ -69,6 +81,9 @@
     "deputyClerk": "William Pardun",
     "municipality": "Oakland",
     "phone": "715-520-0735",
+    "phonesExtra": [
+      "715-566-1857"
+    ],
     "recordUpdated": "2025-04-16",
     "url": "https://townofoaklandwi.com/"
   },
@@ -92,6 +107,9 @@
     "deputyClerk": "Peggy Tolbert",
     "municipality": "Sand Lake",
     "phone": "715-520-0735",
+    "phonesExtra": [
+      "715-222-9375"
+    ],
     "recordUpdated": "2024-01-02",
     "url": "https://townofsandlake.org/"
   },
@@ -123,6 +141,9 @@
     "deputyClerk": "Bonnie Wicklund",
     "municipality": "Trade Lake",
     "phone": "715-488-2227",
+    "phonesExtra": [
+      "715-222-7071"
+    ],
     "recordUpdated": "2025-04-22",
     "url": "https://tradelakewi.com/"
   },

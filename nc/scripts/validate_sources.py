@@ -54,6 +54,7 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)),
                                 "scripts"))
 from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+from robots_policy import HostPacer, RobotsGate  # noqa: E402  (FLEET_SHARED)
 
 try:
     import requests
@@ -163,6 +164,34 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "nc-superior-court",
+        "app_file": "nc-superior-court-districts.json",
+        "source_url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-41.html",
+        "note": (
+            "The 73 superior court districts G.S. 7A-41 writes: whole counties, "
+            "and in nine divided counties the 2010 Census voting districts and "
+            "blocks the section lists, drawn from TIGERweb's Census 2010 service "
+            "(layers 72 and 18) by nc/scripts/build_nc_court_districts.py. The "
+            "section's text is kept in nc/data/source/statutes/ and every build "
+            "holds it to this page; its offline --check runs in CI. The General "
+            "Assembly can rewrite the districts in any session, and the table "
+            "it enacted for 1 January 2029 already ends Districts 10E and 31D, "
+            "so nc/WATCH.md carries a row for both."
+        ),
+        "ends_on": "2029-01-01",
+    },
+    {
+        "layer": "nc-district-court",
+        "app_file": "nc-district-court-districts.json",
+        "source_url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-133.html",
+        "note": (
+            "The 47 district court districts G.S. 7A-133 writes: whole counties, "
+            "and Wake's and Vance's districts from the 2010 Census voting "
+            "districts the section lists, by the same builder and held to this "
+            "page the same way."
+        ),
+    },
+    {
         "layer": "county",
         "app_file": "state-counties.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
@@ -203,6 +232,225 @@ PROVENANCE = [
             "States takes it into trust, on no redistricting calendar, so only a "
             "rebuild sees a new area; --check is offline and proves the "
             "land-to-government join, never the Census's own set."
+        ),
+    },
+    {
+        "layer": "voting-precinct",
+        "app_file": "nc-precincts.json",
+        "source_url": "https://services.nconemap.gov/secure/rest/services/NC1Map_Boundaries/MapServer/0",
+        "note": (
+            "North Carolina's 2,625 voting precincts from NC OneMap's copy of "
+            "the State Board of Elections' statewide file (matched to "
+            "SBE_PRECINCTS_20260824.zip by its counts), pre-built by "
+            "nc/scripts/build_nc_precincts.py through "
+            "scripts/statewide_precincts.py. The builder's --watch also lists "
+            "the Board's own folder for a newer zip, on the quarterly row in "
+            "nc/WATCH.md."
+        ),
+    },
+    {
+        "layer": "school-board-district",
+        "app_file": "nc-school-board-districts.json",
+        "source_url": "https://dl.ncsbe.gov/ENRS/2024_11_05/results_pct_20241105.zip",
+        "note": (
+            "The 214 district seats of the 38 school boards that elect by "
+            "district (measured 2026-10-17). No published map of these lines was "
+            "found, so each is rebuilt from the State Board of Elections' precinct-level "
+            "results (this URL is the 2024 general's; the builder reads every "
+            "results file since 2022): a district is the precincts whose "
+            "ballots carried its seat's latest contest, on the State Board's "
+            "precinct map of that election (dl.ncsbe.gov/ShapeFiles/Precinct/), "
+            "cut to the Census school district. Each board's website link is "
+            "the address NCES's Common Core of Data district directory gives, "
+            "kept where it answered with a page at the build. Rebuilt by hand "
+            "with nc/scripts/build_nc_school_board_districts.py; its --watch, "
+            "on a row in nc/WATCH.md, lists any results file or precinct map "
+            "posted or reposted since the build."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gis.charlottenc.gov/arcgis/rest/services/PLN/CouncilDistricts/MapServer/0",
+        "note": (
+            "Charlotte's 7 council districts, from the city's own map, which "
+            "says it shows the current boundaries, one of the 100 districts of "
+            "the 17 North Carolina cities above 25,000 people that elect "
+            "council members by district or ward, pre-built by "
+            "nc/scripts/build_nc_city_wards.py through "
+            "scripts/city_ward_maps.py, which takes the cities to draw from "
+            "nc/data/source/nc-city-council-seats.json; the quarterly --watch "
+            "row in nc/WATCH.md compares each map's fingerprint recorded at the "
+            "build. The names on the cards come from each city's own pages, and "
+            "nc/scripts/build_nc_city_councils.py --watch is what notices one "
+            "of those changing."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://services.arcgis.com/v400IkDOw1ad7Yad/ArcGIS/rest/services/Council_Districts_Scenario_2/FeatureServer/1",
+        "note": (
+            "Raleigh's 5 council districts, from the copy the city published in "
+            "its ArcGIS Online organization in November 2021 as \"Proposed "
+            "Council Districts, Scenario 2\", because the city's live layer is "
+            "closed to this project by its robots.txt; the precincts that "
+            "carried each district's contest on 5 November 2024 lie 99.9% to "
+            "100% inside the same district on it (see the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gcgis.guilfordcountync.gov/arcgis/rest/services/GISDV/Elected_Representation/MapServer/4",
+        "note": (
+            "Greensboro's 5 council districts, from Guilford County's map (see "
+            "the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://arcgis2.cityofws.org/arcgissmwa02/rest/services/OICv2/Boundaries2/MapServer/0",
+        "note": (
+            "Winston-Salem's 8 named wards, from the city's own map (see the "
+            "Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gismaps.fayettevillenc.gov/cofpublicgis/rest/services/CityCouncilDistricts/CityCouncilDistricts/MapServer/0",
+        "note": (
+            "Fayetteville's 9 council districts, from the city's own map (see "
+            "the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://maps-apis.carync.gov/server/rest/services/Elections/Elections/FeatureServer/2",
+        "note": (
+            "Cary's 4 council districts, from the town's own map, its records "
+            "with no district left out (see the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gcgis.guilfordcountync.gov/arcgis/rest/services/GISDV/Elected_Representation/MapServer/10",
+        "note": (
+            "High Point's 6 council wards, from Guilford County's map (see the "
+            "Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gisonline.greenvillenc.gov/arcgis/rest/services/Published/MapServer/1",
+        "note": (
+            "Greenville's 5 council districts, from the city's own map, its "
+            "record whose district reads \"Non Voting\" left out (see the "
+            "Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://cogserver.gastonianc.gov/serverweb/rest/services/AdminBnds/GastoniaCouncilWards/MapServer/0",
+        "note": (
+            "Gastonia's 6 council wards, from the city's own map (see the "
+            "Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gismaps.onslowcountync.gov/arcgis/rest/services/TemplateSite/OperationalLayers/MapServer/60",
+        "note": (
+            "Jacksonville's 4 council wards, from Onslow County's \"City of "
+            "Jacksonville Wards\" layer, one of two maps of the city's wards the "
+            "county publishes; nc/WATCH.md asks for it to be read again once "
+            "the council adopts new wards (see the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://services.arcgis.com/4MdqIsNzxG7xyTvf/arcgis/rest/services/City_Council_Districts/FeatureServer/6",
+        "note": (
+            "Rocky Mount's 7 council wards, from the city's own map, which says "
+            "its boundaries were finalized in 2022 (see the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://maps.iredellcountync.gov/server/rest/services/Data/Elections/MapServer/3",
+        "note": (
+            "Mooresville's 4 wards, from Iredell County's map (see the "
+            "Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gisservices.wilsonnc.org/services/rest/services/communitymaps/communitymaps/MapServer/34",
+        "note": (
+            "Wilson's 7 council districts, from the city's own map (see the "
+            "Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gis.goldsboronc.gov/arcgis/rest/services/Election_Districts/FeatureServer/0",
+        "note": (
+            "Goldsboro's 6 council districts, from the city's own map, its "
+            "record numbered 0 that draws the whole city left out (see the "
+            "Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://gis.newbernnc.gov/arcgis/rest/services/Boundary/NewBern_Wards/FeatureServer/0",
+        "note": (
+            "New Bern's 6 wards, from the city's own map, the ward number alone "
+            "requested because the layer also carries its aldermen's home "
+            "addresses (see the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://lee-arcgis.leecountync.gov/arcgis/rest/services/Political/POLITICAL/MapServer/1",
+        "note": (
+            "Sanford's 5 wards, from Lee County's map (see the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "nc-city-wards.json",
+        "source_url": "https://services2.arcgis.com/WbGEgSzGTEPg4fr6/arcgis/rest/services/Stvl_Election_Wards/FeatureServer/0",
+        "note": (
+            "Statesville's 6 wards, from the city's own map, last edited on 8 "
+            "September 2026 (see the Charlotte row)."
+        ),
+    },
+    {
+        "layer": "county",
+        "app_file": "nc-conservation-boards.json",
+        "source_url": "https://www.ncagr.gov/divisions/soil-water/district-directory/open",
+        "note": (
+            "The supervisors of each county's soil and water conservation "
+            "district, read from the Division of Soil and Water Conservation's "
+            "District Directory (a 242-page PDF printed on 29 September 2026 "
+            "when read on 2026-10-16) by "
+            "nc/scripts/build_nc_conservation_boards.py and named on the County "
+            "card. The address serves the current edition (inferred). Re-read "
+            "quarterly and after each November general election; WATCH.md "
+            "carries the row."
         ),
     },
 ]
@@ -299,6 +547,16 @@ ENDPOINTS = [
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
         "min_count": 1500,  # 1,668 measured 2026-09-29
     },
+    # The precinct layer the builder reads (2026-10-15). A floor rather than
+    # the exact count: the quarterly --watch in nc/WATCH.md is what notices a
+    # changed precinct; this row notices the query failing or the layer emptying.
+    {
+        "layer": "voting-precinct",
+        "url": ("https://services.nconemap.gov/secure/rest/services/"
+                "NC1Map_Boundaries/MapServer/0/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 2350,  # 2,625 records measured 2026-10-15
+    },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"
 
@@ -320,19 +578,44 @@ class Findings(object):
         return "ok"
 
 
+USER_AGENT = "districtry source validator (+https://districtry.com/nc/)"
+PACER = None
+
+
+def pacer():
+    """The run's one HostPacer, built on first use, so an --offline run opens
+    no session. www.ncleg.gov states `Crawl-delay: 2` and this registry reads
+    four of its pages (both member lists and the two court statutes), so they
+    are held two seconds apart; a host that states no delay is not slowed."""
+    global PACER
+    if PACER is None:
+        PACER = HostPacer(RobotsGate(requests.Session(), USER_AGENT,
+                                     timeout=HTTP_TIMEOUT,
+                                     headers={"User-Agent": USER_AGENT}))
+    return PACER
+
+
 def http_get(url, want_json=True, params=None):
     """GET with a sane UA; returns (ok, payload_or_error). Never raises."""
     if requests is None:
         return False, "requests not installed"
+    ua = USER_AGENT
     try:
-        require_robots_once(url, "districtry source validator (+https://districtry.com/mi/)",
-                            headers={"User-Agent": "districtry source validator (+https://districtry.com/mi/)"}, label="nc-validate-sources")
-        resp = requests.get(
-            url,
-            params=params,
-            timeout=HTTP_TIMEOUT,
-            headers={"User-Agent": "districtry source validator (+https://districtry.com/mi/)"},
-        )
+        require_robots_once(url, ua, headers={"User-Agent": ua},
+                            label="nc-validate-sources")
+    except SystemExit:
+        # require_robots_once prints why and exits on a refusal or an
+        # unreadable policy. Here that is one source's finding rather than the
+        # end of the run, and nothing is fetched from the host either way.
+        return False, "robots.txt refuses this client or could not be read (the reason is printed above); nothing fetched"
+    try:
+        with pacer().hold(url):
+            resp = requests.get(
+                url,
+                params=params,
+                timeout=HTTP_TIMEOUT,
+                headers={"User-Agent": ua},
+            )
     except Exception as e:  # network/TLS/proxy errors are a finding, not a crash
         return False, "request failed: %s" % e
     if resp.status_code >= 400:
@@ -500,6 +783,34 @@ def check_serving_map(findings, today=None):
                          "and bump the cache name." % (p["app_file"], until))
 
 
+# ---- check 3c: a court district the law has ended is no longer drawn --------
+def check_ended_districts(findings, today=None):
+    """Offline. The table G.S. 7A-41 enacted for 1 January 2029 ends superior
+    court Districts 10E and 31D, and the shipped file marks both with `endsOn`.
+    Nothing else would notice the date pass, so once it has this says so every
+    month until the file is rebuilt from the law as it then reads."""
+    import datetime
+    today = today or datetime.date.today().isoformat()
+    for p in PROVENANCE:
+        ends = p.get("ends_on")
+        if not ends or today < ends:
+            continue
+        fpath = os.path.join(APP_DATA_DIR, p["app_file"])
+        try:
+            with open(fpath) as f:
+                features = json.load(f).get("features") or []
+        except (OSError, ValueError):
+            continue
+        ended = [str(ft["properties"].get("unit")) for ft in features
+                 if (ft.get("properties") or {}).get("endsOn", today + "~") <= today]
+        if ended:
+            findings.add(WARN, p["layer"],
+                         "data/app/%s still draws District(s) %s, which the law ended on "
+                         "%s. Read %s for which district their ground joins, rebuild with "
+                         "build_nc_court_districts.py and bump the cache name (nc/WATCH.md)."
+                         % (p["app_file"], ", ".join(ended), ends, p["source_url"]))
+
+
 # ---- check 4: live endpoints reachable --------------------------------------
 def check_endpoints(findings, offline):
     if offline:
@@ -595,7 +906,14 @@ def main():
     check_socrata(findings, args.offline)
     check_provenance(findings, args.offline)
     check_serving_map(findings)
+    check_ended_districts(findings)
     check_endpoints(findings, args.offline)
+
+    # Which hosts asked to be slowed down, and by how much. On stderr, because
+    # stdout is the markdown report that becomes the monthly issue body.
+    if not args.offline and PACER is not None:
+        for line in PACER.report(prefix=""):
+            print(line, file=sys.stderr)
 
     report = render(findings)
     sys.stdout.write(report)

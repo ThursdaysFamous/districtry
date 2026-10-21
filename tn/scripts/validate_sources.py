@@ -174,6 +174,170 @@ PROVENANCE = [
             "district and its county and nothing about who holds it."
         ),
     },
+    {
+        "layer": "tribal-government",
+        "app_file": "tribal-areas.json",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer",
+        "note": (
+            "Tribal land from the Census's AIANNHA service, current vintage, through "
+            "the fleet's shared reader scripts/tribal_areas.py and built by "
+            "scripts/build_tribal_areas.py: 1 area, the Mississippi Band of Choctaw Indians' "
+            "off-reservation trust land near Henning, of which about 4% lies in Tennessee. "
+            "Land enters the map when the United States takes it into trust, on no "
+            "redistricting calendar, so only a rebuild sees a new area; --check is offline "
+            "and proves the land-to-government join, never the Census's own set."
+        ),
+    },
+    {
+        "layer": "voting-precinct",
+        "app_file": "tn-precincts.json",
+        "source_url": "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/12",
+        "note": (
+            "Tennessee's 1,870 voting precincts from the Comptroller of the "
+            "Treasury's statewide layer (1,879 records: Overton County's nine "
+            "are published twice), pre-built by "
+            "tn/scripts/build_tn_precincts.py through "
+            "scripts/statewide_precincts.py; the quarterly --watch row in "
+            "tn/WATCH.md compares the fingerprint recorded at the build."
+        ),
+    },
+    {
+        "layer": "school-board-district",
+        "app_file": "tn-school-board-districts.json",
+        "source_url": "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/5",
+        "note": (
+            "114 school board districts in eighteen counties from the "
+            "Comptroller of the Treasury's School Board Districts New layer "
+            "(115 records: one has no county and no shape and is skipped), "
+            "pre-built by tn/scripts/build_tn_school_board_districts.py "
+            "through scripts/published_district_layers.py; the "
+            "quarterly --watch row in tn/WATCH.md compares the fingerprint "
+            "recorded at the build."
+        ),
+    },
+    {
+        "layer": "tn-judicial-district",
+        "app_file": "tn-judicial-districts.json",
+        "source_url": "https://tennesseeda.gov/",
+        "note": (
+            "Tennessee's 32 judicial districts, dissolved from the county "
+            "fabric by tn/scripts/build_tn_judicial_districts.py following the "
+            "District Attorneys General Conference's county selector (read "
+            "2026-10-16; snapshot in tn/data/source/courts/), checked against "
+            "31 district pages and the Comptroller's FY2019 judicial map. The "
+            "statute is not readable here: its public copy is LexisNexis's and "
+            "the General Assembly's site admits only named search engines. A "
+            "new district shows first on the conference's own selector; the "
+            "re-read is a row in tn/WATCH.md."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://gis.mcgtn.org/arcgis/rest/services/CityWard/MapServer/1",
+        "note": (
+            "Clarksville's 12 council wards, from the city's own map on "
+            "Clarksville and Montgomery County's shared GIS, one of the 72 "
+            "districts of the eleven Tennessee cities above 25,000 people "
+            "whose districts are drawn, pre-built by "
+            "tn/scripts/build_tn_city_wards.py through "
+            "scripts/city_ward_maps.py, which takes the cities to draw from "
+            "tn/data/source/tn-city-council-seats.json; the quarterly --watch "
+            "row in tn/WATCH.md compares each city's fingerprint recorded at "
+            "the build. The names on the cards come from each city's own "
+            "pages, and tn/scripts/build_tn_city_councils.py --watch is what "
+            "notices one of those changing."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://publicmaps.franklintn.gov/arcgis/rest/services/Maps/GovernmentServices/MapServer/21",
+        "note": (
+            "Franklin's 4 aldermanic wards, from the city's own map (see "
+            "the Clarksville row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://services3.arcgis.com/k6aQP9AQncZQEtBv/arcgis/rest/services/PSALayers/FeatureServer/86",
+        "note": (
+            "Jackson's 9 council districts, from the city's own map of its "
+            "Plan A, effective May 2023 (see the Clarksville row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://gis.clevelandtn.gov/arcgis/rest/services/CityCouncilDistricts/CityCouncilDistricts/MapServer/0",
+        "note": (
+            "Cleveland's 5 council districts, from the city's own map (see "
+            "the Clarksville row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://arcweb.gallatin-tn.gov/arcgis/rest/services/Features/City_Council_Districts/MapServer/2",
+        "note": (
+            "Gallatin's 5 council districts, from the city's own map (see "
+            "the Clarksville row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://services6.arcgis.com/ubRvNDgGwwJuZMcL/arcgis/rest/services/Wards_VL/FeatureServer/0",
+        "note": (
+            "Columbia's 5 council wards, from the city's own map (see the "
+            "Clarksville row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://utility.arcgis.com/usrsvcs/servers/621b088a06a84f16b412e25b8d127804/rest/services/Administration_City/FeatureServer/1",
+        "note": (
+            "Mount Juliet's 4 commission districts, from the city's own "
+            "map, reached through the ArcGIS Online proxy the city "
+            "registers for it (see the Clarksville row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://services.arcgis.com/xhDV83hFoiDFnMbw/arcgis/rest/services/Morristown_Ward_Map/FeatureServer/0",
+        "note": (
+            "Morristown's 4 council wards, from the city's own map, updated "
+            "with its May 2026 redistricting (see the Clarksville row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://services2.arcgis.com/OIAIimblRxPs0xxc/arcgis/rest/services/Council_Districts/FeatureServer/0",
+        "note": (
+            "Chattanooga's 9 council districts, from a copy the City of "
+            "Chattanooga publishes of its own map on ArcGIS Online, because "
+            "the city's own map server's robots.txt shuts this project out "
+            "and Hamilton County's copy withholds the shapes. Nothing on the "
+            "copy says which plan it draws; tn/scripts/build_tn_city_wards.py "
+            "says why it is taken to be the plan effective 14 April 2025 "
+            "(see the Clarksville row)."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "tn-city-wards.json",
+        "source_url": "https://services5.arcgis.com/I2fcoygeHRmx0WzS/arcgis/rest/services/PSALayers/FeatureServer/29",
+        "note": (
+            "Hendersonville's 6 wards, from Sumner County's copy of the "
+            "City of Hendersonville's map, because the city's own map "
+            "server answers a request for its robots.txt with HTTP 500 "
+            "(see the Clarksville row)."
+        ),
+    },
 ]
 
 ENDPOINTS = [
@@ -186,11 +350,17 @@ ENDPOINTS = [
     #
     # The counts below are measured 2026-10-10 and are RECORDED, not asserted:
     # this validator reports, it never edits the app. Incorporated places 345 ·
+    # county subdivisions 855, all civil districts (measured 2026-10-15) ·
     # unified school districts 127 · elementary school districts 15 · secondary
     # school districts 15. Tennessee uses all three school layers: fifteen
     # cities run their own elementary schools while the county system runs the
     # high schools, so a reader there is in one elementary and one secondary
     # district at once.
+    {
+        "layer": "county-subdivision",
+        "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query?where=STATE%3D%2747%27&returnCountOnly=true&f=json",
+        "min_count": 770,   # 855 measured 2026-10-15; floor set below it, not at it
+    },
     {
         "layer": "municipality",
         "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=STATE%3D%2747%27&returnCountOnly=true&f=json",
@@ -261,6 +431,25 @@ ENDPOINTS = [
                 "&inSR=4326&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json"),
         "min_count": 960,   # 1,070 measured 2026-10-10
     },
+    # The precinct layer the builder reads (2026-10-15). A floor rather than
+    # the exact count: the quarterly --watch in tn/WATCH.md is what notices a
+    # changed precinct; this row notices the query failing or the layer emptying.
+    {
+        "layer": "voting-precinct",
+        "url": ("https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/"
+                "Redistricting_Address_Lookup/FeatureServer/12/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 1690,  # 1,879 records measured 2026-10-15
+    },
+    # The school board district layer the builder reads (2026-10-16). A floor,
+    # for the reason the precinct row above gives.
+    {
+        "layer": "school-board-district",
+        "url": ("https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/"
+                "Redistricting_Address_Lookup/FeatureServer/5/query?where=1%3D1"
+                "&returnCountOnly=true&f=json"),
+        "min_count": 103,   # 115 records measured 2026-10-16
+    },
 ]
 FAIL, WARN, OK = "FAIL", "WARN", "OK"
 
@@ -286,14 +475,21 @@ def http_get(url, want_json=True, params=None):
     """GET with a sane UA; returns (ok, payload_or_error). Never raises."""
     if requests is None:
         return False, "requests not installed"
+    ua = "districtry source validator (+https://districtry.com/tn/)"
     try:
-        require_robots_once(url, "districtry source validator (+https://districtry.com/tn/)",
-                            headers={"User-Agent": "districtry source validator (+https://districtry.com/tn/)"}, label="tn-validate-sources")
+        require_robots_once(url, ua, headers={"User-Agent": ua},
+                            label="tn-validate-sources")
+    except SystemExit:
+        # require_robots_once prints why and exits on a refusal or an
+        # unreadable policy. Here that is one source's finding rather than the
+        # end of the run, and nothing is fetched from the host either way.
+        return False, "robots.txt refuses this client or could not be read (the reason is printed above); nothing fetched"
+    try:
         resp = requests.get(
             url,
             params=params,
             timeout=HTTP_TIMEOUT,
-            headers={"User-Agent": "districtry source validator (+https://districtry.com/tn/)"},
+            headers={"User-Agent": ua},
         )
     except Exception as e:  # network/TLS/proxy errors are a finding, not a crash
         return False, "request failed: %s" % e

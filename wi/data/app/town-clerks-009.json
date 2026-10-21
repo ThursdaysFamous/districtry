@@ -31,6 +31,9 @@
     "clerk": "Judy Baierl",
     "municipality": "Humboldt",
     "phone": "920-863-3370",
+    "phonesExtra": [
+      "920-609-5666"
+    ],
     "recordUpdated": "2023-11-19",
     "url": "https://humboldt-wi.gov/"
   },
@@ -39,6 +42,9 @@
     "deputyClerk": "Melissa Hongisto",
     "municipality": "Lawrence",
     "phone": "920-347-3719",
+    "phonesExtra": [
+      "920-347-3713"
+    ],
     "recordUpdated": "2023-11-19",
     "url": "https://www.lawrencewi.gov/"
   },
@@ -47,6 +53,9 @@
     "deputyClerk": "Jennifer L Broich",
     "municipality": "Ledgeview",
     "phone": "920-336-3360 EXT 105",
+    "phonesExtra": [
+      "920-336-3360 EXT 104"
+    ],
     "recordUpdated": "2026-06-18",
     "url": "https://www.ledgeview.wi.gov/"
   },
@@ -69,6 +78,9 @@
     "deputyClerk": "Janet Bodart",
     "municipality": "Pittsfield",
     "phone": "920-676-1517",
+    "phonesExtra": [
+      "920-822-3409"
+    ],
     "recordUpdated": "2023-12-26",
     "url": "http://townofpittsfield.org"
   },
@@ -77,6 +89,9 @@
     "deputyClerk": "Randy Hansen",
     "municipality": "Rockland",
     "phone": "920-336-2814",
+    "phonesExtra": [
+      "920-621-1024"
+    ],
     "recordUpdated": "2024-01-16",
     "url": "http://www.townofrockland.org/"
   },

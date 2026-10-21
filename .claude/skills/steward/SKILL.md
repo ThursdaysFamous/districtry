@@ -55,6 +55,8 @@ python3 scripts/build_coverage_gaps.py --check --metro oklahoma  --out ok/data/a
 python3 scripts/build_coverage_gaps.py --check --metro southcarolina --out sc/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro tennessee --out tn/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro arkansas --out ar/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro mississippi --out ms/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro louisiana --out la/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro nyc       --out ny/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro sf        --out ca/data/app/coverage-gaps.json
 python3 scripts/validate_gap_counts.py --selftest                 # the claim/label split, both directions, offline
@@ -98,7 +100,7 @@ python3 scripts/build_il_gis_board_rosters.py --check     # the seven Illinois b
 python3 scripts/build_llms_txt.py --check                 # /llms.txt vs the fleet it describes; its page set comes from sitemap.xml, so it cannot name a page that is not there
 python3 scripts/build_endpoint_inventory.py --check       # docs/ENDPOINT_INVENTORY.md vs the tree: runtime hosts, dataset counts, point transmission; also fails once the repo starts recording a term it calls unrecorded
 python3 scripts/build_sitemap.py --check                 # sitemap.xml PARSES as XML, and every page's lastmod matches its last commit (regenerate with no flag; a page you have edited but not committed dates today, so the order you run it in no longer matters). A parse FAIL means no crawler can read any of it — that is what a double hyphen in its header comment did on 2026-09-12.
-python3 scripts/build_redirect_stubs.py --check           # the 8 root shells + 404.html vs their targets
+python3 scripts/build_redirect_stubs.py --check           # the 8 root shells, the /android short address and 404.html vs their sources
 python3 scripts/build_question_forms.py --check          # every question page's address box vs that page's own .cta
 python3 scripts/build_district_search.py --check         # the "33rd ward" index: every district present, its point inside it, live sources unchanged
 python3 scripts/build_legislator_pages.py --check         # the 12 state-legislature and congress pages vs their rosters and worksheets
@@ -119,9 +121,11 @@ python3 scripts/validate_python_hygiene.py                # a name imported nowh
 python3 scripts/validate_arcgis_format.py                # no app asks ArcGIS for f=geojson
 node scripts/esri_rings_test.mjs                          # ring nesting, on fixtures
 node scripts/map_link_test.mjs                            # pasted Google/Apple Maps links and coordinates, read by the one shared parser
+node scripts/office_address_test.mjs                      # the address a legislator's office pin is looked up by: fixtures, then every shipped district office (no phone number in it, its city and ZIP line kept)
 node scripts/build_og_image.mjs --check                    # every surface's social card is the one the renderer wrote, labelled with its metros.json tag (provenance, not pixels)
 python3 scripts/validate_instance_registration.py         # every instance named in every table
 python3 scripts/validate_instance_assets.py               # every same-origin asset a page names exists
+python3 scripts/validate_telephones.py                    # every tel: link a page serves dials one number; every shipped telephone holds at most one
 python3 scripts/build_metro_outline.py --check           # IL ring + anchor registry
 python3 wi/scripts/build_metro_outline.py --check
 python3 ia/scripts/build_metro_outline.py --check
@@ -146,6 +150,7 @@ python3 wi/scripts/validate_sources.py --selftest        # the LTSB filing watch
 python3 wi/scripts/wi_county_board_scraper.py --selftest            # the county board scrape's robots decision: a site-wide disallow refuses, an API host's 403 does not, 5xx and 202 refuse, and the Archive rung never routes round a disallow
 python3 scripts/isbe_precinct_fabric.py --selftest         # the five Jasper-test reconciliation causes
 python3 scripts/il_library_trustees_scraper.py --selftest   # the library board-page reader's six shapes and five refusals
+python3 scripts/build_il_library_trustees.py --selftest   # whose a library page's printed telephone or e-mail is: one trustee's entry ships, a shared one ships on nobody
 python3 scripts/peoria_county_board_scraper.py --selftest   # both index shapes at once: the CivicPlus editor paragraphs, the retired subhead headings, and the prose the anchor keeps out
 python3 ia/scripts/ia_county_minutes_chair_scraper.py --selftest   # the four refusals that stand between a chair card and a wrong name
 python3 ia/scripts/build_ia_county_chair.py --selftest              # the carry-forward rules: only `unreachable`, never a refusal, never past 60 days or a January
@@ -155,6 +160,46 @@ python3 ia/scripts/ia_supervisor_district_scraper.py --selftest     # the superv
 python3 ia/scripts/ia_city_officials_scraper.py --selftest           # the bound on a council page's LAST member, whom no next member bounds: a footer's city-hall number never becomes their phone, and a real one at the page's own offset survives
 python3 ia/scripts/ia_city_council_scraper.py --selftest             # the fourteen 25k-plus cities' five parser shapes: `3rd Ward` is not a street address, a caps line can carry role and name together, and a staff title is dropped with its name printed
 python3 ia/scripts/build_ia_city_councils.py --check                 # the shipped city councils: every seat count exact, no home address in any field, and the two cities that name no mayor still naming none
+python3 ar/scripts/build_ar_city_councils.py --check                 # the hand-kept council seats: the done standard's cities and seat counts, every name on its recorded page, the shipped file rebuilt exactly, every drawn ward a seat its voters elect
+python3 nc/scripts/build_nc_city_councils.py --check                 # the same for North Carolina's 42 places
+python3 ok/scripts/build_ok_city_councils.py --check                 # the same for Oklahoma's 16 cities
+python3 sc/scripts/build_sc_city_councils.py --check                 # the same for South Carolina's 17 places
+python3 tn/scripts/build_tn_city_councils.py --check                 # the same for Tennessee's 28 cities
+python3 ky/scripts/build_ky_county_districts.py --selftest           # the precinct-placing rules: ballots first, 2022 only where it agrees, one empty district filled, Army posts left out
+python3 ky/scripts/build_ky_county_districts.py --check              # the shipped magisterial and council districts hash to their record and cover each drawn county
+python3 ar/scripts/build_ar_townships.py --check                     # Arkansas's townships: hash and per-county counts against their record, every name a township, every county covered by its own
+python3 ar/scripts/build_ar_court_districts.py --check               # the newest states' court districts are whole counties: every county in exactly one, every district's area its own counties' area
+python3 in/scripts/build_in_appeals_districts.py --check             # the same for Indiana's Court of Appeals districts
+python3 ok/scripts/build_ok_judicial_districts.py --check            # the same for Oklahoma's judicial districts
+python3 sc/scripts/build_sc_judicial_circuits.py --check             # the same for South Carolina's judicial circuits
+python3 tn/scripts/build_tn_judicial_districts.py --check            # the same for Tennessee's judicial districts
+python3 nc/scripts/build_nc_court_districts.py --check              # North Carolina's superior and district court districts against the kept text of G.S. 7A-41 and 7A-133: the parse, the judge counts, each district's area from the county file and the 2010 pieces, the interior points, and a county file that has not moved
+python3 ar/scripts/build_ar_precincts.py --check                     # a statewide precinct layer: hash and per-county counts against its record, each county covered by its own precincts, the card's stated wording
+python3 in/scripts/build_in_precincts.py --check                     # the same for Indiana
+python3 ky/scripts/build_ky_precincts.py --check                     # the same for Kentucky
+python3 nc/scripts/build_nc_precincts.py --check                     # the same for North Carolina
+python3 sc/scripts/build_sc_precincts.py --check                     # the same for South Carolina
+python3 tn/scripts/build_tn_precincts.py --check                     # the same for Tennessee
+python3 ar/scripts/build_ar_school_board_districts.py --check        # a published school board map: hash and per-board counts against its record, the builder's test points in the districts it names, the card's stated wording
+python3 in/scripts/build_in_school_board_districts.py --check        # the same for Indiana (Indianapolis Public Schools)
+python3 sc/scripts/build_sc_school_board_districts.py --check        # the same for South Carolina
+python3 tn/scripts/build_tn_school_board_districts.py --check        # the same for Tennessee
+python3 nc/scripts/build_nc_school_board_districts.py --check        # North Carolina's districts read from results: every seat drawn once, no point in two seats of one tier; needs shapely
+python3 ky/scripts/build_ky_school_board_divisions.py --selftest     # Kentucky's division parsers on fixed cases; needs shapely
+python3 ky/scripts/build_ky_school_board_divisions.py --check        # Kentucky's divisions: hash against the record, KRS 160.211 as kept in the repository, the precinct agreement, the card's stated wording
+python3 ar/scripts/build_ar_fire_districts.py --check                # Arkansas's fire districts against their record
+python3 in/scripts/build_in_conservancy_districts.py --check         # Indiana's conservancy districts against their record
+python3 in/scripts/build_in_conservancy_directors.py --check         # Indiana's conservancy boards: every district the map draws, each person a name, each district citing the directory
+python3 ok/scripts/build_ok_conservation_districts.py --check        # Oklahoma's conservation districts against their record
+python3 ok/scripts/build_ok_conservation_offices.py --check          # Oklahoma's district offices: every district the map draws, an office, a telephone and a district e-mail address for each
+python3 ar/scripts/build_ar_city_wards.py --check                    # Arkansas's city wards against their record and the card's stated wording
+python3 nc/scripts/build_nc_city_wards.py --check                    # a city ward layer from each city's own map: hash against the record, every map read from where the builder now reads it
+python3 ok/scripts/build_ok_city_wards.py --check                    # the same for Oklahoma
+python3 sc/scripts/build_sc_city_wards.py --check                    # the same for South Carolina
+python3 tn/scripts/build_tn_city_wards.py --check                    # the same for Tennessee
+python3 ky/scripts/build_ky_conservation_boards.py --check           # the County card's conservation board: a board for every county, every district citing a page the record read, no field the card does not show
+python3 nc/scripts/build_nc_conservation_boards.py --check           # the same for North Carolina
+python3 sc/scripts/build_sc_conservation_boards.py --check           # the same for South Carolina
 python3 ia/scripts/ia_county_board_page_scraper.py --selftest       # the four county board pages whose two outside publishers disagree: a role word at the end of a line is not a name, a committee line is not a supervisor, and a no-break space still separates `District 1` from the name
 python3 scripts/build_parcel_fabric_districts.py --selftest        # the geometry repair's three refusals and its drop count
 python3 scripts/validate_geometry_measure.py                      # the engine's area/overlap/point-weight block, held to shapely
@@ -165,6 +210,16 @@ python3 ia/scripts/build_legislative_boundaries.py --check      # the same relat
 python3 wi/scripts/build_legislative_boundaries.py --check      # the same relation in Wisconsin (art. IV s. 5, three Assembly per Senate), plus each declared dropped ring's after-answer re-derived from the shipped bytes
 python3 wi/scripts/dropped_rings.py --selftest   # the dropped-ring mechanism, fixtures only
 python3 wi/scripts/build_wi_supervisory_districts.py --check-shipped   # every declared dropped ring's AFTER answer, offline
+python3 ms/scripts/build_ms_county_officials.py --check         # Mississippi's supervisors and election commissioners: five of each per county, a board office only where three share it, and a commissioner carrying nothing but a name
+python3 ms/scripts/build_ms_supervisor_districts.py --check      # Mississippi's supervisor districts against their build record, the directory's seats, the Census edition the card names, and the County layer
+python3 ms/scripts/build_ms_court_districts.py --check           # Mississippi's six court maps against the court's own county lists and the laws that redraw them in 2027 and 2031, every saved copy re-hashed
+python3 ms/scripts/build_ms_judges.py --selftest                 # the judges' parse and the change table's staleness tests, on literals
+python3 ms/scripts/build_ms_judges.py --check                    # the shipped judges against their shape, their counts and the court maps
+python3 ms/scripts/build_ms_city_councils.py --selftest           # the city council page readers, on literals: the four seat shapes, the name test, the seat labels a page prints, each person's own telephone numbers and five refusals of them, and each person's own e-mail address, read by entry and by card, scrambled by Cloudflare's e-mail protection or not, and eleven refusals of it
+python3 ms/scripts/build_ms_city_councils.py --check              # the 15 cities' councils against their declared seats and the name test, Greenville naming nobody with its reason, and each city's telephone numbers and e-mail addresses against the cities that declare them and their floors, with no address carried for two people or as an office's mailbox
+python3 ms/scripts/build_ms_city_wards.py --check                 # the nine cities' wards against their councils' ward seats, the card's empty state, the sources page and the record of what each ward layer served
+python3 la/scripts/build_la_parish_officials.py --check          # Louisiana's parish governing bodies as shipped: all 64 parishes, every member named and seated, the member, telephone and party floors, no telephone on two members' rows, and no field the builder does not read
+python3 la/scripts/build_la_parish_districts.py --check          # Louisiana's parish districts against their build record, the list's seats, the Census edition the card names, and the Parish layer
 python3 wi/scripts/dropped_rings.py --check       # each declaration's `why` prose against its own m2 and verts, and each builder's FIDELITY_MAX_M against its GAP_CLOSED, across every declaring builder
 python3 scripts/scraper_common.py --selftest                # the nine AFR builders' what-moved line, both ways: silent on a stamp-only week, names the record on a real one
 python3 scripts/arcgis_error.py --selftest                   # a rate limit told apart from a shape error, both measured wordings and a 429; the 5/15/45 ladder taken then raised, never waited on a 404
@@ -190,6 +245,8 @@ python3 ok/scripts/validate_index.py ok/index.html
 python3 sc/scripts/validate_index.py sc/index.html
 python3 tn/scripts/validate_index.py tn/index.html
 python3 ar/scripts/validate_index.py ar/index.html
+python3 ms/scripts/validate_index.py ms/index.html
+python3 la/scripts/validate_index.py la/index.html
 
 # --- browser gates: ONE server at the repo root, every instance
 python3 -m http.server 8000 &
@@ -207,6 +264,8 @@ BASE_URL=http://localhost:8000/ok/ node ok/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/sc/ node sc/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/tn/ node tn/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/ar/ node ar/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/ms/ node ms/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/la/ node la/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000      node scripts/landing_test.mjs
 BASE_URL=http://localhost:8000      node scripts/page_consistency_test.mjs
 BASE_URL=http://localhost:8000      node scripts/probe_point_transmission.mjs --check

@@ -17,6 +17,7 @@ import { chromium } from "playwright";
 import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { stubBasemap } from "../../scripts/basemap_stub.mjs";
 
 // Vendored Leaflet fallback for sandboxed environments (e.g. Claude Code web),
 // where the browser (Chromium) cannot reach cdnjs.cloudflare.com — it does not
@@ -179,7 +180,7 @@ async function cardText(page, id) {
   }, id);
 }
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // 1. App boots and registers every layer.
   {
@@ -475,6 +476,38 @@ try {
         !info.error && ok,
         info.text.slice(0, 70)
       );
+    }
+    await context.close();
+  }
+
+  // 2a1. THE ANCHOR TOWN'S CLERK SHOWS BOTH NUMBERS THE DIRECTORY PRINTS.
+  //      The anchor is in the Town of Marathon, county subdivision 5507349075;
+  //      no incorporated place holds it (TIGERweb, 2026-10-17, with
+  //      Caledonia's interior point as the control). That town's clerk record
+  //      carries the Elections Commission's Phone 2, which ships since Adam's
+  //      ruling of 2026-10-17 ("if the official government source uses
+  //      personal phone numbers, we publish those"). The numbers expected are
+  //      read from the shipped file, so a new edition of the directory changes
+  //      what is expected; a record carrying no second number is reported,
+  //      never passed as a check. The card shows numbers with no-break
+  //      hyphens, folded back before comparing.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=county,county-subdivision`);
+    const want = await page.evaluate(async () => {
+      const r = await fetch("data/app/town-clerks-073.json").then((x) => x.json());
+      const rec = r["5507349075"] || {};
+      return [rec.phone].concat(rec.phonesExtra || []).filter(Boolean);
+    });
+    const info = await cardText(page, "county-subdivision");
+    const text = (info.text || "").replace(/‑/g, "-");
+    if (want.length < 2) {
+      console.log("  SKIP  county-subdivision clerk's second number — the anchor town's clerk record carries none");
+    } else {
+      const missing = want.filter((n) => !text.includes(n));
+      check("the anchor town's clerk shows both numbers the Elections Commission prints",
+        !info.error && missing.length === 0,
+        `${missing.length} of ${want.length} missing; card ${text.slice(0, 160)}`);
     }
     await context.close();
   }
@@ -847,6 +880,139 @@ try {
     check("an at-large village board is named and the card says it has no districts",
           ok, `heading=${JSON.stringify(heading || null)} seatBadge=${seatBadge} ` +
               `president=${presBadge} how=${JSON.stringify((how || {}).value || null)}`);
+    await context.close();
+  }
+
+  // ---- 10b. A BOARD THE CITY DOES NOT CALL AT LARGE IS NOT LABELLED SO ----
+  // Fond du Lac's council page describes seven members and gives none a
+  // district, but never says how the seats are elected, so its roster carries
+  // `atLarge: false` and the city's own description. The card must print that
+  // description and must NOT head the block "elected at large". Read from the
+  // shipped roster at a point in downtown Fond du Lac (2026-10-15); the
+  // assertion is the wording, so it survives an April election.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(
+      context, `${BASE}#point=43.77300,-88.44700&layers=municipality`);
+    await cardText(page, "municipality");
+    const labels = await page.$$eval("#card-municipality .card-section-label",
+                                     (els) => els.map((e) => e.textContent.trim()));
+    const fields = await page.$$eval("#card-municipality .card-field",
+      (els) => els.map((e) => ({
+        label: (e.querySelector(".card-field-label") || {}).textContent || "",
+        value: (e.querySelector(".card-field-value") || {}).textContent || ""
+      })));
+    const heading = labels.find((l) => /^\d+ members/.test(l));
+    const how = fields.find((f) => f.label.trim() === "How they are elected");
+    const ok = heading === "7 members" && !!how &&
+               how.value.indexOf("do not say whether the seats are elected at large") !== -1;
+    check("a board whose city does not say it is at large is not labelled at large",
+          ok, `heading=${JSON.stringify(heading || null)} ` +
+              `how=${JSON.stringify((how || {}).value || null)}`);
+    await context.close();
+  }
+  // ---- 10c. A TOWN'S CARD NAMES ITS BOARD, OR SAYS WHY IT CANNOT ----
+  // wi-town-boards.json is a network-first file the County Subdivision card
+  // merges onto the TIGER town it already answered with, so only a browser can
+  // prove the board reaches the card. Two towns, read from the shipped file at
+  // each town's Census interior point (TIGERweb, 2026-10-15): the Town of
+  // Beaver, in Clark County, whose directory names its board, and the Town of
+  // Vienna, in Dane County, which publishes no list. The assertions are the
+  // roles, the dated source line and the sentence, never a name, so an April
+  // election changes nothing here.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(
+      context, `${BASE}#point=44.81032,-90.50011&layers=county,county-subdivision`);
+    await cardText(page, "county-subdivision");
+    const labels = await page.$$eval("#card-county-subdivision .card-section-label",
+                                     (els) => els.map((e) => e.textContent.trim()));
+    const badges = await page.$$eval("#card-county-subdivision .card-badge",
+                                     (els) => els.map((e) => e.textContent.trim()));
+    const asOf = await page.$$eval("#card-county-subdivision .card-linkrow",
+      (els) => els.map((e) => ({
+        title: ((e.querySelector(".card-linkrow-title") || {}).textContent || "").trim(),
+        note: ((e.querySelector(".card-linkrow-note") || {}).textContent || "").trim(),
+        links: Array.from(e.querySelectorAll("a")).length
+      })).find((r) => r.title === "As of") || null);
+    const chair = badges.filter((b) => b === "Chairperson").length === 1;
+    const supv = badges.filter((b) => /^Supervisor/.test(b)).length >= 2;
+    const ok = labels.indexOf("Town board") !== -1 && chair && supv && !!asOf &&
+               asOf.note.indexOf("Clark County's list of town officials") === 0 &&
+               /read \d{4}-\d{2}-\d{2}\.$/.test(asOf.note) && asOf.links === 1;
+    check("a town's card names its board from the county's list, dated",
+          ok, `labels=${JSON.stringify(labels)} badges=${JSON.stringify(badges)} ` +
+              `asOf=${JSON.stringify(asOf)}`);
+
+    // ...and each member's telephone numbers as the county prints them, which
+    // ship since Adam's ruling of 2026-10-17. The numbers expected are read
+    // from the shipped file's record for the Town of Beaver (GEOID
+    // 5501905750, the town the point above is in), so a weekly refresh that
+    // changes them changes what is expected; a board carrying none is
+    // reported, never passed. The card writes hyphens as U+2011, folded back
+    // before comparing, and a failure prints counts, not the numbers.
+    const wantNumbers = await page.evaluate(async () => {
+      const r = await fetch("data/app/wi-town-boards.json").then((x) => x.json());
+      const out = [];
+      ((r["5501905750"] || {}).board || []).forEach((p) => {
+        [p.phone].concat(p.phonesExtra || []).forEach((n) => { if (n) out.push(n); });
+      });
+      return out;
+    });
+    const shown = ((await cardText(page, "county-subdivision")).text || "")
+      .replace(/\u2011/g, "-");
+    if (!wantNumbers.length) {
+      console.log("  SKIP  town board members' own numbers — the Town of Beaver's " +
+                  "board carries none in the shipped file");
+    } else {
+      const missing = wantNumbers.filter((n) => !shown.includes(n));
+      check("a town's card shows each board member's number the county prints",
+            missing.length === 0,
+            `${wantNumbers.length} numbers in the file, ${missing.length} not on the card`);
+    }
+
+    // ...and the one e-mail address the county prints beside a member, which
+    // ships since Adam's choice of 2026-10-17 ("E-mails too") as that
+    // member's "Email" link. Beaver's members carry none, so this is the Town
+    // of Thorp, also in Clark County (GEOID 5501979650), at its Census
+    // interior point (TIGERweb, 2026-10-17; the same query gives Beaver the
+    // point above). The addresses expected are read from the shipped file's
+    // record for that town, so a refresh moves them; a board carrying none is
+    // reported, never passed, and a failure prints counts, not the addresses.
+    const mailPage = await booted(
+      context, `${BASE}#point=44.99591,-90.87056&layers=county,county-subdivision`);
+    await cardText(mailPage, "county-subdivision");
+    const wantEmails = await mailPage.evaluate(async () => {
+      const r = await fetch("data/app/wi-town-boards.json").then((x) => x.json());
+      return ((r["5501979650"] || {}).board || []).map((p) => p.email).filter(Boolean);
+    });
+    const mailtos = await mailPage.$$eval("#card-county-subdivision a[href^='mailto:']",
+      (els) => els.map((e) => e.getAttribute("href").slice("mailto:".length)));
+    if (!wantEmails.length) {
+      console.log("  SKIP  town board members' e-mail addresses — the Town of " +
+                  "Thorp's board carries none in the shipped file");
+    } else {
+      const missingMail = wantEmails.filter((e) => mailtos.indexOf(e) === -1);
+      check("a town's card links each board member's e-mail the county prints",
+            missingMail.length === 0,
+            `${wantEmails.length} addresses in the file, ${missingMail.length} not linked on the card`);
+    }
+
+    const none = await booted(
+      context, `${BASE}#point=43.24830,-89.42913&layers=county,county-subdivision`);
+    await cardText(none, "county-subdivision");
+    const noneLabels = await none.$$eval("#card-county-subdivision .card-section-label",
+                                         (els) => els.map((e) => e.textContent.trim()));
+    const values = await none.$$eval("#card-county-subdivision .card-field-value",
+                                     (els) => els.map((e) => e.textContent.trim()));
+    const noneBadges = await none.$$eval("#card-county-subdivision .card-badge",
+                                         (els) => els.map((e) => e.textContent.trim()));
+    const said = values.some((v) => v.indexOf(
+      "Dane County does not publish a list of who sits on its town boards.") === 0);
+    const okNone = noneLabels.indexOf("Town board") !== -1 && said &&
+                   !noneBadges.some((b) => b === "Chairperson");
+    check("a town in a county with no list says so and names no board",
+          okNone, `labels=${JSON.stringify(noneLabels)} values=${JSON.stringify(values)}`);
     await context.close();
   }
   // ---- 1x. The Tribal Government card names the nation, its seat and its

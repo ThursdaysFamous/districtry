@@ -1,0 +1,1094 @@
+{
+ "_about": "Written by the builder, never by hand: every page and document read for this file, the date it was last read, the address it ended at, its size and hash, and for each document how many boards and names it gave.",
+ "documents": {
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Adair%20County.pdf": {
+   "boards": 1,
+   "bytes": 161624,
+   "county": "Adair",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Adair%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "f9f4462491a4b38050df0159c37f3ef6c77b6d1ce167b92964a61462c1e24496"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Allen%20County.pdf": {
+   "boards": 1,
+   "bytes": 159018,
+   "county": "Allen",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Allen%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "ccd879c2c0a02108700766fc280d173c65c4f68bb8d0b2029650cd0737d6757c"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Anderson%20County.pdf": {
+   "boards": 1,
+   "bytes": 140481,
+   "county": "Anderson",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Anderson%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "af5aab804b1c51735b7189efd1fa56937521d47ac8a69b2b886142ed05ffc05b"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Ballard%20County.pdf": {
+   "boards": 1,
+   "bytes": 165834,
+   "county": "Ballard",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Ballard%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "d78009b7958b5db75dc87c5d7a31530382b47074541358d694c5d672bf6d22bf"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Barren%20County.pdf": {
+   "boards": 1,
+   "bytes": 163127,
+   "county": "Barren",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Barren%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "85268c988696610f802b30b908aafbb4ff2c0a658c537b42422ed4463f7b5e4d"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Bath%20County.pdf": {
+   "boards": 1,
+   "bytes": 159253,
+   "county": "Bath",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Bath%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "79e519e5e0344584414da1f0f9a096c7ff7a163d6d4f133ae60fab56fca34d6c"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Bell%20County.pdf": {
+   "boards": 1,
+   "bytes": 161251,
+   "county": "Bell",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Bell%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "961a571b4f879d417989cb9d627b9cdbb24ef11ff976adb526f8eb24fa0b97c9"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Boone%20County.pdf": {
+   "boards": 1,
+   "bytes": 160279,
+   "county": "Boone",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Boone%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "ebc8217b7575c82a57978ecc920156311af9647b253c8d346b6046619e1acf44"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Bourbon%20County.pdf": {
+   "boards": 1,
+   "bytes": 179043,
+   "county": "Bourbon",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Bourbon%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "1b9c941eeab7a4b448c26660c75cc74dadfd1516a490f369888143cb2ac17db7"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Boyd%20County.pdf": {
+   "boards": 1,
+   "bytes": 162858,
+   "county": "Boyd",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Boyd%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "ef0efc9b3af13e3bf51dbd2cba7e8b715ee5b484f413e84ea12fc71c9b5d235d"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Boyle%20County.pdf": {
+   "boards": 1,
+   "bytes": 184807,
+   "county": "Boyle",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Boyle%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "2a5f3f6a5f0d0713376f1ef57b64e9be3c3d924559f601205dc3c003dce310c3"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Bracken%20County.pdf": {
+   "boards": 1,
+   "bytes": 143087,
+   "county": "Bracken",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Bracken%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "d90d6c076cb6ff9d0f9492e5481e898f435fa425f065542f1415cd769da96691"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Breathitt%20County.pdf": {
+   "boards": 1,
+   "bytes": 161319,
+   "county": "Breathitt",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Breathitt%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "8047672b099296cc5336423e5a97a6a80871bed889c31b1937623e0ba755c43c"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Breckinridge%20County.pdf": {
+   "boards": 1,
+   "bytes": 163188,
+   "county": "Breckinridge",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Breckinridge%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "b32ffcafde69506e3d54781da9d96e65f655c84fee02a7559b02850e729077a8"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Bullitt%20County.pdf": {
+   "boards": 1,
+   "bytes": 163188,
+   "county": "Bullitt",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Bullitt%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "b710fa9c1cadf6787a563be52f81c572b61a6ed1658d8ce7d421a73b6e27558b"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Butler%20County.pdf": {
+   "boards": 1,
+   "bytes": 163284,
+   "county": "Butler",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Butler%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "d0ff97f5d06aaf12c2da8d9d54b9af301002b91bbdc25d4413766775d2d12dfe"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Caldwell%20County.pdf": {
+   "boards": 1,
+   "bytes": 210832,
+   "county": "Caldwell",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Caldwell%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "ba7cd811486aee7dea0025603476fb09bbc9542d6610a21c831e26364a391a1d"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Calloway%20County.pdf": {
+   "boards": 1,
+   "bytes": 160446,
+   "county": "Calloway",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Calloway%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "d36794ed9048db28b559863d12a0295f6ff2718a254f5b812b9b3b4cac1f45a6"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Campbell%20County.pdf": {
+   "boards": 1,
+   "bytes": 159677,
+   "county": "Campbell",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Campbell%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "daf3c940cb6cb47c4d8f74a96d2a52bd4fb1f5d862db247d50a8a0418a450e9d"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Carlisle%20County.pdf": {
+   "boards": 1,
+   "bytes": 164686,
+   "county": "Carlisle",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Carlisle%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "a5481fc639dcaa3ab810b9dfe114f6c52b01b237513560bac6c48bd98cb8b4c3"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Carroll%20County.pdf": {
+   "boards": 1,
+   "bytes": 159110,
+   "county": "Carroll",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Carroll%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "cdb301a1fb3211e46ae7899f46184dcc443c1326a40c2c8c526468390f150eb1"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Carter%20County.pdf": {
+   "boards": 1,
+   "bytes": 156936,
+   "county": "Carter",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Carter%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "4b41828bcb4e1a9d08a32b19eefc18b4dce2f0c7ebf2d944cb215332bcf5f96b"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Casey%20County.pdf": {
+   "boards": 1,
+   "bytes": 210219,
+   "county": "Casey",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Casey%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "521d4451f1458143bdcd08499003e06121d18432896e62a0d335a650ed9fedb9"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Christian%20County.pdf": {
+   "boards": 1,
+   "bytes": 212951,
+   "county": "Christian",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Christian%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "e5fe31fb177f3569eecb0a974360c12a77f870f08c993c63042cd2787cdc4181"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Clark%20County.pdf": {
+   "boards": 1,
+   "bytes": 163023,
+   "county": "Clark",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Clark%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "d069ca0fa7bae31c545399604bada8aebaf34f20334613a450b021b4576e284d"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Clay%20County.pdf": {
+   "boards": 1,
+   "bytes": 161288,
+   "county": "Clay",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Clay%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "21d359f9c89a4b32874d2892c03274a1e1d6dcf44e27ed91173adc98d7c86f85"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Clinton%20County.pdf": {
+   "boards": 1,
+   "bytes": 163158,
+   "county": "Clinton",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Clinton%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "27dd4358389e3d9b0ac22a259a8c473aae371fc87e418cc041db73f345bd2c61"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Crittenden%20County.pdf": {
+   "boards": 1,
+   "bytes": 212072,
+   "county": "Crittenden",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Crittenden%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "610c5a6a735bf0b47ce2e7eeae9dde3ffd66e701aab28d57475be61bc84ee7d9"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Cumberland%20County.pdf": {
+   "boards": 1,
+   "bytes": 163291,
+   "county": "Cumberland",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Cumberland%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "43b0875737c1f157c0b9225ab565acdca8e36451bde088414a800a7e379cc991"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Daviess%20County.pdf": {
+   "boards": 1,
+   "bytes": 164761,
+   "county": "Daviess",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Daviess%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "89f1d02abb90d5da038d6d58c65fa41d3ed4dd3d74d0e421a0f86b0bd9eac242"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Edmonson%20County.pdf": {
+   "boards": 1,
+   "bytes": 164222,
+   "county": "Edmonson",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Edmonson%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "864ff0eaa9bea98cfb34a39adf0b4460b083d9aa894d8c5b403e23f89f056f56"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Elliott%20County.pdf": {
+   "boards": 1,
+   "bytes": 162048,
+   "county": "Elliott",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Elliott%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "1f05c6991671e7ff80baa1e9c656ec0e58095d57604d2755df186e3a7de78c7b"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Estill%20County.pdf": {
+   "boards": 1,
+   "bytes": 162586,
+   "county": "Estill",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Estill%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "475a4f9c0f6a4d00451728e24232ae4e6075f8d255bc4f6f88332718909f715c"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Fayette%20County.pdf": {
+   "boards": 1,
+   "bytes": 163707,
+   "county": "Fayette",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Fayette%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "6bdc347184bc88805f55d8aae24b418ac96de1cf23a9b0c84b2daac0223a4c12"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Fleming%20County.pdf": {
+   "boards": 1,
+   "bytes": 179658,
+   "county": "Fleming",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Fleming%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "8c9e0969afa38f743576366ae11ec43747713fb3a43cee3cb3bd6f544da1b716"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Floyd%20County.pdf": {
+   "boards": 1,
+   "bytes": 180171,
+   "county": "Floyd",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Floyd%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "c2d0ce11f1b59829bd44c086427ffda5bf227dc3a8a2bd77f1b1f0862cd87e8b"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Franklin%20County.pdf": {
+   "boards": 1,
+   "bytes": 189865,
+   "county": "Franklin",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Franklin%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "c6125b802a6b824a0b203ef62908bcf95e93e505ae10ec297a6c7ba6e6be3842"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Fulton%20County.pdf": {
+   "boards": 1,
+   "bytes": 166289,
+   "county": "Fulton",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Fulton%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "f5c242894c9b4f3a5b0209df3701b8b39e0ff6e72d8dd935c90ca03db99c9527"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Gallatin%20County.pdf": {
+   "boards": 1,
+   "bytes": 159117,
+   "county": "Gallatin",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Gallatin%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "ca4432af937310a9791b104f3b08c5c885cd83f75a01772bf6fd628d12510c62"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Garrard%20County.pdf": {
+   "boards": 1,
+   "bytes": 162408,
+   "county": "Garrard",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Garrard%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "95f5e2c6eb38ed745a9442e867e48ebd60d57a58516a6b4873d5d9499c7af8e5"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Grant%20County.pdf": {
+   "boards": 1,
+   "bytes": 158602,
+   "county": "Grant",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Grant%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "f7662c336e2c1284390bb27a37271f8faa6bf17d6f21c53c289f2242613e1d5a"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Graves%20County.pdf": {
+   "boards": 1,
+   "bytes": 165524,
+   "county": "Graves",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Graves%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "df2dd9d3b09ea29de2f00a5ece143c2cba0cdc0fd1fc2370f987bb3d2c234ba0"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Grayson%20County.pdf": {
+   "boards": 1,
+   "bytes": 182446,
+   "county": "Grayson",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Grayson%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "7801401f88fd41582baae259d94c7ab313b93c0fd732a7800c6e1833385a2b39"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Green%20County.pdf": {
+   "boards": 1,
+   "bytes": 163636,
+   "county": "Green",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Green%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "852320375f9d96afaa377ff1273a92c62e06b4eb29eac7e97656af794d0e8761"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Greenup%20County.pdf": {
+   "boards": 1,
+   "bytes": 162885,
+   "county": "Greenup",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Greenup%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "25196828ccf0aa2e4c795a6fb2f969bcc699ec90333ed582a02dc1f079936cd7"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Hancock%20County.pdf": {
+   "boards": 1,
+   "bytes": 163394,
+   "county": "Hancock",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Hancock%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "0414fada0756e6749b0f9ec0e3a7705074c1b09cf1cee0fe1cea10a3a6a2eaf7"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Hardin%20County.pdf": {
+   "boards": 1,
+   "bytes": 164417,
+   "county": "Hardin",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Hardin%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "26039dcae0dd2821c4025dcd2c2b9770a86fc52cc60cefed5dae33ca8b64dce6"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Harlan%20County.pdf": {
+   "boards": 1,
+   "bytes": 161417,
+   "county": "Harlan",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Harlan%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "121b8d0293805744ab988938f307f3325d45b06edf827e3cdb8f77005f15a869"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Harrison%20County.pdf": {
+   "boards": 1,
+   "bytes": 159515,
+   "county": "Harrison",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Harrison%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "dd884617f84a93357d6b0643caad13a6b2ee65745004c86dd7472d8bf3e72a7f"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Hart%20County.pdf": {
+   "boards": 1,
+   "bytes": 183422,
+   "county": "Hart",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Hart%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "b9fb6d91d086b1c1b9a40dc7ef1653382279edcfd1c869ebee1ba6a0803b5d3f"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Henderson%20County.pdf": {
+   "boards": 1,
+   "bytes": 165061,
+   "county": "Henderson",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Henderson%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "e07de1378ddcae2868fdced12166bbe06a9ebe8f3baa6bb758fdfefaad377ad4"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Henry%20County.pdf": {
+   "boards": 1,
+   "bytes": 158965,
+   "county": "Henry",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Henry%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "a296ee7b13074cc8e8ac916b4534b58a5355224eba0069939bda2f01a9504adb"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Hickman%20County.pdf": {
+   "boards": 1,
+   "bytes": 165193,
+   "county": "Hickman",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Hickman%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "aacdd01c22b90629f98e7e2847c836292dd0092e8f76d5b78bb8e0629dfa4524"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Hopkins%20County.pdf": {
+   "boards": 1,
+   "bytes": 204986,
+   "county": "Hopkins",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Hopkins%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "eafba3b8b8822b204851d50128699b90457904b1343c5371092e89c1f8eaf5c1"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Jackson%20County.pdf": {
+   "boards": 1,
+   "bytes": 162303,
+   "county": "Jackson",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Jackson%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "8e889c6780b2705b497a1cd3056baecc014116ae0e820138d603fcd6bb5f8bb0"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Jefferson%20County.pdf": {
+   "boards": 1,
+   "bytes": 162563,
+   "county": "Jefferson",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Jefferson%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "b6bb75a7e00b9b2a709fbc5111cf33c392cf1425d4b4bbbb9e8b6d034ace1ec5"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Jessamine%20County.pdf": {
+   "boards": 1,
+   "bytes": 162438,
+   "county": "Jessamine",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Jessamine%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "1490bb7e82e64120eeacc35488b8fd03d401019c161a640710e4478c02a9c3cb"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Johnson%20County.pdf": {
+   "boards": 1,
+   "bytes": 157217,
+   "county": "Johnson",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Johnson%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "b6fbc4d575f7b7d860b7726b00e20016e3f7be1f0d62f935e70e014b1f817a30"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Kenton%20County.pdf": {
+   "boards": 1,
+   "bytes": 159304,
+   "county": "Kenton",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Kenton%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "f77ed2376c05dc74a2f974d5026b25050421f1e3d71ac8568932cf9a884a1fb8"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Knott%20County.pdf": {
+   "boards": 1,
+   "bytes": 161435,
+   "county": "Knott",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Knott%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "a4238b7802702cae07f85d9240aa2523786b8be1a3ee7a080424b4c328780845"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Knox%20County.pdf": {
+   "boards": 1,
+   "bytes": 161444,
+   "county": "Knox",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Knox%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "85185193542ed6cb8efbe296e26d58a1b3859e9cd58df19f20e21b089b8bd655"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/LaRue%20County.pdf": {
+   "boards": 1,
+   "bytes": 162946,
+   "county": "LaRue",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/LaRue%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "3baf3c19d2a2f938514560c616c58493cba738c2037b6fca663d3941d254a5e3"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Laurel%20County.pdf": {
+   "boards": 1,
+   "bytes": 158074,
+   "county": "Laurel",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Laurel%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "1302f45dce0b94638ebb59c548b2365a7dc65d0ac6928c14ea8b110ee060b362"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Lawrence%20County.pdf": {
+   "boards": 1,
+   "bytes": 187503,
+   "county": "Lawrence",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Lawrence%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "7dafe76dfc751dba908aa4c7d363b81e246f60c78398d74e896968864693eb67"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Lee%20County.pdf": {
+   "boards": 1,
+   "bytes": 161497,
+   "county": "Lee",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Lee%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "e0844774cfbceb47ef0da9f91ee05670ae14e40a89577de8b2bc0ab2200aaf95"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Leslie%20County.pdf": {
+   "boards": 1,
+   "bytes": 162029,
+   "county": "Leslie",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Leslie%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "16395e91e012272fcc95bfa0937d6ba213db3caad348b7796cc82369e28aaac4"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Letcher%20County.pdf": {
+   "boards": 1,
+   "bytes": 161774,
+   "county": "Letcher",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Letcher%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "14b798f64dcfe0054c900de1cd955f76af19e8bf34f2752ce10eb9987e374ab2"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Lewis%20County.pdf": {
+   "boards": 1,
+   "bytes": 143170,
+   "county": "Lewis",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Lewis%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "13824a0d0f3380ef2c7e2abee0b9dab41fc0f6c6166e567255776140dedd35dd"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Lincoln%20County.pdf": {
+   "boards": 1,
+   "bytes": 163295,
+   "county": "Lincoln",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Lincoln%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "229467412f90f45b3f13d35e29e436e951c8947c4ea5f2d2f330c8dc94f18f81"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Livingston%20County.pdf": {
+   "boards": 1,
+   "bytes": 211150,
+   "county": "Livingston",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Livingston%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "cb531b9f904d85d318c5f301ebbfd0344dc012b5c65f29a4f8bf1629c08ee893"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Logan%20County%2C%20North%20and%20South.pdf": {
+   "boards": 2,
+   "bytes": 189911,
+   "county": "Logan",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Logan%20County%2C%20North%20and%20South.pdf",
+   "names": 14,
+   "read": "2026-10-16",
+   "sha256": "a966e2ff1a7f8d5d2890d3741e6ebd95f94e166a0fc002a2672ffd677242b0d8"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Lyon%20County.pdf": {
+   "boards": 1,
+   "bytes": 165973,
+   "county": "Lyon",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Lyon%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "6e1746bf222c5b3202d9dd4d0a6db6af5306a4254e85368f52c493184750cad8"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Madison%20County.pdf": {
+   "boards": 1,
+   "bytes": 163345,
+   "county": "Madison",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Madison%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "85f5c63a971642cb7f6e1d202945d6c9bef65fe42e9545021623df7ce391e485"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Magoffin%20County.pdf": {
+   "boards": 1,
+   "bytes": 162115,
+   "county": "Magoffin",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Magoffin%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "e29e09940a7a44758d11767e095f87be89af2ec0e7ed41a758a7c272c3f84556"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Marion%20County.pdf": {
+   "boards": 1,
+   "bytes": 208645,
+   "county": "Marion",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Marion%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "3b9e6725053efa086ed746c11cfeec4e85700359fa68a292c12a4437a4ad21f9"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Marshall%20County.pdf": {
+   "boards": 1,
+   "bytes": 166084,
+   "county": "Marshall",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Marshall%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "6d362b1f8a1dab719b466a8b2d5835c1108b60a7d7ecfe52280e194a6025da2a"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Martin%20County.pdf": {
+   "boards": 1,
+   "bytes": 162017,
+   "county": "Martin",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Martin%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "85ccd99284b9257d1dc18ec0b06e49a5b4d147272a3e3df275c377fa6e326dca"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Mason%20County.pdf": {
+   "boards": 1,
+   "bytes": 158778,
+   "county": "Mason",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Mason%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "607993c8c58ccfd125337ded212817dae2178a841ca7f3001a6d97d7d227cce1"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/McCracken%20County.pdf": {
+   "boards": 1,
+   "bytes": 165386,
+   "county": "McCracken",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/McCracken%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "72239bc020af2db59f8ca5ed6627c1e0528b4b8f10fe202d64c17eeee4831931"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/McCreary%20County.pdf": {
+   "boards": 1,
+   "bytes": 163658,
+   "county": "McCreary",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/McCreary%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "2c0a7745fd0e0d96471a332ac0cac9382c1533aa232e589d5b391fb7315abfce"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/McLean%20County.pdf": {
+   "boards": 1,
+   "bytes": 164604,
+   "county": "McLean",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/McLean%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "b6d78e62b4b556608471a3d55d583778154bfc3160545e7f3947c57d39219f23"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Meade%20County.pdf": {
+   "boards": 1,
+   "bytes": 164329,
+   "county": "Meade",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Meade%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "431ccf1734acd97e78ade3d41d23a82dcdcc86aa01ae8a5db665c2ea9b8f1244"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Menifee%20County.pdf": {
+   "boards": 1,
+   "bytes": 162363,
+   "county": "Menifee",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Menifee%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "4153327a3bbb56445b6fe5d632408f2eff6ae915a853e856da8733e8e7a4bdc2"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Mercer%20County.pdf": {
+   "boards": 1,
+   "bytes": 162797,
+   "county": "Mercer",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Mercer%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "b7e7683deb0c38603c292dc71b30194024b9db300de11b9a8449074a90185c32"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Metcalfe%20County.pdf": {
+   "boards": 1,
+   "bytes": 163591,
+   "county": "Metcalfe",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Metcalfe%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "c98427b5e59c48c09874e2123bf3d80f87c9d313a7c87e5d7d611c454efc05d6"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Monroe%20County.pdf": {
+   "boards": 1,
+   "bytes": 163561,
+   "county": "Monroe",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Monroe%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "ecce379a343d02868ce5abda2ba14db168fb04b2f0edbfa79cebd6ec371c6815"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Montgomery%20County.pdf": {
+   "boards": 1,
+   "bytes": 163700,
+   "county": "Montgomery",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Montgomery%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "43c2023a7f32d6cdfc97e0ec23027050c42723ce1860c0b9574fde4b2c84b8b9"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Morgan%20County.pdf": {
+   "boards": 1,
+   "bytes": 160657,
+   "county": "Morgan",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Morgan%20County.pdf",
+   "names": 6,
+   "read": "2026-10-16",
+   "sha256": "f85ea0fa960eedcbc9fbc779882eb55646ad95a3c02700999ee2c3b303045b19"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Muhlenberg%20County.pdf": {
+   "boards": 1,
+   "bytes": 182856,
+   "county": "Muhlenberg",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Muhlenberg%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "2cea11d1a98c3c3d4d7534824c12aeecdd93b52e4cfa73cd73c72e446a9f4027"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Nelson%20County.pdf": {
+   "boards": 1,
+   "bytes": 163227,
+   "county": "Nelson",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Nelson%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "15c05157afabd2c96230b532c5a0968a592c454b920f8c6bde02e478df65d16f"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Nicholas%20County.pdf": {
+   "boards": 1,
+   "bytes": 143453,
+   "county": "Nicholas",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Nicholas%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "398acaa756803306b64f0d263a00bd426ac4ef2f8e382023f1e8f9f54c9f27b8"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Ohio%20County.pdf": {
+   "boards": 1,
+   "bytes": 183553,
+   "county": "Ohio",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Ohio%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "5551f20bba2e1a33052af803898c3d26db41fcbdb40a8d609f70a90f5d482d42"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Oldham%20County.pdf": {
+   "boards": 1,
+   "bytes": 163634,
+   "county": "Oldham",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Oldham%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "0410ecf51a246c72ba8e1781d229919dfc345623f33c8377f4f9df6fe6611ce3"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Owen%20County.pdf": {
+   "boards": 1,
+   "bytes": 183126,
+   "county": "Owen",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Owen%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "bd4cb9bc4cdef67971ec2c767c19749c568e5f18481e40ddd9064190864cb80e"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Owsley%20County.pdf": {
+   "boards": 1,
+   "bytes": 157568,
+   "county": "Owsley",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Owsley%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "0ebfa509bfe0cf553826ff675ccb0143e8d0ff4e1a97d3386357047ed9ac99b6"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Pendleton%20County.pdf": {
+   "boards": 1,
+   "bytes": 209254,
+   "county": "Pendleton",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Pendleton%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "273e52e58c4726bd48492d0a4f6037c8a6c498c4f86b4499a0acf8bedf9754c5"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Perry%20County.pdf": {
+   "boards": 1,
+   "bytes": 157249,
+   "county": "Perry",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Perry%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "ac2d7ba503d787d357fbc351811df14f530232ed4cf955eb9a46aab721e27c41"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Pike%20County.pdf": {
+   "boards": 1,
+   "bytes": 161598,
+   "county": "Pike",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Pike%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "688a2c0ed6731bbd4f25ea6687f46e5bc272e55751ff6bc20fef46a4bd30b27c"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Powell%20County.pdf": {
+   "boards": 1,
+   "bytes": 162955,
+   "county": "Powell",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Powell%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "3955b4c7eae00ec61e95f0d6167a0574ea21873c5930db85140930f9bc5a394e"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Pulaski%20County.pdf": {
+   "boards": 1,
+   "bytes": 142979,
+   "county": "Pulaski",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Pulaski%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "f10cf84500b9170db1b84067e852f7be2d909b94c021a9fe1a77bd6196f781a8"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Robertson%20County.pdf": {
+   "boards": 1,
+   "bytes": 158583,
+   "county": "Robertson",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Robertson%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "fe23a16922e77b9b93a8296d7828319f5ee6b4696a5f57f49d7711036418b33c"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Rockcastle%20County.pdf": {
+   "boards": 1,
+   "bytes": 163324,
+   "county": "Rockcastle",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Rockcastle%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "cde9f3d80bd4c55646702b2dc1c20cbcd4c1b2650319afa0d3ceae50d83b70f8"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Rowan%20County.pdf": {
+   "boards": 1,
+   "bytes": 160895,
+   "county": "Rowan",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Rowan%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "58a815f2af741ae3f55e3fdb2ef21ee7b12ed1223491a4e661a2741951e34555"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Russell%20County.pdf": {
+   "boards": 1,
+   "bytes": 163441,
+   "county": "Russell",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Russell%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "681fa2aebe2792bae0da5efe450a3352a7abcd26ad19b303ff6785e1fc2c1609"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Scott%20County.pdf": {
+   "boards": 1,
+   "bytes": 158863,
+   "county": "Scott",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Scott%20County.pdf",
+   "names": 6,
+   "read": "2026-10-16",
+   "sha256": "3318fda9a5ef1725ef76243e4df25b9ed590f6734a21d15167b505d4fa8c82cb"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Shelby%20County.pdf": {
+   "boards": 1,
+   "bytes": 163004,
+   "county": "Shelby",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Shelby%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "8c2ab774643daa4a9d807e715543d8ecb0a1ed5496a78bb29b8eb1e4dd1c4274"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Simpson%20County.pdf": {
+   "boards": 1,
+   "bytes": 162857,
+   "county": "Simpson",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Simpson%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "ee030d4148a61aede52cae3f1ab650bf2c450b41cbc4723573caa201ed91b7b1"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Spencer%20County.pdf": {
+   "boards": 1,
+   "bytes": 163727,
+   "county": "Spencer",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Spencer%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "1725b031195ab881703c101aec43b55937a77ff32c1505fa55799dbc07e843be"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Taylor%20County.pdf": {
+   "boards": 1,
+   "bytes": 163460,
+   "county": "Taylor",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Taylor%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "7aa0fa650925e75f461d74207da31ddd5335e91b6315bfa979495febddd070fa"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Todd%20County.pdf": {
+   "boards": 1,
+   "bytes": 184744,
+   "county": "Todd",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Todd%20County.pdf",
+   "names": 6,
+   "read": "2026-10-16",
+   "sha256": "48d31f4982c514c1d8c925bf8b62a27a924deda8f035a7bbedb9223837f81d30"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Trigg%20County.pdf": {
+   "boards": 1,
+   "bytes": 211458,
+   "county": "Trigg",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Trigg%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "0c4d798d4a8299e0dcd6acc877ce45ab2871d0a6ffc7e57293a0f1b1d9472108"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Trimble%20County.pdf": {
+   "boards": 1,
+   "bytes": 158885,
+   "county": "Trimble",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Trimble%20County.pdf",
+   "names": 6,
+   "read": "2026-10-16",
+   "sha256": "b05f5f292dfb7aad6ebfae60be33bd10634e4bf5fd7db0d7c44f65f59d608985"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Union%20County.pdf": {
+   "boards": 1,
+   "bytes": 184774,
+   "county": "Union",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Union%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "60daf7d388c0e51190850f5d06aca1197cac95bbce4245bc32409e4e99bde5fb"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Warren%20County.pdf": {
+   "boards": 1,
+   "bytes": 184941,
+   "county": "Warren",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Warren%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "91d8885e759801acea4f26b7907c8b4144a110fa15642ca5cbe1bd1401ee9cec"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Washington%20County.pdf": {
+   "boards": 1,
+   "bytes": 183295,
+   "county": "Washington",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Washington%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "e333d9b999acf748e1b26fe2ec965fd56bffb16549e12e11b721bddd199fd4ed"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Wayne%20County.pdf": {
+   "boards": 1,
+   "bytes": 159084,
+   "county": "Wayne",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Wayne%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "3d96366d8e29f7399dbe7bb9b18948335f85ff110a6f4835c4a14ef6f55ce620"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Webster%20County.pdf": {
+   "boards": 1,
+   "bytes": 165528,
+   "county": "Webster",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Webster%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "8d21699862836264064085a22c271cfa5d69baaddac428f08ad6ee6eb8e2f015"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Whitley%20County.pdf": {
+   "boards": 1,
+   "bytes": 163914,
+   "county": "Whitley",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Whitley%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "cd37158a94005dd12ce94c1c98018d99bf6c4576497f236984424fa19a89141b"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Wolfe%20County.pdf": {
+   "boards": 1,
+   "bytes": 162018,
+   "county": "Wolfe",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Wolfe%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "4a465084f4e460a1264fa640bb0b6b69094aecef1ad61f0de394d499d9e8488b"
+  },
+  "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Woodford%20County.pdf": {
+   "boards": 1,
+   "bytes": 163891,
+   "county": "Woodford",
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Conservation%20Districts/Woodford%20County.pdf",
+   "names": 7,
+   "read": "2026-10-16",
+   "sha256": "174b99df0b7eadee1dba54aeedb1862282e578188aa646364e59e579004d0e32"
+  }
+ },
+ "index": {
+  "https://eec.ky.gov/Natural-Resources/Conservation/Pages/Conservation-Districts.aspx": {
+   "bytes": 346028,
+   "documents": 120,
+   "final": "https://eec.ky.gov/Natural-Resources/Conservation/Pages/Conservation-Districts.aspx",
+   "read": "2026-10-16",
+   "sha256": "0044580edf0625e0850c17295c1f7f33cd10fda1709f3f30c9327b4c1afa196a"
+  }
+ }
+}

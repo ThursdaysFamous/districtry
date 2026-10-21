@@ -45,7 +45,7 @@
 // refreshed per election.)
 /* ==== TEMPLATE:END sw-version-history ==== */
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-il-shell-v43";
+const CACHE_NAME = "districtry-il-shell-v46";
 
 const SHELL_URLS = [
   "./",
@@ -104,6 +104,12 @@ const GEOMETRY_URLS = [
   "./data/app/champaign-county-outline.json",
   "./data/app/christian-county-outline.json",
   "./data/app/christian-county-board-districts.json",
+  "./data/app/ford-county-board-districts.json",
+  "./data/app/fayette-county-board-districts.json",
+  "./data/app/cumberland-county-board-districts.json",
+  "./data/app/jersey-county-board-districts.json",
+  "./data/app/jasper-county-board-districts.json",
+  "./data/app/lawrence-county-board-districts.json",
   "./data/app/clark-county-board-districts.json",
   "./data/app/clark-county-outline.json",
   "./data/app/calhoun-precincts.json",
@@ -133,6 +139,7 @@ const GEOMETRY_URLS = [
   "./data/app/clinton-county-board-districts.json",
   "./data/app/warren-county-board-districts.json",
   "./data/app/warren-precincts.json",
+  "./data/app/macoupin-county-board-districts.json",
   "./data/app/knox-county-board-districts.json",
   "./data/app/edwards-county-outline.json",
   "./data/app/effingham-county-outline.json",
@@ -379,6 +386,7 @@ const ROSTER_URLS = [
   "./data/app/clinton-county-board-members.json",
   "./data/app/warren-county-board-members.json",
   "./data/app/adams-county-board-members.json",
+  "./data/app/macoupin-county-board-members.json",
   "./data/app/knox-county-board-members.json",
   "./data/app/il-senate-members.json",
   "./data/app/il-house-members.json",
@@ -451,6 +459,12 @@ const ROSTER_URLS = [
   "./data/app/douglas-county-board-members.json",
   "./data/app/vermilion-county-board-members.json",
   "./data/app/wayne-county-board-members.json",
+  "./data/app/ford-county-board-members.json",
+  "./data/app/fayette-county-board-members.json",
+  "./data/app/cumberland-county-board-members.json",
+  "./data/app/jersey-county-board-members.json",
+  "./data/app/jasper-county-board-members.json",
+  "./data/app/lawrence-county-board-members.json",
   "./data/app/christian-county-board-members.json",
   "./data/app/clay-county-board-members.json",
   "./data/app/st-clair-precinct-polling.json",

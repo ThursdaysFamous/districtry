@@ -165,8 +165,62 @@ ALWAYS_AVAILABLE = {"setuptools", "pip", "pkg_resources"}
 # files to meet it (Jackson County prints "Vacant" in one trustee's name cell),
 # and a per-instance copy of that word list is exactly what this list refuses.
 # Stdlib-only at module scope — argparse, json, os, re, sys.
+#
+# `aia_bundle` (2026-10-15) is the seventh, added when Mississippi's legislature
+# roster builder became the first INSTANCE file to read a host that serves only
+# its leaf certificate (www.legislature.ms.gov, whose GlobalSign intermediate
+# every automated client then reports as missing). The module's own docstring is
+# the argument and states this list's test in its own words: "A pinned hash that
+# exists in two files is a pin that drifts; this is the one copy." Which
+# certificate completes a host's chain, and what it must hash to, must not be
+# answered differently per instance. Stdlib-only at module scope — base64,
+# hashlib, os, tempfile, urllib.request; `certifi` is imported inside
+# `ca_bundle()`, the one function that uses it, and ships with `requests`, which
+# every caller already installs.
+#
+# `city_councils` (2026-10-17) is the eighth, added when the weekly council page
+# watch (watch-city-council-pages.yml) became the first workflow to run the five
+# state builders that import it — Arkansas, North Carolina, Oklahoma, South
+# Carolina and Tennessee. Its test is this list's: what "this name is still on
+# the page its seat cites" means — one normalisation of a page's text, one
+# reading of robots.txt at every redirect hop, one rule that a page which cannot
+# be read keeps what it last said — must not be answered differently per state,
+# and the five builders exist so that each states only its own files, seat
+# counts and measured browser pages. Stdlib-only at module scope apart from
+# `scraper_common`, which is on this list; `pdftotext` is a program it runs, not
+# a module, and the workflow installs it.
+#
+# `statewide_precincts`, `published_district_layers`, `whole_county_courts`,
+# `city_ward_maps` and `conservation_boards` (2026-10-17) are the ninth to the
+# thirteenth, added when the smoke job began running the --check of the newest
+# states' builders that import them. Each is the one implementation a family of
+# state builders shares, and each state's builder says only where its source
+# is, how to read one record and what to expect: six states' precinct layers;
+# the school board, special district and Arkansas ward maps a government office
+# publishes; five states' whole-county court districts; the ward maps read city
+# by city in four states; and three states' conservation district boards. What
+# "the shipped file matches the record its builder wrote" and "every county is
+# covered by its own districts" mean must not be answered differently per
+# state, which is this list's test. All five are stdlib-only at module scope
+# apart from one another, `city_councils` and `scraper_common`, which are on
+# this list; `requests`, `shapely` and the `mapshaper` and `pdftotext` programs
+# are reached only when a builder fetches or builds, never by its --check.
+#
+# `boundary_fidelity` (2026-10-20) is the fourteenth, added when the smoke job
+# began running North Carolina's court district builder, the first of its
+# importers that any workflow runs; the ten state county builders that also
+# import it are operator steps. It answers how far a simplified boundary strays
+# from the line it was simplified from, measured from each SOURCE vertex to the
+# drawn line, which is the direction that gates something: measured from the
+# drawn vertices it answers about zero by construction. How far a drawn line
+# strays must not be answered differently per state, which is this list's test.
+# Stdlib-only (math and sys), and the court builder imports it inside its build,
+# which its --check never calls.
 FLEET_SHARED = {"undeliverable", "robots_policy", "arcgis_error", "scraper_common",
-                "workflow_run_evidence", "validate_officeholder_names"}
+                "workflow_run_evidence", "validate_officeholder_names", "aia_bundle",
+                "city_councils", "statewide_precincts", "published_district_layers",
+                "whole_county_courts", "city_ward_maps", "conservation_boards",
+                "boundary_fidelity"}
 ROOT_SCRIPTS = os.path.join(REPO_ROOT, "scripts")
 
 PIP_RE = re.compile(r"pip3?\s+install\s+([^\n]*)")

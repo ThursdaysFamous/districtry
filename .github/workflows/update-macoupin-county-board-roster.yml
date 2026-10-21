@@ -1,0 +1,139 @@
+name: Update Macoupin County Board roster
+
+# Weekly refresh of the Macoupin County Board District card's member roster
+# (il/data/app/macoupin-county-board-members.json), fetched by index.html.
+#
+# TWO JOBS IN ONE RUN.
+#
+# 1. THE ROSTER comes from the County Clerk's elected-officials directory, read
+#    from the JSONP service its page fills itself from: eighteen seats, two per
+#    district, each with the year it is next on the ballot and the page's own
+#    mark for a member appointed to fill an unexpired term, plus the board
+#    Chair. No party or phone ships. Since 2026-10-17 (Adam's "E-mails too")
+#    each seat's detail record is asked for its second-contact e-mail, which
+#    ships where its local part carries the member's surname; nothing else in
+#    that record, which also carries the holder's residence, is read.
+#
+# 2. THE REDISTRICTING TRIPWIRE. The shipped boundary is the county's own Board
+#    Districts layer (GIS_Layers layer 3) as it stood on 2026-10-15. The same run
+#    re-reads that layer's nine districts and each one's area, without geometry,
+#    and FAILS if any has moved. A red run here means the county redrew its
+#    districts and build_macoupin_board_districts.py must be re-run and its
+#    witnesses re-read before this county ships again — the alarm working, not
+#    breakage.
+#
+#    WHAT THE CHECK CANNOT SEE: a redraw that kept every district's area to the
+#    square metre. Every cheaper way for this county to move is caught.
+#
+# If anything changed, this opens a PR rather than committing to main:
+# officeholder data gets a human look before it ships.
+
+on:
+  schedule:
+    - cron: "0 10 * * 4"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because this job regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own last
+          # commit. Under the default depth-1 checkout git reports the single
+          # fetched commit as the last commit of EVERY file, so every one of the
+          # 243 entries takes today's date. Measured 2026-09-19 by building the
+          # sitemap in a depth-1 clone: 243 of 243 lastmods moved, against 0 in a
+          # full clone, where `build_sitemap.py --check` passes. A bot run on
+          # 2026-09-17 shipped 241 wrong dates this way.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install scraper dependencies
+        # Both surfaces answer plain GETs, so requests reaches them. The builder
+        # imports only CONSTANTS from build_macoupin_board_districts.py, whose
+        # geometry stack is function-local (the De Witt seam), so no shapely here.
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Read the Clerk's directory and re-read the county's district layer
+        run: python3 scripts/macoupin_county_board_scraper.py -o /tmp/macoupin_board_raw.json
+
+      - name: Rebuild roster data file
+        run: python3 scripts/build_macoupin_county_board.py /tmp/macoupin_board_raw.json
+
+      # Gate the regenerated data before it can reach a PR.
+      - name: Validate app + data files
+        run: python3 scripts/validate_index.py il/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- il/data/app/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR.
+          branch="bot/macoupin-county-board-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip, not from the checkout this
+          # run started with. actions/checkout is shallow, these runs take tens
+          # of minutes, and if main gains a .github/workflows/ change meanwhile,
+          # the branch ends up differing from main THERE too — which GitHub reads
+          # as the push updating a workflow and refuses for a token without
+          # `workflow` scope. Measured 2026-09-02 on update-municipal-officials.
+          # Re-cutting leaves this branch differing from main in its data file(s)
+          # alone; the rebuilt files are carried across, and a run where main
+          # touched those same files errors instead of pushing, which is right.
+          # Full history, for the same reason as fetch-depth: 0 above. `git fetch
+          # --depth=1` RE-SHALLOWS a clone that was fetched complete (measured:
+          # 512 commits down to 13), so the two have to move together — deepening
+          # the checkout alone would be undone here.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          # The per-county board pages (il/county-board/) are GENERATED from
+          # the roster this job just rewrote, so regenerate them here or the
+          # smoke gate's `build_county_pages.py --check` fails on this PR with a
+          # page naming last week's members. The sitemap follows, because those
+          # pages are in it and its lastmod is each file's own last commit.
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          # docs/EAM_STATUS.md counts the districts this roster names, so a
+          # county gaining or losing a member moves it and the smoke gate's
+          # `build_eam_status.py --check` fails on this PR. See that script's
+          # check_workflows(), which is what names this job.
+          python3 scripts/build_eam_status.py
+          git add il/data/app/macoupin-county-board-members.json il/county-board il/county-board.html about.html sitemap.xml docs/EAM_STATUS.md
+          git commit -m "Update Macoupin County Board roster from macoupinvotes.gov"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Macoupin County Board roster from macoupinvotes.gov" \
+              --body "Automated weekly refresh of the Macoupin County Board District card's member roster, generated by \`scripts/macoupin_county_board_scraper.py\` + \`scripts/build_macoupin_county_board.py\`. Please review the diff before merging — this changes data about real officeholders. The same run re-reads the county's own Board Districts layer and fails if any district's area has moved; that failure would mean the county redrew its districts, and the geometry must be rebuilt and re-witnessed before it ships again." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

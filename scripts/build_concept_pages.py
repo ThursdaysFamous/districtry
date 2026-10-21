@@ -64,6 +64,7 @@ from question_page import (METROS, PageError, check_layer, head, load,  # noqa: 
 # Importing it keeps ONE reader of that question; grouping the file again here
 # is how the page and the table come to disagree about how many districts exist.
 from build_officeholder_tables import afr_people, afr_units  # noqa: E402
+from build_county_pages import dial_digits  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -217,7 +218,7 @@ def township_page(tag, spec, worksheet):
             "<td>%s</td></tr>" % (
                 esc(rec["name"]),
                 esc(office["address"]),
-                ('<a href="tel:%s">%s</a>' % (re.sub(r"[^0-9+]", "", office["phone"]),
+                ('<a href="tel:%s">%s</a>' % (esc(dial_digits(office["phone"])),
                                               esc(office["phone"]))
                  if office.get("phone") else ""),
                 ('<a href="%s" target="_blank" rel="noopener">Website</a>'
@@ -709,9 +710,10 @@ def city_council_page(tag, spec, worksheet):
     exactly the sentence that survives a seventh city unread.
 
     THE CITIES DRAWN WITHOUT A ROSTER ARE NAMED RATHER THAN OMITTED. Michigan
-    draws Flint, Warren and Rochester Hills and names nobody in them; a page
-    that listed three cities and said nothing about the other three would read
-    as though the map covered three.
+    draws Rochester Hills and names nobody there, and draws six more whose cards
+    name their members from the weekly city-board file this page prints no
+    table for; a page that listed only the cities it has tables for would read
+    as though the map covered only those.
     """
     wards = {name: len(load(path)["features"])
              for name, path in spec["wards"]}
@@ -721,8 +723,20 @@ def city_council_page(tag, spec, worksheet):
     # of 46 beside "draws the wards of 3 cities" reads as though all 46 sat in
     # those three. The first draft printed exactly that.
     in_wards, at_large_cities, at_large_named = 0, 0, 0
+    ward_city_names = set()
     for _label, path, adapter in spec["rosters"]:
         data = load(path)
+        if adapter == "ward_city_councils":
+            # Iowa's council file holds every city above 25,000 the app can
+            # read; the ones that elect by ward are the ones it names a "Ward N"
+            # seat for, and only those whose wards are DRAWN count here.
+            for rec in data.values():
+                members = rec.get("members") or []
+                if rec.get("city") in wards and any(
+                        re.match(r"Ward \d+$", m.get("seat") or "") for m in members):
+                    ward_city_names.add(rec["city"])
+                    in_wards += sum(1 for m in members if m.get("name"))
+            continue
         if adapter == "city_officials":
             at_large_cities += len(data)
             at_large_named += sum(1 for rec in data.values()
@@ -735,14 +749,37 @@ def city_council_page(tag, spec, worksheet):
                 if m.get("name"):
                     in_wards += 1
     named = in_wards + at_large_named
-    rostered = {label for label, _p, a in spec["rosters"] if a != "city_officials"}
-    unrostered = sorted(c for c in wards if c not in rostered)
+    rostered = ({label for label, _p, a in spec["rosters"]
+                 if a not in ("city_officials", "ward_city_councils")}
+                | ward_city_names)
+    # CITIES WHOSE CARDS NAME THEIR MEMBERS FROM THE WEEKLY CITY-BOARD FILE
+    # (Michigan's mi-municipal-officials.json) are named apart, because this
+    # page prints no table for them and so cannot count their members, while
+    # saying the map names nobody there would be false — it said exactly that
+    # of Flint and Warren from the day their cards started naming members.
+    # The claim is CHECKED against that file: a city it no longer carries, or
+    # carries with no member for any seat, fails the build rather than being
+    # described as named.
+    on_card = []
+    for city, (path, geoid) in sorted((spec.get("named_on_card") or {}).items()):
+        board = load(path).get(geoid) or {}
+        if not any(m.get("name") and m.get("seat") for m in board.get("members") or []):
+            fail("%s: %s names no member by seat for %s (%s), so the page cannot say "
+                 "its card names them" % (spec["file"], path, city, geoid))
+        if city in wards:
+            on_card.append(city)
+    unrostered = sorted(c for c in wards if c not in rostered and c not in on_card)
     place = spec["place"]
 
-    missing = ("" if not unrostered else
-               " The map also draws %s, where this app does not name the "
-               "members yet, so those cards give the ward and a link to the "
-               "city rather than a name." % _join(unrostered))
+    missing = ("" if not on_card else
+               " The map also draws %s, whose cards name the members as each "
+               "city's own council page lists them." % _join(on_card))
+    if unrostered:
+        missing += ((" It also draws %s" if on_card else " The map also draws %s")
+                    % _join(unrostered)
+                    + ", where this app does not name the members yet, so %s the ward "
+                      "and a link to the city rather than a name."
+                    % ("that card gives" if len(unrostered) == 1 else "those cards give"))
     elsewhere = ("" if not at_large_named else
                  " %d more sit on the councils of %d smaller %s cities that "
                  "elect at large and have no wards to draw; their own county "
@@ -839,21 +876,36 @@ def dispatch_counties(layer):
     return len(keys)
 
 
-def office_table(units, noun, plural):
+def office_table(units, noun, plural, own_line=""):
     """One row per district that publishes an office, from the same filings.
 
-    THE ADDRESS AND THE TELEPHONE BELONG TO THE DISTRICT, NOT TO A PERSON, so
-    they sit here rather than beside a name in the table above — the rule the
-    township-hall table already follows, and for the same reason: a filing
-    publishes one office per district and one telephone, often a named
-    officer's own line, and printing it next to one trustee would make it
+    THE ADDRESS AND THE TELEPHONE HERE BELONG TO THE DISTRICT, NOT TO A PERSON,
+    so they sit here rather than beside a name in the table above — the rule the
+    township-hall table already follows. comptroller_afr.py ships a district's
+    address or telephone only where two differently-surnamed people on its
+    filing both gave it, so printing it next to one trustee would make it
     theirs.
 
-    NO E-MAIL COLUMN. About a third of these filings carry one and it is
-    almost always a named officer's work address rather than the district's, so
-    it stays on the map's card where the question is who to contact about this
-    district, and off a page that would publish several hundred of them in one
-    scrapeable block.
+    A TELEPHONE THE FILING PRINTS BESIDE ONE PERSON ALONE IS THAT PERSON'S, and
+    since Adam's ruling of 2026-10-17 ("if the official government source uses
+    personal phone numbers, we publish those") it ships on that person's record
+    and the people table above prints it beside their name, whosever line it
+    is. Until that day this docstring and the paragraph below said this site
+    never prints a telephone beside a name. `own_line` finishes the page's
+    sentence where a further number is kept off its people: a library officer
+    does not carry a number the library systems' directory lists as the
+    library's own (build_il_library_district_officials.py), so the sentence
+    says so on the library page and only there.
+
+    NO E-MAIL COLUMN, in this table or in the people table above. The
+    district's own address has always shipped on the map's card, and since Adam
+    chose "E-mails too" on 2026-10-17 each officer's own address does too; both
+    stay on the card, where the question is who to contact about this district,
+    and off a page that would publish several hundred of them in one block a
+    single request can read. The people table's generator carries no e-mail
+    column for any roster (build_officeholder_tables.py says why). That is a
+    decision about this page and not about the addresses, which ship in the
+    data the card reads, and the paragraph below says where they are.
     """
     rows = []
     for name, rec in units:
@@ -866,16 +918,18 @@ def office_table(units, noun, plural):
             "      <tr><td>%s</td><td>%s</td><td>%s</td></tr>"
             % (esc(name), esc(where),
                ('<a href="tel:%s">%s</a>'
-                % (re.sub(r"[^0-9+]", "", phone), esc(phone))) if phone else ""))
+                % (esc(dial_digits(phone)), esc(phone))) if phone else ""))
     if not rows:
         raise PageError("no %s publishes an office in its filing — the page's "
                         "office table would be empty" % noun)
     return """  <section>
     <h2>Where to reach each %(noun)s</h2>
     <p>Where %(n)d of these %(plural)s say to reach them, in their own filings. The address and
-      the telephone belong to the <strong>%(noun)s</strong> rather than to any one person on
-      it: a filing publishes one of each, often a named officer's own line, so this
-      site never prints either beside a name.</p>
+      the telephone here belong to the <strong>%(noun)s</strong> rather than to any one person
+      on it: each is one that two different people on the filing both gave. The table above
+      prints a telephone beside a person's name where the filing lists it for that person
+      alone%(own_line)s. E-mail addresses, the %(noun)s's own and each person's, are on the
+      map's card and not on this page.</p>
     <div class="flow-table-wrap">
     <table class="flow">
       <thead><tr><th>%(head)s</th><th>Office</th><th>Telephone</th></tr></thead>
@@ -887,7 +941,7 @@ def office_table(units, noun, plural):
   </section>
 
 """ % dict(n=len(rows), rows="\n".join(rows), noun=esc(noun), plural=esc(plural),
-           head=esc(noun[0].upper() + noun[1:]))
+           head=esc(noun[0].upper() + noun[1:]), own_line=own_line)
 
 
 def afr_provenance(noun, name_note):
@@ -950,8 +1004,9 @@ def fire_district_page(tag, spec, worksheet):
     <h2>What the lookup shows</h2>
     <div class="answer-card">
       <p>Select any point and the card names the <strong>fire protection district</strong>
-        covering it, the people its latest filing names, and the district's office and
-        telephone.</p>
+        covering it, the people its latest filing names, each with any telephone or e-mail
+        address the filing gives as that person's own, and the district's office, telephone
+        and e-mail.</p>
       <p>The map draws these districts in %(counties)d Illinois counties. This page names the
         %(units)d districts among them that file an annual report the state publishes. A
         district the filings do not reach still draws on the map, and its card may still name
@@ -1008,7 +1063,9 @@ def park_district_page(tag, spec, worksheet):
     <h2>What the lookup shows</h2>
     <div class="answer-card">
       <p>Select any point and the card names the <strong>park district</strong> covering it,
-        the people its latest filing names, and the district's office and telephone.</p>
+        the people its latest filing names, each with any telephone or e-mail address the
+        filing gives as that person's own, and the district's office, telephone and
+        e-mail.</p>
       <p>The map draws park districts in %(counties)d Illinois counties. This page names the
         %(units)d districts among them that file an annual report the state publishes. A
         district the filings do not reach still draws on the map, and its card may still name
@@ -1077,7 +1134,9 @@ def library_district_page(tag, spec, worksheet):
     <div class="answer-card">
       <p>Select any point and the card names the <strong>library</strong> serving it, whether
         it is a district you live inside or a municipal library whose area is simply the
-        village, the people its latest filing names, and its office and telephone.</p>
+        village, the people its latest filing names, each with any telephone or e-mail address
+        the filing gives as that person's own (never the library's own line), and its office,
+        telephone and e-mail.</p>
       <p>The map draws library boundaries in %(counties)d Illinois counties. This page names
         %(units)d of them from the annual report the library files with the state and
         %(site)d more from the library's own website. A library in neither table still draws
@@ -1113,7 +1172,10 @@ def library_district_page(tag, spec, worksheet):
   </section>
 
 """  % dict(counties=counties, units=len(units), districts=districts, site=len(site))
-    sections += office_table(units, "library", "libraries")
+    sections += office_table(
+        units, "library", "libraries",
+        own_line=" and the Illinois library systems' shared directory does not list it as "
+                 "the library's own telephone")
     sections += afr_provenance("library", LIBRARY_NAME_NOTE)
 
     return dict(
@@ -1360,9 +1422,18 @@ PAGES = [
                 ("Detroit", "mi/data/app/mi-detroit-council-districts.json"),
                 ("Flint", "mi/data/app/mi-flint-wards.json"),
                 ("Grand Rapids", "mi/data/app/mi-grand-rapids-wards.json"),
+                ("Holland", "mi/data/app/mi-holland-wards.json"),
                 ("Jackson", "mi/data/app/mi-jackson-wards.json"),
+                ("Midland", "mi/data/app/mi-midland-wards.json"),
+                ("Muskegon", "mi/data/app/mi-muskegon-wards.json"),
+                ("Pontiac", "mi/data/app/mi-pontiac-wards.json"),
                 ("Rochester Hills", "mi/data/app/mi-rochester-hills-wards.json"),
+                ("Walker", "mi/data/app/mi-walker-wards.json"),
                 ("Warren", "mi/data/app/mi-warren-wards.json")],
+         named_on_card={c: ("mi/data/app/mi-municipal-officials.json", g) for c, g in (
+             ("Flint", "2629000"), ("Holland", "2638640"), ("Midland", "2653780"),
+             ("Muskegon", "2656320"), ("Pontiac", "2665440"), ("Walker", "2682960"),
+             ("Warren", "2684000"))},
          rosters=[("Detroit", "mi/data/app/mi-detroit-council-members.json", "city_council"),
                   ("Grand Rapids", "mi/data/app/mi-grand-rapids-council-members.json",
                    "city_council"),
@@ -1378,8 +1449,13 @@ PAGES = [
                  "mi/data/app/mi-detroit-council-districts.json",
                  "mi/data/app/mi-flint-wards.json",
                  "mi/data/app/mi-grand-rapids-wards.json",
+                 "mi/data/app/mi-holland-wards.json",
                  "mi/data/app/mi-jackson-wards.json",
+                 "mi/data/app/mi-midland-wards.json",
+                 "mi/data/app/mi-muskegon-wards.json",
+                 "mi/data/app/mi-pontiac-wards.json",
                  "mi/data/app/mi-rochester-hills-wards.json",
+                 "mi/data/app/mi-walker-wards.json",
                  "mi/data/app/mi-warren-wards.json"],
          sibling=dict(page="county-commissioner.html",
                       label="Who is my county commissioner?",
@@ -1394,16 +1470,27 @@ PAGES = [
          layers="city-ward", make=city_council_page, place="Iowa",
          wards=[("Cedar Rapids", "ia/data/app/cedar-rapids-wards.json"),
                 ("Des Moines", "ia/data/app/dsm-wards.json"),
-                ("Waterloo", "ia/data/app/waterloo-wards.json")],
+                ("Waterloo", "ia/data/app/waterloo-wards.json"),
+                ("Ames", "ia/data/app/ames-wards.json"),
+                ("Bettendorf", "ia/data/app/bettendorf-wards.json"),
+                ("Cedar Falls", "ia/data/app/cedar-falls-wards.json"),
+                ("Davenport", "ia/data/app/davenport-wards.json"),
+                ("Dubuque", "ia/data/app/dubuque-wards.json"),
+                ("Marion", "ia/data/app/marion-wards.json"),
+                ("Marshalltown", "ia/data/app/marshalltown-wards.json"),
+                ("Mason City", "ia/data/app/mason-city-wards.json"),
+                ("West Des Moines", "ia/data/app/west-des-moines-wards.json")],
          rosters=[("Des Moines", "ia/data/app/dsm-council-members.json", "city_council"),
                   ("Cedar Rapids", "ia/data/app/cedar-rapids-council-members.json",
                    "city_council"),
                   ("Waterloo", "ia/data/app/waterloo-council-members.json", "city_council"),
+                  ("ward cities", "ia/data/app/ia-city-councils.json", "ward_city_councils"),
                   ("small cities", "ia/data/app/ia-city-officials.json", "city_officials")],
          counts=["ia/data/app/dsm-council-members.json",
                  "ia/data/app/cedar-rapids-council-members.json",
                  "ia/data/app/waterloo-council-members.json",
                  "ia/data/app/ia-city-officials.json",
+                 "ia/data/app/ia-city-councils.json",
                  "ia/data/app/cedar-rapids-wards.json",
                  "ia/data/app/dsm-wards.json",
                  "ia/data/app/waterloo-wards.json"],

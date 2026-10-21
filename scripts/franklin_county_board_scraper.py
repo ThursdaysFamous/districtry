@@ -39,11 +39,20 @@ passed. `mailto:` is rewritten to a `data-cfemail` hex blob, so this decodes it
 (XOR with the first byte) and treats a row that has the markup but yields no
 address as a hard failure rather than as a member with no e-mail.
 
-THE COLUMN IS "HOME OR E-MAIL", AND ONLY THE E-MAIL HALF SHIPS. The county
-gives no way to tell which of the two a given cell holds, and a home telephone
-is the one contact this project does not publish; the Mobile column already
-carries a number for every member. A value in that column that is not an
-e-mail address is counted and reported, never shipped.
+THE COLUMN IS "HOME OR E-MAIL", AND BOTH HALVES SHIP. An e-mail address there
+ships as the member's e-mail, as it always has. A telephone number there is the
+member's home line, and since Adam's ruling of 2026-10-17 ("if the official
+government source uses personal phone numbers, we publish those") it ships as
+well, in `phonesExtra` as "home 618-...", after the Mobile column's number,
+which stays first as "mobile 618-..." (a member with no Mobile number carries
+the home number in `phone`). Until that day a number in this column
+was counted and dropped. Measured on 2026-10-17 the column held one e-mail
+address and eight empty cells, so no home number ships yet; the parser reads one
+the day the county prints one. Three things still stop a number: one printed
+more than once on the page (that is an office or county line, not a member's),
+one whose tel: link dials something other than the digits shown, and the same
+number as the member's own Mobile. Anything else in the column is counted and
+reported without its value.
 
 NO PARTY SHIPS. The members page publishes none. The canvasses do — but only
 for the third of the board that was last on the ballot, so taking party from
@@ -95,6 +104,12 @@ STREET_RE = re.compile(
     r"blvd|hwy|way|circle|cir|place|pl|trail|heights)\b", re.I)
 
 X_ROLE, X_NAME, X_ADDRESS, X_MOBILE, X_CONTACT = 0, 1, 2, 3, 4
+# The page's own column headings, which become each number's label: the Mobile
+# column's number reads "mobile 618-...", and a number in the "Home or E-Mail"
+# column reads "home 618-...".
+LABEL_MOBILE, LABEL_HOME = "mobile", "home"
+TEL_HREF_RE = re.compile(r'href="tel:([^"]*)"', re.I)
+ANY_NUMBER_RE = re.compile(r"\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}")
 
 
 fail = make_fail("franklin-board-scraper")
@@ -151,11 +166,38 @@ def read_grid(page):
     return cells
 
 
+def digits(text):
+    return re.sub(r"\D", "", text or "")
+
+
+def numbers_on_page(page):
+    """How many times each telephone number is printed in the page's visible
+    text. A number printed twice is an office or county line rather than one
+    member's, whichever column it sits in."""
+    text = re.sub(r"(?is)<(script|style)[^>]*>.*?</\1>", " ", page)
+    text = html.unescape(re.sub(r"<[^>]+>", " ", text))
+    counts = {}
+    for number in ANY_NUMBER_RE.findall(text):
+        counts[digits(number)] = counts.get(digits(number), 0) + 1
+    return counts
+
+
+def tel_links_agree(fragment, shown):
+    """False when a cell's tel: link dials something other than the number it
+    shows; then neither ships."""
+    return all(digits(href) == digits(shown)
+               for href in TEL_HREF_RE.findall(fragment or ""))
+
+
 def scrape_members(page, warnings):
     cells = read_grid(page)
+    raw_cells = {(int(m.group(1)), int(m.group(2))): m.group(3)
+                 for m in CELL_RE.finditer(page)}
+    printed = numbers_on_page(page)
     rows = sorted({y for y, _x in cells})
     roster, district = {}, None
     dropped_contacts = 0
+    home_numbers = 0
     obfuscated = len(re.findall(r'data-cfemail="', page))
     decoded = 0
     for y in rows:
@@ -175,29 +217,55 @@ def scrape_members(page, warnings):
             member["role"] = role
         mobile = cells.get((y, X_MOBILE), "")
         if mobile:
-            if PHONE_RE.match(mobile):
-                member["phone"] = mobile
+            if not PHONE_RE.match(mobile):
+                # The value is not printed: if the columns moved, it could be
+                # the member's home address.
+                warnings.append("%s: the Mobile cell is not a phone number — "
+                                "not shipped" % name)
+            elif not tel_links_agree(raw_cells.get((y, X_MOBILE)), mobile):
+                warnings.append("%s: the Mobile cell's tel: link dials a "
+                                "different number from the one shown — neither "
+                                "shipped" % name)
             else:
-                warnings.append("%s: Mobile cell %r is not a phone number — not "
-                                "shipped" % (name, mobile))
+                member["phone"] = "%s %s" % (LABEL_MOBILE, mobile)
         contact = cells.get((y, X_CONTACT), "")
         if contact:
             if EMAIL_RE.match(contact):
                 member["email"] = contact
                 decoded += 1
+            elif PHONE_RE.match(contact):
+                # "Home or E-Mail": a number here is the member's home line,
+                # which ships since Adam's ruling of 2026-10-17.
+                if digits(contact) == digits(mobile):
+                    pass  # the Mobile number again; it already ships
+                elif printed.get(digits(contact), 0) > 1:
+                    dropped_contacts += 1
+                    warnings.append("%s: the number in the 'Home or E-Mail' "
+                                    "cell is printed more than once on the page, "
+                                    "so it is an office line — not shipped" % name)
+                elif not tel_links_agree(raw_cells.get((y, X_CONTACT)), contact):
+                    dropped_contacts += 1
+                    warnings.append("%s: the 'Home or E-Mail' cell's tel: link "
+                                    "dials a different number from the one "
+                                    "shown — neither shipped" % name)
+                else:
+                    home = "%s %s" % (LABEL_HOME, contact)
+                    if member.get("phone"):
+                        member["phonesExtra"] = [home]
+                    else:
+                        member["phone"] = home  # the first number goes in `phone`
+                    home_numbers += 1
             else:
-                # "Home or E-Mail": a home telephone is the one contact this
-                # project does not publish, and the county does not say which
-                # a given cell holds.
                 dropped_contacts += 1
                 warnings.append("%s: the 'Home or E-Mail' cell holds something "
-                                "that is not an e-mail — not shipped" % name)
+                                "that is neither an e-mail nor a phone number — "
+                                "not shipped" % name)
         roster.setdefault(district, []).append(member)
     if obfuscated and not decoded:
         fail("the page carries %d Cloudflare-obfuscated address(es) and none "
              "decoded — this is the Brown County failure, where every count "
              "guard passed while the contact column emptied" % obfuscated)
-    return roster, dropped_contacts
+    return roster, dropped_contacts, home_numbers
 
 
 def check_composition(warnings):
@@ -256,7 +324,7 @@ def main():
     args = parser.parse_args()
 
     warnings = []
-    roster, dropped = scrape_members(get(BOARD_URL), warnings)
+    roster, dropped, home_numbers = scrape_members(get(BOARD_URL), warnings)
 
     districts = sorted(roster, key=int)
     total = sum(len(v) for v in roster.values())
@@ -268,13 +336,14 @@ def main():
     phones = sum(1 for ms in roster.values() for m in ms if m.get("phone"))
     if phones < MIN_PHONES:
         fail("%d members carry a phone, floor is %d" % (phones, MIN_PHONES))
-    # The privacy invariant, asserted rather than assumed.
+    # The privacy invariant, asserted rather than assumed. The message names the
+    # member and the field and never the value, which would be the residence.
     for members in roster.values():
         for member in members:
             for key, value in member.items():
                 if STREET_RE.search(str(value)):
-                    fail("a residence reached %s's %s (%r) — the Address column "
-                         "is never read" % (member["name"], key, value))
+                    fail("a residence reached %s's %s — the Address column is "
+                         "never read" % (member["name"], key))
 
     counts, seats = check_composition(warnings)
 
@@ -291,8 +360,8 @@ def main():
         json.dump(payload, handle, indent=2, ensure_ascii=False)
 
     print("franklin-board-scraper: %d members across %d districts (%d phones, "
-          "%d e-mails, %d non-e-mail contacts dropped) -> %s"
-          % (total, len(districts), phones,
+          "%d home numbers, %d e-mails, %d other contacts dropped) -> %s"
+          % (total, len(districts), phones, home_numbers,
              sum(1 for ms in roster.values() for m in ms if m.get("email")),
              dropped, args.out), file=sys.stderr)
     print("  composition unchanged: %s precincts per district, %d total"

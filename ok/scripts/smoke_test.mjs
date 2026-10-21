@@ -17,6 +17,7 @@ import { chromium } from "playwright";
 import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { stubBasemap } from "../../scripts/basemap_stub.mjs";
 
 // Vendored Leaflet fallback for sandboxed environments (e.g. Claude Code web),
 // where the browser (Chromium) cannot reach cdnjs.cloudflare.com — it does not
@@ -49,11 +50,11 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "35.49230,-97.50340"; // the State Capitol, Oklahoma City, Oklahoma County
-const OFFLINE = ["county", "us-house", "ok-senate", "ok-house"];
-const EXPECT_DISTRICT = { "county": "Oklahoma County", "us-house": "5", "ok-senate": "48", "ok-house": "99" };
+const OFFLINE = ["county", "us-house", "ok-senate", "ok-house", "ok-judicial-district"];
+const EXPECT_DISTRICT = { "county": "Oklahoma County", "us-house": "5", "ok-senate": "48", "ok-house": "99", "ok-judicial-district": "7" };
 const NEGATIVE_POINT = "33.65000,-97.15000"; // near Gainesville, Cooke County, TEXAS, about 15 km south of the Red River — outside Oklahoma and outside every other instance in the fleet, and inside permalink_gate (minLat 33.50) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-09: TIGERweb's state layer names Texas at this point (control: the Capitol anchor returns Oklahoma). TEXAS BECAUSE NO INSTANCE SERVES IT, and on land rather than on the Red River, whose channel the county fabric could place on either side.
 const APP_NAME = "districtry Oklahoma";
-const EXPECT_LAYERS = 13;
+const EXPECT_LAYERS = 17;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -73,7 +74,9 @@ const GEOCODER_STUB_FEATURE = {
   type: "Feature",
   geometry: { type: "Point", coordinates: [-97.5034, 35.4923] },
   properties: {
-    housenumber: "100",
+    // the typed number: an answer without it shows the street instead of
+    // a row (ENGINE geocoder-search runAddressSearch)
+    housenumber: "16",
     street: "W Jones St",
     city: "Capital City",
     state: "Oklahoma",
@@ -97,6 +100,16 @@ const failures = [];
 function check(name, ok, detail) {
   console.log(`  ${ok ? "PASS" : "FAIL"}  ${name}${detail ? "  — " + detail : ""}`);
   if (!ok) failures.push(name);
+}
+
+// A council member's own e-mail address and numbers now ride the city cards,
+// and a log names a city and a seat but never a member's contact, so the card
+// text the city checks print has every number and address replaced first (the
+// card prints a number with no-break hyphens, U+2011, so those count as well).
+function noContacts(text) {
+  return String(text)
+    .replace(/[^\s<>"'(),;:@]+@[^\s<>"'(),;:@]+\.[A-Za-z]{2,}/g, "<e-mail>")
+    .replace(/\(?\b\d{3}\)?[\s.\-\u2011]*\d{3}[\s.\-\u2011]*\d{4}\b/g, "<number>");
 }
 
 // Each check runs in its own context with service workers BLOCKED. The app's
@@ -165,7 +178,7 @@ async function cardText(page, id) {
   }, id);
 }
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // 1. App boots and registers every layer.
   {
@@ -372,10 +385,13 @@ try {
   //     the app, which reads exactly like correct behaviour.
   //
   //     OKLAHOMA'S OWN CASE IS THE ONE BELOW THAT MATTERS, and it is the
-  //     absence half: none of its six neighbours (Texas, Arkansas, Missouri,
-  //     Kansas, Colorado, New Mexico) is covered, so a point just over the
-  //     state line must be selected HERE, where the app says nothing answers
-  //     there, rather than handed to an app with nothing to show. This instance
+  //     absence half: five of its six neighbours (Texas, Missouri, Kansas,
+  //     Colorado, New Mexico) are not covered, so a point just over one of
+  //     those state lines must be selected HERE, where the app says nothing
+  //     answers there, rather than handed to an app with nothing to show.
+  //     ARKANSAS IS COVERED SINCE ITS GO-LIVE (2026-10-15), so Fort Smith,
+  //     about 4 km over the line, must open that app; the case was added in
+  //     the change that published it. This instance
   //     is also DARK, so it has no entry in fleet-outlines.json at all and
   //     answers its own side from the coverage rings the wash retained — no
   //     fetch. The two positive cases prove the file is still read for
@@ -384,6 +400,7 @@ try {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Milwaukee", lat: 43.04, lng: -87.91, want: "https://districtry.com/wi/" },
+      { name: "Fort Smith, Arkansas", lat: 35.3859, lng: -94.3985, want: "https://districtry.com/ar/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -565,6 +582,35 @@ try {
   }
 
 
+  // 2c. A JUDICIAL DISTRICT WHOSE OFFICES HAVE DIFFERENT ELECTORATES. Most
+  //     districts elect every district judge district-wide, which the ground-
+  //     truth point (District 7, Oklahoma County) exercises; District 14 does
+  //     not: nine offices are elected by Pawnee and Tulsa counties and five by
+  //     Tulsa alone (the State Election Board's 2024 roster). So the card asks
+  //     which county the point is in and says which offices that county votes
+  //     for. Both counties are asserted, because a card that told Pawnee it
+  //     votes for all fourteen would read just as plausibly. Same-origin files
+  //     only, so no network.
+  {
+    const cases = [
+      { name: "Pawnee", point: "36.33780,-96.80340",
+        want: "Offices 1, 3, 5, 7, 9, 10, 12, 13 and 14, 9 of the district's 14 district judges." },
+      { name: "Tulsa", point: "36.15400,-95.99280",
+        want: "Every one of the district's 14 district judges." },
+    ];
+    for (const c of cases) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${c.point}&layers=ok-judicial-district`);
+      const info = await cardText(page, "ok-judicial-district");
+      const said = new RegExp(c.name + " County votes for", "i").test(info.text) &&
+        info.text.includes(c.want);
+      check(`ok-judicial-district tells ${c.name} County which District 14 offices it elects`,
+        !info.error && /District 14\b/.test(info.text) && said, info.text.slice(0, 160));
+      await context.close();
+    }
+  }
+
+
   // 2e. Share control: the point chip carries ONE "Share" button whose popover
   //     serves the live campaign-tagged permalink, the embed snippet (tagged
   //     with its own source and pointed at the canonical deployment), and the
@@ -725,6 +771,11 @@ try {
   //    tigerweb.geo.census.gov, with the same query answering 200 to curl
   //    through the agent proxy in the same minute).
   //
+  //    SINCE 2026-10-17 THESE LAYERS ARE ANSWERED FROM SAME-ORIGIN TILE
+  //    ARCHIVES, and the stubs stay anyway: several cases below exist in no
+  //    archive (an affix no table carries, an inactive municipality), so
+  //    each case refuses its layer's archive and the stub decides the card.
+  //
   //    WHAT IS ACTUALLY WORTH TESTING IS THIS INSTANCE'S OWN CODE, and none of
   //    it is exercised by a live fetch that happens to work. Three claims, each
   //    written for Oklahoma and each wrong in a way a reader would see:
@@ -738,6 +789,13 @@ try {
   //        records none.
   //    (c) Both school tilings answer, because the unified and elementary
   //        districts partition the state between them.
+  //    (d) A city above 25,000 names its mayor and every council seat from
+  //        the roster, joined on the Census id the stub carries, with who
+  //        elects each seat: a ward's own voters, or the whole city, and for
+  //        a mayor the council chose from its members, the ward that member
+  //        holds. A place outside the 16 says it names nobody. The roster is
+  //        the shipped data/app file, so this also holds the join to it.
+  //        Each id and NAME is the Census's own (TIGERweb, read 2026-10-16).
   {
     function esriPolygon(props) {
       return {
@@ -756,12 +814,68 @@ try {
 
     const cases = [
       {
-        name: "a city names itself a city",
+        name: "a city below 25,000 names itself a city and names nobody",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "4000200", NAME: "Ada city", BASENAME: "Ada", STATE: "40", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Ada city/, /Incorporated city/, /Not named here/, /16 cities above 25,000/],
+        reject: [/INACTIVE/, /Incorporated town/, /Mayor/]
+      },
+      {
+        name: "a city names its mayor and council, and who elected each seat",
         layer: "municipality",
         service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
         props: { GEOID: "4055000", NAME: "Oklahoma City city", BASENAME: "Oklahoma City", STATE: "40", LSADC: "25", FUNCSTAT: "A" },
-        want: [/Oklahoma City city/, /Incorporated city/, /Not named here/],
-        reject: [/INACTIVE/, /Incorporated town/]
+        want: [/Oklahoma City city/, /Incorporated city/, /David Holt/, /Bradley Carter/, /Council, Ward 1/,
+          /elected by Ward 1/, /elected by the whole city/, /How the seats are elected/, /Read on/,
+          /As listed on Oklahoma City's own website/, /Which ward this point is in/],
+        reject: [/INACTIVE/, /Not named here/]
+      },
+      {
+        name: "a mayor the council chose keeps the ward the voters gave",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "4004450", NAME: "Bartlesville city", BASENAME: "Bartlesville", STATE: "40", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Bartlesville city/, /Jim Curd, Jr\./, /elected by Ward 3/, /Tim Sherrick/,
+          /The council chooses the mayor and vice mayor from among its members/, /Which ward this point is in/],
+        reject: [/elected by the whole city/, /Not named here/]
+      },
+      {
+        name: "a city that ties seats to wards and elects them all citywide says so",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "4009050", NAME: "Broken Arrow city", BASENAME: "Broken Arrow", STATE: "40", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Broken Arrow city/, /Debra Wimpee/, /Ward 1, elected by the whole city/, /Council, Ward 2/,
+          /Council, At large/, /elected by the voters of the whole city/],
+        reject: [/elected by Ward/, /this point is in/, /Not named here/]
+      },
+      {
+        name: "Tulsa's seats are districts and its members councilors",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "4075000", NAME: "Tulsa city", BASENAME: "Tulsa", STATE: "40", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Tulsa city/, /Monroe Nichols/, /Vanessa Hall-Harper/, /Councilor, District 1/,
+          /elected by District 1/, /Which district this point is in/],
+        reject: [/elected by Ward/, /Not named here/]
+      },
+      {
+        name: "a city whose wards are not drawn says why",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "4041850", NAME: "Lawton city", BASENAME: "Lawton", STATE: "40", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Lawton city/, /Stan Booker/, /elected by Ward 1/,
+          /As listed on Lawton's own website\. The city's eight wards are not drawn on this map yet/],
+        reject: [/this point is in/, /Not named here/]
+      },
+      {
+        name: "a city whose website this app cannot read says where its names come from",
+        layer: "municipality",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/4",
+        props: { GEOID: "4050050", NAME: "Muskogee city", BASENAME: "Muskogee", STATE: "40", LSADC: "25", FUNCSTAT: "A" },
+        want: [/Muskogee city/, /Ryan Michael Lowe/, /Dale Boots/, /elected by Ward 2/,
+          /Muskogee's website does not let this app read it/, /official results for February 10, 2026/,
+          /not drawn on this map yet/],
+        reject: [/As listed on Muskogee's own website/, /this point is in/, /Not named here/]
       },
       {
         name: "a town names itself a town, not a city",
@@ -802,16 +916,48 @@ try {
         props: { GEOID: "4000001", NAME: "Example Elementary School District", STATE: "40" },
         want: [/Example Elementary School District/],
         reject: []
+      },
+      // The level-14 map. Every Oklahoma subdivision is a census county
+      // division (LSADC 22, FUNCSTAT S, measured 2026-10-15), so the card must
+      // say no one is elected from it, name its county from the app's own
+      // county file, and title it without TIGER's "CCD", since the card's
+      // header already says Census County Division. A status code the card
+      // does not carry prints no Government row rather than an improvised one.
+      {
+        name: "a census county division says no one is elected from it",
+        layer: "county-subdivision",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/1",
+        props: { GEOID: "4010992426", NAME: "Oklahoma City Southwest CCD", BASENAME: "Oklahoma City Southwest", STATE: "40", COUNTY: "109", LSADC: "22", FUNCSTAT: "S" },
+        want: [/Oklahoma City Southwest/, /Oklahoma County/, /no one is elected from it/, /no township governments/],
+        reject: [/\bCCD\b/]
+      },
+      {
+        name: "a subdivision the Census records as nonfunctioning says so",
+        layer: "county-subdivision",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/1",
+        props: { GEOID: "4010992426", NAME: "Oklahoma City Southwest CCD", BASENAME: "Oklahoma City Southwest", STATE: "40", COUNTY: "109", LSADC: "22", FUNCSTAT: "N" },
+        want: [/Oklahoma City Southwest/, /no functioning government/],
+        reject: [/draws to report its counts/]
+      },
+      {
+        name: "a status code the card does not carry prints NO government row",
+        layer: "county-subdivision",
+        service: "Places_CouSub_ConCity_SubMCD/MapServer/1",
+        props: { GEOID: "4010992426", NAME: "Oklahoma City Southwest CCD", BASENAME: "Oklahoma City Southwest", STATE: "40", COUNTY: "109", LSADC: "22", FUNCSTAT: "A" },
+        want: [/Oklahoma City Southwest/, /Oklahoma County/],
+        reject: [/Government/]
       }
     ];
 
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=${c.layer}`, async (p) => {
-        // Both the point query and the statewide overlay download go to the
-        // same service path, so one route answers both with the same feature —
-        // which also proves the card comes from the POINT query rather than
-        // from the 27 MB statewide set: the app renders before that finishes.
+        // The layer is drawn and answered from a tile archive since 2026-10-17,
+        // so the archive is refused here: the card then falls back to the
+        // census loader, whose point query and whole-set download go to the
+        // same service path, and this one route answers either with the same
+        // feature (the archive-failure path il's smoke check 2d also holds).
+        await p.route(`**/data/app/tiles/${c.layer}.pmtiles`, (r) => r.abort());
         await p.route(`**/${c.service}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: esriBody(c.props) }));
       });
@@ -821,8 +967,59 @@ try {
       const present = c.reject.filter((re) => re.test(text));
       check(c.name, !info.error && missing.length === 0 && present.length === 0,
         missing.length || present.length
-          ? `missing=${missing} unwanted=${present} text=${text.slice(0, 160)}`
-          : text.slice(0, 90));
+          ? `missing=${missing} unwanted=${present} text=${noContacts(text).slice(0, 160)}`
+          : noContacts(text).slice(0, 90));
+      await context.close();
+    }
+
+    // (e) A member's own e-mail address and numbers reach that member's row
+    //     as links. Where a city's page prints them beside one member, the
+    //     seat carries them (scripts/city_councils.py, CONTACTS), and the
+    //     build proved every one in the shipped file on the page its seat
+    //     cites. The expected links are read from that file, so this check
+    //     prints counts and never a value; a member the file gives nothing
+    //     must show no link.
+    {
+      const roster = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/ok-city-councils.json"), "utf8"));
+      const props = { GEOID: "4023950", NAME: "Enid city", BASENAME: "Enid", STATE: "40", LSADC: "25", FUNCSTAT: "A" };
+      const dial = (phone) => {
+        // the engine's cardPhoneDial: the digits, stopping at an extension
+        let s = String(phone);
+        const m = /(^|[^A-Za-z])(?:ext(?:ension)?|x)[.:]?\s*\d/i.exec(s);
+        if (m) s = s.slice(0, m.index + m[1].length);
+        return "tel:" + s.replace(/[^\d+]/g, "");
+      };
+      const want = roster[props.GEOID].seats.filter((s) => s.name).map((s) => ({
+        name: s.name,
+        mails: s.email ? ["mailto:" + s.email] : [],
+        tels: [s.phone].concat(s.phonesExtra || []).filter(Boolean).map(dial)
+      }));
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=municipality`, async (p) => {
+        // The municipality layer reads its tile archive before it asks the
+        // Census, so the archive is refused and the stubbed query answers.
+        await p.route("**/data/app/tiles/municipality.pmtiles", (r) => r.abort());
+        await p.route("**/Places_CouSub_ConCity_SubMCD/MapServer/4/query**", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: esriBody(props) }));
+      });
+      await cardText(page, "municipality");
+      const rows = await page.evaluate(() =>
+        Array.from(document.querySelectorAll("#card-municipality .card-person")).map((row) => ({
+          name: (row.querySelector(".card-person-name") || {}).textContent || "",
+          mails: Array.from(row.querySelectorAll('a[href^="mailto:"]')).map((a) => a.getAttribute("href")),
+          tels: Array.from(row.querySelectorAll('a[href^="tel:"]')).map((a) => a.getAttribute("href"))
+        })));
+      const differ = want.filter((w) => {
+        const row = rows.find((r) => r.name === w.name);
+        return !row || JSON.stringify(row.mails) !== JSON.stringify(w.mails) ||
+          JSON.stringify(row.tels) !== JSON.stringify(w.tels);
+      }).length;
+      const mails = want.filter((w) => w.mails.length).length;
+      const tels = want.reduce((n, w) => n + w.tels.length, 0);
+      check(`${props.BASENAME}'s members' own e-mail addresses and numbers are links on their own rows`,
+        mails > 0 && tels > 0 && differ === 0,
+        `${mails} e-mail links and ${tels} numbers across ${want.length} named members; ` +
+        `${differ} rows differ from the shipped file`);
       await context.close();
     }
   }
@@ -866,6 +1063,10 @@ try {
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=zip-code`, async (p) => {
+        // The layer is drawn and answered from a tile archive since 2026-10-17;
+        // refusing it sends the card to the census loader, which this stub answers
+        // (the archive-failure path il's smoke check 2d also holds).
+        await p.route("**/data/app/tiles/zip-code.pmtiles", (r) => r.abort());
         await p.route(`**/${ZCTA}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("73105") }));
       });
@@ -880,6 +1081,10 @@ try {
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=zip-code`, async (p) => {
+        // The layer is drawn and answered from a tile archive since 2026-10-17;
+        // refusing it sends the card to the census loader, which this stub answers
+        // (the archive-failure path il's smoke check 2d also holds).
+        await p.route("**/data/app/tiles/zip-code.pmtiles", (r) => r.abort());
         await p.route(`**/${ZCTA}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("76301") }));
       });
@@ -993,6 +1198,66 @@ try {
     check("the Capitol is outside every tribal area and is told so in the layer's own words",
           off.text.indexOf("not on any tribal area the Census draws in Oklahoma") !== -1,
           JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
+  }
+
+  // ---- City Council District, drawn for the nine cities above 25,000
+  // people whose wards elect their own members and are drawn, and answered
+  // from the shipped files alone, so nothing here is stubbed. In Oklahoma
+  // City, Tulsa, Moore and Enid it names the member or members that ward
+  // elects and no other, in the city's own word for the unit, and says whose
+  // map the line comes from; in Bartlesville's Ward 3 it names the mayor, the
+  // council having chosen that ward's member, and says nobody is elected by
+  // the whole city there; in Edmond, which elects every seat citywide, in
+  // Lawton, whose wards are not drawn, and in Stillwater, whose council has
+  // no wards, there is nothing to answer and the card says why. The
+  // Oklahoma City point is the Capitol; the Tulsa, Moore and Enid points and
+  // the three outside points are the ward builder's own anchors; the
+  // Bartlesville point is shapely's representative point of its Ward 3 pulled
+  // in from the edge. Each lies inside the Census outline of the city named
+  // (TIGERweb, read 2026-10-16).
+  for (const c of [
+    { name: "Oklahoma City", point: POINT,
+      want: [/Ward 7\b/, /Oklahoma City City Council/, /Camal Pennington/, /Council, Ward 7/,
+        /elected by Ward 7/, /The mayor\. The City or Town card names the mayor\./,
+        /the City of Oklahoma City's own map/, /within 4 metres/],
+      reject: [/David Holt/, /JoBeth Hamon/, /Mark Stonecipher/, /elected by District/] },
+    { name: "Tulsa", point: "36.09500,-95.94000",
+      want: [/District 9\b/, /Tulsa City Council/, /Carol Bush/, /Councilor, District 9/,
+        /elected by District 9/, /The mayor\./, /the City of Tulsa's own map/],
+      reject: [/Monroe Nichols/, /Vanessa Hall-Harper/, /elected by Ward/] },
+    { name: "Moore", point: "35.33000,-97.49000",
+      want: [/Ward 3\b/, /Moore City Council/, /Sid Porter/, /Louie Williams/, /elected by Ward 3/,
+        /the City of Moore's own map/],
+      reject: [/Mark Hamm/, /Adam Webb/, /Melissa Hunt/] },
+    { name: "Enid", point: "36.39560,-97.87840",
+      want: [/Ward 5\b/, /Enid City Commission/, /Rob Stallings/, /Commissioner, Ward 5/,
+        /elected by Ward 5/, /the City of Enid's own map/],
+      reject: [/David Mason/, /Cheryl Patterson/] },
+    { name: "Bartlesville's Ward 3", point: "36.72616,-95.96557",
+      want: [/Ward 3\b/, /Bartlesville City Council/, /Jim Curd, Jr\./, /Mayor/, /elected by Ward 3/,
+        /The council chooses the mayor and vice mayor from among its members/],
+      reject: [/Elected by the whole city/, /Tim Sherrick/, /Trevor Dorsey/] },
+    { name: "Edmond", point: "35.65280,-97.47810",
+      want: [/not in a council ward or district this map draws/, /Broken Arrow, Owasso, Jenks and Edmond/],
+      reject: [/Edmond City Council/] },
+    { name: "Lawton", point: "34.60360,-98.39590",
+      want: [/not in a council ward or district this map draws/, /Lawton's and Muskogee's wards are not drawn yet/],
+      reject: [/Lawton City Council/] },
+    { name: "Stillwater", point: "36.11560,-97.05840",
+      want: [/not in a council ward or district this map draws/, /Stillwater's council has no wards/,
+        /names the mayor and council of all 16/],
+      reject: [/Stillwater City Council/] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=city-ward`);
+    const info = await cardText(page, "city-ward");
+    const text = info.text || "";
+    const missing = c.want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    check(`city-ward card at ${c.name} names only what that ward elects, in the city's own word`,
+      !info.error && missing.length === 0 && present.length === 0,
+      `missing=${missing} unwanted=${present} text=${noContacts(text).slice(0, 200)}`);
     await context.close();
   }
 } finally {

@@ -21,10 +21,11 @@
 // link forwards with its query AND hash intact, and a plain visit does not.
 //
 //   node scripts/landing_test.mjs          # BASE_URL defaults to :8131
-import { chromium } from "playwright";
+import { chromium, devices } from "playwright";
 import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { stubBasemap } from "./basemap_stub.mjs";
 
 const BASE = process.env.BASE_URL || "http://localhost:8131";
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -36,6 +37,8 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const FLEET = JSON.parse(readFileSync(
   join(HERE, "..", "metros.json"), "utf8")).metros;
 const TAGS = FLEET.map((m) => m.tag).filter(Boolean);
+// The host the site is served at, which the manifest's share target names.
+const SITE_HOST = readFileSync(join(HERE, "..", "CNAME"), "utf8").trim();
 const failures = [];
 function check(name, ok, detail) {
   console.log(`  ${ok ? "PASS" : "FAIL"}  ${name}${detail ? "  — " + detail : ""}`);
@@ -62,17 +65,6 @@ async function serveVendoredLeaflet(page) {
     });
   });
   return true;
-}
-
-// A 1x1 transparent GIF for the CARTO basemap tiles. The map's correctness has
-// nothing to do with whether a raster tile painted, and letting real tile
-// requests fly would make this gate depend on a third party's uptime — and
-// spend the fleet's metered CARTO quota on CI.
-const BLANK_TILE = Buffer.from(
-  "R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBTAA7", "base64");
-async function stubTiles(page) {
-  await page.route("**/*.basemaps.cartocdn.com/**", (route) =>
-    route.fulfill({ status: 200, contentType: "image/gif", body: BLANK_TILE }));
 }
 
 // One Photon response, shaped like the real thing. The address box is asserted
@@ -106,7 +98,7 @@ async function textOrNull(page, selector) {
 // block 9b counts the launcher worker's requests to prove a share never
 // leaves the phone. Read at launch, so it is set here rather than in the job.
 process.env.PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS = "1";
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // --- 1. a bare visit renders the landing page, and does NOT forward -------
   {
@@ -235,32 +227,120 @@ try {
     await ctx.close();
   }
 
-  // --- 1b. the rename toast fades on its own, and dismisses on click -------
+  // --- 1b. the notice: the Android test invitation, on Android only --------
   //
-  // It is a TOAST now rather than an inline banner, which means it sits over
-  // the masthead and can cover the wordmark. A toast that fails to fade is a
-  // permanent obstruction on the front door — and because it is absolutely
-  // positioned, a reader cannot scroll it away.
+  // The front page's notice (NOTICE in build_landing_page.py) invites Android
+  // readers into the Google Play app's closed test. It ships hidden and the
+  // page's script shows it, so the script is what is under test: shown in an
+  // Android browser and nowhere else, never inside the Play app or an
+  // installed copy, linking the steps page with its ref, and closed on
+  // request. It sits in the page's flow above the masthead and no longer
+  // fades, so one that would not close would hold the address box down for
+  // the whole visit. A close or a followed link is remembered (Adam,
+  // 2026-10-20: a "no" stays closed) under the key the maps' own invitation
+  // to the test uses, so an answer on either page keeps both closed, while a
+  // reader who has only SEEN the maps' bar is still shown this one.
   {
-    const ctx = await browser.newContext({ serviceWorkers: "block" });
-    const page = await ctx.newPage();
-    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
-    const notice = await page.$("#notice");
-    check("the rename notice renders", notice !== null);
-    if (notice) {
-      const shown = await notice.isVisible();
-      check("the rename notice starts visible", shown, String(shown));
-      await page.click("#notice-dismiss");
-      // The fade is a 900ms CSS animation, then display:none.
-      await page.waitForTimeout(1600);
-      const after = await page.evaluate(() => {
-        const el = document.getElementById("notice");
-        return el ? getComputedStyle(el).display : "removed";
-      });
-      check("dismissing the rename notice hides it",
-        after === "none" || after === "removed", after);
+    async function noticeOn(opts, path, init, initArg) {
+      const ctx = await browser.newContext({ ...opts, serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      if (init) await page.addInitScript(init, initArg);
+      await page.goto(BASE + path, { waitUntil: "domcontentloaded" });
+      await page.waitForTimeout(300);
+      const shown = await page.isVisible("#notice").catch(() => false);
+      return { ctx, page, shown };
     }
-    await ctx.close();
+    const android = devices["Pixel 7"];
+    {
+      const { ctx, page, shown } = await noticeOn({}, "/");
+      check("the notice is in the page", (await page.$("#notice")) !== null);
+      check("a computer is not shown the Android invitation", !shown, String(shown));
+      await ctx.close();
+    }
+    {
+      const { ctx, shown } = await noticeOn(devices["iPhone 14"], "/");
+      check("an iPhone is not shown the Android invitation", !shown, String(shown));
+      await ctx.close();
+    }
+    {
+      const { ctx, page, shown } = await noticeOn(android, "/");
+      check("an Android phone is shown the invitation", shown, String(shown));
+      if (shown) {
+        const link = await page.$eval(".notice-cta a", (a) => {
+          const r = a.getBoundingClientRect();
+          return { href: a.getAttribute("href"), w: Math.round(r.width), h: Math.round(r.height) };
+        }).catch(() => null);
+        check("the invitation links the steps page, tagged for the traffic report",
+          !!link && link.href === "/android.html?ref=front-page", JSON.stringify(link));
+        check("the invitation's link is at least a 24px target",
+          !!link && link.w >= 24 && link.h >= 24, JSON.stringify(link));
+        const close = await page.$eval("#notice-dismiss", (b) => {
+          const r = b.getBoundingClientRect();
+          return [Math.round(r.width), Math.round(r.height)];
+        });
+        check("the close button is at least a 24px target",
+          close[0] >= 24 && close[1] >= 24, JSON.stringify(close));
+        await page.click("#notice-dismiss");
+        const after = await page.isVisible("#notice");
+        check("closing the invitation hides it", !after, String(after));
+        const kept = await page.evaluate(() => localStorage.getItem("districtry-install-invite"));
+        check("closing the invitation is remembered under the maps' invitation key",
+          kept === "test-answered", String(kept));
+        await page.reload({ waitUntil: "domcontentloaded" });
+        await page.waitForTimeout(300);
+        const again = await page.isVisible("#notice");
+        check("a closed invitation stays closed on the next visit", !again, String(again));
+      }
+      await ctx.close();
+    }
+    {
+      const { ctx, page, shown } = await noticeOn(android, "/");
+      let kept = null;
+      let again = null;
+      if (shown) {
+        await Promise.all([
+          page.waitForURL(/\/android\.html/, { timeout: 15000 }).catch(() => null),
+          page.click(".notice-cta a"),
+        ]);
+        kept = await page.evaluate(() => localStorage.getItem("districtry-install-invite"));
+        await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+        await page.waitForTimeout(300);
+        again = await page.isVisible("#notice");
+      }
+      check("following the invitation's link is remembered too, and it is not shown again",
+        shown && kept === "test-answered" && again === false, JSON.stringify({ shown, kept, again }));
+      await ctx.close();
+    }
+    for (const [stored, want, what] of [
+      ["test-shown", true, "an Android phone that has only seen the maps' invitation is still shown this one"],
+      ["test-answered", false, "an Android phone that closed or followed the maps' invitation is not shown this one"],
+    ]) {
+      const { ctx, shown } = await noticeOn(android, "/", (v) => {
+        try { localStorage.setItem("districtry-install-invite", v); } catch (e) { /* reported by the check */ }
+      }, stored);
+      check(what, shown === want, String(shown));
+      await ctx.close();
+    }
+    // Inside the Google Play app, which opens its first page with ref=play
+    // (engine/shared/play-app.txt marks the window in the head).
+    {
+      const { ctx, shown } = await noticeOn(android, "/?ref=play");
+      check("the Play app is not shown the invitation", !shown, String(shown));
+      await ctx.close();
+    }
+    // An installed copy reports display-mode standalone, which Playwright
+    // cannot emulate, so matchMedia is made to answer it.
+    {
+      const { ctx, shown } = await noticeOn(android, "/", () => {
+        const real = window.matchMedia.bind(window);
+        window.matchMedia = (q) => /display-mode:\s*standalone/.test(q)
+          ? { matches: true, media: q, onchange: null,
+              addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {} }
+          : real(q);
+      });
+      check("an installed copy is not shown the invitation", !shown, String(shown));
+      await ctx.close();
+    }
   }
 
   // --- 1c. the address box routes to the instance that covers the point ----
@@ -487,6 +567,14 @@ try {
       return r.fulfill({ status: 200, contentType: "application/json",
         body: JSON.stringify({ url: "https://www.google.com/maps/place/Lambeau+Field/@44.50,-88.06,12z/data=!3m1!4b1!8m2!3d44.5013!4d-88.0622" }) });
     });
+    // the counter is stubbed, and each count it is handed is recorded outside
+    // the page, because the page navigates away straight after counting
+    const counted = [];
+    await page.route("**/gc.zgo.at/**", (r) => r.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+    await page.exposeFunction("__gcCount", (path) => { counted.push(path); });
+    await page.addInitScript(() => {
+      window.goatcounter = { count: (vars) => { if (vars && vars.event) window.__gcCount(vars.path); } };
+    });
     await stubInstances(page);
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "https://maps.app.goo.gl/AbCdEf123");
@@ -496,26 +584,211 @@ try {
       lookupAsked.length === 1 && lookupAsked[0] === "https://maps.app.goo.gl/AbCdEf123", JSON.stringify(lookupAsked));
     check("a short map link to Green Bay opens /wi/", new URL(page.url()).pathname === "/wi/", page.url());
     check("a short map link is never sent to the geocoder", !photonAsked, String(photonAsked));
+    check("the front page counts the short link it read once, by kind and where it went",
+      counted.join() === "map-link-read/front/google/short/pasted/to-wi", JSON.stringify(counted));
     await ctx.close();
   }
-  // ...and when the lookup cannot follow it, the page says how to get the full one
+  // ...a lookup that fails once is asked again, and the second answer is used
+  // (ENGINE map-link resolveShortMapLink: a try again after 1.5 seconds)...
   {
     const ctx = await browser.newContext({ serviceWorkers: "block" });
     const page = await ctx.newPage();
-    let photonAsked = false;
-    await page.route("**/photon.komoot.io/**", (r) => { photonAsked = true; return photonStub([])(r); });
-    await page.route("**/link-lookup.districtry.deno.net/**", (r) =>
-      r.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ error: "could not follow the link" }) }));
+    let lookups = 0;
+    await page.route("**/photon.komoot.io/**", photonStub([]));
+    await page.route("**/link-lookup.districtry.deno.net/**", (r) => ++lookups === 1
+      ? r.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ error: "the link could not be followed" }) })
+      : r.fulfill({ status: 200, contentType: "application/json",
+          body: JSON.stringify({ url: "https://www.google.com/maps/place/Lambeau+Field/@44.50,-88.06,12z/data=!3m1!4b1!8m2!3d44.5013!4d-88.0622" }) }));
     await stubInstances(page);
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.fill("#search-input", "https://maps.app.goo.gl/AbCdEf123");
     await page.click("#search-button");
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(600);
+    const between = await textOrNull(page, "#search-status");
+    await page.waitForURL((u) => new URL(u).pathname === "/wi/", { timeout: 6000 }).catch(() => {});
+    check("a lookup that fails once says it is trying again", /trying again/i.test(between || ""), JSON.stringify(between));
+    check("a lookup that fails once is asked again, and its answer opens /wi/",
+      lookups === 2 && new URL(page.url()).pathname === "/wi/", lookups + " lookup(s), at " + page.url());
+    await ctx.close();
+  }
+  // ...and when the lookup still cannot follow it, the page says which side
+  // failed, and no longer sends a phone reader to an address bar
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    let photonAsked = false, lookups = 0;
+    await page.route("**/photon.komoot.io/**", (r) => { photonAsked = true; return photonStub([])(r); });
+    await page.route("**/link-lookup.districtry.deno.net/**", (r) => {
+      lookups++;
+      return r.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ error: "the link could not be followed" }) });
+    });
+    await stubInstances(page);
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await page.fill("#search-input", "https://maps.app.goo.gl/AbCdEf123");
+    await page.click("#search-button");
+    await page.waitForSelector("#search-status.err", { timeout: 12000 }).catch(() => {});
     const msg = await textOrNull(page, "#search-status");
-    check("a short map link the lookup cannot follow stays on the landing page and says what to paste instead",
-      new URL(page.url()).pathname === "/" && /copy the full address/i.test(msg || ""), JSON.stringify(msg));
+    check("a short map link the lookup cannot follow is asked three times in all", lookups === 3, String(lookups));
+    check("a short map link the lookup cannot follow stays on the landing page and says Google didn't answer",
+      new URL(page.url()).pathname === "/" && /couldn't be read just now \(Google didn't answer/.test(msg || "") &&
+      !/address bar/.test(msg || ""), JSON.stringify(msg));
     check("a short map link is never sent to the geocoder, even when the lookup fails", !photonAsked, String(photonAsked));
     await ctx.close();
+  }
+
+  // ...a link from the Google Maps app carries no position, only the place's
+  // name and address in one string. When that matches nothing, the address
+  // alone is asked, and an answer counts only if it is the address's house,
+  // its number on its street (ENGINE map-link labelAtHouse; until
+  // 2026-10-19 the number anywhere in the label, labelCarriesNumber): a
+  // street that merely partly matches must route nowhere. The address's own street in its own
+  // town, without the number (labelOnStreet), opens the app that covers it
+  // with what was typed, so that app shows the street (showStreetOnly).
+  // Typed text gets no such retry.
+  //
+  // AND A LINK GOES ONLY TO THE APP OF THE STATE ITS ADDRESS NAMES (namedState,
+  // ENGINE map-link addressStateTag): an answer elsewhere is another place of
+  // that name, and when nothing there answers, the link is handed to that app,
+  // rebuilt from its words (mapLinkForText), so its own search tries the
+  // address, the street and the name. On 2026-10-16 a Wisconsin place's short
+  // link said "No matches" here. A state no app covers is said to be, with
+  // nothing searched, and California, where San Francisco's app covers one
+  // city, is routed by position as before.
+  {
+    const NAMED = "Lambeau Field, 1265 Lombardi Ave, Green Bay, WI 54304";
+    const BARE = "1265 Lombardi Ave, Green Bay, WI 54304";
+    const FULL = "https://maps.google.com/?q=Lambeau+Field,+1265+Lombardi+Ave,+Green+Bay,+WI+54304&ftid=0x0:0x1&entry=gps";
+    const REBUILT = "#q=" + encodeURIComponent("https://www.google.com/maps?q=Lambeau+Field,+1265+Lombardi+Ave,+Green+Bay,+WI+54304");
+    const OHIO = "https://maps.google.com/?q=Union+Terminal,+1301+Western+Ave,+Cincinnati,+OH+45203&ftid=0x0:0x2&entry=gps";
+    const LA_NAMED = "Grand Central Market, 317 S Broadway, Los Angeles, CA 90013";
+    const LA = "https://maps.google.com/?q=Grand+Central+Market,+317+S+Broadway,+Los+Angeles,+CA+90013&ftid=0x0:0x3&entry=gps";
+    const at = (props) => ({ ...photonFeature(44.5013, -88.0622), properties: props });
+    for (const c of [
+      { name: "an answer carrying its house number opens /wi/", text: FULL, answer: at({ housenumber: "1265", street: "Lombardi Avenue" }),
+        asks: [NAMED, BARE], want: "/wi/", hash: /^#point=44\.50130,-88\.06220$/ },
+      { name: "a street without its house number selects no point, and the link goes to /wi/, the state its address names",
+        text: FULL, answer: at({ street: "Lombardi Avenue" }), asks: [NAMED, BARE], want: "/wi/", hash: REBUILT },
+      { name: "its street in its town, without the number, opens /wi/ with the link to show the street",
+        text: FULL, answer: at({ name: "Lombardi Avenue", city: "Green Bay", state: "Wisconsin", postcode: "54304" }),
+        asks: [NAMED, BARE], want: "/wi/", hash: REBUILT },
+      { name: "an answer in Illinois is another place of its name, and the link goes to /wi/",
+        text: FULL, answerFor: (q) => (q === NAMED ? [photonFeature(41.8825, -87.6285)] : []),
+        asks: [NAMED], want: "/wi/", hash: REBUILT },
+      { name: "a place in Ohio, which no app covers, is said to be, and nothing is searched",
+        text: OHIO, answerFor: () => [], asks: [], want: "/",
+        msg: /^That place is in Ohio, which districtry doesn't cover yet/ },
+      { name: "a place in Los Angeles is routed by its position, since San Francisco's app covers one city",
+        text: LA, answerFor: (q) => (q === LA_NAMED ? [photonFeature(34.0508, -118.2489)] : []),
+        asks: [LA_NAMED], want: "/", msg: /outside every place districtry covers/ },
+      { name: "the same words typed are not retried", text: NAMED, answer: at({ housenumber: "1265", street: "Lombardi Avenue" }),
+        asks: [NAMED], want: "/" },
+    ]) {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      const asked = [];
+      await page.route("**/photon.komoot.io/**", (r) => {
+        const q = new URL(r.request().url()).searchParams.get("q");
+        asked.push(q);
+        return photonStub(c.answerFor ? c.answerFor(q) : q === BARE ? [c.answer] : [])(r);
+      });
+      await stubInstances(page);
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.fill("#search-input", c.text);
+      await page.click("#search-button");
+      await addressSettled(page);
+      const hash = new URL(page.url()).hash;
+      const msg = c.msg ? await textOrNull(page, "#search-status") : null;
+      check(`a place's name and address that match nothing whole: ${c.name}`,
+        JSON.stringify(asked) === JSON.stringify(c.asks) && new URL(page.url()).pathname === c.want &&
+          (!c.hash || (c.hash instanceof RegExp ? c.hash.test(hash) : hash === c.hash)) && (!c.msg || c.msg.test(msg || "")),
+        JSON.stringify({ asked, url: page.url(), msg }));
+      await ctx.close();
+    }
+    // The case Adam met: a short link to a Wisconsin place, read by the
+    // lookup, whose words and address match nothing, is handed to /wi/.
+    {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      const asked = [], looked = [];
+      await page.route("**/photon.komoot.io/**", (r) => { asked.push(new URL(r.request().url()).searchParams.get("q")); return photonStub([])(r); });
+      await page.route("**/link-lookup.districtry.deno.net/**", (r) => {
+        looked.push(new URL(r.request().url()).searchParams.get("u"));
+        return r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ url: FULL }) });
+      });
+      await stubInstances(page);
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.fill("#search-input", "https://maps.app.goo.gl/AbCdEf123");
+      await page.click("#search-button");
+      await addressSettled(page);
+      check("a short link to a Wisconsin place that matches nothing here opens /wi/ with the link, not \"No matches\"",
+        looked.length === 1 && JSON.stringify(asked) === JSON.stringify([NAMED, BARE]) &&
+          new URL(page.url()).pathname === "/wi/" && new URL(page.url()).hash === REBUILT,
+        JSON.stringify({ looked, asked, url: page.url() }));
+      await ctx.close();
+    }
+  }
+
+  // ...AN ADDRESS TYPED WITH NO NAME IN FRONT is held to its house number
+  // from the first try (searchAndRoute `whole`, as in the apps): an answer
+  // without the number is a street, and its point a spot somewhere along it,
+  // so the app covering the address's street (addressInTownOf), or else the
+  // first covered answer, is opened with what was typed and never with a
+  // point. An answer that is the house (labelAtHouse) still opens its point,
+  // and since 2026-10-19 an answer with the number on another street does
+  // not. An address that names a state whose app covers the whole state is
+  // handed to that app when no answer is in a place districtry covers, so
+  // that its search asks the Census Bureau's address records. The number and
+  // the street's spot are made up.
+  {
+    const TYPED = "9 W Oakley Dr NW, Westmont, IL";
+    const NO_STATE = "9 W Oakley Dr NW, Westmont";
+    const NO_TOWN = "9 W Oakley Dr NW";
+    const at = (props) => ({ ...photonFeature(41.82196, -87.97949), properties: props });
+    const ON = at({ name: "West Oakley Drive Northwest", city: "Westmont", state: "Illinois", postcode: "60559" });
+    const OTHER = at({ name: "Oakley Drive North", city: "Westmont", state: "Illinois", postcode: "60559" });
+    const HOUSE = at({ housenumber: "9", street: "West Oakley Drive Northwest", city: "Westmont", state: "Illinois" });
+    const OTHER_HOUSE = at({ housenumber: "9", street: "Oakley Drive North", city: "Westmont", state: "Illinois", postcode: "60559" });
+    const TEXAS = { ...photonFeature(...UNCOVERED_POINT), properties: { name: "Oakley Drive", city: "Dallas", state: "Texas" } };
+    for (const c of [
+      { name: "its street without the number opens /il/ with the address, not a point", text: TYPED, answer: [ON],
+        want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
+      { name: "typed with no town, its street opens /il/ with what was typed", text: NO_TOWN, answer: [ON],
+        want: "/il/", hash: "#q=" + encodeURIComponent(NO_TOWN) },
+      { name: "an answer on another street, without the number, opens /il/ with the address, not that street's point",
+        text: TYPED, answer: [OTHER], want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
+      { name: "an answer that is the house opens its point, as before", text: TYPED, answer: [ON, HOUSE],
+        want: "/il/", hash: /^#point=41\.82196,-87\.97949$/ },
+      { name: "its number on another street opens /il/ with the address, not that house's point", text: TYPED,
+        answer: [OTHER_HOUSE], want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
+      { name: "answers no app covers, to an address that names no state, are said to be outside", text: NO_STATE,
+        answer: [TEXAS], want: "/", msg: /outside every place districtry covers/ },
+      { name: "answers no app covers, to an address in Illinois, open /il/ with the address", text: TYPED,
+        answer: [TEXAS], want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
+      { name: "no answer at all, to an address in Illinois, opens /il/ with the address", text: TYPED,
+        answer: [], want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
+      { name: "no answer at all, to an address that names no state, is said to match nothing", text: NO_STATE,
+        answer: [], want: "/", msg: /^No matches/ },
+    ]) {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      const asked = [];
+      await page.route("**/photon.komoot.io/**", (r) => {
+        asked.push(new URL(r.request().url()).searchParams.get("q"));
+        return photonStub(c.answer)(r);
+      });
+      await stubInstances(page);
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.fill("#search-input", c.text);
+      await page.click("#search-button");
+      await addressSettled(page);
+      const hash = new URL(page.url()).hash;
+      const msg = c.msg ? await textOrNull(page, "#search-status") : null;
+      check(`a typed address held to its house number: ${c.name}`,
+        JSON.stringify(asked) === JSON.stringify([c.text]) && new URL(page.url()).pathname === c.want &&
+          (!c.hash || (c.hash instanceof RegExp ? c.hash.test(hash) : hash === c.hash)) && (!c.msg || c.msg.test(msg || "")),
+        JSON.stringify({ asked, url: page.url(), msg }));
+      await ctx.close();
+    }
   }
 
   // --- 1d. an address nobody covers SAYS SO, and never guesses -------------
@@ -587,7 +860,6 @@ try {
     });
     page.on("pageerror", (e) => errs.push(String(e)));
     const vendored = await serveVendoredLeaflet(page);
-    await stubTiles(page);
     const resp = await page.goto(BASE + "/coverage-map.html", { waitUntil: "load" });
     check("coverage map loads", resp.status() === 200, `HTTP ${resp.status()}`);
     await page.waitForTimeout(1500);
@@ -654,7 +926,6 @@ try {
     const ctx = await browser.newContext({ serviceWorkers: "block" });
     const page = await ctx.newPage();
     await serveVendoredLeaflet(page);
-    await stubTiles(page);
     // `domcontentloaded`, NOT `load` — see section 6 for the measurement. This
     // check reads an iframe attribute and fetches the map separately; neither
     // needs the page's subresources, and the landing page carries a
@@ -925,9 +1196,11 @@ try {
         manifest.name === "districtry",
       JSON.stringify(manifest && { id: manifest.id, name: manifest.name, scope: manifest.scope,
         start_url: manifest.start_url, display: manifest.display }));
+    // The address is the launcher's FULL one: the Google Play app copies it as
+    // written, and Chrome drops a share whose address names no site.
     const st = manifest && manifest.share_target;
-    check("the manifest puts the app in the Share menu, sending title, text and url to the launcher by GET",
-      !!st && st.action === "/app/" && st.method === "GET" && !st.enctype &&
+    check("the manifest puts the app in the Share menu, sending title, text and url to the launcher's full address by GET",
+      !!st && st.action === `https://${SITE_HOST}/app/` && st.method === "GET" && !st.enctype &&
         JSON.stringify(st.params) === JSON.stringify({ title: "title", text: "text", url: "url" }),
       JSON.stringify(st));
     await ctx.close();

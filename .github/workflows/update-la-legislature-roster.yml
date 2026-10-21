@@ -1,0 +1,108 @@
+name: Update Louisiana legislature roster
+
+# Weekly refresh of the Louisiana Senate + House rosters
+# (la/data/app/la-senate-members.json and la-house-members.json, fetched by
+# la/index.html's chamber cards). Rebuilds both chambers from each chamber's
+# own member list (house.louisiana.gov/H_Reps/H_Reps_FullInfo and
+# senate.la.gov/Senators_FullInfo) and every member's own page, and — if
+# anything changed — opens a PR rather than committing directly to main.
+#
+# The builder reads the two member lists and every member's page (143
+# requests on 2026-10-20, one second apart, so a few minutes). It reads the name, district
+# and party, the district office's address and telephone and the member's
+# e-mail address, and never the legislative assistant or the fax number the
+# same pages print. A seat the list prints as "Vacant" ships as a vacancy
+# record, and the office the list still prints beside it, which was the
+# departed member's, does not ship.
+#
+# Both hosts serve their whole certificate chain and permit every path the
+# builder reads (robots.txt read 2026-10-20), so nothing is pinned; requests is
+# installed for the builder's own session, and robots.txt is read through
+# scraper_common before each host's first fetch.
+#
+# THE REBUILT FILES ARE CARRIED ACROSS THE BRANCH CUT RATHER THAN SCRAPED A
+# SECOND TIME, the update-ilga-roster.yml pattern: a second pass would ask the
+# legislature's servers for the same pages again for nothing. A run where main
+# changed those same files meanwhile errors at the checkout instead of
+# pushing, which is right.
+#
+# LOUISIANA IS DARK, so this job does not regenerate la/state-legislature.html:
+# build_legislator_pages.py refuses an instance metros.json does not carry, so
+# that page is not built yet. Go-live adds the step in the same change that
+# adds la to metros.json — la/WATCH.md has the list.
+
+on:
+  schedule:
+    - cron: "23 19 * * 2" # Tuesday 19:23 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # requests for the builder's session (it retries a reset or a timeout).
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Rebuild Louisiana Senate + House rosters
+        run: python3 la/scripts/build_la_legislature_roster.py
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, every data/app file must be present and
+      # well formed, and every seat must carry a record.
+      - name: Validate app + data files
+        run: |
+          python3 la/scripts/validate_index.py la/index.html
+          python3 scripts/validate_chamber_rosters.py
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- la/data/app/la-senate-members.json la/data/app/la-house-members.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/la-legislature-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history — see the sibling
+          # workflows' own comments for why both halves matter. The two rebuilt
+          # files ride across the checkout as working-tree changes.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add la/data/app/la-senate-members.json la/data/app/la-house-members.json
+          git commit -m "Update Louisiana Senate + House rosters from the Louisiana Legislature"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Louisiana Senate + House rosters" \
+              --body "Automated weekly refresh of the Louisiana Senate and Louisiana House chamber cards' rosters, from each chamber's own member list and member pages on senate.la.gov and house.louisiana.gov, generated by \`la/scripts/build_la_legislature_roster.py\`. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

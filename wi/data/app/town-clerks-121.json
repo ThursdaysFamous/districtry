@@ -29,12 +29,18 @@
     "clerk": "Jacob Solfest",
     "municipality": "Chimney Rock",
     "phone": "715-797-2988",
+    "phonesExtra": [
+      "715-530-3688"
+    ],
     "recordUpdated": "2023-12-22"
   },
   "5512120300": {
     "clerk": "Kara Wener",
     "municipality": "Dodge",
     "phone": "608-539-2881",
+    "phonesExtra": [
+      "507-429-2698"
+    ],
     "recordUpdated": "2023-12-22",
     "url": "https://townofdodgewi.com/"
   },
@@ -56,24 +62,36 @@
     "clerk": "Donald A Halvorson",
     "municipality": "Hale",
     "phone": "715-694-2113",
+    "phonesExtra": [
+      "715-695-3549"
+    ],
     "recordUpdated": "2023-12-28"
   },
   "5512144500": {
     "clerk": "Sharon Sosalla",
     "municipality": "Lincoln",
     "phone": "715-985-3038",
+    "phonesExtra": [
+      "715-538-4201"
+    ],
     "recordUpdated": "2023-06-09"
   },
   "5512162650": {
     "clerk": "John Bautch",
     "municipality": "Pigeon",
     "phone": "715-983-5883",
+    "phonesExtra": [
+      "715-533-4037"
+    ],
     "recordUpdated": "2026-06-11"
   },
   "5512165500": {
     "clerk": "Cathy Nelson",
     "municipality": "Preston",
     "phone": "608-989-2133",
+    "phonesExtra": [
+      "608-989-2036"
+    ],
     "recordUpdated": "2025-06-24",
     "url": "https://www.townofprestontremplo.com/"
   },

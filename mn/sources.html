@@ -697,25 +697,26 @@ main details p:first-of-type { margin-top: -2px; }
 
 /* The address box a question page carries above its .cta link. It does not
    geocode: it hands the typed text to the app as `./#q=<address>` and the app
-   runs its own bounded search. See the geocoder-search ENGINE block.
+   runs its own bounded search. See the geocoder-search ENGINE block. Its one
+   button also opens the map when the box is left empty.
 
    IT IS HIDDEN UNTIL ITS SCRIPT UNHIDES IT, so a reader with no JavaScript
-   gets the .cta link below and never an input that cannot submit.
+   gets the .cta link below and never an input that cannot submit. Once it is
+   shown, the .cta link and its note are hidden: the box's own button makes
+   the same trip, and two buttons with the same words read as a mistake.
+   Hidden HERE rather than by the box's script, because that script runs
+   above the link, before the link is in the document.
 
    THE BUTTON FACE FLIPS IN DARK and that is a measurement, not a preference:
    white on --accent-deep reads 1.91:1 there (the shortfall validate_contrast
    already records for .cta), against 9.64:1 for --paper on the same violet.
    The landing page's search button made the same flip for the same reason.
 
-   THE STATUS LINE HAS NO ERROR COLOUR because the sub-page palette carries no
-   error token — the shell speaks --accent/--slate/--panel, and --error is not
-   among the eleven aliases build_brand_tokens.py emits. --accent-warm-deep is
-   this shell's caution hue (the .disclaimer rule below uses its lighter pair)
-   and measures 8.11:1 light / 8.64:1 dark on --panel, so the failure state is
-   painted with it rather than by adding a twelfth token. The message says what
-   went wrong in words either way. */
+   THE STATUS LINE HAS NO ERROR STATE since 2026-10-20: the one failure it
+   reported was an empty box, and an empty box now opens the map. */
 .lookup { margin: 6px 0 14px; max-width: 34rem; }
 .lookup[hidden] { display: none; }
+.lookup:not([hidden]) ~ .cta, .lookup:not([hidden]) ~ .cta-note { display: none; }
 .lookup-card {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -756,15 +757,19 @@ main details p:first-of-type { margin-top: -2px; }
 .lookup-go:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .lookup-go:disabled { opacity: .6; cursor: default; }
 :root[data-theme="dark"] .lookup-go { color: var(--paper); }
-.lookup-status {
+.lookup-hint {
   margin: 10px 0 0;
   font-size: 13.5px;
   line-height: 1.4;
   color: var(--slate);
 }
-.lookup-status.err { color: var(--accent-warm-deep); }
-.lookup-or { font-size: 13px; color: var(--slate); margin: 14px 0 2px; }
-.lookup-or[hidden] { display: none; }
+.lookup-status {
+  margin: 6px 0 0;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--slate);
+}
+.lookup-status:empty { margin: 0; }
 
 .answer-card {
   background: var(--panel);
@@ -843,6 +848,12 @@ table.flow td.who { font-weight: 600; white-space: nowrap; }
 table.flow td.who a { text-decoration: none; }
 table.flow td.who a:hover { text-decoration: underline; }
 table.flow td small { display: block; color: var(--slate-soft); font-size: 12.5px; margin-top: 3px; font-weight: 400; }
+/* A cell holding two or more telephone numbers prints one to a line, 28px
+   apart. At the table's own line height two stacked tel: links sit 23.6px
+   apart (measured 2026-10-17 on a South Carolina member with a home and a
+   business number), under WCAG 2.5.8's 24px spacing floor; 28px is the floor
+   the county pages' .m-contact rows use for the same reason. */
+table.flow td.tels { line-height: 28px; }
 
 .nope { list-style: none; margin: 0 0 18px; padding: 0; }
 .nope li { position: relative; padding: 0 0 0 26px; margin: 0 0 9px; }
@@ -1160,7 +1171,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">19 layers — 6 political and legislative, 2 public safety, 4 schools, 7 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">20 layers — 7 political and legislative, 2 public safety, 4 schools, 7 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1169,7 +1180,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">6 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">7 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1247,6 +1258,18 @@ table.matrix code {
                 <td data-label="Who it names">The council, from each nation's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card. Nine of the thirteen nations publish one this project can read; for the other four the card says why it names nobody. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json, which the Census does not publish and the Bureau does not draw.</td>
                 <td data-label="Where it applies">Minnesota — 22 areas across 13 nations. Most points in the state are on no tribal land.</td>
               </tr>
+              <tr id="layer-city-ward">
+                <th scope="row"><span class="layer-name">City Council District</span><code>city-ward</code></th>
+                <td data-label="What it answers">The city council ward or district containing the point, in the 22 Minnesota cities above 25,000 people whose councils elect by ward or district, and the council member it elects.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0" target="_blank" rel="noopener">Office of the Minnesota Secretary of State, Elections Division — Voting Districts, Minnesota, whose every precinct carries the ward it lies in: each ward is its precincts joined together, built by mn/scripts/build_mn_city_wards.py. Checked against the ballot: for all 101 wards, the precincts that voted in the ward's latest council contest since 2022 (the Secretary of State's localPrct.txt results) are exactly the precincts the same election's precinct map puts in the ward, measured 2026-10-15</a></li>
+                    <li><a href="https://electionresultsfiles.sos.mn.gov/20241105/localPrct.txt" target="_blank" rel="noopener">Office of the Minnesota Secretary of State, local results by precinct (localPrct.txt), the ballot each ward is checked against</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The winner of each ward's most recent council election, from the same city council roster the City card reads (mn/data/app/mn-city-councils.json), every name dated. A winner is not a claim about who sits today, and the card says so.</td>
+                <td data-label="Where it applies">The 22 Minnesota cities above 25,000 people whose councils elect by ward or district: Austin, Blaine, Bloomington, Brooklyn Park, Chaska, Coon Rapids, Duluth, Elk River, Fridley, Mankato, Minneapolis, Minnetonka, Moorhead, Owatonna, Plymouth, Ramsey, Richfield, Rochester, St. Cloud, St. Louis Park, St. Paul and Winona. The precinct map carries wards for 47 smaller cities too; they are not drawn, because this app does not name those councils.</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -1302,7 +1325,7 @@ table.matrix code {
                 <td data-label="What it answers">The unified (every-grade) school district covering the point.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 322 features for Minnesota, measured 2026-09-29</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 322 features for Minnesota, measured 2026-09-29</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">The winners of each board's most recent elections, from the Office of the Minnesota Secretary of State's school district results files (electionresultsfiles.sos.mn.gov), dated to each election and joined to the Census district through the Minnesota Department of Education's own district layer: 1,882 of 2,099 seats on 326 boards, measured 2026-10-07. A winner is not a claim about who sits today, and the card says so; a seat a special election leaves unsettled names nobody and says why. Built weekly by mn/scripts/build_mn_school_boards.py. Gap mn-school-board-members.</td>
@@ -1314,18 +1337,19 @@ table.matrix code {
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://electionresultsfiles.sos.mn.gov/20241105/localPrct.txt" target="_blank" rel="noopener">Office of the Minnesota Secretary of State, local results by precinct (localPrct.txt) for the 2022 to 2025 generals: each district is the precincts that voted in its seat's most recent contest, read in that election's own precincts (the Secretary of State's per-general precinct layers for 2022 and 2024, today's precincts for odd years), cut to the Census school district boundary. Built by mn/scripts/build_mn_school_board_districts.py; Minneapolis's six agree with the City of Minneapolis's own park commissioner districts at all 1,800 sampled points, measured 2026-10-08</a></li>
+                    <li><a href="https://www.ahschools.us/fs/resource-manager/view/64849109-6308-46ab-a5a4-19ab85b45278" target="_blank" rel="noopener">Anoka-Hennepin School District, Current Board Election Areas, School Board District Boundaries (2022): the district's own map, linked from its school board page, read precinct by precinct against the Secretary of State's 2022 precincts by mn/scripts/trace_isd11_board_map.py, because its odd-year results are reported by shared polling place</a></li>
                     <li><a href="https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_electionresults_2022_2030/FeatureServer" target="_blank" rel="noopener">Office of the Minnesota Secretary of State, General Election Results By Precinct layers (the precincts each general was held in)</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">The winners of each district's most recent election, from the same school board roster the School District card reads (mn/data/app/mn-school-boards.json), every name dated. A winner is not a claim about who sits today, and the card says so.</td>
-                <td data-label="Where it applies">The 13 Minnesota school districts whose boards elect by district and whose results place those districts on precincts: Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Anoka-Hennepin elects by district and is not drawn (gap mn-school-board-election-districts).</td>
+                <td data-label="Where it applies">The 14 Minnesota school districts whose boards elect by district: Anoka-Hennepin, Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Duluth's rural townships are not placed in a district (gap mn-school-board-election-districts).</td>
               </tr>
               <tr id="layer-school-district-elementary">
                 <th scope="row"><span class="layer-name">School District (Elementary)</span><code>school-district-elementary</code></th>
                 <td data-label="What it answers">The elementary-tiling school district covering the point, in the eight places Minnesota has one.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime (no builder script, no committed data/app file); 8 features for Minnesota, measured 2026-09-29. SEVEN OF THE EIGHT record LOGRADE PK and HIGRADE 12, the same span as a unified district, so the card prints the recorded grades and the tiling and claims nothing about which grades the district operates — recorded as the coverage gap mn-elementary-district-grades</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 8 features for Minnesota, measured 2026-09-29. SEVEN OF THE EIGHT record LOGRADE PK and HIGRADE 12, the same span as a unified district, so the card prints the recorded grades and the tiling and claims nothing about which grades the district operates — recorded as the coverage gap mn-elementary-district-grades</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">The same school board roster as the unified layer's row, keyed by this layer's Census district id. Gap mn-school-board-members.</td>
@@ -1336,7 +1360,7 @@ table.matrix code {
                 <td data-label="What it answers">The secondary school district covering the point, in the one place Minnesota has one.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 1 (secondary school districts), queried live at runtime (no builder script, no committed data/app file); exactly 1 feature for Minnesota, measured 2026-09-29 — 'Park Rapids Public School District in Pine Point (9-12)'. It ships rather than being dropped because it IS the answer where it applies: without it a reader in Pine Point would be shown an elementary district and no high-school district at all</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 1 (secondary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; exactly 1 feature for Minnesota, measured 2026-09-29 — 'Park Rapids Public School District in Pine Point (9-12)'. It ships rather than being dropped because it IS the answer where it applies: without it a reader in Pine Point would be shown an elementary district and no high-school district at all</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NOBODY IS NAMED HERE, deliberately: the one secondary district (Park Rapids, grades 9-12) lies over the Pine Point district, whose voters elect Pine Point's own board, so naming Park Rapids's board on this card would name people a reader there does not vote for. The Elementary card is the one for Pine Point.</td>
@@ -1383,7 +1407,7 @@ table.matrix code {
                 <td data-label="What it answers">The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the delivery routes sharing a ZIP code, not a postal boundary.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime (no builder script, no committed data/app file). A ZCTA has NO STATE FIELD because it can cross a state line, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='27'; 1,385 features in Minnesota's envelope, measured 2026-09-29</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. A ZCTA has NO STATE FIELD because it can cross a state line, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='27'; 1,385 features in Minnesota's envelope, measured 2026-09-29</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD SAYS SO IN AS MANY WORDS: a ZIP code elects nobody. It is a postal delivery grouping the Census approximates as an area, and the card states that rather than leaving a reader to wonder why no name appears.</td>
@@ -1394,10 +1418,10 @@ table.matrix code {
                 <td data-label="What it answers">The organized town covering the point, or the Census placeholder record for the city that stands in place of one — and which of the two it is.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file); 2,762 features for Minnesota, measured 2026-09-29</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / county subdivisions, layer 1, copied into a tile archive served from this site, re-fetched from the Census weekly; 2,762 features for Minnesota, measured 2026-09-29</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER. A Minnesota town elects three supervisors to three-year terms plus a clerk and a treasurer in alternate years (Minn. Stat. 367.03, read at revisor.mn.gov on 2026-09-29), and no statewide roster of those officers was found, so the card names nobody. Recorded as the coverage gap mn-township-officers. A city's people belong on the City card and an unorganized territory's on the county's, so neither gets a town-board row at all.</td>
+                <td data-label="Who it names">The board of each of the 704 towns that hold their town election in November — supervisors, clerk and treasurer — from the Office of the Minnesota Secretary of State's local results files (electionresultsfiles.sos.mn.gov), each name dated to the election that seated it: 2,813 of 3,115 seats, measured 2026-10-15. A winner is not a claim about who holds the seat today, and the card says so. A March-election town runs its own election, whose results are in no file the state publishes. For 416 of those towns the card names the officers on their county's own list of township officers instead — 29 counties publish one this app reads (measured 2026-10-16) — each dated to the list and the day it was read, and only where the election results name nobody; the rest name nobody (gap mn-township-officers). Built weekly by mn/scripts/build_mn_town_boards.py; the county lists by mn/scripts/mn_county_town_officers_scraper.py and build_mn_county_town_officers.py. A city's people belong on the City card and an unorganized territory's on the county's, so neither gets a town-board row at all.</td>
                 <td data-label="Where it applies">Minnesota — statewide.</td>
               </tr>
               <tr id="layer-voting-precinct">
@@ -1416,7 +1440,7 @@ table.matrix code {
                 <td data-label="What it answers">The city covering the point, if any. Most of Minnesota's land is township or unorganized territory, where the card is correctly empty.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 856 features for Minnesota, measured 2026-09-29, ALL of them carrying the Census's city descriptor — there is no village among them, which is why this card has no type row where Michigan's needs one</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places / incorporated places, layer 4, copied into a tile archive served from this site, re-fetched from the Census weekly; 856 features for Minnesota, measured 2026-09-29, ALL of them carrying the Census's city descriptor — there is no village among them, which is why this card has no type row where Michigan's needs one</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">In the 43 cities above 25,000 people, the mayor and council members, each the winner of the most recent election for that seat, from the Office of the Minnesota Secretary of State's city results files (electionresultsfiles.sos.mn.gov), dated to that election: 249 of 268 seats. A winner is not a claim about who sits today, and the card says so; a seat decided in later ranked-choice rounds, which the state's file does not carry, names nobody and says why. Built weekly by mn/scripts/build_mn_city_councils.py. The 813 smaller cities name nobody yet, recorded as the coverage gap mn-municipal-officeholders.</td>
@@ -1602,7 +1626,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 322 features for Minnesota, measured 2026-09-29",
+          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 322 features for Minnesota, measured 2026-09-29",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
         }
       ],
@@ -1629,13 +1653,18 @@ table.matrix code {
         },
         {
           "@type": "Dataset",
+          "name": "Anoka-Hennepin School District, Current Board Election Areas, School Board District Boundaries (2022): the district's own map, linked from its school board page, read precinct by precinct against the Secretary of State's 2022 precincts by mn/scripts/trace_isd11_board_map.py, because its odd-year results are reported by shared polling place",
+          "url": "https://www.ahschools.us/fs/resource-manager/view/64849109-6308-46ab-a5a4-19ab85b45278"
+        },
+        {
+          "@type": "Dataset",
           "name": "Office of the Minnesota Secretary of State, General Election Results By Precinct layers (the precincts each general was held in)",
           "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_electionresults_2022_2030/FeatureServer"
         }
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "The 13 Minnesota school districts whose boards elect by district and whose results place those districts on precincts: Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Anoka-Hennepin elects by district and is not drawn (gap mn-school-board-election-districts)"
+        "name": "The 14 Minnesota school districts whose boards elect by district: Anoka-Hennepin, Cook County, Lake Superior, Lake of the Woods, Duluth, Elk River, Winona, St. Louis County, MACCRAY, Lac qui Parle Valley, Red Rock Central, RTR, Rock Ridge and Minneapolis. Duluth's rural townships are not placed in a district (gap mn-school-board-election-districts)"
       }
     },
     {
@@ -1688,7 +1717,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime (no builder script, no committed data/app file). A ZCTA has NO STATE FIELD because it can cross a state line, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='27'; 1,385 features in Minnesota's envelope, measured 2026-09-29",
+          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. A ZCTA has NO STATE FIELD because it can cross a state line, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='27'; 1,385 features in Minnesota's envelope, measured 2026-09-29",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
         }
       ],
@@ -1710,7 +1739,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime (no builder script, no committed data/app file); 8 features for Minnesota, measured 2026-09-29. SEVEN OF THE EIGHT record LOGRADE PK and HIGRADE 12, the same span as a unified district, so the card prints the recorded grades and the tiling and claims nothing about which grades the district operates — recorded as the coverage gap mn-elementary-district-grades",
+          "name": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 8 features for Minnesota, measured 2026-09-29. SEVEN OF THE EIGHT record LOGRADE PK and HIGRADE 12, the same span as a unified district, so the card prints the recorded grades and the tiling and claims nothing about which grades the district operates — recorded as the coverage gap mn-elementary-district-grades",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
         }
       ],
@@ -1724,7 +1753,7 @@ table.matrix code {
       "@id": "https://districtry.com/mn/sources.html#dataset-county-subdivision",
       "identifier": "county-subdivision",
       "name": "Township or City",
-      "description": "The organized town covering the point, or the Census placeholder record for the city that stands in place of one — and which of the two it is. NO OFFICEHOLDER. A Minnesota town elects three supervisors to three-year terms plus a clerk and a treasurer in alternate years (Minn. Stat. 367.03, read at revisor.mn.gov on 2026-09-29), and no statewide roster of those officers was found, so the card names nobody. Recorded as the coverage gap mn-township-officers. A city's people belong on the City card and an unorganized territory's on the county's, so neither gets a town-board row at all.",
+      "description": "The organized town covering the point, or the Census placeholder record for the city that stands in place of one — and which of the two it is. The board of each of the 704 towns that hold their town election in November — supervisors, clerk and treasurer — from the Office of the Minnesota Secretary of State's local results files (electionresultsfiles.sos.mn.gov), each name dated to the election that seated it: 2,813 of 3,115 seats, measured 2026-10-15. A winner is not a claim about who holds the seat today, and the card says so. A March-election town runs its own election, whose results are in no file the state publishes. For 416 of those towns the card names the officers on their county's own list of township officers instead — 29 counties publish one this app reads (measured 2026-10-16) — each dated to the list and the day it was read, and only where the election results name nobody; the rest name nobody (gap mn-township-officers). Built weekly by mn/scripts/build_mn_town_boards.py; the county lists by mn/scripts/mn_county_town_officers_scraper.py and build_mn_county_town_officers.py. A city's people belong on the City card and an unorganized territory's on the county's, so neither gets a town-board row at all.",
       "url": "https://districtry.com/mn/sources.html#layer-county-subdivision",
       "isPartOf": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
@@ -1732,7 +1761,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file); 2,762 features for Minnesota, measured 2026-09-29",
+          "name": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, copied into a tile archive served from this site, re-fetched from the Census weekly; 2,762 features for Minnesota, measured 2026-09-29",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
         }
       ],
@@ -1798,13 +1827,40 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 856 features for Minnesota, measured 2026-09-29, ALL of them carrying the Census's city descriptor — there is no village among them, which is why this card has no type row where Michigan's needs one",
+          "name": "U.S. Census TIGERweb — Places / incorporated places, layer 4, copied into a tile archive served from this site, re-fetched from the Census weekly; 856 features for Minnesota, measured 2026-09-29, ALL of them carrying the Census's city descriptor — there is no village among them, which is why this card has no type row where Michigan's needs one",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
       ],
       "spatialCoverage": {
         "@type": "Place",
         "name": "Minnesota — statewide, answering only inside an incorporated city"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mn/sources.html#dataset-city-ward",
+      "identifier": "city-ward",
+      "name": "City Council District",
+      "description": "The city council ward or district containing the point, in the 22 Minnesota cities above 25,000 people whose councils elect by ward or district, and the council member it elects. The winner of each ward's most recent council election, from the same city council roster the City card reads (mn/data/app/mn-city-councils.json), every name dated. A winner is not a claim about who sits today, and the card says so.",
+      "url": "https://districtry.com/mn/sources.html#layer-city-ward",
+      "isPartOf": {
+        "@id": "https://districtry.com/mn/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Office of the Minnesota Secretary of State, Elections Division — Voting Districts, Minnesota, whose every precinct carries the ward it lies in: each ward is its precincts joined together, built by mn/scripts/build_mn_city_wards.py. Checked against the ballot: for all 101 wards, the precincts that voted in the ward's latest council contest since 2022 (the Secretary of State's localPrct.txt results) are exactly the precincts the same election's precinct map puts in the ward, measured 2026-10-15",
+          "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Office of the Minnesota Secretary of State, local results by precinct (localPrct.txt), the ballot each ward is checked against",
+          "url": "https://electionresultsfiles.sos.mn.gov/20241105/localPrct.txt"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The 22 Minnesota cities above 25,000 people whose councils elect by ward or district: Austin, Blaine, Bloomington, Brooklyn Park, Chaska, Coon Rapids, Duluth, Elk River, Fridley, Mankato, Minneapolis, Minnetonka, Moorhead, Owatonna, Plymouth, Ramsey, Richfield, Rochester, St. Cloud, St. Louis Park, St. Paul and Winona. The precinct map carries wards for 47 smaller cities too; they are not drawn, because this app does not name those councils"
       }
     },
     {
@@ -1820,7 +1876,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), queried live at runtime (no builder script, no committed data/app file); exactly 1 feature for Minnesota, measured 2026-09-29 — 'Park Rapids Public School District in Pine Point (9-12)'. It ships rather than being dropped because it IS the answer where it applies: without it a reader in Pine Point would be shown an elementary district and no high-school district at all",
+          "name": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; exactly 1 feature for Minnesota, measured 2026-09-29 — 'Park Rapids Public School District in Pine Point (9-12)'. It ships rather than being dropped because it IS the answer where it applies: without it a reader in Pine Point would be shown an elementary district and no high-school district at all",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1"
         }
       ],

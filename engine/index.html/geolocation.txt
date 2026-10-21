@@ -56,7 +56,7 @@
             // standing inside a sibling's area: send them there, deep-linking
             // the located point (the URL fragment stays client-side, same
             // exposure as the sibling's own geolocate → permalink flow)
-            geoStatusEl.textContent = "You're outside " + METRO_NAME + " — but " +
+            geoStatusEl.textContent = "You're outside " + appPlaceName() + " — but " +
               siblingDisplayName(owner) + " covers where you are.";
             geoStatusEl.className = "geo-status";
             trackLocateFail("other-app");
@@ -64,7 +64,7 @@
             return;
           }
           trackLocateFail("outside");
-          geoStatusEl.textContent = "Your current location looks like it's outside the " + METRO_NAME + " area this app covers.";
+          geoStatusEl.textContent = "Your current location looks like it's outside the " + appPlaceName() + " area this app covers.";
           geoStatusEl.className = "geo-status err";
         });
       },

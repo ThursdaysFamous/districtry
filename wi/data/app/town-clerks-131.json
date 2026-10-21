@@ -4,6 +4,9 @@
     "deputyClerk": "Brenda Kaehler",
     "municipality": "Addison",
     "phone": "262-629-5420 EXT 1",
+    "phonesExtra": [
+      "262-629-5420 EXT 3"
+    ],
     "recordUpdated": "2024-03-18",
     "url": "https://addisonwi.gov/"
   },
@@ -50,6 +53,9 @@
     "deputyClerk": "Connie Diaz",
     "municipality": "Jackson",
     "phone": "262-677-4048",
+    "phonesExtra": [
+      "414-573-2873"
+    ],
     "recordUpdated": "2023-12-20",
     "url": "https://www.townofjacksonwi.gov/"
   },
@@ -73,6 +79,9 @@
     "deputyClerk": "Cassandra Walker",
     "municipality": "Trenton",
     "phone": "262-675-6009 EXT 106",
+    "phonesExtra": [
+      "262-290-0154"
+    ],
     "recordUpdated": "2025-11-18",
     "url": "https://townoftrenton.wi.gov/"
   },

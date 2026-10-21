@@ -23,6 +23,19 @@ Village card gains a third roster beside the mayor's and the clerk's (both
 already joined on that same GEOID), and no new layer, toggle or engine block is
 involved.
 
+SIX BODIES SINCE 2026-10-15. Caledonia, Oshkosh and Janesville are described
+below and in their own functions; Mount Pleasant, Menomonee Falls and Fond du Lac
+joined that day, each with its gate in its own docstring. TWO OF THE SIX DO NOT
+SAY THEY ARE ELECTED AT LARGE — Menomonee Falls says its trustees are elected
+"by numbered seat", Fond du Lac does not say — so they carry `atLarge: false`
+and a `howElected` sentence repeating what the city says, and the card prints
+that sentence instead of "elected at large".
+
+OSHKOSH READS FROM HERE NOW. On 2026-10-15 the city's council page had moved to
+www.oshkoshwi.gov, whose robots.txt (621 bytes) answered this file's own token
+from a Claude Code sandbox with the default TLS context and permits both pages
+read, and both pages answered. The history below is kept as it was written.
+
 THE TWO CITIES, each with its route and its measured trap:
 
   Caledonia (25,470, GEOID 5511950) — the Village Board, through the village's
@@ -108,6 +121,16 @@ THE TWO CITIES, each with its route and its measured trap:
                     lowered-security read returned and never as the verdict.
                     THE RUNNER DID NOT CONFIRM IT; see above.
 
+AN ADDRESS A CITY PRINTS IN A MEMBER'S OWN ENTRY SHIPS WHATEVER ITS DOMAIN,
+since 2026-10-17, on Adam's choice that day ("E-mails too"). Until then
+Oshkosh, Mount Pleasant and Fond du Lac read only an address on the city's or
+village's own domain. Each now reads the mailto in the member's own entry and
+stops where that entry ends, because the domain test had also been keeping an
+address printed elsewhere on the page off the member's row; where an entry
+prints two, the government's own is kept. An address printed for two
+members, or one that names another member, is the builder's to settle
+(wi_email_rules.py), and no message here prints an address.
+
 BOTH HOSTS SERVE THE DISTRICTRY TOKEN and that is why this file sends one. The
 sibling alderperson scraper sends a pinned Chrome string because 17 of the 35
 hosts it reaches refuse the token and the User-Agent is set once for all of
@@ -139,7 +162,23 @@ UA = {"User-Agent": UA_ROSTER_BOT}
 
 CALEDONIA_BOARD = "https://www.caledonia-wi.gov/board"
 CALEDONIA_FEED_HOST = "https://www.caledonia-wi.gov/"
-OSHKOSH_COUNCIL = "https://www.ci.oshkosh.wi.us/CityCouncil/"
+# THE CITY'S CURRENT HOST, NOT THE ONE THE ELECTIONS COMMISSION LISTS.
+# www.ci.oshkosh.wi.us/CityCouncil/ now redirects here, and urllib follows a
+# redirect without asking the new host's robots.txt, so the page is fetched at
+# its own address and the policy read is the one that governs it (2026-10-15:
+# 621 bytes, no rule matching either path).
+OSHKOSH_COUNCIL = "https://www.oshkoshwi.gov/CityCouncil/"
+OSHKOSH_FORM = "https://www.oshkoshwi.gov/CityCouncil/FormOfGovernment.aspx"
+# The tranche of 2026-10-15: three more governing bodies of 25,000 or more
+# whose map draws no district. All three hosts served this file's own token,
+# robots.txt first, on that day; Mount Pleasant and Menomonee Falls serve the
+# 816-byte CivicPlus default policy, which is never to be cited as either
+# village's own choice.
+MOUNT_PLEASANT_BOARD = "https://www.mtpleasantwi.gov/319/Village-Board"
+MENOMONEE_FALLS_BOARD = ("https://www.menomoneefalls.gov/1410"
+                         "/Village-Board-Members")
+FOND_DU_LAC_ABOUT = "https://www.fdl.wi.gov/city-council/"
+FOND_DU_LAC_CONTACT = "https://www.fdl.wi.gov/city-council/contact-us/"
 JANESVILLE_CONTACT = ("https://www.janesvillewi.gov/government/city-council"
                       "/contact-the-city-council")
 JANESVILLE_MEMBERS = ("https://www.janesvillewi.gov/government/city-council"
@@ -210,6 +249,56 @@ def clean(text):
     return re.sub(r"\s+", " ", H.unescape(text or "")).strip()
 
 
+# One address, as a member's own entry prints it in a mailto link.
+ADDRESS = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+
+
+def own_mailto(fragment, own_domain):
+    """The address a member's own entry links with mailto, whatever its
+    domain, or None. FRAGMENT must be that entry and nothing after it. Where
+    it links two, the one on OWN_DOMAIN (the government's) is kept, because
+    the card shows one "Email" link."""
+    found = [a.strip() for a in re.findall(r'mailto:([^"\'?<>\s]+)', fragment)
+             if ADDRESS.fullmatch(a.strip())]
+    ours = [a for a in found if a.lower().endswith("@" + own_domain)]
+    return (ours or found or [None])[0]
+
+
+def own_div(block):
+    """BLOCK up to the close of the div it opens with, or None when the markup
+    never closes it. BLOCK starts just inside that div's opening tag."""
+    depth = 1
+    for tag in re.finditer(r"<(/?)div\b", block):
+        depth += -1 if tag.group(1) else 1
+        if depth == 0:
+            return block[:tag.start()]
+    return None
+
+
+# Janesville's Cell Phone cell must hold exactly one telephone number, and any
+# number the contact page prints is found with the second pattern.
+JANESVILLE_ONE_NUMBER = re.compile(r"^\(?\d{3}\)?[\s.-]*\d{3}[\s.-]\d{4}$")
+JANESVILLE_NUMBER = re.compile(r"\(?\b\d{3}\)?[\s.-]*\d{3}[\s.-]\d{4}\b")
+
+
+def _digits(text):
+    """The digits that identify a telephone line, a leading 1 dropped."""
+    d = re.sub(r"\D", "", text or "")
+    return d[1:] if len(d) == 11 and d.startswith("1") else d
+
+
+def _tel_links_agree(cell_html):
+    """False when a tel: link in the cell dials a different number than the
+    number its own text shows. A link showing no number is not compared."""
+    for href, shown in re.findall(
+            r'(?is)<a\b[^>]*\bhref\s*=\s*["\']?tel:([^"\'>\s]*)[^>]*>(.*?)</a>',
+            cell_html or ""):
+        text = clean(re.sub(r"(?is)<[^>]+>", " ", shown))
+        if re.search(r"\d", text) and _digits(href) != _digits(text):
+            return False
+    return True
+
+
 def scrape_caledonia():
     page = fetch(CALEDONIA_BOARD)
 
@@ -271,44 +360,243 @@ def scrape_caledonia():
 
 
 def scrape_oshkosh():
+    """The Common Council, one `councilMember` block per official: an h3
+    reading "Mayor NAME", "Deputy Mayor NAME" or "Council Member NAME", a phone
+    line that may be blank, an e-mail and a term.
+
+    THE AT-LARGE GATE IS THE CITY'S OWN SENTENCE on its Form of Government
+    page: "Oshkosh elects six council members and a mayor on a non-partisan
+    basis, at large". The council page itself never says at large.
+
+    THE BLOCK IS THE UNIT. An earlier version split the page on headings and
+    took the first phone number in the text that followed, so a member whose
+    phone line is blank (Jacob Amos, measured 2026-10-15) was handed the city's
+    main number from further down the page. Reading inside each block leaves a
+    blank line blank.
+
+    THE E-MAIL SHIPS WHATEVER ITS DOMAIN, since 2026-10-17 (Adam's choice that
+    day, "E-mails too"); until then only one on oshkoshwi.gov was read. It is
+    read from the member's own div, which ends where that div closes: the last
+    block runs on to the end of the page, and an address printed further down
+    would otherwise be read as the last member's. Measured that day, each
+    member's div links one address, and nothing after the last one links any.
+    """
+    form = clean(re.sub(r"<[^>]+>", " ", fetch(OSHKOSH_FORM)))
+    if not re.search(r"(?i)elects six council members and a mayor\b[^.]*"
+                     r"\bat large\b", form):
+        raise RuntimeError("Oshkosh's Form of Government page no longer says "
+                           "the council is elected at large — the at-large "
+                           "claim has lost its source")
     page = fetch(OSHKOSH_COUNCIL)
-
-    # THE CITY'S OWN WORDS ARE THE AT-LARGE GATE, as at Caledonia.
-    flat = clean(page)
-    if "deputy mayor" not in flat.lower():
-        raise RuntimeError("Oshkosh's council page no longer describes the "
-                           "council's composition — the at-large claim has lost "
-                           "its source")
-
     members = []
-    seen = set()
-    # Each official is a block carrying a name, a role line and a mailto. The
-    # mailto is the anchor because it is the one field every one of the seven
-    # has, and the role line sits immediately above it.
-    for block in re.split(r"(?i)<(?:h[2-5]|div class=\"[^\"]*council)", page):
-        mail = re.search(r'mailto:([A-Za-z0-9._%+-]+@oshkoshwi\.gov)', block)
-        if not mail:
+    for block in re.split(r'<div class="councilMember\b', page)[1:]:
+        h3 = re.search(r"(?s)<h3>(.*?)</h3>", block)
+        if not h3:
             continue
-        email = mail.group(1)
-        if email.lower() in seen:
-            continue
-        text = clean(re.sub(r"<[^>]+>", " ", block))
-        role = re.search(r"(?i)\b(Mayor|Deputy Mayor|Council Member)\b", text)
-        name = re.search(r"(?i)\b(Mayor|Deputy Mayor|Council Member)\b\s*"
-                         r"([A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+){1,3})",
-                         text)
-        if not (role and name):
-            continue
-        seen.add(email.lower())
-        row = {"name": clean(name.group(2)), "role": clean(role.group(1)),
-               "email": email}
-        phone = re.search(r"\(?(\d{3})\)?[ .-](\d{3})[ .-](\d{4})", text)
+        m = re.fullmatch(r"(Mayor|Deputy Mayor|Council Member)\s+(.+)",
+                         clean(re.sub(r"<[^>]+>", " ", h3.group(1))))
+        if not m:
+            raise RuntimeError("Oshkosh: a council block is headed %r, which "
+                               "names no role this reader knows"
+                               % clean(h3.group(1)))
+        row = {"name": m.group(2), "role": m.group(1)}
+        own = own_div(block)
+        if own is None:
+            raise RuntimeError("Oshkosh: the block for %s never closes its div, "
+                               "so where the member's own entry ends is not "
+                               "known" % m.group(2))
+        mail = own_mailto(own, "oshkoshwi.gov")
+        if mail:
+            row["email"] = mail
+        body = clean(re.sub(r"<[^>]+>", " ", block[h3.end():]))
+        phone = re.search(r"\((\d{3})\)\s*(\d{3})-(\d{4})", body)
         if phone:
             row["phone"] = "(%s) %s-%s" % phone.groups()
+        term = re.search(r"Term:\s*(\d{4})", body)
+        if term:
+            row["term"] = term.group(1)
         members.append(row)
-
+    if len(members) != 7:
+        raise RuntimeError("Oshkosh: %d council blocks against the six members "
+                           "and mayor its Form of Government page states"
+                           % len(members))
     return {"geoid": "5560500", "name": "Oshkosh", "county": "Winnebago",
             "atLarge": True, "board": members, "sourceUrl": OSHKOSH_COUNCIL}
+
+
+def scrape_mount_pleasant():
+    """The Village Board: an h3 per member reading "NAME<br>Village President"
+    or "NAME<br>Trustee Seat No. N", then a paragraph with a mailto, a phone
+    and "Term Expires: Month YYYY".
+
+    THE AT-LARGE GATE IS THE VILLAGE'S OWN SENTENCE: "These elected officials
+    serve at large." The seat numbers are seats, not districts, and the card
+    says so.
+
+    THE E-MAIL SHIPS WHATEVER ITS DOMAIN, since 2026-10-17 (Adam's choice that
+    day, "E-mails too"); until then only one on mtpleasantwi.gov was read. It
+    is read from the member's own paragraph, which is the one that follows the
+    member's heading. Measured that day, each paragraph links one address.
+    """
+    page = fetch(MOUNT_PLEASANT_BOARD)
+    if "These elected officials serve at large" not in clean(page):
+        raise RuntimeError("Mount Pleasant's board page no longer says its "
+                           "officials serve at large — the at-large claim has "
+                           "lost its source")
+    # A heading may not span another heading's close: the page carries an
+    # empty `<h3><br></h3>` before a script, and a lazy match across it read a
+    # script line into the next member's name.
+    members = []
+    for m in re.finditer(r'(?s)<h3 class="subhead2"[^>]*>((?:(?!</h3>).)*)'
+                         r'</h3>\s*<p[^>]*>(.*?)</p>', page):
+        lines = [clean(re.sub(r"<[^>]+>", " ", x))
+                 for x in re.split(r"(?i)<br\s*/?>", m.group(1))]
+        lines = [x for x in lines if x]
+        if len(lines) < 2 or not re.fullmatch(
+                r"Village President|Trustee Seat No\. \d", lines[1]):
+            continue
+        row = {"name": lines[0], "role": lines[1]}
+        mail = own_mailto(m.group(2), "mtpleasantwi.gov")
+        if mail:
+            row["email"] = mail
+        text = clean(re.sub(r"<[^>]+>", " ", m.group(2)))
+        phone = re.search(r"\(\d{3}\)\s*\d{3}-\d{4}", text)
+        if phone:
+            row["phone"] = phone.group(0)
+        term = re.search(r"Term Expires:\s*([A-Z][a-z]+ \d{4})", text)
+        if term:
+            row["term"] = term.group(1)
+        members.append(row)
+    if len(members) != 7:
+        raise RuntimeError("Mount Pleasant: %d members read against the six "
+                           "trustees and one president its page states"
+                           % len(members))
+    return {"geoid": "5554875", "name": "Mount Pleasant", "county": "Racine",
+            "atLarge": True, "board": members,
+            "sourceUrl": MOUNT_PLEASANT_BOARD}
+
+
+def scrape_menomonee_falls():
+    """The Village Board: one `member-card` per person, a `member-name` with a
+    `seat-badge` ("Seat N") on each trustee, a `member-role`, and a term.
+
+    THE PAGE DOES NOT SAY THE TRUSTEES ARE ELECTED AT LARGE, so this roster
+    does not claim it. Its words are "Elected at-large" for the president and
+    "6 elected seats · Nonpartisan · Elected by numbered seat" for the
+    trustees, and no trustee is given a district. Both sentences are gates,
+    and the card prints what the page says rather than "elected at large".
+
+    NO CONTACT SHIPS: the one phone shown is the village's own main number on
+    every card, and each e-mail is a form link.
+    """
+    page = fetch(MENOMONEE_FALLS_BOARD)
+    flat = clean(re.sub(r"<[^>]+>", " ", page))
+    if "Elected by numbered seat" not in flat or "Elected at-large" not in flat:
+        raise RuntimeError("Menomonee Falls no longer says how its board is "
+                           "elected in the words this roster repeats")
+    members = []
+    for card in re.split(r'<div class="member-card\b', page)[1:]:
+        # The seat badge sits INSIDE the name span, so it is read and removed
+        # before the name is.
+        name = re.search(r'(?s)<span class="member-name">(.*?)</span>\s*'
+                         r'<span class="member-role">(.*?)</span>', card)
+        if not name:
+            continue
+        badge = re.search(r'(?s)<span class="seat-badge">(.*?)</span>',
+                          name.group(1))
+        seat = clean(badge.group(1)) if badge else ""
+        who = clean(re.sub(r"<[^>]+>", " ", re.sub(
+            r'(?s)<span class="seat-badge">.*?</span>', " ", name.group(1))))
+        what = clean(re.sub(r"<[^>]+>", " ", name.group(2)))
+        if seat and what == "Village Trustee":
+            if not re.fullmatch(r"Seat \d", seat):
+                raise RuntimeError("Menomonee Falls: %s carries the badge %r"
+                                   % (who, seat))
+            label = "Trustee, " + seat
+        elif not seat and what == "Village President":
+            label = what
+        else:
+            raise RuntimeError("Menomonee Falls: %s has neither a seat nor the "
+                               "president's role" % who)
+        row = {"name": who, "role": label}
+        term = re.search(r'Term Expires</span>\s*<span class="meta-value">'
+                         r"([A-Z][a-z]+ \d{4})</span>", card)
+        if term:
+            row["term"] = term.group(1)
+        members.append(row)
+    if len(members) != 7:
+        raise RuntimeError("Menomonee Falls: %d member cards against six "
+                           "trustees and a president" % len(members))
+    return {"geoid": "5551000", "name": "Menomonee Falls",
+            "county": "Waukesha", "atLarge": False,
+            "howElected": "The village says its president is elected at large "
+                          "and its six trustees are elected by numbered seat. "
+                          "It gives no trustee a district, and the map draws "
+                          "none.",
+            "board": members, "sourceUrl": MENOMONEE_FALLS_BOARD}
+
+
+def scrape_fond_du_lac():
+    """The City Council's contact page: one person card per member, the name
+    in `person-name`, the role in `person-title` ("President", "Council
+    Vice-President", "Council Member"), then an e-mail, a phone, "Elected:"
+    and "Current Term Ends:".
+
+    THE CITY DOES NOT SAY HOW THE SEATS ARE ELECTED, so this roster does not
+    either. Its council page describes "a seven-member City Council elected for
+    two-year terms" and gives no member a district; neither that page nor the
+    council-organization page says "at large". That sentence is the gate, and
+    the card prints it rather than "elected at large".
+
+    THE E-MAIL IS WRITTEN AS HTML ENTITIES, which every browser decodes to the
+    address it shows, so decoding it reads the page as a reader sees it. The
+    page says members "may be reached ... by contacting their personal
+    numbers", and the number on each card is that published contact.
+
+    THE E-MAIL SHIPS WHATEVER ITS DOMAIN, since 2026-10-17 (Adam's choice that
+    day, "E-mails too"); until then only one on fdl.wi.gov was read. It is read
+    from the card's own lines before "Elected:" (or "Current Term Ends:" where
+    that comes first), or from its first 200 characters when the card prints
+    neither, because the last card runs on to the end of the page. Measured
+    that day, each card links its address about 65 characters in and prints
+    "Elected:" about 140 in.
+    """
+    about = clean(re.sub(r"<[^>]+>", " ", fetch(FOND_DU_LAC_ABOUT)))
+    if not re.search(r"(?i)seven-member City Council elected for two-year "
+                     r"terms", about):
+        raise RuntimeError("Fond du Lac's council page no longer describes a "
+                           "seven-member council elected for two-year terms")
+    page = fetch(FOND_DU_LAC_CONTACT)
+    members = []
+    for m in re.finditer(r'(?s)<span class="person-name">(.*?)</span>'
+                         r'<span class="person-title">(.*?)</span>(.*?)'
+                         r'(?=<span class="person-name">|$)', page):
+        row = {"name": clean(re.sub(r"<[^>]+>", " ", m.group(1))),
+               "role": clean(re.sub(r"<[^>]+>", " ", m.group(2)))}
+        rest = H.unescape(m.group(3))
+        stop = re.search(r"Elected:|Current Terms? Ends:", rest)
+        mail = own_mailto(rest[:stop.start() if stop else 200], "fdl.wi.gov")
+        if mail:
+            row["email"] = mail
+        text = clean(re.sub(r"<[^>]+>", " ", rest))
+        phone = re.search(r"\b\d{3}-\d{3}-\d{4}\b", text)
+        if phone:
+            row["phone"] = phone.group(0)
+        term = re.search(r"Current Terms? Ends:\s*([A-Z][a-z]+ \d{4})", text)
+        if term:
+            row["term"] = term.group(1)
+        members.append(row)
+    if len(members) != 7:
+        raise RuntimeError("Fond du Lac: %d person cards against the "
+                           "seven-member council its page states"
+                           % len(members))
+    return {"geoid": "5526275", "name": "Fond du Lac", "county": "Fond du Lac",
+            "atLarge": False,
+            "howElected": "The city describes a seven-member council elected "
+                          "for two-year terms and gives no member a district. "
+                          "Its pages do not say whether the seats are elected "
+                          "at large.",
+            "board": members, "sourceUrl": FOND_DU_LAC_CONTACT}
 
 
 def scrape_janesville():
@@ -346,12 +634,18 @@ def scrape_janesville():
     `colspan="2"`, so a column index drifts; the HEADER ROW names the columns and
     is what this maps on, failing if the five headings ever change.
 
-    THE CELL-PHONE COLUMN IS READ AND NOT SHIPPED. The city publishes a City
-    Phone and a Cell Phone for each member, and only the first is emitted: a
-    direct city line is the number a resident is meant to use, while the other is
-    a personal handset, published on five of seven records so a column built from
-    it would be partly blank anyway. Nothing filters it later because nothing
-    emits it.
+    THE CELL-PHONE COLUMN SHIPS SINCE 2026-10-17. The city publishes a City
+    Phone and a Cell Phone for each member. Until 2026-10-17 only the City Phone
+    was emitted, on the reasoning that the cell number is a personal handset.
+    Adam ruled that day, for every state, "if the official government source
+    uses personal phone numbers, we publish those", so the cell number is now
+    emitted too, labelled "cell" as the column heading says: in `phonesExtra`
+    after the city line, or as `phone` for a member the table gives no city
+    line. Measured 2026-10-17, five of the seven print one. A cell number that
+    is the member's own city line, that the table prints for two or more
+    members, or that the page prints outside the table (the city's own lines)
+    is not the member's and does not ship; a cell holding anything but one
+    telephone number fails the city rather than shipping part of it.
 
     NO ADDRESS SHIPS. The page gives one mailing address for the whole council
     (City Hall, PO Box 5005) and no member's own, so there is none to exclude.
@@ -372,10 +666,10 @@ def scrape_janesville():
                            "Phone column; the roster cannot be read by heading")
 
     rows = re.findall(r"(?is)<tr[^>]*>(.*?)</tr>", table)
-    cells = [[clean(re.sub(r"(?is)<[^>]+>", " ", c))
-              for c in re.findall(r"(?is)<t[dh][^>]*>(.*?)</t[dh]>", r)]
-             for r in rows]
-    cells = [row for row in cells if row]
+    raw_cells = [re.findall(r"(?is)<t[dh][^>]*>(.*?)</t[dh]>", r) for r in rows]
+    raw_cells = [row for row in raw_cells if row]
+    cells = [[clean(re.sub(r"(?is)<[^>]+>", " ", c)) for c in row]
+             for row in raw_cells]
     if not cells:
         raise RuntimeError("Janesville's contact table has no rows")
 
@@ -390,8 +684,21 @@ def scrape_janesville():
                            "guessed" % (cells[0], want))
     ix = {k: i for i, k in enumerate(head)}
 
-    members = []
+    # How often each number is printed in the table's two phone columns, and
+    # the numbers the page prints outside the table (the city's own lines): a
+    # cell number found in either is not one member's (see the docstring).
+    printed = {}
     for row in cells[1:]:
+        if len(row) == len(head):
+            for col in ("city phone", "cell phone"):
+                key = _digits(row[ix[col]])
+                if key:
+                    printed[key] = printed.get(key, 0) + 1
+    outside = {_digits(n) for n in JANESVILLE_NUMBER.findall(
+        clean(re.sub(r"(?is)<[^>]+>", " ", contact.replace(table, " "))))}
+
+    members = []
+    for row, raw in zip(cells[1:], raw_cells[1:]):
         if len(row) != len(head):
             raise RuntimeError("Janesville: a council row has %d cells against "
                                "%d headings; %r" % (len(row), len(head), row))
@@ -407,8 +714,33 @@ def scrape_janesville():
         if email:
             member["email"] = email
         phone = row[ix["city phone"]]
+        if phone and not _tel_links_agree(raw[ix["city phone"]]):
+            print("  note Janesville: %s's City Phone link dials a different "
+                  "number than its text shows — neither ships" % name,
+                  file=sys.stderr)
+            phone = ""
         if phone:
             member["phone"] = phone
+        cell = row[ix["cell phone"]]
+        if cell and not JANESVILLE_ONE_NUMBER.match(cell):
+            raise RuntimeError("Janesville: %s's Cell Phone cell holds something "
+                               "other than one telephone number — re-read the "
+                               "table before shipping it" % name)
+        key = _digits(cell)
+        if cell and not _tel_links_agree(raw[ix["cell phone"]]):
+            print("  note Janesville: %s's Cell Phone link dials a different "
+                  "number than its text shows — neither ships" % name,
+                  file=sys.stderr)
+        elif cell and key == _digits(phone):
+            pass                       # the city line printed in both columns
+        elif cell and (printed.get(key, 0) > 1 or key in outside):
+            print("  note Janesville: %s's cell number is printed for another "
+                  "member or elsewhere on the page — the city's line, not the "
+                  "member's; not shipped" % name, file=sys.stderr)
+        elif cell and phone:
+            member["phonesExtra"] = ["cell " + cell]
+        elif cell:
+            member["phone"] = "cell " + cell
         term = row[ix["term(s)"]]
         if term:
             member["term"] = term
@@ -433,7 +765,10 @@ def scrape_janesville():
 
 
 CITIES = (("Caledonia", scrape_caledonia), ("Oshkosh", scrape_oshkosh),
-          ("Janesville", scrape_janesville))
+          ("Janesville", scrape_janesville),
+          ("Mount Pleasant", scrape_mount_pleasant),
+          ("Menomonee Falls", scrape_menomonee_falls),
+          ("Fond du Lac", scrape_fond_du_lac))
 
 
 def attempt(label, fn, got, failures):

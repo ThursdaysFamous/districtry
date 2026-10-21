@@ -25,6 +25,9 @@
     "clerk": "Kristen Telford",
     "municipality": "Breed",
     "phone": "920-842-2166",
+    "phonesExtra": [
+      "920-590-1338"
+    ],
     "recordUpdated": "2023-11-29",
     "url": "https://townofbreedwi.org/"
   },
@@ -33,6 +36,9 @@
     "deputyClerk": "Cindy Kroll",
     "municipality": "Chase",
     "phone": "920-822-1560",
+    "phonesExtra": [
+      "920-615-1560"
+    ],
     "recordUpdated": "2026-06-05",
     "url": "http://townofchase.org/"
   },
@@ -74,6 +80,9 @@
     "clerk": "Amy Peterson",
     "municipality": "Little River",
     "phone": "920-373-7095",
+    "phonesExtra": [
+      "920-834-3617"
+    ],
     "recordUpdated": "2024-09-12",
     "url": "https://townoflittleriver.com/"
   },
@@ -81,6 +90,9 @@
     "clerk": "Lisa Glinski",
     "municipality": "Little Suamico",
     "phone": "920-826-7655",
+    "phonesExtra": [
+      "920-660-4103"
+    ],
     "recordUpdated": "2026-03-23",
     "url": "https://townoflittlesuamico.com/"
   },
@@ -135,6 +147,9 @@
     "clerk": "Lisa Peitersen",
     "municipality": "Spruce",
     "phone": "920-829-5111",
+    "phonesExtra": [
+      "920-373-6226"
+    ],
     "recordUpdated": "2023-12-28",
     "url": "https://www.townofspruce.net/"
   },

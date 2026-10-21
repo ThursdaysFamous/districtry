@@ -1,0 +1,11 @@
+# Court of Appeals of Indiana, "Court of Appeals Districts",
+# https://www.in.gov/courts/appeals/districts/, read 2026-10-16. The
+# paragraph describing the districts, copied from the page's text.
+The 15 members of the Court of Appeals of Indiana represent five state districts :
+Three members of the Court must come from the 1st District , encompassing the southern third of the state;
+three from the 2nd District , the middle third; and
+three from the 3rd District , the northern third of Indiana.
+Judges named from these districts stand for retention only in their districts.
+In 1978, a 4th District was created, consisting of three judges, one from each of the first three districts.
+Likewise, in 1991, a 5th District was added, also with judges from each of the first three districts.
+Judges representing the 4th and 5th districts stand for retention statewide.

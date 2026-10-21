@@ -164,10 +164,6 @@ ACCEPTED_DROPS = {
         "Bremer withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (3 district(s) at the base); its "
         "supervisors still appear on the County card",
-    "ia/data/app/ia-supervisor-members.json:023":
-        "Butler withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (3 district(s) at the base); its "
-        "supervisors still appear on the County card",
     "ia/data/app/ia-supervisor-members.json:033":
         "Cerro Gordo withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (3 district(s) at the base); its "
@@ -182,18 +178,6 @@ ACCEPTED_DROPS = {
         "supervisors still appear on the County card",
     "ia/data/app/ia-supervisor-members.json:113":
         "Linn withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (3 district(s) at the base); its "
-        "supervisors still appear on the County card",
-    "ia/data/app/ia-supervisor-members.json:121":
-        "Madison withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (3 district(s) at the base); its "
-        "supervisors still appear on the County card",
-    "ia/data/app/ia-supervisor-members.json:161":
-        "Sac withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (3 district(s) at the base); its "
-        "supervisors still appear on the County card",
-    "ia/data/app/ia-supervisor-members.json:173":
-        "Taylor withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (3 district(s) at the base); its "
         "supervisors still appear on the County card",
     "ia/data/app/ia-supervisor-members.json:187":
@@ -271,12 +255,6 @@ ACCEPTED_DROPS = {
         "vanishing. build_wi_county_officer_roster.py no longer writes it; "
         "the county-level contactChecked and contactCheckedWeekly, which the "
         "card and the history tiles do read, are unchanged.",
-
-    "ia/data/app/ia-supervisor-members.json:phone":
-        "2026-08-28 -- the board switchboard, hoisted to county-level "
-        "`boardPhone` and rendered as \"Board office\". It was never a "
-        "per-supervisor number; build_ia_supervisor_roster.py now refuses any "
-        "phone on a member row.",
 
     # Palo, Iowa (place GEOID 1961230), removed on purpose 2026-09-05, and NOT
     # because the city stopped publishing -- its council page parses perfectly

@@ -47,6 +47,7 @@ TWO KINDS OF CLAIM, AND THE BUILD TREATS THEM DIFFERENTLY:
 """
 
 import argparse
+import bisect
 import difflib
 import html
 import json
@@ -143,7 +144,7 @@ OUT = os.path.join(REPO_ROOT, "privacy.html")
 POINT_TRANSMISSION = os.path.join(REPO_ROOT, "point-transmission.json")
 CANONICAL = "https://districtry.com/privacy.html"
 SITE = "https://districtry.com/"
-UPDATED = "13 October 2026"
+UPDATED = "20 October 2026"
 CONTACT = "adam@overberg.co"
 REPO_URL = "https://github.com/ThursdaysFamous/districtry"
 
@@ -217,9 +218,78 @@ LINK_LOOKUP_ROW = (
     "own lookup, which runs on Deno&#39;s servers, follows it to the full link and "
     "sends that back. Deno receives your IP address and the short link. The lookup&#39;s "
     "own code stores neither; Deno, not this project, keeps whatever request logs its "
-    "platform keeps. A full map link or a coordinate pair is read in "
-    "your browser and goes nowhere.",
+    "platform keeps. A map link or a coordinate pair that carries its position is read in "
+    "your browser and goes nowhere; a map link that names a place without one is searched "
+    "like typed text, by the address search below.",
     "Only when you paste or share a short map link.", "link_lookup")
+
+# THE ADDRESS ROUTE OF THAT LOOKUP (from 2026-10-17). A place shared from the
+# Google Maps app is its name and its street address with no position, and the
+# map's own search often holds the street and not the house number on it. An
+# app then asks the same lookup, at `?a=`, for the Census Bureau's estimate of
+# where the number falls on the street (engine geocoder-search
+# lookupAddressRanges), and shows it as a pin, whose point it has selected
+# since 2026-10-18. The same day it was extended, on Adam's choice, to an
+# address a reader types and sends, because that search has the same gap; an
+# address being typed is never sent. From 2026-10-19 (Adam's "Use Census") it
+# is also asked about an address whose street the map's search does not know
+# in its town either, with the app's own state added when the address names
+# none (engine map-link addressForLookup), and an address whose street it
+# knows is asked about with the ZIP code the street's answers carry when they
+# carry one and the address none (engine geocoder-search showStreetOnly). That
+# sends the address to Deno and from Deno to the Census Bureau, which sees
+# Deno's address and not the reader's. MEASURED from the call itself, so the
+# row names exactly the surfaces that make it: the front door reads the same
+# map-link block and carries the lookup's host, and never makes this call; an
+# address typed there is handed to the app that covers it, which does.
+HOUSE_LOOKUP_CALL = re.compile(r'MAP_LINK_LOOKUP\s*\+\s*"\?a="')
+HOUSE_LOOKUP_ROW = (
+    "U.S. Census Bureau", "house-number lookup",
+    "https://www.census.gov/about/policies/privacy.html",
+    "Only when the map&#39;s own address search can&#39;t find the house at an address you "
+    "search for, because it knows the street but not the house number on it, or doesn&#39;t "
+    "know the street in that town at all, and you typed the address and sent the search "
+    "(with Search or Enter, or by picking its street from the list) or a map link you paste "
+    "or share carries it: the address, with its state and its street&#39;s ZIP code filled in "
+    "when you left them out, sent through districtry&#39;s lookup on Deno Deploy, which asks "
+    "the Census Bureau&#39;s geocoder where that number falls on the street and sends its "
+    "estimate back. The Census Bureau receives the address and the lookup&#39;s IP address, "
+    "not yours. Nothing is sent this way while you are still typing.",
+    "Only when the map's search can't find the house at an address you search for.",
+    "house_lookup")
+
+# THE SAME LOOKUP FOR OFFICE PINS (from 2026-10-20, New York, Adam's "Use
+# Census"). An app's office-pin provider (its own poiGeocodeRequest) may hand an
+# office's address to the engine's lookupAddressRanges when its usual geocoder
+# cannot place it, which sends the PUBLIC ADDRESS OF AN OFFICE A CARD SHOWS to
+# Deno and on to the Census Bureau. Which office a card shows says which
+# district the reader selected, so the two rows name this use for exactly the
+# apps that make it.
+#
+# HOUSE_LOOKUP_CALL cannot see it, because the provider calls the function and
+# not the `?a=` request, so it is measured from WHERE the code refers to them,
+# with comments read past and, for the names, quoted text too (a sentence
+# naming a function is not a call). Every rule FAILS the build: the `?a=`
+# request may be made only inside lookupAddressRanges; any other reference to
+# lookupAddressRanges must sit in the engine's search block, which is the
+# reader's own search and the use HOUSE_LOOKUP_ROW describes, or in an app's
+# poiGeocodeRequest; and poiGeocodeRequest may be called only from the
+# office-pin queue (engine poi-geocode geocodePoiAddress) or named on the
+# debug namespace, which is what makes each of its requests an office pin.
+# That last rule holds the "office pins" every geocoder row names, not only
+# this one. "In" a function means between its own braces, so a call placed
+# after a function's closing brace is in no function, though that function is
+# the nearest one declared before it. The comment reader is held to itself:
+# wherever the file defines lookupAddressRanges, the definition must still
+# read as code once comments are blanked.
+SCRIPT_BLOCK = re.compile(r"<script\b[^>]*>([\s\S]*?)</script>", re.I)
+SEARCH_BLOCK = ("/* ==== ENGINE:BEGIN geocoder-search ==== */",
+                "/* ==== ENGINE:END geocoder-search ==== */")
+OFFICE_PIN_QUEUE = "geocodePoiAddress"
+OFFICE_PIN_PROVIDER = "poiGeocodeRequest"
+HOUSE_LOOKUP_FN = "lookupAddressRanges"
+OFFICE_PIN_EXPORT = re.compile(r"^[ \t]*EXPLORER_EXPORTS\.%s\s*=\s*%s\s*;[ \t]*$"
+                               % (OFFICE_PIN_PROVIDER, OFFICE_PIN_PROVIDER))
 
 
 # Geocoders, keyed by the host the measurement finds. What a geocoder receives is
@@ -230,22 +300,43 @@ LINK_LOOKUP_ROW = (
 # would be wrong for one of them: the apps' boxes are type-ahead and send on
 # each keystroke, while the front door's sends only on submit. Over-stating what
 # leaves a browser is the safe direction to be wrong in, and it is still wrong.
+# Nominatim's row said until 2026-10-14 that it also received "the address you
+# searched, when the bounded fallback runs" (from #477). Measured that day, every
+# app's one Nominatim request is poiGeocodeRequest, reached only from the
+# office-pin queue; the search box uses Photon (New York: GeoSearch, then Photon).
+# New York places its office pins through GeoSearch instead, so "when" is per row:
+# one shared sentence had every geocoder doing both jobs.
+# Nominatim's row also said until 2026-10-20 that an office address "is data
+# about buildings, not about you". The address is public, but a card shows the
+# office for the district the reader selected, so which office is asked about
+# says which district that is. Adam accepted that reading for the Census
+# lookup's office pins that day ("Use Census"), and both office-pin rows say it
+# now too.
 GEOCODERS = {
     "photon.komoot.io": (
         "Photon / Komoot", "address search", "https://www.komoot.com/privacy",
-        "<strong>The text you type into the search box</strong> — sent as you type on the "
-        "apps' type-ahead boxes, and only when you press the button on the front door."),
+        "<strong>The text you type into the search box</strong>, or the place&#39;s name "
+        "and address from a map link you paste or share — sent as you type on the apps' "
+        "type-ahead boxes, and only when you press the button on the front door.",
+        "Only while you are searching for an address."),
     "nominatim.openstreetmap.org": (
-        "Nominatim / OpenStreetMap", "address search, office pins",
+        "Nominatim / OpenStreetMap", "office pins",
         "https://osmfoundation.org/wiki/Privacy_Policy",
-        "The address you searched, when the bounded fallback runs. It also receives "
-        "<em>public office addresses from the datasets</em> — a clerk's office, a school "
-        "— to place their map pins; that is data about buildings, not about you."),
+        "<em>Public office addresses from the datasets</em> — a clerk's office, a school "
+        "— to place their map pins. The addresses are public, but which office a card "
+        "shows says which district you selected. "
+        "Nothing you type into the search box is sent here.",
+        "Only when a card places an office pin."),
     "geosearch.planninglabs.nyc": (
-        "GeoSearch / NYC Planning", "address search",
+        "GeoSearch / NYC Planning", "address search, office pins",
         "https://www.nyc.gov/home/privacy-policy.page",
-        "<strong>The text you type into the search box</strong>, sent as you type so "
-        "suggestions can appear."),
+        "<strong>The text you type into the search box</strong>, or the place&#39;s name "
+        "and address from a map link you paste or share, sent as you type so "
+        "suggestions can appear. It also receives <em>public office addresses from the "
+        "datasets</em> to place their map pins; which office a card shows says which "
+        "district you selected.",
+        "Only while you are searching for an address, or when a card places an office "
+        "pin."),
 }
 
 # THE BATCH ADDRESS CHECK (Illinois today) is a second way an address leaves a
@@ -366,22 +457,42 @@ def measure_address_list(src, name):
 # that the installed app was opened, once per launch, and into which app; and
 # `install-invite/<what>` what became of the one-time invitation on a phone
 # (shown, accepted, declined or closed; tip-shown or tip-closed for the
-# iPhone's directions). All three are by app and never by place: the launch
-# event is sent at boot, before any point is selected.
+# iPhone's directions; and since 2026-10-20, while the Android app is in
+# Google Play's closed test, test-shown, test-join or test-closed for the
+# invitation to that test, which an Android phone gets instead of the
+# install). All three are by app and never by place: the launch event is
+# sent at boot, before any point is selected.
 # `share-in/` joined on 2026-10-14, when the installed app joined Android's
 # Share menu (the manifest's share_target): `share-in/<tag>` records that a
 # place shared into the app opened that app, and nothing about the place,
 # which travels in the address hash and reaches analytics only as the
 # rounded `select` any selection sends.
+# `map-link-read/` joined on 2026-10-17, to count how often places are shared
+# or pasted as Google Maps and Apple Maps links and whether the search found
+# them: `map-link-read/<tag>/<source>/<form>/<via>/<outcome>`, sent once per
+# link the search box reads (engine geocoder-search countLinkRead). It names
+# the app, google or apple, whether the link was short, whether it came in
+# the page's address or was pasted, and what the reader was shown (a
+# position, an address, a street, another state's app, nothing, or why the
+# short link could not be read). It never carries the link, the place's
+# name, its address or its position. The front page sends the same event
+# with `front` for the tag (ROOT_EVENTS).
+# `osm-note` joined on 2026-10-17 (engine `geocoder-search` osmNoteLink): when
+# the map's search knows a street and not the house number on it, its message
+# links to OpenStreetMap's note form, and following that link records
+# `osm-note` and nothing about the street or the place.
 EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
                    "feedback-open/button", "feedback-open/link", "feedback-send/email",
                    "feedback-send/github", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
-                   "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "select",
+                   "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link-read/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "osm-note", "select",
                    "share-in/", "share-native", "share-open", "share-permalink", "share-qr"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
+# What the front page (the one untagged surface) sends: only the map-link
+# count above, from its address box. Gated, because the page says so.
+ROOT_EVENTS = ["map-link-read/front/"]
 
 
 def event_phrase(event, apps):
@@ -463,6 +574,10 @@ def measure(rel, name, url, tag):
         app["ga"] = None
 
     app["district_search"] = bool(re.search(r"\bvar DISTRICT_SEARCH_URL\s*=", src))
+    # Whether the install invitation runs the Android app's closed test
+    # (engine install-app): the constant holds the steps page's address while
+    # it does, and null once the app is published.
+    app["android_test"] = bool(re.search(r'\bvar DST_ANDROID_TEST_URL\s*=\s*"', src))
 
     m = re.search(r'data-goatcounter="(https://([a-z0-9-]+)\.goatcounter\.com/count)"', src)
     app["goatcounter"] = {"url": m.group(1), "site": m.group(2)} if m else None
@@ -512,6 +627,8 @@ def measure(rel, name, url, tag):
     app["tiles"] = "basemaps.cartocdn.com" in src_all
     app["cdn"] = "cdnjs.cloudflare.com" in src_all
     app["link_lookup"] = LINK_LOOKUP_HOST in src_all
+    app["house_lookup"] = bool(HOUSE_LOOKUP_CALL.search(src_all))
+    app["office_house_lookup"] = measure_office_house_lookup(src_all, rel)
     # A layer drawn from a vector-tile archive (engine tile-overlay block)
     # asks this site's host for its map a piece at a time — the pieces under
     # the view and, for the card, the one under the selected point — where
@@ -665,6 +782,193 @@ def enclosing_function(src, pos):
     return best.group(1), params
 
 
+# What may come just before a `/` that opens a regular expression rather than
+# dividing, as a JavaScript parser decides it.
+REGEX_AFTER = set("(,=:[!&|?{};+-*%<>~^")
+REGEX_AFTER_WORDS = {"return", "typeof", "instanceof", "in", "of", "new", "delete",
+                     "void", "throw", "case", "do", "else"}
+JS_MARK = re.compile(r"[/'\"`]")
+
+
+def js_code_only(js, strings=False):
+    """`js` with every comment blanked to spaces, line breaks kept, so a position
+    in the result is the same position in the source. Strings and regular
+    expressions are read past rather than into, so the `//` in a URL or a `/*` in
+    a pattern opens no comment; a string or a pattern never runs past its line,
+    which bounds what a misreading can hide to one line. Whether a `/` opens a
+    pattern or divides is decided by the code before it, as a parser decides it.
+    It jumps from one slash or quote to the next, because a character loop over
+    every app file cost about two seconds a run.
+
+    With `strings` the inside of every quoted string and pattern is blanked as
+    well, quotes kept, so a name written inside one is not read as a use of it.
+    A backquoted template is left as it is, because its `${...}` holds code: a
+    name in a template's text then reads as a use, which fails the build rather
+    than missing one."""
+    out = list(js)
+    i, n = 0, len(js)
+    while True:
+        m = JS_MARK.search(js, i)
+        if not m:
+            break
+        i = m.start()
+        c = js[i]
+        nxt = js[i + 1] if i + 1 < n else ""
+        if c == "/" and nxt and nxt in "/*":
+            if nxt == "/":
+                end = js.find("\n", i)
+                end = n if end < 0 else end
+            else:
+                end = js.find("*/", i + 2)
+                end = n if end < 0 else end + 2
+            for k in range(i, end):
+                if js[k] != "\n":
+                    out[k] = " "
+            i = end
+            continue
+        if c == "/":
+            k = i - 1
+            while k >= 0 and out[k].isspace():
+                k -= 1
+            prev, word = (out[k] if k >= 0 else ""), ""
+            if prev and (prev.isalnum() or prev in "_$"):
+                s = k
+                while s >= 0 and (out[s].isalnum() or out[s] in "_$"):
+                    s -= 1
+                word = "".join(out[s + 1:k + 1])
+            if not (prev == "" or prev in REGEX_AFTER or word in REGEX_AFTER_WORDS):
+                i += 1
+                continue
+        j, in_class = i + 1, False
+        while j < n and js[j] != "\n":
+            if js[j] == "\\":
+                j += 2
+                continue
+            if c == "/" and js[j] == "[":
+                in_class = True
+            elif c == "/" and js[j] == "]":
+                in_class = False
+            elif js[j] == c and not in_class:
+                break
+            j += 1
+        if strings and c != "`":
+            for k in range(i + 1, min(j, n)):
+                out[k] = " "
+        i = j + 1
+    return "".join(out)
+
+
+def word_before(js, pos):
+    return pos > 0 and (js[pos - 1].isalnum() or js[pos - 1] in "_$")
+
+
+def references(js, name):
+    """Every place `name` stands as a whole identifier in `js`."""
+    return [m for m in re.finditer(re.escape(name) + r"(?![\w$])", js)
+            if not word_before(js, m.start())]
+
+
+BRACE = re.compile(r"[{}]")
+
+
+def body_span(code, pos):
+    """(open, close): the positions of the brace that opens the body of the
+    function declared at pos and of the brace that closes it, or None when the
+    braces never balance. `code` must be js_code_only(..., strings=True), so a
+    brace in a comment, a string or a pattern is not counted."""
+    depth, start = 0, code.find("{", pos)
+    if start < 0:
+        return None
+    for m in BRACE.finditer(code, start):
+        depth += 1 if m.group() == "{" else -1
+        if depth == 0:
+            return start, m.start()
+    return None
+
+
+def measure_office_house_lookup(src, where):
+    """True when an app's office pins can ask the house-number lookup.
+
+    Fails the build on any use of the lookup this page does not describe (see
+    the note above SCRIPT_BLOCK)."""
+    office = False
+    for block in SCRIPT_BLOCK.finditer(src):
+        raw = block.group(1)
+        if HOUSE_LOOKUP_FN not in raw and OFFICE_PIN_PROVIDER not in raw and '"?a="' not in raw:
+            continue
+        # The `?a=` request is read with its string in place; every name is read
+        # with strings blanked, so a sentence naming a function is not a use.
+        js = js_code_only(raw)
+        code = js_code_only(raw, strings=True)
+        line_of = lambda pos: raw.count("\n", 0, pos) + src.count("\n", 0, block.start(1)) + 1
+        # The function declarations, found once per block. No pattern here starts
+        # with \b, which costs Python's regex engine its literal-prefix search:
+        # about thirty times slower over an app file.
+        fns = [(m.start(), m.group(1)) for m in
+               re.finditer(r"function\s+([A-Za-z_$][\w$]*)\s*\(", code)
+               if not word_before(code, m.start())]
+        starts = [f[0] for f in fns]
+
+        def inside(pos, name):
+            # The nearest function declared before pos must be `name`, AND pos
+            # must lie in its body: code after a function's closing brace is in
+            # no function, though the nearest declaration before it is that one.
+            k = bisect.bisect_left(starts, pos) - 1
+            if k < 0 or fns[k][1] != name:
+                return False
+            span = body_span(code, starts[k])
+            if span is None:
+                fail("%s line %d: the braces after `function %s(` never balance, so "
+                     "this generator cannot tell where that function ends or whether "
+                     "a use of the house-number lookup is inside it"
+                     % (where, line_of(starts[k]), name))
+            return span[0] < pos < span[1]
+
+        def declared(pos):
+            return bool(re.search(r"\bfunction\s+$", code[max(0, pos - 40):pos]))
+        search = []
+        for b in re.finditer(re.escape(SEARCH_BLOCK[0]), raw):
+            e = raw.find(SEARCH_BLOCK[1], b.end())
+            search.append((b.end(), len(raw) if e < 0 else e))
+        if (re.search(r"function\s+%s\s*\(" % HOUSE_LOOKUP_FN, raw)
+                and not re.search(r"function\s+%s\s*\(" % HOUSE_LOOKUP_FN, code)):
+            fail("%s: the comment reader in this generator blanked the definition of "
+                 "%s, so it is misreading this file and cannot say where the lookup "
+                 "is called from" % (where, HOUSE_LOOKUP_FN))
+        for m in HOUSE_LOOKUP_CALL.finditer(js):
+            if not inside(m.start(), HOUSE_LOOKUP_FN):
+                fail("%s line %d: the house-number lookup's `?a=` request is made outside "
+                     "%s. This page names what that request sends from where it is made, "
+                     "so call %s instead, or describe the new use here and in the Deno "
+                     "and Census rows" % (where, line_of(m.start()), HOUSE_LOOKUP_FN,
+                                          HOUSE_LOOKUP_FN))
+        for m in references(code, HOUSE_LOOKUP_FN):
+            if declared(m.start()) or any(a <= m.start() < b for a, b in search):
+                continue
+            if inside(m.start(), OFFICE_PIN_PROVIDER):
+                office = True
+                continue
+            fail("%s line %d: %s is used outside the map's own search (ENGINE "
+                 "geocoder-search) and outside %s, so an address reaches the Census "
+                 "Bureau from a place this page does not describe. Describe that use "
+                 "in the Deno and Census rows and measure it here"
+                 % (where, line_of(m.start()), HOUSE_LOOKUP_FN, OFFICE_PIN_PROVIDER))
+        for m in references(code, OFFICE_PIN_PROVIDER):
+            if declared(m.start()):
+                continue
+            start = code.rfind("\n", 0, m.start()) + 1
+            end = code.find("\n", m.start())
+            if OFFICE_PIN_EXPORT.match(code[start:len(code) if end < 0 else end]):
+                continue
+            if inside(m.start(), OFFICE_PIN_QUEUE):
+                continue
+            fail("%s line %d: %s is called from outside the office-pin queue (%s). "
+                 "Every geocoder row on this page says it is asked only to place an "
+                 "office pin, so that would stop being true"
+                 % (where, line_of(m.start()), OFFICE_PIN_PROVIDER, OFFICE_PIN_QUEUE))
+    return office
+
+
 def collect_events(src, where):
     """Every event name an app can send, with indirect calls RESOLVED not skipped.
 
@@ -796,6 +1100,11 @@ def gate_fleet_claims(apps):
     maps = [a for a in apps if a["has_map"]]
     if not maps:
         fail("no app measured as carrying a map — the measurement is broken")
+    for a in apps:
+        if not a["has_map"] and a["events"] != ROOT_EVENTS:
+            fail("%s sends analytics events %s, and this page says the front page "
+                 "sends %s and nothing else. Change the page's sentence and "
+                 "ROOT_EVENTS together." % (a["file"], a["events"], ROOT_EVENTS))
     for a in maps:
         if a["events"] != EXPECTED_EVENTS:
             fail("%s sends analytics events %s, not the fleet set %s. The page "
@@ -996,7 +1305,10 @@ def render_app_rows(apps):
         for store in ("sessionStorage", "localStorage"):
             for k in a["storage_read"][store]:
                 stored.append("%s<small>read only</small>" % code(k))
-        search = ", ".join(GEOCODERS[h][0] for h in a["geocoders"]) or "<em>No search box.</em>"
+        # Each service is named with its job, because an app reaches one geocoder
+        # for the search box and may reach another only for office pins.
+        search = ", ".join("%s (%s)" % (GEOCODERS[h][0], GEOCODERS[h][1])
+                           for h in a["geocoders"]) or "<em>No search box.</em>"
         point = ("%d layer%s" % (a["point_query_layers"], "" if a["point_query_layers"] == 1 else "s")
                  if a["point_query_layers"] else "<em>None.</em>")
         rows.append(
@@ -1014,15 +1326,48 @@ def render_app_rows(apps):
     return "\n".join(rows)
 
 
+def office_lookup_groups(apps):
+    """(office-pin geocoder, [app names]) for the apps whose office pins can ask
+    the house-number lookup, one group per geocoder, so a row can say which
+    geocoder failed before the lookup was asked."""
+    groups = {}
+    for a in apps:
+        if not a.get("office_house_lookup"):
+            continue
+        if not (a.get("house_lookup") and a.get("link_lookup")):
+            fail("%s: its office pins call the house-number lookup, but the lookup's "
+                 "host or its `?a=` request is not in the file, so the Deno and Census "
+                 "rows would not name it" % a["file"])
+        pins = [GEOCODERS[h][0] for h in a["geocoders"] if "office pins" in GEOCODERS[h][1]]
+        if len(pins) != 1:
+            fail("%s: its office pins call the house-number lookup when its office-pin "
+                 "geocoder cannot place an office, and it reaches %d geocoders whose row "
+                 "says office pins, so this page cannot name the one that comes first"
+                 % (a["file"], len(pins)))
+        groups.setdefault(pins[0], []).append(a["name"])
+    return sorted(groups.items())
+
+
 def render_recipient_rows(apps):
     rows = []
-    for label, sub, policy, what, when, key in COMMON_RECIPIENTS + [LINK_LOOKUP_ROW]:
+    office_groups = office_lookup_groups(apps)
+    for label, sub, policy, what, when, key in COMMON_RECIPIENTS + [LINK_LOOKUP_ROW, HOUSE_LOOKUP_ROW]:
         users = apps if key is None else [a for a in apps if a[key]]
         if not users:
             fail("no surface requests %s any more — the recipients table names it, "
                  "so either the fleet changed or the measurement is broken" % label)
         tiled = [a["name"] for a in users if a.get("vector_tiles")]
         mapped = [a["name"] for a in users if a.get("has_map")]
+        housed = [a["name"] for a in users if a.get("house_lookup")]
+        if key == "link_lookup" and housed:
+            where = ("every app" if set(housed) == set(mapped) else
+                     ", ".join(housed[:-1]) + " and " + housed[-1] if len(housed) > 1 else housed[0])
+            what += (" In %s, when the map&#39;s own search can&#39;t find the house at an "
+                     "address you search for, or at one a map link names, the lookup also "
+                     "receives <strong>that address</strong> and asks the U.S. Census Bureau "
+                     "where the number falls (the next row)." % esc(where))
+            when = ("Only when you paste or share a short map link, or, in %s, when the map's "
+                    "search can't find the house at an address you search for." % where)
         if label == "GitHub Pages" and tiled:
             where = ("every app" if set(tiled) == set(mapped) else
                      ", ".join(tiled[:-1]) + " and " + tiled[-1] if len(tiled) > 1 else tiled[0])
@@ -1030,13 +1375,29 @@ def render_recipient_rows(apps):
                      "time, so those requests also describe the area you are looking at and, "
                      "to answer its card, <strong>the square of about 7 km around the point "
                      "you select</strong>." % esc(where))
+        # THE OFFICE PINS' USE OF THE LOOKUP, per app (see the note above
+        # SCRIPT_BLOCK): an office's public address, and with it the district
+        # the reader selected.
+        for pins, names in office_groups if key in ("link_lookup", "house_lookup") else []:
+            if key == "link_lookup":
+                what += (" In %s it also receives <strong>the public address of an office a "
+                         "card shows</strong>, when %s can&#39;t place that office&#39;s map "
+                         "pin, and asks the Census Bureau the same way. Which office a card "
+                         "shows says which district you selected."
+                         % (esc(joined(names)), esc(pins)))
+            else:
+                what += (" In %s it also receives, through the same lookup, <strong>the "
+                         "public address of an office a card shows</strong>, when %s "
+                         "can&#39;t place that office&#39;s map pin. Which office a card "
+                         "shows says which district you selected."
+                         % (esc(joined(names)), esc(pins)))
+            when += " In %s, also when a card places an office pin %s can't place." % (
+                joined(names), pins)
         rows.append(recipient_row(label, sub, policy, what, when,
                                   ", ".join(a["name"] for a in users) + "."))
     for host in sorted({h for a in apps for h in a["geocoders"]}):
-        label, sub, policy, what = GEOCODERS[host]
+        label, sub, policy, what, when = GEOCODERS[host]
         users = [a["name"] for a in apps if host in a["geocoders"]]
-        when = ("Only while you are searching for an address, or when a "
-                "card places an office pin.")
         # MEASURED per (surface, host), not per surface: an app reaches more
         # than one geocoder, and only the one the batch panel actually calls
         # receives a pasted list.
@@ -1078,8 +1439,8 @@ def render_recipient_rows(apps):
             "GoatCounter", "analytics", "https://www.goatcounter.com/help/privacy",
             "A page count and a few named events. See "
             '<a href="#analytics">Analytics, precisely</a>.',
-            "Every visit to any page. The named events come from an app\u2019s map "
-            "only.", counter_who(), once=True))
+            "Every visit to any page. The named events come from an app\u2019s map, "
+            "and one from the front page\u2019s address box.", counter_who(), once=True))
     ga_users = [a["name"] for a in apps if a["ga"]]
     if ga_users:
         rows.append(recipient_row(
@@ -1154,12 +1515,43 @@ def render_storage_paragraphs(apps):
                 % (code("il"), code("ny"), code(store), code(key), esc(joined(users)),
                    code("/app/")))
         elif key == "districtry-install-invite":
+            # The Android test's clause is true only while the engine's
+            # install-app block runs the test; measured from the apps rather
+            # than remembered, so retiring the test cannot leave it standing.
+            test = any(a["android_test"] for a in apps if a["name"] in users)
+            # The front door writes this key only to remember its own
+            # invitation to that test (scripts/build_landing_page.py NOTICE),
+            # so a write with no test running is a sentence nobody can write.
+            front = any(a["name"] in users and not a["tag"] for a in apps)
+            if front and not test:
+                fail("the front door writes %r for its invitation to the Android test, "
+                     "and no app runs that test any more, so the sentence about it would "
+                     "be false: retire the front page's NOTICE with the test" % key)
+            if test:
+                lead = ("On a phone, the map makes an invitation only once: on Android, while "
+                        "districtry’s Android app is being tested on Google Play, to join the "
+                        "test, and elsewhere, to add districtry to your home screen. An Android "
+                        "phone that was offered the home screen before the test began is asked "
+                        "once more, about the test.")
+                if front:
+                    lead += (" On Android the front door invites you to the test too, until you "
+                             "close that invitation or follow its link. The map records the "
+                             "invitation it made in %s under %s, so it does not make it again. "
+                             "Closing either invitation to the test, or following its link, "
+                             "records that under the same name, and then neither the map nor "
+                             "the front door shows it again.")
+                else:
+                    lead += (" It records the invitation it made in %s under %s, so it does "
+                             "not make it again.")
+            else:
+                lead = ("On a phone, the map offers once to add districtry to your home screen. "
+                        "It records that it has asked in %s under %s, so it does not ask again.")
             out.append(
-                "<p><strong>The install invitation.</strong> On a phone, the map offers once "
-                "to add districtry to your home screen. It records that it has asked in %s "
-                "under %s, so it does not ask again. This is on %s. It is one word, and it "
-                "never leaves your browser.</p>"
-                % (code(store), code(key), esc(joined(users))))
+                "<p><strong>The install invitation.</strong> " + lead % (code(store), code(key)) +
+                " This is on %s. It is one word, and it never leaves your browser.</p>"
+                # "The front door" heads a table cell; in the middle of this
+                # sentence it takes a small letter.
+                % esc(re.sub(r"^The ", "the ", joined(users))))
         elif key == "districtry-app-launch":
             out.append(
                 "<p><strong>A launch already counted.</strong> When you open the installed "
@@ -1275,9 +1667,15 @@ def render_analytics_section(apps):
         'rel="noopener">GoatCounter</a> is cookieless and does not build a profile across '
         "sites. %s. Besides the "
         "page view, each app sends named events for: %s. Exactly two of those — %s — carry "
-        "coordinates, <strong>rounded to %d decimal places</strong>. A page that is not an "
-        "app — a county list, a question page, this one — sends the page view and nothing "
-        "else. <strong>Nothing you type is ever sent to it.</strong></p>"
+        "coordinates, <strong>rounded to %d decimal places</strong>. When the search box reads a "
+        "Google Maps or Apple Maps link, map-link-read/ says which app it was in, which of the "
+        "two the link came from, whether it was a short link, whether it was pasted or "
+        "arrived in the page\u2019s address (as a place shared into the installed app does), "
+        "and what the search showed; it never carries the link, the place or its position. "
+        "The front page sends that one event, as map-link-read/front/, when its address box "
+        "reads such a link. Any other page that is not an app — a county list, a question "
+        "page, this one — sends the page view and nothing else. <strong>Nothing you type is "
+        "ever sent to it.</strong></p>"
         % (where,
            esc(", ".join(event_phrase(e, apps) for e in EXPECTED_EVENTS)),
            esc(" and ".join(EXPECTED_COORD_EVENTS)), COORD_DECIMALS))
@@ -1595,7 +1993,7 @@ PRIVACY_BODY = """
             <th scope="col">Google Analytics</th>
             <th scope="col">GoatCounter</th>
             <th scope="col">Stored in your browser</th>
-            <th scope="col">Address search</th>
+            <th scope="col">Address lookups</th>
             <th scope="col">Sends your point to a server</th>
           </tr>
         </thead>
@@ -1695,7 +2093,9 @@ PRIVACY_BODY = """
         request. The launcher hands it to the map after the <span class="k">#</span>, and the map
         reads it as it would a link pasted into its search box: a link that carries its position
         is read on your phone, a short link goes to the short-link lookup in the table above, and
-        a place name or an address goes to the address search. The launcher keeps that copy from
+        a place name or an address goes to the address search. When that search can't find the
+        house at the address, the address also goes through the lookup to the Census Bureau,
+        which the table above names too. The launcher keeps that copy from
         the first time the installed app opens, or from the moment you install districtry from a
         state's map. A share sent before then reaches this site's host, GitHub Pages, in the
         address of that request.</p>
@@ -1706,8 +2106,9 @@ PRIVACY_BODY = """
     <h2>What there isn't</h2>
     <ul class="nope">
       <li>No accounts, logins, or passwords.</li>
-      <li>No database or back end operated by this project — there is nowhere for us to keep
-        anything.</li>
+      <li>No database operated by this project, and nowhere for us to keep anything. The one
+        service it runs, the map-link lookup in the table above, answers each request and keeps
+        no record of it.</li>
       <li>No advertising, ad networks, retargeting pixels, or social trackers.</li>
       <li>No sale or sharing of data. There is no data of yours to sell.</li>
       <li>No cross-site tracking or profile built by this project.</li>

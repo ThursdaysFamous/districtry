@@ -50,12 +50,12 @@ one. Only `office.address1` is read, and only when the service labels it
 asserted not to equal any officeholder's residence in that municipality. The
 Cass rule, made explicit: a whole field is discarded rather than filtered.
 
-CONTACT IS MUNICIPALITY-LEVEL ONLY, and that is a measurement, not a default.
+THE PRIMARY CONTACT SLOT IS THE MUNICIPALITY'S: a measurement, not a default.
 The service's `office.email` looks per-person and is not reliably so: Staunton's
 Ward 4 alderman Matthew McKee carries jmoore@stauntonil.com — his predecessor's
 address — and four different Virden officeholders carry mlackey@virdenonline.com.
-Attributing either to the person named beside it would be wrong, so no
-`person_email` and no `person_phone` ship. What ships is the municipality's own
+Attributing either to the person named beside it would be wrong, so no person
+carries `office.phone` or `office.email`. What ships is the municipality's own
 hall contact, chosen as the MODAL value across that municipality's offices,
 which also disposes of the county's transcription typos in the same stroke
 (Brighton's hall is (618)372-8860 on eight rows and (608)372-8860 on the ninth;
@@ -67,7 +67,44 @@ vacant seat).
 
 `office.phone2` / `email2` / `website2` are the vendor's second-contact slot and
 sit beside address2, the residence; a county board member's pair there is a
-mobile number and a gmail address. They are not read.
+mobile number and a gmail address. Since 2026-10-17 the question for each is
+attribution, not privacy: Adam's ruling that day ("if the official government
+source uses personal phone numbers, we publish those") and his choice the same
+day to publish personal e-mail addresses as well ("E-mails too") ship a number
+or an address that is the official's own, and the slot belongs to the OFFICE,
+as the stale primary e-mails above show. The domain of an address was never the
+reason one is withheld here.
+
+THE SLOT'S TELEPHONE NUMBER IS NOT READ, because nothing ties it to the person
+holding the office. Measured 2026-10-17: of 231 held municipal offices 30 carry
+a phone2, and two of those numbers are each printed on two trustees of one
+village; the one independent government witness available, Sangamon County's
+direct numbers for Virden's nine officeholders, cannot test it because no
+Virden office carries a phone2. So no `person_phone` ships, and `website2` is
+not read either.
+
+THE SLOT'S E-MAIL SHIPS ON THE HOLDER WHERE IT NAMES THEM, since 2026-10-17, by
+the test build_macoupin_county_board.py applies to the county board's seats
+(12 of 14 there that day): `names_member`, imported from that builder rather
+than restated, which passes an address whose local part's letters contain the
+holder's surname. `email2` is read only where the detail record names the same
+office and holder as the list, and it ships on no person where the directory
+prints it for two or more different people (in either slot), where it is the
+municipality's own hall e-mail, or where its local part is an office's mailbox
+or the municipality's name ("cityhall" holds the surname Hall). Every address
+that does not ship is named by seat on every run, never by value, and one that
+would ship must be exactly one address (scraper_common.person_email_problem).
+Measured by a live read on 2026-10-17: 8 held municipal offices carry an e-mail
+in the slot; 5 pass, 2 fail the name test and 1 is printed for two different
+people. Two of the five are Virden aldermen, and Virden's entry comes from
+Sangamon County's directory (COUNTY_PRECEDENCE in
+build_municipal_officials_roster.py), so three reach the municipal file.
+MIN_PERSON_EMAILS floors the five at three.
+
+The primary `office.email`, read the same way, names its holder and is printed
+for nobody else on 17 of the 149 held offices that carry one. Those still ship
+on no person: the test is applied to the second slot only, and the stale
+addresses above are the primary slot's.
 
 Usage:
     python3 scripts/macoupin_municipal_officials_scraper.py --out macoupin_muni.json
@@ -83,7 +120,14 @@ import sys
 import time
 
 import requests
-from scraper_common import require_robots_once, UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import (  # noqa: E402  (shared machinery — do not fork)
+    UA_CHROME_WIN_126, person_email_problem, require_robots_once,
+)
+# One name test for one service's second-contact slot: the county board's
+# builder owns it, and the municipal offices take it from there rather than
+# keeping a second copy that could come to disagree with it.
+from build_macoupin_county_board import names_member  # noqa: E402
+from vtd_board_districts import norm  # noqa: E402  (shared machinery — do not fork)
 
 REST = "https://www.macoupinvotes.gov/ce/mobile/seam/resource/rest/voter/"
 # The callback the page itself uses, sent verbatim so the request this makes is
@@ -228,6 +272,20 @@ MIN_HEADS = 26           # Hettick's presidency is published vacant
 # other seven cities two), of which five are published vacant: 53 live.
 MIN_WARD_SEATS = 50
 MIN_OFFICE_PHONES = 24   # of 27; Eagarville publishes none
+# Second-contact e-mails that ship on the person holding the office. See the
+# module docstring for the measured count this sits at about two thirds of; a
+# run that stops reading the slot then fails instead of quietly shipping none.
+MIN_PERSON_EMAILS = 3
+
+# A local part that is an office's mailbox and not a person's, even where a
+# surname happens to sit inside it: "cityhall" holds Hall, and Mayor is a
+# surname. Compared on letters only, after the municipality's own name is taken
+# out, so "girardcityhall" and a bare "girard" are both read as the city's.
+OFFICE_MAILBOX_RE = re.compile(
+    r"(?:(?:city|village|town)(?:of)?)?"
+    r"(?:hall|cityhall|villagehall|townhall|clerk|office|offices|admin|"
+    r"administrator|info|information|treasurer|mayor|president|board|"
+    r"trustees?|aldermen|council|contact|mail)?")
 
 
 def strip_jsonp(text, url):
@@ -363,9 +421,28 @@ def fetch_contact(session, rows, warnings):
         second_text = address_text(second)
         if second_text:
             residences[municipality].add(second_text.lower())
+        # The second-contact slot's e-mail, read only where the detail record
+        # is the office and the holder the list names, the check
+        # macoupin_county_board_scraper.py makes for a board seat: an address
+        # read off a record for some other office or holder could only be
+        # attributed to the wrong person. phone2 and website2 sit in the same
+        # slot and are not read (see the module docstring).
+        held = bool(holder_name(office)) and not office.get("postAtVacant")
+        same = (block.get("id") == office_id
+                and (block.get("title") or "").strip()
+                == (office.get("title") or "").strip()
+                and ((block.get("officeHolder") or {}).get("ballotDisplay")
+                     or "").strip() == holder_name(office))
+        if held and not same:
+            warnings.append("%s office %d (%s): the detail record names a "
+                            "different office or holder than the list, so no "
+                            "second-contact e-mail is read for it"
+                            % (municipality, office_id,
+                               (office.get("title") or "").strip()))
         contact[office_id] = {
             "phone": (block.get("phone") or "").strip(),
             "email": (block.get("email") or "").strip(),
+            "email2": (block.get("email2") or "").strip() if same else "",
             "website": (block.get("website") or "").strip(),
             "address": hall_text,
             "city": (hall.get("city") or "").strip(),
@@ -455,7 +532,74 @@ def municipality_contact(rows, contact, residences, warnings):
     return out
 
 
-def build_records(rows, halls, warnings):
+def seat_of(municipality, office):
+    """The municipality, the office as printed and its holder, which is how a
+    message names a seat (a village prints six offices titled "Trustee").
+    Never the address: see the module docstring."""
+    return "%s, %s (%s)" % (municipality, (office.get("title") or "").strip(),
+                            holder_name(office) or "vacant")
+
+
+def office_mailbox(address, municipality):
+    """True when the address's local part is a mailbox of the municipality's
+    rather than a person's: an office word, the municipality's own name, or
+    both, and nothing else."""
+    letters = re.sub(r"[^a-z]", "", address.split("@", 1)[0].lower())
+    for word in re.findall(r"[a-z]+", municipality.lower()):
+        if len(word) >= 3 and word not in ("city", "village", "town"):
+            letters = letters.replace(word, "")
+    return bool(OFFICE_MAILBOX_RE.fullmatch(letters))
+
+
+def person_emails(rows, contact, halls, notes):
+    """{office id: address}: the second-contact e-mails that ship on the person
+    holding the office, under the rule in the module docstring. `notes` gets
+    one line for each address that does not ship, naming the seat and the
+    reason and never the address."""
+    holders = collections.defaultdict(set)
+    for _municipality, _district, office in rows:
+        name = holder_name(office)
+        if not name or office.get("postAtVacant"):
+            continue
+        found = contact.get(office.get("id")) or {}
+        for key in ("email", "email2"):
+            value = (found.get(key) or "").strip().lower()
+            if value:
+                holders[value].add(norm(name))
+    keep = {}
+    for municipality, _district, office in rows:
+        name = holder_name(office)
+        if not name or office.get("postAtVacant"):
+            continue
+        value = ((contact.get(office.get("id")) or {}).get("email2") or "").strip()
+        if not value:
+            continue
+        where = seat_of(municipality, office)
+        hall = ((halls.get(municipality) or {}).get("office_email") or "").lower()
+        if len(holders[value.lower()]) > 1:
+            notes.append("%s: the directory prints the same e-mail for %d "
+                         "different people, so it is an office's and ships on "
+                         "none" % (where, len(holders[value.lower()])))
+        elif value.lower() == hall:
+            notes.append("%s: the e-mail is the municipality's own, which "
+                         "ships on the hall row and not on a person" % where)
+        elif office_mailbox(value, municipality):
+            notes.append("%s: the e-mail's local part names an office or the "
+                         "municipality, not a person" % where)
+        elif not names_member(value, name):
+            notes.append("%s: the e-mail's local part does not carry the "
+                         "holder's surname, so it is not shown to be theirs"
+                         % where)
+        else:
+            problem = person_email_problem(value)
+            if problem:
+                sys.exit("FATAL: %s: the directory's second-contact e-mail %s "
+                         "— refusing to write" % (where, problem))
+            keep[office.get("id")] = value
+    return keep
+
+
+def build_records(rows, halls, emails, warnings):
     officials = []
     ward_seats = 0
     for municipality, district_name, office in rows:
@@ -502,6 +646,11 @@ def build_records(rows, halls, warnings):
             year = election_year(office.get("nextElectionDate"))
             if year:
                 record["next_election"] = year
+            # The holder's own e-mail where person_emails() tied it to them.
+            # Scottville's one office printed as two rows is one person, so
+            # both halves carry it.
+            if office.get("id") in emails:
+                record["person_email"] = emails[office.get("id")]
             for key in ("office_phone", "office_email", "office_address",
                         "office_city", "office_state", "office_zip", "website"):
                 if hall.get(key):
@@ -530,7 +679,9 @@ def main():
     else:
         contact, residences = fetch_contact(session, rows, warnings)
     halls = municipality_contact(rows, contact, residences, warnings)
-    officials, ward_seats = build_records(rows, halls, warnings)
+    email_notes = []
+    emails = person_emails(rows, contact, halls, email_notes)
+    officials, ward_seats = build_records(rows, halls, emails, warnings)
 
     places = sorted({row[0] for row in rows})
     heads = sum(1 for record in officials
@@ -552,15 +703,32 @@ def main():
     if not args.skip_contact and phones < MIN_OFFICE_PHONES:
         problems.append("%d municipalities with a hall phone < floor %d"
                         % (phones, MIN_OFFICE_PHONES))
-    # The privacy invariant, asserted rather than assumed: nothing that reached a
-    # record may be a residence, and no record may carry a person-level contact.
+    if not args.skip_contact and len(emails) < MIN_PERSON_EMAILS:
+        problems.append("%d offices with a second-contact e-mail that names its "
+                        "holder < floor %d — the detail records may have changed "
+                        "shape" % (len(emails), MIN_PERSON_EMAILS))
+    # Asserted rather than assumed: nothing that reached a record may be a
+    # residence; no record may carry a telephone of its own, because the slot's
+    # number cannot be tied to the person now holding the office (measured
+    # 2026-10-17; see the module docstring); and an e-mail on a person must be
+    # one the name test ties to that person and the municipality does not use
+    # as its own. Each message names the seat and never the value.
     for record in officials:
         shipped = (record.get("office_address") or "").lower()
         if shipped and shipped in residences.get(record["jurisdiction"], set()):
             problems.append("a residence reached %s's address" % record["jurisdiction"])
-        for banned in ("person_phone", "person_email"):
-            if record.get(banned):
-                problems.append("%s carries %s" % (record["name"], banned))
+        where = "%s, %s (%s)" % (record["jurisdiction"], record["office"],
+                                 record["name"])
+        if record.get("person_phone") or record.get("person_phones_extra"):
+            problems.append("%s carries a telephone number of its own" % where)
+        own = record.get("person_email")
+        if own:
+            hall = (record.get("office_email") or "").lower()
+            if (not names_member(own, record["name"]) or own.lower() == hall
+                    or office_mailbox(own, record["jurisdiction"])
+                    or person_email_problem(own)):
+                problems.append("%s carries an e-mail that is not shown to be "
+                                "the holder's own" % where)
     if problems:
         for problem in problems:
             print("  FAIL: %s" % problem, file=sys.stderr)
@@ -591,6 +759,15 @@ def main():
              sum(1 for e in halls.values() if e.get("office_email")),
              sum(1 for e in halls.values() if e.get("office_address")),
              sum(1 for e in halls.values() if e.get("website"))), file=sys.stderr)
+    slot = sum(1 for _m, _d, office in rows
+               if holder_name(office) and not office.get("postAtVacant")
+               and (contact.get(office.get("id")) or {}).get("email2"))
+    print("    holders' own e-mails: %d offices carry one that names the holder "
+          "(%d records), of %d held offices whose second-contact slot holds one"
+          % (len(emails), sum(1 for r in officials if r.get("person_email")), slot),
+          file=sys.stderr)
+    for note in email_notes:
+        print("  e-mail NOT SHIPPED — %s" % note, file=sys.stderr)
     for place in places:
         print("    %-26s %d" % (place, per[place]), file=sys.stderr)
     for item in skipped:

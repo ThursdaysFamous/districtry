@@ -28,6 +28,9 @@
     "clerk": "Tamaney Augustin",
     "municipality": "Caswell",
     "phone": "715-784-0827",
+    "phonesExtra": [
+      "920-627-0436"
+    ],
     "recordUpdated": "2026-02-25",
     "url": "https://www.townofcaswellwi.com/"
   },
@@ -48,6 +51,9 @@
     "deputyClerk": "Margaret McCarthy",
     "municipality": "Hiles",
     "phone": "715-649-3680",
+    "phonesExtra": [
+      "715-784-1361"
+    ],
     "recordUpdated": "2025-10-15",
     "url": "http://www.townofhiles.org/"
   },
@@ -63,6 +69,9 @@
     "deputyClerk": "Diane Dubey",
     "municipality": "Lincoln",
     "phone": "715-478-2985",
+    "phonesExtra": [
+      "715-889-2640"
+    ],
     "recordUpdated": "2026-07-20",
     "url": "https://townoflincolnforestwi.gov/"
   },
@@ -71,6 +80,9 @@
     "deputyClerk": "Shirely R Ginter",
     "municipality": "Nashville",
     "phone": "715-478-2524",
+    "phonesExtra": [
+      "715-889-1127"
+    ],
     "recordUpdated": "2024-01-29",
     "url": "https://nashtownwi.com/"
   },

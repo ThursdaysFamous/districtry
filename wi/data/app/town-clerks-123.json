@@ -23,6 +23,9 @@
     "clerk": "Sara Rudie",
     "municipality": "Coon",
     "phone": "608-452-3966",
+    "phonesExtra": [
+      "608-634-3624"
+    ],
     "recordUpdated": "2023-12-28",
     "url": "http://www.tn.coon.wi.gov/page/home"
   },
@@ -30,6 +33,9 @@
     "clerk": "Denise Valentine",
     "municipality": "Forest",
     "phone": "608-489-2608",
+    "phonesExtra": [
+      "608-868-4057"
+    ],
     "recordUpdated": "2025-05-27",
     "url": "https://townofforest.com/"
   },
@@ -49,6 +55,9 @@
     "clerk": "Mary A Stanek",
     "municipality": "Greenwood",
     "phone": "608-489-3584",
+    "phonesExtra": [
+      "608-553-0964"
+    ],
     "recordUpdated": "2023-12-22",
     "url": "https://tn.greenwood.wi.gov/page/home"
   },
@@ -76,12 +85,18 @@
     "clerk": "Kelsey Vance",
     "municipality": "Jefferson",
     "phone": "608-769-6943",
+    "phonesExtra": [
+      "608-637-2587"
+    ],
     "recordUpdated": "2026-05-05"
   },
   "5512339475": {
     "clerk": "Dana Lee",
     "municipality": "Kickapoo",
     "phone": "608-629-5848",
+    "phonesExtra": [
+      "831-601-6759"
+    ],
     "recordUpdated": "2025-11-19",
     "url": "https://www.tn.kickapoo.wi.gov/page/home"
   },
@@ -97,6 +112,9 @@
     "deputyClerk": "Jake Spry",
     "municipality": "Stark",
     "phone": "608-386-6692",
+    "phonesExtra": [
+      "608-625-4206"
+    ],
     "recordUpdated": "2025-06-18",
     "url": "https://tn.stark.wi.gov/"
   },
@@ -110,6 +128,9 @@
     "clerk": "Fay Urban",
     "municipality": "Union",
     "phone": "608-528-4437",
+    "phonesExtra": [
+      "608-528-4582"
+    ],
     "recordUpdated": "2023-12-22",
     "url": "http://townofunionvernon.us/"
   },
@@ -117,6 +138,9 @@
     "clerk": "Nathan Campbell",
     "municipality": "Viroqua",
     "phone": "608-606-0208",
+    "phonesExtra": [
+      "608-637-3944"
+    ],
     "recordUpdated": "2023-01-18",
     "url": "https://www.vernoncounty.org/government/municipalities/town_of_viroqua.php"
   },
@@ -124,6 +148,9 @@
     "clerk": "Ardene Wirts",
     "municipality": "Webster",
     "phone": "608-606-1444",
+    "phonesExtra": [
+      "608-625-4568"
+    ],
     "recordUpdated": "2023-12-11",
     "url": "https://www.tn.webster.wi.gov/page/home"
   },
@@ -131,6 +158,9 @@
     "clerk": "Cindy Eisenman",
     "municipality": "Wheatland",
     "phone": "608-648-3583",
+    "phonesExtra": [
+      "608-804-0009"
+    ],
     "recordUpdated": "2025-03-12",
     "url": "https://www.town-of-wheatland.com/"
   },

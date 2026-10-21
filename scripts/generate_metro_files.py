@@ -17,7 +17,9 @@ Targets (region name -> file):
     metro-config      -> index.html   (interior of the METRO config fence; it also
                                        carries LAYER_CODES and LAYER_CONCEPTS, read
                                        from the fleet-wide layer-codes.json and
-                                       layer-concepts.json)
+                                       layer-concepts.json, and, where the worksheet
+                                       declares `frames`, LAYER_FRAMES, measured
+                                       from the shipped files those name)
     layer-area-rank   -> index.html   (the LAYER_AREA_RANK array)
     sw-metro-config   -> sw.js        (CACHE_NAME + shell/geometry/roster lists)
     validator-config  -> scripts/validate_index.py (floors + expected ids)
@@ -67,8 +69,10 @@ import difflib
 import functools
 import datetime
 import json
+import math
 import os
 import re
+import struct
 import subprocess
 import sys
 
@@ -152,6 +156,12 @@ def render_metro_config(w):
     a("  var PERMALINK_GATE = %s;" % bbox_js(w["permalink_gate"], ["minLat", "maxLat", "minLng", "maxLng"]))
     L.extend(render_layer_codes(w))
     L.extend(render_layer_concepts(w))
+    # Where a link naming city or county layers opens. Opt-in on the same
+    # inertness rule as the keys below: an instance without `frames` sees a
+    # byte-identical region, and ENGINE permalink reads the variable through a
+    # typeof guard, so such an instance opens every link at its boot view.
+    if "frames" in w:
+        L.extend(render_layer_frames(w))
     # Emitted ONLY when the worksheet declares it. A fork whose layers are all
     # city-scoped keeps a byte-identical metro-config region, which is what
     # makes this safe to ship through the engine release: the bump workflow
@@ -327,6 +337,36 @@ def render_layer_concepts(w):
         else:
             line += " " + item
     a(line + " };")
+    return L
+
+
+def render_layer_frames(w):
+    """LAYER_FRAMES for one instance: each area's measured extent, and the
+    layers that answer only inside one (load_layer_frames gates both)."""
+    areas, named = w["_layer_frames"]
+    L = []
+    a = L.append
+
+    def wrap(head, items, tail):
+        line = head
+        for i, item in enumerate(items):
+            item += "," if i != len(items) - 1 else ""
+            if len(line) + 1 + len(item) > 96:
+                a(line)
+                line = "      " + item
+            else:
+                line += " " + item
+        a(line + tail)
+
+    a("  // Where a map link that names layers and no point opens (ENGINE permalink):")
+    a("  // `areas` are [west, south, east, north], measured from the shipped files the")
+    a("  // worksheet's `frames` names; `layers` answer only inside their area. A link")
+    a("  // naming any other layer opens at the boot view.")
+    a("  var LAYER_FRAMES = {")
+    wrap("    areas: {", ["%s: [%s]" % (js_str(n), ", ".join(js_num(v) for v in b))
+                         for n, b in areas.items()], " },")
+    wrap("    layers: {", ["%s: %s" % (js_str(lid), js_str(n)) for lid, n in named], " }")
+    a("  };")
     return L
 
 
@@ -1086,6 +1126,8 @@ INSTANCES = {
     "sc":  {"app": "sc",  "scripts": "sc/scripts",  "docs": "sc",  "worksheet": "sc/metro-worksheet.json"},
     "tn":  {"app": "tn",  "scripts": "tn/scripts",  "docs": "tn",  "worksheet": "tn/metro-worksheet.json"},
     "ar":  {"app": "ar",  "scripts": "ar/scripts",  "docs": "ar",  "worksheet": "ar/metro-worksheet.json"},
+    "ms":  {"app": "ms",  "scripts": "ms/scripts",  "docs": "ms",  "worksheet": "ms/metro-worksheet.json"},
+    "la":  {"app": "la",  "scripts": "la/scripts",  "docs": "la",  "worksheet": "la/metro-worksheet.json"},
 }
 
 
@@ -1712,6 +1754,114 @@ def check_no_dashed_layers(app_text):
     return problems
 
 
+# How far a framed layer's vector-tile archive may reach past its area, in
+# degrees (about 200 m). Measured 2026-10-20: every archive of every framed
+# layer then lay INSIDE its area as rounded, so this only absorbs a tile
+# builder reporting its bounds a little wide; a layer whose ground runs a
+# suburb past its area is several hundredths of a degree out and fails.
+FRAME_ARCHIVE_SLACK = 0.002
+
+
+def _coordinates(obj, out):
+    """Every [lng, lat] position in a GeoJSON object, in any geometry type."""
+    if isinstance(obj, list):
+        if len(obj) >= 2 and all(isinstance(v, (int, float)) and not isinstance(v, bool)
+                                 for v in obj[:2]):
+            out.append(obj)
+            return
+        for x in obj:
+            _coordinates(x, out)
+    elif isinstance(obj, dict):
+        for k in ("features", "geometry", "geometries", "coordinates"):
+            if k in obj:
+                _coordinates(obj[k], out)
+
+
+def _archive_bounds(path):
+    """[west, south, east, north] from a PMTiles v3 header, or None if the file
+    is not one. The bounds are four little-endian int32s at bytes 102-117, in
+    units of 1e-7 degrees (the PMTiles v3 specification)."""
+    with open(path, "rb") as f:
+        head = f.read(127)
+    if len(head) < 127 or head[:7] != b"PMTiles" or head[7] != 3:
+        return None
+    return [v / 1e7 for v in struct.unpack("<iiii", head[102:118])]
+
+
+def load_layer_frames(ws_path, worksheet, app_dir):
+    """The worksheet's `frames` -> ({area: [w, s, e, n]}, [(layer id, area)]),
+    or None for an instance with no `frames`.
+
+    An area's extent is MEASURED from the shipped files the worksheet names
+    for it and rounded outward to three decimals (about 100 m), never typed
+    into the worksheet, so a boundary rebuild that moves the ground moves the
+    area with it and the drift gate says so. Refused, each because the map
+    would open somewhere the layers are not: an area no layer names, a layer
+    naming no area, a file that is missing or holds no coordinates, an area
+    outside metro_bbox, and a framed layer whose vector-tile archive
+    (data/app/tiles/<id>.pmtiles, where it has one) reaches past its area by
+    more than FRAME_ARCHIVE_SLACK. A layer with no archive is held only by its
+    worksheet entry, because its ground is fetched live and cannot be measured
+    offline."""
+    frames = worksheet.get("frames")
+    named = [(l["id"], l["frame"]) for l in worksheet["layers"] if "frame" in l]
+    if frames is None:
+        if named:
+            fail("%s: layer(s) name a frame but the worksheet declares no `frames`: %s"
+                 % (ws_path, ", ".join("%s -> %s" % p for p in named)))
+        return None
+    problems = []
+    for lid, area in named:
+        if area not in frames:
+            problems.append("layer `%s` names frame %r, which `frames` does not declare" % (lid, area))
+    used = {area for _, area in named}
+    for area in frames:
+        if area not in used:
+            problems.append("frame %r is named by no layer — drop it, or set `frame` on the "
+                            "layers that answer only there" % area)
+    mb = worksheet["metro_bbox"]
+    areas = {}
+    for area, files in frames.items():
+        pts = []
+        for name in files:
+            path = os.path.join(app_dir, "data", "app", name)
+            try:
+                with open(path, encoding="utf-8") as f:
+                    _coordinates(json.load(f), pts)
+            except (OSError, ValueError) as e:
+                problems.append("frame %r: cannot read %s: %s" % (area, path, e))
+        if len(pts) < 3:
+            problems.append("frame %r: its files hold %d coordinate(s), too few to measure an area"
+                            % (area, len(pts)))
+            continue
+        box = [math.floor(min(p[0] for p in pts) * 1000) / 1000,
+               math.floor(min(p[1] for p in pts) * 1000) / 1000,
+               math.ceil(max(p[0] for p in pts) * 1000) / 1000,
+               math.ceil(max(p[1] for p in pts) * 1000) / 1000]
+        box = [round(v, 3) for v in box]
+        if not (mb["minLng"] <= box[0] and mb["minLat"] <= box[1]
+                and box[2] <= mb["maxLng"] and box[3] <= mb["maxLat"]):
+            problems.append("frame %r measures %s, which is not inside metro_bbox" % (area, box))
+        areas[area] = box
+    for lid, area in named:
+        box = areas.get(area)
+        archive = os.path.join(app_dir, "data", "app", "tiles", lid + ".pmtiles")
+        if box is None or not os.path.exists(archive):
+            continue
+        b = _archive_bounds(archive)
+        if b is None:
+            problems.append("layer `%s`: %s is not a PMTiles v3 archive" % (lid, archive))
+            continue
+        out = max(box[0] - b[0], box[1] - b[1], b[2] - box[2], b[3] - box[3])
+        if out > FRAME_ARCHIVE_SLACK:
+            problems.append("layer `%s` is framed on %r %s but its archive reaches %s, %.3f "
+                            "degrees past it — its ground is not that area"
+                            % (lid, area, box, [round(v, 4) for v in b], out))
+    if problems:
+        fail("%s `frames`:\n  %s" % (ws_path, "\n  ".join(problems)))
+    return areas, named
+
+
 def check_shared_ids_carried(root, concepts, schema):
     """A layer id two LIVE apps both register is one a reader can switch on in
     either, and moving between them should keep it on — so it must sit under a
@@ -1867,6 +2017,9 @@ def main():
                  % (inst["worksheet"], LAYER_CONCEPTS_FILE, instance, ", ".join(unknown_ids)))
         worksheet["_layer_concepts"] = [(c, cols[instance]) for c, cols in layer_concepts.items()
                                         if instance in cols]
+        frames = load_layer_frames(inst["worksheet"], worksheet, os.path.join(args.root, inst["app"]))
+        if frames is not None:
+            worksheet["_layer_frames"] = frames
         app_path = os.path.join(args.root, inst["app"], "index.html")
         with open(app_path, encoding="utf-8") as f:
             app_text = f.read()

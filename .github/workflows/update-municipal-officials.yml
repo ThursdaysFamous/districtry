@@ -419,15 +419,15 @@ jobs:
         continue-on-error: true
         run: python3 scripts/il_large_city_councils_scraper.py --out-dir /tmp
 
-      # Lake County's six readable cities above 25,000. The county IS in this
+      # Lake County's seven readable cities above 25,000. The county IS in this
       # job, at the contact-only rung: its portal publishes a hall address for
       # all 41 municipalities and names nobody, so every Lake unit above the
       # line arrives with an address and no people. Seven of Illinois's eight
       # unanswered units were Lake's, which is why this is a whole-county
-      # decision rather than a seventh entry in the step above. Gurnee is the
-      # seventh and is not here: its board page names no trustee in any byte
-      # this job is served.
-      - name: Scrape six Lake County cities' own council pages
+      # decision rather than a seventh entry in the step above. Gurnee joined
+      # 2026-10-15: its board page fills its list from a feed the page names,
+      # and the scraper reads that feed the way the page does.
+      - name: Scrape seven Lake County cities' own council pages
         id: scrape_lake_cities
         continue-on-error: true
         run: python3 scripts/il_lake_cities_councils_scraper.py --out-dir /tmp
@@ -701,6 +701,7 @@ jobs:
           add "${{ steps.scrape_large_cities.outcome }}" normal      enrich /tmp/normal_council.json
           add "${{ steps.scrape_large_cities.outcome }}" quincy      enrich /tmp/quincy_council.json
           add "${{ steps.scrape_large_cities.outcome }}" danville    enrich /tmp/danville_council.json
+          add "${{ steps.scrape_lake_cities.outcome }}" gurnee           enrich /tmp/gurnee_council.json
           add "${{ steps.scrape_lake_cities.outcome }}" highland-park    enrich /tmp/highland-park_council.json
           add "${{ steps.scrape_lake_cities.outcome }}" mundelein        enrich /tmp/mundelein_council.json
           add "${{ steps.scrape_lake_cities.outcome }}" north-chicago    enrich /tmp/north-chicago_council.json
@@ -747,8 +748,10 @@ jobs:
       # same reason: a failed Cook scrape carries all three Cook-fed files
       # forward together, and the builder refuses partial input on its own.
       # continue-on-error, deliberately: this builder's FATALs are strict on
-      # purpose (completeness, one-seat-per-office, personal-domain refusals)
-      # and each one means THIS file stands while a human looks — never that
+      # purpose (completeness, one-seat-per-office, a hall e-mail that is not
+      # one address; the personal-domain refusal was retired on 2026-10-17,
+      # Adam's "E-mails too") and each one means THIS file stands while a
+      # human looks — never that
       # the whole ~30-county municipal refresh should miss its week. The
       # refusal is surfaced on a standing issue below, because a green run
       # is invisible to the roster-health watchdog.
@@ -765,7 +768,7 @@ jobs:
         run: |
           title="Township officials: the Cook build refused the write"
           existing="$(gh issue list --search "$title in:title" --state open --json number --jq '.[0].number')"
-          body="build_township_officials.py exited non-zero on $(date -u +%Y-%m-%d) — its guards read the TWNSP feed as changed (a township missing, a duplicated seat, a personal-domain hall contact, or an address-type change). The shipped township-officials.json is unchanged and still serves its last verified values. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          body="build_township_officials.py exited non-zero on $(date -u +%Y-%m-%d) — its guards read the TWNSP feed as changed (a township missing, a duplicated seat, a hall e-mail that is not one address, too few hall e-mails, or an address-type change). The shipped township-officials.json is unchanged and still serves its last verified values. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           if [ -n "$existing" ]; then
             gh issue comment "$existing" --body "$body"
           else
@@ -839,7 +842,12 @@ jobs:
           # added — it was regenerated before the cut and never added, so the
           # dates this job moves went uncommitted.
           python3 scripts/build_sitemap.py
-          git add il/data/app/municipal-officials.json il/data/app/cook-library-trustees.json il/data/app/township-officials.json il/township.html il/history.html about.html sitemap.xml
+          # docs/EAM_STATUS.md counts the places this roster names, so a
+          # refresh that moves a count fails the smoke gate's
+          # `build_eam_status.py --check` on this PR unless it is rebuilt here,
+          # after the cut onto main (#1572 went red that way on 2026-10-15).
+          python3 scripts/build_eam_status.py
+          git add il/data/app/municipal-officials.json il/data/app/cook-library-trustees.json il/data/app/township-officials.json il/township.html il/history.html about.html sitemap.xml docs/EAM_STATUS.md
           git commit -m "Update municipal and township officials rosters from the county clerk directories"
           git push -u origin "$branch" --force
           # Only open a PR if one isn't already open for this branch; if it is,

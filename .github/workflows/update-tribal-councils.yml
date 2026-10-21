@@ -1,15 +1,16 @@
-name: Update tribal councils (WI + MI + IL + MN + NY + IA + IN + NC)
+name: Update tribal councils (WI + MI + IL + MN + NY + IA + IN + NC + SC + TN + MS)
 
 # Weekly refresh of the councils on the Tribal Government cards in Wisconsin,
-# Michigan, Illinois, Minnesota, New York, Iowa, Indiana and North Carolina. scripts/tribal_council_scraper.py reads each nation's own
-# council page (and, for the two Wisconsin nations that publish no council
-# page, the Wisconsin Department of Administration's list of tribal officials)
-# into data/tribal-councils.json; scripts/build_tribal_areas.py --rosters then
-# writes each instance's own data/app/tribal-councils.json from it. A nation
-# whose page cannot be read this week keeps its last-read council, marked with
-# the date it was last read (the preserve rule, 2026-09-19). If anything
-# changed it opens a PR rather than committing to main — officeholder data gets
-# a look before it ships.
+# Michigan, Illinois, Minnesota, New York, Iowa, Indiana, North Carolina, South
+# Carolina, Tennessee and Mississippi. scripts/tribal_council_scraper.py reads
+# each nation's own council page (and, for the two Wisconsin nations that
+# publish no council page, the Wisconsin Department of Administration's list of
+# tribal officials) into data/tribal-councils.json;
+# scripts/build_tribal_areas.py --rosters then writes each instance's own
+# data/app/tribal-councils.json from it. A nation whose page cannot be read
+# this week keeps its last-read council, marked with the date it was last read
+# (the preserve rule, 2026-09-19). If anything changed it opens a PR rather
+# than committing to main — officeholder data gets a look before it ships.
 #
 # The land itself (tribal-areas.json) is NOT rebuilt here: it is served
 # cache-first and changes only when the Census redraws it, while these names
@@ -63,6 +64,8 @@ jobs:
           python3 in/scripts/validate_index.py in/index.html
           python3 nc/scripts/validate_index.py nc/index.html
           python3 sc/scripts/validate_index.py sc/index.html
+          python3 tn/scripts/validate_index.py tn/index.html
+          python3 ms/scripts/validate_index.py ms/index.html
 
       - name: Check for changes
         id: diff
@@ -85,13 +88,13 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add data/tribal-councils.json wi/data/app/tribal-councils.json mi/data/app/tribal-councils.json il/data/app/tribal-councils.json mn/data/app/tribal-councils.json ny/data/app/tribal-councils.json ia/data/app/tribal-councils.json in/data/app/tribal-councils.json sc/data/app/tribal-councils.json wi/data/app/tribal-areas.json mi/data/app/tribal-areas.json il/data/app/tribal-areas.json mn/data/app/tribal-areas.json ny/data/app/tribal-areas.json ia/data/app/tribal-areas.json in/data/app/tribal-areas.json nc/data/app/tribal-areas.json sc/data/app/tribal-areas.json
+          git add data/tribal-councils.json wi/data/app/tribal-councils.json mi/data/app/tribal-councils.json il/data/app/tribal-councils.json mn/data/app/tribal-councils.json ny/data/app/tribal-councils.json ia/data/app/tribal-councils.json in/data/app/tribal-councils.json sc/data/app/tribal-councils.json tn/data/app/tribal-councils.json ms/data/app/tribal-councils.json wi/data/app/tribal-areas.json mi/data/app/tribal-areas.json il/data/app/tribal-areas.json mn/data/app/tribal-areas.json ny/data/app/tribal-areas.json ia/data/app/tribal-areas.json in/data/app/tribal-areas.json nc/data/app/tribal-areas.json sc/data/app/tribal-areas.json tn/data/app/tribal-areas.json ms/data/app/tribal-areas.json
           git commit -m "Update tribal councils from each nation's own page"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
             gh pr create \
               --title "Update tribal councils from each nation's own page" \
-              --body "Automated weekly refresh of the councils on the Wisconsin, Michigan, Illinois, Minnesota, New York, Iowa, Indiana and North Carolina Tribal Government cards, read by \`scripts/tribal_council_scraper.py\` from each nation's own council page (two Wisconsin nations from the state's list, because they publish none). A nation whose page could not be read keeps its last-read council with that date. Please review the diff before merging — this changes data about real officeholders. If tribal-areas.json changed too, a nation's council started or stopped being carried, and the cache gate will ask for a cache-name bump." \
+              --body "Automated weekly refresh of the councils on the Wisconsin, Michigan, Illinois, Minnesota, New York, Iowa, Indiana, North Carolina, South Carolina, Tennessee and Mississippi Tribal Government cards, read by \`scripts/tribal_council_scraper.py\` from each nation's own council page (two Wisconsin nations from the state's list, because they publish none). A nation whose page could not be read keeps its last-read council with that date. Please review the diff before merging — this changes data about real officeholders. If tribal-areas.json changed too, a nation's council started or stopped being carried, and the cache gate will ask for a cache-name bump." \
               --base main \
               --head "$branch"
           else

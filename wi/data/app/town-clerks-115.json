@@ -29,6 +29,9 @@
     "clerk": "Kristine R Vomastic",
     "municipality": "Belle Plaine",
     "phone": "715-524-2690",
+    "phonesExtra": [
+      "715-460-3053"
+    ],
     "recordUpdated": "2023-12-29"
   },
   "5511507625": {
@@ -156,6 +159,9 @@
     "deputyClerk": "Lori Hayes",
     "municipality": "Wescott",
     "phone": "715-526-9755",
+    "phonesExtra": [
+      "715-526-9853"
+    ],
     "recordUpdated": "2026-07-17",
     "url": "https://www.townofwescott.com/"
   },
@@ -163,6 +169,9 @@
     "clerk": "Maria Donat",
     "municipality": "Wittenberg",
     "phone": "715-253-3222",
+    "phonesExtra": [
+      "715-370-5805"
+    ],
     "recordUpdated": "2023-09-25",
     "url": "https://townofwittenbergwi.gov"
   },

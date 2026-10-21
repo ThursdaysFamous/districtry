@@ -1,0 +1,84 @@
+# The same roster's "STATE OF OKLAHOMA KEY TO DISTRICTS BY COUNTY" (pages
+# 39-40), read 2026-10-16 from the same PDF. Each county's own row, first
+# line only, exactly as the text layer prints it; the lines a long
+# senate or house list wraps onto carry no county and are not copied.
+# Columns: county, congressional district(s), DISTRICT JUDGE district,
+# district attorney district, state senate district(s), state house
+# district(s). The build reads only the third column.
+Adair           2          15          27               4                      86
+Alfalfa         3           4          26              19                      58
+Atoka           2          25          19               6                     19, 22
+Beaver          3           1           1              27                      61
+Beckham         3           2           2              38                     55, 57
+Blaine          3           4           4              26                     55, 59
+Bryan           2          19          19               6                     19, 21
+Caddo           3           6           6              26                  55, 56, 65
+Canadian       3, 5        26           4       18, 22, 23, 26,       41, 43, 47, 55, 56, 60
+Carter          4          20         20               14                      48, 49
+Cherokee        2          15         27            3, 4, 9                  4, 14, 86
+Choctaw         2          17         17                6                        19
+Cimarron        3          1           1               27                        61
+Cleveland       4          21         21        15, 16, 17, 24,   20, 27, 36, 42, 44, 45, 46, 53,
+Coal            2          25         19               14                      18, 22
+Comanche        4          5           5            31, 32                62, 63, 64, 65
+Cotton          4          5           5               31                        63
+Craig           2          12         12                1                       6, 7
+Creek          1, 3        24         24          8, 12, 21             24, 29, 30, 35, 68
+Custer          3          2           2               26                        57
+Delaware        2          13         13              1, 4                    5, 7, 86
+Dewey           3          4          26               27                        59
+Ellis           3          2           2               27                        61
+Garfield        3          4           4               19                 38, 40, 58, 59
+Garvin          4          21         21            13, 43                     42, 48
+Grady           4          6           6            23, 43                     51, 56
+Grant           3          4           4               19                        38
+Greer           3          3           3               38                        52
+Harmon          3          3           3               38                        52
+Harper          3          1           1               27                        61
+Haskell         2          16         18                7                        15
+Hughes          2          22         22               13                        18
+Jackson         3          3           3               38                        52
+Jefferson       4          5           6               31                        50
+Johnston        2          20         20             6, 14                       22
+Kay             3          8           8            10, 19                     37, 38
+Kingfisher      3          4           4            20, 26                     41, 59
+Kiowa           3          3           3               38                      52, 63
+Latimer         2          16         16                7                        17
+LeFlore         2          16         16              5, 7                    1, 3, 15
+Lincoln         3          23         23               28                        32
+Logan          3, 5        9           9            20, 28              31, 32, 33, 38, 41
+Love            4          20         20               31                        49
+McClain         4          21         21            13, 43                  20, 25, 42
+McCurtain           2         17          17               5                        1
+McIntosh            2         18          25               8                     13, 15
+Major               3          4          26               27                      58
+Marshall            2         20          20               14                    21, 49
+Mayes               2         12          12              1, 3                 5, 6, 8, 86
+Murray              4         20          20            13, 14                   22, 48
+Muskogee            2         15          15              8, 9               13, 14, 15, 16
+Noble               3          8           8               20                    35, 38
+Nowata              2         11          11               29                     6, 10
+Okfuskee            2         24          24               8                       18
+Oklahoma         3, 4, 5       7           7       17, 18, 22, 28,   31, 36, 39, 41, 54, 81, 82, 83,
+Okmulgee           2          24         25                8                      16, 24
+Osage              3          10         10             10, 11              10, 35, 37, 66, 73
+Ottawa             2          13         13                1                         7
+Pawnee             3          14         10                20                        35
+Payne              3          9          9              20, 21                32, 33, 34, 35
+Pittsburg          2          18         18                7                    15, 17, 18
+Pontotoc           4          22         22                13                        25
+Pottawatomie       5          23         23             17, 28                25, 26, 27, 28
+Pushmataha         2          17         17               5, 6                       19
+Roger Mills        3          2          2                 27                        57
+Rogers            1, 2        12         12           1, 2, 3, 29             6, 8, 9, 23, 74
+Seminole           5          22         22                28                        28
+Sequoyah           2          15         27               4, 7                       2
+Stephens           4          5          6              31, 43                    50, 51
+Texas              3          1          1                 27                        61
+Tillman            4          3          3                 38                        63
+Tulsa              1          14         14         2, 10, 11, 12,    9, 11, 16, 23, 24, 29, 30, 66,
+Wagoner           1, 2        15         27              3, 36           4, 8, 12, 13, 14, 23, 98
+Washington         2          11         11                29                     10, 11
+Washita            3          2          2                 38                        55
+Woods              3          4          26                27                        58
+Woodward           3          4          26                27                   58, 59, 61

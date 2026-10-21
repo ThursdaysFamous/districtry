@@ -24,6 +24,9 @@
     "deputyClerk": "Becky Gutzman",
     "municipality": "Courtland",
     "phone": "608-225-4666",
+    "phonesExtra": [
+      "920-326-9920"
+    ],
     "recordUpdated": "2026-07-20",
     "url": "https://www.courtlandtownship.com/"
   },
@@ -38,6 +41,9 @@
     "clerk": "Mark Considine",
     "municipality": "Fort Winnebago",
     "phone": "608-683-5713",
+    "phonesExtra": [
+      "608-697-5351"
+    ],
     "recordUpdated": "2023-12-28",
     "url": "https://www.fortwinn.com/"
   },
@@ -58,6 +64,9 @@
     "clerk": "Joan Olson",
     "municipality": "Leeds",
     "phone": "608-635-8878",
+    "phonesExtra": [
+      "608-206-7122"
+    ],
     "recordUpdated": "2023-12-18",
     "url": "https://townofleeds.org/"
   },
@@ -73,6 +82,9 @@
     "deputyClerk": "Jina Decot",
     "municipality": "Lodi",
     "phone": "608-592-4868 EXT 1",
+    "phonesExtra": [
+      "608-592-4868 EXT 2"
+    ],
     "recordUpdated": "2026-07-21",
     "url": "https://www.tn.lodi.wi.gov/home"
   },
@@ -100,6 +112,9 @@
     "clerk": "Kathy M Olson",
     "municipality": "Otsego",
     "phone": "920-992-1043",
+    "phonesExtra": [
+      "990-348-8062"
+    ],
     "recordUpdated": "2026-07-24"
   },
   "5502160925": {

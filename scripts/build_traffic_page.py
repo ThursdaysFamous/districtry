@@ -79,7 +79,9 @@ INSTANCE_NAMES = {"il": "Illinois", "ny": "New York", "ca": "San Francisco",
                   "nc": "North Carolina", "ok": "Oklahoma",
                   "sc": "South Carolina",
                   "tn": "Tennessee",
-                  "landing": "Fleet landing"}
+                  "ar": "Arkansas",
+                  "ms": "Mississippi",
+                  "landing": "Front page"}
 # The day each instance was first LISTED on the front door, measured once with
 #   git log --reverse --format=%cs -S'"tag": "<tag>"' -- metros.json
 # and recorded here rather than re-read, so this build needs no git and cannot
@@ -97,13 +99,24 @@ FLEET_LISTED = {"il": "2026-08-24", "ny": "2026-08-24", "ca": "2026-08-24",
                 "mn": "2026-09-30", "ky": "2026-09-30",
                 "in": "2026-10-07", "nc": "2026-10-09",
                 "ok": "2026-10-10", "sc": "2026-10-13",
-                "tn": "2026-10-13"}
+                "tn": "2026-10-13", "ar": "2026-10-15",
+                "ms": "2026-10-16"}
 # GoatCounter publishes a referrer's HOST; these are the names a reader knows.
 # A host with no entry ships exactly as GoatCounter spells it.
 REF_NAMES = {"(unknown)": "Direct / unknown", "duckduckgo.com": "DuckDuckGo",
              "go.bsky.app": "Bluesky", "www.bing.com": "Bing",
              "bsky.app": "Bluesky", "www.google.com": "Google",
              "search.brave.com": "Brave", "www.reddit.com": "Reddit"}
+# The per-day source chart's groups. A referrer key in none of these, other
+# than "(unknown)", counts as "Other sites", which is where a smaller search
+# engine (Brave, Ecosia) lands too; the page's note says so.
+DAY_REF_GROUPS = [
+    ("Google", {"Google", "www.google.com", "google.com"}),
+    ("DuckDuckGo", {"duckduckgo.com", "noai.duckduckgo.com", "DuckDuckGo"}),
+    ("Bing", {"www.bing.com", "bing.com", "cn.bing.com", "Bing"}),
+    ("Yahoo", {"Yahoo", "search.yahoo.com", "yahoo.com"}),
+]
+NO_SOURCE = "(unknown)"
 LAYER_NAMES = {"ward": "Ward", "school-board": "School board",
                "congress": "Congress", "il-house": "IL House",
                "il-senate": "IL Senate", "county-board": "County board",
@@ -111,6 +124,10 @@ LAYER_NAMES = {"ward": "Ward", "school-board": "School board",
                "police-district": "Police district",
                "ccpsa-district-council": "Police council",
                "school-district": "School district", "county": "County",
+               # Every state app except Illinois, New York and San Francisco
+               # registers its U.S. House layer as "us-house"; it reached the
+               # top ten on 2026-10-18 and drew as the raw id.
+               "us-house": "U.S. House",
                # The three tilings the app registers separately. Only the
                # unified one has reached the top ten so far, and it did so
                # unnamed: an id with no entry ships as the raw id, so the bar
@@ -131,6 +148,24 @@ LAYER_NAMES = {"ward": "Ward", "school-board": "School board",
                "senate": "State Senate", "house": "State House",
                "council": "City council", "community-board": "Community board",
                "supervisor-district": "Supervisor district"}
+# The day the search boxes started counting the map links they read
+# (`map-link-read/`, engine geocoder-search countLinkRead).
+MAP_LINKS_FROM = "2026-10-17"
+# What each map-link outcome means to a reader of this page. `to-<tag>` is the
+# front page opening an app and `failed-<why>` a short link the lookup could
+# not read; both are grouped below rather than listed here per value.
+MAP_LINK_OUTCOMES = {"point": "Position in link",
+                     "found": "Address found",
+                     "pin": "House pinned",
+                     "street": "Street only",
+                     "name": "By place name",
+                     "other-state": "Another state",
+                     "uncovered": "State not covered",
+                     "district": "District name",
+                     "none": "Nothing matched",
+                     "unreadable": "No place in link",
+                     "search-failed": "Search failed"}
+# The bar column is 112px, so every label here is short enough to fit it.
 # The day the Illinois app moved from "/" to "/il/" and the landing page took
 # the root path. Root pageviews are split at it, one day at a time.
 ROOT_MOVED = "2026-08-24"
@@ -362,6 +397,47 @@ def engine(doc, start, end):
     }
 
 
+def map_link_summary(gc):
+    """The map-link rows as the page draws them: three bar groups and a
+    summary the lead sentence reads. Fails on a row whose path is not the
+    event's six parts, because a row this cannot read would otherwise drop out
+    of every total without a word."""
+    sources, results, places = {}, {}, {}
+    total = short = retried = opened = failed = 0
+    for r in gc.get("map_links", []):
+        parts = r["path"].split("/")
+        if len(parts) != 6 or parts[0] != "map-link-read":
+            fail("map-link row %r is not map-link-read/<tag>/<source>/<form>/<via>/<outcome>"
+                 % r["path"])
+        _, tag, source, form, via, outcome = parts
+        n = r["count"]
+        total += n
+        src = {"google": "Google Maps", "apple": "Apple Maps"}.get(source, source)
+        sources[src] = sources.get(src, 0) + n
+        if form.startswith("short"):
+            short += n
+        if form == "short-retried":
+            retried += n
+        if via == "opened":
+            opened += n
+        if outcome.startswith("failed-"):
+            failed += n
+            what = "Short link failed"
+        elif outcome.startswith("to-"):
+            what = "Sent to a state"
+        else:
+            what = MAP_LINK_OUTCOMES.get(outcome, outcome)
+        results[what] = results.get(what, 0) + n
+        where = "Front page" if tag == "front" else INSTANCE_NAMES.get(tag, tag)
+        places[where] = places.get(where, 0) + n
+    ranked = lambda d: sorted(d.items(), key=lambda kv: (-kv[1], kv[0]))
+    return ranked(sources), ranked(results), ranked(places), {
+        "total": total, "short": short, "retried": retried, "opened": opened,
+        "failed": failed, "cut": bool(gc.get("map_links_cut")),
+        "from": long_label(MAP_LINKS_FROM),
+        "measured": "map_links" in gc}
+
+
 def split_by_instance(gc, pageviews):
     """The per-instance bars, out of the fetcher's own instances[].
 
@@ -379,9 +455,9 @@ def split_by_instance(gc, pageviews):
         if row["key"] in INSTANCE_NAMES:
             named_rows.append((INSTANCE_NAMES[row["key"]], row["count"]))
         else:
-            # The fetcher's own "(not in the pages list)" row: the dashboard's
-            # pages list caps at ten, so the long tail is in the total and in
-            # no bar.
+            # "(other pages)": the site's own pages that belong to no app, and
+            # "(not in the pages list)" when the fetcher could not read the
+            # list to its end. Both are in the total and in no bar.
             residual += row["count"]
     named_rows.sort(key=lambda r: -r[1])
     attributed = sum(n for _, n in named_rows) + residual
@@ -391,6 +467,37 @@ def split_by_instance(gc, pageviews):
              "fetcher writes both; they cannot disagree."
              % (pageviews, attributed))
     return named_rows, residual
+
+
+def day_refs(gc):
+    """One row per fetched day: [label, google, ddg, bing, yahoo, other,
+    no-source, cut-short].
+
+    A file fetched before the per-day lists existed has no
+    `daily_referrers`, and the page then hides the section rather than
+    drawing a chart of zeroes, which would read as "nobody arrived".
+
+    A day whose list the dashboard cut short keeps its flag, because the
+    rows it did not send are the smallest ones and would have landed in
+    "Other sites": that cell is then a floor, and the page marks it.
+    """
+    out = []
+    for d in gc.get("daily_referrers", []):
+        counts = {name: 0 for name, _ in DAY_REF_GROUPS}
+        other = none = 0
+        for r in d["rows"]:
+            for name, keys in DAY_REF_GROUPS:
+                if r["key"] in keys or r["label"] in keys:
+                    counts[name] += r["count"]
+                    break
+            else:
+                if r["key"] == NO_SOURCE:
+                    none += r["count"]
+                else:
+                    other += r["count"]
+        out.append([label(d["date"])] + [counts[n] for n, _ in DAY_REF_GROUPS]
+                   + [other, none, bool(d.get("more"))])
+    return out
 
 
 def build():
@@ -433,6 +540,7 @@ def build():
                            for t, n in sorted(by_tag.items())}
         pooled[name] = total_row - got
     daily_sum = gc["pageviews"] + gc["events"]
+    ml_sources, ml_results, ml_places, ml = map_link_summary(gc)
 
     block = '''%s
   /* GENERATED by scripts/build_traffic_page.py from data/goatcounter-traffic.json,
@@ -457,6 +565,13 @@ def build():
   /* Bing Webmaster Tools, same window. `reporting` is how many of the verified
      properties returned any rows at all. */
   var bingData = %s;
+
+  /* Where each of the last days' visits came from, each day asked for on
+     its own: [day, Google, DuckDuckGo, Bing, Yahoo, other sites, no source,
+     list cut short]. Empty when the data file predates the per-day fetch. */
+  var dayRefs = [
+    %s
+  ];
 
   var barData = {
     instances: [
@@ -483,6 +598,21 @@ def build():
     campaigns: [
       %s
     ],
+    /* Google Maps and Apple Maps links the search boxes read, counted since
+       mapLinks.from: by which maps app, what the search showed, and which app
+       or the front page read it. `measured` is false for a data file fetched
+       before the count existed, which the page says rather than reading as
+       zero. */
+    mapLinkSources: [
+      %s
+    ],
+    mapLinkResults: [
+      %s
+    ],
+    mapLinkPlaces: [
+      %s
+    ],
+    mapLinks: %s,
     /* geolocate-success events; the meter is geoSuccess / Geolocations.
        NULL, NOT ZERO, when the dashboard's ten-row events list does not carry
        the row. Absence and zero are different facts and `.get(key, 0)` made
@@ -506,9 +636,13 @@ def build():
     /* the two Illinois SEO pages the narrative tracks, so the sentence cannot
        claim a figure the path widget has moved past */
     seo: { police: %d, school: %d },
-    /* Page visits no instance bar carries: the dashboard's pages list caps at
-       ten rows, so the long tail is in the pageview total and in no bar. */
+    /* Page visits no instance bar carries. Since 2026-10-20 the fetcher reads
+       the whole pages list, so these are the site's own pages that belong to
+       no app (privacy, about, the Android steps page); pagesCut is true only
+       when the list could not be read to its end, and then they are also the
+       visits to pages the list never reached. */
     instResidual: %d,
+    pagesCut: %s,
     /* Instances not LISTED on the front door for any day of this window, by
        display name. Their bars read zero because the app was not being served,
        not because the dashboard's ten-row cap hid them, and the zero-bar note
@@ -543,15 +677,18 @@ def build():
         BEGIN, start, end, daily,
         json.dumps(engine(gsc, start, end), separators=(",", ":")),
         json.dumps(engine(bing, start, end), separators=(",", ":")),
+        ",\n    ".join(json.dumps(r, separators=(", ", ": ")) for r in day_refs(gc)),
         rows(instances), rows(layers),
         rows(named(gc["referrers"], REF_NAMES)),
         rows([(r["label"] or r["key"], r["count"]) for r in gc["systems"]]),
         rows([(r["label"] or r["key"], r["count"]) for r in gc["browsers"]]),
-        rows([("Point selects", ev.get("select", 0)),
-              ("Address searches", ev.get("address-search", 0)),
-              ("Geolocations", ev.get("geolocate", 0))]),
+        rows([("Points chosen", ev.get("select", 0)),
+              ("Searches", ev.get("address-search", 0)),
+              ("Location requests", ev.get("geolocate", 0))]),
         rows([(r["label"] or r["key"], r["count"]) for r in gc["locations"]]),
         rows([(r["label"] or r["key"], r["count"]) for r in gc["campaigns"]], 2),
+        rows(ml_sources, 2), rows(ml_results, 2), rows(ml_places, 2),
+        json.dumps(ml, separators=(", ", ": "), sort_keys=True),
         ("null" if ev.get("geolocate-success") is None
          else str(ev["geolocate-success"])),
         json.dumps(layer_scope([r["path"][6:] for r in gc["layers"][:10]]),
@@ -561,6 +698,7 @@ def build():
         long_label(LAYER_SPLIT),
         pg.get("/il/police-district.html", 0), pg.get("/il/school-board.html", 0),
         residual,
+        "true" if gc.get("pages_truncated", True) else "false",
         json.dumps(not_listed_yet(end), separators=(",", ":")),
         json.dumps(listed_partway(start, end), separators=(",", ":"),
                    sort_keys=True),
@@ -659,7 +797,7 @@ def main():
              gc["total"] - daily_sum))
     for name, count in instances:
         print("  %-16s %d" % (name, count))
-    print("  %-16s %d (long tail, in no bar)" % ("(not listed)", residual))
+    print("  %-16s %d (in no bar)" % ("(no app)", residual))
     print("  %d data-stat span(s) written from the data; %d key(s) keep a "
           "hand-typed fallback a crawler reads: %s"
           % (len(fallbacks), len(unwritten), ", ".join(sorted(unwritten)) or "none"))

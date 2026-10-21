@@ -44,12 +44,15 @@
    {
     "email": "nfpd4800@gmail.com",
     "name": "Alan Hohlt",
-    "phone": "618-201-5633"
+    "phone": "cell 618-201-5633"
    },
    {
     "email": "dave.ibendahl@washingtonco.illinois.gov",
     "name": "Dave Ibendahl",
-    "phone": "618-336-5233"
+    "phone": "618-336-5233",
+    "phonesExtra": [
+     "cell 618-214-0856"
+    ]
    },
    {
     "email": "desdkszls@gmail.com",
@@ -78,12 +81,12 @@
    {
     "email": "ddmeyerfarms@att.net",
     "name": "David Meyer",
-    "phone": "618-534-5921"
+    "phone": "cell 618-534-5921"
    },
    {
     "email": "paul.todd@washingtonco.illinois.gov",
     "name": "Paul Todd",
-    "phone": "618-599-0821"
+    "phone": "cell 618-599-0821"
    }
   ],
   "sourceUrl": "https://washingtonco.illinois.gov/county-board/"

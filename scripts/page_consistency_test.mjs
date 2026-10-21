@@ -49,6 +49,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { stubBasemap } from "./basemap_stub.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -302,9 +303,19 @@ const contrast = (fg, bg) => {
   return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
 };
 
-const browser = await chromium.launch();
+// SEVERAL PAGES AT ONCE (2026-10-17). One page at a time this check took
+// 685s on a CI runner, more than any other browser gate, and the whole run
+// waited on it. Each page gets its own browser contexts and the checks only
+// append to `failures` and read `probed`, so pages are independent; a url two
+// pages link may be probed twice, which costs a request and changes no
+// answer. PAGE_JOBS overrides the count; 1 is the old one-at-a-time run.
+const PAGE_JOBS = Math.max(1, parseInt(process.env.PAGE_JOBS || "4", 10) || 1);
+
+const browser = stubBasemap(await chromium.launch());
 try {
-  for (const path of paths) {
+  const queue = [...paths];
+  const checkPages = async () => {
+  for (let path = queue.shift(); path !== undefined; path = queue.shift()) {
     const seg = path.replace(/^\/|\/$/g, "").split("/");
     const tag = seg.length > 1 ? seg[0] : null;       // null for the root pages
     const file = path.endsWith("/") ? "index.html" : seg[seg.length - 1];
@@ -611,42 +622,73 @@ try {
       }
 
       // --- the question pages' address box, LAST because it navigates ------
-      // scripts/build_question_forms.py generates one form eleven times and
-      // its --check proves the bytes; this is the half a static check cannot
-      // have. The form ships `hidden` and its own script unhides it, so a
-      // reader with no JavaScript never meets an input that cannot submit —
+      // scripts/build_question_forms.py generates one form for every question
+      // page and its --check proves the bytes; this is the half a static check
+      // cannot have. The form ships `hidden` and its own script unhides it, so
+      // a reader with no JavaScript never meets an input that cannot submit —
       // which means "hidden" is also what a broken script looks like, and
-      // only a browser can tell the two apart. The submit is then measured by
-      // the URL it produces: ./#q=<address>&layers=<the page's own cta>, with
-      // the address in the HASH, where count.js cannot send it.
+      // only a browser can tell the two apart. Since 2026-10-20 its one button
+      // does both jobs (Adam: "Search if an address is provided or open the
+      // map if not"), so the page's own map link and its note are hidden
+      // while the box shows, and both submits are measured by the URL they
+      // produce: exactly the hash of the page's own map link from an empty
+      // box (its layers, and the area to open on where the page names one),
+      // and ./#q=<address>&<that hash> from a typed one, with the address in
+      // the HASH, where count.js cannot send it.
       if (await p.locator("#lookup").count()) {
         check(path, "address box unhides when its script runs",
               await p.locator("#lookup").isVisible());
         const cta = await p.evaluate(() => {
           const a = document.querySelector('a.cta[href^="./#layers="]');
-          return a ? a.getAttribute("href").split("#layers=")[1] : null;
+          return a ? a.getAttribute("href").split("#")[1] : null;
         });
         check(path, "address box sits above a cta naming its layers", !!cta);
+        const doubled = await p.evaluate(() =>
+          [".cta", ".cta-note"].filter((s) => {
+            const el = document.querySelector(s);
+            return el && el.getClientRects().length > 0;
+          }));
+        check(path, "the map link and its note are hidden beside the box",
+              doubled.length === 0, doubled.join(", ") + " still showing");
+        const controls = await p.evaluate(() =>
+          Array.from(document.querySelectorAll("#lookup button, #lookup a, #lookup input[type=submit], a.cta"))
+            .filter((el) => el.getClientRects().length > 0)
+            .map((el) => el.textContent.trim() || el.value));
+        check(path, "one button to press, which searches or opens the map",
+              controls.length === 1, controls.join(" | "));
         // The app is not this check's subject. Stubbing the instance root
-        // keeps eleven pages from booting a 26,000-line document each.
+        // keeps every question page from booting the whole app twice.
         await p.route(`**/${tag}/`, (r) => r.fulfill({
           status: 200, contentType: "text/html",
           body: "<!doctype html><title>stub</title>" }));
+        const submit = async () => {
+          await Promise.all([
+            p.waitForURL((u) => u.pathname === `/${tag}/`, { timeout: 5000 }).catch(() => {}),
+            p.click(".lookup-go"),
+          ]);
+          return new URL(p.url());
+        };
+        let got = await submit();
+        check(path, "an empty box opens the map on the page's own layers",
+              got.pathname === `/${tag}/` &&
+              got.search === "" &&
+              got.hash === `#${cta}`,
+              p.url());
+        await p.goto(BASE + path, { waitUntil: "domcontentloaded" });
+        await p.waitForSelector("#lookup:not([hidden])", { timeout: 5000 }).catch(() => {});
         await p.fill("#lookup-q", "233 S Wacker Dr");
-        await Promise.all([
-          p.waitForURL((u) => u.pathname === `/${tag}/`, { timeout: 5000 }).catch(() => {}),
-          p.click(".lookup-go"),
-        ]);
-        const got = new URL(p.url());
+        got = await submit();
         check(path, "submitting hands the address to the app in the hash",
               got.pathname === `/${tag}/` &&
               got.search === "" &&
-              got.hash === `#q=233%20S%20Wacker%20Dr&layers=${cta}`,
+              got.hash === `#q=233%20S%20Wacker%20Dr&${cta}`,
               p.url());
       }
       await ctx.close();
     }
   }
+  };
+  await Promise.all(Array.from({ length: PAGE_JOBS }, checkPages));
 } finally {
   await browser.close();
 }

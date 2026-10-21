@@ -4,6 +4,9 @@
   "metro_bbox": { "minLng": -79.82, "minLat": 40.43, "maxLng": -71.62, "maxLat": 45.07 },
   "metro_center": [42.75, -75.77],
   "permalink_gate": { "minLat": 40.33, "maxLat": 45.17, "minLng": -79.91, "maxLng": -71.52 },
+  "frames": {
+    "nyc": ["borough-boundaries.json"]
+  },
   "socrata_host": "https://data.cityofnewyork.us",
   "socrata_app_token": "mde4YTGz0w7M4jDhUJ7WVn85W",
   "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
@@ -64,7 +67,11 @@
     { "id": "southcarolina", "label": "South Carolina", "url": "https://districtry.com/sc/", "emoji": "🌴", "explorer_name": "districtry South Carolina",
       "bbox": { "minLng": -83.36, "minLat": 31.99, "maxLng": -78.49, "maxLat": 35.16 } },
     { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
-      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } }
+      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
+    { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
+    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
+      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } }
   ],
   "hover_number_keys": [
     ["district", "dist_num", "dist", "district_number", "district_no"],
@@ -241,6 +248,7 @@
       "id": "borough",
       "label": "Borough / County",
       "group": "geography",
+      "frame": "nyc",
       "area_rank": 12,
       "rank_note": "5 counties — largest",
       "rank_comment": [
@@ -280,6 +288,7 @@
       "id": "borough-president",
       "label": "Borough President",
       "group": "political",
+      "frame": "nyc",
       "area_rank": 13,
       "source": {
         "answers": "Which Borough President's office covers this address.",
@@ -297,6 +306,7 @@
       "id": "district-attorney",
       "label": "District Attorney",
       "group": "political",
+      "frame": "nyc",
       "area_rank": 14,
       "source": {
         "answers": "Which District Attorney's office covers this address.",
@@ -332,6 +342,7 @@
       "id": "municipal-court",
       "label": "Civil Court (Municipal Court) District",
       "group": "political",
+      "frame": "nyc",
       "area_rank": 16,
       "rank_note": "28 Civil Court districts",
       "source": {
@@ -368,6 +379,7 @@
       "id": "school-district",
       "label": "Community School District",
       "group": "schools",
+      "frame": "nyc",
       "area_rank": 18,
       "rank_note": "32 community school districts",
       "source": {
@@ -386,6 +398,7 @@
       "id": "cec",
       "label": "Community Education Council",
       "group": "schools",
+      "frame": "nyc",
       "area_rank": 19,
       "rank_note": "same 32, drawn just after school-district",
       "source": {
@@ -404,6 +417,7 @@
       "id": "fire-battalion",
       "label": "FDNY Battalion",
       "group": "safety",
+      "frame": "nyc",
       "area_rank": 20,
       "rank_note": "49 FDNY battalions",
       "source": {
@@ -423,6 +437,7 @@
       "guide": { "href": "council-district.html", "text": "What Council district am I in?" },
       "label": "City Council District",
       "group": "political",
+      "frame": "nyc",
       "area_rank": 21,
       "rank_note": "51 City Council districts",
       "source": {
@@ -442,6 +457,7 @@
       "guide": { "href": "community-board.html", "text": "What community board am I in?" },
       "label": "Community District / Board",
       "group": "political",
+      "frame": "nyc",
       "area_rank": 22,
       "rank_note": "59 community districts",
       "source": {
@@ -460,6 +476,7 @@
       "id": "election-district",
       "label": "Election District",
       "group": "political",
+      "frame": "nyc",
       "area_rank": 23,
       "rank_comment": [
         "election-district (~4,200) sits just BEFORE its parent Assembly so the",
@@ -499,6 +516,7 @@
       "id": "police-sector",
       "label": "NYPD Sector",
       "group": "safety",
+      "frame": "nyc",
       "area_rank": 25,
       "rank_note": "303 sectors — just before its parent precinct",
       "source": {
@@ -517,6 +535,7 @@
       "id": "police-precinct",
       "label": "NYPD Precinct",
       "group": "safety",
+      "frame": "nyc",
       "area_rank": 26,
       "rank_note": "78 NYPD precincts",
       "source": {
@@ -527,7 +546,7 @@
             "url": "https://data.cityofnewyork.us/d/y76i-bdw7"
           }
         ],
-        "people": "Commanding officers are re-scraped weekly from the NYPD's own precinct pages. Where the NYPD publishes none, the card says the precinct is listed without a commander rather than guessing.",
+        "people": "Commanding officers, station house addresses and precinct desk telephones are re-scraped weekly from the NYPD's own precinct pages. Where the NYPD publishes none, the card says the precinct is listed without a commander rather than guessing.",
         "applies": "New York City."
       }
     },
@@ -535,6 +554,7 @@
       "id": "zip-code",
       "label": "ZIP Code (MODZCTA)",
       "group": "geography",
+      "frame": "nyc",
       "area_rank": 28,
       "rank_note": "~178 MODZCTA",
       "source": {
@@ -559,7 +579,7 @@
           "answers": "The Census Bureau's ZIP Code Tabulation Area covering this point, anywhere in New York State outside New York City.",
           "boundary": [
             {
-              "label": "ZIP Code Tabulation Areas from U.S. Census TIGERweb, fetched live by a bounding envelope because the layer carries no state field",
+              "label": "ZIP Code Tabulation Areas from U.S. Census TIGERweb, fetched by a bounding envelope because the layer carries no state field, copied into a tile archive served from this site, re-fetched from the Census weekly",
               "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
             }
           ],
@@ -571,6 +591,7 @@
       "id": "neighborhood",
       "label": "Neighborhood (NTA)",
       "group": "geography",
+      "frame": "nyc",
       "area_rank": 29,
       "rank_note": "~262 NTAs",
       "source": {
@@ -589,6 +610,7 @@
       "id": "hs-zone",
       "label": "High School Zone",
       "group": "schools",
+      "frame": "nyc",
       "area_rank": 30,
       "rank_note": "high-school zones (sparse)",
       "source": {
@@ -607,6 +629,7 @@
       "id": "ms-zone",
       "label": "Middle School Zone",
       "group": "schools",
+      "frame": "nyc",
       "area_rank": 31,
       "rank_note": "middle-school zones (partial)",
       "source": {
@@ -625,6 +648,7 @@
       "id": "es-zone",
       "label": "Elementary School Zone",
       "group": "schools",
+      "frame": "nyc",
       "area_rank": 32,
       "rank_note": "elementary zones — smallest polygon layer",
       "source": {
@@ -661,17 +685,22 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
+      "frame": "nyc",
       "area_rank": 34,
       "rank_note": "point marker — always topmost",
       "source": {
-        "answers": "The nearest police stations to this point, by straight-line distance.",
+        "answers": "The nearest NYPD precinct station houses to this point, by straight-line distance.",
         "boundary": [
           {
-            "label": "Police station locations from NYC Open Data (ji82-xba5)",
-            "url": "https://data.cityofnewyork.us/d/ji82-xba5"
+            "label": "Station house addresses from each precinct's own NYPD page",
+            "url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts-landing.page"
+          },
+          {
+            "label": "Located from those addresses with NYC Planning's GeoSearch geocoder",
+            "url": "https://geosearch.planninglabs.nyc/"
           }
         ],
-        "people": "No roster is joined; the card gives the station and its address.",
+        "people": "No roster is joined; the card gives each station house, its address and its desk telephone, re-read weekly from NYPD's precinct pages.",
         "applies": "New York City."
       }
     },
@@ -1004,7 +1033,7 @@
       }]
   },
   "sw": {
-    "cache_name": "nyc-district-explorer-shell-v22",
+    "cache_name": "nyc-district-explorer-shell-v23",
     "shell_urls": [
       "./",
       "./icons/app/apple-touch-icon.png",
@@ -1031,7 +1060,7 @@
   "geocoder": {
     "address": "GeoSearch (city type-ahead, geosearch.planninglabs.nyc) then Photon bounded to the state when the city search finds nothing",
     "unbounded": "Photon (whole-coverage, sibling-metro lookup)",
-    "poi": "GeoSearch (office-address pin lookup; every layer that drops a pin is city-only)",
+    "poi": "GeoSearch (office-address pin lookup; it knows New York City addresses only, so an answer counts only in the office's own ZIP code or at the same house number in the same postal area) then, for an office it cannot place, the Census Bureau's house-number estimate through districtry's lookup, kept only at the office's own number on its street in its town or ZIP code",
     "search_placeholder": "Search a New York address"
   },
   "palette": {

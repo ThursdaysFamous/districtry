@@ -1,0 +1,11 @@
+# Sentences from the summary of the Arkansas GIS Office's metadata for its Circuit
+# Court Districts layer, which summarises the federal court order in Hunt v.
+# State of Arkansas, No. PB-C-89-405 (E.D. Ark.),
+# https://gis.arkansas.gov/Metadata/HTML/asdi.Boundaries.CIRCUIT_COURT_export.html,
+# read 2026-10-16 with this project's own client, districtry/1.0 (+https://districtry.com/ar/); that host serves no robots.txt (the path answers with an HTML page), so it disallows nothing.
+# Page: 86495 bytes, SHA-256 e09105ac3288eb5968ef8d95c8e5f82fbafdd845391c384f5c4a3db9b6340916. Copied as published, one sentence to a line.
+Judicial sub-districts are included in the file by a court order known as the Hunt Decree that was ordered by the US District Court, Eastern District Arkansas on November 7, 1991.
+The remedy ordered by this court will not disturb the existing district lines of the present judicial districts except to the extent that it creates electoral sub-districts with the First, Second, Sixth, Tenth and Eleventh West Judicial Districts for the purposes of election only.
+All judges elected from the electoral sub-districts will exercise jurisdiction district-wide in their capacity as circuit, chancery or circuit-chancery judges.
+There will be no sub-district residency requirement.
+No changes in any of these sub-districts or in the allocation of judgeships among them may be made except by order of the Court.

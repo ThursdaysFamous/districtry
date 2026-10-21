@@ -21,7 +21,13 @@ docstring said "every one with a street, city, telephone and e-mail" until
 mobile and personal e-mail -- Atlanta Memorial's card carried a rural grid
 address and a hotmail account. comptroller_afr.py now ships only a value the
 filing witnesses as the unit's, which for Logan is three addresses, one
-telephone and three role mailboxes.
+telephone and three role mailboxes. That rule is about the DISTRICT's contact.
+Since Adam's ruling of 2026-10-17 ("if the official government source uses
+personal phone numbers, we publish those"), the telephone a slot prints beside
+an officer ships on that officer's own record, mobile or not, and since he
+chose "E-mails too" the same day so does the e-mail address, hotmail or not,
+unless the filing prints it beside a second person too; no officer's street
+address ships.
 
 THE JOIN IS AN EXPLICIT TABLE OF UNIT CODES, NOT A NAME MATCH, and Logan is
 why the distinction is not pedantry: the Warehouse search is a SUBSTRING match

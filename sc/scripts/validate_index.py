@@ -87,16 +87,18 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 8
+MIN_REGISTER_LAYER = 13
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "sc-senate", "county", "school-district-unified", "sc-house",
-    "county-council", "zip-code", "municipality", "tribal-government",
-    "police-station", "fire-station", "post-office",
+    "us-house", "sc-circuit-court", "sc-senate", "county",
+    "school-district-unified", "sc-house", "county-subdivision",
+    "county-council", "school-board-district", "zip-code", "voting-precinct",
+    "municipality", "city-ward", "tribal-government", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -108,6 +110,10 @@ GEOMETRY_FILES = {
     "sc-house-districts.json": (124, 124),  # The 124 South Carolina House districts.
     "sc-county-council-districts.json": (315, 315),  # The 315 county council districts in all 46 counties, from the state Revenue and Fiscal Affairs Office (sc/scripts/build_sc_county_council_districts.py).
     "tribal-areas.json": (2, 2),  # South Carolina's tribal land (scripts/build_tribal_areas.py) — the Catawba Reservation and its off-reservation trust land. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-12; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
+    "sc-precincts.json": (2315, 2315),  # Every South Carolina voting precinct, pre-built by sc/scripts/build_sc_precincts.py through scripts/statewide_precincts.py from the Revenue and Fiscal Affairs Office's layer (Douglas-Peucker at 8 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.97% with zero overlaps; an exact 2,315 count on the fetch and the drawn file). 7.8 MB, 2.24 MB gzipped, fetched only when a reader switches the layer on.
+    "sc-school-board-districts.json": (383, 383),  # Every South Carolina school board district, pre-built by sc/scripts/build_sc_school_board_districts.py through scripts/published_district_layers.py from the Revenue and Fiscal Affairs Office's layer (Douglas-Peucker at 4 m; a 400-point agreement gate on every board's extent, measured 99.99% with zero overlaps; an exact 383 count, after the 18 records marked “At Large” are skipped). 4.6 MB, 1.43 MB gzipped, fetched only when a reader switches the layer on.
+    "sc-judicial-circuits.json": (16, 16),  # The 16 judicial circuits of S.C. Code Section 14-5-610, dissolved from the county fabric by sc/scripts/build_sc_judicial_circuits.py, each carrying the number of judges the section sets for it.
+    "sc-city-wards.json": (75, 75),  # The 75 council districts and wards of the 12 cities and towns above 25,000 people that elect council members by district, pre-built by sc/scripts/build_sc_city_wards.py through scripts/city_ward_maps.py: nine from the place's own map, Sumter's from the election map on gis.sumter-sc.com, and Florence's and Aiken's from the Revenue and Fiscal Affairs Office's copy (Douglas-Peucker at 4 m; a 4,800-point agreement gate over the twelve places' extents, measured 99.98% with zero overlaps; each map held to its place's Census outline). 1.26 MB, 349 KB gzipped, fetched only when a reader switches the layer on.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -116,8 +122,10 @@ ROSTER_FILES = {
     "sc-senate-members.json": 42,  # South Carolina Senate roster from the General Assembly's own member pages, refreshed weekly. The floor is below 46 because a vacant seat is a real event; the chamber listed all 46 on 2026-10-10.
     "sc-house-members.json": 114,  # South Carolina House roster from the General Assembly's own member pages, refreshed weekly. The floor is below 124 for the same reason; the chamber listed all 124 on 2026-10-10.
     "sc-county-council-members.json": 46,  # County council members, one key per county FIPS, from the Election Commission's certified results, refreshed weekly by update-sc-county-council-roster.yml.
+    "sc-city-councils.json": 17,  # The mayor and council of each of the 17 cities and towns above 25,000 people, keyed by Census place id, written down from each place's own pages and proved against them by sc/scripts/build_sc_city_councils.py, whose --check holds the file to its seats file, its record of every page read and the drawn districts. Every page it cites is re-read weekly (watch-city-council-pages.yml, listed in the North Carolina worksheet because one root workflow belongs to one instance), which opens a tracking issue when a name or a contact has gone from its page and never edits the file; the seats file is changed by hand (sc/WATCH.md).
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
     "tribal-councils.json": 1,  # The Catawba Nation's Executive Committee, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
+    "sc-conservation-boards.json": 46,  # The five commissioners of each county's conservation district, keyed by county GEOID, read from the Department of Natural Resources' page for each district by sc/scripts/build_sc_conservation_boards.py, whose --check holds the file to its record of the pages read and to the County card's wording. Re-read quarterly and in February after the elected seats change hands (sc/WATCH.md).
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

@@ -1,0 +1,20 @@
+# The judges' positions in each Court of Appeals district, from the court's own
+# district map page, https://arcourts.gov/courts/court-of-appeals/map, read 2026-10-16
+# with this project's own client, districtry/1.0 (+https://districtry.com/ar/), after reading robots.txt, which permits the path.
+# Page: 88865 bytes, SHA-256 45d2639f12936b0c6176ce7da34ff6599e1634896c688b18741aeba4b7d16112. Read from the page's table of district,
+# position and next election; a district with one judge has no position number.
+# The judges' names and the election years are not carried.
+#
+# district <TAB> position (blank where the district has one judge)
+1	1
+1	2
+2	1
+2	2
+3	1
+3	2
+4	1
+4	2
+5	
+6	1
+6	2
+7	

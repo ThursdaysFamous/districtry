@@ -139,9 +139,19 @@ jobs:
           git checkout -B "$branch" FETCH_HEAD
           # REGENERATED HERE, AFTER THE CUT, AND NOT BEFORE IT. Building before
           # the cut leaves shared files dirty, where `git checkout -B` refuses to
-          # move onto main's new tip.
+          # move onto main's new tip. ia/city-council.html counts and tables
+          # the ward cities' members off this roster since 2026-10-15, and
+          # about.html counts the people those tables name.
+          python3 scripts/build_concept_pages.py
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
           python3 scripts/build_sitemap.py
-          git add ia/data/app/ia-city-councils.json sitemap.xml
+          # docs/EAM_STATUS.md counts the places this roster names, so a
+          # refresh that moves a count fails the smoke gate's
+          # `build_eam_status.py --check` on this PR unless it is rebuilt here,
+          # after the cut onto main (#1572 went red that way on 2026-10-15).
+          python3 scripts/build_eam_status.py
+          git add ia/data/app/ia-city-councils.json ia/city-council.html about.html sitemap.xml docs/EAM_STATUS.md
           git commit -m "Update the Iowa city councils roster from the cities' own pages"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

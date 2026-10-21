@@ -2,17 +2,17 @@
 
 Every page here was read on 2026-10-01 with the fleet's roster token, after
 its host's robots.txt; each parser's docstring names the page structure it was
-written against and the trap it guards. Dearborn Heights is not in the table:
-its council page names six people and says nothing about a seventh seat, and
-the only statement of the vacancy is a time-limited News Flash (2026-09-22,
-appointment vote 2026-10-13), so the page cannot be read as a whole council.
+written against and the trap it guards. Dearborn Heights joined on
+2026-10-15: until the council filled its vacant seat on 2026-10-13 its page
+named six people and said nothing about a seventh, so it could not be read as
+a whole council. Its parser refuses any count but seven for that reason.
 """
 
 import json
 import re
 from datetime import datetime, timezone
 
-from mi_municipal_common import txt, emails_in, phones_in, phone, member
+from mi_municipal_common import txt, emails_in, phones_in, phone, member, own_email
 
 
 def _section(h, start_pat, end_pat=None, unit=""):
@@ -157,9 +157,16 @@ def parse_dearborn(h, also):
     """Drupal cards: a role line ("Council President", "Council Member") in a
     text-xl div, the name in the following <h2>, then a biography ending
     "Email: X@dearborn.gov". No per-member phone. The mayor is not on this
-    page."""
+    page.
+
+    The e-mail is the member's dearborn.gov address where the biography
+    prints one, as it always was (all seven did, read 2026-10-01). Since
+    Adam's choice of 2026-10-17 ("E-mails too"), a biography printing none
+    gives the one other address it prints, through `own_email`, unless
+    another member's biography or the rest of the page prints it too, which
+    makes it the council's or the city's address rather than the member's."""
     cards = re.split(r'<div\s+class="text-xl font-semibold[^"]*">', h)[1:]
-    members = []
+    entries = []
     for c in cards:
         role = txt(c[:c.find("</div")])
         if not role.startswith("Council"):
@@ -167,9 +174,12 @@ def parse_dearborn(h, also):
         n = re.search(r"<h2[^>]*>(.*?)</h2\s*>", c, re.S)
         if not n:
             raise ValueError("Dearborn: card %r has no name heading" % role)
-        bio = c[n.end():c.find("contact.dearborn.gov")]
-        em = [e for e in emails_in(bio) if e.endswith("@dearborn.gov")]
-        members.append(member(n.group(1), role, None, None, em[0] if em else None))
+        entries.append((role, n.group(1), c[n.end():c.find("contact.dearborn.gov")]))
+    bios = [bio for _, _, bio in entries]
+    members = []
+    for i, (role, name, bio) in enumerate(entries):
+        em = own_email(bio, bios[:i] + bios[i + 1:], h, ("dearborn.gov",))
+        members.append(member(name, role, None, None, em))
     _expect("Dearborn", members, 7)
     return {"members": members}
 
@@ -287,24 +297,60 @@ def parse_flint(h, also):
     and Cell rows and an e-mail (entity-encoded text). TRAP: an "In Memoriam"
     notice naming a former First Ward member follows the section; only the
     articles inside the section are read, and the ward comes from each
-    article's own label."""
+    article's own label.
+
+    The Office row (the council office's line with the member's extension)
+    is the member's `phone`. The member's own row is carried too, in
+    `phonesExtra`, under Adam's ruling of 2026-10-17 ("if the official
+    government source uses personal phone numbers, we publish those"): a row
+    labelled "Cell" as "cell <number>", and one labelled "Phone" (one member's,
+    read 2026-10-17) as the bare number, since that label says nothing the
+    number does not. A row whose tel: link and printed number disagree is not
+    carried, nor a number printed for a second member or equal to the office
+    line.
+
+    The e-mail is the member's address on cityofflint.com, as it always was
+    (each of the nine articles printed one, read 2026-10-17). Where an article
+    prints none, `own_email` takes the one other address it prints, since
+    Adam's choice of 2026-10-17 ("E-mails too"), unless another member's
+    article or the rest of the page prints it too."""
     sec = _section(h, r'<section class="content-block block-directory[^"]*" id="council-members">',
                    r"</section>", "Flint")
-    members = []
-    for a in re.findall(r'<article class="directory-item.*?</article>', sec, re.S):
+    members, own_rows, offices = [], [], set()
+    articles = re.findall(r'<article class="directory-item.*?</article>', sec, re.S)
+    for a in articles:
         hd = re.search(r"<header>\s*<h3[^>]*>(.*?)</h3>(.*?)<div>", a, re.S)
         if not hd:
             raise ValueError("Flint: directory item without a name heading")
         w = re.match(r"^City Council\s*[–-]\s*(\d(?:st|nd|rd|th)) Ward$", txt(hd.group(2)))
         if not w:
             raise ValueError("Flint: %r has label %r" % (txt(hd.group(1)), txt(hd.group(2))))
-        office = None
-        for lab, val in re.findall(r'directory-item-label">(.*?)</div>\s*<a[^>]*>(.*?)</a>', a, re.S):
-            if txt(lab) == "Office":
-                office = phone(txt(val))
-        em = [e for e in emails_in(a) if e.endswith("@cityofflint.com")]
+        office, own = None, []
+        for lab, attrs, val in re.findall(
+                r'directory-item-label">(.*?)</div>\s*<a([^>]*)>(.*?)</a>', a, re.S):
+            label, shown = txt(lab), phone(txt(val))
+            if label == "Office":
+                office = shown
+                if shown:
+                    offices.add(re.sub(r"\D", "", shown.split(" ext")[0]))
+            elif label in ("Cell", "Phone") and shown:
+                tel = re.search(r'href="tel:([^"]*)"', attrs)
+                dial = re.sub(r"\D", "", tel.group(1)) if tel else ""
+                if len(dial) == 11 and dial.startswith("1"):
+                    dial = dial[1:]
+                if dial != re.sub(r"\D", "", shown):
+                    continue
+                own.append(("cell " if label == "Cell" else "") + shown)
+        em = own_email(a, [o for o in articles if o is not a], h, ("cityofflint.com",))
         members.append(member(hd.group(1), "Council Member", "Ward %d" % _ORDINAL[w.group(1)],
-                              office, em[0] if em else None))
+                              office, em))
+        own_rows.append(own)
+    digits = [re.sub(r"\D", "", n) for own in own_rows for n in own]
+    for rec, own in zip(members, own_rows):
+        keep = [n for n in own if digits.count(re.sub(r"\D", "", n)) == 1
+                and re.sub(r"\D", "", n) not in offices]
+        if keep:
+            rec["phonesExtra"] = keep
     _expect("Flint", members, 9)
     return {"members": members}
 
@@ -371,13 +417,27 @@ def parse_novi(h, also):
     return {"members": members}
 
 
+# Taylor's page prints one council member's address on cityoftaqylormi.gov,
+# one letter away from the city's own cityoftaylormi.gov (read 2026-10-01 and
+# again 2026-10-17). Mail to an address as misprinted cannot be expected to
+# reach the member, and a contact detail is never corrected, so no address on
+# this domain is taken and that member carries no e-mail. The exclusion names
+# the domain and not the address, and nothing here prints either.
+TAYLOR_MISPRINTED_DOMAINS = ("cityoftaqylormi.gov",)
+
+
 def parse_taylor(h, also):
     """CivicPlus editor blocks: <h2> name, then the title paragraph ("City
     Council Chairman", "City Council Pro Tem", "Councilman") and "Email: x"
-    as plain text. TRAP: one address is printed on the misspelt domain
-    cityoftaqylormi.gov; only addresses on cityoftaylormi.gov are kept. A
-    quoted nickname is dropped from the name."""
-    members = []
+    as plain text. A quoted nickname is dropped from the name.
+
+    The e-mail is the member's cityoftaylormi.gov address where the block
+    prints one, as it always was. Since Adam's choice of 2026-10-17 ("E-mails
+    too"), a block printing none gives the one other address it prints,
+    through `own_email`, unless another member's block or the rest of the
+    page prints it too. TRAP: one address is printed on the misspelt domain
+    in TAYLOR_MISPRINTED_DOMAINS; it is never taken and never corrected."""
+    rows = []
     for m in re.finditer(r"<h2[^>]*>(.*?)</h2>\s*<p>(.*?)</p>\s*<p>(.*?)</p>", h, re.S):
         title = txt(m.group(2))
         role = {"City Council Chairman": "Council Chairman",
@@ -386,9 +446,13 @@ def parse_taylor(h, also):
                 "Councilwoman": "Council Member"}.get(title)
         if not role:
             continue
-        em = [e for e in emails_in(m.group(3)) if e.endswith("@cityoftaylormi.gov")]
-        members.append(member(_drop_nickname(txt(m.group(1))), role, None, None,
-                              em[0] if em else None))
+        rows.append((m.group(1), role, m.group(3)))
+    blocks = [block for _, _, block in rows]
+    members = []
+    for i, (name, role, block) in enumerate(rows):
+        em = own_email(block, blocks[:i] + blocks[i + 1:], h, ("cityoftaylormi.gov",),
+                       TAYLOR_MISPRINTED_DOMAINS)
+        members.append(member(_drop_nickname(txt(name)), role, None, None, em))
     _expect("Taylor", members, 7)
     return {"members": members}
 
@@ -618,6 +682,25 @@ def parse_lansing(h, also):
     return {"members": members}
 
 
+def parse_dearborn_heights(h, also):
+    """CivicPlus h-card widget headed "Members": seven cards, each a name, a
+    job title that is blank for an ordinary member ("Council Chair" and
+    "Council Chair Pro Tem" otherwise) and a "More Information" link. No
+    per-member contact on the page. TRAP: from 2026-09-22 to 2026-10-13 the
+    page named six members and said nothing about the vacant seventh seat, so
+    a count below seven is a vacancy the page does not state, never a smaller
+    council; the parser refuses it rather than shipping six as the whole
+    council."""
+    members = []
+    for name, title, b in _hcards(h):
+        role = title or "Council Member"
+        if role not in ("Council Chair", "Council Chair Pro Tem", "Council Member"):
+            raise ValueError("Dearborn Heights: unexpected title %r for %r" % (title, name))
+        members.append(member(name, role))
+    _expect("Dearborn Heights", members, 7)
+    return {"members": members}
+
+
 UNITS = [
     {"geoid": "2684000", "name": "Warren", "kind": "city", "body": "City Council",
      "url": "https://www.cityofwarren.org/government/city-council/city-council-members/",
@@ -631,6 +714,9 @@ UNITS = [
     {"geoid": "2621000", "name": "Dearborn", "kind": "city", "body": "City Council",
      "url": "https://dearborn.gov/government/city-council/meet-city-council",
      "seats": 7, "parse": parse_dearborn},
+    {"geoid": "2621020", "name": "Dearborn Heights", "kind": "city", "body": "City Council",
+     "url": "https://www.dearbornheightsmi.gov/231/City-Council",
+     "seats": 7, "parse": parse_dearborn_heights},
     {"geoid": "2649000", "name": "Livonia", "kind": "city", "body": "City Council",
      "url": "https://www.livonia.gov/1653/City-Council",
      "seats": 7, "parse": parse_livonia},
