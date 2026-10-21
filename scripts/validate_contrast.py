@@ -213,7 +213,7 @@ FLOORS = {"text": 4.5, "large": 3.0, "ui": 3.0, "decorative": None}
 # literal is the card palette's, which is the next gate's subject.
 PAIRS = [
     # — body text on the grounds —
-    ("ink",        "surface",    "text", "cards, panels, masthead: header.masthead, .layer-block, .share-popover (skin); the sub-page shell's .answer-card body; the phone install invitation's .install-invite-text on its --panel bar (styles-app); landing .ask h3, each question tile's question (build_landing_page); landing .ex-name, the name on each card of the worked example beside the address box, and that card's .ex-pill, whose ground is its layer's map colour mixed into --surface, which no token names, so probe_contrast_pairs.mjs measures it in the browser (build_landing_page)"),
+    ("ink",        "surface",    "text", "cards, panels, masthead: header.masthead, .layer-block, .share-popover (skin); the sub-page shell's .answer-card body; the phone install invitation's .install-invite-text on its --panel bar (styles-app); landing .ask h3, each question tile's question (build_landing_page); landing .ex-pick buttons at rest, the worked example's place buttons; landing .ex-name, the name on each card of the worked example beside the address box, and that card's .ex-pill, whose ground is its layer's map colour mixed into --surface, which no token names, so probe_contrast_pairs.mjs measures it in the browser (build_landing_page)"),
     ("ink",        "paper",      "text", "app ground: body (styles-app); every root page's body; the question pages' .lookup-input value, a --paper field inside the --panel .lookup-card (shell)"),
     ("ink",        "surface-2",  "text", ".layer-block-head in DARK only — the skin repaints it #262331 (== --surface-2 dark) under --card-ink #ece9f4 (== --ink dark); in light the head is styles-card-v2's literal #fff (== --surface), so the light half of this row re-measures (ink, surface). The --surface-2 VALUE reaches a light-tier reader through .card-section-label (the muted row below)"),
     ("ink",        "brand-tint", "text", "landing .notice-h and .pill; privacy .tldr (build_landing_page, build_privacy_page — children of body or of an unpainted main, i.e. on --paper); landing .ex-place, the worked example's heading, on its tinted panel (build_landing_page — on body)"),
@@ -222,7 +222,7 @@ PAIRS = [
     ("ink-2",      "surface",    "text", "history.html .tile-l (build_history_page)"),
     ("ink-2",      "paper",      "text", "history.html .intro, .entry p, code (build_history_page)"),
     ("ink-3",      "surface",    "text", "landing .cov-count beside its --ink strong, on the --surface .coverage card (build_landing_page); the question pages' .lookup-label, .lookup-hint and .lookup-status on the --panel .lookup-card (shell); h1.title small, .masthead-action-link (skin, as --slate); .share-popover-note / -label (styles-app, on the #fff popover); .install-invite-close, the invitation's dismiss glyph, as --slate on its --panel bar (styles-app); the gaps panel's .gap-area, .gap-detail, .gaps-credit and its group caret .gaps-section-label::before — a state indicator repainted from --line-strong on 2026-09-02 (styles-footer); renderSourceUnavailable paints it from JS; landing .ex-body, the body each card of the worked example names (build_landing_page)"),
-    ("ink-3",      "paper",      "text", "sub-page details body, landing h1 at <=560px, .kbd-select-btn (shell, root, styles-app); the .lookup-input PLACEHOLDER, which is --slate rather than the --slate-soft every other placeholder in the fleet uses \u2014 that pair is 2.28:1 on --paper and is the recorded (faint, paper) shortfall below, so a new field does not join it; landing .try, the one-tap places under the address box (build_landing_page)"),
+    ("ink-3",      "paper",      "text", "sub-page details body, landing h1 at <=560px, .kbd-select-btn (shell, root, styles-app); the .lookup-input PLACEHOLDER, which is --slate rather than the --slate-soft every other placeholder in the fleet uses \u2014 that pair is 2.28:1 on --paper and is the recorded (faint, paper) shortfall below, so a new field does not join it"),
     ("ink-3",      "surface-2",  "text", "privacy.html thead th at 12px (build_privacy_page)"),
     ("ink-3",      "brand-tint", "text", "landing .notice-b, footer .support (build_landing_page — on body); landing .ex-addr, the worked example's address on its tinted panel"),
     ("ink-3",      "border",     "text", ".gap-badge at 10px — text on the border colour (styles-footer)"),
@@ -241,12 +241,12 @@ PAIRS = [
 
     # — links and accents as text —
     ("brand-700",  "surface",    "text", "links on panels: .dpf-links a, .sibling-result-hint (skin, as --accent-deep); the invitation's .install-invite-go, an outlined button on its --panel bar (styles-app). NOT .dpf-support a — its ground is the skin's own --dst-brand-tint-soft — and NOT footer.site-footer a, which the skin hides"),
-    ("brand-700",  "paper",      "text", "links on the app ground; privacy and history `a`; .locate-btn, .btn-secondary (styles-app, styles-footer); landing .try a:hover (build_landing_page)"),
+    ("brand-700",  "paper",      "text", "links on the app ground; privacy and history `a`; .locate-btn, .btn-secondary (styles-app, styles-footer)"),
     ("brand-700",  "brand-tint", "text", "landing footer .support a:hover and .notice-cta a:hover (build_landing_page — on body); landing .ex-eyebrow at 12.5px and .ex-open:hover, on the worked example's tinted panel"),
     ("brand-700",  "brand-tint@surface", "text", "privacy .masthead-actions a:hover — the masthead is a --surface panel (build_privacy_page)"),
     ("brand-700",  "surface-2",  "text", "the UNPRESSED .hover-toggle-btn and .pin-parent-btn in dark: --accent-deep (styles-app) on --dst-raised #262331 (skin), which equals --surface-2 dark — literal equals token"),
     ("brand",      "surface",    "text", "coverage-map attribution links at 10px; .dst-wordmark-link:hover (skin, as --accent)"),
-    ("brand",      "paper",      "text", "landing footer a; sub-page summary::after glyph at 24px; landing .try a, the one-tap places under the address box (build_landing_page)"),
+    ("brand",      "paper",      "text", "landing footer a; sub-page summary::after glyph at 24px"),
     ("brand",      "brand-tint", "text", "landing footer .support a and the notice's .notice-cta a (build_landing_page — on body); landing .ex-open, the worked example's map link"),
 
     # — error state —
@@ -260,9 +260,9 @@ PAIRS = [
     # the same tokens are BUTTON FACES under white text (the polarity
     # inversion the sub-page reader named). build_landing_page.py already
     # flips its own button to --paper text in dark, and records why.
-    ("#fff",       "brand",      "text", ".search-row button (styles-core colour, skin ground), .masthead-actions a.is-primary:hover (shell), .footer-link-btn:hover (skin), .lookup-go:hover in light (shell)"),
+    ("#fff",       "brand",      "text", ".search-row button (styles-core colour, skin ground), .masthead-actions a.is-primary:hover (shell), .footer-link-btn:hover (skin), .lookup-go:hover in light (shell); landing .ex-pick button[aria-pressed=true], the place the worked example shows, in LIGHT only — its dark face flips to --paper like .search-button's (build_landing_page)"),
     ("#fff",       "brand-700",  "text", ".lookup-go in LIGHT only \u2014 its dark face flips to --paper, the row below; .cta and the RESTING .masthead-actions a.is-primary (shell, on every sub-page), .search-row button:hover, .btn-primary:hover (styles-core) — NOT the pressed/pinned toggles in dark: the skin's later [data-theme=dark] .hover-toggle-btn / .pin-parent-btn rules repaint those on --dst-raised, which is its own defect (see the entry below)"),
-    ("paper",      "brand",      "text", ".lookup-go:hover in dark (shell); landing .search-button in dark — the flip that HOLDS: build_landing_page records white on #a78bfa = 2.72 and paints --paper instead"),
+    ("paper",      "brand",      "text", ".lookup-go:hover in dark (shell); landing .search-button in dark — the flip that HOLDS: build_landing_page records white on #a78bfa = 2.72 and paints --paper instead; landing .ex-pick button[aria-pressed=true] in dark, the same flip"),
     ("paper",      "brand-700",  "text", "landing .search-button:hover in dark; the question pages' .lookup-go at rest in dark, which makes the same flip for the same measurement (shell)"),
     ("paper",      "ink",        "text", ".skip-link — the app's (styles-core) and, since 2026-09-02, the sub-page shell's (engine/shared/styles-subpage); the root pages' skip links already painted this pair. Focus-only, and the one masthead element the skin does not restyle"),
 
@@ -270,6 +270,7 @@ PAIRS = [
     ("brand-warm", "paper",      "ui",   "--focus-ring: 3px solid var(--accent-warm) on the app ground and every sub-page summary"),
     ("brand-warm", "surface",    "ui",   "focus ring on a card or the masthead; .group-safety .dot"),
     ("brand",      "surface",    "ui",   ".lookup-input and .lookup-go focus rings, drawn inside the --panel .lookup-card (shell); focused input border: .masthead .search-row input:focus (skin); .group-political .dot; the landing .search-input / .search-button rings inside .search-card"),
+    ("brand",      "brand-tint", "ui",   "landing .ex-pick button and .ex-open focus rings, drawn on the worked example's tinted panel (build_landing_page — on body)"),
     ("brand",      "paper",      "ui",   "focus rings on the page ground: privacy :focus-visible on body links (build_privacy_page); landing .pill:focus-visible, drawn outside the pill over .pills, which has no background (build_landing_page)"),
     ("data-500",   "surface",    "ui",   "legend dot / selected-boundary swatch: .dml-dot (skin; literals #1d5fd6 / #6ea8ff equal the token's two tiers); landing .st-dot and the .cov-key squares, the only mark that tells a covered state from one that is not (build_landing_page)"),
     ("border-dot@paper", "surface", "ui", "the question pages' .lookup-input RESTING border (shell), composited over its own --paper interior and seen against the --panel .lookup-card. The stronger of the two border tokens, chosen over --line because --line is the pair recorded below as perceivable on neither edge; it is still short, and is recorded rather than swapped for a value the palette does not have"),

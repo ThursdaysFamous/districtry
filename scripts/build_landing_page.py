@@ -1009,10 +1009,21 @@ def concept_layers(tag, concepts):
 # THE WORKED EXAMPLE beside the address box (2026-10-21, the option Adam was
 # shown as A). Measured on main that day, the page named no officeholder at
 # all: it said what districtry answers and never showed an answer. So it shows
-# one, for one well-known place, read the way the map reads it: each district
+# one, for a well-known place, read the way the map reads it: each district
 # from the boundary file its layer draws, and each person from the roster its
-# card reads. Nothing below is typed in by hand except the place, its address,
+# card reads. Nothing below is typed in by hand except each place, its address,
 # its point and the name of each body.
+#
+# SIX PLACES, A BUTTON FOR EACH, AND A DIFFERENT ONE FIRST ON EACH VISIT (Adam,
+# the same day, choosing that over an example that changed place by itself
+# every few seconds, which is hard to read and needs a pause button). The
+# page's script starts on the place after the one it showed on the last visit,
+# kept in localStorage under PLACE_KEY, or on one picked at random where
+# nothing is kept. A press of a button is counted as example-place/<id>, which
+# names one of these places and nothing about the reader, and the privacy page
+# names both the count and the key. The buttons replaced a line under the
+# address box that opened two other places' maps. With no script the page
+# shows Chicago and no buttons, so it offers nothing that cannot work.
 #
 # THE DISTRICTS ARE MEASURED HERE AND THE NAMES ARE READ WHEN THE PAGE OPENS
 # (Adam, the same day: "Why not have the example just be a real read of a
@@ -1023,67 +1034,160 @@ def concept_layers(tag, concepts):
 # reads (EXAMPLE_SCRIPT), so a name changes on the front page the moment it
 # changes on the map, and no weekly job touches this page. The districts stay
 # here because reading them live means downloading each layer's boundary
-# file: measured that day, 501 KB compressed for this example's five against
-# 45 KB for the whole page, where its five rosters are 14 KB. Which district a
-# fixed point is in changes only when a boundary file is rebuilt, which no
-# weekly job does, and --check fails until this page is regenerated with it.
-# What it costs: the names need the script (without it the cards show the
-# bodies and districts and the link to the map), they are not in the page's
-# text, and a roster that loses a seat shows "Not listed" to a reader, as the
-# map's card does, rather than failing a build first.
+# file: measured that day (gzip at its default level), 501 KB for Chicago's
+# five against 48 KB for the whole page, where Chicago's five rosters are
+# 14 KB. A place's rosters are read only when that place is shown, so a visit
+# pays for one place's: from 10.5 KB for San Francisco's to 61.9 KB for
+# Madison's, whose county board roster holds every Wisconsin county's
+# supervisors. Which
+# district a fixed point is in changes only when a boundary file is rebuilt,
+# which no weekly job does, and --check fails until this page is regenerated
+# with it. What it costs: the names need the script (without it the cards
+# show the bodies and districts and the link to the map), they are not in the
+# page's text, and a roster that loses a seat shows "Not listed" to a reader,
+# as the map's card does, rather than failing a build first.
 #
-# ONLY OFFICES WHOSE BOUNDARIES SHIP AS FILES. The ward and the Cook County
-# Board answer at City Hall too, but the map reads both boundaries from the
-# city's and the county's own servers when a reader clicks, so this generator
-# cannot measure which district City Hall is in, and a district typed in here
-# would be a claim nothing holds to the map. The link under the example opens
-# both.
+# ONLY OFFICES WHOSE BOUNDARIES SHIP AS FILES. Chicago's ward and the Cook
+# County Board answer at City Hall too, but the map reads both boundaries from
+# the city's and the county's own servers when a reader clicks, and New York
+# City's council districts ship only as a tile archive this generator does not
+# read, so it cannot measure which district the point is in, and a district
+# typed in here would be a claim nothing holds to the map. Each place's link
+# opens those layers too (LINK_CONCEPTS).
 #
 # THE POINT MUST NOT SIT NEAR AN EDGE. The shipped boundaries are simplified,
 # and a point a few metres from an edge can fall on one side here and on the
 # other in a reader's browser, so the build fails when any example district's
 # edge is nearer than EXAMPLE_EDGE_M. Measured on 2026-10-21 the nearest is
-# the Board of Review's, 124 m from the point.
-EXAMPLE_TAG = "il"
-EXAMPLE_PLACE = "Chicago City Hall"
-EXAMPLE_ADDRESS = "121 N. LaSalle St., Chicago"
-EXAMPLE_POINT = (41.88372, -87.63238)
+# New York City Hall's State Assembly district, 68 m from the point.
 EXAMPLE_EDGE_M = 50
-EXAMPLE_CARDS = [
-    # The layer, the body its card names, its boundary file and roster under
-    # the app's data/app, the roster key a district carries (read the way the
-    # app reads it), and the district as the card prints it. Every roster here
-    # maps that key to one record with a `name`, the shape EXAMPLE_SCRIPT reads.
-    {"layer": "congress", "body": "U.S. House",
-     "boundary": "congress-districts.json", "roster": "congress-roster.json",
-     "key": lambda p: str(int(p["BASENAME"])), "label": lambda p, k: "IL-" + k},
-    {"layer": "il-senate", "body": "Illinois Senate",
-     "boundary": "il-senate-districts.json", "roster": "il-senate-members.json",
-     "key": lambda p: str(int(p["BASENAME"])), "label": lambda p, k: "District " + k},
-    {"layer": "il-house", "body": "Illinois House",
-     "boundary": "il-house-districts.json", "roster": "il-house-members.json",
-     "key": lambda p: str(int(p["BASENAME"])), "label": lambda p, k: "District " + k},
-    {"layer": "ccbr", "body": "Cook County Board of Review",
-     "boundary": "ccbr-districts.json", "roster": "ccbr-roster.json",
-     "key": lambda p: str(p["DISTRICT"]), "label": lambda p, k: "District " + k},
-    # The boundary's 1-20 is the roster's key and is printed nowhere; a seat
-    # is named by the Board's own number and letter, the boundary's longName.
-    {"layer": "school-board", "body": "Chicago Board of Education",
-     "boundary": "school-board-districts.json", "roster": "school-board-members.json",
-     "key": lambda p: str(p["district"]), "label": lambda p, k: p["longName"]},
-]
+PLACE_KEY = "districtry-example-place"
 
-# The other places a reader can try in one tap, each opening its app at the
-# point with the layers for TRY_CONCEPTS on. The point must lie inside that
-# app's own outline in fleet-outlines.json, or the app would hand the reader
-# on to another one; the build checks it.
-TRY_PLACES = [
-    # what the link says, the metros.json id of the app, and the point
-    ("the Wisconsin State Capitol", "wisconsin", 43.07468, -89.38421),
-    ("New York City Hall", "nyc", 40.71278, -74.00583),
+
+def _chamber(layer, body, boundary, roster):
+    """A card for a chamber the app registers through the engine's chamber
+    factory, which keys its roster by the district number with its leading
+    zeros dropped and prints the district with the registration's
+    districtPrefix ("IL-7") or as "District 26" where it has none."""
+    return {"layer": layer, "body": body, "boundary": boundary, "roster": roster,
+            "chamber": True}
+
+
+EXAMPLE_PLACES = [
+    # Each place: its id (the button's, the panel's and the counted event's),
+    # the button's words, the app's tag, the place and its address as the
+    # panel names them, its point, and its cards in the order they show. A
+    # card names its layer, the body its card names, its boundary file and
+    # roster under the app's data/app, and, unless it is a chamber, the path to
+    # the seat in that roster (read the way that app's own card reads it) and
+    # the district as that card prints it. What the path reaches is one record
+    # with a `name`, or a list of them where a district seats several; the
+    # page's script reads both (EXAMPLE_SCRIPT).
+    {"id": "chicago", "button": "Chicago", "tag": "il",
+     "place": "Chicago City Hall", "address": "121 N. LaSalle St., Chicago",
+     "point": (41.88372, -87.63238),
+     "cards": [
+         _chamber("congress", "U.S. House", "congress-districts.json", "congress-roster.json"),
+         _chamber("il-senate", "Illinois Senate", "il-senate-districts.json",
+                  "il-senate-members.json"),
+         _chamber("il-house", "Illinois House", "il-house-districts.json",
+                  "il-house-members.json"),
+         {"layer": "ccbr", "body": "Cook County Board of Review",
+          "boundary": "ccbr-districts.json", "roster": "ccbr-roster.json",
+          "seat": lambda p: [str(p["DISTRICT"])],
+          "label": lambda p: "District %s" % p["DISTRICT"]},
+         # The boundary's 1-20 is the roster's key and is printed nowhere; a
+         # seat is named by the Board's own number and letter, its longName.
+         {"layer": "school-board", "body": "Chicago Board of Education",
+          "boundary": "school-board-districts.json", "roster": "school-board-members.json",
+          "seat": lambda p: [str(p["district"])],
+          "label": lambda p: p["longName"]},
+     ]},
+    {"id": "madison", "button": "Madison", "tag": "wi",
+     "place": "Wisconsin State Capitol", "address": "2 E. Main St., Madison",
+     "point": (43.07468, -89.38421),
+     "cards": [
+         _chamber("us-house", "U.S. House", "congress-districts.json", "congress-roster.json"),
+         _chamber("wi-senate", "Wisconsin Senate", "wi-senate-districts.json",
+                  "wi-senate-members.json"),
+         _chamber("wi-assembly", "Wisconsin Assembly", "wi-assembly-districts.json",
+                  "wi-assembly-members.json"),
+         {"layer": "county-board", "body": "Dane County Board",
+          "boundary": "county-supervisory-districts.json", "roster": "county-board-members.json",
+          "seat": lambda p: [p["SUPER_FIPS"]],
+          "label": lambda p: "District %s" % p["SUPERID"]},
+         # A district can seat more than one alderperson, so its seat is a list.
+         {"layer": "aldermanic-district", "body": "Madison Common Council",
+          "boundary": "aldermanic-districts.json", "roster": "wi-alderpersons.json",
+          "seat": lambda p: [p["COUSUBFP"], "members", p["ALDERID"]],
+          "label": lambda p: "District %d" % int(p["ALDERID"])},
+     ]},
+    {"id": "detroit", "button": "Detroit", "tag": "mi",
+     "place": "Coleman A. Young Municipal Center", "address": "2 Woodward Ave., Detroit",
+     "point": (42.32944, -83.04389),
+     "cards": [
+         _chamber("us-house", "U.S. House", "congress-districts.json", "congress-roster.json"),
+         _chamber("mi-senate", "Michigan Senate", "mi-senate-districts.json",
+                  "mi-senate-members.json"),
+         _chamber("mi-house", "Michigan House", "mi-house-districts.json",
+                  "mi-house-members.json"),
+         {"layer": "county-commissioner", "body": "Wayne County Commission",
+          "boundary": "mi-commissioner-districts.json", "roster": "mi-commissioner-members.json",
+          "seat": lambda p: [p["CountyFIPS"], "districts", str(p["District"])],
+          "label": lambda p: "District %s" % p["District"]},
+         {"layer": "city-ward", "body": "Detroit City Council",
+          "boundary": "mi-detroit-council-districts.json",
+          "roster": "mi-detroit-council-members.json",
+          "seat": lambda p: ["districts", str(p["District"])],
+          "label": lambda p: "District %s" % p["District"]},
+     ]},
+    {"id": "nashville", "button": "Nashville", "tag": "tn",
+     "place": "Tennessee State Capitol",
+     "address": "600 Dr. Martin L. King Jr. Blvd., Nashville",
+     "point": (36.16583, -86.78417),
+     "cards": [
+         _chamber("us-house", "U.S. House", "congress-districts.json", "congress-roster.json"),
+         _chamber("tn-senate", "Tennessee Senate", "tn-senate-districts.json",
+                  "tn-senate-members.json"),
+         _chamber("tn-house", "Tennessee House", "tn-house-districts.json",
+                  "tn-house-members.json"),
+         # Nashville and Davidson County are one government, and the county's
+         # commission districts are its Metro Council's, as the map's card says.
+         {"layer": "county-commissioner", "body": "Metro Council",
+          "boundary": "tn-commission-districts.json", "roster": "tn-commissioners.json",
+          "seat": lambda p: [p["countyfips"], "districts", str(p["district"])],
+          "label": lambda p: "District %s" % p["district"]},
+     ]},
+    {"id": "new-york", "button": "New York", "tag": "ny",
+     "place": "New York City Hall", "address": "City Hall Park, Manhattan",
+     "point": (40.71278, -74.00583),
+     "cards": [
+         _chamber("congress", "U.S. House", "congress-districts.json", "congress-roster.json"),
+         _chamber("state-senate", "New York State Senate", "state-senate-districts.json",
+                  "ny-senate-members.json"),
+         _chamber("state-assembly", "New York State Assembly", "state-assembly-districts.json",
+                  "ny-assembly-members.json"),
+     ]},
+    {"id": "san-francisco", "button": "San Francisco", "tag": "ca",
+     "place": "San Francisco City Hall",
+     "address": "1 Dr. Carlton B. Goodlett Pl., San Francisco",
+     "point": (37.77927, -122.41924),
+     "cards": [
+         _chamber("congress", "U.S. House", "congress-districts.json", "congress-roster.json"),
+         _chamber("ca-senate", "California Senate", "ca-senate-districts.json",
+                  "ca-senate-members.json"),
+         _chamber("ca-assembly", "California Assembly", "ca-assembly-districts.json",
+                  "ca-assembly-members.json"),
+         {"layer": "supervisor-district", "body": "Board of Supervisors",
+          "boundary": "supervisor-districts.json", "roster": "sf-supervisor-members.json",
+          "seat": lambda p: [str(p["district"])],
+          "label": lambda p: "District %s" % p["district"]},
+     ]},
 ]
-TRY_CONCEPTS = ("us-house", "state-senate", "state-house", "county-board",
-                "city-council", "school-board-district")
+# The kinds of district each place's link turns on besides its cards' own:
+# here Chicago's ward and the Cook County Board, and New York City's council.
+LINK_CONCEPTS = ("us-house", "state-senate", "state-house", "county-board",
+                 "city-council", "school-board-district")
 
 
 def _parts(geom):
@@ -1156,17 +1260,42 @@ def app_link(metro, lat, lng, layer_ids):
                                 ",".join(codes[i] for i in layer_ids))
 
 
-def example_cards():
-    """[(spec, district label, roster key, (light, dark))] at the example
-    point, measured from the shipped boundary files. The colours are the ones
-    the map draws each layer in. The names are not here: the page reads them
-    from the rosters when it opens (EXAMPLE_SCRIPT), so this checks only that
+@functools.lru_cache(maxsize=None)
+def chamber_prefixes(tag):
+    """{layer id: its districtPrefix, or None} for every chamber the app
+    registers through the engine's chamber factory, read off the registration
+    itself, so a chamber card prints its district as the map's card does."""
+    src = read(os.path.join(REPO_ROOT, tag, "index.html"), "the %s app" % tag)
+    out = {}
+    for m in re.finditer(r"(?ms)^[ \t]*registerIlgaChamber\(\{(.*?)^[ \t]*\}\);", src):
+        layer = re.search(r'\bid:\s*"([^"]+)"', m.group(1))
+        if layer:
+            prefix = re.search(r'\bdistrictPrefix:\s*"([^"]*)"', m.group(1))
+            out[layer.group(1)] = prefix.group(1) if prefix else None
+    return out
+
+
+def place_cards(place):
+    """[(spec, district label, seat path, (light, dark))] at one place's point,
+    measured from the shipped boundary files. The colours are the ones the map
+    draws each layer in. The names are not here: the page reads them from the
+    rosters when it shows the place (EXAMPLE_SCRIPT), so this checks only that
     each roster is the list the map's card reads."""
-    lat, lng = EXAMPLE_POINT
-    base = os.path.join(REPO_ROOT, EXAMPLE_TAG, "data", "app")
-    app = read(os.path.join(REPO_ROOT, EXAMPLE_TAG, "index.html"), "the %s app" % EXAMPLE_TAG)
+    tag, (lat, lng) = place["tag"], place["point"]
+    base = os.path.join(REPO_ROOT, tag, "data", "app")
+    app = read(os.path.join(REPO_ROOT, tag, "index.html"), "the %s app" % tag)
     out = []
-    for spec in EXAMPLE_CARDS:
+    for spec in place["cards"]:
+        if spec.get("chamber"):
+            prefixes = chamber_prefixes(tag)
+            if spec["layer"] not in prefixes:
+                fail("%s/index.html registers no chamber %r, so the example cannot "
+                     "say how its card prints a district." % (tag, spec["layer"]))
+            prefix = prefixes[spec["layer"]] or "District "
+            seat = lambda p: [str(int(p["BASENAME"]))]
+            label = lambda p, prefix=prefix: prefix + str(int(p["BASENAME"]))
+        else:
+            seat, label = spec["seat"], spec["label"]
         boundary = os.path.join(base, spec["boundary"])
         try:
             feats = json.loads(read(boundary, "an example boundary"))["features"]
@@ -1175,11 +1304,11 @@ def example_cards():
         hits = {}
         for f in feats:
             if _inside(f.get("geometry"), lng, lat):
-                hits.setdefault(spec["key"](f["properties"]), []).append(f)
+                hits.setdefault(json.dumps(seat(f["properties"])), []).append(f)
         if len(hits) != 1:
             fail("%s: %s answers %d district(s) at %s (%s), not one. Pick a point "
                  "every example layer answers once."
-                 % (spec["layer"], spec["boundary"], len(hits), EXAMPLE_PLACE,
+                 % (spec["layer"], spec["boundary"], len(hits), place["place"],
                     ", ".join(sorted(hits)) or "none"))
         (key, found), = hits.items()
         edge = min(_edge_metres(f["geometry"], lng, lat) for f in found)
@@ -1187,132 +1316,209 @@ def example_cards():
             fail("%s: %s is %.0f m from the edge of its district in %s, nearer "
                  "than EXAMPLE_EDGE_M (%d m), so the map in a reader's browser "
                  "could answer the other side of it. Move the point."
-                 % (spec["layer"], EXAMPLE_PLACE, edge, spec["boundary"], EXAMPLE_EDGE_M))
+                 % (spec["layer"], place["place"], edge, spec["boundary"], EXAMPLE_EDGE_M))
         try:
             roster = json.loads(read(os.path.join(base, spec["roster"]), "an example roster"))
         except ValueError as e:
-            fail("%s is not JSON: %s" % (spec["roster"], e))
+            fail("%s/%s is not JSON: %s" % (tag, spec["roster"], e))
         if not isinstance(roster, dict):
-            fail("%s is not keyed by district, so the page could not find the seat "
-                 "in it." % spec["roster"])
+            fail("%s/%s is not keyed by district, so the page could not find the seat "
+                 "in it." % (tag, spec["roster"]))
         if ("data/app/" + spec["roster"]) not in app:
             fail("%s/index.html never reads data/app/%s, so the example would name "
                  "people from a list the map's card does not read."
-                 % (EXAMPLE_TAG, spec["roster"]))
-        concept = concept_of(EXAMPLE_TAG, spec["layer"])
+                 % (tag, spec["roster"]))
+        concept = concept_of(tag, spec["layer"])
         colour = concept_colour(concept) if concept else None
-        out.append((spec, spec["label"](found[0]["properties"], key), key,
-                    colour or own_colour(EXAMPLE_TAG, spec["layer"])))
+        out.append((spec, label(found[0]["properties"]), json.loads(key),
+                    colour or own_colour(tag, spec["layer"])))
     return out
 
 
-def example_layers():
-    """The layers the example's link opens: the cards' own, then the
-    TRY_CONCEPTS layers the cards leave out (the ward and the county board)."""
-    ids = [spec["layer"] for spec in EXAMPLE_CARDS]
-    return ids + [i for i in concept_layers(EXAMPLE_TAG, TRY_CONCEPTS) if i not in ids]
+def place_layers(place):
+    """The layers a place's link opens: its cards' own, then the
+    LINK_CONCEPTS layers its cards leave out."""
+    ids = [spec["layer"] for spec in place["cards"]]
+    return ids + [i for i in concept_layers(place["tag"], LINK_CONCEPTS) if i not in ids]
 
 
-# Each card's name line ships hidden, so a reader with no script sees the
-# bodies, the districts and the link to the map. This runs right after the
-# example, shows the lines empty (their height kept, so nothing moves when they
-# fill), reads each roster once and names each seat by the rule the officeholder
+# The places past the first, and each card's name line, ship hidden, so a
+# reader with no script sees Chicago's bodies, districts and link to the map,
+# and no button that cannot work. This runs right after the example. It shows
+# the place after the one it showed on the last visit (PLACE_KEY), or one at
+# random, shows the buttons, and reads a place's rosters when that place is
+# first shown: each roster once, each seat named by the rule the officeholder
 # tables print by: a name, or "Vacant", or "Not listed", never a guess. A seat
-# whose number and letter the roster gives differently from the boundary (the
-# Chicago Board of Education's, whose boundary numbers its seats 1-20) is not
-# named at all. landing_test.mjs block 1i holds each name to its roster.
+# that is a list of members names every member, and says how many of its seats
+# are vacant. A seat whose number and letter the roster gives differently from
+# the boundary (the Chicago Board of Education's, whose boundary numbers its
+# seats 1-20) is not named at all. landing_test.mjs block 1i holds each name to
+# its roster.
 EXAMPLE_SCRIPT = """\
       <script>
       (function () {
         var box = document.currentScript.previousElementSibling;
         if (!box || !window.fetch) return;
-        var cards = box.querySelectorAll(".ex-card[data-roster]"), lists = {}, i;
-        for (i = 0; i < cards.length; i++) {
-          var url = cards[i].getAttribute("data-roster");
-          cards[i].querySelector(".ex-name").hidden = false;
-          (lists[url] = lists[url] || []).push(cards[i]);
+        var PLACE_KEY = "%s";
+        var pick = box.querySelector(".ex-pick");
+        var panels = box.querySelectorAll(".ex-panel[data-place]");
+        var buttons = box.querySelectorAll(".ex-pick button[data-place]");
+        var order = [], byId = {}, shown = {}, lists = {}, i;
+        for (i = 0; i < panels.length; i++) {
+          order.push(panels[i].getAttribute("data-place"));
+          byId[panels[i].getAttribute("data-place")] = panels[i];
+        }
+        if (!pick || !order.length) return;
+        // The counter loads after this script, so a count waits for it, up to
+        // ten seconds, as the address box's does.
+        function trackEvent(path, tries) {
+          if (window.goatcounter && typeof window.goatcounter.count === "function") {
+            window.goatcounter.count({ path: path, title: path, event: true });
+            return;
+          }
+          if ((tries || 0) < 40) setTimeout(function () { trackEvent(path, (tries || 0) + 1); }, 250);
         }
         function show(card, text, named) {
           var line = card.querySelector(".ex-name");
           line.textContent = text;
           line.className = named ? "ex-name" : "ex-name ex-none";
         }
-        function name(card, list) {
-          var rec = list && typeof list === "object" ? list[card.getAttribute("data-seat")] : null;
-          if (!rec || typeof rec !== "object") return show(card, "Not listed", false);
-          var pill = card.querySelector(".ex-pill").textContent;
-          if (rec.subDistrict && pill !== "District " + rec.subDistrict) return show(card, "Not listed", false);
+        // One member: the name, "" for a seat the roster calls vacant, or null.
+        function member(rec, pill) {
+          if (!rec || typeof rec !== "object" || rec.withheld) return null;
+          if (rec.subDistrict && pill !== "District " + rec.subDistrict) return null;
           var n = typeof rec.name === "string" ? rec.name.replace(/^\\s+|\\s+$/g, "") : "";
-          if (n && n.toUpperCase() !== "VACANT") return show(card, n, true);
-          show(card, rec.vacant || n ? "Vacant" : "Not listed", false);
+          if (n && n.toUpperCase() !== "VACANT") return n;
+          return rec.vacant || n ? "" : null;
         }
-        Object.keys(lists).forEach(function (url) {
-          fetch(url).then(function (r) {
-            if (!r.ok) throw new Error("HTTP " + r.status);
-            return r.json();
-          }).then(function (list) {
-            lists[url].forEach(function (card) { name(card, list); });
-          }, function () {
-            lists[url].forEach(function (card) { show(card, "Name didn't load", false); });
+        function name(card, list) {
+          var path = JSON.parse(card.getAttribute("data-seat")), seat = list, k;
+          for (k = 0; k < path.length; k++) {
+            seat = seat && typeof seat === "object" &&
+              Object.prototype.hasOwnProperty.call(seat, path[k]) ? seat[path[k]] : null;
+          }
+          var pill = card.querySelector(".ex-pill").textContent;
+          var recs = Array.isArray(seat) ? seat : [seat], names = [], vacant = 0;
+          for (k = 0; k < recs.length; k++) {
+            var n = member(recs[k], pill);
+            if (n) names.push(n);
+            else if (n === "") vacant++;
+          }
+          if (!names.length) return show(card, vacant ? "Vacant" : "Not listed", false);
+          if (vacant) names.push(vacant === 1 ? "a vacant seat" : vacant + " vacant seats");
+          show(card, names.length === 1 ? names[0]
+            : names.slice(0, -1).join(", ") + " and " + names[names.length - 1], true);
+        }
+        function fill(panel) {
+          var cards = panel.querySelectorAll(".ex-card[data-roster]"), groups = {}, j;
+          for (j = 0; j < cards.length; j++) {
+            var url = cards[j].getAttribute("data-roster");
+            cards[j].querySelector(".ex-name").hidden = false;
+            (groups[url] = groups[url] || []).push(cards[j]);
+          }
+          Object.keys(groups).forEach(function (url) {
+            lists[url] = lists[url] || fetch(url).then(function (r) {
+              if (!r.ok) throw new Error("HTTP " + r.status);
+              return r.json();
+            });
+            lists[url].then(function (list) {
+              groups[url].forEach(function (card) { name(card, list); });
+            }, function () {
+              groups[url].forEach(function (card) { show(card, "Name didn't load", false); });
+            });
           });
+        }
+        function choose(id) {
+          var j;
+          for (j = 0; j < order.length; j++) byId[order[j]].hidden = order[j] !== id;
+          for (j = 0; j < buttons.length; j++) {
+            buttons[j].setAttribute("aria-pressed",
+              buttons[j].getAttribute("data-place") === id ? "true" : "false");
+          }
+          if (!shown[id]) {
+            shown[id] = true;
+            fill(byId[id]);
+          }
+        }
+        var last = null, start;
+        try { last = window.localStorage.getItem(PLACE_KEY); } catch (e) { /* storage blocked */ }
+        i = order.indexOf(last);
+        start = i >= 0 ? order[(i + 1) %% order.length]
+                       : order[Math.floor(Math.random() * order.length)];
+        try { window.localStorage.setItem(PLACE_KEY, start); } catch (e) { /* the next visit picks at random */ }
+        choose(start);
+        pick.hidden = false;
+        pick.addEventListener("click", function (e) {
+          var b = e.target;
+          while (b && b !== pick && !(b.getAttribute && b.getAttribute("data-place"))) b = b.parentNode;
+          if (!b || b === pick || b.getAttribute("aria-pressed") === "true") return;
+          choose(b.getAttribute("data-place"));
+          trackEvent("example-place/" + b.getAttribute("data-place"));
         });
       })();
       </script>
-"""
+""" % PLACE_KEY
 
 
 def render_example(metros):
-    """The worked example's aside and the script that names its people, and
-    the line of one-tap places that follows the independence sentence."""
+    """The worked example: its place buttons, a panel for each place, and the
+    script that picks the place and names its people."""
     by_tag = {m["tag"]: m for m in metros}
-    by_id = {m.get("id"): m for m in metros}
-    if EXAMPLE_TAG not in by_tag:
-        fail("the worked example is in %r, which metros.json does not list as live."
-             % EXAMPLE_TAG)
-    lat, lng = EXAMPLE_POINT
-    items = []
-    for spec, label, key, colour in example_cards():
-        items.append(
-            '          <li class="ex-card" style="--lc-l:%s;--lc-d:%s" data-roster="%s" '
-            'data-seat="%s"><span class="ex-body">%s</span>'
-            '<span class="ex-name" hidden></span><span class="ex-pill">%s</span></li>'
-            % (colour + (html.escape("%s/data/app/%s" % (EXAMPLE_TAG, spec["roster"]), quote=True),
-                         html.escape(key, quote=True), html.escape(spec["body"]),
-                         html.escape(label))))
-    aside = (
-        '      <aside class="example" aria-labelledby="ex-h">\n'
-        '        <p class="ex-eyebrow">What you get</p>\n'
-        '        <h2 id="ex-h" class="ex-place">Example: %s</h2>\n'
-        '        <p class="ex-addr">%s</p>\n'
-        '        <ul class="ex-cards">\n%s\n        </ul>\n'
-        '        <a class="ex-open" href="%s">See every district here on the map'
-        '<span aria-hidden="true">&#160;&#8594;</span></a>\n'
-        '      </aside>\n'
-        % (html.escape(EXAMPLE_PLACE), html.escape(EXAMPLE_ADDRESS), "\n".join(items),
-           html.escape(app_link(by_tag[EXAMPLE_TAG], lat, lng, example_layers()), quote=True)))
-
     try:
         outlines = json.loads(read(os.path.join(REPO_ROOT, "fleet-outlines.json"),
                                    "the fleet outlines"))["outlines"]
     except (ValueError, KeyError) as e:
         fail("fleet-outlines.json has no outlines: %s" % e)
-    links = []
-    for words, metro_id, plat, plng in TRY_PLACES:
-        m = by_id.get(metro_id)
+    ids = [p["id"] for p in EXAMPLE_PLACES]
+    if len(set(ids)) != len(ids) or not all(re.match(r"^[a-z][a-z-]*$", i) for i in ids):
+        fail("EXAMPLE_PLACES ids must be distinct and lower-case words joined by "
+             "hyphens, since each names a panel, a button and a counted event: %s" % ids)
+    buttons, panels = [], []
+    for n, place in enumerate(EXAMPLE_PLACES):
+        m = by_tag.get(place["tag"])
         if not m:
-            fail("TRY_PLACES links %r, which metros.json does not list as live." % metro_id)
-        if not _inside(outlines.get(metro_id), plng, plat):
-            fail("TRY_PLACES puts %s at %s,%s, outside %s's own outline in "
+            fail("EXAMPLE_PLACES puts %s in %r, which metros.json does not list as "
+                 "live." % (place["place"], place["tag"]))
+        lat, lng = place["point"]
+        # A point outside the app's own outline would be handed on to another app.
+        if not _inside(outlines.get(m["id"]), lng, lat):
+            fail("EXAMPLE_PLACES puts %s at %s,%s, outside %s's own outline in "
                  "fleet-outlines.json, so that app would hand the reader on."
-                 % (words, plat, plng, metro_id))
-        layer_ids = concept_layers(m["tag"], TRY_CONCEPTS)
-        if not layer_ids:
-            fail("%s has no layer for any of TRY_CONCEPTS." % metro_id)
-        links.append('<a href="%s">%s</a>' % (
-            html.escape(app_link(m, plat, plng, layer_ids), quote=True), html.escape(words)))
-    joined = links[0] if len(links) == 1 else ", ".join(links[:-1]) + " or " + links[-1]
-    tries = '        <p class="try">Or try it at %s.</p>\n' % joined
-    return aside + EXAMPLE_SCRIPT, tries
+                 % (place["place"], lat, lng, m["id"]))
+        items = []
+        for spec, label, seat, colour in place_cards(place):
+            items.append(
+                '            <li class="ex-card" style="--lc-l:%s;--lc-d:%s" data-roster="%s" '
+                'data-seat="%s"><span class="ex-body">%s</span>'
+                '<span class="ex-name" hidden></span><span class="ex-pill">%s</span></li>'
+                % (colour + (html.escape("%s/data/app/%s" % (place["tag"], spec["roster"]), quote=True),
+                             html.escape(json.dumps(seat), quote=True), html.escape(spec["body"]),
+                             html.escape(label))))
+        buttons.append(
+            '          <button type="button" data-place="%s" '
+            'aria-controls="ex-%s" aria-pressed="%s">%s</button>'
+            % (place["id"], place["id"], "true" if n == 0 else "false",
+               html.escape(place["button"])))
+        panels.append(
+            '        <div class="ex-panel" id="ex-%s" data-place="%s"%s>\n'
+            '          <h2 class="ex-place">Example: %s</h2>\n'
+            '          <p class="ex-addr">%s</p>\n'
+            '          <ul class="ex-cards">\n%s\n          </ul>\n'
+            '          <a class="ex-open" href="%s">See every district here on the map'
+            '<span aria-hidden="true">&#160;&#8594;</span></a>\n'
+            '        </div>\n'
+            % (place["id"], place["id"], "" if n == 0 else " hidden",
+               html.escape(place["place"]), html.escape(place["address"]), "\n".join(items),
+               html.escape(app_link(m, lat, lng, place_layers(place)), quote=True)))
+    return (
+        '      <aside class="example" aria-labelledby="ex-h">\n'
+        '        <p id="ex-h" class="ex-eyebrow">What you get</p>\n'
+        '        <div class="ex-pick" role="group" aria-label="Example places" hidden>\n'
+        '%s\n'
+        '        </div>\n'
+        '%s'
+        '      </aside>\n'
+        % ("\n".join(buttons), "".join(panels))) + EXAMPLE_SCRIPT
 
 
 DC = "District of Columbia"
@@ -1444,10 +1650,10 @@ def build():
     key_wash = ('          <li><span class="sw sw-wash" aria-hidden="true"></span>'
                 'Statewide layers only</li>\n' if two_tier else "")
 
-    # The worked example beside the address box. Its districts are measured
-    # here; its names are read by the page when it opens, so a roster refresh
-    # does not touch this page.
-    example, tries = render_example(metros)
+    # The worked example beside the address box: a panel per place, its
+    # districts measured here and its names read by the page when it shows that
+    # place, so a roster refresh does not touch this page.
+    example = render_example(metros)
 
     return """<!DOCTYPE html>
 <html lang="en">
@@ -1737,25 +1943,19 @@ h1 {
   color: var(--ink-3);
 }
 
-/* THE WORKED EXAMPLE (2026-10-21): one place and who represents it there,
-   beside the address box on a wide screen and under it on a narrow one. Until
-   then the page said what districtry answers and never showed an answer, so it
-   read as a list of what is covered rather than as something to use. Each card
-   carries its layer's map colour, light and dark, the way the question tiles
-   do; the words on it stay in the page's ink, because a map colour is chosen
-   to read as a line and not as text. */
+/* THE WORKED EXAMPLE (2026-10-21): a place and who represents it there, one
+   of six a reader can switch between, beside the address box on a wide screen
+   and under it on a narrow one. Until then the page said what districtry
+   answers and never showed an answer, so it read as a list of what is covered
+   rather than as something to use. Each card carries its layer's map colour,
+   light and dark, the way the question tiles do; the words on it stay in the
+   page's ink, because a map colour is chosen to read as a line and not as
+   text. */
 .hero {
   display: grid; grid-template-columns: minmax(0, 1fr) 370px;
   gap: 36px; align-items: start;
 }
 .hero-main { min-width: 0; }
-.try { margin: 14px 0 0; font-size: 14.5px; line-height: 1.6; color: var(--ink-3); }
-.try a {
-  color: var(--brand-600); font-weight: 600; text-decoration: none;
-  border-bottom: 1px solid var(--brand-border);
-}
-.try a:hover { color: var(--brand-700); border-bottom-color: currentColor; }
-.try a:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; border-radius: 2px; }
 .example {
   margin-top: 4px; padding: 16px 14px 12px;
   background: var(--brand-tint); border: 1px solid var(--brand-border);
@@ -1765,6 +1965,27 @@ h1 {
   margin: 0 4px 7px; font: var(--font-heading-weight) 12.5px/1 var(--font-heading);
   letter-spacing: .09em; text-transform: uppercase; color: var(--brand-700);
 }
+/* A button for each place, the one shown filled the way the address box's
+   button is, so which place is showing does not rest on colour alone. They
+   ship hidden and the page's script shows them, so a reader with no script is
+   not offered buttons that cannot work. */
+.ex-pick { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 4px 13px; }
+.ex-pick[hidden] { display: none; }
+.ex-pick button {
+  min-height: 30px; padding: 5px 11px;
+  font: 600 13.5px/1.2 var(--font-body); color: var(--ink);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 999px; cursor: pointer;
+}
+.ex-pick button:hover { border-color: var(--brand-600); }
+.ex-pick button[aria-pressed="true"] {
+  color: #fff; background: var(--brand-600); border-color: var(--brand-600); cursor: default;
+}
+.ex-pick button:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ex-pick button[aria-pressed="true"] { color: var(--paper); }
+}
+:root[data-theme="dark"] .ex-pick button[aria-pressed="true"] { color: var(--paper); }
 .ex-place {
   margin: 0 4px; font: var(--font-heading-weight) 21px/1.2 var(--font-heading);
   color: var(--ink);
@@ -2121,7 +2342,7 @@ footer .support b { color: var(--ink); }
              %(answer_verb)s today — an address anywhere else says so instead of guessing.</p>
           <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
         </div>
-    %(independence)s%(tries)s      </div>
+    %(independence)s      </div>
 %(example)s    </div>
 
     <h2>Where it answers today</h2>
@@ -2495,8 +2716,9 @@ footer .support b { color: var(--ink); }
    * uncovered, none, unreadable, search-failed, or failed-<why> when the
    * lookup could not read a short link. A place shared into the installed
    * app reaches this page (as "opened") when no state has been opened yet.
-   * Nothing about the place is in it. It is the one event this page sends,
-   * and the privacy page names it (build_privacy_page.py ROOT_EVENTS). The
+   * Nothing about the place is in it. It is one of the two events this page
+   * sends, with the worked example's example-place/<place> (EXAMPLE_SCRIPT),
+   * and the privacy page names both (build_privacy_page.py ROOT_EVENTS). The
    * counter loads after this script, so a count waits for it, up to ten
    * seconds, as the apps' do. */
   var linkRead = null, linkVia = "pasted";
@@ -2830,7 +3052,6 @@ footer .support b { color: var(--ink); }
         "notice_memory": notice_memory(),
         "independence": render_independence(),
         "example": example,
-        "tries": tries,
         "answer_count": html.escape(answer_count),
         "answer_verb": answer_verb,
         "key_wash": key_wash,

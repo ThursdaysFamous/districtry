@@ -1008,175 +1008,327 @@ try {
     await ctx.close();
   }
 
-  // --- 1i. the worked example: one place, and who represents it there ------
+  // --- 1i. the worked example: six places, and who represents each --------
   //
   // Beside the address box since 2026-10-21: a place, the offices that answer
-  // there and the people who hold them. The districts are measured by the
-  // generator from the boundary files the map draws (render_example) and held
+  // there and the people who hold them, with a button for each of six places
+  // and a different place first on each visit. The districts are measured by
+  // the generator from the boundary files the map draws (place_cards) and held
   // there by build_landing_page.py --check; the names are read by the page's
-  // own script, when it opens, from the rosters the map's cards read
-  // (EXAMPLE_SCRIPT), so they are held HERE: each card names what its roster
-  // says for its seat, by the rule the officeholder tables print by. Also
-  // held: the example beside the box on a computer and after it on a phone,
-  // each card in its layer's map colour in both themes, links that open an app
-  // at a point with layers on and keep that point when followed, the
-  // independence sentence still on a phone's first screen (which is why the
-  // try-it line comes after it), the bodies and districts with no name lines
-  // when there is no script, and a roster that fails to load saying so on its
-  // own card only.
-  const exampleNamed = () => {
-    const lines = [...document.querySelectorAll(".ex-card .ex-name")];
+  // own script, when it shows a place, from the rosters the map's cards read
+  // (EXAMPLE_SCRIPT), so they are held HERE: in every place, each card names
+  // what its roster says for its seat, by the rule the officeholder tables
+  // print by. Also held: the example beside the box on a computer and after it
+  // on a phone, the independence sentence still on a phone's first screen,
+  // each card in its layer's map colour in both themes, each place's link
+  // opening the app its names come from at a point with layers on and keeping
+  // that point when followed, one place on view at a time with its button
+  // pressed, a visit starting on the place after the last visit's (and on some
+  // place when none is kept or storage is blocked), a press counted once as
+  // example-place/<place> and nothing counted on load, Chicago alone with no
+  // buttons and no name lines when there is no script, and a roster that fails
+  // to load saying so on its own card only.
+  const PLACE_KEY = (/\bvar PLACE_KEY = "([^"]+)"/.exec(
+    readFileSync(join(HERE, "..", "index.html"), "utf8")) || [])[1];
+  // The place on view, once its names have filled in.
+  const exampleNamed = (place) => {
+    const shown = [...document.querySelectorAll(".ex-panel")].filter((p) => !p.hidden);
+    if (shown.length !== 1 || (place && shown[0].getAttribute("data-place") !== place)) return false;
+    const lines = [...shown[0].querySelectorAll(".ex-card .ex-name")];
     return lines.length > 0 && lines.every((l) => !l.hidden && l.textContent.trim());
   };
-  // The page's rule, restated so the page is held to it: a name, or "Vacant",
-  // or "Not listed", and not named at all where the roster's number and
-  // letter for the seat differ from the district the card shows.
-  const rosterSays = (roster, seat, pill) => {
-    const rec = roster && typeof roster === "object" ? roster[seat] : null;
-    if (!rec || typeof rec !== "object") return "Not listed";
-    if (rec.subDistrict && pill !== "District " + rec.subDistrict) return "Not listed";
-    const n = typeof rec.name === "string" ? rec.name.trim() : "";
-    if (n && n.toUpperCase() !== "VACANT") return n;
-    return rec.vacant || n ? "Vacant" : "Not listed";
-  };
-  {
-    const examples = {};
-    for (const [label, opts] of [
-      ["computer", { viewport: { width: 1280, height: 800 }, colorScheme: "light" }],
-      // iPhone 13's viewport, so "first screen" means a real phone's.
-      ["phone", { viewport: { width: 390, height: 664 }, colorScheme: "light" }],
-      ["dark", { viewport: { width: 1280, height: 800 }, colorScheme: "dark" }],
-    ]) {
-      const ctx = await browser.newContext({ ...opts, serviceWorkers: "block" });
-      const page = await ctx.newPage();
-      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
-      await page.evaluate(() => document.fonts.ready);
-      await page.waitForFunction(exampleNamed, null, { timeout: 10000 }).catch(() => {});
-      examples[label] = await page.evaluate(() => {
-        const aside = document.querySelector(".example");
-        const search = document.querySelector(".search-card");
-        const a = aside && aside.getBoundingClientRect();
-        const s = search && search.getBoundingClientRect();
-        return {
-          shown: !!aside && aside.checkVisibility(),
-          beside: !!(a && s && a.left >= s.right && a.top < s.bottom),
-          after: !!(a && s && a.top >= s.bottom && a.left < s.right),
-          sideways: document.documentElement.scrollWidth > innerWidth,
-          indep: (() => {
-            const p = document.querySelector(".independence");
-            if (!p) return null;
-            return { top: Math.round(p.getBoundingClientRect().top),
-                     line: parseFloat(getComputedStyle(p).lineHeight), screen: innerHeight };
-          })(),
-          cards: [...document.querySelectorAll(".ex-card")].map((li) => ({
-            body: (li.querySelector(".ex-body")?.textContent || "").trim(),
-            name: (li.querySelector(".ex-name")?.textContent || "").trim(),
-            pill: (li.querySelector(".ex-pill")?.textContent || "").trim(),
-            roster: li.getAttribute("data-roster"),
-            seat: li.getAttribute("data-seat"),
-            lc: getComputedStyle(li).getPropertyValue("--lc").trim().toUpperCase(),
-            light: li.style.getPropertyValue("--lc-l").trim().toUpperCase(),
-            dark: li.style.getPropertyValue("--lc-d").trim().toUpperCase(),
-          })),
-          links: [...document.querySelectorAll(".example a, .try a")].map((l) => l.href),
-        };
-      });
-      await ctx.close();
-    }
-    const { computer, phone, dark } = examples;
-    check("the worked example is on the page, with a name and a district on every card",
-      computer.shown && computer.cards.length >= 3 &&
-        computer.cards.every((c) => c.body && c.name && c.pill),
-      JSON.stringify(computer.cards.map((c) => [c.body, c.name, c.pill])));
-    // Each name against the roster file the page fetched, read here from the
-    // tree the server serves. A roster the map's own app does not read is
-    // build_landing_page.py's to refuse.
-    const rosterSaid = computer.cards.map((c) => {
-      try {
-        return rosterSays(JSON.parse(readFileSync(join(HERE, "..", c.roster), "utf8")), c.seat, c.pill);
-      } catch (e) {
-        return `(${c.roster}: ${e.message})`;
-      }
-    });
-    check("each example card names what its roster says for its seat",
-      computer.cards.length > 0 && computer.cards.every((c, i) => c.name === rosterSaid[i]),
-      JSON.stringify(computer.cards.map((c, i) => [c.roster, c.seat, c.name, rosterSaid[i]])));
-    check("on a computer the example sits beside the address box", computer.beside, JSON.stringify(computer));
-    check("on a phone the example comes after the address box, with no sideways scroll",
-      phone.shown && phone.after && !phone.sideways, JSON.stringify({ ...phone, cards: phone.cards.length }));
-    // INDEPENDENCE in build_landing_page.py says why that sentence is above
-    // the fold. Put under the box, the try-it line pushed it to the last line
-    // of this screen, so two lines of it must show.
-    check("on a phone the independence sentence starts on the first screen, at least two lines of it",
-      !!phone.indep && phone.indep.top + 2 * phone.indep.line <= phone.indep.screen,
-      JSON.stringify(phone.indep));
-    check("each example card takes its layer's map colour, light and dark",
-      computer.cards.every((c) => /^#[0-9A-F]{6}$/.test(c.light) && c.lc === c.light) &&
-        dark.cards.every((c) => /^#[0-9A-F]{6}$/.test(c.dark) && c.lc === c.dark),
-      JSON.stringify([computer.cards.map((c) => c.lc), dark.cards.map((c) => c.lc)]));
-    // A link opens an app with its point and its layers in the short form the
-    // apps write: #p=lat,lng and &l= with the layers' permanent codes.
-    const apps = FLEET.map((m) => m.url);
-    check("every example link opens an app at a point with layers on",
-      computer.links.length >= 3 && computer.links.every((h) =>
-        apps.some((u) => h.startsWith(u + "#")) &&
-        /#p=-?\d+(\.\d+)?,-?\d+(\.\d+)?&l=[a-z][a-z0-9]*(,[a-z][a-z0-9]*)*$/.test(h)),
-      JSON.stringify(computer.links));
-
-    // With no script: the bodies and districts and the link to the map, and
-    // no name line, empty or otherwise.
-    {
-      const ctx = await browser.newContext({ javaScriptEnabled: false, serviceWorkers: "block" });
-      const page = await ctx.newPage();
-      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
-      const bare = await page.evaluate(() => ({
-        cards: [...document.querySelectorAll(".ex-card")].map((li) => ({
-          body: (li.querySelector(".ex-body")?.textContent || "").trim(),
-          pill: (li.querySelector(".ex-pill")?.textContent || "").trim(),
-          name: li.querySelector(".ex-name")?.checkVisibility() ?? false,
+  const exampleState = () => {
+    const text = (el) => (el?.textContent || "").trim();
+    const shown = [...document.querySelectorAll(".ex-panel")].filter((p) => !p.hidden);
+    return {
+      shown: shown.length === 1 ? shown[0].getAttribute("data-place") : `${shown.length} panels`,
+      picker: !!document.querySelector(".ex-pick")?.checkVisibility(),
+      buttons: [...document.querySelectorAll(".ex-pick button")].map((b) => ({
+        place: b.getAttribute("data-place"), pressed: b.getAttribute("aria-pressed"),
+        controls: b.getAttribute("aria-controls") })),
+      panels: [...document.querySelectorAll(".ex-panel")].map((p) => ({
+        place: p.getAttribute("data-place"), id: p.id, heading: text(p.querySelector(".ex-place")),
+        link: p.querySelector("a.ex-open")?.href || null,
+        linkShown: !!p.querySelector("a.ex-open")?.checkVisibility(),
+        cards: [...p.querySelectorAll(".ex-card")].map((li) => ({
+          body: text(li.querySelector(".ex-body")),
+          name: text(li.querySelector(".ex-name")),
+          nameShown: li.querySelector(".ex-name")?.checkVisibility() ?? false,
+          pill: text(li.querySelector(".ex-pill")),
+          roster: li.getAttribute("data-roster"),
+          seat: li.getAttribute("data-seat"),
+          lc: getComputedStyle(li).getPropertyValue("--lc").trim().toUpperCase(),
+          light: li.style.getPropertyValue("--lc-l").trim().toUpperCase(),
+          dark: li.style.getPropertyValue("--lc-d").trim().toUpperCase(),
         })),
-        link: !!document.querySelector(".example a.ex-open")?.checkVisibility(),
-      }));
-      await ctx.close();
-      check("with no script the example shows its bodies, districts and map link, and no name lines",
-        bare.link && bare.cards.length === computer.cards.length &&
-          bare.cards.every((c) => c.body && c.pill && !c.name),
-        JSON.stringify(bare));
+      })),
+    };
+  };
+  // The page's rule, restated so the page is held to it: follow the seat's
+  // path into the roster; each member there is a name, or a vacant seat, or
+  // nothing (no record, a withheld one, or one whose number and letter differ
+  // from the district the card shows); a seat names every member, then how
+  // many of its seats are vacant, and with no member it is "Vacant" or "Not
+  // listed".
+  const seatSays = (roster, seatJson, pill) => {
+    let seat = roster;
+    for (const k of JSON.parse(seatJson)) {
+      seat = seat && typeof seat === "object" && Object.prototype.hasOwnProperty.call(seat, k) ? seat[k] : null;
     }
-    // A roster that fails to load says so on its own card, and the others
-    // still name their seats.
-    {
-      const failing = computer.cards[0]?.roster;
-      const ctx = await browser.newContext({ serviceWorkers: "block" });
-      const page = await ctx.newPage();
-      if (failing) {
-        await page.route((u) => u.pathname === "/" + failing,
-          (r) => r.fulfill({ status: 404, contentType: "text/plain", body: "not found" }));
+    const member = (rec) => {
+      if (!rec || typeof rec !== "object" || rec.withheld) return null;
+      if (rec.subDistrict && pill !== "District " + rec.subDistrict) return null;
+      const n = typeof rec.name === "string" ? rec.name.trim() : "";
+      if (n && n.toUpperCase() !== "VACANT") return n;
+      return rec.vacant || n ? "" : null;
+    };
+    const names = [];
+    let vacant = 0;
+    for (const rec of Array.isArray(seat) ? seat : [seat]) {
+      const n = member(rec);
+      if (n) names.push(n);
+      else if (n === "") vacant++;
+    }
+    if (!names.length) return vacant ? "Vacant" : "Not listed";
+    if (vacant) names.push(vacant === 1 ? "a vacant seat" : `${vacant} vacant seats`);
+    return names.length === 1 ? names[0] : names.slice(0, -1).join(", ") + " and " + names[names.length - 1];
+  };
+  const rosterFiles = new Map();
+  const rosterSaid = (c) => {
+    try {
+      if (!rosterFiles.has(c.roster)) {
+        rosterFiles.set(c.roster, JSON.parse(readFileSync(join(HERE, "..", c.roster), "utf8")));
       }
-      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
-      await page.waitForFunction(exampleNamed, null, { timeout: 10000 }).catch(() => {});
-      const got = await page.evaluate(() => [...document.querySelectorAll(".ex-card")].map((li) => [
-        li.getAttribute("data-roster"), (li.querySelector(".ex-name")?.textContent || "").trim()]));
-      await ctx.close();
-      check("a roster that fails to load says so on its own card only",
-        !!failing && got.length === computer.cards.length &&
-          got.every(([roster, name], i) => roster === failing ? name === "Name didn't load"
-                                                              : name === computer.cards[i].name),
-        JSON.stringify(got));
+      return seatSays(rosterFiles.get(c.roster), c.seat, c.pill);
+    } catch (e) {
+      return `(${c.roster}: ${e.message})`;
     }
-
-    // Followed, a link keeps its point: the instance is stubbed, so a wrong
-    // route shows as a wrong URL rather than as a failed navigation that
-    // leaves the page on / and reads like a right one.
-    const ctx = await browser.newContext({ serviceWorkers: "block" });
+  };
+  // A page on the example's own origin, with the counter stubbed: each count
+  // the page hands it is recorded in `counted`, and nothing reaches GoatCounter.
+  async function examplePage(opts, counted) {
+    const ctx = await browser.newContext({ ...opts, serviceWorkers: "block" });
     const page = await ctx.newPage();
-    await stubInstances(page);
+    await page.route("**/gc.zgo.at/**", (r) => r.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+    if (counted) {
+      await page.exposeFunction("__gcCount", (path) => { counted.push(path); });
+      await page.addInitScript(() => {
+        window.goatcounter = { count: (vars) => { if (vars && vars.event) window.__gcCount(vars.path); } };
+      });
+    }
+    return { ctx, page };
+  }
+  // The last visit's place, as a reader's browser would hold it, set from a
+  // page on the same origin before the front page opens.
+  async function keepPlace(page, place) {
+    await page.goto(BASE + "/robots.txt", { waitUntil: "domcontentloaded" });
+    await page.evaluate(([k, v]) => localStorage.setItem(k, v), [PLACE_KEY, place]);
+  }
+  async function openExample(page) {
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
-    const want = await page.getAttribute(".try a", "href");
-    await page.click(".try a");
+    await page.evaluate(() => document.fonts.ready);
+    await page.waitForFunction(exampleNamed, null, { timeout: 10000 }).catch(() => {});
+  }
+  async function showPlace(page, place) {
+    await page.click(`.ex-pick button[data-place="${place}"]`);
+    await page.waitForFunction(exampleNamed, place, { timeout: 10000 }).catch(() => {});
+  }
+  check("the front page's script names the key it keeps the last place under", !!PLACE_KEY, String(PLACE_KEY));
+  {
+    // On a computer: every place, pressed in turn, with the counter stubbed.
+    const counted = [];
+    const { ctx, page } = await examplePage({ viewport: { width: 1280, height: 800 }, colorScheme: "light" }, counted);
+    await openExample(page);
+    const first = await page.evaluate(exampleState);
+    const layout = await page.evaluate(() => {
+      const a = document.querySelector(".example")?.getBoundingClientRect();
+      const s = document.querySelector(".search-card")?.getBoundingClientRect();
+      return { beside: !!(a && s && a.left >= s.right && a.top < s.bottom) };
+    });
+    await page.waitForTimeout(300);
+    const onLoad = counted.slice();
+    const order = first.buttons.map((b) => b.place);
+    check("the example has a button for each of its places, in the order of their panels",
+      order.length >= 2 && order.join() === first.panels.map((p) => p.place).join() &&
+        first.buttons.every((b) => b.controls === "ex-" + b.place) &&
+        first.panels.every((p) => p.id === "ex-" + p.place),
+      JSON.stringify({ buttons: first.buttons, panels: first.panels.map((p) => [p.place, p.id]) }));
+    check("with the script, the buttons show and one place is on view, its button pressed",
+      first.picker && order.includes(first.shown) &&
+        first.buttons.every((b) => b.pressed === String(b.place === first.shown)),
+      JSON.stringify({ picker: first.picker, shown: first.shown, buttons: first.buttons }));
+    check("on a computer the example sits beside the address box", layout.beside, JSON.stringify(layout));
+    check("opening the page counts nothing for the example", onLoad.length === 0, JSON.stringify(onLoad));
+    const pressed = [];
+    const views = {};
+    for (const place of order) {
+      if (place === first.shown) continue;
+      await showPlace(page, place);
+      pressed.push(place);
+      const now = await page.evaluate(exampleState);
+      views[place] = { shown: now.shown, buttons: now.buttons.map((b) => [b.place, b.pressed]) };
+    }
+    // a press of the button already pressed changes nothing and counts nothing
+    const before = await page.evaluate(exampleState);
+    await page.click(`.ex-pick button[data-place="${before.shown}"]`);
+    await page.waitForTimeout(400);
+    const after = await page.evaluate(exampleState);
+    check("each button shows its own place, alone, and presses only itself",
+      pressed.length === order.length - 1 && pressed.every((p) => views[p].shown === p &&
+        views[p].buttons.every(([b, s]) => s === String(b === p))),
+      JSON.stringify(views));
+    check("each press is counted once as example-place/<place>, and a press of the pressed button not at all",
+      counted.join() === pressed.map((p) => "example-place/" + p).join() && after.shown === before.shown,
+      JSON.stringify({ counted, pressed, again: after.shown }));
+    // Every place has now been on view, so every card has its name.
+    const cards = after.panels.flatMap((p) => p.cards.map((c) => ({ place: p.place, ...c })));
+    check("every place names a person or a vacant seat or says Not listed on every card, under a body and a district",
+      after.panels.length === order.length && after.panels.every((p) => p.cards.length >= 3 && p.heading) &&
+        cards.every((c) => c.body && c.name && c.pill),
+      JSON.stringify(after.panels.map((p) => [p.place, p.cards.map((c) => [c.body, c.name, c.pill])])));
+    check("each example card names what its roster says for its seat, in every place",
+      cards.length > 0 && cards.every((c) => c.name === rosterSaid(c)),
+      JSON.stringify(cards.filter((c) => c.name !== rosterSaid(c))
+        .map((c) => [c.place, c.roster, c.seat, c.name, rosterSaid(c)])));
+    check("each example card takes its layer's map colour in light",
+      cards.every((c) => /^#[0-9A-F]{6}$/.test(c.light) && c.lc === c.light),
+      JSON.stringify(cards.map((c) => [c.place, c.lc, c.light])));
+    // A link opens an app with its point and its layers in the short form the
+    // apps write, and it is the app whose rosters the place's names come from.
+    const apps = FLEET.map((m) => m.url);
+    check("every place's link opens the app its names come from, at a point with layers on",
+      after.panels.every((p) => !!p.link && apps.some((u) => p.link.startsWith(u + "#")) &&
+        /#p=-?\d+(\.\d+)?,-?\d+(\.\d+)?&l=[a-z][a-z0-9]*(,[a-z][a-z0-9]*)*$/.test(p.link) &&
+        p.cards.every((c) => p.link.includes("/" + c.roster.split("/")[0] + "/#"))),
+      JSON.stringify(after.panels.map((p) => [p.place, p.link])));
+    await ctx.close();
+  }
+  {
+    // On a phone, and in the dark.
+    const phone = await examplePage({ viewport: { width: 390, height: 664 }, colorScheme: "light" });
+    await openExample(phone.page);
+    const got = await phone.page.evaluate(() => {
+      const a = document.querySelector(".example")?.getBoundingClientRect();
+      const s = document.querySelector(".search-card")?.getBoundingClientRect();
+      const p = document.querySelector(".independence");
+      return {
+        shown: !!document.querySelector(".example")?.checkVisibility(),
+        after: !!(a && s && a.top >= s.bottom && a.left < s.right),
+        sideways: document.documentElement.scrollWidth > innerWidth,
+        indep: p ? { top: Math.round(p.getBoundingClientRect().top),
+                     line: parseFloat(getComputedStyle(p).lineHeight), screen: innerHeight } : null,
+      };
+    });
+    await phone.ctx.close();
+    check("on a phone the example comes after the address box, with no sideways scroll",
+      got.shown && got.after && !got.sideways, JSON.stringify(got));
+    // INDEPENDENCE in build_landing_page.py says why that sentence is above
+    // the fold, so two lines of it must show on a phone's first screen.
+    check("on a phone the independence sentence starts on the first screen, at least two lines of it",
+      !!got.indep && got.indep.top + 2 * got.indep.line <= got.indep.screen, JSON.stringify(got.indep));
+    const dark = await examplePage({ viewport: { width: 1280, height: 800 }, colorScheme: "dark" });
+    await openExample(dark.page);
+    const night = await dark.page.evaluate(exampleState);
+    await dark.ctx.close();
+    const nightCards = night.panels.flatMap((p) => p.cards.map((c) => ({ place: p.place, ...c })));
+    check("each example card takes its layer's map colour in dark",
+      nightCards.length > 0 && nightCards.every((c) => /^#[0-9A-F]{6}$/.test(c.dark) && c.lc === c.dark),
+      JSON.stringify(nightCards.map((c) => [c.place, c.lc, c.dark])));
+  }
+  {
+    // A visit starts on the place after the last visit's, the last place
+    // goes round to the first, and a visit keeps the place it showed.
+    const { ctx, page } = await examplePage({ viewport: { width: 1280, height: 800 } });
+    await openExample(page);
+    const visit1 = await page.evaluate(exampleState);
+    const kept1 = await page.evaluate((k) => localStorage.getItem(k), PLACE_KEY);
+    await openExample(page);
+    const visit2 = await page.evaluate(exampleState);
+    const kept2 = await page.evaluate((k) => localStorage.getItem(k), PLACE_KEY);
+    const order = visit1.buttons.map((b) => b.place);
+    await keepPlace(page, order[order.length - 1]);
+    await openExample(page);
+    const visit3 = await page.evaluate(exampleState);
+    await ctx.close();
+    check("a first visit shows one of the places and keeps it",
+      order.includes(visit1.shown) && kept1 === visit1.shown, JSON.stringify({ shown: visit1.shown, kept1 }));
+    check("the next visit starts on the place after it, and keeps that one",
+      visit2.shown === order[(order.indexOf(visit1.shown) + 1) % order.length] && kept2 === visit2.shown,
+      JSON.stringify({ first: visit1.shown, next: visit2.shown, kept2 }));
+    check("after the last place, a visit starts on the first", visit3.shown === order[0],
+      JSON.stringify({ last: order[order.length - 1], next: visit3.shown }));
+  }
+  {
+    // Storage the page cannot read or write still shows a place, named.
+    const { ctx, page } = await examplePage({ viewport: { width: 1280, height: 800 } });
+    await page.addInitScript(() => {
+      Object.defineProperty(window, "localStorage", {
+        configurable: true, get() { throw new DOMException("blocked", "SecurityError"); } });
+    });
+    await openExample(page);
+    const blocked = await page.evaluate(exampleState);
+    const named = await page.evaluate(exampleNamed);
+    await ctx.close();
+    check("with storage blocked the example still shows a place, named, and its buttons",
+      blocked.picker && blocked.buttons.some((b) => b.place === blocked.shown) && named,
+      JSON.stringify({ shown: blocked.shown, picker: blocked.picker, named }));
+  }
+  {
+    // With no script: Chicago's bodies and districts and its link to the map,
+    // and no buttons and no name line, empty or otherwise.
+    const ctx = await browser.newContext({ javaScriptEnabled: false, serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    const bare = await page.evaluate(exampleState);
+    await ctx.close();
+    const on = bare.panels.filter((p) => p.linkShown);
+    check("with no script the example shows Chicago's bodies, districts and map link, and no buttons or name lines",
+      !bare.picker && bare.shown === "chicago" && on.length === 1 && on[0].place === "chicago" &&
+        on[0].cards.length >= 3 && on[0].cards.every((c) => c.body && c.pill && !c.nameShown),
+      JSON.stringify({ picker: bare.picker, shown: bare.shown, on: on.map((p) => p.place) }));
+  }
+  {
+    // A roster that fails to load says so on its own card, and the place's
+    // other cards still name their seats. The last place is kept, so the
+    // visit starts on the first, Chicago.
+    const { ctx, page } = await examplePage({ viewport: { width: 1280, height: 800 } });
+    const state = await (async () => {
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      return page.evaluate(exampleState);
+    })();
+    const order = state.buttons.map((b) => b.place);
+    const firstPanel = state.panels.find((p) => p.place === order[0]);
+    const failing = firstPanel?.cards[0]?.roster;
+    if (failing) {
+      await page.route((u) => u.pathname === "/" + failing,
+        (r) => r.fulfill({ status: 404, contentType: "text/plain", body: "not found" }));
+    }
+    await keepPlace(page, order[order.length - 1]);
+    await openExample(page);
+    const got = await page.evaluate(exampleState);
+    await ctx.close();
+    const panel = got.panels.find((p) => p.place === got.shown);
+    check("a roster that fails to load says so on its own card only",
+      !!failing && got.shown === order[0] && !!panel && panel.cards.length === firstPanel.cards.length &&
+        panel.cards.every((c) => c.roster === failing ? c.name === "Name didn't load" : c.name === rosterSaid(c)),
+      JSON.stringify({ failing, shown: got.shown, cards: panel && panel.cards.map((c) => [c.roster, c.name]) }));
+  }
+  {
+    // Followed, a place's link keeps its point. The place is one other than
+    // the first, and the instances are stubbed, so a wrong route shows as a
+    // wrong URL rather than as a failed navigation that leaves the page on /
+    // and reads like a right one.
+    const { ctx, page } = await examplePage({ viewport: { width: 1280, height: 800 } });
+    await stubInstances(page);
+    await openExample(page);
+    const state = await page.evaluate(exampleState);
+    const place = state.buttons[state.buttons.length - 1]?.place;
+    if (place && state.shown !== place) await showPlace(page, place);
+    const want = await page.getAttribute(`#ex-${place} a.ex-open`, "href");
+    await page.click(`#ex-${place} a.ex-open`);
     await page.waitForURL((u) => u.pathname !== "/", { timeout: 10000, waitUntil: "commit" }).catch(() => {});
-    check("following a try-it link opens that app with its point and layers",
-      page.url() === want, `${page.url()} vs ${want}`);
+    check("following a place's link opens that place's app with its point and layers",
+      !!want && page.url() === want, `${page.url()} vs ${want}`);
     await ctx.close();
   }
 
