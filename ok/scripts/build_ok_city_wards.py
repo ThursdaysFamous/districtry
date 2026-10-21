@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Build ok/data/app/ok-city-wards.json: the 56 council wards and districts of
-the nine Oklahoma cities above 25,000 people whose wards elect their own
+Build ok/data/app/ok-city-wards.json: the 64 council wards and districts of
+the ten Oklahoma cities above 25,000 people whose wards elect their own
 members and whose maps this project may draw, each read from the map its
 city publishes.
 
@@ -12,25 +12,24 @@ city publishes.
 The work is scripts/city_ward_maps.py; this file says where each city's map
 is and how to read it. WHICH cities are drawn is read from the seats file the
 council roster is built from (ok/data/source/ok-city-council-seats.json):
-every city with a seat its own ward's voters elect, less the two that
+every city with a seat its own ward's voters elect, less the one that
 ok/scripts/build_ok_city_councils.py declares undrawn.
 
-NOT DRAWN: Lawton and Muskogee elect their members by ward, and
-build_ok_city_councils.py says why neither map is drawn (Lawton's published
-map does not divide the 2020 census population evenly, so it may not be the
-map in force, and Muskogee publishes none this project may read). Broken
-Arrow, Owasso, Jenks and Edmond tie seats to wards and elect every seat by
-the whole city, so a ward there would elect no one of its own, and
-Stillwater's council has no wards.
+NOT DRAWN: Muskogee elects its members by ward, and build_ok_city_councils.py
+says why its map is not drawn (Muskogee publishes none this project may
+read). Broken Arrow, Owasso, Jenks and Edmond tie seats to wards and elect
+every seat by the whole city, so a ward there would elect no one of its own,
+and Stillwater's council has no wards.
 
 NO STATE OFFICE PUBLISHES THEM. The State Election Board publishes precinct
 maps and results, and no map of any city's wards, so each city's map is read
 from the city.
 
-WHO PUBLISHES EACH, read on 2026-10-16: all nine cities publish their own,
-from their own map servers (Moore, Midwest City, Bartlesville and Shawnee) or
-from ArcGIS Online (Oklahoma City, Tulsa, Norman, Enid and Bixby). Each
-ward's card says whose map it is drawn from.
+WHO PUBLISHES EACH, read on 2026-10-16 (Lawton's on 2026-10-21): all ten
+cities publish their own, from their own map servers (Moore, Midwest City,
+Bartlesville and Shawnee) or from ArcGIS Online (Oklahoma City, Tulsa,
+Norman, Lawton, Enid and Bixby). Each ward's card says whose map it is drawn
+from.
 
 IS EACH THE CURRENT MAP. Norman's layer says it was "Updated September 13,
 2022 by O-2223-8", an ordinance. Bixby's gives each ward a population, and
@@ -40,44 +39,61 @@ carries the metes-and-bounds description of each of its nine election
 districts and was last edited on 29 January 2026; Shawnee's Ward 5 was last
 edited on 22 September 2026 and its other wards on 2 July 2026, Bixby's layer
 on 26 August 2026, Midwest City's Ward 5 on 2 October 2025 and Enid's layer
-on 4 August 2025; Oklahoma City's,
+on 4 August 2025; Lawton's service says "Updated-05/12/2023" and its data was
+last edited on 2 July 2026; Oklahoma City's,
 Moore's and Bartlesville's say nothing about when they were drawn. So each
 map was measured against the Census Bureau's 2020 blocks inside the city's
-current Census outline on 2026-10-16, and each city's wards hold its people
-to within 5.3% of an equal share (Oklahoma City 2.0%, Tulsa 2.7%, Norman
-5.3%, Moore 0.6%, Midwest City 3.9%, Enid 5.1%, Bartlesville 4.0%, Shawnee
-0.9% and Bixby 4.1%). That is what a map drawn on the 2020 census shows, and
-it does not prove when a map was drawn, since a city whose people grew
-evenly could keep an older map this balanced; that each of the nine is the
-map in force is an inference, recorded as one. No city election in Oklahoma
-is published as precinct results this project may read (the State Election
-Board's results site refuses it), so the precinct test North Carolina's
-builder runs is not available here. Lawton's map fails the balance
-measurement, which is why it is not drawn.
+current Census outline on 2026-10-16, and nine of the ten cities' wards hold
+their people to within 5.3% of an equal share (Oklahoma City 2.0%, Tulsa
+2.7%, Norman 5.3%, Moore 0.6%, Midwest City 3.9%, Enid 5.1%, Bartlesville
+4.0%, Shawnee 0.9% and Bixby 4.1%). That is what a map drawn on the 2020
+census shows, and it does not prove when a map was drawn, since a city whose
+people grew evenly could keep an older map this balanced; that each of the
+nine is the map in force is an inference, recorded as one. No city election
+in Oklahoma is published as precinct results this project may read (the
+State Election Board's results site refuses it), so the precinct test North
+Carolina's builder runs is not available here.
 
-EACH MAP IS A MAP OF ITS CITY, measured on 2026-10-16 against the Census
-outline of the place: the share of the place its wards cover, and the share
-of the wards outside the place. Each source's floor and ceiling below are
-five points from what was measured, so a few annexed blocks pass and another
-city's map, or a county's, does not. Bixby's wards cover 97.5% of the city's
-Census outline and leave 14 of its 2020 people in no ward; Tulsa's leave
-176, Shawnee's 36, Midwest City's 32, Bartlesville's 8 and Oklahoma City's
-5. Why each leaves that ground out was not established. A point there
-answers no ward, which is what those maps say.
+LAWTON'S IS DRAWN ON THE CITY'S WORD, and not on that measurement, which it
+fails: on the 2020 census its wards hold from 9,180 to 12,570 people leaving
+out Ward 2, which holds Fort Sill (18,668 with it), against an even share of
+11,296, and its population fields are from the 2010 census (measured
+2026-10-16 and again, with the same counts, on 2026-10-21). So until
+2026-10-21 it was not drawn, and the City Clerk's office was asked which map
+shows the wards in force (docs/ASK_DRAFTS.md, Ask ok-lawton-ward-map). The
+office answered on 2026-10-21 by pointing to the city's public ward map, a
+web app titled "Council Ward Members Jurisdiction" whose one web map,
+"Lawton Council Ward Map", has this layer as its only layer (read from
+ArcGIS Online's item records the same day). The answer said nothing about
+the population figures. So the map is drawn as the one the city shows the
+public, and whether the city means to redraw it is not known.
+
+EACH MAP IS A MAP OF ITS CITY, measured on 2026-10-16 (Lawton's on
+2026-10-21) against the Census outline of the place: the share of the place
+its wards cover, and the share of the wards outside the place. Each source's
+floor and ceiling below are five points from what was measured, so a few
+annexed blocks pass and another city's map, or a county's, does not. Bixby's
+wards cover 97.5% of the city's Census outline and leave 14 of its 2020
+people in no ward; Tulsa's leave 176, Shawnee's 36, Midwest City's 32,
+Bartlesville's 8 and Oklahoma City's 5, and Lawton's none. Why each leaves
+that ground out was not established. A point there answers no ward, which is
+what those maps say.
 
 PRIVACY. The builder asks each layer for its ward field and nothing else.
-Six carry more beside each ward: Oklahoma City's, Tulsa's, Moore's, Midwest
+Seven carry more beside each ward: Oklahoma City's, Tulsa's, Moore's, Midwest
 City's and Bixby's each member's name (Tulsa's and Moore's in a field for
-"Representative Name(s)", beside a district website), and Shawnee's each
-commissioner's name and fields called Contact and Photo.
+"Representative Name(s)", beside a district website), Shawnee's each
+commissioner's name and fields called Contact and Photo, and Lawton's fields
+called Name, Address, Phone, email and Term_Expires.
 
 PUBLISHING GAPS, recorded as evidence for the state-publishing ask (gap
 ok-municipal-officeholders): no state office publishes Oklahoma's city
-wards; the nine maps carry the ward number under eight different field
-names, Shawnee's in a field named for a state code (STATEFP10); only
-Norman's says when it was adopted; Lawton's published map does not divide
-the 2020 census population evenly; and Muskogee publishes no map of its
-wards this project may read.
+wards; the ten maps carry the ward number under nine different field names,
+Shawnee's in a field named for a state code (STATEFP10); only Norman's says
+when it was adopted; Lawton's map does not divide the 2020 census population
+evenly and carries 2010 census figures, so whether it was the map in force
+could be learned only by asking the city; and Muskogee publishes no map of
+its wards this project may read.
 """
 
 import os
@@ -93,7 +109,7 @@ import city_ward_maps as cwm  # noqa: E402
 NUMBER = r"([1-9][0-9]?)"
 
 # (covers, outside) floors and ceilings, five points from the shares measured
-# on 2026-10-16 that each comment gives.
+# on 2026-10-16 (Lawton's on 2026-10-21) that each comment gives.
 SOURCES = (
     cwm.Source("4055000",  # Oklahoma City: covers 99.7%, 0.3% outside
                "https://utility.arcgis.com/usrsvcs/servers/666b9654ab104ba7ac49870c66190e9c/"
@@ -110,6 +126,11 @@ SOURCES = (
                "Council_Wards/FeatureServer/1",
                "WARDNO", NUMBER, records=8, covers=95.0, outside=5.2,
                drawn_from="the City of Norman's own map"),
+    cwm.Source("4041850",  # Lawton: 99.7%, 0.1%; 11 records for 8 wards, drawn on the city's word
+               "https://services2.arcgis.com/baoUryRiOxhCY0yb/arcgis/rest/services/"
+               "CouncilWard/FeatureServer/0",
+               "Ward_Number", NUMBER, records=11, parts=3, covers=94.7, outside=5.1,
+               drawn_from="the City of Lawton's own map"),
     cwm.Source("4049200",  # Moore: 99.9%, 0.1%; the field reads "Ward 1"
                "https://gis.cityofmoore.com/arcgis/rest/services/OpenData/"
                "Government_Services/MapServer/20",
@@ -153,8 +174,9 @@ SPEC = cwm.Spec(
         "the map its city publishes",
     ),
     # Each point is one the Census's place map puts in the place named
-    # (TIGERweb, read 2026-10-16), and its ward is the answer that city's map
-    # gave the same day; each is more than 250 metres from a ward's edge.
+    # (TIGERweb, read 2026-10-16; the Lawton and Muskogee points 2026-10-21),
+    # and its ward is the answer that city's map gave the same day; each is
+    # more than 250 metres from a ward's edge.
     inside=(
         (-97.50330, 35.49230, "4055000-7", "a point in Oklahoma City"),
         (-95.94000, 36.09500, "4075000-9", "a point in Tulsa, whose wards are called "
@@ -163,10 +185,12 @@ SPEC = cwm.Spec(
                                            "\"Ward 3\""),
         (-97.87840, 36.39560, "4023950-5", "a point in Enid, whose map numbers each ward "
                                            "\"05\""),
+        (-98.39590, 34.60360, "4041850-5", "a point in Lawton, whose wards are drawn on the "
+                                           "city's word"),
     ),
     outside=(
         (-97.47810, 35.65280, "a point in Edmond, whose wards elect no one of their own"),
-        (-98.39590, 34.60360, "a point in Lawton, whose wards are not drawn yet"),
+        (-95.37120, 35.74860, "a point in Muskogee, whose wards are not drawn yet"),
         (-97.05840, 36.11560, "a point in Stillwater, which elects its whole council by "
                               "the whole city"),
     ),

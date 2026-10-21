@@ -858,19 +858,44 @@
   function zipMessage(text, extra) {
     var seq = districtSearchSeq, picked = state.sequence;
     function current() { return seq === districtSearchSeq && picked === state.sequence; }
+    // The message stays open while the reader is at the search bar and folds
+    // away once they move off it (the pointer leaves it, a click or a tap
+    // lands elsewhere, or focus moves out), as a picked address's line does
+    // at once; hovering or focusing the bar shows it again. Only a mouse
+    // leaving counts, because a finger "leaves" every time it lifts.
+    var left = false;
     function write(t, more) {
       if (!current()) return;
       geoStatus.textContent = t;
       geoStatus.className = "geo-status";
       if (more) geoStatus.appendChild(more);
-      collapseAfterSelect = false;
+      collapseAfterSelect = left;
+      refreshSearchShellExpanded();
+    }
+    function stopWatchingAway() {
+      searchShellEl.removeEventListener("pointerleave", away);
+      searchShellEl.removeEventListener("focusout", away);
+      document.removeEventListener("pointerdown", away, true);
+    }
+    function away(e) {
+      if (!current()) { stopWatchingAway(); return; }
+      if (e.type === "pointerleave" && e.pointerType !== "mouse") return;
+      if (e.type === "focusout" && searchShellEl.contains(e.relatedTarget)) return;
+      if (e.type === "pointerdown" && searchShellEl.contains(e.target)) return;
+      left = true;
+      stopWatchingAway();
+      collapseAfterSelect = true;
       refreshSearchShellExpanded();
     }
     write(text, extra);
+    searchShellEl.addEventListener("pointerleave", away);
+    searchShellEl.addEventListener("focusout", away);
+    document.addEventListener("pointerdown", away, true);
     // every selection adds the selected point's marker (setSelectedPoint)
     var watch = function () {
       if (state.sequence === picked) return;
       map.off("layeradd", watch);
+      stopWatchingAway();
       if (seq !== districtSearchSeq) return; // a newer search wrote its own words
       geoStatus.textContent = "";
       collapseAfterSelect = true;

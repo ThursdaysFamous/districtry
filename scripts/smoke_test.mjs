@@ -1556,6 +1556,13 @@ try {
       rows: [...document.querySelectorAll("#geocode-results li")].map((li) => li.className),
       on: [...document.querySelectorAll(".layer-block input[type=checkbox]")].filter((c) => c.checked).map((c) => c.id.replace(/^toggle-/, "")).sort(),
       parent: document.querySelectorAll(".rel-parent-outline").length,
+      ink: window[ns].highlightColor("zip-code"),
+      lead: (() => {
+        const first = document.getElementById("groups-root").firstElementChild;
+        return first && first.classList.contains("group-pinned")
+          ? [...first.querySelectorAll(".layer-block input[type=checkbox]")].map((c) => c.id.replace(/^toggle-/, "")).join() || null : null;
+      })(),
+      open: document.querySelector(".search-shell").classList.contains("expanded"),
       crossing: [...document.querySelectorAll(".rel-map-label")].map((e) => e.textContent).sort(),
       hash: location.hash,
       button: !!document.querySelector(".zip-stats-btn"),
@@ -1576,11 +1583,15 @@ try {
       !!got.point && Math.abs(got.point.lat - sy) < 1e-6 && Math.abs(got.point.lng - sx) < 1e-6 &&
         got.on.join() === "ward,zip-code" && /(^|&)c=zp(&|$)/.test(got.hash.slice(1)),
       JSON.stringify({ point: got.point, on: got.on, hash: got.hash }));
+    // the compared ZIP code is its own lit line in the comparison's ink, with
+    // no second outline drawn over it (Adam, 2026-10-21: the whole set the
+    // comparison reads is simplified and the tiles are not, so the two ran
+    // side by side), and its card leads the list on a computer as on a phone
     check("every ward the ZIP code crosses is outlined against it, and the message says the spot is not an address",
-      got.parent === 1 && got.crossing.join() === "Ward 33,Ward 39,Ward 40,Ward 47" && got.button &&
+      got.parent === 0 && got.ink === "#14181C" && got.lead === "zip-code" && got.crossing.join() === "Ward 33,Ward 39,Ward 40,Ward 47" && got.button &&
         /selected a spot inside ZIP code 60625, not at any address/.test(got.status) &&
         /every City Ward it crosses/.test(got.status),
-      JSON.stringify({ parent: got.parent, crossing: got.crossing, status: got.status.slice(0, 220) }));
+      JSON.stringify({ parent: got.parent, ink: got.ink, lead: got.lead, crossing: got.crossing, status: got.status.slice(0, 220) }));
     check("a ZIP code a list holds is never sent to the geocoder", r.asked.length === 0, JSON.stringify(r.asked));
     check("a ZIP code search is counted by its layer, once, and its pin is not counted as a reader's",
       got.events.filter((e) => /^zip-search\//.test(e)).join() === "zip-search/zip-code" &&
@@ -1603,6 +1614,23 @@ try {
       got.on.join() === "congress,zip-code" && got.crossing.length >= 1 && got.crossing.every((t) => /^IL-\d+$/.test(t)) &&
         /every U\.S\. House District it crosses/.test(got.status),
       JSON.stringify({ on: got.on, crossing: got.crossing, status: got.status.slice(-120) }));
+    // the message stays open at the search bar and folds away once the reader
+    // clicks elsewhere, keeping its words for when they come back to the bar
+    const openBefore = got.open;
+    await r.page.click(".group-pinned .group-heading");
+    await r.page.waitForTimeout(200);
+    got = await view(r.page);
+    check("the ZIP code's message stays open until the reader clicks away from the search bar, then folds",
+      openBefore === true && got.open === false && /selected a spot inside ZIP code 60625/.test(got.status),
+      JSON.stringify({ openBefore, open: got.open, status: got.status.slice(0, 80) }));
+    // stopping the comparison gives the ZIP code its own colour back and puts
+    // its card back in its group
+    await r.page.click(".group-pinned .pin-parent-btn");
+    await r.page.waitForTimeout(300);
+    got = await view(r.page);
+    check("stopping the comparison gives the ZIP code back its own line and its card back its place",
+      got.ink !== "#14181C" && !!got.ink && got.lead === null && got.parent === 0,
+      JSON.stringify({ ink: got.ink, lead: got.lead }));
     await r.context.close();
 
     r = await run("q=53703", true);
@@ -2288,6 +2316,91 @@ try {
       await page.waitForTimeout(300);
       const again = (await shareEvents()).filter((e) => e.indexOf("share-in/") === 0);
       check("a reload in the same window counts the share no more", again.length === 0, JSON.stringify(again));
+      await context.close();
+    }
+    // A LONG-PRESS SHORTCUT. The launcher hands "Use my location" on as
+    // #locate and leaves districtry-shortcut in session storage. The map must
+    // press its own location button, so the browser asks as it does for the
+    // button, select where the reader is, and count the shortcut once, by app
+    // and action. The key must leave the address before the browser answers:
+    // with the location refused the map selects nothing, so only that strip
+    // keeps a reload from asking again. A point in the address wins.
+    const seedShortcut = (context, action) => context.addInitScript((a) => {
+      try {
+        if (!sessionStorage.getItem("__shortcutSeeded")) {
+          sessionStorage.setItem("__shortcutSeeded", "1");
+          sessionStorage.setItem("districtry-shortcut", a);
+        }
+      } catch (e) { /* blocked storage: the count check below reports it */ }
+    }, action);
+    const shortcutEvents = (p) => p.evaluate(() => (window.__gcEvents || [])
+      .filter((v) => v && v.event && /^(geolocate|geolocate-success|locate-fail\/.*|app-shortcut\/.*|feedback-open\/.*)$/.test(v.path))
+      .map((v) => v.path));
+    {
+      const HERE = { latitude: 41.8789, longitude: -87.6359 };
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE,
+        permissions: ["geolocation"], geolocation: HERE });
+      await seedShortcut(context, "locate");
+      const page = await booted(context, `${BASE}#locate`, stubCounter);
+      const sel = await page.waitForFunction((n) => !!window[n].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT })
+        .then(() => page.evaluate((n) => window[n].state.selectedPoint, EXPORTS_NAME), () => null);
+      await page.waitForTimeout(300);
+      const events = await shortcutEvents(page);
+      const mark = await page.evaluate(() => sessionStorage.getItem("districtry-shortcut"));
+      check("the locate shortcut selects where the reader is, through the map's own location button",
+        !!sel && Math.abs(sel.lat - HERE.latitude) < 1e-6 && Math.abs(sel.lng - HERE.longitude) < 1e-6,
+        JSON.stringify(sel));
+      check("the locate shortcut is counted once, by app, beside the button's own counts, and its mark removed",
+        events.slice().sort().join() === [`app-shortcut/${TAG}/locate`, "geolocate", "geolocate-success"].sort().join() && mark === null,
+        JSON.stringify({ events, mark }));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      await seedShortcut(context, "locate");
+      const page = await booted(context, `${BASE}#locate`, stubCounter);
+      await page.waitForTimeout(800);
+      const first = await shortcutEvents(page);
+      const hash = await page.evaluate(() => location.hash);
+      check("with the location refused, the locate shortcut says so once and leaves no #locate in the address",
+        first.slice().sort().join() === [`app-shortcut/${TAG}/locate`, "geolocate", `locate-fail/${TAG}/denied`].sort().join() && hash === "",
+        JSON.stringify({ first, hash }));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      await page.waitForTimeout(800);
+      const again = await shortcutEvents(page);
+      check("a reload after the locate shortcut asks for the location no more", again.length === 0, JSON.stringify(again));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE,
+        permissions: ["geolocation"], geolocation: { latitude: 41.8789, longitude: -87.6359 } });
+      const page = await booted(context, `${BASE}#p=41.8825,-87.6285&locate`, stubCounter);
+      await page.waitForTimeout(800);
+      const sel = await page.evaluate((n) => window[n].state.selectedPoint, EXPORTS_NAME);
+      const events = await shortcutEvents(page);
+      check("a point in the address wins over #locate, and the location is not asked for",
+        !!sel && Math.abs(sel.lat - 41.8825) < 1e-6 && events.length === 0 &&
+          !/locate/.test(await page.evaluate(() => location.hash)),
+        JSON.stringify({ sel, events }));
+      await context.close();
+    }
+    // "Report a problem" is handed on as #feedback, which opens the report
+    // form exactly as a link to it does (check 1h), and is counted once.
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      await seedShortcut(context, "feedback");
+      const page = await booted(context, `${BASE}#feedback`, stubCounter);
+      await page.waitForTimeout(300);
+      const open = await page.evaluate(() => {
+        const m = document.getElementById("feedback-modal");
+        return !!m && !m.hidden;
+      });
+      const events = await shortcutEvents(page);
+      const mark = await page.evaluate(() => sessionStorage.getItem("districtry-shortcut"));
+      check("the report shortcut opens the report form and is counted once, by app",
+        open && events.slice().sort().join() === [`app-shortcut/${TAG}/feedback`, "feedback-open/link"].sort().join() && mark === null,
+        JSON.stringify({ open, events, mark }));
       await context.close();
     }
     {

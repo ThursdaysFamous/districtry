@@ -38,5 +38,35 @@
       "text": "text",
       "url": "url"
     }
-  }
+  },
+  "shortcuts": [
+    {
+      "name": "Use my location",
+      "short_name": "My location",
+      "description": "Show the districts where you are now",
+      "url": "https://districtry.com/app/#locate",
+      "icons": [
+        {
+          "src": "/shortcut-locate-192.png",
+          "sizes": "192x192",
+          "type": "image/png",
+          "purpose": "any"
+        }
+      ]
+    },
+    {
+      "name": "Report a problem",
+      "short_name": "Report",
+      "description": "Tell districtry about a wrong answer or a bug",
+      "url": "https://districtry.com/app/#feedback",
+      "icons": [
+        {
+          "src": "/shortcut-report-192.png",
+          "sizes": "192x192",
+          "type": "image/png",
+          "purpose": "any"
+        }
+      ]
+    }
+  ]
 }

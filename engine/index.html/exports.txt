@@ -330,6 +330,19 @@
       rt.overlayLayer.eachLayer(function (l) { if (!color && l.options && l.options.color) color = l.options.color; });
       return color;
     },
+    // the colour the lit district's line is drawn in, so a test can see the
+    // compared district take the comparison's ink (relParentInk)
+    highlightColor: function (id) {
+      var mod = getLayerById(id), rt = layerRuntime[id];
+      if (!mod || !rt || !rt.overlayLayer || !rt.highlightApplied) return null;
+      if (rt.overlayLayer.dxTiles) {
+        var gl = tileGLLayer && tileGLLayer.getMaplibreMap(), ids = tileIds(mod);
+        if (rt.tileLiveSelected) return rt.overlayLayer.liveSelected ? highlightStyleFor(mod).color : null;
+        return gl && gl.getLayer(ids.hl) ? gl.getPaintProperty(ids.hl, "line-color") : null;
+      }
+      var lit = rt.highlightedLayer;
+      return lit && lit.options ? lit.options.color : null;
+    },
     loadWholeFile: function (id) {
       var mod = getLayerById(id);
       if (!mod || !tileDrawAvailable(mod)) return Promise.resolve(false);
