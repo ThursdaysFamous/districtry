@@ -45,17 +45,22 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # index.html actually carries the fences, so an app WITHOUT dark mode is skipped
 # instead of failing, and an app that adopts it is picked up with nothing here to
 # edit.
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-try:
-    from generate_metro_files import INSTANCES
-except ImportError:  # pragma: no cover
-    INSTANCES = {"il": {"app": "il"}}
+#
+# THE FOLDERS ARE READ OFF THE TREE, NOT OFF generate_metro_files.INSTANCES
+# (2026-10-21). That import exits the process when jsonschema is missing, and
+# it is not an ImportError, so the fallback that used to sit here never ran.
+# It did not matter while only this script and its CI step read the table; the
+# front page's question tiles now take their dark colours from dark_twin, and
+# build_landing_page.py has run without jsonschema since it was written. The
+# tree is also the rule validate_instance_registration.py holds the registry
+# to (a top-level folder with its own index.html), so both readers name the
+# same apps.
 
 
 def targets():
     out = []
-    for tag in sorted(INSTANCES):
-        rel = os.path.join(INSTANCES[tag]["app"], "index.html")
+    for tag in sorted(os.listdir(REPO_ROOT)):
+        rel = os.path.join(tag, "index.html")
         path = os.path.join(REPO_ROOT, rel)
         try:
             with open(path, encoding="utf-8", newline="") as f:

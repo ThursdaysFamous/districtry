@@ -86,6 +86,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # statewide wash only while an area that draws one is live. One reader of which
 # areas have two tiers, not two.
 from build_coverage_map import AREAS  # noqa: E402
+# The dark twin of a map colour, so a question tile and the layer it asks about
+# share one colour at night as well as by day. One derivation, not two.
+import build_dark_map_palette as palette  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MANIFEST = os.path.join(REPO_ROOT, "metros.json")
@@ -907,12 +910,7 @@ def render_asks(metros):
 
 
 def question_colours():
-    """{question: (light, dark)} for every question row that names a concept.
-
-    build_dark_map_palette is imported here rather than at the top because it
-    reads the fleet through generate_metro_files, which needs jsonschema, and
-    several generators import this module for its shell alone."""
-    import build_dark_map_palette as palette
+    """{question: (light, dark)} for every question row that names a concept."""
     asked = [q for q, _ in QUESTION_ROWS]
     missing = [q for q in asked if q not in QUESTION_CONCEPT]
     if missing:
