@@ -1,0 +1,87 @@
+{
+  "1": {
+    "members": [
+      {
+        "email": "tmurray@marionco.illinois.gov",
+        "name": "Tracy Murray",
+        "role": "Vice-Chairman"
+      },
+      {
+        "name": "Matt Huelskoetter"
+      },
+      {
+        "email": "swoodward@marionco.illinois.gov",
+        "name": "Sharon Woodward"
+      }
+    ],
+    "sourceUrl": "https://marioncountyil.gov/county-board/"
+  },
+  "2": {
+    "members": [
+      {
+        "email": "mdouglas@marionco.illinois.gov",
+        "name": "Dr. Michael Douglas"
+      },
+      {
+        "email": "jriley@marionco.illinois.gov",
+        "name": "Jack Riley"
+      },
+      {
+        "email": "dreed@marionco.illinois.gov",
+        "name": "Deb Reed"
+      }
+    ],
+    "sourceUrl": "https://marioncountyil.gov/county-board/"
+  },
+  "3": {
+    "members": [
+      {
+        "name": "Shawn Richards"
+      },
+      {
+        "email": "jdunahee@marionco.illinois.gov",
+        "name": "Josh Dunahee"
+      },
+      {
+        "email": "swhritenour@marionco.illinois.gov",
+        "name": "Steven Whritenour",
+        "role": "Chairman"
+      }
+    ],
+    "sourceUrl": "https://marioncountyil.gov/county-board/"
+  },
+  "4": {
+    "members": [
+      {
+        "email": "crose@marionco.illinois.gov",
+        "name": "Cody Rose"
+      },
+      {
+        "email": "jmeekshakim@marionco.illinois.gov",
+        "name": "Judith Meeks-Hakim"
+      },
+      {
+        "email": "ckrupp@marionco.illinois.gov",
+        "name": "Christopher Krupp"
+      }
+    ],
+    "sourceUrl": "https://marioncountyil.gov/county-board/"
+  },
+  "5": {
+    "members": [
+      {
+        "email": "asmith@marionco.illinois.gov",
+        "name": "Adam Smith"
+      },
+      {
+        "email": "diossi@marionco.illinois.gov",
+        "name": "David Iossi"
+      },
+      {
+        "email": "dsmith@marionco.illinois.gov",
+        "name": "Debbie A. Smith"
+      }
+    ],
+    "sourceUrl": "https://marioncountyil.gov/county-board/"
+  }
+}

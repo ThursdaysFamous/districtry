@@ -92,7 +92,7 @@
 | Moultrie | 17139 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Ogle | 17141 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 3 — `ogle-lasalle-special-districts` (no-source); `ogle-municipal-wards` (no-source); `statewide-library-officials` (no-source) |
 | Peoria | 17143 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 2 — `pass9-ward-seats-without-maps` (no-source); `peoria-fire-park-library-contact` (data-quality) |
-| Perry | 17145 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 2 — `perry-county-website-blocked` (blocked); `statewide-library-officials` (no-source) |
+| Perry | 17145 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Pike | 17149 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Pulaski | 17153 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Putnam | 17155 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (2)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 101 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 100 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.

@@ -28,6 +28,13 @@ TO SEEK and none should be invented. Its commissioners are not carried here
 either — that is a roster, it belongs on the County card with a source and a date,
 and the only county source for it is the site this client cannot read.
 
+CORRECTED 2026-10-20: the site can be read now. Asked with our own token on
+Python's own HTTP client, perrycountyil.gov served its commissioners page three
+times running, twenty seconds apart, naming all three, so they ride the County
+card from `scripts/il_county_commissioners_scraper.py` (its PERRY entry records
+the reading). The two sentences above, and the opening paragraph's "That blocker
+is unchanged", were true of the holding page the site answered in August.
+
 THE PRECINCTS ARE THE CENSUS FABRIC, ONE FOR ONE. THE JASPER TEST PASSES 27/27:
 the census voting districts carry Perry's twenty-seven precinct names exactly, and
 their POP100 sums to the county's own 2020 population of 20,945 to the person. No
