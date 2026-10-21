@@ -8594,11 +8594,12 @@ asked, and nothing changes on the map.
 
 ## Ask ny-nysl-library-trustees — New York State Library, Division of Library Development: the trustee names libraries already report
 
-> **NOT SENT. Drafted 2026-10-21**, for the operator to read and, if he agrees, to send from his
-> own mailbox. To Amy Heebner, who leads the Technology, Reporting and Federal Aid Services Team
+> **ASKED 2026-10-21 at 17:26 UTC**, from the operator's own mailbox, read off the sent folder by
+> the thread that drafts the letters. The sent copy, not the text below, is the record of what was
+> asked. A follow-up is due about 2026-11-11 if nothing has come back. Drafted 2026-10-21. To Amy Heebner, who leads the Technology, Reporting and Federal Aid Services Team
 > in the State Library's Division of Library Development (`amy.heebner@nysed.gov`). That team
 > runs the annual report every public and association library files. Gap
-> `ny-special-district-officials` carries the draft's date.
+> `ny-special-district-officials` carries the date in its `ask` field.
 
 **Why this is asked.** A New York library district elects its trustees, and districtry's Sullivan
 County map draws the county's two library districts with nobody named on the card. Under the
