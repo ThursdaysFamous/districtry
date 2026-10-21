@@ -51,6 +51,23 @@ and Chromium's code the same day. A browser resolves the full address exactly
 as it resolved the short one, so the website's own install is unchanged, and
 the host comes from `CNAME`, the file that says where the site is served.
 
+LONG-PRESS SHORTCUTS (from 2026-10-21). `shortcuts` puts "Use my location"
+and "Report a problem" on the menu a long press on the installed app's icon
+opens, on Android and in a computer's installed copy, and the Google Play app
+carries them as its own app shortcuts. Each opens the launcher with its action
+in the hash (`/app/#locate`, `/app/#feedback`), so a shortcut needs nothing the
+launcher cannot do offline, and the launcher hands the action on to the state
+the reader used last, where the map asks for the reader's location or opens
+the report form, exactly as its own button would. With no state remembered,
+"locate" opens the front page, which asks for no location, and "feedback"
+opens the site's own report form. Each address is written in full for the
+share target's reason and one more: PWABuilder resolves a shortcut's address
+against the address it fetched the manifest from, and when it retries a build
+whose images failed it fetches the manifest through a proxy of its own, so a
+short address would send a shortcut to PWABuilder's host (read in its code on
+2026-10-21). The icons are rendered from SVG by
+`scripts/build_shortcut_icons.mjs`, which records what it rendered.
+
 THE GOOGLE PLAY APP (from 2026-10-16). The Play app is a Trusted Web Activity
 that opens this site, built with PWABuilder. Android shows it full screen, with
 no address bar, only when `/.well-known/assetlinks.json` names its package and
@@ -80,8 +97,8 @@ instance (generated into each app's head-theme region).
 
 WHAT `--check` ASSERTS, beyond byte-equality of the manifest:
   * every worksheet agrees on `brand.product_name` and `brand.theme_color`;
-  * the three icons the manifest names are byte-identical to the brand's own
-    files under districtry/icons/ and are PNGs of the size declared;
+  * every icon the manifest names is byte-identical to the brand's own file
+    under districtry/icons/ and is a PNG of the size declared;
   * no instance ships a manifest of its own (a second app identity);
   * every page that declares a manifest declares this one, once, and every
     app page and the front door declare it;
@@ -95,6 +112,13 @@ WHAT `--check` ASSERTS, beyond byte-equality of the manifest:
   * the launcher's worker names no cache outside its own prefix and never
     fetches the request it was handed, and the engine block registers that
     worker at the same script and scope the launcher does;
+  * there are no more shortcuts than the Play app keeps, each short name fits
+    the length Bubblewrap allows, each address is the launcher's full address
+    with the shortcut's action in the hash, the launcher passes on exactly
+    those actions and leaves the mark the engine counts a shortcut by, each
+    action is read by the engine block that does it, and each icon is a copy
+    of the PNG `build_shortcut_icons.mjs` rendered from a source that has not
+    changed since;
   * `.well-known/assetlinks.json` is byte-identical to what `PLAY_SIGNING_KEYS`
     produces, every fingerprint in it is well formed and listed once, and the
     Play-app block recognises the app by the package name it names.
@@ -107,6 +131,7 @@ Usage:
 import argparse
 import difflib
 import glob
+import hashlib
 import json
 import os
 import re
@@ -193,6 +218,33 @@ ICONS = [
     ("icon-maskable-512.png", "districtry/icons/districtry-maskable-512.png", 512, "maskable"),
 ]
 
+# The long-press shortcuts. Each opens the launcher with its action in the
+# hash, and `reader` names the engine block that does the action and the line
+# it reads the action with, so an action renamed on one side fails here rather
+# than leaving the shortcut opening a map with nothing done. Android shows
+# `name` where there is room and `short_name` where there is not. Each icon is
+# a root copy of the PNG scripts/build_shortcut_icons.mjs renders from
+# districtry/icons/<icon minus "-192.png">.svg.
+SHORTCUTS = [
+    {"action": "locate", "name": "Use my location", "short_name": "My location",
+     "description": "Show the districts where you are now",
+     "icon": "shortcut-locate-192.png",
+     "reader": (os.path.join("engine", "index.html", "geolocation.txt"),
+                'var LOCATE_LINK_KEY = "locate";')},
+    {"action": "feedback", "name": "Report a problem", "short_name": "Report",
+     "description": "Tell districtry about a wrong answer or a bug",
+     "icon": "shortcut-report-192.png",
+     "reader": (os.path.join("engine", "index.html", "feedback.txt"),
+                'if (key !== "feedback") continue;')},
+]
+SHORTCUT_ICON_DIR = os.path.join("districtry", "icons")
+SHORTCUT_RECORD = os.path.join(SHORTCUT_ICON_DIR, "shortcut-icons.json")
+SHORTCUT_PX = 192
+# PWABuilder keeps the first four shortcuts and drops the rest, and Bubblewrap
+# cuts a short name at 12 characters (its SHORT_NAME_MAX_SIZE).
+SHORTCUTS_MAX = 4
+SHORT_NAME_MAX = 12
+
 MANIFEST_LINK_RE = re.compile(r'<link\b[^>]*\brel=["\']manifest["\'][^>]*>', re.I)
 HREF_RE = re.compile(r'\bhref=["\']([^"\']*)["\']', re.I)
 
@@ -265,6 +317,43 @@ def check_share_target(doc, site):
              "gone (seen on a Pixel on 2026-10-16)." % (action, site, START_URL))
 
 
+def check_shortcuts(doc, site):
+    """Hold the long-press shortcuts to what the Play app keeps of them.
+
+    PWABuilder keeps four and drops the rest without saying which, Bubblewrap
+    cuts a short name at 12 characters, and a shortcut whose address does not
+    name the site the app is linked to would open outside the app, or on
+    PWABuilder's own host when a build is retried through its proxy. Each
+    action must also be one the launcher passes on, or the shortcut opens the
+    map with nothing done."""
+    shortcuts = doc["shortcuts"]
+    if len(shortcuts) > SHORTCUTS_MAX:
+        fail("the manifest lists %d shortcuts. PWABuilder keeps the first %d and "
+             "drops the rest from the Google Play app." % (len(shortcuts), SHORTCUTS_MAX))
+    actions = [s["action"] for s in SHORTCUTS]
+    if len(set(actions)) != len(actions):
+        fail("SHORTCUTS lists an action twice: %s" % actions)
+    host = urllib.parse.urlsplit(site).netloc
+    for s, entry in zip(SHORTCUTS, shortcuts):
+        if not re.match(r"^[a-z]+$", s["action"]):
+            fail("shortcut action %r is not lower-case letters. The launcher "
+                 "passes on only a bare word, so nothing else can reach a map."
+                 % s["action"])
+        if len(entry["short_name"]) > SHORT_NAME_MAX:
+            fail("shortcut %r has the short name %r, %d characters. Bubblewrap "
+                 "cuts a short name at %d, so the Play app would show it cut off."
+                 % (s["action"], entry["short_name"], len(entry["short_name"]),
+                    SHORT_NAME_MAX))
+        parts = urllib.parse.urlsplit(entry["url"])
+        want = ("https", host, START_URL, "", s["action"])
+        if (parts.scheme, parts.netloc, parts.path, parts.query, parts.fragment) != want:
+            fail("shortcut %r opens %r. It must open the launcher's full address "
+                 "with the action in the hash, %s%s#%s: PWABuilder resolves a "
+                 "short address against the address it fetched the manifest "
+                 "from, which is its own proxy when it retries a build."
+                 % (s["action"], entry["url"], site, START_URL, s["action"]))
+
+
 def png_size(data):
     if data[:8] != b"\x89PNG\r\n\x1a\n" or data[12:16] != b"IHDR":
         return None
@@ -311,8 +400,21 @@ def build_manifest():
             "method": "GET",
             "params": {p: p for p in SHARE_PARAMS},
         },
+        # The long-press menu on the app's icon. Each address is written in
+        # full because PWABuilder resolves a short one against whichever
+        # address it fetched the manifest from (see the docstring).
+        "shortcuts": [
+            {"name": s["name"], "short_name": s["short_name"],
+             "description": s["description"],
+             "url": site + START_URL + "#" + s["action"],
+             "icons": [{"src": "/" + s["icon"],
+                        "sizes": "%dx%d" % (SHORTCUT_PX, SHORTCUT_PX),
+                        "type": "image/png", "purpose": "any"}]}
+            for s in SHORTCUTS
+        ],
     }
     check_share_target(doc, site)
+    check_shortcuts(doc, site)
     return json.dumps(doc, indent=2, ensure_ascii=False) + "\n"
 
 
@@ -370,10 +472,42 @@ def write_or_check(relpath, want, check, source, why):
         print("build-manifests: %s already current" % relpath)
 
 
+def sha256_of(relpath):
+    with open(os.path.join(REPO, relpath), "rb") as fh:
+        return hashlib.sha256(fh.read()).hexdigest()
+
+
+def shortcut_icons():
+    """Each shortcut icon as (root copy, brand PNG, size, purpose), once the
+    brand PNG is shown to be the one scripts/build_shortcut_icons.mjs rendered
+    from its source as that source is now. Nothing here reads the pixels, so
+    this proves where a PNG came from and never that it looks right."""
+    record = json.loads(read(os.path.join(REPO, SHORTCUT_RECORD), "the shortcut icon record"))
+    out, rerender = [], "Run node scripts/build_shortcut_icons.mjs, look at the PNGs, then run this script."
+    for s in SHORTCUTS:
+        entry = record.get(s["icon"])
+        source = s["icon"].replace("-%d.png" % SHORTCUT_PX, ".svg")
+        if not entry or entry.get("source") != source or entry.get("px") != SHORTCUT_PX:
+            fail("%s has no record of %s rendered at %dpx from %s. %s"
+                 % (SHORTCUT_RECORD, s["icon"], SHORTCUT_PX, source, rerender))
+        if sha256_of(os.path.join(SHORTCUT_ICON_DIR, source)) != entry["source_sha256"]:
+            fail("%s changed after %s was rendered from it. %s"
+                 % (os.path.join(SHORTCUT_ICON_DIR, source), s["icon"], rerender))
+        png = os.path.join(SHORTCUT_ICON_DIR, s["icon"])
+        if sha256_of(png) != entry["png_sha256"]:
+            fail("%s is not the PNG build_shortcut_icons.mjs rendered. %s" % (png, rerender))
+        out.append((s["icon"], png, SHORTCUT_PX, "any"))
+    stale = sorted(set(record) - {s["icon"] for s in SHORTCUTS})
+    if stale:
+        fail("%s records %s, which no shortcut uses. Remove the icon's source and "
+             "PNG, then render again." % (SHORTCUT_RECORD, ", ".join(stale)))
+    return out
+
+
 def icons(check):
     """Copy each root icon from the brand's own file, or check it still is one."""
     drift = []
-    for icon, src, px, _purpose in ICONS:
+    for icon, src, px, _purpose in ICONS + shortcut_icons():
         with open(os.path.join(REPO, src), "rb") as fh:
             want = fh.read()
         size = png_size(want)
@@ -469,6 +603,7 @@ def check_launcher():
              "own first launch, a place shared into the app would reach the host "
              "in the address of the request." % ENGINE_BLOCK)
     share_key = launcher_share_key(engine, page)
+    shortcut_key = launcher_shortcut_key(engine, page)
     if not re.search(r'<meta name="robots" content="noindex', page):
         fail("%s is not marked noindex. It is a redirect, not a page a search "
              "result should send anyone to." % LAUNCHER)
@@ -495,7 +630,41 @@ def check_launcher():
         fail("%s fetches the request it was handed. A place shared into the app "
              "arrives in that request's address, so the refresh must ask for the "
              "launcher page alone." % LAUNCHER_SW)
-    return key, share_key
+    return key, share_key, shortcut_key
+
+
+def launcher_shortcut_key(engine, page):
+    """The launcher's half of a long-press shortcut, and the key it is counted by.
+
+    The launcher passes on only the actions it lists, so its list must be the
+    manifest's: an action the manifest has and the launcher lacks opens a map
+    with nothing done, and one the launcher has and the manifest lacks is a
+    hash nothing sends. Each action must be read by the engine block that does
+    it, and the launcher must leave the mark install-app counts a shortcut by."""
+    m = re.search(r"\bvar SHORTCUT_ACTIONS = \[([^\]]*)\];", page)
+    if not m:
+        fail("%s does not declare SHORTCUT_ACTIONS as a list of string literals, "
+             "so the actions it passes on cannot be established" % LAUNCHER)
+    listed = re.findall(r'"([^"]*)"', m.group(1))
+    want = [s["action"] for s in SHORTCUTS]
+    if listed != want:
+        fail("%s passes on the actions %s and the manifest's shortcuts send %s. "
+             "Change SHORTCUTS and the launcher together." % (LAUNCHER, listed, want))
+    for s in SHORTCUTS:
+        block, line = s["reader"]
+        if line not in read(os.path.join(REPO, block), "the engine block for %r" % s["action"]):
+            fail("%s no longer carries %s, the line that reads the %r shortcut's "
+                 "hash. The shortcut would open a map with nothing done."
+                 % (block, line, s["action"]))
+    k = re.search(r'\bvar DST_SHORTCUT_KEY = "([^"]+)";', engine)
+    if not k:
+        fail("%s no longer declares DST_SHORTCUT_KEY as a string literal, so the "
+             "key the launcher must write cannot be established" % ENGINE_BLOCK)
+    if 'sessionStorage.setItem("%s"' % k.group(1) not in page:
+        fail("%s does not write sessionStorage %r, the key %s counts a shortcut "
+             "by. Shortcuts would go uncounted, and nothing else would fail."
+             % (LAUNCHER, k.group(1), ENGINE_BLOCK))
+    return k.group(1)
 
 
 def launcher_share_key(engine, page):
@@ -561,13 +730,15 @@ def main():
 
     icons(args.check)
     linking = check_pages()
-    key, share_key = check_launcher()
+    key, share_key, shortcut_key = check_launcher()
     print("build-manifests: OK — one manifest for %d instances, linked by %d "
           "page(s), sending a share to %s; the launcher reads %r, the key the "
           "apps write, and marks a shared place under %r, the key they count "
-          "it by; the asset links name %s with %d Play signing keys"
+          "it by; %d long-press shortcut(s) (%s), marked under %r; the asset "
+          "links name %s with %d Play signing keys"
           % (len(INSTANCES), linking, site_origin() + START_URL, key, share_key,
-             PLAY_PACKAGE, len(PLAY_SIGNING_KEYS)))
+             len(SHORTCUTS), ", ".join(s["action"] for s in SHORTCUTS),
+             shortcut_key, PLAY_PACKAGE, len(PLAY_SIGNING_KEYS)))
 
 
 if __name__ == "__main__":

@@ -1604,6 +1604,24 @@ try {
       !!st && st.action === `https://${SITE_HOST}/app/` && st.method === "GET" && !st.enctype &&
         JSON.stringify(st.params) === JSON.stringify({ title: "title", text: "text", url: "url" }),
       JSON.stringify(st));
+    // The long-press shortcuts open the launcher's FULL address with their
+    // action in the hash, each with a 192px icon the browser can fetch: the
+    // Google Play app is built from these entries, and Bubblewrap drops a
+    // shortcut whose icon is smaller than 96px or not an "any" icon.
+    const sc = (manifest && manifest.shortcuts) || [];
+    check("the manifest's two long-press shortcuts open the launcher's full address with their action in the hash",
+      sc.length === 2 && sc[0].url === `https://${SITE_HOST}/app/#locate` &&
+        sc[1].url === `https://${SITE_HOST}/app/#feedback` &&
+        sc.every((s) => s.name && s.short_name && s.short_name.length <= 12 &&
+          Array.isArray(s.icons) && s.icons.length === 1 && s.icons[0].sizes === "192x192" &&
+          s.icons[0].purpose === "any" && s.icons[0].type === "image/png"),
+      JSON.stringify(sc.map((s) => ({ url: s.url, short_name: s.short_name, icons: s.icons }))));
+    for (const s of sc) {
+      const r = await page.request.get(new URL(s.icons[0].src, BASE + "/").href);
+      check(`the ${JSON.stringify(s.short_name)} shortcut's icon is served as a PNG`,
+        r.status() === 200 && /^image\/png/.test(r.headers()["content-type"] || ""),
+        `${s.icons[0].src} -> HTTP ${r.status()} ${r.headers()["content-type"]}`);
+    }
     await ctx.close();
 
     const cases = [
@@ -1815,6 +1833,83 @@ try {
       check("the worker refreshes its copy without the share, so the host never sees it",
         refresh.length > 0 && leaked.length === 0, JSON.stringify({ refresh, leaked }));
       await ctx.close();
+    }
+  }
+
+  // --- 9c. a long-press shortcut on the installed app's icon ----------------
+  //
+  // The manifest's shortcuts open /app/#locate and /app/#feedback. The
+  // launcher must hand the action on, in the hash and nothing else, to the
+  // state used last, where the map asks for the location or opens the report
+  // form (smoke check 1l holds that half), and leave the mark the map counts
+  // the shortcut by. With no state remembered, "feedback" opens the site's own
+  // report form and "locate" opens the front page with nothing handed on,
+  // because the front page asks nobody for a location. An action the launcher
+  // does not list is dropped, a share wins over a shortcut, and a shortcut in
+  // the Google Play app keeps ref=play.
+  {
+    const wi = TAGS.includes("wi") ? "wi" : TAGS[0];
+    const open = async ({ stored, address, referrer }) => {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      await ctx.addInitScript(({ s, r }) => {
+        if (location.pathname !== "/app/") return;
+        try {
+          if (s === null) localStorage.removeItem("districtry-last-app");
+          else localStorage.setItem("districtry-last-app", s);
+        } catch (e) { /* private mode */ }
+        if (r) Object.defineProperty(Document.prototype, "referrer", { get: () => r, configurable: true });
+      }, { s: stored, r: referrer || null });
+      const p = await ctx.newPage();
+      await stubInstances(p);
+      await p.route((url) => url.pathname === "/", (r) => r.fulfill({
+        status: 200, contentType: "text/html", body: "<!doctype html><title>front door stub</title>",
+      }));
+      await p.route("**/gc.zgo.at/**", (r) => r.abort());
+      await p.goto(BASE + address, { waitUntil: "commit" });
+      await p.waitForURL((u) => u.pathname !== "/app/", { timeout: 5000, waitUntil: "commit" }).catch(() => {});
+      await p.waitForLoadState("domcontentloaded").catch(() => {});
+      const at = await p.evaluate(() => {
+        const get = (k) => { try { return sessionStorage.getItem(k); } catch (e) { return "blocked"; } };
+        return { path: location.pathname, search: location.search, hash: location.hash,
+          shortcut: get("districtry-shortcut"), share: get("districtry-share-in"),
+          play: get("districtry-play-app") };
+      }).catch((e) => ({ error: String(e) }));
+      await ctx.close();
+      return at;
+    };
+    for (const action of ["locate", "feedback"]) {
+      const at = await open({ stored: wi, address: "/app/#" + action });
+      check(`the ${action} shortcut opens /${wi}/#${action} and marks the window for the count`,
+        at.path === `/${wi}/` && at.search === "" && at.hash === "#" + action && at.shortcut === action,
+        JSON.stringify(at));
+    }
+    {
+      const at = await open({ stored: null, address: "/app/#locate" });
+      check("with no state remembered, the locate shortcut opens the front page and hands nothing on",
+        at.path === "/" && at.hash === "" && at.shortcut === null, JSON.stringify(at));
+    }
+    {
+      const at = await open({ stored: null, address: "/app/#feedback" });
+      check("with no state remembered, the report shortcut opens the site's own report form",
+        at.path === "/feedback.html" && at.hash === "" && at.shortcut === null, JSON.stringify(at));
+    }
+    {
+      const at = await open({ stored: wi, address: "/app/#gaps" });
+      check("an action the launcher does not list is not handed on",
+        at.path === `/${wi}/` && at.hash === "" && at.shortcut === null, JSON.stringify(at));
+    }
+    {
+      const at = await open({ stored: wi, address: "/app/?text=" + encodeURIComponent("9 Example St, Madison, WI") + "#locate" });
+      check("a share wins over a shortcut",
+        at.path === `/${wi}/` && /^#q=/.test(at.hash) && at.shortcut === null && at.share === "1",
+        JSON.stringify(at));
+    }
+    {
+      const at = await open({ stored: wi, address: "/app/#locate", referrer: "android-app://com.districtry.app/" });
+      check("a shortcut in the Google Play app keeps ref=play and the window's Play mark",
+        at.path === `/${wi}/` && at.search === "?ref=play" && at.hash === "#locate" &&
+          at.shortcut === "locate" && at.play === "1",
+        JSON.stringify(at));
     }
   }
 
