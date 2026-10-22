@@ -191,9 +191,17 @@ jobs:
           if [ "$debs_after" -gt "$debs_before" ]; then
             echo "new_debs=1" >> "$GITHUB_OUTPUT"
           fi
-          if [ "$deps_status" -ne 0 ]; then exit "$deps_status"; fi
           if [ "${{ steps.pw-cache.outputs.cache-hit }}" != "true" ]; then
             retry 2 300 npx playwright install chromium
+          fi
+          if [ "$deps_status" -ne 0 ]; then
+            # See smoke-test.yml: go on only if the browser actually starts.
+            if timeout 60 node -e "require('playwright').chromium.launch().then(b => b.close())"; then
+              echo "::warning::install-deps did not finish, but Chromium starts with the libraries already on this runner; some optional fonts may be missing"
+            else
+              echo "::error::install-deps did not finish and Chromium does not start without it"
+              exit "$deps_status"
+            fi
           fi
 
       - name: Save Chromium's system packages
