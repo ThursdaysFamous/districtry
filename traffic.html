@@ -2414,6 +2414,17 @@ code {
   /* ---- daily stacked column chart ---- */
   var box = document.getElementById("dailyChart");
   var W = 900, H = 250, padL = 34, padR = 6, padT = 10, padB = 26;
+  /* On a phone the chart keeps its labels legible by drawing at 0.8px per
+     unit and scrolling sideways (the 720px floor in the stylesheet). That
+     floor is for two months of columns; a shorter window is drawn on a
+     narrower canvas, about 11.5 units a day, so 30 days or fewer fits the
+     screen at the same label size instead of scrolling. */
+  var narrow = window.matchMedia && window.matchMedia("(max-width: 760px)").matches;
+  box.style.minWidth = "";
+  if (narrow && daily.length < FULL.daily.length) {
+    W = Math.max(360, Math.min(900, Math.round(padL + padR + daily.length * 11.5)));
+    box.style.minWidth = Math.round(W * 0.8) + "px";
+  }
   var plotW = W - padL - padR, plotH = H - padT - padB;
   /* Next clean step above the peak — derived, so a new high cannot overflow
      the plot and a quiet month cannot leave the chart squashed flat. */
@@ -2657,6 +2668,18 @@ code {
   };
 
   render(keyFromHash());
+  /* The chart's canvas depends on the screen width, so crossing the phone
+     breakpoint (a rotated phone, a resized window) draws it again. */
+  var mq = window.matchMedia && window.matchMedia("(max-width: 760px)");
+  var redraw = function () {
+    var on = document.querySelector('#timeframe button[aria-pressed="true"]');
+    var k = on ? on.getAttribute("data-days") : keyFromHash();
+    var old = document.getElementById("page-main");
+    old.parentNode.replaceChild(PRISTINE.cloneNode(true), old);
+    render(k);
+  };
+  if (mq && mq.addEventListener) mq.addEventListener("change", redraw);
+  else if (mq && mq.addListener) mq.addListener(redraw);
 })();
 </script>
 </body>
