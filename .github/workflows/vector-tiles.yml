@@ -132,14 +132,60 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ env.PLAYWRIGHT_VERSION }}-${{ runner.os }}
 
+      # Chromium's system packages are cached between runs; smoke-test.yml
+      # carries the story (Ubuntu's mirror at 40 KB/s on 2026-10-22).
+      - name: Restore Chromium's system packages
+        if: ${{ !cancelled() }}
+        id: apt-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/apt-debs
+          key: apt-debs-${{ runner.os }}-${{ env.PLAYWRIGHT_VERSION }}-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index }}
+          restore-keys: apt-debs-${{ runner.os }}-${{ env.PLAYWRIGHT_VERSION }}-
+
       - name: Install Playwright + Chromium
+        id: pw-install
         timeout-minutes: 15
         run: |
           npm install "playwright@${PLAYWRIGHT_VERSION}"
-          npx playwright install-deps chromium
+          # Seed apt's archive from the restored cache, keep what it downloads,
+          # and copy every finished .deb back out even if apt timed out.
+          sudo rm -f /etc/apt/apt.conf.d/docker-clean
+          echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' \
+            | sudo tee /etc/apt/apt.conf.d/99keep-downloaded-debs >/dev/null
+          mkdir -p ~/apt-debs
+          debs_before=$(find ~/apt-debs -maxdepth 1 -name '*.deb' | wc -l)
+          echo "apt cache: $debs_before .deb file(s) restored"
+          if [ "$debs_before" -gt 0 ]; then
+            sudo cp ~/apt-debs/*.deb /var/cache/apt/archives/
+          fi
+          deps_status=0
+          npx playwright install-deps chromium || deps_status=$?
+          cp -n /var/cache/apt/archives/*.deb ~/apt-debs/ 2>/dev/null || true
+          debs_after=$(find ~/apt-debs -maxdepth 1 -name '*.deb' | wc -l)
+          echo "apt cache: $debs_after .deb file(s) after install-deps"
+          if [ "$debs_after" -gt "$debs_before" ]; then
+            echo "new_debs=1" >> "$GITHUB_OUTPUT"
+          fi
           if [ "${{ steps.pw-cache.outputs.cache-hit }}" != "true" ]; then
             npx playwright install chromium
           fi
+          if [ "$deps_status" -ne 0 ]; then
+            # See smoke-test.yml: go on only if the browser actually starts.
+            if timeout 60 node -e "require('playwright').chromium.launch().then(b => b.close())"; then
+              echo "::warning::install-deps did not finish, but Chromium starts with the libraries already on this runner; some optional fonts may be missing"
+            else
+              echo "::error::install-deps did not finish and Chromium does not start without it"
+              exit "$deps_status"
+            fi
+          fi
+
+      - name: Save Chromium's system packages
+        if: ${{ !cancelled() && steps.pw-install.outputs.new_debs == '1' }}
+        uses: actions/cache/save@v4
+        with:
+          path: ~/apt-debs
+          key: ${{ steps.apt-cache.outputs.cache-primary-key }}
 
       # The sets the mirrored layers were built from, kept between runs
       # (scripts/probe_tile_cards.mjs says how each is filed): fetching them
