@@ -7943,6 +7943,14 @@ that needs a change in law, is then the next question; nothing here establishes 
 > any that has not answered. Each city's gap record carries the date in its `ask` field and the
 > city in its `covers` field.
 >
+> **BAY CITY ANSWERED 2026-10-22.** The City Clerk wrote that the ward lines have not changed,
+> that the current ward map is on Bay County's online GIS map, and that the precinct list is a
+> PDF on the city's site; she did not take up the river and Middleground Island question.
+> Measured the same day, the county's map gives every resident the same ward as the state's 2026
+> precincts and differs only on the river and the uninhabited island, so the wards were built
+> from it (`mi/scripts/build_mi_bay_city_wards.py`) and wait on the operator's word to ship. No
+> follow-up is owed to Bay City; its gap record is retired with the wards.
+>
 > Drafted 2026-10-15. Three letters, one per city, each about one ward map this project measured
 > on 2026-10-15 and did not ship. Each city's gap record in `docs/DATA_LAYER_GUIDEBOOK.md`
 > carries the measurement (`annarbor-ward-boundary`, `kentwood-ward-boundary`,

@@ -2822,22 +2822,6 @@ trusted.
       ]
     },
     {
-      "id": "bay-city-ward-boundary",
-      "kind": "data-quality",
-      "concept": "City council district",
-      "area": "Bay City",
-      "layer": "city-ward",
-      "counties": [],
-      "summary": "Bay City elects nine commissioners by ward, and this app does not show you which ward you live in.",
-      "why": "The city's published ward map and the state's current precinct map disagree about where several ward lines run, so showing either one would risk telling you the wrong ward.",
-      "wanted": "Bay City's current adopted ward boundary, republished so it agrees with the precincts the state records for the city.",
-      "blocker": "ASKED 2026-10-21: the operator sent the letter drafted 2026-10-15 as Ask mi-city-ward-edges in docs/ASK_DRAFTS.md to the city clerk, Tema Lucero, at cityclerk@baycitymi.gov, at 01:41 UTC; as drafted it asks whether the 2026 precincts follow the ward lines in the city's current map and where a newer ward map can be found. The operator reworded some of that night's letters before sending, so what was sent, not the draft, is the record of the wording. The address and the clerk's name came from a voter-information listing of Michigan election offices and not from the city's own website, which the thread that drafts the letters reported is behind a Cloudflare block and did not read; if the letter bounces, the city's own clerk page read in a browser is the next place to look. A follow-up is due about 11 November. The level counts as recorded only once the outcome is `refused`, or `unresponsive` after one follow-up and thirty days. RE-MEASURED 2026-10-15: ONE PLAN, NOT TWO, AND STILL REFUSED. The sentence below that a dozen interior ward pairs means 'two different plans' does not hold up: the city's layer, Bay County's citywide ward layer and the county's precinct layer give identical ward populations, so the city publishes one plan (2010-era). It agrees with the state's 2026 precincts on 96.35-96.88% of all points and 98.58% where both maps draw a ward, with the differences around the Saginaw River and Middleground Island, so it fails even a rule that set the city's outer edge aside. The city is the one to ask which ward lines the 2026 precincts follow. EARLIER: MEASURED 2026-09-06 AND REFUSED BY THE CURRENCY GATE. The city publishes `Wards` from its own GIS account (BayCityGIS_COBC, item snippet \"Shapefile of Bay City Wards\", licenceInfo empty, shared public, last modified 2023-12-12) with exactly 9 features keyed WARD 1-9, which matches the state's own count. It scores 97.608% against the state's 2026 precinct fabric — BELOW THIS PROJECT'S 0.99 FLOOR, and the floor was not moved. WHERE THE DISAGREEMENT SITS IS WHAT DECIDES IT: it is NOT concentrated on one edge. Sampling 6,000 points found 58 in a ward the two publishers name differently, spread across TWELVE distinct ward pairs, the largest being city-4-vs-state-3 (17 points) and city-8-vs-state-7 (10). A single mis-drawn city outline produces disagreement on the perimeter; disagreement between a dozen interior pairs is two different plans. Bay City is also the fleet's tidiest 1:1 case — the state records exactly one precinct per ward, nine and nine — which makes the mismatch harder to explain away as precinct aggregation. The city's layer is the likelier stale one at 2023 against a 2026 fabric, but this build does not assert which is right; it declines to ship either.",
-      "ask": {"who": "City Clerk Tema Lucero (cityclerk@baycitymi.gov)", "asked": "2026-10-21", "outcome": "pending"},
-      "covers": [
-        "local-government:2606020"
-      ]
-    },
-    {
       "id": "mi-county-board-robots-declined",
       "kind": "blocked",
       "concept": "County board",
