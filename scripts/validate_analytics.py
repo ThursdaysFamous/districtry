@@ -19,8 +19,11 @@ pages that do not draw a map.
 
 THE RULE, in two halves:
 
-  GOOGLE ANALYTICS belongs to the two apps whose worksheets declare a `ga_id`,
-  in their `index.html`, where the generator puts it. Anywhere else it is a copy.
+  GOOGLE ANALYTICS belongs only to an app whose worksheet declares a `ga_id`,
+  in its `index.html`, where the generator puts it. Anywhere else it is a copy.
+  Since 2026-10-22 no worksheet declares one: Illinois and New York, the two
+  that did, dropped it for a cookieless new-or-returning count (engine
+  `install-app`, `visit/`), so this half now holds the whole tree at none.
   Dropping it from the thirteen cost no measurement this project reports on:
   GoatCounter is on all of them and is what data/goatcounter-traffic.json and
   the traffic report read.
@@ -240,7 +243,7 @@ def main():
               % (rel, entry["date"], entry["reason"]))
     undecided = len(uncounted) - len(no_counter)
     print("validate-analytics: OK — %d page(s) across %d instance(s), %d "
-          "redirect shell(s) skipped. Google Analytics on %d (%s), from the two "
+          "redirect shell(s) skipped. Google Analytics on %d (%s), from the "
           "worksheets that declare it. GoatCounter on %d from one copy of the "
           "tag; %d carry none, %d of those recorded with a reason%s"
           % (len(surface), len(tags), len(shells), len(ga_pages),

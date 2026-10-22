@@ -1136,6 +1136,19 @@ route it there itself.
 
 ## Ask 8 — Iowa Secretary of State: a statewide list of city clerks
 
+> **ANSWERED 2026-10-22, AND THE ANSWER IS NO.** The operator's follow-up went on 2026-10-22
+> and the Elections Division replied the same morning (Dani Phillips, from
+> `IVoters.Support@sos.iowa.gov`): the office does not have such a list, and the request
+> should go to the county auditors or to the Iowa League of Cities. Both routes were already
+> in use: the League's directory gives each city a phone and website and names no person,
+> and thirteen county auditors publish their cities' officials, ten of them current. So the
+> operator sent two new letters the same day: one to the **Iowa League of Cities** through
+> the "Email Us" form on its website (it publishes no e-mail address), asking it to share
+> its members' mayor and clerk names, and one by e-mail to the **Iowa State Association of
+> County Auditors**' President, Karla Weiss (Winnebago County Auditor), asking for a city
+> clerk list or for the request to be passed on. Follow-ups are due about 2026-11-12. This
+> ask is closed.
+>
 > **SENT 2026-09-04 to `elections@sos.iowa.gov`**, subject "Is there a statewide list of Iowa
 > city clerks?". No reply on that thread as of 2026-10-01, so one follow-up is due and the
 > thirty-day silence mark falls on 2026-10-04.
@@ -7712,6 +7725,82 @@ with it or the build fails as it does today, and the 2024 results rule is retire
 association gives a district. A no to that: recorded in gap `ar-quorum-court` with its date, and
 the counties' own sites and the next election's results stay the route.
 
+## Ask ar-adem-fire-districts — ADEM Office of Fire Protection Services: which fire districts elect commissioners, and who they are
+
+> **SENT 2026-10-21 at 17:36 UTC, ANSWERED 2026-10-21 at 18:07 UTC** by Louis Eckelhoff, Fire & EMS
+> Coordinator, Fire Protection Services (`louis.eckelhoff@adem.arkansas.gov`): "The information you
+> are requesting is all held at the County level. I might be able to provide a list of the
+> Departments that are classified as Fire Protection District, I will have to see what I can pull
+> from my portal. Give me a day or two to retrieve the information." So the commissioners' names
+> are each county's to give, and the state's part may be the list of which districts elect them.
+> The Letters thread passes on the list when it arrives and nudges around 2026-10-24 if it has not.
+> Recorded in gap `ar-fire-district-boards` and in `ar/WATCH.md`'s fire district row.
+>
+> Drafted 2026-10-21, to the Office of Fire Protection Services at
+> `fire.services@adem.arkansas.gov`, the office mailbox on its own Fire Services page
+> (`dps.arkansas.gov/emergency-management/adem/state-fire-marshals-office/fire-services/`, read
+> 2026-10-21 after its robots.txt, which permits every path and asks for 10 seconds between requests;
+> the page hides the address behind Cloudflare's e-mail protection, which a browser decodes for every
+> visitor). No person is named on the page, so the letter is addressed to the office. Adam said
+> "Yes write it" on 2026-10-21 to the card proposing it. The mailbox was searched the same day for
+> any message to or from `adem.arkansas.gov` or `dps.arkansas.gov`: none. This ask is recorded in gap
+> `ar-fire-district-boards` and in `ar/WATCH.md`'s fire district row; record the send and any reply
+> in both. The Gmail draft was made by the Letters thread on 2026-10-21 with one wording change,
+> carried back here the same day: the line on what a card shows now follows the fleet rule of
+> 2026-10-17 (an official's own phone or e-mail is published where a government source prints it).
+
+**Why this is asked.** Arkansas's map draws all 971 fire districts from the Arkansas GIS Office's
+layer and names nobody who runs them. Read in the Association of Arkansas Counties' Fire Department
+Guidebook, which quotes the code, only one kind of district has an elected board: a fire protection
+district formed under A.C.A. 14-284 subchapter 2, whose commissioners are elected by the district's
+voters at a public meeting the county court calls (14-284-208(b)). Nonprofit departments have
+private boards, subordinate service districts have boards the county judge appoints, and city
+departments answer to the city. That is a county meeting, not a ballot, so no election
+commission's results name the commissioners, and no state office publishes them. The GIS layer
+codes 63 records `FPD`, but defines none of its codes and does not match one county's own notice.
+This office certifies every department each year, and certification requires a department to be
+organized as one of the four kinds, so it is the one office that could say which districts are fire
+protection districts. Whether it holds their commissioners' names is not known, and the letter does
+not assume it does. A list of the districts alone is useful; a "no" is a complete answer.
+
+> Subject: Which Arkansas fire districts elect commissioners, for a free district map
+>
+> Dear Office of Fire Protection Services,
+>
+> I run districtry (https://districtry.com), a free, non-commercial website where anyone can click
+> a point on a map, or type an address, and see every district that covers it and who represents
+> them there. Our Arkansas map went live last week at https://districtry.com/ar/. It draws all of
+> Arkansas's fire districts from the Arkansas GIS Office's fire district map, and for each one it
+> says which district a point is in and which counties the district serves. It does not yet say who
+> runs any of them.
+>
+> As we read the state's fire protection district law, most fire departments in Arkansas do not have
+> an elected board. Nonprofit departments have their own boards and city departments answer to their
+> city. Fire protection districts formed since 1989 elect commissioners, chosen by the district's
+> voters at a public meeting the county court calls (older districts' commissioners are appointed by
+> the county court). Those are the boards we would like to name, because they are
+> elected to represent the people who live in the district. We have not found a published list of
+> them anywhere.
+>
+> Your office certifies Arkansas's fire departments and records whether each is a nonprofit, a
+> subordinate service district, a fire protection district or a municipal department, so I am writing
+> with two questions:
+>
+> 1. Could you share a list of the certified departments that are organized as fire protection
+>    districts, ideally with each one's department ID number so we can match it to the state's map?
+> 2. If your office holds the names of those districts' commissioners, or a contact for each board,
+>    could you share those too? If someone else keeps them, such as each county clerk, telling us
+>    that would help just as much.
+>
+> If neither is something you can share, a "no" is a genuinely useful answer and we will record it.
+> We would never show a home or street address, we would leave off anything a commissioner asks us in
+> writing to leave off, and every card would credit the source and link back to it.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+
 ## Ask ms-maris-supervisor-districts — MARIS, Mississippi's state GIS clearinghouse: collect and publish each county's current supervisor district map
 
 > **ASKED 2026-10-16 — DRAFTED 2026-10-15.** The operator rewrote this draft and sent it on
@@ -8522,3 +8611,405 @@ asked, and nothing changes on the map.
 - Confirm the letter's figures against the shipped file on the day it goes: two county boards
   drawn, Jefferson and Rowan. If another county has been drawn since, change the number and the
   names.
+
+---
+
+## Ask ny-nysl-library-trustees — New York State Library, Division of Library Development: the trustee names libraries already report
+
+> **ASKED 2026-10-21 at 17:26 UTC**, from the operator's own mailbox, read off the sent folder by
+> the thread that drafts the letters. The sent copy, not the text below, is the record of what was
+> asked. A follow-up is due about 2026-11-11 if nothing has come back. Drafted 2026-10-21. To Amy Heebner, who leads the Technology, Reporting and Federal Aid Services Team
+> in the State Library's Division of Library Development (`amy.heebner@nysed.gov`). That team
+> runs the annual report every public and association library files. Gap
+> `ny-special-district-officials` carries the date in its `ask` field.
+
+**Why this is asked.** A New York library district elects its trustees, and districtry's Sullivan
+County map draws the county's two library districts with nobody named on the card. Under the
+operator's ruling of 2026-10-21, a special district counts as answered only where its board is
+named. The State Library already collects the names: Section 10 of the Annual Report for Public
+and Association Libraries ("Officers and Trustees") asks for each trustee's name, office and term
+as of February 1, and question 10.7 asks how the board is chosen. The report is filed through
+LibPAS, which needs a login, and no public download of Section 10 was found on 2026-10-21. The
+letter asks whether that section can be shared. Fire district commissioners are not asked here:
+whether the Comptroller's collection of local officials covers fire districts is already part of
+Ask ny-comptroller-local-officials, which waits until 2026-11-20.
+
+> Subject: Library trustee names from the annual report
+>
+> Dear Ms. Heebner,
+>
+> I run districtry (https://districtry.com), a free website where anyone can click a point on a
+> map, or type an address, and see every district that covers it and who represents them there.
+> New York's map is at https://districtry.com/ny/.
+>
+> It now shows public library districts in Sullivan County, and I would like it to name each
+> district's elected trustees. Section 10 of the Annual Report for Public and Association
+> Libraries already asks every library for its trustees' names, offices and terms as of
+> February 1. I could not find that section published anywhere.
+>
+> Could the State Library share Section 10 for public library districts, either for Sullivan
+> County or statewide? Because the report is dated, each name could be shown with that date and
+> a credit to the State Library. A spreadsheet or any other form is fine.
+>
+> If this is not something you can share, or should go to someone else, a short reply saying so
+> is a complete answer.
+>
+> Thank you,
+> Adam Overberg
+> districtry
+
+**What an answer changes.** A yes: the two Sullivan library district cards name their trustees
+with the report's date, and other counties' library districts can be named as their maps are
+added. A no: recorded in the gap with its date, and the cards keep naming nobody.
+
+**Before sending:**
+
+- Confirm Ms. Heebner is still listed on the Division of Library Development's staff page.
+- Check that Section 10 is still part of the current year's annual report form.
+
+---
+
+## Ask la-sos-precinct-districts — Louisiana Secretary of State, Elections Division: publish which precincts make up each parish governing body, school board and town council district
+
+> **ASKED 2026-10-21 at 13:58 UTC**, from the operator's own mailbox to `elections@sos.la.gov`,
+> read off the sent folder by the thread that drafts the letters. The operator reworded the
+> opening before sending, so the sent copy, not the text below, is the record of what was asked.
+> A follow-up is due about 2026-11-11 if nothing has come back. Gaps `la-parish-district-lines`,
+> `la-school-board-district-lines` and `la-municipal-ward-lines` carry the date in their `ask`
+> fields.
+>
+> Drafted 2026-10-21. To Sherri Wharton Hadskey, Commissioner of
+> Elections, at `elections@sos.la.gov`. The Department of State's Elections contact page
+> (`www.sos.la.gov/elections-voting/contact-us`) names her as Commissioner and gives
+> 225.922.0900 and 800.883.2805; its office contact page gives the mailing address, P.O.
+> Box 94125, Baton Rouge, LA 70804-9125. Both were read 2026-10-21 under the operator's
+> standing exception of that day for finding a government office's address, because
+> `www.sos.la.gov`'s robots.txt disallows every path, and nothing from the site was kept but
+> what this note and the letter say. **The current site prints no e-mail address**: its
+> "email us" links open a contact form addressed to the Elections Division
+> (`coraweb.sos.la.gov/contact/contactform.aspx`, recipient "elections division").
+> `elections@sos.la.gov` is the address the Department's own news releases gave for the
+> Elections Division in 2019, 2020 and 2021, found by a web search the same day and not
+> opened. If it bounces, the letter goes through that form. The mailbox was searched on
+> 2026-10-21 for anything to or from `sos.la.gov` or `la.gov` and held nothing. The
+> operator chose to have it drafted the same day ("Merge and draft the letters").
+
+**Why this is asked.** Louisiana's map names the members of all 64 parish governing bodies
+(559 district seats), the 69 school boards (639 members, 637 elected from districts) and the
+councils of 302 municipalities from the Secretary of State's list of elected officials, and
+draws the state's 3,569 voting precincts from the Legislature's statewide precinct file (the
+edition of 27 January 2026). It can say which member represents a point only where it can
+draw the district. For the parish governing bodies, the one statewide map is the Census
+Bureau's, and in 52 of the 63 parishes outside Orleans its 2026 lines put nobody in a
+different district from its 2020 edition and are 13.76% to 201.38% apart on the 2020 census,
+so they are not lines drawn on that census; those 52 parishes held 3,138,618 of the state's
+4,657,757 residents in 2020, which the letter calls about two in three (gap
+`la-parish-district-lines`). The Census Bureau maps no school board election district and
+no municipal ward or council district (gaps `la-school-board-district-lines` and
+`la-municipal-ward-lines`). On 2026-10-21 the map drew six parishes from the Census's lines
+and, once the city council change ships, two more from each parish government's own map,
+the council districts of four cities from each city's own map, and no school board's
+districts. Louisiana law builds these districts from precincts: whole precincts for a parish
+governing authority (R.S. 33:1411(C)); whole precincts for a school board, which may divide
+a precinct along census lines into no more than two districts, with no more than three
+divided precincts in a district (R.S. 17:71.3(E)); and whole precincts "to the extent
+practicable" for a municipality, which may also divide one (R.S. 33:1371(C)), all read on
+the Legislature's site 2026-10-21. So a list of the precincts in each district, with the
+divided precincts marked, would let the map draw nearly every district on the precinct map
+it already draws. The Secretary of State keeps that assignment: the voter lists the
+Department sells carry each voter's ward and precinct beside their police jury and school
+board districts ("Voter List Charges and Other Information", revised July 2024, read
+2026-10-21 under the same exception and not kept), R.S. 17:71.3(E)(2)(b) has the Secretary of
+State tell a school board when its plan is void, and R.S. 18:21(A) lets the Secretary of
+State produce and sell maps of precincts and election jurisdictions, priced at $1 a precinct
+by LAC 31:I.809 (read in the Office of the State Register's copy of Title 31, 2026-10-21).
+Since 2025, R.S. 18:1922.2 (Acts 2025, No. 199) has every local governing body send a
+proposed plan to the parish registrar of voters and clerk of court before adopting it, as a
+shapefile or block equivalency file where it was drawn by computer. One free statewide list
+would close all three gaps at once, and it is the change in how Louisiana publishes this
+information that the project exists to encourage; a no is the evidence that it takes more
+than asking.
+
+> Subject: Which precincts make up each parish, school board and town council district
+>
+> Dear Commissioner Hadskey,
+>
+> I run districtry (https://districtry.com), a free, non-commercial website where anyone can
+> click a point on a map, or type an address, and see every district that covers it and who
+> represents them there. Louisiana's map is at https://districtry.com/la/.
+>
+> From your office's list of elected officials, it names the members of the 64 parish
+> governing bodies, the 69 school boards and the councils of 302 cities, towns and villages,
+> and it draws the state's 3,569 voting precincts from the Legislature's precinct file. What
+> it usually cannot say is which of those members represents a given address, because it has
+> no current map of their districts:
+>
+> - For police juries and parish councils, the only statewide map I have found is the Census
+>   Bureau's. In 52 parishes its lines have not changed since 2020 and are far from equal in
+>   population on the 2020 census, so they are probably not the lines in force. About two in
+>   three Louisianans live in those parishes.
+> - For school boards and town councils, the Census Bureau publishes no map at all, and I
+>   have found current maps for only a few of them.
+>
+> Louisiana law builds these districts from whole precincts, dividing a precinct only where
+> the law allows it. So a list of the precincts in each district, noting any precinct divided
+> between districts, would let anyone draw them on the Legislature's precinct map. Your
+> office already keeps this assignment: the voter lists it provides show each voter's ward
+> and precinct beside their police jury and school board districts.
+>
+> Would your office consider publishing that list, free, for the parish governing
+> authorities, school boards and municipalities whose members are elected by district or
+> ward? A spreadsheet that is updated whenever a plan or a precinct changes would be ideal,
+> but any form is welcome. If something like it is already public, a pointer would answer
+> this letter. This is only about district boundaries, not voter records or any personal
+> information.
+>
+> If publishing it is not possible, I have a smaller question. R.S. 18:21 lets your office
+> produce and sell maps of precincts and election jurisdictions. Do those maps include the
+> police jury, school board and city council districts, and could a copy bought from your
+> office be shown on a free public website like this one, credited to your office?
+>
+> A short answer to either question is useful, including a no, or the name of the right
+> person to ask.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** A published list, or a pointer to one: read after its host's
+robots.txt, and each body's districts drawn as the union of their listed precincts on
+`la-precincts.json`, held to the tests a drawn district already meets here (every precinct
+of the body's ground in exactly one district, as many districts as the Secretary of State's
+list has seats, and balanced on the 2020 census); a district with a divided precinct is
+drawn only where the list says which census blocks fall on each side, and is otherwise
+recorded. The three gaps shrink by the bodies the list settles. If the answer is yes, ask in
+the reply whether the same list can carry the election sections some judges are elected from
+(gap `la-court-election-sections`). An answer to the second question: a price and terms that
+allow showing the maps are the operator's decision to buy or not, and a copy bought is used
+only on those terms and dated on every card that uses it. A no, or no answer after the
+follow-ups: recorded in the three gaps with its date, and the map goes on drawing parishes and
+cities one at a time from their own published maps, with letters to the largest parishes and
+cities that publish none.
+
+**Before sending:**
+
+- `elections@sos.la.gov` is taken from the Department's news releases of 2019 to 2021 and is
+  not printed on its current site. If the operator prefers, or the address bounces, paste the
+  letter into the Elections Division contact form linked from the site's Elections pages.
+- Re-read the Elections contact page in a browser and confirm the Commissioner of Elections.
+- The figures must still match the shipped files on the day it goes: 64 parishes in
+  `la/data/app/la-parish-officials.json`, 69 boards in `la-school-board-members.json`, 302
+  municipalities in `la-municipal-officials.json` and 3,569 precincts in `la-precincts.json`.
+  The 52 parishes and "about two in three" come from `la/scripts/build_la_parish_districts.py
+  --survey`, which re-measures them.
+- The voter-list sentence rests on the Department's "Voter List Charges and Other Information",
+  revised July 2024. If a newer revision no longer lists the police jury and school board
+  districts, cut the sentence.
+
+## Ask la-ldaf-swcd-supervisors — Louisiana Department of Agriculture and Forestry, Office of Soil and Water Conservation: publish each conservation district's five supervisors, and share the district boundaries as a map file
+
+> **ASKED 2026-10-21 at 13:57 UTC**, from the operator's own mailbox to
+> `soilandwater@ldaf.state.la.us`, read off the sent folder by the thread that drafts the
+> letters. The operator reworded the opening before sending, so the sent copy, not the text
+> below, is the record of what was asked. It went before the conservation districts were on
+> the map. A follow-up is due about 2026-11-11 if nothing has come back, and can say what the
+> map shows by then. It is the `ask` of gap `la-conservation-district-supervisors`, which
+> the change that put the districts' offices on the Parish card wrote (2026-10-21).
+>
+> Drafted 2026-10-21. To the Office of Soil and Water Conservation at
+> `soilandwater@ldaf.state.la.us`, telephone (225) 922-1269, 5825 Florida Blvd, Baton Rouge,
+> LA 70806: the address and number the office's own page on the Department's website gives
+> (`www.ldaf.la.gov/about/organization/oswc`, read 2026-10-21 after the host's robots.txt,
+> which disallows only `/.build-info`). The page names no person, so the letter is addressed to
+> the office. The mailbox was searched on 2026-10-21 for anything to or from `ldaf.la.gov` or
+> `la.gov` and held nothing. The operator chose to have it drafted the same day, as the optional
+> second Louisiana letter ("Merge and draft the letters").
+
+**Why this is asked.** The done standard counts the special districts a state's own law
+creates (`docs/DONE_STANDARD.md`, entry 12), and Louisiana's soil and water conservation
+districts are organized under Part I of Chapter 9 of Title 3 (R.S. 3:1201 and after), which
+makes each one a governmental subdivision of the state (R.S. 3:1202(3)). The Department's districts
+page (`www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts`, read
+2026-10-21) says the state has 44, each governed by five supervisors, "3 locally elected and 2
+appointed by the state Soil and Water Conservation Commission". R.S. 3:1206 and 3:1207, as
+amended by Acts 2026, No. 180 and read on the Legislature's site the same day, have
+nominating petitions filed with the Commission, the Secretary of State hold the election as a
+private election, one elected seat filled each year for a three-year term beginning July 1,
+the Commission declare a candidate elected when no more candidates are nominated than there
+are seats, and the Commission fill a vacancy by appointment; so the Commission, which this
+office staffs, is the one body that knows every board. The page links one PDF as "Find your
+district and contact" (on `assets.ctfassets.net`, the file host of the content system the
+Department's website is built on, which serves no robots.txt; read 2026-10-21): a map of the
+44 districts, credited to the Office of
+Soil and Water Conservation's GIS Department and edited 2026-10-19, and a list giving each
+district's office town and telephone. Neither names a supervisor. The map is a picture, and
+on it some district lines run inside parishes: read at 150 dots per inch, Ouachita Parish is
+divided between D'Arbonne (district 2) and Boeuf River (district 14), whose offices are listed
+in Farmerville and Ruston, and in Rayville and Monroe. So the layer cannot be drawn from parish
+outlines alone, and the letter also asks for the boundaries as a file. The website carries
+an "All rights reserved" notice and no terms of use, so the letter asks whether the
+boundaries may be shown. A published list of supervisors by district would let each district's
+card name its board, which is the change in how Louisiana publishes this information that the
+project exists to encourage.
+
+> **CORRECTED 2026-10-21, after the letter went.** The map is not a picture. Page 1 of the PDF
+> is a vector drawing, each district a filled path object with its number inside, and the
+> change that put the districts on the Parish card read those objects and not the pixels
+> (`la/scripts/measure_la_conservation_parishes.py`). The 150-dots-per-inch reading above is
+> kept as it was written. Its finding stands: Ouachita is divided between D'Arbonne and Boeuf
+> River. The objects show six more parishes divided between two districts (Ascension,
+> Caldwell, Iberville, Jefferson, Richland and St. James), and in Jefferson the second district
+> is Lafourche-Terrebonne, which the map gives Grand Isle under a coastline stroke wider than the
+> island, so the picture shows the island as black. The letter's question about the boundaries
+> is unchanged by this.
+
+> Subject: Soil and water conservation district supervisors on districtry.com
+>
+> Dear Office of Soil and Water Conservation team,
+>
+> I run districtry (https://districtry.com), a free, non-commercial website where anyone can
+> click a point on a map, or type an address, and see every district that covers it and who
+> represents them there. Louisiana's map is at https://districtry.com/la/.
+>
+> I would like to add Louisiana's 44 soil and water conservation districts, with each
+> district's office town and telephone from the Department's map and list of district
+> contacts, credited to the Department. What I cannot find is who serves on each board. The
+> Department's page explains that each district is governed by five supervisors, three
+> elected locally and two appointed by the Soil and Water Conservation Commission, but I have
+> not found a list of each district's supervisors.
+>
+> Would the Department consider publishing, for each district, its five current supervisors,
+> whether each is elected or appointed, and when each term ends? A page or a spreadsheet on
+> your website would do. If a list like that already exists, a pointer to it would answer
+> this letter.
+>
+> I also have a smaller question. On the Department's map some district lines run inside
+> parishes (Ouachita Parish, for example, is divided between two districts), so I cannot draw
+> every district from parish boundaries alone. Could the office share the district boundaries
+> as a map file, such as a shapefile, and say whether they may be shown on districtry,
+> credited to the Department? districtry runs no advertising and sells nothing; it asks for
+> sponsorship toward its running costs, shown only in its footer.
+>
+> A short answer to either question is useful, including a no. If someone else looks after
+> the supervisors' records or the district map, I would be grateful if you could pass this
+> along.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com
+
+**What each answer means.** A published list, or a pointer to one: read after its host's
+robots.txt, joined to the districts by name, and each card names its five supervisors with
+their positions and term dates, dated with the list's own date. Only names, positions and term
+dates are carried, and a supervisor's own telephone or e-mail only where the Department prints
+it beside that supervisor. A boundary file with permission: the districts are drawn from it,
+held to the parish outlines wherever a district is whole parishes, and credited as asked. A
+boundary file without permission, or none: districts that are whole parishes are drawn from the
+parish map, and the others wait, recorded in the conservation district gap the layer writes
+when it is built. A no to the list, or no answer after the follow-ups: recorded in that gap
+with its date, and the cards give each district's office and name no one.
+
+> **CORRECTED 2026-10-21.** No layer was built. The change lists each parish's district or
+> districts, with their offices, on the Parish card, as Kentucky, North Carolina and South
+> Carolina list theirs on the County card, because 57 of the 64 parishes lie in one district and
+> a layer drawn from parish lines would say no more than the card does. The gap the change wrote
+> is `la-conservation-district-supervisors`. A boundary file with permission would now let a
+> layer draw all 44 districts, the seven divided parishes included.
+
+**Before sending:**
+
+- Re-read the office's page in a browser and confirm the address is unchanged.
+- If the conservation districts are on the map when this goes, change "I would like to add" to
+  "I have added" and say what the cards show.
+- Check "44" against the Department's district list on the day it goes.
+- The sponsorship sentence is there because the letter asks for permission. Keep it as long as
+  districtry asks for sponsorship.
+
+## Ask la-shreveport-council-districts — ReGIS at the Northwest Louisiana Council of Governments, with the City of Shreveport: written permission to show the city's council districts, or their open publication
+
+> **ASKED 2026-10-21 at 13:59 UTC**, from the operator's own mailbox to `public_comments@nlcog.org`,
+> copied to `LaTonya.Bogan@shreveportla.gov`, read off the sent folder by the thread that drafts
+> the letters. A follow-up is due about 2026-11-11 if nothing has come back. Gap
+> `la-municipal-ward-lines` records it in its blocker; that record's `ask` field carries the
+> Secretary of State's letter (Ask la-sos-precinct-districts), which asks about all six of the
+> undrawn cities, Shreveport among them.
+>
+> Written and made a Gmail draft on 2026-10-21 by the thread that drafts the letters, on the
+> operator's word that day ("Yes write the letter."), and sent the same hour, so no draft was
+> written here first. It is addressed to Kevin Reeves, whom the Northwest Louisiana Council of
+> Governments' staff page lists as ReGIS Project Manager, at `public_comments@nlcog.org`, the one
+> address the Council publishes, and copied to LaTonya Bogan, Clerk of Council, at the address
+> the City's council directory gives; that thread read both pages on 2026-10-21. It searched the
+> mailbox the same day and found nothing to or from `nlcog.org`, ReGIS or `shreveportla.gov`.
+
+**Why this is asked.** Shreveport elects its seven council members from Districts A to G, and
+it is Louisiana's third-largest city (187,593 people on the 2020 census). Its City card names
+the whole council and cannot say which member represents a point, because the one map of the
+districts found, the `Council_Districts` layer on the regional GIS
+(`services3.arcgis.com/cEsSI6IR59h5UGE4/arcgis/rest/services/Council_Districts/FeatureServer`,
+item `181daa1be5754b8281a9da0d02d24f3a`, modified 2025-08-26), carries this notice in its licence
+field: "No one is permitted to copy, distribute, and/or sell this information except in
+accordance with a written agreement with ReGIS-NLCOG." So `la/scripts/build_la_city_wards.py`
+does not draw Shreveport (`NOT_DRAWN`). The layer's owner account, `cosgisadmin`, names no
+organization on its public profile, and its 36 public items include "High Risk Flood Zones for
+City of Shreveport" (read 2026-10-21), which suggests the account is the City's own; that is why
+the City is copied.
+
+The operator reworded that thread's draft before sending it. The text below is the letter as
+sent, copied from the sent folder by that thread, except the last line of the signature, a
+telephone number, which is not copied into this repository. It paraphrases the layer's licence
+notice rather than quoting it.
+
+> Subject: Permission to show Shreveport's council districts on districtry.com
+>
+> Dear Mr. Reeves,
+>
+> I run districtry (https://districtry.com), a free, non-commercial website that allows users
+> to click a location or enter an address to see their electoral districts and
+> representatives. Louisiana's map is available at https://districtry.com/la/.
+>
+> For Shreveport, the site lists all seven City Council members using data from the Secretary
+> of State, but it cannot currently determine which district a specific address is in. The
+> only map of the seven districts I have found is the City's "Council_Districts" layer hosted
+> by ReGIS on ArcGIS Online. Because the license terms state that a written agreement with
+> ReGIS-NLCOG is required to copy or distribute this information, I have not used it.
+>
+> Would ReGIS-NLCOG be willing to provide written permission for districtry to display these
+> council district lines? The boundaries would be:
+>
+>   - Displayed for free with no advertising
+>   - Credited to ReGIS-NLCOG and the City of Shreveport with a link back
+>   - Re-synced monthly to ensure the data stays current
+>
+> No other data from the layer would be used. Alternatively, if the City and ReGIS were
+> willing to publish the district lines under an open license, it would allow public access
+> and use.
+>
+> I have cc'd the Clerk of Council in case this decision falls under the City's jurisdiction.
+> Any update—including a referral to the appropriate contact—would be greatly appreciated.
+>
+> Thank you for your time and consideration.
+>
+> Best regards,
+>
+> Adam Overberg
+> adam@overberg.co
+
+**What each answer means.** The letter makes three promises, and each answer that lets the
+lines be shown keeps all three: no advertising, a credit to ReGIS-NLCOG and the City of
+Shreveport with a link back, and a monthly re-sync, which would be the monthly source check
+(`la/scripts/validate_sources.py`) re-reading the layer, as it already does for the six maps
+the layer draws, and warning when a line or its edit date moves, with the builder re-run the
+same month. Only the district lines are used, as the letter says.
+
+| answer | what it settles |
+|---|---|
+| written permission | `la/scripts/build_la_city_wards.py` draws Shreveport from the `Council_Districts` layer after the checks every drawn city passes (the districts balance on the 2020 census, every district matches a seat the Secretary of State's list names, and no ground is in two cities), and Shreveport leaves `NOT_DRAWN`. The permission and its date are recorded here and in gap `la-municipal-ward-lines`, whose record then no longer names Shreveport. |
+| the lines published under an open licence | The same, under the published terms, credited as those terms ask. |
+| a referral | A letter to whoever is named, recorded under this ask as its follow-up. |
+| a no | Recorded with its date in gap `la-municipal-ward-lines`, and Shreveport moves to a gap record of its own whose `ask` carries this letter, so the refusal is counted the way the done standard counts one. Shreveport stays undrawn. |
+| no reply | A follow-up about 2026-11-11, a second two weeks after that, and then `UNRESPONSIVE`, which is a claim about the ask and never about the Council or the City. |

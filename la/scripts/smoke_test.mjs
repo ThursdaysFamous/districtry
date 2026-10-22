@@ -19,6 +19,7 @@ import { chromium } from "playwright";
 import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { stubBasemap } from "../../scripts/basemap_stub.mjs";
 
 // Vendored Leaflet fallback for sandboxed environments (e.g. Claude Code web),
 // where the browser (Chromium) cannot reach cdnjs.cloudflare.com — it does not
@@ -55,7 +56,7 @@ const OFFLINE = ["county", "us-house", "la-senate", "la-house", "voting-precinct
 const EXPECT_DISTRICT = { "county": "Orleans Parish", "us-house": "2", "la-senate": "5", "la-house": "93", "voting-precinct": "Precinct 3-1", "la-supreme-court": "7", "la-court-of-appeal": "Fourth Circuit, District 1", "la-district-court": "Civil District Court and Criminal District Court" };
 const NEGATIVE_POINT = "28.60000,-90.50000"; // open water about 50 km south of the Louisiana coast, past the state's offshore line — outside Louisiana and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-20: TIGERweb's state and county layers name no state or parish here, its legislative layers no district, and its ZIP layer no ZIP code (control: New Orleans City Hall returns Louisiana, Orleans Parish and 70112). OPEN WATER BECAUSE A POINT ON A NEIGHBOUR'S LAND WOULD HAVE TO MOVE: Arkansas and Mississippi are live already, and the fleet is meant to reach every state, Texas included.
 const APP_NAME = "districtry Louisiana";
-const EXPECT_LAYERS = 16;
+const EXPECT_LAYERS = 17;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "LouisianaExplorer";
@@ -197,7 +198,7 @@ async function cardText(page, id) {
   }, id);
 }
 
-const browser = await chromium.launch();
+const browser = stubBasemap(await chromium.launch());
 try {
   // 1. App boots and registers every layer.
   {
@@ -846,6 +847,11 @@ try {
   //        skips), Gonzales (divisions), Lafayette (FUNCSTAT B, a council and
   //        no mayor of its own), and Orleans and West Baton Rouge's school
   //        boards (district seats, and one member elected at large).
+  //        A city whose council districts the City Council District layer
+  //        draws (the cities in the shipped la-city-wards.json; Lafayette
+  //        here) says that layer names the member, and Shreveport, whose
+  //        districts are not drawn, says this app cannot say which district
+  //        the point is in.
   //    (f) Either roster refused: the place still answers, naming nobody.
   {
     function esriPolygon(props) {
@@ -877,9 +883,14 @@ try {
       }
       return word;
     };
+    // The cities whose council districts the City Council District layer
+    // draws, read from the shipped file, so the City card's sentence about
+    // which member represents the point is held to what is drawn.
+    const wardCities = new Set(shipped("la-city-wards.json").features.map((f) => String(f.properties.geoid)));
     // Every way the card can disagree with the place's record, as a list of
-    // short labels; empty means it agrees.
-    function disagreements(o, text, footer, board) {
+    // short labels; empty means it agrees. `drawn` is whether the City Council
+    // District layer draws the place's districts.
+    function disagreements(o, text, footer, board, drawn) {
       const out = [];
       const shown = plain(text);
       const named = (list) => (list || []).filter((p) => p && p.name);
@@ -911,10 +922,15 @@ try {
       if (atLarge.length ? !/elected at large represents? the whole/.test(text)
                          : /at large/i.test(text)) out.push("at large");
       const ground = groundOf(seats);
+      const one = (WORDS[o.kind] || [null, "member"])[1];
+      const namedHere = board ? text.includes(`does not draw the school board's ${ground}s`)
+        : drawn ? new RegExp(`The City Council District layer draws the (city|town|village)'s ${ground}s ` +
+                             `and names that ${one}\\.`).test(text) && !/cannot say which/.test(text)
+        : text.includes(`${ground}s, so it cannot say which ${ground} that is`);
       if (seats.length && !(ground
-            ? text.includes(`elected from the ${ground} this point is in represents it`) &&
-              text.includes(board ? `does not draw the school board's ${ground}s` : `${ground}s, so it cannot say which ${ground} that is`)
+            ? text.includes(`elected from the ${ground} this point is in represents it`) && namedHere
             : text.includes("but not the ground each seat covers"))) out.push("which");
+      if (drawn && !ground) out.push("drawn, with no ground");
       if (!ground && /this point is in represents it/.test(text)) out.push("claims ground");
       if (members.length && !text.includes("without a ward or district")) out.push("plain");
       // one shared date names it, whether or not that day has passed
@@ -1069,7 +1085,9 @@ try {
       const present = c.reject.filter((re) => re.test(text));
       const record = c.town ? towns[c.props.GEOID] : c.board ? boards[c.props.GEOID] : null;
       const off = (c.town || c.board)
-        ? (record ? disagreements(record, text, await footerLinks(page, c.layer), !!c.board) : ["no record in the shipped roster"])
+        ? (record ? disagreements(record, text, await footerLinks(page, c.layer), !!c.board,
+                                  c.layer === "municipality" && wardCities.has(c.props.GEOID))
+                   : ["no record in the shipped roster"])
         : [];
       // a refused roster names nobody the shipped one would
       const leaked = c.refuse
@@ -1271,6 +1289,94 @@ try {
     await context.close();
   }
 
+  // 9c. THE SOIL AND WATER CONSERVATION DISTRICT, on the Parish card: the
+  //     district the Department of Agriculture and Forestry's map puts the
+  //     parish in, each of its offices with its telephone and extension, that
+  //     the card names no supervisor, how the board is chosen, and where it
+  //     comes from. The districts and offices expected are read from the
+  //     shipped file (data/app/la-conservation-districts.json), which
+  //     la/scripts/build_la_conservation_districts.py writes, so a rebuild
+  //     moves them. Three parishes, each for its own claim:
+  //       - Orleans, at City Hall: one district, whose one office is outside
+  //         the parish (Boutte, in St. Charles);
+  //       - Ouachita, one of the seven parishes the map divides between two
+  //         districts: both are listed, the one covering more of the parish
+  //         first, under the sentence saying the line between them is not
+  //         drawn;
+  //       - Jefferson, divided too, whose entry adds the note about Grand Isle.
+  //     The Ouachita and Jefferson points are the parish's pole of
+  //     inaccessibility as the shipped parish file draws it (shapely
+  //     polylabel, 2026-10-21), 15.4 and 8.3 km from the parish's edge; the
+  //     check also reads that file there, so a moved point fails here rather
+  //     than testing another parish. Then the file is refused, and the
+  //     section alone says so while the parish's officials are still named.
+  {
+    const swcd = shipped("la-conservation-districts.json");
+    const parishes = shipped("state-counties.json");
+    const cases = [
+      { point: POINT, geoid: "22071", parish: "Orleans Parish" },
+      { point: "32.44057,-92.15684", geoid: "22073", parish: "Ouachita Parish" },
+      { point: "29.55153,-90.07420", geoid: "22051", parish: "Jefferson Parish" },
+    ];
+    const SPLIT = (parish) => `${parish} has two soil and water conservation districts on the ` +
+      "Department of Agriculture and Forestry's map, and this app does not draw the line between " +
+      "them, so both are listed.";
+    const swcdCard = async (pt, routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=county`, routeFn);
+      const info = await cardText(page, "county");
+      const body = await page.evaluate((cid) => {
+        const el = document.getElementById("card-" + cid);
+        return el ? Array.from(el.querySelectorAll("a[href]")).map((a) => a.href) : [];
+      }, "county");
+      await context.close();
+      return { text: plain(info.text || ""), error: info.error, body };
+    };
+    for (const c of cases) {
+      const entry = swcd[c.geoid] || {};
+      const districts = entry.districts || [];
+      const offices = districts.flatMap((d) => d.offices || []);
+      const at = propsAt(parishes, c.point).map((p) => String(p.GEOID));
+      const card = await swcdCard(c.point);
+      const low = card.text.toLowerCase();
+      const where = districts.map((d) => low.indexOf(d.name.toLowerCase()));
+      const ordered = where.every((i, k) => i >= 0 && (k === 0 || i > where[k - 1]));
+      const missing = offices.filter((o) => !card.text.includes(`${o.town} office`) ||
+        !card.text.includes(o.phone) || !card.body.includes("tel:" + o.phone.replace(/[^\d+]/g, "")) ||
+        (o.ext && !card.text.includes(`Extension ${o.ext}`))).map((o) => o.town);
+      const split = districts.length > 1;
+      const splitOk = split
+        ? card.text.includes(SPLIT(c.parish) + (entry.note ? " " + entry.note : ""))
+        : !/soil and water conservation districts on the Department/.test(card.text);
+      const creditOk = /Where this comes from/i.test(card.text) &&
+        card.text.includes(`Louisiana's 44 soil and water conservation districts, last edited ${longDate(entry.mapEdited)} ` +
+          `and read on ${longDate(entry.read)}. This app lists the districts that cover each parish and does not draw their lines.`) &&
+        card.body.includes(entry.pageUrl) && /The Department's page on these districts/.test(card.text);
+      check(`the Parish card in ${c.parish} lists ${split ? "both soil and water conservation districts the map divides it between" : "its soil and water conservation district"}, ` +
+          "every office with its telephone and extension, that no supervisor is named, how the board is chosen, and where it comes from",
+        at.length === 1 && at[0] === c.geoid && !card.error && card.text.includes(c.parish) &&
+          districts.length === (c.geoid === "22071" ? 1 : 2) && ordered && offices.length > 0 &&
+          missing.length === 0 && splitOk && creditOk &&
+          /Not named here\. The Department of Agriculture and Forestry's list gives each district's offices but names none of its five supervisors/.test(card.text) &&
+          /Five supervisors, each a landowner or farm operator, serve three-year terms\./.test(card.text) &&
+          /The Commission appoints the other two, and fills any vacancy for the rest of the term\./.test(card.text),
+        `at=${at} districts=${districts.length} ordered=${ordered} missing=${missing.slice(0, 2)} split=${splitOk} ` +
+          `credit=${creditOk} ${card.text.slice(0, 80)}`);
+    }
+
+    const orleans = shipped("la-parish-officials.json")["22071"];
+    const refused = await swcdCard(POINT, async (p) => {
+      await p.route("**/data/app/la-conservation-districts.json", (r) => r.fulfill({ status: 503, body: "down" }));
+    });
+    const crescent = (swcd["22071"].districts || [])[0].name;
+    check("the Parish card says the list of soil and water conservation districts did not load, and still names the parish's officials",
+      !refused.error && /Orleans Parish/.test(refused.text) &&
+        refused.text.includes("The list of soil and water conservation districts did not load, so none is shown.") &&
+        !refused.text.toLowerCase().includes(crescent.toLowerCase()) &&
+        !!orleans.executive && refused.text.includes(orleans.executive.name),
+      refused.text.slice(0, 90));
+  }
+
   // 10. THE POLICE JURY OR COUNCIL DISTRICT LAYER, drawn only in the parishes
   //     whose current lines are confirmed (Adam's ruling of 2026-10-20,
   //     "Confirmed only"). The district, parish, body and member expected are
@@ -1284,10 +1390,24 @@ try {
   //         there are any, the body, where the line comes from (the Census's
   //         January 1, 2026 edition, which the build checked) and where the
   //         names come from.
-  //       - Orleans, at City Hall, is not drawn: the layer HIDES, with the
-  //         layers= permalink intact. This is the half that discriminates:
-  //         without `coverage` the card would say no district is drawn here,
-  //         about a parish with five.
+  //       - New Orleans City Hall, in the New Orleans City Council's District
+  //         B, and the State Capitol, in East Baton Rouge's Metro District 10:
+  //         these two parishes are drawn from their own government's map
+  //         (since 2026-10-21), so each card says whose map the line is,
+  //         never the Census edition, and links that government's page for
+  //         its districts. Measured 2026-10-21 against each government's own
+  //         layer: New Orleans's answered B at City Hall and C at a point in
+  //         Algiers; the City-Parish's answered 10 at the Capitol and 2 and 9
+  //         at points in the parish's north and south-east.
+  //       - A point in Jefferson Parish, which is not drawn: the layer HIDES,
+  //         with the layers= permalink intact. This is the half that
+  //         discriminates: without `coverage` the card would say no district
+  //         is drawn here, about a parish with five.
+  //       - A point in Lake Pontchartrain inside Orleans Parish, where the
+  //         city's map draws no district (its own layer answered none there on
+  //         2026-10-21, and TIGER's areal hydrography names the lake there and
+  //         no water at City Hall): the layer shows, and the card says the
+  //         parish's own map leaves out some of its water.
   //       - With the layer OFF at the Caddo parish point, the coverage test
   //         reads the list of drawn parishes and never the districts file,
   //         which every reader would otherwise download on a first selection,
@@ -1298,16 +1418,35 @@ try {
   //         for it and calls nothing vacant.
   //       - Two members from one district, Cameron's shape, on a stubbed
   //         roster for the same reason: the card names both.
-  //     The points are each district's pole of inaccessibility as the shipped
-  //     file draws it (shapely polylabel, 2026-10-20), 5 to 13 km from its
-  //     nearest line.
+  //     The three Census-lined points are each district's pole of
+  //     inaccessibility as the shipped file draws it (shapely polylabel,
+  //     2026-10-20), 5 to 13 km from its nearest line; City Hall is 520 m
+  //     inside District B and the Capitol 845 m inside Metro District 10 as
+  //     the shipped file draws them (2026-10-21).
   {
     const districts = shipped("la-parish-districts.json");
     const roster = shipped("la-parish-officials.json");
-    const seatOf = (p) => (((roster[p.parishfips] || {}).seats) || [])
-      .filter((s) => s.seat === `${p.label === "Ward" ? "Ward" : "District"} ${p.district}`);
-    const drawnPoints = ["32.83961,-93.92869", "29.84237,-91.03153", "29.77359,-90.28081"];  // Caddo 1, Assumption Ward 4, St. Charles 4
+    const counties = shipped("state-counties.json");
+    const drawnParishes = shipped("la-parish-district-parishes.json");
+    // the app's own word for a seat: "Ward 4", "Metro District 10", "District B"
+    const seatName = (p) => `${p.label === "Ward" || p.label === "Metro District" ? p.label : "District"} ${p.district}`;
+    const seatOf = (p) => (((roster[p.parishfips] || {}).seats) || []).filter((s) => s.seat === seatName(p));
+    const CAPITOL = "30.45710,-91.18740";  // the Louisiana State Capitol, East Baton Rouge Parish
+    const drawnPoints = ["32.83961,-93.92869", "29.84237,-91.03153", "29.77359,-90.28081", POINT, CAPITOL];  // Caddo 1, Assumption Ward 4, St. Charles 4, Orleans B, East Baton Rouge Metro 10
     const CADDO_PARISH = "32.45376,-93.89207";  // the Caddo point check 9 uses, in District 12
+    const JEFFERSON = "29.98410,-90.15290";  // in Jefferson Parish on the shipped parish outlines, 2.8 km from Orleans's nearest drawn district
+    const ORLEANS_LAKE = "30.10000,-90.10000";  // Lake Pontchartrain, inside Orleans Parish's outline, 7.8 km from its nearest drawn district
+    const hrefs = (page, id) => page.evaluate((cid) => {
+      const el = document.getElementById("card-" + cid);
+      return el ? Array.from(el.querySelectorAll("a[href]")).map((a) => a.href) : [];
+    }, id);
+    const blockHidden = (page, id, want) => page
+      .waitForFunction(([cid, w]) => {
+        const box = document.getElementById("toggle-" + cid);
+        const block = box && box.closest(".layer-block");
+        return block && block.hidden === w;
+      }, [id, want], { timeout: QUERY_TIMEOUT })
+      .then(() => true, () => false);
 
     for (const pt of drawnPoints) {
       const at = propsAt(districts, pt);
@@ -1315,40 +1454,59 @@ try {
       const seats = seatOf(p);
       const o = roster[p.parishfips] || {};
       const atLarge = o.atLarge || [];
-      const name = `${p.label === "Ward" ? "Ward" : "District"} ${p.district}`;
+      const name = seatName(p);
+      const own = p.lines === "own";
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${pt}&layers=parish-district`);
       const info = await cardText(page, "parish-district");
       const text = info.text || "";
+      const links = await hrefs(page, "parish-district");
       const word = p.label === "Ward" ? "ward" : "district";
-      check(`the parish-district card in ${p.parish || "a drawn parish"} names ${name}, its member${atLarge.length ? ", the members elected at large" : ""} and where the line and the names come from`,
+      check(`the parish-district card in ${p.parish || "a drawn parish"} names ${name}, its member${atLarge.length ? ", the members elected at large" : ""} and where the line and the names come from${own ? ", and links the parish government's page for its districts" : ""}`,
         at.length === 1 && seats.length === 1 && !info.error &&
           new RegExp(`\\b${name}\\b`).test(text) && text.includes(seats[0].name) &&
           atLarge.every((m) => text.includes(m.name)) &&
           (atLarge.length ? /Members elected at large/i.test(text) : !/Members elected at large/i.test(text)) &&
           text.includes(p.parish) && text.includes(p.body) &&
-          /Where this line comes from/i.test(text) && text.includes("January 1, 2026 edition") &&
-          text.includes(`${word}s hold nearly equal numbers of people`) &&
+          /Where this line comes from/i.test(text) &&
+          (own
+            ? p.lines === "own" && !!p.source && text.includes(p.source + ".") &&
+              !text.includes("January 1, 2026 edition") && !!p.sourceUrl && links.includes(p.sourceUrl) &&
+              /The official page for these districts/.test(text)
+            : p.lines === "census" && text.includes("January 1, 2026 edition") &&
+              text.includes(`${word}s hold nearly equal numbers of people`) &&
+              !/The official page for these districts/.test(text)) &&
           (atLarge.length ? /Where the names come from/i.test(text) : /Where the name comes from/i.test(text)),
-        `districts here=${at.length} seats=${seats.length} ${text.slice(0, 140)}`);
+        `districts here=${at.length} seats=${seats.length} lines=${p.lines} ${text.slice(0, 140)}`);
       await context.close();
     }
 
     {
+      const parish = propsAt(counties, JEFFERSON)[0] || {};
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${POINT}&layers=parish-district`);
-      const hidden = await page
-        .waitForFunction(() => {
-          const box = document.getElementById("toggle-parish-district");
-          const block = box && box.closest(".layer-block");
-          return block && block.hidden === true;
-        }, null, { timeout: QUERY_TIMEOUT })
-        .then(() => true, () => false);
+      const page = await booted(context, `${BASE}#point=${JEFFERSON}&layers=parish-district`);
+      const hidden = await blockHidden(page, "parish-district", true);
       const stillOn = await page.evaluate(
         (n) => window[n].state.layersOn["parish-district"] === true, EXPORTS_NAME);
-      check("parish-district hides in Orleans Parish, whose current lines are not confirmed, and stays switched on",
-        propsAt(districts, POINT).length === 0 && hidden && stillOn,
-        `drawn here=${propsAt(districts, POINT).length} hidden=${hidden} layersOn=${stillOn}`);
+      check("parish-district hides in Jefferson Parish, whose current lines are not confirmed, and stays switched on",
+        parish.NAME === "Jefferson Parish" && !Object.prototype.hasOwnProperty.call(drawnParishes, String(parish.GEOID)) &&
+          propsAt(districts, JEFFERSON).length === 0 && hidden && stillOn,
+        `parish=${parish.NAME} drawn here=${propsAt(districts, JEFFERSON).length} hidden=${hidden} layersOn=${stillOn}`);
+      await context.close();
+    }
+
+    {
+      const parish = propsAt(counties, ORLEANS_LAKE)[0] || {};
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${ORLEANS_LAKE}&layers=parish-district`);
+      const shown = await blockHidden(page, "parish-district", false);
+      const info = await cardText(page, "parish-district");
+      const text = info.text || "";
+      check("in Orleans Parish's part of Lake Pontchartrain, where the city's map draws no district, parish-district shows and says the parish's own map leaves out some of its water",
+        parish.NAME === "Orleans Parish" && propsAt(districts, ORLEANS_LAKE).length === 0 && shown && !info.error &&
+          /No police jury or council district is drawn at this point/.test(text) &&
+          /the parish's own district map leaves out some of the parish's water/.test(text),
+        `parish=${parish.NAME} drawn here=${propsAt(districts, ORLEANS_LAKE).length} shown=${shown} ${text.slice(0, 140)}`);
       await context.close();
     }
 
@@ -1658,6 +1816,145 @@ try {
           c["la-court-of-appeal"].text.includes("Fourth Circuit, District 1") &&
           c["la-district-court"].text.includes("Civil District Court and Criminal District Court"),
         `named=${named.slice(0, 2)} ${COURTS.map((id) => JSON.stringify(c[id].text.slice(0, 80))).join(" | ")}`);
+    }
+  }
+
+  // 13. THE CITY COUNCIL DISTRICT LAYER, in the four cities whose own current
+  //     map is confirmed: Lafayette, Bossier City, Central and Slidell (since
+  //     2026-10-21). The district, city and member expected are read from the
+  //     shipped files at the point (la-city-wards.json and the City card's
+  //     roster, la-municipal-officials.json), so a rebuild moves the
+  //     expectation with them; what is asserted is that the card agrees.
+  //       - In each city, the card names the city, the district, its member,
+  //         the members elected at large where the city has them, whose map
+  //         the line is and how close the drawing is to it, and where the
+  //         names come from; it links the city's page for its map and, in its
+  //         footer, the Secretary of State's list; and it dials every member
+  //         it names, each at the number the list prints, and no other.
+  //       - Where Bossier City's own map draws District 2 and District 4 over
+  //         one spot, the card names both districts and both members.
+  //       - At New Orleans City Hall the layer shows and says which four
+  //         cities are drawn, and that New Orleans is governed by its parish's
+  //         council.
+  //       - The roster is refused: the district still answers and names nobody.
+  //       - A seat the list leaves out, on a stubbed roster because no drawn
+  //         city has one on 2026-10-21: the card says the list names no one
+  //         for it, calls nothing vacant, and still names the members elected
+  //         at large.
+  //     The four city points are each city's district farthest from its own
+  //     edge, at its pole of inaccessibility as the shipped file draws it
+  //     (shapely polylabel, 2026-10-21), 1.2 to 2.7 km inside; the Bossier City
+  //     point is the polylabel of the largest part of that overlap, 1.9 m from
+  //     its edge. Measured the same day against each city's own layer, each
+  //     point answered the district the file draws there (both 2 and 4 at the
+  //     overlap), and a point outside each city answered none.
+  {
+    const wards = shipped("la-city-wards.json");
+    const towns = shipped("la-municipal-officials.json");
+    const CITY_POINTS = ["30.17791,-92.05253", "32.54174,-93.64607", "30.60565,-91.06211", "30.32313,-89.80894"];  // Lafayette 3, Bossier City 4, Central 5, Slidell D
+    const BOSSIER_TWO = "32.526884,-93.632816";  // Bossier City Districts 2 and 4, as the city's map draws them
+    const named = (list) => (list || []).filter((m) => m && m.name);
+    const memberOf = (p) => named((towns[p.geoid] || {}).seats).filter((m) => m.seat === p.seat);
+    const dials = (people) => people.filter((m) => m.phone).map((m) => "tel:" + m.phone.replace(/[^\d+]/g, ""));
+    const wardCard = async (pt, routeFn) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=city-ward`, routeFn);
+      const info = await cardText(page, "city-ward");
+      const got = await page.evaluate((cid) => {
+        const el = document.getElementById("card-" + cid);
+        const block = el && el.closest(".layer-block");
+        return {
+          body: el ? Array.from(el.querySelectorAll("a[href]")).map((a) => a.href) : [],
+          footer: block ? Array.from(block.querySelectorAll(".card-footer a[href]")).map((a) => a.href) : [],
+          hidden: !!(block && block.hidden)
+        };
+      }, "city-ward");
+      await context.close();
+      return { text: info.text || "", error: info.error, links: got };
+    };
+    const lineSentence = (p) => p.source.charAt(0).toUpperCase() + p.source.slice(1) +
+      ". The line drawn here is within 4 metres of that map's own.";
+
+    for (const pt of CITY_POINTS) {
+      const at = propsAt(wards, pt);
+      const p = at[0] || {};
+      const o = towns[p.geoid] || {};
+      const seats = memberOf(p);
+      const atLarge = named(o.atLarge);
+      const people = seats.concat(atLarge);
+      const c = await wardCard(pt);
+      const tel = c.links.body.filter((h) => h.startsWith("tel:"));
+      const want = dials(people);
+      check(`the City Council District card in ${p.city || "a drawn city"} names ${p.seat}, its member${atLarge.length ? ", the members elected at large" : ""}, whose map the line is and where the names come from, links the city's map page and the list, and dials each member`,
+        at.length === 1 && seats.length === 1 && !c.error && !c.links.hidden &&
+          new RegExp(`\\b${p.seat}\\b`).test(c.text) && c.text.includes(p.city) &&
+          people.every((m) => c.text.includes(m.name)) &&
+          (atLarge.length ? /Members elected at large/i.test(c.text) : !/Members elected at large/i.test(c.text)) &&
+          /Where this line comes from/i.test(c.text) && c.text.includes(lineSentence(p)) &&
+          (people.length > 1 ? /Where the names come from/i.test(c.text) : /Where the name comes from/i.test(c.text)) &&
+          c.text.includes(`read on ${longDate(o.read)}`) &&
+          c.links.body.includes(p.sourceUrl) && /The city's page for this map/.test(c.text) &&
+          c.links.footer.includes(o.sourceUrl) &&
+          want.length === people.length && want.every((h) => tel.includes(h)) && tel.length === want.length &&
+          !/More than one/.test(c.text),
+        `districts here=${at.length} seats=${seats.length} tel want=${want.length} got=${tel.length} ${c.text.slice(0, 160)}`);
+    }
+
+    {
+      const at = propsAt(wards, BOSSIER_TWO);
+      const people = at.flatMap(memberOf);
+      const c = await wardCard(BOSSIER_TWO);
+      const seatsHere = at.map((p) => p.seat).sort();
+      check("where Bossier City's own map draws District 2 and District 4 over one spot, the City Council District card names both districts and both members",
+        at.length === 2 && seatsHere.join() === "District 2,District 4" && people.length === 2 && !c.error &&
+          people.every((m) => c.text.includes(m.name)) && /More than one district here/.test(c.text) &&
+          c.text.includes("Bossier City's own district map draws District 2 and District 4 over this spot, so this app names both rather than choosing one."),
+        `districts here=${seatsHere} members=${people.length} ${c.text.slice(0, 160)}`);
+    }
+
+    {
+      const c = await wardCard(POINT);
+      check("at New Orleans City Hall the City Council District card shows, says which four cities are drawn and that New Orleans is governed by its parish's council",
+        propsAt(wards, POINT).length === 0 && !c.error && !c.links.hidden &&
+          /No city council district is drawn at this point/.test(c.text) &&
+          /four of Louisiana's 13 cities of 25,000 people or more \(Lafayette, Bossier City, Central and Slidell\)/.test(c.text) &&
+          /New Orleans, Baton Rouge and Houma are governed by their parish's council/.test(c.text),
+        c.text.slice(0, 160));
+    }
+
+    {
+      const pt = CITY_POINTS[0];
+      const p = propsAt(wards, pt)[0] || {};
+      const o = towns[p.geoid] || {};
+      const everyone = named(o.seats).concat(named(o.atLarge), o.mayor && o.mayor.name ? [o.mayor] : []);
+      const c = await wardCard(pt, async (pg) => {
+        await pg.route("**/data/app/la-municipal-officials.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      });
+      const leaked = everyone.filter((m) => c.text.includes(m.name)).map((m) => m.name);
+      check("the City Council District card still names the district, and names nobody, when the list of mayors and councils fails",
+        !c.error && new RegExp(`\\b${p.seat}\\b`).test(c.text) && c.text.includes(lineSentence(p)) &&
+          /The list of mayors and councils did not load, so no one is named here/.test(c.text) &&
+          everyone.length > 0 && leaked.length === 0,
+        `named=${leaked.slice(0, 2)} ${c.text.slice(0, 140)}`);
+    }
+
+    {
+      const pt = CITY_POINTS[3];
+      const p = propsAt(wards, pt)[0] || {};
+      const stub = JSON.parse(JSON.stringify(towns));
+      const left = memberOf(p)[0] || {};
+      stub[p.geoid].seats = stub[p.geoid].seats.filter((m) => m.seat !== p.seat);
+      const atLarge = named(stub[p.geoid].atLarge);
+      const c = await wardCard(pt, async (pg) => {
+        await pg.route("**/data/app/la-municipal-officials.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(stub) }));
+      });
+      check("the City Council District card says the list names no one for a seat it leaves out, calls nothing vacant, and still names the members elected at large",
+        !c.error && !!left.name && !c.text.includes(left.name) && atLarge.length > 0 &&
+          atLarge.every((m) => c.text.includes(m.name)) &&
+          /The Secretary of State's list names no one for this district, so no one is named here/.test(c.text) &&
+          !/vacant/i.test(c.text),
+        c.text.slice(0, 160));
     }
   }
 } finally {

@@ -196,7 +196,9 @@
    "link": "https://districtry.com/il/?utm_source=press-chi&utm_medium=email&utm_campaign=districtry-launch",
    "sent_on": "2026-08-31",
    "sent_to": "newsroom@blockclubchi.org",
-   "data_desk_finding": "NO DATA DESK — measured 2026-09-02. The full team page renders (103 role words: 51 reporters, 46 editors) and the word 'data' appears ONCE, 'graphics' never. This is an absence on a page that loaded, not a page that failed."
+   "data_desk_finding": "NO DATA DESK — measured 2026-09-02. The full team page renders (103 role words: 51 reporters, 46 editors) and the word 'data' appears ONCE, 'graphics' never. This is an absence on a page that loaded, not a page that failed.",
+   "followed_up_on": "2026-10-21",
+   "followed_up_to": "newsroom@blockclubchi.org"
   },
   {
    "name": "Capitol News Illinois",
@@ -313,7 +315,9 @@
    "wave": 1,
    "link": "https://districtry.com/il/?utm_source=press-chi&utm_medium=email&utm_campaign=districtry-launch",
    "sent_on": "2026-08-31",
-   "sent_to": "chicago.tips@chalkbeat.org"
+   "sent_to": "chicago.tips@chalkbeat.org",
+   "followed_up_on": "2026-10-21",
+   "followed_up_to": "chicago.tips@chalkbeat.org"
   },
   {
    "name": "Chi Hack Night",
@@ -356,7 +360,9 @@
    "notes": "THIS IS NOT PRESS AND A PRESS RELEASE IS THE WRONG ARTIFACT TO SEND. Chi Hack Night is a weekly civic-tech community meetup (Tuesdays 7-10pm, YouTube livestream + Slack), not a newsroom. It has no news desk, no tips line, no editorial contact, and no reporters. Nothing on the site invites press releases and nothing on it says press releases are accepted. WHAT IT DOES ACCEPT: a talk pitch. /speaker-submissions asks for \"a brief 2-3 paragraph summary\" covering \"who you are, what you would like to present on, it's relevance to data, technology and civics, and why it would be relevant to our audience,\" sent to booking@chihacknight.org.",
    "wave": 2,
    "link": "https://districtry.com/il/?utm_source=press-chi&utm_medium=email&utm_campaign=districtry-launch",
-   "intro": "I've been building districtry.com on my own, and it now covers 91 of Illinois's 102 counties. The last 11 are not a scraping problem, they are a person-with-a-file problem. If anyone wants to help comb county sites, or knows someone in a county GIS or clerk's office, that is the most useful thing I could get."
+   "intro": "I've been building districtry.com on my own, and it now covers 91 of Illinois's 102 counties. The last 11 are not a scraping problem, they are a person-with-a-file problem. If anyone wants to help comb county sites, or knows someone in a county GIS or clerk's office, that is the most useful thing I could get.",
+   "sent_on": "2026-09-23",
+   "sent_to": "booking@chihacknight.org"
   },
   {
    "name": "Chicago Sun-Times",
@@ -434,7 +440,9 @@
    "wave": 1,
    "link": "https://districtry.com/il/?utm_source=press-chi&utm_medium=email&utm_campaign=districtry-launch",
    "sent_on": "2026-08-31",
-   "sent_to": "tips@suntimes.com"
+   "sent_to": "tips@suntimes.com",
+   "followed_up_on": "2026-10-21",
+   "followed_up_to": "tips@suntimes.com"
   },
   {
    "name": "Cicero Independiente",
@@ -557,7 +565,9 @@
    "wave": 1,
    "link": "https://districtry.com/il/?utm_source=press-chi&utm_medium=email&utm_campaign=districtry-launch",
    "sent_on": "2026-08-31",
-   "sent_to": "chicago@citycast.fm"
+   "sent_to": "chicago@citycast.fm",
+   "followed_up_on": "2026-10-21",
+   "followed_up_to": "chicago@citycast.fm"
   },
   {
    "name": "Crain's Chicago Business",
@@ -791,7 +801,9 @@
    "intro": "The judicial subcircuit is the least understood district on a Cook County ballot, and you are the only newsroom that treats it as a beat. I've built a free lookup that returns a reader's subcircuit from their address, along with every other district they vote in. It is open source and there is no account.",
    "sent_on": "2026-09-01",
    "sent_to": "tips@injusticewatch.org",
-   "data_desk_finding": "NO DATA DESK — measured 2026-09-02. Its 'Visual Reporter' creates visual ART for stories; that is illustration, not data journalism."
+   "data_desk_finding": "NO DATA DESK — measured 2026-09-02. Its 'Visual Reporter' creates visual ART for stories; that is illustration, not data journalism.",
+   "followed_up_on": "2026-10-21",
+   "followed_up_to": "tips@injusticewatch.org"
   },
   {
    "name": "Invisible Institute",
@@ -1006,7 +1018,9 @@
    "wave": 1,
    "link": "https://districtry.com/il/?utm_source=press-chi&utm_medium=email&utm_campaign=districtry-launch",
    "sent_on": "2026-08-31",
-   "sent_to": "news@wbez.org"
+   "sent_to": "news@wbez.org",
+   "followed_up_on": "2026-10-21",
+   "followed_up_to": "news@wbez.org"
   },
   {
    "name": "Axios Chicago",
@@ -1062,7 +1076,9 @@
    "notes": "HOW THESE WERE READ — READ THIS FIRST. www.axios.com refuses this client outright: every path returns Cloudflare HTTP 403 (the local Chicago hub, /contact, /about/team, /authors/*, /newsletters/axios-chicago), on both WebFetch and curl with a normal browser user-agent. Nothing here was answered from memory and nothing was pattern-constructed. Every www.axios.com address below was read in the page source of an Internet Archive snapshot of that exact URL, fetched live during this task. Snapshot dates: /contact 2026-08-24, /newsletters/axios-chicago 2026-08-24, /about/team 2026-07-09, /authors/meng and /authors/cshepherd 2026-06-04, /authors/jkaufmann 2026-06-21. tips.axios.com is NOT blocked and was fetched live (HTTP 200) today.",
    "wave": 2,
    "link": "https://districtry.com/il/?utm_source=press-chi&utm_medium=email&utm_campaign=districtry-launch",
-   "intro": "You live in about a dozen governments and probably cannot name half of them. I found that out when a neighbor a few doors down turned out to have a different alder than me, and I built a free lookup so anyone can check their own address."
+   "intro": "You live in about a dozen governments and probably cannot name half of them. I found that out when a neighbor a few doors down turned out to have a different alder than me, and I built a free lookup so anyone can check their own address.",
+   "sent_on": "2026-10-21",
+   "sent_to": "news@axios.com"
   },
   {
    "name": "CWBChicago",
@@ -1133,7 +1149,9 @@
    "notes": "CONTACT SURFACE, AS READ. The site is a Blogspot. Its footer ('Elsewhere on Chicago Public Square') links Contact and About as label pages — https://www.chicagopublicsquare.com/search/label/Contact and .../label/About — and both resolve to the same canonical post, https://www.chicagopublicsquare.com/2017/02/about-chicago-public-square.html ('Welcome to Chicago Public Square'), which carries the whole contact block. Any of the three URLs is a valid citation; the permalink is the stable one. SIX ADDRESSES ARE PUBLISHED IN ONE LABELLED BLOCK. Three are returned above. The other three are labelled for non-editorial purposes and should NOT receive the release: Ads@ChicagoPublicSquare.com ('■ Advertise'), Squerror@ChicagoPublicSquare.com ('■ Corr…",
    "wave": 1,
    "link": "https://districtry.com/il/?utm_source=press-chi&utm_medium=email&utm_campaign=districtry-launch",
-   "intro": "Short version, if it is useful to you: I'm a Chicago cyber security professional who spent his own time mapping 262 counties because I could not find out which district my neighbor was in. It is free, there is no account, and I'm asking people to try their own address."
+   "intro": "Short version, if it is useful to you: I'm a Chicago cyber security professional who spent his own time mapping 262 counties because I could not find out which district my neighbor was in. It is free, there is no account, and I'm asking people to try their own address.",
+   "sent_on": "2026-10-21",
+   "sent_to": "Tips@ChicagoPublicSquare.com"
   },
   {
    "name": "Chicago Reader",
@@ -1264,11 +1282,14 @@
    "wave": 2,
    "link": "https://districtry.com/il/?utm_source=press-chi&utm_medium=email&utm_campaign=districtry-launch",
    "intro": "One person has now mapped 262 of the 273 counties in Illinois, Wisconsin and Iowa, and the goal is all 3,143 in the country. I am that person, and I started because I could not find out which districts my own neighbor lived in. The Illinois half is free for your readers to use today.",
-   "sent_on": null,
+   "sent_on": "2026-09-09",
    "attempted_on": "2026-09-01",
    "attempted_to": "newsroom@chicagotribune.com",
-   "attempt_outcome": "bounced the same minute — address not found. Re-routed to aquig@chicagotribune.com (A.D. Quig, Cook County government / City Hall); NOT yet re-sent.",
-   "data_desk_finding": "NO DATA BYLINE OBTAINABLE — measured 2026-09-02. The Tribune publishes no staff directory (already recorded above) AND its author pages state no job title at all, so there is no Tribune page that says who its data desk is. Aggregators (Muck Rack, Feedspot, SignalHire) claim to know; they are scraped contact brokers and this list does not cite them."
+   "attempt_outcome": "bounced the same minute — address not found. Re-sent to aquig@chicagotribune.com (A.D. Quig, Cook County government / City Hall) on 2026-09-09.",
+   "data_desk_finding": "NO DATA BYLINE OBTAINABLE — measured 2026-09-02. The Tribune publishes no staff directory (already recorded above) AND its author pages state no job title at all, so there is no Tribune page that says who its data desk is. Aggregators (Muck Rack, Feedspot, SignalHire) claim to know; they are scraped contact brokers and this list does not cite them.",
+   "followed_up_on": "2026-10-21",
+   "followed_up_to": "aquig@chicagotribune.com",
+   "sent_to": "aquig@chicagotribune.com"
   },
   {
    "name": "Daily Herald",
@@ -1501,7 +1522,9 @@
    "sent_on": "2026-09-01",
    "sent_to": "jgreenfield@streetsblog.org",
    "reply_on": "2026-09-01",
-   "reply_note": "John Greenfield, Editor, replied the same afternoon — interested, may run it. The wording is in your own inbox; it is not reproduced here."
+   "reply_note": "John Greenfield, Editor, replied the same afternoon that he might include it in Streetsblog Chicago's daily headlines roundup. It was not in that roundup on 1-4 September (checked 2026-10-21); later days were not checked. The wording is in your own inbox; it is not reproduced here.",
+   "followed_up_on": "2026-10-21",
+   "followed_up_to": "jgreenfield@openplans.org"
   },
   {
    "name": "The Chicago Reporter",

@@ -27,8 +27,11 @@ list and member pages), the TIGERweb fabric — **City, Town or Village** (`muni
 site serves (`data/app/tiles/`, copied from TIGERweb by the fleet's weekly census mirror job), so
 no layer sends a reader's selected point to any server — and three nearest-N layers from the USGS National Map
 (**Police Station**, **Fire & EMS Station**, **Post Office**). Beside it, **Police Jury or Council
-District** (`parish-district`) draws the districts of each of the 6 parishes whose current lines
-are confirmed, and is hidden in the other 58. **Voting Precinct** (`voting-precinct`, since
+District** (`parish-district`) draws the districts of each of the 8 parishes whose current lines
+are confirmed (6 from the Census's lines, and Orleans and East Baton Rouge from each parish
+government's own map), and is hidden in the other 56. **City Council District** (`city-ward`,
+since 2026-10-21) draws the 22 council districts of Lafayette, Bossier City, Central and Slidell,
+each from the city's own map. **Voting Precinct** (`voting-precinct`, since
 2026-10-21) draws all 3,569 precincts in the 64 parishes from the Legislature's statewide precinct
 file. **Supreme Court District**, **Court of Appeal District** and **Judicial District**
 (`la-supreme-court`, `la-court-of-appeal`, `la-district-court`, since 2026-10-21) draw the three
@@ -110,6 +113,46 @@ unless the list has a seat for exactly the districts the Census draws. **THE LAY
 READS A LIST, NOT THE LAYER'S FILE** (`la-parish-district-parishes.json`, under 1 KB), because it
 runs on a reader's first selection even with the layer off.
 
+**TWO PARISHES ARE DRAWN FROM THEIR OWN MAPS INSTEAD** (`OWN_MAP_PARISHES` in the same builder,
+2026-10-21). In Orleans the Census files no council districts at all, and East Baton Rouge's 2026
+Census lines are older than the 2020 census, so each is drawn from its government's own map layer:
+New Orleans's City Council Districts, whose own description says "effective January 12, 2026" and
+"based upon the 2020 decennial United States Census", and the City-Parish's Council District, whose
+twelve districts each hold within 51 people of the figures it published for Plan 4B, the plan the
+Metropolitan Council adopted on August 10, 2022. Only the district field is asked for (both layers
+also carry the members' names), each district is cut at the parish line on the Census Bureau's map
+so this layer and the Parish card agree about which parish a point is in, and each district's 2020
+people are pinned, so a line that moves stops the build. The ground in no district is water and
+riverbank (395.95 km² in Orleans, 7.93 km² in East Baton Rouge) and no 2020 resident lived on it.
+The monthly source check re-reads both maps (`la/scripts/validate_sources.py`, check 6). In these
+two parishes this layer is also the city's council: the Secretary of State's list names New Orleans's
+and Baton Rouge's councils as the parishes', so the City, Town or Village card has no record for
+either and the Parish card names them.
+
+**FOUR CITIES' COUNCIL DISTRICTS ARE DRAWN, EACH FROM THE CITY'S OWN MAP** (`la-city-wards.json`,
+`la/scripts/build_la_city_wards.py`, its `--check` in CI). All 13 of Louisiana's cities of 25,000
+people or more elect council members by district. Lafayette, Bossier City, Central and Slidell are
+drawn: each city's own pages name the layer as its current districts, and each layer is lines drawn
+on the 2020 census, which is MEASURED rather than taken from a date — counted on both censuses'
+blocks, the four are 6.5% to 10.7% apart on the 2020 census and 16.2% to 26.1% on the 2010 census,
+because people move in the ten years between. The lines between districts are the city's own, never
+redrawn, and the outer edge is the Census Bureau's map of the city, which the City card reads, so
+the two cards never put a point in different cities. Every district's 2020 people are pinned, and a
+city's own population figures are held to them where it publishes them, two differences recorded
+with their reasons (`OWN_POPULATION`: one Bossier City block of 600 people, outside the city on the
+2020 census's map and inside it on today's, and 29 people Central's own figures place in another
+district). New Orleans,
+Baton Rouge and Houma are their parish's council and are drawn by the layer above. The other six
+are not drawn, each for a reason recorded in `NOT_DRAWN`: Monroe's only layer predates the
+council's 2022 ordinance, Kenner's balances on the 2010 census and not the 2020 census, which plan
+is in force in Alexandria is not established, New Iberia's only layer is its 2012 plan, Lake
+Charles publishes its plan as a PDF only, and Shreveport's one layer may not be copied without a
+written agreement with the regional GIS that publishes it (Adam's decision whether to ask;
+`la/WATCH.md`). The card names every district at a point, because three cities' maps draw
+neighbouring districts over each other in a few slivers, and names the member from the City card's
+roster by the city and the seat. The monthly source check re-reads all four layers
+(`la/scripts/validate_sources.py`, check 7).
+
 **THE PRECINCTS ARE A FILE THE LEGISLATURE POSTS, EDITION BY EDITION, NOT A MAP SERVICE**
 (`la-precincts.json`, `la/scripts/build_la_precincts.py`, its `--check` in CI). The redistricting
 office lists its precinct shapefiles at `redist.legis.la.gov/default_ShapeFiles2020`; the newest on
@@ -149,6 +192,29 @@ point's whole parish in one section. Every card says how many judges the list na
 many seats a court has. The Third Circuit's own site answered this project's client with a
 Cloudflare challenge on 2026-10-21, so its cards link the list instead.
 
+**THE SOIL AND WATER CONSERVATION DISTRICTS ARE ON THE PARISH CARD, LISTED AND NOT DRAWN, AND THE
+CARD NAMES NO SUPERVISOR** (`la-conservation-districts.json`,
+`la/scripts/build_la_conservation_districts.py`, `--check` in CI). Louisiana's 44 districts are
+governmental subdivisions of the state (La. R.S. 3:1208), each governed by five supervisors, three
+elected and two appointed by the Soil and Water Conservation Commission (3:1205 to 3:1207). The
+Department of Agriculture and Forestry publishes one PDF of them: page 1 a map of the 44, page 2 a
+list of their 50 offices, each with its town, telephone and extension. **THE MAP IS A VECTOR
+DRAWING, AND ITS OBJECTS ARE WHAT IS READ, NEVER ITS PIXELS**:
+`la/scripts/measure_la_conservation_parishes.py` reads each filled path by its own fill rule, fits
+the shipped parishes to the map's grey parish strokes, and says which districts cover each parish;
+its answer is copied into the builder's `PARISHES` by hand, and the builder stops when the drawing
+changes (`MAP_FINGERPRINT`). 57 parishes lie in one district and seven in two (Ascension, Caldwell,
+Iberville, Jefferson, Ouachita, Richland and St. James), and those cards list both, the one covering
+more of the parish first, because no line traced from a PDF is drawn. **IN JEFFERSON THE PICTURE
+AND THE OBJECTS DISAGREE**: the map strokes the coast 6 pt wide over Grand Isle, which is narrower
+than that on the page, so the printed map shows the island black while its fill is the
+Lafourche-Terrebonne district's, which the card says. Neither the Department's list nor the
+Secretary of State's names a supervisor, so the card names none (gap
+`la-conservation-district-supervisors`; the Department was asked on 2026-10-21). The card's two
+fixed sentences, how the board is chosen and why it names no one, are held by the builder's
+`--check` to its own copy, and `la/scripts/validate_sources.py` (check 8) warns monthly when the
+Department's page links a different file or the PDF changes.
+
 **ONE SCHOOL LAYER, LABELLED WITHOUT A QUALIFIER.** TIGER's unified tiling holds 69 districts for
 Louisiana and its elementary and secondary tilings hold none — so the layer is "School District",
 and its id stays `school-district-unified` because a layer id is a public address. **ITS CARD NAMES
@@ -187,7 +253,8 @@ towns' rows name no seat for any member and nothing in them says how the members
 card says the list names them without a ward or district. 99 towns name a seat for each member and 47
 elect some members at large, and the Census draws no municipal ward or council district, so where
 the seats are all wards or all districts the card says the member elected from this point's ward or
-district represents it and that the map does not draw them, and otherwise that the list names a seat
+district represents it and that the map does not draw them (in Lafayette, Bossier City, Central and
+Slidell, that the City Council District layer draws them and names the member), and otherwise that the list names a seat
 but not the ground it covers (gap `la-municipal-ward-lines`). A numbered or lettered run of seats that
 skips one names the skipped seat (Bernice's District 3), as on the Parish card. Lafayette's council is
 named here and its Mayor-President on the Parish card, as Lafayette Parish's executive. A telephone,
@@ -251,7 +318,7 @@ legislative seats vacant on 2026-10-21 (Senate 14, House 77 and 92) are listed a
 - Metro: Louisiana (`louisiana`) — https://districtry.com/la/
 - Geocoders: address Photon (Louisiana-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Louisiana-bounded, serial >=1s queue)
 - Ground truth: 29.95240,-90.07670 (New Orleans City Hall, 1300 Perdido Street, Orleans Parish) → county Orleans Parish; us-house 2; la-senate 5; la-house 93; voting-precinct Precinct 3-1; la-supreme-court 7; la-court-of-appeal Fourth Circuit, District 1; la-district-court Civil District Court and Criminal District Court. Negative point 28.60000,-90.50000 (open water about 50 km south of the Louisiana coast, past the state's offshore line — outside Louisiana and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-20: TIGERweb's state and county layers name no state or parish here, its legislative layers no district, and its ZIP layer no ZIP code (control: New Orleans City Hall returns Louisiana, Orleans Parish and 70112). OPEN WATER BECAUSE A POINT ON A NEIGHBOUR'S LAND WOULD HAVE TO MOVE: Arkansas and Mississippi are live already, and the fleet is meant to reach every state, Texas included.).
-- Layers: 16 registered (political 8, safety 2, schools 1, geography 5); `registerLayer(` floor 14. Debug namespace `window.LouisianaExplorer`.
+- Layers: 17 registered (political 9, safety 2, schools 1, geography 5); `registerLayer(` floor 14. Debug namespace `window.LouisianaExplorer`.
 - Scheduled workflows: `update-la-congress-roster.yml` (Mon 19:23 UTC); `update-la-legislature-roster.yml` (Tue 19:23 UTC); `update-la-parish-officials.yml` (Wed 19:23 UTC); `la-validate-sources.yml` (1st of month 20:47 UTC).
 - Source registry: `la/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -287,6 +354,10 @@ python3 la/scripts/build_la_precincts.py --check
 # shape, floors and districts):
 python3 la/scripts/build_la_court_districts.py --check
 python3 la/scripts/build_la_judges.py --check
+
+# Soil and water conservation districts (offline: the shipped file against
+# its record of the PDF read, and the Parish card's two fixed sentences):
+python3 la/scripts/build_la_conservation_districts.py --check
 
 # Generated-region gate: per-instance facts live ONCE in la/metro-worksheet.json;
 # GENERATED regions are emitted from it. NEVER hand-edit a GENERATED region:
@@ -346,8 +417,10 @@ operator script: `metro-outline.json` (the whole-state outline for the coverage 
 Texas, Arkansas and Mississippi), `state-counties.json` (`la/scripts/build_state_counties.py`,
 Douglas-Peucker at 5 m, refused unless the 8 m fidelity ceiling passes),
 `la-parish-districts.json` and `la-parish-district-parishes.json`
-(`la/scripts/build_la_parish_districts.py`, the 6 confirmed parishes, one mapshaper run so a shared
-line is simplified once), `la-precincts.json` (`la/scripts/build_la_precincts.py`, the
+(`la/scripts/build_la_parish_districts.py`, the 8 confirmed parishes, one mapshaper run so a shared
+line is simplified once), `la-city-wards.json` (`la/scripts/build_la_city_wards.py`, the four drawn
+cities' council districts in one shared topology, Douglas-Peucker at 3 m, refused unless every
+populated 2020 block keeps its district and the true line strays no more than 4 m), `la-precincts.json` (`la/scripts/build_la_precincts.py`, the
 Legislature's statewide precinct file, Douglas-Peucker at 12 m, refused unless the exact count, the
 6,000-point agreement gate and the per-parish cover check pass), the three court maps
 `la-supreme-court-districts.json`, `la-court-of-appeal-districts.json` and
@@ -363,6 +436,10 @@ Secretary of State's list) and `la-municipal-officials.json` and `la-school-boar
 (`la/scripts/build_la_local_officials.py`, from the exports the parish builder fetched in the same
 run) and `la-judges.json` (`la/scripts/build_la_judges.py`, from the same run's exports) — all
 count-guarded, all refreshed weekly by CI as reviewed PRs.
+`la-conservation-districts.json` (`la/scripts/build_la_conservation_districts.py`, from the
+Department of Agriculture and Forestry's map and list of district offices) is rebuilt by hand when
+the monthly source check warns, because a changed map reaches the builder only after a person has
+read the measurement (`la/WATCH.md`).
 The tribal land is `tribal-areas.json` and its names `tribal-councils.json`, both written by the
 fleet's shared `scripts/build_tribal_areas.py` through the one land-to-government join every
 instance uses (`data/tribal-government-join.json`); the councils are re-read weekly from each
