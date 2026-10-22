@@ -107,24 +107,12 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ env.PLAYWRIGHT_VERSION }}-${{ runner.os }}
 
+      # No apt step: the runner image already carries every library Chromium
+      # loads, so this proves Chromium starts instead. smoke-test.yml carries
+      # the story (Ubuntu's mirror at 40 KB/s on 2026-10-22).
       - name: Install Playwright + Chromium
-        # Backstop for a multi-phase failure day. The ladder inside is sized to
-        # fail NAMED under this cap when any ONE phase is sick (budgets in the
-        # run body); two-plus sick phases at once is what this cap is for.
         timeout-minutes: 15
         run: |
-          # Phase budgets, sized so any SINGLE sick phase fails with a NAMED
-          # error inside the step's 15-minute cap — the cap stays the
-          # multi-phase backstop, never the first line of defence:
-          #   npm      3 x 60s   (normally ~2 s; lock-free, retry-safe)
-          #   apt      1 x 420s  (normally seconds; NEVER retried in-process —
-          #            a timeout-killed apt orphans apt-get still holding
-          #            /var/lib/dpkg/lock-frontend, so every in-job retry dies
-          #            on the corpse's lock, proven live in the SF fork. A
-          #            mirror too sick for 7 minutes needs a fresh runner,
-          #            and only a re-run provides one.)
-          #   browser  2 x 300s  on a cache miss only (the CDN fetch that hung
-          #            28 minutes in the Chicago fork; lock-free, retry-safe)
           retry() {
             local attempts=$1 budget=$2; shift 2
             for i in $(seq 1 "$attempts"); do
@@ -136,33 +124,12 @@ jobs:
             return 1
           }
           retry 3 60 npm install "playwright@${PLAYWRIGHT_VERSION}"
-          # DROP APT SOURCES THIS JOB DOES NOT USE, BEFORE install-deps TOUCHES
-          # APT. On 2026-09-09 dl.google.com served a main/binary-amd64
-          # Packages.gz whose SHA256 (bc1428ab...) did not match the one its own
-          # Release file advertised (233e56de...), and `apt-get update` treats a
-          # Hash Sum mismatch on ANY configured repo as fatal. That failed four
-          # consecutive deploys across four unrelated merges, and the same step
-          # in smoke-test.yml would have failed every PR the moment one ran.
-          # The runner image carries the Google Chrome repo; NOTHING in these
-          # workflows installs from it — install-deps takes Chromium's shared
-          # libraries from Ubuntu's own archive, which fetched fine throughout,
-          # and the browser build itself comes from Playwright's CDN or the
-          # cache above. So a third party's publishing race stopped this site
-          # deploying, over a repository it has no use for.
-          #
-          # This removes a repo rather than weakening a check: no
-          # --allow-insecure-repositories, no --allow-unauthenticated, and
-          # every remaining source is still verified normally. Both apt formats
-          # are matched because Ubuntu is migrating .list to deb822 .sources,
-          # and a hardcoded filename would silently stop matching. Matching on
-          # CONTENT rather than filename for the same reason. It is a no-op on
-          # an image that ships no such repo.
-          sudo find /etc/apt/sources.list.d -maxdepth 1 -type f \
-               \( -name '*.list' -o -name '*.sources' \) \
-               -exec grep -q 'dl\.google\.com' {} \; -print -delete 2>/dev/null || true
-          retry 1 420 npx playwright install-deps chromium
           if [ "${{ steps.pw-cache.outputs.cache-hit }}" != "true" ]; then
             retry 2 300 npx playwright install chromium
+          fi
+          if ! timeout 60 node -e "require('playwright').chromium.launch().then(b => b.close())"; then
+            echo "::error::Chromium does not start with the libraries on this runner image; restore 'npx playwright install-deps chromium' to this step"
+            exit 1
           fi
 
       - name: Behaviour gate on the assembled tree (serve + smoke test)
@@ -227,6 +194,14 @@ jobs:
             ar/data/state ar/data/source ar/scripts
             ms/data/state ms/data/source ms/scripts
             la/data/state la/data/source la/scripts
+            # Missouri arrives dark: the whole folder is excluded until
+            # go-live, and metros.json deliberately carries no mo entry until
+            # then (validate_instance_registration.py holds the two together).
+            # THE BLANKET `<tag>/**` FORM IS LOAD-BEARING, not a style: it is
+            # what dark_instances() reads, and four generators import that to
+            # tell a dark folder from an unregistered one. It goes live only on
+            # the operator's word.
+            'mo/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full
@@ -297,12 +272,13 @@ jobs:
           test -f _site/fleet-outlines.json || { echo "::error::assemble produced no fleet-outlines.json — the apps could not hand a reader to a sibling"; exit 1; }
           # The installed app. The apps and the front door link the ONE manifest
           # at the root, whose start_url is the launcher at /app/, which registers its own
-          # worker; the three icons are the manifest's. An assemble that drops
+          # worker; the five icons are the manifest's, three for the app and one
+          # for each long-press shortcut. An assemble that drops
           # any of them leaves every page looking right in a browser tab while
           # a phone that installs districtry opens to a 404 or a blank icon.
           # .well-known/assetlinks.json is the Google Play app's: without it
           # the app still opens, with an address bar across the top.
-          for installed in manifest.webmanifest app/index.html app/sw.js favicon-192.png icon-512.png icon-maskable-512.png .well-known/assetlinks.json; do
+          for installed in manifest.webmanifest app/index.html app/sw.js favicon-192.png icon-512.png icon-maskable-512.png shortcut-locate-192.png shortcut-report-192.png .well-known/assetlinks.json; do
             test -f "_site/$installed" || { echo "::error::assemble produced no $installed — the installed app needs it"; exit 1; }
           done
           grep -q '^Content-Signal:' _site/robots.txt || { echo "::error::the published robots.txt carries no Content-Signal line"; exit 1; }

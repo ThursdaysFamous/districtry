@@ -109,6 +109,7 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro arkansas --out ar/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro mississippi --out ms/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro louisiana --out la/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro missouri --out mo/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
           # the weekly fleet-status notice.
@@ -908,6 +909,7 @@ jobs:
           python3 wi/scripts/build_metro_outline.py --check
           python3 ia/scripts/build_metro_outline.py --check
           python3 mi/scripts/build_metro_outline.py --check
+          python3 mo/scripts/build_metro_outline.py --check
 
       # docs/PRESS_LIST.md carries a --check in its own header calling it the
       # drift gate, and until now nothing ran it — a generated file gated in
@@ -1609,6 +1611,19 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 ms/scripts/build_ms_county_officials.py --check
 
+      # Missouri's county governing bodies and other elected officers come
+      # from the Secretary of State's Missouri Roster, a PDF that also prints
+      # each official's own office address and fax number. This holds the
+      # shipped file to the shape it was built in, offline: one record for
+      # each of the 114 counties and the City of St. Louis under its own
+      # name, every body in the shape the build requires (the four charter
+      # counties, the city and the commission counties, seat counts
+      # included), the recalled Jackson County executive still not named,
+      # every seat and office named or marked vacant, and no fax number.
+      - name: MO county officials keep their shape and carry no fax number
+        if: ${{ !cancelled() }}
+        run: python3 mo/scripts/build_mo_county_officials.py --check
+
       # Mississippi draws county supervisor districts only in the counties whose
       # Census lines are confirmed current: changed after the 2020 census, and
       # balanced on that census's own blocks. The blocks are not shipped, so the
@@ -1671,12 +1686,14 @@ jobs:
         run: python3 la/scripts/build_la_parish_officials.py --check
 
       # Louisiana draws a police jury or council district only in the parishes
-      # whose Census lines are confirmed current: changed after the 2020 census,
-      # and balanced on that census's own blocks. The blocks are not shipped, so
-      # the population cannot be re-measured here; this holds the shipped file
-      # to its build record, every district to a seat in the Secretary of
-      # State's list in the parish's own word, the card to the Census edition
-      # the file was built from, and the drawn parishes to the Parish layer.
+      # whose lines are confirmed current: the Census's where they changed after
+      # the 2020 census and balance on that census's own blocks, and Orleans's
+      # and East Baton Rouge's from each parish government's own map. The
+      # blocks are not shipped, so the population cannot be re-measured here;
+      # this holds the shipped file to its build record, every district to a
+      # seat in the Secretary of State's list in the parish's own word, the card
+      # to the Census edition the file was built from, and the drawn parishes to
+      # the Parish layer.
       - name: LA parish districts still match their build record, the list's seats and the Parish layer
         if: ${{ !cancelled() }}
         run: python3 la/scripts/build_la_parish_districts.py --check
@@ -1698,6 +1715,31 @@ jobs:
         run: |
           python3 la/scripts/build_la_court_districts.py --check
           python3 la/scripts/build_la_judges.py --check
+
+      # Louisiana's city council districts, drawn in the four cities whose own
+      # current map is confirmed (Lafayette, Bossier City, Central and Slidell),
+      # each cut at the Census Bureau's map of the city. The census blocks the
+      # plans were confirmed on are not shipped, so this holds the shipped file
+      # to its build record, every city's districts to the council seats the
+      # Secretary of State's list names for it, no ground to two cities, and the
+      # hand-written sentences naming the drawn cities (the card's empty state,
+      # the City card's list and the sources page) to the builder's own lists of
+      # which cities are drawn and why the others are not.
+      - name: LA city council districts still match their build record, the list's seats and the cities the pages name
+        if: ${{ !cancelled() }}
+        run: python3 la/scripts/build_la_city_wards.py --check
+
+      # Louisiana's soil and water conservation districts, listed on the Parish
+      # card from the Department of Agriculture and Forestry's map and list of
+      # district offices (a PDF that is not kept). This holds the shipped file
+      # to its build record offline: all 44 districts and 64 parishes, the
+      # pinned parishes each district covers and the seven the map divides
+      # between two, every office with a town and one telephone number, the
+      # map's fingerprint and dates, and the card's two fixed sentences, about
+      # the board and how it is chosen, to the builder's own copy of them.
+      - name: LA soil and water conservation districts still match their build record and the card's sentences
+        if: ${{ !cancelled() }}
+        run: python3 la/scripts/build_la_conservation_districts.py --check
 
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.
@@ -1848,6 +1890,7 @@ jobs:
           python3 ar/scripts/validate_index.py ar/index.html
           python3 ms/scripts/validate_index.py ms/index.html
           python3 la/scripts/validate_index.py la/index.html
+          python3 mo/scripts/validate_index.py mo/index.html
 
 
   browser:
@@ -1887,13 +1930,9 @@ jobs:
       # run, and on 2026-08-18 that fetch hung twice — 28 and 14 minutes
       # against a normal ~23 s step — each needing a manual cancel + re-run.
       # Two guards, either sufficient alone: the browser build is CACHED keyed
-      # on the pinned version (a hit skips the CDN entirely; only the apt-side
-      # install-deps still runs, and the runner image pre-satisfies most of
-      # it), and every phase runs under its own budget — sized in the install
-      # step to fail NAMED inside that step's 15-minute cap, with apt outside
-      # the retry entirely, because a timeout-killed apt orphans the dpkg lock
-      # and poisons every retry (observed live in the SF fork's first cached
-      # run). deploy-pages.yml and release-engine.yml run this same
+      # on the pinned version (a hit skips the CDN entirely), and every phase
+      # runs under its own budget, sized in the install step to fail NAMED
+      # inside that step's 15-minute cap. deploy-pages.yml and release-engine.yml run this same
       # toolchain and carry the same pair, pointing here for the story.
       - name: Cache Playwright Chromium
         if: ${{ !cancelled() }}
@@ -1903,25 +1942,28 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ env.PLAYWRIGHT_VERSION }}-${{ runner.os }}
 
+      # NO APT STEP (2026-10-22). This step used to run
+      # `npx playwright install-deps chromium`, which apt-installs Chromium's
+      # system packages from Ubuntu's Azure mirror. The runner image already
+      # carries every library Chromium loads, so what it added was about 25 MB
+      # of extra fonts, mostly Chinese, Japanese and Thai faces no page here
+      # uses. On 2026-10-22 that mirror served them at about 40 KB/s and failed
+      # main's smoke, a deploy and this workflow's own fix PR, while every test
+      # that then ran without them passed. Caching the .deb files (#1709) did
+      # not help a runner that started cold. So nothing here touches apt; the
+      # step proves instead that Chromium STARTS, and fails by name if a future
+      # runner image ever drops a library it needs. deploy-pages.yml and
+      # vector-tiles.yml do the same.
       - name: Install Playwright + Chromium
         if: ${{ !cancelled() }}
-        # Backstop for a multi-phase failure day. The ladder inside is sized to
-        # fail NAMED under this cap when any ONE phase is sick (budgets in the
-        # run body); two-plus sick phases at once is what this cap is for.
         timeout-minutes: 15
         run: |
           # Phase budgets, sized so any SINGLE sick phase fails with a NAMED
-          # error inside the step's 15-minute cap — the cap stays the
-          # multi-phase backstop, never the first line of defence:
+          # error inside the step's 15-minute cap:
           #   npm      3 x 60s   (normally ~2 s; lock-free, retry-safe)
-          #   apt      1 x 420s  (normally seconds; NEVER retried in-process —
-          #            a timeout-killed apt orphans apt-get still holding
-          #            /var/lib/dpkg/lock-frontend, so every in-job retry dies
-          #            on the corpse's lock, proven live in the SF fork. A
-          #            mirror too sick for 7 minutes needs a fresh runner,
-          #            and only a re-run provides one.)
           #   browser  2 x 300s  on a cache miss only (the CDN fetch that hung
           #            28 minutes in the Chicago fork; lock-free, retry-safe)
+          #   launch   1 x 60s   (normally under a second)
           retry() {
             local attempts=$1 budget=$2; shift 2
             for i in $(seq 1 "$attempts"); do
@@ -1933,33 +1975,12 @@ jobs:
             return 1
           }
           retry 3 60 npm install "playwright@${PLAYWRIGHT_VERSION}"
-          # DROP APT SOURCES THIS JOB DOES NOT USE, BEFORE install-deps TOUCHES
-          # APT. On 2026-09-09 dl.google.com served a main/binary-amd64
-          # Packages.gz whose SHA256 (bc1428ab...) did not match the one its own
-          # Release file advertised (233e56de...), and `apt-get update` treats a
-          # Hash Sum mismatch on ANY configured repo as fatal. That failed four
-          # consecutive deploys across four unrelated merges, and the same step
-          # in smoke-test.yml would have failed every PR the moment one ran.
-          # The runner image carries the Google Chrome repo; NOTHING in these
-          # workflows installs from it — install-deps takes Chromium's shared
-          # libraries from Ubuntu's own archive, which fetched fine throughout,
-          # and the browser build itself comes from Playwright's CDN or the
-          # cache above. So a third party's publishing race stopped this site
-          # deploying, over a repository it has no use for.
-          #
-          # This removes a repo rather than weakening a check: no
-          # --allow-insecure-repositories, no --allow-unauthenticated, and
-          # every remaining source is still verified normally. Both apt formats
-          # are matched because Ubuntu is migrating .list to deb822 .sources,
-          # and a hardcoded filename would silently stop matching. Matching on
-          # CONTENT rather than filename for the same reason. It is a no-op on
-          # an image that ships no such repo.
-          sudo find /etc/apt/sources.list.d -maxdepth 1 -type f \
-               \( -name '*.list' -o -name '*.sources' \) \
-               -exec grep -q 'dl\.google\.com' {} \; -print -delete 2>/dev/null || true
-          retry 1 420 npx playwright install-deps chromium
           if [ "${{ steps.pw-cache.outputs.cache-hit }}" != "true" ]; then
             retry 2 300 npx playwright install chromium
+          fi
+          if ! timeout 60 node -e "require('playwright').chromium.launch().then(b => b.close())"; then
+            echo "::error::Chromium does not start with the libraries on this runner image; restore 'npx playwright install-deps chromium' to this step"
+            exit 1
           fi
 
       # ONE server, EVERY instance. Until R3 this ran il alone, which is what
@@ -2060,6 +2081,7 @@ jobs:
           BASE_URL=http://localhost:8000/mi/  node mi/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/ms/  node ms/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/la/  node la/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/mo/  node mo/scripts/smoke_test.mjs
 
           # shard 3
 

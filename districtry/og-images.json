@@ -79,6 +79,14 @@
     "height": 630,
     "rendered": "2026-09-29"
   },
+  "mo": {
+    "path": "mo/og-image.png",
+    "label": "mo",
+    "sha256": "e117ed43bd47c363fe713910f7b5b352d803f2c6ce16bead02023b54439fa36f",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-10-21"
+  },
   "ms": {
     "path": "ms/og-image.png",
     "label": "ms",

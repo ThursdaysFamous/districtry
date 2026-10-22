@@ -82,3 +82,32 @@
     );
   });
 
+  // A LONG-PRESS SHORTCUT. "Use my location" on the installed app's icon
+  // opens the launcher at /app/#locate, which opens this map with `#locate`
+  // in the hash, and that presses the button above once the map has booted,
+  // so the browser asks for the location exactly as it does when the button
+  // is pressed. The key leaves the address first, so a reload, a copied link
+  // or a bookmark of this page never asks again. It does nothing in a frame,
+  // which is someone else's page, or when the address also carries a point,
+  // which the reader chose. scripts/build_manifests.py --check holds this key
+  // to the manifest's shortcut.
+  var LOCATE_LINK_KEY = "locate";
+  (function locateFromLink() {
+    var parts = location.hash.replace(/^#/, "").split("&");
+    if (parts.indexOf(LOCATE_LINK_KEY) < 0) return;
+    var rest = parts.filter(function (kv) { return kv && kv !== LOCATE_LINK_KEY; });
+    try {
+      history.replaceState(null, "", location.pathname + location.search +
+        (rest.length ? "#" + rest.join("&") : ""));
+    } catch (e) { /* the key stays, and a reload asks again */ }
+    var framed = true;
+    try { framed = window.top !== window.self; } catch (e) { framed = true; }
+    if (framed) return;
+    for (var i = 0; i < rest.length; i++) {
+      if (/^(?:p|point)=/.test(rest[i])) return;
+    }
+    // After the rest of this script, so the map has booted and restored the
+    // layers the address names before the browser is asked.
+    setTimeout(function () { locateBtn.click(); }, 0);
+  })();
+

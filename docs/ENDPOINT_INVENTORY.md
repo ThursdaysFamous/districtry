@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **287 distinct hosts** those files
-name, **45 are fetched by the browser**; the other 242 are links.
+makes from a link a reader clicks. Of **286 distinct hosts** those files
+name, **44 are fetched by the browser**; the other 242 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -68,12 +68,11 @@ several.
 
 Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
-### Analytics — 2 host(s)
+### Analytics — 1 host(s)
 
 | host | instances |
 |---|---|
 | `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la |
-| `www.googletagmanager.com` | il, ny |
 
 ### Webfonts — none
 
@@ -156,7 +155,7 @@ prose.
 | tn | 0 | 19 |
 | ar | 0 | 18 |
 | ms | 0 | 17 |
-| la | 0 | 16 |
+| la | 0 | 17 |
 
 ### Where each layer's shapes come from
 
@@ -389,21 +388,21 @@ measured until the next run describes it.
 | ny | 38 | 36 | 0 |
 | ca | 17 | 15 | 0 |
 | wi | 92 | 267 | 5 |
-| ia | 71 | 70 | 0 |
+| ia | 71 | 71 | 0 |
 | mi | 38 | 68 | 1 |
 | mn | 29 | 21 | 0 |
 | ky | 31 | 17 | 0 |
 | in | 22 | 20 | 0 |
 | nc | 40 | 19 | 0 |
-| ok | 31 | 18 | 0 |
+| ok | 32 | 18 | 0 |
 | sc | 36 | 20 | 0 |
 | tn | 34 | 19 | 0 |
 | ar | 28 | 20 | 0 |
 | ms | 41 | 24 | 0 |
-| la | 24 | 22 | 0 |
-| **total** | **703** | **1065** | **12** |
+| la | 28 | 24 | 0 |
+| **total** | **708** | **1068** | **12** |
 
-**204 distinct source hosts** across the six manifests. Each instance's
+**207 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

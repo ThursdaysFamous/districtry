@@ -101,6 +101,18 @@ them is published (Adam, 2026-10-15). A state where only some counties publish
 their township officers passes on those counties, and the card says so for the
 townships it cannot name.
 
+Special districts (level 12) pass when the app draws them and names the board
+of every kind of district whose board the voters elect (Adam, 2026-10-21: "Who
+the rep is, is the whole point of the app", and "Only ones with elected reps").
+A district whose board is appointed, or chosen by other governments' boards,
+passes by being drawn, because no voter elects anyone to it; a district whose
+voters elect its board passes only where the card names that board, and listing
+its office does not count. Naming it wherever a list of it is published is
+enough, as it is for townships: Illinois names the fire, park and library
+boards that file with the state and says so on the cards of those that do not.
+A kind of district whose elected board the card names nowhere keeps the level
+open, and a letter asking for the list is its route.
+
 ## Township and county subdivision boundaries
 
 Added on 2026-10-14 at Adam's request: the layer that tells a reader which
@@ -361,16 +373,19 @@ Oklahoma city council or where its wards run, so each city's mayor and council
 are written down from the city's own pages and proved against them on every
 build, except Muskogee's: the city's website shuts out every crawler but five
 named ones, so its names come from the county election board's official
-results and news reports, and the card says so. The wards of nine of the
+results and news reports, and the card says so. The wards of ten of the
 eleven cities that elect members by ward or district are drawn from each
 city's own map. Broken Arrow, Owasso, Jenks and Edmond tie seats to wards and
 elect every seat by the whole city, and Stillwater has no wards, which was read
 from each city's charter, its own pages and its county's election results
 because no state office records it; nothing is drawn for those five, since a
-reader in one votes for every seat. Lawton and Muskogee elect by ward and their
-wards cannot be drawn yet: the only ward map Lawton publishes as data does not
-divide the 2020 census population evenly, so it may not be the map in force,
-and Muskogee publishes no copy this project may read.
+reader in one votes for every seat. Muskogee elects by ward and its wards
+cannot be drawn yet, because it publishes no copy this project may read.
+Lawton's are drawn on the city's word since 2026-10-21: the only ward map it
+publishes as data does not divide the 2020 census population evenly, so it was
+left undrawn and the city was asked which map is in force, and the City
+Clerk's office answered by pointing to the city's public ward map, which draws
+that same layer.
 
 Illinois already passes Examined, so every county it does not dispatch is either
 served another way or carries a record; the fourth test does not re-ask that
@@ -442,28 +457,51 @@ question.
   asked on 2026-10-01 and has not answered, and no precinct layer ships there
   until it does.
 - Special districts: Illinois (fire, park and library districts, the
-  Metropolitan Water Reclamation District and Chicago's special service areas),
-  Wisconsin (technical college and tax increment districts), Iowa (community
-  college and area education agency districts), Michigan (intermediate school
-  districts), Minnesota (watershed districts), New York (fire and library
-  districts) and San Francisco (BART directors), and since 2026-10-16 Indiana's
-  100 active conservancy districts, from the Department of Natural Resources'
-  map, each board named from the department's 2026 directory except seven the
-  directory names nobody for, and Oklahoma's 84 conservation districts, from
-  the Conservation Commission's map, each with its office and none with its
-  directors, because the Commission publishes no list of them, and Arkansas's
-  971 fire districts, from the map state law has each fire district file with
-  the Arkansas GIS Office, naming nobody, because the map names no one who
-  runs a district. Since the same day Kentucky, North Carolina and South
-  Carolina answer it with their conservation districts, whose boards the County
-  card names from each state's own list of them (Adam's choice of 2026-10-16).
+  Metropolitan Water Reclamation District and Chicago's special service areas)
+  and San Francisco (BART directors), whose elected boards the cards name;
+  Wisconsin (technical college and tax increment districts), Michigan
+  (intermediate school districts) and Minnesota (watershed districts), whose
+  boards no voter elects; and since 2026-10-16 Indiana's 100 active conservancy
+  districts, from the Department of Natural Resources' map, each board named
+  from the department's 2026 directory except seven the directory names nobody
+  for. Michigan's pass rests on its law: an intermediate school district's
+  board is chosen by the local school boards unless its voters have chosen to
+  elect it, and which districts, if any, have done so is not measured. Since
+  the same day Kentucky, North Carolina and South Carolina answer it with their
+  conservation districts, whose boards the County card names from each state's
+  own list of them (Adam's choice of 2026-10-16).
   Each of those districts covers a whole county or several, so they need no map
   of their own; the one exception is Kentucky's Logan County, which has two
   districts whose line this app does not draw, and its card lists both boards.
   Tennessee still owes the entry: its only list of conservation district
   supervisors is on a state web host that refused six of this project's nine
   reads on the evening of 2026-10-16, and nothing is built from a read that
-  happened to be served.
+  happened to be served. Oklahoma, Louisiana, Arkansas, New York and Iowa
+  owe it too, since Adam's ruling of 2026-10-21 above, because each draws a
+  kind of district whose board the voters elect and does not name that
+  board everywhere it is drawn.
+  Arkansas's 971 fire districts are drawn from the map state law has each fire
+  district file with the Arkansas GIS Office, which names no one who runs a
+  district, and a fire protection district's five commissioners are elected
+  by its voters. New York's fire districts elect five commissioners and its
+  library districts their trustees, and nothing published names them. Iowa's
+  community college trustees are elected one per director district, and
+  Iowa keeps no statewide list, so the level waits until the card names the
+  trustee in every college's districts; Northeast Iowa's own page does not
+  say which trustee holds which numbered district (measured 2026-10-21). Its
+  area education agencies, whose directors no voter elects, would pass on
+  their own.
+  Oklahoma's 84 conservation districts are drawn from the Conservation
+  Commission's map, each with its office and none with its directors, three
+  of whom each district's voters elect, because the Commission publishes no
+  list of them; they counted as answering it from 2026-10-16 until that
+  ruling. Since 2026-10-21 Louisiana's Parish card lists the soil and water
+  conservation district that covers the parish, with its offices, from the
+  Department of Agriculture and Forestry's map of the 44 districts and its
+  list of their offices, and names none of the district's five supervisors,
+  because no published list names them. Seven parishes are divided between
+  two districts whose line this app does not draw, and their cards list both,
+  as Logan County's does.
 - Tribal governments: no app answers one.
 
 ## Launching is a lower bar than being done
