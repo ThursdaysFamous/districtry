@@ -1040,6 +1040,7 @@ main details.tableview:last-of-type { border-bottom: 0; }
 }
 .engines button[aria-pressed="true"] { background: var(--accent-deep); color: var(--paper); }
 .engines button:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+.timeframe-row { margin: 14px 0 14px; }
 .tablecard {
   background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
   padding: 6px 18px 4px; overflow-x: auto;
@@ -1126,8 +1127,16 @@ code {
 
   <section>
     <div class="window-row">
-      <span class="kicker">The last two months</span>
+      <span class="kicker"><span data-stat="period">The last two months</span></span>
       <span><span data-stat="range">August 21 – October 21, 2026</span> &middot; <span data-stat="days">62</span> days &middot; read on <span data-stat="exportDate">October 22, 2026</span></span>
+    </div>
+    <div class="timeframe-row">
+      <div class="engines" id="timeframe" role="group" aria-label="Timeframe" hidden>
+        <button type="button" data-days="7" aria-pressed="false">7 days</button>
+        <button type="button" data-days="14" aria-pressed="false">14 days</button>
+        <button type="button" data-days="30" aria-pressed="false">30 days</button>
+        <button type="button" data-days="full" aria-pressed="true">2 months</button>
+      </div>
     </div>
     <div class="tiles">
       <div class="tile">
@@ -1161,7 +1170,7 @@ code {
         <span class="key"><span class="swatch" style="background:var(--s2)"></span>Features used</span>
       </div>
     </div>
-    <p class="take">Every visit, plus every feature used: choosing a point, searching, turning on a layer. The four days to <span data-stat="lastDay">October 21</span> ran <span data-stat="recentDays">422, 768, 859 and 993</span><span data-day="Aug 24">, against an average of <span data-stat="preAvg">59</span> a day before the rename</span>. <span data-day="Aug 24"><span data-stat="bandNote">Every one of them is above that average.</span> </span><span data-stat="peakLabel">Wednesday, Oct 21</span> is the busiest day in these two months, at <span data-stat="peak">993</span><span data-stat="sinceRebrandNote"></span>.</p>
+    <p class="take">Every visit, plus every feature used: choosing a point, searching, turning on a layer. The four days to <span data-stat="lastDay">October 21</span> ran <span data-stat="recentDays">422, 768, 859 and 993</span><span data-day="Aug 24">, against an average of <span data-stat="preAvg">59</span> a day before the rename</span>. <span data-day="Aug 24"><span data-stat="bandNote">Every one of them is above that average.</span> </span><span data-stat="peakLabel">Wednesday, Oct 21</span> is the busiest day in <span data-stat="periodThese">these two months</span>, at <span data-stat="peak">993</span><span data-stat="sinceRebrandNote"></span>.</p>
     <div class="chartcard">
       <div class="chartbox" id="dailyChart"></div>
     </div>
@@ -1293,7 +1302,7 @@ code {
     <p class="take">What the figures above can&rsquo;t tell you.</p>
     <ol>
       <li id="note-1"><strong>The two totals.</strong> The <span data-stat="total">11,241</span> total is the visit counter&rsquo;s own figure. The daily columns add up to <span data-stat="dailySum">11,351</span>, <span data-stat="dailyGap">110</span> apart. The gap changes from day to day and its cause is unknown, so both figures are shown. <span data-stat="barSumNote">The browser and system charts add up to the total; the country chart is 255 short because it lists only the top entries.</span> The counter uses no cookies and does not identify anyone.</li>
-      <li id="note-2"><strong>The dates.</strong> This page covers the last two months, <span data-stat="range">August 21 – October 21, 2026</span> (<span data-stat="days">62</span> days), ending with the last full day. <span data-day="Aug 24">Until <strong>August 24</strong> the Illinois map was the site&rsquo;s front page; since then it has its own address and the front page lists every state.</span> <span data-day="Aug 25"><strong>August 25 is low</strong> because Google wrongly flagged the new districtry.com address that morning, and Chrome turned visitors away before the page loaded. Those visits can&rsquo;t be recovered.</span> The Illinois school board page had <span data-stat="seoSchool">326</span> visits, the third most of any page.</li>
+      <li id="note-2"><strong>The dates.</strong> This page covers <span data-stat="periodLast">the last two months</span>, <span data-stat="range">August 21 – October 21, 2026</span> (<span data-stat="days">62</span> days), ending with the last full day. <span data-day="Aug 24">Until <strong>August 24</strong> the Illinois map was the site&rsquo;s front page; since then it has its own address and the front page lists every state.</span> <span data-day="Aug 25"><strong>August 25 is low</strong> because Google wrongly flagged the new districtry.com address that morning, and Chrome turned visitors away before the page loaded. Those visits can&rsquo;t be recovered.</span> The Illinois school board page had <span data-stat="seoSchool">326</span> visits, the third most of any page.</li>
       <li id="note-3"><strong>Visits by app.</strong> Older apps have had more time to collect visits, so read the order as age, not popularity.<span data-day="Aug 24"> Before August 24, visits to apps other than Illinois weren&rsquo;t recorded at all.</span> <span data-stat="residualNote">50 of 4,561 page visits were to pages that belong to no app, such as the privacy page, so they are in no bar.</span><span data-stat="zeroInstNote"></span></li>
       <li id="note-4"><strong>Layers.</strong> <span data-stat="layerScopeNote">Some layers appear in more than one state’s map, and their counts add up across states. Since September 29 each count also records which app it came from: Congress (Illinois 93, New York 31 and San Francisco 3), County (Arkansas 28, Illinois 88, Indiana 6, Iowa 5, Kentucky 4, Michigan 14, Minnesota 8, Mississippi 1, North Carolina 11, Oklahoma 9, South Carolina 4, Tennessee 5 and Wisconsin 11), County board (Illinois 77 and Wisconsin 18), U.S. House (Arkansas 7, Indiana 22, Iowa 8, Kentucky 4, Michigan 21, Minnesota 4, North Carolina 8, Oklahoma 3, South Carolina 15, Tennessee 15 and Wisconsin 9) and Ward (Illinois 145 and 91 not by app). “Not by app” is from before that date, or too small to be listed. The rest belong to one app only: County precinct, IL House, IL Senate, School board and Ward precinct.</span> Only the top ten layers are shown.</li>
       <li id="note-5"><strong>Sources.</strong> Only the top six sources are shown. They add up to <span data-stat="refSum">5,124</span> of <span data-stat="total">11,241</span> visits, so a search engine&rsquo;s real total may be a little higher. The campaigns list counts only links tagged for a campaign.</li>
@@ -1593,7 +1602,39 @@ code {
 
      EVERYTHING ELSE is computed below from `daily` and `barData`. */
   var META = { exportDate: "October 22, 2026", year: 2026, total: 11241 };
+
+  /* The shorter windows the timeframe buttons offer, keyed by day count, each
+     with every variable above for its own period. The lists were read off the
+     dashboard for that period; the daily series and the per-day referrer rows
+     are the full window's cut to length. Empty when the data file predates
+     the per-window fetch, and the page then shows no buttons. */
+  var WINDOWS = {};
   /* ==== TRAFFIC-DATA:END ==== */
+
+  /* ---- timeframe ----
+     The buttons under the dates choose which window the whole report shows:
+     the full two months above, or one of WINDOWS. Everything below runs once
+     per choice against a fresh copy of the page as it was served, so each
+     sentence, chart and table is computed for that window exactly as it is
+     for the full one, and the hand-typed text a crawler reads stays the
+     full window's. The choice is kept in the address as #last-7-days and so
+     on, so a link opens on it. */
+  var FULL = { daily: daily, searchData: searchData, bingData: bingData,
+               dayRefs: dayRefs, barData: barData, META: META };
+  var PRISTINE = document.getElementById("page-main").cloneNode(true);
+  var keyFromHash = function () {
+    var m = /^#last-(\d+)-days$/.exec(location.hash);
+    return m && WINDOWS[m[1]] ? m[1] : "full";
+  };
+
+  var render = function (key) {
+  var WIN = key === "full" ? FULL : WINDOWS[key];
+  var daily = WIN.daily, searchData = WIN.searchData, bingData = WIN.bingData,
+      dayRefs = WIN.dayRefs, barData = WIN.barData;
+  var META = { exportDate: FULL.META.exportDate, year: WIN.META.year,
+               total: WIN.META.total };
+  var periodLast = key === "full" ? "the last two months" : "the last " + key + " days";
+  var periodThese = key === "full" ? "these two months" : "these " + key + " days";
 
   var fmt = function (n) { return n.toLocaleString("en-US"); };
 
@@ -1684,6 +1725,9 @@ code {
     (afterRebrand.length ? afterRebrand : daily)[0]);
 
   var STATS = {
+    period: periodLast.charAt(0).toUpperCase() + periodLast.slice(1),
+    periodLast: periodLast,
+    periodThese: periodThese,
     range: longMonth(daily[0][0]) + " – " + longMonth(daily[daily.length - 1][0]) +
            ", " + META.year,
     days: daily.length,
@@ -1997,7 +2041,7 @@ code {
           "those ten, not that nobody visited.";
       } else if (hidden.length) {
         out += " A bar at zero (" + join(hidden) + ") means nobody visited " +
-          (hidden.length === 1 ? "that app" : "those apps") + " in these two months.";
+          (hidden.length === 1 ? "that app" : "those apps") + " in " + periodThese + ".";
       }
       var newly = zero.filter(function (n) { return !!part[n]; });
       if (newly.length) {
@@ -2006,7 +2050,7 @@ code {
         var days = function (n) {
           return n + " (" + part[n] + (part[n] === 1 ? " day" : " days") + ")";
         };
-        out += " Some were also on the front page for only part of these two months: " +
+        out += " Some were also on the front page for only part of " + periodThese + ": " +
           join(newly.map(days)) + ".";
       }
       var shown = zero.filter(function (n) { return late.indexOf(n) !== -1; });
@@ -2363,9 +2407,13 @@ code {
   var box = document.getElementById("dailyChart");
   var W = 900, H = 250, padL = 34, padR = 6, padT = 10, padB = 26;
   var plotW = W - padL - padR, plotH = H - padT - padB;
-  /* Next clean 50 above the peak — derived, so a new high cannot overflow
+  /* Next clean step above the peak — derived, so a new high cannot overflow
      the plot and a quiet month cannot leave the chart squashed flat. */
-  var yMax = Math.max(50, Math.ceil((peakDay[1] + peakDay[2]) * 1.12 / 50) * 50);
+  /* The gridline step grows with the peak so the axis keeps about five to
+     seven lines: at 50 a day of 993 drew twenty-four. */
+  var peakTop = (peakDay[1] + peakDay[2]) * 1.12;
+  var yStep = peakTop <= 300 ? 50 : peakTop <= 700 ? 100 : peakTop <= 1400 ? 200 : 500;
+  var yMax = Math.max(yStep, Math.ceil(peakTop / yStep) * yStep);
   var n = daily.length;
   var band = plotW / n;
   var colW = Math.min(20, band - 4);
@@ -2391,7 +2439,7 @@ code {
 
   /* gridlines + y ticks */
   var ticks = [];
-  for (var tv = 0; tv <= yMax; tv += 50) ticks.push(tv);
+  for (var tv = 0; tv <= yMax; tv += yStep) ticks.push(tv);
   ticks.forEach(function (t) {
     var yy = y(t);
     svg.appendChild(el("line", {
@@ -2416,8 +2464,10 @@ code {
   var labelDays = Math.max(1, Math.ceil(46 / band));
 
   daily.forEach(function (d, i) {
-    /* weekly ticks + the final day; drop a weekly tick that would crowd it */
-    if (i !== n - 1 && (i % 7 !== 0 || n - 1 - i < labelDays)) return;
+    /* weekly ticks + the final day; drop a weekly tick that would crowd it.
+       A window of two weeks or less has room to name every day. */
+    var every = n <= 14 ? labelDays : 7;
+    if (i !== n - 1 && (i % every !== 0 || n - 1 - i < labelDays)) return;
     var last = i === n - 1;
     var lab = el("text", {
       x: last ? W - padR : padL + band * i + band / 2, y: H - 8,
@@ -2574,6 +2624,31 @@ code {
     });
     tbody.appendChild(tr);
   });
+
+  var tf = document.getElementById("timeframe");
+  if (Object.keys(WINDOWS).length) {
+    tf.hidden = false;
+    Array.prototype.forEach.call(tf.querySelectorAll("button"), function (b) {
+      var k = b.getAttribute("data-days");
+      if (k !== "full" && !WINDOWS[k]) { b.remove(); return; }
+      b.setAttribute("aria-pressed", k === key ? "true" : "false");
+      b.addEventListener("click", function () {
+        if (k === key) return;
+        try {
+          history.replaceState(null, "", k === "full"
+            ? location.pathname + location.search : "#last-" + k + "-days");
+        } catch (e) { /* a frame that refuses it keeps the choice for this view only */ }
+        var old = document.getElementById("page-main");
+        old.parentNode.replaceChild(PRISTINE.cloneNode(true), old);
+        render(k);
+        var again = document.querySelector('#timeframe button[data-days="' + k + '"]');
+        if (again) again.focus();
+      });
+    });
+  }
+  };
+
+  render(keyFromHash());
 })();
 </script>
 </body>

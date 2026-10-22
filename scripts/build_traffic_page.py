@@ -351,7 +351,7 @@ def newest_property(doc):
             "clicks": p["clicks"], "impressions": p["impressions"]}
 
 
-def engine(doc, start, end):
+def engine(doc, start, end, key=None):
     """One search card's figures, summed across that engine's properties.
 
     Clipped to the window by DATE on the daily series. The per-query rows carry
@@ -368,7 +368,11 @@ def engine(doc, start, end):
             impressions += d["impressions"]
             first = d["key"] if first is None else min(first, d["key"])
             last = d["key"] if last is None else max(last, d["key"])
-        for q in prop["queries"]:
+        # A shorter window's queries were asked for over that window; the
+        # property's own list is the full window's.
+        qs = (prop.get("windows", {}).get(key, {}).get("queries", [])
+              if key else prop["queries"])
+        for q in qs:
             a = queries.setdefault(q["key"], {"q": q["key"], "clicks": 0,
                                               "impressions": 0, "_pos": 0.0})
             a["clicks"] += q["clicks"]
@@ -501,16 +505,14 @@ def day_refs(gc):
     return out
 
 
-def build():
-    gc = load("goatcounter-traffic.json")
-    gsc = load("search-performance.json")
-    bing = load("bing-search-performance.json")
-    start, end = gc["window"]["start"], gc["window"]["end"]
+def bar_data(gc, start, end):
+    """barData for one window, as the page reads it, plus the instance rows
+    and their residual for the reconciliation printout.
 
-    daily = ",\n    ".join('["%s", %d, %d]' % (label(d["date"]), d["pageviews"],
-                                               d["events"])
-                           for d in gc["daily"])
-    check_instance_names()
+    `gc` is the whole fetched file for the full window, or one of its
+    `windows` entries for a shorter one: both carry the same lists, read off
+    the dashboard for their own period.
+    """
     instances, residual = split_by_instance(gc, gc["pageviews"])
     ev = {r["path"]: r["count"] for r in gc["top_events"]}
     pg = {r["path"]: r["count"] for r in gc["pages"]}
@@ -540,8 +542,83 @@ def build():
             split[name] = {INSTANCE_NAMES.get(t, t): n
                            for t, n in sorted(by_tag.items())}
         pooled[name] = total_row - got
-    daily_sum = gc["pageviews"] + gc["events"]
     ml_sources, ml_results, ml_places, ml = map_link_summary(gc)
+    pairs = lambda rows_: [(r["label"] or r["key"], r["count"]) for r in rows_]
+    bd = {
+        "instances": instances,
+        "layers": layers,
+        "refs": named(gc["referrers"], REF_NAMES),
+        "systems": pairs(gc["systems"]),
+        "browsers": pairs(gc["browsers"]),
+        "actions": [("Points chosen", ev.get("select", 0)),
+                    ("Searches", ev.get("address-search", 0)),
+                    ("Location requests", ev.get("geolocate", 0))],
+        "geo": pairs(gc["locations"]),
+        "campaigns": pairs(gc["campaigns"]),
+        "mapLinkSources": ml_sources,
+        "mapLinkResults": ml_results,
+        "mapLinkPlaces": ml_places,
+        "mapLinks": ml,
+        "geoSuccess": ev.get("geolocate-success"),
+        "layerScope": layer_scope([r["path"][6:] for r in gc["layers"][:10]]),
+        "layerSplit": split,
+        "layerPooled": pooled,
+        "layerSplitFrom": long_label(LAYER_SPLIT),
+        "seo": {"police": pg.get("/il/police-district.html", 0),
+                "school": pg.get("/il/school-board.html", 0)},
+        "instResidual": residual,
+        "pagesCut": bool(gc.get("pages_truncated", True)),
+        "notListedYet": not_listed_yet(end),
+        "listedPartway": listed_partway(start, end),
+    }
+    return bd, instances, residual
+
+
+def windows_block(gc, gsc, bing):
+    """The shorter windows the page's timeframe buttons offer, as one object
+    keyed by day count. Each carries everything the page's script reads, so
+    the script renders a window exactly as it renders the full one.
+
+    The daily series and the per-day referrer rows are the full window's cut
+    to length; every list is the dashboard's own for that period. A data file
+    fetched before the windows existed gives an empty object, and the page
+    then offers no buttons.
+    """
+    end = gc["window"]["end"]
+    out = {}
+    for key, w in sorted(gc.get("windows", {}).items(), key=lambda kv: int(kv[0])):
+        n, start = int(key), w["start"]
+        days = [d for d in gc["daily"] if d["date"] >= start]
+        if len(days) != n:
+            fail("window %s: %d day(s) of the daily series fall on or after "
+                 "%s, not %d" % (key, len(days), start, n))
+        bd = bar_data(w, start, end)[0]
+        out[key] = {
+            "daily": [[label(d["date"]), d["pageviews"], d["events"]]
+                      for d in days],
+            "searchData": engine(gsc, start, end, key),
+            "bingData": engine(bing, start, end, key),
+            "dayRefs": [r for r in day_refs(gc)[-n:]],
+            "barData": bd,
+            "META": {"total": w["total"], "year": int(start[:4])},
+        }
+    return out
+
+
+def build():
+    gc = load("goatcounter-traffic.json")
+    gsc = load("search-performance.json")
+    bing = load("bing-search-performance.json")
+    start, end = gc["window"]["start"], gc["window"]["end"]
+
+    daily = ",\n    ".join('["%s", %d, %d]' % (label(d["date"]), d["pageviews"],
+                                               d["events"])
+                           for d in gc["daily"])
+    check_instance_names()
+    bd, instances, residual = bar_data(gc, start, end)
+    daily_sum = gc["pageviews"] + gc["events"]
+    compact = lambda v: json.dumps(v, separators=(",", ":"), sort_keys=True)
+    wins = windows_block(gc, gsc, bing)
 
     block = '''%s
   /* GENERATED by scripts/build_traffic_page.py from data/goatcounter-traffic.json,
@@ -674,39 +751,37 @@ def build():
 
      EVERYTHING ELSE is computed below from `daily` and `barData`. */
   var META = { exportDate: "%s", year: %d, total: %d };
+
+  /* The shorter windows the timeframe buttons offer, keyed by day count, each
+     with every variable above for its own period. The lists were read off the
+     dashboard for that period; the daily series and the per-day referrer rows
+     are the full window's cut to length. Empty when the data file predates
+     the per-window fetch, and the page then shows no buttons. */
+  var WINDOWS = %s;
 %s''' % (
         BEGIN, start, end, daily,
         json.dumps(engine(gsc, start, end), separators=(",", ":")),
         json.dumps(engine(bing, start, end), separators=(",", ":")),
         ",\n    ".join(json.dumps(r, separators=(", ", ": ")) for r in day_refs(gc)),
-        rows(instances), rows(layers),
-        rows(named(gc["referrers"], REF_NAMES)),
-        rows([(r["label"] or r["key"], r["count"]) for r in gc["systems"]]),
-        rows([(r["label"] or r["key"], r["count"]) for r in gc["browsers"]]),
-        rows([("Points chosen", ev.get("select", 0)),
-              ("Searches", ev.get("address-search", 0)),
-              ("Location requests", ev.get("geolocate", 0))]),
-        rows([(r["label"] or r["key"], r["count"]) for r in gc["locations"]]),
-        rows([(r["label"] or r["key"], r["count"]) for r in gc["campaigns"]], 2),
-        rows(ml_sources, 2), rows(ml_results, 2), rows(ml_places, 2),
-        json.dumps(ml, separators=(", ", ": "), sort_keys=True),
-        ("null" if ev.get("geolocate-success") is None
-         else str(ev["geolocate-success"])),
-        json.dumps(layer_scope([r["path"][6:] for r in gc["layers"][:10]]),
-                   separators=(",", ":"), sort_keys=True),
-        json.dumps(split, separators=(",", ":"), sort_keys=True),
-        json.dumps(pooled, separators=(",", ":"), sort_keys=True),
-        long_label(LAYER_SPLIT),
-        pg.get("/il/police-district.html", 0), pg.get("/il/school-board.html", 0),
+        rows(bd["instances"]), rows(bd["layers"]), rows(bd["refs"]),
+        rows(bd["systems"]), rows(bd["browsers"]), rows(bd["actions"]),
+        rows(bd["geo"]), rows(bd["campaigns"], 2),
+        rows(bd["mapLinkSources"], 2), rows(bd["mapLinkResults"], 2),
+        rows(bd["mapLinkPlaces"], 2),
+        json.dumps(bd["mapLinks"], separators=(", ", ": "), sort_keys=True),
+        "null" if bd["geoSuccess"] is None else str(bd["geoSuccess"]),
+        compact(bd["layerScope"]), compact(bd["layerSplit"]),
+        compact(bd["layerPooled"]), bd["layerSplitFrom"],
+        bd["seo"]["police"], bd["seo"]["school"],
         residual,
-        "true" if gc.get("pages_truncated", True) else "false",
-        json.dumps(not_listed_yet(end), separators=(",", ":")),
-        json.dumps(listed_partway(start, end), separators=(",", ":"),
-                   sort_keys=True),
+        "true" if bd["pagesCut"] else "false",
+        json.dumps(bd["notListedYet"], separators=(",", ":")),
+        compact(bd["listedPartway"]),
         "{:,}".format(gc["total"]), "{:,}".format(daily_sum),
         "{:,}".format(abs(gc["total"] - daily_sum)),
         datetime.date.fromisoformat(gc["fetched"][:10]).strftime("%B %-d, %Y"),
-        int(start[:4]), gc["total"], END)
+        int(start[:4]), gc["total"],
+        compact(wins).replace("</", "<\\/"), END)
 
     # The fallbacks a crawler reads. Only the keys this script already derives;
     # everything else keeps its literal and is printed below.
