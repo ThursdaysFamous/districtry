@@ -302,7 +302,8 @@
    * short tag per source is 25 characters shorter AND splits them in the
    * counter every app runs. The cost is on those two apps: gtag reads only
    * utm_* tags, so a shared arrival no longer carries a share label in Google
-   * Analytics. Organic traffic stays untagged, and a re-share from a tagged
+   * Analytics (both dropped Google Analytics on 2026-10-22, so the cost
+   * ended there). Organic traffic stays untagged, and a re-share from a tagged
    * page rebuilds from origin+pathname, so an inbound tag is never copied
    * forward as the next reader's source.
    *

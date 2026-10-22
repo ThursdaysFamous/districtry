@@ -1556,6 +1556,13 @@ try {
       rows: [...document.querySelectorAll("#geocode-results li")].map((li) => li.className),
       on: [...document.querySelectorAll(".layer-block input[type=checkbox]")].filter((c) => c.checked).map((c) => c.id.replace(/^toggle-/, "")).sort(),
       parent: document.querySelectorAll(".rel-parent-outline").length,
+      ink: window[ns].highlightColor("zip-code"),
+      lead: (() => {
+        const first = document.getElementById("groups-root").firstElementChild;
+        return first && first.classList.contains("group-pinned")
+          ? [...first.querySelectorAll(".layer-block input[type=checkbox]")].map((c) => c.id.replace(/^toggle-/, "")).join() || null : null;
+      })(),
+      open: document.querySelector(".search-shell").classList.contains("expanded"),
       crossing: [...document.querySelectorAll(".rel-map-label")].map((e) => e.textContent).sort(),
       hash: location.hash,
       button: !!document.querySelector(".zip-stats-btn"),
@@ -1576,11 +1583,15 @@ try {
       !!got.point && Math.abs(got.point.lat - sy) < 1e-6 && Math.abs(got.point.lng - sx) < 1e-6 &&
         got.on.join() === "ward,zip-code" && /(^|&)c=zp(&|$)/.test(got.hash.slice(1)),
       JSON.stringify({ point: got.point, on: got.on, hash: got.hash }));
+    // the compared ZIP code is its own lit line in the comparison's ink, with
+    // no second outline drawn over it (Adam, 2026-10-21: the whole set the
+    // comparison reads is simplified and the tiles are not, so the two ran
+    // side by side), and its card leads the list on a computer as on a phone
     check("every ward the ZIP code crosses is outlined against it, and the message says the spot is not an address",
-      got.parent === 1 && got.crossing.join() === "Ward 33,Ward 39,Ward 40,Ward 47" && got.button &&
+      got.parent === 0 && got.ink === "#14181C" && got.lead === "zip-code" && got.crossing.join() === "Ward 33,Ward 39,Ward 40,Ward 47" && got.button &&
         /selected a spot inside ZIP code 60625, not at any address/.test(got.status) &&
         /every City Ward it crosses/.test(got.status),
-      JSON.stringify({ parent: got.parent, crossing: got.crossing, status: got.status.slice(0, 220) }));
+      JSON.stringify({ parent: got.parent, ink: got.ink, lead: got.lead, crossing: got.crossing, status: got.status.slice(0, 220) }));
     check("a ZIP code a list holds is never sent to the geocoder", r.asked.length === 0, JSON.stringify(r.asked));
     check("a ZIP code search is counted by its layer, once, and its pin is not counted as a reader's",
       got.events.filter((e) => /^zip-search\//.test(e)).join() === "zip-search/zip-code" &&
@@ -1603,6 +1614,23 @@ try {
       got.on.join() === "congress,zip-code" && got.crossing.length >= 1 && got.crossing.every((t) => /^IL-\d+$/.test(t)) &&
         /every U\.S\. House District it crosses/.test(got.status),
       JSON.stringify({ on: got.on, crossing: got.crossing, status: got.status.slice(-120) }));
+    // the message stays open at the search bar and folds away once the reader
+    // clicks elsewhere, keeping its words for when they come back to the bar
+    const openBefore = got.open;
+    await r.page.click(".group-pinned .group-heading");
+    await r.page.waitForTimeout(200);
+    got = await view(r.page);
+    check("the ZIP code's message stays open until the reader clicks away from the search bar, then folds",
+      openBefore === true && got.open === false && /selected a spot inside ZIP code 60625/.test(got.status),
+      JSON.stringify({ openBefore, open: got.open, status: got.status.slice(0, 80) }));
+    // stopping the comparison gives the ZIP code its own colour back and puts
+    // its card back in its group
+    await r.page.click(".group-pinned .pin-parent-btn");
+    await r.page.waitForTimeout(300);
+    got = await view(r.page);
+    check("stopping the comparison gives the ZIP code back its own line and its card back its place",
+      got.ink !== "#14181C" && !!got.ink && got.lead === null && got.parent === 0,
+      JSON.stringify({ ink: got.ink, lead: got.lead }));
     await r.context.close();
 
     r = await run("q=53703", true);
@@ -2251,6 +2279,34 @@ try {
       check("a launch of the installed app is counted once per window, by app",
         first.join() === `app-launch/${TAG}` && second.length === 0,
         `first=${JSON.stringify(first)} after reload=${JSON.stringify(second)}`);
+      await context.close();
+    }
+    // NEW OR RETURNING. A first visit in a fresh browser counts
+    // visit/first/<tag> and writes the one-character districtry-seen mark; a
+    // reload in the same window counts nothing more; a new window in the same
+    // browser finds the mark and counts visit/return/<tag>. Nothing else is
+    // stored, and Google Analytics is loaded nowhere.
+    {
+      const visitEvents = (p) => p.evaluate(() => (window.__gcEvents || [])
+        .filter((v) => v && v.event && /^visit\//.test(v.path)).map((v) => v.path));
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      let gaRequests = 0;
+      context.on("request", (r) => { if (/googletagmanager|google-analytics/.test(r.url())) gaRequests++; });
+      const page = await booted(context, BASE, stubCounter);
+      await page.waitForTimeout(300);
+      const first = await visitEvents(page);
+      const mark = await page.evaluate(() => localStorage.getItem("districtry-seen"));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      await page.waitForTimeout(300);
+      const reloaded = await visitEvents(page);
+      const page2 = await booted(context, BASE, stubCounter);
+      await page2.waitForTimeout(300);
+      const second = await visitEvents(page2);
+      check("a first visit, then a return in a new window, are each counted once by app, with no Google Analytics",
+        first.join() === `visit/first/${TAG}` && mark === "1" && reloaded.length === 0 &&
+          second.join() === `visit/return/${TAG}` && gaRequests === 0,
+        `first=${JSON.stringify(first)} mark=${mark} reload=${JSON.stringify(reloaded)} new window=${JSON.stringify(second)} ga=${gaRequests}`);
       await context.close();
     }
     // A PLACE SHARED INTO THE APP. The launcher (/app/) hands it over as #q=,

@@ -497,6 +497,13 @@ def measure_address_list(src, name):
 # that keeps a list of its ZIP codes (ZIP_SEARCH_URL, the worksheet's
 # `zip_search` key) can send it, so the sentence names the apps that cannot,
 # measured off each app's own file, as it does for district-search/.
+# `visit/` joined on 2026-10-22, the day Google Analytics left the two apps
+# that ran it (engine `install-app`): `visit/first/<tag>` or
+# `visit/return/<tag>`, once per browser window, decided by a one-character
+# mark in local storage (`districtry-seen`) that never leaves the browser. It
+# answers the one question Google Analytics was kept for, how many readers
+# come back, without a cookie or an identifier. It names the app and never a
+# place.
 EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "app-shortcut/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
@@ -505,7 +512,7 @@ EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "app-shortcu
                    "gaps-suggest/", "gaps-why/", "geolocate",
                    "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link-read/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "osm-note", "select",
                    "share-in/", "share-native", "share-open", "share-permalink", "share-qr",
-                   "zip-search/"]
+                   "visit/", "zip-search/"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
 # What the front page (the one untagged surface) sends: the map-link count
 # above, from its address box, and since 2026-10-21 `example-place/<place>`
@@ -1629,6 +1636,24 @@ def render_storage_paragraphs(apps):
                 "app, the launch is counted once. A mark in %s under %s records that, so "
                 "moving between states in the same window does not count it again. This "
                 "is on %s. It is erased when you close the app, and it never leaves your "
+                "browser.</p>"
+                % (code(store), code(key), esc(joined(users))))
+        elif key == "districtry-seen":
+            out.append(
+                "<p><strong>Whether you have been here before.</strong> The first time you "
+                "open a districtry map, it writes the single character 1 in %s under %s. "
+                "On later visits the map finds it and counts the visit as a return; "
+                "without it, the visit is counted as a first one. That is how the site "
+                "counts returning readers without a cookie. The mark holds no date and "
+                "no identifier, and it never leaves your browser. It is set by %s, and "
+                "clearing this site's data removes it.</p>"
+                % (code(store), code(key), esc(joined(users))))
+        elif key == "districtry-visit-counted":
+            out.append(
+                "<p><strong>A visit already counted.</strong> A mark in %s under %s "
+                "records that this window's visit has been counted as first or returning, "
+                "so moving between pages or states does not count it again. This is on "
+                "%s. It is erased when you close the window, and it never leaves your "
                 "browser.</p>"
                 % (code(store), code(key), esc(joined(users))))
         elif key == "districtry-play-app":

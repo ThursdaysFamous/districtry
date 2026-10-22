@@ -1,0 +1,1095 @@
+{
+ "colleges": {
+  "1": {
+   "college": "Northeast Iowa",
+   "sourceUrl": "https://www.nicc.edu/about/administration/board-of-trustees/",
+   "asOf": "2026-10-21",
+   "undistricted": [
+    {
+     "name": "Jim Anderson",
+     "role": "Chair",
+     "email": "jimatty@hotmail.com"
+    },
+    {
+     "name": "Kathy Gunderson",
+     "role": "Vice Chair",
+     "email": "kgundcpa@neitel.net"
+    },
+    {
+     "name": "John Finley",
+     "email": "finleys@alpinecom.net"
+    },
+    {
+     "name": "Nick Fisch",
+     "email": "nfisch4dbq@gmail.com"
+    },
+    {
+     "name": "Wendy Knight",
+     "email": "wendy@focusforwardthinking.com"
+    },
+    {
+     "name": "Gary McAndrew",
+     "email": "gary@mcandrewsearch.com"
+    },
+    {
+     "name": "Jason Norton",
+     "email": "trysouth03@yahoo.com"
+    },
+    {
+     "name": "Sue Runyon",
+     "email": "srunyonmath@gmail.com"
+    },
+    {
+     "name": "Dean Sherman",
+     "email": "deansherman@iowatelecom.net"
+    }
+   ]
+  },
+  "2": {
+   "college": "North Iowa",
+   "sourceUrl": "https://www.niacc.edu/about/governing-board/",
+   "asOf": "2026-10-21",
+   "seats": {
+    "1": {
+     "name": "David Steffens Jr.",
+     "termEnds": "2029"
+    },
+    "2": {
+     "name": "Kurt Herbrechtsmeyer",
+     "termEnds": "2029"
+    },
+    "3": {
+     "name": "Mark Paca",
+     "termEnds": "2027"
+    },
+    "4": {
+     "name": "John Rowe",
+     "termEnds": "2027"
+    },
+    "5": {
+     "name": "Willie Weis",
+     "termEnds": "2029"
+    },
+    "6": {
+     "name": "Andy Julseth",
+     "role": "President",
+     "termEnds": "2027"
+    },
+    "7": {
+     "name": "Dr. Stephanie Nettleton",
+     "role": "Vice President",
+     "termEnds": "2027"
+    },
+    "8": {
+     "name": "Debra Hill",
+     "termEnds": "2027"
+    },
+    "9": {
+     "name": "Nicki Prantner",
+     "termEnds": "2027"
+    }
+   }
+  },
+  "3": {
+   "college": "Iowa Lakes",
+   "sourceUrl": "https://iowalakes.edu/contact_category/board-of-trustees/",
+   "asOf": "2026-10-21",
+   "seats": {
+    "1": {
+     "name": "Arden Kinnander",
+     "role": "President",
+     "profileUrl": "https://iowalakes.edu/directory/arden-kinnander/"
+    },
+    "2": {
+     "name": "Janice Lund",
+     "profileUrl": "https://iowalakes.edu/directory/janice-lund/"
+    },
+    "3": {
+     "name": "Curt Petersen",
+     "profileUrl": "https://iowalakes.edu/directory/curt-petersen/"
+    },
+    "4": {
+     "name": "Jane Nolan Goeken",
+     "profileUrl": "https://iowalakes.edu/directory/jane-nolan-goeken/"
+    },
+    "5": {
+     "name": "Kari Batman",
+     "profileUrl": "https://iowalakes.edu/directory/kari-batman/"
+    },
+    "6": {
+     "name": "Pat Kibbie",
+     "profileUrl": "https://iowalakes.edu/directory/pat-kibbie/"
+    },
+    "7": {
+     "name": "Bob Jennings",
+     "role": "Vice President",
+     "profileUrl": "https://iowalakes.edu/directory/bob-jennings/"
+    }
+   }
+  },
+  "4": {
+   "college": "Northwest Iowa",
+   "sourceUrl": "https://nwicc.edu/about/board-of-trustees/",
+   "asOf": "2026-10-21",
+   "seats": {
+    "1": {
+     "name": "Cynthia Porter",
+     "email": "riccporter@outlook.com"
+    },
+    "2": {
+     "name": "Stephen Simons",
+     "role": "Vice President",
+     "email": "stevesimons@nwicc.edu"
+    },
+    "3": {
+     "name": "Loretta Berkland",
+     "email": "dberklan@premieronline.net"
+    },
+    "4": {
+     "name": "Steve Loshman",
+     "email": "sloshman@c-sagrow.com"
+    },
+    "5": {
+     "name": "Adam Besaw",
+     "role": "President",
+     "email": "abesaw@nwicc.edu"
+    },
+    "6": {
+     "name": "Leroy Van Kekerix",
+     "email": "Leroy.vankekerix@iowastatebank.net"
+    },
+    "7": {
+     "name": "Ron Heemstra",
+     "email": "rheemstra@nwicc.edu"
+    }
+   }
+  },
+  "5": {
+   "college": "Iowa Central",
+   "sourceUrl": "https://www.iowacentral.edu/about/trustees.asp",
+   "asOf": "2026-10-21",
+   "seats": {
+    "1": {
+     "name": "Kati Lemberg",
+     "email": "Kati.Lemberg@CBARFD.com"
+    },
+    "2": {
+     "name": "Tom Beneke"
+    },
+    "3": {
+     "name": "Larry Hecht",
+     "role": "President",
+     "email": "larryehecht@gmail.com"
+    },
+    "4": {
+     "name": "Connie L. Smith",
+     "email": "smithous@netins.net"
+    },
+    "5": {
+     "name": "Andrea Oswald",
+     "role": "Vice President",
+     "email": "aloswald77@gmail.com"
+    },
+    "6": {
+     "name": "Bennett O'Connor",
+     "email": "boconnor@tcins.com"
+    },
+    "7": {
+     "name": "Craig Schlienz",
+     "email": "cschlienz@availa.bank"
+    },
+    "8": {
+     "name": "Kevin Bahrenfuss"
+    },
+    "9": {
+     "name": "Mike Richards",
+     "email": "msrichards61@gmail.com"
+    }
+   }
+  },
+  "6": {
+   "college": "Iowa Valley",
+   "sourceUrl": "https://www.iavalley.edu/district/about-iowa-valley/board-of-directors.html",
+   "asOf": "2026-10-21",
+   "seats": {
+    "1": {
+     "name": "Taylor Nederhoff"
+    },
+    "2": {
+     "name": "Clark Lawler"
+    },
+    "3": {
+     "name": "Amber Danielson",
+     "role": "Vice President"
+    },
+    "4": {
+     "name": "Jackie Pippin"
+    },
+    "5": {
+     "name": "Chris Brodin"
+    },
+    "6": {
+     "name": "Joanna Hofer",
+     "role": "President"
+    },
+    "7": {
+     "name": "Paul Pohlson"
+    }
+   }
+  },
+  "7": {
+   "college": "Hawkeye",
+   "sourceUrl": "https://www.hawkeyecollege.edu/about/leadership/board-of-trustees",
+   "asOf": "2026-10-21",
+   "seats": {
+    "1": {
+     "name": "Barbara A. McGregor",
+     "email": "mcgregorbarbaraa@gmail.com",
+     "phone": "641-435-2454",
+     "termEnds": "2027"
+    },
+    "2": {
+     "name": "Jay A. Nardini",
+     "email": "nardinijay@gmail.com",
+     "phone": "319-231-9121",
+     "termEnds": "2027"
+    },
+    "3": {
+     "name": "Louis Beck",
+     "email": "beck84254@aol.com",
+     "phone": "319-939-4532",
+     "termEnds": "2029"
+    },
+    "4": {
+     "name": "Dave Westley",
+     "email": "hawkwes24@gmail.com",
+     "termEnds": "2029"
+    },
+    "5": {
+     "name": "Bridget Saffold",
+     "email": "focusondiabetes@gmail.com",
+     "phone": "319-427-2057",
+     "termEnds": "2029"
+    },
+    "6": {
+     "name": "Casey P. McLaughlin",
+     "email": "casey.mclaughlin@lpl.com",
+     "phone": "319-269-1339",
+     "termEnds": "2027"
+    },
+    "7": {
+     "name": "Christine Hutcheson",
+     "email": "cktwait@gmail.com",
+     "phone": "319-239-7280",
+     "termEnds": "2029"
+    },
+    "8": {
+     "name": "Ron Orf",
+     "email": "ronbow502000@yahoo.com",
+     "termEnds": "2027"
+    },
+    "9": {
+     "name": "JoDee Knox",
+     "email": "Jodee.Knox@unitypoint.org",
+     "phone": "319-231-4400",
+     "termEnds": "2029"
+    }
+   }
+  },
+  "9": {
+   "college": "Eastern Iowa",
+   "sourceUrl": "https://eicc.edu/about/board-trustees/default.aspx",
+   "asOf": "2026-10-21",
+   "seats": {
+    "1": {
+     "vacant": true
+    },
+    "2": {
+     "name": "Alexandra Dermody",
+     "termEnds": "2029"
+    },
+    "3": {
+     "name": "Allison Ambrose",
+     "termEnds": "2027"
+    },
+    "4": {
+     "name": "Robert H. Gallagher",
+     "termEnds": "2027"
+    },
+    "5": {
+     "name": "Jenny Hansen",
+     "termEnds": "2027"
+    },
+    "6": {
+     "name": "Deepak Joshi",
+     "termEnds": "2029"
+    },
+    "7": {
+     "name": "Dianne Prichard",
+     "termEnds": "2027"
+    },
+    "8": {
+     "name": "Yuli Diaz",
+     "termEnds": "2029"
+    },
+    "9": {
+     "name": "Michelle Garvin",
+     "termEnds": "2027"
+    }
+   }
+  },
+  "10": {
+   "college": "Kirkwood",
+   "sourceUrl": "https://www.kirkwood.edu/about-us/trustees/index",
+   "asOf": "2026-10-21",
+   "seats": {
+    "1": {
+     "name": "Dr. Keith Stamp"
+    },
+    "2": {
+     "name": "Tracy Pearson",
+     "role": "Chair"
+    },
+    "3": {
+     "name": "Peggy Doerge"
+    },
+    "4": {
+     "name": "Lorraine Williams"
+    },
+    "5": {
+     "name": "Alan Jensen",
+     "role": "Vice Chair"
+    },
+    "6": {
+     "name": "Joel Thys"
+    },
+    "7": {
+     "name": "Doug Bannon"
+    },
+    "8": {
+     "name": "Steve Caves"
+    },
+    "9": {
+     "name": "Leslie A. Wright"
+    }
+   }
+  },
+  "11": {
+   "college": "Des Moines Area",
+   "sourceUrl": "https://www.dmacc.edu/about/leadership.html",
+   "asOf": "2026-10-21",
+   "seats": {
+    "1": {
+     "name": "Cheryl Langston",
+     "email": "cheryl.langston@dmacc.edu",
+     "termEnds": "2027"
+    },
+    "2": {
+     "name": "Fred Greiner",
+     "email": "fred.greiner@dmacc.edu",
+     "termEnds": "2027"
+    },
+    "3": {
+     "name": "Trish Roberts",
+     "email": "trish.roberts@dmacc.edu",
+     "termEnds": "2029"
+    },
+    "4": {
+     "name": "Kevin Halterman",
+     "role": "President",
+     "email": "kevin.halterman@dmacc.edu",
+     "termEnds": "2029"
+    },
+    "5": {
+     "name": "Chaz Allen",
+     "email": "chaz.allen@dmacc.edu",
+     "termEnds": "2029"
+    },
+    "6": {
+     "name": "Denny Presnall",
+     "email": "denny.presnall@dmacc.edu",
+     "termEnds": "2027"
+    },
+    "7": {
+     "name": "Madelyn Tursi",
+     "email": "madelyn.tursi@dmacc.edu",
+     "termEnds": "2027"
+    },
+    "8": {
+     "name": "Felix Gallagher",
+     "role": "Vice President",
+     "email": "felix.gallagher@dmacc.edu",
+     "termEnds": "2027"
+    },
+    "9": {
+     "name": "Angela Jackson",
+     "email": "angela.jackson@dmacc.edu",
+     "termEnds": "2029"
+    }
+   }
+  },
+  "12": {
+   "college": "Western Iowa Tech",
+   "sourceUrl": "https://www.witcc.edu/about/board/",
+   "asOf": "2026-10-21",
+   "seats": {
+    "1": {
+     "name": "Justin Daale",
+     "email": "justin.daale@witcc.edu"
+    },
+    "2": {
+     "name": "Gary Jordan",
+     "email": "gary.jordan@witcc.edu"
+    },
+    "3": {
+     "name": "Hanna Reinders",
+     "email": "hanna.reinders@witcc.edu"
+    },
+    "4": {
+     "name": "Linnea Fletcher",
+     "role": "President",
+     "email": "linnea.fletcher@witcc.edu"
+    },
+    "5": {
+     "name": "Tricia Sutherland",
+     "role": "Vice President",
+     "email": "tricia.sutherland@witcc.edu"
+    },
+    "6": {
+     "name": "Mary Parker",
+     "email": "mary.parker@witcc.edu"
+    },
+    "7": {
+     "name": "Jeremy Ogle",
+     "email": "jeremy.ogle@witcc.edu"
+    },
+    "8": {
+     "name": "Russell Wray",
+     "email": "russell.wray@witcc.edu"
+    },
+    "9": {
+     "name": "Erin Muck",
+     "email": "erin.muck@witcc.edu"
+    }
+   }
+  },
+  "13": {
+   "college": "Iowa Western",
+   "sourceUrl": "https://www.iwcc.edu/about/administration/board-of-trustees/",
+   "asOf": "2026-10-21",
+   "seats": {
+    "1": {
+     "name": "Gilbert Thomas",
+     "termEnds": "2027"
+    },
+    "2": {
+     "name": "Kerry Newman",
+     "termEnds": "2027"
+    },
+    "3": {
+     "name": "Dr. John Marshall",
+     "role": "Vice President",
+     "termEnds": "2027"
+    },
+    "4": {
+     "name": "Chris Blake",
+     "termEnds": "2029"
+    },
+    "5": {
+     "name": "Matt Johnson",
+     "termEnds": "2029"
+    },
+    "6": {
+     "name": "Tom Riley",
+     "termEnds": "2029"
+    },
+    "7": {
+     "name": "Kirk Madsen",
+     "termEnds": "2029"
+    },
+    "8": {
+     "name": "Connie Hornbeck",
+     "role": "President",
+     "termEnds": "2027"
+    },
+    "9": {
+     "name": "Randy Pash",
+     "termEnds": "2029"
+    }
+   }
+  },
+  "14": {
+   "college": "Southwestern",
+   "sourceUrl": "https://www.swcciowa.edu/about/general-college-information/board-of-directors",
+   "asOf": "2026-10-21",
+   "seats": {
+    "1": {
+     "name": "Paul Nelson"
+    },
+    "2": {
+     "name": "Fred Shearer",
+     "role": "Vice President"
+    },
+    "3": {
+     "name": "Sue Stearns"
+    },
+    "4": {
+     "name": "Carol Saxton"
+    },
+    "5": {
+     "name": "Kevin Britten"
+    },
+    "6": {
+     "name": "Taylor McClellan"
+    },
+    "7": {
+     "name": "Bonnie Larson"
+    },
+    "8": {
+     "name": "Dr. Tony Cass",
+     "role": "President"
+    }
+   }
+  },
+  "15": {
+   "college": "Indian Hills",
+   "sourceUrl": "https://www.indianhills.edu/about/boardoftrustees.php",
+   "asOf": "2026-10-21",
+   "seats": {
+    "1": {
+     "name": "Beth Danowsky"
+    },
+    "2": {
+     "name": "Riley Sheetz"
+    },
+    "3": {
+     "name": "Christine Estle"
+    },
+    "4": {
+     "name": "Lori Yates"
+    },
+    "5": {
+     "name": "Richard Gaumer",
+     "role": "President"
+    },
+    "6": {
+     "name": "Kevin Crall"
+    },
+    "7": {
+     "name": "Alan Wilson"
+    },
+    "8": {
+     "name": "Michael Matthes"
+    },
+    "9": {
+     "name": "Katie Nichols",
+     "role": "Vice President"
+    }
+   }
+  },
+  "16": {
+   "college": "Southeastern",
+   "sourceUrl": "https://www.scciowa.edu/meet/about/leadership/board-of-trustees/index.aspx",
+   "asOf": "2026-10-21",
+   "seats": {
+    "1": {
+     "name": "Jesse Howard",
+     "email": "Jesse_howard@outlook.com"
+    },
+    "2": {
+     "name": "Landen Hillyard",
+     "role": "Chairperson",
+     "email": "landenhillyard@gmail.com"
+    },
+    "3": {
+     "name": "Jeff Heland",
+     "email": "heland6050@aol.com"
+    },
+    "4": {
+     "name": "Moudy Nabulsi",
+     "role": "Vice Chairperson",
+     "email": "nabulsis@msn.com"
+    },
+    "5": {
+     "name": "Janet Fife-LaFrenz",
+     "email": "fifelafrenz@gmail.com"
+    }
+   }
+  }
+ },
+ "seats": {
+  "2-1": {
+   "name": "David Steffens Jr.",
+   "termEnds": "2029"
+  },
+  "2-2": {
+   "name": "Kurt Herbrechtsmeyer",
+   "termEnds": "2029"
+  },
+  "2-3": {
+   "name": "Mark Paca",
+   "termEnds": "2027"
+  },
+  "2-4": {
+   "name": "John Rowe",
+   "termEnds": "2027"
+  },
+  "2-5": {
+   "name": "Willie Weis",
+   "termEnds": "2029"
+  },
+  "2-6": {
+   "name": "Andy Julseth",
+   "role": "President",
+   "termEnds": "2027"
+  },
+  "2-7": {
+   "name": "Dr. Stephanie Nettleton",
+   "role": "Vice President",
+   "termEnds": "2027"
+  },
+  "2-8": {
+   "name": "Debra Hill",
+   "termEnds": "2027"
+  },
+  "2-9": {
+   "name": "Nicki Prantner",
+   "termEnds": "2027"
+  },
+  "3-1": {
+   "name": "Arden Kinnander",
+   "role": "President",
+   "profileUrl": "https://iowalakes.edu/directory/arden-kinnander/"
+  },
+  "3-2": {
+   "name": "Janice Lund",
+   "profileUrl": "https://iowalakes.edu/directory/janice-lund/"
+  },
+  "3-3": {
+   "name": "Curt Petersen",
+   "profileUrl": "https://iowalakes.edu/directory/curt-petersen/"
+  },
+  "3-4": {
+   "name": "Jane Nolan Goeken",
+   "profileUrl": "https://iowalakes.edu/directory/jane-nolan-goeken/"
+  },
+  "3-5": {
+   "name": "Kari Batman",
+   "profileUrl": "https://iowalakes.edu/directory/kari-batman/"
+  },
+  "3-6": {
+   "name": "Pat Kibbie",
+   "profileUrl": "https://iowalakes.edu/directory/pat-kibbie/"
+  },
+  "3-7": {
+   "name": "Bob Jennings",
+   "role": "Vice President",
+   "profileUrl": "https://iowalakes.edu/directory/bob-jennings/"
+  },
+  "4-1": {
+   "name": "Cynthia Porter",
+   "email": "riccporter@outlook.com"
+  },
+  "4-2": {
+   "name": "Stephen Simons",
+   "role": "Vice President",
+   "email": "stevesimons@nwicc.edu"
+  },
+  "4-3": {
+   "name": "Loretta Berkland",
+   "email": "dberklan@premieronline.net"
+  },
+  "4-4": {
+   "name": "Steve Loshman",
+   "email": "sloshman@c-sagrow.com"
+  },
+  "4-5": {
+   "name": "Adam Besaw",
+   "role": "President",
+   "email": "abesaw@nwicc.edu"
+  },
+  "4-6": {
+   "name": "Leroy Van Kekerix",
+   "email": "Leroy.vankekerix@iowastatebank.net"
+  },
+  "4-7": {
+   "name": "Ron Heemstra",
+   "email": "rheemstra@nwicc.edu"
+  },
+  "5-1": {
+   "name": "Kati Lemberg",
+   "email": "Kati.Lemberg@CBARFD.com"
+  },
+  "5-2": {
+   "name": "Tom Beneke"
+  },
+  "5-3": {
+   "name": "Larry Hecht",
+   "role": "President",
+   "email": "larryehecht@gmail.com"
+  },
+  "5-4": {
+   "name": "Connie L. Smith",
+   "email": "smithous@netins.net"
+  },
+  "5-5": {
+   "name": "Andrea Oswald",
+   "role": "Vice President",
+   "email": "aloswald77@gmail.com"
+  },
+  "5-6": {
+   "name": "Bennett O'Connor",
+   "email": "boconnor@tcins.com"
+  },
+  "5-7": {
+   "name": "Craig Schlienz",
+   "email": "cschlienz@availa.bank"
+  },
+  "5-8": {
+   "name": "Kevin Bahrenfuss"
+  },
+  "5-9": {
+   "name": "Mike Richards",
+   "email": "msrichards61@gmail.com"
+  },
+  "6-1": {
+   "name": "Taylor Nederhoff"
+  },
+  "6-2": {
+   "name": "Clark Lawler"
+  },
+  "6-3": {
+   "name": "Amber Danielson",
+   "role": "Vice President"
+  },
+  "6-4": {
+   "name": "Jackie Pippin"
+  },
+  "6-5": {
+   "name": "Chris Brodin"
+  },
+  "6-6": {
+   "name": "Joanna Hofer",
+   "role": "President"
+  },
+  "6-7": {
+   "name": "Paul Pohlson"
+  },
+  "7-1": {
+   "name": "Barbara A. McGregor",
+   "email": "mcgregorbarbaraa@gmail.com",
+   "phone": "641-435-2454",
+   "termEnds": "2027"
+  },
+  "7-2": {
+   "name": "Jay A. Nardini",
+   "email": "nardinijay@gmail.com",
+   "phone": "319-231-9121",
+   "termEnds": "2027"
+  },
+  "7-3": {
+   "name": "Louis Beck",
+   "email": "beck84254@aol.com",
+   "phone": "319-939-4532",
+   "termEnds": "2029"
+  },
+  "7-4": {
+   "name": "Dave Westley",
+   "email": "hawkwes24@gmail.com",
+   "termEnds": "2029"
+  },
+  "7-5": {
+   "name": "Bridget Saffold",
+   "email": "focusondiabetes@gmail.com",
+   "phone": "319-427-2057",
+   "termEnds": "2029"
+  },
+  "7-6": {
+   "name": "Casey P. McLaughlin",
+   "email": "casey.mclaughlin@lpl.com",
+   "phone": "319-269-1339",
+   "termEnds": "2027"
+  },
+  "7-7": {
+   "name": "Christine Hutcheson",
+   "email": "cktwait@gmail.com",
+   "phone": "319-239-7280",
+   "termEnds": "2029"
+  },
+  "7-8": {
+   "name": "Ron Orf",
+   "email": "ronbow502000@yahoo.com",
+   "termEnds": "2027"
+  },
+  "7-9": {
+   "name": "JoDee Knox",
+   "email": "Jodee.Knox@unitypoint.org",
+   "phone": "319-231-4400",
+   "termEnds": "2029"
+  },
+  "9-1": {
+   "vacant": true
+  },
+  "9-2": {
+   "name": "Alexandra Dermody",
+   "termEnds": "2029"
+  },
+  "9-3": {
+   "name": "Allison Ambrose",
+   "termEnds": "2027"
+  },
+  "9-4": {
+   "name": "Robert H. Gallagher",
+   "termEnds": "2027"
+  },
+  "9-5": {
+   "name": "Jenny Hansen",
+   "termEnds": "2027"
+  },
+  "9-6": {
+   "name": "Deepak Joshi",
+   "termEnds": "2029"
+  },
+  "9-7": {
+   "name": "Dianne Prichard",
+   "termEnds": "2027"
+  },
+  "9-8": {
+   "name": "Yuli Diaz",
+   "termEnds": "2029"
+  },
+  "9-9": {
+   "name": "Michelle Garvin",
+   "termEnds": "2027"
+  },
+  "10-1": {
+   "name": "Dr. Keith Stamp"
+  },
+  "10-2": {
+   "name": "Tracy Pearson",
+   "role": "Chair"
+  },
+  "10-3": {
+   "name": "Peggy Doerge"
+  },
+  "10-4": {
+   "name": "Lorraine Williams"
+  },
+  "10-5": {
+   "name": "Alan Jensen",
+   "role": "Vice Chair"
+  },
+  "10-6": {
+   "name": "Joel Thys"
+  },
+  "10-7": {
+   "name": "Doug Bannon"
+  },
+  "10-8": {
+   "name": "Steve Caves"
+  },
+  "10-9": {
+   "name": "Leslie A. Wright"
+  },
+  "11-1": {
+   "name": "Cheryl Langston",
+   "email": "cheryl.langston@dmacc.edu",
+   "termEnds": "2027"
+  },
+  "11-2": {
+   "name": "Fred Greiner",
+   "email": "fred.greiner@dmacc.edu",
+   "termEnds": "2027"
+  },
+  "11-3": {
+   "name": "Trish Roberts",
+   "email": "trish.roberts@dmacc.edu",
+   "termEnds": "2029"
+  },
+  "11-4": {
+   "name": "Kevin Halterman",
+   "role": "President",
+   "email": "kevin.halterman@dmacc.edu",
+   "termEnds": "2029"
+  },
+  "11-5": {
+   "name": "Chaz Allen",
+   "email": "chaz.allen@dmacc.edu",
+   "termEnds": "2029"
+  },
+  "11-6": {
+   "name": "Denny Presnall",
+   "email": "denny.presnall@dmacc.edu",
+   "termEnds": "2027"
+  },
+  "11-7": {
+   "name": "Madelyn Tursi",
+   "email": "madelyn.tursi@dmacc.edu",
+   "termEnds": "2027"
+  },
+  "11-8": {
+   "name": "Felix Gallagher",
+   "role": "Vice President",
+   "email": "felix.gallagher@dmacc.edu",
+   "termEnds": "2027"
+  },
+  "11-9": {
+   "name": "Angela Jackson",
+   "email": "angela.jackson@dmacc.edu",
+   "termEnds": "2029"
+  },
+  "12-1": {
+   "name": "Justin Daale",
+   "email": "justin.daale@witcc.edu"
+  },
+  "12-2": {
+   "name": "Gary Jordan",
+   "email": "gary.jordan@witcc.edu"
+  },
+  "12-3": {
+   "name": "Hanna Reinders",
+   "email": "hanna.reinders@witcc.edu"
+  },
+  "12-4": {
+   "name": "Linnea Fletcher",
+   "role": "President",
+   "email": "linnea.fletcher@witcc.edu"
+  },
+  "12-5": {
+   "name": "Tricia Sutherland",
+   "role": "Vice President",
+   "email": "tricia.sutherland@witcc.edu"
+  },
+  "12-6": {
+   "name": "Mary Parker",
+   "email": "mary.parker@witcc.edu"
+  },
+  "12-7": {
+   "name": "Jeremy Ogle",
+   "email": "jeremy.ogle@witcc.edu"
+  },
+  "12-8": {
+   "name": "Russell Wray",
+   "email": "russell.wray@witcc.edu"
+  },
+  "12-9": {
+   "name": "Erin Muck",
+   "email": "erin.muck@witcc.edu"
+  },
+  "13-1": {
+   "name": "Gilbert Thomas",
+   "termEnds": "2027"
+  },
+  "13-2": {
+   "name": "Kerry Newman",
+   "termEnds": "2027"
+  },
+  "13-3": {
+   "name": "Dr. John Marshall",
+   "role": "Vice President",
+   "termEnds": "2027"
+  },
+  "13-4": {
+   "name": "Chris Blake",
+   "termEnds": "2029"
+  },
+  "13-5": {
+   "name": "Matt Johnson",
+   "termEnds": "2029"
+  },
+  "13-6": {
+   "name": "Tom Riley",
+   "termEnds": "2029"
+  },
+  "13-7": {
+   "name": "Kirk Madsen",
+   "termEnds": "2029"
+  },
+  "13-8": {
+   "name": "Connie Hornbeck",
+   "role": "President",
+   "termEnds": "2027"
+  },
+  "13-9": {
+   "name": "Randy Pash",
+   "termEnds": "2029"
+  },
+  "14-1": {
+   "name": "Paul Nelson"
+  },
+  "14-2": {
+   "name": "Fred Shearer",
+   "role": "Vice President"
+  },
+  "14-3": {
+   "name": "Sue Stearns"
+  },
+  "14-4": {
+   "name": "Carol Saxton"
+  },
+  "14-5": {
+   "name": "Kevin Britten"
+  },
+  "14-6": {
+   "name": "Taylor McClellan"
+  },
+  "14-7": {
+   "name": "Bonnie Larson"
+  },
+  "14-8": {
+   "name": "Dr. Tony Cass",
+   "role": "President"
+  },
+  "15-1": {
+   "name": "Beth Danowsky"
+  },
+  "15-2": {
+   "name": "Riley Sheetz"
+  },
+  "15-3": {
+   "name": "Christine Estle"
+  },
+  "15-4": {
+   "name": "Lori Yates"
+  },
+  "15-5": {
+   "name": "Richard Gaumer",
+   "role": "President"
+  },
+  "15-6": {
+   "name": "Kevin Crall"
+  },
+  "15-7": {
+   "name": "Alan Wilson"
+  },
+  "15-8": {
+   "name": "Michael Matthes"
+  },
+  "15-9": {
+   "name": "Katie Nichols",
+   "role": "Vice President"
+  },
+  "16-1": {
+   "name": "Jesse Howard",
+   "email": "Jesse_howard@outlook.com"
+  },
+  "16-2": {
+   "name": "Landen Hillyard",
+   "role": "Chairperson",
+   "email": "landenhillyard@gmail.com"
+  },
+  "16-3": {
+   "name": "Jeff Heland",
+   "email": "heland6050@aol.com"
+  },
+  "16-4": {
+   "name": "Moudy Nabulsi",
+   "role": "Vice Chairperson",
+   "email": "nabulsis@msn.com"
+  },
+  "16-5": {
+   "name": "Janet Fife-LaFrenz",
+   "email": "fifelafrenz@gmail.com"
+  }
+ }
+}

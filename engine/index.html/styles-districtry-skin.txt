@@ -977,9 +977,9 @@
      stopped describing the same object. Measured at 390px and 1400px, idle
      and expanded: this shadow was the ONLY non-colour difference between
      them; every box in the search bar is otherwise identical. */
-  /* the pinned-parent outline is deliberately near-black (#14181C) so it reads
-     as neutral over a light basemap; over a dark one it is simply gone. */
-  [data-theme="dark"] .rel-parent-outline { stroke: #ece9f4; }
+  /* the pinned district's line is near-black (#14181C) so it reads as neutral
+     over a light basemap; over a dark one it is simply gone. The line itself
+     takes its colour in script (relParentInk); this is its key swatch. */
   [data-theme="dark"] .rel-sw-parent { border-top-color: #ece9f4; }
   [data-theme="dark"] .rel-sw-in { border-top-color: #6ea8ff; }
   [data-theme="dark"] .rel-sw-cross { border-top-color: #6ea8ff; }

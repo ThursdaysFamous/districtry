@@ -1136,6 +1136,19 @@ route it there itself.
 
 ## Ask 8 — Iowa Secretary of State: a statewide list of city clerks
 
+> **ANSWERED 2026-10-22, AND THE ANSWER IS NO.** The operator's follow-up went on 2026-10-22
+> and the Elections Division replied the same morning (Dani Phillips, from
+> `IVoters.Support@sos.iowa.gov`): the office does not have such a list, and the request
+> should go to the county auditors or to the Iowa League of Cities. Both routes were already
+> in use: the League's directory gives each city a phone and website and names no person,
+> and thirteen county auditors publish their cities' officials, ten of them current. So the
+> operator sent two new letters the same day: one to the **Iowa League of Cities** through
+> the "Email Us" form on its website (it publishes no e-mail address), asking it to share
+> its members' mayor and clerk names, and one by e-mail to the **Iowa State Association of
+> County Auditors**' President, Karla Weiss (Winnebago County Auditor), asking for a city
+> clerk list or for the request to be passed on. Follow-ups are due about 2026-11-12. This
+> ask is closed.
+>
 > **SENT 2026-09-04 to `elections@sos.iowa.gov`**, subject "Is there a statewide list of Iowa
 > city clerks?". No reply on that thread as of 2026-10-01, so one follow-up is due and the
 > thirty-day silence mark falls on 2026-10-04.
@@ -7712,6 +7725,82 @@ with it or the build fails as it does today, and the 2024 results rule is retire
 association gives a district. A no to that: recorded in gap `ar-quorum-court` with its date, and
 the counties' own sites and the next election's results stay the route.
 
+## Ask ar-adem-fire-districts — ADEM Office of Fire Protection Services: which fire districts elect commissioners, and who they are
+
+> **SENT 2026-10-21 at 17:36 UTC, ANSWERED 2026-10-21 at 18:07 UTC** by Louis Eckelhoff, Fire & EMS
+> Coordinator, Fire Protection Services (`louis.eckelhoff@adem.arkansas.gov`): "The information you
+> are requesting is all held at the County level. I might be able to provide a list of the
+> Departments that are classified as Fire Protection District, I will have to see what I can pull
+> from my portal. Give me a day or two to retrieve the information." So the commissioners' names
+> are each county's to give, and the state's part may be the list of which districts elect them.
+> The Letters thread passes on the list when it arrives and nudges around 2026-10-24 if it has not.
+> Recorded in gap `ar-fire-district-boards` and in `ar/WATCH.md`'s fire district row.
+>
+> Drafted 2026-10-21, to the Office of Fire Protection Services at
+> `fire.services@adem.arkansas.gov`, the office mailbox on its own Fire Services page
+> (`dps.arkansas.gov/emergency-management/adem/state-fire-marshals-office/fire-services/`, read
+> 2026-10-21 after its robots.txt, which permits every path and asks for 10 seconds between requests;
+> the page hides the address behind Cloudflare's e-mail protection, which a browser decodes for every
+> visitor). No person is named on the page, so the letter is addressed to the office. Adam said
+> "Yes write it" on 2026-10-21 to the card proposing it. The mailbox was searched the same day for
+> any message to or from `adem.arkansas.gov` or `dps.arkansas.gov`: none. This ask is recorded in gap
+> `ar-fire-district-boards` and in `ar/WATCH.md`'s fire district row; record the send and any reply
+> in both. The Gmail draft was made by the Letters thread on 2026-10-21 with one wording change,
+> carried back here the same day: the line on what a card shows now follows the fleet rule of
+> 2026-10-17 (an official's own phone or e-mail is published where a government source prints it).
+
+**Why this is asked.** Arkansas's map draws all 971 fire districts from the Arkansas GIS Office's
+layer and names nobody who runs them. Read in the Association of Arkansas Counties' Fire Department
+Guidebook, which quotes the code, only one kind of district has an elected board: a fire protection
+district formed under A.C.A. 14-284 subchapter 2, whose commissioners are elected by the district's
+voters at a public meeting the county court calls (14-284-208(b)). Nonprofit departments have
+private boards, subordinate service districts have boards the county judge appoints, and city
+departments answer to the city. That is a county meeting, not a ballot, so no election
+commission's results name the commissioners, and no state office publishes them. The GIS layer
+codes 63 records `FPD`, but defines none of its codes and does not match one county's own notice.
+This office certifies every department each year, and certification requires a department to be
+organized as one of the four kinds, so it is the one office that could say which districts are fire
+protection districts. Whether it holds their commissioners' names is not known, and the letter does
+not assume it does. A list of the districts alone is useful; a "no" is a complete answer.
+
+> Subject: Which Arkansas fire districts elect commissioners, for a free district map
+>
+> Dear Office of Fire Protection Services,
+>
+> I run districtry (https://districtry.com), a free, non-commercial website where anyone can click
+> a point on a map, or type an address, and see every district that covers it and who represents
+> them there. Our Arkansas map went live last week at https://districtry.com/ar/. It draws all of
+> Arkansas's fire districts from the Arkansas GIS Office's fire district map, and for each one it
+> says which district a point is in and which counties the district serves. It does not yet say who
+> runs any of them.
+>
+> As we read the state's fire protection district law, most fire departments in Arkansas do not have
+> an elected board. Nonprofit departments have their own boards and city departments answer to their
+> city. Fire protection districts formed since 1989 elect commissioners, chosen by the district's
+> voters at a public meeting the county court calls (older districts' commissioners are appointed by
+> the county court). Those are the boards we would like to name, because they are
+> elected to represent the people who live in the district. We have not found a published list of
+> them anywhere.
+>
+> Your office certifies Arkansas's fire departments and records whether each is a nonprofit, a
+> subordinate service district, a fire protection district or a municipal department, so I am writing
+> with two questions:
+>
+> 1. Could you share a list of the certified departments that are organized as fire protection
+>    districts, ideally with each one's department ID number so we can match it to the state's map?
+> 2. If your office holds the names of those districts' commissioners, or a contact for each board,
+>    could you share those too? If someone else keeps them, such as each county clerk, telling us
+>    that would help just as much.
+>
+> If neither is something you can share, a "no" is a genuinely useful answer and we will record it.
+> We would never show a home or street address, we would leave off anything a commissioner asks us in
+> writing to leave off, and every card would credit the source and link back to it.
+>
+> Thank you for your time.
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+
 ## Ask ms-maris-supervisor-districts — MARIS, Mississippi's state GIS clearinghouse: collect and publish each county's current supervisor district map
 
 > **ASKED 2026-10-16 — DRAFTED 2026-10-15.** The operator rewrote this draft and sent it on
@@ -8523,6 +8612,63 @@ asked, and nothing changes on the map.
   drawn, Jefferson and Rowan. If another county has been drawn since, change the number and the
   names.
 
+---
+
+## Ask ny-nysl-library-trustees — New York State Library, Division of Library Development: the trustee names libraries already report
+
+> **ASKED 2026-10-21 at 17:26 UTC**, from the operator's own mailbox, read off the sent folder by
+> the thread that drafts the letters. The sent copy, not the text below, is the record of what was
+> asked. A follow-up is due about 2026-11-11 if nothing has come back. Drafted 2026-10-21. To Amy Heebner, who leads the Technology, Reporting and Federal Aid Services Team
+> in the State Library's Division of Library Development (`amy.heebner@nysed.gov`). That team
+> runs the annual report every public and association library files. Gap
+> `ny-special-district-officials` carries the date in its `ask` field.
+
+**Why this is asked.** A New York library district elects its trustees, and districtry's Sullivan
+County map draws the county's two library districts with nobody named on the card. Under the
+operator's ruling of 2026-10-21, a special district counts as answered only where its board is
+named. The State Library already collects the names: Section 10 of the Annual Report for Public
+and Association Libraries ("Officers and Trustees") asks for each trustee's name, office and term
+as of February 1, and question 10.7 asks how the board is chosen. The report is filed through
+LibPAS, which needs a login, and no public download of Section 10 was found on 2026-10-21. The
+letter asks whether that section can be shared. Fire district commissioners are not asked here:
+whether the Comptroller's collection of local officials covers fire districts is already part of
+Ask ny-comptroller-local-officials, which waits until 2026-11-20.
+
+> Subject: Library trustee names from the annual report
+>
+> Dear Ms. Heebner,
+>
+> I run districtry (https://districtry.com), a free website where anyone can click a point on a
+> map, or type an address, and see every district that covers it and who represents them there.
+> New York's map is at https://districtry.com/ny/.
+>
+> It now shows public library districts in Sullivan County, and I would like it to name each
+> district's elected trustees. Section 10 of the Annual Report for Public and Association
+> Libraries already asks every library for its trustees' names, offices and terms as of
+> February 1. I could not find that section published anywhere.
+>
+> Could the State Library share Section 10 for public library districts, either for Sullivan
+> County or statewide? Because the report is dated, each name could be shown with that date and
+> a credit to the State Library. A spreadsheet or any other form is fine.
+>
+> If this is not something you can share, or should go to someone else, a short reply saying so
+> is a complete answer.
+>
+> Thank you,
+> Adam Overberg
+> districtry
+
+**What an answer changes.** A yes: the two Sullivan library district cards name their trustees
+with the report's date, and other counties' library districts can be named as their maps are
+added. A no: recorded in the gap with its date, and the cards keep naming nobody.
+
+**Before sending:**
+
+- Confirm Ms. Heebner is still listed on the Division of Library Development's staff page.
+- Check that Section 10 is still part of the current year's annual report form.
+
+---
+
 ## Ask la-sos-precinct-districts — Louisiana Secretary of State, Elections Division: publish which precincts make up each parish governing body, school board and town council district
 
 > **ASKED 2026-10-21 at 13:58 UTC**, from the operator's own mailbox to `elections@sos.la.gov`,
@@ -8669,8 +8815,8 @@ cities that publish none.
 > letters. The operator reworded the opening before sending, so the sent copy, not the text
 > below, is the record of what was asked. It went before the conservation districts were on
 > the map. A follow-up is due about 2026-11-11 if nothing has come back, and can say what the
-> map shows by then. No gap record carries it yet: the record for the districts' supervisors
-> is written by the change that puts the districts' offices on the Parish card.
+> map shows by then. It is the `ask` of gap `la-conservation-district-supervisors`, which
+> the change that put the districts' offices on the Parish card wrote (2026-10-21).
 >
 > Drafted 2026-10-21. To the Office of Soil and Water Conservation at
 > `soilandwater@ldaf.state.la.us`, telephone (225) 922-1269, 5825 Florida Blvd, Baton Rouge,
@@ -8707,6 +8853,17 @@ an "All rights reserved" notice and no terms of use, so the letter asks whether 
 boundaries may be shown. A published list of supervisors by district would let each district's
 card name its board, which is the change in how Louisiana publishes this information that the
 project exists to encourage.
+
+> **CORRECTED 2026-10-21, after the letter went.** The map is not a picture. Page 1 of the PDF
+> is a vector drawing, each district a filled path object with its number inside, and the
+> change that put the districts on the Parish card read those objects and not the pixels
+> (`la/scripts/measure_la_conservation_parishes.py`). The 150-dots-per-inch reading above is
+> kept as it was written. Its finding stands: Ouachita is divided between D'Arbonne and Boeuf
+> River. The objects show six more parishes divided between two districts (Ascension,
+> Caldwell, Iberville, Jefferson, Richland and St. James), and in Jefferson the second district
+> is Lafourche-Terrebonne, which the map gives Grand Isle under a coastline stroke wider than the
+> island, so the picture shows the island as black. The letter's question about the boundaries
+> is unchanged by this.
 
 > Subject: Soil and water conservation district supervisors on districtry.com
 >
@@ -8755,6 +8912,13 @@ boundary file without permission, or none: districts that are whole parishes are
 parish map, and the others wait, recorded in the conservation district gap the layer writes
 when it is built. A no to the list, or no answer after the follow-ups: recorded in that gap
 with its date, and the cards give each district's office and name no one.
+
+> **CORRECTED 2026-10-21.** No layer was built. The change lists each parish's district or
+> districts, with their offices, on the Parish card, as Kentucky, North Carolina and South
+> Carolina list theirs on the County card, because 57 of the 64 parishes lie in one district and
+> a layer drawn from parish lines would say no more than the card does. The gap the change wrote
+> is `la-conservation-district-supervisors`. A boundary file with permission would now let a
+> layer draw all 44 districts, the seven divided parishes included.
 
 **Before sending:**
 
