@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **287 distinct hosts** those files
-name, **45 are fetched by the browser**; the other 242 are links.
+makes from a link a reader clicks. Of **286 distinct hosts** those files
+name, **44 are fetched by the browser**; the other 242 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -68,12 +68,11 @@ several.
 
 Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
-### Analytics — 2 host(s)
+### Analytics — 1 host(s)
 
 | host | instances |
 |---|---|
 | `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la |
-| `www.googletagmanager.com` | il, ny |
 
 ### Webfonts — none
 
