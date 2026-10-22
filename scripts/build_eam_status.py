@@ -1561,6 +1561,11 @@ ANSWERS = {
         "sub-county-government": answers("county-subdivision"),
         "school-boards-by-district": answers("mps-school-board"),
         "precincts": answers("ward"),
+        # Answered under Adam's rule of 2026-10-21 (an elected board must be
+        # named; an appointed one need not be): a technical college district's
+        # board is appointed by a committee of the county board chairs or
+        # school board presidents (Wis. Stat. 38.08), and a tax increment
+        # district has no board of its own.
         "special-districts": answers("wtcs-district", "tid-district"),
         # SHIPPED 2026-10-01. The app draws all 21 pieces of tribal land in
         # Wisconsin -- 11 reservations and 10 of off-reservation trust land --
@@ -1596,7 +1601,21 @@ ANSWERS = {
         "sub-county-government": answers("county-subdivision"),
         "school-boards-by-district": answers("school-director-district"),
         "precincts": answers("precinct"),
-        "special-districts": answers("community-college", "cc-director-district", "iowa-aea"),
+        # REOPENED 2026-10-21 under Adam's rule of that day, that a special
+        # district whose board the voters elect answers this level only where
+        # the card names the board ("Only ones with elected reps"; see the
+        # done standard). An area education agency's directors are chosen by
+        # the boards of its member school districts and no voter elects them
+        # (Iowa Code 273.8), so the AEA layer meets the test by being drawn.
+        # A community college's trustees ARE elected, one from each director
+        # district by its own voters (Iowa Code 260C.11). Iowa keeps no
+        # statewide list, so the level stays open until the card names the
+        # trustee for every college's districts; a college whose own page
+        # does not say which trustee holds which numbered district (Northeast
+        # Iowa's, measured 2026-10-21) keeps it open whatever the other
+        # fourteen name. The layers are named here so the unclaimed-layer
+        # print does not list them.
+        "special-districts": Entry("open", ("community-college", "cc-director-district", "iowa-aea")),
         # SHIPPED 2026-10-10 (#1496) by the fleet-wide tribal thread: four
         # areas across three nations, each named with the town its government
         # sits in, and the Winnebago council named -- the Wisconsin and
@@ -1626,7 +1645,14 @@ ANSWERS = {
         "school-boards-by-district": na(MI_NO_SCHOOL_BOARD_DISTRICTS),
         "precincts": answers("precinct"),
         # Intermediate school districts: special districts the Revised School
-        # Code creates (MCL 380.601 et seq.), each with its own levy.
+        # Code creates (MCL 380.601 et seq.), each with its own levy. They stay
+        # answered under Adam's rule of 2026-10-21 (an elected board must be
+        # named; an appointed one need not be) because a board is chosen by
+        # one representative of each local school board (MCL 380.614), not by
+        # the voters. The law lets a district's voters choose to elect its
+        # board at the ballot instead (MCL 380.615-380.617); which of the 56,
+        # if any, have done so is not measured, and each one that has would
+        # owe its board's names (gap mi-isd-board-members).
         "special-districts": answers("mi-isd"),
         # SHIPPED 2026-10-01, on the same builder and the same join as
         # Wisconsin's: 24 areas, 13 reservations and 11 of off-reservation
@@ -1704,6 +1730,11 @@ ANSWERS = {
         # this level. Not the only family Minnesota has: the Secretary of
         # State's precinct service also carries soil-and-water, hospital and
         # park districts, which are further layers rather than a gap here.
+        # Answered under Adam's rule of 2026-10-21 (an elected board must be
+        # named; an appointed one need not be): a watershed district's managers
+        # are appointed by the county boards (Minn. Stat. 103D.311), and a
+        # watershed management organization is run by members its cities and
+        # towns appoint or by the county board itself.
         "special-districts": answers("watershed-district"),
         # SHIPPED 2026-10-10 (#1470): the app draws Minnesota's 22 pieces of
         # tribal land across 13 nations, and the card names nine councils
@@ -1970,15 +2001,18 @@ ANSWERS = {
             "statistical areas, not governments."),
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
-        # The Conservation Commission's map of the 84 conservation districts,
-        # which cover the state, with each district's office from the
-        # Commission's directory (2026-10-16;
-        # ok/scripts/build_ok_conservation_districts.py and
-        # build_ok_conservation_offices.py). Three of each board's five
+        # REOPENED 2026-10-21 by Adam ("Reopen for OK. Who the rep is, is the
+        # whole point of the app"): offices without the people do not answer
+        # this level. It had counted as answered since 2026-10-16, when the
+        # Conservation Commission's map of the 84 conservation districts,
+        # which cover the state, shipped with each district's office from the
+        # Commission's directory (ok/scripts/build_ok_conservation_districts.py
+        # and build_ok_conservation_offices.py). Three of each board's five
         # directors are elected by the district's voters, and the card names
         # none of them, because the Commission publishes no list of directors
-        # (gap ok-conservation-district-directors).
-        "special-districts": answers("conservation-district"),
+        # (gap ok-conservation-district-directors). The layer is named here so
+        # the unclaimed-layer print does not list it.
+        "special-districts": Entry("open", ("conservation-district",)),
         # The fleet-wide tribal layer thread drew Oklahoma's nations, as census
         # statistical areas labeled as such (Adam, 2026-10-10), and the app went
         # live with them: 31 areas across 33 nations (ok/CLAUDE.md).
@@ -2167,12 +2201,22 @@ ANSWERS = {
         # The Arkansas GIS Office's layer carries all 2,920 precincts as the
         # counties report them, and the app draws them (2026-10-15).
         "precincts": answers("voting-precinct"),
-        # ANSWERED 2026-10-16: the GIS Office's FIRE_DISTRICTS layer, the map
-        # state law has every fire district file with it, draws 971 districts
-        # (ar/scripts/build_ar_fire_districts.py). Level 12 asks for the
-        # districts drawn; who runs each one is not on the map and is recorded
-        # as gap ar-fire-district-boards.
-        "special-districts": answers("fire-district"),
+        # REOPENED 2026-10-21 under Adam's rule of that day, that a special
+        # district whose board the voters elect answers this level only where
+        # the card names the board ("Only ones with elected reps"; see the
+        # done standard). It had counted as answered since 2026-10-16, when
+        # the GIS Office's FIRE_DISTRICTS layer, the map state law has every
+        # fire district file with it, shipped with 971 districts
+        # (ar/scripts/build_ar_fire_districts.py). A fire protection district
+        # formed under A.C.A. 14-284-201 et seq. has five commissioners elected
+        # by its qualified electors (14-284-208), as Garland County's ordinance
+        # 0-19-52 of 2019, converting the Fountain Lake district, sets out (read
+        # 2026-10-21 from the county's own site, robots.txt read first), and the
+        # card names nobody (gap ar-fire-district-boards). Not every district
+        # on the map is that kind (the map's type codes are defined nowhere the
+        # GIS Office publishes), but the ones that are elect their boards. The
+        # layer is named here so the unclaimed-layer print does not list it.
+        "special-districts": Entry("open", ("fire-district",)),
         # NO TRIBAL LAND IN ARKANSAS, measured 2026-10-15 with
         # validate_tribal_join's own queries: the reservation, trust-land and
         # state-reservation layers keep nothing inside the state, while the same
@@ -2310,6 +2354,16 @@ ANSWERS = {
         # precincts in all 64 parishes, its edition of 27 January 2026, and
         # the app draws them (2026-10-21, la/scripts/build_la_precincts.py).
         "precincts": answers("voting-precinct"),
+        # OPEN, by Adam's choice of 2026-10-21 ("Leave it open. ... Who the rep
+        # is, is the whole point of the app"). Since that day the Parish card
+        # lists the soil and water conservation district that covers the
+        # parish, with its offices, from the Department of Agriculture and
+        # Forestry's map of the 44 districts and its list of their offices
+        # (la/scripts/build_la_conservation_districts.py). Each district is a
+        # governmental subdivision of the state (La. R.S. 3:1208) run by five
+        # supervisors, and no published list names them, so the card names
+        # none (gap la-conservation-district-supervisors), and offices without
+        # the people do not answer this level.
         "special-districts": OPEN,
         # SHIPPED 2026-10-21 (#1668): the land of Louisiana's four nations,
         # each named with its government, and the councils of three named from
@@ -2348,7 +2402,14 @@ ANSWERS = {
         # so this level is reached county by county; the twelve other layers in
         # Sullivan's service are tax-map assessment districts a town board
         # governs, with no body of their own, so they are not governments.
-        "special-districts": answers("fire-district", "library-district"),
+        # REOPENED 2026-10-21 under Adam's rule of that day, that a special
+        # district whose board the voters elect answers this level only where
+        # the card names the board ("Only ones with elected reps"; see the
+        # done standard): a fire district elects five commissioners and a
+        # library district its trustees, and the cards name none of them (gap
+        # ny-special-district-officials). The layers are named here so the
+        # unclaimed-layer print does not list them.
+        "special-districts": Entry("open", ("fire-district", "library-district")),
         # SHIPPED (#1480): eleven areas across eight nations, federal and state
         # reservations both, each named with its government, and two nations'
         # councils named -- the Wisconsin and Michigan shape.
