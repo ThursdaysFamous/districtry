@@ -192,6 +192,29 @@ point's whole parish in one section. Every card says how many judges the list na
 many seats a court has. The Third Circuit's own site answered this project's client with a
 Cloudflare challenge on 2026-10-21, so its cards link the list instead.
 
+**THE SOIL AND WATER CONSERVATION DISTRICTS ARE ON THE PARISH CARD, LISTED AND NOT DRAWN, AND THE
+CARD NAMES NO SUPERVISOR** (`la-conservation-districts.json`,
+`la/scripts/build_la_conservation_districts.py`, `--check` in CI). Louisiana's 44 districts are
+governmental subdivisions of the state (La. R.S. 3:1208), each governed by five supervisors, three
+elected and two appointed by the Soil and Water Conservation Commission (3:1205 to 3:1207). The
+Department of Agriculture and Forestry publishes one PDF of them: page 1 a map of the 44, page 2 a
+list of their 50 offices, each with its town, telephone and extension. **THE MAP IS A VECTOR
+DRAWING, AND ITS OBJECTS ARE WHAT IS READ, NEVER ITS PIXELS**:
+`la/scripts/measure_la_conservation_parishes.py` reads each filled path by its own fill rule, fits
+the shipped parishes to the map's grey parish strokes, and says which districts cover each parish;
+its answer is copied into the builder's `PARISHES` by hand, and the builder stops when the drawing
+changes (`MAP_FINGERPRINT`). 57 parishes lie in one district and seven in two (Ascension, Caldwell,
+Iberville, Jefferson, Ouachita, Richland and St. James), and those cards list both, the one covering
+more of the parish first, because no line traced from a PDF is drawn. **IN JEFFERSON THE PICTURE
+AND THE OBJECTS DISAGREE**: the map strokes the coast 6 pt wide over Grand Isle, which is narrower
+than that on the page, so the printed map shows the island black while its fill is the
+Lafourche-Terrebonne district's, which the card says. Neither the Department's list nor the
+Secretary of State's names a supervisor, so the card names none (gap
+`la-conservation-district-supervisors`; the Department was asked on 2026-10-21). The card's two
+fixed sentences, how the board is chosen and why it names no one, are held by the builder's
+`--check` to its own copy, and `la/scripts/validate_sources.py` (check 8) warns monthly when the
+Department's page links a different file or the PDF changes.
+
 **ONE SCHOOL LAYER, LABELLED WITHOUT A QUALIFIER.** TIGER's unified tiling holds 69 districts for
 Louisiana and its elementary and secondary tilings hold none — so the layer is "School District",
 and its id stays `school-district-unified` because a layer id is a public address. **ITS CARD NAMES
@@ -332,6 +355,10 @@ python3 la/scripts/build_la_precincts.py --check
 python3 la/scripts/build_la_court_districts.py --check
 python3 la/scripts/build_la_judges.py --check
 
+# Soil and water conservation districts (offline: the shipped file against
+# its record of the PDF read, and the Parish card's two fixed sentences):
+python3 la/scripts/build_la_conservation_districts.py --check
+
 # Generated-region gate: per-instance facts live ONCE in la/metro-worksheet.json;
 # GENERATED regions are emitted from it. NEVER hand-edit a GENERATED region:
 pip install -c scripts/requirements.txt jsonschema
@@ -409,6 +436,10 @@ Secretary of State's list) and `la-municipal-officials.json` and `la-school-boar
 (`la/scripts/build_la_local_officials.py`, from the exports the parish builder fetched in the same
 run) and `la-judges.json` (`la/scripts/build_la_judges.py`, from the same run's exports) — all
 count-guarded, all refreshed weekly by CI as reviewed PRs.
+`la-conservation-districts.json` (`la/scripts/build_la_conservation_districts.py`, from the
+Department of Agriculture and Forestry's map and list of district offices) is rebuilt by hand when
+the monthly source check warns, because a changed map reaches the builder only after a person has
+read the measurement (`la/WATCH.md`).
 The tribal land is `tribal-areas.json` and its names `tribal-councils.json`, both written by the
 fleet's shared `scripts/build_tribal_areas.py` through the one land-to-government join every
 instance uses (`data/tribal-government-join.json`); the councils are re-read weekly from each

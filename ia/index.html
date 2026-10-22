@@ -6780,7 +6780,8 @@ function initIowaExplorer() {
    * short tag per source is 25 characters shorter AND splits them in the
    * counter every app runs. The cost is on those two apps: gtag reads only
    * utm_* tags, so a shared arrival no longer carries a share label in Google
-   * Analytics. Organic traffic stays untagged, and a re-share from a tagged
+   * Analytics (both dropped Google Analytics on 2026-10-22, so the cost
+   * ended there). Organic traffic stays untagged, and a re-share from a tagged
    * page rebuilds from origin+pathname, so an inbound tag is never copied
    * forward as the next reader's source.
    *
@@ -17560,7 +17561,7 @@ function initIowaExplorer() {
     "Des Moines Area": "https://www.dmacc.edu/",
     "Western Iowa Tech": "https://www.witcc.edu/",
     "Iowa Western": "https://www.iwcc.edu/",
-    "Southwestern": "https://www.swcc.edu/",
+    "Southwestern": "https://www.swcciowa.edu/",
     "Indian Hills": "https://www.indianhills.edu/"
   };
 
@@ -17595,14 +17596,23 @@ function initIowaExplorer() {
    * builder refuses to interpolate it, so a point inside that missing district
    * answers with no card rather than with a neighbouring district's number.
    *
-   * IDENTITY-ONLY. Trustees ARE elected per district, but no statewide roster
-   * exists and the 15 colleges publish their boards 15 ways — 6 name a
-   * numbered district on a discoverable page, one sits behind a captcha and
-   * one refuses this client (measured 2026-08-28, per college, in WATCH.md).
-   * Joining 6 of 15 would leave a reader unable to tell a college with no
-   * published district from one this app simply has not read. ---------- */
+   * THE TRUSTEE IS NAMED FROM THE COLLEGE'S OWN BOARD PAGE. No statewide
+   * roster exists, and measured 2026-10-21 all fifteen colleges publish their
+   * boards, fourteen of them by numbered director district
+   * (data/app/ia-cc-trustees.json, ia/scripts/ia_cc_trustee_scraper.py +
+   * build_ia_cc_trustees.py, weekly). The fifteenth, Northeast Iowa, lists
+   * its trustees by the school districts they represent, and four of its nine
+   * list Dubuque Community, so a school district does not identify a seat;
+   * that card says so and names nobody for the district. (Until that date this
+   * card named nobody anywhere, on a 2026-08-28 reading that six colleges named
+   * a district, one sat behind a captcha and one refused this client.)
+   * ---------- */
   var loadCcDirectorDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/ia-cc-director-districts.json", {}, 2);
+  });
+  // Keyed by the same `ddkey` ("<merged area>-<district>") the layer draws.
+  var loadCcTrustees = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ia-cc-trustees.json", {}, 2);
   });
 
   registerLayer({
@@ -17632,9 +17642,13 @@ function initIowaExplorer() {
     // nothing here can tell which boundary is right, so a mismatch answers with
     // no district and says why.
     query: function (point, seq) {
+      // The trustee file is a small same-origin read and its failure is NOT
+      // this layer's failure: the .catch is on that leg alone, so a district
+      // still answers with its number, saying the trustee could not be loaded.
       return Promise.all([
         queryFeatureAt(loadCcDirectorDistricts, point),
-        queryFeatureAt(loadIaCommunityColleges, point).catch(function () { return null; })
+        queryFeatureAt(loadIaCommunityColleges, point).catch(function () { return null; }),
+        loadCcTrustees().catch(function () { return null; })
       ]).then(function (parts) {
         var feature = parts[0];
         if (!feature) return null;
@@ -17642,11 +17656,20 @@ function initIowaExplorer() {
         var parentProps = (parts[1] && parts[1].properties) || null;
         var parentName = parentProps ? findPropCI(parentProps, ["name"]) : null;
         var name = findPropCI(props, ["name"]);
+        var trustees = parts[2];
+        var area = findPropCI(props, ["collegedistrict"]);
+        var ddkey = findPropCI(props, ["ddkey"]);
+        var college = (trustees && trustees.colleges && area != null &&
+                       trustees.colleges[String(area)]) || null;
         return {
           seq: seq,
           label: findPropCI(props, ["label"]),
           name: name,
           population: findPropCI(props, ["population"]),
+          trusteesLoaded: !!trustees,
+          college: college,
+          trustee: (college && college.seats && trustees.seats && ddkey != null &&
+                    trustees.seats[String(ddkey)]) || null,
           // null when the parent could not be read at all — only a real
           // disagreement suppresses the district
           disagrees: (parentName != null && name != null &&
@@ -17676,19 +17699,59 @@ function initIowaExplorer() {
       if (result.population != null) {
         rows.push({ label: "2020 population", value: Number(result.population).toLocaleString() });
       }
-      rows.push({
+      // the district, then the trustee, then how the seat is filled and where
+      // the name comes from (the fleet's card order)
+      var tail = [{
         label: "Election",
         value: "One member of this college's board of trustees is elected from " +
           "this district (Iowa Code 260C.11)."
-      });
-      rows.push({
-        label: "Trustees",
-        value: "Not shown. Iowa publishes no statewide roster of community " +
-          "college trustees, and the 15 colleges publish their boards 15 " +
-          "different ways — naming some and not others would read as a college " +
-          "having no trustees rather than as one this app has not read."
-      });
-      return renderFieldStack(rows);
+      }];
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderFieldStack(rows));
+      var t = result.trustee, c = result.college;
+      if (t) {
+        wrap.appendChild(renderSectionLabel("TRUSTEE"));
+        var row = { name: t.vacant ? "Vacant" : String(t.name) };
+        if (t.role) row.badge = String(t.role);
+        if (t.email) row.email = String(t.email);
+        if (t.phone) row.phone = String(t.phone);
+        var notes = [];
+        // the college said the seat is empty, so the card says it in words as
+        // well as in the name slot
+        if (t.vacant) notes.push("The college lists this seat as vacant");
+        if (t.termEnds) notes.push("Term ends " + String(t.termEnds));
+        if (notes.length) row.note = notes.join(" \u00b7 ");
+        wrap.appendChild(renderPersonRows([row]));
+        tail.push({
+          label: "Source",
+          value: "Named by " + String(c.college) + " Community College's own " +
+            "board page" + (c.asOf ? ", read " + String(c.asOf) : "") +
+            ". Iowa keeps no statewide list of community college trustees."
+        });
+      } else if (c && c.undistricted) {
+        tail.push({
+          label: "Trustee",
+          value: "Not shown. " + String(c.college) + " Community College lists " +
+            "its " + c.undistricted.length + " trustees by the school districts " +
+            "they represent rather than by director district, and several list " +
+            "the same school district, so this app cannot tell which trustee is " +
+            "elected from this district. The college's board page names them all."
+        });
+      } else {
+        tail.push({
+          label: "Trustee",
+          value: result.trusteesLoaded
+            ? "Not shown. This college's board page did not name a trustee for " +
+              "this district when it was last read."
+            : "Not shown. The list of trustees could not be loaded; try again."
+        });
+      }
+      wrap.appendChild(renderFieldStack(tail));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      var url = result.college && safeHttpUrl(result.college.sourceUrl);
+      return url ? { label: String(result.college.college) + " board of trustees", url: url } : null;
     },
     // Frame the parent while this is on (the WI mpd-squad-area contract): a
     // director district only means anything against the college it divides.
@@ -20524,6 +20587,18 @@ function initIowaExplorer() {
         boot, before GoatCounter's script has always arrived, so these wait for
         it rather than being lost.
 
+     3a. NEW OR RETURNING, without a cookie: `visit/first/<tag>` or
+        `visit/return/<tag>`, once per browser window (DST_VISIT_COUNTED_KEY
+        in session storage). DST_SEEN_KEY in local storage is the mark: absent,
+        the visit is a first one and the mark is written; present, the visit
+        is a return. The mark is the single character "1", never a date or an
+        identifier, it never leaves the browser, and local storage is shared
+        by every page on the site, so "first" means the first time this
+        browser opened any districtry map. Storage that cannot be read or
+        written counts nothing, rather than counting every visit as a first.
+        It replaced Google Analytics, whose new-user figure needs a cookie
+        that carries an identifier (2026-10-22).
+
      4. A PLACE SHARED INTO THE APP. The manifest's share_target puts the
         installed districtry in Android's Share menu and sends what was shared
         to the launcher at /app/, which hands it here as #q= (the hash, which
@@ -20550,6 +20625,8 @@ function initIowaExplorer() {
   var DST_APP_LAUNCH_KEY = "districtry-app-launch";
   var DST_SHARE_IN_KEY = "districtry-share-in";
   var DST_SHORTCUT_KEY = "districtry-shortcut";
+  var DST_SEEN_KEY = "districtry-seen";
+  var DST_VISIT_COUNTED_KEY = "districtry-visit-counted";
   var DST_INVITE_DELAY_MS = 3000;
   var DST_ANDROID_TEST_URL = "/android.html?ref=map";
   var DST_TEST_INVITE_SEEN = "test-shown";
@@ -20665,6 +20742,19 @@ function initIowaExplorer() {
 
   if (!dstFramed) {
     try { window.localStorage.setItem(DST_LAST_APP_KEY, METRO_BRAND.instanceTag); } catch (e) { /* the launcher then opens the front page */ }
+  }
+
+  if (!dstFramed) {
+    var dstVisit = null;
+    try {
+      if (!window.sessionStorage.getItem(DST_VISIT_COUNTED_KEY)) {
+        var dstSeen = !!window.localStorage.getItem(DST_SEEN_KEY);
+        if (!dstSeen) window.localStorage.setItem(DST_SEEN_KEY, "1");
+        window.sessionStorage.setItem(DST_VISIT_COUNTED_KEY, "1");
+        dstVisit = dstSeen ? "return" : "first";
+      }
+    } catch (e) { dstVisit = null; /* storage blocked: count nothing */ }
+    if (dstVisit) dstCountWhenReady("visit/" + dstVisit + "/" + METRO_BRAND.instanceTag);
   }
 
   if (dstInstalledLaunch()) {

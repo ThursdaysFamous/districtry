@@ -284,28 +284,35 @@ def render(d):
       "together. A bounce is recorded as an ATTEMPT, never as a send — an outlet that was never "
       "reached still has a pitch owing.")
     a("")
+    # A bounce that was later re-sent keeps its own row, so the ledger still shows the attempt.
     log = []
     for o in d["outlets"]:
+        if o.get("attempted_on"):
+            state = "bounced, re-sent" if o.get("sent_on") else "**BOUNCED — owing**"
+            log.append((o["attempted_on"], o, state,
+                        o.get("attempted_to") or "", o.get("attempt_outcome") or ""))
         if o.get("sent_on"):
             log.append((o["sent_on"], o, "sent", o.get("sent_to") or "", o.get("reply_note") or ""))
-        elif o.get("attempted_on"):
-            log.append((o["attempted_on"], o, "**BOUNCED — owing**",
-                        o.get("attempted_to") or "", o.get("attempt_outcome") or ""))
     if not log:
         a("Nothing has been sent yet.")
         a("")
         return "\n".join(L) + "\n"
     log.sort(key=lambda r: (r[0], r[1]["name"]))
-    a(f"{len(log)} outlets contacted; "
-      f"{sum(1 for r in log if r[2] == 'sent')} delivered, "
-      f"{sum(1 for r in log if r[2] != 'sent')} bounced. "
-      f"{sum(1 for r in log if r[4])} have an outcome recorded.")
+    sent = [r for r in log if r[2] == "sent"]
+    owing = [r for r in log if r[2].startswith("**BOUNCED")]
+    a(f"{len({r[1]['name'] for r in log})} outlets contacted; "
+      f"{len(sent)} delivered, {len(owing)} bounced and still owing. "
+      f"{sum(1 for r in log if r[4])} rows have an outcome recorded; "
+      f"{sum(1 for r in sent if r[1].get('followed_up_on'))} have had their one follow-up.")
     a("")
-    a("| Sent | Wave | Outlet | Address used | State | Outcome |")
-    a("|---|---|---|---|---|---|")
+    a("| Sent | Wave | Outlet | Address used | State | Follow-up | Outcome |")
+    a("|---|---|---|---|---|---|---|")
     for day, o, state, addr, note in log:
+        follow = ""
+        if state == "sent" and o.get("followed_up_on"):
+            follow = f"{o['followed_up_on']} to `{o.get('followed_up_to') or addr}`"
         a(f"| {day} | {o.get('wave','')} | [{esc(o['name'])}]({o['homepage']}) | "
-          f"`{addr}` | {state} | {esc(note)} |")
+          f"`{addr}` | {state} | {follow} | {esc(note)} |")
     a("")
     return "\n".join(L) + "\n"
 

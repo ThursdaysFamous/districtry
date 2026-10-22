@@ -1,0 +1,1314 @@
+{
+ "22001": {
+  "districts": [
+   {
+    "name": "Acadia Soil and Water Conservation District",
+    "number": "20",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "337-783-2061",
+      "town": "Crowley"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22003": {
+  "districts": [
+   {
+    "name": "Allen Soil and Water Conservation District",
+    "number": "37",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "337-639-4850",
+      "town": "Oberlin"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22005": {
+  "districts": [
+   {
+    "name": "New River Soil and Water Conservation District",
+    "number": "23",
+    "offices": [
+     {
+      "phone": "225-562-2335",
+      "town": "Convent"
+     }
+    ]
+   },
+   {
+    "name": "Lower Delta Soil and Water Conservation District",
+    "number": "24",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "225-473-8446",
+      "town": "Donaldsonville"
+     },
+     {
+      "ext": "3",
+      "phone": "225-687-2184",
+      "town": "Addis"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22007": {
+  "districts": [
+   {
+    "name": "Lower Delta Soil and Water Conservation District",
+    "number": "24",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "225-473-8446",
+      "town": "Donaldsonville"
+     },
+     {
+      "ext": "3",
+      "phone": "225-687-2184",
+      "town": "Addis"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22009": {
+  "districts": [
+   {
+    "name": "Avoyelles Soil and Water Conservation District",
+    "number": "17",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-253-9235",
+      "town": "Marksville"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22011": {
+  "districts": [
+   {
+    "name": "Calcasieu Soil and Water Conservation District",
+    "number": "9",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "337-239-2193",
+      "town": "Leesville"
+     },
+     {
+      "ext": "3",
+      "phone": "337-463-7001",
+      "town": "Deridder"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22013": {
+  "districts": [
+   {
+    "name": "Saline Soil and Water Conservation District",
+    "number": "6",
+    "offices": [
+     {
+      "ext": "5",
+      "phone": "318-894-2174",
+      "town": "Ringgold"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22015": {
+  "districts": [
+   {
+    "name": "Bodcau Soil and Water Conservation District",
+    "number": "43",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-747-9567",
+      "town": "Bossier"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22017": {
+  "districts": [
+   {
+    "name": "Caddo Soil and Water Conservation District",
+    "number": "5",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-676-3461",
+      "town": "Shreveport"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22019": {
+  "districts": [
+   {
+    "name": "Gulf Coast Soil and Water Conservation District",
+    "number": "22",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "337-474-1583",
+      "town": "Lake Charles"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22021": {
+  "districts": [
+   {
+    "name": "Dugdemona Soil and Water Conservation District",
+    "number": "8",
+    "offices": [
+     {
+      "phone": "318-628-4438",
+      "town": "Winnfield"
+     },
+     {
+      "ext": "3",
+      "phone": "318-649-2651",
+      "town": "Columbia"
+     }
+    ]
+   },
+   {
+    "name": "Boeuf River Soil and Water Conservation District",
+    "number": "14",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-728-2081",
+      "town": "Rayville"
+     },
+     {
+      "ext": "3",
+      "phone": "318-343-4467",
+      "town": "Monroe"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22023": {
+  "districts": [
+   {
+    "name": "Gulf Coast Soil and Water Conservation District",
+    "number": "22",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "337-474-1583",
+      "town": "Lake Charles"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22025": {
+  "districts": [
+   {
+    "name": "Catahoula Soil and Water Conservation District",
+    "number": "34",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-339-4239",
+      "town": "Jonesville"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22027": {
+  "districts": [
+   {
+    "name": "D'Arbonne Soil and Water Conservation District",
+    "number": "2",
+    "offices": [
+     {
+      "ext": "1",
+      "phone": "318-368-8021",
+      "town": "Farmerville"
+     },
+     {
+      "ext": "3",
+      "phone": "318-255-2826",
+      "town": "Ruston"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22029": {
+  "districts": [
+   {
+    "name": "Tensas-Concordia Soil and Water Conservation District",
+    "number": "16",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-757-4870",
+      "town": "Ferriday"
+     },
+     {
+      "ext": "3",
+      "phone": "318-766-3502",
+      "town": "St. Joseph"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22031": {
+  "districts": [
+   {
+    "name": "De Soto Soil and Water Conservation District",
+    "number": "39",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-872-4814",
+      "town": "Mansfield"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22033": {
+  "districts": [
+   {
+    "name": "Capital Soil and Water Conservation District",
+    "number": "33",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "225-665-4253",
+      "town": "Denham Springs"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22035": {
+  "districts": [
+   {
+    "name": "East Carroll Soil and Water Conservation District",
+    "number": "15",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-559-2640",
+      "town": "Lake Providence"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22037": {
+  "districts": [
+   {
+    "name": "Feliciana Soil and Water Conservation District",
+    "number": "1",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "225-683-8955",
+      "town": "Clinton"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22039": {
+  "districts": [
+   {
+    "name": "Evangeline Soil and Water Conservation District",
+    "number": "30",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "337-363-6602",
+      "town": "Ville Platte"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22041": {
+  "districts": [
+   {
+    "name": "Northeast Soil and Water Conservation District",
+    "number": "13",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-435-9424",
+      "town": "Winnsboro"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22043": {
+  "districts": [
+   {
+    "name": "Grant Soil and Water Conservation District",
+    "number": "10",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-627-3751",
+      "town": "Colfax"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22045": {
+  "districts": [
+   {
+    "name": "Iberia Soil and Water Conservation District",
+    "number": "21",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "337-369-3234",
+      "town": "New Iberia"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22047": {
+  "districts": [
+   {
+    "name": "Lower Delta Soil and Water Conservation District",
+    "number": "24",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "225-473-8446",
+      "town": "Donaldsonville"
+     },
+     {
+      "ext": "3",
+      "phone": "225-687-2184",
+      "town": "Addis"
+     }
+    ]
+   },
+   {
+    "name": "New River Soil and Water Conservation District",
+    "number": "23",
+    "offices": [
+     {
+      "phone": "225-562-2335",
+      "town": "Convent"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22049": {
+  "districts": [
+   {
+    "name": "Dugdemona Soil and Water Conservation District",
+    "number": "8",
+    "offices": [
+     {
+      "phone": "318-628-4438",
+      "town": "Winnfield"
+     },
+     {
+      "ext": "3",
+      "phone": "318-649-2651",
+      "town": "Columbia"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22051": {
+  "districts": [
+   {
+    "name": "Crescent Soil and Water Conservation District",
+    "number": "26",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "985-331-9084",
+      "town": "Boutte"
+     }
+    ]
+   },
+   {
+    "name": "Lafourche-Terrebonne Soil and Water Conservation District",
+    "number": "19",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "985-447-3871",
+      "town": "Thibodaux"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "note": "On the Department's map, Grand Isle is part of the Lafourche-Terrebonne district.",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22053": {
+  "districts": [
+   {
+    "name": "Jefferson Davis Soil and Water Conservation District",
+    "number": "44",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "337-824-0968",
+      "town": "Jennings"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22055": {
+  "districts": [
+   {
+    "name": "Lafayette Soil and Water Conservation District",
+    "number": "28",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "337-332-2811",
+      "town": "Breaux Bridge"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22057": {
+  "districts": [
+   {
+    "name": "Lafourche-Terrebonne Soil and Water Conservation District",
+    "number": "19",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "985-447-3871",
+      "town": "Thibodaux"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22059": {
+  "districts": [
+   {
+    "name": "La Salle Soil and Water Conservation District",
+    "number": "35",
+    "offices": [
+     {
+      "phone": "318-992-2235",
+      "town": "Jena"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22061": {
+  "districts": [
+   {
+    "name": "D'Arbonne Soil and Water Conservation District",
+    "number": "2",
+    "offices": [
+     {
+      "ext": "1",
+      "phone": "318-368-8021",
+      "town": "Farmerville"
+     },
+     {
+      "ext": "3",
+      "phone": "318-255-2826",
+      "town": "Ruston"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22063": {
+  "districts": [
+   {
+    "name": "Capital Soil and Water Conservation District",
+    "number": "33",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "225-665-4253",
+      "town": "Denham Springs"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22065": {
+  "districts": [
+   {
+    "name": "Madison Soil and Water Conservation District",
+    "number": "36",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-574-4158",
+      "town": "Tallulah"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22067": {
+  "districts": [
+   {
+    "name": "Morehouse Soil and Water Conservation District",
+    "number": "11",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-281-1561",
+      "town": "Bastrop"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22069": {
+  "districts": [
+   {
+    "name": "Natchitoches Soil and Water Conservation District",
+    "number": "38",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-357-8366",
+      "town": "Natchitoches"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22071": {
+  "districts": [
+   {
+    "name": "Crescent Soil and Water Conservation District",
+    "number": "26",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "985-331-9084",
+      "town": "Boutte"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22073": {
+  "districts": [
+   {
+    "name": "D'Arbonne Soil and Water Conservation District",
+    "number": "2",
+    "offices": [
+     {
+      "ext": "1",
+      "phone": "318-368-8021",
+      "town": "Farmerville"
+     },
+     {
+      "ext": "3",
+      "phone": "318-255-2826",
+      "town": "Ruston"
+     }
+    ]
+   },
+   {
+    "name": "Boeuf River Soil and Water Conservation District",
+    "number": "14",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-728-2081",
+      "town": "Rayville"
+     },
+     {
+      "ext": "3",
+      "phone": "318-343-4467",
+      "town": "Monroe"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22075": {
+  "districts": [
+   {
+    "name": "Plaquemines Soil and Water Conservation District",
+    "number": "42",
+    "offices": [
+     {
+      "phone": "504-934-6973",
+      "town": "Belle Chasse"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22077": {
+  "districts": [
+   {
+    "name": "Upper Delta Soil and Water Conservation District",
+    "number": "25",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "225-638-7746",
+      "town": "New Roads"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22079": {
+  "districts": [
+   {
+    "name": "Rapides Soil and Water Conservation District",
+    "number": "12",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-473-7856",
+      "town": "Alexandria"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22081": {
+  "districts": [
+   {
+    "name": "Red River Soil and Water Conservation District",
+    "number": "40",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-932-4352",
+      "town": "Coushatta"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22083": {
+  "districts": [
+   {
+    "name": "Boeuf River Soil and Water Conservation District",
+    "number": "14",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-728-2081",
+      "town": "Rayville"
+     },
+     {
+      "ext": "3",
+      "phone": "318-343-4467",
+      "town": "Monroe"
+     }
+    ]
+   },
+   {
+    "name": "Northeast Soil and Water Conservation District",
+    "number": "13",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-435-9424",
+      "town": "Winnsboro"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22085": {
+  "districts": [
+   {
+    "name": "Sabine Soil and Water Conservation District",
+    "number": "4",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-256-3491",
+      "town": "Many"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22087": {
+  "districts": [
+   {
+    "name": "Crescent Soil and Water Conservation District",
+    "number": "26",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "985-331-9084",
+      "town": "Boutte"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22089": {
+  "districts": [
+   {
+    "name": "Crescent Soil and Water Conservation District",
+    "number": "26",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "985-331-9084",
+      "town": "Boutte"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22091": {
+  "districts": [
+   {
+    "name": "Tangipahoa-St. Helena Soil and Water Conservation District",
+    "number": "32",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "985-748-8751",
+      "town": "Amite"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22093": {
+  "districts": [
+   {
+    "name": "Lower Delta Soil and Water Conservation District",
+    "number": "24",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "225-473-8446",
+      "town": "Donaldsonville"
+     },
+     {
+      "ext": "3",
+      "phone": "225-687-2184",
+      "town": "Addis"
+     }
+    ]
+   },
+   {
+    "name": "New River Soil and Water Conservation District",
+    "number": "23",
+    "offices": [
+     {
+      "phone": "225-562-2335",
+      "town": "Convent"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22095": {
+  "districts": [
+   {
+    "name": "Crescent Soil and Water Conservation District",
+    "number": "26",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "985-331-9084",
+      "town": "Boutte"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22097": {
+  "districts": [
+   {
+    "name": "St. Landry Soil and Water Conservation District",
+    "number": "29",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "337-948-8288",
+      "town": "Opelousas"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22099": {
+  "districts": [
+   {
+    "name": "St. Martin Soil and Water Conservation District",
+    "number": "27",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "337-332-2910",
+      "town": "Breaux Bridge"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22101": {
+  "districts": [
+   {
+    "name": "St. Mary Soil and Water Conservation District",
+    "number": "18",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "337-828-1461",
+      "town": "Franklin"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22103": {
+  "districts": [
+   {
+    "name": "Bogue Chitto-Pearl River Soil and Water Conservation District",
+    "number": "7",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "985-839-5687",
+      "town": "Franklinton"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22105": {
+  "districts": [
+   {
+    "name": "Tangipahoa-St. Helena Soil and Water Conservation District",
+    "number": "32",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "985-748-8751",
+      "town": "Amite"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22107": {
+  "districts": [
+   {
+    "name": "Tensas-Concordia Soil and Water Conservation District",
+    "number": "16",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-757-4870",
+      "town": "Ferriday"
+     },
+     {
+      "ext": "3",
+      "phone": "318-766-3502",
+      "town": "St. Joseph"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22109": {
+  "districts": [
+   {
+    "name": "Lafourche-Terrebonne Soil and Water Conservation District",
+    "number": "19",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "985-447-3871",
+      "town": "Thibodaux"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22111": {
+  "districts": [
+   {
+    "name": "D'Arbonne Soil and Water Conservation District",
+    "number": "2",
+    "offices": [
+     {
+      "ext": "1",
+      "phone": "318-368-8021",
+      "town": "Farmerville"
+     },
+     {
+      "ext": "3",
+      "phone": "318-255-2826",
+      "town": "Ruston"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22113": {
+  "districts": [
+   {
+    "name": "Vermilion Soil and Water Conservation District",
+    "number": "41",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "337-893-5664",
+      "town": "Abbeville"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22115": {
+  "districts": [
+   {
+    "name": "Calcasieu Soil and Water Conservation District",
+    "number": "9",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "337-239-2193",
+      "town": "Leesville"
+     },
+     {
+      "ext": "3",
+      "phone": "337-463-7001",
+      "town": "Deridder"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22117": {
+  "districts": [
+   {
+    "name": "Bogue Chitto-Pearl River Soil and Water Conservation District",
+    "number": "7",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "985-839-5687",
+      "town": "Franklinton"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22119": {
+  "districts": [
+   {
+    "name": "Dorcheat Soil and Water Conservation District",
+    "number": "3",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-377-3950",
+      "town": "Minden"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22121": {
+  "districts": [
+   {
+    "name": "Upper Delta Soil and Water Conservation District",
+    "number": "25",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "225-638-7746",
+      "town": "New Roads"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22123": {
+  "districts": [
+   {
+    "name": "West Carroll Soil and Water Conservation District",
+    "number": "31",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "318-428-9303",
+      "town": "Oak Grove"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22125": {
+  "districts": [
+   {
+    "name": "Feliciana Soil and Water Conservation District",
+    "number": "1",
+    "offices": [
+     {
+      "ext": "3",
+      "phone": "225-683-8955",
+      "town": "Clinton"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ },
+ "22127": {
+  "districts": [
+   {
+    "name": "Dugdemona Soil and Water Conservation District",
+    "number": "8",
+    "offices": [
+     {
+      "phone": "318-628-4438",
+      "town": "Winnfield"
+     },
+     {
+      "ext": "3",
+      "phone": "318-649-2651",
+      "town": "Columbia"
+     }
+    ]
+   }
+  ],
+  "mapEdited": "2026-10-19",
+  "pageUrl": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+  "read": "2026-10-21"
+ }
+}

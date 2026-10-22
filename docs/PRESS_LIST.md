@@ -152,7 +152,7 @@ Tag these `utm_source=press-chi`. The **#** column is the tier (send tier 1 firs
 | 1 | 1 | [Block Club Chicago](https://blockclubchicago.org/) | nonprofit newsroom | `newsroom@blockclubchi.org` <br>[source](https://blockclubchicago.org/send-tips/) | confirmed <br>*sent 2026-08-31* | *already sent — see your own sent mail for the wording used* |
 | 1 | 2 | [Capitol News Illinois](https://capitolnewsillinois.com/) | wire | `editors@capitolnewsillinois.com` <br>[source](https://capitolnewsillinois.com/media-center/) | confirmed <br>*sent 2026-09-01* | *already sent — see your own sent mail for the wording used* |
 | 1 | 1 | [Chalkbeat Chicago](https://www.chalkbeat.org/chicago/) | nonprofit newsroom | `chicago.tips@chalkbeat.org` <br>[source](https://www.chalkbeat.org/contact/) | confirmed <br>*sent 2026-08-31* | *already sent — see your own sent mail for the wording used* |
-| 1 | 2 | [Chi Hack Night](https://chihacknight.org/) | Weekly civic-tech community meetup — NOT press (event, YouTube livestream, Slack, mailing list) | `booking@chihacknight.org` <br>[source](https://chihacknight.org/speaker-submissions) | confirmed <br>**not a news inbox** | I've been building districtry.com on my own, and it now covers 91 of Illinois's 102 counties. The last 11 are not a scraping problem, they are a person-with-a-file problem. If anyone wants to help comb county sites, or knows someone in a county GIS or clerk's office, that is the most useful thing I could get. |
+| 1 | 2 | [Chi Hack Night](https://chihacknight.org/) | Weekly civic-tech community meetup — NOT press (event, YouTube livestream, Slack, mailing list) | `booking@chihacknight.org` <br>[source](https://chihacknight.org/speaker-submissions) | confirmed <br>**not a news inbox** <br>*sent 2026-09-23* | *already sent — see your own sent mail for the wording used* |
 | 1 | 1 | [Chicago Sun-Times](https://chicago.suntimes.com/) | daily | `tips@suntimes.com` <br>[source](https://chicago.suntimes.com/tips) | confirmed <br>*sent 2026-08-31* | *already sent — see your own sent mail for the wording used* |
 | 1 | 2 | [Cicero Independiente](https://www.ciceroindependiente.com/) | nonprofit newsroom | `info@ciceroindependiente.com` <br>[source](https://www.ciceroindependiente.com/contact) | confirmed | Suburban Cook is not simpler than Chicago, it is less documented. A Cicero or Berwyn address sits in a township, a county board district, a judicial subcircuit and school districts whose lines are not published anywhere together. I built a free lookup that returns all of them for one address. |
 | 1 | 1 | [City Cast Chicago (and its Hey Chicago newsletter)](https://chicago.citycast.fm/) | Daily podcast plus daily email newsletter | `chicago@citycast.fm` <br>[source](https://chicago.citycast.fm/contact) | confirmed <br>*sent 2026-08-31* | *already sent — see your own sent mail for the wording used* |
@@ -163,10 +163,10 @@ Tag these `utm_source=press-chi`. The **#** column is the tier (send tier 1 firs
 | 1 | 2 | [Invisible Institute](https://invisible.institute/) | Nonprofit investigative newsroom / data journalism | `info@invisibleinstitute.com` <br>[source](https://invisible.institute/contact) | confirmed <br>*sent 2026-09-01* | *already sent — see your own sent mail for the wording used* |
 | 1 | 1 | [South Side Weekly <br>*(also South Side Weekly (with the Hyde Park Herald) — one inbox)*](https://southsideweekly.com/) | weekly | `editor@southsideweekly.com` <br>[source](https://southsideweekly.com/editors/) | confirmed <br>*sent 2026-08-31* | *already sent — see your own sent mail for the wording used* |
 | 1 | 1 | [WBEZ / Chicago Public Media](https://www.wbez.org/) | public radio | `news@wbez.org` <br>[source](https://www.wbez.org/pressroom) | confirmed <br>*sent 2026-08-31* | *already sent — see your own sent mail for the wording used* |
-| 2 | 2 | [Axios Chicago](https://www.axios.com/local/chicago) | newsletter | `news@axios.com` <br>[source](https://www.axios.com/contact) | **unrechecked** | You live in about a dozen governments and probably cannot name half of them. I found that out when a neighbor a few doors down turned out to have a different alder than me, and I built a free lookup so anyone can check their own address. |
-| 2 | 1 | [Chicago Public Square](https://www.chicagopublicsquare.com/) | Daily email newsletter (Charlie Meyerson) | `Tips@ChicagoPublicSquare.com` <br>[source](https://www.chicagopublicsquare.com/2017/02/about-chicago-public-square.html) | confirmed | Short version, if it is useful to you: I'm a Chicago cyber security professional who spent his own time mapping 262 counties because I could not find out which district my neighbor was in. It is free, there is no account, and I'm asking people to try their own address. |
+| 2 | 2 | [Axios Chicago](https://www.axios.com/local/chicago) | newsletter | `news@axios.com` <br>[source](https://www.axios.com/contact) | **unrechecked** <br>*sent 2026-10-21* | *already sent — see your own sent mail for the wording used* |
+| 2 | 1 | [Chicago Public Square](https://www.chicagopublicsquare.com/) | Daily email newsletter (Charlie Meyerson) | `Tips@ChicagoPublicSquare.com` <br>[source](https://www.chicagopublicsquare.com/2017/02/about-chicago-public-square.html) | confirmed <br>*sent 2026-10-21* | *already sent — see your own sent mail for the wording used* |
 | 2 | 2 | [Chicago Reader](https://chicagoreader.com/) | nonprofit newsroom | `themail@chicagoreader.com` <br>[source](https://chicagoreader.com/about/contact/) | confirmed <br>*sent 2026-09-01* | *already sent — see your own sent mail for the wording used* |
-| 2 | 2 | [Chicago Tribune](https://www.chicagotribune.com/) | daily | `aquig@chicagotribune.com` <br>[source](https://www.chicagotribune.com/author/a-d-quig/) | confirmed | One person has now mapped 262 of the 273 counties in Illinois, Wisconsin and Iowa, and the goal is all 3,143 in the country. I am that person, and I started because I could not find out which districts my own neighbor lived in. The Illinois half is free for your readers to use today. |
+| 2 | 2 | [Chicago Tribune](https://www.chicagotribune.com/) | daily | `aquig@chicagotribune.com` <br>[source](https://www.chicagotribune.com/author/a-d-quig/) | confirmed <br>*sent 2026-09-09* | *already sent — see your own sent mail for the wording used* |
 | 2 | 2 | [La Raza](https://laraza.com/) | weekly | `agenda@laraza.com` <br>[source](https://laraza.com/about-us/) | confirmed | Latino wards were among the most reshaped in the last remap, and this November's ballot carries all 21 school board seats, 20 by subdistrict plus a citywide president. I built a free lookup that returns a reader's subdistrict and alder from their address. I should say plainly that a Spanish version does not exist yet, and I would like help building one. |
 | 2 | 2 | [NBC 5 Chicago (WMAQ)](https://www.nbcchicago.com/) | TV | `limchicagonewstips@nbcuni.com` <br>[source](https://www.nbcchicago.com/news/local/about-us/2951228/) | confirmed | One address, every office you vote for on Nov. 3. I built a free lookup that returns a Chicago voter's ward, police district, school board subdistrict, judicial subcircuit and state and congressional districts. It is the same idea as a judges explainer, extended to the districts that are new this year. |
 | 2 | 2 | [Streetsblog Chicago](https://chi.streetsblog.org/) | nonprofit newsroom | `kea@streetsblog.org` <br>[source](https://usa.streetsblog.org/contact) | confirmed <br>*sent 2026-09-01* | *already sent — see your own sent mail for the wording used* |
@@ -775,25 +775,29 @@ The plan's rule stands: **send to the desk, name the reporter in the first line.
 
 **GENERATED from `sent_on` / `attempted_on` in `docs/press-list.json` — this table is not hand-filled.** `docs/ASK_DRAFTS.md` exists because two ask ledgers in this repo once said *held* about e-mails that had already been sent. A hand-filled press ledger is that same failure waiting to happen with strangers on the other end, so the ledger and the per-outlet rows above are now ONE fact: mark the outlet the day it goes out and both surfaces move together. A bounce is recorded as an ATTEMPT, never as a send — an outlet that was never reached still has a pitch owing.
 
-17 outlets contacted; 16 delivered, 1 bounced. 2 have an outcome recorded.
+20 outlets contacted; 20 delivered, 0 bounced and still owing. 2 rows have an outcome recorded; 8 have had their one follow-up.
 
-| Sent | Wave | Outlet | Address used | State | Outcome |
-|---|---|---|---|---|---|
-| 2026-08-31 | 1 | [Block Club Chicago](https://blockclubchicago.org/) | `newsroom@blockclubchi.org` | sent |  |
-| 2026-08-31 | 1 | [Chalkbeat Chicago](https://www.chalkbeat.org/chicago/) | `chicago.tips@chalkbeat.org` | sent |  |
-| 2026-08-31 | 1 | [Chicago Sun-Times](https://chicago.suntimes.com/) | `tips@suntimes.com` | sent |  |
-| 2026-08-31 | 1 | [City Bureau / Chicago Documenters](https://www.citybureau.org/) | `info@citybureau.org` | sent |  |
-| 2026-08-31 | 1 | [City Cast Chicago (and its Hey Chicago newsletter)](https://chicago.citycast.fm/) | `chicago@citycast.fm` | sent |  |
-| 2026-08-31 | 1 | [Illinois Answers Project](https://illinoisanswers.org/) | `tips@illinoisanswers.org` | sent |  |
-| 2026-08-31 | 1 | [South Side Weekly](https://southsideweekly.com/) | `editor@southsideweekly.com` | sent |  |
-| 2026-08-31 | 1 | [WBEZ / Chicago Public Media](https://www.wbez.org/) | `news@wbez.org` | sent |  |
-| 2026-08-31 | 1 | [WTTW News / Chicago Tonight (WTTW-11)](https://news.wttw.com/) | `hcherone@wttw.com` | sent |  |
-| 2026-09-01 | 2 | [Capitol News Illinois](https://capitolnewsillinois.com/) | `editors@capitolnewsillinois.com` | sent |  |
-| 2026-09-01 | 2 | [Chicago Reader](https://chicagoreader.com/) | `themail@chicagoreader.com` | sent |  |
-| 2026-09-01 | 2 | [Chicago Tribune](https://www.chicagotribune.com/) | `newsroom@chicagotribune.com` | **BOUNCED — owing** | bounced the same minute — address not found. Re-routed to aquig@chicagotribune.com (A.D. Quig, Cook County government / City Hall); NOT yet re-sent. |
-| 2026-09-01 | 2 | [Crain's Chicago Business](https://www.chicagobusiness.com/) | `editor@chicagobusiness.com` | sent |  |
-| 2026-09-01 | 2 | [Evanston RoundTable](https://evanstonroundtable.com/) | `tips@evanstonroundtable.com` | sent |  |
-| 2026-09-01 | 2 | [Injustice Watch](https://www.injusticewatch.org/) | `tips@injusticewatch.org` | sent |  |
-| 2026-09-01 | 2 | [Invisible Institute](https://invisible.institute/) | `info@invisibleinstitute.com` | sent |  |
-| 2026-09-01 | 2 | [Streetsblog Chicago](https://chi.streetsblog.org/) | `jgreenfield@streetsblog.org` | sent | John Greenfield, Editor, replied the same afternoon — interested, may run it. The wording is in your own inbox; it is not reproduced here. |
+| Sent | Wave | Outlet | Address used | State | Follow-up | Outcome |
+|---|---|---|---|---|---|---|
+| 2026-08-31 | 1 | [Block Club Chicago](https://blockclubchicago.org/) | `newsroom@blockclubchi.org` | sent | 2026-10-21 to `newsroom@blockclubchi.org` |  |
+| 2026-08-31 | 1 | [Chalkbeat Chicago](https://www.chalkbeat.org/chicago/) | `chicago.tips@chalkbeat.org` | sent | 2026-10-21 to `chicago.tips@chalkbeat.org` |  |
+| 2026-08-31 | 1 | [Chicago Sun-Times](https://chicago.suntimes.com/) | `tips@suntimes.com` | sent | 2026-10-21 to `tips@suntimes.com` |  |
+| 2026-08-31 | 1 | [City Bureau / Chicago Documenters](https://www.citybureau.org/) | `info@citybureau.org` | sent |  |  |
+| 2026-08-31 | 1 | [City Cast Chicago (and its Hey Chicago newsletter)](https://chicago.citycast.fm/) | `chicago@citycast.fm` | sent | 2026-10-21 to `chicago@citycast.fm` |  |
+| 2026-08-31 | 1 | [Illinois Answers Project](https://illinoisanswers.org/) | `tips@illinoisanswers.org` | sent |  |  |
+| 2026-08-31 | 1 | [South Side Weekly](https://southsideweekly.com/) | `editor@southsideweekly.com` | sent |  |  |
+| 2026-08-31 | 1 | [WBEZ / Chicago Public Media](https://www.wbez.org/) | `news@wbez.org` | sent | 2026-10-21 to `news@wbez.org` |  |
+| 2026-08-31 | 1 | [WTTW News / Chicago Tonight (WTTW-11)](https://news.wttw.com/) | `hcherone@wttw.com` | sent |  |  |
+| 2026-09-01 | 2 | [Capitol News Illinois](https://capitolnewsillinois.com/) | `editors@capitolnewsillinois.com` | sent |  |  |
+| 2026-09-01 | 2 | [Chicago Reader](https://chicagoreader.com/) | `themail@chicagoreader.com` | sent |  |  |
+| 2026-09-01 | 2 | [Chicago Tribune](https://www.chicagotribune.com/) | `newsroom@chicagotribune.com` | bounced, re-sent |  | bounced the same minute — address not found. Re-sent to aquig@chicagotribune.com (A.D. Quig, Cook County government / City Hall) on 2026-09-09. |
+| 2026-09-01 | 2 | [Crain's Chicago Business](https://www.chicagobusiness.com/) | `editor@chicagobusiness.com` | sent |  |  |
+| 2026-09-01 | 2 | [Evanston RoundTable](https://evanstonroundtable.com/) | `tips@evanstonroundtable.com` | sent |  |  |
+| 2026-09-01 | 2 | [Injustice Watch](https://www.injusticewatch.org/) | `tips@injusticewatch.org` | sent | 2026-10-21 to `tips@injusticewatch.org` |  |
+| 2026-09-01 | 2 | [Invisible Institute](https://invisible.institute/) | `info@invisibleinstitute.com` | sent |  |  |
+| 2026-09-01 | 2 | [Streetsblog Chicago](https://chi.streetsblog.org/) | `jgreenfield@streetsblog.org` | sent | 2026-10-21 to `jgreenfield@openplans.org` | John Greenfield, Editor, replied the same afternoon that he might include it in Streetsblog Chicago's daily headlines roundup. It was not in that roundup on 1-4 September (checked 2026-10-21); later days were not checked. The wording is in your own inbox; it is not reproduced here. |
+| 2026-09-09 | 2 | [Chicago Tribune](https://www.chicagotribune.com/) | `aquig@chicagotribune.com` | sent | 2026-10-21 to `aquig@chicagotribune.com` |  |
+| 2026-09-23 | 2 | [Chi Hack Night](https://chihacknight.org/) | `booking@chihacknight.org` | sent |  |  |
+| 2026-10-21 | 2 | [Axios Chicago](https://www.axios.com/local/chicago) | `news@axios.com` | sent |  |  |
+| 2026-10-21 | 1 | [Chicago Public Square](https://www.chicagopublicsquare.com/) | `Tips@ChicagoPublicSquare.com` | sent |  |  |
 

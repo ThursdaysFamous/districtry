@@ -132,13 +132,19 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ env.PLAYWRIGHT_VERSION }}-${{ runner.os }}
 
+      # No apt step: the runner image already carries every library Chromium
+      # loads, so this proves Chromium starts instead. smoke-test.yml carries
+      # the story (Ubuntu's mirror at 40 KB/s on 2026-10-22).
       - name: Install Playwright + Chromium
         timeout-minutes: 15
         run: |
           npm install "playwright@${PLAYWRIGHT_VERSION}"
-          npx playwright install-deps chromium
           if [ "${{ steps.pw-cache.outputs.cache-hit }}" != "true" ]; then
             npx playwright install chromium
+          fi
+          if ! timeout 60 node -e "require('playwright').chromium.launch().then(b => b.close())"; then
+            echo "::error::Chromium does not start with the libraries on this runner image; restore 'npx playwright install-deps chromium' to this step"
+            exit 1
           fi
 
       # The sets the mirrored layers were built from, kept between runs

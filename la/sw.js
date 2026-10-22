@@ -67,6 +67,7 @@ const ROSTER_URLS = [
   "./data/app/la-senate-members.json",
   "./data/app/la-house-members.json",
   "./data/app/la-parish-officials.json",
+  "./data/app/la-conservation-districts.json",
   "./data/app/la-municipal-officials.json",
   "./data/app/la-school-board-members.json",
   "./data/app/la-judges.json",
