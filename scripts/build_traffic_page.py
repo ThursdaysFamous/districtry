@@ -107,7 +107,9 @@ FLEET_LISTED = {"il": "2026-08-24", "ny": "2026-08-24", "ca": "2026-08-24",
 REF_NAMES = {"(unknown)": "Direct / unknown", "duckduckgo.com": "DuckDuckGo",
              "go.bsky.app": "Bluesky", "www.bing.com": "Bing",
              "bsky.app": "Bluesky", "www.google.com": "Google",
-             "search.brave.com": "Brave", "www.reddit.com": "Reddit"}
+             "search.brave.com": "Brave", "www.reddit.com": "Reddit",
+             # The Play app opens its start page as /app/?ref=play.
+             "play": "Android app"}
 # The per-day source chart's groups. A referrer key in none of these, other
 # than "(unknown)", counts as "Other sites", which is where a smaller search
 # engine (Brave, Ecosia) lands too; the page's note says so.
