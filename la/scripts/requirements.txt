@@ -24,6 +24,15 @@ requests==2.33.1
 # stdlib only.
 shapely==2.1.2
 
+# la/scripts/build_la_conservation_districts.py reads the Department of
+# Agriculture and Forestry's map and list of district contacts (a PDF) with
+# pdfplumber when it builds; its --check (in CI) is stdlib only.
+# la/scripts/measure_la_conservation_parishes.py, run by hand when the map
+# changes, also needs pyproj to place the map's drawing on the parish
+# outlines, and numpy, which shapely already installs.
+pdfplumber==0.11.10
+pyproj==3.7.2
+
 # Conversion 2 (docs/MECHANIZATION_PLAYBOOK.md): worksheet validation in
 # scripts/generate_metro_files.py. The generator is otherwise stdlib-only;
 # validate_index.py deliberately stays stdlib and does NOT import this.

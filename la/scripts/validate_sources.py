@@ -45,6 +45,10 @@ What it checks (findings carry a severity — FAIL, WARN, or OK):
   7. The cities drawn from their own council district maps (Lafayette,
      Bossier City, Central and Slidell), the same way, with Bossier City's
      plan layer's figures.                                                [WARN]
+  8. The soil and water conservation districts: the Department of
+     Agriculture and Forestry's page is asked which copy of its map and list
+     of district contacts it links, and that copy's bytes are compared with
+     the ones la-conservation-districts.json was read from.               [WARN]
 
 Exit status: 0 when nothing needs a human (OK or WARN only), 1 on any FAIL.
 Newer-edition detection is deliberately WARN, not FAIL — the current dataset
@@ -61,6 +65,7 @@ Usage:
 
 import argparse
 import datetime
+import hashlib
 import json
 import os
 import re
@@ -309,6 +314,19 @@ PROVENANCE = [
             "Bureau's map of the city (this layer), pre-built by "
             "la/scripts/build_la_city_wards.py. Check 7 asks each city's layer "
             "and the Census's map of the city again."
+        ),
+    },
+    {
+        "layer": "county",
+        "app_file": "la-conservation-districts.json",
+        "source_url": "https://www.ldaf.la.gov/land/conservation/soil-and-water-conservation-districts",
+        "note": (
+            "Which of the 44 soil and water conservation districts cover each "
+            "parish, and each district's offices, from the one PDF this page "
+            "links (the Department's map, edited 2026-10-19, and its list of "
+            "district contacts), read by "
+            "la/scripts/build_la_conservation_districts.py. Check 8 asks the "
+            "page which copy it links and compares that copy's bytes."
         ),
     },
     {
@@ -870,6 +888,67 @@ def check_city_wards(findings, offline):
                          % (city, built, drawn[0], drawn[-1]))
 
 
+# ---- check 8: the soil and water conservation districts' PDF ---------------
+def check_conservation_districts(findings, offline):
+    """la-conservation-districts.json is read from the one PDF the Department
+    of Agriculture and Forestry's page on the districts links (its map and its
+    list of district contacts), and the build records the copy it read
+    (data/source/la-conservation-districts.source.json). Nothing runs that
+    build on a schedule, so the page is asked again which copy it links, and
+    that copy's bytes are compared with the bytes the shipped file was read
+    from. Both reads go through the builder's own fetch, which reads robots.txt
+    before each host and at every redirect, as the client the builder is."""
+    if offline:
+        return
+    import build_la_conservation_districts as cons
+    label = "county"
+    try:
+        with open(cons.RECORD, encoding="utf-8") as fh:
+            record = json.load(fh)
+    except (OSError, ValueError) as e:
+        findings.add(FAIL, label, "the conservation district build's record of what it read "
+                     "could not be read (%s), so the Department's map was not checked: %s"
+                     % (e, cons.RECORD))
+        return
+    read = record.get("read")
+    try:
+        page = cons.fetch(cons.PAGE_URL, "text/html").decode("utf-8", "replace")
+    except SystemExit:
+        findings.add(WARN, label, "soil and water conservation districts: the Department's page "
+                     "could not be read (the reason is printed above), so its map was not "
+                     "checked: %s" % cons.PAGE_URL)
+        return
+    found = sorted(set(cons.ASSET_URL.findall(page)))
+    if len(found) != 1:
+        findings.add(WARN, label, "soil and water conservation districts: the Department's page "
+                     "now links %d copies of its map and list of district contacts (%s), where "
+                     "it linked one when the shipped file was read on %s. Read the page, then "
+                     "rebuild with la/scripts/build_la_conservation_districts.py: %s"
+                     % (len(found), ", ".join(found) or "none", read, cons.PAGE_URL))
+        return
+    moved = []
+    if found[0] != record.get("sourceUrl"):
+        moved.append("the page links a new copy of the PDF, %s" % found[0])
+    try:
+        pdf = cons.fetch(found[0], "application/pdf")
+    except SystemExit:
+        findings.add(WARN, label, "soil and water conservation districts: the PDF the Department's "
+                     "page links could not be read (the reason is printed above), so it was not "
+                     "compared: %s" % found[0])
+        return
+    if hashlib.sha256(pdf).hexdigest() != record.get("sha256"):
+        moved.append("the PDF's bytes differ from the copy read on %s" % read)
+    if moved:
+        findings.add(WARN, label, "soil and water conservation districts: %s. Rebuild with "
+                     "la/scripts/build_la_conservation_districts.py, which stops if the map has "
+                     "changed and says how to measure it again: %s"
+                     % ("; ".join(moved), cons.PAGE_URL))
+    else:
+        findings.add(OK, label, "soil and water conservation districts: the Department's page "
+                     "still links the copy read on %s (its map edited %s), byte for byte"
+                     % (read, record.get("mapEdited")))
+
+
 def render(findings):
     order = {FAIL: 0, WARN: 1, OK: 2}
     rows = sorted(findings.rows, key=lambda r: (order[r[0]], r[1]))
@@ -922,6 +1001,7 @@ def main():
     check_congress_map(findings, args.offline)
     check_parish_own_maps(findings, args.offline)
     check_city_wards(findings, args.offline)
+    check_conservation_districts(findings, args.offline)
 
     report = render(findings)
     sys.stdout.write(report)

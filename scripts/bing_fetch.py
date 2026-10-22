@@ -70,6 +70,11 @@ OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
 # much history to hand over; this decides how much of it is published.
 WINDOW_DAYS = 62
 
+# The shorter windows the traffic report's timeframe buttons offer. Bing's
+# query rows carry a date, so each is the same rows cut to its window here,
+# with no further request.
+PRESET_DAYS = (7, 14, 30)
+
 # A property returning nothing is usually a revoked key or an unverified site
 # rather than a quiet week, and writing that would silently empty the card.
 MIN_IMPRESSIONS = 1
@@ -247,7 +252,16 @@ def main():
                                  if r["date"] and start <= r["date"] <= end])[:500],
             "pages": collapse([r for r in pages
                                if r["date"] and start <= r["date"] <= end]),
+            "windows": {},
         }
+        last = datetime.date.fromisoformat(end)
+        for n in PRESET_DAYS:
+            first = (last - datetime.timedelta(days=n - 1)).isoformat()
+            out["properties"][site]["windows"][str(n)] = {
+                "start": first,
+                "queries": collapse([r for r in queries if r["date"]
+                                     and first <= r["date"] <= end])[:500],
+            }
 
     if total_impressions < MIN_IMPRESSIONS:
         sys.exit("refusing to write: %d impressions across %d verified "

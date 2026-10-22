@@ -6799,7 +6799,8 @@ function initWisconsinExplorer() {
    * short tag per source is 25 characters shorter AND splits them in the
    * counter every app runs. The cost is on those two apps: gtag reads only
    * utm_* tags, so a shared arrival no longer carries a share label in Google
-   * Analytics. Organic traffic stays untagged, and a re-share from a tagged
+   * Analytics (both dropped Google Analytics on 2026-10-22, so the cost
+   * ended there). Organic traffic stays untagged, and a re-share from a tagged
    * page rebuilds from origin+pathname, so an inbound tag is never copied
    * forward as the next reader's source.
    *
@@ -21050,6 +21051,18 @@ function initWisconsinExplorer() {
         boot, before GoatCounter's script has always arrived, so these wait for
         it rather than being lost.
 
+     3a. NEW OR RETURNING, without a cookie: `visit/first/<tag>` or
+        `visit/return/<tag>`, once per browser window (DST_VISIT_COUNTED_KEY
+        in session storage). DST_SEEN_KEY in local storage is the mark: absent,
+        the visit is a first one and the mark is written; present, the visit
+        is a return. The mark is the single character "1", never a date or an
+        identifier, it never leaves the browser, and local storage is shared
+        by every page on the site, so "first" means the first time this
+        browser opened any districtry map. Storage that cannot be read or
+        written counts nothing, rather than counting every visit as a first.
+        It replaced Google Analytics, whose new-user figure needs a cookie
+        that carries an identifier (2026-10-22).
+
      4. A PLACE SHARED INTO THE APP. The manifest's share_target puts the
         installed districtry in Android's Share menu and sends what was shared
         to the launcher at /app/, which hands it here as #q= (the hash, which
@@ -21076,6 +21089,8 @@ function initWisconsinExplorer() {
   var DST_APP_LAUNCH_KEY = "districtry-app-launch";
   var DST_SHARE_IN_KEY = "districtry-share-in";
   var DST_SHORTCUT_KEY = "districtry-shortcut";
+  var DST_SEEN_KEY = "districtry-seen";
+  var DST_VISIT_COUNTED_KEY = "districtry-visit-counted";
   var DST_INVITE_DELAY_MS = 3000;
   var DST_ANDROID_TEST_URL = "/android.html?ref=map";
   var DST_TEST_INVITE_SEEN = "test-shown";
@@ -21191,6 +21206,19 @@ function initWisconsinExplorer() {
 
   if (!dstFramed) {
     try { window.localStorage.setItem(DST_LAST_APP_KEY, METRO_BRAND.instanceTag); } catch (e) { /* the launcher then opens the front page */ }
+  }
+
+  if (!dstFramed) {
+    var dstVisit = null;
+    try {
+      if (!window.sessionStorage.getItem(DST_VISIT_COUNTED_KEY)) {
+        var dstSeen = !!window.localStorage.getItem(DST_SEEN_KEY);
+        if (!dstSeen) window.localStorage.setItem(DST_SEEN_KEY, "1");
+        window.sessionStorage.setItem(DST_VISIT_COUNTED_KEY, "1");
+        dstVisit = dstSeen ? "return" : "first";
+      }
+    } catch (e) { dstVisit = null; /* storage blocked: count nothing */ }
+    if (dstVisit) dstCountWhenReady("visit/" + dstVisit + "/" + METRO_BRAND.instanceTag);
   }
 
   if (dstInstalledLaunch()) {

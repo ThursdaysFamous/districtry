@@ -2281,6 +2281,34 @@ try {
         `first=${JSON.stringify(first)} after reload=${JSON.stringify(second)}`);
       await context.close();
     }
+    // NEW OR RETURNING. A first visit in a fresh browser counts
+    // visit/first/<tag> and writes the one-character districtry-seen mark; a
+    // reload in the same window counts nothing more; a new window in the same
+    // browser finds the mark and counts visit/return/<tag>. Nothing else is
+    // stored, and Google Analytics is loaded nowhere.
+    {
+      const visitEvents = (p) => p.evaluate(() => (window.__gcEvents || [])
+        .filter((v) => v && v.event && /^visit\//.test(v.path)).map((v) => v.path));
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      let gaRequests = 0;
+      context.on("request", (r) => { if (/googletagmanager|google-analytics/.test(r.url())) gaRequests++; });
+      const page = await booted(context, BASE, stubCounter);
+      await page.waitForTimeout(300);
+      const first = await visitEvents(page);
+      const mark = await page.evaluate(() => localStorage.getItem("districtry-seen"));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      await page.waitForTimeout(300);
+      const reloaded = await visitEvents(page);
+      const page2 = await booted(context, BASE, stubCounter);
+      await page2.waitForTimeout(300);
+      const second = await visitEvents(page2);
+      check("a first visit, then a return in a new window, are each counted once by app, with no Google Analytics",
+        first.join() === `visit/first/${TAG}` && mark === "1" && reloaded.length === 0 &&
+          second.join() === `visit/return/${TAG}` && gaRequests === 0,
+        `first=${JSON.stringify(first)} mark=${mark} reload=${JSON.stringify(reloaded)} new window=${JSON.stringify(second)} ga=${gaRequests}`);
+      await context.close();
+    }
     // A PLACE SHARED INTO THE APP. The launcher (/app/) hands it over as #q=,
     // in the shape Android shares a Google Maps place (its name, then the
     // link), and leaves districtry-share-in in session storage. The app must

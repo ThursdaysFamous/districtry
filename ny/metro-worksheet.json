@@ -43,8 +43,6 @@
       "twitter_description": "See every civic district that covers a New York address, and who represents you."
     },
     "analytics": {
-      "ga_id": "G-YPJ570LWJB",
-      "ga_hostname": "districtry.com",
       "goatcounter_url": "https://districtry.goatcounter.com/count"
     }
   },
