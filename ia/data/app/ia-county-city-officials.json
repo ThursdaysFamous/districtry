@@ -491,14 +491,14 @@
   "members": [
    {
     "county": "Boone",
-    "name": "Richard Bryant",
-    "phone": "(515) 726-0733",
+    "name": "Lori Phelan",
+    "phone": "(515) 771-6262",
     "role": "City Clerk"
    },
    {
     "county": "Boone",
-    "name": "Ken Gustin",
-    "phone": "(515) 971-2756",
+    "name": "Ashley Walker",
+    "phone": "(515) 337-5515",
     "role": "Mayor",
     "termEnds": "2027",
     "termLength": "4 Years"
@@ -519,13 +519,6 @@
    },
    {
     "county": "Boone",
-    "name": "Crystal Hellyer",
-    "role": "City Council",
-    "termEnds": "2027",
-    "termLength": "4 Years"
-   },
-   {
-    "county": "Boone",
     "name": "Dan Johnson",
     "phone": "(515) 275-4860",
     "role": "City Council",
@@ -534,7 +527,14 @@
    },
    {
     "county": "Boone",
-    "name": "Stephanie Lambert",
+    "name": "Mike Phelan",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Boone",
+    "name": "Vacant Vacant",
     "role": "City Council",
     "termEnds": "2027",
     "termLength": "4 Years"
