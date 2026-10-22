@@ -3973,8 +3973,6 @@
       "twitter_description": "See every civic district that covers a Chicago address — ward, police district, community area, congressional and state districts, school zones — and who represents you."
     },
     "analytics": {
-      "ga_id": "G-YPJ570LWJB",
-      "ga_hostname": "districtry.com",
       "goatcounter_url": "https://districtry.goatcounter.com/count"
     },
     "product_name": "districtry",
