@@ -17718,13 +17718,14 @@ function initMichiganExplorer() {
     bodyUrl: "https://www.baycitymi.gov/377/Contact-the-Commissioners",
     seatsNote: "Bay City elects one commissioner from each of nine wards, and a mayor "
              + "at large.",
-    // The map the City Clerk named on 2026-10-22 as the current one.
+    // The clerk wrote on 2026-10-22 that the lines have not changed and named
+    // the county's GIS map as current.
     // mi/scripts/build_mi_bay_city_wards.py says why it is checked against
     // the state's precincts by residents rather than by area: the two maps
     // divide the Saginaw River and Middleground Island differently.
-    linesFrom: "Bay County's ward map, which the City Clerk named as the current one. "
-             + "On the Saginaw River and Middleground Island, where nobody lives, it "
-             + "can differ from the state's precinct map."
+    linesFrom: "Bay County's ward map. The City Clerk wrote on 22 October 2026 that "
+             + "the ward lines have not changed. On the Saginaw River and Middleground "
+             + "Island, where nobody lives, it can differ from the state's precinct map."
   });
   var pontiacEntry = municipalWardEntry({
     key: "pontiac", label: "Pontiac", geoid: "2665440", unit: "District",

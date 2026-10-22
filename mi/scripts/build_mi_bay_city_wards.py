@@ -12,10 +12,14 @@ wards:
 
 THE CLERK'S ANSWER. On 2026-10-22 the City Clerk wrote that the ward lines
 have not changed and that the current ward map is the one on Bay County's GIS
-map. That is why the county's layer is read rather than the city's own: the
-clerk named it, it was edited this year, and it matches the county's precinct
-layer to within 76 m2 (measured 2026-10-22). The city's and the county's maps
-put every resident in the same ward; they differ only along the river.
+website, linking the county's FetchGIS viewer (app.fetchgis.com, its wards
+layer). That viewer is a vendor's host whose robots.txt is `User-agent: *` /
+`Disallow: /`, so it is not read here, and that it draws the same wards as
+the layer below is INFERRED, not measured. What is measured: the county's own
+ArcGIS Online "City Wards" layer, edited this year, matches the county's
+precinct layer to within 76 m2 and the city's own 2023 `Wards` layer on every
+resident, so the three publications the project can read agree on who lives
+in which ward and differ only along the river (all 2026-10-22).
 
 WHY THE "residents" RULE. Measured 2026-10-22 against the state's 2026
 precincts, the county's wards agree on 98.408% of 4,000 points where both draw
