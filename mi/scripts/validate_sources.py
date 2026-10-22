@@ -504,6 +504,17 @@ PROVENANCE = [
     },
     {
         "layer": "city-ward",
+        "app_file": "mi-bay-city-wards.json",
+        "source_url": "https://services7.arcgis.com/NsdAMAHBh4C0qHfJ/arcgis/rest/services/Where_Do_I_Vote__WFL1/FeatureServer/6",
+        "note": (
+            "Bay City's nine commission wards, from Bay County's City Wards layer, which "
+            "the City Clerk named on 2026-10-22 as the current ward map, by "
+            "mi/scripts/build_mi_bay_city_wards.py. The county states no terms and the "
+            "build fails if it starts to."
+        ),
+    },
+    {
+        "layer": "city-ward",
         "app_file": "mi-jackson-council-members.json",
         "source_url": "https://www.cityofjackson.org/289/Mayor-City-Council-City-Manager",
         "note": (
