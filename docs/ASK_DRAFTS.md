@@ -1136,6 +1136,19 @@ route it there itself.
 
 ## Ask 8 — Iowa Secretary of State: a statewide list of city clerks
 
+> **ANSWERED 2026-10-22, AND THE ANSWER IS NO.** The operator's follow-up went on 2026-10-22
+> and the Elections Division replied the same morning (Dani Phillips, from
+> `IVoters.Support@sos.iowa.gov`): the office does not have such a list, and the request
+> should go to the county auditors or to the Iowa League of Cities. Both routes were already
+> in use: the League's directory gives each city a phone and website and names no person,
+> and thirteen county auditors publish their cities' officials, ten of them current. So the
+> operator sent two new letters the same day: one to the **Iowa League of Cities** through
+> the "Email Us" form on its website (it publishes no e-mail address), asking it to share
+> its members' mayor and clerk names, and one by e-mail to the **Iowa State Association of
+> County Auditors**' President, Karla Weiss (Winnebago County Auditor), asking for a city
+> clerk list or for the request to be passed on. Follow-ups are due about 2026-11-12. This
+> ask is closed.
+>
 > **SENT 2026-09-04 to `elections@sos.iowa.gov`**, subject "Is there a statewide list of Iowa
 > city clerks?". No reply on that thread as of 2026-10-01, so one follow-up is due and the
 > thirty-day silence mark falls on 2026-10-04.
@@ -7929,6 +7942,14 @@ that needs a change in law, is then the next question; nothing here establishes 
 > not the text below, are the record of what was asked. A follow-up is due about 2026-11-11 for
 > any that has not answered. Each city's gap record carries the date in its `ask` field and the
 > city in its `covers` field.
+>
+> **BAY CITY ANSWERED 2026-10-22.** The City Clerk wrote that the ward lines have not changed,
+> that the current ward map is on Bay County's online GIS map, and that the precinct list is a
+> PDF on the city's site; she did not take up the river and Middleground Island question.
+> Measured the same day, the county's map gives every resident the same ward as the state's 2026
+> precincts and differs only on the river and the uninhabited island, so the wards were built
+> from it (`mi/scripts/build_mi_bay_city_wards.py`) and wait on the operator's word to ship. No
+> follow-up is owed to Bay City; its gap record is retired with the wards.
 >
 > Drafted 2026-10-15. Three letters, one per city, each about one ward map this project measured
 > on 2026-10-15 and did not ship. Each city's gap record in `docs/DATA_LAYER_GUIDEBOOK.md`
