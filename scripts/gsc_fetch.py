@@ -76,6 +76,11 @@ OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
 # property's real first and last day are still recorded per property, measured
 # rather than assumed — the API clamps to whatever that property holds.
 WINDOW_DAYS = 62
+
+# The shorter windows the traffic report's timeframe buttons offer. The query
+# and page lists are period totals, so each is asked for over its own window;
+# the daily series is the full window's, cut to length on the page.
+PRESET_DAYS = (7, 14, 30)
 PAGE = 25000          # the API's own per-request ceiling
 MAX_ROWS = 100000     # sanity stop; this site is nowhere near it
 
@@ -181,7 +186,18 @@ def main():
             "queries": sorted(series(queries),
                               key=lambda x: -x["impressions"])[:500],
             "pages": sorted(series(pages), key=lambda x: -x["impressions"]),
+            "windows": {},
         }
+        last = datetime.date.fromisoformat(end)
+        for n in PRESET_DAYS:
+            w = {"startDate": (last - datetime.timedelta(days=n - 1)).isoformat(),
+                 "endDate": end}
+            out["properties"][site]["windows"][str(n)] = {
+                "start": w["startDate"],
+                "queries": sorted(series(post(headers, site,
+                                              dict(w, dimensions=["query"]))),
+                                  key=lambda x: -x["impressions"])[:500],
+            }
 
     if total_impressions < MIN_IMPRESSIONS:
         sys.exit("refusing to write: %d impressions across %d property(ies). "

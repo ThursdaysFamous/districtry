@@ -59,6 +59,14 @@ OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
 # 62 days, so this keeps the chart the same width it has always been.
 WINDOW_DAYS = 62
 
+# The shorter windows the report's timeframe buttons offer, each read whole
+# off the dashboard for its own period rather than cut out of the two-month
+# one: the bar lists (apps, layers, browsers, countries) are period totals
+# with no day in them, so a seven-day list cannot be derived from a sixty-two
+# day one. Adam chose "every section follows the button" on 2026-10-22, at
+# the cost of asking the dashboard for each list once per window.
+PRESET_DAYS = (7, 14, 30)
+
 # The dashboard's widget indices, learned from the dashboard itself. These are
 # positional, not named, which is why --explore exists.
 # The dashboard's widget indices, read off the dashboard's own containers and
@@ -387,8 +395,12 @@ def explore(s, total, start, end):
                                                  if head else "?"), len(h)))
 
 
-def collect(s, total, start, end):
-    """Everything the traffic report reads, in one pass over the dashboard."""
+def collect(s, total, start, end, per_day=True):
+    """Everything the traffic report reads, in one pass over the dashboard.
+
+    per_day=False leaves out the per-day referrer lists, which are about the
+    last REF_DAYS days whatever the window and are read once, for the full one.
+    """
     hits = widget(s, 1, total, start, end)
     mx = re.search(r'data-max="(\d+)"', hits)
     if not mx:
@@ -522,7 +534,27 @@ def collect(s, total, start, end):
         out[name] = rows(widget(s, n, total, start, end))
     # Last, because it changes the session's period: everything above is read
     # against the window, and this asks the dashboard about one day at a time.
-    out["daily_referrers"] = daily_referrers(s, end)
+    if per_day:
+        out["daily_referrers"] = daily_referrers(s, end)
+    return out
+
+
+def preset_windows(s, end):
+    """Each PRESET_DAYS window ending on `end`, read for its own period.
+
+    The dashboard is asked for the period first, because js-total-utc is that
+    period's total and every widget takes it as a parameter (see session()).
+    The daily series is dropped: it is the full window's, cut to length.
+    """
+    out = {}
+    last = datetime.date.fromisoformat(end)
+    for n in PRESET_DAYS:
+        start = (last - datetime.timedelta(days=n - 1)).isoformat()
+        total = period_total(s, start, end)
+        print("window %s..%s (%d days)" % (start, end, n))
+        w = collect(s, total, start, end, per_day=False)
+        del w["daily"]
+        out[str(n)] = dict({"start": start, "end": end, "days": n}, **w)
     return out
 
 
@@ -708,6 +740,9 @@ def main():
                  "That is a revoked token or a changed dashboard, not a quiet "
                  "week." % (data["pageviews"], len(data["daily"]), start, end))
 
+    # After the full window, because it changes the session's period.
+    data["windows"] = preset_windows(s, end)
+
     attributed = sum(r["count"] for r in data["instances"])
     print("%d pageviews, %d events over %d days; instances sum to %d"
           % (data["pageviews"], data["events"], len(data["daily"]), attributed))
@@ -719,7 +754,8 @@ def main():
                      "districtry.goatcounter.com dashboard. The window is a "
                      "rolling two months ending on the last full day. 'total' "
                      "is GoatCounter's deduplicated period total, which is "
-                     "NOT the sum of the daily series."),
+                     "NOT the sum of the daily series. 'windows' holds the same "
+                     "lists read for the last 7, 14 and 30 days."),
         "fetched": datetime.datetime.now(datetime.timezone.utc)
                            .strftime("%Y-%m-%dT%H:%M:%SZ"),
         "site": SITE,
