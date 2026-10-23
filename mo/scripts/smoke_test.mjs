@@ -1225,7 +1225,7 @@ try {
       const whereOk = p.source === "cole" ? text.includes("MidMO GIS")
         : p.source === "townships"
           ? text.includes("made of whole townships") &&
-            text.includes(`clerk pointed this app to that map on ${longDate(p.clerk)}`)
+            text.includes(`clerk pointed this app to that map on ${longDate(p.pointedOn)}`)
           : text.includes(`${p.county}'s own map viewer`);
       check(`county-commissioner card in ${p.county || "a drawn county"} names the ${p.seat || "?"} and its commissioner, the presiding commissioner, and where the line comes from`,
         at.length === 1 && !!drawn[p.countyfips] && !info.error && !!mine.name && !!pres.name &&

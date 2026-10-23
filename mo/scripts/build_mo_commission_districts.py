@@ -471,7 +471,7 @@ def build_county(c3, spec, county_feature, roster, today):
             "source": _source_kind(spec), "read": today},
             "geometry": mapping(geom)})
         if spec.get("clerk"):
-            feats[-1]["properties"]["clerk"] = spec["clerk"]
+            feats[-1]["properties"]["pointedOn"] = spec["clerk"]
     people = {spec["names"][n]: 0 for n in names}
     unplaced = 0
     for x, y, p in fetch_block_points(c3):
@@ -580,8 +580,8 @@ def check_problems(fc, records, counties, roster):
                             % (where, district_seats(roster, geoid)))
         if p.get("source") != _source_kind(spec):
             problems.append("%s: source %r" % (where, p.get("source")))
-        if p.get("clerk") != spec.get("clerk"):
-            problems.append("%s: clerk %r, SOURCES says %r" % (where, p.get("clerk"),
+        if p.get("pointedOn") != spec.get("clerk"):
+            problems.append("%s: pointedOn %r, SOURCES says %r" % (where, p.get("pointedOn"),
                                                                spec.get("clerk")))
         if not _ISO_DATE.match(str(p.get("read") or "")):
             problems.append("%s: read %r is not a date" % (where, p.get("read")))
