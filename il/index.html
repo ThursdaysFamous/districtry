@@ -2491,6 +2491,26 @@ svg.leaflet-image-layer.leaflet-interactive path {
    * transition fades the shadow back in on moveend. (OPTIMIZATION_PLAYBOOK P9/R2-5.) */
   .map-panning .region-highlight { filter: none; transition: none; }
   .poi-pin { background: none; border: none; }
+  /* the line beside a point-of-interest pin: a solid white chip like the
+     compared districts' labels (readable over any basemap, in both themes),
+     its text darkened from the layer's colour (--poi-label-ink, set per pin) */
+  .leaflet-tooltip.poi-pin-label {
+    display: flex;
+    flex-direction: column;
+    max-width: 220px;
+    padding: 2px 8px 3px;
+    background: #fff;
+    color: var(--poi-label-ink, #14181C);
+    border: 1.5px solid currentColor;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.22);
+    font-family: var(--font-body);
+    line-height: 1.3;
+    white-space: normal;
+  }
+  .leaflet-tooltip.poi-pin-label::before { display: none; }
+  .poi-pin-label-kind { font-size: 10.5px; font-weight: 600; text-transform: none; opacity: 0.85; }
+  .poi-pin-label-name { font-size: 12px; font-weight: 700; }
   /* ==== ENGINE:END styles-markers ==== */
   /* ==== TEMPLATE:BEGIN styles-masthead-actions ==== */
   /* Chicago-specific: the masthead action row — the Data-gaps button and the
@@ -4303,6 +4323,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
         title="Hover explorer — show the districts under your cursor as you move the mouse">Hover: on</button>
     </div>
 
+    <!-- Election notice (Illinois only, until Election Day): turns on the
+         precinct and county layers so a click answers where the reader votes. -->
+    <div class="map-tile-banner election-notice" id="election-notice" role="region" aria-label="Election Day" hidden
+         style="border-left-color: var(--accent); bottom: 56px;">
+      <span id="election-notice-text">Election Day is Tuesday, Nov 3. Click where you live to see where you vote.</span>
+      <button type="button" id="election-notice-go"
+              style="flex: none; display: inline-flex; align-items: center; min-height: 32px; padding: 0 12px; background: transparent; color: var(--accent-deep, #0B5394); border: 1px solid var(--accent-deep, #0B5394); border-radius: 5px; font-family: var(--font-body); font-size: 13px; font-weight: 600; cursor: pointer;">Show where to vote</button>
+      <button type="button" id="election-notice-dismiss" class="tile-banner-dismiss" aria-label="Dismiss this message">✕</button>
+    </div>
     <div class="map-tile-banner" id="tile-banner" role="status" aria-live="polite" hidden>
       <span>Base map tiles unavailable — your selections and layers still work.</span>
       <button type="button" id="tile-banner-dismiss" class="tile-banner-dismiss" aria-label="Dismiss this message">✕</button>
@@ -13041,6 +13070,30 @@ function initChiExplorer() {
         icon: poiPinIcon(moduleColor(mod)),
         keyboard: false,
         alt: poi.label + " location"
+      });
+      // A pin says what it is beside itself, on every device: a touch screen
+      // has no hover, and two layers' pins can share a colour family (a ward
+      // office and a polling place are both dark blue in Illinois). The small
+      // line names the kind of place, `poi.kind` where the layer gives one and
+      // the layer's own name otherwise; the bold line is the place itself.
+      // textContent throughout, since both can be publisher text.
+      var pinLabel = document.createElement("span");
+      var pinKind = document.createElement("span");
+      pinKind.className = "poi-pin-label-kind";
+      pinKind.textContent = poi.kind ? String(poi.kind) : mod.label;
+      var pinName = document.createElement("span");
+      pinName.className = "poi-pin-label-name";
+      pinName.textContent = String(poi.label);
+      pinLabel.appendChild(pinKind);
+      pinLabel.appendChild(pinName);
+      pinLabel.style.setProperty("--poi-label-ink", hoverPillStyle(moduleColor(mod)).color);
+      rt.poiMarker.bindTooltip(pinLabel, {
+        permanent: true,
+        direction: "right",
+        offset: [9, -17],
+        opacity: 1,
+        interactive: false,
+        className: "poi-pin-label"
       });
       // Touch devices have no real hover state (see hoverCapable) — skip wiring
       // the hover popup to this pin there so a tap can't pop it up unexpectedly.
@@ -24682,6 +24735,45 @@ function initChiExplorer() {
    * ward_precinct per the dataset schema. ---------- */
   var loadWardPrecincts = makeCachedLoader("i8fv-xe4b");
 
+  /* Each precinct's Election Day polling place, from the Board of Election
+   * Commissioners' published list (scripts/chicago_polling_places_scraper.py +
+   * build_chicago_polling_places.py, refreshed daily until Election Day). The
+   * card shows it only up to and including the election date, in Chicago's
+   * own time zone: an assignment belongs to one election, and the day after
+   * it the list says nothing true about the next one. */
+  var loadChicagoPolling = makeCached(function () {
+    return fetchJSONWithRetry("data/app/chicago-polling-places.json", {}, 2);
+  });
+  function chicagoToday() {
+    try {
+      return new Date().toLocaleDateString("en-CA", { timeZone: "America/Chicago" });
+    } catch (e) {
+      var d = new Date();
+      return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
+    }
+  }
+  function chicagoPollingFor(list, ward, precinct) {
+    if (!list || !list.precincts || !list.sites || !list.electionDate) return null;
+    if (chicagoToday() > list.electionDate) return null;
+    var i = list.precincts[String(ward) + "-" + String(precinct)];
+    var site = (i === undefined || i === null) ? null : list.sites[i];
+    if (!site) return null;
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var fmt = function (iso) {
+      var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+      return m ? months[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1] : String(iso || "");
+    };
+    return {
+      place: site.place,
+      address: site.address,
+      lat: site.lat === undefined ? null : site.lat,
+      lng: site.lng === undefined ? null : site.lng,
+      election: String(list.election || "Election") + ", " + fmt(list.electionDate),
+      listDate: fmt(list.listDate),
+      lookupUrl: safeHttpUrl(list.lookupUrl)
+    };
+  }
+
   registerLayer({
     id: "ward-precinct",
     tiles: "data/app/tiles/ward-precinct.pmtiles", // vector tiles mirrored from the Chicago Data Portal (scripts/mirror_portal_tiles.py)
@@ -24705,17 +24797,51 @@ function initChiExplorer() {
         var precinct = precinctRaw !== null && precinctRaw !== undefined ? String(precinctRaw).replace(/^0+(?=\d)/, "") : null;
         var wardRaw = findPropCI(props, ["ward", "ward_num", "ward_number", "ward_id"]);
         var ward = wardRaw !== null && wardRaw !== undefined ? String(wardRaw).replace(/^0+(?=\d)/, "") : null;
-        return { seq: seq, precinct: precinct, ward: ward };
+        var base = { seq: seq, precinct: precinct, ward: ward, polling: null };
+        if (!ward || !precinct) return base;
+        // A polling failure costs the polling row, never the precinct.
+        return loadChicagoPolling().then(function (list) {
+          base.polling = chicagoPollingFor(list, ward, precinct);
+          return base;
+        }, function () { return base; });
       });
     },
-    // 4b compact: the header carries "Precinct N" with the parent ward as
-    // the meta line; no render() — the engine skips it for compact layers
-    compact: true,
+    render: function (result) {
+      var rows = [];
+      if (result.ward) rows.push({ label: "Ward", value: "Ward " + String(result.ward) });
+      var p = result.polling;
+      if (p) {
+        rows.push({
+          label: "Polling place (" + p.election + ")",
+          value: String(p.place) + " — " + String(p.address)
+        });
+        rows.push({
+          label: "As listed",
+          value: "On the Board of Elections' list dated " + p.listDate +
+            ". The Board says the list can change, so confirm with its lookup before you go."
+        });
+      }
+      return renderFieldStack(rows);
+    },
     cardIdentifier: function (result) {
       return result.precinct ? "Precinct " + String(result.precinct) : "Unknown";
     },
-    cardMeta: function (result) {
-      return result.ward ? "Ward " + String(result.ward) : null;
+    // The feature carries both its ward and its precinct number, and the
+    // engine's fallback reads "ward" first, so every precinct's map label and
+    // hover row used to print its ward (33) rather than itself. The precinct
+    // number is what tells one precinct from its neighbours inside a ward.
+    hoverName: function (feature) {
+      var raw = findPropCI(feature.properties || {}, ["precinct", "precinct_num", "precinct_number", "precinct_no"]);
+      return raw !== null && raw !== undefined ? "Precinct " + String(raw).replace(/^0+(?=\d)/, "") : null;
+    },
+    primaryLink: function (result) {
+      var p = result && result.polling;
+      return p && p.lookupUrl ? { label: "Confirm where you vote", url: p.lookupUrl } : null;
+    },
+    pointOfInterest: function (result) {
+      var p = result && result.polling;
+      if (!p || p.lat === null || p.lng === null) return null;
+      return { kind: "Polling place", label: String(p.place), address: String(p.address), lat: p.lat, lng: p.lng };
     },
     onToggle: function (on) {
       var wardRt = layerRuntime["ward"];
@@ -24739,6 +24865,47 @@ function initChiExplorer() {
     }
   });
   declareDataSource("ward-precinct", { label: CHICAGO_PORTAL });
+
+  /* ---------- Election notice (until Election Day) ----------
+   * One dismissible line over the map, from now through the election date in
+   * Chicago's time zone, saying where to find the answer: its button turns on
+   * the precinct layers, Chicago's early voting sites and the County card, so
+   * a click anywhere in Illinois answers it as well as this app can — the
+   * polling place itself on the Chicago precinct card and on the precinct cards
+   * of the counties that publish one, and the county clerk's office on the
+   * County card everywhere.
+   * Never shown inside an embed, where the host page decides what is said. */
+  var ELECTION_NOTICE_UNTIL = "2026-11-03";
+  // A literal, not built from the date, so the privacy page's measurement of
+  // the keys this app stores reads the whole key.
+  var ELECTION_NOTICE_KEY = "districtry-election-notice-2026-11-03";
+  (function () {
+    var notice = document.getElementById("election-notice");
+    if (!notice) return;
+    var embedded = false;
+    try { embedded = window.self !== window.top; } catch (e) { embedded = true; }
+    if (embedded || chicagoToday() > ELECTION_NOTICE_UNTIL) return;
+    // A link that already says what to show (a point, a search, a form) is
+    // its own answer; the notice is for a reader who arrives at a bare map.
+    if (/[#&](p|point|q|feedback)=|#feedback\b/.test(location.hash || "")) return;
+    try { if (localStorage.getItem(ELECTION_NOTICE_KEY)) return; } catch (e) { /* storage blocked: show it */ }
+    var dismiss = function () {
+      notice.hidden = true;
+      try { localStorage.setItem(ELECTION_NOTICE_KEY, "1"); } catch (e) { /* nothing to remember it in */ }
+    };
+    document.getElementById("election-notice-dismiss").addEventListener("click", dismiss);
+    document.getElementById("election-notice-go").addEventListener("click", function () {
+      ["county", "county-precinct", "ward-precinct", "early-voting"].forEach(function (id) {
+        var box = document.getElementById("toggle-" + id);
+        if (box && !box.checked) box.click();
+      });
+      dismiss();
+    });
+    // The first tap on the map is the reader doing what the notice asks, and
+    // on a phone the notice sits over the map they are tapping.
+    map.once("click", function () { notice.hidden = true; });
+    notice.hidden = false;
+  })();
 
   /* ---------- U.S. House (Congress) — TIGERweb boundary joined to a same-origin
    * roster (district -> current IL representative plus their D.C. and district
@@ -38925,6 +39092,13 @@ function initChiExplorer() {
     // District 3" without re-implementing ~60 county fetches. Settles every
     // county, failed ones included (ok:false), so a build can refuse a partial
     // index rather than silently ship one.
+    // The name a layer prints for one feature on its map labels and hover row
+    // (the same hoverValue those read), for a check that a layer names its own
+    // districts and not a parent's (smoke check 1k1b).
+    hoverValueFor: function (id, properties) {
+      var mod = getLayerById(id);
+      return mod ? hoverValue(mod, { type: "Feature", geometry: null, properties: properties || {} }) : null;
+    },
     layerDistricts: function (id) {
       var mod = getLayerById(id);
       if (!mod || !mod.countyEntries) return Promise.reject(new Error(id + " is not a county-dispatched layer"));
