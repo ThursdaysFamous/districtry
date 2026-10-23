@@ -87,16 +87,17 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 9
+MIN_REGISTER_LAYER = 10
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "mo-senate", "county", "mo-house", "school-district-unified",
-    "school-district-elementary", "zip-code", "county-subdivision",
-    "municipality", "police-station", "fire-station", "post-office",
+    "us-house", "mo-senate", "county", "mo-house", "county-commissioner",
+    "school-district-unified", "school-district-elementary", "zip-code",
+    "county-subdivision", "municipality", "police-station", "fire-station",
+    "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -106,6 +107,7 @@ GEOMETRY_FILES = {
     "congress-districts.json": (8, 8),  # The 8 U.S. House districts, TIGERweb layer 4 (CD119), the 2022 map, kept past 3 January 2027 because the 2026 election uses it.
     "mo-senate-districts.json": (34, 34),  # The 34 Missouri Senate districts, from the state's own map of the 2022 plan.
     "mo-house-districts.json": (163, 163),  # The 163 Missouri House districts, from the state's own map of the 2022 plan.
+    "mo-commission-districts.json": (44, 44),  # The county commission districts of the 22 counties whose map viewer or download publishes them (mo/scripts/build_mo_commission_districts.py), two per county, clipped to the Census Bureau's county lines.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -114,6 +116,7 @@ ROSTER_FILES = {
     "mo-senate-members.json": 34,  # Missouri Senate roster from the Senate's own member pages, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size.
     "mo-house-members.json": 163,  # Missouri House roster from the House's own published member list, on the same terms.
     "mo-county-officials.json": 115,  # Every county's commission or council, county executive and other elected officers from the Secretary of State's Missouri Roster, one record for each of the 114 counties and the City of St. Louis, refreshed weekly by update-mo-county-officials.yml.
+    "mo-commission-counties.json": 22,  # The 22 counties whose commission districts are drawn, by GEOID, with each district's 2020 census population, written by the same build as mo-commission-districts.json and held to it by its --check. The County Commission District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 

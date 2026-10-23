@@ -372,10 +372,32 @@
       }
     },
     {
+      "id": "county-commissioner",
+      "label": "County Commission District",
+      "group": "political",
+      "area_rank": 5,
+      "rank_note": "Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 22 counties whose county map viewer or download publishes them",
+      "source": {
+        "answers": "The county commission district covering the point, and the district commissioner elected from it, in the 22 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner.",
+        "boundary": [
+          {
+            "label": "Integrity GIS county map viewers — the commission district layer each county's own public map viewer carries, for Barton, Bates, Buchanan, Camden, Chariton, Christian, Cooper, Dade, DeKalb, Lincoln, Maries, Marion, McDonald, Miller, Phelps, Polk, Pulaski, Ralls, Ray, Vernon and Warren counties, read 2026-10-23. Each answers exactly two districts, whose names match the seats the Secretary of State's Missouri Roster lists for that county. Clipped to the Census Bureau's county line, with the few slivers the viewer leaves between its two districts given to the district beside them. Whether each viewer's line is the one the county's elections use today is NOT established: no viewer gives a date for its lines, and Missouri law sets no date by which a county must redraw them.",
+            "url": "https://www.integritygis.com/"
+          },
+          {
+            "label": "Cole County — the commission district shapefile MidMO GIS, the map site of the City of Jefferson and Cole County, publishes for download (CC_Commissioner.zip), created 11 May 2011, clipped to the Census Bureau's county line in the same way. Whether it is the line the county's elections use today is not established either.",
+            "url": "https://www.midmogis.org/GIS_Hyperlinks/Downloadables/CC_Commissioner.zip"
+          }
+        ],
+        "people": "mo-county-officials.json, the roster the County card reads: each county's district commissioners from the Secretary of State's Missouri Roster, joined by seat name.",
+        "applies": "22 of Missouri's 114 counties; hidden in the other 92 and in the City of St. Louis, which the Data gaps panel lists and explains."
+      }
+    },
+    {
       "id": "school-district-unified",
       "label": "School District (Unified)",
       "group": "schools",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "445 unified districts, about 372 km2 of land on average, live from TIGERweb (no data/app file); with the 71 elementary districts they cover the state exactly",
       "source": {
         "answers": "The public school district covering the point.",
@@ -393,7 +415,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "71 elementary districts, about 177 km2 of land on average, live from TIGERweb (no data/app file); the ground the unified tiling leaves",
       "source": {
         "answers": "The elementary school district covering the point, where the point is in one.",
@@ -411,7 +433,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "1,977 ZIP Code Tabulation Areas in the state's own bounding box, about 163 km2 of land on average, fetched live by envelope; the layer hides outside Missouri",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -429,7 +451,7 @@
       "id": "county-subdivision",
       "label": "Township",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "1,394 records tiling the state — 1,393 townships and the City of St. Louis, which the Census files as its own — about 128 km2 of land on average, live from TIGERweb (no data/app file)",
       "source": {
         "answers": "The township containing the point and its county, and whether the township has a government of its own.",
@@ -447,7 +469,7 @@
       "id": "municipality",
       "label": "City, Town or Village",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "947 incorporated places, about 8 km2 of land on average, live from TIGERweb",
       "source": {
         "answers": "The city, town or village containing the point, if any.",
@@ -465,7 +487,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -483,7 +505,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -501,7 +523,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -516,7 +538,7 @@
       }
     }
   ],
-  "min_register_layer": 9,
+  "min_register_layer": 10,
   "anchor_point": {
     "lat": 38.5791,
     "lng": -92.1729,
@@ -580,6 +602,12 @@
         "min_features": 163,
         "max_features": 163,
         "note": "The 163 Missouri House districts, from the state's own map of the 2022 plan."
+      },
+      {
+        "file": "mo-commission-districts.json",
+        "min_features": 44,
+        "max_features": 44,
+        "note": "The county commission districts of the 22 counties whose map viewer or download publishes them (mo/scripts/build_mo_commission_districts.py), two per county, clipped to the Census Bureau's county lines."
       }
     ],
     "rosters": [
@@ -604,6 +632,11 @@
         "note": "Every county's commission or council, county executive and other elected officers from the Secretary of State's Missouri Roster, one record for each of the 114 counties and the City of St. Louis, refreshed weekly by update-mo-county-officials.yml."
       },
       {
+        "file": "mo-commission-counties.json",
+        "min_keys": 22,
+        "note": "The 22 counties whose commission districts are drawn, by GEOID, with each district's 2020 census population, written by the same build as mo-commission-districts.json and held to it by its --check. The County Commission District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
@@ -611,7 +644,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mo-shell-v1",
+    "cache_name": "districtry-mo-shell-v2",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
