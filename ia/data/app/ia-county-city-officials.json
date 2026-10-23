@@ -534,10 +534,10 @@
    },
    {
     "county": "Boone",
-    "name": "Vacant Vacant",
     "role": "City Council",
     "termEnds": "2027",
-    "termLength": "4 Years"
+    "termLength": "4 Years",
+    "vacant": true
    }
   ],
   "officeAddress": "266 284th St. Berkley, IA 50220",
