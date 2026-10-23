@@ -52,8 +52,12 @@ WHAT IT CHECKS, because each is a claim the page makes:
      site: the Content-Signal for `*`, read by robots_policy.py.
 
 WHAT IT CANNOT CHECK. Who reviews and merges a pull request is not recorded in
-the tree, and neither is the traffic report being refreshed by a scheduled
-agent. The page states both as the project's practice; a change to that
+the tree, nor that a change a reader would see waits for the operator's word,
+nor that letters and social posts are only drafted, nor the operator's one
+robots.txt exception for finding a government office's contact address (ruled
+2026-10-21); and neither is the traffic report being refreshed by a scheduled
+agent. That every fetching script reads robots.txt is held by
+validate_robots_adoption.py, not here. The page states both as the project's practice; a change to that
 practice is a change to the prose here.
 
     python3 scripts/build_ai_page.py           # write ai.html
@@ -319,20 +323,35 @@ def body():
         its certified election results say, and how its districts can be built from what it
         publishes.</li>
       <li><strong>Drafts text:</strong> the explanatory pages, the records of what data is
-        missing, the history pages, and e-mails asking county offices for what nobody
-        publishes.</li>
-      <li><strong>Reviews and merges changes.</strong> Several agents work at once, most of them
-        on one state each, and one more coordinates them. The coordinating agent reviews the
-        other agents' pull requests and the weekly roster updates, and merges them under
-        standing authority from the person who runs the project. Its standing rule is to test
-        each change on the combined code before merging it, and to hold any change it cannot
-        verify.</li>
+        missing, the history pages, letters asking governments for what nobody publishes, and
+        social media posts.</li>
+      <li><strong>Reviews and merges changes.</strong> Several agents work at once: one for each
+        state being built, others on letters, outreach and the phone app, and scheduled ones that
+        run daily checks. One more coordinates them and reports to the person. Each agent merges
+        its own changes once the checks pass, one at a time, and a scheduled agent reviews and
+        merges the weekly roster updates. Their standing rule is to test each change on the
+        combined code before merging it, and to hold any change they cannot verify.</li>
       <li><strong>Refreshes the traffic report.</strong> A scheduled agent rebuilds the site's
         <a href="/traffic.html">traffic page</a> from its analytics each day and commits it
         directly, without a pull request.</li>
     </ul>
     <p>The agents are Claude Code, from Anthropic, working in the project's public
       repository.</p>
+  </section>
+
+  <section>
+    <h2>How the agents read the web</h2>
+    <p>The agents and the scripts they write look for each answer at the government that
+      publishes it first: a county's own site, a state's election office, a city's open data.
+      Before a script reads a site, it reads that site's robots.txt, the file where a site says
+      what automated readers may fetch, and it does not fetch what the file refuses. An automated
+      check fails any new script that skips this step, and an older script that does not do it
+      yet is recorded until it is fixed. A captcha or other challenge is never worked around. An
+      agent checking a source by hand follows the same rules.</p>
+    <p>There is one exception. To find the contact address of a government office for a letter,
+      an agent may read pages that robots.txt asks automated readers to skip. It keeps nothing
+      from them except the address it puts in the letter, and it still never gets past a
+      captcha.</p>
   </section>
 
   <section>
@@ -343,8 +362,14 @@ def body():
       <li><strong>Makes the calls the sources cannot settle.</strong> For example, a district map
         whose populations are far from equal ships only after the county confirms in writing
         that it is the current map.</li>
-      <li><strong>Sends every e-mail.</strong> An agent may draft a message to a county clerk; a
-        person reads it, edits it and sends it. Nothing is sent automatically.</li>
+      <li><strong>Sends every e-mail.</strong> An agent may draft a letter to a county, city,
+        state agency, tribal government or reporter. It is saved as a draft in the person's
+        mailbox, and the person edits it and sends it. Nothing is sent automatically.</li>
+      <li><strong>Posts every social media post.</strong> An agent may draft one. The person
+        decides whether to post it, and no agent schedules or posts anything.</li>
+      <li><strong>Approves what readers will see.</strong> A change only the code sees can be
+        merged without the person. Anything a reader would notice, such as a new county, a new
+        layer or a changed page, waits until the person says to merge it.</li>
       <li><strong>Does not read every change.</strong> The person reads what the coordinating
         agent reports and answers the questions the agents raise. For everything else, the
         project relies on the rules and on the checks below.</li>
