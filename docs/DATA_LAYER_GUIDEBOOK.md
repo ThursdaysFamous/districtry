@@ -2242,7 +2242,12 @@ trusted.
       "summary": "Inside Beloit the City or Village card names the clerk but not the city council. Beloit is the one Wisconsin city over 25,000 whose governing body the app does not name.",
       "why": "Beloit's own site asks every automated reader not to read any of it, and that request is honoured. No other public page lists the council.",
       "wanted": "Permission to read the city's council page, or a list of the council members from the city.",
-      "blocker": "MEASURED 2026-10-15. www.beloitwi.gov publishes `User-agent: *` / `Disallow: /` under six named crawlers that get narrow rules, so nothing on that host is read. Rock County's certified results name the council winners of 2025 and 2026 in a citywide contest (32 of 32 precincts), but election results are not a roster: a resignation or appointment since would not show, so they are not shipped as one. The state's ward file codes every Beloit ward `ALDERID 00`, so the map draws no Beloit district. Ask wi-city-council-pages (Beloit) is drafted in docs/ASK_DRAFTS.md and waits on the clerk's address; once it goes, this record gains its `ask`."
+      "blocker": "MEASURED 2026-10-15. www.beloitwi.gov publishes `User-agent: *` / `Disallow: /` under six named crawlers that get narrow rules, so nothing on that host is read. Rock County's certified results name the council winners of 2025 and 2026 in a citywide contest (32 of 32 precincts), but election results are not a roster: a resignation or appointment since would not show, so they are not shipped as one. The state's ward file codes every Beloit ward `ALDERID 00`, so the map draws no Beloit district. ASKED 2026-10-23: Ask wi-city-council-pages (Beloit) in docs/ASK_DRAFTS.md went to the City Clerk that day, asking permission to read the council page; follow-up due about 2026-11-13.",
+      "ask": {
+        "who": "Beloit City Clerk",
+        "asked": "2026-10-23",
+        "outcome": "pending"
+      }
     },
   {
     "id": "wi-town-boards",
