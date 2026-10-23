@@ -4122,6 +4122,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
   /* ==== ENGINE:END styles-districtry-skin ==== */
 </style>
+<style id="election-notice-style">
+  /* The Election Day notice (this app's alone) on a phone: the banner it
+     borrows lays its parts out in one row, which there squeezed the sentence
+     into a narrow column beside the button. The sentence takes the first row
+     beside the dismiss cross and the button drops to a row of its own. */
+  @media (max-width: 767px) {
+    .election-notice { flex-wrap: wrap; width: min(92%, 440px); row-gap: 8px; }
+    #election-notice-text { flex: 1 1 calc(100% - 50px); min-width: 0; order: 0; }
+    #election-notice-dismiss { order: 1; align-self: flex-start; }
+    #election-notice-go { order: 2; }
+  }
+</style>
 <script>
   (function () {
     var t = "light";
