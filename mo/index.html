@@ -2436,24 +2436,30 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .poi-pin { background: none; border: none; }
   /* the line beside a point-of-interest pin: a solid white chip like the
      compared districts' labels (readable over any basemap, in both themes),
-     its text darkened from the layer's colour (--poi-label-ink, set per pin) */
-  .leaflet-tooltip.poi-pin-label {
-    display: flex;
-    flex-direction: column;
+     its text darkened from the layer's colour (--poi-label-ink, set per pin).
+     The pane in the selector outranks the dark theme's own tooltip rule,
+     which otherwise paints the chip dark with light text. The kind and the
+     place are blocks of their own: both sit in one inline wrapper span, so a
+     flex rule on the tooltip never reached them and they ran together. */
+  .leaflet-tooltip-pane .leaflet-tooltip.poi-pin-label {
+    /* an absolutely placed tooltip sizes itself to the pane it sits in,
+       which has no width, so without max-content every word took its own
+       line ("Polling / place") */
+    width: max-content;
     max-width: 220px;
-    padding: 2px 8px 3px;
+    padding: 4px 9px 5px;
     background: #fff;
     color: var(--poi-label-ink, #14181C);
     border: 1.5px solid currentColor;
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.22);
     font-family: var(--font-body);
-    line-height: 1.3;
+    line-height: 1.25;
     white-space: normal;
   }
-  .leaflet-tooltip.poi-pin-label::before { display: none; }
-  .poi-pin-label-kind { font-size: 10.5px; font-weight: 600; text-transform: none; opacity: 0.85; }
-  .poi-pin-label-name { font-size: 12px; font-weight: 700; }
+  .leaflet-tooltip-pane .leaflet-tooltip.poi-pin-label::before { display: none; }
+  .poi-pin-label-kind { display: block; margin-bottom: 1px; font-size: 10.5px; font-weight: 600; opacity: 0.85; }
+  .poi-pin-label-name { display: block; font-size: 12px; font-weight: 700; }
   /* ==== ENGINE:END styles-markers ==== */
   /* Fork-owned: the masthead action row holding the Data-gaps button, pinned to
      the RIGHT of the wordmark so the masthead reads as one bar (brand left,
@@ -8123,10 +8129,22 @@ function initMissouriExplorer() {
     var viewbox = [POI_GEOCODE_BBOX.minLng, POI_GEOCODE_BBOX.maxLat, POI_GEOCODE_BBOX.maxLng, POI_GEOCODE_BBOX.minLat].join(",");
     var url = "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&bounded=1&viewbox=" +
       viewbox + "&q=" + encodeURIComponent(address);
+    // OpenStreetMap often holds a street without its house numbers, and
+    // then Nominatim answers nothing, or the street itself (category
+    // "highway"), somewhere along its length. Either way the Census Bureau's
+    // estimate from its address ranges is asked next, through the link
+    // lookup (lookupAddressRanges, ENGINE geocoder-search), and taken only
+    // when its one match is this number on this street in this town; a
+    // street answer is kept when the Census Bureau has none. Until
+    // 2026-10-23 a miss here was the end of it, so a polling place or an
+    // office whose house number OpenStreetMap lacks got no pin at all.
     return fetchJSONWithRetry(url, { headers: { "Accept": "application/json" } }, 1)
       .then(function (results) {
         var hit = results && results[0];
-        return hit ? { lat: parseFloat(hit.lat), lng: parseFloat(hit.lon) } : null;
+        var at = hit ? { lat: parseFloat(hit.lat), lng: parseFloat(hit.lon) } : null;
+        if (at && hit.category !== "highway") return at;
+        return lookupAddressRanges(addressForLookup(address, METRO_BRAND.instanceTag) || address)
+          .then(function (m) { return m || at; });
       });
   }
 
@@ -10905,7 +10923,7 @@ function initMissouriExplorer() {
     "mo-senate",         // 34 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 115 counties (114 counties and the independent City of St. Louis), pre-built from TIGERweb; the instance's offline anchor layer
     "mo-house",          // 163 House districts — smaller on average than a county, larger than a school district
-    "county-commissioner", // Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 23 counties whose county map viewer, download or posted township map publishes them
+    "county-commissioner", // Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 26 counties whose county map viewer, download, posted township map, GIS office or clerk publishes them
     "school-district-unified", // 445 unified districts, about 372 km2 of land on average, live from TIGERweb (no data/app file); with the 71 elementary districts they cover the state exactly
     "school-district-elementary", // 71 elementary districts, about 177 km2 of land on average, live from TIGERweb (no data/app file); the ground the unified tiling leaves
     "zip-code",          // 1,977 ZIP Code Tabulation Areas in the state's own bounding box, about 163 km2 of land on average, fetched live by envelope; the layer hides outside Missouri
@@ -15305,8 +15323,12 @@ function initMissouriExplorer() {
    * mo/scripts/build_mo_commission_districts.py): 21 counties' map viewers
    * carry a Commissioner District layer, MidMO GIS, the map site of
    * the City of Jefferson and Cole County, publishes Cole's as a download,
-   * and Lawrence County's posted map draws its two districts along whole
-   * townships, drawn here from TIGER's township lines. No statewide map of the lines
+   * Lawrence County's posted map draws its two districts along whole
+   * townships, drawn here from TIGER's township lines, Cass County's GIS
+   * office sent this app a file of its two districts, and Saline County's
+   * clerk listed the townships and precincts in each (drawn from TIGER's
+   * townships and the Census's 2020 Marshall ward precincts), and Perry
+   * County's map at SEMO GIS carries a Commissioner Districts layer. No statewide map of the lines
    * exists, so everywhere else the layer is hidden (coverage), and gap
    * mo-county-commission-district-lines says why. The County card names
    * every county's commissioners either way.
@@ -15356,11 +15378,28 @@ function initMissouriExplorer() {
       ? String(result.county) + "'s commission districts as the county's own " +
         "posted map draws them, each made of whole townships, drawn here from " +
         "the Census Bureau's township lines"
+      : result.source === "sent"
+      ? String(result.county) + "'s commission districts as the county's GIS " +
+        "office sent them to this app"
+      : result.source === "arcgis"
+      ? "The Commissioner Districts layer of " + String(result.county) +
+        "'s own map at SEMO GIS"
+      : result.source === "listed"
+      ? String(result.county) + "'s commission districts as the county clerk " +
+        "listed them, township by township and precinct by precinct"
       : "The Commissioner District layer of " + String(result.county) +
         "'s own map viewer";
     var clerk = moDate(result.clerk);
-    return where + (read ? ", read on " + read : "") + "." + (clerk
+    var sent = moDate(result.sent);
+    var listed = moDate(result.listed);
+    if (result.source === "sent") read = sent;
+    if (result.source === "listed") read = listed;
+    return where + (read ? (sent || listed ? " on " : ", read on ") + read : "") + "." + (clerk
       ? " The county clerk pointed this app to that map on " + clerk + "."
+      : "") + (result.source === "listed"
+      ? " They are drawn here from the Census Bureau's township lines and, " +
+        "inside a township the list splits, its 2020 voting precinct lines, " +
+        "which may be older than a city's newest ward lines."
       : "") + " Missouri law has " +
       "each county commission draw the line between its two districts, and " +
       "sets no date by which it must be redrawn. This app has not checked " +
@@ -15402,6 +15441,8 @@ function initMissouriExplorer() {
           source: findPropCI(props, ["source"]),
           read: findPropCI(props, ["read"]),
           clerk: findPropCI(props, ["pointedon"]),
+          listed: findPropCI(props, ["listedon"]),
+          sent: findPropCI(props, ["senton"]),
           officials: null,
           rosterFailed: false
         };

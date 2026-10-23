@@ -2436,24 +2436,30 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .poi-pin { background: none; border: none; }
   /* the line beside a point-of-interest pin: a solid white chip like the
      compared districts' labels (readable over any basemap, in both themes),
-     its text darkened from the layer's colour (--poi-label-ink, set per pin) */
-  .leaflet-tooltip.poi-pin-label {
-    display: flex;
-    flex-direction: column;
+     its text darkened from the layer's colour (--poi-label-ink, set per pin).
+     The pane in the selector outranks the dark theme's own tooltip rule,
+     which otherwise paints the chip dark with light text. The kind and the
+     place are blocks of their own: both sit in one inline wrapper span, so a
+     flex rule on the tooltip never reached them and they ran together. */
+  .leaflet-tooltip-pane .leaflet-tooltip.poi-pin-label {
+    /* an absolutely placed tooltip sizes itself to the pane it sits in,
+       which has no width, so without max-content every word took its own
+       line ("Polling / place") */
+    width: max-content;
     max-width: 220px;
-    padding: 2px 8px 3px;
+    padding: 4px 9px 5px;
     background: #fff;
     color: var(--poi-label-ink, #14181C);
     border: 1.5px solid currentColor;
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.22);
     font-family: var(--font-body);
-    line-height: 1.3;
+    line-height: 1.25;
     white-space: normal;
   }
-  .leaflet-tooltip.poi-pin-label::before { display: none; }
-  .poi-pin-label-kind { font-size: 10.5px; font-weight: 600; text-transform: none; opacity: 0.85; }
-  .poi-pin-label-name { font-size: 12px; font-weight: 700; }
+  .leaflet-tooltip-pane .leaflet-tooltip.poi-pin-label::before { display: none; }
+  .poi-pin-label-kind { display: block; margin-bottom: 1px; font-size: 10.5px; font-weight: 600; opacity: 0.85; }
+  .poi-pin-label-name { display: block; font-size: 12px; font-weight: 700; }
   /* ==== ENGINE:END styles-markers ==== */
   /* Fork-owned: the masthead action row holding the Data-gaps button, pinned to
      the RIGHT of the wordmark so the masthead reads as one bar (brand left,
@@ -3852,6 +3858,25 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
   /* ==== ENGINE:END styles-districtry-skin ==== */
 </style>
+<style id="election-notice-style">
+  /* The Election Day notice (this app's alone) on a phone: the banner it
+     borrows lays its parts out in one row, which there squeezed the sentence
+     into a narrow column beside the button. The sentence takes the first row
+     beside the dismiss cross and the button drops to a row of its own. */
+  @media (max-width: 767px) {
+    /* It also stops short of the zoom buttons on the right: centred at 92%
+       wide it covered them. The script below lifts it above the map credit
+       line, since on a phone the map's column runs on below the map. */
+    .election-notice {
+      flex-wrap: wrap; row-gap: 8px;
+      left: 8px; right: 54px;
+      transform: none; width: auto; max-width: none;
+    }
+    #election-notice-text { flex: 1 1 calc(100% - 50px); min-width: 0; order: 0; }
+    #election-notice-dismiss { order: 1; align-self: flex-start; }
+    #election-notice-go { order: 2; }
+  }
+</style>
 <script>
   /* The theme applied BEFORE FIRST PAINT, from the same key the toggle writes,
      so a reader who chose dark never sees a white flash on the way in. Falls
@@ -4048,6 +4073,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
         title="Hover explorer — show the districts under your cursor as you move the mouse">Hover: on</button>
     </div>
 
+    <!-- Election notice (Wisconsin's own, until Election Day): turns on the
+         ward layer, whose card names the reader's polling place. -->
+    <div class="map-tile-banner election-notice" id="election-notice" role="region" aria-label="Election Day" hidden
+         style="border-left-color: var(--accent); bottom: 56px;">
+      <span id="election-notice-text">Election Day is Tuesday, Nov 3. Click where you live to see where you vote.</span>
+      <button type="button" id="election-notice-go"
+              style="flex: none; display: inline-flex; align-items: center; min-height: 32px; padding: 0 12px; background: transparent; color: var(--accent-deep, #0B5394); border: 1px solid var(--accent-deep, #0B5394); border-radius: 5px; font-family: var(--font-body); font-size: 13px; font-weight: 600; cursor: pointer;">Show where to vote</button>
+      <button type="button" id="election-notice-dismiss" class="tile-banner-dismiss" aria-label="Dismiss this message">✕</button>
+    </div>
     <div class="map-tile-banner" id="tile-banner" role="status" aria-live="polite" hidden>
       <span>Base map tiles unavailable — your selections and layers still work.</span>
       <button type="button" id="tile-banner-dismiss" class="tile-banner-dismiss" aria-label="Dismiss this message">✕</button>
@@ -8151,10 +8185,22 @@ function initWisconsinExplorer() {
     var viewbox = [POI_GEOCODE_BBOX.minLng, POI_GEOCODE_BBOX.maxLat, POI_GEOCODE_BBOX.maxLng, POI_GEOCODE_BBOX.minLat].join(",");
     var url = "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&bounded=1&viewbox=" +
       viewbox + "&q=" + encodeURIComponent(address);
+    // OpenStreetMap often holds a street without its house numbers, and
+    // then Nominatim answers nothing, or the street itself (category
+    // "highway"), somewhere along its length. Either way the Census Bureau's
+    // estimate from its address ranges is asked next, through the link
+    // lookup (lookupAddressRanges, ENGINE geocoder-search), and taken only
+    // when its one match is this number on this street in this town; a
+    // street answer is kept when the Census Bureau has none. Until
+    // 2026-10-23 a miss here was the end of it, so a polling place or an
+    // office whose house number OpenStreetMap lacks got no pin at all.
     return fetchJSONWithRetry(url, { headers: { "Accept": "application/json" } }, 1)
       .then(function (results) {
         var hit = results && results[0];
-        return hit ? { lat: parseFloat(hit.lat), lng: parseFloat(hit.lon) } : null;
+        var at = hit ? { lat: parseFloat(hit.lat), lng: parseFloat(hit.lon) } : null;
+        if (at && hit.category !== "highway") return at;
+        return lookupAddressRanges(addressForLookup(address, METRO_BRAND.instanceTag) || address)
+          .then(function (m) { return m || at; });
       });
   }
 
@@ -16811,6 +16857,77 @@ function initWisconsinExplorer() {
       return { label: "Find your polling place — MyVote Wisconsin", url: "https://myvote.wi.gov/" };
     }
   });
+
+  /* ---------- Election notice (until Election Day) ----------
+   * One dismissible line over the map, from now through the election date in
+   * Wisconsin's time zone, saying where to find the answer: its button turns
+   * on the ward layer, whose card names the polling place from the pairing
+   * above (and links MyVote where it has none). The same notice as Illinois's,
+   * which is where the comments below on its placement were measured.
+   * Never shown inside an embed, where the host page decides what is said. */
+  var ELECTION_NOTICE_UNTIL = "2026-11-03";
+  // A literal, not built from the date, so the privacy page's measurement of
+  // the keys this app stores reads the whole key.
+  var ELECTION_NOTICE_KEY = "districtry-election-notice-2026-11-03";
+  function electionNoticeToday() {
+    try {
+      return new Date().toLocaleDateString("en-CA", { timeZone: "America/Chicago" });
+    } catch (e) {
+      var d = new Date();
+      return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
+    }
+  }
+  (function () {
+    var notice = document.getElementById("election-notice");
+    if (!notice) return;
+    var embedded = false;
+    try { embedded = window.self !== window.top; } catch (e) { embedded = true; }
+    if (embedded || electionNoticeToday() > ELECTION_NOTICE_UNTIL) return;
+    // A link that already says what to show (a point, a search, a form) is
+    // its own answer; the notice is for a reader who arrives at a bare map.
+    if (/[#&](p|point|q|feedback)=|#feedback\b/.test(location.hash || "")) return;
+    try { if (localStorage.getItem(ELECTION_NOTICE_KEY)) return; } catch (e) { /* storage blocked: show it */ }
+    var dismiss = function () {
+      notice.hidden = true;
+      try { localStorage.setItem(ELECTION_NOTICE_KEY, "1"); } catch (e) { /* nothing to remember it in */ }
+    };
+    document.getElementById("election-notice-dismiss").addEventListener("click", dismiss);
+    document.getElementById("election-notice-go").addEventListener("click", function () {
+      ["ward"].forEach(function (id) {
+        var box = document.getElementById("toggle-" + id);
+        if (box && !box.checked) box.click();
+      });
+      dismiss();
+    });
+    // The first tap on the map is the reader doing what the notice asks, and
+    // on a phone the notice sits over the map they are tapping.
+    map.once("click", function () { notice.hidden = true; });
+    // On a phone the map's column carries a row of controls below the map,
+    // so a fixed bottom offset put the notice over the map's credit line and
+    // off the map's foot. Measure the gap and sit 22px above the map's foot
+    // there, clear of the credit line; a computer keeps the inline 56px.
+    var mapEl = document.getElementById("map");
+    var placeNotice = function () {
+      if (notice.hidden || !mapEl || !window.matchMedia("(max-width: 767px)").matches) {
+        notice.style.bottom = "56px";
+        return;
+      }
+      var col = notice.offsetParent;
+      if (!col) return;
+      // bottom is measured from the column's padding edge, so its lower
+      // border is taken off too
+      var below = col.getBoundingClientRect().bottom - (parseFloat(getComputedStyle(col).borderBottomWidth) || 0) -
+        mapEl.getBoundingClientRect().bottom;
+      notice.style.bottom = Math.round(Math.max(0, below) + 22) + "px";
+    };
+    window.addEventListener("resize", placeNotice);
+    // the controls row under the map fills in after boot (the Boundary
+    // streets button arrives with the vector labels), so measure again
+    // whenever the column changes height
+    notice.hidden = false;
+    if (window.ResizeObserver && notice.offsetParent) new ResizeObserver(placeNotice).observe(notice.offsetParent);
+    placeNotice();
+  })();
 
   /* ---------- 4. School District (Unified) ----------
    * Geometry pre-built at bootstrap (TIGERweb School layer 0, STATE-filtered,

@@ -43,6 +43,17 @@
   "spreadPct": 10.1,
   "unplaced2020": 36
  },
+ "29037": {
+  "county": "Cass County",
+  "people2020": {
+   "District 1": 50946,
+   "District 2": 56878
+  },
+  "read": "2026-10-23",
+  "source": "sent",
+  "spreadPct": 11.0,
+  "unplaced2020": 0
+ },
  "29041": {
   "county": "Chariton County",
   "people2020": {
@@ -175,6 +186,17 @@
   "spreadPct": 10.3,
   "unplaced2020": 4
  },
+ "29157": {
+  "county": "Perry County",
+  "people2020": {
+   "First District": 9295,
+   "Second District": 9661
+  },
+  "read": "2026-10-23",
+  "source": "arcgis",
+  "spreadPct": 3.9,
+  "unplaced2020": 0
+ },
  "29161": {
   "county": "Phelps County",
   "people2020": {
@@ -228,6 +250,17 @@
   "read": "2026-10-23",
   "source": "viewer",
   "spreadPct": 13.6,
+  "unplaced2020": 0
+ },
+ "29195": {
+  "county": "Saline County",
+  "people2020": {
+   "Northern District": 10207,
+   "Southern District": 13126
+  },
+  "read": "2026-10-23",
+  "source": "listed",
+  "spreadPct": 25.0,
   "unplaced2020": 0
  },
  "29217": {
