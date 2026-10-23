@@ -627,14 +627,14 @@
         "on drops the ward to outline-only, framing the precinct fills from underneath."
       ],
       "source": {
-        "answers": "The Chicago ward precinct containing the point — the smallest unit the city runs elections in.",
+        "answers": "The Chicago ward precinct containing the point — the smallest unit the city runs elections in — and, up to Election Day, where its voters vote.",
         "boundary": [
           {
             "label": "Chicago Data Portal — ward precincts (i8fv-xe4b)",
             "url": "https://data.cityofchicago.org/d/i8fv-xe4b"
           }
         ],
-        "people": "Nobody is elected from a precinct; it is an election unit, not an office.",
+        "people": "Nobody is elected from a precinct; it is an election unit, not an office. The polling place comes from the Chicago Board of Election Commissioners' published list, read daily until Election Day, with each building placed on the map by the U.S. Census Bureau's geocoder.",
         "applies": "City of Chicago."
       }
     },
@@ -3087,6 +3087,11 @@
         "note": "GeoJSON FeatureCollection (type/metadata/features — key floor is shape-only); hand-curated per election from chicagoelections.gov, network-first so a new election's list is never served stale"
       },
       {
+        "file": "chicago-polling-places.json",
+        "min_keys": 8,
+        "note": "Each Chicago precinct's Election Day polling place (sites[] plus precincts{ward-precinct: site index}) from the Chicago Board of Election Commissioners' published list, by scripts/chicago_polling_places_scraper.py + build_chicago_polling_places.py, refreshed daily; the build requires the list and the i8fv-xe4b precinct map to name the same 1,291 precincts and places each building with the Census geocoder, and the card hides the row after electionDate. Network-first: a moved polling place must reach a returning visitor at once"
+      },
+      {
         "file": "ccbr-roster.json",
         "min_keys": 3
       },
@@ -3925,6 +3930,11 @@
       "file": "update-tiger-tiles.yml",
       "purpose": "Re-mirror the Census TIGERweb layers the apps draw from vector tiles, fleet-wide (scripts/mirror_tiger_tiles.py -> the archives + tiger-mirror.json); rebuilds and gates only a layer whose fetched set changed, moves the cache name of each app whose archive it replaced, and opens a PR only then",
       "schedule": "Sun 10:41 UTC"
+    },
+    {
+      "file": "update-chicago-polling-places.yml",
+      "purpose": "Re-read the Chicago Board of Elections' polling place list daily (its file name changes with each revision, so the link is discovered) and rebuild il/data/app/chicago-polling-places.json; fails if the list and the precinct map disagree, or if the list cannot be read on or before the election date; opens a PR on any change",
+      "schedule": "daily 11:15 UTC"
     }
   ],
   "geocoder": {
