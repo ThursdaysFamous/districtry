@@ -376,9 +376,9 @@
       "label": "County Commission District",
       "group": "political",
       "area_rank": 5,
-      "rank_note": "Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 22 counties whose county map viewer or download publishes them",
+      "rank_note": "Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 23 counties whose county map viewer, download or posted township map publishes them",
       "source": {
-        "answers": "The county commission district covering the point, and the district commissioner elected from it, in the 22 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner.",
+        "answers": "The county commission district covering the point, and the district commissioner elected from it, in the 23 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner.",
         "boundary": [
           {
             "label": "Integrity GIS county map viewers — the commission district layer each county's own public map viewer carries, for Barton, Bates, Buchanan, Camden, Chariton, Christian, Cooper, Dade, DeKalb, Lincoln, Maries, Marion, McDonald, Miller, Phelps, Polk, Pulaski, Ralls, Ray, Vernon and Warren counties, read 2026-10-23. Each answers exactly two districts, whose names match the seats the Secretary of State's Missouri Roster lists for that county. Clipped to the Census Bureau's county line, with the few slivers the viewer leaves between its two districts given to the district beside them. Whether each viewer's line is the one the county's elections use today is NOT established: no viewer gives a date for its lines, and Missouri law sets no date by which a county must redraw them.",
@@ -387,10 +387,14 @@
           {
             "label": "Cole County — the commission district shapefile MidMO GIS, the map site of the City of Jefferson and Cole County, publishes for download (CC_Commissioner.zip), created 11 May 2011, clipped to the Census Bureau's county line in the same way. Whether it is the line the county's elections use today is not established either.",
             "url": "https://www.midmogis.org/GIS_Hyperlinks/Downloadables/CC_Commissioner.zip"
+          },
+          {
+            "label": "Lawrence County — the county's posted map of its two commission districts (a 2024 scan), whose Eastern District is outlined around six whole townships: Aurora, Buck Prairie, Freistatt, Ozark, Spring River and Turnback. Drawn as the union of those townships' Census Bureau (TIGER) lines, clipped to the county line in the same way; the county clerk pointed to that map when asked on 2026-10-23. Whether it is the line the county's elections use today is not established either.",
+            "url": "https://www.lawrencecountymo.org/_files/ugd/e487e4_0038fc0bb16742e8b9dc74b091ced286.pdf"
           }
         ],
         "people": "mo-county-officials.json, the roster the County card reads: each county's district commissioners from the Secretary of State's Missouri Roster, joined by seat name.",
-        "applies": "22 of Missouri's 114 counties; hidden in the other 92 and in the City of St. Louis, which the Data gaps panel lists and explains."
+        "applies": "23 of Missouri's 114 counties; hidden in the other 91 and in the City of St. Louis, which the Data gaps panel lists and explains."
       }
     },
     {
@@ -605,9 +609,9 @@
       },
       {
         "file": "mo-commission-districts.json",
-        "min_features": 44,
-        "max_features": 44,
-        "note": "The county commission districts of the 22 counties whose map viewer or download publishes them (mo/scripts/build_mo_commission_districts.py), two per county, clipped to the Census Bureau's county lines."
+        "min_features": 46,
+        "max_features": 46,
+        "note": "The county commission districts of the 23 counties whose map viewer, download or posted township map publishes them (mo/scripts/build_mo_commission_districts.py), two per county, clipped to the Census Bureau's county lines."
       }
     ],
     "rosters": [
@@ -633,8 +637,8 @@
       },
       {
         "file": "mo-commission-counties.json",
-        "min_keys": 22,
-        "note": "The 22 counties whose commission districts are drawn, by GEOID, with each district's 2020 census population, written by the same build as mo-commission-districts.json and held to it by its --check. The County Commission District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file."
+        "min_keys": 23,
+        "note": "The 23 counties whose commission districts are drawn, by GEOID, with each district's 2020 census population, written by the same build as mo-commission-districts.json and held to it by its --check. The County Commission District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file."
       },
       {
         "file": "coverage-gaps.json",
@@ -644,7 +648,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mo-shell-v2",
+    "cache_name": "districtry-mo-shell-v3",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
