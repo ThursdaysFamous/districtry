@@ -37,6 +37,13 @@
     // District 3" without re-implementing ~60 county fetches. Settles every
     // county, failed ones included (ok:false), so a build can refuse a partial
     // index rather than silently ship one.
+    // The name a layer prints for one feature on its map labels and hover row
+    // (the same hoverValue those read), for a check that a layer names its own
+    // districts and not a parent's (smoke check 1k1b).
+    hoverValueFor: function (id, properties) {
+      var mod = getLayerById(id);
+      return mod ? hoverValue(mod, { type: "Feature", geometry: null, properties: properties || {} }) : null;
+    },
     layerDistricts: function (id) {
       var mod = getLayerById(id);
       if (!mod || !mod.countyEntries) return Promise.reject(new Error(id + " is not a county-dispatched layer"));

@@ -1419,6 +1419,7 @@ PAGES = [
     dict(tag="mi", file="city-council.html", worksheet="mi/metro-worksheet.json",
          layers="city-ward", make=city_council_page, place="Michigan",
          wards=[("Battle Creek", "mi/data/app/mi-battle-creek-wards.json"),
+                ("Bay City", "mi/data/app/mi-bay-city-wards.json"),
                 ("Detroit", "mi/data/app/mi-detroit-council-districts.json"),
                 ("Flint", "mi/data/app/mi-flint-wards.json"),
                 ("Grand Rapids", "mi/data/app/mi-grand-rapids-wards.json"),
@@ -1432,6 +1433,7 @@ PAGES = [
                 ("Walker", "mi/data/app/mi-walker-wards.json"),
                 ("Warren", "mi/data/app/mi-warren-wards.json")],
          named_on_card={c: ("mi/data/app/mi-municipal-officials.json", g) for c, g in (
+             ("Bay City", "2606020"),
              ("Flint", "2629000"), ("Holland", "2638640"), ("Lansing", "2646000"),
              ("Midland", "2653780"),
              ("Muskegon", "2656320"), ("Pontiac", "2665440"), ("Walker", "2682960"),
@@ -1448,6 +1450,7 @@ PAGES = [
                  "mi/data/app/mi-battle-creek-commission-members.json",
                  "mi/data/app/mi-jackson-council-members.json",
                  "mi/data/app/mi-battle-creek-wards.json",
+                 "mi/data/app/mi-bay-city-wards.json",
                  "mi/data/app/mi-detroit-council-districts.json",
                  "mi/data/app/mi-flint-wards.json",
                  "mi/data/app/mi-grand-rapids-wards.json",

@@ -36473,7 +36473,7 @@
    "name": "Z_Corbin",
    "officials": [],
    "phone": "(606) 528-0669",
-   "population": "1,790",
+   "population": "0",
    "searchCounty": "Knox",
    "sourceUrl": "https://kydlgweb.ky.gov/Cities/16_CityView.cfm?City_ID=467",
    "zip": "40702"
@@ -41960,7 +41960,7 @@
  "source": {
   "counties": 120,
   "publisher": "Kentucky Department for Local Government",
-  "read": "2026-10-14",
+  "read": "2026-10-21",
   "url": "https://kydlgweb.ky.gov/Cities/16_CityHome.cfm"
  }
 }

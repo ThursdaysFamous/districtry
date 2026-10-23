@@ -2434,6 +2434,32 @@ svg.leaflet-image-layer.leaflet-interactive path {
    * transition fades the shadow back in on moveend. (OPTIMIZATION_PLAYBOOK P9/R2-5.) */
   .map-panning .region-highlight { filter: none; transition: none; }
   .poi-pin { background: none; border: none; }
+  /* the line beside a point-of-interest pin: a solid white chip like the
+     compared districts' labels (readable over any basemap, in both themes),
+     its text darkened from the layer's colour (--poi-label-ink, set per pin).
+     The pane in the selector outranks the dark theme's own tooltip rule,
+     which otherwise paints the chip dark with light text. The kind and the
+     place are blocks of their own: both sit in one inline wrapper span, so a
+     flex rule on the tooltip never reached them and they ran together. */
+  .leaflet-tooltip-pane .leaflet-tooltip.poi-pin-label {
+    /* an absolutely placed tooltip sizes itself to the pane it sits in,
+       which has no width, so without max-content every word took its own
+       line ("Polling / place") */
+    width: max-content;
+    max-width: 220px;
+    padding: 4px 9px 5px;
+    background: #fff;
+    color: var(--poi-label-ink, #14181C);
+    border: 1.5px solid currentColor;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.22);
+    font-family: var(--font-body);
+    line-height: 1.25;
+    white-space: normal;
+  }
+  .leaflet-tooltip-pane .leaflet-tooltip.poi-pin-label::before { display: none; }
+  .poi-pin-label-kind { display: block; margin-bottom: 1px; font-size: 10.5px; font-weight: 600; opacity: 0.85; }
+  .poi-pin-label-name { display: block; font-size: 12px; font-weight: 700; }
   /* ==== ENGINE:END styles-markers ==== */
   /* Fork-owned: the masthead action row holding the Data-gaps button, pinned to
      the RIGHT of the wordmark so the masthead reads as one bar (brand left,
@@ -10901,7 +10927,7 @@ function initMichiganExplorer() {
     "county-commissioner", // 619 districts across all 83 counties — the finest tiling this instance ships, smaller than a state House district
     "county-subdivision", // 1,581 records tiling the state, live from TIGERweb (no data/app file) — 1,122 general-law townships, 118 charter townships, 301 city placeholder records for 281 distinct cities (18 of which cross a county line), and 40 'not defined' records that are pure Great Lakes water
     "zip-code",          // 1,010 ZIP Code Tabulation Areas covering Michigan, live from TIGERweb (no data/app file) — 139.7 km2 mean feature area, between a township and a precinct
-    "city-ward",         // Thirteen cities: Detroit, Warren, Grand Rapids, Flint, Lansing, Rochester Hills, Battle Creek, Jackson, Pontiac, Midland, Muskegon, Holland and Walker. Their districts run from Detroit's seven over 139 sq mi (about 20 each) down to Jackson's six wards over 11 (about 2 each), measured 2026-10-01 — all smaller than a typical Michigan ZCTA; ranked on Detroit's, the largest
+    "city-ward",         // Fourteen cities: Detroit, Warren, Grand Rapids, Flint, Lansing, Rochester Hills, Battle Creek, Jackson, Pontiac, Midland, Muskegon, Holland, Bay City and Walker. Their districts run from Detroit's seven over 139 sq mi (about 20 each) down to Jackson's six wards over 11 (about 2 each), measured 2026-10-01 — all smaller than a typical Michigan ZCTA; ranked on Detroit's, the largest
     "precinct",          // 3,895 voting precincts across all 83 counties, pre-built from the state's own 2026-cycle layer — 38.8 km2 mean feature area against a 6.4 km2 median, a six-fold skew because a rural township precinct and a city precinct are barely the same kind of object; the finest tiling this instance ships
     "tribal-government", // Tribal land — Michigan has 24 pieces across 12 nations, from the Isabella Reservation's 564.926 km² down to a 0.074 km² Grand Traverse parcel, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked on its 3.021 km² MEDIAN, below the precinct fabric's measured 6.400 — medians rather than means, because this layer's own mean of 39.8 km² is Isabella and L'Anse and describes none of the other 22 parcels. The places layer below it is live and publishes a mean rather than a median, so no claim is made here about which of the two is smaller; the rank governs draw order only. Partial coverage: most of Michigan is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn there — measured against the Census's 484 tribal subdivisions nationwide, 1 of them in Michigan and it is Lac Vieux Desert's — the 2020 population, and the council: the authority for who sits on it is each nation's own published list. Nine of the twelve publish one this project reads weekly, and the card names that council with the date it was read and a link to the page; three cannot be read, two behind a managed challenge and one publishing its council to its members only, and the card says which. Michigan has no current state list of tribal officials to fall back on. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "municipality",      // 533 incorporated places, live from TIGERweb (no data/app file) — 281 cities and 252 villages, small dense pockets inside the township fabric, so the smallest layer this instance ships at a 12 km2 mean
@@ -12435,6 +12461,30 @@ function initMichiganExplorer() {
         icon: poiPinIcon(moduleColor(mod)),
         keyboard: false,
         alt: poi.label + " location"
+      });
+      // A pin says what it is beside itself, on every device: a touch screen
+      // has no hover, and two layers' pins can share a colour family (a ward
+      // office and a polling place are both dark blue in Illinois). The small
+      // line names the kind of place, `poi.kind` where the layer gives one and
+      // the layer's own name otherwise; the bold line is the place itself.
+      // textContent throughout, since both can be publisher text.
+      var pinLabel = document.createElement("span");
+      var pinKind = document.createElement("span");
+      pinKind.className = "poi-pin-label-kind";
+      pinKind.textContent = poi.kind ? String(poi.kind) : mod.label;
+      var pinName = document.createElement("span");
+      pinName.className = "poi-pin-label-name";
+      pinName.textContent = String(poi.label);
+      pinLabel.appendChild(pinKind);
+      pinLabel.appendChild(pinName);
+      pinLabel.style.setProperty("--poi-label-ink", hoverPillStyle(moduleColor(mod)).color);
+      rt.poiMarker.bindTooltip(pinLabel, {
+        permanent: true,
+        direction: "right",
+        offset: [9, -17],
+        opacity: 1,
+        interactive: false,
+        className: "poi-pin-label"
       });
       // Touch devices have no real hover state (see hoverCapable) — skip wiring
       // the hover popup to this pin there so a tap can't pop it up unexpectedly.
@@ -17711,6 +17761,22 @@ function initMichiganExplorer() {
              + "(creativecommons.org/licenses/by-nc/4.0). Changed only by rounding its "
              + "coordinates to six decimal places."
   });
+  var bayCityEntry = municipalWardEntry({
+    key: "bay-city", label: "Bay City", geoid: "2606020", unit: "Ward",
+    file: "data/app/mi-bay-city-wards.json",
+    body: "Bay City City Commission",
+    bodyUrl: "https://www.baycitymi.gov/377/Contact-the-Commissioners",
+    seatsNote: "Bay City elects one commissioner from each of nine wards, and a mayor "
+             + "at large.",
+    // The clerk wrote on 2026-10-22 that the lines have not changed and named
+    // the county's GIS map as current.
+    // mi/scripts/build_mi_bay_city_wards.py says why it is checked against
+    // the state's precincts by residents rather than by area: the two maps
+    // divide the Saginaw River and Middleground Island differently.
+    linesFrom: "Bay County's ward map. The City Clerk wrote on 22 October 2026 that "
+             + "the ward lines have not changed. On the Saginaw River and Middleground "
+             + "Island, where nobody lives, it can differ from the state's precinct map."
+  });
   var pontiacEntry = municipalWardEntry({
     key: "pontiac", label: "Pontiac", geoid: "2665440", unit: "District",
     file: "data/app/mi-pontiac-wards.json",
@@ -17743,11 +17809,12 @@ function initMichiganExplorer() {
     // Grand Rapids, then Flint, then Rochester Hills, then Battle Creek,
     // then Jackson; the four drawn on 2026-10-15 follow in the same order
     // (Pontiac, Midland, Muskegon, Holland), then Walker, drawn 2026-10-16.
-    // Lansing, drawn 2026-10-20, is the largest of those and goes ahead of them.
+    // Lansing, drawn 2026-10-20, is the largest of those and goes ahead of them;
+    // Bay City, drawn 2026-10-22, sits between Holland and Walker.
     entries: [detroitEntry, warrenEntry, grandRapidsEntry, flintEntry,
               rochesterHillsEntry, battleCreekEntry, jacksonEntry,
               lansingEntry, pontiacEntry, midlandEntry, muskegonEntry, hollandEntry,
-              walkerEntry]
+              bayCityEntry, walkerEntry]
   });
 
 
@@ -19421,6 +19488,13 @@ function initMichiganExplorer() {
     // District 3" without re-implementing ~60 county fetches. Settles every
     // county, failed ones included (ok:false), so a build can refuse a partial
     // index rather than silently ship one.
+    // The name a layer prints for one feature on its map labels and hover row
+    // (the same hoverValue those read), for a check that a layer names its own
+    // districts and not a parent's (smoke check 1k1b).
+    hoverValueFor: function (id, properties) {
+      var mod = getLayerById(id);
+      return mod ? hoverValue(mod, { type: "Feature", geometry: null, properties: properties || {} }) : null;
+    },
     layerDistricts: function (id) {
       var mod = getLayerById(id);
       if (!mod || !mod.countyEntries) return Promise.reject(new Error(id + " is not a county-dispatched layer"));

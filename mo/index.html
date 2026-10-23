@@ -2434,6 +2434,32 @@ svg.leaflet-image-layer.leaflet-interactive path {
    * transition fades the shadow back in on moveend. (OPTIMIZATION_PLAYBOOK P9/R2-5.) */
   .map-panning .region-highlight { filter: none; transition: none; }
   .poi-pin { background: none; border: none; }
+  /* the line beside a point-of-interest pin: a solid white chip like the
+     compared districts' labels (readable over any basemap, in both themes),
+     its text darkened from the layer's colour (--poi-label-ink, set per pin).
+     The pane in the selector outranks the dark theme's own tooltip rule,
+     which otherwise paints the chip dark with light text. The kind and the
+     place are blocks of their own: both sit in one inline wrapper span, so a
+     flex rule on the tooltip never reached them and they ran together. */
+  .leaflet-tooltip-pane .leaflet-tooltip.poi-pin-label {
+    /* an absolutely placed tooltip sizes itself to the pane it sits in,
+       which has no width, so without max-content every word took its own
+       line ("Polling / place") */
+    width: max-content;
+    max-width: 220px;
+    padding: 4px 9px 5px;
+    background: #fff;
+    color: var(--poi-label-ink, #14181C);
+    border: 1.5px solid currentColor;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.22);
+    font-family: var(--font-body);
+    line-height: 1.25;
+    white-space: normal;
+  }
+  .leaflet-tooltip-pane .leaflet-tooltip.poi-pin-label::before { display: none; }
+  .poi-pin-label-kind { display: block; margin-bottom: 1px; font-size: 10.5px; font-weight: 600; opacity: 0.85; }
+  .poi-pin-label-name { display: block; font-size: 12px; font-weight: 700; }
   /* ==== ENGINE:END styles-markers ==== */
   /* Fork-owned: the masthead action row holding the Data-gaps button, pinned to
      the RIGHT of the wordmark so the masthead reads as one bar (brand left,
@@ -4238,14 +4264,14 @@ function initMissouriExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "mo-senate": "mos", "county": "co", "mo-house": "moh",
-    "school-district-unified": "su", "school-district-elementary": "se", "zip-code": "zp",
-    "county-subdivision": "cs", "municipality": "mu", "police-station": "ps",
-    "fire-station": "fs", "post-office": "po" };
+    "county-commissioner": "cm", "school-district-unified": "su",
+    "school-district-elementary": "se", "zip-code": "zp", "county-subdivision": "cs",
+    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
-  var LAYER_CONCEPTS = { };
+  var LAYER_CONCEPTS = { "county-board": ["county-commissioner"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -10885,6 +10911,7 @@ function initMissouriExplorer() {
     "mo-senate",         // 34 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 115 counties (114 counties and the independent City of St. Louis), pre-built from TIGERweb; the instance's offline anchor layer
     "mo-house",          // 163 House districts — smaller on average than a county, larger than a school district
+    "county-commissioner", // Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 23 counties whose county map viewer, download or posted township map publishes them
     "school-district-unified", // 445 unified districts, about 372 km2 of land on average, live from TIGERweb (no data/app file); with the 71 elementary districts they cover the state exactly
     "school-district-elementary", // 71 elementary districts, about 177 km2 of land on average, live from TIGERweb (no data/app file); the ground the unified tiling leaves
     "zip-code",          // 1,977 ZIP Code Tabulation Areas in the state's own bounding box, about 163 km2 of land on average, fetched live by envelope; the layer hides outside Missouri
@@ -12420,6 +12447,30 @@ function initMissouriExplorer() {
         icon: poiPinIcon(moduleColor(mod)),
         keyboard: false,
         alt: poi.label + " location"
+      });
+      // A pin says what it is beside itself, on every device: a touch screen
+      // has no hover, and two layers' pins can share a colour family (a ward
+      // office and a polling place are both dark blue in Illinois). The small
+      // line names the kind of place, `poi.kind` where the layer gives one and
+      // the layer's own name otherwise; the bold line is the place itself.
+      // textContent throughout, since both can be publisher text.
+      var pinLabel = document.createElement("span");
+      var pinKind = document.createElement("span");
+      pinKind.className = "poi-pin-label-kind";
+      pinKind.textContent = poi.kind ? String(poi.kind) : mod.label;
+      var pinName = document.createElement("span");
+      pinName.className = "poi-pin-label-name";
+      pinName.textContent = String(poi.label);
+      pinLabel.appendChild(pinKind);
+      pinLabel.appendChild(pinName);
+      pinLabel.style.setProperty("--poi-label-ink", hoverPillStyle(moduleColor(mod)).color);
+      rt.poiMarker.bindTooltip(pinLabel, {
+        permanent: true,
+        direction: "right",
+        offset: [9, -17],
+        opacity: 1,
+        interactive: false,
+        className: "poi-pin-label"
       });
       // Touch devices have no real hover state (see hoverCapable) — skip wiring
       // the hover popup to this pin there so a tap can't pop it up unexpectedly.
@@ -15029,8 +15080,10 @@ function initMissouriExplorer() {
    * 2026-10-17; one it prints beside two or more officials is the office's.
    *
    * WHICH DISTRICT COMMISSIONER OR COUNCIL MEMBER REPRESENTS THE POINT is
-   * not answered: no map of the districts is drawn yet, so this card lists
-   * the whole body and claims no district for the point. A roster miss
+   * not answered here: this card lists the whole body and claims no district
+   * for the point. In the counties whose commission districts are drawn
+   * (mo-commission-counties.json) it points to the County Commission District
+   * layer, which does. A roster miss
    * degrades to a sentence naming nobody, never to an error card.
    * ---------- */
   var loadStateCounties = makeCached(function () {
@@ -15113,11 +15166,16 @@ function initMissouriExplorer() {
   }
   // The sentence saying which members represent the point, by the body's
   // kind and the seats the roster prints.
-  function moWhichMember(o, seats) {
+  function moWhichMember(o, seats, drawn) {
     var district = seats.filter(function (s) { return !s.countywide; });
     if (o.kind === "commission") {
       return "The presiding commissioner is elected by the whole county and " +
-        "represents every point in it. " + (district.length === 2
+        "represents every point in it. " + (district.length === 2 && drawn
+          ? "Each of the other two commissioners is elected by the voters of " +
+            "one of the county's two commission districts. The County " +
+            "Commission District layer draws the line between them and names " +
+            "the one who represents this point."
+          : district.length === 2
           ? "Each of the other two commissioners is elected by the voters of " +
             "one of the county's two commission districts. This app does not " +
             "have a map of the line between them yet, so it cannot say which " +
@@ -15167,12 +15225,17 @@ function initMissouriExplorer() {
           officials: null
         };
         // the roster's own failure is not this layer's failure: a miss
-        // degrades to the sentence naming nobody
-        return loadMoCountyOfficials().then(function (roster) {
+        // degrades to the sentence naming nobody. The list of counties whose
+        // commission districts are drawn only changes one sentence, and a
+        // failure to read it leaves the sentence saying no map is drawn.
+        var drawn = loadCommissionCounties().then(function (list) {
+          result.commissionDrawn = !!(list && result.geoid != null &&
+            Object.prototype.hasOwnProperty.call(list, String(result.geoid)));
+        }, function () {});
+        return Promise.all([drawn, loadMoCountyOfficials().then(function (roster) {
           result.officials = (roster && result.geoid != null)
             ? roster[String(result.geoid)] || null : null;
-          return result;
-        }, function () {
+        }, function () {})]).then(function () {
           return result;
         });
       });
@@ -15230,10 +15293,175 @@ function initMissouriExplorer() {
             "officers a county elects elsewhere in Missouri, listed above."
         });
       }
-      var which = moWhichMember(o, seats);
+      var which = moWhichMember(o, seats, result.commissionDrawn);
       if (which) fields.push({ label: "Which one represents this point", value: which });
       fields.push({ label: "Where these names come from", value: moRosterCredit(o) });
       wrap.appendChild(renderFieldStack(fields));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      return moRosterLink(result);
+    }
+  });
+
+  /* ---------- 1a. County Commission District ----------
+   * Which of the county's two district commissioners represents the point,
+   * drawn ONLY in the counties whose own published maps draw the line
+   * (data/app/mo-commission-districts.json, built by
+   * mo/scripts/build_mo_commission_districts.py): 21 counties' map viewers
+   * carry a Commissioner District layer, MidMO GIS, the map site of
+   * the City of Jefferson and Cole County, publishes Cole's as a download,
+   * and Lawrence County's posted map draws its two districts along whole
+   * townships, drawn here from TIGER's township lines. No statewide map of the lines
+   * exists, so everywhere else the layer is hidden (coverage), and gap
+   * mo-county-commission-district-lines says why. The County card names
+   * every county's commissioners either way.
+   *
+   * THE LINE IS THE COUNTY'S MAP AND IT IS NOT CHECKED AGAINST THE ELECTION
+   * RECORDS. Missouri sets no date by which a county must redraw, and
+   * nothing a viewer publishes says when its line was drawn, so the card
+   * says where the line comes from and that it has not been checked against
+   * the precinct records the county's elections use.
+   *
+   * THE COVERAGE TEST ASKS THE COUNTY LAYER, NOT THIS LAYER'S FILE, the
+   * shape Mississippi's supervisor districts use: the point's county is found
+   * in state-counties.json, which the County card loads anyway, and looked up
+   * in data/app/mo-commission-counties.json (under 5 KB). The builder draws
+   * each county's two districts to tile that county exactly, so inside a
+   * drawn county one district always answers.
+   *
+   * THE NAME IS THE ROSTER'S. Each district carries the seat the Secretary of
+   * State's Missouri Roster prints for it ("Eastern District", "District
+   * One"), and the builder refuses a county whose map's two districts do not
+   * map to the roster's two district seats. ---------- */
+  var loadCommissionDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mo-commission-districts.json", {}, 2);
+  });
+  var loadCommissionCounties = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mo-commission-counties.json", {}, 2);
+  });
+  function inDrawnCommissionCounty(point) {
+    return Promise.all([loadStateCounties(), loadCommissionCounties()]).then(function (got) {
+      var feats = (got[0] && got[0].features) || [];
+      var drawn = got[1] || {};
+      for (var i = 0; i < feats.length; i++) {
+        if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+          var geoid = findPropCI(feats[i].properties || {}, ["geoid"]);
+          return geoid != null && Object.prototype.hasOwnProperty.call(drawn, String(geoid));
+        }
+      }
+      return false;
+    });
+  }
+  function moCommissionSource(result) {
+    var read = moDate(result.read);
+    var where = result.source === "cole"
+      ? "Cole County's commission districts as MidMO GIS, the map site of " +
+        "the City of Jefferson and Cole County, publishes them for download"
+      : result.source === "townships"
+      ? String(result.county) + "'s commission districts as the county's own " +
+        "posted map draws them, each made of whole townships, drawn here from " +
+        "the Census Bureau's township lines"
+      : "The Commissioner District layer of " + String(result.county) +
+        "'s own map viewer";
+    var clerk = moDate(result.clerk);
+    return where + (read ? ", read on " + read : "") + "." + (clerk
+      ? " The county clerk pointed this app to that map on " + clerk + "."
+      : "") + " Missouri law has " +
+      "each county commission draw the line between its two districts, and " +
+      "sets no date by which it must be redrawn. This app has not checked " +
+      "this line against the precinct records the county's elections use, so " +
+      "near the line, check with the county clerk.";
+  }
+
+  registerLayer({
+    id: "county-commissioner",
+    group: "political",
+    label: "County Commission District",
+    coverage: inDrawnCommissionCounty,
+    // Inside a drawn county the two districts tile it, so this is reached
+    // only where the County layer's file and this one round differently.
+    emptyNote: "No commission district is drawn at this point. The County " +
+      "card names the county's commissioners.",
+    overlay: {
+      load: loadCommissionDistricts,
+      // the fleet's county-board blue and width (root layer-concepts.json
+      // `colors` and `lines`)
+      style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.06 }
+    },
+    hoverName: function (feature) {
+      var props = feature.properties || {};
+      var county = findPropCI(props, ["county"]);
+      var seat = findPropCI(props, ["seat"]);
+      if (county == null || seat == null) return null;
+      return String(county) + " " + String(seat);
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadCommissionDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var result = {
+          seq: seq,
+          county: findPropCI(props, ["county"]),
+          geoid: findPropCI(props, ["countyfips"]),
+          seat: findPropCI(props, ["seat"]),
+          source: findPropCI(props, ["source"]),
+          read: findPropCI(props, ["read"]),
+          clerk: findPropCI(props, ["pointedon"]),
+          officials: null,
+          rosterFailed: false
+        };
+        // the roster's own failure is not this layer's failure: the district
+        // still answers the question, and the card says no one is named
+        return loadMoCountyOfficials().then(function (roster) {
+          result.officials = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    cardIdentifier: function (result) {
+      return result.seat != null ? String(result.seat) : "Unknown district";
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var o = result.officials;
+      var seats = (o && o.seats) || [];
+      var mine = null, presiding = null;
+      for (var i = 0; i < seats.length; i++) {
+        if (seats[i].countywide) presiding = presiding || seats[i];
+        else if (seats[i].seat === result.seat) mine = seats[i];
+      }
+      var notes = [];
+      if (mine && (mine.name || mine.vacant)) {
+        wrap.appendChild(renderPersonRows([moPersonRow(mine, "Commissioner, " +
+          String(result.seat))], { tinted: true }));
+      } else {
+        notes.push({
+          label: "Commissioner",
+          value: result.rosterFailed
+            ? "The list of commissioners did not load, so no one is named here."
+            : "The Missouri Roster names no commissioner for this district, so " +
+              "no one is named here."
+        });
+      }
+      if (presiding && (presiding.name || presiding.vacant)) {
+        wrap.appendChild(renderSectionLabel("Elected by the whole county"));
+        wrap.appendChild(renderPersonRows([moPersonRow(presiding, presiding.seat)]));
+      }
+      if (notes.length) wrap.appendChild(renderFieldStack(notes));
+      var office = moBodyOffice(o);
+      if (office) wrap.appendChild(office);
+      wrap.appendChild(renderFieldStack([
+        { label: "County",
+          value: result.county != null ? String(result.county) : "Unknown county",
+          primary: true },
+        { label: "Where this line comes from", value: moCommissionSource(result) },
+        { label: "Where these names come from", value: moRosterCredit(o) }
+      ]));
       return wrap;
     },
     primaryLink: function (result) {
@@ -17426,7 +17654,7 @@ function initMissouriExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "mo-senate", "mo-house",
+  var LAYER_SIDEBAR_RANK = ["us-house", "mo-senate", "mo-house", "county-commissioner",
     // Missouri runs two school tilings that partition the state between
     // them, so the two sit together.
     "school-district-unified", "school-district-elementary",
@@ -17559,6 +17787,13 @@ function initMissouriExplorer() {
     // District 3" without re-implementing ~60 county fetches. Settles every
     // county, failed ones included (ok:false), so a build can refuse a partial
     // index rather than silently ship one.
+    // The name a layer prints for one feature on its map labels and hover row
+    // (the same hoverValue those read), for a check that a layer names its own
+    // districts and not a parent's (smoke check 1k1b).
+    hoverValueFor: function (id, properties) {
+      var mod = getLayerById(id);
+      return mod ? hoverValue(mod, { type: "Feature", geometry: null, properties: properties || {} }) : null;
+    },
     layerDistricts: function (id) {
       var mod = getLayerById(id);
       if (!mod || !mod.countyEntries) return Promise.reject(new Error(id + " is not a county-dispatched layer"));
@@ -17926,11 +18161,12 @@ function initMissouriExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#2F6B3A": "#6FBE7B",
-    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#A05F00": "#FBA23D", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1",
-    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6FB2": "#74BBFF",
+    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
+    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A05F00": "#FBA23D",
+    "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA",
+    "#D19133": "#FFD6A3"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
