@@ -186,6 +186,41 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "county-commissioner",
+        "app_file": "mo-commission-districts.json",
+        "source_url": "https://christiangis.integritygis.com/Geocortex/Essentials/REST/sites/Christian_County_MO/map?f=json",
+        "note": (
+            "The commission districts of 21 counties read from each county's "
+            "own Integrity GIS map viewer (Christian's is the one probed here; "
+            "the 21 are listed in SOURCES in "
+            "mo/scripts/build_mo_commission_districts.py), plus Cole's and "
+            "Lawrence's from the rows below, clipped to the County layer. No viewer dates its "
+            "lines, and they are not checked against the precinct records the "
+            "counties' elections use."
+        ),
+    },
+    {
+        "layer": "county-commissioner",
+        "app_file": "mo-commission-districts.json",
+        "source_url": "https://www.midmogis.org/GIS_Hyperlinks/Downloadables/CC_Commissioner.zip",
+        "note": (
+            "Cole County's commission districts, the shapefile MidMO GIS (the "
+            "City of Jefferson and Cole County's map site) publishes for "
+            "download, created 2011-05-11."
+        ),
+    },
+    {
+        "layer": "county-commissioner",
+        "app_file": "mo-commission-districts.json",
+        "source_url": "https://www.lawrencecountymo.org/_files/ugd/e487e4_0038fc0bb16742e8b9dc74b091ced286.pdf",
+        "note": (
+            "Lawrence County's posted map of its two commission districts, "
+            "a 2024 scan whose line runs along whole townships; the builder "
+            "draws each district as the union of TIGER's township lines it "
+            "names. The county clerk pointed to it on 2026-10-23."
+        ),
+    },
+    {
         "layer": "county",
         "app_file": "metro-outline.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",

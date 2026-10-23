@@ -72,6 +72,30 @@
         keyboard: false,
         alt: poi.label + " location"
       });
+      // A pin says what it is beside itself, on every device: a touch screen
+      // has no hover, and two layers' pins can share a colour family (a ward
+      // office and a polling place are both dark blue in Illinois). The small
+      // line names the kind of place, `poi.kind` where the layer gives one and
+      // the layer's own name otherwise; the bold line is the place itself.
+      // textContent throughout, since both can be publisher text.
+      var pinLabel = document.createElement("span");
+      var pinKind = document.createElement("span");
+      pinKind.className = "poi-pin-label-kind";
+      pinKind.textContent = poi.kind ? String(poi.kind) : mod.label;
+      var pinName = document.createElement("span");
+      pinName.className = "poi-pin-label-name";
+      pinName.textContent = String(poi.label);
+      pinLabel.appendChild(pinKind);
+      pinLabel.appendChild(pinName);
+      pinLabel.style.setProperty("--poi-label-ink", hoverPillStyle(moduleColor(mod)).color);
+      rt.poiMarker.bindTooltip(pinLabel, {
+        permanent: true,
+        direction: "right",
+        offset: [9, -17],
+        opacity: 1,
+        interactive: false,
+        className: "poi-pin-label"
+      });
       // Touch devices have no real hover state (see hoverCapable) — skip wiring
       // the hover popup to this pin there so a tap can't pop it up unexpectedly.
       if (hoverCapable) {
