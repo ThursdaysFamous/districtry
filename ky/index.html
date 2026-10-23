@@ -2434,6 +2434,26 @@ svg.leaflet-image-layer.leaflet-interactive path {
    * transition fades the shadow back in on moveend. (OPTIMIZATION_PLAYBOOK P9/R2-5.) */
   .map-panning .region-highlight { filter: none; transition: none; }
   .poi-pin { background: none; border: none; }
+  /* the line beside a point-of-interest pin: a solid white chip like the
+     compared districts' labels (readable over any basemap, in both themes),
+     its text darkened from the layer's colour (--poi-label-ink, set per pin) */
+  .leaflet-tooltip.poi-pin-label {
+    display: flex;
+    flex-direction: column;
+    max-width: 220px;
+    padding: 2px 8px 3px;
+    background: #fff;
+    color: var(--poi-label-ink, #14181C);
+    border: 1.5px solid currentColor;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.22);
+    font-family: var(--font-body);
+    line-height: 1.3;
+    white-space: normal;
+  }
+  .leaflet-tooltip.poi-pin-label::before { display: none; }
+  .poi-pin-label-kind { font-size: 10.5px; font-weight: 600; text-transform: none; opacity: 0.85; }
+  .poi-pin-label-name { font-size: 12px; font-weight: 700; }
   /* ==== ENGINE:END styles-markers ==== */
   /* Fork-owned: the masthead action row holding the Data-gaps button, pinned to
      the RIGHT of the wordmark so the masthead reads as one bar (brand left,
@@ -12435,6 +12455,30 @@ function initKentuckyExplorer() {
         keyboard: false,
         alt: poi.label + " location"
       });
+      // A pin says what it is beside itself, on every device: a touch screen
+      // has no hover, and two layers' pins can share a colour family (a ward
+      // office and a polling place are both dark blue in Illinois). The small
+      // line names the kind of place, `poi.kind` where the layer gives one and
+      // the layer's own name otherwise; the bold line is the place itself.
+      // textContent throughout, since both can be publisher text.
+      var pinLabel = document.createElement("span");
+      var pinKind = document.createElement("span");
+      pinKind.className = "poi-pin-label-kind";
+      pinKind.textContent = poi.kind ? String(poi.kind) : mod.label;
+      var pinName = document.createElement("span");
+      pinName.className = "poi-pin-label-name";
+      pinName.textContent = String(poi.label);
+      pinLabel.appendChild(pinKind);
+      pinLabel.appendChild(pinName);
+      pinLabel.style.setProperty("--poi-label-ink", hoverPillStyle(moduleColor(mod)).color);
+      rt.poiMarker.bindTooltip(pinLabel, {
+        permanent: true,
+        direction: "right",
+        offset: [9, -17],
+        opacity: 1,
+        interactive: false,
+        className: "poi-pin-label"
+      });
       // Touch devices have no real hover state (see hoverCapable) — skip wiring
       // the hover popup to this pin there so a tap can't pop it up unexpectedly.
       if (hoverCapable) {
@@ -18347,6 +18391,13 @@ function initKentuckyExplorer() {
     // District 3" without re-implementing ~60 county fetches. Settles every
     // county, failed ones included (ok:false), so a build can refuse a partial
     // index rather than silently ship one.
+    // The name a layer prints for one feature on its map labels and hover row
+    // (the same hoverValue those read), for a check that a layer names its own
+    // districts and not a parent's (smoke check 1k1b).
+    hoverValueFor: function (id, properties) {
+      var mod = getLayerById(id);
+      return mod ? hoverValue(mod, { type: "Feature", geometry: null, properties: properties || {} }) : null;
+    },
     layerDistricts: function (id) {
       var mod = getLayerById(id);
       if (!mod || !mod.countyEntries) return Promise.reject(new Error(id + " is not a county-dispatched layer"));
