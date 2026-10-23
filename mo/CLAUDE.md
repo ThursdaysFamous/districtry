@@ -18,7 +18,9 @@ the City of St. Louis, Census TIGERweb, the coverage ring, and the card that nam
 governing body and its other elected officers), **U.S. House** (8 districts, TIGERweb geometry
 joined to the public-domain unitedstates/congress-legislators roster), **Missouri Senate** and
 **Missouri House** (34 and 163 districts, the state's own maps of the 2022 plans joined to each
-chamber's own publications), the LIVE TIGERweb fabric — **Township** (`county-subdivision`, 1,394,
+chamber's own publications), **County Commission District** (`county-commissioner`, 44 districts
+in the 22 counties whose own published maps carry the lines, joined to the County card's roster),
+the LIVE TIGERweb fabric — **Township** (`county-subdivision`, 1,394,
 shown under the County layer), **City, Town or Village** (`municipality`, 947), **School District
 (Unified)** (445), **School District (Elementary)** (71) and **ZIP Code** — and three nearest-N layers
 from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
@@ -73,11 +75,18 @@ e-mail address printed in one official's own entry ships on that official; one p
 or more members of the governing body is the body's; an address ships only as the body's office,
 where two or more members print it word for word. Fax numbers never ship.
 
-**THE COMMISSION DISTRICTS ARE NOT DRAWN, AND THAT IS A DECISION FOR EACH COUNTY'S OWN MAP.** A
-county's two commission districts are drawn by its commission "without dividing municipal
-townships" (RSMo 49.010), and no statewide map of them was found. Townships are not a substitute:
-tested against three counties' own maps on 2026-10-21, Franklin's twelve townships fall whole
-inside its districts, while Buchanan splits 2 of 12 and Clay 2 of 7. Recorded as gap
+**THE COMMISSION DISTRICTS ARE DRAWN COUNTY BY COUNTY, FROM EACH COUNTY'S OWN MAP.** A county's
+two commission districts are drawn by its commission "without dividing municipal townships"
+(RSMo 49.010), and no statewide map of them was found. Townships are not a substitute: tested
+against three counties' own maps on 2026-10-21, Franklin's twelve townships fall whole inside its
+districts, while Buchanan splits 2 of 12 and Clay 2 of 7. Since 2026-10-23 the County Commission
+District layer draws 22 counties (`mo/scripts/build_mo_commission_districts.py`, `--check` in CI):
+21 from the commissioner district layer of the county's own map viewer and Cole from MidMO GIS's
+download, each clipped to the County layer so the two districts tile the county exactly, and each
+district joined to the roster's seat by name. **The card says the line is not checked against the
+county's election records**, because no viewer dates its lines and Missouri sets no redistricting
+date; the Secretary of State's per-jurisdiction precinct reports (SUN0000590, not ordered) would be
+that check. The layer hides in the other 92 counties and the City of St. Louis, which stay in gap
 `mo-county-commission-district-lines`; a county joins when its own map proves the lines.
 
 **TWO SCHOOL LAYERS TILE THE STATE BETWEEN THEM.** TIGER holds 445 unified and 71 elementary
@@ -110,7 +119,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Missouri (`missouri`) — https://districtry.com/mo/
 - Geocoders: address Photon (Missouri-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Missouri-bounded, serial >=1s queue)
 - Ground truth: 38.57910,-92.17290 (Missouri State Capitol, 201 W. Capitol Avenue, Jefferson City, Cole County) → county Cole County; us-house 3; mo-senate 6; mo-house 60. Negative point 38.61560,-95.26780 (Franklin County, Kansas, near Ottawa, about 57 km west of the Missouri line — outside Missouri and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-21: TIGERweb's state and county layers name Kansas and Franklin County here (control: the State Capitol returns Missouri and Cole County), and none of the state's shipped boundary files contains it. MISSOURI HAS NO COAST, SO THIS POINT IS ON A NEIGHBOUR'S LAND AND WILL HAVE TO MOVE: Iowa, Illinois, Kentucky, Tennessee, Arkansas and Oklahoma are live already, so Kansas and Nebraska are the only neighbours left, and the change that makes either one live moves this point to the other, the way Kentucky's go-live moved Indiana's.).
-- Layers: 12 registered (political 3, safety 2, schools 2, geography 5); `registerLayer(` floor 9. Debug namespace `window.MissouriExplorer`.
+- Layers: 13 registered (political 4, safety 2, schools 2, geography 5); `registerLayer(` floor 10. Debug namespace `window.MissouriExplorer`.
 - Scheduled workflows: `update-mo-congress-roster.yml` (Mon 18:37 UTC); `update-mo-legislature-roster.yml` (Tue 18:37 UTC); `update-mo-county-officials.yml` (Wed 18:37 UTC); `mo-validate-sources.yml` (1st of month 21:13 UTC).
 - Source registry: `mo/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -192,7 +201,10 @@ operator script: `metro-outline.json` (the whole-state outline for the coverage 
 eight neighbouring states), `state-counties.json` (`mo/scripts/build_state_counties.py`), and
 `congress-districts.json`, `mo-senate-districts.json`, `mo-house-districts.json`
 (`mo/scripts/build_legislative_boundaries.py` — Douglas-Peucker at 5 m, refused unless BOTH the
-2,000-random-point agreement gate and the 8 m fidelity ceiling pass). Rosters:
+2,000-random-point agreement gate and the 8 m fidelity ceiling pass), and
+`mo-commission-districts.json` with its list of drawn counties `mo-commission-counties.json`
+(`mo/scripts/build_mo_commission_districts.py`, from 21 county map viewers and Cole's download,
+each pair clipped to tile its county). Rosters:
 `congress-roster.json` (`mo/scripts/build_congress_roster.py`, from unitedstates/congress-legislators),
 `mo-{senate,house}-members.json` (`mo/scripts/build_mo_legislature_roster.py`, from each chamber's
 own publications and the Secretary of State's General Assembly Roster) and

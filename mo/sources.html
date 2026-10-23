@@ -1179,7 +1179,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">12 layers — 3 political and legislative, 2 public safety, 2 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">13 layers — 4 political and legislative, 2 public safety, 2 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1188,7 +1188,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">3 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1228,6 +1228,18 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">mo-house-members.json, rebuilt weekly by CI from the Missouri House's own published list of members: the name, the party, and the Capitol office's room, telephone and e-mail address. The list also prints each member's home town, which is not read. A vacant seat carries a record saying so.</td>
                 <td data-label="Where it applies">Missouri — statewide, all 163 districts.</td>
+              </tr>
+              <tr id="layer-county-commissioner">
+                <th scope="row"><span class="layer-name">County Commission District</span><code>county-commissioner</code></th>
+                <td data-label="What it answers">The county commission district covering the point, and the district commissioner elected from it, in the 22 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.integritygis.com/" target="_blank" rel="noopener">Integrity GIS county map viewers — the commission district layer each county's own public map viewer carries, for Barton, Bates, Buchanan, Camden, Chariton, Christian, Cooper, Dade, DeKalb, Lincoln, Maries, Marion, McDonald, Miller, Phelps, Polk, Pulaski, Ralls, Ray, Vernon and Warren counties, read 2026-10-23. Each answers exactly two districts, whose names match the seats the Secretary of State's Missouri Roster lists for that county. Clipped to the Census Bureau's county line, with the few slivers the viewer leaves between its two districts given to the district beside them. Whether each viewer's line is the one the county's elections use today is NOT established: no viewer gives a date for its lines, and Missouri law sets no date by which a county must redraw them.</a></li>
+                    <li><a href="https://www.midmogis.org/GIS_Hyperlinks/Downloadables/CC_Commissioner.zip" target="_blank" rel="noopener">Cole County — the commission district shapefile MidMO GIS, the map site of the City of Jefferson and Cole County, publishes for download (CC_Commissioner.zip), created 11 May 2011, clipped to the Census Bureau's county line in the same way. Whether it is the line the county's elections use today is not established either.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">mo-county-officials.json, the roster the County card reads: each county's district commissioners from the Secretary of State's Missouri Roster, joined by seat name.</td>
+                <td data-label="Where it applies">22 of Missouri's 114 counties; hidden in the other 92 and in the City of St. Louis, which the Data gaps panel lists and explains.</td>
               </tr>
             </tbody>
           </table>
@@ -1475,6 +1487,33 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Missouri — statewide, all 163 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mo/sources.html#dataset-county-commissioner",
+      "identifier": "county-commissioner",
+      "name": "County Commission District",
+      "description": "The county commission district covering the point, and the district commissioner elected from it, in the 22 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner. mo-county-officials.json, the roster the County card reads: each county's district commissioners from the Secretary of State's Missouri Roster, joined by seat name.",
+      "url": "https://districtry.com/mo/sources.html#layer-county-commissioner",
+      "isPartOf": {
+        "@id": "https://districtry.com/mo/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Integrity GIS county map viewers — the commission district layer each county's own public map viewer carries, for Barton, Bates, Buchanan, Camden, Chariton, Christian, Cooper, Dade, DeKalb, Lincoln, Maries, Marion, McDonald, Miller, Phelps, Polk, Pulaski, Ralls, Ray, Vernon and Warren counties, read 2026-10-23. Each answers exactly two districts, whose names match the seats the Secretary of State's Missouri Roster lists for that county. Clipped to the Census Bureau's county line, with the few slivers the viewer leaves between its two districts given to the district beside them. Whether each viewer's line is the one the county's elections use today is NOT established: no viewer gives a date for its lines, and Missouri law sets no date by which a county must redraw them.",
+          "url": "https://www.integritygis.com/"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Cole County — the commission district shapefile MidMO GIS, the map site of the City of Jefferson and Cole County, publishes for download (CC_Commissioner.zip), created 11 May 2011, clipped to the Census Bureau's county line in the same way. Whether it is the line the county's elections use today is not established either.",
+          "url": "https://www.midmogis.org/GIS_Hyperlinks/Downloadables/CC_Commissioner.zip"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "22 of Missouri's 114 counties; hidden in the other 92 and in the City of St. Louis, which the Data gaps panel lists and explains"
       }
     },
     {

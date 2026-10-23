@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "mo-senate", "mo-house"];
 const EXPECT_DISTRICT = { "county": "Cole County", "us-house": "3", "mo-senate": "6", "mo-house": "60" };
 const NEGATIVE_POINT = "38.61560,-95.26780"; // Franklin County, Kansas, near Ottawa, about 57 km west of the Missouri line — outside Missouri and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-21: TIGERweb's state and county layers name Kansas and Franklin County here (control: the State Capitol returns Missouri and Cole County), and none of the state's shipped boundary files contains it. MISSOURI HAS NO COAST, SO THIS POINT IS ON A NEIGHBOUR'S LAND AND WILL HAVE TO MOVE: Iowa, Illinois, Kentucky, Tennessee, Arkansas and Oklahoma are live already, so Kansas and Nebraska are the only neighbours left, and the change that makes either one live moves this point to the other, the way Kentucky's go-live moved Indiana's.
 const APP_NAME = "districtry Missouri";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "MissouriExplorer";
@@ -90,6 +90,10 @@ const STRAGGLER_POINT = "0,0";
 // None of the four anchors declares a coverage() test, so none hide — they
 // all take the honest "no district here" branch instead.
 const NEGATIVE_HIDDEN = [];
+// Check 10's points: Christian's from its larger district's pole of
+// inaccessibility, Henry's the one check 9 uses.
+const CHRISTIAN_POINT = "36.95028,-93.04376";
+const HENRY_POINT = "38.38256,-93.69450";
 const BOOT_TIMEOUT = 45000; // Leaflet CDN + first paint on a cold CI runner
 const QUERY_TIMEOUT = 25000;
 
@@ -1069,8 +1073,10 @@ try {
   //    correct rebuild. Seven places, each for its own claim:
   //      - Cole, at the State Capitol: a county commission with a presiding
   //        commissioner and two district commissioners, the office the three
-  //        share, the sentence saying the app cannot yet tell which district
-  //        commissioner represents the point, and the credit and link;
+  //        share, the sentence sending the reader to the County Commission
+  //        District layer (Cole's lines are drawn; in a county whose lines
+  //        are not, the sentence says the app cannot yet tell which district
+  //        commissioner represents the point), and the credit and link;
   //      - St. Louis County: a county executive first, then a seven-member
   //        council, with the e-mail address and telephone the roster prints
   //        beside each;
@@ -1089,6 +1095,7 @@ try {
   //    nearest county line; Cole's is the State Capitol, 8 km inside it.
   {
     const roster = shipped("mo-county-officials.json");
+    const drawnCommission = shipped("mo-commission-counties.json");
     const cases = [
       { point: POINT, geoid: "29051" },
       { point: "38.62140,-90.43781", geoid: "29189" },
@@ -1140,7 +1147,9 @@ try {
         : !/'s office/.test(got.all);
       const district = seats.filter((s) => !s.countywide);
       const whichOk = o.kind === "commission"
-        ? (district.length === 2
+        ? (district.length === 2 && Object.prototype.hasOwnProperty.call(drawnCommission, c.geoid)
+            ? text.includes("The County Commission District layer draws the line between them")
+            : district.length === 2
             ? text.includes("This app does not have a map of the line between them yet")
             : text.includes("This app does not have a map of those districts yet, so it cannot say which of them represents this point."))
         : o.kind === "city"
@@ -1176,6 +1185,85 @@ try {
         named.length === 0,
       `named=${named.slice(0, 2)} text=${text.slice(0, 90)}`);
     await context.close();
+  }
+
+  // 10. THE COUNTY COMMISSION DISTRICT LAYER, drawn only in the counties whose
+  //     own map viewer or download publishes the line
+  //     (data/app/mo-commission-districts.json). The district, its
+  //     commissioner and the presiding commissioner are all read from the
+  //     shipped files, so a rebuild or a new roster moves the expectation.
+  //       - Cole, at the State Capitol, drawn from MidMO GIS's download, and
+  //         Christian, drawn from its map viewer: the card names the district
+  //         and its commissioner, the presiding commissioner, where the line
+  //         comes from and that it has not been checked against the
+  //         county's election records.
+  //       - Henry, whose lines this app does not draw: the layer HIDES and
+  //         stays switched on. This is the half that discriminates: without
+  //         `coverage` the card would say no district is drawn there, about a
+  //         county that has two.
+  //       - The roster is refused: the district still answers and names
+  //         nobody.
+  //     Christian's point is the pole of inaccessibility of its larger
+  //     district as the shipped file draws it (shapely polylabel,
+  //     2026-10-23); Henry's is check 9's.
+  {
+    const fc = shipped("mo-commission-districts.json");
+    const roster = shipped("mo-county-officials.json");
+    const drawn = shipped("mo-commission-counties.json");
+    const seatOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.seat === p.seat) || {};
+    const presidingOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.countywide) || {};
+    for (const pt of [POINT, CHRISTIAN_POINT]) {
+      const at = propsAt(fc, pt);
+      const p = at[0] || {};
+      const mine = seatOf(p), pres = presidingOf(p);
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=county-commissioner`);
+      const info = await cardText(page, "county-commissioner");
+      const text = info.text || "";
+      const whereOk = p.source === "cole"
+        ? text.includes("MidMO GIS") : text.includes(`${p.county}'s own map viewer`);
+      check(`county-commissioner card in ${p.county || "a drawn county"} names the ${p.seat || "?"} and its commissioner, the presiding commissioner, and where the line comes from`,
+        at.length === 1 && !!drawn[p.countyfips] && !info.error && !!mine.name && !!pres.name &&
+          text.includes(p.seat) && text.includes(mine.name) && text.includes(pres.name) &&
+          whereOk && text.includes(`read on ${longDate(p.read)}`) &&
+          /has not checked this line against the precinct records/.test(text) &&
+          /Where these names come from/.test(text),
+        `districts here=${at.length} ${text.slice(0, 140)}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${HENRY_POINT}&layers=county-commissioner`);
+      const hidden = await page
+        .waitForFunction(() => {
+          const box = document.getElementById("toggle-county-commissioner");
+          const block = box && box.closest(".layer-block");
+          return block && block.hidden === true;
+        }, null, { timeout: QUERY_TIMEOUT })
+        .then(() => true, () => false);
+      const stillOn = await page.evaluate(
+        (n) => window[n].state.layersOn["county-commissioner"] === true, EXPORTS_NAME);
+      check("county-commissioner hides in Henry County, whose lines are not drawn, and stays switched on",
+        propsAt(fc, HENRY_POINT).length === 0 && !drawn["29083"] && hidden && stillOn,
+        `hidden=${hidden} layersOn=${stillOn}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=county-commissioner`, async (pg) => {
+        await pg.route("**/data/app/mo-county-officials.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      });
+      const info = await cardText(page, "county-commissioner");
+      const text = info.text || "";
+      const p = propsAt(fc, POINT)[0] || {};
+      const cole = roster["29051"] || {};
+      const named = (cole.seats || []).filter((s) => s.name && text.includes(s.name));
+      check("county-commissioner still answers the district and names nobody when the list of officials fails",
+        !info.error && !!p.seat && text.includes(p.seat) &&
+          /did not load, so no one is named here/.test(text) && named.length === 0,
+        `named=${named.length} ${text.slice(0, 100)}`);
+      await context.close();
+    }
   }
 } finally {
   await browser.close();

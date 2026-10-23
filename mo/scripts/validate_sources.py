@@ -186,6 +186,30 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "county-commissioner",
+        "app_file": "mo-commission-districts.json",
+        "source_url": "https://christiangis.integritygis.com/Geocortex/Essentials/REST/sites/Christian_County_MO/map?f=json",
+        "note": (
+            "The commission districts of 21 counties read from each county's "
+            "own Integrity GIS map viewer (Christian's is the one probed here; "
+            "the 21 are listed in SOURCES in "
+            "mo/scripts/build_mo_commission_districts.py), plus Cole's from "
+            "the row below, clipped to the County layer. No viewer dates its "
+            "lines, and they are not checked against the precinct records the "
+            "counties' elections use."
+        ),
+    },
+    {
+        "layer": "county-commissioner",
+        "app_file": "mo-commission-districts.json",
+        "source_url": "https://www.midmogis.org/GIS_Hyperlinks/Downloadables/CC_Commissioner.zip",
+        "note": (
+            "Cole County's commission districts, the shapefile MidMO GIS (the "
+            "City of Jefferson and Cole County's map site) publishes for "
+            "download, created 2011-05-11."
+        ),
+    },
+    {
         "layer": "county",
         "app_file": "metro-outline.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
