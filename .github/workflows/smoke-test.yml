@@ -1624,6 +1624,15 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 mo/scripts/build_mo_county_officials.py --check
 
+      # Missouri draws county commission districts only in the 22 counties
+      # whose own map viewer or download publishes them. This holds the shipped
+      # file to the roster's two district seats per county, each pair to its
+      # county's whole area, the drawn-counties list to the file, and the
+      # County layer to this one at 2,000 points.
+      - name: MO commission districts match the roster's seats and tile their counties
+        if: ${{ !cancelled() }}
+        run: python3 mo/scripts/build_mo_commission_districts.py --check
+
       # Mississippi draws county supervisor districts only in the counties whose
       # Census lines are confirmed current: changed after the 2020 census, and
       # balanced on that census's own blocks. The blocks are not shipped, so the

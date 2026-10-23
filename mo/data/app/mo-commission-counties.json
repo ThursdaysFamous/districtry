@@ -1,0 +1,255 @@
+{
+ "29011": {
+  "county": "Barton County",
+  "people2020": {
+   "District One": 5735,
+   "District Two": 5902
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 2.9,
+  "unplaced2020": 0
+ },
+ "29013": {
+  "county": "Bates County",
+  "people2020": {
+   "Northern District": 8193,
+   "Southern District": 7849
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 4.3,
+  "unplaced2020": 0
+ },
+ "29021": {
+  "county": "Buchanan County",
+  "people2020": {
+   "Eastern District": 41544,
+   "Western District": 43249
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 4.0,
+  "unplaced2020": 0
+ },
+ "29029": {
+  "county": "Camden County",
+  "people2020": {
+   "First District": 20273,
+   "Second District": 22436
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 10.1,
+  "unplaced2020": 36
+ },
+ "29041": {
+  "county": "Chariton County",
+  "people2020": {
+   "Eastern District": 3681,
+   "Western District": 3721
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 1.1,
+  "unplaced2020": 6
+ },
+ "29043": {
+  "county": "Christian County",
+  "people2020": {
+   "Eastern District": 41044,
+   "Western District": 47798
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 15.2,
+  "unplaced2020": 0
+ },
+ "29051": {
+  "county": "Cole County",
+  "people2020": {
+   "Eastern District": 40837,
+   "Western District": 36442
+  },
+  "read": "2026-10-23",
+  "source": "cole",
+  "spreadPct": 11.4,
+  "unplaced2020": 0
+ },
+ "29053": {
+  "county": "Cooper County",
+  "people2020": {
+   "Eastern District": 7921,
+   "Western District": 9182
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 14.7,
+  "unplaced2020": 0
+ },
+ "29057": {
+  "county": "Dade County",
+  "people2020": {
+   "Eastern District": 4062,
+   "Western District": 3507
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 14.7,
+  "unplaced2020": 0
+ },
+ "29063": {
+  "county": "DeKalb County",
+  "people2020": {
+   "Eastern District": 6000,
+   "Western District": 5029
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 17.6,
+  "unplaced2020": 0
+ },
+ "29109": {
+  "county": "Lawrence County",
+  "people2020": {
+   "Eastern District": 18502,
+   "Western District": 19499
+  },
+  "read": "2026-10-23",
+  "source": "townships",
+  "spreadPct": 5.2,
+  "unplaced2020": 0
+ },
+ "29113": {
+  "county": "Lincoln County",
+  "people2020": {
+   "First District": 28609,
+   "Second District": 30965
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 7.9,
+  "unplaced2020": 0
+ },
+ "29119": {
+  "county": "McDonald County",
+  "people2020": {
+   "Eastern District": 11790,
+   "Western District": 11513
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 2.4,
+  "unplaced2020": 0
+ },
+ "29125": {
+  "county": "Maries County",
+  "people2020": {
+   "Eastern District": 4221,
+   "Western District": 4211
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 0.2,
+  "unplaced2020": 0
+ },
+ "29127": {
+  "county": "Marion County",
+  "people2020": {
+   "Eastern District": 13359,
+   "Western District": 15158
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 12.6,
+  "unplaced2020": 8
+ },
+ "29131": {
+  "county": "Miller County",
+  "people2020": {
+   "First District": 11724,
+   "Second District": 12994
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 10.3,
+  "unplaced2020": 4
+ },
+ "29161": {
+  "county": "Phelps County",
+  "people2020": {
+   "District 1": 23192,
+   "District 2": 21446
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 7.8,
+  "unplaced2020": 0
+ },
+ "29167": {
+  "county": "Polk County",
+  "people2020": {
+   "Northern District": 13840,
+   "Southern District": 17679
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 24.4,
+  "unplaced2020": 0
+ },
+ "29169": {
+  "county": "Pulaski County",
+  "people2020": {
+   "Eastern District": 27780,
+   "Western District": 26175
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 5.9,
+  "unplaced2020": 0
+ },
+ "29173": {
+  "county": "Ralls County",
+  "people2020": {
+   "Eastern District": 4869,
+   "Western District": 5480
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 11.8,
+  "unplaced2020": 6
+ },
+ "29177": {
+  "county": "Ray County",
+  "people2020": {
+   "Eastern District": 10792,
+   "Western District": 12366
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 13.6,
+  "unplaced2020": 0
+ },
+ "29217": {
+  "county": "Vernon County",
+  "people2020": {
+   "Northern District": 9722,
+   "Southern District": 9985
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 2.7,
+  "unplaced2020": 0
+ },
+ "29219": {
+  "county": "Warren County",
+  "people2020": {
+   "District 1": 17686,
+   "District 2": 17846
+  },
+  "read": "2026-10-23",
+  "source": "viewer",
+  "spreadPct": 0.9,
+  "unplaced2020": 0
+ }
+}

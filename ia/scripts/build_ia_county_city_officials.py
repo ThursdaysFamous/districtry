@@ -221,8 +221,11 @@ CITY_SUFFIX = re.compile(
 # Position". The seat is real and so is the vacancy, so the row is kept with
 # `vacant: true` and no name, and the card says the county lists the seat as
 # vacant. Only whole-cell placeholders match: a person's name never does.
+# Boone County's page lists Berkley's council with a row whose first and last
+# name cells both read "Vacant" (first seen 2026-10-22), which the scraper
+# joins into "Vacant Vacant", so a repeated word is a placeholder too.
 VACANT_NAME = re.compile(
-    r"^\s*(vacant|vacancy)(\s+(position|seat|office))?\s*$|"
+    r"^\s*(vacant|vacancy)(\s+(vacant|vacancy|position|seat|office))?\s*$|"
     r"^\s*(open|unfilled)\s+(position|seat)\s*$", re.I)
 
 
