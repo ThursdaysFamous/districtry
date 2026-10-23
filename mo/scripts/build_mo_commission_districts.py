@@ -15,9 +15,12 @@ map draws them. Measured 2026-10-23, 21 counties' public map viewers, all
 built by one vendor (Integrity GIS, on its Geocortex Essentials servers),
 carry a layer named Commissioner District that any visitor can query, and
 Cole County's regional GIS office (midmogis.org, for Jefferson City and Cole
-County) offers the lines as a shapefile download. Those 22 are SOURCES below.
-The other 93 counties and the City of St. Louis are not drawn, and the layer
-is hidden there; the County card names every county's commissioners either
+County) offers the lines as a shapefile download. And Lawrence County posts a
+scanned map of its two districts whose lines run along whole townships; its
+clerk pointed to that map when asked (2026-10-23), so its districts are drawn
+as the union of the Census Bureau's township lines the map names (TOWNSHIPS
+below). Those 23 are SOURCES below. The other 91 counties and the City of St.
+Louis are not drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
 WHAT IS CHECKED, AND WHAT IS NOT. Every build refuses a county unless:
@@ -94,6 +97,8 @@ VIEWER = "https://%s.integritygis.com/Geocortex/Essentials/REST/sites/%s/map"
 BLOCKS = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
           "Tracts_Blocks/MapServer/12/query")
 SOURCE_VIEWER = "the county's map viewer, its Commissioner District layer"
+COUSUB = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+          "Places_CouSub_ConCity_SubMCD/MapServer/1/query")
 SOURCE_COLE = ("the Jefferson City and Cole County GIS office (midmogis.org), "
                "its download of the commissioner districts")
 
@@ -129,6 +134,18 @@ SOURCES = {
     "063": {"viewer": ("christiangis", "Dekalb_County_MO", "11", "62"),
             "names": {"EASTERN COMMISSIONER DISTRICT": "Eastern District",
                       "WESTERN COMMISSIONER DISTRICT": "Western District"}},
+    # Lawrence's map (lawrencecountymo.org, a 2024 scan, read 2026-10-23)
+    # outlines its Eastern District around six whole townships, and its
+    # township and precinct areas match TIGER's 14 townships: Mount Vernon's
+    # three precincts all lie west of the line and Aurora's three east of it.
+    "109": {"townships": {
+                "Eastern District": ["Aurora", "Buck Prairie", "Freistatt", "Ozark",
+                                     "Spring River", "Turnback"],
+                "Western District": ["Green", "Hoberg", "Lincoln", "Mount Pleasant",
+                                     "Mount Vernon", "Pierce", "Red Oak", "Vineyard"]},
+            "map": ("https://www.lawrencecountymo.org/_files/ugd/"
+                    "e487e4_0038fc0bb16742e8b9dc74b091ced286.pdf"),
+            "clerk": "2026-10-23"},
     "113": {"viewer": ("phelpsgis", "Lincoln_County_MO", "1", "35"),
             "names": {"DISTRICT I": "First District", "DISTRICT II": "Second District"}},
     "119": {"viewer": ("christiangis", "McDonald_County_MO", "2", "35"), "field": "district_n",
@@ -255,6 +272,31 @@ def fetch_viewer(spec):
     return out
 
 
+def fetch_townships(c3, spec):
+    """The county's districts as unions of whole TIGER townships. Every
+    township the Census draws in the county must be named in exactly one
+    district, so a township added or renamed stops the build."""
+    from shapely.ops import unary_union  # noqa: PLC0415
+    data = _get(COUSUB, {
+        "where": "STATE='%s' AND COUNTY='%s'" % (STATE, c3),
+        "outFields": "BASENAME", "returnGeometry": "true", "outSR": "4326", "f": "json"})
+    if data.get("error"):
+        raise RuntimeError("county %s townships: %r" % (c3, data["error"]))
+    shapes = {}
+    for f in data.get("features") or []:
+        shapes[f["attributes"]["BASENAME"]] = _esri_rings_to_shape(f["geometry"]["rings"])
+    named = [t for ts in spec["townships"].values() for t in ts]
+    if sorted(named) != sorted(shapes) or len(set(named)) != len(named):
+        raise RuntimeError("county %s: SOURCES names townships %r, the Census draws %r"
+                           % (c3, sorted(named), sorted(shapes)))
+    return [(seat, unary_union([shapes[t] for t in ts]).buffer(0))
+            for seat, ts in sorted(spec["townships"].items())]
+
+
+def _source_kind(spec):
+    return "cole" if "zip" in spec else "townships" if "townships" in spec else "viewer"
+
+
 def _dbf_rows(raw):
     n, header_len, rec_len = struct.unpack("<IHH", raw[4:12])
     fields, o = [], 32
@@ -343,7 +385,11 @@ def build_county(c3, spec, county_feature, roster, today):
     from shapely.ops import transform as shp_transform  # noqa: PLC0415
     geoid = STATE + c3
     name = county_feature["properties"]["NAME"]
-    got = fetch_zip(spec) if "zip" in spec else fetch_viewer(spec)
+    if "townships" in spec:
+        got = fetch_townships(c3, spec)
+        spec = dict(spec, names={seat: seat for seat in spec["townships"]})
+    else:
+        got = fetch_zip(spec) if "zip" in spec else fetch_viewer(spec)
     if len(got) != 2:
         raise RuntimeError("%s: the source answers %d districts, not 2" % (name, len(got)))
     seats = district_seats(roster, geoid)
@@ -422,8 +468,10 @@ def build_county(c3, spec, county_feature, roster, today):
     for (src_name, _), geom in zip(got, (a_out, b_out)):
         feats.append({"type": "Feature", "properties": {
             "county": name, "countyfips": geoid, "seat": spec["names"][src_name],
-            "source": "cole" if "zip" in spec else "viewer", "read": today},
+            "source": _source_kind(spec), "read": today},
             "geometry": mapping(geom)})
+        if spec.get("clerk"):
+            feats[-1]["properties"]["clerk"] = spec["clerk"]
     people = {spec["names"][n]: 0 for n in names}
     unplaced = 0
     for x, y, p in fetch_block_points(c3):
@@ -530,8 +578,11 @@ def check_problems(fc, records, counties, roster):
         if p.get("seat") not in district_seats(roster, geoid):
             problems.append("%s: the roster prints no such district seat (it prints %r)"
                             % (where, district_seats(roster, geoid)))
-        if p.get("source") != ("cole" if "zip" in spec else "viewer"):
+        if p.get("source") != _source_kind(spec):
             problems.append("%s: source %r" % (where, p.get("source")))
+        if p.get("clerk") != spec.get("clerk"):
+            problems.append("%s: clerk %r, SOURCES says %r" % (where, p.get("clerk"),
+                                                               spec.get("clerk")))
         if not _ISO_DATE.match(str(p.get("read") or "")):
             problems.append("%s: read %r is not a date" % (where, p.get("read")))
         g = f.get("geometry") or {}
