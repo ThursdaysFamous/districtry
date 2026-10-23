@@ -8,8 +8,8 @@
 #
 # DAILY, NOT WEEKLY: the list's own footer says "This list is subject to
 # change", and a polling place that moves in the last week before an election
-# is exactly when a reader needs the change. Adam chose a daily check until
-# Election Day (2026-10-23).
+# is exactly when a reader needs the change. On 2026-10-23 Adam chose a daily
+# check until Election Day, Tuesday 2026-11-03.
 #
 # THE TRIPWIRE: the build fails unless the Board's list and the Data Portal's
 # precinct map (i8fv-xe4b, the map the app draws) hold exactly the same 1,291
