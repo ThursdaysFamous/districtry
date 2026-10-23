@@ -4128,7 +4128,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
      into a narrow column beside the button. The sentence takes the first row
      beside the dismiss cross and the button drops to a row of its own. */
   @media (max-width: 767px) {
-    .election-notice { flex-wrap: wrap; width: min(92%, 440px); row-gap: 8px; }
+    /* It also stops short of the zoom buttons on the right: centred at 92%
+       wide it covered them. The script below lifts it above the map credit
+       line, since on a phone the map's column runs on below the map. */
+    .election-notice {
+      flex-wrap: wrap; row-gap: 8px;
+      left: 8px; right: 54px;
+      transform: none; width: auto; max-width: none;
+    }
     #election-notice-text { flex: 1 1 calc(100% - 50px); min-width: 0; order: 0; }
     #election-notice-dismiss { order: 1; align-self: flex-start; }
     #election-notice-go { order: 2; }
@@ -24922,7 +24929,31 @@ function initChiExplorer() {
     // The first tap on the map is the reader doing what the notice asks, and
     // on a phone the notice sits over the map they are tapping.
     map.once("click", function () { notice.hidden = true; });
+    // On a phone the map's column carries a row of controls below the map,
+    // so a fixed bottom offset put the notice over the map's credit line and
+    // off the map's foot. Measure the gap and sit 22px above the map's foot
+    // there, clear of the credit line; a computer keeps the inline 56px.
+    var mapEl = document.getElementById("map");
+    var placeNotice = function () {
+      if (notice.hidden || !mapEl || !window.matchMedia("(max-width: 767px)").matches) {
+        notice.style.bottom = "56px";
+        return;
+      }
+      var col = notice.offsetParent;
+      if (!col) return;
+      // bottom is measured from the column's padding edge, so its lower
+      // border is taken off too
+      var below = col.getBoundingClientRect().bottom - (parseFloat(getComputedStyle(col).borderBottomWidth) || 0) -
+        mapEl.getBoundingClientRect().bottom;
+      notice.style.bottom = Math.round(Math.max(0, below) + 22) + "px";
+    };
+    window.addEventListener("resize", placeNotice);
+    // the controls row under the map fills in after boot (the Boundary
+    // streets button arrives with the vector labels), so measure again
+    // whenever the column changes height
     notice.hidden = false;
+    if (window.ResizeObserver && notice.offsetParent) new ResizeObserver(placeNotice).observe(notice.offsetParent);
+    placeNotice();
   })();
 
   /* ---------- U.S. House (Congress) — TIGERweb boundary joined to a same-origin
