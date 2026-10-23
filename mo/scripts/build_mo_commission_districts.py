@@ -26,8 +26,11 @@ Saline County's clerk listed, on 2026-10-23, the townships and precincts in
 each of its two districts: whole townships but for Marshall, which its city's
 wards split, so Saline is drawn from TIGER's township lines and, inside
 Marshall township, the Census Bureau's 2020 voting districts, whose four
-Marshall wards tile that township (LISTED below). Those 25 are SOURCES below.
-The other 89 counties and the City of St. Louis are not
+Marshall wards tile that township (LISTED below). And Perry County's clerk
+pointed, on 2026-10-23, to the county's public map at SEMO GIS (the Southeast
+Missouri Regional Planning Commission's map server), whose Commissioner
+Districts layer any visitor can query (ARCGIS below). Those 26 are SOURCES
+below. The other 88 counties and the City of St. Louis are not
 drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
@@ -172,6 +175,15 @@ SOURCES = {
                 "prj": "1e84a19d8fa23d2f23c0cdd5d16cc096abe8ee6235eeb391a139484fbcd35654"},
             "names": {"1": "District 1", "2": "District 2"},
             "sent": "2026-10-23"},
+    # Perry's clerk (Jared W. Kutz) answered on 2026-10-23 by pointing to the
+    # county's public map at SEMO GIS, whose PerryCo_PublicBase service has a
+    # Commissioner Districts layer (COMM_DIST 1 and 2). The roster prints
+    # First and Second District.
+    "157": {"arcgis": ("https://maps.semogis.com/server/rest/services/Perry_CO/"
+                       "PerryCo_PublicBase/MapServer/61"),
+            "field": "COMM_DIST",
+            "names": {"1": "First District", "2": "Second District"},
+            "clerk": "2026-10-23"},
     # Saline's clerk (Brittni Allison Burton) answered on 2026-10-23 with the
     # townships and precincts each district holds, and a 2011 map of the
     # line. Every township is whole but Marshall, whose Wards 3 and 4 are in
@@ -316,6 +328,23 @@ def fetch_viewer(spec):
     return out
 
 
+def fetch_arcgis(spec):
+    """A county's own ArcGIS map service layer, queried anonymously. The
+    layer's own name must still be Commissioner Districts, so a renumbered
+    service is caught rather than read as commission districts."""
+    url = spec["arcgis"]
+    name = _get(url, {"f": "json"}).get("name")
+    if not name or not re.match(r"Commissioners? Districts?$", name):
+        raise RuntimeError("%s is %r, not the Commissioner Districts layer" % (url, name))
+    data = _get(url + "/query", {
+        "where": "1=1", "outFields": spec["field"], "returnGeometry": "true",
+        "outSR": "4326", "f": "json"})
+    if data.get("exceededTransferLimit"):
+        raise RuntimeError("%s: the commissioner layer hit the transfer cap" % url)
+    return [(str(f["attributes"].get(spec["field"])), _esri_rings_to_shape(f["geometry"]["rings"]))
+            for f in data.get("features") or []]
+
+
 def fetch_split_township(c3, township, shape_, seats):
     """A township a county splits by precinct, as {seat: part}, from the
     Census Bureau's 2020 voting districts. The precincts named must be every
@@ -373,7 +402,8 @@ def fetch_townships(c3, spec):
 
 
 def _source_kind(spec):
-    return ("cole" if "zip" in spec else "listed" if "listed" in spec
+    return ("cole" if "zip" in spec else "arcgis" if "arcgis" in spec
+            else "listed" if "listed" in spec
             else "townships" if "townships" in spec
             else "sent" if "file" in spec else "viewer")
 
@@ -494,7 +524,7 @@ def build_county(c3, spec, county_feature, roster, today):
         spec = dict(spec, names={seat: seat for seat in spec["townships"]})
     else:
         got = (fetch_zip(spec) if "zip" in spec else read_sent(spec) if "file" in spec
-               else fetch_viewer(spec))
+               else fetch_arcgis(spec) if "arcgis" in spec else fetch_viewer(spec))
     if len(got) != 2:
         raise RuntimeError("%s: the source answers %d districts, not 2" % (name, len(got)))
     seats = district_seats(roster, geoid)
