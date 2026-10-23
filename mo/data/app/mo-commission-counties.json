@@ -241,6 +241,17 @@
   "spreadPct": 13.6,
   "unplaced2020": 0
  },
+ "29195": {
+  "county": "Saline County",
+  "people2020": {
+   "Northern District": 10207,
+   "Southern District": 13126
+  },
+  "read": "2026-10-23",
+  "source": "listed",
+  "spreadPct": 25.0,
+  "unplaced2020": 0
+ },
  "29217": {
   "county": "Vernon County",
   "people2020": {
