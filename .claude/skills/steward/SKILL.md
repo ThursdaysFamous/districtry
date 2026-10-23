@@ -216,6 +216,7 @@ python3 wi/scripts/dropped_rings.py --selftest   # the dropped-ring mechanism, f
 python3 wi/scripts/build_wi_supervisory_districts.py --check-shipped   # every declared dropped ring's AFTER answer, offline
 python3 ms/scripts/build_ms_county_officials.py --check         # Mississippi's supervisors and election commissioners: five of each per county, a board office only where three share it, and a commissioner carrying nothing but a name
 python3 mo/scripts/build_mo_county_officials.py --check         # Missouri's county governing bodies and officers as shipped: one record per county and the City of St. Louis, every body in the shape the build requires, the recalled Jackson County executive still not named, every seat named or vacant, and no fax number
+python3 mo/scripts/build_mo_commission_districts.py --check     # Missouri's commission districts: two per drawn county, the roster's seats, each pair the county's whole area, and the County layer agreeing at 2,000 points
 python3 ms/scripts/build_ms_supervisor_districts.py --check      # Mississippi's supervisor districts against their build record, the directory's seats, the Census edition the card names, and the County layer
 python3 ms/scripts/build_ms_court_districts.py --check           # Mississippi's six court maps against the court's own county lists and the laws that redraw them in 2027 and 2031, every saved copy re-hashed
 python3 ms/scripts/build_ms_judges.py --selftest                 # the judges' parse and the change table's staleness tests, on literals

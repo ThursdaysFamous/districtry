@@ -5008,6 +5008,10 @@ next step rather than a mailing.
 
 ## Ask wi-city-council-pages — Beloit: may we read your council page?
 
+> **BELOIT ASKED 2026-10-23** at 02:12 UTC, sent by the operator to the City Clerk at an
+> address the operator found; follow-up due about 2026-11-13. Gap `wi-beloit-council` carries the
+> ask. The other four cities' letters stay withdrawn, as below.
+
 > **RE-CHECKED 2026-10-06 UNDER THE READ-THE-PAGE-FIRST RULE. THE REFUSAL STANDS AND ONE
 > SENTENCE OF THE LETTER WAS FALSE FOR BELOIT, NOW CORRECTED.** The rule asks whether a page we
 > called unreadable actually loads its names from a feed we could read. For Beloit that question
@@ -5207,6 +5211,12 @@ round.
 ---
 
 ## Ask wi-oshkosh-council — City of Oshkosh Clerk: our reader cannot reach your robots.txt
+
+> **SENT 2026-10-23 AT 02:10 UTC DESPITE THE WITHDRAWAL BELOW, AND ALREADY ANSWERED BY THE CITY'S
+> OWN SITE.** The draft was edited on 2026-10-22 instead of being flagged as withdrawn, so it went
+> out saying the council is missing. It is not: the council has been on the map since 2026-10-15.
+> A short correction to the clerk is drafted for the operator and not sent. No follow-up is due,
+> and no gap record carries this ask, because none is open.
 
 > **WITHDRAWN 2026-10-16. DO NOT SEND.** The question this letter asks has answered itself.
 > On 2026-10-15 the city's council page had moved to `www.oshkoshwi.gov`, whose robots.txt
@@ -7942,6 +7952,14 @@ that needs a change in law, is then the next question; nothing here establishes 
 > not the text below, are the record of what was asked. A follow-up is due about 2026-11-11 for
 > any that has not answered. Each city's gap record carries the date in its `ask` field and the
 > city in its `covers` field.
+>
+> **BAY CITY ANSWERED 2026-10-22.** The City Clerk wrote that the ward lines have not changed,
+> that the current ward map is on Bay County's online GIS map, and that the precinct list is a
+> PDF on the city's site; she did not take up the river and Middleground Island question.
+> Measured the same day, the county's map gives every resident the same ward as the state's 2026
+> precincts and differs only on the river and the uninhabited island, so the wards were built
+> from it (`mi/scripts/build_mi_bay_city_wards.py`) and wait on the operator's word to ship. No
+> follow-up is owed to Bay City; its gap record is retired with the wards.
 >
 > Drafted 2026-10-15. Three letters, one per city, each about one ward map this project measured
 > on 2026-10-15 and did not ship. Each city's gap record in `docs/DATA_LAYER_GUIDEBOOK.md`

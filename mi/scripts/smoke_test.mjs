@@ -825,6 +825,9 @@ try {
         // Lansing, drawn 2026-10-20 under the city's CC BY-NC licence; its
         // ward 4 member is the council president.
         { city: "Lansing", geoid: "2646000", pt: "42.73367,-84.56588", ward: "4", seat: "Ward 4" },
+        // Bay City, drawn 2026-10-22 from Bay County's ward map; the point is
+        // Ward 5 in the state's 2026 precincts too, away from the river.
+        { city: "Bay City", geoid: "2606020", pt: "43.56836,-83.88409", ward: "5", seat: "Ward 5" },
       ];
       for (const c of CITY_POINTS) {
         const board = boards[c.geoid];
