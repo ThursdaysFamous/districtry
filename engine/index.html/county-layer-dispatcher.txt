@@ -281,9 +281,25 @@
         var entry = byKey[result.dxCounty];
         return entry && entry.primaryLink ? entry.primaryLink(result) : null;
       },
+      // an entry may name its own pin; otherwise a result carrying a polling
+      // place and its address (every Illinois county-precinct entry that
+      // publishes one) pins it, as Chicago's precinct card does. Until
+      // 2026-10-23 no county entry declared one, so those precinct cards
+      // named a polling place the map never showed.
       pointOfInterest: function (result) {
         var entry = byKey[result.dxCounty];
-        return entry && entry.pointOfInterest ? entry.pointOfInterest(result) : null;
+        if (entry && entry.pointOfInterest) return entry.pointOfInterest(result);
+        if (result && result.pollingPlace && result.pollingAddress) {
+          var poi = { kind: "Polling place", label: String(result.pollingPlace), address: String(result.pollingAddress) };
+          // a county whose service places its polling places (Kane) needs no geocoder
+          if (result.pollingLat != null && result.pollingLng != null &&
+              isFinite(result.pollingLat) && isFinite(result.pollingLng)) {
+            poi.lat = Number(result.pollingLat);
+            poi.lng = Number(result.pollingLng);
+          }
+          return poi;
+        }
+        return null;
       },
       // concept-level (not per-county) nesting + toggle hook, passed through
       // verbatim — county-precinct nests under township in every county, with

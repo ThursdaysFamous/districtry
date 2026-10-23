@@ -8138,10 +8138,22 @@ function initIowaExplorer() {
     var viewbox = [POI_GEOCODE_BBOX.minLng, POI_GEOCODE_BBOX.maxLat, POI_GEOCODE_BBOX.maxLng, POI_GEOCODE_BBOX.minLat].join(",");
     var url = "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&bounded=1&viewbox=" +
       viewbox + "&q=" + encodeURIComponent(address);
+    // OpenStreetMap often holds a street without its house numbers, and
+    // then Nominatim answers nothing, or the street itself (category
+    // "highway"), somewhere along its length. Either way the Census Bureau's
+    // estimate from its address ranges is asked next, through the link
+    // lookup (lookupAddressRanges, ENGINE geocoder-search), and taken only
+    // when its one match is this number on this street in this town; a
+    // street answer is kept when the Census Bureau has none. Until
+    // 2026-10-23 a miss here was the end of it, so a polling place or an
+    // office whose house number OpenStreetMap lacks got no pin at all.
     return fetchJSONWithRetry(url, { headers: { "Accept": "application/json" } }, 1)
       .then(function (results) {
         var hit = results && results[0];
-        return hit ? { lat: parseFloat(hit.lat), lng: parseFloat(hit.lon) } : null;
+        var at = hit ? { lat: parseFloat(hit.lat), lng: parseFloat(hit.lon) } : null;
+        if (at && hit.category !== "highway") return at;
+        return lookupAddressRanges(addressForLookup(address, METRO_BRAND.instanceTag) || address)
+          .then(function (m) { return m || at; });
       });
   }
 
@@ -16790,9 +16802,25 @@ function initIowaExplorer() {
         var entry = byKey[result.dxCounty];
         return entry && entry.primaryLink ? entry.primaryLink(result) : null;
       },
+      // an entry may name its own pin; otherwise a result carrying a polling
+      // place and its address (every Illinois county-precinct entry that
+      // publishes one) pins it, as Chicago's precinct card does. Until
+      // 2026-10-23 no county entry declared one, so those precinct cards
+      // named a polling place the map never showed.
       pointOfInterest: function (result) {
         var entry = byKey[result.dxCounty];
-        return entry && entry.pointOfInterest ? entry.pointOfInterest(result) : null;
+        if (entry && entry.pointOfInterest) return entry.pointOfInterest(result);
+        if (result && result.pollingPlace && result.pollingAddress) {
+          var poi = { kind: "Polling place", label: String(result.pollingPlace), address: String(result.pollingAddress) };
+          // a county whose service places its polling places (Kane) needs no geocoder
+          if (result.pollingLat != null && result.pollingLng != null &&
+              isFinite(result.pollingLat) && isFinite(result.pollingLng)) {
+            poi.lat = Number(result.pollingLat);
+            poi.lng = Number(result.pollingLng);
+          }
+          return poi;
+        }
+        return null;
       },
       // concept-level (not per-county) nesting + toggle hook, passed through
       // verbatim — county-precinct nests under township in every county, with

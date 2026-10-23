@@ -8133,10 +8133,22 @@ function initIndianaExplorer() {
     var viewbox = [POI_GEOCODE_BBOX.minLng, POI_GEOCODE_BBOX.maxLat, POI_GEOCODE_BBOX.maxLng, POI_GEOCODE_BBOX.minLat].join(",");
     var url = "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&bounded=1&viewbox=" +
       viewbox + "&q=" + encodeURIComponent(address);
+    // OpenStreetMap often holds a street without its house numbers, and
+    // then Nominatim answers nothing, or the street itself (category
+    // "highway"), somewhere along its length. Either way the Census Bureau's
+    // estimate from its address ranges is asked next, through the link
+    // lookup (lookupAddressRanges, ENGINE geocoder-search), and taken only
+    // when its one match is this number on this street in this town; a
+    // street answer is kept when the Census Bureau has none. Until
+    // 2026-10-23 a miss here was the end of it, so a polling place or an
+    // office whose house number OpenStreetMap lacks got no pin at all.
     return fetchJSONWithRetry(url, { headers: { "Accept": "application/json" } }, 1)
       .then(function (results) {
         var hit = results && results[0];
-        return hit ? { lat: parseFloat(hit.lat), lng: parseFloat(hit.lon) } : null;
+        var at = hit ? { lat: parseFloat(hit.lat), lng: parseFloat(hit.lon) } : null;
+        if (at && hit.category !== "highway") return at;
+        return lookupAddressRanges(addressForLookup(address, METRO_BRAND.instanceTag) || address)
+          .then(function (m) { return m || at; });
       });
   }
 
