@@ -41,7 +41,7 @@ and answers with the full link it leads to.
 Every app also sends it, at `?a=`, **the street address a reader searches for
 or a map link carries** when the map's own search can't find the house,
 and it asks the U.S. Census Bureau's geocoder where that number falls.
-The ny app sends it **the public address of an office a card shows** too,
+The il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms and la apps send it **the public address of an office a card shows** too,
 when the app's office-pin geocoder can't place that office's pin, which
 says which district the reader selected.
 No served file names the Census host, because only the lookup asks it.
