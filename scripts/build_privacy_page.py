@@ -1717,6 +1717,12 @@ def render_storage_paragraphs(apps):
                 # "The front door" heads a table cell; in the middle of this
                 # sentence it takes a small letter.
                 % (code(store), code(key), esc(re.sub(r"^The ", "the ", joined(users)))))
+        elif key.startswith("districtry-election-notice-"):
+            out.append(
+                "<p><strong>The Election Day notice.</strong> If you close the notice over "
+                "the map, or press its button, %s on %s keeps %s so it stays closed until "
+                "that election. It is one character, and it never leaves your browser.</p>"
+                % (code(store), esc(joined(users)), code(key)))
         elif key == "districtry-boundary-streets":
             out.append(
                 "<p><strong>Boundary street names.</strong> If you switch the map's "

@@ -402,6 +402,7 @@ const ROSTER_URLS = [
   "./data/app/kendall-county-board-members.json",
   "./data/app/mchenry-county-board-members.json",
   "./data/app/early-voting-sites.json",
+  "./data/app/chicago-polling-places.json",
   "./data/app/ccbr-roster.json",
   "./data/app/il-court-justices.json",
   "./data/app/il-county-clerks.json",

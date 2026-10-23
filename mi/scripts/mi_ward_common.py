@@ -22,7 +22,8 @@ WHAT A BUILDER SUPPLIES. A `cfg` dict and the source features keyed by ward:
                   not unique in Michigan
   expect_wards    ("1", .., "6")
   expect_state    {ward: precinct count} in the state's fabric
-  agreement       "union" or "lines" (below)
+  agreement       "union", "lines" or "residents" (below)
+  agreement_why   required with "residents": why area cannot answer for this city
   robots_urls     every URL the build fetches, so each host is asked first
 
 THE TWO AGREEMENT RULES. Both compare the city's wards against the state's
@@ -41,8 +42,20 @@ precincts dissolved by their WARD column, at 4,000 random points inside either.
            the rule recommended to the operator on 2026-10-15 for cities whose
            only difference from the state is the city's outer edge.
 
-Both figures are printed on every run whichever rule gates, so a reader of
-the log sees the edge difference rather than having it hidden by the rule.
+  "residents" same / (people in BOTH maps) >= 99%, counted over every
+           populated Census 2020 block at its internal point, so it asks
+           whether a person at home is told the same ward by both publishers.
+           Added 2026-10-22 for Bay City, where the two maps divide the
+           Saginaw River and the empty Middleground Island differently and
+           agree on every resident (32,649 of 32,649), while the area rules
+           read 98.4% "lines" because a river is mostly area. A builder must
+           say why in `agreement_why`, and the area figures still print, so
+           this rule cannot be picked to make a gap disappear quietly. Its
+           cost is stated rather than hidden: a click on the river or the
+           island can name a different ward from the state's precincts.
+
+Both area figures are printed on every run whichever rule gates, so a reader
+of the log sees the edge difference rather than having it hidden by the rule.
 """
 
 import json
@@ -225,6 +238,38 @@ def point_agreement(a, b, box, samples=4000, seed=20261015):
             "lines": (same / both) if both else 0.0}
 
 
+def resident_agreement(cfg, a, b, blocks):
+    """The share of people, among those both maps place in a ward, whom both
+    maps place in the SAME ward, counted at each populated block's internal
+    point. Everything it counts is printed."""
+    same = diff = only_a = only_b = 0
+    for lon, lat, pop in blocks:
+        if not pop:
+            continue
+        ka = next((k for k, g in a if in_geometry((lon, lat), g)), None)
+        kb = next((k for k, g in b if in_geometry((lon, lat), g)), None)
+        if ka is None and kb is None:
+            continue
+        if ka is not None and kb is not None:
+            if ka == kb:
+                same += pop
+            else:
+                diff += pop
+                print("    %d people at %.5f,%.5f: Ward %s here, Ward %s in the state's "
+                      "precincts" % (pop, lat, lon, ka, kb))
+        elif ka is not None:
+            only_a += pop
+        else:
+            only_b += pop
+    print("  residents: %d told the same ward by both maps, %d a different one; %d only "
+          "inside %s's wards, %d only inside the state's (the outer edge, held by the "
+          "tiling gate)" % (same, diff, only_a, cfg["name"], only_b))
+    print("    rule reason: %s" % cfg["agreement_why"])
+    if same + diff == 0:
+        fail(cfg, "no resident is inside both maps — the block or precinct query moved")
+    return same / (same + diff)
+
+
 def overlaps(m, box, samples=2000, seed=7):
     rng = random.Random(seed)
     n = 0
@@ -349,6 +394,15 @@ def gate_and_write(cfg, wards, ward_key):
                                       agree["only_b"]))
     print("    where both maps draw a ward: %.3f%%; over either map: %.3f%% (rule: %s)"
           % (100 * agree["lines"], 100 * agree["union"], cfg["agreement"]))
+    blocks = None
+    if cfg["agreement"] == "residents":
+        if not cfg.get("agreement_why"):
+            fail(cfg, "the residents rule needs agreement_why: say why area cannot answer")
+        print("fetching Census 2020 blocks for the residents rule…")
+        blocks = fetch_blocks(box, cfg.get("min_blocks", 500))
+        agree["residents"] = resident_agreement(cfg, wm, model(sprecs, state_ward), blocks)
+    elif cfg["agreement"] not in ("lines", "union"):
+        fail(cfg, "unknown agreement rule %r" % cfg["agreement"])
     score = agree[cfg["agreement"]]
     if score < MIN_AGREEMENT:
         fail(cfg, "agreement %.3f%% (%s rule) is below the %.0f%% floor — find out which "
@@ -356,8 +410,9 @@ def gate_and_write(cfg, wards, ward_key):
                   % (100 * score, cfg["agreement"], 100 * MIN_AGREEMENT))
 
     # ---- TILING against the Census place -----------------------------------
-    print("fetching Census 2020 blocks…")
-    blocks = fetch_blocks(box, cfg.get("min_blocks", 500))
+    if blocks is None:
+        print("fetching Census 2020 blocks…")
+        blocks = fetch_blocks(box, cfg.get("min_blocks", 500))
     place = esri(PLACE, {"where": "GEOID = '%s'" % cfg["place_geoid"], "outFields": "NAME,GEOID"})
     if str(place[0]["properties"].get("NAME", "")) != cfg["place_name"]:
         fail(cfg, "place GEOID %s is not %s (got %r)" % (
