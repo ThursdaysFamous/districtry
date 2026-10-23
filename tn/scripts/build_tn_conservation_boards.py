@@ -36,7 +36,11 @@ CLAUDE.md sets for a managed challenge, so the file is not built from a read
 that happened to be served: this builder is not to be run until the host
 serves three consecutive reads at least 15 seconds apart, re-measured
 deliberately and recorded here with its date (tn/WATCH.md carries it). Whether this project's own
-reads tripped a rate rule is not established. What follows describes the
+reads tripped a rate rule is not established. Re-measured on 2026-10-23 with
+this builder's own client: robots.txt was served this time (23 bytes,
+"Allow: /"), and the PDF answered 403 on all three reads, at 15:04:48,
+15:05:06 and 15:05:23 UTC, each the same 118-byte awselb/2.0 body, so it is
+still not built. What follows describes the
 copy read that morning, which the parser was written and tested against.
 
 WHAT IT GIVES. One block per county, the 95 in alphabetical order: the
