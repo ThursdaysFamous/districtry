@@ -2041,7 +2041,15 @@ try {
         const c = document.getElementById("card-ward-precinct");
         return c && /Ward \d/.test(c.textContent);
       }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
-      await page.waitForTimeout(800);
+      // Wait for the polling pin itself rather than a fixed pause: the ward
+      // layer this one turns on drops its own office pin on its own schedule,
+      // so a count of every pin after a pause was a race (#1725 read 2 and 2).
+      if (date > "2026") {
+        await page.waitForFunction(() => Array.from(document.querySelectorAll(".leaflet-tooltip-pane .poi-pin-label"))
+          .some((el) => /TEST POLLING SCHOOL/.test(el.textContent)), null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      } else {
+        await page.waitForTimeout(1500);
+      }
       const out = await page.evaluate(() => {
         const c = document.getElementById("card-ward-precinct");
         const block = c ? c.parentNode : null;
@@ -2049,8 +2057,10 @@ try {
         const notice = document.getElementById("election-notice");
         return { text: c ? c.textContent.replace(/\s+/g, " ") : null,
           link: link ? link.href : null,
-          // the polling pin is the one marker not on the selected point
-          pins: document.querySelectorAll(".leaflet-marker-pane .leaflet-marker-icon").length,
+          // every pin says what it is beside itself; the polling pin's line
+          // names the kind of place and the building
+          pinLabels: Array.from(document.querySelectorAll(".leaflet-tooltip-pane .poi-pin-label"))
+            .map((el) => el.textContent.replace(/\s+/g, " ").trim()),
           notice: notice ? notice.hidden : null };
       });
       await context.close();
@@ -2065,8 +2075,21 @@ try {
     check("after its election date the precinct card names no polling place",
       past.text !== null && /Ward \d/.test(past.text) && !/Polling place/.test(past.text),
       JSON.stringify(past));
-    check("the polling place drops a pin while it is shown, and none after the election",
-      live.pins === past.pins + 1, JSON.stringify({ live: live.pins, past: past.pins }));
+    check("the polling place drops one pin labelled with the kind of place and the building, and none after the election",
+      live.pinLabels.filter((t) => t === "Polling placeTEST POLLING SCHOOL").length === 1 &&
+      !past.pinLabels.some((t) => /TEST POLLING SCHOOL/.test(t)),
+      JSON.stringify({ live: live.pinLabels, past: past.pinLabels }));
+    {
+      // A precinct feature carries its ward too, and the engine's fallback
+      // reads "ward" first, so its map labels printed the ward (Adam,
+      // 2026-10-23: every precinct inside Ward 33 read "33").
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, BASE);
+      const name = await page.evaluate(() =>
+        window.ChiExplorer.hoverValueFor("ward-precinct", { ward: "33", precinct: "06" }));
+      check("a ward precinct's map label names the precinct, not its ward", name === "Precinct 6", JSON.stringify(name));
+      await context.close();
+    }
     const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/Chicago" });
     if (today <= "2026-11-03") {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -2079,11 +2102,11 @@ try {
       if (shown) {
         await page.click("#election-notice-go");
         await page.waitForTimeout(500);
-        toggled = await page.evaluate(() => ["county", "county-precinct", "ward-precinct"].map((id) => {
+        toggled = await page.evaluate(() => ["county", "county-precinct", "ward-precinct", "early-voting"].map((id) => {
           const b = document.getElementById("toggle-" + id); return !!(b && b.checked);
         }).concat([document.getElementById("election-notice").hidden]));
       }
-      check("a bare map shows the Election Day notice, and its button turns on the precinct and county layers",
+      check("a bare map shows the Election Day notice, and its button turns on the precinct, early voting and county layers",
         shown === true && toggled && toggled.every(Boolean), JSON.stringify({ shown, toggled }));
       await context.close();
     }
