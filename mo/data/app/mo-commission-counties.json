@@ -43,6 +43,17 @@
   "spreadPct": 10.1,
   "unplaced2020": 36
  },
+ "29037": {
+  "county": "Cass County",
+  "people2020": {
+   "District 1": 50946,
+   "District 2": 56878
+  },
+  "read": "2026-10-23",
+  "source": "sent",
+  "spreadPct": 11.0,
+  "unplaced2020": 0
+ },
  "29041": {
   "county": "Chariton County",
   "people2020": {

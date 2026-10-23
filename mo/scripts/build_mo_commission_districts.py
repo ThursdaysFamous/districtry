@@ -19,8 +19,11 @@ County) offers the lines as a shapefile download. And Lawrence County posts a
 scanned map of its two districts whose lines run along whole townships; its
 clerk pointed to that map when asked (2026-10-23), so its districts are drawn
 as the union of the Census Bureau's township lines the map names (TOWNSHIPS
-below). Those 23 are SOURCES below. The other 91 counties and the City of St.
-Louis are not drawn, and the layer is hidden there; the County card names every county's commissioners either
+below). And Cass County's GIS office, in the Assessor's office, e-mailed this
+project a shapefile of its two districts on 2026-10-23 after its clerk passed
+on the request; the file is kept under data/source/raw/ (SENT below). Those 24
+are SOURCES below. The other 90 counties and the City of St. Louis are not
+drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
 WHAT IS CHECKED, AND WHAT IS NOT. Every build refuses a county unless:
@@ -54,7 +57,8 @@ edge rather than the viewer's. The line between the two districts is held
 to FIDELITY_MAX_M: every vertex of the source's own dividing line must lie
 within that distance of the drawn one.
 
-Build (network: the viewers, the Cole download and TIGERweb; shapely and
+Build (network: the viewers, the Cole download and TIGERweb; Cass's file is
+read from disk; shapely and
 pyproj):
     python3 mo/scripts/build_mo_commission_districts.py
 Check (offline, stdlib only; in CI):
@@ -99,6 +103,7 @@ BLOCKS = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
 SOURCE_VIEWER = "the county's map viewer, its Commissioner District layer"
 COUSUB = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
           "Places_CouSub_ConCity_SubMCD/MapServer/1/query")
+RAW_DIR = os.path.join(REPO_ROOT, "data", "source", "raw")
 SOURCE_COLE = ("the Jefferson City and Cole County GIS office (midmogis.org), "
                "its download of the commissioner districts")
 
@@ -146,6 +151,20 @@ SOURCES = {
             "map": ("https://www.lawrencecountymo.org/_files/ugd/"
                     "e487e4_0038fc0bb16742e8b9dc74b091ced286.pdf"),
             "clerk": "2026-10-23"},
+    # Cass County GIS (Lisa Mendpara, PMM, in the Assessor's office) e-mailed
+    # this shapefile on 2026-10-23 after the clerk forwarded the request. Its
+    # metadata was last synced 2022-04-28, and the county's own district map
+    # (sent with it) draws the same two areas: District 2 the northwest,
+    # Belton, Raymore and Peculiar, and District 1 the rest. The files are
+    # kept as sent and held to their SHA-256 below.
+    "037": {"file": "cass-commission-districts/commission", "field": "District",
+            "sha256": {
+                "shp": "10d69d775098334c8717689fbba58ee6625791120065cbce6bbb73957e4af354",
+                "shx": "0df31e0c3cce5f5da1ef99b75552b7ec22b8f8f5208b9268eff4f835075b7328",
+                "dbf": "4105dcbdbadef6ccaaf2581f01543fb3a622e6c8e828c93ba19fd5c1b5865e6d",
+                "prj": "1e84a19d8fa23d2f23c0cdd5d16cc096abe8ee6235eeb391a139484fbcd35654"},
+            "names": {"1": "District 1", "2": "District 2"},
+            "sent": "2026-10-23"},
     "113": {"viewer": ("phelpsgis", "Lincoln_County_MO", "1", "35"),
             "names": {"DISTRICT I": "First District", "DISTRICT II": "Second District"}},
     "119": {"viewer": ("christiangis", "McDonald_County_MO", "2", "35"), "field": "district_n",
@@ -294,7 +313,8 @@ def fetch_townships(c3, spec):
 
 
 def _source_kind(spec):
-    return "cole" if "zip" in spec else "townships" if "townships" in spec else "viewer"
+    return ("cole" if "zip" in spec else "townships" if "townships" in spec
+            else "sent" if "file" in spec else "viewer")
 
 
 def _dbf_rows(raw):
@@ -348,6 +368,29 @@ def fetch_zip(spec):
     return [(row.get(spec["field"]), _esri_rings_to_shape(r)) for row, r in zip(rows, rings)]
 
 
+def _raw_file(spec, ext):
+    import hashlib  # noqa: PLC0415
+    path = os.path.join(RAW_DIR, spec["file"] + "." + ext)
+    with open(path, "rb") as fh:
+        raw = fh.read()
+    if hashlib.sha256(raw).hexdigest() != spec["sha256"][ext]:
+        raise RuntimeError("%s is not the file the county sent" % os.path.relpath(path, REPO_ROOT))
+    return raw
+
+
+def read_sent(spec):
+    """A shapefile a county sent, kept under data/source/raw/."""
+    from pyproj import Transformer  # noqa: PLC0415
+    t = Transformer.from_crs(_raw_file(spec, "prj").decode("latin-1"), "EPSG:4326",
+                             always_xy=True)
+    _raw_file(spec, "shx")
+    rings = _shp_polygons(_raw_file(spec, "shp"), t.transform)
+    rows = _dbf_rows(_raw_file(spec, "dbf"))
+    if len(rings) != len(rows):
+        raise RuntimeError("%s: %d shapes and %d records" % (spec["file"], len(rings), len(rows)))
+    return [(row.get(spec["field"]), _esri_rings_to_shape(r)) for row, r in zip(rows, rings)]
+
+
 def fetch_block_points(c3):
     """Every populated 2020 census block in the county, as (lng, lat, people)
     at its internal point."""
@@ -389,7 +432,8 @@ def build_county(c3, spec, county_feature, roster, today):
         got = fetch_townships(c3, spec)
         spec = dict(spec, names={seat: seat for seat in spec["townships"]})
     else:
-        got = fetch_zip(spec) if "zip" in spec else fetch_viewer(spec)
+        got = (fetch_zip(spec) if "zip" in spec else read_sent(spec) if "file" in spec
+               else fetch_viewer(spec))
     if len(got) != 2:
         raise RuntimeError("%s: the source answers %d districts, not 2" % (name, len(got)))
     seats = district_seats(roster, geoid)
@@ -472,6 +516,8 @@ def build_county(c3, spec, county_feature, roster, today):
             "geometry": mapping(geom)})
         if spec.get("clerk"):
             feats[-1]["properties"]["pointedOn"] = spec["clerk"]
+        if spec.get("sent"):
+            feats[-1]["properties"]["sentOn"] = spec["sent"]
     people = {spec["names"][n]: 0 for n in names}
     unplaced = 0
     for x, y, p in fetch_block_points(c3):
@@ -583,6 +629,9 @@ def check_problems(fc, records, counties, roster):
         if p.get("pointedOn") != spec.get("clerk"):
             problems.append("%s: pointedOn %r, SOURCES says %r" % (where, p.get("pointedOn"),
                                                                spec.get("clerk")))
+        if p.get("sentOn") != spec.get("sent"):
+            problems.append("%s: sentOn %r, SOURCES says %r" % (where, p.get("sentOn"),
+                                                            spec.get("sent")))
         if not _ISO_DATE.match(str(p.get("read") or "")):
             problems.append("%s: read %r is not a date" % (where, p.get("read")))
         g = f.get("geometry") or {}

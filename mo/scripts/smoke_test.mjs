@@ -94,6 +94,7 @@ const NEGATIVE_HIDDEN = [];
 // inaccessibility, Henry's the one check 9 uses.
 const CHRISTIAN_POINT = "36.95028,-93.04376";
 const LAWRENCE_POINT = "36.99024,-93.67586";
+const CASS_POINT = "38.7968,-94.45476";
 const HENRY_POINT = "38.38256,-93.69450";
 const BOOT_TIMEOUT = 45000; // Leaflet CDN + first paint on a cold CI runner
 const QUERY_TIMEOUT = 25000;
@@ -1195,7 +1196,8 @@ try {
   //     shipped files, so a rebuild or a new roster moves the expectation.
   //       - Cole, at the State Capitol, drawn from MidMO GIS's download, and
   //         Christian, drawn from its map viewer, and Lawrence, drawn from
-  //         whole TIGER townships and pointed to by its clerk: the card names the district
+  //         whole TIGER townships and pointed to by its clerk, and Cass,
+  //         drawn from the file its GIS office sent: the card names the district
   //         and its commissioner, the presiding commissioner, where the line
   //         comes from and that it has not been checked against the
   //         county's election records.
@@ -1206,15 +1208,16 @@ try {
   //       - The roster is refused: the district still answers and names
   //         nobody.
   //     Christian's point is the pole of inaccessibility of its larger
-  //     district as the shipped file draws it, and Lawrence's of its Eastern
-  //     District (shapely polylabel, 2026-10-23); Henry's is check 9's.
+  //     district as the shipped file draws it, Lawrence's of its Eastern
+  //     District and Cass's of its District 2 (shapely polylabel,
+  //     2026-10-23); Henry's is check 9's.
   {
     const fc = shipped("mo-commission-districts.json");
     const roster = shipped("mo-county-officials.json");
     const drawn = shipped("mo-commission-counties.json");
     const seatOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.seat === p.seat) || {};
     const presidingOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.countywide) || {};
-    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT]) {
+    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT]) {
       const at = propsAt(fc, pt);
       const p = at[0] || {};
       const mine = seatOf(p), pres = presidingOf(p);
@@ -1226,11 +1229,13 @@ try {
         : p.source === "townships"
           ? text.includes("made of whole townships") &&
             text.includes(`clerk pointed this app to that map on ${longDate(p.pointedOn)}`)
+          : p.source === "sent"
+            ? text.includes(`GIS office sent them to this app on ${longDate(p.sentOn)}`)
           : text.includes(`${p.county}'s own map viewer`);
       check(`county-commissioner card in ${p.county || "a drawn county"} names the ${p.seat || "?"} and its commissioner, the presiding commissioner, and where the line comes from`,
         at.length === 1 && !!drawn[p.countyfips] && !info.error && !!mine.name && !!pres.name &&
           text.includes(p.seat) && text.includes(mine.name) && text.includes(pres.name) &&
-          whereOk && text.includes(`read on ${longDate(p.read)}`) &&
+          whereOk && (p.source === "sent" || text.includes(`read on ${longDate(p.read)}`)) &&
           /has not checked this line against the precinct records/.test(text) &&
           /Where these names come from/.test(text),
         `districts here=${at.length} ${text.slice(0, 140)}`);
