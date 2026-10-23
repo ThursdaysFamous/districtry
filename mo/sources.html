@@ -1231,15 +1231,16 @@ table.matrix code {
               </tr>
               <tr id="layer-county-commissioner">
                 <th scope="row"><span class="layer-name">County Commission District</span><code>county-commissioner</code></th>
-                <td data-label="What it answers">The county commission district covering the point, and the district commissioner elected from it, in the 22 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner.</td>
+                <td data-label="What it answers">The county commission district covering the point, and the district commissioner elected from it, in the 23 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://www.integritygis.com/" target="_blank" rel="noopener">Integrity GIS county map viewers — the commission district layer each county's own public map viewer carries, for Barton, Bates, Buchanan, Camden, Chariton, Christian, Cooper, Dade, DeKalb, Lincoln, Maries, Marion, McDonald, Miller, Phelps, Polk, Pulaski, Ralls, Ray, Vernon and Warren counties, read 2026-10-23. Each answers exactly two districts, whose names match the seats the Secretary of State's Missouri Roster lists for that county. Clipped to the Census Bureau's county line, with the few slivers the viewer leaves between its two districts given to the district beside them. Whether each viewer's line is the one the county's elections use today is NOT established: no viewer gives a date for its lines, and Missouri law sets no date by which a county must redraw them.</a></li>
                     <li><a href="https://www.midmogis.org/GIS_Hyperlinks/Downloadables/CC_Commissioner.zip" target="_blank" rel="noopener">Cole County — the commission district shapefile MidMO GIS, the map site of the City of Jefferson and Cole County, publishes for download (CC_Commissioner.zip), created 11 May 2011, clipped to the Census Bureau's county line in the same way. Whether it is the line the county's elections use today is not established either.</a></li>
+                    <li><a href="https://www.lawrencecountymo.org/_files/ugd/e487e4_0038fc0bb16742e8b9dc74b091ced286.pdf" target="_blank" rel="noopener">Lawrence County — the county's posted map of its two commission districts (a 2024 scan), whose Eastern District is outlined around six whole townships: Aurora, Buck Prairie, Freistatt, Ozark, Spring River and Turnback. Drawn as the union of those townships' Census Bureau (TIGER) lines, clipped to the county line in the same way; the county clerk pointed to that map when asked on 2026-10-23. Whether it is the line the county's elections use today is not established either.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">mo-county-officials.json, the roster the County card reads: each county's district commissioners from the Secretary of State's Missouri Roster, joined by seat name.</td>
-                <td data-label="Where it applies">22 of Missouri's 114 counties; hidden in the other 92 and in the City of St. Louis, which the Data gaps panel lists and explains.</td>
+                <td data-label="Where it applies">23 of Missouri's 114 counties; hidden in the other 91 and in the City of St. Louis, which the Data gaps panel lists and explains.</td>
               </tr>
             </tbody>
           </table>
@@ -1494,7 +1495,7 @@ table.matrix code {
       "@id": "https://districtry.com/mo/sources.html#dataset-county-commissioner",
       "identifier": "county-commissioner",
       "name": "County Commission District",
-      "description": "The county commission district covering the point, and the district commissioner elected from it, in the 22 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner. mo-county-officials.json, the roster the County card reads: each county's district commissioners from the Secretary of State's Missouri Roster, joined by seat name.",
+      "description": "The county commission district covering the point, and the district commissioner elected from it, in the 23 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner. mo-county-officials.json, the roster the County card reads: each county's district commissioners from the Secretary of State's Missouri Roster, joined by seat name.",
       "url": "https://districtry.com/mo/sources.html#layer-county-commissioner",
       "isPartOf": {
         "@id": "https://districtry.com/mo/sources.html#catalog"
@@ -1509,11 +1510,16 @@ table.matrix code {
           "@type": "Dataset",
           "name": "Cole County — the commission district shapefile MidMO GIS, the map site of the City of Jefferson and Cole County, publishes for download (CC_Commissioner.zip), created 11 May 2011, clipped to the Census Bureau's county line in the same way. Whether it is the line the county's elections use today is not established either.",
           "url": "https://www.midmogis.org/GIS_Hyperlinks/Downloadables/CC_Commissioner.zip"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Lawrence County — the county's posted map of its two commission districts (a 2024 scan), whose Eastern District is outlined around six whole townships: Aurora, Buck Prairie, Freistatt, Ozark, Spring River and Turnback. Drawn as the union of those townships' Census Bureau (TIGER) lines, clipped to the county line in the same way; the county clerk pointed to that map when asked on 2026-10-23. Whether it is the line the county's elections use today is not established either.",
+          "url": "https://www.lawrencecountymo.org/_files/ugd/e487e4_0038fc0bb16742e8b9dc74b091ced286.pdf"
         }
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "22 of Missouri's 114 counties; hidden in the other 92 and in the City of St. Louis, which the Data gaps panel lists and explains"
+        "name": "23 of Missouri's 114 counties; hidden in the other 91 and in the City of St. Louis, which the Data gaps panel lists and explains"
       }
     },
     {

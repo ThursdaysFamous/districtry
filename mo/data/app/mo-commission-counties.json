@@ -109,6 +109,17 @@
   "spreadPct": 17.6,
   "unplaced2020": 0
  },
+ "29109": {
+  "county": "Lawrence County",
+  "people2020": {
+   "Eastern District": 18502,
+   "Western District": 19499
+  },
+  "read": "2026-10-23",
+  "source": "townships",
+  "spreadPct": 5.2,
+  "unplaced2020": 0
+ },
  "29113": {
   "county": "Lincoln County",
   "people2020": {

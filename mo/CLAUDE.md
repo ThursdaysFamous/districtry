@@ -18,8 +18,8 @@ the City of St. Louis, Census TIGERweb, the coverage ring, and the card that nam
 governing body and its other elected officers), **U.S. House** (8 districts, TIGERweb geometry
 joined to the public-domain unitedstates/congress-legislators roster), **Missouri Senate** and
 **Missouri House** (34 and 163 districts, the state's own maps of the 2022 plans joined to each
-chamber's own publications), **County Commission District** (`county-commissioner`, 44 districts
-in the 22 counties whose own published maps carry the lines, joined to the County card's roster),
+chamber's own publications), **County Commission District** (`county-commissioner`, 46 districts
+in the 23 counties whose own published maps carry the lines, joined to the County card's roster),
 the LIVE TIGERweb fabric — **Township** (`county-subdivision`, 1,394,
 shown under the County layer), **City, Town or Village** (`municipality`, 947), **School District
 (Unified)** (445), **School District (Elementary)** (71) and **ZIP Code** — and three nearest-N layers
@@ -80,13 +80,13 @@ two commission districts are drawn by its commission "without dividing municipal
 (RSMo 49.010), and no statewide map of them was found. Townships are not a substitute: tested
 against three counties' own maps on 2026-10-21, Franklin's twelve townships fall whole inside its
 districts, while Buchanan splits 2 of 12 and Clay 2 of 7. Since 2026-10-23 the County Commission
-District layer draws 22 counties (`mo/scripts/build_mo_commission_districts.py`, `--check` in CI):
-21 from the commissioner district layer of the county's own map viewer and Cole from MidMO GIS's
-download, each clipped to the County layer so the two districts tile the county exactly, and each
+District layer draws 23 counties (`mo/scripts/build_mo_commission_districts.py`, `--check` in CI):
+21 from the commissioner district layer of the county's own map viewer, Cole from MidMO GIS's
+download and Lawrence from its posted map, whose line runs along whole townships drawn from TIGER, each clipped to the County layer so the two districts tile the county exactly, and each
 district joined to the roster's seat by name. **The card says the line is not checked against the
 county's election records**, because no viewer dates its lines and Missouri sets no redistricting
 date; the Secretary of State's per-jurisdiction precinct reports (SUN0000590, not ordered) would be
-that check. The layer hides in the other 92 counties and the City of St. Louis, which stay in gap
+that check. The layer hides in the other 91 counties and the City of St. Louis, which stay in gap
 `mo-county-commission-district-lines`; a county joins when its own map proves the lines.
 
 **TWO SCHOOL LAYERS TILE THE STATE BETWEEN THEM.** TIGER holds 445 unified and 71 elementary
@@ -203,7 +203,7 @@ eight neighbouring states), `state-counties.json` (`mo/scripts/build_state_count
 (`mo/scripts/build_legislative_boundaries.py` — Douglas-Peucker at 5 m, refused unless BOTH the
 2,000-random-point agreement gate and the 8 m fidelity ceiling pass), and
 `mo-commission-districts.json` with its list of drawn counties `mo-commission-counties.json`
-(`mo/scripts/build_mo_commission_districts.py`, from 21 county map viewers and Cole's download,
+(`mo/scripts/build_mo_commission_districts.py`, from 21 county map viewers, Cole's download and Lawrence's township map,
 each pair clipped to tile its county). Rosters:
 `congress-roster.json` (`mo/scripts/build_congress_roster.py`, from unitedstates/congress-legislators),
 `mo-{senate,house}-members.json` (`mo/scripts/build_mo_legislature_roster.py`, from each chamber's

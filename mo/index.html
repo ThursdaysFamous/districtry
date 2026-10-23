@@ -10885,7 +10885,7 @@ function initMissouriExplorer() {
     "mo-senate",         // 34 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 115 counties (114 counties and the independent City of St. Louis), pre-built from TIGERweb; the instance's offline anchor layer
     "mo-house",          // 163 House districts — smaller on average than a county, larger than a school district
-    "county-commissioner", // Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 22 counties whose county map viewer or download publishes them
+    "county-commissioner", // Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 23 counties whose county map viewer, download or posted township map publishes them
     "school-district-unified", // 445 unified districts, about 372 km2 of land on average, live from TIGERweb (no data/app file); with the 71 elementary districts they cover the state exactly
     "school-district-elementary", // 71 elementary districts, about 177 km2 of land on average, live from TIGERweb (no data/app file); the ground the unified tiling leaves
     "zip-code",          // 1,977 ZIP Code Tabulation Areas in the state's own bounding box, about 163 km2 of land on average, fetched live by envelope; the layer hides outside Missouri
@@ -15259,8 +15259,10 @@ function initMissouriExplorer() {
    * drawn ONLY in the counties whose own published maps draw the line
    * (data/app/mo-commission-districts.json, built by
    * mo/scripts/build_mo_commission_districts.py): 21 counties' map viewers
-   * carry a Commissioner District layer, and MidMO GIS, the map site of
-   * the City of Jefferson and Cole County, publishes Cole's as a download. No statewide map of the lines
+   * carry a Commissioner District layer, MidMO GIS, the map site of
+   * the City of Jefferson and Cole County, publishes Cole's as a download,
+   * and Lawrence County's posted map draws its two districts along whole
+   * townships, drawn here from TIGER's township lines. No statewide map of the lines
    * exists, so everywhere else the layer is hidden (coverage), and gap
    * mo-county-commission-district-lines says why. The County card names
    * every county's commissioners either way.
@@ -15306,9 +15308,16 @@ function initMissouriExplorer() {
     var where = result.source === "cole"
       ? "Cole County's commission districts as MidMO GIS, the map site of " +
         "the City of Jefferson and Cole County, publishes them for download"
+      : result.source === "townships"
+      ? String(result.county) + "'s commission districts as the county's own " +
+        "posted map draws them, each made of whole townships, drawn here from " +
+        "the Census Bureau's township lines"
       : "The Commissioner District layer of " + String(result.county) +
         "'s own map viewer";
-    return where + (read ? ", read on " + read : "") + ". Missouri law has " +
+    var clerk = moDate(result.clerk);
+    return where + (read ? ", read on " + read : "") + "." + (clerk
+      ? " The county clerk pointed this app to that map on " + clerk + "."
+      : "") + " Missouri law has " +
       "each county commission draw the line between its two districts, and " +
       "sets no date by which it must be redrawn. This app has not checked " +
       "this line against the precinct records the county's elections use, so " +
@@ -15348,6 +15357,7 @@ function initMissouriExplorer() {
           seat: findPropCI(props, ["seat"]),
           source: findPropCI(props, ["source"]),
           read: findPropCI(props, ["read"]),
+          clerk: findPropCI(props, ["pointedon"]),
           officials: null,
           rosterFailed: false
         };
