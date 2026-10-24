@@ -1276,13 +1276,14 @@ table.matrix code {
               </tr>
               <tr id="layer-precinct">
                 <th scope="row"><span class="layer-name">Precinct</span><code>precinct</code></th>
-                <td data-label="What it answers">The voting precinct covering the point, its county, and how many voters were registered in it for the 2026 cycle.</td>
+                <td data-label="What it answers">The voting precinct covering the point, its county, and how many voters were registered in it for the 2026 cycle — and, in Detroit up to Election Day, where its voters vote.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://services3.arcgis.com/dxRQUfTDNtfqZ301/arcgis/rest/services/2026_Voting_Precincts/FeatureServer/0" target="_blank" rel="noopener">Michigan Dept. of State, Bureau of Elections — &quot;2026 Voting Precincts&quot; (ArcGIS Online item c349bc2bb6c2468594d341a09f520ea8, the CURATED item: it carries the title, the licence, the validation caveat and the full field names). 3,895 features, pre-built by mi/scripts/build_mi_precincts.py (paged, Visvalingam-simplified, 2,000-point agreement gate). THE NEWEST MAP IS NOT ON THE MAPSERVER THAT CARRIES THE COMMISSIONER LAYER: that service publishes a precinct layer per cycle and stops at 2024, while the 2026 map lives on the state's ArcGIS Online org on a different host — and Michigan consolidated 4,340 precincts into 3,895 between the cycles, so building from the MapServer would have shipped a map 445 precincts wrong</a></li>
+                    <li><a href="https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/Election_Precincts/FeatureServer/0" target="_blank" rel="noopener">City of Detroit Department of Elections — &quot;Detroit Election Precincts (Current)&quot; (ArcGIS Online item ef621ded941a402fa436185541316994), the source of Detroit's polling places only; the boundary drawn is the state's</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER — a precinct elects nobody; it is the unit a ballot is counted in. AND NO POLLING PLACE, which here is a fact about the source rather than a decision: the layer carries no polling field at all, so unlike Iowa's precinct builder there is nothing to decline. The card names the state's own caveat instead — the Bureau collects this from local election officials and says validation was &quot;done by most, but not all&quot; jurisdictions — and points a reader at their clerk.</td>
+                <td data-label="Who it names">NO OFFICEHOLDER — a precinct elects nobody; it is the unit a ballot is counted in. The state's layer carries no polling field, and Michigan publishes no statewide polling-place file this project can read: the Secretary of State's voter lookup answers with a managed challenge and data.michigan.gov's robots.txt disallows every path (measured 2026-10-24). So the card names a polling place only in Detroit, from the City of Detroit Department of Elections' own precinct layer, read daily until Election Day, with each building placed on the map by the U.S. Census Bureau's geocoder. Everywhere else it names the state's own caveat — the Bureau collects the map from local election officials and says validation was &quot;done by most, but not all&quot; jurisdictions — and points a reader at their clerk.</td>
                 <td data-label="Where it applies">Michigan — statewide, all 3,895 precincts across all 83 counties, as drawn for the 2026 election cycle. Every precinct's county-subdivision key resolves against the Census MCD fabric this instance ships (1,530 of 1,530 distinct keys, measured 2026-09-04 — the same 1,530 on the 2024 map, because the consolidation happened WITHIN municipalities rather than between them), so the precinct and the Township or City card agree on which local government a point sits in. The state's voting-equipment column is deliberately not fetched: it changes on a different clock from the boundary.</td>
               </tr>
               <tr id="layer-tribal-government">
@@ -1823,7 +1824,7 @@ table.matrix code {
       "@id": "https://districtry.com/mi/sources.html#dataset-precinct",
       "identifier": "precinct",
       "name": "Precinct",
-      "description": "The voting precinct covering the point, its county, and how many voters were registered in it for the 2026 cycle. NO OFFICEHOLDER — a precinct elects nobody; it is the unit a ballot is counted in. AND NO POLLING PLACE, which here is a fact about the source rather than a decision: the layer carries no polling field at all, so unlike Iowa's precinct builder there is nothing to decline. The card names the state's own caveat instead — the Bureau collects this from local election officials and says validation was \"done by most, but not all\" jurisdictions — and points a reader at their clerk.",
+      "description": "The voting precinct covering the point, its county, and how many voters were registered in it for the 2026 cycle — and, in Detroit up to Election Day, where its voters vote. NO OFFICEHOLDER — a precinct elects nobody; it is the unit a ballot is counted in. The state's layer carries no polling field, and Michigan publishes no statewide polling-place file this project can read: the Secretary of State's voter lookup answers with a managed challenge and data.michigan.gov's robots.txt disallows every path (measured 2026-10-24). So the card names a polling place only in Detroit, from the City of Detroit Department of Elections' own precinct layer, read daily until Election Day, with each building placed on the map by the U.S. Census Bureau's geocoder. Everywhere else it names the state's own caveat — the Bureau collects the map from local election officials and says validation was \"done by most, but not all\" jurisdictions — and points a reader at their clerk.",
       "url": "https://districtry.com/mi/sources.html#layer-precinct",
       "isPartOf": {
         "@id": "https://districtry.com/mi/sources.html#catalog"
@@ -1833,6 +1834,11 @@ table.matrix code {
           "@type": "Dataset",
           "name": "Michigan Dept. of State, Bureau of Elections — \"2026 Voting Precincts\" (ArcGIS Online item c349bc2bb6c2468594d341a09f520ea8, the CURATED item: it carries the title, the licence, the validation caveat and the full field names). 3,895 features, pre-built by mi/scripts/build_mi_precincts.py (paged, Visvalingam-simplified, 2,000-point agreement gate). THE NEWEST MAP IS NOT ON THE MAPSERVER THAT CARRIES THE COMMISSIONER LAYER: that service publishes a precinct layer per cycle and stops at 2024, while the 2026 map lives on the state's ArcGIS Online org on a different host — and Michigan consolidated 4,340 precincts into 3,895 between the cycles, so building from the MapServer would have shipped a map 445 precincts wrong",
           "url": "https://services3.arcgis.com/dxRQUfTDNtfqZ301/arcgis/rest/services/2026_Voting_Precincts/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Detroit Department of Elections — \"Detroit Election Precincts (Current)\" (ArcGIS Online item ef621ded941a402fa436185541316994), the source of Detroit's polling places only; the boundary drawn is the state's",
+          "url": "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/Election_Precincts/FeatureServer/0"
         }
       ],
       "spatialCoverage": {

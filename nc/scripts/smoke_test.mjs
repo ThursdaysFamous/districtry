@@ -593,6 +593,76 @@ try {
   }
 
 
+  // 2b2. THE PRECINCT CARD NAMES ITS POLLING PLACE, AND ONLY UP TO ELECTION
+  //      DAY. The polling file is stubbed (the Capitol block's precinct, Wake
+  //      01-14, to one test building) so the check does not expire with the
+  //      real list: with a far-future election date the card must name the
+  //      building, link the Board's lookup and drop a pin; with a past one it
+  //      must name nothing. The Election Day notice is checked on a bare map
+  //      while the real notice date has not passed.
+  {
+    const [plat, plng] = POINT.split(",").map(Number);
+    const fixture = (date) => JSON.stringify({ election: "Test Election", electionDate: date, listDate: "2026-10-23",
+      sourceUrl: "https://dl.ncsbe.gov/ENRS/test.csv", crosswalkUrl: "https://dl.ncsbe.gov/data/test.zip",
+      lookupUrl: "https://vt.ncsbe.gov/PPLkup/",
+      sites: [{ place: "TEST POLLING SCHOOL", address: "1 N TEST ST, RALEIGH, NC 27601", lat: plat + 0.001, lng: plng + 0.001 }],
+      precincts: { "37183-01-14": 0 }, carvedOut: {} });
+    const read = async (date) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=voting-precinct`, async (p) => {
+        await p.route("**/data/app/nc-polling-places.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: fixture(date) }));
+      });
+      const card = await cardText(page, "voting-precinct");
+      await page.waitForTimeout(800);
+      const out = await page.evaluate(() => {
+        const c = document.getElementById("card-voting-precinct");
+        const block = c ? c.closest(".layer-block") : null;
+        const link = block ? block.querySelector(".card-footer-link") : null;
+        const notice = document.getElementById("election-notice");
+        return { link: link ? link.textContent.trim() : null,
+          pins: document.querySelectorAll(".leaflet-marker-pane .leaflet-marker-icon").length,
+          notice: notice ? notice.hidden : null };
+      });
+      out.text = card.text;
+      await context.close();
+      return out;
+    };
+    const live = await read("2999-01-01");
+    check("the precinct card names its polling place, links the Board's lookup and pins the building",
+      /TEST POLLING SCHOOL — 1 N TEST ST/.test(live.text || "") && /Test Election/.test(live.text || "") &&
+      /Confirm where you vote/.test(live.link || "") && live.notice === true,
+      JSON.stringify(live));
+    const past = await read("2001-01-01");
+    check("after its election date the precinct card names no polling place",
+      /Precinct 01-14/.test(past.text || "") && !/Polling place/.test(past.text || "") &&
+      /Find your polling place/.test(past.link || ""),
+      JSON.stringify(past));
+    check("the polling place drops a pin while it is shown, and none after the election",
+      live.pins === past.pins + 1, JSON.stringify({ live: live.pins, past: past.pins }));
+    const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" });
+    if (today <= "2026-11-03") {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, BASE);
+      const shown = await page.evaluate(() => {
+        const n = document.getElementById("election-notice");
+        return n ? !n.hidden : null;
+      });
+      let toggled = null;
+      if (shown) {
+        await page.click("#election-notice-go");
+        await page.waitForTimeout(500);
+        toggled = await page.evaluate(() => {
+          const b = document.getElementById("toggle-voting-precinct");
+          return [!!(b && b.checked), document.getElementById("election-notice").hidden];
+        });
+      }
+      check("a bare map shows the Election Day notice, and its button turns on the precinct layer",
+        shown === true && toggled && toggled.every(Boolean), JSON.stringify({ shown, toggled }));
+      await context.close();
+    }
+  }
+
   // 2c. The County card names the supervisors of the county's soil and water
   //     conservation district from the state's District Directory
   //     (nc-conservation-boards.json, keyed by county GEOID; a same-origin
