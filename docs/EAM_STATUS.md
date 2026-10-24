@@ -53,7 +53,7 @@ different thing from one it failed.
 | mi | **EA··** | 83 | 83/83 | 619 | 617 | all | 69 | 1 without a job | 13 of 14 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 21 | all | 13 of 14 levels |
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 24 | all | 8 of 14 levels |
-| nc | **EAMC** | 100 | 100/100 | 373 | 584 | all | 19 | all | all 14 levels |
+| nc | **EAMC** | 100 | 100/100 | 373 | 584 | all | 20 | all | all 14 levels |
 | ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 36 | all | 10 of 14 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 18 | all | 10 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 20 | all | 13 of 14 levels |
