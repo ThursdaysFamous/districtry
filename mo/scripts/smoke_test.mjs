@@ -100,6 +100,10 @@ const CASS_POINT = "38.7968,-94.45476";
 const SALINE_POINT = "39.1534,-93.246";
 // Perry's Second District, its pole of inaccessibility (shapely polylabel).
 const PERRY_POINT = "37.67846,-89.69876";
+// Iron's Western District and Scott's First District, each its pole of
+// inaccessibility; both counties are drawn from SEMO GIS with no clerk's word.
+const IRON_POINT = "37.66512,-91.07966";
+const SCOTT_POINT = "36.98163,-89.65252";
 const HENRY_POINT = "38.38256,-93.69450";
 const BOOT_TIMEOUT = 45000; // Leaflet CDN + first paint on a cold CI runner
 const QUERY_TIMEOUT = 25000;
@@ -1223,7 +1227,7 @@ try {
     const drawn = shipped("mo-commission-counties.json");
     const seatOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.seat === p.seat) || {};
     const presidingOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.countywide) || {};
-    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT, SALINE_POINT, PERRY_POINT]) {
+    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT, SALINE_POINT, PERRY_POINT, IRON_POINT, SCOTT_POINT]) {
       const at = propsAt(fc, pt);
       const p = at[0] || {};
       const mine = seatOf(p), pres = presidingOf(p);
@@ -1239,7 +1243,8 @@ try {
             ? text.includes(`GIS office sent them to this app on ${longDate(p.sentOn)}`)
           : p.source === "arcgis"
             ? text.includes(`${p.county}'s own map at SEMO GIS`) &&
-              text.includes(`clerk pointed this app to that map on ${longDate(p.pointedOn)}`)
+              (p.pointedOn ? text.includes(`clerk pointed this app to that map on ${longDate(p.pointedOn)}`)
+                : !text.includes("clerk pointed this app"))
           : p.source === "listed"
             ? text.includes(`county clerk listed them, township by township and precinct by precinct on ${longDate(p.listedOn)}`) &&
               text.includes("2020 voting precinct lines")

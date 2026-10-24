@@ -198,7 +198,7 @@ PROVENANCE = [
             "GIS office e-mailed on 2026-10-23 (kept in mo/data/source/raw/), "
             "and Saline's from its clerk's list of townships and precincts, "
             "drawn from TIGER's townships and 2020 voting districts, "
-            "and Perry's from its map at SEMO GIS, "
+            "and Perry's, Iron's and Scott's from their maps at SEMO GIS, "
             "clipped to the County layer. No viewer dates its "
             "lines, and they are not checked against the precinct records the "
             "counties' elections use."
