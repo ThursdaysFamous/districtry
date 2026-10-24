@@ -325,14 +325,18 @@
       "area_rank": 14,
       "rank_note": "3,895 voting precincts across all 83 counties, pre-built from the state's own 2026-cycle layer — 38.8 km2 mean feature area against a 6.4 km2 median, a six-fold skew because a rural township precinct and a city precinct are barely the same kind of object; the finest tiling this instance ships",
       "source": {
-        "answers": "The voting precinct covering the point, its county, and how many voters were registered in it for the 2026 cycle.",
+        "answers": "The voting precinct covering the point, its county, and how many voters were registered in it for the 2026 cycle — and, in Detroit up to Election Day, where its voters vote.",
         "boundary": [
           {
             "label": "Michigan Dept. of State, Bureau of Elections — \"2026 Voting Precincts\" (ArcGIS Online item c349bc2bb6c2468594d341a09f520ea8, the CURATED item: it carries the title, the licence, the validation caveat and the full field names). 3,895 features, pre-built by mi/scripts/build_mi_precincts.py (paged, Visvalingam-simplified, 2,000-point agreement gate). THE NEWEST MAP IS NOT ON THE MAPSERVER THAT CARRIES THE COMMISSIONER LAYER: that service publishes a precinct layer per cycle and stops at 2024, while the 2026 map lives on the state's ArcGIS Online org on a different host — and Michigan consolidated 4,340 precincts into 3,895 between the cycles, so building from the MapServer would have shipped a map 445 precincts wrong",
             "url": "https://services3.arcgis.com/dxRQUfTDNtfqZ301/arcgis/rest/services/2026_Voting_Precincts/FeatureServer/0"
+          },
+          {
+            "label": "City of Detroit Department of Elections — \"Detroit Election Precincts (Current)\" (ArcGIS Online item ef621ded941a402fa436185541316994), the source of Detroit's polling places only; the boundary drawn is the state's",
+            "url": "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/Election_Precincts/FeatureServer/0"
           }
         ],
-        "people": "NO OFFICEHOLDER — a precinct elects nobody; it is the unit a ballot is counted in. AND NO POLLING PLACE, which here is a fact about the source rather than a decision: the layer carries no polling field at all, so unlike Iowa's precinct builder there is nothing to decline. The card names the state's own caveat instead — the Bureau collects this from local election officials and says validation was \"done by most, but not all\" jurisdictions — and points a reader at their clerk.",
+        "people": "NO OFFICEHOLDER — a precinct elects nobody; it is the unit a ballot is counted in. The state's layer carries no polling field, and Michigan publishes no statewide polling-place file this project can read: the Secretary of State's voter lookup answers with a managed challenge and data.michigan.gov's robots.txt disallows every path (measured 2026-10-24). So the card names a polling place only in Detroit, from the City of Detroit Department of Elections' own precinct layer, read daily until Election Day, with each building placed on the map by the U.S. Census Bureau's geocoder. Everywhere else it names the state's own caveat — the Bureau collects the map from local election officials and says validation was \"done by most, but not all\" jurisdictions — and points a reader at their clerk.",
         "applies": "Michigan — statewide, all 3,895 precincts across all 83 counties, as drawn for the 2026 election cycle. Every precinct's county-subdivision key resolves against the Census MCD fabric this instance ships (1,530 of 1,530 distinct keys, measured 2026-09-04 — the same 1,530 on the 2024 map, because the consolidation happened WITHIN municipalities rather than between them), so the precinct and the Township or City card agree on which local government a point sits in. The state's voting-equipment column is deliberately not fetched: it changes on a different clock from the boundary."
       }
     },
@@ -966,6 +970,11 @@
         "file": "mi-municipal-officials.json",
         "min_keys": 62,
         "note": "The elected boards of Michigan's large cities (7-digit Census place id) and townships (10-digit county-subdivision id), read weekly from each unit's own page by mi/scripts/mi_municipal_officials_scraper.py and built by build_mi_municipal_officials.py, refreshed by update-mi-municipal-officials.yml. Covers the units over 25,000 people whose own page names every seat; a unit not carried keeps the card's 'not named here' sentence."
+      },
+      {
+        "file": "mi-detroit-polling-places.json",
+        "min_keys": 9,
+        "note": "Each Detroit precinct's Election Day polling place (sites[] plus precincts{precinct name: site index}, inside geoid 2616322000) from the City of Detroit Department of Elections' own precinct layer, by mi/scripts/build_mi_detroit_polling_places.py, refreshed daily until Election Day; the build requires the city's list and the state's 2026 precinct map to hold the same 402 precinct codes on the same ground, places each building with the Census geocoder, and the card hides the row after electionDate. Network-first: a moved polling place must reach a returning visitor at once"
       }
     ]
   },
@@ -1027,6 +1036,11 @@
       "file": "update-mi-municipal-officials.yml",
       "purpose": "Michigan city council and township board rosters (each unit's own page)",
       "schedule": "Sun 20:30 UTC"
+    },
+    {
+      "file": "update-mi-detroit-polling-places.yml",
+      "purpose": "Re-read the City of Detroit Department of Elections' precinct layer daily and rebuild mi/data/app/mi-detroit-polling-places.json; fails if the city's list and the state's precinct map stop holding the same 402 precincts on the same ground, or if the list cannot be read on or before the election date; opens a PR on any change",
+      "schedule": "daily 11:45 UTC"
     }
   ],
   "geocoder": {
@@ -1076,6 +1090,11 @@
     "file": "history.html",
     "intro": "districtry Michigan answers for all 83 counties: the county commissioner districts Michigan's own Bureau of Elections compiles from every county's apportionment filing, plus the national tier every U.S. state can serve from national publishers. It was built dark across three changes in one day — the national tier, the commissioner flagship, then publication — rather than going live on arrival.",
     "entries": [
+      {
+        "date": "2026-10-24",
+        "title": "Detroit's polling places",
+        "body": "In Detroit, the precinct card now names the precinct's Election Day polling place, with its cross street and a pin on the map, from the City of Detroit Department of Elections' own precinct list. The list is checked every day until Election Day, Tuesday, Nov 3, and the card stops showing it after that day. Michigan has no statewide polling-place list this map can read, so outside Detroit the card still sends readers to their clerk. Every card that names a polling place links the state's own voter lookup as the final word."
+      },
       {
         "date": "2026-10-22",
         "title": "Bay City's wards",
