@@ -327,14 +327,14 @@
       "area_rank": 12,
       "rank_note": "2,625 precincts tiling the state, pre-built from the State Board of Elections' file as NC OneMap serves it — 53.10 km2 mean area, land and water (median 25.32), measured 2026-10-15 on the drawn file: smaller than the Qualla Boundary's pieces (median 107.2 km2), larger on average than a city or town (20.26 km2 of land)",
       "source": {
-        "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
+        "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported — and, up to Election Day, the polling place its voters go to.",
         "boundary": [
           {
             "label": "North Carolina State Board of Elections — the statewide precinct file (SBE_PRECINCTS_20260824), public information under G.S. 132-1, read from the queryable copy NC OneMap serves for the Center for Geographic Information and Analysis; 2,625 features, pre-built for the state by nc/scripts/build_nc_precincts.py and shipped with the app. The copy carries no date of its own; on 2026-10-15 it matched the Board's August 24, 2026 file in every county, which the card says.",
             "url": "https://services.nconemap.gov/secure/rest/services/NC1Map_Boundaries/MapServer/0"
           }
         ],
-        "people": "NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent.",
+        "people": "NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent. The polling place comes from the State Board of Elections' polling place list for the election, joined to the map's precincts through the Board's Voting Information Project feed, read daily until Election Day, with each building placed on the map by the U.S. Census Bureau's geocoder.",
         "applies": "North Carolina — statewide."
       }
     },
@@ -666,6 +666,11 @@
         "file": "nc-conservation-boards.json",
         "min_keys": 100,
         "note": "The supervisors of the soil and water conservation district covering each county, keyed by county GEOID, read from the state's District Directory by nc/scripts/build_nc_conservation_boards.py, whose --check holds the file to its record of the directory read and to the County card's wording. Re-read quarterly and after each November election (nc/WATCH.md)."
+      },
+      {
+        "file": "nc-polling-places.json",
+        "min_keys": 9,
+        "note": "Each precinct's Election Day polling place (sites[] plus precincts{map key: site index}) from the State Board of Elections' polling place list for the 2026-11-03 election, joined to nc-precincts.json by code through the Board's Voting Information Project feed, by nc/scripts/build_nc_polling_places.py, refreshed daily; the build fails unless every precinct on the map has exactly one row in the list, and places each building with the Census geocoder. The card hides the row after electionDate. Network-first: a moved polling place must reach a returning visitor at once"
       }
     ]
   },
@@ -707,6 +712,11 @@
       "file": "watch-city-council-pages.yml",
       "purpose": "A weekly re-read of every page the city council seats files of Arkansas, North Carolina, Oklahoma, South Carolina and Tennessee cite, opening one tracking issue when a name or a contact has gone from its page or a page cannot be read",
       "schedule": "Thu 15:30 UTC"
+    },
+    {
+      "file": "update-nc-polling-places.yml",
+      "purpose": "Re-read the State Board of Elections' polling place list for the 2026-11-03 election daily and rebuild nc/data/app/nc-polling-places.json; fails if the list and the precinct map disagree, or if the list cannot be read on or before the election date; opens a PR on any change",
+      "schedule": "daily 11:45 UTC"
     }
   ],
   "geocoder": {
