@@ -1404,13 +1404,13 @@ table.matrix code {
               </tr>
               <tr id="layer-voting-precinct">
                 <th scope="row"><span class="layer-name">Voting Precinct</span><code>voting-precinct</code></th>
-                <td data-label="What it answers">The voting precinct containing the point — where a reader votes and how their ballots are reported.</td>
+                <td data-label="What it answers">The voting precinct containing the point — where a reader votes and how their ballots are reported — and, up to Election Day, the polling place its voters go to.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://services.nconemap.gov/secure/rest/services/NC1Map_Boundaries/MapServer/0" target="_blank" rel="noopener">North Carolina State Board of Elections — the statewide precinct file (SBE_PRECINCTS_20260824), public information under G.S. 132-1, read from the queryable copy NC OneMap serves for the Center for Geographic Information and Analysis; 2,625 features, pre-built for the state by nc/scripts/build_nc_precincts.py and shipped with the app. The copy carries no date of its own; on 2026-10-15 it matched the Board's August 24, 2026 file in every county, which the card says.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent.</td>
+                <td data-label="Who it names">NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent. The polling place comes from the State Board of Elections' polling place list for the election, joined to the map's precincts through the Board's Voting Information Project feed, read daily until Election Day, with each building placed on the map by the U.S. Census Bureau's geocoder.</td>
                 <td data-label="Where it applies">North Carolina — statewide.</td>
               </tr>
               <tr id="layer-municipality">
@@ -1731,7 +1731,7 @@ table.matrix code {
       "@id": "https://districtry.com/nc/sources.html#dataset-voting-precinct",
       "identifier": "voting-precinct",
       "name": "Voting Precinct",
-      "description": "The voting precinct containing the point — where a reader votes and how their ballots are reported. NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent.",
+      "description": "The voting precinct containing the point — where a reader votes and how their ballots are reported — and, up to Election Day, the polling place its voters go to. NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent. The polling place comes from the State Board of Elections' polling place list for the election, joined to the map's precincts through the Board's Voting Information Project feed, read daily until Election Day, with each building placed on the map by the U.S. Census Bureau's geocoder.",
       "url": "https://districtry.com/nc/sources.html#layer-voting-precinct",
       "isPartOf": {
         "@id": "https://districtry.com/nc/sources.html#catalog"

@@ -29,8 +29,12 @@ Marshall township, the Census Bureau's 2020 voting districts, whose four
 Marshall wards tile that township (LISTED below). And Perry County's clerk
 pointed, on 2026-10-23, to the county's public map at SEMO GIS (the Southeast
 Missouri Regional Planning Commission's map server), whose Commissioner
-Districts layer any visitor can query (ARCGIS below). Those 26 are SOURCES
-below. The other 88 counties and the City of St. Louis are not
+Districts layer any visitor can query (ARCGIS below). The same map server
+carries a Commissioner District layer for Iron and Scott counties too, found
+on 2026-10-24 without any county pointing to it, so those two are drawn from
+it the same way (St. Francois's, on the same server, is not; see its note
+below). Those 28 are SOURCES
+below. The other 86 counties and the City of St. Louis are not
 drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
@@ -184,6 +188,32 @@ SOURCES = {
             "field": "COMM_DIST",
             "names": {"1": "First District", "2": "Second District"},
             "clerk": "2026-10-23"},
+    # Iron and Scott publish a Commissioner District layer on the same SEMO
+    # GIS server, each in a service named <County>Co_Districts, found on
+    # 2026-10-24 by reading the server's folders (no robots.txt; HTTP 404).
+    # No county pointed to these, so no pointedOn is written. Each answers
+    # exactly two features under the names the roster prints: Iron's
+    # Southern and Western, Scott's FIRST and SECOND. Scott was asked by
+    # letter on 2026-10-23, before the layer was found.
+    #
+    # St. Francois has one too (StFrancoisCo_Districts/MapServer/0, Comm_Dist
+    # 1 and 2) and is NOT drawn from it. Measured 2026-10-24, its two
+    # districts reach 0.61% of the county outside the Census county line,
+    # over MAX_GAP, in strips 40-60 m wide along the north and east edges,
+    # where the county's own voting district layer on the same service
+    # reaches 0.10%; its features carry 2010 voting district attributes; and
+    # its dividing line splits current voting districts (0006 58/42, FR01
+    # 68/32, E001 80/20), so which line the county uses now is not settled
+    # by the layer. The county was asked by letter on 2026-10-23, and its
+    # answer decides it.
+    "093": {"arcgis": ("https://maps.semogis.com/server/rest/services/Iron_CO/"
+                       "IronCo_Districts/MapServer/5"),
+            "field": "COMM_DIST",
+            "names": {"Southern": "Southern District", "Western": "Western District"}},
+    "201": {"arcgis": ("https://maps.semogis.com/server/rest/services/Scott_CO/"
+                       "ScottCo_Districts/MapServer/6"),
+            "field": "NAME",
+            "names": {"FIRST": "First District", "SECOND": "Second District"}},
     # Saline's clerk (Brittni Allison Burton) answered on 2026-10-23 with the
     # townships and precincts each district holds, and a 2011 map of the
     # line. Every township is whole but Marshall, whose Wards 3 and 4 are in
