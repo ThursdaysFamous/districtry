@@ -728,6 +728,64 @@ try {
     await context.close();
   }
 
+  // 6b. THE DETROIT PRECINCT CARD NAMES ITS POLLING PLACE, AND ONLY UP TO
+  //     ELECTION DAY. The polling file is stubbed (every Detroit precinct to
+  //     one test building) so the check does not expire with the real list:
+  //     with a far-future election date the card must name the building, link
+  //     the state's voter lookup and drop one labelled pin; with a past date
+  //     it must name nothing. The point is an interior point of the shipped
+  //     "City of Detroit, Precinct 1", which the tile and the file both hold.
+  {
+    const DETROIT_POINT = "42.36604,-82.99150";
+    const [plat, plng] = DETROIT_POINT.split(",").map(Number);
+    const precincts = {};
+    for (let n = 1; n <= 600; n++) precincts["City of Detroit, Precinct " + n] = 0;
+    const fixture = (date) => JSON.stringify({ election: "Test Election", electionDate: date, listDate: "2026-10-07",
+      geoid: "2616322000", lookupUrl: "https://mvic.sos.state.mi.us/Voter/Index",
+      sites: [{ place: "TEST POLLING SCHOOL", address: "1 Test St", zip: "48207", crossStreet: "at Test Ave",
+        lat: plat + 0.001, lng: plng + 0.001 }], precincts });
+    const read = async (date) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${DETROIT_POINT}&layers=precinct`, async (p) => {
+        await p.route("**/data/app/mi-detroit-polling-places.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: fixture(date) }));
+      });
+      await page.waitForFunction(() => {
+        const c = document.getElementById("card-precinct");
+        return c && /Precinct 1(?!\d)/.test(c.textContent);
+      }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      if (date > "2026") {
+        await page.waitForFunction(() => Array.from(document.querySelectorAll(".leaflet-tooltip-pane .poi-pin-label"))
+          .some((el) => /TEST POLLING SCHOOL/.test(el.textContent)), null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      } else {
+        await page.waitForTimeout(1500);
+      }
+      const out = await page.evaluate(() => {
+        const c = document.getElementById("card-precinct");
+        const block = c ? c.parentNode : null;
+        const link = block ? block.querySelector(".card-footer-link") : null;
+        return { text: c ? c.textContent.replace(/\s+/g, " ") : null,
+          link: link ? link.href : null,
+          pinLabels: Array.from(document.querySelectorAll(".leaflet-tooltip-pane .poi-pin-label"))
+            .map((el) => el.textContent.replace(/\s+/g, " ").trim()) };
+      });
+      await context.close();
+      return out;
+    };
+    const live = await read("2999-01-01");
+    check("the Detroit precinct card names its polling place, links the state's lookup and pins the building",
+      /TEST POLLING SCHOOL — 1 Test St, Detroit 48207 \(at Test Ave\)/.test(live.text || "") &&
+      /Test Election, Jan 1, 2999/.test(live.text || "") && /last changed Oct 7, 2026/.test(live.text || "") &&
+      live.link === "https://mvic.sos.state.mi.us/Voter/Index" &&
+      live.pinLabels.filter((t) => t === "Polling placeTEST POLLING SCHOOL").length === 1,
+      JSON.stringify(live));
+    const past = await read("2001-01-01");
+    check("after its election date the Detroit precinct card names no polling place and drops no pin",
+      past.text !== null && /City of Detroit, Precinct 1(?!\d)/.test(past.text) && !/Polling place/.test(past.text) &&
+      past.link === null && !past.pinLabels.some((t) => /TEST POLLING SCHOOL/.test(t)),
+      JSON.stringify(past));
+  }
+
   // 7. The dispatched city-ward card, PER WARD — the one surface in this
   //    instance that nothing else here reaches. The anchor point is in Lansing,
   //    where `city-ward` is out of coverage and hides, so every check above

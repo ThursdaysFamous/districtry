@@ -194,7 +194,12 @@ PROVENANCE = [
             "own Integrity GIS map viewer (Christian's is the one probed here; "
             "the 21 are listed in SOURCES in "
             "mo/scripts/build_mo_commission_districts.py), plus Cole's and "
-            "Lawrence's from the rows below, clipped to the County layer. No viewer dates its "
+            "Lawrence's from the rows below and Cass's from the shapefile its "
+            "GIS office e-mailed on 2026-10-23 (kept in mo/data/source/raw/), "
+            "and Saline's from its clerk's list of townships and precincts, "
+            "drawn from TIGER's townships and 2020 voting districts, "
+            "and Perry's, Iron's and Scott's from their maps at SEMO GIS, "
+            "clipped to the County layer. No viewer dates its "
             "lines, and they are not checked against the precinct records the "
             "counties' elections use."
         ),

@@ -19,8 +19,23 @@ County) offers the lines as a shapefile download. And Lawrence County posts a
 scanned map of its two districts whose lines run along whole townships; its
 clerk pointed to that map when asked (2026-10-23), so its districts are drawn
 as the union of the Census Bureau's township lines the map names (TOWNSHIPS
-below). Those 23 are SOURCES below. The other 91 counties and the City of St.
-Louis are not drawn, and the layer is hidden there; the County card names every county's commissioners either
+below). And Cass County's GIS office, in the Assessor's office, e-mailed this
+project a shapefile of its two districts on 2026-10-23 after its clerk passed
+on the request; the file is kept under data/source/raw/ (SENT below). And
+Saline County's clerk listed, on 2026-10-23, the townships and precincts in
+each of its two districts: whole townships but for Marshall, which its city's
+wards split, so Saline is drawn from TIGER's township lines and, inside
+Marshall township, the Census Bureau's 2020 voting districts, whose four
+Marshall wards tile that township (LISTED below). And Perry County's clerk
+pointed, on 2026-10-23, to the county's public map at SEMO GIS (the Southeast
+Missouri Regional Planning Commission's map server), whose Commissioner
+Districts layer any visitor can query (ARCGIS below). The same map server
+carries a Commissioner District layer for Iron and Scott counties too, found
+on 2026-10-24 without any county pointing to it, so those two are drawn from
+it the same way (St. Francois's, on the same server, is not; see its note
+below). Those 28 are SOURCES
+below. The other 86 counties and the City of St. Louis are not
+drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
 WHAT IS CHECKED, AND WHAT IS NOT. Every build refuses a county unless:
@@ -54,7 +69,8 @@ edge rather than the viewer's. The line between the two districts is held
 to FIDELITY_MAX_M: every vertex of the source's own dividing line must lie
 within that distance of the drawn one.
 
-Build (network: the viewers, the Cole download and TIGERweb; shapely and
+Build (network: the viewers, the Cole download and TIGERweb; Cass's file is
+read from disk; shapely and
 pyproj):
     python3 mo/scripts/build_mo_commission_districts.py
 Check (offline, stdlib only; in CI):
@@ -99,6 +115,9 @@ BLOCKS = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
 SOURCE_VIEWER = "the county's map viewer, its Commissioner District layer"
 COUSUB = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
           "Places_CouSub_ConCity_SubMCD/MapServer/1/query")
+VTD2020 = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+           "tigerWMS_Census2020/MapServer/58/query")
+RAW_DIR = os.path.join(REPO_ROOT, "data", "source", "raw")
 SOURCE_COLE = ("the Jefferson City and Cole County GIS office (midmogis.org), "
                "its download of the commissioner districts")
 
@@ -146,6 +165,73 @@ SOURCES = {
             "map": ("https://www.lawrencecountymo.org/_files/ugd/"
                     "e487e4_0038fc0bb16742e8b9dc74b091ced286.pdf"),
             "clerk": "2026-10-23"},
+    # Cass County GIS (Lisa Mendpara, PMM, in the Assessor's office) e-mailed
+    # this shapefile on 2026-10-23 after the clerk forwarded the request. Its
+    # metadata was last synced 2022-04-28, and the county's own district map
+    # (sent with it) draws the same two areas: District 2 the northwest,
+    # Belton, Raymore and Peculiar, and District 1 the rest. The files are
+    # kept as sent and held to their SHA-256 below.
+    "037": {"file": "cass-commission-districts/commission", "field": "District",
+            "sha256": {
+                "shp": "10d69d775098334c8717689fbba58ee6625791120065cbce6bbb73957e4af354",
+                "shx": "0df31e0c3cce5f5da1ef99b75552b7ec22b8f8f5208b9268eff4f835075b7328",
+                "dbf": "4105dcbdbadef6ccaaf2581f01543fb3a622e6c8e828c93ba19fd5c1b5865e6d",
+                "prj": "1e84a19d8fa23d2f23c0cdd5d16cc096abe8ee6235eeb391a139484fbcd35654"},
+            "names": {"1": "District 1", "2": "District 2"},
+            "sent": "2026-10-23"},
+    # Perry's clerk (Jared W. Kutz) answered on 2026-10-23 by pointing to the
+    # county's public map at SEMO GIS, whose PerryCo_PublicBase service has a
+    # Commissioner Districts layer (COMM_DIST 1 and 2). The roster prints
+    # First and Second District.
+    "157": {"arcgis": ("https://maps.semogis.com/server/rest/services/Perry_CO/"
+                       "PerryCo_PublicBase/MapServer/61"),
+            "field": "COMM_DIST",
+            "names": {"1": "First District", "2": "Second District"},
+            "clerk": "2026-10-23"},
+    # Iron and Scott publish a Commissioner District layer on the same SEMO
+    # GIS server, each in a service named <County>Co_Districts, found on
+    # 2026-10-24 by reading the server's folders (no robots.txt; HTTP 404).
+    # No county pointed to these, so no pointedOn is written. Each answers
+    # exactly two features under the names the roster prints: Iron's
+    # Southern and Western, Scott's FIRST and SECOND. Scott was asked by
+    # letter on 2026-10-23, before the layer was found.
+    #
+    # St. Francois has one too (StFrancoisCo_Districts/MapServer/0, Comm_Dist
+    # 1 and 2) and is NOT drawn from it. Measured 2026-10-24, its two
+    # districts reach 0.61% of the county outside the Census county line,
+    # over MAX_GAP, in strips 40-60 m wide along the north and east edges,
+    # where the county's own voting district layer on the same service
+    # reaches 0.10%; its features carry 2010 voting district attributes; and
+    # its dividing line splits current voting districts (0006 58/42, FR01
+    # 68/32, E001 80/20), so which line the county uses now is not settled
+    # by the layer. The county was asked by letter on 2026-10-23, and its
+    # answer decides it.
+    "093": {"arcgis": ("https://maps.semogis.com/server/rest/services/Iron_CO/"
+                       "IronCo_Districts/MapServer/5"),
+            "field": "COMM_DIST",
+            "names": {"Southern": "Southern District", "Western": "Western District"}},
+    "201": {"arcgis": ("https://maps.semogis.com/server/rest/services/Scott_CO/"
+                       "ScottCo_Districts/MapServer/6"),
+            "field": "NAME",
+            "names": {"FIRST": "First District", "SECOND": "Second District"}},
+    # Saline's clerk (Brittni Allison Burton) answered on 2026-10-23 with the
+    # townships and precincts each district holds, and a 2011 map of the
+    # line. Every township is whole but Marshall, whose Wards 3 and 4 are in
+    # the Northern District and Wards 1 and 2 in the Southern. Salt Fork is
+    # not in her list because it votes with Blackwater (the Census's 2020
+    # "Blackwater/Salt Fork" precinct), and her map puts it in the Southern
+    # District. The Census's 2020 Marshall 1-4 voting districts tile Marshall
+    # township, 3 and 4 in its north half, and their line runs as the map's
+    # does through the township. Marshall may have redrawn its wards since
+    # 2020, which this does not see.
+    "195": {"townships": {
+                "Northern District": ["Cambridge", "Clay", "Grand Pass", "Miami"],
+                "Southern District": ["Arrow Rock", "Blackwater", "Elmwood", "Liberty",
+                                      "Salt Fork", "Salt Pond"]},
+            "precincts": {"Marshall": {
+                "Northern District": ["Marshall 3", "Marshall 4"],
+                "Southern District": ["Marshall 1", "Marshall 2"]}},
+            "listed": "2026-10-23"},
     "113": {"viewer": ("phelpsgis", "Lincoln_County_MO", "1", "35"),
             "names": {"DISTRICT I": "First District", "DISTRICT II": "Second District"}},
     "119": {"viewer": ("christiangis", "McDonald_County_MO", "2", "35"), "field": "district_n",
@@ -272,10 +358,55 @@ def fetch_viewer(spec):
     return out
 
 
+def fetch_arcgis(spec):
+    """A county's own ArcGIS map service layer, queried anonymously. The
+    layer's own name must still be Commissioner Districts, so a renumbered
+    service is caught rather than read as commission districts."""
+    url = spec["arcgis"]
+    name = _get(url, {"f": "json"}).get("name")
+    if not name or not re.match(r"Commissioners? Districts?$", name):
+        raise RuntimeError("%s is %r, not the Commissioner Districts layer" % (url, name))
+    data = _get(url + "/query", {
+        "where": "1=1", "outFields": spec["field"], "returnGeometry": "true",
+        "outSR": "4326", "f": "json"})
+    if data.get("exceededTransferLimit"):
+        raise RuntimeError("%s: the commissioner layer hit the transfer cap" % url)
+    return [(str(f["attributes"].get(spec["field"])), _esri_rings_to_shape(f["geometry"]["rings"]))
+            for f in data.get("features") or []]
+
+
+def fetch_split_township(c3, township, shape_, seats):
+    """A township a county splits by precinct, as {seat: part}, from the
+    Census Bureau's 2020 voting districts. The precincts named must be every
+    voting district inside the township, and together they must tile it."""
+    from shapely.ops import unary_union  # noqa: PLC0415
+    data = _get(VTD2020, {
+        "where": "STATE='%s' AND COUNTY='%s'" % (STATE, c3),
+        "outFields": "NAME", "returnGeometry": "true", "outSR": "4326", "f": "json"})
+    if data.get("error"):
+        raise RuntimeError("county %s voting districts: %r" % (c3, data["error"]))
+    inside = {}
+    for f in data.get("features") or []:
+        g = _esri_rings_to_shape(f["geometry"]["rings"])
+        if g.intersection(shape_).area > 0.5 * g.area:
+            inside[f["attributes"]["NAME"].replace(" Voting District", "")] = g
+    named = [p for ps in seats.values() for p in ps]
+    if sorted(named) != sorted(inside) or len(set(named)) != len(named):
+        raise RuntimeError("county %s %s: SOURCES names precincts %r, the Census draws %r"
+                           % (c3, township, sorted(named), sorted(inside)))
+    whole = unary_union(list(inside.values()))
+    if whole.symmetric_difference(shape_).area > 0.001 * shape_.area:
+        raise RuntimeError("county %s: the %s precincts do not tile the township"
+                           % (c3, township))
+    return {seat: unary_union([inside[p] for p in ps]).intersection(shape_)
+            for seat, ps in seats.items()}
+
+
 def fetch_townships(c3, spec):
-    """The county's districts as unions of whole TIGER townships. Every
-    township the Census draws in the county must be named in exactly one
-    district, so a township added or renamed stops the build."""
+    """The county's districts as unions of whole TIGER townships, and of the
+    parts of any township SOURCES splits by precinct. Every township the
+    Census draws in the county must be named in exactly one district or
+    split, so a township added or renamed stops the build."""
     from shapely.ops import unary_union  # noqa: PLC0415
     data = _get(COUSUB, {
         "where": "STATE='%s' AND COUNTY='%s'" % (STATE, c3),
@@ -285,16 +416,26 @@ def fetch_townships(c3, spec):
     shapes = {}
     for f in data.get("features") or []:
         shapes[f["attributes"]["BASENAME"]] = _esri_rings_to_shape(f["geometry"]["rings"])
-    named = [t for ts in spec["townships"].values() for t in ts]
+    split = spec.get("precincts") or {}
+    named = [t for ts in spec["townships"].values() for t in ts] + list(split)
     if sorted(named) != sorted(shapes) or len(set(named)) != len(named):
         raise RuntimeError("county %s: SOURCES names townships %r, the Census draws %r"
                            % (c3, sorted(named), sorted(shapes)))
-    return [(seat, unary_union([shapes[t] for t in ts]).buffer(0))
-            for seat, ts in sorted(spec["townships"].items())]
+    parts = {seat: [shapes[t] for t in ts] for seat, ts in spec["townships"].items()}
+    for township, seats in split.items():
+        if sorted(seats) != sorted(parts):
+            raise RuntimeError("county %s %s: split among %r, not the districts %r"
+                               % (c3, township, sorted(seats), sorted(parts)))
+        for seat, part in fetch_split_township(c3, township, shapes[township], seats).items():
+            parts[seat].append(part)
+    return [(seat, unary_union(ps).buffer(0)) for seat, ps in sorted(parts.items())]
 
 
 def _source_kind(spec):
-    return "cole" if "zip" in spec else "townships" if "townships" in spec else "viewer"
+    return ("cole" if "zip" in spec else "arcgis" if "arcgis" in spec
+            else "listed" if "listed" in spec
+            else "townships" if "townships" in spec
+            else "sent" if "file" in spec else "viewer")
 
 
 def _dbf_rows(raw):
@@ -348,6 +489,29 @@ def fetch_zip(spec):
     return [(row.get(spec["field"]), _esri_rings_to_shape(r)) for row, r in zip(rows, rings)]
 
 
+def _raw_file(spec, ext):
+    import hashlib  # noqa: PLC0415
+    path = os.path.join(RAW_DIR, spec["file"] + "." + ext)
+    with open(path, "rb") as fh:
+        raw = fh.read()
+    if hashlib.sha256(raw).hexdigest() != spec["sha256"][ext]:
+        raise RuntimeError("%s is not the file the county sent" % os.path.relpath(path, REPO_ROOT))
+    return raw
+
+
+def read_sent(spec):
+    """A shapefile a county sent, kept under data/source/raw/."""
+    from pyproj import Transformer  # noqa: PLC0415
+    t = Transformer.from_crs(_raw_file(spec, "prj").decode("latin-1"), "EPSG:4326",
+                             always_xy=True)
+    _raw_file(spec, "shx")
+    rings = _shp_polygons(_raw_file(spec, "shp"), t.transform)
+    rows = _dbf_rows(_raw_file(spec, "dbf"))
+    if len(rings) != len(rows):
+        raise RuntimeError("%s: %d shapes and %d records" % (spec["file"], len(rings), len(rows)))
+    return [(row.get(spec["field"]), _esri_rings_to_shape(r)) for row, r in zip(rows, rings)]
+
+
 def fetch_block_points(c3):
     """Every populated 2020 census block in the county, as (lng, lat, people)
     at its internal point."""
@@ -389,7 +553,8 @@ def build_county(c3, spec, county_feature, roster, today):
         got = fetch_townships(c3, spec)
         spec = dict(spec, names={seat: seat for seat in spec["townships"]})
     else:
-        got = fetch_zip(spec) if "zip" in spec else fetch_viewer(spec)
+        got = (fetch_zip(spec) if "zip" in spec else read_sent(spec) if "file" in spec
+               else fetch_arcgis(spec) if "arcgis" in spec else fetch_viewer(spec))
     if len(got) != 2:
         raise RuntimeError("%s: the source answers %d districts, not 2" % (name, len(got)))
     seats = district_seats(roster, geoid)
@@ -472,6 +637,10 @@ def build_county(c3, spec, county_feature, roster, today):
             "geometry": mapping(geom)})
         if spec.get("clerk"):
             feats[-1]["properties"]["pointedOn"] = spec["clerk"]
+        if spec.get("sent"):
+            feats[-1]["properties"]["sentOn"] = spec["sent"]
+        if spec.get("listed"):
+            feats[-1]["properties"]["listedOn"] = spec["listed"]
     people = {spec["names"][n]: 0 for n in names}
     unplaced = 0
     for x, y, p in fetch_block_points(c3):
@@ -583,6 +752,12 @@ def check_problems(fc, records, counties, roster):
         if p.get("pointedOn") != spec.get("clerk"):
             problems.append("%s: pointedOn %r, SOURCES says %r" % (where, p.get("pointedOn"),
                                                                spec.get("clerk")))
+        if p.get("sentOn") != spec.get("sent"):
+            problems.append("%s: sentOn %r, SOURCES says %r" % (where, p.get("sentOn"),
+                                                            spec.get("sent")))
+        if p.get("listedOn") != spec.get("listed"):
+            problems.append("%s: listedOn %r, SOURCES says %r" % (where, p.get("listedOn"),
+                                                              spec.get("listed")))
         if not _ISO_DATE.match(str(p.get("read") or "")):
             problems.append("%s: read %r is not a date" % (where, p.get("read")))
         g = f.get("geometry") or {}

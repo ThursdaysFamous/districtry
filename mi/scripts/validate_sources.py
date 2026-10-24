@@ -320,6 +320,17 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "precinct",
+        "app_file": "mi-detroit-polling-places.json",
+        "source_url": "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/Election_Precincts/FeatureServer/0",
+        "note": (
+            "Each Detroit precinct's polling place, from the City of Detroit Department of "
+            "Elections' own precinct layer, by mi/scripts/build_mi_detroit_polling_places.py, "
+            "read daily until Election Day by update-mi-detroit-polling-places.yml. The build "
+            "fails unless the city's 402 precinct codes are the state's, on the same ground."
+        ),
+    },
+    {
         "layer": "mi-isd",
         "app_file": "mi-isd-districts.json",
         "source_url": ("https://services3.arcgis.com/dxRQUfTDNtfqZ301/arcgis/rest/"

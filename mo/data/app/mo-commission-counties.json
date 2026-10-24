@@ -5,7 +5,7 @@
    "District One": 5735,
    "District Two": 5902
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 2.9,
   "unplaced2020": 0
@@ -16,7 +16,7 @@
    "Northern District": 8193,
    "Southern District": 7849
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 4.3,
   "unplaced2020": 0
@@ -27,7 +27,7 @@
    "Eastern District": 41544,
    "Western District": 43249
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 4.0,
   "unplaced2020": 0
@@ -38,10 +38,21 @@
    "First District": 20273,
    "Second District": 22436
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 10.1,
   "unplaced2020": 36
+ },
+ "29037": {
+  "county": "Cass County",
+  "people2020": {
+   "District 1": 50946,
+   "District 2": 56878
+  },
+  "read": "2026-10-24",
+  "source": "sent",
+  "spreadPct": 11.0,
+  "unplaced2020": 0
  },
  "29041": {
   "county": "Chariton County",
@@ -49,7 +60,7 @@
    "Eastern District": 3681,
    "Western District": 3721
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 1.1,
   "unplaced2020": 6
@@ -60,7 +71,7 @@
    "Eastern District": 41044,
    "Western District": 47798
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 15.2,
   "unplaced2020": 0
@@ -71,7 +82,7 @@
    "Eastern District": 40837,
    "Western District": 36442
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "cole",
   "spreadPct": 11.4,
   "unplaced2020": 0
@@ -82,7 +93,7 @@
    "Eastern District": 7921,
    "Western District": 9182
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 14.7,
   "unplaced2020": 0
@@ -93,7 +104,7 @@
    "Eastern District": 4062,
    "Western District": 3507
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 14.7,
   "unplaced2020": 0
@@ -104,9 +115,20 @@
    "Eastern District": 6000,
    "Western District": 5029
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 17.6,
+  "unplaced2020": 0
+ },
+ "29093": {
+  "county": "Iron County",
+  "people2020": {
+   "Southern District": 5423,
+   "Western District": 4114
+  },
+  "read": "2026-10-24",
+  "source": "arcgis",
+  "spreadPct": 27.5,
   "unplaced2020": 0
  },
  "29109": {
@@ -115,7 +137,7 @@
    "Eastern District": 18502,
    "Western District": 19499
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "townships",
   "spreadPct": 5.2,
   "unplaced2020": 0
@@ -126,7 +148,7 @@
    "First District": 28609,
    "Second District": 30965
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 7.9,
   "unplaced2020": 0
@@ -137,7 +159,7 @@
    "Eastern District": 11790,
    "Western District": 11513
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 2.4,
   "unplaced2020": 0
@@ -148,7 +170,7 @@
    "Eastern District": 4221,
    "Western District": 4211
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 0.2,
   "unplaced2020": 0
@@ -159,7 +181,7 @@
    "Eastern District": 13359,
    "Western District": 15158
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 12.6,
   "unplaced2020": 8
@@ -170,10 +192,21 @@
    "First District": 11724,
    "Second District": 12994
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 10.3,
   "unplaced2020": 4
+ },
+ "29157": {
+  "county": "Perry County",
+  "people2020": {
+   "First District": 9295,
+   "Second District": 9661
+  },
+  "read": "2026-10-24",
+  "source": "arcgis",
+  "spreadPct": 3.9,
+  "unplaced2020": 0
  },
  "29161": {
   "county": "Phelps County",
@@ -181,7 +214,7 @@
    "District 1": 23192,
    "District 2": 21446
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 7.8,
   "unplaced2020": 0
@@ -192,7 +225,7 @@
    "Northern District": 13840,
    "Southern District": 17679
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 24.4,
   "unplaced2020": 0
@@ -203,7 +236,7 @@
    "Eastern District": 27780,
    "Western District": 26175
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 5.9,
   "unplaced2020": 0
@@ -214,7 +247,7 @@
    "Eastern District": 4869,
    "Western District": 5480
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 11.8,
   "unplaced2020": 6
@@ -225,9 +258,31 @@
    "Eastern District": 10792,
    "Western District": 12366
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 13.6,
+  "unplaced2020": 0
+ },
+ "29195": {
+  "county": "Saline County",
+  "people2020": {
+   "Northern District": 10207,
+   "Southern District": 13126
+  },
+  "read": "2026-10-24",
+  "source": "listed",
+  "spreadPct": 25.0,
+  "unplaced2020": 0
+ },
+ "29201": {
+  "county": "Scott County",
+  "people2020": {
+   "First District": 19037,
+   "Second District": 19022
+  },
+  "read": "2026-10-24",
+  "source": "arcgis",
+  "spreadPct": 0.1,
   "unplaced2020": 0
  },
  "29217": {
@@ -236,7 +291,7 @@
    "Northern District": 9722,
    "Southern District": 9985
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 2.7,
   "unplaced2020": 0
@@ -247,7 +302,7 @@
    "District 1": 17686,
    "District 2": 17846
   },
-  "read": "2026-10-23",
+  "read": "2026-10-24",
   "source": "viewer",
   "spreadPct": 0.9,
   "unplaced2020": 0
