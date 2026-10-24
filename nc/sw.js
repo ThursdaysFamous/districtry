@@ -69,6 +69,7 @@ const ROSTER_URLS = [
   "./data/app/nc-city-councils.json",
   "./data/app/coverage-gaps.json",
   "./data/app/nc-conservation-boards.json",
+  "./data/app/nc-polling-places.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */
