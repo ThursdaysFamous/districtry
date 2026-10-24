@@ -119,6 +119,7 @@ const ROSTER_URLS = [
   "./data/app/mi-commissioner-returns.json",
   "./data/app/mi-commissioner-members.json",
   "./data/app/mi-municipal-officials.json",
+  "./data/app/mi-detroit-polling-places.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

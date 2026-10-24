@@ -15888,10 +15888,11 @@ function initMichiganExplorer() {
    * precinct card implying more certainty than its own publisher claims would
    * break this project's honesty rule by omission rather than by invention.
    *
-   * IDENTITY ONLY, AND NO POLLING PLACE — not by choice but by construction:
-   * the layer carries none, which is the strongest form of the fleet's
-   * polling-data discipline (Iowa's builder has to DECLINE polling fields
-   * that exist; here there are none to decline). Registered voters ship
+   * THE STATE'S LAYER CARRIES NO POLLING PLACE, and Michigan publishes no
+   * statewide polling-place file this project can read (the Secretary of
+   * State's voter lookup is behind a managed challenge, measured 2026-10-24).
+   * So the card names a polling place only where a city publishes its own
+   * list, joined below: Detroit's, from 2026-10-24. Registered voters ship
    * because the state publishes them per precinct and the card names the
    * cycle they belong to; the voting-equipment column is dropped, since it
    * moves on a different clock from the boundary.
@@ -16061,25 +16062,120 @@ function initMichiganExplorer() {
     emptyNote: "This point is not on tribal land. Michigan has 24 tribal areas across 12 nations \u2014 thirteen reservations and eleven pieces of off-reservation trust land \u2014 and this point is on none of them."
   });
 
-  registerPolygonLayer({
+  /* Each Detroit precinct's Election Day polling place, from the City of
+   * Detroit Department of Elections' own precinct layer
+   * (mi/scripts/build_mi_detroit_polling_places.py, refreshed daily until
+   * Election Day). Michigan publishes no statewide polling-place file this
+   * project can read, so this is one city's list, keyed by the precinct name
+   * the shipped boundary already carries, inside the one geoid it names. The
+   * card shows it only up to and including the election date in Michigan's
+   * own time zone: an assignment belongs to one election, and the day after it
+   * the list says nothing true about the next one. */
+  var loadDetroitPolling = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-detroit-polling-places.json", {}, 2);
+  });
+  function michiganToday() {
+    try {
+      return new Date().toLocaleDateString("en-CA", { timeZone: "America/Detroit" });
+    } catch (e) {
+      var d = new Date();
+      return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
+    }
+  }
+  function detroitPollingFor(list, geoid, name) {
+    if (!list || !list.precincts || !list.sites || !list.electionDate) return null;
+    if (String(geoid) !== String(list.geoid)) return null;
+    if (michiganToday() > list.electionDate) return null;
+    var i = list.precincts[String(name)];
+    var site = (i === undefined || i === null) ? null : list.sites[i];
+    if (!site) return null;
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var fmt = function (iso) {
+      var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+      return m ? months[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1] : String(iso || "");
+    };
+    return {
+      place: site.place,
+      address: String(site.address) + (site.zip ? ", Detroit " + String(site.zip) : ", Detroit"),
+      crossStreet: site.crossStreet || null,
+      lat: site.lat === undefined ? null : site.lat,
+      lng: site.lng === undefined ? null : site.lng,
+      election: String(list.election || "Election") + ", " + fmt(list.electionDate),
+      listDate: fmt(list.listDate),
+      lookupUrl: safeHttpUrl(list.lookupUrl)
+    };
+  }
+
+  // A bespoke registration rather than registerPolygonLayer, only so the
+  // query can join Detroit's polling place after the point-first lookup; the
+  // identity rows and the hover name are the factory's own.
+  var PRECINCT_BOUNDARY_NOTE =
+    "Michigan publishes voting precincts one election cycle at a " +
+    "time; this is the 2026 set, the newest the state has released. " +
+    "The Bureau of Elections collects it from local election " +
+    "officials and says validation was done by most, but not all, " +
+    "jurisdictions — so your clerk is the authority on where you vote.";
+  registerLayer({
     id: "precinct",
     tiles: "data/app/tiles/precinct.pmtiles", // vector tiles (engine tile-overlay block)
     group: "political",
     label: "Precinct",
-    loader: loadMiPrecincts,
-    style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.04 },
-    fields: [
-      { name: "name", label: "Precinct", keys: ["name"], primary: true },
-      { name: "county", label: "County", keys: ["county"] },
-      { name: "voters", label: "Registered voters (2026 cycle)", keys: ["voters"] },
-      { label: "About this boundary",
-        value: "Michigan publishes voting precincts one election cycle at a " +
-               "time; this is the 2026 set, the newest the state has released. " +
-               "The Bureau of Elections collects it from local election " +
-               "officials and says validation was done by most, but not all, " +
-               "jurisdictions — so your clerk is the authority on where you " +
-               "vote, and this app makes no claim about your polling place." }
-    ]
+    overlay: { load: loadMiPrecincts, style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.04 } },
+    hoverName: function (feature) {
+      var v = findPropCI(feature.properties || {}, ["name"]);
+      return (v == null || v === "") ? null : String(v);
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadMiPrecincts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var base = {
+          seq: seq,
+          name: findPropCI(props, ["name"]),
+          county: findPropCI(props, ["county"]),
+          voters: findPropCI(props, ["voters"]),
+          geoid: findPropCI(props, ["geoid"]),
+          polling: null
+        };
+        if (!base.name || !base.geoid) return base;
+        // A polling failure costs the polling row, never the precinct.
+        return loadDetroitPolling().then(function (list) {
+          base.polling = detroitPollingFor(list, base.geoid, base.name);
+          return base;
+        }, function () { return base; });
+      });
+    },
+    render: function (result) {
+      var rows = [{ label: "Precinct", value: result.name ? String(result.name) : "Unknown", primary: true }];
+      if (result.county) rows.push({ label: "County", value: String(result.county) });
+      if (result.voters) rows.push({ label: "Registered voters (2026 cycle)", value: String(result.voters) });
+      var p = result.polling;
+      if (p) {
+        rows.push({
+          label: "Polling place (" + p.election + ")",
+          value: String(p.place) + " — " + String(p.address) + (p.crossStreet ? " (" + String(p.crossStreet) + ")" : "")
+        });
+        rows.push({
+          label: "As listed",
+          value: "On the Detroit Department of Elections' precinct list, last changed " + p.listDate +
+            ". A polling place can change before an election, so confirm with the state's lookup before you go."
+        });
+        rows.push({ label: "About this boundary", value: PRECINCT_BOUNDARY_NOTE });
+      } else {
+        rows.push({ label: "About this boundary",
+                    value: PRECINCT_BOUNDARY_NOTE + " This app names a polling place only in Detroit, and only up to Election Day." });
+      }
+      return renderFieldStack(rows);
+    },
+    primaryLink: function (result) {
+      var p = result && result.polling;
+      return p && p.lookupUrl ? { label: "Confirm where you vote", url: p.lookupUrl } : null;
+    },
+    pointOfInterest: function (result) {
+      var p = result && result.polling;
+      if (!p || p.lat === null || p.lng === null) return null;
+      return { kind: "Polling place", label: String(p.place), address: String(p.address), lat: p.lat, lng: p.lng };
+    }
   });
 
 
