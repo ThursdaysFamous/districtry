@@ -620,7 +620,11 @@ try {
   //      county's five shipped; Wright is then the one board still withheld.
   //      If Wright resolves too, this row needs another withheld county.
   //
-  //      BOTH BRANCHES, for the reason 2a4 already gives. Adair must name a
+  //      Adair was the county-named row until 2026-10-23, when the statewide
+  //      directory listed its whole board again and Adair's supervisors came
+  //      from there; Tama, still named by its own page, took the row.
+  //
+  //      BOTH BRANCHES, for the reason 2a4 already gives. Tama must name a
   //      supervisor AND carry the county-named sentence; Wright must
   //      carry the withheld sentence and NOT the county-named one, because a
   //      county-named line over a board we do not publish would credit a
@@ -635,10 +639,10 @@ try {
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     for (const [lat, lng, county, want, absent, why] of [
-      [41.33000, -94.47000, "Adair County", "Named by the county",
-       null, "Adair, named by the county's own page"],
-      [41.33000, -94.47000, "Adair County", "Jerry Walker",
-       null, "Adair names a supervisor the statewide directory lost"],
+      [42.08000, -92.53000, "Tama County", "Named by the county",
+       null, "Tama, named by the county's own page"],
+      [42.08000, -92.53000, "Tama County", "Mark Doland",
+       null, "Tama names a supervisor from the county's own page"],
       [42.73160, -93.73270, "Wright County", "Not shown",
        "Named by the county", "Wright, withheld and not credited"],
       [42.04940, -92.90710, "Marshall County", "Supervisor",
