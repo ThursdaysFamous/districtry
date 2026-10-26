@@ -1698,13 +1698,14 @@ ANSWERS = {
         # no state file, BUT a town clerk certifies its officers to the county
         # each spring, and a survey of all 87 counties on 2026-10-15 found 42
         # that publish a list of them (mn/data/source/
-        # mn-county-township-officer-survey.json). 29 of those lists are READ
-        # since 2026-10-16 (mn/scripts/build_mn_county_town_officers.py): 2,019
-        # officers in 416 March towns. The other 13 are not: five behind a
-        # robots.txt Disallow, three behind a Cloudflare 403, one 5xx, one a
-        # scanned image, and three that name no March town's officers in a
-        # form that can be read (Anoka, Olmsted, Goodhue). Until those are
-        # settled the level stays open. Gap mn-township-officers carries it.
+        # mn-county-township-officer-survey.json). 32 of those lists are READ
+        # (mn/scripts/build_mn_county_town_officers.py): 29 since 2026-10-16,
+        # and Goodhue, Renville and Traverse (a scanned page, read by eye)
+        # since 2026-10-26, 2,218 officers in 456 March towns. The other 10
+        # are not: five behind a robots.txt Disallow, three behind a
+        # Cloudflare 403, and two that name no March town's officers in a
+        # form that can be read (Anoka, Olmsted). Until those are settled the
+        # level stays open. Gap mn-township-officers carries it.
         "sub-county-government": OPEN,
         # SETTLED 2026-10-01 by this instance's own thread: the level exists
         # only where a district has opted into it (Minn. Stat. 205A.12 subds.

@@ -260,12 +260,12 @@
   },
   "Goodhue": {
    "publishes": true,
-   "url": "https://goodhuecountymn.gov/about/townships/",
-   "format": "pdf-per-township",
+   "url": "https://services5.arcgis.com/zCDVc272xQCnwjzc/arcgis/rest/services/Township_Election_Management/FeatureServer/0",
+   "format": "arcgis-layer",
    "townships_listed": 21,
-   "as_of": "2024-2026",
+   "as_of": "per town (the layer's edit date)",
    "robots": "allow",
-   "note": "Robots 404. One certified_listing_of_township_officers_*.pdf per township.",
+   "note": "Read 2026-10-26 from the county's Township Election Management layer, one row per township naming each officer, a telephone, an e-mail and the term's end; the township pages at goodhuecountymn.gov/about/townships/ link each town. Address fields are never requested. The per-town certification PDFs are no longer the route.",
    "scope": "full",
    "evidence": "fetched"
   },
@@ -675,13 +675,14 @@
   },
   "Renville": {
    "publishes": true,
-   "url": null,
+   "url": "https://www.renvillecountymn.gov/vidoc/city-and-township-officials/",
    "format": "pdf-single",
-   "townships_listed": null,
-   "as_of": null,
+   "townships_listed": 27,
+   "as_of": "2026-09-17",
    "robots": "allow",
-   "note": "The vidoc 'township-city-officers-listing-pdf' is indexed. The fetch got IncompleteRead, so contents are unverified.",
-   "evidence": "search-index"
+   "note": "'City-Township-Officials-Listing_Sept-2026.pdf', served at the vidoc page's own address and read 2026-10-26. The older link 'township-city-officers-listing-pdf' answers with an empty file. The county's elections map layer carries officers whose terms ended 2016-2023 and is not used.",
+   "evidence": "fetched",
+   "scope": "full"
   },
   "Rice": {
    "publishes": "unknown",
@@ -809,12 +810,12 @@
   },
   "Traverse": {
    "publishes": true,
-   "url": null,
+   "url": "https://traversecountymn.gov/departments/departments/county-commissioners/township-officers/",
    "format": "scanned-image",
-   "townships_listed": null,
+   "townships_listed": 15,
    "as_of": "2026-03-18",
    "robots": "allow",
-   "note": "An image on the township officers page with no text layer; it would need OCR.",
+   "note": "A scanned image with no text layer ('TOWNSHIP OFFICERS AND TERMS', 2026-03-18). Read by eye 2026-10-26 and transcribed in the scraper, which uses the transcription only while the county serves the same image (checked by its SHA-256). All 15 towns hold their town election in November, so the results name them and the list is a witness.",
    "scope": "full",
    "evidence": "fetched"
   },

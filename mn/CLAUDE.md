@@ -48,11 +48,12 @@ which cross a county line) and 59 unorganized territories.
 November; the November contests are in the Secretary of State's `local.txt` files beside the
 city contests, and 704 towns' boards come out of them — 2,813 of 3,115 seats named, each dated,
 292 of the rest won by write-in. A March town runs its own election and its results are in no
-file the state publishes (the March election days answer 404 on the results host). **416 OF
-THEM ARE NAMED FROM THEIR COUNTY'S LIST SINCE 2026-10-16** (`mn/scripts/mn_county_town_officers_scraper.py`
+file the state publishes (the March election days answer 404 on the results host). **456 OF
+THEM ARE NAMED FROM THEIR COUNTY'S LIST** (416 since 2026-10-16, 40 more on 2026-10-26) (`mn/scripts/mn_county_town_officers_scraper.py`
 → `data/source/mn-county-town-officers.json`, then `build_mn_county_town_officers.py` →
 `mn-county-town-officers.json`): a town clerk certifies its officers to the county after each
-election, 42 counties publish the lists, and 29 are read — 2,018 officers as re-read on
+election, 42 counties publish the lists, and 32 are read (Goodhue, Renville and Traverse joined
+2026-10-26, Traverse's scanned page read by eye and held to the image's SHA-256) — 2,018 officers as re-read on
 2026-10-17, with names, offices, terms and, under Adam's ruling of that day ("if the official
 government source uses personal phone numbers, we publish those"), the telephone each list prints
 beside an officer (1,537 carry one, 75 a second), and, under Adam's choice of the same day
@@ -63,11 +64,11 @@ number or an address printed beside two people or again away from the officer is
 and stays out, as does a mailbox named for the town itself or for another office, and 180
 numbers printed with no area code ship as printed (gap `mn-township-phone-area-code`). One
 source per town: a town the election results name keeps those names, and the county list is
-compared as a witness (982 of 1,096 winners' surnames, 277 towns). The other 13 counties and
+compared as a witness (982 of 1,096 winners' surnames, 277 towns). The other 10 counties and
 their reasons are in gap `mn-township-officers`, which still covers about 680 towns, with a
 letter to the Minnesota Association of Townships, in `docs/ASK_DRAFTS.md`, sent on 2026-10-21. **NO WEEKLY
 JOB READS THE LISTS YET** — a new workflow needs the operator's word — so each card names the
-day its list was read. **THE DONE-STANDARD LEVEL STAYS OPEN** while those 13 are unsettled.
+day its list was read. **THE DONE-STANDARD LEVEL STAYS OPEN** while those 10 are unsettled.
 A seat a November town has not had
 on a ballot since 2022 is ABSENT rather than read from 2020: a six-year supervisor term (Minn.
 Stat. 367.03 subd. 4a) or an appointed clerk or treasurer leaves a board short, and the card
