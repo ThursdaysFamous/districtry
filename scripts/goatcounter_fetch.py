@@ -65,7 +65,7 @@ WINDOW_DAYS = 62
 # with no day in them, so a seven-day list cannot be derived from a sixty-two
 # day one. Adam chose "every section follows the button" on 2026-10-22, at
 # the cost of asking the dashboard for each list once per window.
-PRESET_DAYS = (1, 2, 7, 14, 30)  # scratch: today alone and today+yesterday
+PRESET_DAYS = (7, 14, 30)
 
 # The dashboard's widget indices, learned from the dashboard itself. These are
 # positional, not named, which is why --explore exists.
@@ -180,7 +180,7 @@ def widget(s, n, total, start, end, **extra):
 
 
 def window():
-    end = datetime.date.today()  # scratch: include the day in progress
+    end = datetime.date.today() - datetime.timedelta(days=1)
     start = end - datetime.timedelta(days=WINDOW_DAYS - 1)
     return start.isoformat(), end.isoformat()
 
@@ -408,6 +408,136 @@ def return_visits(s, total, start, end, mx, events):
     return out
 
 
+# ---------------------------------------------------------------------------
+# PEOPLE AGAINST USAGE (added 2026-10-26).
+#
+# WHAT GOATCOUNTER COUNTS, read off its own help pages that day: it "only
+# counts visits rather than pageviews", a visit being "the first time someone
+# loads a page", and a session -- a hash of the browser and its address -- is
+# held for 8 hours (goatcounter.com/help/sessions). Events are counted the same
+# way unless a site opts out per event (goatcounter.com/help/events), and this
+# site never does (engine sanitize.txt trackEvent). So EVERY number in this
+# file is "browsers that did this at least once in 8 hours": a page read twice
+# is one, a map clicked forty times is one `select`. A reader of the totals
+# who takes them as presses or as people overstates them both ways.
+#
+# What the dashboard does NOT have is a count of sessions across paths, which
+# is the number a person asks for ("how many people"). The three things below
+# are what lets the report build that number from parts and say how good it is.
+
+# Event families whose second part changes what they mean. `visit/first` and
+# `visit/return` are counters the apps send on opening; `install-invite/shown`
+# is the app showing a prompt, `install-invite/closed` a reader closing it.
+TWO_PART_FAMILIES = ("visit", "install-invite")
+# Ten rows a page. 2026-10-26's 62-day window had several hundred event paths
+# (a layer, a ZIP layer or a map-link outcome per app), so this leaves room.
+EVENT_PAGES = 150
+
+
+def event_family(path):
+    parts = path.split("/")
+    if parts[0] in TWO_PART_FAMILIES and len(parts) > 1:
+        return "/".join(parts[:2])
+    return parts[0]
+
+
+def event_breakdown(s, total, start, end, mx, dates):
+    """Every event path in the window, summed per family and per day.
+
+    The events list caps at ten rows like the pages list, and gets past the cap
+    the same way (all_pages with `exclude`). Each row carries its own daily
+    series, so the per-family series below are exact rather than a top ten
+    stretched to cover the rest. Returns (paths, families, cut): paths is every
+    row's total, families {family: {count, daily[]}} with daily aligned to
+    `dates`, cut true when the list could not be read to its end, so every
+    family is then a floor.
+    """
+    rows_, cut = all_pages(s, total, start, end, mx, filt="is:event",
+                           label="events", pages_max=EVENT_PAGES)
+    fams = {}
+    for r in rows_:
+        f = fams.setdefault(event_family(r["path"]),
+                            {"count": 0, "daily": [0] * len(dates)})
+        f["count"] += r["count"]
+        for i, d in enumerate(dates):
+            f["daily"][i] += r["daily"].get(d, 0)
+    paths = sorted(({"path": r["path"], "count": r["count"]} for r in rows_),
+                   key=lambda r: (-r["count"], r["path"]))
+    return paths, fams, bool(cut)
+
+
+def page_kinds(page_rows, dates, tags):
+    """Page visits per day, split into app maps, the front page and the rest.
+
+    An app's map is its root path (`/il`, `/il/`, `/il/index.html`); every other
+    page under a tag (question pages, county pages, sources) is "other", with
+    the site's own pages. The root path is the landing page from ROOT_MOVED on,
+    the rule split_by_instance() already applies.
+    """
+    roots = set()
+    for t in tags:
+        roots.update(("/" + t, "/" + t + "/", "/" + t + "/index.html"))
+    out = {k: [0] * len(dates) for k in ("app", "front", "other")}
+    for r in page_rows:
+        path = r["path"]
+        for i, d in enumerate(dates):
+            n = r["daily"].get(d, 0)
+            if not n:
+                continue
+            if path in ("/", "/index.html"):
+                kind = "app" if d < ROOT_MOVED else "front"
+            elif path in roots:
+                kind = "app"
+            else:
+                kind = "other"
+            out[kind][i] += n
+    return out
+
+
+# The three slices the report compares. A page visit is a browser reading a
+# page; `visit/` is a browser opening a state's map (the counter the apps send);
+# `select` is a browser being shown districts for a point, which is the answer
+# the site exists to give. Where each slice came from, what screen it was on and
+# which country it was in, side by side, is what separates readers from traffic
+# that loads pages and never asks anything.
+SLICES = [("pageview", "is:pageview"), ("visit", "visit/"), ("select", "select")]
+
+
+def slices(s, total, start, end, mx):
+    """Referrers, countries and screen sizes for each of SLICES.
+
+    THE FILTER ON THESE WIDGETS IS AN ASSUMPTION, as it is on the totals widget
+    in return_visits(): the dashboard applies its path filter to every widget,
+    but that is its own query string rather than a documented API. So each
+    slice also carries the totals widget's own sum for the same filter and the
+    paths the filter matched, and the report uses a slice only when its country
+    rows add up to that sum.
+    """
+    out = {}
+    for name, filt in SLICES:
+        days = series(widget(s, 1, total, start, end, filter=filt))
+        matched = pages(widget(s, 0, total, start, end, max=mx, filter=filt))
+        refs, refs_cut = all_rows(s, 2, total, start, end, filter=filt)
+        locs, locs_cut = all_rows(s, 6, total, start, end, filter=filt)
+        sizes = rows(widget(s, 8, total, start, end, filter=filt))
+        n = sum(days.values())
+        print("slice %s: %d by day; countries sum %d%s, sources sum %d%s"
+              % (name, n, sum(r["count"] for r in locs),
+                 " (cut)" if locs_cut else "", sum(r["count"] for r in refs),
+                 " (cut)" if refs_cut else ""))
+        out[name] = {
+            "count": n,
+            # Only the first ten, which is what says whether the filter caught
+            # anything it should not have; `select` is matched on a title too.
+            "matched": [{"path": r["path"], "count": r["count"]}
+                        for r in matched[:10]],
+            "referrers": refs, "referrers_cut": refs_cut,
+            "locations": locs, "locations_cut": locs_cut,
+            "sizes": sizes,
+        }
+    return out
+
+
 def top(rows, n=10):
     return [{k: v for k, v in r.items() if k != "daily"}
             for r in sorted(rows, key=lambda r: -r["count"])[:n]]
@@ -496,6 +626,17 @@ def collect(s, total, start, end, per_day=True):
     layer_rows = sum_layer_shapes(fleet_layer_rows, per_instance)
 
     visits = return_visits(s, total, start, end, mx, sum(d["events"] for d in daily))
+    dates = sorted(hits)
+    if per_day:
+        # The full window only: each family carries its daily series, so a
+        # shorter window's families are the same series cut to length.
+        event_paths, event_families, events_cut = event_breakdown(
+            s, total, start, end, mx, dates)
+        print("events: %d paths in %d families, sum %d of %d%s"
+              % (len(event_paths), len(event_families),
+                 sum(r["count"] for r in event_paths),
+                 sum(d["events"] for d in daily),
+                 ", list cut short" if events_cut else ""))
 
     out = {
         "total": total,
@@ -527,7 +668,16 @@ def collect(s, total, start, end, per_day=True):
         # and `visit/return/<tag>`, sent since 2026-10-22). None when the
         # dashboard's answer did not reconcile; see return_visits().
         "visits": visits,
+        # PEOPLE AGAINST USAGE, read since 2026-10-26; see event_breakdown(),
+        # page_kinds() and slices(). Every count is browsers in an 8-hour
+        # session, never presses and never people.
+        "slices": slices(s, total, start, end, mx),
     }
+    if per_day:
+        out.update({"event_paths": event_paths,
+                    "event_families": event_families,
+                    "events_cut": events_cut,
+                    "page_kinds": page_kinds(page_rows, dates, fleet_tags())})
     # THE INSTANCE BARS MUST SUM TO THE PAGEVIEW TOTAL, and they are counted
     # two different ways: the total off the totals widget, the split off the
     # pages list. The pages list caps at ten rows, so every pageview below
@@ -614,7 +764,7 @@ REF_DAYS = 14
 REF_PAGES = 6
 
 
-def all_rows(s, n, total, start, end):
+def all_rows(s, n, total, start, end, **extra):
     """Every row of a bar widget, following its "show more" by offset.
 
     THE OFFSET IS AN ASSUMPTION ABOUT A DASHBOARD THAT PUBLISHES NO API, so it
@@ -626,7 +776,7 @@ def all_rows(s, n, total, start, end):
     """
     out, seen = [], set()
     for _ in range(REF_PAGES):
-        page = rows(widget(s, n, total, start, end, offset=len(out)))
+        page = rows(widget(s, n, total, start, end, offset=len(out), **extra))
         more = bool(MORE and MORE[0])
         fresh = [r for r in page if r["key"] not in seen]
         if len(fresh) < len(page) or not fresh:
@@ -643,7 +793,8 @@ def all_rows(s, n, total, start, end):
 PAGE_PAGES = 60
 
 
-def all_pages(s, total, start, end, mx):
+def all_pages(s, total, start, end, mx, filt="is:pageview", label="pages",
+              pages_max=PAGE_PAGES):
     """Every row of the pages list, following its "show more" by offset.
 
     THE TEN-ROW CAP IS WHY AN APP READ 0. The per-app bars are summed from
@@ -662,7 +813,7 @@ def all_pages(s, total, start, end, mx):
     honest. Returns (rows, cut).
     """
     out, seen = [], set()
-    for _ in range(PAGE_PAGES):
+    for _ in range(pages_max):
         # GoatCounter's own "show more" on this list sends the numeric ids of
         # the rows already shown as `exclude`; a plain `offset` was tried
         # first and on 2026-10-20 returned the same ten rows. The opening tag
@@ -670,28 +821,28 @@ def all_pages(s, total, start, end, mx):
         # the markup this depends on without the token.
         ids = [r["id"] for r in out if r.get("id") is not None]
         extra = {"exclude": ",".join(map(str, ids))} if ids else {}
-        html = widget(s, 0, total, start, end, max=mx, filter="is:pageview",
+        html = widget(s, 0, total, start, end, max=mx, filter=filt,
                       **extra)
         if not out:
             first = re.search(r'<tr id="[^>]*>', html)
-            print("pages list: first row tag %s"
-                  % (first.group(0)[:200] if first else "(none)"))
+            print("%s list: first row tag %s"
+                  % (label, first.group(0)[:200] if first else "(none)"))
         page = pages(html)
         more = bool(MORE and MORE[0])
         fresh = [r for r in page if r["path"] not in seen]
         if out and len(ids) < len(out):
-            print("pages list: rows carry no id to exclude, stopped at %d"
-                  % len(out))
+            print("%s list: rows carry no id to exclude, stopped at %d"
+                  % (label, len(out)))
             return out, more
         if len(fresh) < len(page) or not fresh:
-            print("pages list: exclude stopped after %d rows" % len(out))
+            print("%s list: exclude stopped after %d rows" % (label, len(out)))
             return out, True if out else more
         out += fresh
         seen.update(r["path"] for r in fresh)
         if not more:
-            print("pages list: all %d rows read" % len(out))
+            print("%s list: all %d rows read" % (label, len(out)))
             return out, False
-    print("pages list: stopped at %d rows, list still cut short" % len(out))
+    print("%s list: stopped at %d rows, list still cut short" % (label, len(out)))
     return out, True
 
 
