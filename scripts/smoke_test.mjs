@@ -1751,10 +1751,9 @@ try {
   //     outlines (ENGINE metro-portal + fleet-outlines.json), never by
   //     rectangles: Illinois's box reaches into Iowa, sibling boxes overlap
   //     over the Upper Peninsula, and the boxes claim states nobody serves.
-  //     One place for each of those, plus St. Louis, which no instance
-  //     answers for and which must be selected HERE (the app says so) rather
-  //     than sent to an app with nothing to show. The sibling apps are stubbed:
-  //     a wrong route would otherwise leave for the real site.
+  //     One place for each of those, plus the Loop, which is selected HERE.
+  //     The sibling apps are stubbed: a wrong route would otherwise leave for
+  //     the real site.
   //
   //     GARY MOVED FROM THE UNCOVERED CASE TO A ROUTING CASE ON 2026-10-07, when
   //     Indiana went live: the same click now belongs to /in/. The uncovered
@@ -1764,13 +1763,23 @@ try {
   //     still selectable. The app routes by outline containment alone, so that
   //     1.6 km is not inside any tolerance the APP applies; the landing page's
   //     own ~1.5 km allowance is why its test uses a point farther west.
+  //
+  //     ST. LOUIS MOVED TO A ROUTING CASE AT MISSOURI'S GO-LIVE, AND THE
+  //     UNCOVERED CASE WENT WITH IT RATHER THAN MOVING AGAIN. Every state this
+  //     instance's permalink_gate reaches is now live, and sampling the gate
+  //     every 0.02 degrees against fleet-outlines.json that day found three
+  //     points in no outline, all slivers between two simplified outlines
+  //     along the Mississippi, which the next simplification would close. A
+  //     point that thin is not a fixture (the Wisconsin band-probe lesson), so
+  //     the half that a point nobody covers is selected here is asserted by
+  //     the instances whose gates still reach an unserved state.
   {
     const cases = [
       { name: "Davenport, Iowa", lat: 41.52, lng: -90.58, want: "https://districtry.com/ia/" },
       { name: "Marquette, Michigan", lat: 46.54, lng: -87.40, want: "https://districtry.com/mi/" },
       { name: "Kenosha, Wisconsin", lat: 42.58, lng: -87.82, want: "https://districtry.com/wi/" },
       { name: "Gary, Indiana", lat: 41.60, lng: -87.34, want: "https://districtry.com/in/" },
-      { name: "St. Louis, Missouri", lat: 38.627, lng: -90.199, want: null },
+      { name: "St. Louis, Missouri", lat: 38.627, lng: -90.199, want: "https://districtry.com/mo/" },
       { name: "the Loop", lat: 41.8825, lng: -87.6285, want: null },
     ];
     for (const c of cases) {

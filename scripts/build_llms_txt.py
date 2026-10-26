@@ -94,12 +94,20 @@ SUMMARY_TEMPLATE = ("Click a point, or type an address, and see every civic "
 # for that member alone, and an address only where three or more of a body's
 # members print the same one, which is the body's office. Its pages are one
 # per PARISH, so the line says so.
+#
+# Missouri's take their names from the Secretary of State's Missouri Roster,
+# or for the three charter counties that keep their own lists from the
+# county's website, and carry each member's telephone and e-mail where that
+# source prints them beside the member.
 CONTACT_NOTE = {
     "ms": "with the board of supervisors' office address and telephone where "
           "the Secretary of State's directory prints them",
     "la": "with the telephone the Secretary of State's list prints for a member "
           "where it prints one, and the body's office address where three or "
           "more members give the same one",
+    "mo": "with the telephone and e-mail the Secretary of State's Missouri "
+          "Roster, or a charter county's own website, prints beside each "
+          "member",
 }
 DEFAULT_CONTACT_NOTE = "with whatever contact details that county publishes"
 # The unit each instance's per-county pages are one per, where it is not a

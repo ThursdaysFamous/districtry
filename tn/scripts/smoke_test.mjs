@@ -384,11 +384,11 @@ try {
   //     the real districtry.com, fails in the sandbox and leaves page.url() on
   //     the app, which reads exactly like correct behaviour.
   //
-  //     TENNESSEE BORDERS FOUR LIVE INSTANCES, so it has both halves to
+  //     TENNESSEE BORDERS FIVE LIVE INSTANCES, so it has both halves to
   //     prove. Kentucky, North Carolina, Arkansas (live since 2026-10-15) and
-  //     Mississippi (live since 2026-10-16) are covered, so a point just over
-  //     any of those lines must open that app; the other four neighbours
-  //     (Virginia, Georgia, Alabama, Missouri) are not, so a point over their
+  //     Mississippi (live since 2026-10-16) are covered, and Missouri since its
+  //     go-live, so a point just over any of those lines must open that app;
+  //     the other three neighbours (Virginia, Georgia, Alabama) are not, so a point over their
   //     lines must be selected HERE, where the app says nothing answers there
   //     (1a2-ii). Southaven joined as a case in the change that published
   //     Mississippi: it sits about 2.6 km south of this app's own outline,

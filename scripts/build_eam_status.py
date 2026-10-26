@@ -182,7 +182,13 @@ from validate_instance_registration import (  # noqa: E402  (FLEET_SHARED)
 STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
                   "ky": 120, "ny": 62, "in": 92,
                   "nc": 100, "ok": 77, "sc": 46, "tn": 95, "ar": 75,
-                  "ms": 82, "la": 64}
+                  "ms": 82, "la": 64,
+                  # Missouri's 114 counties. The independent City of St. Louis
+                  # belongs to none of them and the Census counts it as a county
+                  # of its own; its governing body is a city's, so it is scored
+                  # once, under level 6 with the other places of 25,000 or more
+                  # (gap mo-st-louis-aldermen), rather than here as well.
+                  "mo": 114}
 
 # Instances with no county tier at all. Recorded with a reason rather than
 # skipped, because a silently absent row reads as a passing one.
@@ -2377,6 +2383,40 @@ ANSWERS = {
         # gap la-tribal-government -- the Wisconsin and Michigan shape.
         "tribal-government": answers("tribal-government"),
     },
+    # Missouri, added at its go-live with the national tier, every county's
+    # commission or council from the Secretary of State's Missouri Roster (the
+    # charter counties from their own pages), and the commission districts of
+    # the counties whose lines are drawn.
+    "mo": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("mo-senate", "mo-house"),
+        "county-boundaries": answers("county"),
+        # Every county's body seats members by district, so a county counts
+        # only where the county-commissioner layer draws its districts: 28 at
+        # go-live, each county's own lines (gap
+        # mo-county-commission-district-lines carries the rest).
+        "county-government": depth("county-commissioner"),
+        "municipal-boundaries": answers("municipality"),
+        # No city's council is named yet (gap mo-municipal-officeholders);
+        # St. Louis's Mayor is named on the County card and its aldermen are
+        # not (gap mo-st-louis-aldermen).
+        "local-government": OPEN,
+        "school-district-boundaries": answers("school-district-unified",
+                                              "school-district-elementary"),
+        "subdivision-boundaries": answers("county-subdivision"),
+        "courts-by-district": OPEN,
+        # The 20 counties that adopted township organization (RSMo chapter 65)
+        # elect township boards, 282 active townships, and nothing here names
+        # them (gap mo-township-officers).
+        "sub-county-government": OPEN,
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        "tribal-government": na(
+            "Missouri has no tribal land. The Census publishes no federal or "
+            "state reservation and no off-reservation trust land in the state, "
+            "measured 2026-10-21 with a control on the state's own code."),
+    },
     "ny": {
         "us-house": answers("congress"),
         "state-legislature": answers("state-senate", "state-assembly"),
@@ -2765,6 +2805,31 @@ def _la_county_maps_owed(B, records):
             if rec.get("districts") and name not in drawn}
 
 
+def _mo_county_maps_owed(B, records):
+    """Missouri counties whose commission or council districts are not drawn.
+
+    Every county's body seats members by district: a commission's two
+    associate commissioners each from half the county (RSMo 49.010), and the
+    four charter counties' councils and legislature from their own districts
+    beside any at-large seats. So a county whose record carries district
+    sections owes a map. Which counties the layer draws is read off the
+    shipped districts file, never listed here; build_county_pages' own
+    Missouri adapter already holds that file's seats to the roster, and this
+    holds its counties to the roster.
+    """
+    rel = "mo/data/app/mo-commission-districts.json"
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+        drawn = {re.sub(r" County$", "",
+                        (f.get("properties") or {}).get("county") or "")
+                 for f in json.load(fh).get("features") or []}
+    stray = sorted(drawn - set(records))
+    if stray:
+        fail("mo: `%s` draws %s, which the county roster does not name"
+             % (rel, ", ".join(stray)))
+    return {B.slug_of(name) for name, rec in records.items()
+            if rec.get("districts") and name not in drawn}
+
+
 def _no_layer(derive):
     """A state whose county-government level draws no county district."""
     def wrapped(B, records):
@@ -2784,6 +2849,7 @@ COUNTY_MAPS_OWED = {
     "ia": _ia_county_maps_owed,
     "ms": _ms_county_maps_owed,
     "la": _la_county_maps_owed,
+    "mo": _mo_county_maps_owed,
 }
 
 

@@ -72,6 +72,7 @@ the audit asked for an item about the project.
 | P1001 (applies to jurisdiction) | Q1612 (Arkansas) | the `/ar/` instance |
 | P1001 (applies to jurisdiction) | Q1494 (Mississippi) | the `/ms/` instance |
 | P1001 (applies to jurisdiction) | Q1588 (Louisiana) | the `/la/` instance |
+| P1001 (applies to jurisdiction) | Q1581 (Missouri) | the `/mo/` instance |
 
 ### What is deliberately absent
 
@@ -130,6 +131,7 @@ endpoint used.
 | `Q1527` | Minnesota |
 | `Q1537` | Wisconsin |
 | `Q1546` | Iowa |
+| `Q1581` | Missouri |
 | `Q1588` | Louisiana |
 | `Q1603` | Kentucky |
 | `Q1612` | Arkansas |

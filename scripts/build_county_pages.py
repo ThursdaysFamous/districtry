@@ -418,6 +418,31 @@ INSTANCES = [
          contacts="la_board_contact",
          index_provenance="each name as the Louisiana Secretary of State's list "
                           "of elected officials prints it, by district or ward"),
+    # MISSOURI'S GOVERNING BODY IS NOT ONE BODY EITHER. 110 counties are
+    # governed by a county commission (a presiding commissioner elected by the
+    # whole county and district commissioners, RSMo 49.010 and 49.020), three
+    # charter counties by a council and Jackson County by a legislature, so the
+    # concept path is the county's government, Kentucky's shape, and every
+    # record names its own body. The City of St. Louis belongs to no county and
+    # gets no page: the roster names its Board of Aldermen's president and none
+    # of its fourteen ward aldermen (gap mo-st-louis-aldermen), and a page whose
+    # whole content is one name is the thin shape these pages refuse.
+    # `district_layer` is the map layer, which is not the concept path here.
+    dict(tag="mo", state="Missouri", concept="county-government",
+         index_page="county-government.html",
+         heading="%(county)s County Commission",
+         page_title="%(county)s County Commission",
+         phrase="county commission or council", index_label="County governments",
+         all_label="All Missouri county governments",
+         app_name="districtry Missouri", app_url="https://districtry.com/mo/",
+         district_word="", member_word="Commissioner",
+         district_layer="county-commissioner",
+         adapters=("mo_county_bodies",),
+         contacts="mo_board_contact",
+         index_provenance="each name as the Missouri Secretary of State's "
+                          "Missouri Roster prints it, or the county's own "
+                          "website where its page is kept up to date between "
+                          "editions"),
     # NEW YORK IS THE FIRST INSTANCE WHOSE COUNTIES DO NOT ALL HAVE A BODY
     # THESE PAGES CAN BE ABOUT, which is why its `phrase` names one form
     # rather than the county tier: a county legislature is elected from
@@ -2795,6 +2820,234 @@ def la_parish_bodies(inst):
     return out, problems, nameless, [path, listed_path, map_path], note
 
 
+# Missouri's three kinds of county governing body, as the Missouri Roster
+# names them (mo/scripts/build_mo_county_officials.py): the body in running
+# prose, and what its members are called.
+MO_KINDS = {"commission": ("commission", "Commissioner"),
+            "council": ("council", "Council Member"),
+            "legislature": ("legislature", "Legislator")}
+MO_STANDFIRST = ("Every member of the %(heading)s, as the Missouri Secretary of "
+                 "State's Missouri Roster prints them.")
+MO_STANDFIRST_OWN = ("Every member of the %(heading)s, as the county's own "
+                     "website lists them.")
+MO_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above is "
+                 "printed in the Missouri Secretary of State's Missouri Roster "
+                 "or on the county's own website,\nand where neither names "
+                 "anyone this page says so rather than filling the gap.")
+
+
+def _mo_seat_key(label):
+    """First District before Second, District 2 before District 10. The
+    roster spells its numbers out in most counties ("First District",
+    "District One") and as digits or Roman numerals in a few, so each word is
+    read as its number where it is one and compared as text otherwise."""
+    words = {"first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5,
+             "sixth": 6, "seventh": 7, "eighth": 8, "ninth": 9,
+             "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+             "i": 1, "ii": 2, "iii": 3}
+    out = []
+    for t in re.split(r"(\d+|\s+)", label):
+        if not t or t.isspace():
+            continue
+        n = int(t) if t.isdigit() else words.get(t.lower())
+        out.append((0, n, "") if n is not None else (1, 0, t))
+    return out
+
+
+def mo_county_bodies(inst):
+    """Missouri: ONE file keyed by county GEOID ("29001"), each record one
+    county's governing body and other elected officers as the Secretary of
+    State's Missouri Roster prints them (mo/scripts/build_mo_county_officials.py),
+    with the members of three charter councils read from the county's own
+    website, which the record says (`seatsSource`).
+
+    THE BODY NAMES ITSELF ON EVERY PAGE: a commission in 110 counties, a
+    council in three charter counties and Jackson County's legislature, so
+    each record's own `body` is the heading.
+
+    A SEAT THE WHOLE COUNTY ELECTS IS ITS OWN SECTION, before the districts:
+    a presiding commissioner presides over the commission and is elected
+    countywide (RSMo 49.010), so filing them under a district would be false.
+
+    THE COUNTY EXECUTIVE IS NAMED IN THE LEDE AND IS NOT LISTED AS A MEMBER,
+    the Louisiana rule: a charter county's executive is not a member of its
+    council, and a section of their own would mark them as one in the page's
+    structured data. Jackson County's executive was recalled after the roster
+    was printed, and the record's own sentence saying so is the lede's.
+
+    THE OTHER ELECTED OFFICERS (clerk, assessor, sheriff and the rest) ARE NOT
+    ON THESE PAGES. They are not members of the body these pages are about.
+
+    THE MAP LINK OPENS WHAT THE APP DRAWS, the Mississippi rule:
+    mo-commission-counties.json lists the counties whose commission district
+    lines the app draws, and this holds that list to the districts file and
+    each drawn county's districts to this roster's district seats. Every other
+    county's page opens the County layer, whose card lists the whole body.
+
+    THE CITY OF ST. LOUIS GETS NO PAGE, and the run's note counts it: the
+    roster names its Board of Aldermen's president and no alderman."""
+    path = os.path.join(app_data(inst["tag"]), "mo-county-officials.json")
+    listed_path = os.path.join(app_data(inst["tag"]), "mo-commission-counties.json")
+    map_path = os.path.join(app_data(inst["tag"]), "mo-commission-districts.json")
+    listed = _read(listed_path)
+    drawn = {}
+    for f in _read(map_path).get("features") or []:
+        props = f.get("properties") or {}
+        drawn.setdefault(str(props.get("countyfips")), []).append(props)
+    out, problems, nameless, skipped = {}, [], set(), []
+    for geoid in sorted(set(listed) ^ set(drawn)):
+        problems.append("mo %s: the list of drawn counties and the districts "
+                        "file disagree about whether this county is drawn" % geoid)
+    records = _read(path)
+    if len(records) != 115:
+        problems.append("mo-county-officials.json carries %d counties, not "
+                        "Missouri's 114 and the City of St. Louis" % len(records))
+    for geoid, rec in sorted(records.items()):
+        county = (rec.get("county") or "").strip()
+        if rec.get("kind") == "city":
+            skipped.append(county)
+            continue
+        name = re.sub(r"\s+County$", "", county)
+        body = (rec.get("body") or "").strip()
+        kind = MO_KINDS.get(rec.get("kind"))
+        read = _mn_date(rec.get("read"))
+        link = (rec.get("sourceUrl") or "").strip()
+        if not name or name == county or not body or not kind or not read \
+                or not link.startswith("https://"):
+            problems.append("mo-county-officials.json %r carries no county, no "
+                            "body, no kind of body this page knows, no read date "
+                            "or no https source" % geoid)
+            continue
+        body_word, member_word = kind
+
+        def person(s, role):
+            m = {"name": (s.get("name") or "").strip(), "role": role}
+            for key in ("party", "email"):
+                if (s.get(key) or "").strip():
+                    m[key] = s[key].strip()
+            phone = (s.get("phone") or "").strip()
+            if phone:
+                label = (s.get("phoneLabel") or "").strip()
+                m["phone"] = "%s (%s)" % (phone, label) if label else phone
+            return m
+
+        groups, countywide, bad = {}, [], False
+        for s in rec.get("seats") or []:
+            label = re.sub(r"\s+", " ", (s.get("seat") or "").strip())
+            if not label or not (s.get("name") or "").strip():
+                problems.append("mo %s County lists a seat with no label or no "
+                                "name" % name)
+                bad = True
+                continue
+            if s.get("countywide") is True:
+                countywide.append(person(s, label))
+            else:
+                groups.setdefault(label, []).append(person(s, member_word))
+        if bad or not groups:
+            if not bad:
+                problems.append("mo %s County lists no seat elected from a "
+                                "district" % name)
+            continue
+        districts = [district(label, members) for label, members
+                     in sorted(groups.items(), key=lambda g: _mo_seat_key(g[0]))]
+        extras = ([("countywide", "Elected by the whole county", countywide)]
+                  if countywide else [])
+        n_district = sum(len(ms) for ms in groups.values())
+
+        props = drawn.get(geoid)
+        cta_layers = None
+        if props:
+            got = sorted(str(p.get("seat")) for p in props)
+            if got != sorted(groups):
+                problems.append("mo %s County: the districts file does not draw "
+                                "this roster's district seats" % name)
+                continue
+            cta_note = ("Opens the map with the county and commission district "
+                        "layers on. The district lines are the county's own map, "
+                        "which this app has not checked against the precinct "
+                        "records the county's elections use, so near the line, "
+                        "check with the county clerk.")
+        else:
+            cta_layers = "county"
+            cta_note = ("Opens the map with the county layer on, whose card lists "
+                        "every member of the %s. This app does not draw %s "
+                        "County's %s district lines yet." % (body_word, name,
+                                                            body_word))
+
+        said = ["The %s is %s County's governing body." % (body, name)]
+        if countywide:
+            said.append("Of its %d members, %d %s elected by the whole county and "
+                        "%d from districts." % (n_district + len(countywide),
+                                                len(countywide),
+                                                "is" if len(countywide) == 1
+                                                else "are", n_district))
+        else:
+            said.append("Its %d members are elected from districts." % n_district)
+        exe = rec.get("executive") or {}
+        title = (exe.get("title") or "").strip()
+        if title and (exe.get("name") or "").strip():
+            said.append("The %s, %s, is elected by the whole county and is not a "
+                        "member of the %s." % (title.lower(), exe["name"].strip(),
+                                               body_word))
+        elif title and (exe.get("notNamed") or "").strip():
+            said.append(exe["notNamed"].strip())
+        own = (rec.get("seatsSource") or "").strip()
+        own_read = _mn_date(rec.get("seatsRead"))
+        if own:
+            said.append("This page lists every seat and who holds it as %s lists "
+                        "them, read on %s, and the map's County card reads the "
+                        "same list, because the county keeps its own page up to "
+                        "date between editions of the Secretary of State's "
+                        "Missouri Roster." % (own, own_read or read))
+        else:
+            said.append("This page lists every seat and who holds it as the "
+                        "Missouri Secretary of State's Missouri Roster prints "
+                        "them, and the map's County card reads the same list.")
+        lede = esc(" ".join(said)).replace("%", "%%")
+
+        roster = esc((rec.get("source") or "").strip()
+                     or "the Missouri Secretary of State's Missouri Roster")
+        source_html = ('Source: <a href="%s" rel="noopener" target="_blank">%s</a>, '
+                       "read on %s. The Secretary of State publishes the roster "
+                       "once every two years, so a change on a board can take "
+                       "until the next edition to appear here."
+                       % (esc(link), roster, esc(read)))
+        own_link = (rec.get("seatsSourceUrl") or "").strip()
+        if own and own_link.startswith("https://"):
+            source_html = ('Source: <a href="%s" rel="noopener" target="_blank">%s'
+                           '</a>, read on %s. The county\'s other officers are in '
+                           '<a href="%s" rel="noopener" target="_blank">%s</a>.'
+                           % (esc(own_link), esc(own), esc(own_read or read),
+                              esc(link), roster))
+        # 155 characters is validate_serp_lengths.py's ceiling.
+        desc = ("Who sits on the %(heading)s, by district"
+                + (" and countywide" if countywide else "")
+                + (", from the county's own website." if own else
+                   ", from the Missouri Secretary of State's Missouri Roster."))
+        entry = {"districts": districts, "extras": extras, "skipped": [],
+                 "slug": county_slug(name), "at_large": False,
+                 "source_file": path, "lede": lede, "heading": body,
+                 "page_title": body, "member_word": member_word,
+                 "standfirst": MO_STANDFIRST_OWN if own else MO_STANDFIRST,
+                 "desc": desc, "disclaimer": MO_DISCLAIMER, "cta_note": cta_note,
+                 "source_html": source_html}
+        if cta_layers:
+            entry["cta_layers"] = cta_layers
+        if not _count_named(districts, extras):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("mo %s County names nobody" % name)
+            nameless.add(name)
+            continue
+        out[name] = entry
+    note = ("%d of Missouri's 114 counties, every governing body named, %d with "
+            "their districts drawn; no page for %s, whose roster names only "
+            "the Board of Aldermen's president"
+            % (len(out), len(set(listed) & set(drawn)),
+               ", ".join(skipped) or "nothing"))
+    return out, problems, nameless, [path, listed_path, map_path], note
+
+
 def _mn_date(iso):
     m = re.match(r"^(\d{4})-(\d{2})-(\d{2})$", str(iso or ""))
     if not m:
@@ -3042,6 +3295,7 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "ar_quorum_courts": ar_quorum_courts,
             "ms_supervisors": ms_supervisors,
             "la_parish_bodies": la_parish_bodies,
+            "mo_county_bodies": mo_county_bodies,
             "ny_supervisors": ny_supervisors,
             "ny_legislature": ny_legislature}
 
@@ -4273,17 +4527,6 @@ def check_workflows(read_by_instance):
 # are the wrong home for it. Nobody has to remember, and nothing is generated
 # from a guess about a shape nobody has looked at.
 NOT_COUNTY_BOARDS = {
-    "mo/data/app/mo-county-officials.json": dict(
-        date="2026-10-21",
-        reason="Missouri's county governing bodies — 110 county commissions, "
-               "three charter councils, Jackson County's legislature and the "
-               "City of St. Louis's mayor and Board of Aldermen president, "
-               "named from the Secretary of State's Missouri Roster. They ARE "
-               "these pages' subject, and are recorded here only while the "
-               "instance is dark: an adapter would write pages for a folder "
-               "the deploy does not publish. Missouri's go-live writes the "
-               "adapter and drops this entry.",
-    ),
     "mn/data/app/mn-swcd-supervisors.json": dict(
         date="2026-10-26",
         reason="the elected supervisors of Minnesota's 88 soil and water "
@@ -4646,6 +4889,27 @@ def ms_board_contact(inst):
                      [rec.get("boardAddress")], rec.get("boardPhone"))
         if c:
             out[_norm_county(rec["county"])] = c
+    return out, [path]
+
+
+def mo_board_contact(inst):
+    """Missouri: the governing body's own office, from the same roster that
+    names its members. The Missouri Roster prints the commission's or
+    council's address, telephone and e-mail in the body's own entry rather
+    than beside one member, so they are the body's."""
+    path = os.path.join(app_data("mo"), "mo-county-officials.json")
+    if not os.path.exists(path):
+        return {}, [path]
+    out = {}
+    for rec in _read(path).values():
+        if not isinstance(rec, dict) or rec.get("kind") not in MO_KINDS:
+            continue
+        word = MO_KINDS[rec["kind"]][0]
+        c = _contact("The %s's office" % word, None, [rec.get("boardAddress")],
+                     rec.get("boardPhone"), rec.get("boardEmail"))
+        if c:
+            name = re.sub(r"\s+County$", "", (rec.get("county") or "").strip())
+            out[_norm_county(name)] = c
     return out, [path]
 
 

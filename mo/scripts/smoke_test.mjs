@@ -430,11 +430,11 @@ try {
   //     Kentucky; Union City, Tennessee; Jonesboro, Arkansas; and Miami,
   //     Oklahoma. Measured against fleet-outlines.json on 2026-10-21, each lies
   //     inside its own state's outline and no other, 17.3, 26.4, 46.3, 22.2,
-  //     34.0 and 23.0 km from this app's coverage ring. This instance answers
-  //     its own side from the coverage ring the wash retained, with no fetch,
-  //     and it works while this instance is dark because the fleet file names
-  //     only live apps. Chicago proves the file is still read for ground far
-  //     from here.
+  //     34.0 and 23.0 km from this app's outline. This instance answers its
+  //     own side from the state outline the wash retained, with no fetch,
+  //     and since go-live the fleet file carries that outline too, which is
+  //     asked first, so a point both draw stays here. Chicago proves the file
+  //     is still read for ground far from here.
   //
   //     KANSAS AND NEBRASKA ARE DELIBERATELY NOT CASES. Nobody serves them
   //     today, so a click there stays here; but the fleet is meant to reach
