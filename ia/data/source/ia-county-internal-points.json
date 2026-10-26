@@ -2,13 +2,6 @@
  "measured": "2026-10-15",
  "note": "The Census's own internal point per county \u2014 guaranteed inside, which a centroid is not for a concave shape. Recorded so --check runs offline.",
  "points": {
-  "adair": {
-   "fips": "001",
-   "lat": 41.3285283,
-   "lng": -94.4781643,
-   "name": "Adair County",
-   "slug": "adair"
-  },
   "black-hawk": {
    "fips": "013",
    "lat": 42.4769201,
@@ -23,33 +16,12 @@
    "name": "Bremer County",
    "slug": "bremer"
   },
-  "calhoun": {
-   "fips": "025",
-   "lat": 42.385907,
-   "lng": -94.6437102,
-   "name": "Calhoun County",
-   "slug": "calhoun"
-  },
-  "cerro-gordo": {
-   "fips": "033",
-   "lat": 43.0749751,
-   "lng": -93.2509646,
-   "name": "Cerro Gordo County",
-   "slug": "cerro-gordo"
-  },
   "dickinson": {
    "fips": "059",
    "lat": 43.3896107,
    "lng": -95.1960572,
    "name": "Dickinson County",
    "slug": "dickinson"
-  },
-  "floyd": {
-   "fips": "067",
-   "lat": 43.052741,
-   "lng": -92.7873669,
-   "name": "Floyd County",
-   "slug": "floyd"
   },
   "franklin": {
    "fips": "069",
@@ -58,20 +30,6 @@
    "name": "Franklin County",
    "slug": "franklin"
   },
-  "guthrie": {
-   "fips": "077",
-   "lat": 41.6835728,
-   "lng": -94.5012723,
-   "name": "Guthrie County",
-   "slug": "guthrie"
-  },
-  "hamilton": {
-   "fips": "079",
-   "lat": 42.3907886,
-   "lng": -93.7091296,
-   "name": "Hamilton County",
-   "slug": "hamilton"
-  },
   "johnson": {
    "fips": "103",
    "lat": 41.670668,
@@ -79,40 +37,12 @@
    "name": "Johnson County",
    "slug": "johnson"
   },
-  "kossuth": {
-   "fips": "109",
-   "lat": 43.2123327,
-   "lng": -94.2139713,
-   "name": "Kossuth County",
-   "slug": "kossuth"
-  },
-  "lee": {
-   "fips": "111",
-   "lat": 40.6475875,
-   "lng": -91.4771574,
-   "name": "Lee County",
-   "slug": "lee"
-  },
   "linn": {
    "fips": "113",
    "lat": 42.0760741,
    "lng": -91.5962062,
    "name": "Linn County",
    "slug": "linn"
-  },
-  "montgomery": {
-   "fips": "137",
-   "lat": 41.0217348,
-   "lng": -95.1577896,
-   "name": "Montgomery County",
-   "slug": "montgomery"
-  },
-  "palo-alto": {
-   "fips": "147",
-   "lat": 43.0753374,
-   "lng": -94.6690546,
-   "name": "Palo Alto County",
-   "slug": "palo-alto"
   },
   "pottawattamie": {
    "fips": "155",
@@ -127,34 +57,6 @@
    "lng": -92.5294115,
    "name": "Tama County",
    "slug": "tama"
-  },
-  "warren": {
-   "fips": "181",
-   "lat": 41.3324459,
-   "lng": -93.5687512,
-   "name": "Warren County",
-   "slug": "warren"
-  },
-  "webster": {
-   "fips": "187",
-   "lat": 42.4335786,
-   "lng": -94.1758309,
-   "name": "Webster County",
-   "slug": "webster"
-  },
-  "winneshiek": {
-   "fips": "191",
-   "lat": 43.2929889,
-   "lng": -91.850788,
-   "name": "Winneshiek County",
-   "slug": "winneshiek"
-  },
-  "worth": {
-   "fips": "195",
-   "lat": 43.373491,
-   "lng": -93.2485332,
-   "name": "Worth County",
-   "slug": "worth"
   },
   "wright": {
    "fips": "197",
