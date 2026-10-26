@@ -45,7 +45,7 @@
 // refreshed per election.)
 /* ==== TEMPLATE:END sw-version-history ==== */
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-il-shell-v46";
+const CACHE_NAME = "districtry-il-shell-v47";
 
 const SHELL_URLS = [
   "./",
@@ -108,6 +108,7 @@ const GEOMETRY_URLS = [
   "./data/app/fayette-county-board-districts.json",
   "./data/app/cumberland-county-board-districts.json",
   "./data/app/jersey-county-board-districts.json",
+  "./data/app/bond-county-board-districts.json",
   "./data/app/jasper-county-board-districts.json",
   "./data/app/lawrence-county-board-districts.json",
   "./data/app/clark-county-board-districts.json",
@@ -465,6 +466,7 @@ const ROSTER_URLS = [
   "./data/app/fayette-county-board-members.json",
   "./data/app/cumberland-county-board-members.json",
   "./data/app/jersey-county-board-members.json",
+  "./data/app/bond-county-board-members.json",
   "./data/app/jasper-county-board-members.json",
   "./data/app/lawrence-county-board-members.json",
   "./data/app/christian-county-board-members.json",
