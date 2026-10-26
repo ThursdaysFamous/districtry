@@ -224,7 +224,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
           }
         ],
-        "people": "NO OFFICEHOLDER, AND THE CARD SAYS SO. Tennessee's school boards are elected, and no statewide roster of their members was established in this pass; the card names the district, prints the grades the Census records and links the state Department of Education's school directory. Recorded as gap tn-school-board-members.",
+        "people": "For the special school districts, the board of education as the district's own page lists it, with any e-mail address or telephone number the page prints beside one member, written down by hand and proved against that page by tn/scripts/build_tn_special_school_boards.py (tn/data/app/tn-special-school-boards.json); no street address is carried. Every other district's card names no one, because Tennessee's school boards are elected and no statewide roster of their members was established; it names the district, prints the grades the Census records and links the state Department of Education's school directory. Recorded as gap tn-school-board-members.",
         "applies": "Tennessee — every point outside the 15 city and special school districts. The unified and elementary tilings partition the state: their Census land areas sum to exactly the 95-county total, measured 2026-10-10."
       }
     },
@@ -318,7 +318,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
           }
         ],
-        "people": "NO OFFICEHOLDER, AND THE CARD SAYS SO. Tennessee's school boards are elected, and no statewide roster of their members was established in this pass; the card names the district, prints the grades the Census records and links the state Department of Education's school directory. Recorded as gap tn-school-board-members.",
+        "people": "For the special school districts, the board of education as the district's own page lists it, with any e-mail address or telephone number the page prints beside one member, written down by hand and proved against that page by tn/scripts/build_tn_special_school_boards.py (tn/data/app/tn-special-school-boards.json); no street address is carried. Every other district's card names no one, because Tennessee's school boards are elected and no statewide roster of their members was established; it names the district, prints the grades the Census records and links the state Department of Education's school directory. Recorded as gap tn-school-board-members.",
         "applies": "Tennessee — the 15 city and special school districts, 980 km2 of land between them. Everywhere else the unified card is the answer."
       }
     },
@@ -662,6 +662,11 @@
         "file": "tn-city-councils.json",
         "min_keys": 28,
         "note": "The mayor and council of each of the 28 cities and towns above 25,000 people, keyed by Census place id, written down from each city's own pages and proved against them by tn/scripts/build_tn_city_councils.py, whose --check holds the file to its seats file, its record of every page read and the drawn districts. Every page it cites is re-read weekly (watch-city-council-pages.yml, listed in the North Carolina worksheet because one root workflow belongs to one instance), which opens a tracking issue when a name or a contact has gone from its page and never edits the file; the seats file is changed by hand (tn/WATCH.md)."
+      },
+      {
+        "file": "tn-special-school-boards.json",
+        "min_keys": 14,
+        "note": "The board of education of each of Tennessee's fourteen special school districts, keyed by the Census school district id, written down from each district's own page and proved against it by tn/scripts/build_tn_special_school_boards.py, whose --check (run inside build_tn_school_board_districts.py --check) holds the file to its seats file and its record of every page read. Read by the School District (Unified) and (Elementary) cards; the seats file is changed by hand (tn/WATCH.md)."
       },
       {
         "file": "coverage-gaps.json",

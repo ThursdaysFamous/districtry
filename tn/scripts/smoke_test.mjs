@@ -888,15 +888,29 @@ try {
         name: "the unified school district names the district",
         layer: "school-district-unified", service: "School/MapServer/0",
         props: { GEOID: "4703180", NAME: "Metropolitan Nashville Public School District", STATE: "47", LOGRADE: "PK", HIGRADE: "12" },
-        want: [/Metropolitan Nashville Public School District/, /Pre-kindergarten to grade 12/, /A unified district/],
-        reject: []
+        want: [/Metropolitan Nashville Public School District/, /Pre-kindergarten to grade 12/, /A unified district/,
+          /boards of the state's fourteen special school districts, and this district is not one of them/],
+        reject: [/Board member/]
+      },
+      // A special school district names its board from the shipped roster
+      // (tn/data/app/tn-special-school-boards.json), each member with the
+      // district the page lists them under, and says where the names came
+      // from; its footer links the district's own board page.
+      {
+        name: "a special school district names its board, each member with their district",
+        layer: "school-district-unified", service: "School/MapServer/0",
+        props: { GEOID: "4701400", NAME: "Gibson County School District", STATE: "47", LOGRADE: "PK", HIGRADE: "12" },
+        want: [/Gibson County School District/, /Tom Lannom/, /Chairman/, /District 3/, /Richard Addo/,
+          /As listed on Gibson County Special School District's own website/, /board of education/i],
+        reject: [/Not named here/, /State school directory/]
       },
       {
         name: "the elementary school district prints its grades in words",
         layer: "school-district-elementary", service: "School/MapServer/2",
         props: { GEOID: "4701260", NAME: "Franklin Special School District", STATE: "47", LOGRADE: "PK", HIGRADE: "08" },
-        want: [/Franklin Special School District/, /Pre-kindergarten to grade 8/, /Secondary\) card names/],
-        reject: [/08/]
+        want: [/Franklin Special School District/, /Pre-kindergarten to grade 8/, /Secondary\) card names/,
+          /Robert Blair/, /Kevin Townsel/],
+        reject: [/08/, /Not named here/]
       },
       {
         name: "the secondary school district names the county's district",
