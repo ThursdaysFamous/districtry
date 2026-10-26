@@ -94,7 +94,9 @@
     { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
       "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } },
     { "id": "louisiana", "label": "Louisiana", "url": "https://districtry.com/la/", "emoji": "🎷", "explorer_name": "districtry Louisiana",
-      "bbox": { "minLng": -94.05, "minLat": 28.85, "maxLng": -89.71, "maxLat": 33.02 } }
+      "bbox": { "minLng": -94.05, "minLat": 28.85, "maxLng": -89.71, "maxLat": 33.02 } },
+    { "id": "missouri", "label": "Missouri", "url": "https://districtry.com/mo/", "emoji": "🏞️", "explorer_name": "districtry Missouri",
+      "bbox": { "minLng": -95.78, "minLat": 35.99, "maxLng": -89.09, "maxLat": 40.62 } }
   ],
   "hover_number_keys": [
     [
@@ -591,8 +593,8 @@
       },
       {
         "file": "zip-index.json",
-        "min_features": 616,
-        "max_features": 616,
+        "min_features": 613,
+        "max_features": 613,
         "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
       }
     ],
@@ -630,7 +632,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ar-shell-v3",
+    "cache_name": "districtry-ar-shell-v4",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

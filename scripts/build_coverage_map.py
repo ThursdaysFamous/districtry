@@ -148,6 +148,13 @@ AREAS = {
     # A parish-by-parish layer is not a second ring the wash could draw, so the
     # coverage_key carries `outside` alone.
     "la": {"outline": "la/data/app/metro-outline.json", "state_outline": None},
+    # Missouri joined at its go-live. It is a TWO-TIER area like Illinois:
+    # the lighter wash is the whole state, where the national-tier layers and
+    # the County card answer, and the solid fill is the counties whose
+    # commission districts are drawn (28 at go-live), each joining the ring as
+    # its lines are confirmed. The two are different files, read from the
+    # worksheet's coverage_key, which carries a `region`.
+    "mo": {"outline": "mo/data/app/metro-outline.json", "state_outline": "mo/data/app/mo-state-outline.json"},
     # New York joined at the 2026-09-19 go-live. It is a TWO-TIER area and the
     # two geometries are genuinely different: the dashed wash is the whole
     # state, where the county, municipality, village, school-district,

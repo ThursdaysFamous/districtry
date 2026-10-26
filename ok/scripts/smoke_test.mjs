@@ -385,11 +385,12 @@ try {
   //     the app, which reads exactly like correct behaviour.
   //
   //     OKLAHOMA'S OWN CASE IS THE ONE BELOW THAT MATTERS, and it is the
-  //     absence half: five of its six neighbours (Texas, Missouri, Kansas,
+  //     absence half: four of its six neighbours (Texas, Kansas,
   //     Colorado, New Mexico) are not covered, so a point just over one of
   //     those state lines must be selected HERE, where the app says nothing
   //     answers there, rather than handed to an app with nothing to show.
-  //     ARKANSAS IS COVERED SINCE ITS GO-LIVE (2026-10-15), so Fort Smith,
+  //     MISSOURI IS COVERED SINCE ITS GO-LIVE and ARKANSAS SINCE ITS OWN
+  //     (2026-10-15), so Fort Smith,
   //     about 4 km over the line, must open that app; the case was added in
   //     the change that published it. This instance
   //     is also DARK, so it has no entry in fleet-outlines.json at all and

@@ -288,6 +288,24 @@
       "landing_name": "Louisiana",
       "blurb": "All 64 parishes and their police juries and councils: cities, towns and villages, voting precincts, school districts, ZIP codes, the land of Louisiana's four federally recognized tribes, and the nearest police station, fire station and post office — plus the Louisiana Senate, House and U.S. House districts, with who holds each seat. Every parish's police jury or council and its president where it elects one, the mayors and councils of 302 cities, towns and villages, and the members of all 69 school boards are named from the Secretary of State's list of elected officials. Parish district lines are drawn in the 6 parishes whose current map is confirmed, and the Data gaps panel says why the other 58 are not.",
       "scope": "all 64 parishes"
+    },
+    {
+      "id": "missouri",
+      "explorer_name": "districtry Missouri",
+      "label": "Missouri",
+      "url": "https://districtry.com/mo/",
+      "emoji": "🏞️",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -95.78,
+        "minLat": 35.99,
+        "maxLng": -89.09,
+        "maxLat": 40.62
+      },
+      "tag": "mo",
+      "landing_name": "Missouri",
+      "blurb": "All 114 counties and the City of St. Louis: cities, towns and villages, townships, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Missouri Senate, House and U.S. House districts, with who holds each seat. Every county's commission, council or legislature and its elected officers are named from the Secretary of State's Missouri Roster, and three charter councils from the counties' own websites. County commission district lines are drawn in the 28 counties whose map has been found or sent, and the map shades the other 86 until theirs are.",
+      "scope": "28 counties in depth"
     }
   ]
 }

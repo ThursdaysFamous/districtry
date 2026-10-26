@@ -52,6 +52,7 @@ different thing from one it failed.
 | la | **EAM·** | 64 | 64/64 | 560 | 559 | all | 24 | all | 9 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 70 | all | 13 of 14 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 23 | all | 13 of 14 levels |
+| mo | **EAM·** | 114 | 114/114 | 254 | 254 | all | 14 | all | 7 of 14 levels |
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 24 | all | 8 of 14 levels |
 | nc | **EAMC** | 100 | 100/100 | 373 | 584 | all | 20 | all | all 14 levels |
 | ny | **EAM·** | 62 | 62/62 § | 144 | 162 | all | 36 | all | 10 of 14 levels |
@@ -156,6 +157,20 @@ this instance is in maintenance.
 - **Under a WATCH.md plan (14):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `mn-city-wards.json`, `mn-commissioner-districts.json`, `mn-county-town-officers.json`, `mn-house-districts.json`, `mn-judicial-districts.json`, `mn-precincts.json`, `mn-school-board-districts.json`, `mn-senate-districts.json`, `mn-swcd-districts.json`, `mn-watershed-districts.json`, `state-counties.json`
 - **Covered: no.** 1 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
+
+### mo — EAM·
+
+- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `mo-commission-counties.json`, `mo-commission-districts.json`, `mo-house-districts.json`, `mo-senate-districts.json`, `mo-state-outline.json`, `state-counties.json`
+- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+  - **4. The county governing body, in every county of the state** — open. 28 of 114 counties name a governing body and draw it where it is elected by district; 86 more name a body elected by district whose districts are not drawn, or not matched to their members
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open
+  - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
+  - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
+  - **10. School boards elected by district** — open (required only where the state has the level)
+  - **11. Election precincts** — open (required only where the state has the level)
+  - **12. Special districts the state's own law creates** — open (required only where the state has the level)
+- **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
+  - **13. Tribal governments** — Missouri has no tribal land. The Census publishes no federal or state reservation and no off-reservation trust land in the state, measured 2026-10-21 with a control on the state's own code.
 
 ### ms — EAM·
 

@@ -31,9 +31,9 @@ name: Update Missouri county officials
 # the builder reads and states no delay; the builder reads it before its first
 # fetch and paces every fetch at one second.
 #
-# MISSOURI IS DARK, so this job regenerates no county page:
-# scripts/build_county_pages.py records this roster in NOT_COUNTY_BOARDS until
-# go-live adds its adapter.
+# It regenerates the per-county pages (mo/county-government/<county>.html)
+# and the files that count them in the same PR, since Missouri's go-live gave
+# scripts/build_county_pages.py its adapter.
 
 on:
   schedule:
@@ -105,7 +105,18 @@ jobs:
           # carried over the checkout as an uncommitted change.
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add mo/data/app/mo-county-officials.json
+          # The per-county pages (mo/county-government/) are GENERATED from
+          # the roster this job just rewrote, so regenerate them here or the
+          # smoke gate's `build_county_pages.py --check` fails on this PR with
+          # a page naming last week's members.
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          # llms.txt COUNTS the per-county pages, and docs/EAM_STATUS.md the
+          # seats the roster names, so a county dropping out moves both.
+          python3 scripts/build_llms_txt.py
+          python3 scripts/build_eam_status.py
+          git add mo/data/app/mo-county-officials.json mo/county-government mo/county-government.html about.html sitemap.xml llms.txt docs/EAM_STATUS.md
           git commit -m "Update Missouri county governing bodies"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

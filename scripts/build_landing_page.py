@@ -355,6 +355,10 @@ CHIP_TOPIC_BY_INSTANCE = {
     ("il", "county-board.html"): "commissioners",
     ("wi", "county-board.html"): "supervisors",
     ("il", "school-board.html"): "Board of Education",
+    # Missouri's county is governed by a commission in 110 of its 114 and by
+    # an elected council or legislature in the four charter counties, so
+    # the page names both rather than Kentucky's fiscal court.
+    ("mo", "county-government.html"): "county commission",
 }
 
 # Where the page answers for a CITY inside the instance rather than the whole

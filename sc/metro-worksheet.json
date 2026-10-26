@@ -94,7 +94,9 @@
     { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
       "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } },
     { "id": "louisiana", "label": "Louisiana", "url": "https://districtry.com/la/", "emoji": "🎷", "explorer_name": "districtry Louisiana",
-      "bbox": { "minLng": -94.05, "minLat": 28.85, "maxLng": -89.71, "maxLat": 33.02 } }
+      "bbox": { "minLng": -94.05, "minLat": 28.85, "maxLng": -89.71, "maxLat": 33.02 } },
+    { "id": "missouri", "label": "Missouri", "url": "https://districtry.com/mo/", "emoji": "🏞️", "explorer_name": "districtry Missouri",
+      "bbox": { "minLng": -95.78, "minLat": 35.99, "maxLng": -89.09, "maxLat": 40.62 } }
   ],
   "hover_number_keys": [
     [
