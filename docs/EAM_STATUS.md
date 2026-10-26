@@ -55,7 +55,7 @@ different thing from one it failed.
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 24 | all | 8 of 14 levels |
 | nc | **EAMC** | 100 | 100/100 | 373 | 584 | all | 20 | all | all 14 levels |
 | ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 36 | all | 10 of 14 levels |
-| ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 18 | all | 10 of 14 levels |
+| ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 19 | all | 10 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 20 | all | 13 of 14 levels |
 | tn | **EAM·** | 95 | 95/95 § | 605 | 1,062 | all | 19 | all | 10 of 14 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,577 | all | 267 | all | 13 of 14 levels |
@@ -197,7 +197,7 @@ this instance is in maintenance.
 ### ok — EAM·
 
 - **Watched, not rewritten:** `ok/data/app/ok-city-councils.json`, by `.github/workflows/watch-city-council-pages.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
-- **Under a WATCH.md plan (12):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ok-city-wards.json`, `ok-commissioner-districts.json`, `ok-conservation-districts.json`, `ok-conservation-offices.json`, `ok-house-districts.json`, `ok-judicial-districts.json`, `ok-senate-districts.json`, `state-counties.json`, `tribal-areas.json`
+- **Under a WATCH.md plan (13):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `ok-city-wards.json`, `ok-commissioner-districts.json`, `ok-conservation-directors.json`, `ok-conservation-districts.json`, `ok-conservation-offices.json`, `ok-house-districts.json`, `ok-judicial-districts.json`, `ok-senate-districts.json`, `state-counties.json`, `tribal-areas.json`
 - **Covered: no.** 4 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 15 of 16 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 1 more names a body elected by ward or district whose wards are not drawn; unanswered: Muskogee city
   - **10. School boards elected by district** — open (required only where the state has the level)
