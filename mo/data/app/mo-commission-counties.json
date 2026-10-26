@@ -120,6 +120,17 @@
   "spreadPct": 17.6,
   "unplaced2020": 0
  },
+ "29089": {
+  "county": "Howard County",
+  "people2020": {
+   "Eastern District": 5465,
+   "Western District": 4686
+  },
+  "read": "2026-10-26",
+  "source": "sent",
+  "spreadPct": 15.3,
+  "unplaced2020": 0
+ },
  "29093": {
   "county": "Iron County",
   "people2020": {
