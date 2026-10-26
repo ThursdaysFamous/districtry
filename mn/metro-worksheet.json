@@ -162,7 +162,7 @@
       "id": "mn-house",
       "label": "Minnesota House District",
       "group": "political",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "134 House districts; two nest exactly inside each Senate district, lettered A and B",
       "source": {
         "answers": "The Minnesota House district covering the point.",
@@ -180,7 +180,7 @@
       "id": "watershed-district",
       "label": "Watershed District",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "64 bodies covering about 67,000 km2 of the state's 225,000 at a mean 1,050 km2 (median 316, from 20 in Richfield-Bloomington to 15,700 in Red Lake) — smaller on average than a House district and larger than a unified school district",
       "source": {
         "answers": "The watershed district or watershed management organization covering the point: what kind of body it is, the state law that creates it, who appoints its board, and its own website. Where the state's map puts the point in two, both are listed.",
@@ -195,10 +195,28 @@
       }
     },
     {
+      "id": "conservation-district",
+      "label": "Soil and Water Conservation District",
+      "group": "geography",
+      "area_rank": 5,
+      "rank_note": "116 shapes for Minnesota's 88 elected soil and water conservation districts — one per district where every voter elects every supervisor, and one per supervisor district in the seven that elect by district — dissolved from the Secretary of State's precincts: a 1,867 km2 mean (median 1,501, from 36 in a Carver supervisor district to 12,970 in North St. Louis), measured 2026-10-26 on the shipped file — smaller on average than a county and larger than a House district",
+      "source": {
+        "answers": "The soil and water conservation district covering the point, the supervisors its voters elect (the whole board, or the one supervisor of a by-district seat and the rest of the board), each dated to the election that seated them, and the district's office.",
+        "boundary": [
+          {
+            "label": "Minnesota Secretary of State — the statewide voting-district (precinct) layer, whose precincts each carry the soil and water ballot they vote (swcdist); 3,548 precincts dissolved into 116 shapes by mn/scripts/build_mn_swcd_districts.py and shipped with the app. Hennepin's and Ramsey's 557 precincts vote no supervisor and are drawn in none",
+            "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
+          }
+        ],
+        "people": "mn-swcd-supervisors.json, rebuilt weekly by mn/scripts/build_mn_swcd_supervisors.py: each seat's most recent canvassed general in the Secretary of State's county races results files (electionresultsfiles.sos.mn.gov), dated to that election — 417 of 440 seats named on 2026-10-26; 20 were won by write-in votes, which the files do not name, and 3 have had no election since the 2022 general. Each district's office, and a phone or e-mail for 302 supervisors whose names it prints, are from the Board of Water and Soil Resources' Soil and Water Conservation District Directory of 21 February 2023; the directory's street addresses for board members are home addresses and are not read.",
+        "applies": "Minnesota — every county but Hennepin and Ramsey, whose districts are run by county staff with no elected board."
+      }
+    },
+    {
       "id": "school-district-unified",
       "label": "School District (Unified)",
       "group": "schools",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "322 districts covering almost all of Minnesota, from TIGERweb, drawn from a mirrored tile archive — 693 km2 mean feature area, the largest of the three school tilings",
       "source": {
         "answers": "The unified (every-grade) school district covering the point.",
@@ -216,7 +234,7 @@
       "id": "school-board-district",
       "label": "School Board District",
       "group": "schools",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "65 board election districts on 14 school boards, a mean 489 km2 (median 175, from 2 in Lake Superior to 3,958 in St. Louis County), measured 2026-10-15 — smaller on average than a unified school district, which they divide, and larger than a commissioner district",
       "source": {
         "answers": "The election district of a school board that elects its members by district (Minn. Stat. 205A.12), and the member or members it elects. Where a precinct votes in two districts, both are named; where the results do not place a piece of a board's school district, the card says so.",
@@ -242,7 +260,7 @@
       "id": "county-commissioner",
       "label": "County Commissioner District",
       "group": "political",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "447 districts tiling all 87 counties, 488 km2 mean feature area (median 299, from 1.8 in Ramsey to 11,154 in St. Louis) — smaller than a unified school district and larger than a ZIP code",
       "source": {
         "answers": "The county commissioner district containing the point: the seat a reader votes on for their county board, which county it belongs to, and how many commissioners that board seats.",
@@ -272,7 +290,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "887 ZIP Code Tabulation Areas overlapping Minnesota, of the 1,385 intersecting its envelope, in a mirrored tile archive (measured 2026-10-17) — 250 km2 mean feature area over the 1,385, between a school district and a township",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the delivery routes sharing a ZIP code, not a postal boundary.",
@@ -290,7 +308,7 @@
       "id": "school-district-elementary",
       "label": "School District (Elementary)",
       "group": "schools",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "8 districts the Census places in its elementary tiling, from TIGERweb, drawn from a mirrored tile archive — 246 km2 mean feature area; they are gap-fills in the unified fabric rather than overlays on it, measured at all 8 interior points",
       "source": {
         "answers": "The elementary-tiling school district covering the point, in the eight places Minnesota has one.",
@@ -308,7 +326,7 @@
       "id": "county-subdivision",
       "label": "Township or City",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "2,762 records tiling the state, from TIGERweb, drawn from a mirrored tile archive — 1,797 townships, 901 city placeholder records for 851 distinct cities (50 of which cross a county line), 59 unorganized territories, 2 unorganized survey townships, and 3 'not defined' records that are Lake Superior water",
       "source": {
         "answers": "The organized town covering the point, or the Census placeholder record for the city that stands in place of one — and which of the two it is.",
@@ -326,7 +344,7 @@
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "4,105 precincts tiling the state at a 55 km2 mean feature area, pre-built from the Secretary of State's own statewide service — the finest tiling on this map, and the only layer here published by the office that maintains it rather than by the Census",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported.",
@@ -344,7 +362,7 @@
       "id": "municipality",
       "label": "City",
       "group": "geography",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "856 incorporated places, from TIGERweb, drawn from a mirrored tile archive — every one a city, with no village among them, at a 14.7 km2 mean feature area",
       "source": {
         "answers": "The city covering the point, if any. Most of Minnesota's land is township or unorganized territory, where the card is correctly empty.",
@@ -362,7 +380,7 @@
       "id": "city-ward",
       "label": "City Council District",
       "group": "political",
-      "area_rank": 16,
+      "area_rank": 17,
       "rank_note": "101 council wards and districts in the 22 cities whose councils this app names and which elect by ward or district, a mean 17.7 km2 (median 14.8, from 2.4 in Winona to 71.8 in Duluth) — ranked just after City, which each one divides, so a ward draws on top of its city",
       "source": {
         "answers": "The city council ward or district containing the point, in the 22 Minnesota cities above 25,000 people whose councils elect by ward or district, and the council member it elects.",
@@ -384,7 +402,7 @@
       "id": "school-district-secondary",
       "label": "School District (Secondary)",
       "group": "schools",
-      "area_rank": 17,
+      "area_rank": 18,
       "rank_note": "1 district, from TIGERweb, drawn from a mirrored tile archive — Park Rapids for grades 9-12 over the Pine Point district, 13.3 km2, the only feature the Census publishes in this tiling for Minnesota",
       "source": {
         "answers": "The secondary school district covering the point, in the one place Minnesota has one.",
@@ -402,7 +420,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 18,
+      "area_rank": 19,
       "rank_note": "694 police-station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -420,7 +438,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 19,
+      "area_rank": 20,
       "rank_note": "1,484 fire and EMS station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest fire and EMS station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -438,7 +456,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 20,
+      "area_rank": 21,
       "rank_note": "1,199 post-office points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -456,7 +474,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "Tribal land — Minnesota has 22 pieces across 13 nations, from the Leech Lake Reservation's 3,393.820 km² down to a 0.146 km² Grand Portage parcel, MEASURED by scripts/build_tribal_areas.py. Ranked on its 6.892 km² MEDIAN, below the voting-precinct fabric's 14.72 km² median (measured 2026-10-10 on the shipped mn-precincts.json, cylindrical equal-area) — medians rather than means, because this layer's own mean of 514 km² is Leech Lake, Red Lake and White Earth and describes none of the other nineteen pieces. The municipality layer below it is live and publishes no median, so no claim is made about which of the two is smaller; the rank governs draw order only. Partial coverage: most of Minnesota is on no tribal land, so the layer carries its own emptyNote. The card names the nation as the Bureau of Indian Affairs names it, its seat (one, the Ho-Chunk Nation's, is in Wisconsin), the districts the Census draws on five of these pieces of land, the 2020 population, and the council from each nation's own published list: nine of the thirteen publish one this project reads weekly, and for the other four the card says why it names nobody. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Minnesota has 22 such areas across 13 nations.",
@@ -471,7 +489,7 @@
       }
     }
   ],
-  "min_register_layer": 16,
+  "min_register_layer": 17,
   "anchor_point": {
     "lat": 44.9744,
     "lng": -93.2655,
@@ -561,6 +579,12 @@
         "note": "Every watershed district and watershed management organization, from BWSR's statewide feature service by mn/scripts/build_mn_watershed_districts.py. Shipped as the state draws them, overlaps included (56 pairs touch by more than a square metre, mostly edge slivers), and gated on 2,000 statewide and 2,000 metro sample points getting the same set of bodies as the source."
       },
       {
+        "file": "mn-swcd-districts.json",
+        "min_features": 116,
+        "max_features": 116,
+        "note": "Minnesota's 88 elected soil and water conservation districts as 116 shapes, pre-built by mn/scripts/build_mn_swcd_districts.py from the Secretary of State's precincts dissolved on the soil and water ballot each votes (swcdist). Gated on a partition (every precinct one value, Hennepin and Ramsey declared to have none), no overlap, and every county's interior anchor landing in its own county's district."
+      },
+      {
         "file": "mn-senate-districts.json",
         "min_features": 67,
         "max_features": 67,
@@ -621,6 +645,11 @@
         "note": "All 447 county commissioner districts, each naming the winner of its most recent election in the Secretary of State's results and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_commissioner_roster.py (update-mn-commissioner-roster.yml)."
       },
       {
+        "file": "mn-swcd-supervisors.json",
+        "min_keys": 88,
+        "note": "All 88 soil and water conservation districts and their 440 supervisor seats, each naming the winner of its most recent election in the Secretary of State's results and its date, or saying why no name is shown, with each district's office from BWSR's directory of 21 February 2023; built weekly by mn/scripts/build_mn_swcd_supervisors.py (update-mn-swcd-supervisors.yml)."
+      },
+      {
         "file": "mn-city-councils.json",
         "min_keys": 43,
         "note": "The mayor and council of each of Minnesota's 43 cities above 25,000 people, each seat naming the winner of its most recent election in the Secretary of State's city results and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_city_councils.py (update-mn-city-councils.yml)."
@@ -653,7 +682,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mn-shell-v12",
+    "cache_name": "districtry-mn-shell-v13",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
@@ -685,6 +714,11 @@
       "file": "update-mn-school-boards.yml",
       "purpose": "School boards (MN), winners from the Secretary of State's school district results",
       "schedule": "Wed 14:10 UTC"
+    },
+    {
+      "file": "update-mn-swcd-supervisors.yml",
+      "purpose": "Soil and water conservation district supervisors (MN), winners from the Secretary of State's county races results",
+      "schedule": "Thu 13:40 UTC"
     }
   ],
   "geocoder": {

@@ -1697,13 +1697,14 @@ ANSWERS = {
         # no state file, BUT a town clerk certifies its officers to the county
         # each spring, and a survey of all 87 counties on 2026-10-15 found 42
         # that publish a list of them (mn/data/source/
-        # mn-county-township-officer-survey.json). 29 of those lists are READ
-        # since 2026-10-16 (mn/scripts/build_mn_county_town_officers.py): 2,019
-        # officers in 416 March towns. The other 13 are not: five behind a
-        # robots.txt Disallow, three behind a Cloudflare 403, one 5xx, one a
-        # scanned image, and three that name no March town's officers in a
-        # form that can be read (Anoka, Olmsted, Goodhue). Until those are
-        # settled the level stays open. Gap mn-township-officers carries it.
+        # mn-county-township-officer-survey.json). 32 of those lists are READ
+        # (mn/scripts/build_mn_county_town_officers.py): 29 since 2026-10-16,
+        # and Goodhue, Renville and Traverse (a scanned page, read by eye)
+        # since 2026-10-26, 2,218 officers in 456 March towns. The other 10
+        # are not: five behind a robots.txt Disallow, three behind a
+        # Cloudflare 403, and two that name no March town's officers in a
+        # form that can be read (Anoka, Olmsted). Until those are settled the
+        # level stays open. Gap mn-township-officers carries it.
         "sub-county-government": OPEN,
         # SETTLED 2026-10-01 by this instance's own thread: the level exists
         # only where a district has opted into it (Minn. Stat. 205A.12 subds.
@@ -1734,7 +1735,13 @@ ANSWERS = {
         # are appointed by the county boards (Minn. Stat. 103D.311), and a
         # watershed management organization is run by members its cities and
         # towns appoint or by the county board itself.
-        "special-districts": answers("watershed-district"),
+        # The elected kind is the soil and water conservation district (Minn.
+        # Stat. ch. 103C), SHIPPED 2026-10-26: 88 districts dissolved from the
+        # precincts' own soil and water ballot, and their supervisors named
+        # from the Secretary of State's results (417 of 440 seats; the rest
+        # were won by write-in votes or have had no election since 2022, and
+        # the card says which).
+        "special-districts": answers("watershed-district", "conservation-district"),
         # SHIPPED 2026-10-10 (#1470): the app draws Minnesota's 22 pieces of
         # tribal land across 13 nations, and the card names nine councils
         # from the nations' own pages and says why the other four name
@@ -1836,8 +1843,8 @@ ANSWERS = {
         "us-house": answers("us-house"),
         "state-legislature": answers("in-senate", "in-house"),
         "county-boundaries": answers("county"),
-        # Since 2026-10-15 the council districts of 55 counties are drawn
-        # (Marion's are the City-County Council's 25); COUNTY_MAPS_DRAWN reads
+        # Since 2026-10-15 the council districts of 55 counties are drawn, 60
+        # since 2026-10-26 (Marion's are the City-County Council's 25); COUNTY_MAPS_DRAWN reads
         # which from the shipped file.
         "county-government": depth("county-council"),
         "municipal-boundaries": answers("municipality"),
@@ -2909,23 +2916,21 @@ WARD_MAPS = {
     # Indianapolis's council districts are the City-County Council's, drawn by
     # the County Council District layer for Marion County.
     "in": dict(
-        drawn={"1836003"},
-        owed={"1801468": "Anderson", "1805860": "Bloomington",
-              "1808416": "Brownsburg",
+        drawn={"1836003",
+               # eleven more on 2026-10-26, in/scripts/build_in_city_wards.py
+               "1805860", "1820728", "1828386", "1829898", "1838358",
+               "1842426", "1852326", "1854180", "1860246", "1878326",
+               "1882700"},
+        owed={"1801468": "Anderson", "1808416": "Brownsburg",
               "1810342": "Carmel", "1814734": "Columbus",
-              "1820728": "Elkhart", "1822000": "Evansville",
+              "1822000": "Evansville",
               "1823278": "Fishers", "1825000": "Fort Wayne",
-              "1825450": "Franklin", "1828386": "Goshen",
-              "1829898": "Greenwood",
-              "1838358": "Jeffersonville", "1840392": "Kokomo",
-              "1840788": "Lafayette", "1842426": "Lawrence",
-              "1846908": "Marion", "1848528": "Merrillville",
+              "1825450": "Franklin", "1840392": "Kokomo",
+              "1840788": "Lafayette", "1846908": "Marion", "1848528": "Merrillville",
               "1848798": "Michigan City", "1849932": "Mishawaka",
-              "1851876": "Muncie", "1852326": "New Albany",
-              "1854180": "Noblesville", "1860246": "Plainfield", "1861092": "Portage",
+              "1851876": "Muncie", "1861092": "Portage",
               "1864260": "Richmond", "1868220": "Schererville", "1871000": "South Bend",
-              "1875428": "Terre Haute", "1878326": "Valparaiso",
-              "1882700": "Westfield", "1882862": "West Lafayette",
+              "1875428": "Terre Haute", "1882862": "West Lafayette",
               "1886372": "Zionsville"}),
     # Arkansas's twelve that elect by ward are drawn by one layer,
     # ar/scripts/build_ar_city_wards.py, which reads the cities off the seats

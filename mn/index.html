@@ -4262,11 +4262,11 @@ function initMinnesotaExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "mn-judicial-district": "mnj", "mn-senate": "mns",
     "county": "co", "mn-house": "mnh", "watershed-district": "ws",
-    "school-district-unified": "su", "school-board-district": "bd", "county-commissioner": "cm",
-    "zip-code": "zp", "school-district-elementary": "se", "county-subdivision": "cs",
-    "voting-precinct": "vp", "municipality": "mu", "city-ward": "cw",
-    "school-district-secondary": "sh", "police-station": "ps", "fire-station": "fs",
-    "post-office": "po", "tribal-government": "tg" };
+    "conservation-district": "cvd", "school-district-unified": "su",
+    "school-board-district": "bd", "county-commissioner": "cm", "zip-code": "zp",
+    "school-district-elementary": "se", "county-subdivision": "cs", "voting-precinct": "vp",
+    "municipality": "mu", "city-ward": "cw", "school-district-secondary": "sh",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4279,7 +4279,8 @@ function initMinnesotaExplorer() {
     "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
     "school-district-secondary": ["school-district-secondary"],
-    "school-board-district": ["school-board-district"], "police-station": ["police-station"],
+    "school-board-district": ["school-board-district"],
+    "conservation-district": ["conservation-district"], "police-station": ["police-station"],
     "fire-station": ["fire-station"], "post-office": ["post-office"],
     "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
@@ -10933,6 +10934,7 @@ function initMinnesotaExplorer() {
     "mn-judicial-district", // Ten districts of whole counties, a mean 22,000 km2 each — larger than a Senate district and smaller than a congressional one
     "mn-senate",         // 67 Senate districts, each divided into two whole House districts
     "county",            // 87 counties, pre-built from TIGERweb; this instance's offline anchor layer
+    "conservation-district", // 116 shapes for Minnesota's 88 elected soil and water conservation districts — one per district where every voter elects every supervisor, and one per supervisor district in the seven that elect by district — dissolved from the Secretary of State's precincts: a 1,867 km2 mean (median 1,501, from 36 in a Carver supervisor district to 12,970 in North St. Louis), measured 2026-10-26 on the shipped file — smaller on average than a county and larger than a House district
     "mn-house",          // 134 House districts; two nest exactly inside each Senate district, lettered A and B
     "watershed-district", // 64 bodies covering about 67,000 km2 of the state's 225,000 at a mean 1,050 km2 (median 316, from 20 in Richfield-Bloomington to 15,700 in Red Lake) — smaller on average than a House district and larger than a unified school district
     "school-district-unified", // 322 districts covering almost all of Minnesota, from TIGERweb, drawn from a mirrored tile archive — 693 km2 mean feature area, the largest of the three school tilings
@@ -15619,6 +15621,174 @@ function initMinnesotaExplorer() {
     }
   });
 
+  /* ---------- 1d2. Soil and water conservation district — dissolved from the precincts ----------
+   * Minnesota's 88 elected soil and water conservation districts (Minn. Stat.
+   * ch. 103C), each governed by a board of supervisors on the general
+   * election ballot. Not the watershed bodies above, whose boards are
+   * appointed. The Secretary of State's precincts each carry the soil and
+   * water ballot they vote (`swcdist`), so the districts are those precincts
+   * dissolved (mn/scripts/build_mn_swcd_districts.py;
+   * data/app/mn-swcd-districts.json): one polygon per district where every
+   * voter elects every supervisor, and one per supervisor district in the
+   * seven that elect by district (Anoka, Carver, Dakota, Fillmore, Renville,
+   * Scott and Washington). Hennepin's and Ramsey's precincts vote no
+   * supervisor and are drawn in none.
+   *
+   * THE NAMES ARE ELECTION WINNERS AND THE CARD SAYS SO, from the same
+   * results files the commissioner card reads
+   * (mn/scripts/build_mn_swcd_supervisors.py;
+   * data/app/mn-swcd-supervisors.json). Each district's office, and a phone
+   * or e-mail for the supervisors whose names it also prints, come from the
+   * Board of Water and Soil Resources' directory of 21 February 2023, and the
+   * card dates them to it.
+   * ---------- */
+  var loadMnSwcdDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-swcd-districts.json", {}, 2);
+  });
+  var loadMnSwcdSupervisors = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mn-swcd-supervisors.json", {}, 2);
+  });
+  function mnSwcdName(props, rec) {
+    if (rec && rec.name) return String(rec.name);
+    return String(props.swcd || "") + " Soil and Water Conservation District";
+  }
+
+  registerLayer({
+    id: "conservation-district",
+    group: "geography",
+    label: "Soil and Water Conservation District",
+    coverage: insideMinnesota,
+    emptyNote: "No soil and water conservation district supervisor is on the " +
+      "ballot here. Hennepin and Ramsey counties do this work through their " +
+      "own county staff (the state's directory lists staff and no elected " +
+      "board for either), so there is no seat to vote for.",
+    overlay: {
+      load: loadMnSwcdDistricts,
+      style: { color: "#556E14", weight: 1.5, fillColor: "#9DB54A", fillOpacity: 0.06 }
+    },
+    hoverName: function (feature) {
+      var props = feature.properties || {};
+      if (!props.swcd) return null;
+      return String(props.swcd) + " SWCD" +
+        (props.district != null ? " District " + String(props.district) : "");
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadMnSwcdDistricts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var result = { seq: seq, props: props, rec: null };
+        // A roster that fails to load leaves the district card standing.
+        return loadMnSwcdSupervisors().then(function (roster) {
+          result.rec = roster ? roster[String(props.swcd)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      // Card convention: identity -> officeholders -> office -> link.
+      var props = result.props || {};
+      var rec = result.rec;
+      var byDistrict = props.district != null;
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: mnSwcdName(props, rec),
+        note: byDistrict
+          ? "Supervisor District " + String(props.district) + " · " + String(props.county) + " County"
+          : String(props.county) + " County"
+      }));
+      function person(seat) {
+        var when = mnElectionDate(seat.election);
+        var p = {
+          name: String(seat.name),
+          note: "District " + String(seat.district) +
+            (when ? " · " + (seat.special ? "won a special election, " : "elected ") + when : "")
+        };
+        if (seat.contact && seat.contact.phone) p.phone = String(seat.contact.phone);
+        if (seat.contact && seat.contact.email) p.email = String(seat.contact.email);
+        return p;
+      }
+      var seats = (rec && rec.seats) ? rec.seats : [];
+      var mine = [], others = [], unnamed = [];
+      seats.forEach(function (seat) {
+        if (!seat.name) { unnamed.push(seat); return; }
+        if (byDistrict && seat.district === props.district) mine.push(person(seat));
+        else others.push(person(seat));
+      });
+      var rows = [];
+      if (result.rosterFailed) {
+        rows.push({
+          label: "Who the supervisors are",
+          value: "The list of election winners did not load, so no name is shown. " +
+            "The district's own office, linked below through the state board, can say."
+        });
+      } else if (byDistrict) {
+        if (mine.length) {
+          wrap.appendChild(renderSectionLabel("Your supervisor"));
+          wrap.appendChild(renderPersonRows(mine));
+        }
+        if (others.length) {
+          wrap.appendChild(renderSectionLabel("The rest of the board"));
+          wrap.appendChild(renderPersonRows(others, { tinted: true }));
+        }
+      } else if (others.length) {
+        wrap.appendChild(renderSectionLabel("Your supervisors"));
+        wrap.appendChild(renderPersonRows(others));
+      }
+      unnamed.forEach(function (seat) {
+        rows.push({
+          label: "District " + String(seat.district) +
+            (byDistrict && seat.district === props.district ? " (yours)" : ""),
+          value: "Not named here: " + String(seat.unnamed) + "."
+        });
+      });
+      if (!result.rosterFailed && seats.length) {
+        rows.push({
+          label: "What these names are",
+          value: "The winners of the most recent election for each seat in the " +
+            "Minnesota Secretary of State's results. If a seat has changed hands " +
+            "since (a resignation or an appointment), this still shows who won. " +
+            "Phone numbers and e-mail addresses are as the Board of Water and " +
+            "Soil Resources' directory of February 21, 2023 printed them."
+        });
+      }
+      rows.push({
+        label: "Who you elect here",
+        value: byDistrict
+          ? "One supervisor, chosen by the voters of this supervisor district " +
+            "alone. The district's other supervisors are chosen by the other " +
+            "supervisor districts."
+          : "Every supervisor on the board. Each seat is numbered for a part of " +
+            "the district its candidate must live in, but every voter in the " +
+            "district votes for every seat."
+      });
+      rows.push({
+        label: "What it does",
+        value: "Helps landowners conserve soil and water: erosion control, " +
+          "wetlands, tree planting, shoreline and buffer work, and state " +
+          "cost-share grants for it."
+      });
+      if (rec && rec.office && rec.office.address) {
+        rows.push({
+          label: "Office",
+          value: String(rec.office.address) +
+            (rec.office.phone ? " · " + String(rec.office.phone) : "") +
+            " (the Board of Water and Soil Resources' directory of February 21, 2023)"
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return {
+        label: "Minnesota Board of Water and Soil Resources",
+        url: "https://bwsr.state.mn.us/"
+      };
+    }
+  });
+
   /* =========================================================================
    * TRIBAL GOVERNMENT — Minnesota's tribal land, 22 pieces across 13 nations.
    *
@@ -18622,6 +18792,9 @@ function initMinnesotaExplorer() {
     // The watershed district sits after the city: a taxing overlay on top of
     // the governments a reader lives in, and appointed rather than elected.
     "county", "county-subdivision", "municipality", "watershed-district",
+    // The soil and water district sits beside the watershed body it is often
+    // confused with; unlike it, its supervisors are elected.
+    "conservation-district",
     "voting-precinct", "zip-code",
     // Last before the proximity layers, and placed rather than ranked: a
     // nation is not a level of the state's own hierarchy, and most readers
@@ -19139,10 +19312,11 @@ function initMinnesotaExplorer() {
     "#1B4F8C": "#5CA0F5", "#1C6E9C": "#57BCFB", "#1F6F6B": "#5DC0BA", "#1F6FB2": "#74BBFF",
     "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF", "#3E9A95": "#6BE3DC",
     "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4BA3D3": "#AFE0FE", "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#5E3A8C": "#B283F4",
-    "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#8163AE": "#CAAAFE", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE", "#A05F00": "#FBA23D", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
+    "#4BA3D3": "#AFE0FE", "#4C8F59": "#82DB92", "#556E14": "#9BBE4E", "#585EDD": "#A7B4FD",
+    "#5E3A8C": "#B283F4", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#8163AE": "#CAAAFE",
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE", "#9DB54A": "#D5F568",
+    "#A05F00": "#FBA23D", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
+    "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
