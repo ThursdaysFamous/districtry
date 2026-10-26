@@ -8414,7 +8414,13 @@ keeps saying the wards are not drawn.
 
 ## Ask ok-csa-ward-layers — OU Center for Spatial Analysis: the same terms question for its Municipal_Wards and School_District_Wards layers
 
-> **NOT YET ASKED — DRAFTED 2026-10-17. NOT A LETTER OF ITS OWN**: a paragraph to add to the
+> **ASKED 2026-10-26 at 13:56 UTC**, by the operator, inside the follow-up to Ask
+> ok-csa-precinct-terms, sent to Dr Chengbin Deng (cdeng@ou.edu) with Dr Todd Fagin copied. It covers
+> the precinct permission and both ward layers. A second follow-up is due about 2026-11-09. Gaps
+> `ok-school-board-members` (its `ask` field) and `ok-municipal-officeholders` (in its `blocker`,
+> since that record's `ask` field holds Lawton's answer) record the send.
+>
+> **DRAFTED 2026-10-17. NOT A LETTER OF ITS OWN**: a paragraph to add to the
 > follow-up of Ask ok-csa-precinct-terms, which went to Dr Chengbin Deng with Dr Todd Fagin copied
 > and is due its follow-up around 2026-10-22. It rides that follow-up because it is the same
 > question about the same publisher, and a second letter to the same two people a week apart would
