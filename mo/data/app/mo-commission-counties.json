@@ -120,6 +120,17 @@
   "spreadPct": 17.6,
   "unplaced2020": 0
  },
+ "29065": {
+  "county": "Dent County",
+  "people2020": {
+   "First District": 7265,
+   "Second District": 7156
+  },
+  "read": "2026-10-26",
+  "source": "listed",
+  "spreadPct": 1.5,
+  "unplaced2020": 0
+ },
  "29089": {
   "county": "Howard County",
   "people2020": {
