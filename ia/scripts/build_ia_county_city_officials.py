@@ -70,9 +70,9 @@ card's block is headed CITY OFFICIALS and not a claim about who was elected.
 
 THE FLOOR IS EXPECTED TO FAIL, PERIODICALLY, BY DESIGN
 --------------------------------------------------------
-Exactly ten counties are current and MIN_COUNTIES is 10, so ONE county letting
+Exactly eleven counties are current and MIN_COUNTIES is 11, so ONE county letting
 its page go stale fails this build -- not a collapse, one county. And every
-EVEN-YEAR JANUARY, when terms elected the previous November begin, all ten
+EVEN-YEAR JANUARY, when terms elected the previous November begin, all eleven
 will briefly publish expired terms until each page is updated, so expect red
 for days or weeks each cycle. NEVER lower the floor to get past that: it is the
 only thing that makes a county quietly going stale visible.
@@ -141,14 +141,15 @@ CITY_OWN = os.path.join(APP, "ia-city-officials.json")
 # ordinary turnover does not.
 #
 # MIN_COUNTIES TRACKS THE CURRENT COUNT ON PURPOSE. It was 8 when eight were
-# current, 9 when Jasper shipped, and is 10 now that ADAMS does, because the
+# current, 9 when Jasper shipped, 10 when ADAMS did, and is 11 now that WORTH
+# does (2026-10-26, read from its elections host), because the
 # property worth keeping is that ONE county going stale fails this build
 # loudly. A floor left behind the count would let the first county quietly drop
 # out, which is the whole thing the gate exists to prevent. Raise it when a
 # county joins; never lower it to get past a county going stale -- and expect
 # it to fail every even-year January, when terms elected the previous November
 # begin and each page publishes an expired term until it is updated.
-MIN_COUNTIES = 10
+MIN_COUNTIES = 11
 MIN_CITIES = 96
 MIN_OFFICIALS = 680
 MIN_MAYORS = 96               # measured 102 of 102. North English straddles the
