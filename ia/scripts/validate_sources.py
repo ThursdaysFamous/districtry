@@ -656,6 +656,21 @@ PROVENANCE = [
     {
         "layer": "municipality",
         "app_file": "ia-county-city-officials.json",
+        "source_url": "https://elections.worthcountyiowa.gov/elected_officials/city/",
+        "note": (
+            "Worth County's seven cities, Northwood among them, and JASPER'S CASE A "
+            "SECOND TIME: the county's election site on its own host, not the main "
+            "site. The 2026-09-25 sweep read worthcounty.org/about/elected_officials/"
+            "city/ (now forwarding to worthcountyiowa.gov), which lists the cities with "
+            "no names, and recorded the county as publishing nobody. Auditor Jacki "
+            "Backhaus pointed at this host on 2026-10-26; the main site's Communities "
+            "page links here. If this row goes dark, read worthcountyiowa.gov for the "
+            "current elections host first."
+        ),
+    },
+    {
+        "layer": "municipality",
+        "app_file": "ia-county-city-officials.json",
         "source_url": "https://keokukcounty.iowa.gov/about/elected_officials/city/",
         "note": (
             "Keokuk County's seventeen cities, the largest of the eight. Its seats are "

@@ -149,6 +149,18 @@ COUNTIES = [
     ("19161", "Sac", "https://www.saccountyiowa.gov/about/elected_officials/city/"),
     ("19165", "Shelby", "https://shelbycounty.iowa.gov/about/elected_officials/city/"),
     ("19189", "Winnebago", "https://winnebagocountyiowa.gov/about/elected_officials/city/"),
+    # WORTH IS JASPER'S CASE A SECOND TIME, and the county auditor had to tell us.
+    # The 2026-09-25 sweep read the county site's own page
+    # (worthcounty.org/about/elected_officials/city/, which now forwards to
+    # worthcountyiowa.gov/about/elected_officials/city/): seven city headings and
+    # no names, recorded `scaffold-no-names`, and still empty on 2026-10-26. The
+    # names were on the county's ELECTIONS host the whole time, the same CMS
+    # module with every offName filled in, and the county site's Communities page
+    # links there. Auditor Jacki Backhaus pointed it out on 2026-10-26 in reply
+    # to our letter. That host serves no robots.txt (404, allow all) and answered
+    # this scraper's token with HTTP 200, 41,243 bytes, on 2026-10-26.
+    ("19195", "Worth",
+     "https://elections.worthcountyiowa.gov/elected_officials/city/"),
 ]
 
 EMAIL = re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")
