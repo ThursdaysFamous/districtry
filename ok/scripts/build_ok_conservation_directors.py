@@ -12,14 +12,14 @@ elected and two appointed (27A O.S. § 3-3-201). The Oklahoma Conservation
 Commission's directory of district offices names none of them, and no list
 the Commission publishes does (ok/scripts/build_ok_conservation_offices.py).
 So on 2026-10-25 every one of the 84 districts was looked for on a website of
-its own. Five named all five directors there; the rest have no site, a
-Facebook page only, or a site that names no board. Of the five, FOUR are read
-here (SOURCES). Lincoln County's About Us page names five directors as well,
-but every meeting its site lists is from 2020 and nothing on it is later than
-a 2023 copyright line, so it may name a board that has since changed, and it
-is left out (SKIPPED) rather than shown as current. The rest of the state
-waits on the letter to the Commission (docs/ASK_DRAFTS.md, Ask
-ok-occ-conservation-directors), and the gap stays recorded as
+its own. Five named all five directors there, and all five are read here
+(SOURCES); the rest have no site, a Facebook page only, or a site that names
+no board. Lincoln County's page may be out of date: every meeting its site
+lists is from 2020 and nothing on it is later than a 2023 copyright line. Adam
+chose on 2026-10-26 to show it anyway, so its record carries a caution
+(CAUTIONS) that the card prints beside the names, saying exactly that. The
+rest of the state waits on the letter to the Commission (docs/ASK_DRAFTS.md,
+Ask ok-occ-conservation-directors), and the gap stays recorded as
 ok-conservation-district-directors.
 
 WHAT IS CARRIED: each director's name as the page prints it, and the office
@@ -66,17 +66,17 @@ SEATS = 5
 # scheme as the page.
 SOURCES = {
     "2": "http://tulsaccd.org/about-tccd/meet-our-board/",
+    "43": "https://lincolnccd.wixsite.com/lincolncountycd/about_us",
     "53": "https://www.deweycountyconservation.com/",
     "54": "https://www.rogerscountyconservationdistrict.org/the-district/",
     "68": "https://deercreekconservation.com/administration/",
 }
 
-# Districts whose own page names a board that is not shown, and why. An entry
-# here is never fetched.
-SKIPPED = {
-    "43": ("https://lincolnccd.wixsite.com/lincolncountycd/about_us",
-           "every meeting the site lists is from 2020 and nothing on it is dated "
-           "later than a 2023 copyright line, so its board may have changed"),
+# Districts whose page may name a board that has since changed, and the
+# sentence the card prints beside the names to say so.
+CAUTIONS = {
+    "43": ("Every meeting this district's website lists is from 2020, and nothing "
+           "on it is dated later than 2023, so this board may have changed."),
 }
 
 ROLES = {
@@ -154,6 +154,34 @@ def parse_tulsa(ls):
     return out
 
 
+def parse_lincoln(ls):
+    # "Board Members", then one director per line, an office either after a
+    # comma on the same line or on the line after one that ends in a comma.
+    try:
+        i = ls.index("Board Members")
+    except ValueError:
+        fail("Lincoln: the board heading is missing")
+    sec = []
+    for l in ls[i + 1:]:
+        if l.replace("\u200b", "").strip() == "District Staff":
+            break
+        sec.append(l)
+    else:
+        fail("Lincoln: the staff heading after the board is missing")
+    out, k = [], 0
+    while k < len(sec):
+        line = sec[k]
+        if line.endswith(",") and k + 1 < len(sec):
+            line, k = line + " " + sec[k + 1], k + 1
+        name, _, office = line.partition(",")
+        d = {"name": name.strip()}
+        if office.strip():
+            d["role"] = role(office)
+        out.append(d)
+        k += 1
+    return out
+
+
 def parse_deer_creek(ls):
     out = []
     for line in between(ls, "Board of Directors", "Associate Directors"):
@@ -167,7 +195,7 @@ def parse_deer_creek(ls):
     return out
 
 
-PARSERS = {"2": parse_tulsa, "53": parse_dewey, "54": parse_rogers, "68": parse_deer_creek}
+PARSERS = {"2": parse_tulsa, "43": parse_lincoln, "53": parse_dewey, "54": parse_rogers, "68": parse_deer_creek}
 
 
 def fetch(url):
@@ -195,8 +223,8 @@ def check(data):
     for key, rec in sorted(data.items()):
         if key not in drawn:
             problems.append("district %s is not on the map" % key)
-        if key in SKIPPED:
-            problems.append("district %s is in SKIPPED and in the file" % key)
+        if rec.get("caution") != CAUTIONS.get(key):
+            problems.append("district %s: caution is not the one CAUTIONS gives" % key)
         if rec.get("sourceUrl") != SOURCES.get(key):
             problems.append("district %s: sourceUrl is not the page SOURCES names" % key)
         if not re.match(r"^\d{4}-\d{2}-\d{2}$", rec.get("read", "")):
@@ -216,9 +244,9 @@ def check(data):
                 problems.append("district %s: %s carries more than a name and office" % (key, n))
             if "role" in d and d["role"] not in set(ROLES.values()):
                 problems.append("district %s: unknown office %r" % (key, d["role"]))
-    for key in SKIPPED:
-        if key not in drawn:
-            problems.append("SKIPPED names district %s, which is not on the map" % key)
+    for key in CAUTIONS:
+        if key not in SOURCES:
+            problems.append("CAUTIONS names district %s, which SOURCES does not read" % key)
     return problems
 
 
@@ -236,9 +264,9 @@ def main():
             for p in problems:
                 print("%s: FAIL: %s" % (LABEL, p))
             raise SystemExit(1)
-        print("%s --check: OK — %d districts' boards, %d directors, %d district skipped"
+        print("%s --check: OK — %d districts' boards, %d directors, %d with a caution"
               % (LABEL, len(data), sum(len(r["directors"]) for r in data.values()),
-                 len(SKIPPED)))
+                 len(CAUTIONS)))
         return
     today = datetime.date.today().isoformat()
     data = {}
@@ -250,6 +278,8 @@ def main():
         else:
             page = fetch(url)
         data[key] = {"sourceUrl": url, "read": today, "directors": PARSERS[key](lines(page))}
+        if key in CAUTIONS:
+            data[key]["caution"] = CAUTIONS[key]
     problems = check(data)
     if problems:
         for p in problems:

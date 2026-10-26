@@ -15988,6 +15988,7 @@ function initOklahomaExplorer() {
               "Oklahoma Conservation Commission publishes no list of directors, so " +
               "these are the board as the district lists it."
           });
+          if (board.caution) rows.push({ label: "May be out of date", value: String(board.caution) });
         } else if (!result.directors) {
           rows.push({
             label: "Board",

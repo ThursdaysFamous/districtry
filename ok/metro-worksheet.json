@@ -184,7 +184,7 @@
             "url": "https://services5.arcgis.com/L6JGkSUcgPo1zSDi/arcgis/rest/services/cons_dis/FeatureServer/0"
           }
         ],
-        "people": "Four districts' five directors, from each district's own website (Tulsa County, Dewey, Rogers and Deer Creek), read by ok/scripts/build_ok_conservation_directors.py and dated on the card. The Commission's directory of district offices, read by ok/scripts/build_ok_conservation_offices.py, gives each district's office, telephone and e-mail, and the card shows them, credited to the Commission, whose website terms of use allow personal, non-commercial use of its content. The directory names none of a district's five directors, so for the other 80 districts the card names no one and says how the board is chosen.",
+        "people": "Five districts' five directors, from each district's own website (Tulsa County, Lincoln County, Dewey, Rogers and Deer Creek; Lincoln County's card says its page may be out of date), read by ok/scripts/build_ok_conservation_directors.py and dated on the card. The Commission's directory of district offices, read by ok/scripts/build_ok_conservation_offices.py, gives each district's office, telephone and e-mail, and the card shows them, credited to the Commission, whose website terms of use allow personal, non-commercial use of its content. The directory names none of a district's five directors, so for the other 79 districts the card names no one and says how the board is chosen.",
         "applies": "Oklahoma — statewide; the 84 districts cover the state bar 67 km2 of slivers, most of them along the Kansas line in Texas County."
       }
     },
@@ -593,8 +593,8 @@
       },
       {
         "file": "ok-conservation-directors.json",
-        "min_keys": 4,
-        "note": "The five directors of each conservation district that names its board on a website of its own, keyed by the district's number on the map, built by ok/scripts/build_ok_conservation_directors.py: 4 districts and 20 directors, read 2026-10-26. The Commission publishes no list of directors, so the other 80 districts name nobody. Rebuilt by hand quarterly (ok/WATCH.md)."
+        "min_keys": 5,
+        "note": "The five directors of each conservation district that names its board on a website of its own, keyed by the district's number on the map, built by ok/scripts/build_ok_conservation_directors.py: 5 districts and 25 directors, read 2026-10-26; Lincoln County's record carries a caution that its page may be out of date. The Commission publishes no list of directors, so the other 79 districts name nobody. Rebuilt by hand quarterly (ok/WATCH.md)."
       },
       {
         "file": "ok-city-councils.json",
