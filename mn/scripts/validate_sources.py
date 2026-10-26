@@ -280,6 +280,39 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "conservation-district",
+        "app_file": "mn-swcd-districts.json",
+        "source_url": (
+            "https://enterprise.gisdata.mn.gov/aghost/rest/services/"
+            "us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
+        ),
+        "note": (
+            "Minnesota's 88 elected soil and water conservation districts as 116 "
+            "shapes, dissolved from the precinct service on the soil and water "
+            "ballot (swcdist) each precinct votes: one shape per district that "
+            "elects at large, one per supervisor district in the seven that elect "
+            "by district. It shares the precinct rows' freshness signal, the "
+            "service's Service Modified stamp. Hennepin's and Ramsey's precincts "
+            "carry no value, because neither county's district has an elected "
+            "board."
+        ),
+    },
+    {
+        "layer": "conservation-district",
+        "app_file": "mn-swcd-supervisors.json",
+        "source_url": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+        "note": (
+            "The 440 supervisor seats' most recent winners, from the Secretary of "
+            "State's county races results file for each election day (this URL is "
+            "the 2024 general's), with each district's office and the "
+            "supervisors' own phones and e-mails from the Board of Water and Soil "
+            "Resources' directory of 21 February 2023 "
+            "(bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf). "
+            "Refreshed weekly by update-mn-swcd-supervisors.yml; a new general "
+            "reaches the file 21 days after election day."
+        ),
+    },
+    {
         "layer": "municipality",
         "app_file": "mn-city-councils.json",
         "source_url": "https://electionresultsfiles.sos.mn.gov/20241105/local.txt",

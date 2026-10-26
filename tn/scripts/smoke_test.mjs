@@ -1257,6 +1257,41 @@ try {
       `missing=${missing} unwanted=${present} text=${noContacts(text).slice(0, 200)}`);
     await context.close();
   }
+
+  // School board districts come from two files: the Comptroller's map for
+  // eighteen counties, and the commission districts 38 counties' boards are
+  // elected from (tn/scripts/build_tn_school_board_from_commission.py). One
+  // point in each kind, one county joined from several commission districts,
+  // and one county drawn by neither, whose card must say so.
+  for (const c of [
+    { name: "Maryville (Blount, the Comptroller's map)", point: "35.75650,-83.97050",
+      want: [/District 5\b/, /Blount County board of education/, /within 4 metres/],
+      reject: [/county commission's districts/] },
+    { name: "Chattanooga (Hamilton, one for one)", point: "35.04560,-85.30970",
+      want: [/District 4\b/, /Hamilton County board of education/,
+        /The Private Acts of 2022, Chapter 50, say Hamilton County's school board districts are the county commission's districts\./,
+        /within 20 metres/, /may not vote for this board/],
+      reject: [/within 4 metres/] },
+    { name: "Murfreesboro (Rutherford, three commission districts)", point: "35.84560,-86.39030",
+      want: [/District 5\b/, /Rutherford County board of education/,
+        /this one is the commission's Districts 17, 18 and 21\./],
+      reject: [/within 4 metres/] },
+    { name: "Greeneville (Greene, not drawn)", point: "36.16320,-82.83100",
+      want: [/not in one of the school board districts this map draws/,
+        /Rhea, Rutherford, Sequatchie, Smith, Tipton, Warren, Wayne, Weakley and Williamson/],
+      reject: [/Greene County board of education/] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=school-board-district`);
+    const info = await cardText(page, "school-board-district");
+    const text = info.text || "";
+    const missing = c.want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    check(`school-board-district card at ${c.name} says where its lines come from`,
+      !info.error && missing.length === 0 && present.length === 0,
+      `missing=${missing} unwanted=${present} text=${text.slice(0, 300)}`);
+    await context.close();
+  }
 } finally {
   await browser.close();
 }

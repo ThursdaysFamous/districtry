@@ -4,7 +4,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://andersoncountytn.gov/county-commission/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 16,
   "domains": [
    "andersoncountytn.gov"
@@ -109,7 +109,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.bedfordcountytn.gov/government/board_of_commissioners.php",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 18,
   "domains": [
    "bedfordcountytn.gov"
@@ -232,7 +232,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://bentoncountytn.gov/county_commission.html",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 18,
   "domains": [
    "bentoncountytn.gov"
@@ -329,7 +329,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://blounttn.gov/835/Commissioners",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 21,
   "domains": [
    "blounttn.gov"
@@ -463,7 +463,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://bradleycountytn.gov/county-government/county-commission/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 14,
   "domains": [
    "bradleycountytn.gov"
@@ -554,7 +554,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://cannoncountytn.gov/county-commissioners/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 10,
   "domains": [
    "cannoncountytn.gov"
@@ -609,12 +609,159 @@
    ]
   }
  },
+ "47019": {
+  "county": "Carter County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://cartercountytn.gov/government/commissioners.php",
+  "readAt": "2026-10-26",
+  "seats": 24,
+  "domains": [
+   "cartercountytn.gov"
+  ],
+  "districts": {
+   "1": [
+    {
+     "email": "keith.range@cartercountytn.gov",
+     "name": "Keith Range",
+     "phone": "(423) 895-2725"
+    },
+    {
+     "email": "nick.holder@cartercountytn.gov",
+     "name": "Nick Holder",
+     "phone": "(423) 895-8174"
+    },
+    {
+     "email": "christie.grindstaff@cartercountytn.gov",
+     "name": "Christie Grindstaff",
+     "phone": "(423) 342-8460"
+    }
+   ],
+   "2": [
+    {
+     "email": "richard.guinn@cartercountytn.gov",
+     "name": "Derrick Guinn",
+     "phone": "(423) 707-8387"
+    },
+    {
+     "email": "avery.wynn@cartercountytn.gov",
+     "name": "Avery Wynn",
+     "phone": "(423) 440-4361"
+    },
+    {
+     "email": "julie.guinn@cartercountytn.gov",
+     "name": "Julie Guinn",
+     "phone": "(423) 772-4435"
+    }
+   ],
+   "3": [
+    {
+     "email": "brad.johnson@cartercountytn.gov",
+     "name": "Bradley Johnson",
+     "phone": "(423) 542-8149"
+    },
+    {
+     "email": "steve.burrough@cartercountytn.gov",
+     "name": "Steve Burrough",
+     "phone": "(423) 895-0149"
+    },
+    {
+     "email": "charles.voncannon@cartercountytn.gov",
+     "name": "Charlie Von Cannon",
+     "phone": "(423) 512-1958"
+    }
+   ],
+   "4": [
+    {
+     "email": "austin.jaynes@cartercountytn.gov",
+     "name": "Austin Jaynes",
+     "phone": "(423) 895-2891"
+    },
+    {
+     "email": "gary.kemp@cartercountytn.gov",
+     "name": "Gary Kemp",
+     "phone": "(423) 512-2696"
+    },
+    {
+     "email": "jason.lyons@cartercountytn.gov",
+     "name": "Jason Lyons",
+     "phone": "(423) 213-2488"
+    }
+   ],
+   "5": [
+    {
+     "email": "lisa.childress@cartercountytn.gov",
+     "name": "Lisa Childress",
+     "phone": "(423) 512-0675"
+    },
+    {
+     "vacant": true
+    },
+    {
+     "email": "charlene.thomas@cartercountytn.gov",
+     "name": "Charlene Thomas",
+     "phone": "(423) 483-4665"
+    }
+   ],
+   "6": [
+    {
+     "email": "taylor.brown@cartercountytn.gov",
+     "name": "Taylor Brown",
+     "phone": "(423) 895-9452"
+    },
+    {
+     "email": "travis.hill@cartercountytn.gov",
+     "name": "Travis Hill",
+     "phone": "(423) 647-3682"
+    },
+    {
+     "email": "todd.smith@cartercountytn.gov",
+     "name": "Todd Smith",
+     "phone": "(423) 440-3049"
+    }
+   ],
+   "7": [
+    {
+     "email": "carole.whaley@cartercountytn.gov",
+     "name": "Carole Whaley",
+     "phone": "(423) 483-6963"
+    },
+    {
+     "email": "scotty.hall@cartercountytn.gov",
+     "name": "Scotty Hall",
+     "phone": "(423) 833-1481"
+    },
+    {
+     "email": "michael.miller@cartercountytn.gov",
+     "name": "Michael Miller",
+     "phone": "(423) 817-2279"
+    }
+   ],
+   "8": [
+    {
+     "email": "wes.holtsclaw@cartercountytn.gov",
+     "name": "Wes Holtsclaw",
+     "phone": "(423) 647-0254"
+    },
+    {
+     "email": "kelly.collins@cartercountytn.gov",
+     "name": "Kelly Collins",
+     "phone": "(423) 542-5776"
+    },
+    {
+     "email": "thomas.proffitt@cartercountytn.gov",
+     "name": "Thomas Proffitt",
+     "phone": "(423) 957-1551"
+    }
+   ]
+  }
+ },
  "47021": {
   "county": "Cheatham County",
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://cheathamcountytn.gov/commission.html",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 12,
   "domains": [
    "cheathamcountytn.gov"
@@ -705,7 +852,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://chestercountytn.org/county_commission.html",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 12,
   "domains": [
    "chestercountytn.org"
@@ -790,7 +937,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://claibornecountytn.gov/countyoffices/county-commission",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 21,
   "domains": [
    "claibornecountytn.gov"
@@ -995,14 +1142,15 @@
      "phone": "(931)-397-6646"
     }
    ]
-  }
+  },
+  "notRead": true
  },
  "47029": {
   "county": "Cocke County",
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.cockecountytn.gov/county-legislative-body",
-  "readAt": "2026-10-17",
+  "readAt": "2026-10-26",
   "seats": 14,
   "domains": [
    "cockecountytn.gov"
@@ -1111,7 +1259,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.coffeecountytn.gov/213/County-Commission",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 18,
   "domains": [
    "coffeecountytn.gov"
@@ -1256,7 +1404,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.crockettvote.com/county-commission",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 24,
   "domains": [
    "crockettvote.com"
@@ -1412,7 +1560,7 @@
   "seatTitle": "Council Member",
   "bodyName": "Metro Council",
   "sourceUrl": "https://www.nashville.gov/departments/council/districts",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 40,
   "domains": [
    "nashville.gov"
@@ -1654,6 +1802,7 @@
     {
      "email": "Sandra.Sepulveda@nashville.gov",
      "name": "Sandra Sepulveda",
+     "phone": "615-432-1330",
      "profileUrl": "https://www.nashville.gov/departments/council/districts/district-30"
     }
    ],
@@ -1736,7 +1885,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.dekalbtennessee.com/county-commission.html",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 14,
   "domains": [
    "dekalbtennessee.com"
@@ -1823,7 +1972,7 @@
     {
      "email": "mathias_district7@yahoo.com",
      "name": "Mathias Anderson",
-     "phone": "615-506-2872"
+     "phone": "615-318-8223"
     }
    ]
   }
@@ -1833,7 +1982,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.dicksoncountytn.gov/county_commission.html",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 12,
   "domains": [
    "dicksoncountytn.gov"
@@ -1928,7 +2077,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.dyercounty.com/elected-officials",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 20,
   "domains": [
    "dyercounty.com"
@@ -2033,7 +2182,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://fayettetn.us/county-boards-councils/county-commission/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 19,
   "domains": [
    "fayettetn.us"
@@ -2169,7 +2318,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://fentresscountytn.gov/county-commissioners/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 10,
   "domains": [
    "fentresscountytn.gov"
@@ -2222,7 +2371,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://franklincotn.us/county_commission.html",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 16,
   "domains": [
    "franklincotn.us",
@@ -2351,7 +2500,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://gilescountytn.gov/commission/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 21,
   "domains": [
    "gilescountytn.gov"
@@ -2479,7 +2628,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://hamblencountytn.gov/county-commission/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 14,
   "domains": [
    "hamblencountytn.gov",
@@ -2592,7 +2741,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.hamiltontn.gov/CountyCommission_Committees.aspx",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 11,
   "domains": [
    "hamiltontn.gov"
@@ -2668,12 +2817,114 @@
    ]
   }
  },
+ "47069": {
+  "county": "Hardeman County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://www.hardemanvotes.com/p/your-elected-officials.html",
+  "readAt": "2026-10-26",
+  "seats": 16,
+  "domains": [
+   "hardemancounty.org"
+  ],
+  "districts": {
+   "1": [
+    {
+     "name": "Rickey W. Griggs",
+     "seat": "Position 1"
+    },
+    {
+     "email": "wjsain@bellsouth.net",
+     "name": "Wilbert (Jackie) Sain",
+     "seat": "Position 2"
+    },
+    {
+     "email": "gatlinone@gmail.com",
+     "name": "Michion Edmund Gatlin",
+     "seat": "Position 3"
+    }
+   ],
+   "2": [
+    {
+     "name": "Erica Woods",
+     "seat": "Position 1"
+    },
+    {
+     "email": "jweems13@gmail.com",
+     "name": "Johnny Weems",
+     "seat": "Position 2"
+    }
+   ],
+   "3": [
+    {
+     "email": "chandralake14@icloud.com",
+     "name": "Chandra Y. Lake",
+     "seat": "Position 1"
+    },
+    {
+     "email": "corybufford72@gmail.com",
+     "name": "Cory Bufford",
+     "seat": "Position 2"
+    }
+   ],
+   "4": [
+    {
+     "email": "coachhensley@yahoo.com",
+     "name": "Bobby Hensley"
+    }
+   ],
+   "5": [
+    {
+     "email": "johnny_lanier@bellsouth.net",
+     "name": "Johnny Max Lanier, Jr",
+     "seat": "Position 1"
+    },
+    {
+     "email": "dave.bell@siplast.com",
+     "name": "David Bell",
+     "seat": "Position 2"
+    },
+    {
+     "email": "jeffkennamore@bellsouth.net",
+     "name": "Jeff Kennamore",
+     "seat": "Position 3"
+    }
+   ],
+   "6": [
+    {
+     "name": "Dylan Stewart"
+    }
+   ],
+   "7": [
+    {
+     "name": "Russell DeBerry",
+     "seat": "Position 1"
+    },
+    {
+     "name": "Terry Howell",
+     "seat": "Position 2"
+    }
+   ],
+   "8": [
+    {
+     "email": "wrightbobby770@gmail.com",
+     "name": "Bobby Wright"
+    }
+   ],
+   "9": [
+    {
+     "email": "jenkinsjoseph488@gmail.com",
+     "name": "Joseph D. Jenkins"
+    }
+   ]
+  }
+ },
  "47071": {
   "county": "Hardin County",
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.hardincogov.com/directory/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 20,
   "domains": [
    "hardincogov.com"
@@ -2789,7 +3040,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.hawkinscountytn.gov/county_commission.html",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 14,
   "domains": [
    "hawkinscountytn.gov"
@@ -2871,7 +3122,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://henrycountytn.gov/government?tab=commissioners",
-  "readAt": "2026-10-17",
+  "readAt": "2026-10-26",
   "seats": 15,
   "domains": [
    "henrycountytn.gov",
@@ -2975,7 +3226,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://hickmancountytn.gov/government/commissioners",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 14,
   "domains": [
    "hickmancountytn.gov"
@@ -3072,7 +3323,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://jeffersoncountytn.gov/county-commission/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 21,
   "domains": [
    "jeffersoncountytn.gov"
@@ -3192,7 +3443,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://commission.knoxcountytn.gov/people/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 11,
   "domains": [
    "knoxcounty.org",
@@ -3295,7 +3546,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://lawrencecountytn.gov/government/commissioners/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 18,
   "domains": [
    "lawrencecountytn.gov"
@@ -3434,7 +3685,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://lincolncountytn.gov/county_directory/chairman_commission.php",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 24,
   "domains": [
    "lincolncountytn.gov"
@@ -3578,12 +3829,69 @@
    ]
   }
  },
+ "47105": {
+  "county": "Loudon County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://loudoncounty-tn.gov/county-commission/",
+  "readAt": "2026-10-26",
+  "seats": 10,
+  "domains": [
+   "loudoncounty-tn.gov"
+  ],
+  "districts": {
+   "1": [
+    {
+     "name": "Chase Randolph"
+    },
+    {
+     "name": "Bob Gross"
+    }
+   ],
+   "2": [
+    {
+     "name": "Jason Tuttle"
+    },
+    {
+     "name": "David Cook"
+    }
+   ],
+   "3": [
+    {
+     "name": "Bill Satterfield"
+    }
+   ],
+   "4": [
+    {
+     "name": "Gary Whitfield"
+    }
+   ],
+   "5": [
+    {
+     "name": "Joe Morrison"
+    },
+    {
+     "name": "Van Shaver"
+    }
+   ],
+   "6": [
+    {
+     "name": "Adam Waller"
+    }
+   ],
+   "7": [
+    {
+     "name": "Rick Dramm"
+    }
+   ]
+  }
+ },
  "47107": {
   "county": "McMinn County",
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.mcminncountytn.gov/county_commission_main.html",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 10,
   "domains": [
    "mcminncountytn.gov"
@@ -3648,12 +3956,125 @@
    ]
   }
  },
+ "47111": {
+  "county": "Macon County",
+  "seatTitle": "Commissioner",
+  "bodyName": "County Commission",
+  "sourceUrl": "https://maconcountytn.gov/government/county_commission/index.php",
+  "readAt": "2026-10-26",
+  "seats": 20,
+  "domains": [
+   "maconcountytn.gov"
+  ],
+  "districts": {
+   "1": [
+    {
+     "name": "Phillip Snow",
+     "phone": "615-699-3891"
+    },
+    {
+     "name": "Todd Gentry",
+     "phone": "615-699-4647"
+    }
+   ],
+   "2": [
+    {
+     "name": "Keith Newberry",
+     "phone": "615-699-3949"
+    },
+    {
+     "name": "Maverick Hesson",
+     "phone": "615-388-7571"
+    }
+   ],
+   "3": [
+    {
+     "name": "Caleb Fleming",
+     "phone": "615-655-7098"
+    },
+    {
+     "name": "Aaron Shipley",
+     "phone": "615-388-5370"
+    }
+   ],
+   "4": [
+    {
+     "name": "Justin Dyer",
+     "phone": "615-388-6041"
+    },
+    {
+     "name": "Billy Wilmore",
+     "phone": "615-388-0766"
+    }
+   ],
+   "5": [
+    {
+     "name": "Dan Hill",
+     "phone": "909-553-0864"
+    },
+    {
+     "name": "Barry Marshall",
+     "phone": "615-633-6401"
+    }
+   ],
+   "6": [
+    {
+     "name": "Tony Wix",
+     "phone": "615-644-3563"
+    },
+    {
+     "name": "Michael Slayton",
+     "phone": "615-655-3891"
+    }
+   ],
+   "7": [
+    {
+     "name": "Joshua Eakles",
+     "phone": "615-655-4276"
+    },
+    {
+     "name": "Barry King",
+     "phone": "615-388-5486"
+    }
+   ],
+   "8": [
+    {
+     "name": "Kristie Doss",
+     "phone": "615-388-6124"
+    },
+    {
+     "name": "Lisa Spivey",
+     "phone": "615-655-4097"
+    }
+   ],
+   "9": [
+    {
+     "name": "Jason Brawner",
+     "phone": "615-388-5608"
+    },
+    {
+     "name": "Cameron Roberts",
+     "phone": "615-388-5576"
+    }
+   ],
+   "10": [
+    {
+     "name": "Helen Hesson",
+     "phone": "615-666-4330"
+    },
+    {
+     "name": "Larry West",
+     "phone": "615-666-8548"
+    }
+   ]
+  }
+ },
  "47113": {
   "county": "Madison County",
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.madisoncountytn.gov/154/County-Commission",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 25,
   "domains": [
    "madisoncountytn.gov"
@@ -3813,7 +4234,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://marioncountytn.net/leadership",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 15,
   "domains": [
    "marioncountytn.net"
@@ -3924,7 +4345,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.marshallcountytn.gov/county-commission",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 18,
   "domains": [
    "marshallcountytn.gov"
@@ -4045,7 +4466,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.maurycounty-tn.gov/168/Commissioners",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 22,
   "domains": [
    "maurycounty-tn.gov"
@@ -4209,7 +4630,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://monroetn.gov/board-of-county-commissioners/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 10,
   "domains": [
    "monroetn.gov"
@@ -4270,7 +4691,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://montgomerytn.gov/commission",
-  "readAt": "2026-10-17",
+  "readAt": "2026-10-26",
   "seats": 21,
   "domains": [
    "montgomerytn.gov",
@@ -4447,7 +4868,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://morgancountytn.gov/county-commission/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 18,
   "domains": [
    "morgancountytn.gov"
@@ -4545,7 +4966,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.obioncountytn.gov/county_commission.html",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 21,
   "domains": [
    "obioncountytn.gov"
@@ -4683,7 +5104,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://polkcountytn.gov/county-commissioners/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 10,
   "domains": [
    "polkcountytn.gov"
@@ -4752,7 +5173,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://putnamcountytn.gov/county-commission",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 24,
   "domains": [
    "putnamcountytn.gov"
@@ -4885,7 +5306,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://roanecountytn.gov/county-commission/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 15,
   "domains": [
    "roanecountytn.gov"
@@ -4973,7 +5394,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://maps.rutherfordcountytn.gov/server/rest/services/Election/Election_Commission/MapServer/5",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 21,
   "domains": [
    "rutherfordcountytn.gov"
@@ -5091,7 +5512,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://scottcounty.com/government/board-of-county-commissioners/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 14,
   "domains": [
    "scottcounty.com"
@@ -5169,7 +5590,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://seviercountytn.gov/government/county_officials/county_commissioners/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 25,
   "domains": [
    "seviercountytn.gov"
@@ -5329,7 +5750,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.stewartcogov.com/commissioners/commissioners.html",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 14,
   "domains": [
    "stewartcogov.com"
@@ -5415,7 +5836,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.scelect.org/electedofficials.html",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 24,
   "domains": [
    "sullivancountytn.gov",
@@ -5523,7 +5944,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://sumnercountytn.gov/government/county-commission/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 24,
   "domains": [
    "sumnercountytn.gov"
@@ -5727,7 +6148,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://tiptonco.com/government/legislative_body/index.php",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 18,
   "domains": [
    "tiptonco.com"
@@ -5837,7 +6258,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://trousdalecountytn.gov/government/local_government/county_commission.php",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 20,
   "domains": [
    "trousdalecountytn.gov"
@@ -5949,7 +6370,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.unicoicountytn.gov/boards_commissions.html",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 9,
   "domains": [
    "unicoicountytn.gov"
@@ -6014,7 +6435,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://unioncountytn.gov/county-commission/",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 16,
   "domains": [
    "unioncountytn.gov"
@@ -6114,7 +6535,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.warrencountytn.gov/government/county_commission/commissioners.php",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 24,
   "domains": [
    "warrencountytn.gov"
@@ -6260,7 +6681,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.washingtoncountytn.org/208/County-Commission",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 15,
   "domains": [
    "washingtoncountytn.org"
@@ -6394,7 +6815,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.williamsoncounty-tn.gov/m/directory/department?did=3",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 24,
   "domains": [
    "williamsoncounty-tn.gov"
@@ -6575,7 +6996,7 @@
   "seatTitle": "Commissioner",
   "bodyName": "County Commission",
   "sourceUrl": "https://www.wilsoncountytn.gov/245/County-Commissioners",
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "seats": 25,
   "domains": [
    "wilsoncountytn.gov"
