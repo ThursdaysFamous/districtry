@@ -499,8 +499,12 @@ def page_kinds(page_rows, dates, tags):
 # `select` is a browser being shown districts for a point, which is the answer
 # the site exists to give. Where each slice came from, what screen it was on and
 # which country it was in, side by side, is what separates readers from traffic
-# that loads pages and never asks anything.
-SLICES = [("pageview", "is:pageview"), ("visit", "visit/"), ("select", "select")]
+# that loads pages and never asks anything. `app-launch` is a browser opening
+# districtry as an installed app (the Play app or a copy added from a browser),
+# which is the one slice that says how much of the rest comes from the closed
+# test's phones.
+SLICES = [("pageview", "is:pageview"), ("visit", "visit/"), ("select", "select"),
+          ("launch", "app-launch/")]
 
 
 def slices(s, total, start, end, mx):
