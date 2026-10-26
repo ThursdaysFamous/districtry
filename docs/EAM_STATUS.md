@@ -19,7 +19,7 @@ whether the data exists** — a level no publisher offers, that we
 asked about and were refused, counts as covered — so a county
 publisher cannot fail an app on it.
 
-**32 gap-record claims name a level, 9 of which carry a
+**31 gap-record claims name a level, 9 of which carry a
 dated ask that counts.** A level this report calls open and
 that no record claims is still a floor. A claim that earns
 nothing is printed under its level with the reason, rather
@@ -45,7 +45,7 @@ different thing from one it failed.
 |---|---|---|---|---|---|---|---|---|---|
 | ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 20 | all | 13 of 14 levels |
 | ca | **--MC** | — | — | 0 | 0 | — | 15 | all | all 14 levels |
-| ia | **EAM·** | 99 | 99/99 | 154 | 154 | all | 57 | all | 13 of 14 levels |
+| ia | **EAM·** | 99 | 99/99 | 154 | 154 | all | 56 | all | 13 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 660 | 1,158 | all | 424 | all | 12 of 14 levels |
 | in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 21 | all | 11 of 14 levels |
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 17 | all | 12 of 14 levels |
@@ -101,9 +101,9 @@ this instance is in maintenance.
 
 ### ia — EAM·
 
-- **Under a WATCH.md plan (37):** re-checked on a stated cadence rather than by a job — `ames-wards.json`, `bettendorf-wards.json`, `black-hawk-county-outline.json`, `bremer-county-outline.json`, `cedar-falls-wards.json`, `cedar-rapids-wards.json`, `congress-districts.json`, `coverage-gaps.json`, `davenport-wards.json`, `dickinson-county-outline.json`, `dsm-wards.json`, `dubuque-wards.json`, `franklin-county-outline.json`, `ia-aeas.json`, `ia-cc-director-districts.json`, `ia-community-colleges.json`, `ia-county-board-directory.json`, `ia-house-districts.json`, `ia-judicial-districts.json`, `ia-precincts.json`, `ia-school-director-districts.json`, `ia-school-districts.json`, `ia-school-sites.json`, `ia-senate-districts.json`, `ia-supervisor-districts.json`, `johnson-county-outline.json`, `linn-county-outline.json`, `marion-wards.json`, `marshalltown-wards.json`, `mason-city-wards.json`, `metro-outline.json`, `pottawattamie-county-outline.json`, `state-counties.json`, `tama-county-outline.json`, `waterloo-wards.json`, `west-des-moines-wards.json`, `wright-county-outline.json`
+- **Under a WATCH.md plan (36):** re-checked on a stated cadence rather than by a job — `ames-wards.json`, `bettendorf-wards.json`, `black-hawk-county-outline.json`, `bremer-county-outline.json`, `cedar-falls-wards.json`, `cedar-rapids-wards.json`, `congress-districts.json`, `coverage-gaps.json`, `davenport-wards.json`, `dickinson-county-outline.json`, `dsm-wards.json`, `dubuque-wards.json`, `franklin-county-outline.json`, `ia-aeas.json`, `ia-cc-director-districts.json`, `ia-community-colleges.json`, `ia-county-board-directory.json`, `ia-house-districts.json`, `ia-judicial-districts.json`, `ia-precincts.json`, `ia-school-director-districts.json`, `ia-school-districts.json`, `ia-school-sites.json`, `ia-senate-districts.json`, `ia-supervisor-districts.json`, `johnson-county-outline.json`, `linn-county-outline.json`, `marion-wards.json`, `marshalltown-wards.json`, `mason-city-wards.json`, `metro-outline.json`, `pottawattamie-county-outline.json`, `state-counties.json`, `tama-county-outline.json`, `waterloo-wards.json`, `west-des-moines-wards.json`
 - **Covered: no.** 1 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
-  - **4. The county governing body, in every county of the state** — open. 93 of 99 counties name a governing body and draw it where it is elected by district; 5 more name a body elected by district whose districts are not drawn, or not matched to their members. A record declares this level and earns nothing: `ia-supervisor-count-disagrees` (wright) — County Auditor Amanda Meyer was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome; `ia-supervisor-count-impossible` (pottawattamie) — County elections office (letter addressed to Auditor Mary Ann Hanusa) was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome
+  - **4. The county governing body, in every county of the state** — open. 94 of 99 counties name a governing body and draw it where it is elected by district; 5 more name a body elected by district whose districts are not drawn, or not matched to their members. A record declares this level and earns nothing: `ia-supervisor-count-impossible` (pottawattamie) — County elections office (letter addressed to Auditor Mary Ann Hanusa) was asked on 2026-10-01 and has not answered; the record earns nothing until a thread writes the outcome
 
 ### il — EAM·
 

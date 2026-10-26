@@ -203,7 +203,7 @@
       "label": "County Supervisor District",
       "group": "political",
       "area_rank": 7,
-      "rank_note": "The flagship layer: 279 features across all 99 counties, PLANTYPE-aware (at-large / residence-district / single-member)",
+      "rank_note": "The flagship layer: 281 features across all 99 counties, PLANTYPE-aware (at-large / residence-district / single-member)",
       "source": {
         "answers": "The county supervisor district covering the point (where drawn), the county's election plan (at-large, residence-district-elected-countywide, or single-member district), and the board's size.",
         "boundary": [
@@ -621,9 +621,9 @@
       },
       {
         "file": "ia-supervisor-districts.json",
-        "min_features": 279,
-        "max_features": 279,
-        "note": "Every county supervisor district across all 99 counties, built by ia/scripts/build_ia_supervisor_districts.py: the state's own aggregate for 94 counties, Jones's and Tama's five districts each from the county's own file (ia/scripts/build_county_supplied_supervisor_districts.py, resolved to whole Census 2020 blocks and gated on population figures from outside the drawing), Black Hawk's own hosted GIS (5 real districts), Story's three adopted districts read off the county Auditor's own printed map and resolved to whole Census 2020 blocks by ia/scripts/build_story_supervisor_districts.py (gated on the Legislative Services Agency's published populations matching exactly, district by district), and Johnson still as one county-level TRANSITIONING feature (5,000-in-state-point agreement gate)."
+        "min_features": 281,
+        "max_features": 281,
+        "note": "Every county supervisor district across all 99 counties, built by ia/scripts/build_ia_supervisor_districts.py: the state's own aggregate for 93 counties, Jones's, Tama's and Wright's five districts each from the county's own file (ia/scripts/build_county_supplied_supervisor_districts.py, resolved to whole Census 2020 blocks and gated on population figures from outside the drawing), Black Hawk's own hosted GIS (5 real districts), Story's three adopted districts read off the county Auditor's own printed map and resolved to whole Census 2020 blocks by ia/scripts/build_story_supervisor_districts.py (gated on the Legislative Services Agency's published populations matching exactly, district by district), and Johnson still as one county-level TRANSITIONING feature (5,000-in-state-point agreement gate)."
       },
       {
         "file": "johnson-county-outline.json",
@@ -765,13 +765,6 @@
         "max_features": 1,
         "dynamic_reference": true,
         "note": "Tama County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Tama County which recorded gap affects them: the statewide directory gives it a board size Iowa law does not allow, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
-      },
-      {
-        "file": "wright-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Wright County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Wright County which recorded gap affects them: the statewide directory and the state's district map disagree about its board size, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
       },
       {
         "file": "black-hawk-county-outline.json",
@@ -925,7 +918,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ia-shell-v28",
+    "cache_name": "districtry-ia-shell-v29",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
