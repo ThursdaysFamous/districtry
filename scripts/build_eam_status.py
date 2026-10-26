@@ -1844,8 +1844,8 @@ ANSWERS = {
         "us-house": answers("us-house"),
         "state-legislature": answers("in-senate", "in-house"),
         "county-boundaries": answers("county"),
-        # Since 2026-10-15 the council districts of 55 counties are drawn
-        # (Marion's are the City-County Council's 25); COUNTY_MAPS_DRAWN reads
+        # Since 2026-10-15 the council districts of 55 counties are drawn, 60
+        # since 2026-10-26 (Marion's are the City-County Council's 25); COUNTY_MAPS_DRAWN reads
         # which from the shipped file.
         "county-government": depth("county-council"),
         "municipal-boundaries": answers("municipality"),
@@ -2917,23 +2917,21 @@ WARD_MAPS = {
     # Indianapolis's council districts are the City-County Council's, drawn by
     # the County Council District layer for Marion County.
     "in": dict(
-        drawn={"1836003"},
-        owed={"1801468": "Anderson", "1805860": "Bloomington",
-              "1808416": "Brownsburg",
+        drawn={"1836003",
+               # eleven more on 2026-10-26, in/scripts/build_in_city_wards.py
+               "1805860", "1820728", "1828386", "1829898", "1838358",
+               "1842426", "1852326", "1854180", "1860246", "1878326",
+               "1882700"},
+        owed={"1801468": "Anderson", "1808416": "Brownsburg",
               "1810342": "Carmel", "1814734": "Columbus",
-              "1820728": "Elkhart", "1822000": "Evansville",
+              "1822000": "Evansville",
               "1823278": "Fishers", "1825000": "Fort Wayne",
-              "1825450": "Franklin", "1828386": "Goshen",
-              "1829898": "Greenwood",
-              "1838358": "Jeffersonville", "1840392": "Kokomo",
-              "1840788": "Lafayette", "1842426": "Lawrence",
-              "1846908": "Marion", "1848528": "Merrillville",
+              "1825450": "Franklin", "1840392": "Kokomo",
+              "1840788": "Lafayette", "1846908": "Marion", "1848528": "Merrillville",
               "1848798": "Michigan City", "1849932": "Mishawaka",
-              "1851876": "Muncie", "1852326": "New Albany",
-              "1854180": "Noblesville", "1860246": "Plainfield", "1861092": "Portage",
+              "1851876": "Muncie", "1861092": "Portage",
               "1864260": "Richmond", "1868220": "Schererville", "1871000": "South Bend",
-              "1875428": "Terre Haute", "1878326": "Valparaiso",
-              "1882700": "Westfield", "1882862": "West Lafayette",
+              "1875428": "Terre Haute", "1882862": "West Lafayette",
               "1886372": "Zionsville"}),
     # Arkansas's twelve that elect by ward are drawn by one layer,
     # ar/scripts/build_ar_city_wards.py, which reads the cities off the seats
