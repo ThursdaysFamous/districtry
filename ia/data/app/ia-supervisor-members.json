@@ -1,4 +1,40 @@
 {
+ "001": {
+  "asOf": "2026-10-26",
+  "asOfSource": "results",
+  "asOfWhy": "Which district each supervisor holds comes from the Secretary of State's certified results for the 2024 general election and the 2026 primary, since a supervisor must live in the district they hold and in the one they run for. No county page this app can read names the districts.",
+  "boardPhone": "(641) 743-2546",
+  "county": "Adair",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Matt Wedemeyer",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Jodie Hoadley",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Jerry Walker",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Nathan Baier",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Michael Christoffersen"
+   }
+  },
+  "readOn": "2026-10-26"
+ },
  "003": {
   "boardPhone": "(641) 322-3240",
   "county": "Adams",
@@ -31,7 +67,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://adamscounty.iowa.gov/supervisors/"
  },
  "023": {
@@ -56,8 +92,35 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://butlercounty.iowa.gov/departments/supervisors"
+ },
+ "025": {
+  "asOf": "2026-10-26",
+  "asOfSource": "results",
+  "asOfWhy": "Which district each supervisor holds comes from the Secretary of State's certified results for the 2024 general election and the 2026 primary, since a supervisor must live in the district they hold and in the one they run for. No county page this app can read names the districts.",
+  "boardPhone": "(712) 297-7741",
+  "county": "Calhoun",
+  "countyNumbers": {
+   "1": "1",
+   "2": "3",
+   "3": "2"
+  },
+  "districts": {
+   "1": {
+    "name": "Dave George",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Cory Ridgely",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Scott Jacobs",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-26"
  },
  "029": {
   "asOf": "2026-10-07",
@@ -95,6 +158,31 @@
   },
   "readOn": "2026-10-07"
  },
+ "033": {
+  "boardPhone": "(641) 421-3024",
+  "county": "Cerro Gordo",
+  "countyNumbers": {
+   "1": "2",
+   "2": "1",
+   "3": "3"
+  },
+  "districts": {
+   "1": {
+    "name": "Casey Callanan",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Chris Watts",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Carl Ginapp",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-15",
+  "sourceUrl": "https://cerrogordo.gov/supervisors/"
+ },
  "037": {
   "boardPhone": "(641) 394-2100",
   "county": "Chickasaw",
@@ -127,8 +215,35 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://chickasawcounty.iowa.gov/board_of_supervisors/"
+ },
+ "067": {
+  "asOf": "2026-10-26",
+  "asOfSource": "results",
+  "asOfWhy": "Which district each supervisor holds comes from the Secretary of State's certified results for the 2024 general election and the 2026 primary, since a supervisor must live in the district they hold and in the one they run for. No county page this app can read names the districts.",
+  "boardPhone": "(641) 257-6129",
+  "county": "Floyd",
+  "countyNumbers": {
+   "1": "3",
+   "2": "2",
+   "3": "1"
+  },
+  "districts": {
+   "1": {
+    "name": "Boyd Campbell",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Frank Rottinghaus",
+    "party": "Democratic"
+   },
+   "3": {
+    "name": "Gloria Carr",
+    "party": "No party"
+   }
+  },
+  "readOn": "2026-10-26"
  },
  "075": {
   "boardPhone": "(319) 824-5813",
@@ -162,8 +277,72 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://www.grundycountyiowa.gov/departments/supervisors"
+ },
+ "077": {
+  "asOf": "2026-10-26",
+  "asOfSource": "results",
+  "asOfWhy": "Which district each supervisor holds comes from the Secretary of State's certified results for the 2024 general election and the 2026 primary, since a supervisor must live in the district they hold and in the one they run for. No county page this app can read names the districts.",
+  "boardPhone": "(641) 747-3512",
+  "county": "Guthrie",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Jerome Kuster",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Brian Johnson",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Maggie Armstrong",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Steve Smith",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Mike Dickson",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-26"
+ },
+ "079": {
+  "asOf": "2026-10-26",
+  "asOfSource": "results",
+  "asOfWhy": "Which district each supervisor holds comes from the Secretary of State's certified results for the 2024 general election and the 2026 primary, since a supervisor must live in the district they hold and in the one they run for. No county page this app can read names the districts.",
+  "boardPhone": "(515) 832-9530",
+  "county": "Hamilton",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3"
+  },
+  "districts": {
+   "1": {
+    "name": "Mary Clausen",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "April Ely",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Rick Young",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-26"
  },
  "089": {
   "boardPhone": "(563) 547-3404",
@@ -187,7 +366,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://howardcounty.iowa.gov/board-of-supervisors/"
  },
  "091": {
@@ -226,7 +405,7 @@
     "phone": "515 770-0014"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://www.humboldtcounty.iowa.gov/offices/administrative/board_of_supervisors/index.php"
  },
  "093": {
@@ -286,8 +465,80 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://www.jonescountyiowa.gov/board_of_supervisors/"
+ },
+ "109": {
+  "boardPhone": "(515) 295-2718",
+  "county": "Kossuth",
+  "countyNumbers": {
+   "1": "4",
+   "2": "5",
+   "3": "1",
+   "4": "2",
+   "5": "3"
+  },
+  "districts": {
+   "1": {
+    "name": "Kyle Stecker",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Amber Garman",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Carter Nath",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Howard Haas",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Joshua Waechter",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-26",
+  "sourceUrl": "https://www.kossuthcounty.iowa.gov/board-of-supervisors/"
+ },
+ "111": {
+  "asOf": "2026-10-26",
+  "asOfSource": "results",
+  "asOfWhy": "Which district each supervisor holds comes from the Secretary of State's certified results for the 2024 general election and the 2026 primary, since a supervisor must live in the district they hold and in the one they run for. No county page this app can read names the districts.",
+  "boardPhone": "(319) 372-6557",
+  "county": "Lee",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Denise Fraise",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Tim Wondra, D.C.",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Charles Holmes",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Garry Seyb",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Ginger Knisley",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-26"
  },
  "119": {
   "boardPhone": "(712) 472-8517",
@@ -321,7 +572,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://lyoncounty.iowa.gov/supervisors/"
  },
  "121": {
@@ -346,7 +597,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://madisoncounty.iowa.gov/offices/board-of-supervisors/"
  },
  "131": {
@@ -381,7 +632,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://mitchellcounty.iowa.gov/departments/board-of-supervisors/"
  },
  "133": {
@@ -406,8 +657,44 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://www.mononacountyiowa.gov/supervisors/"
+ },
+ "137": {
+  "asOf": "2026-10-26",
+  "asOfSource": "results",
+  "asOfWhy": "Which district each supervisor holds comes from the Secretary of State's certified results for the 2024 general election and the 2026 primary, since a supervisor must live in the district they hold and in the one they run for. No county page this app can read names the districts.",
+  "boardPhone": "(712) 623-5127",
+  "county": "Montgomery",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Charla Schmid",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Mike Olson",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Bryant Amos"
+   },
+   "4": {
+    "name": "Mark Peterson",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Alex Burton",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-26"
  },
  "143": {
   "asOf": "2026-10-06",
@@ -445,6 +732,43 @@
   },
   "readOn": "2026-10-06"
  },
+ "147": {
+  "asOf": "2026-10-26",
+  "asOfSource": "results",
+  "asOfWhy": "Which district each supervisor holds comes from the Secretary of State's certified results for the 2024 general election and the 2026 primary, since a supervisor must live in the district they hold and in the one they run for. No county page this app can read names the districts.",
+  "boardPhone": "(712) 852-2563",
+  "county": "Palo Alto",
+  "countyNumbers": {
+   "1": "2",
+   "2": "3",
+   "3": "5",
+   "4": "1",
+   "5": "4"
+  },
+  "districts": {
+   "1": {
+    "name": "Craig Merrill",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Roger Faulstick",
+    "party": "Democratic"
+   },
+   "3": {
+    "name": "Linus Solberg",
+    "party": "Democratic"
+   },
+   "4": {
+    "name": "Keith Wirtz",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Ronald Graettinger",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-26"
+ },
  "151": {
   "boardPhone": "(712) 335-3361",
   "county": "Pocahontas",
@@ -477,7 +801,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://pocahontascounty.iowa.gov/board-of-supervisors/"
  },
  "153": {
@@ -512,7 +836,7 @@
     "party": "Democratic"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://www.polkcountyiowa.gov/board-of-supervisors/"
  },
  "161": {
@@ -536,7 +860,7 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://www.saccountyiowa.gov/supervisors/"
  },
  "167": {
@@ -611,7 +935,7 @@
     "phone": "641-481-2310"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://www.tamacounty.iowa.gov/supervisors/"
  },
  "173": {
@@ -635,8 +959,45 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://taylorcounty.iowa.gov/departments/board-of-supervisors/"
+ },
+ "181": {
+  "asOf": "2026-10-26",
+  "asOfSource": "results",
+  "asOfWhy": "Which district each supervisor holds comes from the Secretary of State's certified results for the 2024 general election and the 2026 primary, since a supervisor must live in the district they hold and in the one they run for. No county page this app can read names the districts.",
+  "boardPhone": "(515) 690-9101",
+  "county": "Warren",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Brian Arnold",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Aaron Dekock",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Travis DeWitt",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Stephanie Erickson",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Crystal McIntyre",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-26"
  },
  "183": {
   "boardPhone": "(319) 653-7711",
@@ -670,8 +1031,43 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://washingtoncounty.iowa.gov/148/Board-of-Supervisors"
+ },
+ "187": {
+  "boardPhone": "(515) 573-7175",
+  "county": "Webster",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Austin Hayek",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Nathan Montgomery",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Bob Thode",
+    "party": "Democratic"
+   },
+   "4": {
+    "name": "Niki Conrad",
+    "party": "Democratic"
+   },
+   "5": {
+    "name": "John Cochrane",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-15",
+  "sourceUrl": "https://www.webstercountyia.gov/departments/board_of_supervisors/index.php"
  },
  "189": {
   "boardPhone": "(641) 585-3412",
@@ -695,7 +1091,67 @@
     "party": "Republican"
    }
   },
-  "readOn": "2026-10-17",
+  "readOn": "2026-10-24",
   "sourceUrl": "https://www.winnebagocountyiowa.gov/board_of_supervisors/"
+ },
+ "191": {
+  "boardPhone": "(563) 382-2370",
+  "county": "Winneshiek",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3",
+   "4": "4",
+   "5": "5"
+  },
+  "districts": {
+   "1": {
+    "name": "Mark Vick",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Mark Faldet",
+    "party": "Democratic"
+   },
+   "3": {
+    "name": "Shirley Vermace",
+    "party": "Democratic"
+   },
+   "4": {
+    "name": "Daniel Langreck",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Steve Kelsay",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-15",
+  "sourceUrl": "https://winneshiekcounty.iowa.gov/departments/board-of-supervisors"
+ },
+ "195": {
+  "boardPhone": "(641) 324-3630",
+  "county": "Worth",
+  "countyNumbers": {
+   "1": "1",
+   "2": "2",
+   "3": "3"
+  },
+  "districts": {
+   "1": {
+    "name": "AJ Stone",
+    "party": "Democratic"
+   },
+   "2": {
+    "name": "Mark Smeby",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Enos Loberg",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-10-26",
+  "sourceUrl": "https://worthcountyiowa.gov/board_of_supervisors/"
  }
 }

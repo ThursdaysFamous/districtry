@@ -15488,6 +15488,9 @@ function initTennesseeExplorer() {
           title: entry && entry.seatTitle ? String(entry.seatTitle) : "Commissioner",
           body: entry && entry.bodyName ? String(entry.bodyName) : null,
           readAt: entry ? entry.readAt : null,
+          // set when the weekly run could not read the county and carried its
+          // last list forward, so the card does not claim a weekly re-read
+          notRead: !!(entry && entry.notRead),
           sourceUrl: entry ? entry.sourceUrl : null
         };
       });
@@ -15544,7 +15547,9 @@ function initTennesseeExplorer() {
           label: "Where these names come from",
           value: (result.county != null ? String(result.county) : "The county") +
             "'s own published list of its " + (result.body || "county commission") +
-            (read ? ", read " + read : "") + ". This app reads it every week."
+            (read ? ", read " + read : "") + (result.notRead
+              ? ". This app could not read the list on its latest weekly try, so these are the names as of that day."
+              : ". This app reads it every week.")
         });
       } else {
         rows.push({

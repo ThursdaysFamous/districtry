@@ -48,11 +48,12 @@ which cross a county line) and 59 unorganized territories.
 November; the November contests are in the Secretary of State's `local.txt` files beside the
 city contests, and 704 towns' boards come out of them — 2,813 of 3,115 seats named, each dated,
 292 of the rest won by write-in. A March town runs its own election and its results are in no
-file the state publishes (the March election days answer 404 on the results host). **416 OF
-THEM ARE NAMED FROM THEIR COUNTY'S LIST SINCE 2026-10-16** (`mn/scripts/mn_county_town_officers_scraper.py`
+file the state publishes (the March election days answer 404 on the results host). **456 OF
+THEM ARE NAMED FROM THEIR COUNTY'S LIST** (416 since 2026-10-16, 40 more on 2026-10-26) (`mn/scripts/mn_county_town_officers_scraper.py`
 → `data/source/mn-county-town-officers.json`, then `build_mn_county_town_officers.py` →
 `mn-county-town-officers.json`): a town clerk certifies its officers to the county after each
-election, 42 counties publish the lists, and 29 are read — 2,018 officers as re-read on
+election, 42 counties publish the lists, and 32 are read (Goodhue, Renville and Traverse joined
+2026-10-26, Traverse's scanned page read by eye and held to the image's SHA-256) — 2,018 officers as re-read on
 2026-10-17, with names, offices, terms and, under Adam's ruling of that day ("if the official
 government source uses personal phone numbers, we publish those"), the telephone each list prints
 beside an officer (1,537 carry one, 75 a second), and, under Adam's choice of the same day
@@ -63,11 +64,11 @@ number or an address printed beside two people or again away from the officer is
 and stays out, as does a mailbox named for the town itself or for another office, and 180
 numbers printed with no area code ship as printed (gap `mn-township-phone-area-code`). One
 source per town: a town the election results name keeps those names, and the county list is
-compared as a witness (982 of 1,096 winners' surnames, 277 towns). The other 13 counties and
+compared as a witness (982 of 1,096 winners' surnames, 277 towns). The other 10 counties and
 their reasons are in gap `mn-township-officers`, which still covers about 680 towns, with a
 letter to the Minnesota Association of Townships, in `docs/ASK_DRAFTS.md`, sent on 2026-10-21. **NO WEEKLY
 JOB READS THE LISTS YET** — a new workflow needs the operator's word — so each card names the
-day its list was read. **THE DONE-STANDARD LEVEL STAYS OPEN** while those 13 are unsettled.
+day its list was read. **THE DONE-STANDARD LEVEL STAYS OPEN** while those 10 are unsettled.
 A seat a November town has not had
 on a ballot since 2022 is ABSENT rather than read from 2020: a six-year supervisor term (Minn.
 Stat. 367.03 subd. 4a) or an appointed clerk or treasurer leaves a board short, and the card
@@ -241,8 +242,8 @@ generate nothing for an instance that does not ask.
 - Metro: Minnesota (`minnesota`) — https://districtry.com/mn/
 - Geocoders: address Photon (Minnesota-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Minnesota-bounded, serial >=1s queue)
 - Ground truth: 44.97440,-93.26550 (downtown Minneapolis, Hennepin County) → county Hennepin County; us-house 5; mn-senate 61; mn-house 61A; mn-judicial-district Fourth Judicial District; voting-precinct Minneapolis W-7 P-6; county-commissioner Hennepin County Commissioner District 3; watershed-district Mississippi Watershed Management Organization; school-board-district District 4; city-ward Ward 7. Negative point 46.87720,-97.05000 (inside Cass County, NORTH DAKOTA, about 20 km west of Fargo — outside Minnesota and outside every other instance in the fleet, and inside permalink_gate (minLng -97.40) so the app answers the click and every shipped layer correctly returns nothing. Measured: 0 hits in every shipped geometry file, TIGERweb's county layer names Cass County STATE 38 (control: the anchor returns Hennepin County STATE 27), and no outline in fleet-outlines.json contains it. TWO POINTS WERE TRIED FIRST AND BOTH FAILED FOR REASONS WORTH RECORDING, because each looked obvious. LAKE SUPERIOR: Minnesota's TIGER county fabric is WATER-INCLUSIVE out to the international boundary, so a point in open Lake Superior at 47.6, -90.0 is named Lk Superior by TIGERweb's hydrography and is still INSIDE Cook County, and a point offshore of Duluth is inside the city of Duluth. Water is not outside the state here. WORTH COUNTY, IOWA (43.45, -93.37): correct on every static test — 0 hits in every shipped geometry file, TIGERweb naming Worth County STATE 19 — and it MADE THE BROWSER LEAVE. fleet-outlines.json puts it inside Iowa, so placeOwner hands the selection off to districtry.com/ia/ and the page navigates away; the smoke test's coverage-band probe then timed out looking for a button on a blank document. A NEGATIVE POINT MUST BE OUTSIDE EVERY LIVE INSTANCE, not only outside this one. Iowa's own negative point (43.65, -93.37) sits inside Minnesota and will start handing off the day this instance goes live — recorded in mn/WATCH.md as a go-live item on ia/, not a defect in this change.).
-- Layers: 20 registered (political 7, safety 2, schools 4, geography 7); `registerLayer(` floor 16. Debug namespace `window.MinnesotaExplorer`.
-- Scheduled workflows: `update-mn-congress-roster.yml` (Mon 13:40 UTC); `update-mn-commissioner-roster.yml` (Tue 13:40 UTC); `update-mn-city-councils.yml` (Tue 14:10 UTC); `update-mn-school-boards.yml` (Wed 14:10 UTC).
+- Layers: 21 registered (political 7, safety 2, schools 4, geography 8); `registerLayer(` floor 17. Debug namespace `window.MinnesotaExplorer`.
+- Scheduled workflows: `update-mn-congress-roster.yml` (Mon 13:40 UTC); `update-mn-commissioner-roster.yml` (Tue 13:40 UTC); `update-mn-city-councils.yml` (Tue 14:10 UTC); `update-mn-school-boards.yml` (Wed 14:10 UTC); `update-mn-swcd-supervisors.yml` (Thu 13:40 UTC).
 - Source registry: `mn/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 

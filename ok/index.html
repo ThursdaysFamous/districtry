@@ -4280,8 +4280,9 @@ function initOklahomaExplorer() {
     "city-council": ["city-ward"], "zip-code": ["zip-code"],
     "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
-    "police-station": ["police-station"], "fire-station": ["fire-station"],
-    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
+    "conservation-district": ["conservation-district"], "police-station": ["police-station"],
+    "fire-station": ["fire-station"], "post-office": ["post-office"],
+    "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -15900,7 +15901,7 @@ function initOklahomaExplorer() {
       },
       // an olive green no other layer here uses, so it reads apart from the
       // county lines most districts follow
-      style: { color: "#5E7A16", weight: 1.5, fillColor: "#9DB54A", fillOpacity: 0.06 }
+      style: { color: "#556E14", weight: 1.5, fillColor: "#9DB54A", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
       return conservationName(feature.properties || {}, loadOkConservationOffices.cached());
@@ -18785,7 +18786,7 @@ function initOklahomaExplorer() {
   var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
     "#1F6F6B": "#5DC0BA", "#1F6FB2": "#74BBFF", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF",
     "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD",
-    "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#5E7A16": "#A1C84C", "#6B7280": "#B1BACE",
+    "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#556E14": "#9BBE4E", "#6B7280": "#B1BACE",
     "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE",
     "#9DB54A": "#D5F568", "#A05F00": "#FBA23D", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1",
     "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
