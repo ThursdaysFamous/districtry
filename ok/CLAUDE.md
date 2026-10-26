@@ -144,7 +144,14 @@ name because the directory carries no district number. THE DIRECTORY NAMES NO DI
 three of each board's five are elected by the district's voters and the Commission issues every
 director's certificate, so the card names nobody and says how the board is chosen (gap
 `ok-conservation-district-directors`; the letter asking the Commission for the list is in
-`docs/ASK_DRAFTS.md`). The quarterly re-checks are in `ok/WATCH.md`.
+`docs/ASK_DRAFTS.md`). FIVE DISTRICTS ARE THE EXCEPTION: Tulsa County, Lincoln County, Dewey,
+Rogers and Deer Creek name their five directors on a website of their own, and their cards name them from that
+page with the day it was read (`ok/scripts/build_ok_conservation_directors.py`). All 84 were
+looked for on 2026-10-25 and five such pages found. Nothing on Lincoln County's site is dated
+after its 2020 meetings, so its card also says the board may have changed (`CAUTIONS`); Adam chose
+on 2026-10-26 to show it that way. Five boards of 84 is not the level
+answered, so the done standard keeps it open until the Commission's list arrives. The quarterly
+re-checks are in `ok/WATCH.md`.
 
 **TRIBAL AREAS ARE DRAWN, AND THIS IS THE ONE INSTANCE THAT DRAWS CENSUS STATISTICAL AREAS.**
 Measured with `scripts/tribal_areas.py` on 2026-10-09, the Census draws one federal reservation

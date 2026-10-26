@@ -15757,7 +15757,7 @@ function initNycExplorer() {
    * IT IS ITS OWN LAYER RATHER THAN A ROW ON THE CITY OR TOWN CARD, because
    * that card is registered through the shared polygon factory, which is an
    * ENGINE block: adding a roster hook to it would be a fleet-wide change for
-   * two New York counties. A reader who wants the town gets the town, and a
+   * a few New York counties. A reader who wants the town gets the town, and a
    * reader who wants the county's governing body gets this.
    *
    * COVERAGE IS SLICED FROM ny-counties.json, the file the County card itself
@@ -15799,9 +15799,13 @@ function initNycExplorer() {
       });
     };
   }
-  function nySupervisorsFor(roster, key, unit) {
+  // A unit is keyed "Johnstown (city)" where two units of one county share a
+  // name (Fulton has a city and a town of Johnstown), so that key is tried
+  // first and the bare name after it.
+  function nySupervisorsFor(roster, key, unit, unitType) {
     var county = roster && roster[key];
-    var entry = county && county.units && county.units[unit];
+    var units = (county && county.units) || {};
+    var entry = (unitType && units[unit + " (" + unitType + ")"]) || units[unit];
     return (entry && entry.members) || [];
   }
   function nySupervisorEntry(key, county) {
@@ -15819,8 +15823,9 @@ function initNycExplorer() {
       hoverOfficial: {
         load: loadNySupervisorMembers,
         name: function (feature, roster) {
-          var people = nySupervisorsFor(
-            roster, key, findPropCI(feature.properties || {}, ["name"]));
+          var props = feature.properties || {};
+          var people = nySupervisorsFor(roster, key,
+            findPropCI(props, ["name"]), findPropCI(props, ["muni_type"]));
           return people.length ? people[0].name : null;
         }
       },
@@ -15847,7 +15852,7 @@ function initNycExplorer() {
           title: roster.board || (county + " County Board of Supervisors"),
           // THE SECOND CLAUSE EXISTS BECAUSE OF GLENS FALLS. The first draft
           // said flatly "the seat is the town or city", which is true of
-          // every unit in three of the four counties and false in Warren,
+          // every unit in most of these counties and false in Warren,
           // where the city of Glens Falls elects a supervisor from each of
           // its five wards and the town of Queensbury elects a Town
           // Supervisor plus four County Supervisors. The card names each
@@ -15858,13 +15863,15 @@ function initNycExplorer() {
             + "drawn. Where a unit sends more than one supervisor, each one's "
             + "own seat is named beside them."
         }));
-        var people = nySupervisorsFor(result.roster, key, result.unit);
+        var people = nySupervisorsFor(
+          result.roster, key, result.unit, result.unitType);
         if (people.length) {
           wrap.appendChild(renderPersonRows(people.map(function (person) {
             var row = { name: person.name, badge: person.role || "Supervisor" };
             if (person.party) row.note = person.party;
             if (person.phone) row.phone = person.phone;
             if (person.email) row.email = person.email;
+            if (person.url) row.links = [{ label: "Supervisor's page", url: person.url }];
             if (person.address) {
               row.details = { label: "Mailing address", items: [person.address] };
             }
@@ -15908,9 +15915,13 @@ function initNycExplorer() {
     style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.05 },
     counties: [
       nySupervisorEntry("delaware", "Delaware"),
+      nySupervisorEntry("fulton", "Fulton"),
+      nySupervisorEntry("livingston", "Livingston"),
       nySupervisorEntry("saratoga", "Saratoga"),
       nySupervisorEntry("schoharie", "Schoharie"),
-      nySupervisorEntry("warren", "Warren")
+      nySupervisorEntry("warren", "Warren"),
+      nySupervisorEntry("wayne", "Wayne"),
+      nySupervisorEntry("wyoming", "Wyoming")
     ]
   });
 

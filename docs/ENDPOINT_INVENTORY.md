@@ -394,7 +394,7 @@ measured until the next run describes it.
 | ky | 31 | 17 | 0 |
 | in | 22 | 21 | 0 |
 | nc | 40 | 20 | 0 |
-| ok | 32 | 18 | 0 |
+| ok | 32 | 19 | 0 |
 | sc | 36 | 20 | 0 |
 | tn | 34 | 20 | 0 |
 | ar | 28 | 20 | 0 |
