@@ -1067,7 +1067,7 @@
         "file": "bond-county-outline.json",
         "min_features": 1,
         "max_features": 1,
-        "note": "Bond County outline — gap-location geometry only. Bond is served as a judicial-circuit secondary with no dispatch entry, so this ships purely so its 2026-08-08 board gap record attaches to ground the gaps panel can locate.",
+        "note": "Bond County outline — the coverage test for the county's library and county-board dispatch entries, read through countyOutlineCoverage(\"bond\"), which builds the file name from the slug at runtime. It shipped on 2026-08-08 as gap-location geometry for the county's board gap record; the library entry made it a coverage test on 2026-09-06 and the board districts joined it on 2026-10-26.",
         "dynamic_reference": true
       },
       {
@@ -1299,6 +1299,12 @@
         "min_features": 5,
         "max_features": 5,
         "note": "Jersey County's four County Board districts, three members each, drawn by whole townships from the precinct-by-district table the County Clerk sent on 2026-10-01, plus Jersey Township as one SHARED area between Districts 1 and 2: the county divides its precincts there, splits Jersey 7 between both, and runs Jersey 1-8 where the census carries 1-10, so nothing inside it can be placed. A township witness proves every census precinct lies in the township its name says (scripts/build_partial_board_districts.py). Bounds are an EQUALITY: four districts plus one shared area."
+      },
+      {
+        "file": "bond-county-board-districts.json",
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Bond County's five single-member County Board districts, built block by block from the county's 2011 apportionment plan (Resolution 06-27-11-01), which the County Clerk sent on 2026-10-26: whole 2010 precincts plus named census blocks moved out of Burgess 2, Shoal Creek 2, Old Ripley and Central 6, the same four precincts the county's 2022 and 2024 canvasses divide between the same districts. Every figure the plan prints is checked against the 2010 census, with the Mulberry Grove pair printed the other way round and the 1,536 people of the Greenville prison left out as the plan leaves them. Five blocks the plan lists under one precinct lie in another; three of them, in Greenville, would be a detached piece of District 5 inside District 4 while the canvasses count their precinct wholly in District 4, so they ship as one SHARED area between Districts 4 and 5 (scripts/build_bond_boundaries.py). Bounds are an EQUALITY: five districts plus one shared area."
       },
       {
         "file": "jasper-county-board-districts.json",
@@ -3401,6 +3407,11 @@
         "note": "Jersey County Board members keyed by district (4 districts x 3 members = 12 seats), scraped weekly from the county's own board page by scripts/il_county_board_pages_scraper.py and written by build_il_county_board_pages.py, which puts it in data/app because the county's drawn districts read it (2026-10-16)."
       },
       {
+        "file": "bond-county-board-members.json",
+        "min_keys": 5,
+        "note": "Bond County Board members keyed by district (5 single-member districts), scraped weekly from the county's own board page by scripts/il_county_board_pages_scraper.py and written by build_il_county_board_pages.py, which puts it in data/app because the county's drawn districts read it (2026-10-26)."
+      },
+      {
         "file": "jasper-county-board-members.json",
         "min_keys": 9,
         "note": "Jasper County Board members keyed by lettered seat (1A to 3C; 3 districts x 3 members), scraped weekly from the county's own board page by scripts/il_county_board_pages_scraper.py and written by build_il_county_board_pages.py, which puts it in data/app because the county's drawn districts read it (2026-10-16)."
@@ -3488,7 +3499,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v47",
+    "cache_name": "districtry-il-shell-v48",
     "shell_urls": [
       "./",
       "./sources.html",

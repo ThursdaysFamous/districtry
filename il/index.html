@@ -17765,6 +17765,12 @@ function initChiExplorer() {
   var loadJasperBoardMembers = makeCached(function () {
     return fetchJSONWithRetry("data/app/jasper-county-board-members.json", {}, 2);
   });
+  var loadBondBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/bond-county-board-districts.json", {}, 2);
+  });
+  var loadBondBoardMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/bond-county-board-members.json", {}, 2);
+  });
   var loadFayetteBoardDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/fayette-county-board-districts.json", {}, 2);
   });
@@ -31866,6 +31872,16 @@ function initChiExplorer() {
         loadGeometry: loadJasperBoardDistricts, loadMembers: loadJasperBoardMembers,
         url: "https://jaspercountyillinois.gov/county-board/board-members/",
         seatsNote: "Three members represent this district."
+      }),
+      // Bond — five single-member districts from the county's 2011
+      // apportionment plan, which names whole precincts and census blocks
+      // (build_bond_boundaries.py), with three Greenville blocks the plan and
+      // the county's election results place differently drawn as shared.
+      partialBoardEntry({
+        key: "bond", title: "Bond County Board", coverage: countyOutlineCoverage("bond"),
+        loadGeometry: loadBondBoardDistricts, loadMembers: loadBondBoardMembers,
+        url: "https://bondcountyil.gov/bond-county-board/",
+        seatsNote: "One member represents this district."
       })
     ]
   });

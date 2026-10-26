@@ -1,6 +1,13 @@
 {
  "note": "County board office addresses for districted counties whose own roster publishes none, from two sources, each named on the card. Most come from the Illinois State Board of Elections' County Officers Book, published on the board chair's own row and corroborated against a second courthouse office on the same county's page. The rest come from the county's own Annual Financial Report filing with the Illinois Comptroller, where a street ships only when two differently-surnamed officers filed the same one. Both are held to the same test: every county that publishes its own board address and also appears in the source must name the same building. So what ships is a shared public building rather than anyone's home, and a county that publishes its own board address is NOT in this file \u2014 its own publication is what ships.",
  "offices": {
+  "bond": {
+   "address": "200 West College Avenue, Greenville, IL 62246",
+   "asOf": "2025-12-15",
+   "confirmedBy": "Circuit Clerk",
+   "source": "isbe",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
   "boone": {
    "address": "1212 Logan Avenue, Belvidere, IL 61008",
    "filedFor": "2025",
