@@ -507,6 +507,28 @@ def day_refs(gc):
     return out
 
 
+def return_visits(gc, start):
+    """First and return visits to the apps for one window, or None.
+
+    The fetcher reads them per day for the full window (`visits`, absent from
+    a file fetched before 2026-10-27 and None when its own check refused the
+    dashboard's answer). Each window's figure is the daily series cut to that
+    window, so the totals and the per-day rows can never disagree.
+    """
+    v = gc.get("visits")
+    if not v:
+        return None
+    first, ret = v["first_daily"], v["return_daily"]
+    dates = [d["date"] for d in gc["daily"]] if "daily" in gc else None
+    if dates is not None and not (len(first) == len(ret) == len(dates)):
+        fail("visits: %d first and %d return days against %d in the daily "
+             "series" % (len(first), len(ret), len(dates)))
+    return {"since": long_label(v["since"]), "first": v["first"],
+            "return": v["return"],
+            "byApp": [[INSTANCE_NAMES.get(r["tag"], r["tag"]), r["count"]]
+                      for r in v["by_app_return"]]}
+
+
 def bar_data(gc, start, end):
     """barData for one window, as the page reads it, plus the instance rows
     and their residual for the reconciliation printout.
@@ -572,6 +594,7 @@ def bar_data(gc, start, end):
         "pagesCut": bool(gc.get("pages_truncated", True)),
         "notListedYet": not_listed_yet(end),
         "listedPartway": listed_partway(start, end),
+        "visits": return_visits(gc, start),
     }
     return bd, instances, residual
 
@@ -736,7 +759,13 @@ def build():
        window is a weaker measurement than the same zero for one findable
        throughout, and the window rolls, so this is measured on every build
        rather than described in a sentence. */
-    listedPartway: %s
+    listedPartway: %s,
+    /* First and return visits to the apps, counted once per browser window
+       since `since` (engine install-app, visit/first and visit/return). NULL
+       for a window the fetcher could not reconcile or a file fetched before
+       the count was read; the page then shows no return-visit figure. byApp is
+       the return visits by app, the ten most. */
+    visits: %s
   };
 
   /* The two facts no arithmetic on this page can recover, so they are stated
@@ -779,6 +808,7 @@ def build():
         "true" if bd["pagesCut"] else "false",
         json.dumps(bd["notListedYet"], separators=(",", ":")),
         compact(bd["listedPartway"]),
+        compact(bd["visits"]),
         "{:,}".format(gc["total"]), "{:,}".format(daily_sum),
         "{:,}".format(abs(gc["total"] - daily_sum)),
         datetime.date.fromisoformat(gc["fetched"][:10]).strftime("%B %-d, %Y"),
