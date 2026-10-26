@@ -43,6 +43,8 @@ WHAT IT CHECKS, because each is a claim the page makes:
      same hosts, plus AI actions, SDK imports, the Claude CLI's print mode and
      AI API-key names. This backs "the weekly updates are read by ordinary
      code". This file is the one script excluded, because it names them.
+     NAMED_NOT_CALLED records a script that names a host as a word rather
+     than an address (a referrer label), re-audited like DIRECT_PUSH.
   3. A workflow that pushes opens a pull request. Every workflow running
      `git push` must also run `gh pr create`, unless DIRECT_PUSH records why
      not. Each entry there FAILS when its file is gone, no longer pushes, or
@@ -162,6 +164,17 @@ DIRECT_PUSH = {
         "officeholder, boundary or app file (2026-09-14)",
 }
 
+# Scripts that name an AI host as a WORD, never as an address, and why that
+# is not a call. Re-audited every run: an entry FAILS when its file is gone,
+# no longer names the host, or names it after "//", which is how an address
+# to it would be written.
+NAMED_NOT_CALLED = {
+    ("scripts/build_traffic_page.py", "chatgpt.com"):
+        "GoatCounter reports chatgpt.com as the referrer of a visit that came "
+        "from a link in ChatGPT, and the traffic report labels it \"ChatGPT\"; "
+        "nothing is sent there (2026-10-26)",
+}
+
 # What the page says about AI systems reading the site, as robots.txt's
 # Content-Signal for `*` must still say it.
 EXPECTED_SIGNAL = {"search": "yes", "ai-input": "yes", "ai-train": "no",
@@ -220,6 +233,11 @@ def check_served():
     return len(files)
 
 
+def as_address(host, text):
+    """Whether `text` writes `host` after "//", with or without subdomains."""
+    return re.search(r"//(?:[a-z0-9-]+\.)*" + re.escape(host), text) is not None
+
+
 def check_automation():
     files = automation_files()
     hits = []
@@ -227,12 +245,24 @@ def check_automation():
         raw = read(path)
         text = raw.lower()
         hits += ["%s names %s" % (rel(path), m)
-                 for m in AI_HOSTS + AUTOMATION_MARKERS if m in text]
+                 for m in AI_HOSTS + AUTOMATION_MARKERS
+                 if m in text and not ((rel(path), m) in NAMED_NOT_CALLED
+                                       and not as_address(m, text))]
         m = SDK_IMPORT.search(raw)
         if m:
             hits.append("%s imports %s" % (rel(path), m.group(1)))
         if CLAUDE_CLI.search(raw):
             hits.append("%s runs the Claude CLI in print mode" % rel(path))
+    for (name, host) in sorted(NAMED_NOT_CALLED):
+        path = os.path.join(REPO_ROOT, name)
+        if not os.path.exists(path):
+            hits.append("NAMED_NOT_CALLED names %s, which no longer exists" % name)
+        elif host not in read(path).lower():
+            hits.append("NAMED_NOT_CALLED says %s names %s, and it no longer "
+                        "does — remove the entry" % (name, host))
+        elif as_address(host, read(path).lower()):
+            hits.append("%s names %s as an address, which NAMED_NOT_CALLED "
+                        "does not cover" % (name, host))
     if hits:
         fail("the page says the weekly updates are read by ordinary code, and "
              "automation uses an AI service:\n  " + "\n  ".join(hits))
