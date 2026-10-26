@@ -2759,8 +2759,7 @@ to and would read as doubting the first answer. It is recorded, not re-asked.
 > edition until summer 2027, so the lost weekly re-read was re-reading an unchanged file; a
 > mid-cycle "updated" file, which this edition's own filename shows can happen, is the one change
 > it would have caught. A thank-you asking her to e-mail the 2027 edition, or to say where it will
-> be posted, was handed to the Letters thread to draft the same day. Drafted 2026-09-12. A first
-> approach to this office. It asks for
+> be posted, was SENT 2026-10-26. Drafted 2026-09-12. A first approach to this office. It asks for
 > permission, not for data: the county already publishes the file and it already serves
 > normally to a browser. Nothing is blocked and nothing is being worked around.
 
