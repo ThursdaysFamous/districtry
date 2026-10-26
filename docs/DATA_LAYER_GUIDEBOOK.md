@@ -2478,28 +2478,6 @@ trusted.
       ]
     },
     {
-      "id": "ia-supervisor-count-disagrees",
-      "concept": "County supervisor",
-      "area": "Wright County, Iowa",
-      "counties": [
-        "wright"
-      ],
-      "covers": [
-        "county-government:wright"
-      ],
-      "ask": {
-        "who": "County Auditor Amanda Meyer",
-        "asked": "2026-10-01",
-        "outcome": "pending"
-      },
-      "kind": "data-quality",
-      "layer": "county-supervisor",
-      "summary": "In Wright County your supervisor card names the county and no supervisors. Two state sources disagree about how many seats the board has, so nothing here can say who fills them.",
-      "why": "The statewide directory lists five supervisors where the state's own district map draws three. The map is the stale half here, and naming five people against a three-district map would put a supervisor in a district the map does not draw.",
-      "wanted": "The state's supervisor-district map redrawn to the five districts the county elects from, or any county list that prints a district number beside each supervisor's name.",
-      "blocker": "MEASURED 2026-09-22 and RE-MEASURED 2026-10-01, when WARREN LEFT THIS RECORD AND THE REMAINING COUNTY'S DIAGNOSIS TURNED OUT TO BE BACKWARDS. Both counties were recorded as two publishers describing different boards with nothing to distinguish them. That was true of neither. Warren needed nothing fetched at all: this repo was reading the board size out of the state layer's own NUMDISTRICTS attribute, which says three, while the SAME layer draws five numbered district polygons for Warren -- so the disagreement was between a column and the geometry beside it in one file, and the polygons decide. Measured statewide, 43 counties' polygon counts differ from their attribute and 42 of those are at-large counties, where a district count and a polygon count are answering different questions; Warren is the only real disagreement in the state, and it closed with the attribute no longer read for a districted county (ia/scripts/build_ia_county_board_directory.py). Exactly one shipped value changed.\n\nWRIGHT IS A DIFFERENT CASE AND THE MAP IS WHAT IS STALE. The association directory lists five supervisors and names districts 1 to 5 against them; the Legislative Services Agency geometry this repo ships draws three districts for the county. Five is a lawful board size under Iowa Code 331.201 and a county that names its own districts 1 to 5 is electing from five of them, so the names are not in doubt -- the MAP is. Shipping the five against a three-district map would seat a supervisor in a district no reader can be shown, which is a worse answer than none, so ia/scripts/build_ia_county_officers.py withholds and prints its reason on the card. REPAIRING THE MAP IS A DIFFERENT PIECE OF WORK from naming the board, and it is the one this record is now waiting on.\n\nASK: ASKED 2026-10-01 -- County Auditor Amanda Meyer, auditor@wrightco.iowa.gov, confirmed in the operator's own sent folder at 14:53:56 UTC. One letter asking how many districts the board elects from today and which supervisor holds each, which settles the map and the roster in one reply. No answer yet; the follow-up falls due at about three weeks (2026-10-22) and the thirty-day silence mark at 2026-10-31. A record earns nothing toward the fourth test until that letter has been refused, or followed up once and met thirty days of silence, so the `covers` tag here is a statement of which level is open and not a claim to have closed it, and the `ask` block says `pending` for the same reason."
-    },
-    {
       "id": "ia-supervisor-count-impossible",
       "concept": "County supervisor",
       "area": "Pottawattamie County, Iowa",

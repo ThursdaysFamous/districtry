@@ -4517,6 +4517,7 @@
   }
  },
  "19197": {
+  "boardPhone": "(515) 532-3262",
   "county": "Wright",
   "countyAttorney": {
    "email": "esimonson@wrightco.iowa.gov",
@@ -4536,7 +4537,30 @@
    "party": "Republican",
    "phone": "(515) 532-3722"
   },
-  "supervisorsWithheld": "the county directory lists 5, and the supervisor-district geometry seats 3",
+  "supervisorPlan": "PLAN 2",
+  "supervisorSeats": 5,
+  "supervisors": [
+   {
+    "name": "Ashley Bosch",
+    "party": "Republican"
+   },
+   {
+    "name": "Betty Ellis",
+    "party": "Republican"
+   },
+   {
+    "name": "Dean Kluss",
+    "party": "Republican"
+   },
+   {
+    "name": "Lynn Loux",
+    "party": "Republican"
+   },
+   {
+    "name": "Rick Rasmussen",
+    "party": "Republican"
+   }
+  ],
   "treasurer": {
    "name": "Peggy Schluttenhofer",
    "party": "Republican",

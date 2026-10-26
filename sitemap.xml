@@ -183,7 +183,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor.html</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1672,6 +1672,12 @@
   <url>
     <loc>https://districtry.com/ia/county-supervisor/worth.html</loc>
     <lastmod>2026-10-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ia/county-supervisor/wright.html</loc>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

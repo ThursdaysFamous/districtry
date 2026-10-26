@@ -615,20 +615,22 @@ try {
   //      them the county's own board page settles it, so those names rest on
   //      a publisher no other county's do and the card says so.
   //
-  //      Wright is the withheld row since 2026-10-17, when the statewide
+  //      Wright was the withheld row from 2026-10-17, when the statewide
   //      directory stopped listing a sixth Pottawattamie supervisor and that
-  //      county's five shipped; Wright is then the one board still withheld.
-  //      If Wright resolves too, this row needs another withheld county.
+  //      county's five shipped, until 2026-10-26, when its five districts
+  //      shipped from the county's own map and the directory's five names
+  //      matched them. No Iowa board is withheld after that, so the row now
+  //      holds Wright to naming a supervisor with no county-named sentence.
+  //      If a board is withheld again, give that county a withheld row.
   //
   //      Adair was the county-named row until 2026-10-23, when the statewide
   //      directory listed its whole board again and Adair's supervisors came
   //      from there; Tama, still named by its own page, took the row.
   //
   //      BOTH BRANCHES, for the reason 2a4 already gives. Tama must name a
-  //      supervisor AND carry the county-named sentence; Wright must
-  //      carry the withheld sentence and NOT the county-named one, because a
-  //      county-named line over a board we do not publish would credit a
-  //      page we were refused; and Marshall, the anchor county, comes from the
+  //      supervisor AND carry the county-named sentence; Wright, whose names
+  //      come from the statewide directory, must name one with NO
+  //      county-named sentence; and Marshall, the anchor county, comes from the
   //      statewide directory like the other 95 and must name a supervisor with
   //      NO county-named sentence at all -- which is the half that keeps the
   //      first honest, since a sentence rendered for every county says nothing.
@@ -643,8 +645,8 @@ try {
        null, "Tama, named by the county's own page"],
       [42.08000, -92.53000, "Tama County", "Mark Doland",
        null, "Tama names a supervisor from the county's own page"],
-      [42.73160, -93.73270, "Wright County", "Not shown",
-       "Named by the county", "Wright, withheld and not credited"],
+      [42.73160, -93.73270, "Wright County", "Dean Kluss",
+       "Named by the county", "Wright, from the statewide directory"],
       [42.04940, -92.90710, "Marshall County", "Supervisor",
        "Named by the county", "Marshall, from the statewide directory"]
     ]) {
