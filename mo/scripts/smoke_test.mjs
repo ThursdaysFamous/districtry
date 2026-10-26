@@ -99,6 +99,8 @@ const CASS_POINT = "38.7968,-94.45476";
 // file draws it (shapely polylabel, 2026-10-26), from the shapefile its
 // Assessor sent.
 const HOWARD_POINT = "39.10983,-92.59028";
+// Salem, in Dent County, whose clerk's office listed the whole townships in each district.
+const DENT_POINT = "37.60307,-91.48972";
 // Inside the Census's 2020 Marshall 4 precinct, the half of Marshall township
 // Saline's clerk lists in the Northern District, 4.1 km from any edge.
 const SALINE_POINT = "39.1534,-93.246";
@@ -1252,7 +1254,7 @@ try {
     const drawn = shipped("mo-commission-counties.json");
     const seatOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.seat === p.seat) || {};
     const presidingOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.countywide) || {};
-    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT, HOWARD_POINT, SALINE_POINT, PERRY_POINT, IRON_POINT, SCOTT_POINT]) {
+    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT, HOWARD_POINT, DENT_POINT, SALINE_POINT, PERRY_POINT, IRON_POINT, SCOTT_POINT]) {
       const at = propsAt(fc, pt);
       const p = at[0] || {};
       const mine = seatOf(p), pres = presidingOf(p);
@@ -1270,9 +1272,12 @@ try {
             ? text.includes(`${p.county}'s own map at SEMO GIS`) &&
               (p.pointedOn ? text.includes(`clerk pointed this app to that map on ${longDate(p.pointedOn)}`)
                 : !text.includes("clerk pointed this app"))
-          : p.source === "listed"
+          : p.source === "listed" && p.byPrecinct
             ? text.includes(`county clerk listed them, township by township and precinct by precinct on ${longDate(p.listedOn)}`) &&
               text.includes("2020 voting precinct lines")
+          : p.source === "listed"
+            ? text.includes(`clerk's office listed them, township by township on ${longDate(p.listedOn)}`) &&
+              !text.includes("voting precinct lines")
           : text.includes(`${p.county}'s own map viewer`);
       check(`county-commissioner card in ${p.county || "a drawn county"} names the ${p.seat || "?"} and its commissioner, the presiding commissioner, and where the line comes from`,
         at.length === 1 && !!drawn[p.countyfips] && !info.error && !!mine.name && !!pres.name &&

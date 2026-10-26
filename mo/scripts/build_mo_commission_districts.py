@@ -34,9 +34,10 @@ carries a Commissioner District layer for Iron and Scott counties too, found
 on 2026-10-24 without any county pointing to it, so those two are drawn from
 it the same way (St. Francois's, on the same server, is not; see its note
 below), Wayne's clerk's office e-mailed a township map on 2026-10-26
-whose line runs along township lines, and Howard's Assessor e-mailed a
-shapefile of its two districts the same day (FILE below). Those 30 are SOURCES
-below. The other 84 counties and the City of St. Louis are not
+whose line runs along township lines, Howard's Assessor e-mailed a
+shapefile of its two districts the same day (FILE below), and Dent's clerk's
+office listed the whole townships in each district the same day. Those 31 are
+SOURCES below. The other 83 counties and the City of St. Louis are not
 drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
@@ -155,6 +156,20 @@ SOURCES = {
     "063": {"viewer": ("christiangis", "Dekalb_County_MO", "11", "62"),
             "names": {"EASTERN COMMISSIONER DISTRICT": "Eastern District",
                       "WESTERN COMMISSIONER DISTRICT": "Western District"}},
+    # Dent's clerk's office answered on 2026-10-26 with the townships each
+    # district holds: First District Texas, Current, Franklin, Gladden, Linn,
+    # Spring Creek East and Sinkin, Second District Watkins, Spring Creek
+    # West, Norman, Short Bend, Meramec and Osage (her list spells two of
+    # them "Frankin" and "Sinkin"; the Census spells them Franklin and
+    # Sinkin). Spring Creek is split between the two districts, and the
+    # Census draws its two halves as two townships, so every one of the 13
+    # townships is whole in one district.
+    "065": {"townships": {
+                "First District": ["Current", "Franklin", "Gladden", "Linn",
+                                   "Sinkin", "Spring Creek East", "Texas"],
+                "Second District": ["Meramec", "Norman", "Osage", "Short Bend",
+                                    "Spring Creek West", "Watkins"]},
+            "listed": "2026-10-26"},
     # Lawrence's map (lawrencecountymo.org, a 2024 scan, read 2026-10-23)
     # outlines its Eastern District around six whole townships, and its
     # township and precinct areas match TIGER's 14 townships: Mount Vernon's
@@ -682,6 +697,8 @@ def build_county(c3, spec, county_feature, roster, today):
             feats[-1]["properties"]["sentOn"] = spec["sent"]
         if spec.get("listed"):
             feats[-1]["properties"]["listedOn"] = spec["listed"]
+            if spec.get("precincts"):
+                feats[-1]["properties"]["byPrecinct"] = True
     people = {spec["names"][n]: 0 for n in names}
     unplaced = 0
     for x, y, p in fetch_block_points(c3):
@@ -757,13 +774,34 @@ def _rounded(geom):
     return _polygonal(set_precision(make_valid(geom), 1e-6))
 
 
-def build():
+def build(only=None):
+    """Read every county's source, or with `only` (a set of three-digit
+    county codes) read just those and keep every other county's districts
+    and record exactly as shipped, so one county's server being down does
+    not stop a change to another. A kept county keeps its own read date."""
     today = datetime.date.today().isoformat()
     roster = load_json(ROSTER_FILE)
     counties = {f["properties"]["GEOID"]: f for f in load_json(COUNTIES_FILE)["features"]}
+    kept_feats, kept_recs = {}, {}
+    if only is not None:
+        unknown = sorted(set(only) - set(SOURCES))
+        if unknown:
+            raise SystemExit("--only names counties SOURCES does not: %s" % ", ".join(unknown))
+        for f in load_json(OUT_FILE)["features"]:
+            kept_feats.setdefault(f["properties"]["countyfips"], []).append(f)
+        kept_recs = load_json(COUNTIES_OUT)
     features, records = [], {}
     for c3, spec in sorted(SOURCES.items()):
         geoid = STATE + c3
+        if only is not None and c3 not in only:
+            if geoid not in kept_feats or geoid not in kept_recs:
+                raise SystemExit("%s is in SOURCES but not shipped, so --only must name it"
+                                 % counties[geoid]["properties"]["NAME"])
+            features += kept_feats[geoid]
+            records[geoid] = kept_recs[geoid]
+            print("  %-18s kept as shipped (read %s)"
+                  % (counties[geoid]["properties"]["NAME"], kept_recs[geoid].get("read")))
+            continue
         feats, rec = build_county(c3, spec, counties[geoid], roster, today)
         features += feats
         records[geoid] = rec
@@ -928,8 +966,14 @@ def check():
 
 
 def main():
-    if "--check" in sys.argv[1:]:
+    args = sys.argv[1:]
+    if "--check" in args:
         check()
+    elif "--only" in args:
+        i = args.index("--only")
+        if i + 1 >= len(args):
+            raise SystemExit("--only needs a comma-separated list of county codes, e.g. 065")
+        build(only={c.strip() for c in args[i + 1].split(",") if c.strip()})
     else:
         build()
 
