@@ -17685,8 +17685,11 @@ function initIowaExplorer() {
    * (data/app/ia-cc-trustees.json, ia/scripts/ia_cc_trustee_scraper.py +
    * build_ia_cc_trustees.py, weekly). The fifteenth, Northeast Iowa, lists
    * its trustees by the school districts they represent, and four of its nine
-   * list Dubuque Community, so a school district does not identify a seat;
-   * that card says so and names nobody for the district. (Until that date this
+   * list Dubuque Community, so a school district does not identify a seat.
+   * Since 2026-10-26 its seats are keyed from election records instead
+   * (build_ia_cc_trustees.py PAIRED, college entry `districtsFrom`), and the
+   * card's Source row says so; the `undistricted` branch below is what the
+   * card shows if the page and that table ever stop agreeing. (Until that date this
    * card named nobody anywhere, on a 2026-08-28 reading that six colleges named
    * a district, one sat behind a captcha and one refused this client.)
    * ---------- */
@@ -17809,7 +17812,16 @@ function initIowaExplorer() {
           label: "Source",
           value: "Named by " + String(c.college) + " Community College's own " +
             "board page" + (c.asOf ? ", read " + String(c.asOf) : "") +
-            ". Iowa keeps no statewide list of community college trustees."
+            ". Iowa keeps no statewide list of community college trustees." +
+            (c.districtsFrom === "elections"
+              ? " The page lists its trustees by school district rather than " +
+                "director district, so which district each trustee holds was " +
+                "matched" + (c.districtsReadOn ? " on " + String(c.districtsReadOn) : "") +
+                " from election records: the Secretary of State's certified " +
+                "2025 results, the 2023 candidate filings and the college's own " +
+                "announcement of a trustee sworn in. A trustee must live in the " +
+                "district that elects them."
+              : "")
         });
       } else if (c && c.undistricted) {
         tail.push({
