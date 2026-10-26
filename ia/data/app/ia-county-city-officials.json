@@ -1621,6 +1621,67 @@
    }
   ]
  },
+ "1927390": {
+  "city": "Fertile",
+  "members": [
+   {
+    "county": "Worth",
+    "name": "Wendy Lunning",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Worth",
+    "name": "Nick Bailey",
+    "phone": "(641) 797-2283",
+    "role": "Mayor",
+    "termEnds": "2027",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Andy Carlson",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Rick Anderson",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Michael Lester",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Holly Lovik-Hanna",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Tim Severson",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   }
+  ],
+  "officeAddress": "3494 Eagle Ave P.O. Box 161 Fertile, IA 50434",
+  "officePhone": "(641) 797-2121",
+  "sources": [
+   {
+    "county": "Worth",
+    "url": "https://elections.worthcountyiowa.gov/elected_officials/city/"
+   }
+  ]
+ },
  "1928920": {
   "city": "Fraser",
   "members": [
@@ -1809,6 +1870,69 @@
    }
   ]
  },
+ "1931890": {
+  "city": "Grafton",
+  "members": [
+   {
+    "county": "Worth",
+    "name": "Renee Petersen",
+    "phone": "(641) 748-2970",
+    "phoneIsOffice": true,
+    "role": "City Clerk"
+   },
+   {
+    "county": "Worth",
+    "name": "Gregg Urbatsch",
+    "role": "Mayor",
+    "termEnds": "2027",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Jane Dalluge",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Randy Hulshizer",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Tom Kruger",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Michael Schaub",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Guy Venz",
+    "role": "City Council",
+    "status": "Appointed to Fill Vacancy until Election",
+    "termEnds": "2027",
+    "termLength": "2 Years"
+   }
+  ],
+  "officeAddress": "109 Third Ave P.O. Box 550 Grafton, IA 50440",
+  "officePhone": "(641) 748-2970",
+  "sources": [
+   {
+    "county": "Worth",
+    "url": "https://elections.worthcountyiowa.gov/elected_officials/city/"
+   }
+  ]
+ },
  "1933870": {
   "city": "Hamilton",
   "members": [
@@ -1871,6 +1995,61 @@
    {
     "county": "Marion",
     "url": "https://www.marioncountyiowa.gov/about/elected_officials/city/"
+   }
+  ]
+ },
+ "1934185": {
+  "city": "Hanlontown",
+  "members": [
+   {
+    "county": "Worth",
+    "name": "Peter Brattrud",
+    "role": "Mayor",
+    "termEnds": "2027",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Larry Bergan Jr.",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Gregory Endelman",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Linda Fulton",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Mike Kennedy",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Dan Moretz",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   }
+  ],
+  "officeAddress": "214 Main St P.O. Box 5 Hanlontown, IA 50444",
+  "officePhone": "(641) 896-3570",
+  "sources": [
+   {
+    "county": "Worth",
+    "url": "https://elections.worthcountyiowa.gov/elected_officials/city/"
    }
   ]
  },
@@ -2111,6 +2290,73 @@
    }
   ]
  },
+ "1939855": {
+  "city": "Joice",
+  "members": [
+   {
+    "county": "Worth",
+    "name": "Amy Wilhelm",
+    "phone": "(641) 588-3330",
+    "phoneIsOffice": true,
+    "role": "City Clerk"
+   },
+   {
+    "county": "Worth",
+    "name": "Audrey Wogen",
+    "role": "Treasurer"
+   },
+   {
+    "county": "Worth",
+    "name": "Rebecca Martinson",
+    "role": "Mayor",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Paul Anderson",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Terry Anonson",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Brady Heagel",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Judy Sell",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Tyler Swenson",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   }
+  ],
+  "officeAddress": "102 N State Street P.O. Box 195 Joice, IA 50446",
+  "officePhone": "(641) 588-3330",
+  "sources": [
+   {
+    "county": "Worth",
+    "url": "https://elections.worthcountyiowa.gov/elected_officials/city/"
+   }
+  ]
+ },
  "1940440": {
   "city": "Kellogg",
   "members": [
@@ -2164,6 +2410,68 @@
    {
     "county": "Jasper",
     "url": "https://jaspercountyelections.iowa.gov/elected_officials/city/"
+   }
+  ]
+ },
+ "1940665": {
+  "city": "Kensett",
+  "members": [
+   {
+    "county": "Worth",
+    "name": "Wendy Varner",
+    "phone": "(641) 845-2388",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Worth",
+    "name": "Richard Olson",
+    "role": "Mayor",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Brandee Cooper",
+    "role": "City Council",
+    "status": "Elected to Fill Vacancy for Term Remainder",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Larue Douglas",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Eli Gile",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Ryder Lestrud",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Kristine Woltzen",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   }
+  ],
+  "officeAddress": "207 5th St P.O. Box 95 Kensett, IA 50448",
+  "officePhone": "(641) 845-2221",
+  "sources": [
+   {
+    "county": "Worth",
+    "url": "https://elections.worthcountyiowa.gov/elected_officials/city/"
    }
   ]
  },
@@ -2927,6 +3235,67 @@
    {
     "county": "Crawford",
     "url": "https://www.crawfordcounty.iowa.gov/about/elected_officials/city/"
+   }
+  ]
+ },
+ "1948900": {
+  "city": "Manly",
+  "members": [
+   {
+    "county": "Worth",
+    "name": "LuAnn Whitehurst",
+    "phone": "(641) 454-4090",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Worth",
+    "name": "Timothy O'Keefe",
+    "role": "Mayor",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Rick Aguilera",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Pete Andera",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Richard Baird",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Scott Heagel",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Joe Ryan",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   }
+  ],
+  "officeAddress": "106 S Broadway St P.O. Box 516 Manly, IA 50456",
+  "officePhone": "(641) 454-3090",
+  "sources": [
+   {
+    "county": "Worth",
+    "url": "https://elections.worthcountyiowa.gov/elected_officials/city/"
    }
   ]
  },
@@ -4118,6 +4487,69 @@
    {
     "county": "Keokuk",
     "url": "https://keokukcounty.iowa.gov/about/elected_officials/city/"
+   }
+  ]
+ },
+ "1957630": {
+  "city": "Northwood",
+  "members": [
+   {
+    "county": "Worth",
+    "name": "Amber Julseth",
+    "phone": "(641) 324-1075",
+    "phoneIsOffice": true,
+    "role": "City Clerk"
+   },
+   {
+    "county": "Worth",
+    "name": "Douglas F. Moehle",
+    "phone": "(641) 324-9992",
+    "role": "Mayor",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Michael Bode",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Teresa George-Zenz",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Steve Peterson",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Daniel Reeder",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Worth",
+    "name": "Annika Schreiber",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   }
+  ],
+  "officeAddress": "627 Central Ave Northwood, IA 50459",
+  "officePhone": "(641) 324-1075",
+  "sources": [
+   {
+    "county": "Worth",
+    "url": "https://elections.worthcountyiowa.gov/elected_officials/city/"
    }
   ]
  },

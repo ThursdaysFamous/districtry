@@ -166,6 +166,14 @@ EXPECT_RECODED_WARDS = 1       # Marion ward 4
 # The city's other four wards carry 01-04, so ward 5 joining 03 completes a
 # four-district plan with nothing left over. Three cities (New London, Port
 # Washington, Cuba City) now wait on that one gate rather than on a source.
+# DURAND'S COMPOSITION WAS COMPLETED ON 2026-10-26, and for the same reason the
+# city is still excluded. Pepin County Clerk Audrey Bauer answered the follow-up
+# to the 2026-10-01 note that the city's ward 3, the one ward her county files
+# uncoded, is ALDERMANIC DISTRICT 3. The other two wards carry 01 and 02, so ward
+# 3 as district 03 completes a three-district plan, one ward per district, with
+# nothing left over. Its 624 residents (LTSB 2025-ward edition) are more than
+# either coded ward holds, which fits a whole district and is a consistency
+# check, not a proof. Four cities now wait on the one gate.
 #
 # BRILLION'S BOARD FORM IS SETTLED AND ITS TWO UNCODED WARDS ARE ANSWERED.
 # Calumet County Clerk Beth Leary wrote on 2026-10-01 that the City of Brillion
