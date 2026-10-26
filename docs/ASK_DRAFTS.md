@@ -2751,9 +2751,16 @@ to and would read as doubting the first answer. It is recorded, not re-asked.
 
 ## Ask 23 — Logan County Clerk: may an automated client read the yearbook?
 
-> **ASKED 2026-10-01, FOLLOWED UP 2026-10-26, no reply as of 2026-10-26** (dates from the sent
-> folder as the Letters thread read it). Drafted 2026-09-12. On 2026-10-24 the site's robots.txt
-> still disallowed `/images/`, so the ask is still open. A first approach to this office. It asks for
+> **ASKED 2026-10-01, FOLLOWED UP 2026-10-26, ANSWERED 2026-10-26** (dates from the mailbox as
+> the Letters thread read it). The Clerk replied that the office publishes a new yearbook every
+> other year and the next one is due in the summer of 2027. She did not say whether an automated
+> read is acceptable, and the reply was not taken as permission: the weekly fetch stays stopped.
+> What it settles is the cost recorded below. The 2025-2026 edition carried forward is the current
+> edition until summer 2027, so the lost weekly re-read was re-reading an unchanged file; a
+> mid-cycle "updated" file, which this edition's own filename shows can happen, is the one change
+> it would have caught. A thank-you asking her to e-mail the 2027 edition, or to say where it will
+> be posted, was handed to the Letters thread to draft the same day. Drafted 2026-09-12. A first
+> approach to this office. It asks for
 > permission, not for data: the county already publishes the file and it already serves
 > normally to a browser. Nothing is blocked and nothing is being worked around.
 
