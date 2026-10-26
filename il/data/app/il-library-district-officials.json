@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-18T15:55:39Z",
+  "generated": "2026-10-25T16:07:44Z",
   "libraries": {
     "Alpha Park Public Library District": {
       "comptrollerCode": "072/010/10",
@@ -4095,7 +4095,7 @@
         }
       ],
       "comptrollerCode": "090/060/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Tazewell",
       "heads": [
         {
@@ -4105,8 +4105,8 @@
         }
       ],
       "office": {
-        "address": "308 N WILMOR RD",
-        "city": "WASHINGTON IL 61571",
+        "address": "380 N Wilmor Rd",
+        "city": "Washington IL 61571",
         "phone": "(309) 444-2241"
       }
     },
@@ -4265,7 +4265,7 @@
         }
       ],
       "comptrollerCode": "101/040/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Winnebago",
       "office": {
         "address": "210 N Elida St",
