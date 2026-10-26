@@ -16346,10 +16346,19 @@ function initTennesseeExplorer() {
    * because the grade split is the whole reason a reader there has two
    * districts. The empty notes point at the other cards.
    *
-   * NO OFFICEHOLDER. Tennessee's school boards are elected, and no statewide
-   * roster of their members has been established here; the card names the
-   * district and links the state's school directory. Recorded as gap
-   * tn-school-board-members.
+   * THE FOURTEEN SPECIAL SCHOOL DISTRICTS NAME THEIR BOARD, written down
+   * from each district's own page and proved against it on every build
+   * (tn/scripts/build_tn_special_school_boards.py through
+   * scripts/city_councils.py; data/app/tn-special-school-boards.json, keyed
+   * by the Census's GEOID). Eleven are in the unified layer and three
+   * (Franklin, Lebanon and Paris) in the elementary layer. A district's
+   * page that lists members by district, zone or precinct is shown that
+   * way; none of those lines is drawn.
+   *
+   * Every other school board names nobody: Tennessee's school boards are
+   * elected, and no statewide roster of their members has been established
+   * here; the card names the district and links the state's school
+   * directory. Recorded as gap tn-school-board-members.
    * ---------- */
   var loadSchoolDistrictsUnified = tigerStatewideLoader(
     TIGERWEB_SERVICES + "School/MapServer", 0,
@@ -16361,6 +16370,10 @@ function initTennesseeExplorer() {
     TIGERWEB_SERVICES + "School/MapServer", 1,
     "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE", "secondary school districts");
 
+  // The board of each special school district, keyed by the Census GEOID.
+  var loadTnSpecialSchoolBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tn-special-school-boards.json", {}, 2);
+  });
   // One query and one card shape for all three tilings; only the sentence
   // about the tiling differs.
   function tnSchoolQuery(load) {
@@ -16368,13 +16381,24 @@ function initTennesseeExplorer() {
       return queryFeatureAt(load, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var result = {
           seq: seq,
           name: findPropCI(props, ["name"]),
           geoid: findPropCI(props, ["geoid"]),
           lo: findPropCI(props, ["lograde"]),
-          hi: findPropCI(props, ["higrade"])
+          hi: findPropCI(props, ["higrade"]),
+          board: null
         };
+        // A roster that fails to load leaves the district's card standing
+        // and says so, rather than taking the boundary answer down with it.
+        return loadTnSpecialSchoolBoards().then(function (roster) {
+          result.board = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     };
   }
@@ -16405,20 +16429,58 @@ function initTennesseeExplorer() {
         });
       }
       rows.push({ label: "Census tiling", value: tierNote });
-      rows.push({
-        label: "Your school board",
-        value: "Not named here. Tennessee's school boards are elected, and " +
-          "no statewide list of their members has been read yet, so this " +
-          "app names no one rather than guessing."
-      });
+      var board = result.board;
+      if (!board) {
+        rows.push({
+          label: "Your school board",
+          value: result.rosterFailed
+            ? "The list of special school district boards did not load, so " +
+              "no name is shown. The district's own website names its board."
+            : "Not named here. Tennessee's school boards are elected, and " +
+              "no statewide list of their members has been read yet, so this " +
+              "app names no one rather than guessing. This app names the " +
+              "boards of the state's fourteen special school districts, and " +
+              "this district is not one of them."
+        });
+        wrap.appendChild(renderFieldStack(rows));
+        return wrap;
+      }
       wrap.appendChild(renderFieldStack(rows));
+      // Card convention: identity -> officeholders.
+      wrap.appendChild(renderSectionLabel("Board of Education"));
+      wrap.appendChild(renderPersonRows((board.seats || []).map(function (seat) {
+        return {
+          name: String(seat.name),
+          badge: seat.role !== "Board member" ? String(seat.role) : null,
+          note: seat.area != null ? String(seat.area) : null,
+          phone: seat.phone,
+          phonesExtra: seat.phonesExtra,
+          email: seat.email
+        };
+      })));
+      var read = tnReadDate(board.read);
+      wrap.appendChild(renderFieldStack([
+        { label: "How the board is chosen", value: String(board.how) },
+        {
+          label: "Where these names come from",
+          value: "As listed on " + String(board.ownName || board.name) +
+            "'s own website." + (board.note ? " " + String(board.note) : "") +
+            (read ? " Read on " + read + "." : "") +
+            " If a seat has changed hands since, the district's own website " +
+            "or office says who holds it now."
+        }
+      ]));
       return wrap;
     };
   }
-  // The state Department of Education's own school directory, which serves
-  // this project's link checker (HTTP 200, measured 2026-10-10; its host
+  // A special school district's own board page; otherwise the state
+  // Department of Education's own school directory, which serves this
+  // project's link checker (HTTP 200, measured 2026-10-10; its host
   // publishes no robots.txt). Linked, never fetched.
-  function tnSchoolLink() {
+  function tnSchoolLink(result) {
+    if (result && result.board && result.board.page) {
+      return { label: "The district's board of education", url: String(result.board.page) };
+    }
     return { label: "State school directory", url: "https://tnschooldirectory.tnedu.gov/" };
   }
   function tnSchoolHover(feature) {

@@ -2151,7 +2151,19 @@ ANSWERS = {
         # The Comptroller of the Treasury's layer carries all 1,870 precincts the
         # county election commissions set, and the app draws them (2026-10-15).
         "precincts": answers("voting-precinct"),
-        "special-districts": OPEN,
+        # The fourteen special school districts, whose voters elect their
+        # boards, are drawn by the two school district layers and their boards
+        # named on those cards from each district's own page (2026-10-26,
+        # tn/scripts/build_tn_special_school_boards.py). Utility districts'
+        # commissioners are elected by their customers, which Adam ruled are
+        # "Not voters" (2026-10-26). Open on the soil and water conservation
+        # districts: their supervisors are elected by the district's landowners
+        # (Tenn. Code Ann. 43-14-202(6), as the Tennessee Farm Bureau quotes
+        # it), which Adam ruled count as voters, noting that only landowners
+        # vote ("Voters", 2026-10-26), and the state's list of them refuses
+        # this project's reader (gap tn-conservation-boards).
+        "special-districts": Entry("open", ("school-district-unified",
+                                            "school-district-elementary")),
         # SHIPPED 2026-10-15: the one piece of tribal land in the state, the
         # Mississippi Band of Choctaw Indians' trust land near Henning, named
         # with the nation's Tribal Chief and Tribal Council.
