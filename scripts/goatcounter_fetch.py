@@ -180,7 +180,7 @@ def widget(s, n, total, start, end, **extra):
 
 
 def window():
-    end = datetime.date.today() - datetime.timedelta(days=1)
+    end = datetime.date.today()  # scratch: include the day in progress
     start = end - datetime.timedelta(days=WINDOW_DAYS - 1)
     return start.isoformat(), end.isoformat()
 
