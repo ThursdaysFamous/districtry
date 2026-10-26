@@ -15954,12 +15954,6 @@ function initOklahomaExplorer() {
           links: links
         }));
         var board = boardRec;
-        if (board && board.directors && board.directors.length) {
-          wrap.appendChild(renderSectionLabel("Board of directors"));
-          wrap.appendChild(renderPersonRows(conservationDirectors(board).map(function (d) {
-            return { name: String(d.name), badge: d.role ? String(d.role) : null };
-          })));
-        }
         var rows = [];
         if (office && office.ext) {
           rows.push({ label: "Phone extension", value: String(office.ext) });
@@ -15980,7 +15974,14 @@ function initOklahomaExplorer() {
               "of district offices does not list this district."
           });
         }
+        // the office's own rows sit under the office; the board follows them
+        if (rows.length) wrap.appendChild(renderFieldStack(rows));
+        rows = [];
         if (board && board.directors && board.directors.length) {
+          wrap.appendChild(renderSectionLabel("Board of directors"));
+          wrap.appendChild(renderPersonRows(conservationDirectors(board).map(function (d) {
+            return { name: String(d.name), badge: d.role ? String(d.role) : null };
+          })));
           rows.push({
             label: "Where these names come from",
             value: "The district's own website, read " + String(board.read) + ". The " +
