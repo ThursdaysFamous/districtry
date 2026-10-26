@@ -753,20 +753,6 @@
         "note": "West Des Moines's 3 council wards, from the city's own CouncilPrecinctsExt layer 4, 31 precincts dissolved to three wards, built by ia/scripts/build_ia_city_wards.py. Gated against the Census Bureau's incorporated place for the city (area ratio near 1, no compact uncovered part, seam under a measured ceiling) and simplified by Douglas-Peucker under a 99.5% point-agreement gate."
       },
       {
-        "file": "adair-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Adair County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Adair County which recorded gap affects them: the statewide directory gives it a board size Iowa law does not allow, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
-      },
-      {
-        "file": "floyd-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Floyd County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Floyd County which recorded gap affects them: the statewide directory gives it a board size Iowa law does not allow, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
-      },
-      {
         "file": "pottawattamie-county-outline.json",
         "min_features": 1,
         "max_features": 1,
@@ -779,13 +765,6 @@
         "max_features": 1,
         "dynamic_reference": true,
         "note": "Tama County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Tama County which recorded gap affects them: the statewide directory gives it a board size Iowa law does not allow, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
-      },
-      {
-        "file": "warren-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Warren County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Warren County which recorded gap affects them: the statewide directory and the state's district map disagree about its board size, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
       },
       {
         "file": "wright-county-outline.json",
@@ -802,60 +781,11 @@
         "note": "Black Hawk County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Black Hawk County which recorded gap affects them: the county elects its supervisors by district and its districts ship, but nothing published says which supervisor holds which district, so the card names the board and cannot place any of them. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
       },
       {
-        "file": "calhoun-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Calhoun County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Calhoun County which recorded gap affects them: the county elects its supervisors by district and its districts ship, but nothing published says which supervisor holds which district, so the card names the board and cannot place any of them. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
-      },
-      {
         "file": "dickinson-county-outline.json",
         "min_features": 1,
         "max_features": 1,
         "dynamic_reference": true,
         "note": "Dickinson County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Dickinson County which recorded gap affects them: the county elects its supervisors by district and its districts ship, but nothing published says which supervisor holds which district, so the card names the board and cannot place any of them. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
-      },
-      {
-        "file": "guthrie-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Guthrie County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Guthrie County which recorded gap affects them: the county elects its supervisors by district and its districts ship, but nothing published says which supervisor holds which district, so the card names the board and cannot place any of them. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
-      },
-      {
-        "file": "kossuth-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Kossuth County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Kossuth County which recorded gap affects them: the county elects its supervisors by district and its districts ship, but nothing published says which supervisor holds which district, so the card names the board and cannot place any of them. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
-      },
-      {
-        "file": "lee-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Lee County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Lee County which recorded gap affects them: the county elects its supervisors by district and its districts ship, but nothing published says which supervisor holds which district, so the card names the board and cannot place any of them. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
-      },
-      {
-        "file": "montgomery-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Montgomery County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Montgomery County which recorded gap affects them: the county elects its supervisors by district and its districts ship, but nothing published says which supervisor holds which district, so the card names the board and cannot place any of them. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
-      },
-      {
-        "file": "palo-alto-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Palo Alto County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Palo Alto County which recorded gap affects them: the county elects its supervisors by district and its districts ship, but nothing published says which supervisor holds which district, so the card names the board and cannot place any of them. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
-      },
-      {
-        "file": "worth-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Worth County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Worth County which recorded gap affects them: the county elects its supervisors by district and its districts ship, but nothing published says which supervisor holds which district, so the card names the board and cannot place any of them. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
       },
       {
         "file": "bremer-county-outline.json",
@@ -865,13 +795,6 @@
         "note": "Bremer County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Bremer County which recorded gap affects them: the county's own district numbering has not been measured against the supervisor-district layer this instance draws, so no supervisor is named on a district card there and the board stays on the County card. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it — measuring this county's numbering retires both its gap entry and this file."
       },
       {
-        "file": "cerro-gordo-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Cerro Gordo County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Cerro Gordo County which recorded gap affects them: the county's own district numbering has not been measured against the supervisor-district layer this instance draws, so no supervisor is named on a district card there and the board stays on the County card. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it — measuring this county's numbering retires both its gap entry and this file."
-      },
-      {
         "file": "franklin-county-outline.json",
         "min_features": 1,
         "max_features": 1,
@@ -879,32 +802,11 @@
         "note": "Franklin County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Franklin County which recorded gap affects them: the county's own district numbering has not been measured against the supervisor-district layer this instance draws, so no supervisor is named on a district card there and the board stays on the County card. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it — measuring this county's numbering retires both its gap entry and this file."
       },
       {
-        "file": "hamilton-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Hamilton County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Hamilton County which recorded gap affects them: the county's own district numbering has not been measured against the supervisor-district layer this instance draws, so no supervisor is named on a district card there and the board stays on the County card. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it — measuring this county's numbering retires both its gap entry and this file."
-      },
-      {
         "file": "linn-county-outline.json",
         "min_features": 1,
         "max_features": 1,
         "dynamic_reference": true,
         "note": "Linn County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Linn County which recorded gap affects them: the county's own district numbering has not been measured against the supervisor-district layer this instance draws, so no supervisor is named on a district card there and the board stays on the County card. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it — measuring this county's numbering retires both its gap entry and this file."
-      },
-      {
-        "file": "webster-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Webster County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Webster County which recorded gap affects them: the county's own district numbering has not been measured against the supervisor-district layer this instance draws, so no supervisor is named on a district card there and the board stays on the County card. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it — measuring this county's numbering retires both its gap entry and this file."
-      },
-      {
-        "file": "winneshiek-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Winneshiek County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Winneshiek County which recorded gap affects them: the county's own district numbering has not been measured against the supervisor-district layer this instance draws, so no supervisor is named on a district card there and the board stays on the County card. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it — measuring this county's numbering retires both its gap entry and this file."
       },
       {
         "file": "tribal-areas.json",

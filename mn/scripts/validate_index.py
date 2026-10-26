@@ -88,19 +88,20 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 16
+MIN_REGISTER_LAYER = 17
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "mn-judicial-district", "mn-senate", "county", "mn-house",
-    "watershed-district", "school-district-unified", "school-board-district",
-    "county-commissioner", "zip-code", "school-district-elementary",
-    "county-subdivision", "voting-precinct", "tribal-government",
-    "municipality", "city-ward", "school-district-secondary",
-    "police-station", "fire-station", "post-office",
+    "us-house", "mn-judicial-district", "mn-senate", "county",
+    "conservation-district", "mn-house", "watershed-district",
+    "school-district-unified", "school-board-district", "county-commissioner",
+    "zip-code", "school-district-elementary", "county-subdivision",
+    "voting-precinct", "tribal-government", "municipality", "city-ward",
+    "school-district-secondary", "police-station", "fire-station",
+    "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -110,6 +111,7 @@ GEOMETRY_FILES = {
     "congress-districts.json": (8, 8),  # U.S. House districts, pre-built from TIGERweb Legislative layer 0.
     "mn-judicial-districts.json": (10, 10),  # The ten judicial districts, dissolved from state-counties.json by mn/scripts/build_mn_judicial_districts.py. The county membership is parsed out of Minn. Stat. 2.722 subd. 1 on every run rather than transcribed, and the write is gated three ways: the statute's lists must partition all 87 counties, the Secretary of State's judicial-district attribute on all 4,105 precincts must agree county by county, and every county's own interior anchor must land in exactly its own district.
     "mn-watershed-districts.json": (55, 80),  # Every watershed district and watershed management organization, from BWSR's statewide feature service by mn/scripts/build_mn_watershed_districts.py. Shipped as the state draws them, overlaps included (56 pairs touch by more than a square metre, mostly edge slivers), and gated on 2,000 statewide and 2,000 metro sample points getting the same set of bodies as the source.
+    "mn-swcd-districts.json": (116, 116),  # Minnesota's 88 elected soil and water conservation districts as 116 shapes, pre-built by mn/scripts/build_mn_swcd_districts.py from the Secretary of State's precincts dissolved on the soil and water ballot each votes (swcdist). Gated on a partition (every precinct one value, Hennepin and Ramsey declared to have none), no overlap, and every county's interior anchor landing in its own county's district.
     "mn-senate-districts.json": (67, 67),  # Minnesota Senate districts, pre-built by mn/scripts/build_legislative_boundaries.py (2,000-point agreement gate, plus the 67-of-67 nesting gate against the House layer).
     "mn-house-districts.json": (134, 134),  # Minnesota House districts, pre-built by mn/scripts/build_legislative_boundaries.py (2,000-point agreement gate; the A/B pair of each Senate district shares its every boundary vertex).
     "mn-commissioner-districts.json": (447, 447),  # Every county commissioner district in Minnesota, pre-built by mn/scripts/build_mn_commissioner_districts.py: the Secretary of State's 4,105 precincts dissolved on the commissioner district each one carries, so no line is drawn that a precinct boundary does not already draw. Six gates must pass before it writes — Minn. Stat. 375.01 and 375.025 read live, giving a 447-district partition of all 87 counties with consecutive numbering and a board size the statute allows; seven county governments' own layers agreeing about every one of the 785 precincts they cover; the certified 2024 and 2022 per-precinct results agreeing as dated snapshots; no point inside one district inside a second; and all 87 county anchors landing in exactly their own county's district, Cook's declared outside the fabric because it sits in Lake Superior. Simplified at a 15 m Douglas-Peucker interval over ONE shared topology, taken from the fabric's own 16.09 m median segment, so neighbouring districts share their border exactly.
@@ -124,6 +126,7 @@ GEOMETRY_FILES = {
 ROSTER_FILES = {
     "congress-roster.json": 8,  # U.S. House roster, refreshed weekly by update-mn-congress-roster.yml.
     "mn-county-commissioners.json": 447,  # All 447 county commissioner districts, each naming the winner of its most recent election in the Secretary of State's results and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_commissioner_roster.py (update-mn-commissioner-roster.yml).
+    "mn-swcd-supervisors.json": 88,  # All 88 soil and water conservation districts and their 440 supervisor seats, each naming the winner of its most recent election in the Secretary of State's results and its date, or saying why no name is shown, with each district's office from BWSR's directory of 21 February 2023; built weekly by mn/scripts/build_mn_swcd_supervisors.py (update-mn-swcd-supervisors.yml).
     "mn-city-councils.json": 43,  # The mayor and council of each of Minnesota's 43 cities above 25,000 people, each seat naming the winner of its most recent election in the Secretary of State's city results and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_city_councils.py (update-mn-city-councils.yml).
     "mn-town-boards.json": 680,  # The board of each Minnesota town that holds its town election in November, keyed by the town's Census county subdivision GEOID, each seat naming the winner of its most recent November election in the Secretary of State's local results and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_town_boards.py (update-mn-city-councils.yml).
     "mn-county-town-officers.json": 360,  # The officers of each Minnesota town the election results do not name that a county's own list of township officers names, keyed by the town's Census county subdivision GEOID: names, offices, terms, the telephone each list prints beside an officer, with its own label and with no area code added where the list prints none (Adam's ruling of 2026-10-17), and the e-mail address it prints beside that officer alone (Adam's choice of 2026-10-17, "E-mails too"), never the officer's home address, with the county, the list's own date where it gives one, the day it was read and the list's address; read by mn/scripts/mn_county_town_officers_scraper.py and built by mn/scripts/build_mn_county_town_officers.py. No scheduled refresh yet.

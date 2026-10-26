@@ -931,7 +931,8 @@ def ia_supervisors(inst):
                      # Present only on a county this project no longer reads.
                      # Their absence is what lets every other county keep the
                      # "re-read on a schedule" sentence, which is true of it.
-                     "asOf": rec.get("asOf"), "asOfWhy": rec.get("asOfWhy")}
+                     "asOf": rec.get("asOf"), "asOfWhy": rec.get("asOfWhy"),
+                     "asOfSource": rec.get("asOfSource")}
     # THE SET DIFFERENCE, NEVER len(chairs) - len(out). Subtracting the counts
     # is only right if every county with a member list also has a chair, and
     # nine do not (measured 2026-09-19: 38 chairs, 17 member lists, 8 counties
@@ -3652,6 +3653,9 @@ def at_large_body(inst, name, rec):
     return "\n".join(x for x in out if x), 0, named
 
 
+IA_RESULTS_URL = "https://electionresults.iowa.gov/IA/"
+
+
 def source_note(rec, at_large):
     """Where the names came from, in the page's own words. A page that names
     people without saying who published them is the thing this project refuses
@@ -3676,6 +3680,15 @@ def source_note(rec, at_large):
                         "county's own published roster</a>." % esc(rec["sourceUrl"]))
         if rec.get("verified"):
             bits.append("Verified %s." % esc(rec["verified"]))
+    elif rec.get("asOfSource") == "results" and rec.get("asOf"):
+        # A COUNTY PLACED FROM CERTIFIED RESULTS published no pairing of its
+        # own, so "the county's own published roster" would be false of it.
+        bits.append('Which district each supervisor holds was matched on %s '
+                    'from <a href="%s" rel="noopener" target="_blank">the '
+                    "Secretary of State's certified election results</a>. %s "
+                    "These will go out of date."
+                    % (esc(rec["asOf"]), esc(IA_RESULTS_URL),
+                       esc(rec.get("asOfWhy") or "").strip()))
     elif rec.get("sourceUrl") and rec.get("asOf"):
         # A PRESERVED COUNTY IS NOT RE-READ ON A SCHEDULE, so it must not say
         # it is. Its roster was fetched legitimately while the county was
@@ -4270,6 +4283,14 @@ NOT_COUNTY_BOARDS = {
                "instance is dark: an adapter would write pages for a folder "
                "the deploy does not publish. Missouri's go-live writes the "
                "adapter and drops this entry.",
+    ),
+    "mn/data/app/mn-swcd-supervisors.json": dict(
+        date="2026-10-26",
+        reason="the elected supervisors of Minnesota's 88 soil and water "
+               "conservation districts. Real officeholders, named, and a "
+               "special district rather than county government: each "
+               "district carries its county only because each lies inside "
+               "one county, and its board is not the county board.",
     ),
     "mn/data/app/mn-county-town-officers.json": dict(
         date="2026-10-16",

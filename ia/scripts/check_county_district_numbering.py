@@ -441,6 +441,328 @@ PRECINCT_COUNTIES = {
             "Doon":        ("4", (43.2789717, -96.2329074)),
         },
     },
+    # THE CERTIFIED 2024 GENERAL AND 2026 PRIMARY TOGETHER (2026-10-26). Each
+    # county below is read from BOTH of the Secretary of State's certified
+    # returns: the 2024 general election (state election 122299, one
+    # sub-archive per county) and the 2026 primary (state election 126082).
+    # A plan 3 county elects its supervisors in staggered terms, so the two
+    # ballots between them carry a contest for every one of its districts and
+    # no district is placed by elimination. A precinct named in both elections
+    # is named in the SAME district both times, which is what says the county
+    # did not redraw between them; Franklin and Bremer fail that test and are
+    # not here, and Linn's 2024 primary already showed it moved.
+    "Adair": {
+        "source": ("https://electionresults.iowa.gov/IA/Adair/122323/354568/reports/detailxml.zip"
+                   " and https://electionresults.iowa.gov/IA/Adair/126083/374896/reports/detailxml.zip"),
+        "districts": 5,
+        "precincts": {
+            "1NW ADAIR":      "1",
+            "2NE STUART":     "2",
+            "3SW FONTANELLE": "3",
+            "4SE ORIENT":     "4",
+            "5GF GREENFIELD": "5",
+        },
+    },
+    "Calhoun": {
+        "source": ("https://electionresults.iowa.gov/IA/Calhoun/122335/354812/reports/detailxml.zip"
+                   " and https://electionresults.iowa.gov/IA/Calhoun/126095/375293/reports/detailxml.zip"),
+        "districts": 3,
+        "precincts": {
+            "01 Butler Williams":                                                 "1",
+            "02 Lincoln Manson Sherman N. Greenfield":                            "1",
+            "05 Calhoun Elm Grove Jackson S. Lake Creek Lake City":               "2",
+            "06 Reading Union S. Logan":                                          "2",
+            "03 Center Garfield Twin Lakes N. Lake Creek N. Logan Rockwell City": "3",
+            "04 Cedar S. Greenfield":                                             "3",
+        },
+    },
+    "Cerro Gordo": {
+        "source": ("https://electionresults.iowa.gov/IA/Cerro_Gordo/122339/355829/reports/detailxml.zip"
+                   " and https://electionresults.iowa.gov/IA/Cerro_Gordo/126099/375434/reports/detailxml.zip"),
+        "districts": 3,
+        "precincts": {
+            "Mason City W2 P2":                    "1",
+            "Mason City W3 P1":                    "1",
+            "Mason City W3 P2":                    "1",
+            "Mason City W3 P3":                    "1",
+            "Mason City W4 P2":                    "1",
+            "Mason City W4 P3":                    "1",
+            "Clear Lake Ward 1":                   "2",
+            "Clear Lake Ward 2":                   "2",
+            "Clear Lake Ward 3":                   "2",
+            "Clear Lake/Grant/Union Twps Pct":     "2",
+            "Geneseo/Dougherty Twps Pct":          "2",
+            "Grimes Twp Pct":                      "2",
+            "Lake/Lincoln Twps Pct":               "2",
+            "Mason S/Bath/Portland/Owen Twps Pct": "2",
+            "Mt Vernon/Pleasant Valley Twps Pct":  "2",
+            "Falls Twp Pct":                       "3",
+            "Lime Creek/Mason N Twps Pct":         "3",
+            "Mason City W1 P1":                    "3",
+            "Mason City W1 P2":                    "3",
+            "Mason City W1 P3":                    "3",
+            "Mason City W2 P1":                    "3",
+            "Mason City W2 P3":                    "3",
+            "Mason City W4 P1":                    "3",
+        },
+    },
+    "Floyd": {
+        "source": ("https://electionresults.iowa.gov/IA/Floyd/122356/354732/reports/detailxml.zip"
+                   " and https://electionresults.iowa.gov/IA/Floyd/126116/375869/reports/detailxml.zip"),
+        "districts": 3,
+        "precincts": {
+            "Charles City 1 (Courthouse)":                 "1",
+            "Scott-Union-Pleasant Grove":                  "1",
+            "Ulster-St Charles South-Riverton":            "1",
+            "Charles City 2 (Messiah)":                    "2",
+            "Charles City 3 - St Charles North (Trinity)": "2",
+            "Rock Grove":                                  "3",
+            "Rockford":                                    "3",
+            "Rudd-Floyd-Cedar-Niles":                      "3",
+        },
+    },
+    "Guthrie": {
+        "source": ("https://electionresults.iowa.gov/IA/Guthrie/122361/355068/reports/detailxml.zip"
+                   " and https://electionresults.iowa.gov/IA/Guthrie/126121/374563/reports/detailxml.zip"),
+        "districts": 5,
+        "precincts": {
+            "Bayard Precinct":         "1",
+            "Casey Precinct":          "1",
+            "Yale Precinct":           "2",
+            "Panora Precinct":         "3",
+            "Guthrie Center Precinct": "4",
+            "Stuart Precinct":         "5",
+        },
+    },
+    "Hamilton": {
+        "source": ("https://electionresults.iowa.gov/IA/Hamilton/122362/354817/reports/detailxml.zip"
+                   " and https://electionresults.iowa.gov/IA/Hamilton/126122/374897/reports/detailxml.zip"),
+        "districts": 3,
+        "precincts": {
+            "Pct 1 WC 1":      "1",
+            "Pct 3 WC 3":      "1",
+            "Pct 2 WC 2":      "2",
+            "Pct 4 Northwest": "2",
+            "Pct 5 Northeast": "2",
+            "Pct 6 Southwest": "3",
+            "Pct 7 Southeast": "3",
+        },
+    },
+    "Kossuth": {
+        "source": ("https://electionresults.iowa.gov/IA/Kossuth/122377/354949/reports/detailxml.zip"
+                   " and https://electionresults.iowa.gov/IA/Kossuth/126137/374609/reports/detailxml.zip"),
+        "districts": 5,
+        # AL1: 3 of its 953 interior samples fall in another of this
+        # layer's districts, the farthest 56 m from the majority
+        # district's edge (measured 2026-10-26). The precinct and district
+        # layers are simplified separately, so that is the two drawings
+        # parting, not a precinct the plan splits.
+        "slivers": {"AL1": 60},
+        "precincts": {
+            "CR RV":       "1",
+            "GF WM":       "1",
+            "IV":          "1",
+            "LV SM":       "1",
+            "PR WL":       "1",
+            "AL1":         "2",
+            "AL4":         "2",
+            "CR 2":        "2",
+            "AL2":         "3",
+            "AL3":         "3",
+            "CR 1":        "3",
+            "EG GT HS SW": "4",
+            "GW SN":       "4",
+            "HB LY LN SF": "4",
+            "RM":          "4",
+            "BF GM PT":    "5",
+            "BT":          "5",
+            "FT LC":       "5",
+            "PC":          "5",
+            "UN CR":       "5",
+        },
+    },
+    "Lee": {
+        "source": ("https://electionresults.iowa.gov/IA/Lee/122378/354624/reports/detailxml.zip"
+                   " and https://electionresults.iowa.gov/IA/Lee/126138/374385/reports/detailxml.zip"),
+        "districts": 5,
+        # FM 2: 3 of its 1054 interior samples fall in another of this
+        # layer's districts, the farthest 45 m from the majority
+        # district's edge (measured 2026-10-26). The precinct and district
+        # layers are simplified separately, so that is the two drawings
+        # parting, not a precinct the plan splits.
+        "slivers": {"FM 2": 50},
+        "precincts": {
+            "GREEN BAY DENMARK PLEASANT RIDGE":    "1",
+            "MARION FRANKLIN":                     "1",
+            "WASHINGTON":                          "1",
+            "WEST POINT":                          "1",
+            "FM 1":                                "2",
+            "FM 2":                                "2",
+            "FM 3":                                "2",
+            "FM4B":                                "2",
+            "CEDAR CHARLESTON HARRISON VAN BUREN": "3",
+            "FM 4A":                               "3",
+            "FM5/Madison Twp/JF Twp":              "3",
+            "JEFFERSON WEST MONTROSE":             "3",
+            "DES MOINES JACKSON":                  "4",
+            "EAST MONTROSE":                       "4",
+            "KE2B":                                "4",
+            "KE4":                                 "4",
+            "KE6":                                 "4",
+            "KE1":                                 "5",
+            "KE2A":                                "5",
+            "KE3":                                 "5",
+            "KE5":                                 "5",
+            "KE7":                                 "5",
+        },
+    },
+    "Montgomery": {
+        "source": ("https://electionresults.iowa.gov/IA/Montgomery/122391/354851/reports/detailxml.zip"
+                   " and https://electionresults.iowa.gov/IA/Montgomery/126151/375637/reports/detailxml.zip"),
+        "districts": 5,
+        "precincts": {
+            "Ward1 Pilot Grove Frankfort RO Twp":              "1",
+            "Ward2 Sherman RO Twp":                            "2",
+            "Ward3 Sherman Pilot Grove Frankfort RO Twp":      "3",
+            "4 Grfld Lncln Sher Pilot Grove Twp Elliott":      "4",
+            "6 West Grant Frankfort Scott Twp Coburg Stanton": "4",
+            "5 Pilot Grove Douglas Twp Grant":                 "5",
+            "7 Scott East Frankfort Washington Twp Villisca":  "5",
+        },
+    },
+    "Palo Alto": {
+        "source": ("https://electionresults.iowa.gov/IA/Palo_Alto/122396/354537/reports/detailxml.zip"
+                   " and https://electionresults.iowa.gov/IA/Palo_Alto/126156/374705/reports/detailxml.zip"),
+        "districts": 5,
+        "precincts": {
+            "MAL, EL, RL, BO, GO, pt SL":          "1",
+            "WB, pt FV":                           "1",
+            "Emmetsburg Ward 1":                   "2",
+            "Emmetsburg Ward 2":                   "2",
+            "EM3, EM, pt SL, pt HL, pt LI, pt WL": "3",
+            "GR, pt WL, pt LI":                    "4",
+            "RV, pt HL":                           "4",
+            "EM4, FR, NV, FF, VN, IN, pt FV":      "5",
+        },
+    },
+    "Warren": {
+        "source": ("https://electionresults.iowa.gov/IA/Warren/122413/355814/reports/detailxml.zip"
+                   " and https://electionresults.iowa.gov/IA/Warren/126173/375855/reports/detailxml.zip"),
+        "districts": 5,
+        "precincts": {
+            "Cumming/WDM":   "1",
+            "Greenfield 2":  "1",
+            "Jackson":       "1",
+            "Jefferson":     "1",
+            "Linn":          "1",
+            "Norwalk 1":     "1",
+            "Norwalk 2":     "1",
+            "Norwalk 7":     "1",
+            "Virginia":      "1",
+            "Des Moines 73": "2",
+            "Des Moines 74": "2",
+            "Greenfield 3":  "2",
+            "Norwalk 3":     "2",
+            "Norwalk 4":     "2",
+            "Norwalk 5":     "2",
+            "Norwalk 6":     "2",
+            "Greenfield 1":  "3",
+            "Greenfield 4":  "3",
+            "Indianola 3":   "3",
+            "Indianola 4":   "3",
+            "Indianola 6":   "3",
+            "Lincoln 1":     "3",
+            "Squaw Creek":   "3",
+            "White Oak":     "3",
+            "Indianola 1":   "4",
+            "Indianola 2":   "4",
+            "Indianola 5":   "4",
+            "Indianola 7":   "4",
+            "Indianola 8":   "4",
+            "Lincoln 2":     "4",
+            "Allen 2":       "5",
+            "Allen 3":       "5",
+            "Belmont":       "5",
+            "Liberty":       "5",
+            "Lincoln 3":     "5",
+            "Otter":         "5",
+            "Palmyra":       "5",
+            "Richland":      "5",
+            "Union":         "5",
+            "White Breast":  "5",
+        },
+    },
+    "Webster": {
+        "source": ("https://electionresults.iowa.gov/IA/Webster/122416/354700/reports/detailxml.zip"
+                   " and https://electionresults.iowa.gov/IA/Webster/126176/374747/reports/detailxml.zip"),
+        "districts": 5,
+        # FD #11: 5 of its 950 interior samples fall in another of this
+        # layer's districts, the farthest 36 m from the majority
+        # district's edge (measured 2026-10-26). The precinct and district
+        # layers are simplified separately, so that is the two drawings
+        # parting, not a precinct the plan splits.
+        "slivers": {"FD #11": 40},
+        "precincts": {
+            "Badger-Cooper-Newark Township":                         "1",
+            "Colfax-Hardin-Washington-Webster-Yell Township":        "1",
+            "FD #10":                                                "1",
+            "FD #11":                                                "1",
+            "Burnside-Elkhorn-Otho-Pleasant Valley-Sumner Township": "2",
+            "Clay-Fulton-Johnson-Roland Township":                   "2",
+            "Dayton Township":                                       "2",
+            "Gowrie-Lost Grove Township":                            "2",
+            "FD # 7":                                                "3",
+            "FD # 8":                                                "3",
+            "FD # 9":                                                "3",
+            "FD #12":                                                "3",
+            "FD # 1":                                                "4",
+            "FD # 2":                                                "4",
+            "FD # 3":                                                "4",
+            "FD # 6":                                                "4",
+            "Deer Creek-Jackson Township":                           "5",
+            "FD # 4 & Douglas Township":                             "5",
+            "FD # 5":                                                "5",
+        },
+    },
+    "Winneshiek": {
+        "source": ("https://electionresults.iowa.gov/IA/Winneshiek/122418/354579/reports/detailxml.zip"
+                   " and https://electionresults.iowa.gov/IA/Winneshiek/126178/374752/reports/detailxml.zip"),
+        "districts": 5,
+        # DEW5: 2 of its 895 interior samples fall in another of this
+        # layer's districts, the farthest 52 m from the majority
+        # district's edge (measured 2026-10-26). The precinct and district
+        # layers are simplified separately, so that is the two drawings
+        # parting, not a precinct the plan splits.
+        "slivers": {"DEW5": 60},
+        "precincts": {
+            "FR BO OR BL & MA": "1",
+            "HE HI CN PL & GL": "1",
+            "DEW1 & DETSUP2":   "2",
+            "DEW2":             "2",
+            "DEW3A":            "2",
+            "DEW3B":            "3",
+            "DEW4":             "3",
+            "DEW5":             "3",
+            "DETSUP4 & SR":     "4",
+            "FR BM & MI":       "4",
+            "CA WA & JA":       "5",
+            "LI & SU":          "5",
+        },
+    },
+    "Worth": {
+        "source": ("https://electionresults.iowa.gov/IA/Worth/122420/354762/reports/detailxml.zip"
+                   " and https://electionresults.iowa.gov/IA/Worth/126180/375743/reports/detailxml.zip"),
+        "districts": 3,
+        "precincts": {
+            "Grafton Barton Deer Creek Union Grove": "1",
+            "Manly Lincoln":                         "1",
+            "Fertile":                               "2",
+            "Hanlontown Danville":                   "2",
+            "Joice Bristol Silver Lake Hartland":    "2",
+            "Kensett Brookfield":                    "2",
+            "Northwood Grove Hartland":              "3",
+        },
+    },
 }
 
 PRECINCTS = "ia/data/app/ia-precincts.json"
@@ -651,10 +973,20 @@ def check_precincts():
                     continue
                 far = max(edge_distance(x, y, polys[got])
                           for x, y in where[k])
-                if far <= SLIVER_M:
+                # A WIDER SLIVER IS DECLARED PER PRECINCT, never by raising
+                # SLIVER_M for every county. Each entry names the metres it was
+                # measured at, and one that is no longer needed says so.
+                allowed = (rec.get("slivers") or {}).get(name, SLIVER_M)
+                if far <= SLIVER_M < allowed:
+                    print("  %s: %s -- its declared %d m sliver allowance is no "
+                          "longer needed (%.0f m now); retire it"
+                          % (county, name, allowed, far))
+                if far <= allowed:
                     print("  %s: %s -- %d sample(s) in this layer's district %s, "
                           "all within %.0f m of district %s's edge, read as a "
-                          "drawing sliver" % (county, name, real[k], k, far, got))
+                          "drawing sliver%s" % (county, name, real[k], k, far, got,
+                          "" if far <= SLIVER_M else
+                          " under its declared %d m allowance" % allowed))
                 else:
                     spread.append(k)
             print("  %s: %s lies in this layer's district %s%s; the county puts "
