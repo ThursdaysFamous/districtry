@@ -17,8 +17,10 @@ Names are kept as printed, nicknames in their brackets ("William (Bill)
 Miller", "Dan (Pete) Bright").
 
 Role: the photo list below the text blocks names two members, and only Sid
-Mason's caption has text: "Chairman". It is NOT recorded: whether the
-commission elected him chairman for the term that began 1 September 2026, or
+Mason's caption has text: "Chairman" (since 2026-10-26 "Chairman District 3
+Post 2", whose seat must be the one the text blocks give him). It is NOT
+recorded: whether the commission elected him chairman for the term that
+began 1 September 2026, or
 the caption is left from the previous term, is not established by anything
 read here, and a card that names the wrong chairman is worse than one that
 names none. The caption is still checked, so the page changing shape raises:
@@ -58,6 +60,9 @@ DOMAINS = ("cockecountytn.gov",)
 URLS = ["https://www.cockecountytn.gov/county-legislative-body"]
 SEATS = {str(i): 2 for i in range(1, 8)}
 AT_LARGE = 0
+# A photo-list caption that also names the seat ("Chairman District 3 Post 2",
+# first seen 2026-10-26); the seat must be the one the text blocks give.
+CAPTION_SEAT_RE = re.compile(r"(.+?) District (\d{1,2}) Post (\d)")
 
 START = "Cocke County Commissioners Information"
 BLOCK_RE = re.compile(r'<div class="sqs-html-content"[^>]*>(.*?)</div>', re.S)
@@ -152,11 +157,16 @@ def parse(pages):
             continue
         if not name:
             raise ValueError("a photo-list caption %r has no name" % role)
-        if not ROLE.fullmatch(role):
+        m = CAPTION_SEAT_RE.fullmatch(role)
+        office, seat = (m.group(1), (m.group(2), m.group(3))) if m else (role, None)
+        if not ROLE.fullmatch(office):
             raise ValueError("photo-list caption for %r reads %r, not a commission office" % (name, role))
-        hits = [r for ms in districts.values() for r in ms if r["name"] == name]
+        hits = [(d, r) for d, ms in districts.items() for r in ms if r["name"] == name]
         if len(hits) != 1:
             raise ValueError("the photo list gives %r the office %r but the text blocks list "
                              "%d members of that name" % (name, role, len(hits)))
+        if seat and (hits[0][0], hits[0][1].get("seat")) != (seat[0], "Post " + seat[1]):
+            raise ValueError("the photo list puts %r in %r, the text blocks in District %s %s"
+                             % (name, role, hits[0][0], hits[0][1].get("seat")))
         # Checked above and deliberately not recorded: see the docstring.
     return {"districts": districts, "atLarge": []}
