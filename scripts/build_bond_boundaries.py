@@ -130,7 +130,7 @@ OUTSIDE_LISTED_PRECINCT = {
 # Lawrence maps draw an area they cannot place.
 SHARED_BLOCKS = {"170059513002043", "170059513002044", "170059513002045"}
 SHARED_KEY = "4|5"
-SHARED_AREA = "Three census blocks in Greenville"
+SHARED_AREA = "a part of Greenville"
 SHARED_NOTE = ("The county's 2011 plan lists these blocks with the Central 6 "
                "precinct and puts them in District 5, but the census places them "
                "in Central 3, and the county's election results count Central 3 "
