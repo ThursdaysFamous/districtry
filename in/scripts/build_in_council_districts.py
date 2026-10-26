@@ -110,13 +110,64 @@ SEAT_NOT_NUMBERED = {
                     "Dist 36\"",
 }
 
-# Floors: 56 counties file, Clay is left out, so 55 are drawn.
-MIN_COUNTIES = 55
+# Counties the state's service does not carry, drawn from the county's own
+# map server instead. Each entry names the layer, the field holding the
+# district, a query clause where the layer holds more than council districts,
+# and a "map" from the field's value to the district only where the value is
+# not the number itself. Every entry was read on the date it records, with
+# robots.txt read first by the same client.
+OWN_SOURCES = {
+    # Read 2026-10-26: the county's own field, "District 1".."District 4"; one
+    # extra 252 sq ft piece of District 3 is merged by the dissolve.
+    "Adams": {"layer": "https://adamsingis.adams.in.us/arcgis/rest/services/"
+                       "General/County_Web/MapServer/24",
+              "field": "PRECINCT"},
+    # Read 2026-10-26: the county's "Delaware County Council Districts 2022"
+    # (the service keeps an older "2012" name).
+    "Delaware": {"layer": "https://services.arcgis.com/VyRjdyMziYNF5Bwe/arcgis/"
+                          "rest/services/County_council_2012/FeatureServer/0",
+                 "field": "COUNCIL_DI"},
+    # Read 2026-10-26: the county's election layer holds every office; its four
+    # "Porter County District N" features split the county exactly, while the
+    # commissioner districts are three features named "(North)" and so on.
+    "Porter": {"layer": "https://services6.arcgis.com/TQ2Al5QIvv4tMBL7/arcgis/"
+                        "rest/services/ElectionGeography_public_27e9bb8eaa1148"
+                        "d08269f6122529bc74/FeatureServer/0",
+               "field": "districtname",
+               "where": "districtname LIKE 'Porter County District _'"},
+    # Read 2026-10-26: "County Council 2025", which the county's own council
+    # district map (updated 2026-09-30) draws.
+    "St. Joseph": {"layer": "https://services.arcgis.com/OjftlhRHkAABcyiF/arcgis/"
+                            "rest/services/County_Council_2025/FeatureServer/0",
+                   "field": "COUNCIL_1",
+                   "map": {c: c for c in "ABCDEFGHI"}},
+    # Read 2026-10-26: Vigo County GIS's council districts, last updated
+    # 2026-05-29.
+    "Vigo": {"layer": "https://services3.arcgis.com/TA4VkagxbBNgroMb/arcgis/"
+                      "rest/services/CountyCouncilDist/FeatureServer/0",
+             "field": "District"},
+}
+
+# Councils not elected from four numbered districts. Lake County's council has
+# seven districts and St. Joseph's nine, lettered A to I (IC 36-2-3-4 sets the
+# usual four-and-three; both counties are written into their own sections).
+DISTRICTS = {
+    "Lake": [str(i) for i in range(1, 8)],
+    "St. Joseph": list("ABCDEFGHI"),
+}
+
+# Floors: 56 counties file to the state, Clay is left out, and five more are
+# drawn from their own servers, so 60 are drawn.
+MIN_COUNTIES = 60
 DISTRICTS_PER_COUNTY = 4
 MARION_DISTRICTS = 25
 # How much of each county its districts must cover, measured against the
 # app's own simplified county outline (the lowest measured was Perry's 99.09%).
 MIN_COVER = 0.985
+# Counties whose outline runs out into Lake Michigan, where a council district
+# stops at the shore. The Census puts Porter County's land at 418.2 of its
+# 521.8 square miles (80.1%); its own districts measured 80.45% on 2026-10-26.
+SHORE_COVER = {"Porter": 0.80}
 SAMPLES = 2000
 
 
@@ -138,6 +189,17 @@ def district_number(county, label):
              "number this builder knows how to read. Record it in DROP_LABELS "
              "with its reason, or teach district_number() its form." % (county, label))
     return str(int(m.group(1)))
+
+
+def expected_districts(county, fips):
+    if fips == MARION:
+        return [str(i) for i in range(1, MARION_DISTRICTS + 1)]
+    return DISTRICTS.get(county) or [str(i) for i in range(1, DISTRICTS_PER_COUNTY + 1)]
+
+
+def _dkey(d):
+    d = str(d)
+    return (0, int(d), "") if d.isdigit() else (1, 0, d)
 
 
 def county_table():
@@ -217,9 +279,10 @@ def check(doc):
     if len(by) < MIN_COUNTIES:
         problems.append("only %d counties drawn (floor %d)" % (len(by), MIN_COUNTIES))
     for (fips, county), ds in sorted(by.items()):
-        want = MARION_DISTRICTS if fips == MARION else DISTRICTS_PER_COUNTY
-        if sorted(ds, key=int) != [str(i) for i in range(1, want + 1)]:
-            problems.append("%s County's districts are %s, not 1..%d" % (county, ds, want))
+        want = expected_districts(county, fips)
+        if sorted(ds, key=_dkey) != want:
+            problems.append("%s County's districts are %s, not %s"
+                            % (county, ds, ", ".join(want)))
         if county in LEFT_OUT_COUNTIES:
             problems.append("%s County is drawn and recorded as left out" % county)
     with open(COUNCILS, encoding="utf-8") as fh:
@@ -265,6 +328,47 @@ def fetch(session):
         off += PAGE
 
 
+def fetch_own(session, county, spec):
+    """One county's council districts from its own layer, as (district, geojson
+    geometry) pairs."""
+    from scraper_common import (  # noqa: PLC0415
+        UA_HEADERS_ROSTER_BOT, UA_ROSTER_BOT, require_robots_once)
+    require_robots_once(spec["layer"], UA_ROSTER_BOT, headers=UA_HEADERS_ROSTER_BOT)
+    out, off = [], 0
+    while True:
+        r = session.get(spec["layer"] + "/query", params={
+            "where": spec.get("where", "1=1"), "outFields": spec["field"],
+            "outSR": "4326", "f": "geojson", "resultOffset": off,
+            "resultRecordCount": PAGE}, timeout=120)
+        r.raise_for_status()
+        doc = r.json()
+        if "error" in doc or "features" not in doc:
+            fail("%s County's own layer answered with no features: %s"
+                 % (county, str(doc)[:200]))
+        for f in doc["features"]:
+            raw = (f.get("properties") or {}).get(spec["field"])
+            value = str(raw).strip() if raw is not None else ""
+            if "map" in spec:
+                if value not in spec["map"]:
+                    fail("%s County's own layer files %s=%r, which its map "
+                         "does not name" % (county, spec["field"], value))
+                d = spec["map"][value]
+            else:
+                m = re.search(r"(\d+)\s*$", value)
+                if not m:
+                    fail("%s County's own layer files %s=%r, which names no "
+                         "district number" % (county, spec["field"], value))
+                d = str(int(m.group(1)))
+            if d is None:
+                continue
+            if f.get("geometry") is None:
+                fail("%s County district %s has no geometry" % (county, d))
+            out.append((d, f["geometry"]))
+        if len(doc["features"]) < PAGE:
+            return out
+        off += PAGE
+
+
 def build(session):
     from shapely.geometry import mapping, shape  # noqa: PLC0415
     from shapely.ops import unary_union  # noqa: PLC0415
@@ -279,7 +383,7 @@ def build(session):
         label = (p.get("dsplayname") or "").strip()
         if county not in counties:
             fail("feature from %r, which is not a county in state-counties.json" % county)
-        if county in LEFT_OUT_COUNTIES:
+        if county in LEFT_OUT_COUNTIES or county in OWN_SOURCES:
             continue
         d = district_number(county, label)
         if d is None:
@@ -288,6 +392,13 @@ def build(session):
         if f.get("geometry") is None:
             fail("%s County %r has no geometry" % (county, label))
         groups.setdefault((county, d), []).append(shape(f["geometry"]).buffer(0))
+    for county, spec in sorted(OWN_SOURCES.items()):
+        if county not in counties:
+            fail("OWN_SOURCES names %r, which is not a county" % county)
+        pieces = fetch_own(session, county, spec)
+        print("%s County: %d features from its own layer" % (county, len(pieces)))
+        for d, geom in pieces:
+            groups.setdefault((county, d), []).append(shape(geom).buffer(0))
     for k in sorted(set(DROP_LABELS) - seen_drops):
         fail("DROP_LABELS records %s %r, which the service no longer files" % k)
     for c in sorted(LEFT_OUT_COUNTIES):
@@ -306,14 +417,15 @@ def build(session):
         union = unary_union(list(parts.values()))
         cover = union.intersection(outline).area / outline.area
         overlap = (sum(g.area for g in parts.values()) - union.area) / outline.area
-        if cover < MIN_COVER:
+        floor = SHORE_COVER.get(county, MIN_COVER)
+        if cover < floor:
             fail("%s County's districts cover %.2f%% of the county (floor %.1f%%)"
-                 % (county, 100 * cover, 100 * MIN_COVER))
+                 % (county, 100 * cover, 100 * floor))
         if overlap > 0.001:
             fail("%s County's districts overlap over %.3f%% of the county"
                  % (county, 100 * overlap))
         lines.append("%s %.2f%%" % (county, 100 * cover))
-        for d in sorted(parts, key=int):
+        for d in sorted(parts, key=_dkey):
             g = parts[d].intersection(outline)
             g = g.buffer(0)
             if g.geom_type not in ("Polygon", "MultiPolygon"):
@@ -370,7 +482,7 @@ def main():
     require_robots_once(SERVICE, UA_ROSTER_BOT, headers=UA_HEADERS_ROSTER_BOT)
     built = build(session)
     built["features"].sort(key=lambda f: (f["properties"]["county"],
-                                          int(f["properties"]["district"])))
+                                          _dkey(f["properties"]["district"])))
     problems, n, f = check(built)
     if problems:
         fail("; ".join(problems))

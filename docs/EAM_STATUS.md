@@ -117,7 +117,7 @@ this instance is in maintenance.
 
 - **Under a WATCH.md plan (12):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `in-appeals-districts.json`, `in-conservancy-directors.json`, `in-conservancy-districts.json`, `in-council-districts.json`, `in-house-districts.json`, `in-precincts.json`, `in-school-board-districts.json`, `in-senate-districts.json`, `metro-outline.json`, `state-counties.json`
 - **Covered: no.** 3 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
-  - **4. The county governing body, in every county of the state** — open. 55 of 92 counties name a governing body and draw it where it is elected by district; 37 more name a body elected by district whose districts are not drawn, or not matched to their members
+  - **4. The county governing body, in every county of the state** — open. 60 of 92 counties name a governing body and draw it where it is elected by district; 32 more name a body elected by district whose districts are not drawn, or not matched to their members
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 6 of 39 units at 25,000+ name a governing body and draw it where it is elected by ward or district; 33 more name a body elected by ward or district whose wards are not drawn; unanswered: Anderson city, Bloomington city, Brownsburg town, Carmel city, Columbus city, Elkhart city, Evansville city, Fishers city and 25 more
   - **10. School boards elected by district** — open (required only where the state has the level)
 

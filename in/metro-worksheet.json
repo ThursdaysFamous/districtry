@@ -159,7 +159,7 @@
       "label": "County Council District",
       "group": "political",
       "area_rank": 6,
-      "rank_note": "241 districts in 55 counties: four per county, and Indianapolis's 25 City-County Council districts",
+      "rank_note": "266 districts in 60 counties: four per county, St. Joseph County's nine, and Indianapolis's 25 City-County Council districts",
       "source": {
         "answers": "Which county council district contains the point, and who won that district's seat and the county's three at-large seats; in Marion County, the Indianapolis City-County Council district and its member.",
         "boundary": [
@@ -169,7 +169,7 @@
           }
         ],
         "people": "The district's council member and the county's at-large members, each the winner of that seat's most recent election in the Indiana Election Division's certified results (in-county-councils.json; for Marion County, the 2023 municipal general in in-city-officials.json). A winner is not a sitting member: Indiana fills a vacancy by party caucus, and the card says so. Boone County's District 3 seat is titled \"Dist 36\" in the results, so its card does not guess which member holds it.",
-        "applies": "Indiana — the 55 counties whose council districts the state's mapping office publishes in full. In the other 37 the card says the lines are not published, and the County card lists every council member."
+        "applies": "Indiana — the 55 counties whose council districts the state's mapping office publishes in full, and five more (Adams, Delaware, Porter, St. Joseph and Vigo) drawn from the county's own map. In the other 32 the card says the lines are not drawn yet, and the County card lists every council member."
       }
     },
     {
@@ -484,9 +484,9 @@
       },
       {
         "file": "in-council-districts.json",
-        "min_features": 241,
-        "max_features": 241,
-        "note": "County council districts in 55 counties and Indianapolis's 25 City-County Council districts, from the Indiana Geographic Information Office's CountyCouncilPolygon layer, built by in/scripts/build_in_council_districts.py."
+        "min_features": 266,
+        "max_features": 266,
+        "note": "County council districts in 60 counties and Indianapolis's 25 City-County Council districts, from the Indiana Geographic Information Office's CountyCouncilPolygon layer and, for Adams, Delaware, Porter, St. Joseph and Vigo, each county's own map layer, built by in/scripts/build_in_council_districts.py."
       },
       {
         "file": "in-school-board-districts.json",
@@ -557,7 +557,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-in-shell-v4",
+    "cache_name": "districtry-in-shell-v5",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

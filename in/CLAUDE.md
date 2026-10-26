@@ -74,9 +74,11 @@ legislative body is the 25-member City-County Council, elected in the MUNICIPAL 
 legislative and executive body), so the 91 per-county pages under `in/county-commissioner/` carry
 the commissioners.
 
-**THE COUNCIL DISTRICTS OF 55 COUNTIES ARE DRAWN** (2026-10-15), as the County Council District
-layer, from the Indiana Geographic Information Office's `CountyCouncilPolygon` layer
-(`in/scripts/build_in_council_districts.py` → `in-council-districts.json`, 241 districts). Marion's
+**THE COUNCIL DISTRICTS OF 60 COUNTIES ARE DRAWN** (55 on 2026-10-15, five more on 2026-10-26), as the County Council District
+layer, from the Indiana Geographic Information Office's `CountyCouncilPolygon` layer and, for
+Adams, Delaware, Porter, St. Joseph and Vigo, each county's own map layer (`OWN_SOURCES`; St. Joseph's
+nine districts are lettered A to I, and Porter's outline runs into Lake Michigan, so its cover floor is 80%)
+(`in/scripts/build_in_council_districts.py` → `in-council-districts.json`, 266 districts in 60 counties). Marion's
 are the City-County Council's 25. The labels are free text ("CC1", "#1", "Area 1", "Indianapolis
 001"), so only the number is read and each county must come out 1..4 (Marion 1..25); Noble's
 three at-large features and a Boone sliver labelled "N.T." are recorded in `DROP_LABELS`, and Clay,

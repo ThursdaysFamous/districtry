@@ -10928,7 +10928,7 @@ function initIndianaExplorer() {
     "in-senate",         // 50 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 92 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "in-house",          // 100 House districts — the finest political tiling this instance ships today
-    "county-council",    // 241 districts in 55 counties: four per county, and Indianapolis's 25 City-County Council districts
+    "county-council",    // 266 districts in 60 counties: four per county, St. Joseph County's nine, and Indianapolis's 25 City-County Council districts
     "school-district-unified", // 291 unified (K-12) districts, from TIGERweb, drawn from a mirrored tile archive. Indiana runs NO elementary and NO secondary districts — both TIGERweb layers return ZERO features for STATE='18' (measured 2026-09-29) — so this instance ships ONE school layer where Michigan ships two, and the two empty layers are recorded drops rather than empty toggles
     "zip-code",          // 807 ZIP Code Tabulation Areas overlapping Indiana (882 counting the 75 that only touch its line), in a mirrored tile archive, measured 2026-10-17 — about 107 km2 mean, between a county and a township, which is where a ZIP ranks in Indiana and is NOT where it ranks in Michigan
     "county-subdivision", // 1,012 county-subdivision records tiling the state, from TIGERweb, drawn from a mirrored tile archive — 1,004 are civil townships (LSADC 44), and the other eight are Census bookkeeping: four coextensive town records, one city record (Muncie), the Camp Atterbury unorganized territory, and two 'not defined' records, all measured 2026-09-29
@@ -15365,13 +15365,14 @@ function initIndianaExplorer() {
     }
   });
 
-  /* ---------- County Council District — 55 counties' own lines.
+  /* ---------- County Council District — 60 counties' own lines.
    *
    * An Indiana county council elects four members from districts and three
    * by the whole county (IC 36-2-3-4), so a reader is owed the one district
    * member whose district holds the point. The lines are each county's own,
    * collected by the Indiana Geographic Information Office (CountyCouncil
-   * Polygon), joined into one shape per district and clipped to the county
+   * Polygon) or, for five counties the state does not carry, read from the
+   * county's own map server, joined into one shape per district and clipped to the county
    * by in/scripts/build_in_council_districts.py, which also checks that every
    * drawn district has a seat of that name in the rosters. Marion County's
    * districts are the Indianapolis City-County Council's 25, named from the
@@ -15409,10 +15410,11 @@ function initIndianaExplorer() {
       style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.05 }
     },
     coverage: insideIndiana,
-    emptyNote: "This map has no council district lines for this county. They " +
-      "are drawn for the counties that give them to the state's mapping " +
-      "office, and this one has not. The County card lists every member of " +
-      "the county council.",
+    emptyNote: "This map has no council district lines for this county yet. " +
+      "They are drawn where the county gives them to the state's mapping " +
+      "office or publishes them on its own map server, and this county does " +
+      "neither in a form the map can read. The County card lists every " +
+      "member of the county council.",
     hoverName: function (feature) {
       var p = feature.properties || {};
       if (String(p.fips) === "18097") return "City-County Council District " + String(p.district);
