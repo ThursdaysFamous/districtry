@@ -60,9 +60,10 @@ DOMAINS = ("cockecountytn.gov",)
 URLS = ["https://www.cockecountytn.gov/county-legislative-body"]
 SEATS = {str(i): 2 for i in range(1, 8)}
 AT_LARGE = 0
-# A photo-list caption that also names the seat ("Chairman District 3 Post 2",
-# first seen 2026-10-26); the seat must be the one the text blocks give.
-CAPTION_SEAT_RE = re.compile(r"(.+?) District (\d{1,2}) Post (\d)")
+# A photo-list caption that names the seat, with or without an office before
+# it ("Chairman District 3 Post 2", "District 5 Post 2", both first seen
+# 2026-10-26); the seat must be the one the text blocks give.
+CAPTION_SEAT_RE = re.compile(r"(?:(.+?) )?District (\d{1,2}) Post (\d)")
 
 START = "Cocke County Commissioners Information"
 BLOCK_RE = re.compile(r'<div class="sqs-html-content"[^>]*>(.*?)</div>', re.S)
@@ -159,7 +160,7 @@ def parse(pages):
             raise ValueError("a photo-list caption %r has no name" % role)
         m = CAPTION_SEAT_RE.fullmatch(role)
         office, seat = (m.group(1), (m.group(2), m.group(3))) if m else (role, None)
-        if not ROLE.fullmatch(office):
+        if office is not None and not ROLE.fullmatch(office):
             raise ValueError("photo-list caption for %r reads %r, not a commission office" % (name, role))
         hits = [(d, r) for d, ms in districts.items() for r in ms if r["name"] == name]
         if len(hits) != 1:

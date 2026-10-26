@@ -1747,6 +1747,10 @@ def _tn_seat(seat):
     return "Seat " + seat if len(seat) <= 2 else seat
 
 
+TN_NOT_READ_WHY = ("This app could not read the county's list on its latest weekly "
+                   "try, so these are the names as of that day.")
+
+
 def tn_commissioners(inst):
     """Tennessee: ONE file keyed by county GEOID ("47093"), each record
     carrying the county's name, its body's name and member title, the day the
@@ -1793,7 +1797,13 @@ def tn_commissioners(inst):
                                          _tn_seat(m.get("seat"))) if x)
             if role:
                 p["role"] = role
-            p["readOn"] = read_on
+            if rec.get("notRead"):
+                # Carried forward: the weekly run could not read this county,
+                # so the page must not say the names are re-read every week.
+                p["asOf"] = read_on
+                p["asOfWhy"] = TN_NOT_READ_WHY
+            else:
+                p["readOn"] = read_on
             return p
 
         districts = []
