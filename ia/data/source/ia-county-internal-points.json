@@ -57,13 +57,6 @@
    "lng": -92.5294115,
    "name": "Tama County",
    "slug": "tama"
-  },
-  "wright": {
-   "fips": "197",
-   "lat": 42.7330073,
-   "lng": -93.7347352,
-   "name": "Wright County",
-   "slug": "wright"
   }
  },
  "source": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query"
