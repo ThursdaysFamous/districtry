@@ -128,7 +128,7 @@ All 120 counties: each county's fiscal court, elected officers and conservation 
 
 All 92 counties: each county's commissioners and county council, townships, cities and towns, voting precincts, school districts, the Indianapolis Public Schools board districts, conservancy districts, ZIP codes, the Pokagon Band's trust land, and the nearest police station, fire station and post office — plus the Court of Appeals districts whose voters decide whether its judges stay, and the Indiana Senate, House and U.S. House districts, with the member named for each U.S. House seat. County officials, township trustees and boards, and the mayors and councils of most places over 25,000 people are named for the winner of each seat's most recent election in the Election Division's certified results; three towns' councils and the Pokagon Band's council are named from their own pages, conservancy district boards from the Department of Natural Resources' directory, and the county council districts are drawn in 55 counties. Nobody is named yet on the two state chambers, the Court of Appeals, the school boards or the smaller towns' councils, and the Data gaps panel says why.
 
-- [Indiana district lookup](https://districtry.com/in/): 17 layers, all 92 counties.
+- [Indiana district lookup](https://districtry.com/in/): 18 layers, all 92 counties.
 - [Who is my U.S. representative?](https://districtry.com/in/congress.html)
 - [Who are my county commissioners?](https://districtry.com/in/county-commissioner.html): links a page per county, 92 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/in/sources.html)
