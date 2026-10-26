@@ -279,15 +279,17 @@
           "email": "gianotti.rosanne@gmail.com",
           "name": "Rosanne Gianotti",
           "role": "President"
-        },
-        {
-          "email": "mary.prairie@gmail.com",
-          "name": "Mary Prairie",
-          "role": "Treasurer"
         }
       ],
       "comptrollerCode": "046/020/12",
-      "filedFor": "2025",
+      "filedFor": "2026",
+      "heads": [
+        {
+          "email": "mary.prairie@gmail.com",
+          "name": "Mary Prairie",
+          "role": "Treas./Admin."
+        }
+      ],
       "kind": "park",
       "office": {
         "phone": "(309) 335-3411"
@@ -514,7 +516,7 @@
       "office": {}
     }
   },
-  "generated": "2026-10-17T23:33:26Z",
+  "generated": "2026-10-24T23:51:00Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
