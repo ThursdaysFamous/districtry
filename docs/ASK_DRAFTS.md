@@ -2751,7 +2751,9 @@ to and would read as doubting the first answer. It is recorded, not re-asked.
 
 ## Ask 23 — Logan County Clerk: may an automated client read the yearbook?
 
-> **NOT YET ASKED — DRAFTED 2026-09-12.** A first approach to this office. It asks for
+> **ASKED 2026-10-01, FOLLOWED UP 2026-10-26, no reply as of 2026-10-26** (dates from the sent
+> folder as the Letters thread read it). Drafted 2026-09-12. On 2026-10-24 the site's robots.txt
+> still disallowed `/images/`, so the ask is still open. A first approach to this office. It asks for
 > permission, not for data: the county already publishes the file and it already serves
 > normally to a browser. Nothing is blocked and nothing is being worked around.
 
