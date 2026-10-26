@@ -3828,6 +3828,19 @@ trusted.
             }
       },
       {
+            "id": "mo-voting-precincts",
+            "concept": "Voting precinct",
+            "area": "Missouri",
+            "counties": [],
+            "kind": "no-source",
+            "layer": null,
+            "summary": "This app does not draw Missouri's voting precincts, so it cannot tell you which precinct your spot is in.",
+            "why": "Each of Missouri's 116 local election authorities keeps its own precinct lines, and the Secretary of State holds no statewide map of them. The Census Bureau's map of voting districts dates from 2020 and may be out of date.",
+            "wanted": "Each county's or election board's current precinct map, as a map layer or a file of its lines, or one statewide map of the current precincts from a state office.",
+            "blocker": "Measured 2026-10-26. THE STATE HOLDS NO MAP: the letter of 2026-10-21 to the Secretary of State's office asked for a statewide map of every county's commission districts and voting precincts, and the office's custodian of records answered the same day (Sunshine request SUN0000585) that it found no responsive records and that this information is kept by the local election authority in each of Missouri's 116 jurisdictions. Its answer to the narrowed request (SUN0000590, 2026-10-22) offers a PDF report per jurisdiction listing every precinct split with its districts, for about $50; the reports carry no geometry, and they are HELD on Adam's word of 2026-10-23, not ordered. The state's map server (gis.mo.gov, its folders listed 2026-10-21) carries the congressional and legislative plans and no precinct layer. THE CENSUS MAP IS 2020's: TIGERweb's tigerWMS_Census2020 layer 58 answers 4,604 voting districts for STATE='29', in all 115 counties and the City of St. Louis, counted 2026-10-26 with this project's own client after the host's robots.txt (none: it serves an HTML page at that path). Those are the precincts the state reported for the 2020 census, and how many counties have redrawn since is not measured statewide. Two counties were compared while drawing their commission districts: in Saline County the 2020 voting districts Marshall 1 to 4 are the four city wards its clerk listed on 2026-10-23, and in St. Francois County the county's own voting district layer on the SEMO GIS server carries 2010 voting district attributes, so neither settles how current the others are. ASKED 2026-10-23, COUNTY BY COUNTY: the 40 letters Adam sent that day to county election authorities (listed in mo-county-commission-district-lines) ask for a precinct map beside the commission district lines; follow-ups are due about 2026-11-13. Cass County's GIS Director sent the county's precinct map with its commission district shapefile the same day, as a map and not a file of lines, and it is not drawn. A county joins a precinct layer when its own published map or file proves its current lines.",
+            "ask": {"who": "the election authorities of 40 Missouri counties, by letter", "asked": "2026-10-23", "outcome": "pending"}
+      },
+      {
             "id": "mo-st-louis-aldermen",
             "concept": "City ward",
             "area": "The City of St. Louis",
@@ -5486,8 +5499,8 @@ concept layer holding a per-county entry table — see
 committed under its app's `data/app/tiles/` and built by `scripts/mirror_tiger_tiles.py`:
 Illinois's, Iowa's, Michigan's and Wisconsin's census layers and the six older apps' ZIP layers
 since 2026-09-27, the nine newest apps' census layers since 2026-10-17, and Louisiana's three
-since 2026-10-21, before it went live. On 2026-10-21 that is every cell here that says live
-TIGERweb. The whole set is still fetched from TIGERweb wherever
+since 2026-10-21 and Missouri's five since 2026-10-26, each before it went live. On 2026-10-26
+that is every cell here that says live TIGERweb. The whole set is still fetched from TIGERweb wherever
 an app needs all of it, such as for a comparison, a pinned district or the raster basemap, so "no
 committed `data/app` file" and "a vintage roll reaches it on its own" are true of that set only:
 a new census vintage reaches the card and the tiled map through the weekly pull request
