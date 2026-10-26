@@ -33,8 +33,9 @@ Districts layer any visitor can query (ARCGIS below). The same map server
 carries a Commissioner District layer for Iron and Scott counties too, found
 on 2026-10-24 without any county pointing to it, so those two are drawn from
 it the same way (St. Francois's, on the same server, is not; see its note
-below). Those 28 are SOURCES
-below. The other 86 counties and the City of St. Louis are not
+below), and Wayne's clerk's office e-mailed a township map on 2026-10-26
+whose line runs along township lines. Those 29 are SOURCES
+below. The other 85 counties and the City of St. Louis are not
 drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
@@ -232,6 +233,19 @@ SOURCES = {
                 "Northern District": ["Marshall 3", "Marshall 4"],
                 "Southern District": ["Marshall 1", "Marshall 2"]}},
             "listed": "2026-10-23"},
+    # Wayne's clerk's office answered on 2026-10-26 with a map of the county's
+    # ten townships (a 2014 Mapping Solutions plat page, kept out of this
+    # repository because it is that firm's work; SHA-256 5e415b83d49c7409ba
+    # b8a601be7614756a688c69e7e2a64b2461ed53f5aba493) and a red line it says
+    # "indicates the Eastern and Western boundaries or our Road
+    # Commissioners". The line runs along township lines only: Benton, Mill
+    # Spring, Williams and Black River lie west of it and the other six east,
+    # and the ten match TIGER's ten.
+    "223": {"townships": {
+                "Eastern District": ["Cedar Creek", "Cowan", "Jefferson", "Logan",
+                                     "Lost Creek", "St. Francois"],
+                "Western District": ["Benton", "Black River", "Mill Spring", "Williams"]},
+            "sent": "2026-10-26"},
     "113": {"viewer": ("phelpsgis", "Lincoln_County_MO", "1", "35"),
             "names": {"DISTRICT I": "First District", "DISTRICT II": "Second District"}},
     "119": {"viewer": ("christiangis", "McDonald_County_MO", "2", "35"), "field": "district_n",
