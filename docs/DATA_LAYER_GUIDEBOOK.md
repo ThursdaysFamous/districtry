@@ -2126,6 +2126,7 @@ trusted.
       "ask": {
         "who": "League of Wisconsin Municipalities",
         "asked": "2026-10-01",
+        "followedUp": "2026-10-26",
         "outcome": "pending"
       },
       "wanted": "For any city or village with districts on the map: a page pairing each aldermanic or trustee district with the member holding it, readable without a sign-in. A statewide open roster would close it in every municipality at once."
@@ -2294,9 +2295,10 @@ trusted.
     "ask": {
       "who": "Wisconsin Towns Association",
       "asked": "2026-10-01",
+      "followedUp": "2026-10-26",
       "outcome": "pending"
     },
-    "blocker": "Per county, measured 2026-10-15: six publish no list (Buffalo, Calumet, Dane, Green Lake, La Crosse, Rock); fifteen ask automated readers not to read their websites, turn them away, or could not be reached; Dodge's directory is a scan with no text in it, Vilas's only directory is from 2023, and Menominee's names the town chair only; Eau Claire, Oconto, Sawyer and Trempealeau publish the board for some towns and not the rest. MEASURED 2026-10-15 by wi/scripts/wi_town_board_scraper.py and build_wi_town_boards.py: 794 towns and 2,614 board members named from 47 counties' own lists, read weekly; `NOT_READ` in the builder records each county here and the sentence its card prints. Adam ruled on 2026-10-15 that this level passes where a list of town boards is published, county by county, with the card saying so for the towns it cannot name. Ask wi-town-boards went to the Wisconsin Towns Association on 2026-10-01 at 14:44 UTC and had no reply when the mailbox was read on 2026-10-15; its follow-up is due about 2026-10-22, and a statewide list from it would cover these counties."
+    "blocker": "Per county, measured 2026-10-15: six publish no list (Buffalo, Calumet, Dane, Green Lake, La Crosse, Rock); fifteen ask automated readers not to read their websites, turn them away, or could not be reached; Dodge's directory is a scan with no text in it, Vilas's only directory is from 2023, and Menominee's names the town chair only; Eau Claire, Oconto, Sawyer and Trempealeau publish the board for some towns and not the rest. MEASURED 2026-10-15 by wi/scripts/wi_town_board_scraper.py and build_wi_town_boards.py: 794 towns and 2,614 board members named from 47 counties' own lists, read weekly; `NOT_READ` in the builder records each county here and the sentence its card prints. Adam ruled on 2026-10-15 that this level passes where a list of town boards is published, county by county, with the card saying so for the towns it cannot name. Ask wi-town-boards went to the Wisconsin Towns Association on 2026-10-01 at 14:44 UTC and had no reply when the mailbox was read on 2026-10-15; its follow-up was sent on 2026-10-26 at 13:56 UTC, with a second follow-up due about 2026-11-09, and a statewide list from it would cover these counties."
   },
     {
       "id": "wi-town-board-phone-area-code",
@@ -2399,6 +2401,7 @@ trusted.
       "ask": {
         "who": "League of Wisconsin Municipalities",
         "asked": "2026-10-01",
+        "followedUp": "2026-10-26",
         "outcome": "pending"
       },
       "wanted": "A statewide list pairing each municipality with its governing body — town board, village board or council. Short of that, another county publishing its executives, or a municipality's own page naming its officers.",
