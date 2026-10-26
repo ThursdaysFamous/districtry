@@ -33,8 +33,10 @@ Districts layer any visitor can query (ARCGIS below). The same map server
 carries a Commissioner District layer for Iron and Scott counties too, found
 on 2026-10-24 without any county pointing to it, so those two are drawn from
 it the same way (St. Francois's, on the same server, is not; see its note
-below). Those 28 are SOURCES
-below. The other 86 counties and the City of St. Louis are not
+below), Wayne's clerk's office e-mailed a township map on 2026-10-26
+whose line runs along township lines, and Howard's Assessor e-mailed a
+shapefile of its two districts the same day (FILE below). Those 30 are SOURCES
+below. The other 84 counties and the City of St. Louis are not
 drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
@@ -69,7 +71,7 @@ edge rather than the viewer's. The line between the two districts is held
 to FIDELITY_MAX_M: every vertex of the source's own dividing line must lie
 within that distance of the drawn one.
 
-Build (network: the viewers, the Cole download and TIGERweb; Cass's file is
+Build (network: the viewers, the Cole download and TIGERweb; Cass's and Howard's files are
 read from disk; shapely and
 pyproj):
     python3 mo/scripts/build_mo_commission_districts.py
@@ -179,6 +181,29 @@ SOURCES = {
                 "prj": "1e84a19d8fa23d2f23c0cdd5d16cc096abe8ee6235eeb391a139484fbcd35654"},
             "names": {"1": "District 1", "2": "District 2"},
             "sent": "2026-10-23"},
+    # Howard County's Assessor (Woody McCutchean) e-mailed this shapefile on
+    # 2026-10-26, after the request to the county clerk, with a second one of
+    # the county's eight townships. Its two shapes are named Western and
+    # Eastern Commissioner's District; the roster prints Western and Eastern
+    # District. The files are kept as sent and held to their SHA-256 below.
+    # They stop at the Missouri River's bank where the Census county line
+    # runs out into the river, so they leave 1.13% of the County card's
+    # county outside both, over MAX_GAP. Measured 2026-10-26 against TIGER's
+    # areal hydrography (a point query on the Missouri River polygon as the
+    # control): of that 13.8 km2, 10.9 km2 is the Missouri River and 2.9 km2
+    # is land in strips along it, the largest 1.5 km2 at 38.997, -92.868.
+    # That ground is cut by the dividing line carried on into the river
+    # (_split_at_dividing_line) and each part goes to the district beside it.
+    "089": {"file": "howard-commission-districts/commission", "field": "NAME",
+            "sha256": {
+                "shp": "5d0aa00a311706e3125bedebb871013be8025e22aa3b3d55bba4b9733a6600e9",
+                "shx": "0e15bf1e29d989c0ea0f11adf0fc3e4a593267f06bc8c958cb7e5c4236a8109f",
+                "dbf": "171c106565a3eaeb6712170d31a4a6782ae98b2627a240af5e64541efc2c4423",
+                "prj": "a537f714b1b3e3e88c85e2673e8e1abbbd35ad3492512617ba3ff82d7de205e7"},
+            "names": {"WESTERN COMMISSIONER'S DISTRICT": "Western District",
+                      "EASTERN COMMISSIONER'S DISTRICT": "Eastern District"},
+            "max_gap": 0.012,
+            "sent": "2026-10-26"},
     # Perry's clerk (Jared W. Kutz) answered on 2026-10-23 by pointing to the
     # county's public map at SEMO GIS, whose PerryCo_PublicBase service has a
     # Commissioner Districts layer (COMM_DIST 1 and 2). The roster prints
@@ -232,6 +257,19 @@ SOURCES = {
                 "Northern District": ["Marshall 3", "Marshall 4"],
                 "Southern District": ["Marshall 1", "Marshall 2"]}},
             "listed": "2026-10-23"},
+    # Wayne's clerk's office answered on 2026-10-26 with a map of the county's
+    # ten townships (a 2014 Mapping Solutions plat page, kept out of this
+    # repository because it is that firm's work; SHA-256 5e415b83d49c7409ba
+    # b8a601be7614756a688c69e7e2a64b2461ed53f5aba493) and a red line it says
+    # "indicates the Eastern and Western boundaries or our Road
+    # Commissioners". The line runs along township lines only: Benton, Mill
+    # Spring, Williams and Black River lie west of it and the other six east,
+    # and the ten match TIGER's ten.
+    "223": {"townships": {
+                "Eastern District": ["Cedar Creek", "Cowan", "Jefferson", "Logan",
+                                     "Lost Creek", "St. Francois"],
+                "Western District": ["Benton", "Black River", "Mill Spring", "Williams"]},
+            "sent": "2026-10-26"},
     "113": {"viewer": ("phelpsgis", "Lincoln_County_MO", "1", "35"),
             "names": {"DISTRICT I": "First District", "DISTRICT II": "Second District"}},
     "119": {"viewer": ("christiangis", "McDonald_County_MO", "2", "35"), "field": "district_n",
@@ -571,7 +609,7 @@ def build_county(c3, spec, county_feature, roster, today):
     gap = county.difference(union).area / county.area
     outside = union.difference(county).area / county.area
     overlap = a.intersection(b).area / county.area
-    if gap > MAX_GAP or outside > MAX_GAP or overlap > MAX_OVERLAP:
+    if gap > spec.get("max_gap", MAX_GAP) or outside > MAX_GAP or overlap > MAX_OVERLAP:
         raise RuntimeError("%s: gap %.4f, outside %.4f, overlap %.5f of the county"
                            % (name, gap, outside, overlap))
     fwd = Transformer.from_crs("EPSG:4326", CRS_EQUAL_AREA, always_xy=True).transform
@@ -586,7 +624,10 @@ def build_county(c3, spec, county_feature, roster, today):
     # the complement happens to hand it to.
     a_given, b_given = a_src, b_src
     rest = county_m.difference(a_src.union(b_src))
-    for piece in getattr(rest, "geoms", [rest]):
+    pieces = list(getattr(rest, "geoms", [rest]))
+    if spec.get("max_gap"):
+        pieces = _split_at_dividing_line(pieces, a_given, b_given)
+    for piece in pieces:
         if piece.is_empty or piece.geom_type != "Polygon":
             continue
         # how much of each district lies within a metre of the sliver: the
@@ -659,6 +700,41 @@ def build_county(c3, spec, county_feature, roster, today):
           % (name, " / ".join(sorted(people)), gap, overlap, worst,
              ", ".join("%d" % v for v in vals), spread))
     return feats, record
+
+
+def _split_at_dividing_line(pieces, a, b, reach_m=5000.0):
+    """Cut ground neither source district reaches with the source's dividing
+    line, carried straight on past each of its ends, so that a strip running
+    along the county edge past the point where the line meets it is shared
+    between the two districts at that point rather than handed whole to one.
+    Used only for a county whose SOURCES entry sets max_gap: the others'
+    gaps are slivers, and cutting them would move nothing a reader sees."""
+    from shapely.geometry import LineString  # noqa: PLC0415
+    from shapely.ops import linemerge, split  # noqa: PLC0415
+    shared = a.boundary.intersection(b.boundary.buffer(1.0))
+    lines = [g for g in getattr(shared, "geoms", [shared]) if g.geom_type == "LineString"]
+    merged = linemerge(lines)
+    longest = max(getattr(merged, "geoms", [merged]), key=lambda g: g.length)
+    coords = list(longest.coords)
+    cuts = []
+    for end, inward in ((coords[0], coords[1:]), (coords[-1], coords[-2::-1])):
+        # the direction of the line's last 200 metres at this end
+        back = end
+        for pt in inward:
+            back = pt
+            if math.hypot(pt[0] - end[0], pt[1] - end[1]) >= 200.0:
+                break
+        dx, dy = end[0] - back[0], end[1] - back[1]
+        n = math.hypot(dx, dy)
+        cuts.append(LineString([end, (end[0] + dx / n * reach_m, end[1] + dy / n * reach_m)]))
+    out = []
+    for piece in pieces:
+        for cut in cuts:
+            if not piece.intersects(cut):
+                continue
+            piece = _polygonal(split(piece, cut))
+        out.extend(getattr(piece, "geoms", [piece]))
+    return out
 
 
 def _polygonal(g):
