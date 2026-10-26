@@ -10,12 +10,18 @@ name: Watch city council pages
 # and number written against a member, is still on the page its seat cites.
 # Adam chose weekly over quarterly on 2026-10-16.
 #
+# It re-reads the board pages of Tennessee's fourteen special school districts
+# too (tn/scripts/build_tn_special_school_boards.py), on Adam's "Yes" of
+# 2026-10-26: those boards are also written down by hand from each district's
+# own page, by the same machinery (scripts/city_councils.py).
+#
 # The files whose pages it re-reads:
 #   ar/data/app/ar-city-councils.json
 #   nc/data/app/nc-city-councils.json
 #   ok/data/app/ok-city-councils.json
 #   sc/data/app/sc-city-councils.json
 #   tn/data/app/tn-city-councils.json
+#   tn/data/app/tn-special-school-boards.json
 #
 # It never edits a seats file or the app's files. A name that has gone from
 # its page usually means the seat changed hands, and which seat a new member
@@ -95,6 +101,9 @@ jobs:
             echo
             echo "### Tennessee"
             python3 tn/scripts/build_tn_city_councils.py --watch 2>&1 || code=1
+            echo
+            echo "### Tennessee special school districts"
+            python3 tn/scripts/build_tn_special_school_boards.py --watch 2>&1 || code=1
           } > watch-report.txt
           cat watch-report.txt
           echo "code=$code" >> "$GITHUB_OUTPUT"
@@ -131,7 +140,7 @@ jobs:
           {
             echo "_Automated by \`.github/workflows/watch-city-council-pages.yml\` on $(date -u +%Y-%m-%d). Nothing was changed in the app._"
             echo
-            echo "The councils of the 122 cities above 25,000 people in Arkansas, North Carolina, Oklahoma, South Carolina and Tennessee are written down by hand from each city's own pages. This week's re-read found these:"
+            echo "The councils of the 122 cities above 25,000 people in Arkansas, North Carolina, Oklahoma, South Carolina and Tennessee, and the boards of Tennessee's fourteen special school districts, are written down by hand from each city's or district's own pages. This week's re-read found these:"
             echo
             echo '```'
             cat watch-lines.txt
@@ -143,7 +152,7 @@ jobs:
             echo "- **NOT READ**: the page could not be read this week. The card keeps what the page said when it was last read. For a page read with a browser's client, re-measure with \`scripts/probe_user_agents.py\` before changing anything, and never ask a refusing host again with a different client."
             echo "- **FAIL**, **FATAL** or a traceback: the seats file or the builder itself has a problem; the full report below says which."
             echo
-            echo "**To clear this issue:** read the city's page, change that state's seats file by hand (\`<tag>/data/source/<tag>-city-council-seats.json\`: a new member, a changed seat, or the page's own spelling as \`as\`), rebuild with \`python3 <tag>/scripts/build_<tag>_city_councils.py\`, which refuses to write unless every name is on the page it cites, and open a pull request. The next weekly run that reads every page and finds every name closes this issue."
+            echo "**To clear this issue:** read the city's page, change that state's seats file by hand (\`<tag>/data/source/<tag>-city-council-seats.json\`: a new member, a changed seat, or the page's own spelling as \`as\`), rebuild with \`python3 <tag>/scripts/build_<tag>_city_councils.py\`, which refuses to write unless every name is on the page it cites, and open a pull request. For a Tennessee special school district the file is \`tn/data/source/tn-special-school-board-seats.json\` and the builder \`tn/scripts/build_tn_special_school_boards.py\`. The next weekly run that reads every page and finds every name closes this issue."
             echo
             echo "<details><summary>Full report</summary>"
             echo
