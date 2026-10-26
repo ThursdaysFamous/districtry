@@ -618,7 +618,10 @@ DASH_RE = re.compile(r"[‐-―−]")
 
 
 def norm(text):
-    text = unicodedata.normalize("NFKC", text)
+    # A soft hyphen is a hint where a line may break, invisible unless it
+    # does, so a page that writes "Mc\u00adDaniel" shows McDaniel
+    # (Bradford Special School District's board page, 2026-10-26).
+    text = unicodedata.normalize("NFKC", text).replace("\u00ad", "")
     for a, b in QUOTES.items():
         text = text.replace(a, b)
     text = DASH_RE.sub("-", text).casefold()
