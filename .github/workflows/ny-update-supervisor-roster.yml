@@ -44,8 +44,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
+      # pymupdf reads Wyoming County's yearly roster, which the county
+      # publishes only as a PDF.
       - name: Install dependencies
-        run: pip install -c scripts/requirements.txt requests
+        run: pip install -c scripts/requirements.txt requests pymupdf
       - name: Scrape each county's board of supervisors page
         run: python3 ny/scripts/ny_supervisor_scraper.py --out /tmp/ny-supervisors.json
       - name: Rebuild roster

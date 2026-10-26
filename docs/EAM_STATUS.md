@@ -54,7 +54,7 @@ different thing from one it failed.
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 21 | all | 13 of 14 levels |
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 24 | all | 8 of 14 levels |
 | nc | **EAMC** | 100 | 100/100 | 373 | 584 | all | 20 | all | all 14 levels |
-| ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 36 | all | 10 of 14 levels |
+| ny | **EAM·** | 62 | 62/62 § | 144 | 162 | all | 36 | all | 10 of 14 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 18 | all | 10 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 20 | all | 13 of 14 levels |
 | tn | **EAM·** | 95 | 95/95 § | 571 | 993 | all | 19 | all | 10 of 14 levels |
@@ -187,10 +187,10 @@ this instance is in maintenance.
 
 ### ny — EAM·
 
-- **Examined by a statewide record:** `ny-county-governing-body` accounts for every county in the state, which is what Examined rests on here: 11 of 62 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
+- **Examined by a statewide record:** `ny-county-governing-body` accounts for every county in the state, which is what Examined rests on here: 15 of 62 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Under a WATCH.md plan (24):** re-checked on a stated cadence rather than by a job — `borough-boundaries.json`, `bronx-county-outline.json`, `brooklyn-county-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `judicial-districts.json`, `manhattan-county-outline.json`, `metro-outline.json`, `municipal-court-districts.json`, `ny-central-hs-districts.json`, `ny-cities-towns.json`, `ny-counties.json`, `ny-school-districts.json`, `ny-state-outline.json`, `ny-villages.json`, `queens-county-outline.json`, `state-assembly-districts.json`, `state-senate-districts.json`, `staten-island-county-outline.json`, `sullivan-county-outline.json`, `sullivan-fire-districts.json`, `sullivan-library-districts.json`, `tompkins-county-outline.json`, `tompkins-legislature-districts.json`
 - **Covered: no.** 4 of the 14 expected levels of government are not answered. A level whose record earns nothing says so underneath it.
-  - **4. The county governing body, in every county of the state** — open. 10 of 62 counties name a governing body. A record declares this level and earns nothing: `ny-county-governing-body` — Office of the State Comptroller, Division of Local Government and School Accountability (localgov@osc.ny.gov) was asked on 2026-10-07 and has not answered; the record earns nothing until a thread writes the outcome
+  - **4. The county governing body, in every county of the state** — open. 14 of 62 counties name a governing body. A record declares this level and earns nothing: `ny-county-governing-body` — Office of the State Comptroller, Division of Local Government and School Accountability (localgov@osc.ny.gov) was asked on 2026-10-07 and has not answered; the record earns nothing until a thread writes the outcome
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 1 of 104 units at 25,000+ name a governing body; unanswered: Albany city, Amherst town, Auburn city, Babylon town, Bethlehem town, Binghamton city, Brighton town, Brookhaven town and 95 more. A record declares this level and earns nothing: `ny-local-governing-body` — Office of the State Comptroller, Division of Local Government and School Accountability (localgov@osc.ny.gov) was asked on 2026-10-07 and has not answered; the record earns nothing until a thread writes the outcome
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level). A record declares this level and earns nothing: `ny-local-governing-body` — Office of the State Comptroller, Division of Local Government and School Accountability (localgov@osc.ny.gov) was asked on 2026-10-07 and has not answered; the record earns nothing until a thread writes the outcome
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)

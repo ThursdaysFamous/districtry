@@ -56,19 +56,46 @@ fail = make_fail("build-ny-supervisor-roster")
 
 
 def units_of(county):
+    """{unit key: MUNI_TYPE}, keyed exactly as the scraper keys a unit.
+
+    A unit is keyed by its name unless two units of the county share it —
+    Fulton's city and town of Johnstown — in which case each is keyed
+    "<name> (<type>)", the key the app looks up first.
+    """
     with open(FABRIC, encoding="utf-8") as f:
         feats = json.load(f)["features"]
-    return {p["NAME"]: p["MUNI_TYPE"]
-            for p in (x.get("properties") or {} for x in feats)
-            if p.get("COUNTY") == county}
+    pairs = [(p["NAME"], p["MUNI_TYPE"])
+             for p in (x.get("properties") or {} for x in feats)
+             if p.get("COUNTY") == county]
+    names = [n for n, _ in pairs]
+    return {("%s (%s)" % (n, t) if names.count(n) > 1 else n): t
+            for n, t in pairs}
 
 
 def build(path=None):
     with open(path or SCRAPE, encoding="utf-8") as f:
         scrape = json.load(f)
     out = {}
+    shipped = {}
+    if os.path.exists(OUT):
+        with open(OUT, encoding="utf-8") as f:
+            shipped = json.load(f)
     for key in sorted(scrape):
         rec = scrape[key]
+        # A COUNTY THE SCRAPER COULD NOT READ KEEPS ITS LAST SHIPPED RECORD.
+        # A refusal stops the fetch and never unpublishes what was read while
+        # the host was serving (the operator's ruling of 2026-09-19). The card
+        # prints no verification date, so nothing on it claims a re-read.
+        if "error" in rec:
+            if key in shipped:
+                out[key] = shipped[key]
+                print("build-ny-supervisor-roster: %s — NOT RE-READ (%s); the "
+                      "last shipped record is carried forward"
+                      % (key, rec["error"]))
+            else:
+                print("build-ny-supervisor-roster: %s — NOT READ (%s) and never "
+                      "shipped, so it stays out" % (key, rec["error"]))
+            continue
         units = units_of(rec["county"])
         if not units:
             fail("%s: the cities-and-towns fabric holds no unit in %s County"
