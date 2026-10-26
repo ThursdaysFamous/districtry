@@ -4499,6 +4499,15 @@ rather than either August recipient.
 
 ### Bond County Clerk — `brooke.weathers@bondcountyil.gov`
 
+> **ANSWERED 2026-10-26** (from the mailbox as the Letters thread read it). This letter went
+> 2026-10-01 and was followed up 2026-10-26; Clerk Weathers replied to the follow-up the same day
+> with a scanned ordinance: the board's 2011 apportionment plan (Resolution 06-27-11-01, adopted
+> 27 June 2011), which lists every district as whole 2010 precincts plus named census blocks. It
+> covers elections from 2012 through 2020, but it divides exactly the four precincts the 2022 and
+> 2024 canvasses show divided, between the same pairs of districts, so it looks like the plan still
+> in use. What it does not say is whether the board kept it after the 2020 census. A thank-you
+> asking that one question is wanted. The record is `bond-county-board-districts`.
+
 > Subject: Bond County board districts — how do four precincts divide?
 >
 > Dear Ms. Weathers,
