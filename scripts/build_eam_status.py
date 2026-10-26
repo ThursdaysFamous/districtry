@@ -1609,13 +1609,12 @@ ANSWERS = {
         # (Iowa Code 273.8), so the AEA layer meets the test by being drawn.
         # A community college's trustees ARE elected, one from each director
         # district by its own voters (Iowa Code 260C.11). Iowa keeps no
-        # statewide list, so the level stays open until the card names the
-        # trustee for every college's districts; a college whose own page
-        # does not say which trustee holds which numbered district (Northeast
-        # Iowa's, measured 2026-10-21) keeps it open whatever the other
-        # fourteen name. The layers are named here so the unclaimed-layer
-        # print does not list them.
-        "special-districts": Entry("open", ("community-college", "cc-director-district", "iowa-aea")),
+        # statewide list, so the level stayed open until the card named the
+        # trustee for every college's districts. CLOSED 2026-10-26: fourteen
+        # colleges number their districts on their own pages, and Northeast
+        # Iowa's nine, which its page lists by school district, are keyed from
+        # election records (PAIRED in ia/scripts/build_ia_cc_trustees.py).
+        "special-districts": answers("community-college", "cc-director-district", "iowa-aea"),
         # SHIPPED 2026-10-10 (#1496) by the fleet-wide tribal thread: four
         # areas across three nations, each named with the town its government
         # sits in, and the Winnebago council named -- the Wisconsin and
