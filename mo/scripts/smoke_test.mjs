@@ -325,37 +325,55 @@ try {
       `${cold.hrefs.length} links`);
 
     // ==== TEMPLATE:BEGIN smoke-coverage-band ====
-    // THIS INSTANCE PAINTS NO MIDDLE BAND, AND THAT IS THE CLAIM ASSERTED HERE.
-    // The gaps lede answers three ways since 2026-09-26 — inside the covered
-    // area, inside a wider region whose own key says what still answers there,
-    // or outside both — and the middle answer exists only where the app hands
-    // drawOutOfScopeMask a region geometry. This one hands it none, so the wash
-    // has two bands and the lede must keep saying "nothing there can be
-    // answered yet" beyond the covered area. Asserted rather than assumed
-    // because the engine block is one shared copy: a change that started
-    // retaining a region unconditionally would have this app claiming something
-    // answers where nothing does, and nothing static could see it — the
-    // sentence is assembled at runtime from a point test.
+    // THIS INSTANCE PAINTS A MIDDLE BAND SINCE 2026-10-26 (Adam: "Shade the map
+    // like IL is currently"). The coverage ring is the counties whose county
+    // commission district lines are drawn and the band is the rest of the
+    // state, where every statewide layer and the County card still answer. The
+    // gaps lede must name the band, with the words COVERAGE_KEY.region gives it,
+    // at a point in an undrawn county, and must claim no band beyond the state
+    // line. Asserted in a browser because the sentence is assembled at runtime
+    // from a point test against geometry the wash fetched.
     //
-    // IT WAITS FOR THE WASH FIRST. A null coverage test correctly falls through
-    // to wording that claims neither, so a point selected before the wash has
-    // loaded asserts against the app's "we cannot tell yet" state — which is
-    // what CI caught on this check's first draft.
-    async function washPainted() {
-      return page.waitForFunction(() => {
+    // BOTH HALVES WAIT FOR THE WASH TO PAINT. A null coverage test falls
+    // through to wording that claims neither, so a point selected before the
+    // wash has loaded asserts against the app's "we cannot tell yet" state. In
+    // an app that declares a region the `dst-glow` line is created ONLY in the
+    // branch that also retains the region polygons, so it is the exact signal.
+    async function washPainted(needRegion) {
+      return page.waitForFunction((wantGlow) => {
         const pane = document.querySelector(".leaflet-pane.leaflet-scope-mask-pane");
-        return !!(pane && pane.querySelector("path"));
-      }, null, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
+        if (!pane || !pane.querySelector("path")) return false;
+        return wantGlow ? !!pane.querySelector("path.dst-glow") : true;
+      }, needRegion, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
     }
-    if (await washPainted()) {
+    // Springfield, Greene County: inside Missouri, and Greene's commission
+    // lines are not drawn (it is not in mo-commission-counties.json, which
+    // validate_index.py holds the coverage ring to).
+    const BAND_PROBE = { region: "Missouri", label: "Springfield, Greene County",
+                         label_says: "County commission districts not drawn yet",
+                         lat: 37.2090, lng: -93.2923 };
+    const ready = await washPainted(true);
+    check(`the wash painted its region band, so the band wording can be read (${BAND_PROBE.region})`,
+      ready, ready ? "scope-mask pane carries dst-glow" :
+      "no dst-glow in the scope-mask pane — the region band never painted, so the " +
+      "two checks below would assert against the app's unknown-coverage wording");
+    await page.evaluate(({ n, lat, lng }) => window[n].setSelectedPoint(lat, lng),
+      { n: EXPORTS_NAME, lat: BAND_PROBE.lat, lng: BAND_PROBE.lng });
+    const band = await openGaps();
+    check(`gaps lede names the coverage band (${BAND_PROBE.label})`,
+      band.lede.indexOf("inside " + BAND_PROBE.region + ", outside the area this app covers in full") !== -1 &&
+      band.lede.indexOf(BAND_PROBE.label_says) !== -1 &&
+      !/nothing there can be answered yet/.test(band.lede),
+      JSON.stringify(band.lede));
+    if (await washPainted(false)) {
       await page.evaluate(({ n, p }) => window[n].setSelectedPoint(p[0], p[1]),
         { n: EXPORTS_NAME, p: NEGATIVE_POINT.split(",").map(Number) });
       const beyond = await openGaps();
-      check("gaps lede claims no coverage band at the negative point",
+      check("gaps lede claims no coverage band outside the state",
         /nothing there can be answered yet/.test(beyond.lede) &&
         !/covers in full/.test(beyond.lede), JSON.stringify(beyond.lede));
     } else {
-      check("gaps lede claims no coverage band at the negative point", false,
+      check("gaps lede claims no coverage band outside the state", false,
         "the wash never painted, so the panel's coverage test could only answer unknown");
     }
     // ==== TEMPLATE:END smoke-coverage-band ====

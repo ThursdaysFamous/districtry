@@ -2,22 +2,36 @@
 """
 Metro Outline Builder (the scope mask's coverage geometry)
 ==========================================================
-Builds data/app/metro-outline.json — for Missouri, the dissolved outline of
-the WHOLE STATE, since coverage is statewide from day one — from Census
-TIGERweb. Unlike Wisconsin's narrower "roster-covered" ring, this wash makes
-no partial claim: METRO_COUNTY_FIPS is all 114 counties and the City of
-St. Louis (29510, a county equivalent), and DISPATCH_COUNTY_FIPS stays empty
-on purpose — this instance has no per-county dispatch layers yet.
+Builds TWO files from Census TIGERweb's county layer, the way Illinois's
+builder does (scripts/build_metro_outline.py):
+
+  * data/app/metro-outline.json — the COVERAGE ring: the dissolved outline of
+    the counties whose commission or council district lines this app draws
+    (METRO_COUNTY_FIPS), where a reader is told which member represents the
+    point. The map leaves this ground clear.
+  * data/app/mo-state-outline.json — the REGION ring: the dissolved outline of
+    all 114 counties and the City of St. Louis (STATE_COUNTY_FIPS), where every
+    statewide layer answers and the County card names the whole commission or
+    council. The map washes the strip between the two lightly and the key
+    says the commission districts are not drawn there yet.
+
+TWO TIERS BY ADAM'S CHOICE OF 2026-10-26 ("Shade the map like IL is
+currently"). Until that day this file claimed the whole state as coverage,
+because the County card names every county's commission and a narrower wash
+greys out ground the app answers for. That is still true, and it is why the
+middle band is LIGHT and its key names what is missing (the district lines)
+rather than calling the ground uncovered. The two tiers show a reader where the
+county's district lines are drawn, which is how this instance comes online:
+county by county, as each county's own map proves its lines.
 
 THE COUNTY LIST HERE IS A CLAIM ABOUT COVERAGE, SO IT HAS TO TRACK WHAT
-ANSWERS. Every county card names its commission or council from the Secretary
-of State's statewide roster, and every statewide layer answers in all 115, so
-the wash claims the whole state. Commission DISTRICT lines are not drawn yet,
-and that is recorded as a gap rather than drawn as a narrower ring: the
-county card answers everywhere, so a narrower wash would grey out ground the
-app does answer for. If that ever stops being true, narrow METRO_COUNTY_FIPS
-to what actually answers, following `wi/scripts/build_metro_outline.py` rather
-than inventing a new shape.
+ANSWERS. METRO_COUNTY_FIPS must be exactly the counties
+data/app/mo-commission-counties.json lists (the counties
+mo/scripts/build_mo_commission_districts.py draws), and --check and
+mo/scripts/validate_index.py both fail when they differ. So a county the
+commission builder draws joins this ring in the same change: add its FIPS here
+and its INSIDE anchor, move it out of RING_OUTSIDE, and rebuild.
+STATE_COUNTY_FIPS must be the 115 the county layer draws and the roster names.
 
 Why this exists: the out-of-scope wash (index.html, ENGINE `scope-mask`)
 marks where the app's fullest answer ends. It also keeps a boot cost out —
@@ -27,8 +41,8 @@ pre-built. This file is one small pre-dissolved feature.
 
 WHY A BUILD STEP RATHER THAN TIGERweb's OWN STATE POLYGON (layer 0):
 dissolving from the county fabric (layer 1) — rather than fetching the
-state layer directly — is what lets this same script narrow to a subset of
-counties the day coverage becomes partial, without changing shape. It also
+state layer directly — is what lets this same script draw the coverage ring
+as a subset of the same counties from the same fetch. It also
 means this file's geometry always agrees with `state-counties.json`'s own
 fabric, since both come from the same layer.
 
@@ -48,7 +62,7 @@ not leak, and the worksheet's negative point is in Kansas, about 57 km west of
 the line, where no instance answers today.
 
 Usage:
-    python3 mo/scripts/build_metro_outline.py                 # writes data/app/metro-outline.json
+    python3 mo/scripts/build_metro_outline.py                 # writes both files
     python3 mo/scripts/build_metro_outline.py --check         # verify the shipped file, write nothing
 """
 
@@ -72,10 +86,10 @@ TIGERWEB = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
             "State_County/MapServer/1/query")
 
 # Every Missouri county's 3-digit FIPS, and the City of St. Louis's (510) —
-# the served area IS the whole state.
-# BOTH constants below must stay plain literal assignments at module top:
+# the REGION ring, where the statewide layers and the County card answer.
+# ALL THREE constants below must stay plain literal assignments at module top:
 # validate_index.py reads them via ast.literal_eval without importing.
-METRO_COUNTY_FIPS = (
+STATE_COUNTY_FIPS = (
     "001", "003", "005", "007", "009", "011", "013", "015",
     "017", "019", "021", "023", "025", "027", "029", "031",
     "033", "035", "037", "039", "041", "043", "045", "047",
@@ -92,11 +106,24 @@ METRO_COUNTY_FIPS = (
     "211", "213", "215", "217", "219", "221", "223", "225",
     "227", "229", "510",
 )
+# The COVERAGE ring: the counties whose commission or council district lines
+# the County Commission District layer draws, exactly the keys of
+# data/app/mo-commission-counties.json (28 on 2026-10-26).
+METRO_COUNTY_FIPS = (
+    "011", "013", "021", "029", "037", "041", "043", "051",
+    "053", "057", "063", "093", "109", "113", "119", "125",
+    "127", "131", "157", "161", "167", "169", "173", "177",
+    "195", "201", "217", "219",
+)
 STATE_FIPS = "29"
-# No dispatch entries: none of this instance's layers is county-dispatched.
+# No dispatch entries: none of this instance's layers is county-dispatched
+# (the commission district layer is one statewide layer that hides outside the
+# counties it draws).
 DISPATCH_COUNTY_FIPS = {}
 
 _UNLISTED = sorted(set(DISPATCH_COUNTY_FIPS.values()) - set(METRO_COUNTY_FIPS))
+_NOT_IN_STATE = sorted(set(METRO_COUNTY_FIPS) - set(STATE_COUNTY_FIPS))
+assert not _NOT_IN_STATE, "METRO_COUNTY_FIPS names %s, outside STATE_COUNTY_FIPS" % _NOT_IN_STATE
 assert not _UNLISTED, (
     "DISPATCH_COUNTY_FIPS names county FIPS %s that METRO_COUNTY_FIPS omits — a "
     "county cannot be served and outside the coverage ring at the same time"
@@ -104,6 +131,8 @@ assert not _UNLISTED, (
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "data", "app", "metro-outline.json")
+STATE_OUT_PATH = os.path.join(REPO_ROOT, "data", "app", "mo-state-outline.json")
+COMMISSION_COUNTIES = os.path.join(REPO_ROOT, "data", "app", "mo-commission-counties.json")
 WORKSHEET = os.path.join(REPO_ROOT, "metro-worksheet.json")
 
 HEADERS = {"User-Agent": "districtry metro-outline builder (+https://districtry.com/mo/)"}
@@ -114,7 +143,7 @@ REQUEST_TIMEOUT = 180
 # tolerance that ever moved the edge past an anchor would fail the build.
 SIMPLIFY_TOLERANCE_M = 25
 
-# One INSIDE anchor per county: the Census Bureau's own internal point for the
+# One STATE_INSIDE anchor per county: the Census Bureau's own internal point for the
 # county (INTPTLAT/INTPTLON on TIGERweb State_County layer 1), which the
 # Census places inside the county by construction. Each was still verified
 # interior against that county's own SIMPLIFIED rings in the shipped
@@ -122,7 +151,7 @@ SIMPLIFY_TOLERANCE_M = 25
 # ring closure alone is not proof a dissolve kept every county. All 115 passed
 # when this table was generated, 2026-10-21. "St. Louis" is the county and
 # "St. Louis City" the independent city.
-INSIDE = {
+STATE_INSIDE = {
     "Adair": (40.19067, -92.60359),
     "Andrew": (39.98886, -94.80355),
     "Atchison": (40.43185, -95.43755),
@@ -247,7 +276,7 @@ INSIDE = {
 # shipped state-counties.json: three in Iowa, five across the Mississippi in
 # Illinois, two in Kentucky, one in Tennessee, four in Arkansas, one in
 # Oklahoma, five in Kansas and two in Nebraska.
-OUTSIDE = {
+STATE_OUTSIDE = {
     "Keokuk, Iowa": (40.39700, -91.38490),
     "Lamoni, Iowa": (40.62280, -93.93300),
     "Shenandoah, Iowa": (40.76550, -95.37220),
@@ -273,10 +302,51 @@ OUTSIDE = {
     "Nebraska City, Nebraska": (40.67640, -95.85970),
 }
 
+# The coverage ring's anchors, from the same table: each drawn county's own
+# internal point is INSIDE the ring, and every other county's, with every
+# town over the state line, is OUTSIDE it. So the ring is proven to hold each
+# county it claims and none it does not, and the count identity in
+# check_anchor_registry still reads one INSIDE anchor per served county.
+RING_COUNTIES = (
+    "Barton",
+    "Bates",
+    "Buchanan",
+    "Camden",
+    "Cass",
+    "Chariton",
+    "Christian",
+    "Cole",
+    "Cooper",
+    "Dade",
+    "DeKalb",
+    "Iron",
+    "Lawrence",
+    "Lincoln",
+    "Maries",
+    "Marion",
+    "McDonald",
+    "Miller",
+    "Perry",
+    "Phelps",
+    "Polk",
+    "Pulaski",
+    "Ralls",
+    "Ray",
+    "Saline",
+    "Scott",
+    "Vernon",
+    "Warren",
+)
+INSIDE = {name: STATE_INSIDE[name] for name in RING_COUNTIES}
+OUTSIDE = dict(STATE_OUTSIDE)
+OUTSIDE.update({name + ", not drawn": STATE_INSIDE[name]
+                for name in STATE_INSIDE if name not in RING_COUNTIES})
+
 
 def fetch_counties():
+    """All 115 county features; the ring is dissolved from the subset."""
     where = "STATE='%s' AND COUNTY IN (%s)" % (
-        STATE_FIPS, ",".join("'%s'" % c for c in METRO_COUNTY_FIPS))
+        STATE_FIPS, ",".join("'%s'" % c for c in STATE_COUNTY_FIPS))
     import requests  # noqa: PLC0415 (see the module header)
     require_robots_once(TIGERWEB, HEADERS["User-Agent"], headers=HEADERS,
                         label="mo-build-metro-outline")
@@ -289,9 +359,9 @@ def fetch_counties():
     })
     resp.raise_for_status()
     feats = (resp.json() or {}).get("features") or []
-    if len(feats) != len(METRO_COUNTY_FIPS):
+    if len(feats) != len(STATE_COUNTY_FIPS):
         print("FATAL: TIGERweb returned %d counties, expected %d — the query or the "
-              "service changed" % (len(feats), len(METRO_COUNTY_FIPS)), file=sys.stderr)
+              "service changed" % (len(feats), len(STATE_COUNTY_FIPS)), file=sys.stderr)
         sys.exit(1)
     return feats
 
@@ -410,14 +480,46 @@ def point_in_rings(lat, lng, rings):
     return inside
 
 
-def validate(rings):
+def validate(rings, inside=None, outside=None, what="the metro outline"):
+    inside = INSIDE if inside is None else inside
+    outside = OUTSIDE if outside is None else outside
     problems = []
-    for label, (lat, lng) in sorted(INSIDE.items()):
+    for label, (lat, lng) in sorted(inside.items()):
         if not point_in_rings(lat, lng, rings):
-            problems.append("%s should be INSIDE the metro outline and is not" % label)
-    for label, (lat, lng) in sorted(OUTSIDE.items()):
+            problems.append("%s should be INSIDE %s and is not" % (label, what))
+    for label, (lat, lng) in sorted(outside.items()):
         if point_in_rings(lat, lng, rings):
-            problems.append("%s should be OUTSIDE the metro outline and is not" % label)
+            problems.append("%s should be OUTSIDE %s and is not" % (label, what))
+    return problems
+
+
+def validate_state(rings):
+    return validate(rings, STATE_INSIDE, STATE_OUTSIDE, "the state outline")
+
+
+def check_commission_counties():
+    """The ring claims exactly the counties the commission district layer
+    draws: METRO_COUNTY_FIPS and RING_COUNTIES against
+    data/app/mo-commission-counties.json, offline."""
+    try:
+        with open(COMMISSION_COUNTIES, encoding="utf-8") as f:
+            drawn = json.load(f)
+    except (IOError, ValueError) as exc:
+        return ["could not read mo-commission-counties.json (%s)" % exc]
+    problems = []
+    fips = {k[2:] for k in drawn}
+    if fips != set(METRO_COUNTY_FIPS):
+        problems.append(
+            "METRO_COUNTY_FIPS and mo-commission-counties.json disagree: drawn and "
+            "not in the ring %s, in the ring and not drawn %s. A county the "
+            "commission builder draws joins the ring in the same change."
+            % (sorted(fips - set(METRO_COUNTY_FIPS)) or "none",
+               sorted(set(METRO_COUNTY_FIPS) - fips) or "none"))
+    names = {(v.get("county") or "").replace(" County", "") for v in drawn.values()}
+    if names != set(RING_COUNTIES):
+        problems.append(
+            "RING_COUNTIES and mo-commission-counties.json name different counties: "
+            "%s against %s" % (sorted(set(RING_COUNTIES) - names), sorted(names - set(RING_COUNTIES))))
     return problems
 
 
@@ -479,7 +581,7 @@ def check_envelopes(rings):
     return problems
 
 
-def build_geojson(rings):
+def build_geojson(rings, name=None):
     polys = group_rings(rings)
     geometry = ({"type": "Polygon", "coordinates": polys[0]} if len(polys) == 1
                 else {"type": "MultiPolygon", "coordinates": polys})
@@ -487,7 +589,7 @@ def build_geojson(rings):
         "type": "FeatureCollection",
         "features": [{
             "type": "Feature",
-            "properties": {"name": "%d-county coverage area" % len(METRO_COUNTY_FIPS)},
+            "properties": {"name": name or ("%d-county coverage area" % len(METRO_COUNTY_FIPS))},
             "geometry": geometry,
         }],
     }
@@ -560,18 +662,23 @@ def check_anchor_registry():
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[1])
     ap.add_argument("--out", default=OUT_PATH)
+    ap.add_argument("--state-out", default=STATE_OUT_PATH)
     ap.add_argument("--check", action="store_true",
-                    help="validate the shipped file instead of rebuilding")
+                    help="validate the shipped files instead of rebuilding")
     args = ap.parse_args()
 
     if args.check:
         with open(args.out) as f:
             shipped = json.load(f)
+        with open(args.state_out) as f:
+            shipped_state = json.load(f)
         # rings_of() flattens Polygon and MultiPolygon alike, so the anchor test
         # reads the file the same way whether or not the served area is one region.
         rings = rings_of(shipped["features"][0])
-        problems = (check_anchor_registry() + validate(rings)
-                    + check_envelopes(rings))
+        state_rings = rings_of(shipped_state["features"][0])
+        problems = (check_anchor_registry() + check_commission_counties()
+                    + validate(rings) + validate_state(state_rings)
+                    + check_envelopes(state_rings))
         for p in problems:
             print("FAIL: %s" % p, file=sys.stderr)
         if problems:
@@ -579,11 +686,23 @@ def main():
         print("metro-outline: OK — %d ring(s), %d vertices, all %d inside / %d outside "
               "anchors correct" % (len(rings), sum(len(r) for r in rings),
                                    len(INSIDE), len(OUTSIDE)), file=sys.stderr)
+        print("mo-state-outline: OK — %d ring(s), %d vertices, all %d inside / %d outside "
+              "anchors correct" % (len(state_rings), sum(len(r) for r in state_rings),
+                                   len(STATE_INSIDE), len(STATE_OUTSIDE)), file=sys.stderr)
         return
 
-    rings = [simplify(r) for r in dissolve(fetch_counties())]
-    problems = (check_anchor_registry() + validate(rings)
-                + check_envelopes(rings))
+    feats = fetch_counties()
+    ring_feats = [f for f in feats
+                  if str((f.get("properties") or {}).get("GEOID", ""))[-3:] in METRO_COUNTY_FIPS]
+    if len(ring_feats) != len(METRO_COUNTY_FIPS):
+        print("FATAL: %d of the %d ring counties came back" % (len(ring_feats), len(METRO_COUNTY_FIPS)),
+              file=sys.stderr)
+        sys.exit(1)
+    rings = [simplify(r) for r in dissolve(ring_feats)]
+    state_rings = [simplify(r) for r in dissolve(feats)]
+    problems = (check_anchor_registry() + check_commission_counties()
+                + validate(rings) + validate_state(state_rings)
+                + check_envelopes(state_rings))
     for p in problems:
         print("FATAL: %s" % p, file=sys.stderr)
     if problems:
@@ -591,13 +710,15 @@ def main():
               file=sys.stderr)
         sys.exit(1)
 
-    with open(args.out, "w") as f:
-        json.dump(build_geojson(rings), f, separators=(",", ":"))
-        f.write("\n")
-    size = os.path.getsize(args.out)
-    print("wrote %s: %d ring(s), %d vertices, %.1f KB"
-          % (args.out, len(rings), sum(len(r) for r in rings), size / 1024.0),
-          file=sys.stderr)
+    for path, rr, name in ((args.out, rings, None),
+                           (args.state_out, state_rings, "Missouri (all 115 counties)")):
+        with open(path, "w") as f:
+            json.dump(build_geojson(rr, name), f, separators=(",", ":"))
+            f.write("\n")
+        size = os.path.getsize(path)
+        print("wrote %s: %d ring(s), %d vertices, %.1f KB"
+              % (path, len(rr), sum(len(r) for r in rr), size / 1024.0),
+              file=sys.stderr)
 
 
 if __name__ == "__main__":

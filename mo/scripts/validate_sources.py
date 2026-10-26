@@ -227,14 +227,27 @@ PROVENANCE = [
     },
     {
         "layer": "county",
+        "app_file": "mo-state-outline.json",
+        "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
+        "note": (
+            "The state outline, the wash's middle band, dissolved from all "
+            "115 counties by mo/scripts/build_metro_outline.py -- 1 ring, "
+            "2,357 vertices, measured rather than predicted. Its --check is "
+            "offline and holds the shipped file to one INSIDE anchor per "
+            "county (115 of 115 correct) plus 23 OUTSIDE anchors over the "
+            "state line."
+        ),
+    },
+    {
+        "layer": "county",
         "app_file": "metro-outline.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
         "note": (
-            "The coverage wash, dissolved from all 115 counties by "
-            "mo/scripts/build_metro_outline.py -- 1 ring, 2,357 vertices, "
-            "measured rather than predicted. Its --check is offline and holds "
-            "the shipped file to one INSIDE anchor per county (115 of 115 "
-            "correct) plus 23 OUTSIDE anchors over the state line."
+            "The coverage ring, dissolved by the same builder from the same "
+            "fetch: only the counties whose commission district lines are "
+            "drawn (28 on 2026-10-26, 11 rings). --check holds it to one "
+            "INSIDE anchor per drawn county and an OUTSIDE anchor in every "
+            "other county."
         ),
     },
 ]
