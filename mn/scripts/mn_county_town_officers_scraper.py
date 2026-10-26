@@ -1715,6 +1715,252 @@ def otter_tail(f):
     return towns, None, urls
 
 
+GOODHUE_LAYER = ("https://services5.arcgis.com/zCDVc272xQCnwjzc/arcgis/rest/services/"
+                 "Township_Election_Management/FeatureServer/0")
+# The layer's officer fields, in the order a ballot lists the offices. Each
+# officer also has an `_address` and a `_city_state_zip` field, which are
+# home addresses and are never asked for.
+GOODHUE_OFFICES = (
+    ("chairperson", "Supervisor (chair)"),
+    ("supervisor_1", "Supervisor"),
+    ("supervisor_2", "Supervisor"),
+    ("Clerk", "Clerk"),
+    ("deputy_clerk", "Deputy Clerk"),
+    ("treasurer", "Treasurer"),
+)
+
+
+@county("Goodhue", 18)
+def goodhue(f):
+    # Each township's page on goodhuecountymn.gov links "Certified Listing of
+    # Township Officers", which since 2026 is an ArcGIS Online lookup app
+    # (item e717f54f7886413894555873171a982b) rather than a PDF per town.
+    # The app's own web map (5056563fc35a416e9f2fd4dd77bd201c) reads one
+    # public feature layer, so that layer is read here as the app reads it,
+    # with only the fields its pop-up shows: name, telephone, e-mail and
+    # the year the term expires. Measured 2026-10-26: 22 features, 21 towns
+    # and an empty Red Wing row (a city, with no town officers). Each town
+    # is dated to its own last edit. The deputy clerk field is labelled
+    # "Holden TWP Only" in the app and is read wherever it is filled.
+    index, final = f.get("https://goodhuecountymn.gov/about/townships/")
+    pages = {}
+    # The index links each town by its photo, so the town is read off the
+    # link's own path ("/about/townships/belle_creek/").
+    for a in soup(index).find_all("a", href=re.compile(r"^/about/townships/[a-z_]+/$")):
+        slug = a["href"].rstrip("/").rsplit("/", 1)[1]
+        pages[slug.replace("_", " ").title()] = urllib.parse.urljoin(final, a["href"])
+    fields = ["field_37", "EditDate"]
+    for key, _office in GOODHUE_OFFICES:
+        base = "Clerk_Name" if key == "Clerk" else (
+            "deputy_clerk_name_holden_twp_on" if key == "deputy_clerk" else key + "_name")
+        low = key.lower()
+        fields += [base, low + "_phone_number", low + "_email_address", low + "_term_expires"]
+    query = "%s/query?%s" % (GOODHUE_LAYER, urllib.parse.urlencode({
+        "where": "1=1", "outFields": ",".join(fields), "returnGeometry": "false",
+        "orderByFields": "OBJECTID", "f": "json"}))
+    data, _ = f.get(query)
+    doc = json.loads(data.decode("utf-8"))
+    if "error" in doc or "features" not in doc:
+        raise RuntimeError("Goodhue's officer layer answered %r" % (doc.get("error") or doc)[:200])
+    towns, as_of, urls = {}, {}, {"": final}
+    for feature in doc["features"]:
+        a = feature["attributes"]
+        town = town_key(a.get("field_37") or "").title()
+        if not town:
+            continue
+        recs = towns.setdefault(town, [])
+        for key, office in GOODHUE_OFFICES:
+            low = key.lower()
+            base = "Clerk_Name" if key == "Clerk" else (
+                "deputy_clerk_name_holden_twp_on" if key == "deputy_clerk" else key + "_name")
+            name = (a.get(base) or "").strip()
+            if not name:
+                continue
+            rec = row(office, None, name, TERM_RE.search(a.get(low + "_term_expires") or "")
+                      and TERM_RE.search(a.get(low + "_term_expires")).group(1))
+            add_numbers(rec, numbers(a.get(low + "_phone_number") or ""))
+            add_emails(rec, emails(a.get(low + "_email_address") or ""))
+            recs.append(rec)
+        if a.get("EditDate"):
+            as_of[town] = datetime.datetime.fromtimestamp(
+                a["EditDate"] / 1000, datetime.timezone.utc).date().isoformat()
+        if town in pages:
+            urls[town] = pages[town]
+    return towns, as_of, urls
+
+
+# Traverse publishes its list as one scanned page with no text layer
+# ("TOWNSHIP OFFICERS AND TERMS", scanned 2026-03-18).  It was read by eye on
+# 2026-10-26 and is transcribed here, one line per officer: office, name,
+# telephone (printed beside the clerk only) and the term's year.  The list is
+# used only while the image the county serves is the one transcribed; any
+# other image fails the county, its last-good towns are kept, and the new
+# image is read and this table replaced.  "2026/2028" (Arthur's Supervisor 2)
+# names no single year and is dropped; the asterisk after Folsom's David
+# Duffield is unexplained on the page and is not carried.
+TRAVERSE_IMAGE = "20260318120532_00001-scaled.jpg"
+TRAVERSE_SHA256 = "ded392a1b79aea973979b6ad51e9b06771c0f99c6654ac2c7175f1c906ddd1e8"
+TRAVERSE_LIST = """
+Arthur|Sup. 1|Ed Hiedeman||2028
+Arthur|Clerk|Maison Gibson|(320) 305-9381|2026
+Arthur|Treas.|Mike O'Neill||2028
+Arthur|Sup. 3|Kristopher Anderson||2026
+Arthur|Sup. 2|Dale Zych||
+Clifton|Sup. 3|Chad Bruns||2028
+Clifton|Clerk|Steven Deal|320-563-4137|2026
+Clifton|Treas.|Karen Lupkes||2028
+Clifton|Sup. 1|Jeff Young||2028
+Clifton|Sup. 2|Kevin Deal||2026
+Croke|Sup. 1|Philip Brink||2026
+Croke|Clerk/Treas|Alexis Doll|320-808-9434|2028
+Croke|Sup. 2|Dale Schwagel||2028
+Croke|Sup. 3|Tom Frisch||2028
+Dollymount|Sup. 1|Steven Fridgen||2026
+Dollymount|Clerk|Steven Rinke|320-563-8784|2026
+Dollymount|Treas.|Brian Rinke||2028
+Dollymount|Sup. 2|Dean Frisch||2026
+Dollymount|Sup. 3|David M Tritz||2028
+Folsom|Sup. 2|David Duffield||2026
+Folsom|Clerk|Dennis Duffield|320-695-2256|2026
+Folsom|Treas.|Peggy Duffield||2028
+Folsom|Sup. 3|David Metz||2028
+Folsom|Sup. 1|Mike Smith||2026
+Lake Valley|Sup. 1|Steve Johnson||2028
+Lake Valley|Clerk|Glenn Koch|320-815-8344|2028
+Lake Valley|Treas.|Mary Peyton||2026
+Lake Valley|Sup. 2|Curt Braun||2028
+Lake Valley|Sup. 3|Tyler Klugman||2026
+Leonardsville|Sup. 3|Randy Tritz||2028
+Leonardsville|Clerk|Adam Jipson|320-808-4295|2028
+Leonardsville|Treas.|Matthew Kleindl||2026
+Leonardsville|Sup. 1|Aaron Fuhrman||2026
+Leonardsville|Sup. 2|Mark Andrews||2026
+Monson|Sup. C|Troy Fridgen||2026
+Monson|Clerk|Jacqueline McClernon|218-770-6964|2028
+Monson|Treas.|Kim Fridgen||2026
+Monson|Sup. B|DeWayne Groneberg||2028
+Monson|Sup. A|Delane Anderson||2026
+Parnell|Sup. 2|Joe Murphy||2026
+Parnell|Clerk/Treas.|Tina Syverson|320-905-1951|2028
+Parnell|Sup. 1|Chad M. Arens||2028
+Parnell|Sup. 3|Lowell Syverson||2026
+Redpath|Sup. 2|Cory Morrow||2028
+Redpath|Clerk|Stephan Berger|320-304-3867|2026
+Redpath|Treas.|Brad Krenz||2028
+Redpath|Sup. 1|Chadd Berger||2028
+Redpath|Sup. 3|Keith Buss||2026
+Tara|Sup. A|Dave Bauer||2028
+Tara|Clerk|Robert Groebner|320-287-2061|2028
+Tara|Treas.|Richard Sanasack||2026
+Tara|Sup. C|Terry Stueve||2026
+Tara|Sup. B|Scott Gilsdorf||2026
+Taylor|Sup. 2|Dean Holtz||2026
+Taylor|Clerk|Norma Holtz|320-563-4288|2028
+Taylor|Treas.|Jeff Krump||2026
+Taylor|Sup. 3|Jeffrey Muehler||2026
+Taylor|Sup. 1|Alan Bruce||2028
+Tintah|Sup. B|Michael Corey||2026
+Tintah|Clerk|Jacob McClernon|320-287-9875|2028
+Tintah|Treas.|Christine Morgan||2026
+Tintah|Sup. C|Michael Porter||2028
+Tintah|Sup. A|Jesse Morgan||2026
+Walls|Sup. 3|Pat Peyton||2028
+Walls|Clerk|Gail Thiel|320-808-5790|2026
+Walls|Treas.|Robert Thiel||2028
+Walls|Sup. 1|Kevin Pederson||2026
+Walls|Sup. 2|Mitch Findlay||2028
+Windsor|Sup. 2|Robert Schmitz||2028
+Windsor|Clerk|Roger A. Schwagel|320-563-8517|
+Windsor|Treas.|Ann Harter||2028
+Windsor|Sup. 3|Joe Reinart||2028
+Windsor|Sup. 1|Brandon Smith||2026
+"""
+
+
+@county("Traverse", 15)
+def traverse(f):
+    page_url = "https://traversecountymn.gov/departments/departments/county-commissioners/township-officers/"
+    html, final = f.get(page_url)
+    src = next((i["src"] for i in soup(html).find_all("img", src=True)
+                if i["src"].endswith(TRAVERSE_IMAGE)), None)
+    if not src:
+        raise ValueError("Traverse: the page no longer shows the transcribed scan; "
+                         "read the new image and replace TRAVERSE_LIST")
+    data, _ = f.get(urllib.parse.urljoin(final, src))
+    f.docs.pop()  # an image has no text to count numbers in
+    if hashlib.sha256(data).hexdigest() != TRAVERSE_SHA256:
+        raise ValueError("Traverse: the scan's bytes changed; read it again and "
+                         "replace TRAVERSE_LIST and TRAVERSE_SHA256")
+    towns = {}
+    for line in TRAVERSE_LIST.strip().splitlines():
+        town, office, name, phone, term = line.split("|")
+        m = re.match(r"^Sup\.?\s*([1-5A-E])\.?$", office)
+        hit = ("Supervisor", m.group(1)) if m else office_cell(office)
+        rec = row(hit[0], hit[1], name, term or None)
+        towns.setdefault(town, []).append(rec)
+        add_numbers(rec, numbers(phone))
+    return towns, "2026-03-18", [final]
+
+
+RENVILLE_COLUMNS = {"town": 739, "title": 637, "name": 537, "address": 420,
+                    "city": 310, "state": 251, "zip": 213, "phone": 179, "term": 113}
+
+
+
+@county("Renville", 24)
+def renville(f):
+    # The auditor-treasurer's "City and Township Officials" listing, a table
+    # set sideways (Faribault's layout) whose cells are placed by where each
+    # line sits across the page: township, title, name, home address (never
+    # read), city, state, ZIP code, telephone and the term's last year or
+    # "Appointed".  The last two pages are the county's cities, whose rows
+    # name "<Name> City" and are not township officers.  The page's address
+    # serves the PDF itself; the document link the county's township page
+    # carried until September 2026 answers with an empty file.
+    import pymupdf  # noqa: PLC0415
+    data, final = f.get("https://www.renvillecountymn.gov/vidoc/city-and-township-officials/")
+    if data[:4] != b"%PDF":
+        raise ValueError("Renville: the officials listing is no longer a PDF")
+    towns = {}
+    for page in pymupdf.open(stream=data, filetype="pdf"):
+        rows = {}
+        for block in page.get_text("dict")["blocks"]:
+            for line in block.get("lines", []):
+                if tuple(round(v) for v in line["dir"]) != (0, -1):
+                    continue
+                text = " ".join(sp["text"] for sp in line["spans"]).strip()
+                if not text:
+                    continue
+                y = line["bbox"][3]
+                col = min(RENVILLE_COLUMNS, key=lambda c: abs(RENVILLE_COLUMNS[c] - y))
+                if col == "address":
+                    continue
+                rows.setdefault(round(line["bbox"][0] / 4), {})[col] = text
+        for key in sorted(rows):
+            r = rows[key]
+            town, title, name = r.get("town", ""), r.get("title", ""), r.get("name", "")
+            if not name or town in ("", "Township") or re.search(r"\bCity$", town):
+                continue
+            m = re.match(r"^Supervisor\s*-\s*([A-E])$", title)
+            hit = ("Supervisor", m.group(1)) if m else office_cell(title)
+            if not hit:
+                raise ValueError("Renville, %s: an office it does not know: %r" % (town, title))
+            office, seat = hit[0], hit[1]
+            # A seat letter printed after the name ("Wayne Stahnke A").
+            m = re.match(r"^(.*\S)\s+([A-E])$", name)
+            if m and office.startswith("Supervisor") and not seat:
+                name, seat = m.group(1), m.group(2)
+            term = r.get("term", "")
+            rec = row(office, seat, name, term if re.match(r"^20\d\d$", term) else None)
+            towns.setdefault(town_key(town), []).append(rec)
+            add_numbers(rec, numbers(" | ".join(r.get(c, "") for c in ("zip", "phone"))))
+    # The listing prints no date; the file's own creation date is when it was
+    # made (2026-09-17 for "City-Township-Officials-Listing_Sept-2026.pdf").
+    m = re.match(r"D:(20\d\d)(\d\d)(\d\d)",
+                 pymupdf.open(stream=data, filetype="pdf").metadata.get("creationDate") or "")
+    return towns, ("%s-%s-%s" % m.groups() if m else None), [final]
+
+
 @county("Faribault", 15)
 def faribault(f):
     # A table set sideways on the page: each row is a column of text lines

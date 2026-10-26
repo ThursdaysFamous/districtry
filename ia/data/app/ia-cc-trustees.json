@@ -4,46 +4,48 @@
    "college": "Northeast Iowa",
    "sourceUrl": "https://www.nicc.edu/about/administration/board-of-trustees/",
    "asOf": "2026-10-21",
-   "undistricted": [
-    {
-     "name": "Jim Anderson",
-     "role": "Chair",
-     "email": "jimatty@hotmail.com"
+   "seats": {
+    "1": {
+     "name": "Sue Runyon",
+     "email": "srunyonmath@gmail.com"
     },
-    {
+    "2": {
      "name": "Kathy Gunderson",
      "role": "Vice Chair",
      "email": "kgundcpa@neitel.net"
     },
-    {
+    "3": {
+     "name": "Jim Anderson",
+     "role": "Chair",
+     "email": "jimatty@hotmail.com"
+    },
+    "4": {
+     "name": "Dean Sherman",
+     "email": "deansherman@iowatelecom.net"
+    },
+    "5": {
      "name": "John Finley",
      "email": "finleys@alpinecom.net"
     },
-    {
-     "name": "Nick Fisch",
-     "email": "nfisch4dbq@gmail.com"
-    },
-    {
-     "name": "Wendy Knight",
-     "email": "wendy@focusforwardthinking.com"
-    },
-    {
+    "6": {
      "name": "Gary McAndrew",
      "email": "gary@mcandrewsearch.com"
     },
-    {
+    "7": {
      "name": "Jason Norton",
      "email": "trysouth03@yahoo.com"
     },
-    {
-     "name": "Sue Runyon",
-     "email": "srunyonmath@gmail.com"
+    "8": {
+     "name": "Wendy Knight",
+     "email": "wendy@focusforwardthinking.com"
     },
-    {
-     "name": "Dean Sherman",
-     "email": "deansherman@iowatelecom.net"
+    "9": {
+     "name": "Nick Fisch",
+     "email": "nfisch4dbq@gmail.com"
     }
-   ]
+   },
+   "districtsFrom": "elections",
+   "districtsReadOn": "2026-10-26"
   },
   "2": {
    "college": "North Iowa",
@@ -618,6 +620,44 @@
   }
  },
  "seats": {
+  "1-1": {
+   "name": "Sue Runyon",
+   "email": "srunyonmath@gmail.com"
+  },
+  "1-2": {
+   "name": "Kathy Gunderson",
+   "role": "Vice Chair",
+   "email": "kgundcpa@neitel.net"
+  },
+  "1-3": {
+   "name": "Jim Anderson",
+   "role": "Chair",
+   "email": "jimatty@hotmail.com"
+  },
+  "1-4": {
+   "name": "Dean Sherman",
+   "email": "deansherman@iowatelecom.net"
+  },
+  "1-5": {
+   "name": "John Finley",
+   "email": "finleys@alpinecom.net"
+  },
+  "1-6": {
+   "name": "Gary McAndrew",
+   "email": "gary@mcandrewsearch.com"
+  },
+  "1-7": {
+   "name": "Jason Norton",
+   "email": "trysouth03@yahoo.com"
+  },
+  "1-8": {
+   "name": "Wendy Knight",
+   "email": "wendy@focusforwardthinking.com"
+  },
+  "1-9": {
+   "name": "Nick Fisch",
+   "email": "nfisch4dbq@gmail.com"
+  },
   "2-1": {
    "name": "David Steffens Jr.",
    "termEnds": "2029"
