@@ -17,7 +17,7 @@
   "robots-unreadable": 4,
   "stack-not-token": 9,
   "tls-chain": 1,
-  "token-ok": 254,
+  "token-ok": 255,
   "token-refused": 3,
   "token-refused-and-stack": 41
  },
@@ -6376,6 +6376,27 @@
     "tn/scripts/build_tn_city_councils.py": "both"
    },
    "measured": "2026-10-16"
+  },
+  "www.kossuthcounty.iowa.gov": {
+   "host": "www.kossuthcounty.iowa.gov",
+   "url": "https://www.kossuthcounty.iowa.gov/a",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 171592 bytes (page carries a captcha widget)"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 2 rule(s)",
+    "crawl-delay": 10.0
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 171592 bytes (page carries a captcha widget)",
+   "callers": {
+    "scripts/robots_policy.py": "self",
+    "ia/scripts/ia_supervisor_district_scraper.py": "browser"
+   },
+   "measured": "2026-10-26"
   },
   "www.lafayettecountywi.org": {
    "host": "www.lafayettecountywi.org",

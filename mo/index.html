@@ -10924,11 +10924,11 @@ function initMissouriExplorer() {
     "county",            // 115 counties (114 counties and the independent City of St. Louis), pre-built from TIGERweb; the instance's offline anchor layer
     "mo-house",          // 163 House districts — smaller on average than a county, larger than a school district
     "county-commissioner", // Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 28 counties whose county map viewer, download, posted township map, GIS office or clerk publishes them
-    "school-district-unified", // 445 unified districts, about 372 km2 of land on average, live from TIGERweb (no data/app file); with the 71 elementary districts they cover the state exactly
-    "school-district-elementary", // 71 elementary districts, about 177 km2 of land on average, live from TIGERweb (no data/app file); the ground the unified tiling leaves
-    "zip-code",          // 1,977 ZIP Code Tabulation Areas in the state's own bounding box, about 163 km2 of land on average, fetched live by envelope; the layer hides outside Missouri
-    "county-subdivision", // 1,394 records tiling the state — 1,393 townships and the City of St. Louis, which the Census files as its own — about 128 km2 of land on average, live from TIGERweb (no data/app file)
-    "municipality",      // 947 incorporated places, about 8 km2 of land on average, live from TIGERweb
+    "school-district-unified", // 445 unified districts, about 372 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive; with the 71 elementary districts they cover the state exactly
+    "school-district-elementary", // 71 elementary districts, about 177 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive; the ground the unified tiling leaves
+    "zip-code",          // 1,040 ZIP Code Tabulation Areas overlapping Missouri, of the 1,977 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-26); about 163 km2 of land on average for the 1,977, and ranked by them, which are what the map draws where the archive is not used (on the raster basemap); the layer hides outside Missouri
+    "county-subdivision", // 1,394 records tiling the state — 1,393 townships and the City of St. Louis, which the Census files as its own — about 128 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive
+    "municipality",      // 947 incorporated places, about 8 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -15032,8 +15032,17 @@ function initMissouriExplorer() {
 
   // Statewide loader with the point-first hook (queryFeatureAt): TIGERweb
   // answers "which feature holds this point" in one small spatial query, so a
-  // first click never waits on a multi-MB statewide download. The full set
-  // still downloads for the map overlay, on toggle.
+  // first click never waits on a multi-MB statewide download.
+  //
+  // SINCE 2026-10-26 THE LAYERS BELOW ARE DRAWN AND ANSWERED FROM TILE
+  // ARCHIVES, copied from TIGERweb into data/app/tiles/ by
+  // scripts/mirror_tiger_tiles.py (each registration's `tiles:` line). A click
+  // reads the tile under the point, so neither this hook nor the whole set is
+  // asked for. The hook still fires in a session whose archive failed to draw
+  // or in a browser that cannot decompress one, and the whole set still
+  // downloads for a comparison or for the overlay on the raster basemap,
+  // which is why the loader keeps both. A TIGER vintage roll reaches these
+  // layers through update-tiger-tiles.yml's weekly pull request.
   //
   // IT IS HERE BECAUSE FOUR LAYERS BELOW ACTUALLY USE IT, which is the only
   // reason to carry it: build_privacy_page.py MEASURES point-query layers by
@@ -15169,7 +15178,13 @@ function initMissouriExplorer() {
       "roster every two years, so an official who took office after this " +
       "edition was printed is not shown here. This app checks every week for " +
       "a new edition. Each telephone number and e-mail address shown on a " +
-      "person's row is one the roster prints beside that official alone.";
+      "person's row is one the roster prints beside that official alone." +
+      (o && o.seatsSource
+        ? " The council members are named from " + String(o.seatsSource) +
+          (moDate(o.seatsRead) ? ", read on " + moDate(o.seatsRead) : "") +
+          ", because the county's own page is kept up to date between " +
+          "editions of the roster."
+        : "");
   }
   function moRosterLink(result) {
     var url = result && result.officials && safeHttpUrl(result.officials.sourceUrl);
@@ -15693,6 +15708,7 @@ function initMissouriExplorer() {
 
   registerLayer({
     id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "Township",
     subOf: "county",
@@ -15785,6 +15801,7 @@ function initMissouriExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City, Town or Village",
     // the honest words for "outside every incorporated place in Missouri",
@@ -15891,6 +15908,7 @@ function initMissouriExplorer() {
 
   registerPolygonLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Unified)",
     loader: loadSchoolDistrictsUnified,
@@ -15907,6 +15925,7 @@ function initMissouriExplorer() {
 
   registerPolygonLayer({
     id: "school-district-elementary",
+    tiles: "data/app/tiles/school-district-elementary.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District (Elementary)",
     loader: loadSchoolDistrictsElementary,
@@ -15996,6 +16015,7 @@ function initMissouriExplorer() {
 
   registerPolygonLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     loader: loadZipCodes,

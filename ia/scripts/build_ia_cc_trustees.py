@@ -27,9 +27,16 @@ Every name is checked to look like a name (no digits, no "@"), every e-mail
 like an e-mail, and no field may read as a street address: Hawkeye's page
 prints each trustee's home address beside their name and none of it ships.
 
-Northeast Iowa names its trustees by school district and not by number, so it
-ships as a list under `undistricted` and the card says why it names no one for
-a district.
+Northeast Iowa names its trustees by school district and not by number, and
+four of its nine list Dubuque Community, so its page alone cannot key a seat.
+Since 2026-10-26 each of its trustees is matched to a district from election
+records (PAIRED below): a trustee must live in the district that elects them
+(Iowa Code 260C.11), so a sitting trustee who won a district, filed for it or
+was sworn in for it lives in it. The page still supplies every name, role and
+e-mail; the table supplies only the district, joined by surname, and the
+college ships with no seats at all if the two stop agreeing. Without that
+table it would ship as a list under `undistricted` and the card would say why
+it names no one for a district.
 
 Usage:
     python3 ia/scripts/build_ia_cc_trustees.py
@@ -51,6 +58,44 @@ DISTRICTS = os.path.join(IA, "data", "app", "ia-cc-director-districts.json")
 COLLEGES = os.path.join(IA, "data", "app", "ia-community-colleges.json")
 
 UNDISTRICTED = {"1"}        # Northeast Iowa: trustees listed by school district
+
+# Which district each of a college's trustees holds, from election records,
+# for a college whose page names its trustees without saying (see the module
+# docstring). Each name is the surname the page prints; at most one district
+# is placed by elimination, and every other has its own record.
+PAIRED = {
+    "1": {
+        "readOn": "2026-10-26",
+        "districts": {
+            "1": "Runyon", "2": "Gunderson", "3": "Anderson", "4": "Sherman",
+            "5": "Finley", "6": "McAndrew", "7": "Norton", "8": "Knight",
+            "9": "Fisch",
+        },
+        "byElimination": "3",
+        "evidence": {
+            # The Secretary of State's certified results for the 2025
+            # city-school election (state election 124196, read per county
+            # from electionresults.iowa.gov), whose winners took office in
+            # December 2025. The contest's counties match the layer's drawn
+            # district in every case.
+            "1": "won District 1 on 2025-11-04 (Brenda Sue Runyon)",
+            "2": "won District 2 on 2025-11-04",
+            "4": "won District 4 on 2025-11-04",
+            "6": "won District 6 on 2025-11-04",
+            "7": "won District 7, to fill a vacancy, on 2025-11-04",
+            "9": "won District 9 on 2025-11-04",
+            # Delaware County's 2023 city-school candidate list
+            # (delawarecountyelections.iowa.gov/files/candidate_list/
+            # 2023_cityschool_election_22343.pdf): the only candidate for the
+            # four-year District 5 term, under the 2023 plan this layer draws.
+            "5": "the only candidate for District 5 on 2023-11-07 (John E. Finley)",
+            # The college's own release of 2023-11-20 (nicc.edu/news/article/
+            # 20231120-board-of-trustees-takes-action-on-president.php).
+            "8": "sworn in as the District 8 trustee on 2023-11-20",
+            "3": "the one district no record places anyone else in",
+        },
+    },
+}
 MIN_COLLEGES = 14           # every districted college, or nothing is written
 STREET = re.compile(
     r"\b\d{1,6}\s+\w+(?:\s+\w+){0,3}\s+(?:St|Street|Ave|Avenue|Rd|Road|Dr|Drive|Ln|"
@@ -107,9 +152,34 @@ def record_problems(r):
     return out
 
 
+def pair_college(area, people):
+    """Seats for a college whose page names no districts, from PAIRED; None
+    when the table and the page disagree (printed), so the college keeps its
+    last-good record instead."""
+    rec = PAIRED[area]
+    by_surname = {}
+    for r in people:
+        by_surname.setdefault(r["name"].split()[-1].lower(), []).append(r)
+    seats, probs = {}, []
+    for d, surname in rec["districts"].items():
+        got = by_surname.get(surname.lower(), [])
+        if len(got) != 1:
+            probs.append("district %s: the page names %d trustee(s) called %s" % (d, len(got), surname))
+            continue
+        seats[d] = dict(got[0])
+    if len(rec["districts"]) != len(people):
+        probs.append("the page names %d trustees, the table pairs %d" % (len(people), len(rec["districts"])))
+    if set(rec["evidence"]) != set(rec["districts"]):
+        probs.append("a paired district carries no evidence")
+    if probs:
+        print("build-ia-cc-trustees: area %s NOT PAIRED: %s" % (area, "; ".join(probs)), file=sys.stderr)
+        return None
+    return {d: seats[d] for d in sorted(seats, key=int)}
+
+
 def check_college(area, c, size):
     """Problems with one scraped college; empty means it may ship."""
-    if area in UNDISTRICTED:
+    if "undistricted" in c:
         people = c.get("undistricted") or []
         probs = [p for r in people for p in record_problems(r)]
         if len(people) != size:
@@ -146,7 +216,17 @@ def build(raw, previous, today):
             continue
         entry = {"college": names[area], "sourceUrl": got["sourceUrl"], "asOf": today}
         if area in UNDISTRICTED:
-            entry["undistricted"] = got["undistricted"]
+            paired = pair_college(area, got["undistricted"]) if area in PAIRED else None
+            if paired is not None:
+                entry["seats"] = paired
+                entry["districtsFrom"] = "elections"
+                entry["districtsReadOn"] = PAIRED[area]["readOn"]
+            elif area in prev_colleges:
+                colleges[area] = prev_colleges[area]
+                carried.append((area, ["the page and the pairing table disagree"]))
+                continue
+            else:
+                entry["undistricted"] = got["undistricted"]
         else:
             entry["seats"] = {d: got["seats"][d] for d in sorted(got["seats"], key=int)}
         # A college whose page says exactly what it said last time keeps the
@@ -156,6 +236,10 @@ def build(raw, previous, today):
         old = prev_colleges.get(area)
         if old and {k: v for k, v in entry.items() if k != "asOf"} == \
                 {k: v for k, v in old.items() if k != "asOf"}:
+            entry["asOf"] = old["asOf"]
+        # The same holds the week a pairing first keys a page that has not
+        # changed: the districts are new, the read is not.
+        elif old and old.get("undistricted") == got.get("undistricted") and "districtsFrom" in entry:
             entry["asOf"] = old["asOf"]
         colleges[area] = entry
     for area, c in colleges.items():
@@ -179,7 +263,11 @@ def check_shipped():
     keys = {"%s-%s" % (a, dn) for a, c in d["colleges"].items() for dn in (c.get("seats") or {})}
     if set(d["seats"]) != keys:
         probs.append("the seats index and the colleges' lists differ")
-    districted = [a for a in d["colleges"] if a not in UNDISTRICTED]
+    for area, rec in PAIRED.items():
+        c = d["colleges"].get(area) or {}
+        if "seats" in c and {k: r["name"].split()[-1] for k, r in c["seats"].items()} != rec["districts"]:
+            probs.append("area %s: the shipped seats and the pairing table disagree" % area)
+    districted = [a for a in d["colleges"] if "seats" in d["colleges"][a]]
     if len(districted) < MIN_COLLEGES:
         probs.append("%d districted colleges, floor %d" % (len(districted), MIN_COLLEGES))
     if probs:
@@ -206,7 +294,7 @@ def main():
     for area, probs in dropped:
         print("build-ia-cc-trustees: area %s LEFT OUT, no last-good record: %s" % (
             area, "; ".join(probs)), file=sys.stderr)
-    districted = [x for x in out["colleges"] if x not in UNDISTRICTED]
+    districted = [x for x in out["colleges"] if "seats" in out["colleges"][x]]
     if len(districted) < MIN_COLLEGES:
         fail("%d districted colleges, floor %d; nothing written" % (len(districted), MIN_COLLEGES))
     with open(OUT, "w") as f:

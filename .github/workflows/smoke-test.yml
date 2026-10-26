@@ -1445,6 +1445,7 @@ jobs:
           python3 in/scripts/build_in_conservancy_directors.py --check
           python3 ok/scripts/build_ok_conservation_districts.py --check
           python3 ok/scripts/build_ok_conservation_offices.py --check
+          python3 ok/scripts/build_ok_conservation_directors.py --check
       # City council wards. Arkansas's come from the GIS Office's statewide map
       # of municipal wards (scripts/published_district_layers.py), and the other
       # four states' from each city's own map (scripts/city_ward_maps.py).
