@@ -51,7 +51,7 @@ different thing from one it failed.
 | ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 17 | all | 12 of 14 levels |
 | la | **EAM·** | 64 | 64/64 | 560 | 559 | all | 24 | all | 9 of 14 levels |
 | mi | **EA··** | 83 | 83/83 | 619 | 617 | all | 70 | 1 without a job | 13 of 14 levels |
-| mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 21 | all | 13 of 14 levels |
+| mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 23 | all | 13 of 14 levels |
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 24 | all | 8 of 14 levels |
 | nc | **EAMC** | 100 | 100/100 | 373 | 584 | all | 20 | all | all 14 levels |
 | ny | **EAM·** | 62 | 62/62 § | 84 | 94 | all | 36 | all | 10 of 14 levels |
@@ -156,7 +156,7 @@ this instance is in maintenance.
 
 ### mn — EAM·
 
-- **Under a WATCH.md plan (13):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `mn-city-wards.json`, `mn-commissioner-districts.json`, `mn-county-town-officers.json`, `mn-house-districts.json`, `mn-judicial-districts.json`, `mn-precincts.json`, `mn-school-board-districts.json`, `mn-senate-districts.json`, `mn-watershed-districts.json`, `state-counties.json`
+- **Under a WATCH.md plan (14):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `mn-city-wards.json`, `mn-commissioner-districts.json`, `mn-county-town-officers.json`, `mn-house-districts.json`, `mn-judicial-districts.json`, `mn-precincts.json`, `mn-school-board-districts.json`, `mn-senate-districts.json`, `mn-swcd-districts.json`, `mn-watershed-districts.json`, `state-counties.json`
 - **Covered: no.** 1 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **9. Townships or other general-purpose sub-county governments** — open (required only where the state has the level)
 

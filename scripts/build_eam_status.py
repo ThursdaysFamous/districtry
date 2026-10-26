@@ -1735,7 +1735,13 @@ ANSWERS = {
         # are appointed by the county boards (Minn. Stat. 103D.311), and a
         # watershed management organization is run by members its cities and
         # towns appoint or by the county board itself.
-        "special-districts": answers("watershed-district"),
+        # The elected kind is the soil and water conservation district (Minn.
+        # Stat. ch. 103C), SHIPPED 2026-10-26: 88 districts dissolved from the
+        # precincts' own soil and water ballot, and their supervisors named
+        # from the Secretary of State's results (417 of 440 seats; the rest
+        # were won by write-in votes or have had no election since 2022, and
+        # the card says which).
+        "special-districts": answers("watershed-district", "conservation-district"),
         # SHIPPED 2026-10-10 (#1470): the app draws Minnesota's 22 pieces of
         # tribal land across 13 nations, and the card names nine councils
         # from the nations' own pages and says why the other four name
