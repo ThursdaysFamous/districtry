@@ -385,8 +385,11 @@ def build():
                                 prior["readAt"], age, PRESERVE_MAX_AGE_DAYS))
             continue
         # The record as last read, less the retired `phones` flag (2026-10-17),
-        # which nothing reads any more.
+        # which nothing reads any more, and marked `notRead` so the card and the
+        # county page stop saying the list is re-read every week (Clay,
+        # 2026-10-26, whose site began refusing this project by robots.txt).
         out[fips5] = {k: v for k, v in prior.items() if k != "phones"}
+        out[fips5]["notRead"] = True
         carried.append("%s (%s, last read %s)" % (spec["county"], why, prior["readAt"]))
     if problems_all:
         for p in problems_all:
