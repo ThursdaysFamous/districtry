@@ -65,7 +65,7 @@ WINDOW_DAYS = 62
 # with no day in them, so a seven-day list cannot be derived from a sixty-two
 # day one. Adam chose "every section follows the button" on 2026-10-22, at
 # the cost of asking the dashboard for each list once per window.
-PRESET_DAYS = (7, 14, 30)
+PRESET_DAYS = (1, 2, 7, 14, 30)  # scratch: today alone and today+yesterday
 
 # The dashboard's widget indices, learned from the dashboard itself. These are
 # positional, not named, which is why --explore exists.
