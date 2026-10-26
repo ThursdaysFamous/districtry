@@ -1,0 +1,6377 @@
+{
+ "Aitkin": {
+  "byDistrict": false,
+  "county": "Aitkin",
+  "name": "Aitkin SWCD",
+  "office": {
+   "address": "307 2nd Street NW, Room 216, Aitkin, MN 56431",
+   "asOf": "2023-02-21",
+   "phone": "218-927-7284",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "3001",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-697-8427",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Thomas Fasteland",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3001",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "320-336-8035",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Wayne Anderson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3001",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-768-2713",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Franklin Turnock",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3001",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-927-4477",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Bob Janzen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3001",
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Daniel Gravley",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Anoka": {
+  "byDistrict": true,
+  "county": "Anoka",
+  "name": "Anoka Conservation District",
+  "office": {
+   "address": "1318 McKay Dr NE, Ste 300, Ham Lake, MN 55304",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "4001",
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Danielle Holder",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4002",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jlindahl.anokaswcd@gmail.com",
+     "phone": "763-753-3449",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "James R Lindahl",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4003",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "gmeixell.anokaswcd@gmail.com",
+     "phone": "763-786-0306",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Glenda Meixell",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4004",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mjtruchon.anokaswcd@gmail.com",
+     "phone": "763-757-3084",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Mary Jo Truchon",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4005",
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Kate Luthner",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Becker": {
+  "byDistrict": false,
+  "county": "Becker",
+  "name": "Becker SWCD",
+  "office": {
+   "address": "809 8th St SE, Detroit Lakes, MN 56501",
+   "asOf": "2023-02-21",
+   "phone": "218-846-7360",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "1005",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "curtisballard44@icloud.com",
+     "phone": "218-204-0341",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Curtis R. Ballard",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1005",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "tmandre@loretel.net",
+     "phone": "218-234-9013",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Michelle Andresen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1005",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "travisschauer@yahoo.com",
+     "phone": "218-849-1925",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Travis J Schauer",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1005",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "epavelko@arvig.net",
+     "phone": "218-849-7115",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Eugene Pavelko",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1005",
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Anthony Beck (Tony)",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Beltrami": {
+  "byDistrict": false,
+  "county": "Beltrami",
+  "name": "Beltrami SWCD",
+  "office": {
+   "address": "701 Minnesota Ave NW Ste 113, Bemidji, MN 56601",
+   "asOf": "2023-02-21",
+   "phone": "218-333-4158",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "8007",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jackpine@gvtel.com",
+     "phone": "218-294-6312",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Ray Hendrickson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8007",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "ltimber@paulbunyan.net",
+     "phone": "218-766-4929",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Rachel Gray",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8007",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "trask@paulbunyan.net",
+     "phone": "218-243-2749",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Ruth Ann Trask",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8007",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "twigbender01@yahoo.com",
+     "phone": "218-444-4140",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Samuel R Christenson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8007",
+    "district": 5,
+    "unnamed": "no general election for this seat appears in any results file the Secretary of State published since the 2022 general (measured 2026-10-26)"
+   }
+  ]
+ },
+ "Benton": {
+  "byDistrict": false,
+  "county": "Benton",
+  "name": "Benton SWCD",
+  "office": {
+   "address": "14 2nd Ave W, Foley, MN 56329",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "2009",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "wade.bastian@scouting.org",
+     "phone": "320-266-6881",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Wade Bastian",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2009",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "joejordan@sherbtel.net",
+     "phone": "763-856-3191",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Joseph G. Jordan",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2009",
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Mike Winkelman",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2009",
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Bruce Brenny",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2009",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "chuckrauho@gmail.com",
+     "phone": "320-493-9503",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Chuck Rau",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Big Stone": {
+  "byDistrict": false,
+  "county": "Big Stone",
+  "name": "Big Stone SWCD",
+  "office": {
+   "address": "990 US Hwy 12, Ortonville, MN 56278",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "2011",
+    "district": 1,
+    "election": "2022-11-08",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   },
+   {
+    "code": "2011",
+    "district": 2,
+    "election": "2024-11-05",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   },
+   {
+    "code": "2011",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "daviddybdahl@yahoo.com",
+     "phone": "320-305-2845",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "David Dybdahl",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2011",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "rqreisdorph@live.com",
+     "phone": "320-839-3430",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Ronald Reisdorph",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2011",
+    "district": 5,
+    "election": "2022-11-08",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   }
+  ]
+ },
+ "Blue Earth": {
+  "byDistrict": false,
+  "county": "Blue Earth",
+  "name": "Blue Earth County SWCD",
+  "office": {
+   "address": "1160 Victory Drive Suite 5, Mankato, MN 56001-5307",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "6013",
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Bernie Paulson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6013",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "shnj01@hickorytech.net",
+     "phone": "507-340-0420",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "John W. Shanahan",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6013",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "carol.krosch@vblueearthcountymn.gov",
+     "phone": "507-546-3084",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Carol Krosch",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6013",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "rolcajj@hickorytech.net",
+     "phone": "507-549-3652",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "John Rollings",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6013",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jquade@gmail.com",
+     "phone": "507-525-5459",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Jacob Quade",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Brown": {
+  "byDistrict": false,
+  "county": "Brown",
+  "name": "Brown SWCD",
+  "office": {
+   "address": "300 2nd Avenue SW, Sleepy Eye, MN 56085",
+   "asOf": "2023-02-21",
+   "phone": "507-794-2553",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "6015",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "sleepybisonacres@gmail.com",
+     "phone": "507-766-1405",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Craig Fischer",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6015",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "baugie59@gmail.com",
+     "phone": "507-766-1985",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Brad Augustin",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6015",
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "William J. Eckstein",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6015",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mark.wellner@frontier.com",
+     "phone": "507-227-5836",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Mark Wellner",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6015",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "raeleerunck@icloud.com",
+     "phone": "507-766-1957",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Rae L. Runck",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Carlton": {
+  "byDistrict": false,
+  "county": "Carlton",
+  "name": "Carlton SWCD",
+  "office": {
+   "address": "808 3rd St, Carlton, MN 55718",
+   "asOf": "2023-02-21",
+   "phone": "218-384-3891",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "3017",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "bdahl@carltonswcd.org",
+     "phone": "218-355-8644",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Barbara M. Dahl",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3017",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "tmichaelson@carltonswcd.org",
+     "phone": "218-391-8062",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Tim L. Michaelson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3017",
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Robert Fox",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3017",
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Gary E. Peterson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3017",
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Roger Hurd",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Carver": {
+  "byDistrict": true,
+  "county": "Carver",
+  "name": "Carver SWCD",
+  "office": {
+   "address": "11360 Highway 212, Suite 6, Cologne, MN 55322",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "4019",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "spwendland@gmail.com",
+     "phone": "952-934-1742",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Stan Wendland",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4020",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mzbinden0704@gmail.com",
+     "phone": "952-288-4747",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Marcus Zbinden",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4021",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mark.zabel@co.dakota.mn.us",
+     "phone": "952-891-7011",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Mark Zabel",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4022",
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Mike Lynch",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4023",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jsonsexcav@gmail.com",
+     "phone": "952-466-5888",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Jeffrey Sons",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Cass": {
+  "byDistrict": false,
+  "county": "Cass",
+  "name": "Cass SWCD",
+  "office": {
+   "address": "300 Minnesota Avenue W, PO Box 3000, Walker, MN 56484",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "8021",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "thomandlindakuschel@tds.net",
+     "phone": "218-232-0880",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Thomas Kuschel",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8021",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "laporteken@yahoo.com",
+     "phone": "218-820-0522",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Ken LaPorte",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8021",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Katy Botz",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8021",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "davidlp2015@gmail.com",
+     "phone": "218-566-1588",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "David L. Peterson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8021",
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Jennifer O'Neill",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Chippewa": {
+  "byDistrict": false,
+  "county": "Chippewa",
+  "name": "Chippewa SWCD",
+  "office": {
+   "address": "629 North 11th Street Suite 7, Montevideo, MN 56265",
+   "asOf": "2023-02-21",
+   "phone": "320-269-2696",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "2023",
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Michelle Overholser",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2023",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "caleisenlohr@hotmail.com",
+     "phone": "320-226-3880",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Calin Eisenlohr",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2023",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Aaron Ahrenholz",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2023",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jacobsonsteve108@gmail.com",
+     "phone": "320-894-8051",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Steven Jacobson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2023",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jerryschwitters@gmail.com",
+     "phone": "320-212-3200",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Jerry Schwitters",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Chisago": {
+  "byDistrict": false,
+  "county": "Chisago",
+  "name": "Chisago SWCD",
+  "office": {
+   "address": "38814 Third Ave, North Branch, MN 55056",
+   "asOf": "2023-02-21",
+   "phone": "651-674-2333",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "4025",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "petersenfarmsofrc@gmail.com",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Lance Petersen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4025",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Rick Cedergren",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4025",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "icm@frontiernet.net",
+     "phone": "651-583-3103",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "David W Tollberg",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4025",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jlwilson6429.jw@gmail.com",
+     "phone": "651-257-8707",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Justin Wilson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4025",
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Matthew Hardy",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Clay": {
+  "byDistrict": false,
+  "county": "Clay",
+  "name": "Clay SWCD",
+  "office": {
+   "address": "1615 30th Ave S, Moorhead, MN 56560",
+   "asOf": "2023-02-21",
+   "phone": "218-287-2255",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "1027",
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Richard Menholt",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1027",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Brady Fuglie",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1027",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "randyschellack@yahoo.com",
+     "phone": "701-238-8121",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Randy Schellack",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1027",
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Jerald Butenhoff",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1027",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "joel.hildebrandt@gmail.com",
+     "phone": "701-205-6430",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Joel Hildebrandt",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Clearwater": {
+  "byDistrict": false,
+  "county": "Clearwater",
+  "name": "Clearwater SWCD",
+  "office": {
+   "address": "312 Main Ave N Ste 3, Bagley, MN 56621",
+   "asOf": "2023-02-21",
+   "phone": "218-694-6845 x 4",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "8029",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-694-2546",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Alroy Lewis",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8029",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Ken Christenson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8029",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "rydeen@gvtel.com",
+     "phone": "218-776-3338",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Paul Rydeen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8029",
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Aaron Kaiser",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8029",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-487-5788",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "John Gunvalson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Cook": {
+  "byDistrict": false,
+  "county": "Cook",
+  "name": "Cook SWCD",
+  "office": {
+   "address": "411 W 2nd St, Grand Marais, MN 55604",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "3031",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "greggw@boreal.org",
+     "phone": "715-472-8302",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Gregg Westigard",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3031",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "murmurcreekobservatory@gmail.com",
+     "phone": "612-202-3789",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Stanley Tull",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3031",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "amberahumphrey@gmail.com",
+     "phone": "218-370-1086",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Amber Humphrey",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3031",
+    "district": 4,
+    "election": "2022-11-08",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   },
+   {
+    "code": "3031",
+    "district": 5,
+    "election": "2024-11-05",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   }
+  ]
+ },
+ "Cottonwood": {
+  "byDistrict": false,
+  "county": "Cottonwood",
+  "name": "Cottonwood SWCD",
+  "office": {
+   "address": "210 10th Street, Windom, MN 56101",
+   "asOf": "2023-02-21",
+   "phone": "507-832-8287",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "5033",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "phatpheasantpub@windomnet.com",
+     "phone": "507-920-9884",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Clark Lingbeek",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5033",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "duroe@mvtvwireless.com",
+     "phone": "507-628-5533",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Cody Duroe",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5033",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "dtasler@hotmail.com",
+     "phone": "507-831-5147",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Daryl Tasler",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5033",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "tcmuller@agristar.net",
+     "phone": "507-831-2031",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Tom Muller",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5033",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jeremyredrock@centurytel.net",
+     "phone": "507-822-2946",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Jeremy Nerem",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Crow Wing": {
+  "byDistrict": false,
+  "county": "Crow Wing",
+  "name": "Crow Wing SWCD",
+  "office": {
+   "address": "322 Laurel Street Suite 22, Brainerd, MN 56401",
+   "asOf": "2023-02-21",
+   "phone": "218-828-6197",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "8035",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "lckoering@clearwire.net",
+     "phone": "218-829-8237",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Leonard Koering",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8035",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "ajfamily10@hotmail.com",
+     "phone": "218-764-3365",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Diane Jacobson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8035",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "guardianadvisorgroup@yahoo.com",
+     "phone": "218-851-3697",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Roger Waytashek",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8035",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "joann.weaver@tds.net",
+     "phone": "218-562-4196",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "JoAnn Weaver",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8035",
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Harvey \"Jim\" Chamberlin",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Dakota": {
+  "byDistrict": true,
+  "county": "Dakota",
+  "name": "Dakota SWCD",
+  "office": {
+   "address": "4100 220th Street W, Suite 102, Farmington, MN 55024",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "4037",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "kevin.chamberlain@co.dakota.mn.us",
+     "phone": "651-437-9135",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Kevin Chamberlain",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4038",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "laura.zanmiller@co.dakota.mn.us",
+     "phone": "651-270-2856",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Laura Zanmiller",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4039",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Brian Raney",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4040",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "bruce.johnson@dakota.mn.us",
+     "phone": "952-994-6755",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Bruce Johnson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4041",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jaynehager.dee@co.dakota.mn.us",
+     "phone": "507-663-1568",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Jayne Hager Dee",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Dodge": {
+  "byDistrict": false,
+  "county": "Dodge",
+  "name": "Dodge SWCD",
+  "office": {
+   "address": "916 2nd Street SE, Dodge Center, MN 55927-9601",
+   "asOf": "2023-02-21",
+   "phone": "507-374-6364 x3",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "7039",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "rtalberts87@gmail.com",
+     "phone": "507-259-6767",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Richard Kenneth Alberts",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7039",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "brucewithschaefferoil@gmail.com",
+     "phone": "507-237-9110",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Bruce Freerksen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7039",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "lrscherg@gmail.com",
+     "phone": "507-374-2170",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Larry Scherger",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7039",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "sportyacres.del@gmail.com",
+     "phone": "507-374-6876",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "David Livingston",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7039",
+    "district": 5,
+    "election": "2024-11-05",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   }
+  ]
+ },
+ "Douglas": {
+  "byDistrict": false,
+  "county": "Douglas",
+  "name": "Douglas SWCD",
+  "office": {
+   "address": "900 Robert Street Suite 102, Alexandria, MN 56308",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "2041",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "98dodge@gctel.com",
+     "phone": "320-834-4680",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Paul Barsness",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2041",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "John Ledermann",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2041",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "rodmary@gctel.com",
+     "phone": "320-808-5005",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Rodney Froemming",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2041",
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Willis John Dropik",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2041",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "arutten@arvig.net",
+     "phone": "320-859-3143",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Kenneth Rutten",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Faribault": {
+  "byDistrict": false,
+  "county": "Faribault",
+  "name": "Faribault County SWCD",
+  "office": {
+   "address": "415 South Grove Street, Suite 8, Blue Earth, MN 56013",
+   "asOf": "2023-02-21",
+   "phone": "507-526-2388",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "6043",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jdbell0902@bevcomm.net",
+     "phone": "507-464-3460",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Jeffrey Bell",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6043",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "humburg.michael@gmail.com",
+     "phone": "507-525-1130",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Michael Humburg",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6043",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "feist6@bevcomm.net",
+     "phone": "507-553-3558",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Randall Feist",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6043",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "farmx5@bevcomm.net",
+     "phone": "507-526-3552",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Neal Mensing",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6043",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "507-787-2394",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Bill Anderson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Fillmore": {
+  "byDistrict": true,
+  "county": "Fillmore",
+  "name": "Fillmore SWCD",
+  "office": {
+   "address": "900 Washington Street NW, Preston, MN 55965",
+   "asOf": "2023-02-21",
+   "phone": "507-765-3878 x3",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "7041",
+    "district": 1,
+    "election": "2022-11-08",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   },
+   {
+    "code": "7042",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Jason T Wetzel",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": true
+   },
+   {
+    "code": "7043",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "kathytesmer@live.com",
+     "phone": "507-272-2261",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Kathy Tesmer",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7044",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "eabiel@outlook.com",
+     "phone": "507-251-7614",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Eunice Biel",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7045",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "tjwillford@hotmail.com",
+     "phone": "507-886-6891",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Travis Willford",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Freeborn": {
+  "byDistrict": false,
+  "county": "Freeborn",
+  "name": "Freeborn SWCD",
+  "office": {
+   "address": "1400 W Main Street, Albert Lea, MN 56007",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "7047",
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Casey Madson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7047",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Scott Lightly",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7047",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Vickie Heers",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": true
+   },
+   {
+    "code": "7047",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "noemail@noemail.com",
+     "phone": "507-373-5607",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Curt Helland",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7047",
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Brad Kramer",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Goodhue": {
+  "byDistrict": false,
+  "county": "Goodhue",
+  "name": "Goodhue SWCD",
+  "office": {
+   "address": "104 East 3rd Avenue, PO Box 335, Goodhue, MN 55027",
+   "asOf": "2023-02-21",
+   "phone": "651-923-5286 x3",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "7049",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "comstock@frontiernet.net",
+     "phone": "507-824-2198",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Mark Comstock",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7049",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "don.schliep@yahoo.com",
+     "phone": "507-732-5701",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Donald Schliep",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7049",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "John F. Beck",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7049",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "edmcnamara@sleepyeyetel.net",
+     "phone": "651-380-8183",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Edward McNamara",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7049",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "hincky1977@gmail.com",
+     "phone": "651-380-1752",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Christopher J. Hinck",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Grant": {
+  "byDistrict": false,
+  "county": "Grant",
+  "name": "Grant SWCD",
+  "office": {
+   "address": "712 Industrial Park Blvd, Elbow Lake, MN 56531",
+   "asOf": "2023-02-21",
+   "phone": "218-685-5395",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "1051",
+    "district": 1,
+    "election": "2024-11-05",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   },
+   {
+    "code": "1051",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Darin Hanson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1051",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "pgroneb@runestone.net",
+     "phone": "320-986-2347",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Paul Groneberg",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1051",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "marksdrew0086@gmail.com",
+     "phone": "320-760-0086",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Andrew M. Marks",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1051",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "randlars@frontiernet.net",
+     "phone": "320-677-2763",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Randy C. Larson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Hubbard": {
+  "byDistrict": false,
+  "county": "Hubbard",
+  "name": "Hubbard SWCD",
+  "office": {
+   "address": "603 Central Ave N Ste 100, Park Rapids, MN 56470",
+   "asOf": "2023-02-21",
+   "phone": "218-732-0121 x 4",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "8057",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "docare05@gmail.com",
+     "phone": "218-854-7306",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Donald Rettinger",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8057",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mcnoyes2x@outlook.com",
+     "phone": "218-407-3425",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Marcel Noyes",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8057",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Heidi Anderson-Thomas",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8057",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "niawa1980@icloud.com",
+     "phone": "218-732-5910",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Donald W. Sells",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8057",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "tripplake1@mac.com",
+     "phone": "218-652-3130",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Lynn G. Goodrich",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Isanti": {
+  "byDistrict": false,
+  "county": "Isanti",
+  "name": "Isanti SWCD",
+  "office": {
+   "address": "110 Buchanan St N, Cambridge, MN 55008",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "4059",
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Valerie M Anderson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4059",
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Tom Anderson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4059",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Franklin Dale Curtis",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4059",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "ankoczur396@gmail.com",
+     "phone": "612-309-5469",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Allan R. Koczur",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4059",
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "David Medvecky",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Itasca": {
+  "byDistrict": false,
+  "county": "Itasca",
+  "name": "Itasca SWCD",
+  "office": {
+   "address": "1895 W Hwy 2, Grand Rapids, MN 55744",
+   "asOf": "2023-02-21",
+   "phone": "218-326-5573",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "8061",
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Chris Reed",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8061",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "nelson885@umn.edu",
+     "phone": "218-246-2588",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Tom Nelson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8061",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Perry Loegering",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8061",
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Michael Oja",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8061",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "sisuwithsaari@aol.com",
+     "phone": "218-885-1375",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Calvin I Saari",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Jackson": {
+  "byDistrict": false,
+  "county": "Jackson",
+  "name": "Jackson SWCD",
+  "office": {
+   "address": "603 S Hwy 86, Lakefield, MN 56150-3295",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "5063",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "507-853-4660",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "David Hussong",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5063",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "507-945-8910",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Dan Riley",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5063",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jdaberkow@gmail.com",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Jeremy Daberkow",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5063",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "507-847-3203",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Paul Nelson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5063",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "507-847-2617",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Larry G. Hansen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Kanabec": {
+  "byDistrict": false,
+  "county": "Kanabec",
+  "name": "Kanabec SWCD",
+  "office": {
+   "address": "2008 Mahogany St, Ste 3, Mora, MN 55051",
+   "asOf": "2023-02-21",
+   "phone": "320-679-1391",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "3065",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "kt@daribel.com",
+     "phone": "320-679-2491",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Kevin C Belkholm",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3065",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "heggie1@centurylink.net",
+     "phone": "320-679-2854",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Norma J Heggernes",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3065",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "sanfordjon095@gmail.com",
+     "phone": "320-679-4554",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Jon Sanford",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3065",
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Eugene Carda",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3065",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "kim@teampowder.com",
+     "phone": "320-679-0512",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Kim Johnson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Kandiyohi": {
+  "byDistrict": false,
+  "county": "Kandiyohi",
+  "name": "Kandiyohi SWCD",
+  "office": {
+   "address": "1005 High Ave NE, Willmar, MN 56201",
+   "asOf": "2023-02-21",
+   "phone": "320-235-3906 x 3",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "2067",
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Steve Friedlein",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2067",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "donnelwilliamson@gmail.com",
+     "phone": "320-220-3100",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Donnel Williamson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2067",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Jeffrey Douglas Martinka",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2067",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jdyoungkrantz@frontiernet.net",
+     "phone": "320-905-3900",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Jane Youngkrantz",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2067",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "smittyfarm2@gmail.com",
+     "phone": "320-905-2987",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Brandon Smith",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Kittson": {
+  "byDistrict": false,
+  "county": "Kittson",
+  "name": "Kittson SWCD",
+  "office": {
+   "address": "410 S 5th St Ste 106, Hallock, MN 56728",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "1069",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "cjfarms82@gmail.com",
+     "phone": "218-843-1766",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "C.J. Peterson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1069",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mort@polarcomm.com",
+     "phone": "218-988-2258",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Carey Mortenson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1069",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "amuir321@gmail.com",
+     "phone": "218-988-2331",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Andrew Muir",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1069",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "sammyanderson88@gmail.com",
+     "phone": "218-280-7764",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Samuel R. Anderson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1069",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jpwilebski@wiktel.com",
+     "phone": "218-762-7251",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Joe Wilebski",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Koochiching": {
+  "byDistrict": false,
+  "county": "Koochiching",
+  "name": "Koochiching SWCD",
+  "office": {
+   "address": "501 3rd Street Suite 100, International Falls, MN 56649",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "8071",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-634-2048",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Ralph Lewis",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8071",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-283-4739",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "George Aitchison",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8071",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Eldon Voigt Jr.",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8071",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-897-5086",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Richard J. Dreher",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8071",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-553-4668",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Jody Reller",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Lac Qui Parle": {
+  "byDistrict": false,
+  "county": "Lac qui Parle",
+  "name": "Lac qui Parle SWCD",
+  "office": {
+   "address": "122 8th Avenue South, Suite 1, Madison, MN 56256",
+   "asOf": "2023-02-21",
+   "phone": "320-598-7321",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "5073",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "lqpswcdarea1@gmail.com",
+     "phone": "320-598-3228",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Rosemary Weber",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5073",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Danny Larson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5073",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "lqpswcdarea3@gmail.com",
+     "phone": "320-598-7697",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Michael Croatt",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5073",
+    "district": 4,
+    "election": "2022-11-08",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   },
+   {
+    "code": "5073",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "lqpswcdarea5@gmail.com",
+     "phone": "320-269-1256",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Amy Bacigalupo",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Lake": {
+  "byDistrict": false,
+  "county": "Lake",
+  "name": "Lake SWCD",
+  "office": {
+   "address": "408 First Avenue, Two Harbors, MN 55616",
+   "asOf": "2023-02-21",
+   "phone": "218-834-8370",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "3075",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "david.abazs@co.lake.mn.us",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "David Abazs",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3075",
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Doug Lande",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3075",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "beth.hippert@co.lake.mn.us",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Beth Hippert",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3075",
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Barbara Omarzu",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3075",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "doug.haus@co.lake.mn.us",
+     "phone": "218-834-3013",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Douglas C Haus",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Lake Of The Woods": {
+  "byDistrict": false,
+  "county": "Lake of the Woods",
+  "name": "Lake of the Woods SWCD",
+  "office": {
+   "address": "PO Box 217, 119 1st Ave NW, Baudette, MN 56623",
+   "asOf": "2023-02-21",
+   "phone": "218-634-1842",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "8077",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-634-2474",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "John Sonstegard",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8077",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-634-9759",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Monica Dohmen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8077",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-766-1181",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Frank Sindelir",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8077",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-634-1691",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Roger Krause",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8077",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-783-5121",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Nancy Dunnell",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Le Sueur": {
+  "byDistrict": false,
+  "county": "Le Sueur",
+  "name": "Le Sueur County SWCD",
+  "office": {
+   "address": "181 West Minnesota Street, Le Center, MN 56057",
+   "asOf": "2023-02-21",
+   "phone": "507-419-0365",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "6079",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "greg.entinger@processdesignpros.com",
+     "phone": "612-718-4770",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Greg Entinger",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6079",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "earletrax@hotmail.com",
+     "phone": "507-340-5829",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Earle Traxler",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6079",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Peter Thelemann",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6079",
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Kenneth Mader",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6079",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jamesmstruck@icloud.com",
+     "phone": "507-382-5960",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Jim Struck",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Lincoln": {
+  "byDistrict": false,
+  "county": "Lincoln",
+  "name": "Lincoln SWCD",
+  "office": {
+   "address": "200 South County Hwy 5, Suite 2, Ivanhoe, MN 56142",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "5081",
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Keith Olsen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5081",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Jeff Paluch",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5081",
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Anthony Dwire",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5081",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "schardin@itc.com",
+     "phone": "507-368-4876",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Conrad Schardin",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5081",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "rbunjer@frontiernet.net",
+     "phone": "507-487-5765",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Ron Bunjer",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Lyon": {
+  "byDistrict": false,
+  "county": "Lyon",
+  "name": "Lyon SWCD",
+  "office": {
+   "address": "1424 E College Dr Ste 600, Marshall, MN 56258",
+   "asOf": "2023-02-21",
+   "phone": "507-532-8207 x3",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "5083",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "septicrock06@yahoo.com",
+     "phone": "507-530-4405",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Gary Laleman",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5083",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "apdeutz@gmail.com",
+     "phone": "507-530-0725",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Allen Deutz",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5083",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Mason Johnson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5083",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jklanoue@icloud.com",
+     "phone": "507-829-3238",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "John Lanoue",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5083",
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Justin Hively",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Mahnomen": {
+  "byDistrict": false,
+  "county": "Mahnomen",
+  "name": "Mahnomen SWCD",
+  "office": {
+   "address": "PO BOX 381, 200 US HWY 59, Mahnomen, MN 56557",
+   "asOf": "2023-02-21",
+   "phone": "218-935-2987 x3",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "1087",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-935-2468",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Terry McCollum",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1087",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-935-5466",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Mike Geray",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1087",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-473-2589",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Victor Eiynck",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1087",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-230-5385",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Pete Revier",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1087",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-935-5834",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Jerry D. Handyside",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Marshall": {
+  "byDistrict": false,
+  "county": "Marshall",
+  "name": "Marshall SWCD",
+  "office": {
+   "address": "105 S Division Street, PO Box 74, Warren, MN 56762",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "1089",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "701-739-7407",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Brent Miller",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1089",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Dale Price",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1089",
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Joey Peterson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1089",
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Barry Walton",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1089",
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Randy Larson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Martin": {
+  "byDistrict": false,
+  "county": "Martin",
+  "name": "Martin SWCD",
+  "office": {
+   "address": "923 North State Street, Suite 110, Fairmont, MN 56031",
+   "asOf": "2023-02-21",
+   "phone": "507-235-6680 x 4",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "6091",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "cowingfarms@hotmail.com",
+     "phone": "507-236-2707",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Larry Cowing",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6091",
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Chantill A. Kahler Royer",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6091",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Russell Laue",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6091",
+    "district": 4,
+    "election": "2022-11-08",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   },
+   {
+    "code": "6091",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "tylerask@live.com",
+     "phone": "507-841-1653",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Tyler Ask",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "McLeod": {
+  "byDistrict": false,
+  "county": "McLeod",
+  "name": "McLeod SWCD",
+  "office": {
+   "address": "520 Chandler Ave N, Glencoe, MN 55336",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "6085",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "ryan.freitag@co.mcleod.mn.us",
+     "phone": "320-395-2137",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Charles W. Mathews",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6085",
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Gary Templin",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6085",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Michael L Loncorich",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6085",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mnharleyfarmer@yahoo.com",
+     "phone": "320-583-5398",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "John Adamek",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6085",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "arborcon@hutchtel.net",
+     "phone": "320-587-3760",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Mark Schnobrich",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Meeker": {
+  "byDistrict": false,
+  "county": "Meeker",
+  "name": "Meeker SWCD",
+  "office": {
+   "address": "522 Johnson Dr, Litchfield, MN 55355",
+   "asOf": "2023-02-21",
+   "phone": "320-693-7287 x 3",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "2093",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "210-857-2381",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Greg Jans",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2093",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "rgaaab@meltel.net",
+     "phone": "320-398-8400",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Robert J Schiefelbein",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2093",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "320-469-6496",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "John Haffley",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2093",
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Fred H. Behnke Jr",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2093",
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Jonathan Hoff",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Mille Lacs": {
+  "byDistrict": false,
+  "county": "Mille Lacs",
+  "name": "Mille Lacs SWCD",
+  "office": {
+   "address": "Historic Courthouse, 635 2nd Street St, Milaca, MN 56353",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "3095",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "dan.campbell@millelacsswcd.org",
+     "phone": "612-558-1790",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Daniel K Campbell",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3095",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Timothy Braun",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3095",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jakejanskiswcd@gmail.com",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Jake Janski",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3095",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "andre.lasalle@millelacsswcd.org",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Andre Lasalle",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3095",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "612-390-7468",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Robert Hoefert",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Morrison": {
+  "byDistrict": false,
+  "county": "Morrison",
+  "name": "Morrison SWCD",
+  "office": {
+   "address": "16776 Heron Rd, Little Falls, MN 56345",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "2097",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mooseman@brainerd.net",
+     "phone": "218-575-2328",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "William Faber",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2097",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "tbrutsch@icloud.com",
+     "phone": "320-745-2296",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Tom Brutscher",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2097",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "scott.saehr@sartellmn.com",
+     "phone": "320-260-2042",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Scott Saehr",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2097",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "dpscholl@centurylink.net",
+     "phone": "320-360-1626",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Dale Scholl",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2097",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "davehubner@hotmail.com",
+     "phone": "320-632-5288",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "David Hubner",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Mower": {
+  "byDistrict": false,
+  "county": "Mower",
+  "name": "Mower SWCD",
+  "office": {
+   "address": "1408 21st Avenue NW, Suite 2, Austin, MN 55912",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "7099",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "moefarms@gmail.com",
+     "phone": "952-237-9808",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Rodney Moe",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7099",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Jay Soltau",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7099",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jamesckg@gmail.com",
+     "phone": "507-438-1123",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "James Kellogg",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7099",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "rssmith567@gmail.com",
+     "phone": "507-438-4570",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Randy Smith",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7099",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jerichson@charter.net",
+     "phone": "507-438-2339",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Jon W. Erichson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Murray": {
+  "byDistrict": false,
+  "county": "Murray",
+  "name": "Murray SWCD",
+  "office": {
+   "address": "2740 22nd Street, Slayton, MN 56172",
+   "asOf": "2023-02-21",
+   "phone": "507-836-6990 Ext. 3",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "5101",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "paulandstacypos@outlook.com",
+     "phone": "507-227-7041",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Paul Posthuma",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5101",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Jason Miller",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": true
+   },
+   {
+    "code": "5101",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "acfeedskent@gmail.com",
+     "phone": "507-360-4871",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Anthony Conrad",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": true
+   },
+   {
+    "code": "5101",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mhenkels@centurytel.net",
+     "phone": "507-360-6348",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Mona Henkels",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5101",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "kphtax67@gmail.com",
+     "phone": "507-760-1255",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Karen Hurd",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Nicollet": {
+  "byDistrict": false,
+  "county": "Nicollet",
+  "name": "Nicollet SWCD",
+  "office": {
+   "address": "501 7th Street, PO Box 457, Nicollet, MN 56074",
+   "asOf": "2023-02-21",
+   "phone": "507-232-2550",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "6103",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "diane@braunfarm.us",
+     "phone": "507-381-5533",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Timothy J Braun",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6103",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "eriannex@gmail.com",
+     "phone": "507-381-6820",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Eric Annexstad",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6103",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "John Luepke",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6103",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "dhhermy@gmail.com",
+     "phone": "507-327-5790",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Don Hermanson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6103",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jdkral@newulmtel.net",
+     "phone": "507-404-0034",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "John H Kral",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Nobles": {
+  "byDistrict": false,
+  "county": "Nobles",
+  "name": "Nobles SWCD",
+  "office": {
+   "address": "1567 McMillan St Ste 3, Worthington, MN 56187",
+   "asOf": "2023-02-21",
+   "phone": "507-376-9150 x3",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "5105",
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Jess R. DeKam",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5105",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "thierfarms@gmail.com",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Nathan Thier",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5105",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "507-370-4008",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Lynn Darling",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5105",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "ricknel001@gmail.com",
+     "phone": "507-425-3193",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Richard Nelsen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5105",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "paul.langseth@gmail.com",
+     "phone": "507-360-5844",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Paul W. Langseth",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Norman": {
+  "byDistrict": false,
+  "county": "Norman",
+  "name": "Norman SWCD",
+  "office": {
+   "address": "100 Main Ave E, PO Box 60, Twin Valley, MN 56584",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "1107",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "ueland@rrv.net",
+     "phone": "218-886-8570",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Gene Ueland",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1107",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "kelly@skaurud.com",
+     "phone": "218-766-6892",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Kelly Skaurud",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1107",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mbtufte@loretel.net",
+     "phone": "218-784-7571",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Bruce Tufte",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1107",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "gbgejr@loretel.net",
+     "phone": "218-784-3741",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Erik Rockstad",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1107",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "smatson@arvig.net",
+     "phone": "218-584-8486",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Ronald Thorsrud",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "North St. Louis": {
+  "byDistrict": false,
+  "county": "St. Louis",
+  "name": "North St. Louis SWCD",
+  "office": {
+   "address": "505 3rd St N, Ste A, Virginia, MN 55792",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "3137",
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Margaret (Peggy) Pearson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3137",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Jerry R. Hovi",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3137",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "frank.nslswcd@gmail.com",
+     "phone": "651-249-7903",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Frank Modich",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3137",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "chuck.nslswcd@gmail.com",
+     "phone": "218-744-1945",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Charles Bainter",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3137",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mark.nslswcd@gmail.com",
+     "phone": "218-744-5759",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Mark Peterson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Olmsted": {
+  "byDistrict": false,
+  "county": "Olmsted",
+  "name": "Olmsted SWCD",
+  "office": {
+   "address": "2122 Campus Drive SE, Suite 200, Rochester, MN 55904",
+   "asOf": "2023-02-21",
+   "phone": "507-328-7070",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "7109",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "rpljrentz@yahoo.com",
+     "phone": "507-289-0665",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "James Rentz",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7109",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "pauleuecker@gmail.com",
+     "phone": "507-259-3148",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Paul Uecker",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7109",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "ckjwinters@gmail.com",
+     "phone": "507-280-8578",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Cheryl Winters",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7109",
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Joseph Himmer",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7109",
+    "district": 5,
+    "election": "2024-11-05",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   }
+  ]
+ },
+ "Otter Tail East": {
+  "byDistrict": false,
+  "county": "Otter Tail",
+  "name": "East Otter Tail SWCD",
+  "office": {
+   "address": "801 Jenny Ave SW Ste 2, Perham, MN 56573",
+   "asOf": "2023-02-21",
+   "phone": "218-346-9105",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "1112",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "balbright@arvig.net",
+     "phone": "218-790-1957",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Bruce E. Albright",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1112",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "wae2000@hotmail.com",
+     "phone": "218-850-7159",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Wayne Enger",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1112",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "eotswcd.lyle@gmail.com",
+     "phone": "218-385-2392",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Lyle Dittmann",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1112",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "green.t@arvig.net",
+     "phone": "218-367-2382",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Terry Greenwaldt",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1112",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "steveinwards@gmail.com",
+     "phone": "218-338-5866",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Steve Inwards",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Otter Tail West": {
+  "byDistrict": false,
+  "county": "Otter Tail",
+  "name": "West Otter Tail SWCD",
+  "office": {
+   "address": "506 Western Ave N, Fergus Falls, MN 56537",
+   "asOf": "2023-02-21",
+   "phone": "218-998-5300",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "1111",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "bardfarm1@gmail.com",
+     "phone": "701-429-8482",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "David L. Johnson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1111",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "drevlowre@gmail.com",
+     "phone": "218-205-5638",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Richard E. Drevlow",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1111",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "rawsaw.wenstrom@gmail.com",
+     "phone": "218-739-9578",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Rod Wenstrom",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1111",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jilljohnwalkup@live.com",
+     "phone": "218-739-2580",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "John S. Walkup",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1111",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "wlrotz@yahoo.com",
+     "phone": "218-405-0331",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Wayne W. Rotz",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Pennington": {
+  "byDistrict": false,
+  "county": "Pennington",
+  "name": "Pennington SWCD",
+  "office": {
+   "address": "201 Sherwood Ave S, Thief River Falls, MN 56701",
+   "asOf": "2023-02-21",
+   "phone": "218-683-7075",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "1113",
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Tom Wold",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1113",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "raptrf3@gmail.com",
+     "phone": "218-686-2063",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Ricky A Peterson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1113",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "kwilde@gvtel.com",
+     "phone": "218-280-5936",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Kevin F. Wilde",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1113",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "miliha@gvtel.com",
+     "phone": "218-686-6074",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Linda Hanson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1113",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "hilgeman@gvtel.com",
+     "phone": "218-686-1059",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Greg Hilgeman",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Pine": {
+  "byDistrict": false,
+  "county": "Pine",
+  "name": "Pine SWCD",
+  "office": {
+   "address": "1610 Hwy 23 N, Sandstone, MN 55072",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "3115",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "dcodegard@msn.com",
+     "phone": "(320)629-6502",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Douglas Odegard",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3115",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Michael Cummins",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3115",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Brenna Doheny",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3115",
+    "district": 4,
+    "election": "2024-11-05",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   },
+   {
+    "code": "3115",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "hinckleytrailers@northlc.com",
+     "phone": "218-485-4166",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Jerry Telker",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Pipestone": {
+  "byDistrict": false,
+  "county": "Pipestone",
+  "name": "Pipestone SWCD",
+  "office": {
+   "address": "119 2nd Avenue SW, Suite 13, Pipestone, MN 56164",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "5117",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "calspronk@gmail.com",
+     "phone": "507-442-5334",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Calvin Spronk",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5117",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Michael Fruechte",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5117",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "kchrist1474@hotmail.com",
+     "phone": "507-820-1191",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Ken Christensen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5117",
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "William (Bill) Folger",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5117",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "bradk@woodstocktel.net",
+     "phone": "507-215-2208",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Bradley Kruisselbrink",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Polk East": {
+  "byDistrict": false,
+  "county": "Polk",
+  "name": "East Polk SWCD",
+  "office": {
+   "address": "240 Cleveland Ave., Mcintosh, MN 56556",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "1120",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "kennyp300@yahoo.com.com",
+     "phone": "218-574-2740",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Kenneth Pederson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1120",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "dkick@gvtel.com",
+     "phone": "218-280-8035",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "David Kiecker",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1120",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Kory Sonstelie",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1120",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mjb@gvtel.com",
+     "phone": "218-563-2173",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Scott Balstad",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1120",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "5lfarms@gvtel.com",
+     "phone": "218-268-4278",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Lawrence P Vettleson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Polk West": {
+  "byDistrict": false,
+  "county": "Polk",
+  "name": "West Polk SWCD",
+  "office": {
+   "address": "528 Strander Ave, Crookston, MN 56716",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "1119",
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Eric McWalter",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1119",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "derek.d.peterson@hotmail.com",
+     "phone": "218-201-0164",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Derek Peterson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1119",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "soren716@gmail.com",
+     "phone": "701-741-4282",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Johnathan Sorenson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1119",
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Christian Pester",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1119",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "farmer_taz@hotmail.com",
+     "phone": "218-280-1332",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Chris Cournia",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Pope": {
+  "byDistrict": false,
+  "county": "Pope",
+  "name": "Pope SWCD",
+  "office": {
+   "address": "1680 North Franklin Street, Glenwood, MN 56334",
+   "asOf": "2023-02-21",
+   "phone": "320-634-5327",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "2121",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "keithnygaard@gmail.com",
+     "phone": "320-760-4745",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Keith Nygaard",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2121",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "randypederson@charter.net",
+     "phone": "320-634-4737",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Randall Edward Pederson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2121",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "tltalle9597@gmail.com",
+     "phone": "320-278-3770",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Tom Talle",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2121",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mfangus1@gmail.com",
+     "phone": "701-238-0932",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Randy Mitteness",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2121",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "dgaryreents@yahoo.com",
+     "phone": "320-554-3328",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "D. Gary Reents",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Red Lake": {
+  "byDistrict": false,
+  "county": "Red Lake",
+  "name": "Red Lake SWCD",
+  "office": {
+   "address": "2602 Wheat Dr, Red Lake Falls, MN 56750",
+   "asOf": "2023-02-21",
+   "phone": "218-253-2593",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "1125",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "kwrrlf@gmail.com",
+     "phone": "218-253-2522",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Kevin W. Reich",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1125",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "dpmiller@gvtel.com",
+     "phone": "218-253-4337",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "David Miller",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1125",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Nathan Whalen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1125",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mlacross@gvtel.com",
+     "phone": "218-253-4124",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Mark LaCrosse",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1125",
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Jimmy Hagge",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Redwood": {
+  "byDistrict": false,
+  "county": "Redwood",
+  "name": "Redwood SWCD",
+  "office": {
+   "address": "1241 East Bridge Street, Suite C, Redwood Falls, MN 56283",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "5127",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "potterosafarms@gmail.com",
+     "phone": "507-641-3087",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Jeff Potter",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5127",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "btimm2220@hotmail.com",
+     "phone": "507-430-2220",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Brian Timm",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5127",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Rick Maurer",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5127",
+    "district": 4,
+    "election": "2024-11-05",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   },
+   {
+    "code": "5127",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "edcartwg@mvtwireless.com",
+     "phone": "507-629-4843",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Edward Carter",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Renville": {
+  "byDistrict": true,
+  "county": "Renville",
+  "name": "Renville SWCD",
+  "office": {
+   "address": "1008 West Lincoln Street, Olivia, MN 56277",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "6129",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "kingcat80656@live.com",
+     "phone": "320-833-2313",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "M.R. Koenig",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6130",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "franklinutilities@mchsi.com",
+     "phone": "507-557-2299",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Kevin S. Kokesch",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6131",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "dean27mj@gmail.com",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Dean Schroeder",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6132",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "kkkay@hotmail.com",
+     "phone": "320-333-6002",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Kathryn K. Kelly",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6133",
+    "district": 5,
+    "unnamed": "no general election for this seat appears in any results file the Secretary of State published since the 2022 general (measured 2026-10-26)"
+   }
+  ]
+ },
+ "Rice": {
+  "byDistrict": false,
+  "county": "Rice",
+  "name": "Rice SWCD",
+  "office": {
+   "address": "1810 - 30th Street NW, Faribault, MN 55021",
+   "asOf": "2023-02-21",
+   "phone": "507-332-5408",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "7131",
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Alexander W. Malecha",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7131",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Gene Kuntz",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7131",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "rogerbongers1972@gmail.com",
+     "phone": "507-291-0440",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Roger Bongers",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7131",
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "John Larson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7131",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "forstmann68@gmail.com",
+     "phone": "507-332-6836",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Richard F. Peterson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Rock": {
+  "byDistrict": false,
+  "county": "Rock",
+  "name": "Rock SWCD",
+  "office": {
+   "address": "311 W Gabrielson Road, Luverne, MN 56156",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "5133",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "info@cragoe.com",
+     "phone": "507-920-3815",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Eugene Cragoe",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5133",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "joshossefoort@yahoo.com",
+     "phone": "507-449-5864",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Josh Ossefoort",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5133",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "rlhoff@alliancecom.net",
+     "phone": "507-920-6230",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Roger Hoff",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5133",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "esslink@alliancecom.net",
+     "phone": "507-227-5808",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Dave Esselink",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5133",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jjaveldkamp@gmail.com",
+     "phone": "507-820-4799",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Jim Veldkamp",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Root River": {
+  "byDistrict": false,
+  "county": "Houston",
+  "name": "Root River SWCD",
+  "office": {
+   "address": "805 North Hwy 44/76, Suite 1, Caledonia, MN 55921",
+   "asOf": "2023-02-21",
+   "phone": "507-724-5261",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "7055",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "wbfarms@acegroup.cc",
+     "phone": "507-894-4845",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Jerry Welke",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7055",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "noemail@noemail.com",
+     "phone": "608-385-7293",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Joe Driscoll",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7055",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "ken.gretchen.anderson@gmail.com",
+     "phone": "507-498-5179",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Kenneth Anderson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7055",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "rkquilter@hotmail.com",
+     "phone": "507-495-3157",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Glenn Kruse",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7055",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "matt.feldmeier@hotmail.com",
+     "phone": "507-450-8346",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Matt Feldmeier",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Roseau": {
+  "byDistrict": false,
+  "county": "Roseau",
+  "name": "Roseau SWCD",
+  "office": {
+   "address": "502 7th St SW, Ste 5, Roseau, MN 56751",
+   "asOf": "2023-02-21",
+   "phone": "218-463-1903",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "1135",
+    "district": 1,
+    "election": "2024-11-05",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   },
+   {
+    "code": "1135",
+    "district": 2,
+    "election": "2024-11-05",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   },
+   {
+    "code": "1135",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jgaukerud@wiktel.com",
+     "phone": "218-528-3529",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "John Gaukerud",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1135",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "janm@wiktel.com",
+     "phone": "218-424-7757",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Jan Miller",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1135",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "landonolson3160@gmail.com",
+     "phone": "218-689-3160",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Landon Olson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Scott": {
+  "byDistrict": true,
+  "county": "Scott",
+  "name": "Scott SWCD",
+  "office": {
+   "address": "7151 190th St W Ste 125, Jordan, MN 55352",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "4139",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "dschoenecker@scottswcd.org",
+     "phone": "952-758-3435",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Doug Schoenecker",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4140",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "rcasey@scottswcd.org",
+     "phone": "612-221-1255",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Rob Casey",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4142",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "ghartmann@scottswcd.org",
+     "phone": "612-554-5205",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Gary A. Hartmann",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4143",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jfitzsimmons@scottswcd.org",
+     "phone": "612-867-0706",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "James M. Fitzsimmons",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4144",
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Daniel Giles",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Sherburne": {
+  "byDistrict": false,
+  "county": "Sherburne",
+  "name": "Sherburne SWCD",
+  "office": {
+   "address": "425 Jackson Ave NW, Elk River, MN 55330",
+   "asOf": "2023-02-21",
+   "phone": "763-220-3434",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "4141",
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Shelly Binsfeld",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4141",
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Christine Jurek",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4141",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "lgoenner@sherburneswcd.org",
+     "phone": "320-743-3224",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Larry Goenner",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4141",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jselvog@sherburneswcd.org",
+     "phone": "320-968-3779",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Jason C. Selvog",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4141",
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Joshua Krenz",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Sibley": {
+  "byDistrict": false,
+  "county": "Sibley",
+  "name": "Sibley SWCD",
+  "office": {
+   "address": "112 5th Street, PO Box 161, Gaylord, MN 55334",
+   "asOf": "2023-02-21",
+   "phone": "507-702-7077",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "6143",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "kthies1@hotmail.com",
+     "phone": "507-995-3187",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Kathleen Thies",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6143",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "pwiemann@senecafoods.com",
+     "phone": "507-964-2989",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Paul Wiemann",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6143",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "lop1369@yahoo.com",
+     "phone": "507-834-6618",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Loren Evenson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6143",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "wrgrams54@hotmail.com",
+     "phone": "507-237-2778",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Wayne R. Grams",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6143",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "rwnielsen@frontiernet.net",
+     "phone": "763-244-5061",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Robert Bob Nielsen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "South St. Louis": {
+  "byDistrict": false,
+  "county": "St. Louis",
+  "name": "South St. Louis SWCD",
+  "office": {
+   "address": "4215 Enterprise Circle, Duluth, MN 55811",
+   "asOf": "2023-02-21",
+   "phone": "218-723-4867",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "3138",
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "John Tollgaard",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3138",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-525-5008",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Marcia Stromgren",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3138",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-476-2712",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Albert Moline",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3138",
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Paul Fish",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "3138",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-525-3820",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Debra L Taylor",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Stearns": {
+  "byDistrict": false,
+  "county": "Stearns",
+  "name": "Stearns SWCD",
+  "office": {
+   "address": "110 2nd Street South, Suite 128, Waite Park, MN 56387",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "2145",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "area1.stearnscountyswcd@gmail.com",
+     "phone": "320-837-5204",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Chuck Uphoff",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2145",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Arlyn Lawrenz",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2145",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "area3.stearnscountyswcd@gmail.com",
+     "phone": "320-248-8343",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Kenneth Schefers",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2145",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "area4.stearnscountyswcd@gmail.com",
+     "phone": "320-249-9809",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Matt Bruyette",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2145",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "area5.stearnscountyswcd@gmail.com",
+     "phone": "320-398-7312",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Thomas Gregory",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Steele": {
+  "byDistrict": false,
+  "county": "Steele",
+  "name": "Steele County SWCD",
+  "office": {
+   "address": "235 Cedardale Drive SE, Owatonna, MN 55060-4417",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "7147",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mdihlenfeld@gmail.com",
+     "phone": "507-451-5864",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Mark Ihlenfeld",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7147",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "507-451-4904",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "David Melby",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7147",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mditlevson@charter.net",
+     "phone": "507-451-6730",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Mark D Ditlevson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7147",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "danhansen805@yahoo.com",
+     "phone": "507-451-1191",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Daniel Hansen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7147",
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Bradley Hagen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Stevens": {
+  "byDistrict": false,
+  "county": "Stevens",
+  "name": "Stevens SWCD",
+  "office": {
+   "address": "12 Hwy 28 East, Suite 2, Morris, MN 56267-9505",
+   "asOf": "2023-02-21",
+   "phone": "320-589-4886",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "2149",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "district1.stevensswcd@gmail.com",
+     "phone": "320-589-4559",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Dave Lonergan",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2149",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "district2.stevensswcd@gmail.com",
+     "phone": "320-589-7155",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Greg Fynboh",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2149",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "district3.stevensswcd@gmail.com",
+     "phone": "320-808-8257",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Debbie Anderson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2149",
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Dennis Feuchtenberger",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2149",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "district5.stevensswcd@gmail.com",
+     "phone": "814-322-6531",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Troy Goodnough",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Swift": {
+  "byDistrict": false,
+  "county": "Swift",
+  "name": "Swift SWCD",
+  "office": {
+   "address": "1430 Utah Avenue, Benson, MN 56215",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "2151",
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Scott Olson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2151",
+    "district": 2,
+    "election": "2022-11-08",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   },
+   {
+    "code": "2151",
+    "district": 3,
+    "unnamed": "no general election for this seat appears in any results file the Secretary of State published since the 2022 general (measured 2026-10-26)"
+   },
+   {
+    "code": "2151",
+    "district": 4,
+    "election": "2022-11-08",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   },
+   {
+    "code": "2151",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "markweimer72@gmail.com",
+     "phone": "320-368-0961",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Mark Weimerskirch",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Todd": {
+  "byDistrict": false,
+  "county": "Todd",
+  "name": "Todd SWCD",
+  "office": {
+   "address": "215 1st Ave S Ste 104, Long Prairie, MN 56347",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "2153",
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Barb James",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2153",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "320-815-1040",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Wayne W. Wendel",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2153",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "320-761-6418",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Dale Katterhagen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2153",
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Larry Bebus",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "2153",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "tomandkaren@midwestinfo.net",
+     "phone": "320-808-9506",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Tom Williamson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Traverse": {
+  "byDistrict": false,
+  "county": "Traverse",
+  "name": "Traverse SWCD",
+  "office": {
+   "address": "304 4th Street North, Wheaton, MN 56296",
+   "asOf": "2023-02-21",
+   "phone": "320-563-8218 x 3",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "1155",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "320-265-6252",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Dennis Zimbrick",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1155",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "320-748-7934",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Greg Hoppe",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1155",
+    "district": 3,
+    "election": "2022-11-08",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   },
+   {
+    "code": "1155",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "320-760-0771",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Douglas E. Frisch",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1155",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "218-770-8812",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Chester Raguse",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Wabasha": {
+  "byDistrict": false,
+  "county": "Wabasha",
+  "name": "Wabasha SWCD",
+  "office": {
+   "address": "611 Broadway Avenue, Suite 10, Wabasha, MN 55981",
+   "asOf": "2023-02-21",
+   "phone": "651-565-4673",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "7157",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "lynn.zabel.wabashaswcd@gmail.com",
+     "phone": "507-534-2493",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Lynn Zabel",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7157",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "sharliek@hughes.net",
+     "phone": "651-565-4144",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Sharleen Klennert",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7157",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "crossmule9@gmail.com",
+     "phone": "507-951-8785",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Chester Ross",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7157",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "sethtentis@gmail.com",
+     "phone": "507-951-9370",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Seth T Tentis",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7157",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "dag@dagknudsen.com",
+     "phone": "651-345-3800",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Dag I Knudsen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Wadena": {
+  "byDistrict": false,
+  "county": "Wadena",
+  "name": "Wadena SWCD",
+  "office": {
+   "address": "4 Alfred Street NE, Wadena, MN 56482-2303",
+   "asOf": "2023-02-21",
+   "phone": "218-632-4201",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "8159",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "kbpberg@gmail.com",
+     "phone": "218-894-3384",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Kenneth Berg",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8159",
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Brett Dailey",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8159",
+    "district": 3,
+    "election": "2022-11-08",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   },
+   {
+    "code": "8159",
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Thomas \"Tom\" Schulz",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "8159",
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Bruce Juntunen",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Waseca": {
+  "byDistrict": false,
+  "county": "Waseca",
+  "name": "Waseca SWCD",
+  "office": {
+   "address": "300 North State Street, Waseca, MN 56093",
+   "asOf": "2023-02-21",
+   "phone": "507-835-0603",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "6161",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "507-234-6165",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Wayne Cords",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6161",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "507-461-2895",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Matthew Sommers",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6161",
+    "contact": {
+     "asOf": "2023-02-21",
+     "phone": "507-340-4791",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Larry Muff",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6161",
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Gregg Rosenthal",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6161",
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Dan Roemhildt",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Washington": {
+  "byDistrict": true,
+  "county": "Washington",
+  "name": "Washington Conservation District",
+  "office": {
+   "address": "455 Hayward Ave N, Oakdale, MN 55128",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "4163",
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Matt Lindholm",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4164",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "dzwirn@gmail.com",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Diane Blake",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4165",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "johnrheinberger@aol.com",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "John Rheinberger",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4166",
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Tim Behrends",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4167",
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "David Nuccio",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Watonwan": {
+  "byDistrict": false,
+  "county": "Watonwan",
+  "name": "Watonwan SWCD",
+  "office": {
+   "address": "108 8th St. S. Suite#2, St. James, MN 56081",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "6165",
+    "district": 1,
+    "election": "2022-11-08",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false,
+    "unnamed": "the seat was won by write-in votes, which the results do not name"
+   },
+   {
+    "code": "6165",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "richsueenger@yahoo.com",
+     "phone": "507-380-7699",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Rich Enger",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6165",
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Matthew J. Wolle",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6165",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "j_bergeman@hotmail.com",
+     "phone": "507-381-7408",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Jordan Bergeman",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "6165",
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Andrew Ekstrom",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Wilkin": {
+  "byDistrict": false,
+  "county": "Wilkin",
+  "name": "Wilkin SWCD",
+  "office": {
+   "address": "1150 Hwy 75 N, Breckenridge, MN 56520",
+   "asOf": "2023-02-21",
+   "phone": "218-643-2933",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "1167",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "edward@wtc-mail.net",
+     "phone": "218-995-2173",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Ross E. Aigner",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1167",
+    "district": 2,
+    "election": "2022-11-08",
+    "name": "Bruce A. Nelson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1167",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "jlnfarms@hotmail.com",
+     "phone": "218-867-2590",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Jared Nordick",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1167",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "ksshre@gmail.com",
+     "phone": "218-640-1450",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Kyle Gowin",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "1167",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "joshjdeal@gmail.com",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2022-11-08",
+    "name": "Joshua Deal",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Winona": {
+  "byDistrict": false,
+  "county": "Winona",
+  "name": "Winona SWCD",
+  "office": {
+   "address": "400 Wilson Street North, PO Box 39, Lewiston, MN 55952",
+   "asOf": "2023-02-21",
+   "phone": "507-523-2171 x 3",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "7169",
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Ross L. Greden",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7169",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Thomas M Lindsey",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7169",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "bill.rowekamp@winonaswcd.com",
+     "phone": "507-458-1992",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2024-11-05",
+    "name": "Bill Rowekamp",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7169",
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Tom Scarponcini",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "7169",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "andy.kronebusch@winonaswcd.com",
+     "phone": "507-429-7340",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Andy Kronebusch",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Wright": {
+  "byDistrict": false,
+  "county": "Wright",
+  "name": "Wright SWCD",
+  "office": {
+   "address": "311 Brighton Ave S Ste C, Buffalo, MN 55313",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "4171",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "mike@mcpcollisioncenter.com",
+     "phone": "320-963-6082",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2022-11-08",
+    "name": "Michael W. Zieska",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4171",
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Kris Olson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4171",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "scrammin@hotmail.com",
+     "phone": "612-490-5206",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "William Daluge",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4171",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "ccuecker@lakedalelink.net",
+     "phone": "320-963-6732",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2024-11-05",
+    "name": "Chris Uecker",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "4171",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "duane@dahlco.com",
+     "phone": "320-286-5913",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "Duane E Dahlman",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ },
+ "Yellow Medicine": {
+  "byDistrict": false,
+  "county": "Yellow Medicine",
+  "name": "Yellow Medicine SWCD",
+  "office": {
+   "address": "1000 - 10th Ave Ste 3, PO Box 545, Clarkfield, MN 56223",
+   "asOf": "2023-02-21",
+   "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+  },
+  "seats": [
+   {
+    "code": "5173",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "remmelefarms@mvtvwireless.co.mn",
+     "phone": "507-828-1108",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 1,
+    "election": "2024-11-05",
+    "name": "Thomas J Remmele",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5173",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "noemail@noemail.com",
+     "phone": "320-564-3699",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 2,
+    "election": "2024-11-05",
+    "name": "Jerry Nelson",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5173",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "elmovolstad@gmail.com",
+     "phone": "507-829-1222",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 3,
+    "election": "2022-11-08",
+    "name": "Elmo Volstad",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5173",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "dlbach@mvtvwireless.com",
+     "phone": "507-224-2158",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 4,
+    "election": "2022-11-08",
+    "name": "Darwyn Bach",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/cntyRaces.txt",
+    "special": false
+   },
+   {
+    "code": "5173",
+    "contact": {
+     "asOf": "2023-02-21",
+     "email": "dclarksean@gmail.com",
+     "phone": "507-828-3984",
+     "sourceUrl": "https://bwsr.state.mn.us/sites/default/files/2022-06/SWCD_Dir.pdf"
+    },
+    "district": 5,
+    "election": "2024-11-05",
+    "name": "DeLon Clarksean",
+    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/cntyRaces.txt",
+    "special": false
+   }
+  ]
+ }
+}

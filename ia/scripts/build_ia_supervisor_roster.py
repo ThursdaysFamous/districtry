@@ -454,6 +454,154 @@ NUMBERING_CHECKED = {
                    "the Legislative Services Agency's published population "
                    "for the same-numbered district exactly",
     },
+    # THE CERTIFIED 2024 GENERAL AND 2026 PRIMARY TOGETHER (checked 2026-10-26).
+    # Each county below is in ia/scripts/check_county_district_numbering.py's
+    # PRECINCT_COUNTIES, which re-runs the placement offline: the Secretary of
+    # State's certified returns list the precincts voting in each supervisor
+    # contest, and between the two elections every district of these counties
+    # was on a ballot, so no district is placed by elimination. A precinct
+    # named in both elections is named in the same district both times.
+    "Adair": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-26",
+        "witness": ("the Secretary of State's certified 2024 general and 2026 primary "
+                    "returns list the precincts voting in each supervisor contest; "
+                    "between them every one of the county's 5 districts was on a "
+                    "ballot, and each of this instance's 5 Adair precincts lies wholly "
+                    "inside the district of this layer that pairing names (the same "
+                    "number throughout)"),
+    },
+    "Calhoun": {
+        "map": {"1": "1", "2": "3", "3": "2"},
+        "checked": "2026-10-26",
+        "witness": ("the Secretary of State's certified 2024 general and 2026 primary "
+                    "returns list the precincts voting in each supervisor contest; "
+                    "between them every one of the county's 3 districts was on a "
+                    "ballot, and each of this instance's 6 Calhoun precincts lies "
+                    "wholly inside the district of this layer that pairing names (1 of "
+                    "3 numbers the same)"),
+    },
+    "Cerro Gordo": {
+        "map": {"1": "2", "2": "1", "3": "3"},
+        "checked": "2026-10-26",
+        "witness": ("the Secretary of State's certified 2024 general and 2026 primary "
+                    "returns list the precincts voting in each supervisor contest; "
+                    "between them every one of the county's 3 districts was on a "
+                    "ballot, and each of this instance's 23 Cerro Gordo precincts lies "
+                    "wholly inside the district of this layer that pairing names (1 of "
+                    "3 numbers the same)"),
+    },
+    "Floyd": {
+        "map": {"1": "3", "2": "2", "3": "1"},
+        "checked": "2026-10-26",
+        "witness": ("the Secretary of State's certified 2024 general and 2026 primary "
+                    "returns list the precincts voting in each supervisor contest; "
+                    "between them every one of the county's 3 districts was on a "
+                    "ballot, and each of this instance's 8 Floyd precincts lies wholly "
+                    "inside the district of this layer that pairing names (1 of 3 "
+                    "numbers the same)"),
+    },
+    "Guthrie": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-26",
+        "witness": ("the Secretary of State's certified 2024 general and 2026 primary "
+                    "returns list the precincts voting in each supervisor contest; "
+                    "between them every one of the county's 5 districts was on a "
+                    "ballot, and each of this instance's 6 Guthrie precincts lies "
+                    "wholly inside the district of this layer that pairing names (the "
+                    "same number throughout)"),
+    },
+    "Hamilton": {
+        "map": {"1": "1", "2": "2", "3": "3"},
+        "checked": "2026-10-26",
+        "witness": ("the Secretary of State's certified 2024 general and 2026 primary "
+                    "returns list the precincts voting in each supervisor contest; "
+                    "between them every one of the county's 3 districts was on a "
+                    "ballot, and each of this instance's 7 Hamilton precincts lies "
+                    "wholly inside the district of this layer that pairing names (the "
+                    "same number throughout)"),
+    },
+    "Kossuth": {
+        "map": {"1": "3", "2": "4", "3": "5", "4": "1", "5": "2"},
+        "checked": "2026-10-26",
+        "witness": ("the Secretary of State's certified 2024 general and 2026 primary "
+                    "returns list the precincts voting in each supervisor contest; "
+                    "between them every one of the county's 5 districts was on a "
+                    "ballot, and each of this instance's 20 Kossuth precincts lies "
+                    "wholly inside the district of this layer that pairing names (0 of "
+                    "5 numbers the same)"),
+    },
+    "Lee": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-26",
+        "witness": ("the Secretary of State's certified 2024 general and 2026 primary "
+                    "returns list the precincts voting in each supervisor contest; "
+                    "between them every one of the county's 5 districts was on a "
+                    "ballot, and each of this instance's 22 Lee precincts lies wholly "
+                    "inside the district of this layer that pairing names (the same "
+                    "number throughout)"),
+    },
+    "Montgomery": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-26",
+        "witness": ("the Secretary of State's certified 2024 general and 2026 primary "
+                    "returns list the precincts voting in each supervisor contest; "
+                    "between them every one of the county's 5 districts was on a "
+                    "ballot, and each of this instance's 7 Montgomery precincts lies "
+                    "wholly inside the district of this layer that pairing names (the "
+                    "same number throughout)"),
+    },
+    "Palo Alto": {
+        "map": {"1": "4", "2": "1", "3": "2", "4": "5", "5": "3"},
+        "checked": "2026-10-26",
+        "witness": ("the Secretary of State's certified 2024 general and 2026 primary "
+                    "returns list the precincts voting in each supervisor contest; "
+                    "between them every one of the county's 5 districts was on a "
+                    "ballot, and each of this instance's 8 Palo Alto precincts lies "
+                    "wholly inside the district of this layer that pairing names (0 of "
+                    "5 numbers the same); the county's own supervisor-district map, "
+                    "fitted to seven towns, gives the same pairing"),
+    },
+    "Warren": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-26",
+        "witness": ("the Secretary of State's certified 2024 general and 2026 primary "
+                    "returns list the precincts voting in each supervisor contest; "
+                    "between them every one of the county's 5 districts was on a "
+                    "ballot, and each of this instance's 40 Warren precincts lies "
+                    "wholly inside the district of this layer that pairing names (the "
+                    "same number throughout)"),
+    },
+    "Webster": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-26",
+        "witness": ("the Secretary of State's certified 2024 general and 2026 primary "
+                    "returns list the precincts voting in each supervisor contest; "
+                    "between them every one of the county's 5 districts was on a "
+                    "ballot, and each of this instance's 19 Webster precincts lies "
+                    "wholly inside the district of this layer that pairing names (the "
+                    "same number throughout)"),
+    },
+    "Winneshiek": {
+        "map": {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"},
+        "checked": "2026-10-26",
+        "witness": ("the Secretary of State's certified 2024 general and 2026 primary "
+                    "returns list the precincts voting in each supervisor contest; "
+                    "between them every one of the county's 5 districts was on a "
+                    "ballot, and each of this instance's 12 Winneshiek precincts lies "
+                    "wholly inside the district of this layer that pairing names (the "
+                    "same number throughout)"),
+    },
+    "Worth": {
+        "map": {"1": "1", "2": "2", "3": "3"},
+        "checked": "2026-10-26",
+        "witness": ("the Secretary of State's certified 2024 general and 2026 primary "
+                    "returns list the precincts voting in each supervisor contest; "
+                    "between them every one of the county's 3 districts was on a "
+                    "ballot, and each of this instance's 7 Worth precincts lies wholly "
+                    "inside the district of this layer that pairing names (the same "
+                    "number throughout)"),
+    },
 }
 
 # WHAT A COUNTY TOLD US IN WRITING.
@@ -572,6 +720,101 @@ CORRESPONDENCE_ROSTERS = {
     },
 }
 
+# WHAT THE CERTIFIED RESULTS SAY.
+#
+# A plan 3 supervisor must live in the district they hold, and the same is true
+# of the district they run for, so a sitting supervisor who WON a district's
+# seat in the 2024 general election, or who RAN for a district's seat in the
+# 2026 primary, holds that district. Both are read off the Secretary of State's
+# certified returns (electionresults.iowa.gov), the same archives whose
+# precinct lists settle these counties' numbering above. A 2024 winner's term
+# runs to January 2029; a 2026 primary candidate is the sitting supervisor until
+# January 2027 whether or not they won it, so these entries go out of date when
+# the 2026 winners take office, and the roster check below is what says so: a
+# new name on the county's own board page no longer matches the names placed
+# here, the county stops keying, and the drop guard stops the weekly build for a
+# person to read the November results.
+#
+# `byElimination` is the one district neither ballot settled for a sitting
+# supervisor (its seat was contested in 2026 by people not on the board). The
+# builder fills it with the one roster name not placed anywhere else, and stops
+# if there is not exactly one. Names are written as the results print them and
+# joined to the roster on a unique surname, exactly as a letter's are.
+#
+# Audited like the letters: an entry FAILS when its county is not a plan 3
+# county, and FAILS when the scraper keys the county's own page, because a page
+# the county publishes is re-read every week and these are not.
+RESULTS_ROSTERS = {
+    "Adair": {
+        "districts": {"1": "Matt Wedemeyer", "2": "Jodie Hoadley",
+                      "3": "Jerry Walker", "4": "Nathan Ross Baier",
+                      "5": "Michael Christoffersen"},
+        "evidence": "won 1, 3 and 5 in the 2024 general; ran in 2 and 4 in the "
+                    "2026 primary",
+    },
+    "Calhoun": {
+        "districts": {"1": "David George", "2": "Scott Jacobs",
+                      "3": "Cory Ridgely"},
+        "evidence": "won 1 and 3 in the 2024 general; ran in 2 in the 2026 "
+                    "primary",
+    },
+    "Floyd": {
+        "districts": {"1": "Gloria Carr", "3": "Boyd Campbell"},
+        "byElimination": "2",
+        "evidence": "won 1 and 3 in the 2024 general (Boyd Campbell ran in 3 "
+                    "again in the 2026 primary); district 2's 2026 primary "
+                    "named nobody on the board",
+    },
+    "Guthrie": {
+        "districts": {"2": "Brian Johnson", "3": "Maggie Armstrong",
+                      "4": "Steve Smith", "5": "Mike Dickson"},
+        "byElimination": "1",
+        "evidence": "won 2 and 5 in the 2024 general; ran in 3 and 4 in the "
+                    "2026 primary; district 1's 2026 primary named nobody on "
+                    "the board",
+    },
+    "Hamilton": {
+        "districts": {"1": "Mary Clausen", "2": "April Ely", "3": "Rick Young"},
+        "evidence": "won 1 and 2 in the 2024 general; ran in 3 in the 2026 "
+                    "primary",
+    },
+    "Lee": {
+        "districts": {"1": "Denise Fraise", "2": "Tim Wondra",
+                      "4": "Garry W. Seyb", "5": "Ginger Knisley"},
+        "byElimination": "3",
+        "evidence": "won 1, 4 and 5 in the 2024 general; ran in 2 in the 2026 "
+                    "primary; district 3's 2026 primary named nobody on the "
+                    "board",
+    },
+    "Montgomery": {
+        "districts": {"1": "Charla A. Schmid", "2": "Mike Olson",
+                      "3": "Bryant Amos", "5": "Alex Burton"},
+        "byElimination": "4",
+        "evidence": "won 3 and 5 in the 2024 general; ran in 1 and 2 in the "
+                    "2026 primary; district 4's 2026 primary named nobody on "
+                    "the board",
+    },
+    "Palo Alto": {
+        "districts": {"1": "Keith Wirtz", "2": "Craig Merrill",
+                      "3": "Roger Faulstick", "4": "Ronald Graettinger",
+                      "5": "Linus Solberg"},
+        "evidence": "won 3 and 4 in the 2024 general; ran in 1, 2 and 5 in "
+                    "the 2026 primary",
+    },
+    "Warren": {
+        "districts": {"1": "Brian C.S. Arnold", "2": "Aaron DeKock",
+                      "3": "Travis DeWitt", "4": "Stephanie Erickson",
+                      "5": "Crystal McIntyre"},
+        "evidence": "won all five in the 2024 general",
+    },
+}
+RESULTS_READ_ON = "2026-10-26"
+RESULTS_CARD_NOTE = (
+    "Which district each supervisor holds comes from the Secretary of State's "
+    "certified results for the 2024 general election and the 2026 primary, "
+    "since a supervisor must live in the district they hold and in the one "
+    "they run for. No county page this app can read names the districts.")
+
 # A ROBOTS REFUSAL IS A RECORDED DROP -- NOT AN OUTAGE, AND NOT A BLANKET
 # EXCUSE EITHER.
 #
@@ -632,6 +875,37 @@ ROBOTS_REFUSED_PRESERVED = {
 # page, and it is what a preserved card shows a reader. After the first run
 # under this change the date rides the file itself as `readOn` and these seeds
 # are never consulted again.
+
+
+def surname(name):
+    """The last word of a name, ignoring a title the roster writes after a
+    comma ("Tim Wondra, D.C.")."""
+    return name.split(",")[0].split()[-1].lower()
+
+
+def join_names(county, written_by_dist, board, who):
+    """Turn names as a letter or a results file writes them into the gated
+    roster's own spelling: an exact match, else a UNIQUE surname. The join is
+    printed every run, and an ambiguous or unmatched name stops the build."""
+    names = {m["name"] for m in board}
+    resolved = {}
+    for dist, written in written_by_dist.items():
+        if written in names:
+            resolved[dist] = written
+            continue
+        hits = sorted(n for n in names if surname(n) == surname(written))
+        if len(hits) != 1:
+            raise RuntimeError(
+                "%s district %s: %s wrote %r, which the gated roster does not "
+                "carry, and %d roster name(s) share the surname %r (%s). "
+                "Settle it by hand rather than guessing."
+                % (county, dist, who, written, len(hits), surname(written),
+                   ", ".join(hits) or "none"))
+        print("  name joined   %-12s district %s: %s wrote %r, the gated "
+              "roster spells it %r -- the roster's spelling ships"
+              % (county, dist, who, written, hits[0]), file=sys.stderr)
+        resolved[dist] = hits[0]
+    return resolved
 
 
 def load(path, what):
@@ -721,29 +995,53 @@ def main():
         # or unmatched one stops the build. The ROSTER'S spelling is what
         # ships, because the roster is the gated source for who these people
         # are and the letter is the source for which district each holds.
-        board = board_by_county.get(county) or []
-        names = {m["name"] for m in board}
-        resolved = {}
-        for dist, written in told["districts"].items():
-            if written in names:
-                resolved[dist] = written
-                continue
-            surname = written.split()[-1]
-            hits = sorted(n for n in names if n.split()[-1] == surname)
-            if len(hits) != 1:
-                raise RuntimeError(
-                    "%s district %s: the county wrote %r, which the gated "
-                    "roster does not carry, and %d roster name(s) share the "
-                    "surname %r (%s). Settle it by hand rather than guessing."
-                    % (county, dist, written, len(hits), surname,
-                       ", ".join(hits) or "none"))
-            print("  name joined   %-12s district %s: the county wrote %r, "
-                  "the gated roster spells it %r -- the roster's spelling "
-                  "ships" % (county, dist, written, hits[0]), file=sys.stderr)
-            resolved[dist] = hits[0]
+        resolved = join_names(county, told["districts"],
+                              board_by_county.get(county) or [], "the county")
         cache[county] = {"districts": resolved, "readOn": told["readOn"]}
         print("  from a letter  %-12s %d district(s), %s"
               % (county, len(resolved), told["why"]), file=sys.stderr)
+    for county in sorted(RESULTS_ROSTERS):
+        told = RESULTS_ROSTERS[county]
+        if county not in plan3:
+            raise RuntimeError(
+                "RESULTS_ROSTERS names %s, which is not a plan 3 county in the "
+                "shipped geometry -- the entry is orphaned and should go"
+                % county)
+        if county not in NUMBERING_CHECKED:
+            raise RuntimeError(
+                "RESULTS_ROSTERS names %s, whose numbering is not in "
+                "NUMBERING_CHECKED -- the results' district numbers are the "
+                "county's own and mean nothing here until they are" % county)
+        if (cache.get(county) or {}).get("districts"):
+            raise RuntimeError(
+                "RESULTS_ROSTERS names %s, but the scraper keyed its own page "
+                "this run -- the entry is stale. Retire it: a page the county "
+                "publishes is re-read every week." % county)
+        board = board_by_county.get(county) or []
+        resolved = join_names(county, told["districts"], board,
+                              "the certified results")
+        gap = told.get("byElimination")
+        if gap:
+            left = sorted({m["name"] for m in board} - set(resolved.values()))
+            if gap in resolved or len(left) != 1:
+                raise RuntimeError(
+                    "RESULTS_ROSTERS[%s] places district %s by elimination, but "
+                    "%d roster name(s) are left over (%s) -- elimination needs "
+                    "exactly one" % (county, gap, len(left), ", ".join(left)))
+            resolved[gap] = left[0]
+            print("  by elimination %-12s district %s: %s, the one supervisor "
+                  "no ballot placed elsewhere" % (county, gap, left[0]),
+                  file=sys.stderr)
+        # A county whose own host refuses this client keeps that verdict on
+        # its entry, so the refusal is still reported and still audited; the
+        # results are read from the Secretary of State's host, not the county's.
+        was_refused = (cache.get(county) or {}).get("robotsRefused")
+        cache[county] = {"districts": resolved, "readOn": RESULTS_READ_ON,
+                         "fromResults": True}
+        if was_refused:
+            cache[county]["robotsRefused"] = was_refused
+        print("  from results   %-12s %d district(s): %s"
+              % (county, len(resolved), told["evidence"]), file=sys.stderr)
 
     # THE ROSTER THIS RUN IS ABOUT TO OVERWRITE, read in FULL rather than as
     # district counts. It is two things at once: the Grundy guard below still
@@ -768,9 +1066,10 @@ def main():
         # list" would read as this repo's own gap.
         if entry.get("robotsRefused"):
             refused_now[county] = entry["robotsRefused"]
-            skipped.append((county, "robots.txt refuses this client -- %s"
-                            % entry["robotsRefused"]))
-            continue
+            if not entry.get("fromResults"):
+                skipped.append((county, "robots.txt refuses this client -- %s"
+                                % entry["robotsRefused"]))
+                continue
         keyed = entry.get("districts") or {}
         board = board_by_county.get(county)
         if not board:
@@ -793,7 +1092,13 @@ def main():
             skipped.append((county, "placed %s but the roster names %s"
                             % (sorted(placed), sorted(by_name))))
             continue
-        seats = seats_by_county.get(county)
+        # THE POLYGONS DECIDE, as build_ia_county_board_directory.py already
+        # rules: Warren draws five numbered districts and its NUMDISTRICTS
+        # column says 3, which would withhold a five-member board over a
+        # column the file's own drawing disproves.
+        seats = (len(layer_ids[county]) if layer_ids.get(county)
+                 and all(str(d).isdigit() for d in layer_ids[county])
+                 else seats_by_county.get(county))
         if seats is not None and seats != len(board):
             skipped.append((county, "roster names %d, geometry seats %d"
                             % (len(board), seats)))
@@ -893,6 +1198,10 @@ def main():
         if told:
             rec["asOf"] = told["readOn"]
             rec["asOfWhy"] = told["cardNote"]
+        if entry.get("fromResults"):
+            rec["asOf"] = RESULTS_READ_ON
+            rec["asOfWhy"] = RESULTS_CARD_NOTE
+            rec["asOfSource"] = "results"
         # The board office's own number, county-level and labelled as such on
         # the card. One number shared by every supervisor is a switchboard.
         if board_phone_by_county.get(county):
@@ -926,6 +1235,10 @@ def main():
             # district number, which this project now knows is usually not this
             # layer's -- so carrying it forward would preserve a pairing that
             # was never right rather than one that has stopped being re-read.
+            continue
+        if fips_by_county[county] in directory:
+            # Keyed this run from a source other than the county's own page
+            # (RESULTS_ROSTERS), which is fresher than a carried copy.
             continue
         carried = prev.get(county)
         if not carried:
@@ -992,7 +1305,10 @@ def main():
         print("  robots-refused %-12s %s | %s | %s"
               % (county, state,
                  "PRESERVED %d district(s), last read %s" % (held[2], held[1])
-                 if held else "nothing preserved -- never fetched",
+                 if held else
+                 "keyed from the certified results instead"
+                 if county in RESULTS_ROSTERS else
+                 "nothing preserved -- never fetched",
                  why),
               file=sys.stderr)
 
