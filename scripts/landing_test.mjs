@@ -491,15 +491,34 @@ try {
 
   // --- 1c-quater. an address a rectangle claims and nobody serves ----------
   //
-  // Clayton, Missouri sits inside Illinois's bbox, so the rectangle pass sent
-  // it to an app with nothing to show there. It is about 13 km from Illinois's
-  // outline, well past the tolerance the page allows a simplified edge.
+  // Lawrence, Kansas sits inside Missouri's bbox, so the rectangle pass would
+  // send it to an app with nothing to show there. It is about 55 km from
+  // Missouri's outline, well past the tolerance the page allows a simplified
+  // edge, and inside no other instance's box.
   //
-  // THIS WAS GARY, INDIANA UNTIL 2026-10-07, when Indiana went live and Gary
-  // became an address the front door must OPEN /in/ for (asserted just below).
-  // Downtown St. Louis was not used: it is about 1.6 km from Illinois's
-  // simplified outline, close enough to the page's ~1.5 km allowance that the
-  // test would be deciding a rounding question rather than this one.
+  // THIS WAS CLAYTON, MISSOURI UNTIL MISSOURI'S GO-LIVE, and Gary, Indiana
+  // before Indiana's (2026-10-07): each became an address the front door must
+  // OPEN its state's app for, asserted just below. Kansas City, Kansas was not
+  // used: it is about 1 km from Missouri's simplified outline, inside the
+  // page's ~1.5 km allowance, so the test would be deciding a rounding
+  // question rather than this one.
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    await page.route("**/photon.komoot.io/**", photonStub([photonFeature(38.9717, -95.2353)]));
+    await stubInstances(page);
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await page.fill("#search-input", "Lawrence, Kansas");
+    await page.click("#search-button");
+    await addressSettled(page);
+    check("Lawrence, Kansas stays on the landing page though Missouri's bbox claims it",
+      new URL(page.url()).pathname === "/", page.url());
+    const msg = await textOrNull(page, "#search-status");
+    check("Lawrence, Kansas is told it is outside every covered place", /outside/i.test(msg || ""), JSON.stringify(msg));
+    await ctx.close();
+  }
+  // ...and Clayton, Missouri, which Illinois's bbox claims as well as
+  // Missouri's, opens Missouri: the outline pass decides.
   {
     const ctx = await browser.newContext({ serviceWorkers: "block" });
     const page = await ctx.newPage();
@@ -509,10 +528,8 @@ try {
     await page.fill("#search-input", "Clayton, Missouri");
     await page.click("#search-button");
     await addressSettled(page);
-    check("Clayton, Missouri stays on the landing page though Illinois's bbox claims it",
-      new URL(page.url()).pathname === "/", page.url());
-    const msg = await textOrNull(page, "#search-status");
-    check("Clayton, Missouri is told it is outside every covered place", /outside/i.test(msg || ""), JSON.stringify(msg));
+    check("Clayton, Missouri opens /mo/ though Illinois's bbox also claims it",
+      new URL(page.url()).pathname === "/mo/", page.url());
     await ctx.close();
   }
   // ...and Gary, which Illinois's bbox ALSO claims, opens Indiana: the outline

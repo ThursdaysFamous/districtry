@@ -1393,6 +1393,5 @@
 {"type":"Feature","bbox":[-89.231,37.1127,-89.0998,37.2173],"geometry":{"type":"Point","coordinates":[-89.16808,37.18226]},"properties":{"zip":"62996","layer":"zip-code"}},
 {"type":"Feature","bbox":[-89.5946,37.9735,-89.585,37.9952],"geometry":{"type":"Point","coordinates":[-89.58977,37.98147]},"properties":{"zip":"62997","layer":"zip-code"}},
 {"type":"Feature","bbox":[-89.522,37.4035,-89.3685,37.6001],"geometry":{"type":"Point","coordinates":[-89.44089,37.53734]},"properties":{"zip":"62998","layer":"zip-code"}},
-{"type":"Feature","bbox":[-89.0636,37.862,-89.0398,37.914],"geometry":{"type":"Point","coordinates":[-89.05249,37.90529]},"properties":{"zip":"62999","layer":"zip-code"}},
-{"type":"Feature","bbox":[-90.133,37.6958,-89.8438,37.9608],"geometry":{"type":"Point","coordinates":[-89.94388,37.88499]},"properties":{"zip":"63673","layer":"zip-code"}}
+{"type":"Feature","bbox":[-89.0636,37.862,-89.0398,37.914],"geometry":{"type":"Point","coordinates":[-89.05249,37.90529]},"properties":{"zip":"62999","layer":"zip-code"}}
 ]}

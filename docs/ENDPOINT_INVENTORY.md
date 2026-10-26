@@ -12,16 +12,16 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **288 distinct hosts** those files
-name, **44 are fetched by the browser**; the other 244 are links.
+makes from a link a reader clicks. Of **289 distinct hosts** those files
+name, **44 are fetched by the browser**; the other 245 are links.
 
 ### Geocoder — 3 host(s)
 
 | host | instances |
 |---|---|
 | `geosearch.planninglabs.nyc` | ny |
-| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la |
-| `photon.komoot.io` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la |
+| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo |
+| `photon.komoot.io` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo |
 
 The most sensitive flow on the site: it is **the text a reader
 types**. `build_privacy_page.py` owns what each receives and links
@@ -32,7 +32,7 @@ per-app measurement, so the two cannot disagree.
 
 | host | instances |
 |---|---|
-| `link-lookup.districtry.deno.net` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la |
+| `link-lookup.districtry.deno.net` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo |
 
 districtry's own service (`services/link-lookup/main.ts`, on Deno
 Deploy). It receives **a short Google Maps or Apple Maps link**, and
@@ -41,7 +41,7 @@ and answers with the full link it leads to.
 Every app also sends it, at `?a=`, **the street address a reader searches for
 or a map link carries** when the map's own search can't find the house,
 and it asks the U.S. Census Bureau's geocoder where that number falls.
-The il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms and la apps send it **the public address of an office a card shows** too,
+The il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la and mo apps send it **the public address of an office a card shows** too,
 when the app's office-pin geocoder can't place that office's pin, which
 says which district the reader selected.
 No served file names the Census host, because only the lookup asks it.
@@ -52,9 +52,9 @@ recipients.
 
 | host | instances |
 |---|---|
-| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la |
-| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la |
-| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la |
+| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo |
+| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo |
+| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo |
 
 One service. Several host spellings appear because the tile URL is a
 `{s}.` template and some are `preconnect` hints — one recipient, not
@@ -64,7 +64,7 @@ several.
 
 | host | instances |
 |---|---|
-| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la |
+| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo |
 
 Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
@@ -72,7 +72,7 @@ Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
 | host | instances |
 |---|---|
-| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la |
+| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo |
 
 ### Webfonts — none
 
@@ -84,7 +84,7 @@ a font CDN would be a recipient the privacy page does not name.
 
 | host | instances |
 |---|---|
-| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la |
+| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo |
 
 ### Socrata — 7 host(s)
 
@@ -103,7 +103,7 @@ a font CDN would be a recipient the privacy page does not name.
 | host | instances |
 |---|---|
 | `arcgispublicmap.co.st-clair.il.us` | il |
-| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn, in, nc, ok, sc, tn, ar, ms, la |
+| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn, in, nc, ok, sc, tn, ar, ms, la, mo |
 | `gis.aurora.il.us` | il |
 | `gis.cityofdanville.org` | il |
 | `gis.cookcountyil.gov` | il |
@@ -156,6 +156,7 @@ prose.
 | ar | 0 | 18 |
 | ms | 0 | 17 |
 | la | 0 | 17 |
+| mo | 0 | 13 |
 
 ### Where each layer's shapes come from
 
@@ -182,7 +183,7 @@ measured until the next run describes it.
 | Township / County Subdivision (`township`) | `tigerweb.geo.census.gov` | — |
 | Municipality (`municipality`) | `tigerweb.geo.census.gov` | — |
 | Judicial Subcircuit (`judicial-subcircuit`) | 4 of 9 county sources, from `gis.cookcountyil.gov`, `services.arcgis.com`, `services3.arcgis.com`; 5 shipped with the app | — |
-| County Board District (`county-board`) | 26 of 72 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`; 45 shipped with the app; 1 did not answer the probe (kane) | `gis.cookcountyil.gov` |
+| County Board District (`county-board`) | 26 of 71 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`; 44 shipped with the app; 1 did not answer the probe (kane) | `gis.cookcountyil.gov` |
 | Fire Protection District (`fire-district`) | 17 of 26 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.leecountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`; 9 shipped with the app | — |
 | DuPage Special Police District (`dupage-county-special-police`) | `services.arcgis.com` | — |
 | Park District (`park-district`) | 10 of 18 county sources, from `gis.cookcountyil.gov`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services7.arcgis.com`; 8 shipped with the app | — |
@@ -380,11 +381,13 @@ measured until the next run describes it.
 
 #### la — not measured
 
+#### mo — not measured
+
 ## 2. Build-time datasets
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
-| il | 131 | 412 | 6 |
+| il | 131 | 410 | 6 |
 | ny | 38 | 36 | 0 |
 | ca | 17 | 15 | 0 |
 | wi | 92 | 267 | 5 |
@@ -400,9 +403,10 @@ measured until the next run describes it.
 | ar | 28 | 20 | 0 |
 | ms | 41 | 24 | 0 |
 | la | 28 | 24 | 0 |
-| **total** | **713** | **1066** | **12** |
+| mo | 23 | 14 | 0 |
+| **total** | **736** | **1078** | **12** |
 
-**208 distinct source hosts** across the six manifests. Each instance's
+**215 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

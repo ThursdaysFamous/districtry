@@ -29,7 +29,7 @@
 // template starts at -v1: the app shell, icons, and the starter data
 // files bootstrap_state.py builds.)
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-mo-shell-v6";
+const CACHE_NAME = "districtry-mo-shell-v7";
 
 const SHELL_URLS = [
   "./",
@@ -46,6 +46,7 @@ const SHELL_URLS = [
 const GEOMETRY_URLS = [
   "./data/app/metro-outline.json",
   "./data/app/mo-state-outline.json",
+  "./data/app/zip-index.json",
   "./data/app/state-counties.json",
   "./data/app/congress-districts.json",
   "./data/app/mo-senate-districts.json",

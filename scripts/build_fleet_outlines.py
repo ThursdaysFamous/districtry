@@ -106,6 +106,10 @@ SOURCES = {
     # statewide, so the dissolve of its 64 parishes is the widest ground it
     # answers on.
     "la": "la/data/app/metro-outline.json",
+    # Missouri's coverage ring is the counties whose commission districts are
+    # drawn, a part of the state, so its widest ground is the state outline,
+    # where the national tier and the County card answer (Illinois's shape).
+    "mo": "mo/data/app/mo-state-outline.json",
 }
 
 # Degrees. 0.002 is about 220 m north-south and 165 m east-west at 42 N.

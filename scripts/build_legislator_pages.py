@@ -393,6 +393,33 @@ INSTANCES = {
             title="Who is my U.S. representative?",
             layer="us-house", roster="congress-roster.json",
             state="Louisiana"),
+    ),
+    # Missouri joined at its go-live with both chambers named from each
+    # chamber's own member list (the seats either list prints as vacant print
+    # as vacancies: Senate 10 and House 29, 95, 99, 110, 114, 149, 159 and 160
+    # on 2026-10-26). Mo. Const. art. III, sec. 11, as the Revisor of Statutes
+    # prints it (read 2026-10-26), elects "the whole number of
+    # representatives" at every general election and each class of senators
+    # every other one, so representatives serve two years and senators four.
+    "mo": dict(
+        worksheet="mo/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Missouri legislator?",
+            body="the Missouri General Assembly",
+            short="Missouri General Assembly",
+            term="Senators serve four-year terms and representatives two-year terms.",
+            chambers=[
+                dict(layer="mo-senate", name="Missouri Senate", short="Senate",
+                     holder="Senator", roster="mo-senate-members.json"),
+                dict(layer="mo-house", name="Missouri House of Representatives", short="House",
+                     holder="Representative", roster="mo-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Missouri"),
     ),}
 
 
