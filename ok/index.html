@@ -4280,8 +4280,9 @@ function initOklahomaExplorer() {
     "city-council": ["city-ward"], "zip-code": ["zip-code"],
     "school-district-unified": ["school-district-unified"],
     "school-district-elementary": ["school-district-elementary"],
-    "police-station": ["police-station"], "fire-station": ["fire-station"],
-    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
+    "conservation-district": ["conservation-district"], "police-station": ["police-station"],
+    "fire-station": ["fire-station"], "post-office": ["post-office"],
+    "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -15834,6 +15835,14 @@ function initOklahomaExplorer() {
    * Commission publishes does, so the card names no one and says why; the
    * gap is recorded as ok-conservation-district-directors.
    *
+   * FOUR DISTRICTS NAME THEIR BOARD ON A WEBSITE OF THEIR OWN, and for those
+   * the card names the five directors from that page, with the day it was
+   * read (ok/scripts/build_ok_conservation_directors.py;
+   * data/app/ok-conservation-directors.json). Of the 84 districts looked for
+   * on 2026-10-25, five named all five directors on their own site; Lincoln
+   * County's is left out because nothing on its site is dated after 2020's
+   * meetings, so its list may be out of date.
+   *
    * THE NAME ON THE CARD AND IN THE HOVER IS THE DIRECTORY'S where the
    * district has an entry there, and the map's otherwise. The map writes most
    * names "<name> CD" and shortens one ("Central North Canadian" for the
@@ -15847,7 +15856,25 @@ function initOklahomaExplorer() {
   var loadOkConservationOffices = makeCached(function () {
     return fetchJSONWithRetry("data/app/ok-conservation-offices.json", {}, 2);
   });
+  var loadOkConservationDirectors = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ok-conservation-directors.json", {}, 2);
+  });
   var OK_CONSERVATION_DIRECTORY = "https://conservation.ok.gov/conservation-district-directory/";
+  var OK_CONSERVATION_ROLE_ORDER = { "Chair": 0, "Vice-Chair": 1, "Secretary-Treasurer": 2, "Treasurer": 2 };
+
+  // the board's officers first, in the order a board lists them, then the
+  // other directors in the order the district's page gives them
+  function conservationDirectors(rec) {
+    var list = (rec && rec.directors) ? rec.directors.slice() : [];
+    var at = {};
+    list.forEach(function (d, i) { at[d.name] = i; });
+    list.sort(function (a, b) {
+      var ra = a.role && OK_CONSERVATION_ROLE_ORDER[a.role] != null ? OK_CONSERVATION_ROLE_ORDER[a.role] : 9;
+      var rb = b.role && OK_CONSERVATION_ROLE_ORDER[b.role] != null ? OK_CONSERVATION_ROLE_ORDER[b.role] : 9;
+      return ra !== rb ? ra - rb : at[a.name] - at[b.name];
+    });
+    return list;
+  }
 
   // the directory's name for the district where it has one, else the map's
   function conservationName(p, offices) {
@@ -15874,7 +15901,7 @@ function initOklahomaExplorer() {
       },
       // an olive green no other layer here uses, so it reads apart from the
       // county lines most districts follow
-      style: { color: "#5E7A16", weight: 1.5, fillColor: "#9DB54A", fillOpacity: 0.06 }
+      style: { color: "#556E14", weight: 1.5, fillColor: "#9DB54A", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
       return conservationName(feature.properties || {}, loadOkConservationOffices.cached());
@@ -15889,13 +15916,17 @@ function initOklahomaExplorer() {
           }
         }
         if (!hits.length) return null;
-        // The offices are a separate file. If it cannot be read, the
-        // districts still show, and each says its office could not be loaded.
-        return loadOkConservationOffices().then(function (offices) {
-          return { seq: seq, districts: hits, offices: offices || {} };
-        }, function () {
-          return { seq: seq, districts: hits, offices: null };
-        });
+        // The offices and the boards are separate files. If one cannot be
+        // read, the districts still show, and each says what did not load.
+        var result = { seq: seq, districts: hits, offices: null, directors: null };
+        return Promise.all([
+          loadOkConservationOffices().then(function (offices) {
+            result.offices = offices || {};
+          }, function () {}),
+          loadOkConservationDirectors().then(function (directors) {
+            result.directors = directors || {};
+          }, function () {})
+        ]).then(function () { return result; });
       });
     },
     render: function (result) {
@@ -15911,13 +15942,19 @@ function initOklahomaExplorer() {
       districts.forEach(function (p) {
         var key = p.key != null ? String(p.key) : null;
         var office = result.offices && key ? result.offices[key] : null;
+        var boardRec = result.directors && key ? result.directors[key] : null;
+        var links = office && office.url ? [{ label: "Website", url: String(office.url) }] : [];
+        if (boardRec && boardRec.sourceUrl) {
+          links.push({ label: "The district's board", url: String(boardRec.sourceUrl) });
+        }
         wrap.appendChild(renderLinkRow({
           title: conservationName(p, result.offices),
           note: office && office.office ? String(office.office) : null,
           phone: office && office.phone ? String(office.phone) : null,
           email: office && office.email ? String(office.email) : null,
-          links: office && office.url ? [{ label: "Website", url: String(office.url) }] : []
+          links: links
         }));
+        var board = boardRec;
         var rows = [];
         if (office && office.ext) {
           rows.push({ label: "Phone extension", value: String(office.ext) });
@@ -15938,12 +15975,35 @@ function initOklahomaExplorer() {
               "of district offices does not list this district."
           });
         }
-        rows.push({
-          label: "Board",
-          value: "Not named here. The Oklahoma Conservation Commission's directory " +
-            "gives each district's office but names none of its five directors, so " +
-            "this app names no one rather than guessing."
-        });
+        // the office's own rows sit under the office; the board follows them
+        if (rows.length) wrap.appendChild(renderFieldStack(rows));
+        rows = [];
+        if (board && board.directors && board.directors.length) {
+          wrap.appendChild(renderSectionLabel("Board of directors"));
+          wrap.appendChild(renderPersonRows(conservationDirectors(board).map(function (d) {
+            return { name: String(d.name), badge: d.role ? String(d.role) : null };
+          })));
+          rows.push({
+            label: "Where these names come from",
+            value: "The district's own website, read " + String(board.read) + ". The " +
+              "Oklahoma Conservation Commission publishes no list of directors, so " +
+              "these are the board as the district lists it."
+          });
+          if (board.caution) rows.push({ label: "May be out of date", value: String(board.caution) });
+        } else if (!result.directors) {
+          rows.push({
+            label: "Board",
+            value: "The list of directors did not load, so no one is named here. Try again."
+          });
+        } else {
+          rows.push({
+            label: "Board",
+            value: "Not named here. The Oklahoma Conservation Commission's directory " +
+              "gives each district's office but names none of its five directors, and " +
+              "this app has found no current list on the district's own website, so " +
+              "it names no one rather than guessing."
+          });
+        }
         rows.push({
           label: "How the board is chosen",
           value: "Five directors: three elected by the registered voters in the " +
@@ -18726,7 +18786,7 @@ function initOklahomaExplorer() {
   var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
     "#1F6F6B": "#5DC0BA", "#1F6FB2": "#74BBFF", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF",
     "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD",
-    "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#5E7A16": "#A1C84C", "#6B7280": "#B1BACE",
+    "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#556E14": "#9BBE4E", "#6B7280": "#B1BACE",
     "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE",
     "#9DB54A": "#D5F568", "#A05F00": "#FBA23D", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1",
     "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};

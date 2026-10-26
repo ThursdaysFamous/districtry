@@ -888,15 +888,29 @@ try {
         name: "the unified school district names the district",
         layer: "school-district-unified", service: "School/MapServer/0",
         props: { GEOID: "4703180", NAME: "Metropolitan Nashville Public School District", STATE: "47", LOGRADE: "PK", HIGRADE: "12" },
-        want: [/Metropolitan Nashville Public School District/, /Pre-kindergarten to grade 12/, /A unified district/],
-        reject: []
+        want: [/Metropolitan Nashville Public School District/, /Pre-kindergarten to grade 12/, /A unified district/,
+          /boards of the state's fourteen special school districts, and this district is not one of them/],
+        reject: [/Board member/]
+      },
+      // A special school district names its board from the shipped roster
+      // (tn/data/app/tn-special-school-boards.json), each member with the
+      // district the page lists them under, and says where the names came
+      // from; its footer links the district's own board page.
+      {
+        name: "a special school district names its board, each member with their district",
+        layer: "school-district-unified", service: "School/MapServer/0",
+        props: { GEOID: "4701400", NAME: "Gibson County School District", STATE: "47", LOGRADE: "PK", HIGRADE: "12" },
+        want: [/Gibson County School District/, /Tom Lannom/, /Chairman/, /District 3/, /Richard Addo/,
+          /As listed on Gibson County Special School District's own website/, /board of education/i],
+        reject: [/Not named here/, /State school directory/]
       },
       {
         name: "the elementary school district prints its grades in words",
         layer: "school-district-elementary", service: "School/MapServer/2",
         props: { GEOID: "4701260", NAME: "Franklin Special School District", STATE: "47", LOGRADE: "PK", HIGRADE: "08" },
-        want: [/Franklin Special School District/, /Pre-kindergarten to grade 8/, /Secondary\) card names/],
-        reject: [/08/]
+        want: [/Franklin Special School District/, /Pre-kindergarten to grade 8/, /Secondary\) card names/,
+          /Robert Blair/, /Kevin Townsel/],
+        reject: [/08/, /Not named here/]
       },
       {
         name: "the secondary school district names the county's district",
@@ -1255,6 +1269,41 @@ try {
     check(`city-ward card at ${c.name} names only what that district elects, in the city's own word`,
       !info.error && missing.length === 0 && present.length === 0,
       `missing=${missing} unwanted=${present} text=${noContacts(text).slice(0, 200)}`);
+    await context.close();
+  }
+
+  // School board districts come from two files: the Comptroller's map for
+  // eighteen counties, and the commission districts 38 counties' boards are
+  // elected from (tn/scripts/build_tn_school_board_from_commission.py). One
+  // point in each kind, one county joined from several commission districts,
+  // and one county drawn by neither, whose card must say so.
+  for (const c of [
+    { name: "Maryville (Blount, the Comptroller's map)", point: "35.75650,-83.97050",
+      want: [/District 5\b/, /Blount County board of education/, /within 4 metres/],
+      reject: [/county commission's districts/] },
+    { name: "Chattanooga (Hamilton, one for one)", point: "35.04560,-85.30970",
+      want: [/District 4\b/, /Hamilton County board of education/,
+        /The Private Acts of 2022, Chapter 50, say Hamilton County's school board districts are the county commission's districts\./,
+        /within 20 metres/, /may not vote for this board/],
+      reject: [/within 4 metres/] },
+    { name: "Murfreesboro (Rutherford, three commission districts)", point: "35.84560,-86.39030",
+      want: [/District 5\b/, /Rutherford County board of education/,
+        /this one is the commission's Districts 17, 18 and 21\./],
+      reject: [/within 4 metres/] },
+    { name: "Greeneville (Greene, not drawn)", point: "36.16320,-82.83100",
+      want: [/not in one of the school board districts this map draws/,
+        /Rhea, Rutherford, Sequatchie, Smith, Tipton, Warren, Wayne, Weakley and Williamson/],
+      reject: [/Greene County board of education/] },
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${c.point}&layers=school-board-district`);
+    const info = await cardText(page, "school-board-district");
+    const text = info.text || "";
+    const missing = c.want.filter((re) => !re.test(text));
+    const present = c.reject.filter((re) => re.test(text));
+    check(`school-board-district card at ${c.name} says where its lines come from`,
+      !info.error && missing.length === 0 && present.length === 0,
+      `missing=${missing} unwanted=${present} text=${text.slice(0, 300)}`);
     await context.close();
   }
 } finally {

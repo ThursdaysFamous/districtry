@@ -4261,7 +4261,8 @@ function initIndianaExplorer() {
     "county-council": "cu", "in-court-of-appeals": "ina", "school-district-unified": "su",
     "zip-code": "zp", "county-subdivision": "cs", "conservancy-district": "cn",
     "school-board-district": "bd", "voting-precinct": "vp", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po", "tribal-government": "tg" };
+    "city-ward": "cw", "police-station": "ps", "fire-station": "fs", "post-office": "po",
+    "tribal-government": "tg" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4270,8 +4271,8 @@ function initIndianaExplorer() {
     "state-house": ["in-house"], "appellate-court-district": ["in-court-of-appeals"],
     "county": ["county"], "county-board": ["county-council"],
     "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
-    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
-    "school-district-unified": ["school-district-unified"],
+    "city-council": ["city-ward"], "voting-precinct": ["voting-precinct"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "school-board-district": ["school-board-district"], "police-station": ["police-station"],
     "fire-station": ["fire-station"], "post-office": ["post-office"],
     "tribal-government": ["tribal-government"] };
@@ -10928,7 +10929,7 @@ function initIndianaExplorer() {
     "in-senate",         // 50 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 92 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "in-house",          // 100 House districts — the finest political tiling this instance ships today
-    "county-council",    // 241 districts in 55 counties: four per county, and Indianapolis's 25 City-County Council districts
+    "county-council",    // 266 districts in 60 counties: four per county, St. Joseph County's nine, and Indianapolis's 25 City-County Council districts
     "school-district-unified", // 291 unified (K-12) districts, from TIGERweb, drawn from a mirrored tile archive. Indiana runs NO elementary and NO secondary districts — both TIGERweb layers return ZERO features for STATE='18' (measured 2026-09-29) — so this instance ships ONE school layer where Michigan ships two, and the two empty layers are recorded drops rather than empty toggles
     "zip-code",          // 807 ZIP Code Tabulation Areas overlapping Indiana (882 counting the 75 that only touch its line), in a mirrored tile archive, measured 2026-10-17 — about 107 km2 mean, between a county and a township, which is where a ZIP ranks in Indiana and is NOT where it ranks in Michigan
     "county-subdivision", // 1,012 county-subdivision records tiling the state, from TIGERweb, drawn from a mirrored tile archive — 1,004 are civil townships (LSADC 44), and the other eight are Census bookkeeping: four coextensive town records, one city record (Muncie), the Camp Atterbury unorganized territory, and two 'not defined' records, all measured 2026-09-29
@@ -10936,6 +10937,7 @@ function initIndianaExplorer() {
     "school-board-district", // The 5 districts the Indianapolis Public Schools board is elected from, pre-built from the City of Indianapolis's layer — 41.6 km2 mean area (median 40.0), measured 2026-10-16 on the drawn file: smaller on average than a civil township, of which 1,012 tile the state, larger than a voting precinct (18.40)
     "voting-precinct",   // 5,121 precincts tiling the state, pre-built from IndianaMap's 2026 layer — 18.40 km2 mean area, land and water (median 2.50), measured 2026-10-15 on the drawn file: about five to a civil township, since 1,012 county-subdivision records tile the same ground, and larger on average than a city or town (12.65 km2 of land)
     "municipality",      // 566 incorporated places, from TIGERweb, drawn from a mirrored tile archive — 446 towns, 119 cities and the one 'Indianapolis city (balance)' record the consolidated Marion County city-county government produces, measured 2026-09-29
+    "city-ward",         // 62 districts in the 11 Indiana cities whose current council district maps this app has confirmed, a mean 11.9 km2 (median 10.1, from 2.8 for Bloomington's District 6 to 39.4 for Jeffersonville's District 6), measured 2026-10-26 — ranked just after City or Town, which each one divides, so a district draws on top of its city
     "tribal-government", // Tribal land — Indiana has 1 piece, 0.931 km² of the Pokagon Band of Potawatomi's off-reservation trust land, MEASURED by scripts/build_tribal_areas.py; the rest of that trust land, 8% of which lies in Indiana, is in Michigan. Drawn above cities and towns, which are larger. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // 650 police-station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area
     "fire-station",      // 1,758 fire and EMS station points in Indiana's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer
@@ -15139,8 +15141,9 @@ function initIndianaExplorer() {
   }
 
   // A city's (or town's) mayor and council, for the City or Town card and for
-  // Marion's County card. `county` says the body is also Marion County's.
-  function inCityRows(wrap, rows, rec, county) {
+  // Marion's County card. `county` says the body is also Marion County's, and
+  // `geoid` (the place's Census id, when known) whether its districts are drawn.
+  function inCityRows(wrap, rows, rec, county, geoid) {
     var seats = rec.seats || [];
     var mayor = seats.filter(function (s) { return s.seat === "Mayor"; });
     var council = { seats: seats.filter(function (s) { return s.seat !== "Mayor"; }) };
@@ -15185,6 +15188,10 @@ function initIndianaExplorer() {
       value: rec.name === "Indianapolis"
         ? "Every seat is listed. The County Council District layer shows " +
           "which of the council's 25 districts covers this point."
+        : geoid != null && IN_WARD_CITIES.indexOf(String(geoid)) !== -1
+        ? "Every seat is listed. The City Council District layer shows which " +
+          "district covers this point. \"At large\" seats are elected by the " +
+          "whole " + (rec.kind === "town" ? "town" : "city") + "."
         : "Every seat is listed, because this app does not draw the " +
           "council's district lines yet. \"At large\" seats are elected by the " +
           "whole " + (county ? "county" : rec.kind === "town" ? "town" : "city") + "."
@@ -15365,13 +15372,14 @@ function initIndianaExplorer() {
     }
   });
 
-  /* ---------- County Council District — 55 counties' own lines.
+  /* ---------- County Council District — 60 counties' own lines.
    *
    * An Indiana county council elects four members from districts and three
    * by the whole county (IC 36-2-3-4), so a reader is owed the one district
    * member whose district holds the point. The lines are each county's own,
    * collected by the Indiana Geographic Information Office (CountyCouncil
-   * Polygon), joined into one shape per district and clipped to the county
+   * Polygon) or, for five counties the state does not carry, read from the
+   * county's own map server, joined into one shape per district and clipped to the county
    * by in/scripts/build_in_council_districts.py, which also checks that every
    * drawn district has a seat of that name in the rosters. Marion County's
    * districts are the Indianapolis City-County Council's 25, named from the
@@ -15409,10 +15417,11 @@ function initIndianaExplorer() {
       style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.05 }
     },
     coverage: insideIndiana,
-    emptyNote: "This map has no council district lines for this county. They " +
-      "are drawn for the counties that give them to the state's mapping " +
-      "office, and this one has not. The County card lists every member of " +
-      "the county council.",
+    emptyNote: "This map has no council district lines for this county yet. " +
+      "They are drawn where the county gives them to the state's mapping " +
+      "office or publishes them on its own map server, and this county does " +
+      "neither in a form the map can read. The County card lists every " +
+      "member of the county council.",
     hoverName: function (feature) {
       var p = feature.properties || {};
       if (String(p.fips) === "18097") return "City-County Council District " + String(p.district);
@@ -16183,7 +16192,7 @@ function initIndianaExplorer() {
       var rows = [];
       if (result.officials) {
         inCityRows(wrap, rows, result.officials,
-          String(result.geoid) === INDIANAPOLIS_GEOID);
+          String(result.geoid) === INDIANAPOLIS_GEOID, result.geoid);
       } else {
         rows.push({
           label: "Your mayor or council",
@@ -16204,6 +16213,198 @@ function initIndianaExplorer() {
             url: String(result.officials.seats[0].sourceUrl) }]
         }));
       }
+      return wrap;
+    }
+  });
+
+  /* ---------- 7b. City Council District ----------
+   * The council districts of the Indiana cities whose current council
+   * district map this app has confirmed: eleven of the 39 places of 25,000
+   * people or more (data/app/in-city-wards.json, built by
+   * in/scripts/build_in_city_wards.py, which records why each of the others
+   * is not drawn here). Indianapolis's 25 City-County Council districts are
+   * the County Council District layer's. Every line between two districts is
+   * the city's own published map, never redrawn; the outer edge is the Census
+   * Bureau's map of the city, the one the City or Town card reads, so the two
+   * cards never put a point in different cities. Each feature carries the
+   * sentence saying whose map it is, and the card prints it.
+   *
+   * EVERY DISTRICT AT A POINT IS NAMED. Elkhart's own map draws Districts 1
+   * and 3 over each other on about 15,000 m2 (measured 2026-10-26), so the
+   * query keeps every district covering the point and the card names each.
+   *
+   * The member is the City or Town card's roster (the Election Division's
+   * certified 2023 results), joined by the city's Census id and the seat
+   * ("District 3"); a roster that fails to load leaves the district standing
+   * and says so.
+   * ---------- */
+  var IN_WARD_CITIES = ["1805860", "1820728", "1828386", "1829898", "1838358", "1842426", "1852326", "1854180", "1860246", "1878326", "1882700"];
+  var loadInCityWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/in-city-wards.json", {}, 2);
+  });
+
+  registerLayer({
+    id: "city-ward",
+    group: "political",
+    label: "City Council District",
+    coverage: insideIndiana,
+    // Gated by in/scripts/build_in_city_wards.py --check, which fails when
+    // this sentence and the district file disagree about which cities are
+    // drawn.
+    emptyNote: "No city council district is drawn at this point. This map " +
+      "draws the council districts of eleven of Indiana's 39 cities of 25,000 " +
+      "people or more (Bloomington, Elkhart, Goshen, Greenwood, Jeffersonville, Lawrence, New Albany, Noblesville, Westfield, Plainfield and Valparaiso), and a few small pieces of ground inside them " +
+      "are in no district on the city's own map. Indianapolis's districts are " +
+      "on the County Council District layer. Elsewhere the City or Town card " +
+      "names the council but not which district this point is in.",
+    overlay: {
+      load: loadInCityWards,
+      // the fleet's city-council blue and width (root layer-concepts.json
+      // `colors` and `lines`)
+      style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.07 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      return p.city != null && p.seat != null ? String(p.city) + ", " + String(p.seat) : null;
+    },
+    hoverOfficial: {
+      load: loadCityOfficials,
+      name: function (feature, roster) {
+        var p = feature.properties || {};
+        var rec = roster && roster[String(p.geoid)];
+        var own = ((rec && rec.seats) || []).filter(function (s) {
+          return s.seat === String(p.seat) && s.name;
+        });
+        return own.length === 1 ? String(own[0].name) : null;
+      }
+    },
+    query: function (point, seq) {
+      return featureSetAt(loadInCityWards, point).then(function (geo) {
+        var feats = (geo && geo.features) ? geo.features : [];
+        var hits = [];
+        for (var i = 0; i < feats.length; i++) {
+          if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+            hits.push(feats[i].properties || {});
+          }
+        }
+        if (!hits.length) return null;
+        hits.sort(function (a, b) {
+          if (String(a.city) !== String(b.city)) return String(a.city) < String(b.city) ? -1 : 1;
+          return Number(a.district) - Number(b.district);
+        });
+        var result = { seq: seq, hits: hits, officials: {}, rosterFailed: false };
+        // the roster's own failure is not this layer's failure: the district
+        // still answers the question, and the card says no one is named
+        return loadCityOfficials().then(function (roster) {
+          hits.forEach(function (h) {
+            result.officials[String(h.geoid)] = roster ? roster[String(h.geoid)] || null : null;
+          });
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var hits = result.hits;
+      var cities = [];
+      hits.forEach(function (h) {
+        if (cities.indexOf(String(h.city)) === -1) cities.push(String(h.city));
+      });
+      var oneCity = cities.length === 1;
+      var first = result.officials[String(hits[0].geoid)] || null;
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: hits.map(function (h) {
+          return String(h.city) + " Council " + String(h.seat);
+        }).join(" and "),
+        note: cities.join(" and ")
+      }));
+      var rows = [];
+      // Card convention: the member elected from the district, then the
+      // members elected by the whole city, who represent this point too.
+      var own = [];
+      hits.forEach(function (h) {
+        var rec = result.officials[String(h.geoid)];
+        var seats = ((rec && rec.seats) || []).filter(function (s) {
+          return String(s.seat) === String(h.seat) && s.name;
+        });
+        own = own.concat(seats);
+        if (!seats.length && !result.rosterFailed) {
+          rows.push({
+            label: (oneCity ? "" : String(h.city) + " ") + String(h.seat),
+            value: "The election results name no one for this district, so no " +
+              "one is named here."
+          });
+        }
+      });
+      if (own.length) {
+        wrap.appendChild(renderSectionLabel("Your district council member"));
+        wrap.appendChild(renderPersonRows(inSeatRows({ seats: own })));
+      }
+      var wide = oneCity ? ((first && first.seats) || []).filter(function (s) {
+        return s.seat === "At large" && s.name;
+      }) : [];
+      if (wide.length) {
+        wrap.appendChild(renderSectionLabel("Elected by the whole city"));
+        wrap.appendChild(renderPersonRows(inSeatRows({ seats: wide })));
+      }
+      if (result.rosterFailed) {
+        rows.push({
+          label: "Member",
+          value: "The list of mayors and council members did not load, so no one " +
+            "is named here."
+        });
+      }
+      if (hits.length > 1 && oneCity) {
+        rows.push({
+          label: "More than one district here",
+          value: cities[0] + "'s own district map draws " +
+            hits.map(function (h) { return String(h.seat); }).join(" and ") +
+            " over this spot, so this app names both rather than choosing one."
+        });
+      } else if (!oneCity) {
+        rows.push({
+          label: "More than one city here",
+          value: "Along the line between " + cities.join(" and ") + ", their " +
+            "districts as drawn here overlap by a hairline, so this app names " +
+            "both. The City or Town card says which city this point is in."
+        });
+      }
+      cities.forEach(function (city) {
+        var h = null;
+        hits.forEach(function (x) { if (!h && String(x.city) === city) h = x; });
+        var src = h && h.source != null ? String(h.source) : "";
+        if (!src) return;
+        rows.push({
+          label: oneCity ? "Where this line comes from" : "Where " + city + "'s line comes from",
+          value: src.charAt(0).toUpperCase() + src.slice(1) + ". The line drawn " +
+            "here is within 4 metres of that map's own."
+        });
+      });
+      if (first && first.source !== "town-page") {
+        rows.push({
+          label: own.length + wide.length > 1 ? "What these names are" : "What this name is",
+          value: "The winner of the most recent election for each seat, from the " +
+            "Indiana Election Division's certified results. Indiana fills a " +
+            "vacancy by party caucus, so if a seat has changed hands since the " +
+            "election this still shows who won it."
+        });
+      } else if (first) {
+        rows.push({
+          label: "What these names are",
+          value: "The council as the town lists it on its own website."
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      var links = [];
+      cities.forEach(function (city) {
+        var h = null;
+        hits.forEach(function (x) { if (!h && String(x.city) === city) h = x; });
+        if (h && h.sourceUrl) links.push({ label: city + "'s district map \u2197", url: String(h.sourceUrl) });
+      });
+      if (links.length) wrap.appendChild(renderLinkRow({ links: links }));
       return wrap;
     }
   });
@@ -18434,7 +18635,9 @@ function initIndianaExplorer() {
     // The conservancy district sits after the city, as Minnesota's watershed
     // district does: a special district on top of the governments a reader
     // lives in, and most of the state is in none.
-    "county", "county-subdivision", "municipality", "conservancy-district",
+    "county", "county-subdivision", "municipality",
+    // The city council district follows the city it divides.
+    "city-ward", "conservancy-district",
     "voting-precinct", "zip-code",
     "tribal-government", "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
@@ -18941,13 +19144,13 @@ function initIndianaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1C6E9C": "#57BCFB", "#1F6F6B": "#5DC0BA", "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE",
-    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD",
-    "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4BA3D3": "#AFE0FE",
-    "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#6B7280": "#B1BACE", "#753B07": "#D7864B",
-    "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#0B5394": "#4FA4FE", "#14181C": "#696F76",
+    "#1B4F8C": "#5CA0F5", "#1C6E9C": "#57BCFB", "#1F6F6B": "#5DC0BA", "#1F6FB2": "#74BBFF",
+    "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF", "#3E9A95": "#6BE3DC",
+    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
+    "#4BA3D3": "#AFE0FE", "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#6B7280": "#B1BACE",
+    "#753B07": "#D7864B", "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
+    "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

@@ -43,6 +43,13 @@ district number:
     Collierville, Germantown, Lakeland and Millington falls in no district,
     and the card says the map leaves them out.
 
+The card draws a second file beside this one, the districts of 38 counties
+whose board is elected from the county commission's own districts
+(build_tn_school_board_from_commission.py, beside this file); --check here
+runs that file's --check first, so CI holds both. It runs the --check of
+build_tn_special_school_boards.py too, the boards of the fourteen special
+school districts that the School District cards name, for the same reason.
+
 County names come from the app's own county map (data/app/state-counties.json),
 so the card and the County layer cannot name a county two ways.
 """
@@ -140,4 +147,13 @@ SPEC = psb.Spec(
 )
 
 if __name__ == "__main__":
+    if "--check" in sys.argv[1:]:
+        # The 38 counties whose board is elected from the commission's own
+        # districts are a second file the same card draws; CI runs this
+        # --check, so it holds that file too.
+        sys.path.insert(0, HERE)
+        import build_tn_school_board_from_commission as from_commission  # noqa: E402
+        from_commission.main(["--check"])
+        import build_tn_special_school_boards as special_boards  # noqa: E402
+        special_boards.run_check()
     psb.main(SPEC, __doc__)

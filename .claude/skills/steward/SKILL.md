@@ -196,6 +196,7 @@ python3 in/scripts/build_in_conservancy_districts.py --check         # Indiana's
 python3 in/scripts/build_in_conservancy_directors.py --check         # Indiana's conservancy boards: every district the map draws, each person a name, each district citing the directory
 python3 ok/scripts/build_ok_conservation_districts.py --check        # Oklahoma's conservation districts against their record
 python3 ok/scripts/build_ok_conservation_offices.py --check          # Oklahoma's district offices: every district the map draws, an office, a telephone and a district e-mail address for each
+python3 ok/scripts/build_ok_conservation_directors.py --check        # Oklahoma's district boards from the districts' own sites: five directors each, only the districts SOURCES names, none skipped
 python3 ar/scripts/build_ar_city_wards.py --check                    # Arkansas's city wards against their record and the card's stated wording
 python3 nc/scripts/build_nc_city_wards.py --check                    # a city ward layer from each city's own map: hash against the record, every map read from where the builder now reads it
 python3 ok/scripts/build_ok_city_wards.py --check                    # the same for Oklahoma

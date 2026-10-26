@@ -215,6 +215,338 @@
       }
     }
   },
+  "fulton": {
+    "board": "Fulton County Board of Supervisors",
+    "county": "Fulton",
+    "seats": 20,
+    "sourceUrl": "https://www.fultoncountyny.gov/board-supervisors",
+    "units": {
+      "Bleecker": {
+        "members": [
+          {
+            "name": "David Howard"
+          }
+        ],
+        "type": "town"
+      },
+      "Broadalbin": {
+        "members": [
+          {
+            "name": "Joseph DiGiacomo"
+          }
+        ],
+        "type": "town"
+      },
+      "Caroga": {
+        "members": [
+          {
+            "name": "John Glenn"
+          }
+        ],
+        "type": "town"
+      },
+      "Ephratah": {
+        "members": [
+          {
+            "name": "Todd Bradt"
+          }
+        ],
+        "type": "town"
+      },
+      "Gloversville": {
+        "members": [
+          {
+            "name": "Constantine \"Dino\" Orfan",
+            "role": "Ward 1 supervisor"
+          },
+          {
+            "name": "Ryan W. Hernigle",
+            "role": "Ward 2 supervisor"
+          },
+          {
+            "name": "John H. Blackmon",
+            "role": "Ward 3 supervisor"
+          },
+          {
+            "name": "Charles Potter",
+            "role": "Ward 4 supervisor"
+          },
+          {
+            "name": "Gregory D. Young",
+            "role": "Ward 5 supervisor"
+          },
+          {
+            "name": "James Isabella",
+            "role": "Ward 6 supervisor"
+          }
+        ],
+        "type": "city"
+      },
+      "Johnstown (city)": {
+        "members": [
+          {
+            "name": "Jared Goderie",
+            "role": "Ward 1 supervisor"
+          },
+          {
+            "name": "Colleen Ioele-DeCristofaro",
+            "role": "Ward 2 supervisor"
+          },
+          {
+            "name": "Thomas E. Roehl",
+            "role": "Ward 3 supervisor"
+          },
+          {
+            "name": "John David Praught",
+            "role": "Ward 4 supervisor"
+          }
+        ],
+        "type": "city"
+      },
+      "Johnstown (town)": {
+        "members": [
+          {
+            "name": "Christina VanValkenburgh"
+          }
+        ],
+        "type": "town"
+      },
+      "Mayfield": {
+        "members": [
+          {
+            "name": "Brandon T. Lehr"
+          }
+        ],
+        "type": "town"
+      },
+      "Northampton": {
+        "members": [
+          {
+            "name": "James Groff"
+          }
+        ],
+        "type": "town"
+      },
+      "Oppenheim": {
+        "members": [
+          {
+            "name": "Neil Clark"
+          }
+        ],
+        "type": "town"
+      },
+      "Perth": {
+        "members": [
+          {
+            "name": "Gregory Fagan"
+          }
+        ],
+        "type": "town"
+      },
+      "Stratford": {
+        "members": [
+          {
+            "name": "Richard Fogarty"
+          }
+        ],
+        "type": "town"
+      }
+    }
+  },
+  "livingston": {
+    "board": "Livingston County Board of Supervisors",
+    "county": "Livingston",
+    "seats": 17,
+    "sourceUrl": "https://www.livingstoncounty.us/96/Board-of-Supervisors",
+    "units": {
+      "Avon": {
+        "members": [
+          {
+            "email": "dlefeber@avon-ny.org",
+            "name": "David L. LeFeber",
+            "phone": "585.226.2425 x12",
+            "role": "Chairperson",
+            "url": "https://www.livingstoncounty.us/805/Avon-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      },
+      "Caledonia": {
+        "members": [
+          {
+            "email": "supervisor@townofcaledoniany.org",
+            "name": "Daniel L. Pangrazio",
+            "phone": "585.538.4927",
+            "role": "Vice Chairperson",
+            "url": "https://www.livingstoncounty.us/807/Caledonia-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      },
+      "Conesus": {
+        "members": [
+          {
+            "email": "dwester@conesusny.gov",
+            "name": "Donald W. Wester",
+            "phone": "585-346-3130 x3",
+            "url": "https://www.livingstoncounty.us/808/Conesus-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      },
+      "Geneseo": {
+        "members": [
+          {
+            "email": "will@geneseony.org",
+            "name": "William S. Wadsworth",
+            "phone": "585.991.5005",
+            "url": "https://www.livingstoncounty.us/809/Geneseo-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      },
+      "Groveland": {
+        "members": [
+          {
+            "email": "supervisor@grovelandny.org",
+            "name": "William G. Devine",
+            "phone": "585.243.1750",
+            "url": "https://www.livingstoncounty.us/810/Groveland-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      },
+      "Leicester": {
+        "members": [
+          {
+            "email": "supervisor@townofleicester.org",
+            "name": "Richard W. White",
+            "url": "https://www.livingstoncounty.us/811/Leicester-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      },
+      "Lima": {
+        "members": [
+          {
+            "email": "supervisor@townoflima.org",
+            "name": "Jonathan Cates",
+            "phone": "585.582.1130",
+            "url": "https://www.livingstoncounty.us/812/Lima-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      },
+      "Livonia": {
+        "members": [
+          {
+            "email": "supervisor@livoniany.org",
+            "name": "Eric R. Gott",
+            "phone": "585.746.0620",
+            "url": "https://www.livingstoncounty.us/813/Livonia-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      },
+      "Mount Morris": {
+        "members": [
+          {
+            "email": "ddisalvo@townofmtmorrisny.gov",
+            "name": "David DiSalvo",
+            "url": "https://www.livingstoncounty.us/815/Mount-Morris-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      },
+      "North Dansville": {
+        "members": [
+          {
+            "email": "supervisor@northdansville.org",
+            "name": "Gregory P. Horr",
+            "phone": "585.335.2330",
+            "url": "https://www.livingstoncounty.us/816/N-Dansville-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      },
+      "Nunda": {
+        "members": [
+          {
+            "email": "supervisor@town.nunda.ny.us",
+            "name": "Merilee G. Walker",
+            "phone": "585.734.4572",
+            "url": "https://www.livingstoncounty.us/817/Nunda-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      },
+      "Ossian": {
+        "members": [
+          {
+            "email": "knapp1@frontiernet.net",
+            "name": "Dwight Knapp",
+            "phone": "585.335.6642",
+            "url": "https://www.livingstoncounty.us/818/Ossian-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      },
+      "Portage": {
+        "members": [
+          {
+            "name": "Ivan C. Davis",
+            "phone": "585.476.2249",
+            "url": "https://www.livingstoncounty.us/819/Portage-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      },
+      "Sparta": {
+        "members": [
+          {
+            "email": "supervisor@sparta-ny.gov",
+            "name": "Mark J. Schuster",
+            "phone": "585.669.2803",
+            "url": "https://www.livingstoncounty.us/820/Sparta-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      },
+      "Springwater": {
+        "members": [
+          {
+            "email": "town_supervisor@springwaterny.org",
+            "name": "Deborah J. Babbitt Henry",
+            "phone": "585.669.2545",
+            "url": "https://www.livingstoncounty.us/821/Springwater-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      },
+      "West Sparta": {
+        "members": [
+          {
+            "email": "townsupervisor@townofwestsparta.org",
+            "name": "Susan J. Erdle",
+            "phone": "585-519-5111",
+            "url": "https://www.livingstoncounty.us/822/W-Sparta-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      },
+      "York": {
+        "members": [
+          {
+            "email": "yorksupr@yorkny.org",
+            "name": "Gerald L. Deming",
+            "phone": "585.204.7002",
+            "url": "https://www.livingstoncounty.us/823/York-Town-Supervisor"
+          }
+        ],
+        "type": "town"
+      }
+    }
+  },
   "saratoga": {
     "board": "Saratoga County Board of Supervisors",
     "county": "Saratoga",
@@ -735,6 +1067,285 @@
           {
             "name": "Kevin Geraghty",
             "phone": "518-623-9511"
+          }
+        ],
+        "type": "town"
+      }
+    }
+  },
+  "wayne": {
+    "board": "Wayne County Board of Supervisors",
+    "county": "Wayne",
+    "seats": 15,
+    "sourceUrl": "https://www.waynecountyny.gov/460/Board-of-Supervisors",
+    "units": {
+      "Arcadia": {
+        "members": [
+          {
+            "name": "Dawn Pisciotti"
+          }
+        ],
+        "type": "town"
+      },
+      "Butler": {
+        "members": [
+          {
+            "name": "Tom Mettler"
+          }
+        ],
+        "type": "town"
+      },
+      "Galen": {
+        "members": [
+          {
+            "name": "Les Carr"
+          }
+        ],
+        "type": "town"
+      },
+      "Huron": {
+        "members": [
+          {
+            "name": "David Fantuzzo"
+          }
+        ],
+        "type": "town"
+      },
+      "Lyons": {
+        "members": [
+          {
+            "name": "James Brady"
+          }
+        ],
+        "type": "town"
+      },
+      "Macedon": {
+        "members": [
+          {
+            "name": "Kim V. Leonard"
+          }
+        ],
+        "type": "town"
+      },
+      "Marion": {
+        "members": [
+          {
+            "name": "Mike Cramer"
+          }
+        ],
+        "type": "town"
+      },
+      "Ontario": {
+        "members": [
+          {
+            "name": "Ben Aman"
+          }
+        ],
+        "type": "town"
+      },
+      "Palmyra": {
+        "members": [
+          {
+            "name": "Gary Rose"
+          }
+        ],
+        "type": "town"
+      },
+      "Rose": {
+        "members": [
+          {
+            "name": "Christine Rice"
+          }
+        ],
+        "type": "town"
+      },
+      "Savannah": {
+        "members": [
+          {
+            "name": "Mike Kolczynski"
+          }
+        ],
+        "type": "town"
+      },
+      "Sodus": {
+        "members": [
+          {
+            "name": "Scott Johnson"
+          }
+        ],
+        "type": "town"
+      },
+      "Walworth": {
+        "members": [
+          {
+            "name": "Laura Elsbree"
+          }
+        ],
+        "type": "town"
+      },
+      "Williamson": {
+        "members": [
+          {
+            "name": "Barry VanNostrand"
+          }
+        ],
+        "type": "town"
+      },
+      "Wolcott": {
+        "members": [
+          {
+            "name": "Lynn Chatfield"
+          }
+        ],
+        "type": "town"
+      }
+    }
+  },
+  "wyoming": {
+    "board": "Wyoming County Board of Supervisors",
+    "county": "Wyoming",
+    "seats": 16,
+    "sourceUrl": "https://www.wyomingco.net/149/Board-of-Supervisors",
+    "units": {
+      "Arcade": {
+        "members": [
+          {
+            "name": "A.D. Berwanger",
+            "party": "Republican"
+          }
+        ],
+        "type": "town"
+      },
+      "Attica": {
+        "members": [
+          {
+            "name": "Bryan Kehl",
+            "party": "Republican"
+          }
+        ],
+        "type": "town"
+      },
+      "Bennington": {
+        "members": [
+          {
+            "name": "Mark Prior",
+            "party": "Republican"
+          }
+        ],
+        "type": "town"
+      },
+      "Castile": {
+        "members": [
+          {
+            "name": "Stanley Klein",
+            "party": "Republican"
+          }
+        ],
+        "type": "town"
+      },
+      "Covington": {
+        "members": [
+          {
+            "name": "Nathan Rudgers",
+            "party": "Republican"
+          }
+        ],
+        "type": "town"
+      },
+      "Eagle": {
+        "members": [
+          {
+            "name": "Mike Roche",
+            "party": "Democrat"
+          }
+        ],
+        "type": "town"
+      },
+      "Gainesville": {
+        "members": [
+          {
+            "name": "David Granger",
+            "party": "Democrat"
+          }
+        ],
+        "type": "town"
+      },
+      "Genesee Falls": {
+        "members": [
+          {
+            "name": "LuAnne Roberts",
+            "party": "Republican"
+          }
+        ],
+        "type": "town"
+      },
+      "Java": {
+        "members": [
+          {
+            "name": "Vanessa McCormick",
+            "party": "Republican"
+          }
+        ],
+        "type": "town"
+      },
+      "Middlebury": {
+        "members": [
+          {
+            "name": "Daniel Leuer",
+            "party": "Republican"
+          }
+        ],
+        "type": "town"
+      },
+      "Orangeville": {
+        "members": [
+          {
+            "name": "Susan May",
+            "party": "Republican"
+          }
+        ],
+        "type": "town"
+      },
+      "Perry": {
+        "members": [
+          {
+            "name": "James R. Brick",
+            "party": "Republican"
+          }
+        ],
+        "type": "town"
+      },
+      "Pike": {
+        "members": [
+          {
+            "name": "Eric Smith"
+          }
+        ],
+        "type": "town"
+      },
+      "Sheldon": {
+        "members": [
+          {
+            "name": "Brian Becker",
+            "party": "Republican"
+          }
+        ],
+        "type": "town"
+      },
+      "Warsaw": {
+        "members": [
+          {
+            "name": "Stephen Perkins",
+            "party": "Republican"
+          }
+        ],
+        "type": "town"
+      },
+      "Wethersfield": {
+        "members": [
+          {
+            "name": "Mark Merrill",
+            "party": "Republican"
           }
         ],
         "type": "town"

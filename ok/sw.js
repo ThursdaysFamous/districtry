@@ -66,6 +66,7 @@ const ROSTER_URLS = [
   "./data/app/ok-house-members.json",
   "./data/app/ok-county-commissioners.json",
   "./data/app/ok-conservation-offices.json",
+  "./data/app/ok-conservation-directors.json",
   "./data/app/ok-city-councils.json",
   "./data/app/coverage-gaps.json",
 ];

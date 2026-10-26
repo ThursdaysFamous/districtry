@@ -92,7 +92,10 @@ ALIASES = {
 # the election results do not name, with 2,019 officers between them. The
 # floors sit under it so a county whose host is down for a week (its last-good
 # list is kept) does not stop the refresh, while a reader that loses a format
-# does.
+# does. Measured again 2026-10-26, after Goodhue, Renville and Traverse were
+# read: 32 counties' lists are read and 31 name March towns, 456 of them with
+# 2,218 officers (Traverse's 15 towns all vote in November); the floors were
+# left where they are.
 MIN_COUNTIES = 25
 MIN_TOWNS = 360
 MIN_OFFICERS = 1700

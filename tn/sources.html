@@ -1335,7 +1335,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 127 features for Tennessee, measured 2026-10-10.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD SAYS SO. Tennessee's school boards are elected, and no statewide roster of their members was established in this pass; the card names the district, prints the grades the Census records and links the state Department of Education's school directory. Recorded as gap tn-school-board-members.</td>
+                <td data-label="Who it names">For the special school districts, the board of education as the district's own page lists it, with any e-mail address or telephone number the page prints beside one member, written down by hand and proved against that page by tn/scripts/build_tn_special_school_boards.py (tn/data/app/tn-special-school-boards.json); no street address is carried. Every other district's card names no one, because Tennessee's school boards are elected and no statewide roster of their members was established; it names the district, prints the grades the Census records and links the state Department of Education's school directory. Recorded as gap tn-school-board-members.</td>
                 <td data-label="Where it applies">Tennessee — every point outside the 15 city and special school districts. The unified and elementary tilings partition the state: their Census land areas sum to exactly the 95-county total, measured 2026-10-10.</td>
               </tr>
               <tr id="layer-school-board-district">
@@ -1344,10 +1344,11 @@ table.matrix code {
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/5" target="_blank" rel="noopener">Tennessee Comptroller of the Treasury, Office of Local Government — &quot;School Board Districts New&quot;, layer 5 of its Redistricting_Address_Lookup service: the districts drawn after the 2020 Census for eighteen counties' boards of education, 114 districts, measured 2026-10-16, pre-built by tn/scripts/build_tn_school_board_districts.py and shipped with the app. In Shelby County they leave out the six towns that run their own school districts. The service states no licence.</a></li>
+                    <li><a href="https://www.ctas.tennessee.edu/private-acts" target="_blank" rel="noopener">The county's own private acts, as the University of Tennessee County Technical Assistance Service publishes them, and for Coffee and Montgomery the county election commission's ballot and precinct chart — 38 counties whose board of education is elected from the county commission's districts (33 one for one, 5 from groups of two or three), read 2026-10-26. Drawn from the Comptroller's commission districts (layer 2 of the same service) by tn/scripts/build_tn_school_board_from_commission.py and shipped with the app.</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">NO NAMES YET. No statewide list of Tennessee's school board members has been read, so the card names no one rather than guessing; recorded as gap tn-school-board-members.</td>
-                <td data-label="Where it applies">The eighteen counties on the Comptroller's map: Blount, Chester, Claiborne, Crockett, Davidson, Fayette, Hardeman, Henry, Jefferson, Johnson, Lawrence, Macon, Madison, Sevier, Shelby, Sumner, Washington and Wilson. Tennessee's county boards of education are elected from districts under state law, and the other counties' districts are not drawn yet (gap tn-school-board-districts).</td>
+                <td data-label="Where it applies">56 counties. The eighteen on the Comptroller's map: Blount, Chester, Claiborne, Crockett, Davidson, Fayette, Hardeman, Henry, Jefferson, Johnson, Lawrence, Macon, Madison, Sevier, Shelby, Sumner, Washington and Wilson. And 38 whose board is elected from the county commission's districts: Anderson, Bedford, Benton, Bradley, Campbell, Carter, Coffee, Decatur, Franklin, Grainger, Hamilton, Hawkins, Henderson, Hickman, Jackson, Lake, Lauderdale, Lewis, Lincoln, Marion, Marshall, Maury, McMinn, McNairy, Meigs, Montgomery, Obion, Polk, Putnam, Rhea, Rutherford, Sequatchie, Smith, Tipton, Warren, Wayne, Weakley and Williamson. Tennessee's county boards of education are elected from districts under state law, and the other 39 counties' districts are not drawn yet (gap tn-school-board-districts).</td>
               </tr>
               <tr id="layer-school-district-elementary">
                 <th scope="row"><span class="layer-name">School District (Elementary)</span><code>school-district-elementary</code></th>
@@ -1357,7 +1358,7 @@ table.matrix code {
                     <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 15 features for Tennessee, measured 2026-10-10.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD SAYS SO. Tennessee's school boards are elected, and no statewide roster of their members was established in this pass; the card names the district, prints the grades the Census records and links the state Department of Education's school directory. Recorded as gap tn-school-board-members.</td>
+                <td data-label="Who it names">For the special school districts, the board of education as the district's own page lists it, with any e-mail address or telephone number the page prints beside one member, written down by hand and proved against that page by tn/scripts/build_tn_special_school_boards.py (tn/data/app/tn-special-school-boards.json); no street address is carried. Every other district's card names no one, because Tennessee's school boards are elected and no statewide roster of their members was established; it names the district, prints the grades the Census records and links the state Department of Education's school directory. Recorded as gap tn-school-board-members.</td>
                 <td data-label="Where it applies">Tennessee — the 15 city and special school districts, 980 km2 of land between them. Everywhere else the unified card is the answer.</td>
               </tr>
               <tr id="layer-school-district-secondary">
@@ -1590,7 +1591,7 @@ table.matrix code {
       "@id": "https://districtry.com/tn/sources.html#dataset-school-district-unified",
       "identifier": "school-district-unified",
       "name": "School District (Unified)",
-      "description": "The public school district covering the point, where one district runs every grade. NO OFFICEHOLDER, AND THE CARD SAYS SO. Tennessee's school boards are elected, and no statewide roster of their members was established in this pass; the card names the district, prints the grades the Census records and links the state Department of Education's school directory. Recorded as gap tn-school-board-members.",
+      "description": "The public school district covering the point, where one district runs every grade. For the special school districts, the board of education as the district's own page lists it, with any e-mail address or telephone number the page prints beside one member, written down by hand and proved against that page by tn/scripts/build_tn_special_school_boards.py (tn/data/app/tn-special-school-boards.json); no street address is carried. Every other district's card names no one, because Tennessee's school boards are elected and no statewide roster of their members was established; it names the district, prints the grades the Census records and links the state Department of Education's school directory. Recorded as gap tn-school-board-members.",
       "url": "https://districtry.com/tn/sources.html#layer-school-district-unified",
       "isPartOf": {
         "@id": "https://districtry.com/tn/sources.html#catalog"
@@ -1622,11 +1623,16 @@ table.matrix code {
           "@type": "Dataset",
           "name": "Tennessee Comptroller of the Treasury, Office of Local Government — \"School Board Districts New\", layer 5 of its Redistricting_Address_Lookup service: the districts drawn after the 2020 Census for eighteen counties' boards of education, 114 districts, measured 2026-10-16, pre-built by tn/scripts/build_tn_school_board_districts.py and shipped with the app. In Shelby County they leave out the six towns that run their own school districts. The service states no licence.",
           "url": "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/5"
+        },
+        {
+          "@type": "Dataset",
+          "name": "The county's own private acts, as the University of Tennessee County Technical Assistance Service publishes them, and for Coffee and Montgomery the county election commission's ballot and precinct chart — 38 counties whose board of education is elected from the county commission's districts (33 one for one, 5 from groups of two or three), read 2026-10-26. Drawn from the Comptroller's commission districts (layer 2 of the same service) by tn/scripts/build_tn_school_board_from_commission.py and shipped with the app.",
+          "url": "https://www.ctas.tennessee.edu/private-acts"
         }
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "The eighteen counties on the Comptroller's map: Blount, Chester, Claiborne, Crockett, Davidson, Fayette, Hardeman, Henry, Jefferson, Johnson, Lawrence, Macon, Madison, Sevier, Shelby, Sumner, Washington and Wilson. Tennessee's county boards of education are elected from districts under state law, and the other counties' districts are not drawn yet (gap tn-school-board-districts)"
+        "name": "56 counties. The eighteen on the Comptroller's map: Blount, Chester, Claiborne, Crockett, Davidson, Fayette, Hardeman, Henry, Jefferson, Johnson, Lawrence, Macon, Madison, Sevier, Shelby, Sumner, Washington and Wilson. And 38 whose board is elected from the county commission's districts: Anderson, Bedford, Benton, Bradley, Campbell, Carter, Coffee, Decatur, Franklin, Grainger, Hamilton, Hawkins, Henderson, Hickman, Jackson, Lake, Lauderdale, Lewis, Lincoln, Marion, Marshall, Maury, McMinn, McNairy, Meigs, Montgomery, Obion, Polk, Putnam, Rhea, Rutherford, Sequatchie, Smith, Tipton, Warren, Wayne, Weakley and Williamson. Tennessee's county boards of education are elected from districts under state law, and the other 39 counties' districts are not drawn yet (gap tn-school-board-districts)"
       }
     },
     {
@@ -1700,7 +1706,7 @@ table.matrix code {
       "@id": "https://districtry.com/tn/sources.html#dataset-school-district-elementary",
       "identifier": "school-district-elementary",
       "name": "School District (Elementary)",
-      "description": "The district running the lower grades at the point, where that is not a unified district. NO OFFICEHOLDER, AND THE CARD SAYS SO. Tennessee's school boards are elected, and no statewide roster of their members was established in this pass; the card names the district, prints the grades the Census records and links the state Department of Education's school directory. Recorded as gap tn-school-board-members.",
+      "description": "The district running the lower grades at the point, where that is not a unified district. For the special school districts, the board of education as the district's own page lists it, with any e-mail address or telephone number the page prints beside one member, written down by hand and proved against that page by tn/scripts/build_tn_special_school_boards.py (tn/data/app/tn-special-school-boards.json); no street address is carried. Every other district's card names no one, because Tennessee's school boards are elected and no statewide roster of their members was established; it names the district, prints the grades the Census records and links the state Department of Education's school directory. Recorded as gap tn-school-board-members.",
       "url": "https://districtry.com/tn/sources.html#layer-school-district-elementary",
       "isPartOf": {
         "@id": "https://districtry.com/tn/sources.html#catalog"

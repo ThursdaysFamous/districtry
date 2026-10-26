@@ -364,6 +364,50 @@ def sum_layer_shapes(fleet_rows, per_instance):
             for lid, n in totals.items()]
 
 
+VISIT_PREFIX = "visit/"
+VISITS_SINCE = "2026-10-22"
+
+
+def return_visits(s, total, start, end, mx, events):
+    """How many app visits were a first visit and how many a return, per day.
+
+    Every app counts `visit/first/<tag>` or `visit/return/<tag>` once per
+    browser window, decided by a mark in local storage (engine block
+    `install-app`, since 2026-10-22). Seventeen apps make up to 34 paths, past
+    the pages list's ten-row cap, so the per-day counts are read from the
+    totals widget with a path filter instead, one request for each kind.
+
+    THE FILTER ON THE TOTALS WIDGET IS AN ASSUMPTION, not a documented API, so
+    it is checked against the pages list for the same filter: the totals must
+    be at least the list's own rows (which can only be fewer, being capped)
+    and no more than every event in the period. A pair that fails either test
+    is printed and recorded as None, so the rest of the refresh still writes
+    and the page shows no figure rather than a wrong one.
+    """
+    out = {"since": VISITS_SINCE}
+    for kind in ("first", "return"):
+        prefix = VISIT_PREFIX + kind + "/"
+        days = series(widget(s, 1, total, start, end, filter=prefix))
+        listed = pages(widget(s, 0, total, start, end, max=mx, filter=prefix))
+        if any(not r["path"].startswith(prefix) for r in listed):
+            print("WARN visit filter %r matched other paths: %s"
+                  % (prefix, sorted({r["path"] for r in listed})[:5]))
+            return None
+        n, shown = sum(days.values()), sum(r["count"] for r in listed)
+        print("visits %s: %d by day, %d in the %d listed rows"
+              % (kind, n, shown, len(listed)))
+        if n < shown or n > events:
+            print("WARN visit counts do not reconcile for %r: %d by day, %d "
+                  "listed, %d events in the period" % (prefix, n, shown, events))
+            return None
+        out[kind] = n
+        out[kind + "_daily"] = [days.get(d, 0) for d in sorted(days)]
+        out["by_app_" + kind] = sorted(
+            ({"tag": r["path"][len(prefix):], "count": r["count"]}
+             for r in listed), key=lambda r: (-r["count"], r["tag"]))
+    return out
+
+
 def top(rows, n=10):
     return [{k: v for k, v in r.items() if k != "daily"}
             for r in sorted(rows, key=lambda r: -r["count"])[:n]]
@@ -451,6 +495,8 @@ def collect(s, total, start, end, per_day=True):
                                    fleet_layer_rows)
     layer_rows = sum_layer_shapes(fleet_layer_rows, per_instance)
 
+    visits = return_visits(s, total, start, end, mx, sum(d["events"] for d in daily))
+
     out = {
         "total": total,
         "daily": daily,
@@ -477,6 +523,10 @@ def collect(s, total, start, end, per_day=True):
             key=lambda r: (-r["count"], r["tag"], r["id"])),
         "instances": split_by_instance(page_rows),
         "pages_truncated": bool(pages_truncated),
+        # First and return visits to the apps, per day (`visit/first/<tag>`
+        # and `visit/return/<tag>`, sent since 2026-10-22). None when the
+        # dashboard's answer did not reconcile; see return_visits().
+        "visits": visits,
     }
     # THE INSTANCE BARS MUST SUM TO THE PAGEVIEW TOTAL, and they are counted
     # two different ways: the total off the totals widget, the split off the

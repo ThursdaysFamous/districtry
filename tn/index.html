@@ -10938,7 +10938,7 @@ function initTennesseeExplorer() {
     "county",            // 95 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "tn-house",          // 99 House districts — the smallest of the three chamber tilings
     "school-district-unified", // 127 unified districts, from TIGERweb, drawn from a mirrored tile archive; with the 15 elementary districts they cover the state exactly
-    "school-board-district", // 114 districts on the boards of education of 18 counties, pre-built from the Comptroller of the Treasury's layer — 200.6 km2 mean area (median 143.7), measured 2026-10-16 on the drawn file: smaller on average than a unified school district, larger than a county commission district, of which 859 tile the state
+    "school-board-district", // 390 districts on the boards of education of 56 counties, 114 from the Comptroller of the Treasury's school board layer and 276 from the county commission districts 38 counties' boards are elected from — 172.0 km2 mean area (median 127.9), measured 2026-10-26 on the drawn files with a flat projection at each district's latitude: smaller on average than a unified school district, larger than a county commission district, of which 859 tile the state
     "county-commissioner", // 859 districts in 95 counties, pre-built from the Comptroller of the Treasury's statewide layer; smaller on average than a state House district or a unified school district
     "county-subdivision", // 855 civil districts, from TIGERweb, drawn from a mirrored tile archive — median 86.4 km2 of land (mean 124.9), measured 2026-10-15: about the size of a county commission district (median 88.7 km2), so ranked just below it
     "zip-code",          // 643 ZIP Code Tabulation Areas overlapping Tennessee, of the 1,070 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-17); the layer hides outside Tennessee
@@ -15488,6 +15488,9 @@ function initTennesseeExplorer() {
           title: entry && entry.seatTitle ? String(entry.seatTitle) : "Commissioner",
           body: entry && entry.bodyName ? String(entry.bodyName) : null,
           readAt: entry ? entry.readAt : null,
+          // set when the weekly run could not read the county and carried its
+          // last list forward, so the card does not claim a weekly re-read
+          notRead: !!(entry && entry.notRead),
           sourceUrl: entry ? entry.sourceUrl : null
         };
       });
@@ -15544,7 +15547,9 @@ function initTennesseeExplorer() {
           label: "Where these names come from",
           value: (result.county != null ? String(result.county) : "The county") +
             "'s own published list of its " + (result.body || "county commission") +
-            (read ? ", read " + read : "") + ". This app reads it every week."
+            (read ? ", read " + read : "") + (result.notRead
+              ? ". This app could not read the list on its latest weekly try, so these are the names as of that day."
+              : ". This app reads it every week.")
         });
       } else {
         rows.push({
@@ -16339,10 +16344,19 @@ function initTennesseeExplorer() {
    * because the grade split is the whole reason a reader there has two
    * districts. The empty notes point at the other cards.
    *
-   * NO OFFICEHOLDER. Tennessee's school boards are elected, and no statewide
-   * roster of their members has been established here; the card names the
-   * district and links the state's school directory. Recorded as gap
-   * tn-school-board-members.
+   * THE FOURTEEN SPECIAL SCHOOL DISTRICTS NAME THEIR BOARD, written down
+   * from each district's own page and proved against it on every build
+   * (tn/scripts/build_tn_special_school_boards.py through
+   * scripts/city_councils.py; data/app/tn-special-school-boards.json, keyed
+   * by the Census's GEOID). Eleven are in the unified layer and three
+   * (Franklin, Lebanon and Paris) in the elementary layer. A district's
+   * page that lists members by district, zone or precinct is shown that
+   * way; none of those lines is drawn.
+   *
+   * Every other school board names nobody: Tennessee's school boards are
+   * elected, and no statewide roster of their members has been established
+   * here; the card names the district and links the state's school
+   * directory. Recorded as gap tn-school-board-members.
    * ---------- */
   var loadSchoolDistrictsUnified = tigerStatewideLoader(
     TIGERWEB_SERVICES + "School/MapServer", 0,
@@ -16354,6 +16368,10 @@ function initTennesseeExplorer() {
     TIGERWEB_SERVICES + "School/MapServer", 1,
     "GEOID,NAME,BASENAME,STATE,LOGRADE,HIGRADE", "secondary school districts");
 
+  // The board of each special school district, keyed by the Census GEOID.
+  var loadTnSpecialSchoolBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tn-special-school-boards.json", {}, 2);
+  });
   // One query and one card shape for all three tilings; only the sentence
   // about the tiling differs.
   function tnSchoolQuery(load) {
@@ -16361,13 +16379,24 @@ function initTennesseeExplorer() {
       return queryFeatureAt(load, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var result = {
           seq: seq,
           name: findPropCI(props, ["name"]),
           geoid: findPropCI(props, ["geoid"]),
           lo: findPropCI(props, ["lograde"]),
-          hi: findPropCI(props, ["higrade"])
+          hi: findPropCI(props, ["higrade"]),
+          board: null
         };
+        // A roster that fails to load leaves the district's card standing
+        // and says so, rather than taking the boundary answer down with it.
+        return loadTnSpecialSchoolBoards().then(function (roster) {
+          result.board = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
       });
     };
   }
@@ -16398,20 +16427,58 @@ function initTennesseeExplorer() {
         });
       }
       rows.push({ label: "Census tiling", value: tierNote });
-      rows.push({
-        label: "Your school board",
-        value: "Not named here. Tennessee's school boards are elected, and " +
-          "no statewide list of their members has been read yet, so this " +
-          "app names no one rather than guessing."
-      });
+      var board = result.board;
+      if (!board) {
+        rows.push({
+          label: "Your school board",
+          value: result.rosterFailed
+            ? "The list of special school district boards did not load, so " +
+              "no name is shown. The district's own website names its board."
+            : "Not named here. Tennessee's school boards are elected, and " +
+              "no statewide list of their members has been read yet, so this " +
+              "app names no one rather than guessing. This app names the " +
+              "boards of the state's fourteen special school districts, and " +
+              "this district is not one of them."
+        });
+        wrap.appendChild(renderFieldStack(rows));
+        return wrap;
+      }
       wrap.appendChild(renderFieldStack(rows));
+      // Card convention: identity -> officeholders.
+      wrap.appendChild(renderSectionLabel("Board of Education"));
+      wrap.appendChild(renderPersonRows((board.seats || []).map(function (seat) {
+        return {
+          name: String(seat.name),
+          badge: seat.role !== "Board member" ? String(seat.role) : null,
+          note: seat.area != null ? String(seat.area) : null,
+          phone: seat.phone,
+          phonesExtra: seat.phonesExtra,
+          email: seat.email
+        };
+      })));
+      var read = tnReadDate(board.read);
+      wrap.appendChild(renderFieldStack([
+        { label: "How the board is chosen", value: String(board.how) },
+        {
+          label: "Where these names come from",
+          value: "As listed on " + String(board.ownName || board.name) +
+            "'s own website." + (board.note ? " " + String(board.note) : "") +
+            (read ? " Read on " + read + "." : "") +
+            " If a seat has changed hands since, the district's own website " +
+            "or office says who holds it now."
+        }
+      ]));
       return wrap;
     };
   }
-  // The state Department of Education's own school directory, which serves
-  // this project's link checker (HTTP 200, measured 2026-10-10; its host
+  // A special school district's own board page; otherwise the state
+  // Department of Education's own school directory, which serves this
+  // project's link checker (HTTP 200, measured 2026-10-10; its host
   // publishes no robots.txt). Linked, never fetched.
-  function tnSchoolLink() {
+  function tnSchoolLink(result) {
+    if (result && result.board && result.board.page) {
+      return { label: "The district's board of education", url: String(result.board.page) };
+    }
     return { label: "State school directory", url: "https://tnschooldirectory.tnedu.gov/" };
   }
   function tnSchoolHover(feature) {
@@ -16499,11 +16566,38 @@ function initTennesseeExplorer() {
    *
    * NO MEMBER IS NAMED. No statewide list of Tennessee's school board members
    * has been read, so the card names no one rather than guessing. Recorded as
-   * gap tn-school-board-members; the 77 counties not on the map are gap
-   * tn-school-board-districts.
+   * gap tn-school-board-members.
+   *
+   * 38 MORE COUNTIES ARE DRAWN FROM THE COMMISSION'S DISTRICTS. Their private
+   * acts (or, for Coffee and Montgomery, the election commission's ballot and
+   * precinct chart) say the board is elected from the county commission's
+   * districts, one for one or two or three to a board district, so
+   * tn/scripts/build_tn_school_board_from_commission.py builds them from
+   * data/app/tn-commission-districts.json into a second file, and each
+   * feature carries the sentence saying where it comes from (`basis`), which
+   * the card prints. Those districts are drawn over the whole county, so the
+   * card says a city or special school district's residents may not vote for
+   * the board. The other 39 counties are gap tn-school-board-districts.
    * ---------- */
-  var loadTnSchoolBoardDistricts = makeCached(function () {
+  var loadTnSchoolBoardComptroller = makeCached(function () {
     return fetchJSONWithRetry("data/app/tn-school-board-districts.json", {}, 2);
+  });
+  // The 38 counties whose board is elected from the county commission's own
+  // districts, by their private acts or their election commission: built from
+  // data/app/tn-commission-districts.json by
+  // tn/scripts/build_tn_school_board_from_commission.py, each feature
+  // carrying the sentence that says why (`basis`). No county is in both files.
+  var loadTnSchoolBoardFromCommission = makeCached(function () {
+    return fetchJSONWithRetry("data/app/tn-school-board-from-commission.json", {}, 2);
+  });
+  var loadTnSchoolBoardDistricts = makeCached(function () {
+    return Promise.all([loadTnSchoolBoardComptroller(), loadTnSchoolBoardFromCommission()])
+      .then(function (both) {
+        return {
+          type: "FeatureCollection",
+          features: (both[0].features || []).concat(both[1].features || [])
+        };
+      });
   });
 
   registerLayer({
@@ -16516,9 +16610,16 @@ function initTennesseeExplorer() {
       "Hardeman, Henry, Jefferson, Johnson, Lawrence, Macon, Madison, Sevier, " +
       "Shelby, Sumner, Washington and Wilson. In Shelby County it leaves out " +
       "Arlington, Bartlett, Collierville, Germantown, Lakeland and Millington, " +
-      "which run their own school districts. Tennessee's county boards of " +
-      "education are elected from districts under state law; the other " +
-      "counties' districts are not drawn here yet.",
+      "which run their own school districts. It also draws the districts of " +
+      "38 counties whose board is elected from the county commission's own " +
+      "districts: Anderson, Bedford, Benton, Bradley, Campbell, Carter, Coffee, " +
+      "Decatur, Franklin, Grainger, Hamilton, Hawkins, Henderson, Hickman, " +
+      "Jackson, Lake, Lauderdale, Lewis, Lincoln, Marion, Marshall, Maury, " +
+      "McMinn, McNairy, Meigs, Montgomery, Obion, Polk, Putnam, Rhea, " +
+      "Rutherford, Sequatchie, Smith, Tipton, Warren, Wayne, Weakley and " +
+      "Williamson. Tennessee's county boards of education are elected from " +
+      "districts under state law; the other counties' districts are not drawn " +
+      "here yet.",
     overlay: {
       load: loadTnSchoolBoardDistricts,
       // the fleet's school-board indigo and line (layer-concepts.json
@@ -16537,7 +16638,8 @@ function initTennesseeExplorer() {
         return {
           seq: seq,
           county: p.board != null ? String(p.board) : null,
-          label: p.label != null ? String(p.label) : null
+          label: p.label != null ? String(p.label) : null,
+          basis: p.basis != null ? String(p.basis) : null
         };
       });
     },
@@ -16559,7 +16661,14 @@ function initTennesseeExplorer() {
           value: "Not named here. No statewide list of Tennessee's school board " +
             "members has been read yet, so this app names no one rather than guessing."
         },
-        {
+        result.basis ? {
+          label: "Where the lines come from",
+          value: result.basis + " They are drawn here from the Comptroller of the " +
+            "Treasury's map of the commission districts drawn after the 2020 Census, " +
+            "to within 20 metres. Where a city or special school district runs its " +
+            "own schools, its residents may not vote for this board. For a " +
+            "definitive answer, ask your county election commission."
+        } : {
           label: "Where the lines come from",
           value: "The Comptroller of the Treasury's map of the districts drawn " +
             "after the 2020 Census, which covers eighteen counties. They are drawn " +

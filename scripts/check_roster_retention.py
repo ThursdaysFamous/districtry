@@ -164,29 +164,13 @@ ACCEPTED_DROPS = {
         "Bremer withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (3 district(s) at the base); its "
         "supervisors still appear on the County card",
-    "ia/data/app/ia-supervisor-members.json:033":
-        "Cerro Gordo withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (3 district(s) at the base); its "
-        "supervisors still appear on the County card",
     "ia/data/app/ia-supervisor-members.json:069":
         "Franklin withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (3 district(s) at the base); its "
-        "supervisors still appear on the County card",
-    "ia/data/app/ia-supervisor-members.json:079":
-        "Hamilton withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (3 district(s) at the base); its "
         "supervisors still appear on the County card",
     "ia/data/app/ia-supervisor-members.json:113":
         "Linn withheld 2026-10-01 -- its own district numbering has not been "
         "measured against this layer's (3 district(s) at the base); its "
-        "supervisors still appear on the County card",
-    "ia/data/app/ia-supervisor-members.json:187":
-        "Webster withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (5 district(s) at the base); its "
-        "supervisors still appear on the County card",
-    "ia/data/app/ia-supervisor-members.json:191":
-        "Winneshiek withheld 2026-10-01 -- its own district numbering has not been "
-        "measured against this layer's (5 district(s) at the base); its "
         "supervisors still appear on the County card",
     # MOVED, NOT DROPPED, 2026-09-24. These four Michigan counties left
     # mi-commissioner-returns.json because they arrived in

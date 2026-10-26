@@ -119,7 +119,7 @@
       "il": "ward", "ny": "council", "ca": "supervisor-district", "wi": "aldermanic-district",
       "ia": "city-ward", "mi": "city-ward", "mn": "city-ward", "ky": "fiscal-court", "nc": "city-ward",
       "ok": "city-ward", "sc": "city-ward", "tn": "city-ward", "ar": "city-ward", "ms": "city-ward",
-      "la": "city-ward"
+      "la": "city-ward", "in": "city-ward"
     },
     "voting-precinct": {
       "il": ["ward-precinct", "county-precinct"], "ny": "election-district", "ca": "election-precinct",
@@ -167,6 +167,7 @@
     "police-beat": { "il": "police-beat", "ny": "police-sector", "wi": "mpd-squad-area" },
     "fire-district": { "il": "fire-district", "ny": "fire-district", "wi": "fire-service", "ar": "fire-district" },
     "library-district": { "il": "library-district", "ny": "library-district" },
+    "conservation-district": { "ok": "conservation-district", "mn": "conservation-district" },
     "police-station": {
       "il": "police-station", "ny": "police-station", "ca": "police-station", "wi": "police-station",
       "ia": "police-station", "mi": "police-station", "mn": "police-station", "in": "police-station",
@@ -221,6 +222,7 @@
     "police-beat":                { "line": "#7A0A1C", "fill": "#E4572E" },
     "fire-district":              { "line": "#B0342A", "fill": "#D0564C" },
     "library-district":           { "line": "#00695C", "fill": "#4DB6AC" },
+    "conservation-district":      { "line": "#556E14", "fill": "#9DB54A" },
     "police-station":             { "line": "#1B4F8C", "fill": "#7FA8D9" },
     "fire-station":               { "line": "#A3341F", "fill": "#E8927C" },
     "post-office":                { "line": "#4B2E83", "fill": "#B39DDB" },
@@ -259,6 +261,7 @@
     "police-beat":                 { "weight": 1 },
     "fire-district":               { "weight": 1.5 },
     "library-district":            { "weight": 1.5 },
+    "conservation-district":       { "weight": 1.5 },
     "police-station":              null,
     "fire-station":                null,
     "post-office":                 null,
