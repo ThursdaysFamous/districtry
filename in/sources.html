@@ -1167,7 +1167,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">17 layers — 6 political and legislative, 2 public safety, 2 schools, 7 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">18 layers — 7 political and legislative, 2 public safety, 2 schools, 7 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1176,7 +1176,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">6 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">7 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1239,6 +1239,27 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">The district's council member and the county's at-large members, each the winner of that seat's most recent election in the Indiana Election Division's certified results (in-county-councils.json; for Marion County, the 2023 municipal general in in-city-officials.json). A winner is not a sitting member: Indiana fills a vacancy by party caucus, and the card says so. Boone County's District 3 seat is titled &quot;Dist 36&quot; in the results, so its card does not guess which member holds it.</td>
                 <td data-label="Where it applies">Indiana — the 55 counties whose council districts the state's mapping office publishes in full, and five more (Adams, Delaware, Porter, St. Joseph and Vigo) drawn from the county's own map. In the other 32 the card says the lines are not drawn yet, and the County card lists every council member.</td>
+              </tr>
+              <tr id="layer-city-ward">
+                <th scope="row"><span class="layer-name">City Council District</span><code>city-ward</code></th>
+                <td data-label="What it answers">The council district containing the point, in the eleven Indiana cities of 25,000 people or more whose current council district map this app has confirmed, and the council member elected from it.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://services9.arcgis.com/47GwVXZ9a8thrviM/arcgis/rest/services/City_Council_Districts/FeatureServer/0" target="_blank" rel="noopener">The City of Bloomington's map of its council districts</a></li>
+                    <li><a href="https://services5.arcgis.com/RhRpaq8RpEQjlpir/arcgis/rest/services/City_Council_Districts/FeatureServer/1" target="_blank" rel="noopener">The map of Elkhart's council districts published on ArcGIS Online as City Council Districts</a></li>
+                    <li><a href="https://services8.arcgis.com/trHxDV6stlqDdGWV/arcgis/rest/services/CouncilDistricts2023/FeatureServer/0" target="_blank" rel="noopener">The City of Goshen's map of its council districts (Elkhart County GIS and City of Goshen GIS)</a></li>
+                    <li><a href="https://services2.arcgis.com/6DdnNWEqLRF18ltQ/arcgis/rest/services/Greenwood_Common_Council/FeatureServer/0" target="_blank" rel="noopener">The City of Greenwood's map of its Common Council districts</a></li>
+                    <li><a href="https://services.arcgis.com/NuZplX0yD9b0Mx90/arcgis/rest/services/city_council_districts/FeatureServer/0" target="_blank" rel="noopener">The City of Jeffersonville's map of its council districts</a></li>
+                    <li><a href="https://gis.indy.gov/server/rest/services/OpenData/OpenData_Political/MapServer/5" target="_blank" rel="noopener">The City of Indianapolis and Marion County's open data map of Lawrence's council districts</a></li>
+                    <li><a href="https://services5.arcgis.com/fhY0REQd0M65vDjz/arcgis/rest/services/New_Albany_2020_Census_Council_Districts/FeatureServer/0" target="_blank" rel="noopener">The map of New Albany's council districts published on ArcGIS Online as New Albany 2020 Census Council Districts</a></li>
+                    <li><a href="https://services5.arcgis.com/beYj0ONLvCt8qxHA/arcgis/rest/services/Election_Municipal_Council_2023/FeatureServer/5" target="_blank" rel="noopener">Hamilton County GIS's map of the Noblesville and Westfield council districts</a></li>
+                    <li><a href="https://services6.arcgis.com/3ejT7DEfNyzKXZBD/arcgis/rest/services/2021_Council_Districts/FeatureServer/0" target="_blank" rel="noopener">The map of Plainfield's council districts published on ArcGIS Online as 2021 Council Districts</a></li>
+                    <li><a href="https://services6.arcgis.com/TQ2Al5QIvv4tMBL7/arcgis/rest/services/ElectionGeography_public_27e9bb8eaa1148d08269f6122529bc74/FeatureServer/0" target="_blank" rel="noopener">Porter County's map of Valparaiso's council districts</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places): each city's outer edge, where its districts are cut so the City Council District and City or Town cards agree about which city a point is in</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">in-city-officials.json, the roster the City or Town card reads, from the Indiana Election Division's certified 2023 municipal general (and, for Plainfield, the town's own council page): the council member elected from each district, joined by district number, and the members the city elects at large.</td>
+                <td data-label="Where it applies">Bloomington, Elkhart, Goshen, Greenwood, Jeffersonville, Lawrence, New Albany, Noblesville, Westfield, Plainfield and Valparaiso. Indianapolis's 25 City-County Council districts are drawn by the County Council District layer. The other cities of 25,000 people or more are not drawn, each for a reason in/scripts/build_in_city_wards.py records (a plan older than the 2020 census, a map published only as a PDF, a map server this app cannot read, or seats the results do not name by district number), and the City or Town card still names their council members.</td>
               </tr>
               <tr id="layer-tribal-government">
                 <th scope="row"><span class="layer-name">Tribal Government</span><code>tribal-government</code></th>
@@ -1722,6 +1743,78 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Indiana — statewide, all 566 incorporated places. 'Indianapolis city (balance)' is the Census record for the part of the consolidated Indianapolis–Marion County government outside its included towns, not a separate municipality"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/in/sources.html#dataset-city-ward",
+      "identifier": "city-ward",
+      "name": "City Council District",
+      "description": "The council district containing the point, in the eleven Indiana cities of 25,000 people or more whose current council district map this app has confirmed, and the council member elected from it. in-city-officials.json, the roster the City or Town card reads, from the Indiana Election Division's certified 2023 municipal general (and, for Plainfield, the town's own council page): the council member elected from each district, joined by district number, and the members the city elects at large.",
+      "url": "https://districtry.com/in/sources.html#layer-city-ward",
+      "isPartOf": {
+        "@id": "https://districtry.com/in/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "The City of Bloomington's map of its council districts",
+          "url": "https://services9.arcgis.com/47GwVXZ9a8thrviM/arcgis/rest/services/City_Council_Districts/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "The map of Elkhart's council districts published on ArcGIS Online as City Council Districts",
+          "url": "https://services5.arcgis.com/RhRpaq8RpEQjlpir/arcgis/rest/services/City_Council_Districts/FeatureServer/1"
+        },
+        {
+          "@type": "Dataset",
+          "name": "The City of Goshen's map of its council districts (Elkhart County GIS and City of Goshen GIS)",
+          "url": "https://services8.arcgis.com/trHxDV6stlqDdGWV/arcgis/rest/services/CouncilDistricts2023/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "The City of Greenwood's map of its Common Council districts",
+          "url": "https://services2.arcgis.com/6DdnNWEqLRF18ltQ/arcgis/rest/services/Greenwood_Common_Council/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "The City of Jeffersonville's map of its council districts",
+          "url": "https://services.arcgis.com/NuZplX0yD9b0Mx90/arcgis/rest/services/city_council_districts/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "The City of Indianapolis and Marion County's open data map of Lawrence's council districts",
+          "url": "https://gis.indy.gov/server/rest/services/OpenData/OpenData_Political/MapServer/5"
+        },
+        {
+          "@type": "Dataset",
+          "name": "The map of New Albany's council districts published on ArcGIS Online as New Albany 2020 Census Council Districts",
+          "url": "https://services5.arcgis.com/fhY0REQd0M65vDjz/arcgis/rest/services/New_Albany_2020_Census_Council_Districts/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Hamilton County GIS's map of the Noblesville and Westfield council districts",
+          "url": "https://services5.arcgis.com/beYj0ONLvCt8qxHA/arcgis/rest/services/Election_Municipal_Council_2023/FeatureServer/5"
+        },
+        {
+          "@type": "Dataset",
+          "name": "The map of Plainfield's council districts published on ArcGIS Online as 2021 Council Districts",
+          "url": "https://services6.arcgis.com/3ejT7DEfNyzKXZBD/arcgis/rest/services/2021_Council_Districts/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Porter County's map of Valparaiso's council districts",
+          "url": "https://services6.arcgis.com/TQ2Al5QIvv4tMBL7/arcgis/rest/services/ElectionGeography_public_27e9bb8eaa1148d08269f6122529bc74/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places): each city's outer edge, where its districts are cut so the City Council District and City or Town cards agree about which city a point is in",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Bloomington, Elkhart, Goshen, Greenwood, Jeffersonville, Lawrence, New Albany, Noblesville, Westfield, Plainfield and Valparaiso. Indianapolis's 25 City-County Council districts are drawn by the County Council District layer. The other cities of 25,000 people or more are not drawn, each for a reason in/scripts/build_in_city_wards.py records (a plan older than the 2020 census, a map published only as a PDF, a map server this app cannot read, or seats the results do not name by district number), and the City or Town card still names their council members"
       }
     },
     {

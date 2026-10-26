@@ -107,8 +107,22 @@ town's council page instead, each seat dated to the read rather than to an elect
 says the names are the town's own list. Plainfield's host refuses this project's token behind
 Cloudflare and serves the stdlib client with a Chrome string and client hints (measured that day);
 its robots.txt is read with that same client. New Albany's at-large race is filed as electing one and elects three
-(`MISFILED_SEAT_COUNTS`). Council district lines are not drawn, so the card lists every seat.
-Gap `in-municipal-officeholders` records the rest.
+(`MISFILED_SEAT_COUNTS`). Gap `in-municipal-officeholders` records the rest.
+
+**THE CITY COUNCIL DISTRICT LAYER DRAWS ELEVEN CITIES' OWN LINES** (`city-ward`, 2026-10-26).
+`in/scripts/build_in_city_wards.py` reads each city's or county's own published map for
+Bloomington, Elkhart, Goshen, Greenwood, Jeffersonville, Lawrence, New Albany, Noblesville,
+Westfield, Plainfield and Valparaiso and writes `in-city-wards.json`. **A LAYER IS TAKEN ONLY
+WHEN IT IS THE CURRENT PLAN**: each is confirmed as drawn on the 2020 census by its people per
+district, which balance on 2020 blocks and not on 2010 ones, and each city's districts are cut at
+the Census Bureau's incorporated place so a district never answers outside its city. The method
+and its gates (fidelity under 4 m, a shared topology, people per district pinned) are Louisiana's
+city-ward builder's. Indianapolis is not in this layer: its City-County Council districts are the
+county-council layer's Marion entry. `NOT_DRAWN` in the builder names every other city over
+25,000 and why it is not drawn — a struck or superseded plan, no layer found, a map published
+only as a PDF, a host behind a challenge — and thirteen places whose results name seats by ward,
+number or direction cannot be joined to a district at all. Where a city is drawn the City or Town
+card says the City Council District layer shows the reader's seat; elsewhere it lists every seat.
 
 **ELECTION PRECINCTS ARE DRAWN SINCE 2026-10-15, FROM INDIANA'S 2026 PRECINCT MAP.**
 `voting-precinct` draws all 5,121 precincts from IndianaMap's "Voting District Boundaries 2026",
@@ -216,7 +230,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Indiana (`indiana`) — https://districtry.com/in/
 - Geocoders: address Photon (Indiana-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, Indiana-bounded, serial >=1s queue)
 - Ground truth: 39.76860,-86.16260 (the Indiana Statehouse, downtown Indianapolis (Marion County)) → county Marion County; us-house 7; in-senate 46; in-house 97; voting-precinct CN055; county-council 12; in-court-of-appeals 2. Negative point 38.25270,-85.75850 (downtown Louisville, Kentucky — south of the Ohio River, whose north bank is the Indiana line, and inside permalink_gate's minLat (37.60) so the point is still selectable; measured to miss all four ANCHOR layers (the live TIGERweb fabric layers are deliberately not anchors — an anchor must answer with the network down) KENTUCKY WENT LIVE ON 2026-09-30 AND NOW COVERS THIS POINT, so the two checks that put it at the map's CENTRE refused ../fleet-outlines.json until 2026-10-13, when panning stopped switching apps; neither refuses anything now, because a selection the app makes itself never leaves. The point itself is unchanged: it is still outside this instance and still misses all four anchor layers, and the gate reaches uncovered ground in Ohio if it ever needs to move. Check 1a2 is where this instance asserts fleet routing, and Louisville moved there from its uncovered case to a Kentucky routing case the same day.).
-- Layers: 17 registered (political 6, safety 2, schools 2, geography 7); `registerLayer(` floor 13. Debug namespace `window.IndianaExplorer`.
+- Layers: 18 registered (political 7, safety 2, schools 2, geography 7); `registerLayer(` floor 13. Debug namespace `window.IndianaExplorer`.
 - Scheduled workflows: `update-in-congress-roster.yml` (Mon 15:45 UTC); `update-in-county-officials.yml` (Wed 15:50 UTC).
 - Source registry: `in/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
