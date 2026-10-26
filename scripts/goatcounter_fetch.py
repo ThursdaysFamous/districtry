@@ -524,6 +524,8 @@ def slices(s, total, start, end, mx):
         refs, refs_cut = all_rows(s, 2, total, start, end, filter=filt)
         locs, locs_cut = all_rows(s, 6, total, start, end, filter=filt)
         sizes = rows(widget(s, 8, total, start, end, filter=filt))
+        browsers = rows(widget(s, 4, total, start, end, filter=filt))
+        systems = rows(widget(s, 5, total, start, end, filter=filt))
         n = sum(days.values())
         print("slice %s: %d by day; countries sum %d%s, sources sum %d%s"
               % (name, n, sum(r["count"] for r in locs),
@@ -537,7 +539,7 @@ def slices(s, total, start, end, mx):
                         for r in matched[:10]],
             "referrers": refs, "referrers_cut": refs_cut,
             "locations": locs, "locations_cut": locs_cut,
-            "sizes": sizes,
+            "sizes": sizes, "browsers": browsers, "systems": systems,
         }
     return out
 
@@ -872,12 +874,21 @@ def daily_referrers(s, end):
         total = period_total(s, day, day)
         if total:
             got, more = all_rows(s, 2, total, day, day)
+            # The same list for page visits alone. The list above counts
+            # every hit, actions included: on 2026-10-26 "facebook.com 17"
+            # was two page visits and fifteen layer and location counts from
+            # the same two browsers. A source's page visits are its arrivals,
+            # and Google's are what Search Console's clicks can be held to.
+            pv_got, pv_more = all_rows(s, 2, total, day, day,
+                                       filter="is:pageview")
         else:
-            got, more = [], False
-        out.append({"date": day, "total": total, "rows": got, "more": more})
-        print("referrers %s: %d rows, sum %d of total %d%s"
+            got, more, pv_got, pv_more = [], False, [], False
+        out.append({"date": day, "total": total, "rows": got, "more": more,
+                    "page_rows": pv_got, "page_more": pv_more})
+        print("referrers %s: %d rows, sum %d of total %d%s; page visits %d"
               % (day, len(got), sum(r["count"] for r in got), total,
-                 ", list cut short" if more else ""))
+                 ", list cut short" if more else "",
+                 sum(r["count"] for r in pv_got)))
     return out
 
 
