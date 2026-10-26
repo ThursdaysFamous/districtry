@@ -1,0 +1,525 @@
+{
+ "4701260": {
+  "body": "Board of Education",
+  "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+  "layer": "school-district-elementary",
+  "name": "Franklin Special School District",
+  "page": "https://www.fssd.org/about-us/board-members",
+  "read": "2026-10-26",
+  "seats": [
+   {
+    "name": "Robert Blair",
+    "role": "Chairman"
+   },
+   {
+    "name": "Allena Bell",
+    "role": "Board member"
+   },
+   {
+    "name": "Robin Newman",
+    "role": "Board member"
+   },
+   {
+    "name": "Amy Potts",
+    "role": "Board member"
+   },
+   {
+    "name": "Tim Stillings",
+    "role": "Board member"
+   },
+   {
+    "name": "Kevin Townsel",
+    "role": "Board member"
+   }
+  ]
+ },
+ "4701390": {
+  "body": "Board of Education",
+  "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+  "layer": "school-district-unified",
+  "name": "Bradford Special School District",
+  "page": "https://www.bradfordspecial.com/91649_1",
+  "read": "2026-10-26",
+  "seats": [
+   {
+    "name": "Jason McDaniel",
+    "role": "Board Chairman"
+   },
+   {
+    "name": "Mark Hampton",
+    "role": "Board member"
+   },
+   {
+    "name": "Chris Johnstone",
+    "role": "Board member"
+   },
+   {
+    "name": "Michael Wheeler",
+    "role": "Board member"
+   },
+   {
+    "name": "Clayton McDade",
+    "role": "Board member"
+   },
+   {
+    "name": "Buni Wendt",
+    "role": "Board member"
+   }
+  ]
+ },
+ "4701400": {
+  "body": "Board of Education",
+  "how": "The district's voters elect its board. The district's own page lists one member for each of its seven districts, with the year each term ends.",
+  "layer": "school-district-unified",
+  "name": "Gibson County School District",
+  "ownName": "Gibson County Special School District",
+  "page": "https://www.gcssd.org/page/board-of-education",
+  "read": "2026-10-26",
+  "seats": [
+   {
+    "area": "District 1",
+    "email": "balls@gcssd.org",
+    "name": "Scott Ball",
+    "phone": "731.643.6161",
+    "role": "Board member"
+   },
+   {
+    "area": "District 2",
+    "email": "watkinse@gcssd.org",
+    "name": "Eddie Watkins",
+    "phone": "731.665.7397",
+    "role": "Board member"
+   },
+   {
+    "area": "District 3",
+    "email": "lannomt@gcssd.org",
+    "name": "Tom Lannom",
+    "phone": "731.414.7815",
+    "role": "Chairman"
+   },
+   {
+    "area": "District 4",
+    "email": "maitlandt@gcssd.org",
+    "name": "Treva Maitland",
+    "phone": "731.414.3521",
+    "role": "Board member"
+   },
+   {
+    "area": "District 5",
+    "email": "campbellj2@gcssd.org",
+    "name": "John Campbell II",
+    "phone": "731.446.6500",
+    "role": "Board member"
+   },
+   {
+    "area": "District 6",
+    "email": "boalsb@gcssd.org",
+    "name": "Benny Boals",
+    "phone": "731.487.6171",
+    "role": "Board member"
+   },
+   {
+    "area": "District 7",
+    "email": "addor@gcssd.org",
+    "name": "Richard Addo",
+    "phone": "404.358.4518",
+    "role": "Board member"
+   }
+  ]
+ },
+ "4701890": {
+  "body": "Board of Education",
+  "how": "The district's voters elect its seven-member board. The district's own page lists its members and does not tie a seat to any part of the district.",
+  "layer": "school-district-unified",
+  "name": "Hollow Rock-Bruceton Special School District",
+  "page": "https://www.hrbedu.org/en-US/board-of-education",
+  "read": "2026-10-26",
+  "seats": [
+   {
+    "name": "Brad Hurley",
+    "role": "Chair"
+   },
+   {
+    "name": "Brandy Boyd",
+    "role": "Vice Chair"
+   },
+   {
+    "name": "Jim Holder",
+    "role": "Board member"
+   },
+   {
+    "name": "Nick Maness",
+    "role": "Board member"
+   },
+   {
+    "name": "Johnathan Tedford",
+    "role": "Board member"
+   },
+   {
+    "name": "Michael Graves",
+    "role": "Board member"
+   },
+   {
+    "name": "April Hampton",
+    "role": "Board member"
+   }
+  ]
+ },
+ "4702010": {
+  "body": "Board of Education",
+  "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+  "layer": "school-district-unified",
+  "name": "Huntingdon Special School District",
+  "page": "https://www.huntingdonschools.net/page/board-members",
+  "read": "2026-10-26",
+  "seats": [
+   {
+    "name": "Lee Carter",
+    "role": "Chairman"
+   },
+   {
+    "name": "Brittany Foster",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "Morgan Butler",
+    "role": "Secretary-Treasurer"
+   },
+   {
+    "name": "Shawna Smith",
+    "role": "Board member"
+   },
+   {
+    "name": "Clay Nolen",
+    "role": "Board member"
+   },
+   {
+    "name": "Kennedy White",
+    "role": "Board member"
+   }
+  ]
+ },
+ "4702370": {
+  "body": "Board of Education",
+  "how": "The district's voters elect its board. The district's own page lists one member for each of its five zones, under the heading 2026 - 2027.",
+  "layer": "school-district-elementary",
+  "name": "Lebanon Special School District",
+  "page": "https://www.lssd.org/apps/pages/index.jsp?uREC_ID=3757624&type=d&pREC_ID=2438713",
+  "read": "2026-10-26",
+  "seats": [
+   {
+    "area": "Zone 1",
+    "email": "wayne.oakley@lssd.org",
+    "name": "Wayne Oakley",
+    "role": "Board member"
+   },
+   {
+    "area": "Zone 2",
+    "email": "maria.scalisi@lssd.org",
+    "name": "Maria Scalisi",
+    "role": "Board member"
+   },
+   {
+    "area": "Zone 3",
+    "email": "israel.woodson@lssd.org",
+    "name": "Israel Woodson",
+    "role": "Board member"
+   },
+   {
+    "area": "Zone 4",
+    "email": "larry.jones@lssd.org",
+    "name": "Larry Jones",
+    "role": "Board member"
+   },
+   {
+    "area": "Zone 5",
+    "email": "heather.sadlergallaher@lssd.org",
+    "name": "Heather Sadler Gallaher",
+    "role": "Board Chair"
+   }
+  ]
+ },
+ "4702790": {
+  "body": "Board of Education",
+  "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+  "layer": "school-district-unified",
+  "name": "McKenzie Special School District",
+  "page": "https://www.mckenzieschools.org/board",
+  "read": "2026-10-26",
+  "seats": [
+   {
+    "name": "Spiro Roditis",
+    "role": "Chairman"
+   },
+   {
+    "name": "Brian Winston",
+    "role": "Vice-Chairman"
+   },
+   {
+    "name": "Karen Fowler",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Misty Aird",
+    "role": "Board member"
+   },
+   {
+    "name": "Chad Brown",
+    "role": "Board member"
+   },
+   {
+    "name": "Matt Lane",
+    "role": "Board member"
+   },
+   {
+    "name": "Brian Stafford",
+    "role": "Board member"
+   }
+  ]
+ },
+ "4702970": {
+  "body": "Board of Education",
+  "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+  "layer": "school-district-unified",
+  "name": "Milan Special School District",
+  "page": "https://www.milanssd.org/page/board-member-contact-information",
+  "read": "2026-10-26",
+  "seats": [
+   {
+    "email": "ownbyw@milanssd.org",
+    "name": "Will Ownby",
+    "role": "Chairman"
+   },
+   {
+    "email": "biggsla@milanssd.org",
+    "name": "Lauren Biggs",
+    "role": "Board member"
+   },
+   {
+    "email": "carmichaelk@milanssd.org",
+    "name": "Kenny Carmichael",
+    "role": "Board member"
+   },
+   {
+    "email": "crockers@milanssd.org",
+    "name": "Sid Crocker",
+    "role": "Board member"
+   },
+   {
+    "email": "hortong@milanssd.org",
+    "name": "Greg Horton",
+    "role": "Board member"
+   },
+   {
+    "email": "mallardj@milanssd.org",
+    "name": "Jake Mallard",
+    "role": "Board member"
+   },
+   {
+    "email": "toddk@milanssd.org",
+    "name": "Kris Todd",
+    "role": "Board member"
+   }
+  ]
+ },
+ "4703300": {
+  "body": "Board of Education",
+  "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+  "layer": "school-district-unified",
+  "name": "Oneida Special School District",
+  "page": "https://www.oneidaschools.org/board-of-education",
+  "read": "2026-10-26",
+  "seats": [
+   {
+    "name": "Nancy Williamson",
+    "role": "Chairperson"
+   },
+   {
+    "name": "Stuart Jones",
+    "role": "Vice Chairman"
+   },
+   {
+    "name": "Danny Cross",
+    "role": "Secretary Treasurer"
+   },
+   {
+    "name": "Kevin Byrd",
+    "role": "Board member"
+   },
+   {
+    "name": "Mark Matthews",
+    "role": "Board member"
+   }
+  ]
+ },
+ "4703360": {
+  "body": "Board of Education",
+  "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+  "layer": "school-district-elementary",
+  "name": "Paris Special School District",
+  "page": "https://www.parisssd.org/board-members",
+  "read": "2026-10-26",
+  "seats": [
+   {
+    "name": "Troy Barrow",
+    "role": "Chairman"
+   },
+   {
+    "name": "Bill Jelks",
+    "role": "Vice-Chairman"
+   },
+   {
+    "name": "Missy Klutts",
+    "role": "Secretary"
+   },
+   {
+    "name": "Barry Flood",
+    "role": "Board member"
+   },
+   {
+    "name": "Luanne Taylor",
+    "role": "Board member"
+   },
+   {
+    "name": "Jon Davidson",
+    "role": "Board member"
+   },
+   {
+    "name": "Rachel Steedly",
+    "role": "Board member"
+   }
+  ]
+ },
+ "4703540": {
+  "body": "Board of Education",
+  "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+  "layer": "school-district-unified",
+  "name": "Richard City Special School District",
+  "note": "The district's page heads this list 2025-2026 Richard Hardy Special School District Board of Education.",
+  "page": "https://richardhardy.org/our-board/",
+  "read": "2026-10-26",
+  "seats": [
+   {
+    "email": "jhoward@richardhardy.org",
+    "name": "Jacque Howard",
+    "role": "Chairman"
+   },
+   {
+    "email": "jolton@richardhardy.org",
+    "name": "Jennifer Olton",
+    "role": "Secretary"
+   },
+   {
+    "email": "chelton@richardhardy.org",
+    "name": "Cherie Helton",
+    "role": "Board member"
+   },
+   {
+    "email": "mlong@richardhardy.org",
+    "name": "Michelle Long",
+    "role": "Board member"
+   }
+  ]
+ },
+ "4703900": {
+  "body": "Board of Education",
+  "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district. It lists three members.",
+  "layer": "school-district-unified",
+  "name": "South Carroll Special School District",
+  "page": "https://www.rocketsonline.org/page/district-board",
+  "read": "2026-10-26",
+  "seats": [
+   {
+    "email": "c_bartho@bellsouth.net",
+    "name": "Corey Bartholomew",
+    "phone": "home 731.986.9799",
+    "phonesExtra": [
+     "cell 731.693.0492"
+    ],
+    "role": "Chairman"
+   },
+   {
+    "email": "dgmcox@yahoo.com",
+    "name": "Donna McDaniel-Cox",
+    "phone": "615-218-2073",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Colton Moore",
+    "phone": "731-415-9652",
+    "role": "Board member"
+   }
+  ]
+ },
+ "4704100": {
+  "body": "Board of Education",
+  "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+  "layer": "school-district-unified",
+  "name": "Trenton Special School District",
+  "page": "https://trentonssd.org/school-board/",
+  "read": "2026-10-26",
+  "seats": [
+   {
+    "name": "Justin Weaver",
+    "role": "Board Chair"
+   },
+   {
+    "name": "Lisa Andrews-Young",
+    "role": "Board member"
+   },
+   {
+    "name": "Katie Dinwiddie",
+    "role": "Board member"
+   },
+   {
+    "name": "Clint Hickerson",
+    "role": "Board member"
+   },
+   {
+    "name": "Ross Pope",
+    "role": "Board member"
+   }
+  ]
+ },
+ "4704490": {
+  "body": "Board of Education",
+  "how": "The district's voters elect its board. The district's own page lists two members for each of three precincts: Atwood, Trezevant, and McLemoresville and County.",
+  "layer": "school-district-unified",
+  "name": "West Carroll Special District",
+  "ownName": "West Carroll Special School District",
+  "page": "https://www.wcssd.org/page/wcssd-board-of-education",
+  "read": "2026-10-26",
+  "seats": [
+   {
+    "area": "Atwood Precinct",
+    "name": "William Robinson",
+    "role": "Chairman"
+   },
+   {
+    "area": "Atwood Precinct",
+    "name": "Jonathan Wilson",
+    "role": "Board member"
+   },
+   {
+    "area": "Trezevant Precinct",
+    "name": "Kelly Weaver",
+    "role": "Secretary/Treasurer"
+   },
+   {
+    "area": "Trezevant Precinct",
+    "name": "Paul Mueller",
+    "role": "Board member"
+   },
+   {
+    "area": "McLemoresville and County Precinct",
+    "name": "Jeremy Jackson",
+    "role": "Vice Chairman"
+   },
+   {
+    "area": "McLemoresville and County Precinct",
+    "name": "Linda Black",
+    "role": "Board member"
+   }
+  ]
+ }
+}

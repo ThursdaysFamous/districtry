@@ -1904,3 +1904,14 @@ carry. 305 places, 69 school districts and 540 of the 831 ZCTAs in its box
 it) became 6.2 MB of archives, `scripts/probe_tile_cards.mjs` found no card
 that differs at 150 points, and `point-transmission.json` reads 0 of 12
 layers sending the point where it read 3.
+
+**Missouri's five followed on 2026-10-26, before it went live**: its county
+subdivision, municipality and unified and elementary school district layers
+as four `MIRRORS` rows and its ZIP layer as one `ZIP_MIRRORS` row. 1,394
+county subdivisions, 947 places, 445 unified and 71 elementary districts and
+1,040 of the 1,977 ZCTAs in its box became 17.0 MB of archives,
+`scripts/probe_tile_cards.mjs` found no card that differs at 249 points, and
+`point-transmission.json` reads 0 of 13 layers sending the point where it
+read 5. Its ZIP code search index waits for go-live, because
+`scripts/build_zip_index.mjs` does not skip a hidden app when it decides which
+app lists a ZIP code that crosses a state line.

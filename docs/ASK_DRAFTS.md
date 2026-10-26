@@ -2751,7 +2751,9 @@ to and would read as doubting the first answer. It is recorded, not re-asked.
 
 ## Ask 23 — Logan County Clerk: may an automated client read the yearbook?
 
-> **NOT YET ASKED — DRAFTED 2026-09-12.** A first approach to this office. It asks for
+> **ASKED 2026-10-01, FOLLOWED UP 2026-10-26, no reply as of 2026-10-26** (dates from the sent
+> folder as the Letters thread read it). Drafted 2026-09-12. On 2026-10-24 the site's robots.txt
+> still disallowed `/images/`, so the ask is still open. A first approach to this office. It asks for
 > permission, not for data: the county already publishes the file and it already serves
 > normally to a browser. Nothing is blocked and nothing is being worked around.
 
@@ -8414,7 +8416,13 @@ keeps saying the wards are not drawn.
 
 ## Ask ok-csa-ward-layers — OU Center for Spatial Analysis: the same terms question for its Municipal_Wards and School_District_Wards layers
 
-> **NOT YET ASKED — DRAFTED 2026-10-17. NOT A LETTER OF ITS OWN**: a paragraph to add to the
+> **ASKED 2026-10-26 at 13:56 UTC**, by the operator, inside the follow-up to Ask
+> ok-csa-precinct-terms, sent to Dr Chengbin Deng (cdeng@ou.edu) with Dr Todd Fagin copied. It covers
+> the precinct permission and both ward layers. A second follow-up is due about 2026-11-09. Gaps
+> `ok-school-board-members` (its `ask` field) and `ok-municipal-officeholders` (in its `blocker`,
+> since that record's `ask` field holds Lawton's answer) record the send.
+>
+> **DRAFTED 2026-10-17. NOT A LETTER OF ITS OWN**: a paragraph to add to the
 > follow-up of Ask ok-csa-precinct-terms, which went to Dr Chengbin Deng with Dr Todd Fagin copied
 > and is due its follow-up around 2026-10-22. It rides that follow-up because it is the same
 > question about the same publisher, and a second letter to the same two people a week apart would
