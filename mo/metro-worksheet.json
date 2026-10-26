@@ -593,7 +593,11 @@
   },
   "coverage_key": {
     "outside": "Outside Missouri",
-    "edge": "Missouri"
+    "region": {
+      "edge": "Missouri",
+      "label": "County commission districts not drawn yet",
+      "sub": "The County card still names every county's commission or council"
+    }
   },
   "data_files": {
     "geometry": [
@@ -601,7 +605,13 @@
         "file": "metro-outline.json",
         "min_features": 1,
         "max_features": 1,
-        "note": "The whole-Missouri outline for the coverage wash (loadMetroOutline), dissolved from the 115-county fabric."
+        "note": "The coverage ring for the wash (loadMetroOutline): the counties whose county commission district lines are drawn, dissolved from the same county fabric as mo-state-outline.json. It can be several disjoint parts."
+      },
+      {
+        "file": "mo-state-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "The whole-Missouri outline (loadStateOutline), dissolved from the 115-county fabric: the wash's middle band and the ground the ZIP layer's coverage test reads."
       },
       {
         "file": "state-counties.json",
@@ -668,7 +678,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mo-shell-v5",
+    "cache_name": "districtry-mo-shell-v6",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
