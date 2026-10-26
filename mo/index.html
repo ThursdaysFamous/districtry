@@ -4297,7 +4297,7 @@ function initMissouriExplorer() {
   // to hand drawOutOfScopeMask() the region geometry, because the key names
   // only the bands that were actually drawn. `edge` names the purple line
   // around the coverage in an instance with no region.
-  var COVERAGE_KEY = { outside: "Outside Missouri", edge: "Missouri" };
+  var COVERAGE_KEY = { outside: "Outside Missouri", region: { edge: "Missouri", label: "County commission districts not drawn yet", sub: "The County card still names every county's commission or council" } };
   /* Sibling District Explorer deployments — one canonical list shared by every
    * metro fork. When a new metro launches, add its entry to every fork's
    * worksheet and regenerate (Conversion 3 will source this list from the
@@ -14975,23 +14975,34 @@ function initMissouriExplorer() {
    * County card names every member in every county from the Missouri Roster.
    * The district LINES are a different question: no statewide map of them
    * exists, the Census does not carry them, and each county draws its own
-   * (RSMo 49.010 asks only that a district not divide a township), so no
-   * district is drawn yet — gap mo-county-commission-district-lines, and
-   * mo/WATCH.md has the measurements.
+   * (RSMo 49.010 asks only that a district not divide a township), so they
+   * are drawn county by county from what each county posts or sends
+   * (mo/scripts/build_mo_commission_districts.py, mo-commission-counties.json)
+   * and the map shades the counties not drawn yet — gap
+   * mo-county-commission-district-lines, and mo/WATCH.md has the
+   * measurements.
    * ======================================================================= */
 
   // The one state fact every TIGERweb where-clause reads.
   var STATE_FIPS = "29";
 
-  /* ---------- state outline (out-of-scope wash) ----------
-   * A single dissolved feature covering all 115 counties, pre-built by
-   * mo/scripts/build_metro_outline.py. Missouri's coverage is the whole
-   * state (2-band coverage_key, no `region`), so this is the ONLY wash
-   * geometry the boot tail needs — see drawOutOfScopeMask below. Read the
-   * ring count from build_metro_outline.py --check, never from a map in your
-   * head. ---------- */
+  /* ---------- coverage ring and state outline (out-of-scope wash) ----------
+   * Two files, both pre-built by mo/scripts/build_metro_outline.py from one
+   * fetch of the state's 115 counties. metro-outline.json is the COVERAGE
+   * RING: the counties whose county commission district lines are drawn,
+   * which is the ground this app answers in full. mo-state-outline.json is
+   * the whole state, where every statewide layer and the County card still
+   * answer. The wash paints the strip between the two as the middle band
+   * (COVERAGE_KEY.region), the way Illinois shades its counties, on Adam's
+   * choice of 2026-10-26 ("Shade the map like IL is currently"), so the map
+   * says which counties are drawn while the rest come online one by one. The
+   * ring can be several disjoint parts; read its ring count from
+   * build_metro_outline.py --check, never from a map in your head. ---------- */
   var loadMetroOutline = makeCached(function () {
     return fetchJSONWithRetry("data/app/metro-outline.json", {}, 2);
+  });
+  var loadStateOutline = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mo-state-outline.json", {}, 2);
   });
 
   /* ---------- Census TIGERweb loaders ----------
@@ -16001,10 +16012,12 @@ function initMissouriExplorer() {
    * set is an ENVELOPE that reaches into the neighbouring states. `coverage`
    * suppresses the query outright, which is the engine's own mechanism for
    * "this layer does not apply here" and costs no fetch at all outside the
-   * state. The outline is the same file the coverage wash already fetches;
-   * a failed fetch fails OPEN per the engine's coverage contract. ---------- */
+   * state. The outline is the same state file the coverage wash already
+   * fetches for its middle band (not the coverage ring, which is only the
+   * counties whose commission lines are drawn); a failed fetch fails OPEN per
+   * the engine's coverage contract. ---------- */
   function inMissouri(point) {
-    return loadMetroOutline().then(function (fc) {
+    return loadStateOutline().then(function (fc) {
       var feats = (fc && fc.features) || [];
       for (var i = 0; i < feats.length; i++) {
         if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) return true;
@@ -17758,17 +17771,17 @@ function initMissouriExplorer() {
 
   buildGroupsUI();
   applyStateFromHash(); // restore a shared #point=…&layers=… link, if present
-  // Out-of-scope wash: a light grey wash over everything beyond this fork's
-  // coverage, drawn at idle from data/app/metro-outline.json (one feature,
-  // the state's 115 TIGERweb counties dissolved, the City of St. Louis among
-  // them, pre-built by mo/scripts/build_metro_outline.py). It marks where coverage genuinely
-  // ends (the cards already hide an out-of-coverage layer outright), and it
-  // skips silently on any error — it is a hint, not data; regenerate the
-  // file, never hand-edit it. This instance is 2-band coverage (no `region`), so
-  // drawOutOfScopeMask takes only the coverage geometry — see
-  // mo/scripts/build_metro_outline.py's docstring for when a second, wider
-  // region file would be added (the WI #523 precedent).
-  whenIdle(function () { drawOutOfScopeMask(loadMetroOutline); });
+  // Out-of-scope wash, in three bands, drawn at idle: clear inside
+  // data/app/metro-outline.json (the counties whose commission district
+  // lines are drawn), a lighter wash over the rest of the state from
+  // data/app/mo-state-outline.json (the 115 counties dissolved, the City of
+  // St. Louis among them, where the statewide layers and the County card
+  // still answer), and the full wash beyond the state line. Both files are
+  // pre-built by mo/scripts/build_metro_outline.py; regenerate them, never
+  // hand-edit. It skips silently on any error — it is a hint, not data.
+  // COVERAGE_KEY.region names the middle band for the map key and the data
+  // gaps panel.
+  whenIdle(function () { drawOutOfScopeMask(loadMetroOutline, loadStateOutline); });
 
 
   // sources.html sends readers back here with "#gaps" to open the Data gaps
