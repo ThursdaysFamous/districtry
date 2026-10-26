@@ -4261,6 +4261,14 @@ NOT_COUNTY_BOARDS = {
                "the deploy does not publish. Missouri's go-live writes the "
                "adapter and drops this entry.",
     ),
+    "mn/data/app/mn-swcd-supervisors.json": dict(
+        date="2026-10-26",
+        reason="the elected supervisors of Minnesota's 88 soil and water "
+               "conservation districts. Real officeholders, named, and a "
+               "special district rather than county government: each "
+               "district carries its county only because each lies inside "
+               "one county, and its board is not the county board.",
+    ),
     "mn/data/app/mn-county-town-officers.json": dict(
         date="2026-10-16",
         reason="the supervisors, clerks and treasurers of 416 Minnesota "
