@@ -34,6 +34,24 @@ results page, and the card says the office is not named rather than naming
 him. An entry there must still match the roster word for word, so it stops
 the build once a new edition no longer prints the name.
 
+THREE CHARTER COUNTIES' OWN PAGES NAME THEIR MEMBERS, AND WIN. The roster was
+printed in June 2025, so it can be a member behind. Read on 2026-10-26, the
+pages of Jefferson County (www.jeffcomo.gov/399/County-Council), St. Charles
+County (www.sccmo.org/1352/Council-Members) and Jackson County
+(www.jacksongov.org/Government/County-Legislature) list every seat of their
+council or legislature, and Jefferson's and Jackson's differ from the roster:
+Jefferson's 5th District is Tim Bennett Jr. where the roster prints Scott Seek,
+and Jackson's 3rd District at Large is Megan L. Smith where it prints Megan L.
+Marshall. So COUNTY_PAGES reads each page every run, and its names ship. A
+member whose surname matches the roster's within one letter (Lori Arons, whom
+the roster prints Lori Aronns) is the same person and keeps the telephone,
+e-mail address and party the roster prints beside them; anyone else ships with
+only what the county's page prints beside them (St. Charles prints each
+member's e-mail address). A page that stops listing every seat stops the
+build. St. Louis County's own page answers this script with a managed
+challenge (HTTP 403, "Just a moment...", 2026-10-26), which is an access
+control, so its council is named from the roster alone.
+
 HOW THE PDF IS READ. pdftotext (poppler-utils) writes every word with its page,
 text flow and position (-tsv). Each page prints two columns, and on pages where
 two counties start side by side poppler's own reading order takes both
@@ -65,7 +83,10 @@ run. A county whose entries do not match the expected shape stops the build.
 ROBOTS. www.sos.mo.gov's robots.txt (199 bytes, read 2026-10-21 through
 scripts/robots_policy.py with this script's own User-Agent) disallows nothing
 this script reads and states no delay; every fetch is still paced at one
-second.
+second. Read 2026-10-26 the same way: www.jeffcomo.gov (2,643 bytes) and
+www.sccmo.org (2,901 bytes) disallow neither page and state Crawl-delay 10,
+which the HostPacer honours; www.jacksongov.org (14,608 bytes) disallows
+neither and states no delay.
 
 Usage:
     python3 mo/scripts/build_mo_county_officials.py [output_dir]
@@ -81,8 +102,8 @@ every seat and office either named or marked vacant, no fax number, and the
 same floors the build applies. It proves the file is what a build writes; it
 never proves the roster has not moved since.
 
---save writes the publications page and the roster PDF into DIR (sos-pubs.html,
-mo-roster.pdf), reading back any it already holds; --offline reads them back
+--save writes the publications page, the roster PDF and the three county pages
+into DIR (sos-pubs.html, mo-roster.pdf and COUNTY_PAGES' files), reading back any it already holds; --offline reads them back
 instead of fetching, for building and testing without the network.
 """
 
@@ -152,6 +173,25 @@ STALE = {
         "checked": "2026-10-21",
     },
 }
+
+# The charter counties whose own pages list every seat of their council or
+# legislature, read every run (see the module docstring), and the seat labels
+# each page's words map to.
+COUNTY_PAGES = {
+    "29099": {"url": "https://www.jeffcomo.gov/399/County-Council",
+              "file": "jefferson-council.html", "parse": "jefferson",
+              "source": "Jefferson County's own website (jeffcomo.gov)"},
+    "29183": {"url": "https://www.sccmo.org/1352/Council-Members",
+              "file": "stcharles-council.html", "parse": "stcharles",
+              "source": "St. Charles County's own website (sccmo.org)"},
+    "29095": {"url": "https://www.jacksongov.org/Government/County-Legislature",
+              "file": "jackson-legislature.html", "parse": "jackson",
+              "source": "Jackson County's own website (jacksongov.org)"},
+}
+ORDINAL_SEATS = {"1": "First", "2": "Second", "3": "Third", "4": "Fourth",
+                 "5": "Fifth", "6": "Sixth", "7": "Seventh"}
+ORDINAL_WORDS = {"1st": "1", "2nd": "2", "3rd": "3", "4th": "4", "5th": "5",
+                 "6th": "6", "7th": "7"}
 
 # The elected county offices carried on the card, by the title the roster
 # prints (asterisks removed) -> the label the card shows. Anything else the
@@ -790,6 +830,96 @@ def build_county(geoid, county, entries, edition, src, today, notes):
     return record
 
 
+def page_text(raw):
+    text = re.sub(r"<script\b.*?</script>|<style\b.*?</style>", " ", raw, flags=re.S | re.I)
+    text = html_module.unescape(re.sub(r"<[^>]+>", " ", text))
+    return re.sub(r"\s+", " ", text.replace("\u00a0", " ")).strip()
+
+
+NAME_WORDS = r"[A-Z][A-Za-z.'’-]*(?: [A-Z][A-Za-z.'’-]*){1,3}?"
+
+
+def parse_county_page(kind, raw):
+    """{seat label: {"name", "email"?}} from one county's own page."""
+    text = page_text(raw)
+    seats = {}
+    if kind == "jefferson":
+        # "District 5 - Tim Bennett Jr. Tim Bennett Jr. Contact & Biography"
+        for m in re.finditer(r"District ([1-7]) - (?:Mrs\.|Mr\.|Ms\.|Dr\.)? ?(" + NAME_WORDS
+                             + r") (?:Mrs\.|Mr\.|Ms\.|Dr\.)? ?\2 Contact", text):
+            seats.setdefault(ORDINAL_SEATS[m.group(1)] + " District", {"name": m.group(2)})
+    elif kind == "stcharles":
+        # "Council District 1 Matt Swanson - Council Vice Chair Email Matt Swanson Blog"
+        blocks = re.split(r"Council District (?=[1-7]\b)", raw)
+        for block in blocks[1:]:
+            m = re.match(r"([1-7]) (" + NAME_WORDS + r")(?: - Council(?: Vice)? Chair)? Email ",
+                         page_text(block))
+            if not m:
+                continue
+            row = {"name": m.group(2)}
+            mail = re.findall(r'href="mailto:([^"?]+)"', block)
+            if len(set(mail)) == 1:
+                row["email"] = mail[0]
+            seats.setdefault(ORDINAL_SEATS[m.group(1)] + " District", row)
+    elif kind == "jackson":
+        # "Jalen Anderson - 1st District At-Large ... Manuel Abarca IV - 1st District"
+        for m in re.finditer(r"(" + NAME_WORDS + r") - ([1-7](?:st|nd|rd|th)) District"
+                             r"( At-Large)?", text):
+            label = ORDINAL_SEATS[ORDINAL_WORDS[m.group(2)]] + " District" + \
+                (" at Large" if m.group(3) else "")
+            seats.setdefault(label, {"name": m.group(1)})
+    return seats
+
+
+def surname_key(name):
+    words = [w for w in re.split(r"\s+", str(name or "").strip()) if w not in NAME_SUFFIXES]
+    return letters(words[-1]) if words else ""
+
+
+def near(a, b):
+    """True when a and b differ by at most one letter added, dropped or changed."""
+    if a == b:
+        return True
+    if abs(len(a) - len(b)) > 1:
+        return False
+    if len(a) == len(b):
+        return sum(x != y for x, y in zip(a, b)) == 1
+    short, long_ = sorted((a, b), key=len)
+    return any(long_[:i] + long_[i + 1:] == short for i in range(len(long_)))
+
+
+def apply_county_page(geoid, record, pages, today, notes):
+    spec = COUNTY_PAGES[geoid]
+    found = parse_county_page(spec["parse"], pages.get(spec["file"], spec["url"]))
+    labels = [s["seat"] for s in record["seats"]]
+    if sorted(found) != sorted(labels):
+        raise SystemExit("FAIL: %s's own page lists seats %s where the roster prints %s"
+                         % (record["county"], sorted(found), sorted(labels)))
+    seats = []
+    for row in record["seats"]:
+        page = found[row["seat"]]
+        if not reads_as_name(page["name"]):
+            raise SystemExit("FAIL: %s's own page: %r does not read as a name"
+                             % (record["county"], page["name"]))
+        same = (not row.get("vacant") and letters(row.get("name", ""))[:1] ==
+                letters(page["name"])[:1] and near(surname_key(row.get("name")),
+                                                   surname_key(page["name"])))
+        if same:
+            new = dict(row, name=page["name"])
+        else:
+            new = {"seat": row["seat"], "name": page["name"]}
+            notes.append("%s %s: the county's page names %s where the roster prints %s"
+                         % (record["county"], row["seat"], page["name"],
+                            "a vacancy" if row.get("vacant") else row.get("name")))
+        if page.get("email") and not new.get("email"):
+            new["email"] = page["email"]
+        seats.append(new)
+    record["seats"] = seats
+    record["seatsSource"] = spec["source"]
+    record["seatsSourceUrl"] = spec["url"]
+    record["seatsRead"] = today
+
+
 def build(pages, today):
     with open(COUNTIES_FILE, encoding="utf-8") as fh:
         counties = [{"geoid": f["properties"]["GEOID"], "name": f["properties"]["NAME"]}
@@ -807,6 +937,8 @@ def build(pages, today):
     for geoid in sorted(by_county):
         out[geoid] = build_county(geoid, names[geoid], by_county[geoid], edition, url,
                                   today, notes)
+        if geoid in COUNTY_PAGES:
+            apply_county_page(geoid, out[geoid], pages, today, notes)
     check(out)
     return out, notes, url, edition
 
@@ -886,6 +1018,15 @@ def check_shipped(path):
         if not str(rec.get("sourceUrl", "")).startswith("https://www.sos.mo.gov/") or \
                 not re.match(r"^\d{4}-\d{2}-\d{2}$", str(rec.get("read", ""))):
             problems.append("%s: source %r read %r" % (where, rec.get("sourceUrl"), rec.get("read")))
+        if geoid in COUNTY_PAGES:
+            spec = COUNTY_PAGES[geoid]
+            if rec.get("seatsSourceUrl") != spec["url"] or rec.get("seatsSource") != spec["source"] \
+                    or not re.match(r"^\d{4}-\d{2}-\d{2}$", str(rec.get("seatsRead", ""))):
+                problems.append("%s: its members are not marked as read from its own page"
+                                % where)
+        elif rec.get("seatsSourceUrl") or rec.get("seatsSource"):
+            problems.append("%s: names a page for its members that COUNTY_PAGES does not"
+                            % where)
         if re.search(r"\bfax\b", json.dumps(rec), re.I):
             problems.append("%s: carries the word fax" % where)
     if problems:

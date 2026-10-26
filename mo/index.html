@@ -15169,7 +15169,13 @@ function initMissouriExplorer() {
       "roster every two years, so an official who took office after this " +
       "edition was printed is not shown here. This app checks every week for " +
       "a new edition. Each telephone number and e-mail address shown on a " +
-      "person's row is one the roster prints beside that official alone.";
+      "person's row is one the roster prints beside that official alone." +
+      (o && o.seatsSource
+        ? " The council members are named from " + String(o.seatsSource) +
+          (moDate(o.seatsRead) ? ", read on " + moDate(o.seatsRead) : "") +
+          ", because the county's own page is kept up to date between " +
+          "editions of the roster."
+        : "");
   }
   function moRosterLink(result) {
     var url = result && result.officials && safeHttpUrl(result.officials.sourceUrl);
