@@ -1985,7 +1985,8 @@ note is drafted and waits on a route rather than on a send.
 
 **SENT 2026-10-01 16:17:55 UTC to `league@lwm-info.org`, subject "Reuse terms for the
 Directory of City and Village Officials". NO REPLY as of 2026-10-15** (read off the operator's
-mailbox that day). Drafted 2026-09-05. Nothing here has been bought, and nothing should
+mailbox that day). **FOLLOWED UP 2026-10-26 at 13:56:03 UTC; a second follow-up is due about
+2026-11-09.** Drafted 2026-09-05. Nothing here has been bought, and nothing should
 be until this is answered.
 
 **The sweep this draft was waiting on has landed, and the draft names its figures.**
@@ -2411,7 +2412,8 @@ unaffected sources; the three district files are not in the tree.
 > London and Port Washington it is written down and not yet built, waiting on the same gate. No
 > reply is owed; a thank-you note is optional and the Letters thread drafts it.
 >
-> Pepin has not replied. Follow up once at about 2026-10-21.
+> Pepin has not replied. The follow-up went on 2026-10-26 at 13:55:52 UTC; a second follow-up is
+> due about 2026-11-09.
 
 **What this is about.** Wisconsin's aldermanic districts are drawn as groups of wards, and
 the ward file the Legislative Technology Services Bureau publishes is the only statewide
@@ -4911,7 +4913,8 @@ government to weaken a protection for one visitor's convenience.
 
 > **SENT 2026-10-01 14:44:02 UTC to `wtowns@wisctowns.com`, subject "districtry.com — is there
 > a list of town board members?". NO REPLY as of 2026-10-15** (read off the operator's mailbox
-> that day). A follow-up is due about 2026-10-22. A first approach to this organisation. It asks
+> that day). **FOLLOWED UP 2026-10-26 at 13:56:12 UTC; a second follow-up is due about
+> 2026-11-09.** A first approach to this organisation. It asks
 > whether a list exists and on what terms, not for anything free: the association is a
 > membership body, not a government, and a list it compiles from its members is its own work
 > to price as it likes.
@@ -5985,9 +5988,9 @@ changes; the Tama card keeps naming the county and no supervisors.
 > the Village Clerk. Recorded from `/mnt/project-files/letters/sent-2026-10-01.md`, which is read
 > off the sent folder — the only record of what actually went, as against what a thread drafted.
 > The matching Bellevue note in `wi/scripts/build_wi_aldermanic_districts.py`'s `EXCLUDED` table
-> and the `aldermanic-incomplete-filings` gap blocker were updated the same day. Follow up once
-> at about 2026-10-21; thirty days of silence after that follow-up is what would let a gap record
-> say the village was asked.
+> and the `aldermanic-incomplete-filings` gap blocker were updated the same day. **FOLLOWED UP
+> 2026-10-26 at 13:55:44 UTC; a second follow-up is due about 2026-11-09**; thirty days of silence
+> after that follow-up is what would let a gap record say the village was asked.
 >
 > **NO `ask` BLOCK GOES WITH IT, AND THAT IS THE STANDARD RATHER THAN AN OMISSION.** An `ask`
 > block can only ever matter on a record that declares `covers`, and
@@ -8413,7 +8416,13 @@ keeps saying the wards are not drawn.
 
 ## Ask ok-csa-ward-layers — OU Center for Spatial Analysis: the same terms question for its Municipal_Wards and School_District_Wards layers
 
-> **NOT YET ASKED — DRAFTED 2026-10-17. NOT A LETTER OF ITS OWN**: a paragraph to add to the
+> **ASKED 2026-10-26 at 13:56 UTC**, by the operator, inside the follow-up to Ask
+> ok-csa-precinct-terms, sent to Dr Chengbin Deng (cdeng@ou.edu) with Dr Todd Fagin copied. It covers
+> the precinct permission and both ward layers. A second follow-up is due about 2026-11-09. Gaps
+> `ok-school-board-members` (its `ask` field) and `ok-municipal-officeholders` (in its `blocker`,
+> since that record's `ask` field holds Lawton's answer) record the send.
+>
+> **DRAFTED 2026-10-17. NOT A LETTER OF ITS OWN**: a paragraph to add to the
 > follow-up of Ask ok-csa-precinct-terms, which went to Dr Chengbin Deng with Dr Todd Fagin copied
 > and is due its follow-up around 2026-10-22. It rides that follow-up because it is the same
 > question about the same publisher, and a second letter to the same two people a week apart would

@@ -1,0 +1,262 @@
+{
+ "_about": "Written by the builder, never by hand: for every page the seats file cites, the date it was last read, the client it was read with, the address it ended at, its size and hash, the names found on it, and the e-mail addresses and the ten digits of the numbers its seats carry that were found on it.",
+ "pages": {
+  "https://richardhardy.org/our-board/": {
+   "bytes": 93548,
+   "client": "token",
+   "emails": [
+    "chelton@richardhardy.org",
+    "jhoward@richardhardy.org",
+    "jolton@richardhardy.org",
+    "mlong@richardhardy.org"
+   ],
+   "final": "https://richardhardy.org/our-board/",
+   "names": [
+    "Cherie Helton",
+    "Jacque Howard",
+    "Jennifer Olton",
+    "Michelle Long"
+   ],
+   "read": "2026-10-26",
+   "sha256": "c44c2e96be0952bc006fb0a1829e3f9bc46557d9cec40e062a739d6f582a18a2"
+  },
+  "https://trentonssd.org/school-board/": {
+   "bytes": 190013,
+   "client": "token",
+   "final": "https://trentonssd.org/school-board/",
+   "names": [
+    "Clint Hickerson",
+    "Justin Weaver",
+    "Katie Dinwiddie",
+    "Lisa Andrews-Young",
+    "Ross Pope"
+   ],
+   "read": "2026-10-26",
+   "sha256": "f37fa3dfbe17e519a1ff0cba314aac21d68c2d3deaf1eca26a53f1f15410f85b"
+  },
+  "https://www.bradfordspecial.com/91649_1": {
+   "bytes": 162493,
+   "client": "token",
+   "final": "https://www.bradfordspecial.com/91649_1",
+   "names": [
+    "Buni Wendt",
+    "Chris Johnstone",
+    "Clayton McDade",
+    "Jason McDaniel",
+    "Mark Hampton",
+    "Michael Wheeler"
+   ],
+   "read": "2026-10-26",
+   "sha256": "47f632f578f0e76a58328371b17f771d8b2cbed061b5bd5fbeb9b49bf17b2f32"
+  },
+  "https://www.fssd.org/about-us/board-members": {
+   "bytes": 85960,
+   "client": "token",
+   "final": "https://www.fssd.org/about-us/board-members",
+   "names": [
+    "Allena Bell",
+    "Amy Potts",
+    "Kevin Townsel",
+    "Robert Blair",
+    "Robin Newman",
+    "Tim Stillings"
+   ],
+   "read": "2026-10-26",
+   "sha256": "d4ff511ba5a288e1b74d8ed6946ac7b10b3f2732df9df5a3ecbbe767db410565"
+  },
+  "https://www.gcssd.org/page/board-of-education": {
+   "bytes": 1384832,
+   "client": "token",
+   "emails": [
+    "addor@gcssd.org",
+    "balls@gcssd.org",
+    "boalsb@gcssd.org",
+    "campbellj2@gcssd.org",
+    "lannomt@gcssd.org",
+    "maitlandt@gcssd.org",
+    "watkinse@gcssd.org"
+   ],
+   "final": "https://www.gcssd.org/page/board-of-education",
+   "names": [
+    "Benny Boals",
+    "Eddie Watkins",
+    "John Campbell II",
+    "Richard Addo",
+    "Scott Ball",
+    "Tom Lannom",
+    "Treva Maitland"
+   ],
+   "phones": [
+    "4043584518",
+    "7314143521",
+    "7314147815",
+    "7314466500",
+    "7314876171",
+    "7316436161",
+    "7316657397"
+   ],
+   "read": "2026-10-26",
+   "sha256": "2b36f9784bc3c6ad3a7d9935f271ec5110de30fd2c2c8a829ee1f4ff68039b67"
+  },
+  "https://www.hrbedu.org/en-US/board-of-education": {
+   "bytes": 189509,
+   "client": "token",
+   "final": "https://www.hrbedu.org/en-US/board-of-education",
+   "names": [
+    "April Hampton",
+    "Brad Hurley",
+    "Brandy Boyd",
+    "Jim Holder",
+    "Johnathan Tedford",
+    "Michael Graves",
+    "Nick Maness"
+   ],
+   "read": "2026-10-26",
+   "sha256": "addce8f8e988e5eff83c3e87075dc10ab4e02b551000193a11d865440b154d8a"
+  },
+  "https://www.huntingdonschools.net/page/board-members": {
+   "bytes": 1243723,
+   "client": "token",
+   "final": "https://www.huntingdonschools.net/page/board-members",
+   "names": [
+    "Brittany Foster",
+    "Clay Nolen",
+    "Kennedy White",
+    "Lee Carter",
+    "Morgan Butler",
+    "Shawna Smith"
+   ],
+   "read": "2026-10-26",
+   "sha256": "55914b85a5bd202183968eb9bb7ad1b8182296bd26803490b92b3ab09d15e621"
+  },
+  "https://www.lssd.org/apps/pages/index.jsp?uREC_ID=3757624&type=d&pREC_ID=2438713": {
+   "bytes": 56084,
+   "client": "token",
+   "emails": [
+    "heather.sadlergallaher@lssd.org",
+    "israel.woodson@lssd.org",
+    "larry.jones@lssd.org",
+    "maria.scalisi@lssd.org",
+    "wayne.oakley@lssd.org"
+   ],
+   "final": "https://www.lssd.org/apps/pages/index.jsp?uREC_ID=3757624&type=d&pREC_ID=2438713",
+   "names": [
+    "Heather Sadler Gallaher",
+    "Israel Woodson",
+    "Larry Jones",
+    "Maria Scalisi",
+    "Wayne Oakley"
+   ],
+   "read": "2026-10-26",
+   "sha256": "b957e991e3f6bcd080c036a67ebfba27813945434c5cb2ae8c2ed616b22df5b3"
+  },
+  "https://www.mckenzieschools.org/board": {
+   "bytes": 44557,
+   "client": "token",
+   "final": "https://www.mckenzieschools.org/board",
+   "names": [
+    "Brian Stafford",
+    "Brian Winston",
+    "Chad Brown",
+    "Karen Fowler",
+    "Matt Lane",
+    "Misty Aird",
+    "Spiro Roditis"
+   ],
+   "read": "2026-10-26",
+   "sha256": "a9e8cead5d8649d09a3f6184008af017662a3fbd1fa0bf833e2fc9d51869dcf9"
+  },
+  "https://www.milanssd.org/page/board-member-contact-information": {
+   "bytes": 1338200,
+   "client": "token",
+   "emails": [
+    "biggsla@milanssd.org",
+    "carmichaelk@milanssd.org",
+    "crockers@milanssd.org",
+    "hortong@milanssd.org",
+    "mallardj@milanssd.org",
+    "ownbyw@milanssd.org",
+    "toddk@milanssd.org"
+   ],
+   "final": "https://www.milanssd.org/page/board-member-contact-information",
+   "names": [
+    "Greg Horton",
+    "Jake Mallard",
+    "Kenny Carmichael",
+    "Kris Todd",
+    "Lauren Biggs",
+    "Sid Crocker",
+    "Will Ownby"
+   ],
+   "read": "2026-10-26",
+   "sha256": "699e7461907592e7792002bd9dac93befd12c24804795132a805d2f9292bd5ce"
+  },
+  "https://www.oneidaschools.org/board-of-education": {
+   "bytes": 1774916,
+   "client": "token",
+   "final": "https://www.oneidaschools.org/board-of-education",
+   "names": [
+    "Danny Cross",
+    "Kevin Byrd",
+    "Mark Matthews",
+    "Nancy Williamson",
+    "Stuart Jones"
+   ],
+   "read": "2026-10-26",
+   "sha256": "931204a2aa6c922c94b2665afd1dabaaae2f81fe068b764af3af2db14476d2d1"
+  },
+  "https://www.parisssd.org/board-members": {
+   "bytes": 226241,
+   "client": "token",
+   "final": "https://www.parisssd.org/board-members",
+   "names": [
+    "Barry Flood",
+    "Bill Jelks",
+    "Jon Davidson",
+    "Luanne Taylor",
+    "Missy Klutts",
+    "Rachel Steedly",
+    "Troy Barrow"
+   ],
+   "read": "2026-10-26",
+   "sha256": "5b1bb11d79a6201359d3ded5d4b19672094631b5fd525af3f14c9ed0deaf76d4"
+  },
+  "https://www.rocketsonline.org/page/district-board": {
+   "bytes": 1247437,
+   "client": "token",
+   "emails": [
+    "c_bartho@bellsouth.net",
+    "dgmcox@yahoo.com"
+   ],
+   "final": "https://www.rocketsonline.org/page/district-board",
+   "names": [
+    "Colton Moore",
+    "Corey Bartholomew",
+    "Donna McDaniel-Cox"
+   ],
+   "phones": [
+    "6152182073",
+    "7314159652",
+    "7316930492",
+    "7319869799"
+   ],
+   "read": "2026-10-26",
+   "sha256": "07a8b4e41a68e37d7ee1ccd966b570d84bcba3f048bf1e50806c4900a338c79a"
+  },
+  "https://www.wcssd.org/page/wcssd-board-of-education": {
+   "bytes": 1431742,
+   "client": "token",
+   "final": "https://www.wcssd.org/page/wcssd-board-of-education",
+   "names": [
+    "Jeremy Jackson",
+    "Jonathan Wilson",
+    "Kelly Weaver",
+    "Linda Black",
+    "Paul Mueller",
+    "William Robinson"
+   ],
+   "read": "2026-10-26",
+   "sha256": "fd615c21664f9f591b8fc3adc2f79dc20064836470abc201b132443c1273070b"
+  }
+ }
+}

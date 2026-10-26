@@ -1,0 +1,640 @@
+{
+ "_about": "Kept by hand: the board of each of Tennessee's fourteen special school districts, written down from each district's own page and proved against it by tn/scripts/build_tn_special_school_boards.py. Keyed by the Census school district id. Never carry a home address.",
+ "districts": {
+  "4701260": {
+   "body": "Board of Education",
+   "census": "Franklin Special School District",
+   "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+   "layer": "school-district-elementary",
+   "name": "Franklin Special School District",
+   "officeMailboxes": [
+    "boardofeducation@fssd.org"
+   ],
+   "seats": [
+    {
+     "from": "board",
+     "name": "Robert Blair",
+     "seat": "Chairman"
+    },
+    {
+     "from": "board",
+     "name": "Allena Bell",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Robin Newman",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Amy Potts",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Tim Stillings",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Kevin Townsel",
+     "seat": "Member"
+    }
+   ],
+   "sources": {
+    "board": "https://www.fssd.org/about-us/board-members"
+   }
+  },
+  "4701390": {
+   "body": "Board of Education",
+   "census": "Bradford Special School District",
+   "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+   "layer": "school-district-unified",
+   "name": "Bradford Special School District",
+   "seats": [
+    {
+     "from": "board",
+     "name": "Jason McDaniel",
+     "seat": "Board Chairman"
+    },
+    {
+     "from": "board",
+     "name": "Mark Hampton",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Chris Johnstone",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Michael Wheeler",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Clayton McDade",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Buni Wendt",
+     "seat": "Member"
+    }
+   ],
+   "sources": {
+    "board": "https://www.bradfordspecial.com/91649_1"
+   }
+  },
+  "4701400": {
+   "body": "Board of Education",
+   "census": "Gibson County School District",
+   "how": "The district's voters elect its board. The district's own page lists one member for each of its seven districts, with the year each term ends.",
+   "layer": "school-district-unified",
+   "name": "Gibson County School District",
+   "seats": [
+    {
+     "area": "District 1",
+     "email": "balls@gcssd.org",
+     "from": "board",
+     "name": "Scott Ball",
+     "phone": "731.643.6161",
+     "seat": "Member"
+    },
+    {
+     "area": "District 2",
+     "email": "watkinse@gcssd.org",
+     "from": "board",
+     "name": "Eddie Watkins",
+     "phone": "731.665.7397",
+     "seat": "Member"
+    },
+    {
+     "area": "District 3",
+     "email": "lannomt@gcssd.org",
+     "from": "board",
+     "name": "Tom Lannom",
+     "phone": "731.414.7815",
+     "seat": "Chairman"
+    },
+    {
+     "area": "District 4",
+     "email": "maitlandt@gcssd.org",
+     "from": "board",
+     "name": "Treva Maitland",
+     "phone": "731.414.3521",
+     "seat": "Member"
+    },
+    {
+     "area": "District 5",
+     "email": "campbellj2@gcssd.org",
+     "from": "board",
+     "name": "John Campbell II",
+     "phone": "731.446.6500",
+     "seat": "Member"
+    },
+    {
+     "area": "District 6",
+     "email": "boalsb@gcssd.org",
+     "from": "board",
+     "name": "Benny Boals",
+     "phone": "731.487.6171",
+     "seat": "Member"
+    },
+    {
+     "area": "District 7",
+     "email": "addor@gcssd.org",
+     "from": "board",
+     "name": "Richard Addo",
+     "phone": "404.358.4518",
+     "seat": "Member"
+    }
+   ],
+   "ownName": "Gibson County Special School District",
+   "sources": {
+    "board": "https://www.gcssd.org/page/board-of-education"
+   }
+  },
+  "4701890": {
+   "body": "Board of Education",
+   "census": "Hollow Rock-Bruceton Special School District",
+   "how": "The district's voters elect its seven-member board. The district's own page lists its members and does not tie a seat to any part of the district.",
+   "layer": "school-district-unified",
+   "name": "Hollow Rock-Bruceton Special School District",
+   "seats": [
+    {
+     "from": "board",
+     "name": "Brad Hurley",
+     "seat": "Chair"
+    },
+    {
+     "from": "board",
+     "name": "Brandy Boyd",
+     "seat": "Vice Chair"
+    },
+    {
+     "from": "board",
+     "name": "Jim Holder",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Nick Maness",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Johnathan Tedford",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Michael Graves",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "April Hampton",
+     "seat": "Member"
+    }
+   ],
+   "sources": {
+    "board": "https://www.hrbedu.org/en-US/board-of-education"
+   }
+  },
+  "4702010": {
+   "body": "Board of Education",
+   "census": "Huntingdon Special School District",
+   "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+   "layer": "school-district-unified",
+   "name": "Huntingdon Special School District",
+   "seats": [
+    {
+     "from": "board",
+     "name": "Lee Carter",
+     "seat": "Chairman"
+    },
+    {
+     "from": "board",
+     "name": "Brittany Foster",
+     "seat": "Vice Chairman"
+    },
+    {
+     "from": "board",
+     "name": "Morgan Butler",
+     "seat": "Secretary-Treasurer"
+    },
+    {
+     "from": "board",
+     "name": "Shawna Smith",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Clay Nolen",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Kennedy White",
+     "seat": "Member"
+    }
+   ],
+   "sources": {
+    "board": "https://www.huntingdonschools.net/page/board-members"
+   }
+  },
+  "4702370": {
+   "body": "Board of Education",
+   "census": "Lebanon Special School District",
+   "how": "The district's voters elect its board. The district's own page lists one member for each of its five zones, under the heading 2026 - 2027.",
+   "layer": "school-district-elementary",
+   "name": "Lebanon Special School District",
+   "seats": [
+    {
+     "area": "Zone 1",
+     "email": "wayne.oakley@lssd.org",
+     "from": "board",
+     "name": "Wayne Oakley",
+     "seat": "Member"
+    },
+    {
+     "area": "Zone 2",
+     "email": "maria.scalisi@lssd.org",
+     "from": "board",
+     "name": "Maria Scalisi",
+     "seat": "Member"
+    },
+    {
+     "area": "Zone 3",
+     "email": "israel.woodson@lssd.org",
+     "from": "board",
+     "name": "Israel Woodson",
+     "seat": "Member"
+    },
+    {
+     "area": "Zone 4",
+     "email": "larry.jones@lssd.org",
+     "from": "board",
+     "name": "Larry Jones",
+     "seat": "Member"
+    },
+    {
+     "area": "Zone 5",
+     "email": "heather.sadlergallaher@lssd.org",
+     "from": "board",
+     "name": "Heather Sadler Gallaher",
+     "seat": "Board Chair"
+    }
+   ],
+   "sources": {
+    "board": "https://www.lssd.org/apps/pages/index.jsp?uREC_ID=3757624&type=d&pREC_ID=2438713"
+   }
+  },
+  "4702790": {
+   "body": "Board of Education",
+   "census": "McKenzie Special School District",
+   "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+   "layer": "school-district-unified",
+   "name": "McKenzie Special School District",
+   "seats": [
+    {
+     "from": "board",
+     "name": "Spiro Roditis",
+     "seat": "Chairman"
+    },
+    {
+     "from": "board",
+     "name": "Brian Winston",
+     "seat": "Vice-Chairman"
+    },
+    {
+     "from": "board",
+     "name": "Karen Fowler",
+     "seat": "Treasurer"
+    },
+    {
+     "from": "board",
+     "name": "Misty Aird",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Chad Brown",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Matt Lane",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Brian Stafford",
+     "seat": "Member"
+    }
+   ],
+   "sources": {
+    "board": "https://www.mckenzieschools.org/board"
+   }
+  },
+  "4702970": {
+   "body": "Board of Education",
+   "census": "Milan Special School District",
+   "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+   "layer": "school-district-unified",
+   "name": "Milan Special School District",
+   "seats": [
+    {
+     "email": "ownbyw@milanssd.org",
+     "from": "board",
+     "name": "Will Ownby",
+     "seat": "Chairman"
+    },
+    {
+     "email": "biggsla@milanssd.org",
+     "from": "board",
+     "name": "Lauren Biggs",
+     "seat": "Member"
+    },
+    {
+     "email": "carmichaelk@milanssd.org",
+     "from": "board",
+     "name": "Kenny Carmichael",
+     "seat": "Member"
+    },
+    {
+     "email": "crockers@milanssd.org",
+     "from": "board",
+     "name": "Sid Crocker",
+     "seat": "Member"
+    },
+    {
+     "email": "hortong@milanssd.org",
+     "from": "board",
+     "name": "Greg Horton",
+     "seat": "Member"
+    },
+    {
+     "email": "mallardj@milanssd.org",
+     "from": "board",
+     "name": "Jake Mallard",
+     "seat": "Member"
+    },
+    {
+     "email": "toddk@milanssd.org",
+     "from": "board",
+     "name": "Kris Todd",
+     "seat": "Member"
+    }
+   ],
+   "sources": {
+    "board": "https://www.milanssd.org/page/board-member-contact-information"
+   }
+  },
+  "4703300": {
+   "body": "Board of Education",
+   "census": "Oneida Special School District",
+   "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+   "layer": "school-district-unified",
+   "name": "Oneida Special School District",
+   "seats": [
+    {
+     "from": "board",
+     "name": "Nancy Williamson",
+     "seat": "Chairperson"
+    },
+    {
+     "from": "board",
+     "name": "Stuart Jones",
+     "seat": "Vice Chairman"
+    },
+    {
+     "from": "board",
+     "name": "Danny Cross",
+     "seat": "Secretary Treasurer"
+    },
+    {
+     "from": "board",
+     "name": "Kevin Byrd",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Mark Matthews",
+     "seat": "Member"
+    }
+   ],
+   "sources": {
+    "board": "https://www.oneidaschools.org/board-of-education"
+   }
+  },
+  "4703360": {
+   "body": "Board of Education",
+   "census": "Paris Special School District",
+   "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+   "layer": "school-district-elementary",
+   "name": "Paris Special School District",
+   "seats": [
+    {
+     "from": "board",
+     "name": "Troy Barrow",
+     "seat": "Chairman"
+    },
+    {
+     "from": "board",
+     "name": "Bill Jelks",
+     "seat": "Vice-Chairman"
+    },
+    {
+     "from": "board",
+     "name": "Missy Klutts",
+     "seat": "Secretary"
+    },
+    {
+     "from": "board",
+     "name": "Barry Flood",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Luanne Taylor",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Jon Davidson",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Rachel Steedly",
+     "seat": "Member"
+    }
+   ],
+   "sources": {
+    "board": "https://www.parisssd.org/board-members"
+   }
+  },
+  "4703540": {
+   "body": "Board of Education",
+   "census": "Richard City Special School District",
+   "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+   "layer": "school-district-unified",
+   "name": "Richard City Special School District",
+   "note": "The district's page heads this list 2025-2026 Richard Hardy Special School District Board of Education.",
+   "seats": [
+    {
+     "email": "jhoward@richardhardy.org",
+     "from": "board",
+     "name": "Jacque Howard",
+     "seat": "Chairman"
+    },
+    {
+     "email": "jolton@richardhardy.org",
+     "from": "board",
+     "name": "Jennifer Olton",
+     "seat": "Secretary"
+    },
+    {
+     "email": "chelton@richardhardy.org",
+     "from": "board",
+     "name": "Cherie Helton",
+     "seat": "Member"
+    },
+    {
+     "email": "mlong@richardhardy.org",
+     "from": "board",
+     "name": "Michelle Long",
+     "seat": "Member"
+    }
+   ],
+   "sources": {
+    "board": "https://richardhardy.org/our-board/"
+   }
+  },
+  "4703900": {
+   "body": "Board of Education",
+   "census": "South Carroll Special School District",
+   "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district. It lists three members.",
+   "layer": "school-district-unified",
+   "name": "South Carroll Special School District",
+   "seats": [
+    {
+     "email": "c_bartho@bellsouth.net",
+     "from": "board",
+     "name": "Corey Bartholomew",
+     "phone": "home 731.986.9799",
+     "phonesExtra": [
+      "cell 731.693.0492"
+     ],
+     "seat": "Chairman"
+    },
+    {
+     "email": "dgmcox@yahoo.com",
+     "from": "board",
+     "name": "Donna McDaniel-Cox",
+     "phone": "615-218-2073",
+     "seat": "Treasurer"
+    },
+    {
+     "from": "board",
+     "name": "Colton Moore",
+     "phone": "731-415-9652",
+     "seat": "Member"
+    }
+   ],
+   "sources": {
+    "board": "https://www.rocketsonline.org/page/district-board"
+   }
+  },
+  "4704100": {
+   "body": "Board of Education",
+   "census": "Trenton Special School District",
+   "how": "The district's voters elect its board. The district's own page lists its members and does not tie a seat to any part of the district.",
+   "layer": "school-district-unified",
+   "name": "Trenton Special School District",
+   "seats": [
+    {
+     "from": "board",
+     "name": "Justin Weaver",
+     "seat": "Board Chair"
+    },
+    {
+     "from": "board",
+     "name": "Lisa Andrews-Young",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Katie Dinwiddie",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Clint Hickerson",
+     "seat": "Member"
+    },
+    {
+     "from": "board",
+     "name": "Ross Pope",
+     "seat": "Member"
+    }
+   ],
+   "sources": {
+    "board": "https://trentonssd.org/school-board/"
+   }
+  },
+  "4704490": {
+   "body": "Board of Education",
+   "census": "West Carroll Special District",
+   "how": "The district's voters elect its board. The district's own page lists two members for each of three precincts: Atwood, Trezevant, and McLemoresville and County.",
+   "layer": "school-district-unified",
+   "name": "West Carroll Special District",
+   "seats": [
+    {
+     "area": "Atwood Precinct",
+     "from": "board",
+     "name": "William Robinson",
+     "seat": "Chairman"
+    },
+    {
+     "area": "Atwood Precinct",
+     "from": "board",
+     "name": "Jonathan Wilson",
+     "seat": "Member"
+    },
+    {
+     "area": "Trezevant Precinct",
+     "from": "board",
+     "name": "Kelly Weaver",
+     "seat": "Secretary/Treasurer"
+    },
+    {
+     "area": "Trezevant Precinct",
+     "from": "board",
+     "name": "Paul Mueller",
+     "seat": "Member"
+    },
+    {
+     "area": "McLemoresville and County Precinct",
+     "from": "board",
+     "name": "Jeremy Jackson",
+     "seat": "Vice Chairman"
+    },
+    {
+     "area": "McLemoresville and County Precinct",
+     "from": "board",
+     "name": "Linda Black",
+     "seat": "Member"
+    }
+   ],
+   "ownName": "West Carroll Special School District",
+   "sources": {
+    "board": "https://www.wcssd.org/page/wcssd-board-of-education"
+   }
+  }
+ }
+}
