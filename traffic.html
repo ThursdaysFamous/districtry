@@ -939,7 +939,7 @@ main > section.ruled { padding-top: 26px; border-top: 1px solid var(--line); }
 }
 
 /* ---- the four figures ---- */
-.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .tile {
   display: flex; flex-direction: column; gap: 2px; min-width: 0;
   background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
@@ -959,6 +959,15 @@ main > section.ruled { padding-top: 26px; border-top: 1px solid var(--line); }
 .sec-head h2 { margin: 0; }
 .take { margin: 0 0 12px; font-size: 15px; color: var(--slate); max-width: 76ch; }
 .take em { color: var(--ink); }
+.reads { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 32px; }
+.read { min-width: 0; }
+.read.wide { grid-column: 1 / -1; }
+.read h3 { margin: 0 0 6px; }
+.read p { margin: 0; font-size: 15px; color: var(--slate); max-width: 76ch; }
+.read p em { color: var(--ink); }
+.missed { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.missed li { font-size: 15px; color: var(--slate); }
+.missed li em { color: var(--ink); font-style: normal; font-weight: 600; }
 .legend { display: flex; flex-wrap: wrap; gap: 18px; font-size: 13.5px; color: var(--slate); }
 .legend .key { display: inline-flex; align-items: center; gap: 7px; }
 .legend .swatch { width: 11px; height: 11px; border-radius: 3px; }
@@ -1079,6 +1088,7 @@ code {
 }
 @media (max-width: 760px) {
   .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .reads { grid-template-columns: minmax(0, 1fr); }
   .tile { padding: 13px 14px 11px; }
   .tile .value { font-size: 30px; }
   .three { grid-template-columns: minmax(0, 1fr); gap: 22px; }
@@ -1128,7 +1138,7 @@ code {
   <section>
     <div class="window-row">
       <span class="kicker"><span data-stat="period">The last two months</span></span>
-      <span><span data-stat="range">August 24 – October 24, 2026</span> &middot; <span data-stat="days">62</span> days &middot; read on <span data-stat="exportDate">October 25, 2026</span></span>
+      <span><span data-stat="range">August 25 – October 25, 2026</span> &middot; <span data-stat="days">62</span> days &middot; read on <span data-stat="exportDate">October 26, 2026</span></span>
     </div>
     <div class="timeframe-row">
       <div class="engines" id="timeframe" role="group" aria-label="Timeframe" hidden>
@@ -1141,23 +1151,33 @@ code {
     <div class="tiles">
       <div class="tile">
         <span class="label">Page visits</span>
-        <span class="value"><span data-stat="pageviews">5,314</span></span>
-        <span class="sub">&asymp;<span data-stat="perDay">86</span> per day</span>
+        <span class="value"><span data-stat="pageviews">5,512</span></span>
+        <span class="sub">&asymp;<span data-stat="perDay">89</span> per day<span data-stat="changeNote"></span></span>
+      </div>
+      <div class="tile" id="returnTile" hidden>
+        <span class="label">Return visits<sup class="ref"><a href="#note-9" aria-label="Note 9">9</a></sup></span>
+        <span class="value"><span data-stat="returnPct">24%</span></span>
+        <span class="sub">of <span data-stat="appVisits">551</span> map visits since <span data-stat="returnSince">October 22</span></span>
       </div>
       <div class="tile">
-        <span class="label">Total activity<sup class="ref"><a href="#note-1" aria-label="Note 1">1</a></sup></span>
-        <span class="value"><span data-stat="total">13,825</span></span>
-        <span class="sub">visits plus features used</span>
+        <span class="label">Clicks from search<sup class="ref"><a href="#note-7" aria-label="Note 7">7</a></sup></span>
+        <span class="value"><span data-stat="searchClicksAll">1,771</span></span>
+        <span class="sub">Google and Bing, <span data-stat="searchCtrAll">2.5%</span> of appearances</span>
+      </div>
+      <div class="tile">
+        <span class="label">Points chosen</span>
+        <span class="value"><span data-stat="pointsChosen">1,899</span></span>
+        <span class="sub">and <span data-stat="searchesRun">884</span> searches</span>
+      </div>
+      <div class="tile">
+        <span class="label">On phones and tablets</span>
+        <span class="value"><span data-stat="mobilePct">55%</span></span>
+        <span class="sub">iPhone, iPad and Android</span>
       </div>
       <div class="tile">
         <span class="label">Busiest day</span>
         <span class="value"><span data-stat="peak">993</span></span>
         <span class="sub"><span data-stat="peakLabel">Wednesday, Oct 21</span></span>
-      </div>
-      <div class="tile">
-        <span class="label">On phones and tablets</span>
-        <span class="value"><span data-stat="mobilePct">54%</span></span>
-        <span class="sub">iPhone, iPad and Android</span>
       </div>
     </div>
   </section>
@@ -1170,7 +1190,7 @@ code {
         <span class="key"><span class="swatch" style="background:var(--s2)"></span>Features used</span>
       </div>
     </div>
-    <p class="take">Every visit, plus every feature used: choosing a point, searching, turning on a layer. The four days to <span data-stat="lastDay">October 24</span> ran <span data-stat="recentDays">993, 922, 993 and 833</span>. <span data-stat="peakLabel">Wednesday, Oct 21</span> is the busiest day in <span data-stat="periodThese">these two months</span>, at <span data-stat="peak">993</span><span data-stat="peakTieNote">, tied with Friday, Oct 23</span><span data-stat="sinceRebrandNote"></span>.</p>
+    <p class="take">Every visit, plus every feature used: choosing a point, searching, turning on a layer: <span data-stat="total">14,549</span> in all.<sup class="ref"><a href="#note-1" aria-label="Note 1">1</a></sup></p>
     <div class="chartcard">
       <div class="chartbox" id="dailyChart"></div>
     </div>
@@ -1191,12 +1211,12 @@ code {
     </div>
     <div class="panel">
       <h2 class="kicker">Most-used map layers<sup class="ref"><a href="#note-4" aria-label="Note 4">4</a></sup></h2>
-      <p class="lead"><span data-stat="layerLead">School board and County are used about equally, within 3 of each other. Ward and U.S. House come next.</span></p>
+      <p class="lead"><span data-stat="layerLead">County and School board are used about equally, within 7 of each other. Ward and U.S. House come next.</span></p>
       <div class="bars" data-bars="layers"></div>
     </div>
     <div class="panel">
       <h2 class="kicker">What visitors do</h2>
-      <p class="lead">How many people used each main feature, counted once per person per day. <span data-stat="geoNote">Finding the reader’s location works 57% of the time: 197 of 348 tries.</span></p>
+      <p class="lead">How many people used each main feature, counted once per person per day. <span data-stat="geoNote">Finding the reader’s location works 56% of the time: 207 of 369 tries.</span></p>
       <div class="bars" data-bars="actions"></div>
       <!-- The fill starts at 0 and the boot script sets it from geoPct. It carried a
            hand-typed width:63% from #1004 until 2026-09-20, which no sync touched because
@@ -1211,14 +1231,14 @@ code {
   <section class="ruled three">
     <div class="panel">
       <h2 class="kicker">How people find the site<sup class="ref"><a href="#note-5" aria-label="Note 5">5</a></sup></h2>
-      <p class="lead">Search engines (Google, DuckDuckGo and Bing) sent <span data-stat="searchVisits">4,093</span> visits. &ldquo;Direct&rdquo; means a typed address, a bookmark or an app that hides the link.</p>
+      <p class="lead">Search engines (Google, DuckDuckGo and Bing) sent <span data-stat="searchVisits">4,355</span> visits. &ldquo;Direct&rdquo; means a typed address, a bookmark or an app that hides the link.</p>
       <div class="bars" data-bars="refs"></div>
       <h3 class="kicker subhead">Campaigns</h3>
       <div class="bars" data-bars="campaigns"></div>
     </div>
     <div class="panel">
       <h2 class="kicker">Devices and browsers</h2>
-      <p class="lead"><span data-stat="mobilePct">54%</span> of visits are on phones and tablets. Chrome and Safari cover <span data-stat="topTwoBrowserPct">96%</span> between them.</p>
+      <p class="lead"><span data-stat="mobilePct">55%</span> of visits are on phones and tablets. Chrome and Safari cover <span data-stat="topTwoBrowserPct">96%</span> between them.</p>
       <h3 class="kicker subhead">Operating systems</h3>
       <div class="bars" data-bars="systems"></div>
       <h3 class="kicker subhead">Browsers</h3>
@@ -1226,7 +1246,7 @@ code {
     </div>
     <div class="panel">
       <h2 class="kicker">Countries</h2>
-      <p class="lead"><span data-stat="usCount">12,776</span> of <span data-stat="total">13,825</span> visits, <span data-stat="usPct">92%</span>, came from the United States.</p>
+      <p class="lead"><span data-stat="usCount">13,337</span> of <span data-stat="total">14,549</span> visits, <span data-stat="usPct">92%</span>, came from the United States.</p>
       <div class="bars" data-bars="geo"></div>
     </div>
   </section>
@@ -1242,7 +1262,6 @@ code {
         <span class="key"><span class="swatch" style="background:var(--slate)"></span>Other sites</span>
       </div>
     </div>
-    <p class="take"><span data-stat="dayRefLead">On October 24 search engines sent 343 visits, against 347 the day before and 86 on October 11.</span></p>
     <div class="chartcard">
       <div class="dayrefs" id="dayRefsChart" role="group" aria-label="Visits from each search engine and other sites, per day"></div>
       <div class="dayscale" aria-hidden="true"><span></span><div class="ticks" id="dayRefsTicks"></div><span></span></div>
@@ -1260,19 +1279,18 @@ code {
     <div class="sec-head">
       <h2>What people search for<sup class="ref"><a href="#note-7" aria-label="Note 7">7</a></sup></h2>
       <div class="engines" id="engines" role="group" aria-label="Search engine" hidden>
-        <button type="button" data-engine="google" aria-pressed="true">Google &middot; <span data-stat="searchClicks">993</span> clicks</button>
-        <button type="button" data-engine="bing" aria-pressed="false">Bing &middot; <span data-stat="bingClicks">712</span> clicks</button>
+        <button type="button" data-engine="google" aria-pressed="true">Google &middot; <span data-stat="searchClicks">1,025</span> clicks</button>
+        <button type="button" data-engine="bing" aria-pressed="false">Bing &middot; <span data-stat="bingClicks">746</span> clicks</button>
       </div>
     </div>
+    <p class="take">How often districtry showed up in each engine&rsquo;s results, and how often someone clicked.</p>
     <div id="searchCard" hidden>
-      <p class="take">How often districtry showed up in Google&rsquo;s results, and how often someone clicked: <span data-stat="searchClicks">993</span> clicks from <span data-stat="searchImpressions">47,243</span> appearances across <span data-stat="searchQueries">899</span> different searches, <span data-stat="searchCtr">2.10%</span> overall. <em><span data-stat="searchTopQuery">what district am i in</span></em> is clicked <span data-stat="searchTopCtr">3.5%</span> of the time from an average spot of <span data-stat="searchTopPos">6.9</span> on the page. <em><span data-stat="searchNextQuery">what district am i in by zip code</span></em> sits at about the same spot (<span data-stat="searchNextPos">7.5</span>) and is clicked <span data-stat="searchNextCtr">3.2%</span> of the time, so the title and description people see likely make the difference.</p>
       <div class="tablecard"><table class="q" id="searchTable">
         <thead><tr><th>Search</th><th class="num">Appearances</th><th class="num">Clicks</th><th class="num">Click rate</th><th class="num">Avg. spot</th></tr></thead>
         <tbody></tbody>
       </table></div>
     </div>
     <div id="bingCard" hidden>
-      <p class="take">The same for Bing: <span data-stat="bingClicks">712</span> clicks from <span data-stat="bingImpressions">20,243</span> appearances across <span data-stat="bingQueries">426</span> different searches, <span data-stat="bingCtr">3.52%</span> overall. The most-seen search, <em><span data-stat="bingTopQuery">what district am i in</span></em>, is clicked <span data-stat="bingTopCtr">1.1%</span> of the time from an average spot of <span data-stat="bingTopPos">5.3</span>. <span data-stat="engineCompare">Both engines’ most-seen search is the same phrase. Of the twelve listed here, zero name a ward or an alderman, against four of Google’s.</span></p>
       <div class="tablecard"><table class="q" id="bingTable">
         <thead><tr><th>Search</th><th class="num">Appearances</th><th class="num">Clicks</th><th class="num">Click rate</th><th class="num">Avg. spot</th></tr></thead>
         <tbody></tbody>
@@ -1297,18 +1315,51 @@ code {
   </section>
 
 
+  <section class="ruled reading" id="reading">
+    <h2>What the figures say</h2>
+    <p class="take">The figures above, read for what they suggest about what to work on. Each part names the chart it is about.</p>
+    <div class="reads">
+      <div class="read wide" id="missedRead" hidden>
+        <h3 class="kicker">Searches worth a look</h3>
+        <p>Searches where districtry is on the first page of results, seen at least 100 times, and clicked less than 1% of the time. When the spot is good and the clicks are not, the title and description people see are the likeliest cause.</p>
+        <ul class="missed" id="missedList"></ul>
+      </div>
+      <div class="read">
+        <h3 class="kicker">Daily activity</h3>
+        <p>The four days to <span data-stat="lastDay">October 25</span> ran <span data-stat="recentDays">922, 993, 833 and 930</span>. <span data-stat="peakLabel">Wednesday, Oct 21</span> is the busiest day in <span data-stat="periodThese">these two months</span>, at <span data-stat="peak">993</span><span data-stat="peakTieNote">, tied with Friday, Oct 23</span><span data-stat="sinceRebrandNote"></span>.</p>
+      </div>
+      <div class="read" id="returnRead" hidden>
+        <h3 class="kicker">Return visits</h3>
+        <p><span data-stat="returnNote">134 of 551 map visits since October 22 came from a browser that had opened a districtry map before. The most went to Illinois (27), Wisconsin (24) and South Carolina (15). The count is new, so this share starts low and will rise as more browsers carry the mark.</span></p>
+      </div>
+      <div class="read" id="dayRefsRead" hidden>
+        <h3 class="kicker">Search engines, day by day</h3>
+        <p><span data-stat="dayRefLead">On October 25 search engines sent 298 visits, against 343 the day before and 137 on October 12.</span></p>
+      </div>
+      <div class="read" id="googleRead" hidden>
+        <h3 class="kicker">Google</h3>
+        <p>How often districtry showed up in Google&rsquo;s results, and how often someone clicked: <span data-stat="searchClicks">1,025</span> clicks from <span data-stat="searchImpressions">48,738</span> appearances across <span data-stat="searchQueries">902</span> different searches, <span data-stat="searchCtr">2.10%</span> overall. <em><span data-stat="searchTopQuery">what district am i in</span></em> is clicked <span data-stat="searchTopCtr">3.6%</span> of the time from an average spot of <span data-stat="searchTopPos">6.8</span> on the page. <em><span data-stat="searchNextQuery">what district am i in by zip code</span></em> sits at about the same spot (<span data-stat="searchNextPos">7.4</span>) and is clicked <span data-stat="searchNextCtr">3.1%</span> of the time, so the title and description people see likely make the difference.</p>
+      </div>
+      <div class="read" id="bingRead" hidden>
+        <h3 class="kicker">Bing</h3>
+        <p>The same for Bing: <span data-stat="bingClicks">746</span> clicks from <span data-stat="bingImpressions">20,985</span> appearances across <span data-stat="bingQueries">426</span> different searches, <span data-stat="bingCtr">3.55%</span> overall. The most-seen search, <em><span data-stat="bingTopQuery">what district am i in</span></em>, is clicked <span data-stat="bingTopCtr">1.1%</span> of the time from an average spot of <span data-stat="bingTopPos">5.3</span>. <span data-stat="engineCompare">Both engines’ most-seen search is the same phrase. Of the twelve in Bing’s table, zero name a ward or an alderman, against four of Google’s.</span></p>
+      </div>
+    </div>
+  </section>
+
   <section class="ruled notes" id="notes">
     <h2>Notes</h2>
     <p class="take">What the figures above can&rsquo;t tell you.</p>
     <ol>
-      <li id="note-1"><strong>The two totals.</strong> The <span data-stat="total">13,825</span> total is the visit counter&rsquo;s own figure. The daily columns add up to <span data-stat="dailySum">13,922</span>, <span data-stat="dailyGap">97</span> apart. The gap changes from day to day and its cause is unknown, so both figures are shown. <span data-stat="barSumNote">The browser and system charts add up to the total; the country chart is 422 short because it lists only the top entries.</span> The counter uses no cookies and does not identify anyone.</li>
-      <li id="note-2"><strong>The dates.</strong> This page covers <span data-stat="periodLast">the last two months</span>, <span data-stat="range">August 24 – October 24, 2026</span> (<span data-stat="days">62</span> days), ending with the last full day. <span data-day="Aug 25"><strong>August 25 is low</strong> because Google wrongly flagged the new districtry.com address that morning, and Chrome turned visitors away before the page loaded. Those visits can&rsquo;t be recovered.</span> The Illinois school board page had <span data-stat="seoSchool">339</span> visits, the fourth most of any page.</li>
-      <li id="note-3"><strong>Visits by app.</strong> <span data-stat="ageNote">Older apps have had more time to collect visits, so read the order as age, not popularity.</span> <span data-stat="residualNote">57 of 5,314 page visits were to pages that belong to no app, such as the privacy page, so they are in no bar.</span><span data-stat="zeroInstNote"></span></li>
-      <li id="note-4"><strong>Layers.</strong> <span data-stat="layerScopeNote">Some layers appear in more than one state’s map, and their counts add up across states. Since September 29 each count also records which app it came from: Congress (Illinois 104, New York 40 and San Francisco 6), County (Arkansas 36, Illinois 107, Indiana 10, Iowa 6, Kentucky 7, Michigan 15, Minnesota 11, Mississippi 2, North Carolina 12, Oklahoma 11, South Carolina 4, Tennessee 8 and Wisconsin 13), County board (Illinois 90 and Wisconsin 20), U.S. House (Arkansas 8, Indiana 29, Iowa 8, Kentucky 4, Louisiana 4, Michigan 24, Minnesota 4, Mississippi 1, North Carolina 12, Oklahoma 7, South Carolina 18, Tennessee 22 and Wisconsin 13) and Ward (Illinois 173 and Wisconsin 4). “Not by app” is from before that date, or too small to be listed. The rest belong to one app only: County precinct, IL House, IL Senate, School board and Ward precinct.</span> Only the top ten layers are shown.</li>
-      <li id="note-5"><strong>Sources.</strong> Only the top six sources are shown. They add up to <span data-stat="refSum">6,158</span> of <span data-stat="total">13,825</span> visits, so a search engine&rsquo;s real total may be a little higher. The campaigns list counts only links tagged for a campaign.</li>
+      <li id="note-1"><strong>The two totals.</strong> The <span data-stat="total">14,549</span> total is the visit counter&rsquo;s own figure. The daily columns add up to <span data-stat="dailySum">14,719</span>, <span data-stat="dailyGap">170</span> apart. The gap changes from day to day and its cause is unknown, so both figures are shown. <span data-stat="barSumNote">The browser and system charts add up to the total; the country chart is 464 short because it lists only the top entries.</span> The counter uses no cookies and does not identify anyone.</li>
+      <li id="note-2"><strong>The dates.</strong> This page covers <span data-stat="periodLast">the last two months</span>, <span data-stat="range">August 25 – October 25, 2026</span> (<span data-stat="days">62</span> days), ending with the last full day. <span data-day="Aug 25"><strong>August 25 is low</strong> because Google wrongly flagged the new districtry.com address that morning, and Chrome turned visitors away before the page loaded. Those visits can&rsquo;t be recovered.</span> The Illinois school board page had <span data-stat="seoSchool">345</span> visits, the fourth most of any page.</li>
+      <li id="note-3"><strong>Visits by app.</strong> <span data-stat="ageNote">Older apps have had more time to collect visits, so read the order as age, not popularity.</span> <span data-stat="residualNote">58 of 5,512 page visits were to pages that belong to no app, such as the privacy page, so they are in no bar.</span><span data-stat="zeroInstNote"></span></li>
+      <li id="note-4"><strong>Layers.</strong> <span data-stat="layerScopeNote">Some layers appear in more than one state’s map, and their counts add up across states. Since September 29 each count also records which app it came from: Congress (Illinois 109, New York 44 and San Francisco 6), County (Arkansas 37, Illinois 114, Indiana 12, Iowa 6, Kentucky 7, Louisiana 1, Michigan 17, Minnesota 12, Mississippi 2, North Carolina 12, Oklahoma 11, South Carolina 4, Tennessee 8 and Wisconsin 14), County board (Illinois 99 and Wisconsin 22), U.S. House (Arkansas 9, Indiana 31, Iowa 9, Kentucky 4, Louisiana 4, Michigan 25, Minnesota 5, Mississippi 1, North Carolina 12, Oklahoma 7, South Carolina 20, Tennessee 22 and Wisconsin 14) and Ward (Illinois 182 and Wisconsin 5). “Not by app” is from before that date, or too small to be listed. The rest belong to one app only: County precinct, IL House, IL Senate, School board and Ward precinct.</span> Only the top ten layers are shown.</li>
+      <li id="note-5"><strong>Sources.</strong> Only the top six sources are shown. They add up to <span data-stat="refSum">6,505</span> of <span data-stat="total">14,549</span> visits, so a search engine&rsquo;s real total may be a little higher. The campaigns list counts only links tagged for a campaign.</li>
       <li id="note-6"><strong>Sources day by day.</strong> Each day is counted on its own. &ldquo;Other sites&rdquo; is any other website that sent a visitor, such as LinkedIn or a news story. &ldquo;No source&rdquo; means the browser didn&rsquo;t say where the visitor came from, such as a typed address or a bookmark; it is in the table but not the chart. A number ending in + means that day&rsquo;s list was cut short, so the real figure is higher.</li>
       <li id="note-7"><strong>Searches.</strong> Google and Bing figures each include both districtry.com and the old chidistricts.com, which still shows up in some results and forwards to the new site. Google leaves out rare searches, so these totals won&rsquo;t match its own reports exactly. The visit counter can&rsquo;t see what anyone searched for, because Google doesn&rsquo;t pass that along. On Bing, districtry.com first appeared on <span data-stat="bingNewFirst">September 13</span>.</li>
       <li id="note-8"><strong>Shared map links.</strong> Since <span data-stat="mapLinkFrom">October 17</span>, each Google Maps or Apple Maps link read by a search box is counted once, with which maps app it came from, whether it was pasted or shared in, what the search found, and which map read it. The link and the place are never recorded. A link the front page passes on to a state&rsquo;s map is counted by both.<span data-stat="mapLinkCutNote"></span></li>
+      <li id="note-9"><strong>Return visits.</strong> Since <span data-stat="returnSince">October 22</span>, each state&rsquo;s map counts a visit once per browser window, as a first visit or a return. A browser that has opened any of the maps before is a return; the mark that says so stays in the browser and is never sent. A cleared browser, a private window or another device counts as a first visit, and every visit before the count began was unmarked, so for its first weeks the share understates how many people come back and will rise as the count ages. The front page and the other pages are not counted here.</li>
     </ol>
   </section>
 
@@ -1316,7 +1367,7 @@ code {
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <p>Source: GoatCounter (districtry.goatcounter.com), read-only dashboard export on <span data-stat="exportDate">October 25, 2026</span>.
+    <p>Source: GoatCounter (districtry.goatcounter.com), read-only dashboard export on <span data-stat="exportDate">October 26, 2026</span>.
       Every app &mdash; <span data-stat="appList">Arkansas, Illinois, Indiana, Iowa, Kentucky, Louisiana, Michigan, Minnesota, Mississippi, New York, North Carolina, Oklahoma, San Francisco, South Carolina, Tennessee and Wisconsin</span> &mdash; reports to this one counter, and each is told apart by its address.
       Search figures come from Google Search Console and Bing Webmaster Tools. All three are refreshed daily.
       No cookies are used, no one is identified, and the browser&rsquo;s language is not collected.</p>
@@ -1389,14 +1440,13 @@ code {
   /* GENERATED by scripts/build_traffic_page.py from data/goatcounter-traffic.json,
      data/search-performance.json and data/bing-search-performance.json, which
      three daily workflows commit. Do not hand-edit: rerun the script. The
-     window is a ROLLING TWO MONTHS ending on the last full day — 2026-08-24 → 2026-10-24 —
+     window is a ROLLING TWO MONTHS ending on the last full day — 2026-08-25 → 2026-10-25 —
      so this page no longer runs from launch and grows without bound.
 
      The PROSE around this block is not generated and can outlive its numbers.
      Read the script's reconciliation output, then read the page. */
 
   var daily = [
-    ["Aug 24", 52, 81],
     ["Aug 25", 25, 34],
     ["Aug 26", 41, 24],
     ["Aug 27", 62, 31],
@@ -1457,24 +1507,24 @@ code {
     ["Oct 21", 361, 632],
     ["Oct 22", 294, 628],
     ["Oct 23", 296, 697],
-    ["Oct 24", 236, 597]
+    ["Oct 24", 236, 597],
+    ["Oct 25", 250, 680]
   ];
 
   /* Google Search Console. Both properties are summed: the site renamed
      mid-history and the old domain still appears in results and redirects
      across, so those are two different results for one search rather than one
      counted twice. */
-  var searchData = {"clicks":993,"impressions":47243,"queries":899,"top":[{"q":"what district am i in","clicks":35,"impressions":1010,"position":6.9},{"q":"what district am i in by zip code","clicks":16,"impressions":504,"position":7.5},{"q":"who is my alderman chicago","clicks":0,"impressions":414,"position":7.5},{"q":"who is my alderman","clicks":0,"impressions":380,"position":7.2},{"q":"find my district","clicks":2,"impressions":295,"position":7.5},{"q":"randolph county board chairman election results david m. holder","clicks":0,"impressions":293,"position":7.3},{"q":"what district am i in by address","clicks":30,"impressions":252,"position":4.1},{"q":"what school district am i in","clicks":7,"impressions":246,"position":7.6},{"q":"who is the alderman in my area","clicks":2,"impressions":232,"position":9.2},{"q":"my district","clicks":1,"impressions":184,"position":14.9},{"q":"district","clicks":0,"impressions":181,"position":20.8},{"q":"find my alderman","clicks":0,"impressions":175,"position":9.2}],"properties":2,"reporting":2,"newest":{"host":"chidistricts.com","first":"2026-08-24","firstLabel":"August 24","clicks":202,"impressions":5299},"first":"2026-08-24","last":"2026-10-23"};
+  var searchData = {"clicks":1025,"impressions":48738,"queries":902,"top":[{"q":"what district am i in","clicks":38,"impressions":1049,"position":6.8},{"q":"what district am i in by zip code","clicks":16,"impressions":516,"position":7.4},{"q":"who is my alderman chicago","clicks":0,"impressions":422,"position":7.5},{"q":"who is my alderman","clicks":0,"impressions":388,"position":7.2},{"q":"randolph county board chairman election results david m. holder","clicks":0,"impressions":296,"position":7.3},{"q":"find my district","clicks":2,"impressions":291,"position":7.4},{"q":"what district am i in by address","clicks":30,"impressions":257,"position":4.2},{"q":"what school district am i in","clicks":7,"impressions":247,"position":7.5},{"q":"who is the alderman in my area","clicks":2,"impressions":238,"position":9.1},{"q":"my district","clicks":1,"impressions":183,"position":14.7},{"q":"district","clicks":0,"impressions":183,"position":21.2},{"q":"find my alderman","clicks":0,"impressions":177,"position":9.2}],"properties":2,"reporting":2,"newest":{"host":"chidistricts.com","first":"2026-08-25","firstLabel":"August 25","clicks":201,"impressions":5135},"first":"2026-08-25","last":"2026-10-24"};
 
   /* Bing Webmaster Tools, same window. `reporting` is how many of the verified
      properties returned any rows at all. */
-  var bingData = {"clicks":712,"impressions":20243,"queries":426,"top":[{"q":"what district am i in","clicks":16,"impressions":1421,"position":5.3},{"q":"district","clicks":0,"impressions":162,"position":7.1},{"q":"which district am i in","clicks":1,"impressions":151,"position":5.6},{"q":"nypd precinct finder","clicks":0,"impressions":96,"position":7.5},{"q":"what district am i in for voting","clicks":3,"impressions":85,"position":6.0},{"q":"what precinct am i in","clicks":2,"impressions":46,"position":6.0},{"q":"what voting district am i in","clicks":0,"impressions":43,"position":7.7},{"q":"new york districts","clicks":0,"impressions":30,"position":6.7},{"q":"what district is my address","clicks":1,"impressions":27,"position":6.0},{"q":"what district do i live in","clicks":1,"impressions":26,"position":6.7},{"q":"what district am i in san francisco","clicks":0,"impressions":16,"position":7.7},{"q":"what district am i","clicks":3,"impressions":15,"position":3.0}],"properties":2,"reporting":2,"newest":{"host":"districtry.com","first":"2026-09-13","firstLabel":"September 13","clicks":711,"impressions":20083},"first":"2026-08-24","last":"2026-10-23"};
+  var bingData = {"clicks":746,"impressions":20985,"queries":426,"top":[{"q":"what district am i in","clicks":16,"impressions":1421,"position":5.3},{"q":"district","clicks":0,"impressions":162,"position":7.1},{"q":"which district am i in","clicks":1,"impressions":151,"position":5.6},{"q":"nypd precinct finder","clicks":0,"impressions":96,"position":7.5},{"q":"what district am i in for voting","clicks":3,"impressions":85,"position":6.0},{"q":"what precinct am i in","clicks":2,"impressions":46,"position":6.0},{"q":"what voting district am i in","clicks":0,"impressions":43,"position":7.7},{"q":"new york districts","clicks":0,"impressions":30,"position":6.7},{"q":"what district is my address","clicks":1,"impressions":27,"position":6.0},{"q":"what district do i live in","clicks":1,"impressions":26,"position":6.7},{"q":"what district am i in san francisco","clicks":0,"impressions":16,"position":7.7},{"q":"what district am i","clicks":3,"impressions":15,"position":3.0}],"properties":2,"reporting":2,"newest":{"host":"districtry.com","first":"2026-09-13","firstLabel":"September 13","clicks":745,"impressions":20858},"first":"2026-08-25","last":"2026-10-24"};
 
   /* Where each of the last days' visits came from, each day asked for on
      its own: [day, Google, DuckDuckGo, Bing, Yahoo, other sites, no source,
      list cut short]. Empty when the data file predates the per-day fetch. */
   var dayRefs = [
-    ["Oct 11", 40, 20, 17, 9, 0, 20, false],
     ["Oct 12", 44, 36, 33, 24, 2, 23, false],
     ["Oct 13", 49, 30, 29, 8, 2, 40, false],
     ["Oct 14", 47, 48, 26, 15, 3, 38, false],
@@ -1487,45 +1537,46 @@ code {
     ["Oct 21", 161, 63, 94, 27, 39, 76, false],
     ["Oct 22", 61, 86, 71, 39, 42, 69, false],
     ["Oct 23", 132, 60, 139, 16, 23, 56, false],
-    ["Oct 24", 71, 160, 92, 20, 32, 35, false]
+    ["Oct 24", 71, 160, 92, 20, 32, 35, false],
+    ["Oct 25", 73, 132, 61, 32, 81, 37, false]
   ];
 
   var barData = {
     instances: [
-      ["Illinois", 2324], ["Front page", 803], ["New York", 412],
-      ["Wisconsin", 278], ["Arkansas", 237], ["Iowa", 162],
-      ["Indiana", 148], ["Tennessee", 141], ["Michigan", 140],
-      ["South Carolina", 129], ["Oklahoma", 117], ["North Carolina", 107],
-      ["Minnesota", 78], ["Kentucky", 78], ["San Francisco", 49],
-      ["Louisiana", 32], ["Mississippi", 22]
+      ["Illinois", 2386], ["Front page", 794], ["New York", 443],
+      ["Wisconsin", 293], ["Arkansas", 255], ["Iowa", 168],
+      ["Indiana", 165], ["Michigan", 146], ["Tennessee", 144],
+      ["South Carolina", 138], ["Oklahoma", 125], ["North Carolina", 117],
+      ["Minnesota", 84], ["Kentucky", 80], ["San Francisco", 55],
+      ["Louisiana", 39], ["Mississippi", 22]
     ],
     layers: [
-      ["School board", 245], ["County", 242], ["Ward", 177],
-      ["U.S. House", 154], ["Congress", 150], ["Ward precinct", 131],
-      ["IL House", 121], ["County precinct", 114], ["County board", 110],
-      ["IL Senate", 101]
+      ["County", 257], ["School board", 250], ["Ward", 187],
+      ["U.S. House", 163], ["Congress", 159], ["Ward precinct", 136],
+      ["IL House", 127], ["County board", 121], ["County precinct", 119],
+      ["IL Senate", 105]
     ],
     refs: [
-      ["Google", 1744], ["Direct / unknown", 1524], ["DuckDuckGo", 1223],
-      ["Bing", 1126], ["Yahoo", 387], ["Android app", 154]
+      ["Google", 1815], ["Direct / unknown", 1545], ["DuckDuckGo", 1355],
+      ["Bing", 1185], ["Yahoo", 419], ["Android app", 186]
     ],
     systems: [
-      ["Windows", 4459], ["iOS", 4239], ["Android", 3225],
-      ["macOS", 1479], ["Linux", 252], ["Chrome OS", 171]
+      ["Windows", 4630], ["iOS", 4474], ["Android", 3491],
+      ["macOS", 1526], ["Linux", 257], ["Chrome OS", 171]
     ],
     browsers: [
-      ["Chrome", 8212], ["Safari", 5052], ["Firefox", 548],
+      ["Chrome", 8625], ["Safari", 5340], ["Firefox", 571],
       ["(unknown)", 13]
     ],
     actions: [
-      ["Points chosen", 1800], ["Searches", 862], ["Location requests", 348]
+      ["Points chosen", 1899], ["Searches", 884], ["Location requests", 369]
     ],
     geo: [
-      ["United States", 12776], ["Germany", 160], ["Malaysia", 138],
-      ["Singapore", 131], ["Thailand", 114], ["Canada", 84]
+      ["United States", 13337], ["Germany", 166], ["Malaysia", 166],
+      ["Singapore", 161], ["Thailand", 161], ["United Arab Emirates", 94]
     ],
     campaigns: [
-      ["districtry-launch", 53], ["2026-08", 27]
+      ["districtry-launch", 53]
     ],
     /* Google Maps and Apple Maps links the search boxes read, counted since
        mapLinks.from: by which maps app, what the search showed, and which app
@@ -1549,7 +1600,7 @@ code {
        published "Geolocation succeeds 0% of the time it is tried: 0 of 88".
        The fetch now asks for it by name, and this stays null-able because a
        row can go missing for a reason that fix does not cover. */
-    geoSuccess: 197,
+    geoSuccess: 207,
     /* Which apps register each DRAWN layer id, read from their own layers[].
        A list of two or more means that bar SUMS across them; null means the id
        is in no worksheet and this page will not guess whose it is. See
@@ -1559,18 +1610,18 @@ code {
        per layer and instance, and how much of each layer's total predates it
        and stays pooled. Both are needed during the seam — layerScope says
        which ids CAN pool, these say how much actually is. */
-    layerSplit: {"Congress":{"Illinois":104,"New York":40,"San Francisco":6},"County":{"Arkansas":36,"Illinois":107,"Indiana":10,"Iowa":6,"Kentucky":7,"Michigan":15,"Minnesota":11,"Mississippi":2,"North Carolina":12,"Oklahoma":11,"South Carolina":4,"Tennessee":8,"Wisconsin":13},"County board":{"Illinois":90,"Wisconsin":20},"County precinct":{"Illinois":114},"IL House":{"Illinois":121},"IL Senate":{"Illinois":101},"School board":{"Illinois":114},"U.S. House":{"Arkansas":8,"Indiana":29,"Iowa":8,"Kentucky":4,"Louisiana":4,"Michigan":24,"Minnesota":4,"Mississippi":1,"North Carolina":12,"Oklahoma":7,"South Carolina":18,"Tennessee":22,"Wisconsin":13},"Ward":{"Illinois":173,"Wisconsin":4},"Ward precinct":{"Illinois":131}},
+    layerSplit: {"Congress":{"Illinois":109,"New York":44,"San Francisco":6},"County":{"Arkansas":37,"Illinois":114,"Indiana":12,"Iowa":6,"Kentucky":7,"Louisiana":1,"Michigan":17,"Minnesota":12,"Mississippi":2,"North Carolina":12,"Oklahoma":11,"South Carolina":4,"Tennessee":8,"Wisconsin":14},"County board":{"Illinois":99,"Wisconsin":22},"County precinct":{"Illinois":119},"IL House":{"Illinois":127},"IL Senate":{"Illinois":105},"School board":{"Illinois":119},"U.S. House":{"Arkansas":9,"Indiana":31,"Iowa":9,"Kentucky":4,"Louisiana":4,"Michigan":25,"Minnesota":5,"Mississippi":1,"North Carolina":12,"Oklahoma":7,"South Carolina":20,"Tennessee":22,"Wisconsin":14},"Ward":{"Illinois":182,"Wisconsin":5},"Ward precinct":{"Illinois":136}},
     layerPooled: {"Congress":0,"County":0,"County board":0,"County precinct":0,"IL House":0,"IL Senate":0,"School board":131,"U.S. House":0,"Ward":0,"Ward precinct":0},
     layerSplitFrom: "September 29",
     /* the two Illinois SEO pages the narrative tracks, so the sentence cannot
        claim a figure the path widget has moved past */
-    seo: { police: 34, school: 339 },
+    seo: { police: 0, school: 345 },
     /* Page visits no instance bar carries. Since 2026-10-20 the fetcher reads
        the whole pages list, so these are the site's own pages that belong to
        no app (privacy, about, the Android steps page); pagesCut is true only
        when the list could not be read to its end, and then they are also the
        visits to pages the list never reached. */
-    instResidual: 57,
+    instResidual: 58,
     pagesCut: false,
     /* Instances not LISTED on the front door for any day of this window, by
        display name. Their bars read zero because the app was not being served,
@@ -1585,7 +1636,13 @@ code {
        window is a weaker measurement than the same zero for one findable
        throughout, and the window rolls, so this is measured on every build
        rather than described in a sentence. */
-    listedPartway: {"Arkansas":10,"Indiana":18,"Iowa":59,"Kentucky":25,"Louisiana":4,"Michigan":52,"Minnesota":25,"Mississippi":9,"North Carolina":16,"Oklahoma":15,"South Carolina":12,"Tennessee":12,"Wisconsin":61}
+    listedPartway: {"Arkansas":11,"Indiana":19,"Iowa":60,"Kentucky":26,"Louisiana":5,"Michigan":53,"Minnesota":26,"Mississippi":10,"North Carolina":17,"Oklahoma":16,"South Carolina":13,"Tennessee":13},
+    /* First and return visits to the apps, counted once per browser window
+       since `since` (engine install-app, visit/first and visit/return). NULL
+       for a window the fetcher could not reconcile or a file fetched before
+       the count was read; the page then shows no return-visit figure. byApp is
+       the return visits by app, the ten most. */
+    visits: {"byApp":[["Illinois",27],["Wisconsin",24],["South Carolina",15],["San Francisco",13],["Oklahoma",13],["New York",11],["Iowa",7],["Michigan",6],["Arkansas",5],["Indiana",3]],"first":417,"return":134,"since":"October 22"}
   };
 
   /* The two facts no arithmetic on this page can recover, so they are stated
@@ -1593,22 +1650,22 @@ code {
 
        exportDate — the day the dashboard was read.
        total      — GoatCounter's own js-total-utc for the window. The browser,
-                    system and location bars sum to it EXACTLY (13,825), and the
-                    daily columns sum to 13,922 — 97 apart, and the SIGN FLIPS day
+                    system and location bars sum to it EXACTLY (14,549), and the
+                    daily columns sum to 14,719 — 170 apart, and the SIGN FLIPS day
                     to day (61 the other way on 2026-09-14), which rules out a
                     fixed offset. Both count the same period and this page does
                     not know what the difference is, so both are printed and
                     neither is derived from the other.
 
      EVERYTHING ELSE is computed below from `daily` and `barData`. */
-  var META = { exportDate: "October 25, 2026", year: 2026, total: 13825 };
+  var META = { exportDate: "October 26, 2026", year: 2026, total: 14549 };
 
   /* The shorter windows the timeframe buttons offer, keyed by day count, each
      with every variable above for its own period. The lists were read off the
      dashboard for that period; the daily series and the per-day referrer rows
      are the full window's cut to length. Empty when the data file predates
      the per-window fetch, and the page then shows no buttons. */
-  var WINDOWS = {"14":{"META":{"total":8430,"year":2026},"barData":{"actions":[["Points chosen",1073],["Searches",413],["Location requests",231]],"browsers":[["Chrome",5005],["Safari",3115],["Firefox",298],["(unknown)",12]],"campaigns":[],"geo":[["United States",7544],["Malaysia",138],["Singapore",131],["Germany",125],["Thailand",114],["Indonesia",65]],"geoSuccess":138,"instResidual":42,"instances":[["Illinois",996],["Front page",378],["Arkansas",237],["New York",234],["Tennessee",141],["Indiana",139],["Wisconsin",131],["South Carolina",129],["Oklahoma",116],["North Carolina",104],["Michigan",81],["Kentucky",75],["Minnesota",61],["Iowa",53],["San Francisco",34],["Louisiana",32],["Mississippi",22]],"layerPooled":{"Congress":0,"County":0,"County board":0,"County precinct":0,"IL House":0,"IL Senate":0,"School board":0,"U.S. House":0,"Ward":0,"Ward precinct":0},"layerScope":{"Congress":["Illinois","New York","San Francisco"],"County":["Illinois","New York","Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana"],"County board":["Illinois","Wisconsin"],"County precinct":["Illinois"],"IL House":["Illinois"],"IL Senate":["Illinois"],"School board":["Illinois"],"U.S. House":["Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana"],"Ward":["Illinois","Wisconsin"],"Ward precinct":["Illinois"]},"layerSplit":{"Congress":{"Illinois":71,"New York":32,"San Francisco":5},"County":{"Arkansas":36,"Illinois":80,"Indiana":10,"Iowa":3,"Kentucky":7,"Michigan":7,"Minnesota":9,"Mississippi":2,"North Carolina":12,"Oklahoma":10,"South Carolina":4,"Tennessee":8,"Wisconsin":12},"County board":{"Illinois":70,"Wisconsin":17},"County precinct":{"Illinois":69},"IL House":{"Illinois":78},"IL Senate":{"Illinois":71},"School board":{"Illinois":53},"U.S. House":{"Arkansas":8,"Indiana":28,"Iowa":3,"Kentucky":2,"Louisiana":4,"Michigan":18,"Minnesota":4,"Mississippi":1,"North Carolina":12,"Oklahoma":7,"South Carolina":18,"Tennessee":22,"Wisconsin":11},"Ward":{"Illinois":109,"Wisconsin":4},"Ward precinct":{"Illinois":84}},"layerSplitFrom":"September 29","layers":[["County",200],["U.S. House",138],["Ward",113],["Congress",108],["County board",87],["Ward precinct",84],["IL House",78],["IL Senate",71],["County precinct",69],["School board",53]],"listedPartway":{"Arkansas":10,"Louisiana":4,"Mississippi":9,"South Carolina":12,"Tennessee":12},"mapLinkPlaces":[["Illinois",2]],"mapLinkResults":[["House pinned",2]],"mapLinkSources":[["Google Maps",2]],"mapLinks":{"cut":false,"failed":0,"from":"October 17","measured":true,"opened":2,"retried":0,"short":2,"total":2},"notListedYet":[],"pagesCut":false,"refs":[["Google",1133],["DuckDuckGo",914],["Bing",842],["Direct / unknown",570],["Yahoo",307],["Android app",154]],"seo":{"police":0,"school":89},"systems":[["Windows",2709],["iOS",2627],["Android",2094],["macOS",764],["Chrome OS",118],["Linux",118]]},"bingData":{"clicks":496,"first":"2026-10-11","impressions":13401,"last":"2026-10-23","newest":{"clicks":711,"first":"2026-09-13","firstLabel":"September 13","host":"districtry.com","impressions":20083},"properties":2,"queries":174,"reporting":2,"top":[{"clicks":12,"impressions":947,"position":4.6,"q":"what district am i in"},{"clicks":0,"impressions":110,"position":7.0,"q":"district"},{"clicks":1,"impressions":93,"position":5.0,"q":"which district am i in"},{"clicks":3,"impressions":85,"position":6.0,"q":"what district am i in for voting"},{"clicks":0,"impressions":45,"position":6.1,"q":"what precinct am i in"},{"clicks":0,"impressions":43,"position":7.7,"q":"what voting district am i in"},{"clicks":0,"impressions":41,"position":7.0,"q":"nypd precinct finder"},{"clicks":0,"impressions":27,"position":6.5,"q":"new york districts"},{"clicks":1,"impressions":23,"position":6.0,"q":"what district is my address"},{"clicks":1,"impressions":15,"position":6.4,"q":"what district do i live in"},{"clicks":0,"impressions":14,"position":8.0,"q":"what district am i in san francisco"},{"clicks":1,"impressions":14,"position":6.0,"q":"districtry"}]},"daily":[["Oct 11",77,102],["Oct 12",121,202],["Oct 13",139,191],["Oct 14",145,203],["Oct 15",184,348],["Oct 16",211,354],["Oct 17",169,298],["Oct 18",164,258],["Oct 19",293,475],["Oct 20",315,544],["Oct 21",361,632],["Oct 22",294,628],["Oct 23",296,697],["Oct 24",236,597]],"dayRefs":[["Oct 11",40,20,17,9,0,20,false],["Oct 12",44,36,33,24,2,23,false],["Oct 13",49,30,29,8,2,40,false],["Oct 14",47,48,26,15,3,38,false],["Oct 15",96,55,46,21,0,20,false],["Oct 16",79,68,58,19,7,36,false],["Oct 17",78,57,28,19,9,22,false],["Oct 18",41,40,14,34,0,36,false],["Oct 19",109,112,111,34,7,60,false],["Oct 20",125,79,84,22,36,39,false],["Oct 21",161,63,94,27,39,76,false],["Oct 22",61,86,71,39,42,69,false],["Oct 23",132,60,139,16,23,56,false],["Oct 24",71,160,92,20,32,35,false]],"searchData":{"clicks":554,"first":"2026-10-11","impressions":24879,"last":"2026-10-23","newest":{"clicks":202,"first":"2026-08-24","firstLabel":"August 24","host":"chidistricts.com","impressions":5299},"properties":2,"queries":503,"reporting":2,"top":[{"clicks":13,"impressions":405,"position":6.6,"q":"what district am i in"},{"clicks":12,"impressions":377,"position":7.6,"q":"what district am i in by zip code"},{"clicks":26,"impressions":217,"position":4.0,"q":"what district am i in by address"},{"clicks":1,"impressions":163,"position":9.9,"q":"what district am i in nc"},{"clicks":0,"impressions":132,"position":8.0,"q":"who is my alderman chicago"},{"clicks":0,"impressions":129,"position":7.0,"q":"who is my alderman"},{"clicks":2,"impressions":103,"position":6.1,"q":"find my district"},{"clicks":0,"impressions":99,"position":10.2,"q":"chicago wards by zip code"},{"clicks":0,"impressions":90,"position":8.3,"q":"what is my congressional district by zip code"},{"clicks":0,"impressions":71,"position":10.1,"q":"find my alderman chicago"},{"clicks":0,"impressions":71,"position":9.3,"q":"who is the alderman in my area"},{"clicks":0,"impressions":69,"position":8.7,"q":"whos my alderman"}]}},"30":{"META":{"total":11166,"year":2026},"barData":{"actions":[["Points chosen",1456],["Searches",677],["Location requests",286]],"browsers":[["Chrome",6753],["Safari",3974],["Firefox",427],["(unknown)",12]],"campaigns":[],"geo":[["United States",10176],["Germany",158],["Malaysia",138],["Singapore",131],["Thailand",114],["Canada",77]],"geoSuccess":164,"instResidual":55,"instances":[["Illinois",1655],["Front page",524],["New York",319],["Arkansas",237],["Wisconsin",168],["Indiana",148],["Tennessee",141],["Iowa",133],["Michigan",132],["South Carolina",129],["Oklahoma",117],["North Carolina",107],["Minnesota",78],["Kentucky",78],["San Francisco",40],["Louisiana",32],["Mississippi",22]],"layerPooled":{"Congress":0,"County":0,"County board":0,"County precinct":0,"IL House":0,"IL Senate":0,"School board":0,"U.S. House":0,"Ward":0,"Ward precinct":0},"layerScope":{"Congress":["Illinois","New York","San Francisco"],"County":["Illinois","New York","Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana"],"County board":["Illinois","Wisconsin"],"County precinct":["Illinois"],"IL House":["Illinois"],"IL Senate":["Illinois"],"School board":["Illinois"],"U.S. House":["Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana"],"Ward":["Illinois","Wisconsin"],"Ward precinct":["Illinois"]},"layerSplit":{"Congress":{"Illinois":104,"New York":40,"San Francisco":6},"County":{"Arkansas":36,"Illinois":107,"Indiana":10,"Iowa":6,"Kentucky":7,"Michigan":15,"Minnesota":11,"Mississippi":2,"North Carolina":12,"Oklahoma":11,"South Carolina":4,"Tennessee":8,"Wisconsin":13},"County board":{"Illinois":90,"Wisconsin":20},"County precinct":{"Illinois":114},"IL House":{"Illinois":121},"IL Senate":{"Illinois":101},"School board":{"Illinois":114},"U.S. House":{"Arkansas":8,"Indiana":29,"Iowa":8,"Kentucky":4,"Louisiana":4,"Michigan":24,"Minnesota":4,"Mississippi":1,"North Carolina":12,"Oklahoma":7,"South Carolina":18,"Tennessee":22,"Wisconsin":13},"Ward":{"Illinois":173,"Wisconsin":4},"Ward precinct":{"Illinois":131}},"layerSplitFrom":"September 29","layers":[["County",242],["Ward",177],["U.S. House",154],["Congress",150],["Ward precinct",131],["IL House",121],["County precinct",114],["School board",114],["County board",110],["IL Senate",101]],"listedPartway":{"Arkansas":10,"Indiana":18,"Kentucky":25,"Louisiana":4,"Minnesota":25,"Mississippi":9,"North Carolina":16,"Oklahoma":15,"South Carolina":12,"Tennessee":12},"mapLinkPlaces":[["Illinois",2]],"mapLinkResults":[["House pinned",2]],"mapLinkSources":[["Google Maps",2]],"mapLinks":{"cut":false,"failed":0,"from":"October 17","measured":true,"opened":2,"retried":0,"short":2,"total":2},"notListedYet":[],"pagesCut":false,"refs":[["Google",1455],["DuckDuckGo",1098],["Bing",1027],["Direct / unknown",985],["Yahoo",365],["Android app",154]],"seo":{"police":0,"school":196},"systems":[["Windows",3792],["iOS",3292],["Android",2627],["macOS",1120],["Linux",203],["Chrome OS",132]]},"bingData":{"clicks":657,"first":"2026-09-25","impressions":18298,"last":"2026-10-23","newest":{"clicks":711,"first":"2026-09-13","firstLabel":"September 13","host":"districtry.com","impressions":20083},"properties":2,"queries":337,"reporting":2,"top":[{"clicks":15,"impressions":1406,"position":5.2,"q":"what district am i in"},{"clicks":1,"impressions":151,"position":5.6,"q":"which district am i in"},{"clicks":0,"impressions":127,"position":7.2,"q":"district"},{"clicks":3,"impressions":85,"position":6.0,"q":"what district am i in for voting"},{"clicks":0,"impressions":84,"position":7.5,"q":"nypd precinct finder"},{"clicks":2,"impressions":46,"position":6.0,"q":"what precinct am i in"},{"clicks":0,"impressions":43,"position":7.7,"q":"what voting district am i in"},{"clicks":0,"impressions":30,"position":6.7,"q":"new york districts"},{"clicks":1,"impressions":27,"position":6.0,"q":"what district is my address"},{"clicks":1,"impressions":26,"position":6.7,"q":"what district do i live in"},{"clicks":3,"impressions":15,"position":3.0,"q":"what district am i"},{"clicks":0,"impressions":14,"position":8.0,"q":"what district am i in san francisco"}]},"daily":[["Sep 25",40,59],["Sep 26",44,47],["Sep 27",30,28],["Sep 28",79,100],["Sep 29",60,95],["Sep 30",51,77],["Oct 1",156,134],["Oct 2",38,71],["Oct 3",52,78],["Oct 4",45,70],["Oct 5",73,114],["Oct 6",94,168],["Oct 7",96,129],["Oct 8",107,172],["Oct 9",90,164],["Oct 10",55,116],["Oct 11",77,102],["Oct 12",121,202],["Oct 13",139,191],["Oct 14",145,203],["Oct 15",184,348],["Oct 16",211,354],["Oct 17",169,298],["Oct 18",164,258],["Oct 19",293,475],["Oct 20",315,544],["Oct 21",361,632],["Oct 22",294,628],["Oct 23",296,697],["Oct 24",236,597]],"dayRefs":[["Oct 11",40,20,17,9,0,20,false],["Oct 12",44,36,33,24,2,23,false],["Oct 13",49,30,29,8,2,40,false],["Oct 14",47,48,26,15,3,38,false],["Oct 15",96,55,46,21,0,20,false],["Oct 16",79,68,58,19,7,36,false],["Oct 17",78,57,28,19,9,22,false],["Oct 18",41,40,14,34,0,36,false],["Oct 19",109,112,111,34,7,60,false],["Oct 20",125,79,84,22,36,39,false],["Oct 21",161,63,94,27,39,76,false],["Oct 22",61,86,71,39,42,69,false],["Oct 23",132,60,139,16,23,56,false],["Oct 24",71,160,92,20,32,35,false]],"searchData":{"clicks":753,"first":"2026-09-25","impressions":37143,"last":"2026-10-23","newest":{"clicks":202,"first":"2026-08-24","firstLabel":"August 24","host":"chidistricts.com","impressions":5299},"properties":2,"queries":561,"reporting":2,"top":[{"clicks":15,"impressions":658,"position":6.9,"q":"what district am i in"},{"clicks":16,"impressions":491,"position":7.4,"q":"what district am i in by zip code"},{"clicks":0,"impressions":318,"position":7.6,"q":"who is my alderman chicago"},{"clicks":0,"impressions":296,"position":7.1,"q":"who is my alderman"},{"clicks":0,"impressions":286,"position":7.2,"q":"randolph county board chairman election results david m. holder"},{"clicks":30,"impressions":251,"position":4.1,"q":"what district am i in by address"},{"clicks":2,"impressions":196,"position":7.3,"q":"find my district"},{"clicks":1,"impressions":176,"position":9.3,"q":"who is the alderman in my area"},{"clicks":1,"impressions":163,"position":9.9,"q":"what district am i in nc"},{"clicks":0,"impressions":155,"position":9.8,"q":"find my alderman chicago"},{"clicks":0,"impressions":151,"position":8.5,"q":"whos my alderman"},{"clicks":0,"impressions":139,"position":9.9,"q":"find your alderman"}]}},"7":{"META":{"total":5759,"year":2026},"barData":{"actions":[["Points chosen",715],["Searches",236],["Location requests",142]],"browsers":[["Chrome",3471],["Safari",2086],["Firefox",195],["(unknown)",7]],"campaigns":[],"geo":[["United States",5000],["Malaysia",138],["Singapore",131],["Germany",117],["Thailand",114],["Indonesia",64]],"geoSuccess":79,"instResidual":38,"instances":[["Illinois",577],["Front page",252],["Arkansas",210],["New York",141],["South Carolina",111],["Tennessee",104],["Oklahoma",77],["Wisconsin",76],["Indiana",74],["North Carolina",67],["Kentucky",45],["Michigan",39],["Iowa",38],["Minnesota",33],["Louisiana",32],["San Francisco",24],["Mississippi",21]],"layerPooled":{"Congress":0,"County":0,"County board":0,"County precinct":0,"IL House":0,"IL Senate":0,"U.S. House":0,"Ward":0,"Ward precinct":0,"zip-code":0},"layerScope":{"Congress":["Illinois","New York","San Francisco"],"County":["Illinois","New York","Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana"],"County board":["Illinois","Wisconsin"],"County precinct":["Illinois"],"IL House":["Illinois"],"IL Senate":["Illinois"],"U.S. House":["Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana"],"Ward":["Illinois","Wisconsin"],"Ward precinct":["Illinois"],"zip-code":["Illinois","New York","San Francisco","Wisconsin","Iowa","Michigan","Minnesota","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana"]},"layerSplit":{"Congress":{"Illinois":49,"New York":18,"San Francisco":4},"County":{"Arkansas":33,"Illinois":47,"Indiana":6,"Iowa":1,"Kentucky":4,"Michigan":3,"Minnesota":5,"Mississippi":2,"North Carolina":6,"Oklahoma":9,"South Carolina":4,"Tennessee":6,"Wisconsin":9},"County board":{"Illinois":42,"Wisconsin":11},"County precinct":{"Illinois":48},"IL House":{"Illinois":47},"IL Senate":{"Illinois":43},"U.S. House":{"Arkansas":6,"Indiana":14,"Iowa":2,"Louisiana":4,"Michigan":4,"Mississippi":1,"North Carolina":9,"Oklahoma":6,"South Carolina":15,"Tennessee":18,"Wisconsin":7},"Ward":{"Illinois":78,"Wisconsin":4},"Ward precinct":{"Illinois":59},"zip-code":{"Illinois":34,"Indiana":4,"Iowa":1,"Louisiana":3,"Minnesota":1,"Mississippi":2,"North Carolina":3,"San Francisco":1,"South Carolina":5,"Tennessee":3}},"layerSplitFrom":"September 29","layers":[["County",135],["U.S. House",86],["Ward",82],["Congress",71],["Ward precinct",59],["zip-code",57],["County board",53],["County precinct",48],["IL House",47],["IL Senate",43]],"listedPartway":{"Louisiana":4},"mapLinkPlaces":[],"mapLinkResults":[],"mapLinkSources":[],"mapLinks":{"cut":false,"failed":0,"from":"October 17","measured":true,"opened":0,"retried":0,"short":0,"total":0},"notListedYet":[],"pagesCut":false,"refs":[["Google",700],["Bing",605],["DuckDuckGo",600],["Direct / unknown",371],["Yahoo",192],["Android app",142]],"seo":{"police":0,"school":47},"systems":[["Windows",1806],["iOS",1771],["Android",1520],["macOS",467],["Chrome OS",107],["Linux",88]]},"bingData":{"clicks":323,"first":"2026-10-18","impressions":8299,"last":"2026-10-23","newest":{"clicks":711,"first":"2026-09-13","firstLabel":"September 13","host":"districtry.com","impressions":20083},"properties":2,"queries":100,"reporting":2,"top":[{"clicks":7,"impressions":591,"position":5.0,"q":"what district am i in"},{"clicks":2,"impressions":78,"position":6.0,"q":"what district am i in for voting"},{"clicks":1,"impressions":64,"position":5.0,"q":"which district am i in"},{"clicks":0,"impressions":42,"position":7.0,"q":"district"},{"clicks":0,"impressions":42,"position":6.0,"q":"what precinct am i in"},{"clicks":0,"impressions":28,"position":7.0,"q":"what voting district am i in"},{"clicks":1,"impressions":23,"position":6.0,"q":"what district is my address"},{"clicks":0,"impressions":23,"position":7.0,"q":"nypd precinct finder"},{"clicks":1,"impressions":14,"position":6.0,"q":"districtry"},{"clicks":0,"impressions":14,"position":7.0,"q":"new york districts"},{"clicks":0,"impressions":13,"position":6.0,"q":"precinct finder"},{"clicks":0,"impressions":12,"position":7.0,"q":"what district do i live in"}]},"daily":[["Oct 18",164,258],["Oct 19",293,475],["Oct 20",315,544],["Oct 21",361,632],["Oct 22",294,628],["Oct 23",296,697],["Oct 24",236,597]],"dayRefs":[["Oct 18",41,40,14,34,0,36,false],["Oct 19",109,112,111,34,7,60,false],["Oct 20",125,79,84,22,36,39,false],["Oct 21",161,63,94,27,39,76,false],["Oct 22",61,86,71,39,42,69,false],["Oct 23",132,60,139,16,23,56,false],["Oct 24",71,160,92,20,32,35,false]],"searchData":{"clicks":322,"first":"2026-10-18","impressions":13704,"last":"2026-10-23","newest":{"clicks":202,"first":"2026-08-24","firstLabel":"August 24","host":"chidistricts.com","impressions":5299},"properties":2,"queries":500,"reporting":2,"top":[{"clicks":9,"impressions":264,"position":6.5,"q":"what district am i in"},{"clicks":4,"impressions":176,"position":8.2,"q":"what district am i in by zip code"},{"clicks":1,"impressions":75,"position":10.3,"q":"what district am i in nc"},{"clicks":8,"impressions":72,"position":4.6,"q":"what district am i in by address"},{"clicks":0,"impressions":72,"position":7.9,"q":"who is my alderman chicago"},{"clicks":0,"impressions":60,"position":10.3,"q":"chicago wards by zip code"},{"clicks":0,"impressions":60,"position":6.6,"q":"who is my alderman"},{"clicks":2,"impressions":54,"position":5.8,"q":"find my district"},{"clicks":0,"impressions":41,"position":5.1,"q":"what school board district am i in"},{"clicks":2,"impressions":40,"position":7.2,"q":"what school district am i in"},{"clicks":0,"impressions":40,"position":6.5,"q":"county commission"},{"clicks":0,"impressions":40,"position":9.3,"q":"david m. holder randolph county board chairman appointed elected randolphcountyil.gov"}]}}};
+  var WINDOWS = {"14":{"META":{"total":9106,"year":2026},"barData":{"actions":[["Points chosen",1156],["Searches",429],["Location requests",245]],"browsers":[["Chrome",5371],["Safari",3402],["Firefox",321],["(unknown)",12]],"campaigns":[],"geo":[["United States",8065],["Malaysia",166],["Singapore",161],["Thailand",161],["Germany",130],["United Arab Emirates",94]],"geoSuccess":144,"instResidual":42,"instances":[["Illinois",1040],["Front page",392],["New York",261],["Arkansas",255],["Indiana",145],["Tennessee",144],["Wisconsin",141],["South Carolina",138],["Oklahoma",124],["North Carolina",114],["Michigan",84],["Kentucky",77],["Minnesota",65],["Iowa",55],["San Francisco",40],["Louisiana",39],["Mississippi",22]],"layerPooled":{"Congress":0,"County":0,"County board":0,"County precinct":0,"IL House":0,"IL Senate":0,"School board":0,"U.S. House":0,"Ward":0,"Ward precinct":0},"layerScope":{"Congress":["Illinois","New York","San Francisco"],"County":["Illinois","New York","Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana"],"County board":["Illinois","Wisconsin"],"County precinct":["Illinois"],"IL House":["Illinois"],"IL Senate":["Illinois"],"School board":["Illinois"],"U.S. House":["Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana"],"Ward":["Illinois","Wisconsin"],"Ward precinct":["Illinois"]},"layerSplit":{"Congress":{"Illinois":74,"New York":35,"San Francisco":5},"County":{"Arkansas":37,"Illinois":81,"Indiana":12,"Iowa":2,"Kentucky":7,"Louisiana":1,"Michigan":9,"Minnesota":9,"Mississippi":2,"North Carolina":12,"Oklahoma":10,"South Carolina":4,"Tennessee":8,"Wisconsin":13},"County board":{"Illinois":75,"Wisconsin":18},"County precinct":{"Illinois":73},"IL House":{"Illinois":82},"IL Senate":{"Illinois":74},"School board":{"Illinois":57},"U.S. House":{"Arkansas":9,"Indiana":27,"Iowa":4,"Kentucky":2,"Louisiana":4,"Michigan":18,"Minnesota":5,"Mississippi":1,"North Carolina":12,"Oklahoma":7,"South Carolina":20,"Tennessee":22,"Wisconsin":11},"Ward":{"Illinois":117,"Wisconsin":5},"Ward precinct":{"Illinois":88}},"layerSplitFrom":"September 29","layers":[["County",207],["U.S. House",142],["Ward",122],["Congress",114],["County board",93],["Ward precinct",88],["IL House",82],["IL Senate",74],["County precinct",73],["School board",57]],"listedPartway":{"Arkansas":11,"Louisiana":5,"Mississippi":10,"South Carolina":13,"Tennessee":13},"mapLinkPlaces":[["Illinois",2]],"mapLinkResults":[["House pinned",2]],"mapLinkSources":[["Google Maps",2]],"mapLinks":{"cut":false,"failed":0,"from":"October 17","measured":true,"opened":2,"retried":0,"short":2,"total":2},"notListedYet":[],"pagesCut":false,"refs":[["Google",1166],["DuckDuckGo",1026],["Bing",886],["Direct / unknown",587],["Yahoo",330],["Android app",186]],"seo":{"police":0,"school":90},"systems":[["iOS",2870],["Windows",2849],["Android",2331],["macOS",814],["Linux",124],["Chrome OS",118]],"visits":{"byApp":[["Illinois",27],["Wisconsin",24],["South Carolina",15],["San Francisco",13],["Oklahoma",13],["New York",11],["Iowa",7],["Michigan",6],["Arkansas",5],["Indiana",3]],"first":417,"return":134,"since":"October 22"}},"bingData":{"clicks":520,"first":"2026-10-12","impressions":13840,"last":"2026-10-24","newest":{"clicks":745,"first":"2026-09-13","firstLabel":"September 13","host":"districtry.com","impressions":20858},"properties":2,"queries":174,"reporting":2,"top":[{"clicks":12,"impressions":947,"position":4.6,"q":"what district am i in"},{"clicks":0,"impressions":110,"position":7.0,"q":"district"},{"clicks":1,"impressions":93,"position":5.0,"q":"which district am i in"},{"clicks":3,"impressions":85,"position":6.0,"q":"what district am i in for voting"},{"clicks":0,"impressions":45,"position":6.1,"q":"what precinct am i in"},{"clicks":0,"impressions":43,"position":7.7,"q":"what voting district am i in"},{"clicks":0,"impressions":41,"position":7.0,"q":"nypd precinct finder"},{"clicks":0,"impressions":27,"position":6.5,"q":"new york districts"},{"clicks":1,"impressions":23,"position":6.0,"q":"what district is my address"},{"clicks":1,"impressions":15,"position":6.4,"q":"what district do i live in"},{"clicks":0,"impressions":14,"position":8.0,"q":"what district am i in san francisco"},{"clicks":1,"impressions":14,"position":6.0,"q":"districtry"}]},"daily":[["Oct 12",121,202],["Oct 13",139,191],["Oct 14",145,203],["Oct 15",184,348],["Oct 16",211,354],["Oct 17",169,298],["Oct 18",164,258],["Oct 19",293,475],["Oct 20",315,544],["Oct 21",361,632],["Oct 22",294,628],["Oct 23",296,697],["Oct 24",236,597],["Oct 25",250,680]],"dayRefs":[["Oct 12",44,36,33,24,2,23,false],["Oct 13",49,30,29,8,2,40,false],["Oct 14",47,48,26,15,3,38,false],["Oct 15",96,55,46,21,0,20,false],["Oct 16",79,68,58,19,7,36,false],["Oct 17",78,57,28,19,9,22,false],["Oct 18",41,40,14,34,0,36,false],["Oct 19",109,112,111,34,7,60,false],["Oct 20",125,79,84,22,36,39,false],["Oct 21",161,63,94,27,39,76,false],["Oct 22",61,86,71,39,42,69,false],["Oct 23",132,60,139,16,23,56,false],["Oct 24",71,160,92,20,32,35,false],["Oct 25",73,132,61,32,81,37,false]],"searchData":{"clicks":570,"first":"2026-10-12","impressions":25951,"last":"2026-10-24","newest":{"clicks":201,"first":"2026-08-25","firstLabel":"August 25","host":"chidistricts.com","impressions":5135},"properties":2,"queries":503,"reporting":2,"top":[{"clicks":15,"impressions":424,"position":6.6,"q":"what district am i in"},{"clicks":12,"impressions":368,"position":7.7,"q":"what district am i in by zip code"},{"clicks":21,"impressions":191,"position":4.0,"q":"what district am i in by address"},{"clicks":2,"impressions":170,"position":9.7,"q":"what district am i in nc"},{"clicks":0,"impressions":139,"position":7.9,"q":"who is my alderman chicago"},{"clicks":0,"impressions":131,"position":7.0,"q":"who is my alderman"},{"clicks":0,"impressions":107,"position":10.2,"q":"chicago wards by zip code"},{"clicks":2,"impressions":106,"position":6.0,"q":"find my district"},{"clicks":0,"impressions":88,"position":8.4,"q":"what is my congressional district by zip code"},{"clicks":0,"impressions":69,"position":10.1,"q":"find my alderman chicago"},{"clicks":0,"impressions":69,"position":10.5,"q":"find my ward"},{"clicks":0,"impressions":69,"position":8.7,"q":"whos my alderman"}]}},"30":{"META":{"total":11908,"year":2026},"barData":{"actions":[["Points chosen",1551],["Searches",695],["Location requests",307]],"browsers":[["Chrome",7178],["Safari",4280],["Firefox",438],["(unknown)",12]],"campaigns":[],"geo":[["United States",10760],["Malaysia",166],["Germany",164],["Singapore",161],["Thailand",161],["United Arab Emirates",94]],"geoSuccess":174,"instResidual":56,"instances":[["Illinois",1705],["Front page",547],["New York",350],["Arkansas",255],["Wisconsin",179],["Indiana",165],["Tennessee",144],["Iowa",139],["South Carolina",138],["Michigan",134],["Oklahoma",125],["North Carolina",117],["Minnesota",84],["Kentucky",80],["San Francisco",46],["Louisiana",39],["Mississippi",22]],"layerPooled":{"Congress":0,"County":0,"County board":0,"County precinct":0,"IL House":0,"IL Senate":0,"School board":0,"U.S. House":0,"Ward":0,"Ward precinct":0},"layerScope":{"Congress":["Illinois","New York","San Francisco"],"County":["Illinois","New York","Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana"],"County board":["Illinois","Wisconsin"],"County precinct":["Illinois"],"IL House":["Illinois"],"IL Senate":["Illinois"],"School board":["Illinois"],"U.S. House":["Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana"],"Ward":["Illinois","Wisconsin"],"Ward precinct":["Illinois"]},"layerSplit":{"Congress":{"Illinois":109,"New York":44,"San Francisco":6},"County":{"Arkansas":37,"Illinois":114,"Indiana":12,"Iowa":6,"Kentucky":7,"Louisiana":1,"Michigan":17,"Minnesota":12,"Mississippi":2,"North Carolina":12,"Oklahoma":11,"South Carolina":4,"Tennessee":8,"Wisconsin":14},"County board":{"Illinois":99,"Wisconsin":22},"County precinct":{"Illinois":119},"IL House":{"Illinois":127},"IL Senate":{"Illinois":105},"School board":{"Illinois":119},"U.S. House":{"Arkansas":9,"Indiana":31,"Iowa":9,"Kentucky":4,"Louisiana":4,"Michigan":25,"Minnesota":5,"Mississippi":1,"North Carolina":12,"Oklahoma":7,"South Carolina":20,"Tennessee":22,"Wisconsin":14},"Ward":{"Illinois":182,"Wisconsin":5},"Ward precinct":{"Illinois":136}},"layerSplitFrom":"September 29","layers":[["County",257],["Ward",187],["U.S. House",163],["Congress",159],["Ward precinct",136],["IL House",127],["County board",121],["County precinct",119],["School board",119],["IL Senate",105]],"listedPartway":{"Arkansas":11,"Indiana":19,"Kentucky":26,"Louisiana":5,"Minnesota":26,"Mississippi":10,"North Carolina":17,"Oklahoma":16,"South Carolina":13,"Tennessee":13},"mapLinkPlaces":[["Illinois",2]],"mapLinkResults":[["House pinned",2]],"mapLinkSources":[["Google Maps",2]],"mapLinks":{"cut":false,"failed":0,"from":"October 17","measured":true,"opened":2,"retried":0,"short":2,"total":2},"notListedYet":[],"pagesCut":false,"refs":[["Google",1516],["DuckDuckGo",1222],["Bing",1079],["Direct / unknown",1017],["Yahoo",392],["Android app",186]],"seo":{"police":0,"school":197},"systems":[["Windows",3946],["iOS",3550],["Android",2904],["macOS",1167],["Linux",209],["Chrome OS",132]],"visits":{"byApp":[["Illinois",27],["Wisconsin",24],["South Carolina",15],["San Francisco",13],["Oklahoma",13],["New York",11],["Iowa",7],["Michigan",6],["Arkansas",5],["Indiana",3]],"first":417,"return":134,"since":"October 22"}},"bingData":{"clicks":683,"first":"2026-09-26","impressions":18902,"last":"2026-10-24","newest":{"clicks":745,"first":"2026-09-13","firstLabel":"September 13","host":"districtry.com","impressions":20858},"properties":2,"queries":295,"reporting":2,"top":[{"clicks":14,"impressions":1319,"position":5.1,"q":"what district am i in"},{"clicks":1,"impressions":139,"position":5.5,"q":"which district am i in"},{"clicks":0,"impressions":127,"position":7.2,"q":"district"},{"clicks":3,"impressions":85,"position":6.0,"q":"what district am i in for voting"},{"clicks":0,"impressions":79,"position":7.5,"q":"nypd precinct finder"},{"clicks":2,"impressions":46,"position":6.0,"q":"what precinct am i in"},{"clicks":0,"impressions":43,"position":7.7,"q":"what voting district am i in"},{"clicks":0,"impressions":30,"position":6.7,"q":"new york districts"},{"clicks":1,"impressions":27,"position":6.0,"q":"what district is my address"},{"clicks":1,"impressions":26,"position":6.7,"q":"what district do i live in"},{"clicks":3,"impressions":15,"position":3.0,"q":"what district am i"},{"clicks":0,"impressions":14,"position":8.0,"q":"what district am i in san francisco"}]},"daily":[["Sep 26",44,47],["Sep 27",30,28],["Sep 28",79,100],["Sep 29",60,95],["Sep 30",51,77],["Oct 1",156,134],["Oct 2",38,71],["Oct 3",52,78],["Oct 4",45,70],["Oct 5",73,114],["Oct 6",94,168],["Oct 7",96,129],["Oct 8",107,172],["Oct 9",90,164],["Oct 10",55,116],["Oct 11",77,102],["Oct 12",121,202],["Oct 13",139,191],["Oct 14",145,203],["Oct 15",184,348],["Oct 16",211,354],["Oct 17",169,298],["Oct 18",164,258],["Oct 19",293,475],["Oct 20",315,544],["Oct 21",361,632],["Oct 22",294,628],["Oct 23",296,697],["Oct 24",236,597],["Oct 25",250,680]],"dayRefs":[["Oct 12",44,36,33,24,2,23,false],["Oct 13",49,30,29,8,2,40,false],["Oct 14",47,48,26,15,3,38,false],["Oct 15",96,55,46,21,0,20,false],["Oct 16",79,68,58,19,7,36,false],["Oct 17",78,57,28,19,9,22,false],["Oct 18",41,40,14,34,0,36,false],["Oct 19",109,112,111,34,7,60,false],["Oct 20",125,79,84,22,36,39,false],["Oct 21",161,63,94,27,39,76,false],["Oct 22",61,86,71,39,42,69,false],["Oct 23",132,60,139,16,23,56,false],["Oct 24",71,160,92,20,32,35,false],["Oct 25",73,132,61,32,81,37,false]],"searchData":{"clicks":776,"first":"2026-09-26","impressions":38090,"last":"2026-10-24","newest":{"clicks":201,"first":"2026-08-25","firstLabel":"August 25","host":"chidistricts.com","impressions":5135},"properties":2,"queries":553,"reporting":2,"top":[{"clicks":18,"impressions":685,"position":6.9,"q":"what district am i in"},{"clicks":16,"impressions":503,"position":7.4,"q":"what district am i in by zip code"},{"clicks":0,"impressions":316,"position":7.6,"q":"who is my alderman chicago"},{"clicks":0,"impressions":290,"position":7.1,"q":"who is my alderman"},{"clicks":0,"impressions":289,"position":7.2,"q":"randolph county board chairman election results david m. holder"},{"clicks":30,"impressions":256,"position":4.2,"q":"what district am i in by address"},{"clicks":2,"impressions":195,"position":7.1,"q":"find my district"},{"clicks":1,"impressions":174,"position":9.5,"q":"who is the alderman in my area"},{"clicks":2,"impressions":170,"position":9.7,"q":"what district am i in nc"},{"clicks":0,"impressions":150,"position":8.5,"q":"whos my alderman"},{"clicks":0,"impressions":147,"position":9.8,"q":"find my alderman chicago"},{"clicks":0,"impressions":131,"position":10.2,"q":"chicago wards by zip code"}]}},"7":{"META":{"total":6179,"year":2026},"barData":{"actions":[["Points chosen",769],["Searches",232],["Location requests",156]],"browsers":[["Chrome",3724],["Safari",2273],["Firefox",180],["(unknown)",2]],"campaigns":[],"geo":[["United States",5273],["Singapore",161],["Thailand",161],["Malaysia",159],["Germany",123],["United Arab Emirates",93]],"geoSuccess":87,"instResidual":26,"instances":[["Illinois",598],["Front page",260],["Arkansas",203],["New York",162],["South Carolina",107],["Tennessee",96],["Wisconsin",91],["Indiana",84],["Oklahoma",81],["North Carolina",73],["Kentucky",47],["Michigan",45],["Iowa",43],["Minnesota",39],["Louisiana",39],["San Francisco",30],["Mississippi",21]],"layerPooled":{"Congress":0,"County":0,"County board":0,"County precinct":0,"IL House":0,"IL Senate":0,"U.S. House":0,"Ward":0,"Ward precinct":0,"ZIP code":0},"layerScope":{"Congress":["Illinois","New York","San Francisco"],"County":["Illinois","New York","Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana"],"County board":["Illinois","Wisconsin"],"County precinct":["Illinois"],"IL House":["Illinois"],"IL Senate":["Illinois"],"U.S. House":["Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana"],"Ward":["Illinois","Wisconsin"],"Ward precinct":["Illinois"],"ZIP code":["Illinois","New York","San Francisco","Wisconsin","Iowa","Michigan","Minnesota","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana"]},"layerSplit":{"Congress":{"Illinois":47,"New York":21,"San Francisco":4},"County":{"Arkansas":29,"Illinois":50,"Indiana":7,"Iowa":1,"Kentucky":4,"Louisiana":1,"Michigan":5,"Minnesota":6,"Mississippi":2,"North Carolina":6,"Oklahoma":9,"Tennessee":5,"Wisconsin":10},"County board":{"Illinois":45,"Wisconsin":13},"County precinct":{"Illinois":49},"IL House":{"Illinois":48},"IL Senate":{"Illinois":44},"U.S. House":{"Arkansas":5,"Indiana":16,"Iowa":3,"Louisiana":4,"Michigan":5,"Minnesota":1,"Mississippi":1,"North Carolina":9,"Oklahoma":6,"South Carolina":14,"Tennessee":17,"Wisconsin":8},"Ward":{"Illinois":80,"Wisconsin":5},"Ward precinct":{"Illinois":59},"ZIP code":{"Arkansas":3,"Illinois":45,"Indiana":5,"Iowa":1,"Louisiana":3,"Minnesota":1,"Mississippi":2,"New York":8,"North Carolina":4,"San Francisco":2,"South Carolina":5,"Tennessee":4,"Wisconsin":2}},"layerSplitFrom":"September 29","layers":[["County",135],["U.S. House",89],["Ward",85],["ZIP code",85],["Congress",72],["Ward precinct",59],["County board",58],["County precinct",49],["IL House",48],["IL Senate",44]],"listedPartway":{"Louisiana":5},"mapLinkPlaces":[],"mapLinkResults":[],"mapLinkSources":[],"mapLinks":{"cut":false,"failed":0,"from":"October 17","measured":true,"opened":0,"retried":0,"short":0,"total":0},"notListedYet":[],"pagesCut":false,"refs":[["Google",732],["DuckDuckGo",692],["Bing",652],["Direct / unknown",372],["Yahoo",190],["Android app",172]],"seo":{"police":0,"school":44},"systems":[["iOS",1919],["Windows",1895],["Android",1671],["macOS",507],["Chrome OS",105],["Linux",82]],"visits":{"byApp":[["Illinois",27],["Wisconsin",24],["South Carolina",15],["San Francisco",13],["Oklahoma",13],["New York",11],["Iowa",7],["Michigan",6],["Arkansas",5],["Indiana",3]],"first":417,"return":134,"since":"October 22"}},"bingData":{"clicks":334,"first":"2026-10-19","impressions":8455,"last":"2026-10-24","newest":{"clicks":745,"first":"2026-09-13","firstLabel":"September 13","host":"districtry.com","impressions":20858},"properties":2,"queries":100,"reporting":2,"top":[{"clicks":7,"impressions":591,"position":5.0,"q":"what district am i in"},{"clicks":2,"impressions":78,"position":6.0,"q":"what district am i in for voting"},{"clicks":1,"impressions":64,"position":5.0,"q":"which district am i in"},{"clicks":0,"impressions":42,"position":6.0,"q":"what precinct am i in"},{"clicks":0,"impressions":42,"position":7.0,"q":"district"},{"clicks":0,"impressions":28,"position":7.0,"q":"what voting district am i in"},{"clicks":1,"impressions":23,"position":6.0,"q":"what district is my address"},{"clicks":0,"impressions":23,"position":7.0,"q":"nypd precinct finder"},{"clicks":1,"impressions":14,"position":6.0,"q":"districtry"},{"clicks":0,"impressions":14,"position":7.0,"q":"new york districts"},{"clicks":0,"impressions":13,"position":6.0,"q":"precinct finder"},{"clicks":0,"impressions":12,"position":7.0,"q":"what district do i live in"}]},"daily":[["Oct 19",293,475],["Oct 20",315,544],["Oct 21",361,632],["Oct 22",294,628],["Oct 23",296,697],["Oct 24",236,597],["Oct 25",250,680]],"dayRefs":[["Oct 19",109,112,111,34,7,60,false],["Oct 20",125,79,84,22,36,39,false],["Oct 21",161,63,94,27,39,76,false],["Oct 22",61,86,71,39,42,69,false],["Oct 23",132,60,139,16,23,56,false],["Oct 24",71,160,92,20,32,35,false],["Oct 25",73,132,61,32,81,37,false]],"searchData":{"clicks":326,"first":"2026-10-19","impressions":14105,"last":"2026-10-24","newest":{"clicks":201,"first":"2026-08-25","firstLabel":"August 25","host":"chidistricts.com","impressions":5135},"properties":2,"queries":500,"reporting":2,"top":[{"clicks":11,"impressions":277,"position":6.5,"q":"what district am i in"},{"clicks":2,"impressions":155,"position":7.9,"q":"what district am i in by zip code"},{"clicks":0,"impressions":72,"position":8.0,"q":"who is my alderman chicago"},{"clicks":0,"impressions":67,"position":10.0,"q":"chicago wards by zip code"},{"clicks":2,"impressions":63,"position":9.3,"q":"what district am i in nc"},{"clicks":0,"impressions":58,"position":6.8,"q":"who is my alderman"},{"clicks":2,"impressions":56,"position":5.9,"q":"find my district"},{"clicks":7,"impressions":55,"position":5.3,"q":"what district am i in by address"},{"clicks":2,"impressions":47,"position":5.3,"q":"what is my district"},{"clicks":2,"impressions":43,"position":7.0,"q":"what school district am i in"},{"clicks":0,"impressions":43,"position":10.5,"q":"find my ward"},{"clicks":0,"impressions":41,"position":6.7,"q":"county commission"}]}}};
   /* ==== TRAFFIC-DATA:END ==== */
 
   /* ---- timeframe ----
@@ -1724,6 +1781,7 @@ code {
     function (b, d) { return (d[1] + d[2]) > (b[1] + b[2]) ? d : b; },
     (afterRebrand.length ? afterRebrand : daily)[0]);
 
+  var visits = barData.visits || null;
   var STATS = {
     period: periodLast.charAt(0).toUpperCase() + periodLast.slice(1),
     periodLast: periodLast,
@@ -1865,6 +1923,38 @@ code {
                                 : rest[0] + " comes") + " next.";
     })(),
     searchVisits: fmt(search),
+    /* The change from the same number of days just before, read off the full
+       window's daily series. The full window has nothing before it. */
+    changeNote: (function () {
+      if (key === "full") return "";
+      var n = daily.length, all = FULL.daily, end = all.length - n;
+      if (end < n) return "";
+      var pv = function (rows) { return rows.reduce(function (t, d) { return t + d[1]; }, 0); };
+      var now = pv(all.slice(end)), before = pv(all.slice(end - n, end));
+      if (!before) return "";
+      var ch = Math.round((now - before) / before * 100);
+      return ch === 0 ? " · the same as the " + n + " days before"
+        : " · " + (ch > 0 ? "up " : "down ") + Math.abs(ch) + "% on the " + n + " days before";
+    })(),
+    returnPct: visits ? pct(visits["return"], visits.first + visits["return"]) : "—",
+    appVisits: visits ? fmt(visits.first + visits["return"]) : "—",
+    returnSince: visits ? visits.since : "",
+    returnNote: (function () {
+      if (!visits || !visits["return"]) return "";
+      var by = visits.byApp.slice(0, 3).map(function (r) { return r[0] + " (" + fmt(r[1]) + ")"; });
+      return fmt(visits["return"]) + " of " + fmt(visits.first + visits["return"]) +
+        " map visits since " + visits.since + " came from a browser that had opened a districtry map before" +
+        (by.length ? ". The most went to " + (by.length > 1 ? by.slice(0, -1).join(", ") + " and " + by[by.length - 1] : by[0]) : "") +
+        ". The count is new, so this share starts low and will rise as more browsers carry the mark.";
+    })(),
+    searchClicksAll: fmt((searchData ? searchData.clicks : 0) + (bingData ? bingData.clicks : 0)),
+    searchCtrAll: (function () {
+      var c = (searchData ? searchData.clicks : 0) + (bingData ? bingData.clicks : 0);
+      var i = (searchData ? searchData.impressions : 0) + (bingData ? bingData.impressions : 0);
+      return i ? (c / i * 100).toFixed(1) + "%" : "—";
+    })(),
+    pointsChosen: fmt(pick(barData.actions, "Points chosen")),
+    searchesRun: fmt(pick(barData.actions, "Searches")),
     refSum: fmt(refSum),
     searchClicks: goog.clicks,
     searchImpressions: goog.impressions,
@@ -1943,7 +2033,7 @@ code {
         return d.top.filter(function (r) { return /ward|alder/i.test(r.q); }).length;
       };
       var bw = wardish(bingData);
-      return lead + " Of the " + words(bingData.top.length) + " listed here, " +
+      return lead + " Of the " + words(bingData.top.length) + " in Bing’s table, " +
              words(bw) + (bw === 1 ? " names" : " name") + " a ward or an alderman, against " +
              words(wardish(searchData)) + " of Google\u2019s.";
     })(),
@@ -2353,6 +2443,7 @@ code {
       ticks.appendChild(tk);
     }
     document.getElementById("dayRefsSection").hidden = false;
+    document.getElementById("dayRefsRead").hidden = false;
   })();
 
   /* ---- search queries (Search Console, Bing Webmaster Tools) ----
@@ -2379,6 +2470,41 @@ code {
   };
   renderQueries(searchData, "searchCard", "searchTable");
   renderQueries(bingData, "bingCard", "bingTable");
+  document.getElementById("googleRead").hidden = document.getElementById("searchCard").hidden;
+  document.getElementById("bingRead").hidden = document.getElementById("bingCard").hidden;
+  if (visits && visits.first + visits["return"]) {
+    document.getElementById("returnTile").hidden = false;
+    document.getElementById("returnRead").hidden = !visits["return"];
+  }
+
+  /* ---- searches worth a look ----
+     Rows from both engines' tables where the site is on the first page of
+     results (average spot 10 or better), seen at least 100 times, and clicked
+     under 1% of the time: the place where a better title or description is
+     most likely to turn appearances into visits. */
+  (function () {
+    var rows = [];
+    [[searchData, "Google"], [bingData, "Bing"]].forEach(function (e) {
+      if (!e[0] || !e[0].top) return;
+      e[0].top.forEach(function (r) {
+        if (r.impressions >= 100 && r.position && r.position <= 10 &&
+            r.clicks / r.impressions < 0.01) rows.push([r, e[1]]);
+      });
+    });
+    if (!rows.length) return;
+    rows.sort(function (a, b) { return b[0].impressions - a[0].impressions; });
+    var ul = document.getElementById("missedList");
+    rows.slice(0, 6).forEach(function (x) {
+      var r = x[0], li = document.createElement("li"), q = document.createElement("em");
+      q.textContent = r.q;
+      li.appendChild(q);
+      li.appendChild(document.createTextNode(" on " + x[1] + ": seen " + fmt(r.impressions) +
+        " times at spot " + r.position.toFixed(1) + ", clicked " + fmt(r.clicks) +
+        (r.clicks === 1 ? " time" : " times") + "."));
+      ul.appendChild(li);
+    });
+    document.getElementById("missedRead").hidden = false;
+  })();
 
   /* ---- one search section, two engines ----
      The two tables used to be two cards, twenty-four rows of which the Bing

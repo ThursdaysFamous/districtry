@@ -680,8 +680,42 @@ def surname_of(name):
     return NAME_SUFFIX_RE.sub("", name.strip()).split()[-1]
 
 
-def key_page(text, names):
-    """Match each known supervisor to the nearest district number.
+# A PAGE WHOSE LABELS SIT HALFWAY BETWEEN TWO NAMES is read from one side only.
+# The nearest-number rule assumes a label sits closer to its own supervisor
+# than to the next one, and two county pages measured 2026-10-26 break that,
+# each putting a supervisor's phone number between the name and the NEXT
+# label: Kossuth writes "Second District Supervisor Howard Haas Phone: (515)
+# 341-7993 Third District Supervisor ...", where the nearest rule puts both
+# Haas and Waechter in District 3, and Worth writes "AJ Stone Board Member -
+# District 1 Term Expires: 2026 Mark Smeby Board Member - District 2", where it
+# puts Stone and Smeby both in District 1. Neither shape can be told from the
+# other by the text alone -- on Kossuth's page reading AFTER each name also
+# gives five distinct districts, the wrong ones -- so the side is recorded per
+# county from reading the page, and the certified results are the witness:
+# Howard Haas won District 2 and Amber Garman District 5 in Kossuth's 2024
+# general election, and Mark Smeby District 2 in Worth's.
+#   "before": each supervisor takes the nearest label printed before the name
+#   "after":  each supervisor takes the nearest label printed after the name
+LABEL_SIDE = {
+    "Kossuth": "before",
+    "Worth": "after",
+}
+
+
+# A COUNTY WHOSE RECORDED HOME ANSWERS THIS CLIENT WITH A REFUSAL while the
+# same site serves it under another spelling. Measured 2026-10-26: the board
+# directory records kossuthcounty.iowa.gov, which answers this file's client
+# HTTP 403 on its home page and on /board-of-supervisors/, while
+# www.kossuthcounty.iowa.gov answers 200 with the board's page; both spellings'
+# robots.txt allow every path, with a 10 s crawl-delay this file honours.
+HOME_OVERRIDE = {
+    "Kossuth": "https://www.kossuthcounty.iowa.gov/",
+}
+
+
+def key_page(text, names, side=None):
+    """Match each known supervisor to the nearest district number, or, for a
+    county in LABEL_SIDE, the nearest one on the recorded side of the name.
 
     Reads no markup at all -- the names come from the shipped roster, so the
     only thing being recovered here is which number each sits beside.
@@ -697,6 +731,10 @@ def key_page(text, names):
         best = None
         for m in re.finditer(r"\b" + re.escape(surname) + r"\b", text, re.I):
             for pos, num in districts:
+                if side == "before" and pos > m.start():
+                    continue
+                if side == "after" and pos < m.start():
+                    continue
                 gap = abs(pos - m.start())
                 if gap <= PROXIMITY_CHARS and (best is None or gap < best[0]):
                     best = (gap, num)
@@ -750,6 +788,39 @@ def _selftest():
         check(got == want,
               "surname_of(%r) -> %r (the page prints this, not the suffix)"
               % (written, got))
+
+    # LABEL_SIDE, on the two pages' own text as strip_tags renders it. The
+    # nearest rule is asserted WRONG on each first, so the side is what moves
+    # the answer and not some other change.
+    KOSSUTH_ROWS = (
+        "First District Supervisor Carter Nath , Phone: (515) 320-6062 Second "
+        "District Supervisor Howard Haas Phone: (515) 341-7993 Third District "
+        "Supervisor Joshua Waechter , Phone: (712) 298-4549 Fourth District "
+        "Supervisor Kyle Stecker Phone: (515) 320-3844 Fifth District "
+        "Supervisor Amber Garman Phone: (515) 361-6751 Kossuth County")
+    KOSSUTH = ["Amber Garman", "Howard Haas", "Carter Nath", "Kyle Stecker",
+               "Joshua Waechter"]
+    near = key_page(KOSSUTH_ROWS, KOSSUTH)[0][0]
+    check(sorted(near.values()) != [1, 2, 3, 4, 5],
+          "Kossuth's rows read nearest-first do not give five districts")
+    got = key_page(KOSSUTH_ROWS, KOSSUTH, LABEL_SIDE["Kossuth"])[0][0]
+    check(got == {"Carter Nath": 1, "Howard Haas": 2, "Joshua Waechter": 3,
+                  "Kyle Stecker": 4, "Amber Garman": 5},
+          "Kossuth's rows read label-before-name -> %r" % got)
+    WORTH_ROWS = (
+        "Board Members AJ Stone Board Member - District 1 Term Expires: 2026 "
+        "Mark Smeby Board Member - District 2 Term Expires: 2028 Enos Loberg "
+        "Board Member - District 3 Term Expires: 2026 Duties and "
+        "Responsibilities ... Supervisor Districts Our Team AJ Stone , Board "
+        "Member - District 1 Mark Smeby , Board Member - District 2 Enos "
+        "Loberg , Board Member - District 3 Map & Directions")
+    WORTH = ["Enos Loberg", "Mark Smeby", "AJ Stone"]
+    near = key_page(WORTH_ROWS, WORTH)[0][0]
+    check(sorted(near.values()) != [1, 2, 3],
+          "Worth's rows read nearest-first do not give three districts")
+    got = key_page(WORTH_ROWS, WORTH, LABEL_SIDE["Worth"])[0][0]
+    check(got == {"AJ Stone": 1, "Mark Smeby": 2, "Enos Loberg": 3},
+          "Worth's rows read label-after-name -> %r" % got)
 
     # Washington County's own board page, as strip_tags renders the five rows.
     WASHINGTON_ROWS = (
@@ -1059,7 +1130,10 @@ def main():
         p = feat["properties"]
         if p.get("PLANTYPE") == "PLAN 3":
             plan3[p["COUNTY"]] = True
-            seats[p["COUNTY"]] = p.get("NUMDISTRICTS")
+            seats.setdefault(p["COUNTY"], set()).add(p["DISTRICT"])
+    # The drawn districts are the seat count, not the NUMDISTRICTS column:
+    # Warren draws five and its column says 3 (build_ia_county_board_directory.py).
+    seats = {c: len(d) for c, d in seats.items()}
 
     with open(OFFICERS) as f:
         officers = json.load(f)
@@ -1077,7 +1151,7 @@ def main():
 
     for county in targets:
         names = supervisors.get(county)
-        home = home_by_county.get(county)
+        home = HOME_OVERRIDE.get(county) or home_by_county.get(county)
         if not names:
             skipped.append((county, "no gated supervisor list in ia-county-officers.json"))
             continue
@@ -1091,7 +1165,8 @@ def main():
                 body = fetch(url)
                 if not body:
                     continue
-                result, reason = key_page(strip_tags(body), names)
+                result, reason = key_page(strip_tags(body), names,
+                                          LABEL_SIDE.get(county))
                 if result:
                     keyed, widest = result
                     page = url

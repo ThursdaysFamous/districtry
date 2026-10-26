@@ -95,7 +95,7 @@ from ._common import member, vacant, member_email, ROLE, read_phones, Withheld
 COUNTY = "Henry"; FIPS = "079"
 DOMAINS = ("henrycountytn.gov", "henrycountytn.org")
 URLS = ["https://henrycountytn.gov/government?tab=commissioners",
-        "https://henrycountytn.gov/assets/index-CH_jWSsR.js"]
+        "https://henrycountytn.gov/assets/index-C-CEYf2G.js"]
 SEATS = {str(i): 3 for i in range(1, 6)}
 AT_LARGE = 0
 
@@ -165,9 +165,12 @@ def parse(pages):
         raise ValueError("the array names districts %s, not 1..5" % sorted(districts, key=int))
 
     # Vacancies only where the county's own total says seats are unfilled.
+    # Since the redeploy of 2026-10-26 the bundle carries the sentence twice:
+    # once in the tab and once in the site's search index. Both must agree.
     total = TOTAL.findall(bundle)
-    if len(total) != 1:
-        raise ValueError("the Commissioners tab no longer states 'a total of N County Commissioners'")
+    if not total or len(set(total)) != 1:
+        raise ValueError("the Commissioners tab no longer states one 'a total of N County "
+                         "Commissioners' (found %r)" % total)
     stated = int(total[0])
     named = sum(len(v) for v in districts.values())
     if stated != named:
