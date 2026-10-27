@@ -52,232 +52,51 @@
       "goatcounter_url": "https://districtry.goatcounter.com/count"
     }
   },
+  "zip_search": {
+    "file": "zip-index.json",
+    "layers": [
+      {"id": "zip-code", "field": "ZCTA5", "inside": ["mo-state-outline.json"]}
+    ]
+  },
   "socrata_host": "https://data.invalid",
   "socrata_app_token": "",
   "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
   "feedback_subject": "districtry Missouri feedback",
   "metro_explorers": [
-    {
-      "id": "chicago",
-      "label": "Illinois",
-      "url": "https://districtry.com/il/",
-      "emoji": "🌭",
-      "explorer_name": "districtry Illinois",
-      "bbox": {
-        "minLng": -91.52,
-        "minLat": 36.96,
-        "maxLng": -87.01,
-        "maxLat": 42.51
-      }
-    },
-    {
-      "id": "nyc",
-      "label": "New York",
-      "url": "https://districtry.com/ny/",
-      "emoji": "🗽",
-      "explorer_name": "districtry New York",
-      "bbox": {
-        "minLng": -79.82,
-        "minLat": 40.43,
-        "maxLng": -71.62,
-        "maxLat": 45.07
-      }
-    },
-    {
-      "id": "sf",
-      "label": "San Francisco",
-      "url": "https://districtry.com/ca/",
-      "emoji": "🌉",
-      "explorer_name": "districtry San Francisco",
-      "bbox": {
-        "minLng": -122.6,
-        "minLat": 37.6,
-        "maxLng": -122.3,
-        "maxLat": 37.95
-      }
-    },
-    {
-      "id": "wisconsin",
-      "label": "Wisconsin",
-      "url": "https://districtry.com/wi/",
-      "emoji": "🧀",
-      "explorer_name": "districtry Wisconsin",
-      "bbox": {
-        "minLng": -92.89,
-        "minLat": 42.49,
-        "maxLng": -86.25,
-        "maxLat": 47.31
-      }
-    },
-    {
-      "id": "iowa",
-      "label": "Iowa",
-      "url": "https://districtry.com/ia/",
-      "emoji": "🌽",
-      "explorer_name": "districtry Iowa",
-      "bbox": {
-        "minLng": -96.64,
-        "minLat": 40.37,
-        "maxLng": -90.14,
-        "maxLat": 43.5
-      }
-    },
-    {
-      "id": "michigan",
-      "label": "Michigan",
-      "url": "https://districtry.com/mi/",
-      "emoji": "🚗",
-      "explorer_name": "districtry Michigan",
-      "bbox": {
-        "minLng": -87.6,
-        "minLat": 41.7,
-        "maxLng": -82.11,
-        "maxLat": 48.01
-      }
-    },
-    {
-      "id": "minnesota",
-      "label": "Minnesota",
-      "url": "https://districtry.com/mn/",
-      "emoji": "🛶",
-      "explorer_name": "districtry Minnesota",
-      "bbox": {
-        "minLng": -97.3,
-        "minLat": 43.44,
-        "maxLng": -89.58,
-        "maxLat": 49.44
-      }
-    },
-    {
-      "id": "kentucky",
-      "label": "Kentucky",
-      "url": "https://districtry.com/ky/",
-      "emoji": "🐎",
-      "explorer_name": "districtry Kentucky",
-      "bbox": {
-        "minLng": -89.62,
-        "minLat": 36.45,
-        "maxLng": -81.91,
-        "maxLat": 39.2
-      }
-    },
-    {
-      "id": "indiana",
-      "label": "Indiana",
-      "url": "https://districtry.com/in/",
-      "emoji": "🏁",
-      "explorer_name": "districtry Indiana",
-      "bbox": {
-        "minLng": -88.1,
-        "minLat": 37.83,
-        "maxLng": -84.78,
-        "maxLat": 41.77
-      }
-    },
-    {
-      "id": "northcarolina",
-      "label": "North Carolina",
-      "url": "https://districtry.com/nc/",
-      "emoji": "🌳",
-      "explorer_name": "districtry North Carolina",
-      "bbox": {
-        "minLng": -84.33,
-        "minLat": 33.74,
-        "maxLng": -75.39,
-        "maxLat": 36.6
-      }
-    },
-    {
-      "id": "oklahoma",
-      "label": "Oklahoma",
-      "url": "https://districtry.com/ok/",
-      "emoji": "🌾",
-      "explorer_name": "districtry Oklahoma",
-      "bbox": {
-        "minLng": -103.01,
-        "minLat": 33.61,
-        "maxLng": -94.43,
-        "maxLat": 37.01
-      }
-    },
-    {
-      "id": "southcarolina",
-      "label": "South Carolina",
-      "url": "https://districtry.com/sc/",
-      "emoji": "🌴",
-      "explorer_name": "districtry South Carolina",
-      "bbox": {
-        "minLng": -83.36,
-        "minLat": 31.99,
-        "maxLng": -78.49,
-        "maxLat": 35.16
-      }
-    },
-    {
-      "id": "tennessee",
-      "label": "Tennessee",
-      "url": "https://districtry.com/tn/",
-      "emoji": "🎸",
-      "explorer_name": "districtry Tennessee",
-      "bbox": {
-        "minLng": -90.32,
-        "minLat": 34.98,
-        "maxLng": -81.64,
-        "maxLat": 36.68
-      }
-    },
-    {
-      "id": "arkansas",
-      "label": "Arkansas",
-      "url": "https://districtry.com/ar/",
-      "emoji": "💎",
-      "explorer_name": "districtry Arkansas",
-      "bbox": {
-        "minLng": -94.62,
-        "minLat": 33.0,
-        "maxLng": -89.64,
-        "maxLat": 36.5
-      }
-    },
-    {
-      "id": "mississippi",
-      "label": "Mississippi",
-      "url": "https://districtry.com/ms/",
-      "emoji": "🧸",
-      "explorer_name": "districtry Mississippi",
-      "bbox": {
-        "minLng": -91.66,
-        "minLat": 30.13,
-        "maxLng": -88.09,
-        "maxLat": 35.0
-      }
-    },
-    {
-      "id": "louisiana",
-      "label": "Louisiana",
-      "url": "https://districtry.com/la/",
-      "emoji": "🎷",
-      "explorer_name": "districtry Louisiana",
-      "bbox": {
-        "minLng": -94.05,
-        "minLat": 28.85,
-        "maxLng": -89.71,
-        "maxLat": 33.02
-      }
-    },
-    {
-      "id": "missouri",
-      "label": "Missouri",
-      "url": "https://districtry.com/mo/",
-      "emoji": "🍖",
-      "explorer_name": "districtry Missouri",
-      "bbox": {
-        "minLng": -95.78,
-        "minLat": 35.99,
-        "maxLng": -89.09,
-        "maxLat": 40.62
-      }
-    }
+    { "id": "chicago", "label": "Illinois", "url": "https://districtry.com/il/", "emoji": "🌭", "explorer_name": "districtry Illinois",
+      "bbox": { "minLng": -91.52, "minLat": 36.96, "maxLng": -87.01, "maxLat": 42.51 } },
+    { "id": "nyc", "label": "New York", "url": "https://districtry.com/ny/", "emoji": "🗽", "explorer_name": "districtry New York",
+      "bbox": { "minLng": -79.82, "minLat": 40.43, "maxLng": -71.62, "maxLat": 45.07 } },
+    { "id": "sf", "label": "San Francisco", "url": "https://districtry.com/ca/", "emoji": "🌉", "explorer_name": "districtry San Francisco",
+      "bbox": { "minLng": -122.6, "minLat": 37.6, "maxLng": -122.3, "maxLat": 37.95 } },
+    { "id": "wisconsin", "label": "Wisconsin", "url": "https://districtry.com/wi/", "emoji": "🧀", "explorer_name": "districtry Wisconsin",
+      "bbox": { "minLng": -92.89, "minLat": 42.49, "maxLng": -86.25, "maxLat": 47.31 } },
+    { "id": "iowa", "label": "Iowa", "url": "https://districtry.com/ia/", "emoji": "🌽", "explorer_name": "districtry Iowa",
+      "bbox": { "minLng": -96.64, "minLat": 40.37, "maxLng": -90.14, "maxLat": 43.5 } },
+    { "id": "michigan", "label": "Michigan", "url": "https://districtry.com/mi/", "emoji": "🚗", "explorer_name": "districtry Michigan",
+      "bbox": { "minLng": -87.6, "minLat": 41.7, "maxLng": -82.11, "maxLat": 48.01 } },
+    { "id": "minnesota", "label": "Minnesota", "url": "https://districtry.com/mn/", "emoji": "🛶", "explorer_name": "districtry Minnesota",
+      "bbox": { "minLng": -97.3, "minLat": 43.44, "maxLng": -89.58, "maxLat": 49.44 } },
+    { "id": "kentucky", "label": "Kentucky", "url": "https://districtry.com/ky/", "emoji": "🐎", "explorer_name": "districtry Kentucky",
+      "bbox": { "minLng": -89.62, "minLat": 36.45, "maxLng": -81.91, "maxLat": 39.2 } },
+    { "id": "indiana", "label": "Indiana", "url": "https://districtry.com/in/", "emoji": "🏁", "explorer_name": "districtry Indiana",
+      "bbox": { "minLng": -88.1, "minLat": 37.83, "maxLng": -84.78, "maxLat": 41.77 } },
+    { "id": "northcarolina", "label": "North Carolina", "url": "https://districtry.com/nc/", "emoji": "🌳", "explorer_name": "districtry North Carolina",
+      "bbox": { "minLng": -84.33, "minLat": 33.74, "maxLng": -75.39, "maxLat": 36.6 } },
+    { "id": "oklahoma", "label": "Oklahoma", "url": "https://districtry.com/ok/", "emoji": "🌾", "explorer_name": "districtry Oklahoma",
+      "bbox": { "minLng": -103.01, "minLat": 33.61, "maxLng": -94.43, "maxLat": 37.01 } },
+    { "id": "southcarolina", "label": "South Carolina", "url": "https://districtry.com/sc/", "emoji": "🌴", "explorer_name": "districtry South Carolina",
+      "bbox": { "minLng": -83.36, "minLat": 31.99, "maxLng": -78.49, "maxLat": 35.16 } },
+    { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
+      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
+    { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
+    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
+      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } },
+    { "id": "louisiana", "label": "Louisiana", "url": "https://districtry.com/la/", "emoji": "🎷", "explorer_name": "districtry Louisiana",
+      "bbox": { "minLng": -94.05, "minLat": 28.85, "maxLng": -89.71, "maxLat": 33.02 } },
+    { "id": "missouri", "label": "Missouri", "url": "https://districtry.com/mo/", "emoji": "🏞️", "explorer_name": "districtry Missouri",
+      "bbox": { "minLng": -95.78, "minLat": 35.99, "maxLng": -89.09, "maxLat": 40.62 } }
   ],
   "hover_number_keys": [
     [
@@ -376,9 +195,9 @@
       "label": "County Commission District",
       "group": "political",
       "area_rank": 5,
-      "rank_note": "Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 28 counties whose county map viewer, download, posted township map, GIS office or clerk publishes them",
+      "rank_note": "Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 31 counties whose county map viewer, download, posted township map, GIS office or clerk publishes or sends them",
       "source": {
-        "answers": "The county commission district covering the point, and the district commissioner elected from it, in the 28 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner.",
+        "answers": "The county commission district covering the point, and the district commissioner elected from it, in the 31 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner.",
         "boundary": [
           {
             "label": "Integrity GIS county map viewers — the commission district layer each county's own public map viewer carries, for Barton, Bates, Buchanan, Camden, Chariton, Christian, Cooper, Dade, DeKalb, Lincoln, Maries, Marion, McDonald, Miller, Phelps, Polk, Pulaski, Ralls, Ray, Vernon and Warren counties, read 2026-10-23. Each answers exactly two districts, whose names match the seats the Secretary of State's Missouri Roster lists for that county. Clipped to the Census Bureau's county line, with the few slivers the viewer leaves between its two districts given to the district beside them. Whether each viewer's line is the one the county's elections use today is NOT established: no viewer gives a date for its lines, and Missouri law sets no date by which a county must redraw them.",
@@ -395,6 +214,18 @@
           {
             "label": "Cass County — the shapefile of its two commission districts that Cass County GIS, in the Assessor's office, e-mailed to this project on 23 October 2026 after the county clerk forwarded the request (its metadata last synced 28 April 2022), kept as sent in mo/data/source/raw/cass-commission-districts/ and clipped to the county line in the same way. District 2 is the northwest of the county (Belton, Raymore and Peculiar) and District 1 the rest, as the county's own district map sent with it draws them.",
             "url": "https://www.casscounty.com/"
+          },
+          {
+            "label": "Howard County — the shapefile of its two commission districts, the Western and Eastern Commissioner's Districts, that the county Assessor e-mailed to this project on 26 October 2026 after the county clerk was asked, kept as sent in mo/data/source/raw/howard-commission-districts/ and clipped to the county line in the same way. It stops at the Missouri River's bank, so the strip between the bank and the Census county line is split where the dividing line meets the river. The Secretary of State's Missouri Roster, linked here, lists its Assessor.",
+            "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
+          },
+          {
+            "label": "Wayne County — the map of its ten townships that the county clerk's office e-mailed to this project on 26 October 2026, with a red line marking the boundary between its Eastern and Western commission districts. The line runs along township lines only: Benton, Black River, Mill Spring and Williams lie west of it and the other six east. Drawn as the union of those townships' Census Bureau (TIGER) lines, clipped to the county line in the same way.",
+            "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
+          },
+          {
+            "label": "Dent County — the county clerk's office's list, e-mailed to this project on 26 October 2026, of the townships in each of its two commission districts: Current, Franklin, Gladden, Linn, Sinkin, Spring Creek East and Texas in the First District, and Meramec, Norman, Osage, Short Bend, Spring Creek West and Watkins in the Second. Drawn as the union of those townships' Census Bureau (TIGER) lines, clipped to the county line in the same way.",
+            "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
           },
           {
             "label": "Saline County — the county clerk's list, sent to this project on 23 October 2026, of the townships and precincts in each of its two commission districts: Cambridge, Clay, Grand Pass and Miami townships and Marshall Wards 3 and 4 in the Northern District, and Arrow Rock, Blackwater, Elmwood, Liberty, Salt Fork and Salt Pond townships and Marshall Wards 1 and 2 in the Southern District, as the 2011 map sent with it also draws them. Drawn from the Census Bureau's (TIGER) township lines and, inside Marshall township, its 2020 voting districts Marshall 1 to 4, which tile that township; Marshall may have redrawn its wards since 2020.",
@@ -414,7 +245,7 @@
           }
         ],
         "people": "mo-county-officials.json, the roster the County card reads: each county's district commissioners from the Secretary of State's Missouri Roster, joined by seat name.",
-        "applies": "28 of Missouri's 114 counties; hidden in the other 86 and in the City of St. Louis, which the Data gaps panel lists and explains."
+        "applies": "31 of Missouri's 114 counties; hidden in the other 83 and in the City of St. Louis, which the Data gaps panel lists and explains."
       }
     },
     {
@@ -593,7 +424,11 @@
   },
   "coverage_key": {
     "outside": "Outside Missouri",
-    "edge": "Missouri"
+    "region": {
+      "edge": "Missouri",
+      "label": "County commission districts not drawn yet",
+      "sub": "The County card still names every county's commission or council"
+    }
   },
   "data_files": {
     "geometry": [
@@ -601,7 +436,19 @@
         "file": "metro-outline.json",
         "min_features": 1,
         "max_features": 1,
-        "note": "The whole-Missouri outline for the coverage wash (loadMetroOutline), dissolved from the 115-county fabric."
+        "note": "The coverage ring for the wash (loadMetroOutline): the counties whose county commission district lines are drawn, dissolved from the same county fabric as mo-state-outline.json. It can be several disjoint parts."
+      },
+      {
+        "file": "mo-state-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "The whole-Missouri outline (loadStateOutline), dissolved from the 115-county fabric: the wash's middle band and the ground the ZIP layer's coverage test reads."
+      },
+      {
+        "file": "zip-index.json",
+        "min_features": 1033,
+        "max_features": 1033,
+        "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside mo-state-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
       },
       {
         "file": "state-counties.json",
@@ -629,9 +476,9 @@
       },
       {
         "file": "mo-commission-districts.json",
-        "min_features": 56,
-        "max_features": 56,
-        "note": "The county commission districts of the 28 counties whose map viewer, download, posted township map, GIS office or clerk publishes them (mo/scripts/build_mo_commission_districts.py), two per county, clipped to the Census Bureau's county lines."
+        "min_features": 62,
+        "max_features": 62,
+        "note": "The county commission districts of the 31 counties whose map viewer, download, posted township map, GIS office or clerk publishes or sends them (mo/scripts/build_mo_commission_districts.py), two per county, clipped to the Census Bureau's county lines."
       }
     ],
     "rosters": [
@@ -657,8 +504,8 @@
       },
       {
         "file": "mo-commission-counties.json",
-        "min_keys": 28,
-        "note": "The 28 counties whose commission districts are drawn, by GEOID, with each district's 2020 census population, written by the same build as mo-commission-districts.json and held to it by its --check. The County Commission District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file."
+        "min_keys": 31,
+        "note": "The 31 counties whose commission districts are drawn, by GEOID, with each district's 2020 census population, written by the same build as mo-commission-districts.json and held to it by its --check. The County Commission District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file."
       },
       {
         "file": "coverage-gaps.json",
@@ -668,7 +515,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mo-shell-v5",
+    "cache_name": "districtry-mo-shell-v9",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

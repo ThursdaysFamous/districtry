@@ -95,6 +95,12 @@ const NEGATIVE_HIDDEN = [];
 const CHRISTIAN_POINT = "36.95028,-93.04376";
 const LAWRENCE_POINT = "36.99024,-93.67586";
 const CASS_POINT = "38.7968,-94.45476";
+// The pole of inaccessibility of Howard's Eastern District as the shipped
+// file draws it (shapely polylabel, 2026-10-26), from the shapefile its
+// Assessor sent.
+const HOWARD_POINT = "39.10983,-92.59028";
+// Salem, in Dent County, whose clerk's office listed the whole townships in each district.
+const DENT_POINT = "37.60307,-91.48972";
 // Inside the Census's 2020 Marshall 4 precinct, the half of Marshall township
 // Saline's clerk lists in the Northern District, 4.1 km from any edge.
 const SALINE_POINT = "39.1534,-93.246";
@@ -325,37 +331,55 @@ try {
       `${cold.hrefs.length} links`);
 
     // ==== TEMPLATE:BEGIN smoke-coverage-band ====
-    // THIS INSTANCE PAINTS NO MIDDLE BAND, AND THAT IS THE CLAIM ASSERTED HERE.
-    // The gaps lede answers three ways since 2026-09-26 — inside the covered
-    // area, inside a wider region whose own key says what still answers there,
-    // or outside both — and the middle answer exists only where the app hands
-    // drawOutOfScopeMask a region geometry. This one hands it none, so the wash
-    // has two bands and the lede must keep saying "nothing there can be
-    // answered yet" beyond the covered area. Asserted rather than assumed
-    // because the engine block is one shared copy: a change that started
-    // retaining a region unconditionally would have this app claiming something
-    // answers where nothing does, and nothing static could see it — the
-    // sentence is assembled at runtime from a point test.
+    // THIS INSTANCE PAINTS A MIDDLE BAND SINCE 2026-10-26 (Adam: "Shade the map
+    // like IL is currently"). The coverage ring is the counties whose county
+    // commission district lines are drawn and the band is the rest of the
+    // state, where every statewide layer and the County card still answer. The
+    // gaps lede must name the band, with the words COVERAGE_KEY.region gives it,
+    // at a point in an undrawn county, and must claim no band beyond the state
+    // line. Asserted in a browser because the sentence is assembled at runtime
+    // from a point test against geometry the wash fetched.
     //
-    // IT WAITS FOR THE WASH FIRST. A null coverage test correctly falls through
-    // to wording that claims neither, so a point selected before the wash has
-    // loaded asserts against the app's "we cannot tell yet" state — which is
-    // what CI caught on this check's first draft.
-    async function washPainted() {
-      return page.waitForFunction(() => {
+    // BOTH HALVES WAIT FOR THE WASH TO PAINT. A null coverage test falls
+    // through to wording that claims neither, so a point selected before the
+    // wash has loaded asserts against the app's "we cannot tell yet" state. In
+    // an app that declares a region the `dst-glow` line is created ONLY in the
+    // branch that also retains the region polygons, so it is the exact signal.
+    async function washPainted(needRegion) {
+      return page.waitForFunction((wantGlow) => {
         const pane = document.querySelector(".leaflet-pane.leaflet-scope-mask-pane");
-        return !!(pane && pane.querySelector("path"));
-      }, null, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
+        if (!pane || !pane.querySelector("path")) return false;
+        return wantGlow ? !!pane.querySelector("path.dst-glow") : true;
+      }, needRegion, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
     }
-    if (await washPainted()) {
+    // Springfield, Greene County: inside Missouri, and Greene's commission
+    // lines are not drawn (it is not in mo-commission-counties.json, which
+    // validate_index.py holds the coverage ring to).
+    const BAND_PROBE = { region: "Missouri", label: "Springfield, Greene County",
+                         label_says: "County commission districts not drawn yet",
+                         lat: 37.2090, lng: -93.2923 };
+    const ready = await washPainted(true);
+    check(`the wash painted its region band, so the band wording can be read (${BAND_PROBE.region})`,
+      ready, ready ? "scope-mask pane carries dst-glow" :
+      "no dst-glow in the scope-mask pane — the region band never painted, so the " +
+      "two checks below would assert against the app's unknown-coverage wording");
+    await page.evaluate(({ n, lat, lng }) => window[n].setSelectedPoint(lat, lng),
+      { n: EXPORTS_NAME, lat: BAND_PROBE.lat, lng: BAND_PROBE.lng });
+    const band = await openGaps();
+    check(`gaps lede names the coverage band (${BAND_PROBE.label})`,
+      band.lede.indexOf("inside " + BAND_PROBE.region + ", outside the area this app covers in full") !== -1 &&
+      band.lede.indexOf(BAND_PROBE.label_says) !== -1 &&
+      !/nothing there can be answered yet/.test(band.lede),
+      JSON.stringify(band.lede));
+    if (await washPainted(false)) {
       await page.evaluate(({ n, p }) => window[n].setSelectedPoint(p[0], p[1]),
         { n: EXPORTS_NAME, p: NEGATIVE_POINT.split(",").map(Number) });
       const beyond = await openGaps();
-      check("gaps lede claims no coverage band at the negative point",
+      check("gaps lede claims no coverage band outside the state",
         /nothing there can be answered yet/.test(beyond.lede) &&
         !/covers in full/.test(beyond.lede), JSON.stringify(beyond.lede));
     } else {
-      check("gaps lede claims no coverage band at the negative point", false,
+      check("gaps lede claims no coverage band outside the state", false,
         "the wash never painted, so the panel's coverage test could only answer unknown");
     }
     // ==== TEMPLATE:END smoke-coverage-band ====
@@ -412,11 +436,11 @@ try {
   //     Kentucky; Union City, Tennessee; Jonesboro, Arkansas; and Miami,
   //     Oklahoma. Measured against fleet-outlines.json on 2026-10-21, each lies
   //     inside its own state's outline and no other, 17.3, 26.4, 46.3, 22.2,
-  //     34.0 and 23.0 km from this app's coverage ring. This instance answers
-  //     its own side from the coverage ring the wash retained, with no fetch,
-  //     and it works while this instance is dark because the fleet file names
-  //     only live apps. Chicago proves the file is still read for ground far
-  //     from here.
+  //     34.0 and 23.0 km from this app's outline. This instance answers its
+  //     own side from the state outline the wash retained, with no fetch,
+  //     and since go-live the fleet file carries that outline too, which is
+  //     asked first, so a point both draw stays here. Chicago proves the file
+  //     is still read for ground far from here.
   //
   //     KANSAS AND NEBRASKA ARE DELIBERATELY NOT CASES. Nobody serves them
   //     today, so a click there stays here; but the fleet is meant to reach
@@ -1208,7 +1232,8 @@ try {
   //       - Cole, at the State Capitol, drawn from MidMO GIS's download, and
   //         Christian, drawn from its map viewer, and Lawrence, drawn from
   //         whole TIGER townships and pointed to by its clerk, and Cass,
-  //         drawn from the file its GIS office sent: the card names the district
+  //         drawn from the file its GIS office sent, and Howard, from the one
+  //         its Assessor sent: the card names the district
   //         and its commissioner, the presiding commissioner, where the line
   //         comes from and that it has not been checked against the
   //         county's election records.
@@ -1229,7 +1254,7 @@ try {
     const drawn = shipped("mo-commission-counties.json");
     const seatOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.seat === p.seat) || {};
     const presidingOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.countywide) || {};
-    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT, SALINE_POINT, PERRY_POINT, IRON_POINT, SCOTT_POINT]) {
+    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT, HOWARD_POINT, DENT_POINT, SALINE_POINT, PERRY_POINT, IRON_POINT, SCOTT_POINT]) {
       const at = propsAt(fc, pt);
       const p = at[0] || {};
       const mine = seatOf(p), pres = presidingOf(p);
@@ -1242,14 +1267,17 @@ try {
           ? text.includes("made of whole townships") &&
             text.includes(`clerk pointed this app to that map on ${longDate(p.pointedOn)}`)
           : p.source === "sent"
-            ? text.includes(`GIS office sent them to this app on ${longDate(p.sentOn)}`)
+            ? text.includes(`own office sent them to this app on ${longDate(p.sentOn)}`)
           : p.source === "arcgis"
             ? text.includes(`${p.county}'s own map at SEMO GIS`) &&
               (p.pointedOn ? text.includes(`clerk pointed this app to that map on ${longDate(p.pointedOn)}`)
                 : !text.includes("clerk pointed this app"))
-          : p.source === "listed"
+          : p.source === "listed" && p.byPrecinct
             ? text.includes(`county clerk listed them, township by township and precinct by precinct on ${longDate(p.listedOn)}`) &&
               text.includes("2020 voting precinct lines")
+          : p.source === "listed"
+            ? text.includes(`clerk's office listed them, township by township on ${longDate(p.listedOn)}`) &&
+              !text.includes("voting precinct lines")
           : text.includes(`${p.county}'s own map viewer`);
       check(`county-commissioner card in ${p.county || "a drawn county"} names the ${p.seat || "?"} and its commissioner, the presiding commissioner, and where the line comes from`,
         at.length === 1 && !!drawn[p.countyfips] && !info.error && !!mine.name && !!pres.name &&

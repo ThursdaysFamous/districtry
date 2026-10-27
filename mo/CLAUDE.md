@@ -8,19 +8,21 @@ districtry Missouri: a single-file, dependency-light web app. Click a point in M
 an address) and it reports every civic district containing that point and who represents you
 there. It serves at **districtry.com/mo/** as a folder of the consolidated districtry repo —
 following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. **The instance is DARK**: no `metros.json` entry, `mo/**` excluded from the
-Pages deploy, nothing served and no landing card naming it. `mo/WATCH.md` lists what go-live has to
-do in one change.
+root-scripts shape. **The instance is LIVE**, on Adam's word, launched on his choices of
+2026-10-26: the map is shaded in two tiers like Illinois's (solid where the county commission
+districts are drawn, a lighter wash over the rest of the state, where every statewide layer and the
+County card answer), and it launched without voting precincts. `docs/MO_EXPANSION_PLAN.md` is the
+record of the launch.
 
 **The layers** draw their shapes from a national publisher or the state, and name people from a
 national roster or the state's own publications: **County** (`county`, 115 — the 114 counties and
-the City of St. Louis, Census TIGERweb, the coverage ring, and the card that names the county's
+the City of St. Louis, Census TIGERweb, the state outline the lighter wash covers, and the card that names the county's
 governing body and its other elected officers), **U.S. House** (8 districts, TIGERweb geometry
 joined to the public-domain unitedstates/congress-legislators roster), **Missouri Senate** and
 **Missouri House** (34 and 163 districts, the state's own maps of the 2022 plans joined to each
-chamber's own publications), **County Commission District** (`county-commissioner`, 56 districts
-in the 28 counties whose own published maps, files or clerks give the lines, joined to the County card's roster),
-the LIVE TIGERweb fabric — **Township** (`county-subdivision`, 1,394,
+chamber's own publications), **County Commission District** (`county-commissioner`, 60 districts
+in the 31 counties whose own published maps, files or clerks give the lines, joined to the County card's roster),
+the TIGERweb fabric, drawn and answered from tile files this site serves (`scripts/mirror_tiger_tiles.py`) — **Township** (`county-subdivision`, 1,394,
 shown under the County layer), **City, Town or Village** (`municipality`, 947), **School District
 (Unified)** (445), **School District (Elementary)** (71) and **ZIP Code** — and three nearest-N layers
 from the USGS National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
@@ -80,7 +82,7 @@ two commission districts are drawn by its commission "without dividing municipal
 (RSMo 49.010), and no statewide map of them was found. Townships are not a substitute: tested
 against three counties' own maps on 2026-10-21, Franklin's twelve townships fall whole inside its
 districts, while Buchanan splits 2 of 12 and Clay 2 of 7. Since 2026-10-23 the County Commission
-District layer draws 28 counties (`mo/scripts/build_mo_commission_districts.py`, `--check` in CI):
+District layer draws 31 counties (`mo/scripts/build_mo_commission_districts.py`, `--check` in CI):
 21 from the commissioner district layer of the county's own map viewer, Cole from MidMO GIS's
 download, Lawrence from its posted map, whose line runs along whole townships drawn from TIGER, and Cass
 from the shapefile its GIS office e-mailed on 2026-10-23 (kept as sent in `mo/data/source/raw/`, held
@@ -90,11 +92,12 @@ Bureau's 2020 voting districts, and Perry from the Commissioner Districts layer 
 at SEMO GIS, which its clerk pointed to, and Iron and Scott from the same server's Commissioner
 District layers, found there on 2026-10-24 with no county pointing to them (St. Francois's, on the same
 server, is not drawn: it reaches 0.61% of the county past the Census line and splits current precincts,
-so its letter's answer decides it), each clipped to the County layer so the two districts tile the county exactly, and each
+so its letter's answer decides it), and Wayne from the township map its clerk's office e-mailed on 2026-10-26, whose
+line between the two districts runs along township lines only, drawn from TIGER's townships, and Howard from the shapefile its Assessor e-mailed the same day, which stops at the Missouri River's bank, so the river strip it leaves is split at the dividing line, each clipped to the County layer so the two districts tile the county exactly, and each
 district joined to the roster's seat by name. **The card says the line is not checked against the
 county's election records**, because no viewer dates its lines and Missouri sets no redistricting
 date; the Secretary of State's per-jurisdiction precinct reports (SUN0000590, not ordered) would be
-that check. The layer hides in the other 86 counties and the City of St. Louis, which stay in gap
+that check. The layer hides in the other 83 counties and the City of St. Louis, which stay in gap
 `mo-county-commission-district-lines`; a county joins when its own map proves the lines.
 
 **TWO SCHOOL LAYERS TILE THE STATE BETWEEN THEM.** TIGER holds 445 unified and 71 elementary

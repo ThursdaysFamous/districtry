@@ -334,6 +334,12 @@ for (const scheme of ["light", "dark"]) {
       // 5000ms, so the old 300ms was adequate and this cannot silently become
       // inadequate the way a number can.
       await page.evaluate(() => document.fonts.ready);
+      // A page folded into tabs shows one panel at a time, and the sweep below
+      // skips what is not displayed, so a tab nobody opened would never be
+      // measured. Every tab panel is shown first (traffic.html since
+      // 2026-10-27); a page without tabs is untouched.
+      await page.evaluate(() => document.querySelectorAll('[role="tabpanel"][hidden]')
+        .forEach((p) => { p.hidden = false; }));
       await page.evaluate(() => new Promise((r) =>
         requestAnimationFrame(() => requestAnimationFrame(r))));
       visited++;

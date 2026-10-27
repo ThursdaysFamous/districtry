@@ -136,7 +136,7 @@ with, working as intended.
 | Clinton County Clerk (IL) | the address where the board meets | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
 | nine Michigan city and township clerks | may an automated reader see your board page | none | Ypsilanti Township **ANSWERED same day**: the clerk was passing the request to the township's technology staff, and the correction reached her at 15:23. Lansing acknowledged automatically, with no content |
 | Cass County Auditor (IA) | which supervisor represents which district | none | **ANSWERED same day, USABLE 2026-10-07 and SHIPPED.** Her 2026-10-01 reply carried the pairing as an inline image that this project's mail tools could not open; the operator supplied the image on 2026-10-07 and it reads District 1 Stephen Green, 2 Mark O'Brien, 3 Wendy Richter, 4 Steve Baier, 5 Bernard Pettinger. The county's own Resolution 2022-12 names the precincts in each district, and every one of our twelve Cass precincts lies in the same-numbered district of our map, including Atlantic's five wards (1 in District 1, 2 and 3 in District 2, 4 and 5 in District 3), so the numbering is checked and the cards name the five. The reply asking her to type the list out is withdrawn and was never sent. |
-| Calumet (Brillion), Pepin (Durand) county clerks (WI) | ward-to-district filing | none | — |
+| Calumet (Brillion), Pepin (Durand) county clerks (WI) | ward-to-district filing | Pepin followed up 2026-10-26 | **BOTH ANSWERED.** Calumet the same day: Brillion elects its council at large and wards 5 and 6 have no residents. Pepin 2026-10-26, after the follow-up: Durand ward 3 is Aldermanic District 3 |
 | Outagamie County Clerk (WI) | the New London filing | none | **ANSWERED same day**, settled: New London wards 10, 11 and 12 are all in Aldermanic District 5 |
 | Brown County Clerk (WI) | how Bellevue elects its board | none | **ANSWERED same day, HEDGED**: "They appear to be at large", with the village clerk's address and a question back about whether the village had been asked. A hedge is not a statement the village has made, so it settles nothing by itself |
 | Chillicothe, West Peoria, Galva city clerks (IL) | ward boundaries | none | — |
@@ -2412,8 +2412,13 @@ unaffected sources; the three district files are not in the tree.
 > London and Port Washington it is written down and not yet built, waiting on the same gate. No
 > reply is owed; a thank-you note is optional and the Letters thread drafts it.
 >
-> Pepin has not replied. The follow-up went on 2026-10-26 at 13:55:52 UTC; a second follow-up is
-> due about 2026-11-09.
+> **PEPIN ANSWERED THE FOLLOW-UP AND COMPLETED DURAND.** The follow-up went on 2026-10-26 at
+> 13:55:52 UTC and Clerk Audrey Bauer replied at 14:12 UTC: "Ward 3 is Alterman 3 in the City of
+> Durand – The only time it matters is when elections involves election of the Alterpersons."
+> So Durand ward 3 is aldermanic district 3. The county files the city's other two wards 01 and
+> 02, so ward 3 as district 03 completes a three-district plan with nothing left over. Like the
+> three cities above it is written down and not yet built, waiting on the same gate. No second
+> follow-up is needed and no reply is owed.
 
 **What this is about.** Wisconsin's aldermanic districts are drawn as groups of wards, and
 the ward file the Legislative Technology Services Bureau publishes is the only statewide
@@ -2751,9 +2756,15 @@ to and would read as doubting the first answer. It is recorded, not re-asked.
 
 ## Ask 23 — Logan County Clerk: may an automated client read the yearbook?
 
-> **ASKED 2026-10-01, FOLLOWED UP 2026-10-26, no reply as of 2026-10-26** (dates from the sent
-> folder as the Letters thread read it). Drafted 2026-09-12. On 2026-10-24 the site's robots.txt
-> still disallowed `/images/`, so the ask is still open. A first approach to this office. It asks for
+> **ASKED 2026-10-01, FOLLOWED UP 2026-10-26, ANSWERED 2026-10-26** (dates from the mailbox as
+> the Letters thread read it). The Clerk replied that the office publishes a new yearbook every
+> other year and the next one is due in the summer of 2027. She did not say whether an automated
+> read is acceptable, and the reply was not taken as permission: the weekly fetch stays stopped.
+> What it settles is the cost recorded below. The 2025-2026 edition carried forward is the current
+> edition until summer 2027, so the lost weekly re-read was re-reading an unchanged file; a
+> mid-cycle "updated" file, which this edition's own filename shows can happen, is the one change
+> it would have caught. A thank-you asking her to e-mail the 2027 edition, or to say where it will
+> be posted, was SENT 2026-10-26. Drafted 2026-09-12. A first approach to this office. It asks for
 > permission, not for data: the county already publishes the file and it already serves
 > normally to a browser. Nothing is blocked and nothing is being worked around.
 
@@ -4487,6 +4498,15 @@ precincts' district numbers, Jersey needs to know whether its 2016 map is still 
 rather than either August recipient.
 
 ### Bond County Clerk — `brooke.weathers@bondcountyil.gov`
+
+> **ANSWERED 2026-10-26** (from the mailbox as the Letters thread read it). This letter went
+> 2026-10-01 and was followed up 2026-10-26; Clerk Weathers replied to the follow-up the same day
+> with a scanned ordinance: the board's 2011 apportionment plan (Resolution 06-27-11-01, adopted
+> 27 June 2011), which lists every district as whole 2010 precincts plus named census blocks. It
+> covers elections from 2012 through 2020, but it divides exactly the four precincts the 2022 and
+> 2024 canvasses show divided, between the same pairs of districts, so it looks like the plan still
+> in use. What it does not say is whether the board kept it after the 2020 census. A thank-you
+> asking that one question is wanted. The record is `bond-county-board-districts`.
 
 > Subject: Bond County board districts — how do four precincts divide?
 >

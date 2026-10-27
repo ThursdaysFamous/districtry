@@ -4764,7 +4764,9 @@ function initChiExplorer() {
     { id: "mississippi", label: "Mississippi", url: "https://districtry.com/ms/", emoji: "🧸", explorerName: "districtry Mississippi",
       bbox: { minLng: -91.66, minLat: 30.13, maxLng: -88.09, maxLat: 35.0 } },
     { id: "louisiana", label: "Louisiana", url: "https://districtry.com/la/", emoji: "🎷", explorerName: "districtry Louisiana",
-      bbox: { minLng: -94.05, minLat: 28.85, maxLng: -89.71, maxLat: 33.02 } }
+      bbox: { minLng: -94.05, minLat: 28.85, maxLng: -89.71, maxLat: 33.02 } },
+    { id: "missouri", label: "Missouri", url: "https://districtry.com/mo/", emoji: "🏞️", explorerName: "districtry Missouri",
+      bbox: { minLng: -95.78, minLat: 35.99, maxLng: -89.09, maxLat: 40.62 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -6625,7 +6627,9 @@ function initChiExplorer() {
     // selection (map click, address search, geolocate, or a shared/permalink load),
     // coordinates coarsened to ~1km (2 decimals) so it maps interest, never an
     // address. Cookieless and identity-free (GoatCounter), like every event here.
-    trackEvent("select", lat.toFixed(2) + "," + lng.toFixed(2));
+    // The path names the app (`select/il`, since 2026-10-27) so a state's own
+    // officials can be told how many points were chosen on that state's map.
+    trackEvent("select/" + METRO_BRAND.instanceTag, lat.toFixed(2) + "," + lng.toFixed(2));
 
     if (selectedMarker) map.removeLayer(selectedMarker);
     selectedMarker = L.marker([lat, lng], { icon: starDivIcon, alt: "Selected point" }).addTo(map);
@@ -17762,6 +17766,12 @@ function initChiExplorer() {
   });
   var loadJasperBoardMembers = makeCached(function () {
     return fetchJSONWithRetry("data/app/jasper-county-board-members.json", {}, 2);
+  });
+  var loadBondBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/bond-county-board-districts.json", {}, 2);
+  });
+  var loadBondBoardMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/bond-county-board-members.json", {}, 2);
   });
   var loadFayetteBoardDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/fayette-county-board-districts.json", {}, 2);
@@ -30578,7 +30588,8 @@ function initChiExplorer() {
               seq: seq,
               district: district,
               precincts: findPropCI(props, ["precincts"]),
-              entry: district != null ? results[1][String(district)] : null
+              entry: district != null ? results[1][String(district)] : null,
+              board: results[1].board || null
             };
           });
         },
@@ -30592,11 +30603,21 @@ function initChiExplorer() {
           if (members.length) {
             wrap.appendChild(renderPersonRows(members.map(boardMemberPerson)));
           }
-          if (result.precincts && result.precincts.length) {
-            wrap.appendChild(renderFieldStack([
-              { label: "Precincts", value: result.precincts.join(", ") }
-            ]));
+          var fields = [];
+          // "meets at", not "office": the County Clerk wrote that the board's
+          // meetings are held in the courthouse, which is a meeting place.
+          if (result.board && result.board.address) {
+            fields.push({ label: "Board meets at",
+                          value: String(result.board.address) });
+            if (result.board.source) {
+              fields.push({ label: "Address source",
+                            value: String(result.board.source) });
+            }
           }
+          if (result.precincts && result.precincts.length) {
+            fields.push({ label: "Precincts", value: result.precincts.join(", ") });
+          }
+          if (fields.length) wrap.appendChild(renderFieldStack(fields));
           return wrap;
         },
         cardIdentifier: function (result) {
@@ -31864,6 +31885,16 @@ function initChiExplorer() {
         loadGeometry: loadJasperBoardDistricts, loadMembers: loadJasperBoardMembers,
         url: "https://jaspercountyillinois.gov/county-board/board-members/",
         seatsNote: "Three members represent this district."
+      }),
+      // Bond — five single-member districts from the county's 2011
+      // apportionment plan, which names whole precincts and census blocks
+      // (build_bond_boundaries.py), with three Greenville blocks the plan and
+      // the county's election results place differently drawn as shared.
+      partialBoardEntry({
+        key: "bond", title: "Bond County Board", coverage: countyOutlineCoverage("bond"),
+        loadGeometry: loadBondBoardDistricts, loadMembers: loadBondBoardMembers,
+        url: "https://bondcountyil.gov/bond-county-board/",
+        seatsNote: "One member represents this district."
       })
     ]
   });

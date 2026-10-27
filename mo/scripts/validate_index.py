@@ -102,12 +102,14 @@ EXPECT_LAYER_IDS = [
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
 GEOMETRY_FILES = {
-    "metro-outline.json": (1, 1),  # The whole-Missouri outline for the coverage wash (loadMetroOutline), dissolved from the 115-county fabric.
+    "metro-outline.json": (1, 1),  # The coverage ring for the wash (loadMetroOutline): the counties whose county commission district lines are drawn, dissolved from the same county fabric as mo-state-outline.json. It can be several disjoint parts.
+    "mo-state-outline.json": (1, 1),  # The whole-Missouri outline (loadStateOutline), dissolved from the 115-county fabric: the wash's middle band and the ground the ZIP layer's coverage test reads.
+    "zip-index.json": (1033, 1033),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside mo-state-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
     "state-counties.json": (115, 115),  # The 114 counties and the City of St. Louis — the instance's offline anchor layer and the ground the coverage tests use.
     "congress-districts.json": (8, 8),  # The 8 U.S. House districts, TIGERweb layer 4 (CD119), the 2022 map, kept past 3 January 2027 because the 2026 election uses it.
     "mo-senate-districts.json": (34, 34),  # The 34 Missouri Senate districts, from the state's own map of the 2022 plan.
     "mo-house-districts.json": (163, 163),  # The 163 Missouri House districts, from the state's own map of the 2022 plan.
-    "mo-commission-districts.json": (56, 56),  # The county commission districts of the 28 counties whose map viewer, download, posted township map, GIS office or clerk publishes them (mo/scripts/build_mo_commission_districts.py), two per county, clipped to the Census Bureau's county lines.
+    "mo-commission-districts.json": (62, 62),  # The county commission districts of the 31 counties whose map viewer, download, posted township map, GIS office or clerk publishes or sends them (mo/scripts/build_mo_commission_districts.py), two per county, clipped to the Census Bureau's county lines.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -116,7 +118,7 @@ ROSTER_FILES = {
     "mo-senate-members.json": 34,  # Missouri Senate roster from the Senate's own member pages, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size.
     "mo-house-members.json": 163,  # Missouri House roster from the House's own published member list, on the same terms.
     "mo-county-officials.json": 115,  # Every county's commission or council, county executive and other elected officers from the Secretary of State's Missouri Roster, one record for each of the 114 counties and the City of St. Louis, refreshed weekly by update-mo-county-officials.yml.
-    "mo-commission-counties.json": 28,  # The 28 counties whose commission districts are drawn, by GEOID, with each district's 2020 census population, written by the same build as mo-commission-districts.json and held to it by its --check. The County Commission District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file.
+    "mo-commission-counties.json": 31,  # The 31 counties whose commission districts are drawn, by GEOID, with each district's 2020 census population, written by the same build as mo-commission-districts.json and held to it by its --check. The County Commission District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 
@@ -388,9 +390,10 @@ def main():
         "validate_index: OK — inline script parses, %d registerLayer( calls, "
         "LAYER_AREA_RANK + LAYER_SIDEBAR_RANK cover all %d ids, no inline datasets, %d well-formed "
         "METRO_EXPLORERS entries, all data/app files present and cached in "
-        "exactly one sw.js list, %d dispatched counties all inside the coverage "
-        "ring whose %d counties match the shipped county layer and the county-officials roster exactly%s"
-        % (n, len(EXPECT_LAYER_IDS), n_metros, n_counties, n_ring,
+        "exactly one sw.js list, %d dispatched counties, a state ring whose %d "
+        "counties match the shipped county layer and the county-officials roster "
+        "exactly, and a coverage ring of the %d counties whose commission lines are drawn%s"
+        % (n, len(EXPECT_LAYER_IDS), n_metros, n_counties, n_ring[0], n_ring[1],
            "" if n_sourced is None else
            ", sources page linked and covering all %d layers" % n_sourced)
     )
@@ -683,7 +686,9 @@ def check_county_coverage_list(html, repo_root):
 
 
 def check_coverage_ring_tracks_counties(repo_root, app_dir):
-    """METRO_COUNTY_FIPS must be exactly the counties this app answers for.
+    """STATE_COUNTY_FIPS must be exactly the counties this app answers for, and
+    METRO_COUNTY_FIPS exactly the counties whose commission lines it draws
+    (the two tiers of the wash since 2026-10-26).
 
     THE CHECK ABOVE CANNOT SEE THIS INSTANCE. It walks registerCountyLayer
     dispatch entries, and this instance has none — every concept it ships is ONE
@@ -710,9 +715,11 @@ def check_coverage_ring_tracks_counties(repo_root, app_dir):
         if not os.path.exists(path):
             fail("%s not found — the coverage-ring/county check cannot run"
                  % os.path.relpath(path, repo_root))
-            return 0
+            return (0, 0)
 
-    in_ring = set(_literals_from(outline_py, ("METRO_COUNTY_FIPS",))["METRO_COUNTY_FIPS"])
+    consts = _literals_from(outline_py, ("METRO_COUNTY_FIPS", "STATE_COUNTY_FIPS"))
+    in_ring = set(consts["STATE_COUNTY_FIPS"])
+    coverage = set(consts["METRO_COUNTY_FIPS"])
     with open(counties_path, encoding="utf-8") as f:
         counties = json.load(f)
     features = counties.get("features") or []
@@ -731,18 +738,18 @@ def check_coverage_ring_tracks_counties(repo_root, app_dir):
         fail("state-counties.json has %d feature(s) whose GEOID is not 5 digits "
              "(%s) — the ring cannot be compared against keys it cannot read"
              % (len(malformed), ", ".join(malformed[:6])))
-        return 0
+        return (0, 0)
 
     masked = sorted(drawn - in_ring)
     if masked:
-        fail("count%s this app DRAWS but which sit outside METRO_COUNTY_FIPS, so "
-             "the out-of-scope wash greys them out while their cards answer in "
-             "full: %s. Add the FIPS to mo/scripts/build_metro_outline.py WITH an "
-             "INSIDE anchor and rebuild data/app/metro-outline.json."
+        fail("count%s this app DRAWS but which sit outside STATE_COUNTY_FIPS, so "
+             "the out-of-scope wash greys them out while their cards answer: "
+             "%s. Add the FIPS to mo/scripts/build_metro_outline.py WITH a "
+             "STATE_INSIDE anchor and rebuild data/app/mo-state-outline.json."
              % ("ies" if len(masked) > 1 else "y", ", ".join(masked)))
     promised = sorted(in_ring - drawn)
     if promised:
-        fail("count%s inside METRO_COUNTY_FIPS with no feature in "
+        fail("count%s inside STATE_COUNTY_FIPS with no feature in "
              "state-counties.json, so the wash promises an answer the map cannot "
              "draw: %s. Either the county layer stopped resolving (rebuild it) or "
              "the county was added to the ring too early."
@@ -755,7 +762,7 @@ def check_coverage_ring_tracks_counties(repo_root, app_dir):
         if len(key) != 5 or not key.isdigit() or not key.startswith("29"):
             fail("mo-county-officials.json has a key that is not a Missouri "
                  "county GEOID: %r" % key)
-            return 0
+            return (0, 0)
         named.add(key[-3:])
     unnamed = sorted(drawn - named)
     if unnamed:
@@ -768,7 +775,21 @@ def check_coverage_ring_tracks_counties(repo_root, app_dir):
         fail("mo-county-officials.json names officials for count%s the "
              "map does not draw: %s"
              % ("ies" if len(orphaned) > 1 else "y", ", ".join(orphaned)))
-    return len(in_ring)
+
+    # The coverage ring (the solid tier) is the counties whose commission
+    # district lines are drawn, and nothing else: a county drawn and left out
+    # is shaded as if its lines were missing, and a county in the ring and not
+    # drawn is shown as if they were drawn.
+    drawn_path = os.path.join(app_dir, "mo-commission-counties.json")
+    with open(drawn_path, encoding="utf-8") as f:
+        lines_drawn = {k[-3:] for k in json.load(f)}
+    if coverage != lines_drawn:
+        fail("METRO_COUNTY_FIPS (the coverage ring) and mo-commission-counties.json "
+             "disagree: drawn and not in the ring %s, in the ring and not drawn %s. "
+             "Add or remove the county in mo/scripts/build_metro_outline.py and "
+             "rebuild data/app/metro-outline.json."
+             % (sorted(lines_drawn - coverage) or "none", sorted(coverage - lines_drawn) or "none"))
+    return len(in_ring), len(coverage)
 
 
 if __name__ == "__main__":

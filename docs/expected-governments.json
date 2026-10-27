@@ -1,7 +1,7 @@
 {
  "built_by": "scripts/build_expected_governments.py",
  "floor": 25000,
- "measured": "2026-10-21",
+ "measured": "2026-10-26",
  "read_by": "scripts/build_eam_status.py",
  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer",
  "source": "U.S. Census Bureau TIGERweb, tigerWMS_Census2020 \u2014 layer 26 (Incorporated Places) and layer 20 (County Subdivisions, FUNCSTAT='A'); POP100 is the 2020 decennial count.",
@@ -14,6 +14,7 @@
   "la": null,
   "mi": true,
   "mn": null,
+  "mo": null,
   "ms": null,
   "nc": null,
   "ny": true,
@@ -2277,6 +2278,197 @@
     "lsadc": "25",
     "name": "Rosemount city",
     "pop": 25650
+   }
+  ],
+  "mo": [
+   {
+    "geoid": "2938000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Kansas City city",
+    "pop": 508090
+   },
+   {
+    "geoid": "2965000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "St. Louis city",
+    "pop": 301578
+   },
+   {
+    "geoid": "2970000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Springfield city",
+    "pop": 169176
+   },
+   {
+    "geoid": "2915670",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Columbia city",
+    "pop": 126254
+   },
+   {
+    "geoid": "2935000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Independence city",
+    "pop": 123011
+   },
+   {
+    "geoid": "2941348",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lee's Summit city",
+    "pop": 101108
+   },
+   {
+    "geoid": "2954074",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "O'Fallon city",
+    "pop": 91316
+   },
+   {
+    "geoid": "2964550",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "St. Joseph city",
+    "pop": 72473
+   },
+   {
+    "geoid": "2964082",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "St. Charles city",
+    "pop": 70493
+   },
+   {
+    "geoid": "2906652",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Blue Springs city",
+    "pop": 58603
+   },
+   {
+    "geoid": "2965126",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "St. Peters city",
+    "pop": 57732
+   },
+   {
+    "geoid": "2924778",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Florissant city",
+    "pop": 52533
+   },
+   {
+    "geoid": "2937592",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Joplin city",
+    "pop": 51762
+   },
+   {
+    "geoid": "2913600",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Chesterfield city",
+    "pop": 49999
+   },
+   {
+    "geoid": "2978442",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Wentzville city",
+    "pop": 44372
+   },
+   {
+    "geoid": "2937000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Jefferson City city",
+    "pop": 43228
+   },
+   {
+    "geoid": "2911242",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Cape Girardeau city",
+    "pop": 39540
+   },
+   {
+    "geoid": "2979820",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Wildwood city",
+    "pop": 35417
+   },
+   {
+    "geoid": "2975220",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "University City city",
+    "pop": 35065
+   },
+   {
+    "geoid": "2903160",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Ballwin city",
+    "pop": 31103
+   },
+   {
+    "geoid": "2942032",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Liberty city",
+    "pop": 30167
+   },
+   {
+    "geoid": "2960788",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Raytown city",
+    "pop": 30012
+   },
+   {
+    "geoid": "2939044",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Kirkwood city",
+    "pop": 29461
+   },
+   {
+    "geoid": "2946586",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Maryland Heights city",
+    "pop": 28284
+   },
+   {
+    "geoid": "2927190",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Gladstone city",
+    "pop": 27063
+   },
+   {
+    "geoid": "2928324",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Grandview city",
+    "pop": 26209
+   },
+   {
+    "geoid": "2931276",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hazelwood city",
+    "pop": 25458
    }
   ],
   "ms": [

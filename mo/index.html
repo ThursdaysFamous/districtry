@@ -4271,7 +4271,13 @@ function initMissouriExplorer() {
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
-  var LAYER_CONCEPTS = { "county-board": ["county-commissioner"] };
+  var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["mo-senate"],
+    "state-house": ["mo-house"], "county": ["county"], "county-board": ["county-commissioner"],
+    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "school-district-elementary": ["school-district-elementary"],
+    "police-station": ["police-station"], "fire-station": ["fire-station"],
+    "post-office": ["post-office"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -4279,6 +4285,9 @@ function initMissouriExplorer() {
   // clean the address is. Set from the worksheet's poi_geocode_bbox — widen
   // it there whenever a layer's cards start naming farther-away offices.
   var POI_GEOCODE_BBOX = { minLng: -96.0, minLat: 35.8, maxLng: -88.9, maxLat: 40.8 };
+  // ZIP code index (scripts/build_zip_index.mjs): a typed ZIP code selects a
+  // spot inside it, and its ZIP layer is turned on and pinned for comparison.
+  var ZIP_SEARCH_URL = "data/app/zip-index.json";
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -4297,7 +4306,7 @@ function initMissouriExplorer() {
   // to hand drawOutOfScopeMask() the region geometry, because the key names
   // only the bands that were actually drawn. `edge` names the purple line
   // around the coverage in an instance with no region.
-  var COVERAGE_KEY = { outside: "Outside Missouri", edge: "Missouri" };
+  var COVERAGE_KEY = { outside: "Outside Missouri", region: { edge: "Missouri", label: "County commission districts not drawn yet", sub: "The County card still names every county's commission or council" } };
   /* Sibling District Explorer deployments — one canonical list shared by every
    * metro fork. When a new metro launches, add its entry to every fork's
    * worksheet and regenerate (Conversion 3 will source this list from the
@@ -4339,7 +4348,7 @@ function initMissouriExplorer() {
       bbox: { minLng: -91.66, minLat: 30.13, maxLng: -88.09, maxLat: 35.0 } },
     { id: "louisiana", label: "Louisiana", url: "https://districtry.com/la/", emoji: "🎷", explorerName: "districtry Louisiana",
       bbox: { minLng: -94.05, minLat: 28.85, maxLng: -89.71, maxLat: 33.02 } },
-    { id: "missouri", label: "Missouri", url: "https://districtry.com/mo/", emoji: "🍖", explorerName: "districtry Missouri",
+    { id: "missouri", label: "Missouri", url: "https://districtry.com/mo/", emoji: "🏞️", explorerName: "districtry Missouri",
       bbox: { minLng: -95.78, minLat: 35.99, maxLng: -89.09, maxLat: 40.62 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
@@ -6022,7 +6031,9 @@ function initMissouriExplorer() {
     // selection (map click, address search, geolocate, or a shared/permalink load),
     // coordinates coarsened to ~1km (2 decimals) so it maps interest, never an
     // address. Cookieless and identity-free (GoatCounter), like every event here.
-    trackEvent("select", lat.toFixed(2) + "," + lng.toFixed(2));
+    // The path names the app (`select/il`, since 2026-10-27) so a state's own
+    // officials can be told how many points were chosen on that state's map.
+    trackEvent("select/" + METRO_BRAND.instanceTag, lat.toFixed(2) + "," + lng.toFixed(2));
 
     if (selectedMarker) map.removeLayer(selectedMarker);
     selectedMarker = L.marker([lat, lng], { icon: starDivIcon, alt: "Selected point" }).addTo(map);
@@ -10923,7 +10934,7 @@ function initMissouriExplorer() {
     "mo-senate",         // 34 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 115 counties (114 counties and the independent City of St. Louis), pre-built from TIGERweb; the instance's offline anchor layer
     "mo-house",          // 163 House districts — smaller on average than a county, larger than a school district
-    "county-commissioner", // Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 28 counties whose county map viewer, download, posted township map, GIS office or clerk publishes them
+    "county-commissioner", // Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 31 counties whose county map viewer, download, posted township map, GIS office or clerk publishes or sends them
     "school-district-unified", // 445 unified districts, about 372 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive; with the 71 elementary districts they cover the state exactly
     "school-district-elementary", // 71 elementary districts, about 177 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive; the ground the unified tiling leaves
     "zip-code",          // 1,040 ZIP Code Tabulation Areas overlapping Missouri, of the 1,977 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-26); about 163 km2 of land on average for the 1,977, and ranked by them, which are what the map draws where the archive is not used (on the raster basemap); the layer hides outside Missouri
@@ -14975,23 +14986,34 @@ function initMissouriExplorer() {
    * County card names every member in every county from the Missouri Roster.
    * The district LINES are a different question: no statewide map of them
    * exists, the Census does not carry them, and each county draws its own
-   * (RSMo 49.010 asks only that a district not divide a township), so no
-   * district is drawn yet — gap mo-county-commission-district-lines, and
-   * mo/WATCH.md has the measurements.
+   * (RSMo 49.010 asks only that a district not divide a township), so they
+   * are drawn county by county from what each county posts or sends
+   * (mo/scripts/build_mo_commission_districts.py, mo-commission-counties.json)
+   * and the map shades the counties not drawn yet — gap
+   * mo-county-commission-district-lines, and mo/WATCH.md has the
+   * measurements.
    * ======================================================================= */
 
   // The one state fact every TIGERweb where-clause reads.
   var STATE_FIPS = "29";
 
-  /* ---------- state outline (out-of-scope wash) ----------
-   * A single dissolved feature covering all 115 counties, pre-built by
-   * mo/scripts/build_metro_outline.py. Missouri's coverage is the whole
-   * state (2-band coverage_key, no `region`), so this is the ONLY wash
-   * geometry the boot tail needs — see drawOutOfScopeMask below. Read the
-   * ring count from build_metro_outline.py --check, never from a map in your
-   * head. ---------- */
+  /* ---------- coverage ring and state outline (out-of-scope wash) ----------
+   * Two files, both pre-built by mo/scripts/build_metro_outline.py from one
+   * fetch of the state's 115 counties. metro-outline.json is the COVERAGE
+   * RING: the counties whose county commission district lines are drawn,
+   * which is the ground this app answers in full. mo-state-outline.json is
+   * the whole state, where every statewide layer and the County card still
+   * answer. The wash paints the strip between the two as the middle band
+   * (COVERAGE_KEY.region), the way Illinois shades its counties, on Adam's
+   * choice of 2026-10-26 ("Shade the map like IL is currently"), so the map
+   * says which counties are drawn while the rest come online one by one. The
+   * ring can be several disjoint parts; read its ring count from
+   * build_metro_outline.py --check, never from a map in your head. ---------- */
   var loadMetroOutline = makeCached(function () {
     return fetchJSONWithRetry("data/app/metro-outline.json", {}, 2);
+  });
+  var loadStateOutline = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mo-state-outline.json", {}, 2);
   });
 
   /* ---------- Census TIGERweb loaders ----------
@@ -15389,32 +15411,41 @@ function initMissouriExplorer() {
     var where = result.source === "cole"
       ? "Cole County's commission districts as MidMO GIS, the map site of " +
         "the City of Jefferson and Cole County, publishes them for download"
+      : result.source === "townships" && result.sent
+      ? String(result.county) + "'s commission districts as a map the county " +
+        "clerk's office sent to this app draws them, each made of whole " +
+        "townships, drawn here from the Census Bureau's township lines"
       : result.source === "townships"
       ? String(result.county) + "'s commission districts as the county's own " +
         "posted map draws them, each made of whole townships, drawn here from " +
         "the Census Bureau's township lines"
       : result.source === "sent"
-      ? String(result.county) + "'s commission districts as the county's GIS " +
+      ? String(result.county) + "'s commission districts as the county's own " +
         "office sent them to this app"
       : result.source === "arcgis"
       ? "The commissioner district layer of " + String(result.county) +
         "'s own map at SEMO GIS"
-      : result.source === "listed"
+      : result.source === "listed" && result.byPrecinct
       ? String(result.county) + "'s commission districts as the county clerk " +
         "listed them, township by township and precinct by precinct"
+      : result.source === "listed"
+      ? String(result.county) + "'s commission districts as the county " +
+        "clerk's office listed them, township by township"
       : "The Commissioner District layer of " + String(result.county) +
         "'s own map viewer";
     var clerk = moDate(result.clerk);
     var sent = moDate(result.sent);
     var listed = moDate(result.listed);
-    if (result.source === "sent") read = sent;
+    if (result.source === "sent" || (result.source === "townships" && sent)) read = sent;
     if (result.source === "listed") read = listed;
     return where + (read ? (sent || listed ? " on " : ", read on ") + read : "") + "." + (clerk
       ? " The county clerk pointed this app to that map on " + clerk + "."
-      : "") + (result.source === "listed"
+      : "") + (result.source === "listed" && result.byPrecinct
       ? " They are drawn here from the Census Bureau's township lines and, " +
         "inside a township the list splits, its 2020 voting precinct lines, " +
         "which may be older than a city's newest ward lines."
+      : result.source === "listed"
+      ? " They are drawn here from the Census Bureau's township lines."
       : "") + " Missouri law has " +
       "each county commission draw the line between its two districts, and " +
       "sets no date by which it must be redrawn. This app has not checked " +
@@ -15457,6 +15488,7 @@ function initMissouriExplorer() {
           read: findPropCI(props, ["read"]),
           clerk: findPropCI(props, ["pointedon"]),
           listed: findPropCI(props, ["listedon"]),
+          byPrecinct: !!findPropCI(props, ["byprecinct"]),
           sent: findPropCI(props, ["senton"]),
           officials: null,
           rosterFailed: false
@@ -16001,10 +16033,12 @@ function initMissouriExplorer() {
    * set is an ENVELOPE that reaches into the neighbouring states. `coverage`
    * suppresses the query outright, which is the engine's own mechanism for
    * "this layer does not apply here" and costs no fetch at all outside the
-   * state. The outline is the same file the coverage wash already fetches;
-   * a failed fetch fails OPEN per the engine's coverage contract. ---------- */
+   * state. The outline is the same state file the coverage wash already
+   * fetches for its middle band (not the coverage ring, which is only the
+   * counties whose commission lines are drawn); a failed fetch fails OPEN per
+   * the engine's coverage contract. ---------- */
   function inMissouri(point) {
-    return loadMetroOutline().then(function (fc) {
+    return loadStateOutline().then(function (fc) {
       var feats = (fc && fc.features) || [];
       for (var i = 0; i < feats.length; i++) {
         if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) return true;
@@ -17758,17 +17792,17 @@ function initMissouriExplorer() {
 
   buildGroupsUI();
   applyStateFromHash(); // restore a shared #point=…&layers=… link, if present
-  // Out-of-scope wash: a light grey wash over everything beyond this fork's
-  // coverage, drawn at idle from data/app/metro-outline.json (one feature,
-  // the state's 115 TIGERweb counties dissolved, the City of St. Louis among
-  // them, pre-built by mo/scripts/build_metro_outline.py). It marks where coverage genuinely
-  // ends (the cards already hide an out-of-coverage layer outright), and it
-  // skips silently on any error — it is a hint, not data; regenerate the
-  // file, never hand-edit it. This instance is 2-band coverage (no `region`), so
-  // drawOutOfScopeMask takes only the coverage geometry — see
-  // mo/scripts/build_metro_outline.py's docstring for when a second, wider
-  // region file would be added (the WI #523 precedent).
-  whenIdle(function () { drawOutOfScopeMask(loadMetroOutline); });
+  // Out-of-scope wash, in three bands, drawn at idle: clear inside
+  // data/app/metro-outline.json (the counties whose commission district
+  // lines are drawn), a lighter wash over the rest of the state from
+  // data/app/mo-state-outline.json (the 115 counties dissolved, the City of
+  // St. Louis among them, where the statewide layers and the County card
+  // still answer), and the full wash beyond the state line. Both files are
+  // pre-built by mo/scripts/build_metro_outline.py; regenerate them, never
+  // hand-edit. It skips silently on any error — it is a hint, not data.
+  // COVERAGE_KEY.region names the middle band for the map key and the data
+  // gaps panel.
+  whenIdle(function () { drawOutOfScopeMask(loadMetroOutline, loadStateOutline); });
 
 
   // sources.html sends readers back here with "#gaps" to open the Data gaps

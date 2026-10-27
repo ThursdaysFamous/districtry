@@ -79,6 +79,7 @@ IDS = {
     "Q1612": "Arkansas",
     "Q1494": "Mississippi",
     "Q1588": "Louisiana",
+    "Q1581": "Missouri",
 }
 
 # metros.json tag -> the jurisdiction item that instance answers for. STATED,
@@ -175,11 +176,18 @@ IDS = {
 # own P47 (Q1439, Q1612, Q1494) carries Q1612 and Q1494, which match this
 # table's ar and ms entries, the control that the route reads what it claims
 # to. Its English label is the bare string "Louisiana".
+#
+# mo was added at its go-live by the same route: Q1581 is in Q1612's own P47,
+# read on 2026-10-26. Read from Special:EntityData the same day, P31 = Q35657,
+# P300 = "US-MO", P131 = Q30, and its own P47 carries Q1204, Q1546, Q1603,
+# Q1509, Q1612 and Q1649, which match this table's il, ia, ky, tn, ar and ok
+# entries. Its English label is the bare string "Missouri".
 JURISDICTION = {
     "il": "Q1204", "wi": "Q1537", "ia": "Q1546", "mi": "Q1166",
     "ny": "Q1384", "ca": "Q62", "mn": "Q1527", "ky": "Q1603",
     "in": "Q1415", "nc": "Q1454", "ok": "Q1649", "sc": "Q1456",
     "tn": "Q1509", "ar": "Q1612", "ms": "Q1494", "la": "Q1588",
+    "mo": "Q1581",
 }
 
 
