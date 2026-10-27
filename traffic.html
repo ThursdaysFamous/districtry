@@ -923,6 +923,65 @@ main > section { margin-block: 0 30px; }
 main > section:last-child { margin-block-end: 0; }
 main > section.ruled { padding-top: 26px; border-top: 1px solid var(--line); }
 
+/* ---- the three tabs ----
+   Numbers, Insights and Milestones. The panels ship one after another and the
+   script folds them (html.tabbed), so with no script the whole report reads in
+   order. Underlined rather than a pill row, because the pill row under them is
+   the timeframe, which filters a panel rather than choosing one. */
+.tabs {
+  display: flex; flex-wrap: wrap; gap: 0 26px;
+  border-bottom: 1px solid var(--line); margin: 0 0 16px;
+}
+.tabs[hidden] { display: none; }
+.tabs button {
+  font: 600 15.5px/1 var(--font-body); color: var(--slate);
+  background: transparent; border: 0; border-bottom: 3px solid transparent;
+  margin-bottom: -1px; padding: 12px 2px 11px; min-height: 44px; cursor: pointer;
+}
+.tabs button:hover { color: var(--ink); }
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tabs button:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+#windowSection { margin-block-end: 0; }
+.tab-panel > section { margin-block: 0 30px; }
+.tab-panel > section:last-child { margin-block-end: 0; }
+.tab-panel > section.ruled { padding-top: 26px; border-top: 1px solid var(--line); }
+#panel-numbers ~ .tab-panel { margin-top: 30px; }
+/* Folded, a panel's first section sits right under the dates or the tabs and
+   needs no rule of its own. */
+.tabbed #panel-numbers ~ .tab-panel { margin-top: 0; }
+.tabbed .tab-panel > section:first-child { padding-top: 6px; border-top: 0; }
+
+/* ---- milestones ----
+   One card per figure with its marks under it, then a table of each state's
+   map. Written whole by the builder; see the TRAFFIC-MILESTONES markers. */
+.window-note { font-size: 14px; color: var(--slate); }
+.milestones h3.kicker { margin: 26px 0 8px; }
+.miles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.mile {
+  display: flex; flex-direction: column; gap: 8px; min-width: 0;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+  padding: 16px 18px 14px;
+}
+.mile h4 { margin: 0; font-size: 13.5px; font-weight: 400; color: var(--slate); }
+.mile .now { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; margin: 0; }
+.mile .value { font-weight: 600; font-size: 32px; line-height: 1.1; color: var(--ink); }
+.mile .to { font-size: 13.5px; color: var(--slate); }
+.marks { list-style: none; margin: 2px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.marks li {
+  font-size: 13px; line-height: 1.3; color: var(--slate); font-variant-numeric: tabular-nums;
+  border: 1px solid var(--line-strong); border-radius: 999px; padding: 3px 10px;
+}
+.marks .mark { font-weight: 600; }
+.marks li.passed { color: var(--ink); border-color: var(--s1); }
+.marks li.passed .mark::before { content: "\2713\00a0"; }
+.marks li.next { color: var(--ink); border-color: var(--ink); }
+.mile .value small { font-size: 15px; font-weight: 500; color: var(--slate); }
+.milestones .tablecard { margin-top: 16px; }
+#mapMarks caption { text-align: left; padding: 12px 0 6px; font-size: 15px; font-weight: 600; color: var(--ink); }
+#mapMarks td { white-space: nowrap; }
+#mapMarks th:nth-child(3), #mapMarks td:nth-child(3) { padding-left: 24px; }
+#mapMarks small { display: block; font-size: 12.5px; color: var(--slate); }
+
 /* Six of these are the section headings for the panels under .three and three
    more head a panel's second bar group, so they are h2 and h3 rather than
    spans: a reader navigating by heading found four headings on the page and
@@ -1108,6 +1167,8 @@ code {
 @media (max-width: 760px) {
   .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .reads { grid-template-columns: minmax(0, 1fr); }
+  .miles { grid-template-columns: minmax(0, 1fr); }
+  .tabs { gap: 0 20px; }
   .tile { padding: 13px 14px 11px; }
   .tile .value { font-size: 30px; }
   .three { grid-template-columns: minmax(0, 1fr); gap: 22px; }
@@ -1156,7 +1217,19 @@ code {
 
 <main id="page-main" class="report" tabindex="-1">
 
-  <section>
+  <!-- THREE TABS, since 2026-10-27, because the page had grown long: the
+       figures, what they suggest, and the marks to watch for. They ship open,
+       one after another, and the script below folds them into tabs, so a
+       reader with no JavaScript, or a broken script, still gets the whole
+       report. The choice is kept in the address (#insights, #milestones) so a
+       link opens on it. -->
+  <div class="tabs" role="tablist" aria-label="Report sections" hidden>
+    <button type="button" role="tab" id="tab-numbers" aria-controls="panel-numbers" aria-selected="true">Numbers</button>
+    <button type="button" role="tab" id="tab-insights" aria-controls="panel-insights" aria-selected="false" tabindex="-1">Insights</button>
+    <button type="button" role="tab" id="tab-milestones" aria-controls="panel-milestones" aria-selected="false" tabindex="-1">Milestones</button>
+  </div>
+
+  <section id="windowSection">
     <div class="window-row">
       <span class="kicker"><span data-stat="period">The last two months</span></span>
       <span><span data-stat="range">August 26 – October 26, 2026</span> &middot; <span data-stat="days">62</span> days &middot; read on <span data-stat="exportDate">October 27, 2026</span></span>
@@ -1169,6 +1242,10 @@ code {
         <button type="button" data-days="full" aria-pressed="true">2 months</button>
       </div>
     </div>
+  </section>
+
+  <div class="tab-panel" id="panel-numbers" data-tab="numbers">
+  <section>
     <!-- SIX FIGURES, THREE ABOUT VISITORS AND THREE ABOUT USE. Until
          2026-10-26 the first tile was every page viewed called "page visits",
          and the daily chart drew every event as "features used", which
@@ -1393,9 +1470,29 @@ code {
   </section>
 
 
+  <section class="ruled notes" id="notes">
+    <h2>Notes</h2>
+    <p class="take">What the figures above can&rsquo;t tell you.</p>
+    <ol>
+      <li id="note-1"><strong>What is counted.</strong> The counter counts each page, and each thing a reader does, once per browser in a visit of up to about eight hours, so reloading a page or choosing a second point adds nothing. Its own total for <span data-stat="periodThese">these two months</span> is <span data-stat="total">15,864</span>: pages viewed and the three kinds of event in note 10 together. The daily columns add up to <span data-stat="dailySum">15,919</span>, <span data-stat="dailyGap">55</span> apart. The gap changes from day to day and its cause is unknown, so both figures are shown. <span data-stat="barSumNote">The screen chart adds up to 5,867, the browser chart to 5,868 and the system chart to 5,868, against 5,881 pages viewed, and the country chart shows only the eight with the most.</span> The counter uses no cookies and does not identify anyone.</li>
+      <li id="note-2"><strong>The dates.</strong> This page covers <span data-stat="periodLast">the last two months</span>, <span data-stat="range">August 26 – October 26, 2026</span> (<span data-stat="days">62</span> days), ending with the last full day. <span data-day="Aug 25"><strong>August 25 is low</strong> because Google wrongly flagged the new districtry.com address that morning, and Chrome turned visitors away before the page loaded. Those visits can&rsquo;t be recovered.</span> The Illinois school board page was viewed <span data-stat="seoSchool">357</span> times, the fourth most of any page.</li>
+      <li id="note-3"><strong>Visits by app.</strong> <span data-stat="ageNote">Older apps have had longer to be found, so read the order as age, not popularity.</span> <span data-stat="residualNote">60 of 5,881 pages viewed were to pages that belong to no app, such as the privacy page, so they are in no bar.</span><span data-stat="zeroInstNote"></span></li>
+      <li id="note-4"><strong>Layers.</strong> <span data-stat="layerScopeNote">Some layers appear in more than one state’s map, and their counts add up across states. Since September 29 each count also records which app it came from: Congress (Illinois 116, New York 51 and San Francisco 7), County (Arkansas 42, Illinois 118, Indiana 13, Iowa 6, Kentucky 7, Louisiana 4, Michigan 18, Minnesota 12, Mississippi 4, North Carolina 12, Oklahoma 16, South Carolina 6, Tennessee 8 and Wisconsin 15), County board (Illinois 102 and Wisconsin 24), U.S. House (Arkansas 13, Indiana 32, Iowa 10, Kentucky 4, Louisiana 6, Michigan 26, Minnesota 5, Mississippi 1, Missouri 1, North Carolina 12, Oklahoma 8, South Carolina 21, Tennessee 22 and Wisconsin 14) and Ward (Illinois 191 and Wisconsin 6). “Not by app” is from before that date, or too small to be listed. The rest belong to one app only: County precinct, IL House, IL Senate, School board and Ward precinct.</span> Only the top ten layers are shown.</li>
+      <li id="note-5"><strong>Visits and sources.</strong> A visit is a page view that arrived from somewhere: a search engine, another site, a shared link, the Google Play app, or nowhere the browser would name, such as a typed address, a bookmark or an app that hides the link, which is &ldquo;Direct / unknown&rdquo;. Another <span data-stat="visitsLeft">1,972</span> pages viewed came with no source at all, and they are counted as pages viewed and not as visits. That they are further pages of visits already counted, opened from a link on districtry itself, is inferred rather than read: the counter names no districtry source, and Google&rsquo;s visits here match the clicks Search Console reports, which they would not if each page a reader opened next were counted as another visit from Google. Measured on October 26, they were 993 against 1,025 for August 25 to October 24, and within eight of each other on each of the 13 days from October 12, the days both record one by one. <span data-stat="refNote">The sources chart shows the eight largest, 3,858 of the 3,909 visits.</span> The campaigns list counts only links tagged for a campaign.</li>
+      <li id="note-6"><strong>Sources day by day.</strong> Each day is counted on its own, for page views alone. &ldquo;Other search engines&rdquo; is Yahoo, Ecosia, Startpage, Brave and the like, and &ldquo;Other sites&rdquo; any other website or shared link that sent a visitor, such as LinkedIn or a news story. The table also gives each day&rsquo;s visits from the Google Play app, the visits with no source named, and the pages viewed with no source at all that note 5 infers were opened from within the site; none of these three is drawn. A number ending in + means that day&rsquo;s list was cut short, so the real figure is higher.</li>
+      <li id="note-7"><strong>Searches.</strong> Google and Bing figures each include both districtry.com and the old chidistricts.com, which still shows up in some results and forwards to the new site. Google leaves out rare searches, so these totals won&rsquo;t match its own reports exactly. The visit counter can&rsquo;t see what anyone searched for, because Google doesn&rsquo;t pass that along. On Bing, districtry.com first appeared on <span data-stat="bingNewFirst">September 13</span>.</li>
+      <li id="note-8"><strong>Shared map links.</strong> Since <span data-stat="mapLinkFrom">October 17</span>, each Google Maps or Apple Maps link read by a search box is counted once, with which maps app it came from, whether it was pasted or shared in, what the search found, and which map read it. The link and the place are never recorded. A link the front page passes on to a state&rsquo;s map is counted by both.<span data-stat="mapLinkCutNote"></span></li>
+      <li id="note-9"><strong>Return visits.</strong> Since <span data-stat="returnSince">October 22</span>, each state&rsquo;s map counts a visit once per browser window, as a first visit or a return. A browser that has opened any of the maps before is a return; the mark that says so stays in the browser and is never sent. A cleared browser, a private window or another device counts as a first visit, and every visit before the count began was unmarked, so for its first weeks the share understates how many people come back and will rise as the count ages. The front page and the other pages are not counted here.</li>
+      <li id="note-10"><strong>What counts as use.</strong> Besides pages viewed, the apps send the counter events, and an event is one of three things: a reader doing something, such as choosing a point, turning on a layer or searching; the result of something a reader did, counted a second time, such as a location found or a hand-off to another state&rsquo;s map; or a count an app sends by itself with nobody doing anything, such as the visit counter every map has sent on opening since October 22, or an install invitation shown. Only the first kind is a reader action on this page. Each is counted once a visit for each thing, so choosing five points counts one and turning on three different layers counts three. A shared link that opens on a point with layers on counts as choosing that point and turning on those layers. Until October 26 this page drew all three kinds together as &ldquo;features used&rdquo;, so after October 22 that chart rose while reader actions did not.</li>
+      <li id="note-11"><strong>The Google Play app.</strong> The Android app on Google Play opens the site with a tag of its own, so its visits are counted apart: <span data-stat="androidVisits">202</span> in <span data-stat="periodThese">these two months</span>. <span data-stat="playNote">The installed app was opened 176 times in these two months, 150 of them outside the United States. Before the last seven days the site barely reached readers abroad: pages viewed from outside the United States averaged 3 a day, against 47 a day in the last seven days. So these launches are more likely people trying the app than readers looking up their own districts.</span></li>
+    </ol>
+  </section>
+  </div>
+
+  <div class="tab-panel" id="panel-insights" data-tab="insights">
   <section class="ruled reading" id="reading">
     <h2>What the figures say</h2>
-    <p class="take">The figures above, read for what they suggest about what to work on. Each part names the chart it is about.</p>
+    <p class="take">The report&rsquo;s figures, read for what they suggest about what to work on. Each part names the chart it is about.</p>
     <div class="reads">
       <div class="read wide" id="missedRead" hidden>
         <h3 class="kicker">Searches worth a look</h3>
@@ -1428,24 +1525,108 @@ code {
       </div>
     </div>
   </section>
+  </div>
 
-  <section class="ruled notes" id="notes">
-    <h2>Notes</h2>
-    <p class="take">What the figures above can&rsquo;t tell you.</p>
-    <ol>
-      <li id="note-1"><strong>What is counted.</strong> The counter counts each page, and each thing a reader does, once per browser in a visit of up to about eight hours, so reloading a page or choosing a second point adds nothing. Its own total for <span data-stat="periodThese">these two months</span> is <span data-stat="total">15,864</span>: pages viewed and the three kinds of event in note 10 together. The daily columns add up to <span data-stat="dailySum">15,919</span>, <span data-stat="dailyGap">55</span> apart. The gap changes from day to day and its cause is unknown, so both figures are shown. <span data-stat="barSumNote">The screen chart adds up to 5,867, the browser chart to 5,868 and the system chart to 5,868, against 5,881 pages viewed, and the country chart shows only the eight with the most.</span> The counter uses no cookies and does not identify anyone.</li>
-      <li id="note-2"><strong>The dates.</strong> This page covers <span data-stat="periodLast">the last two months</span>, <span data-stat="range">August 26 – October 26, 2026</span> (<span data-stat="days">62</span> days), ending with the last full day. <span data-day="Aug 25"><strong>August 25 is low</strong> because Google wrongly flagged the new districtry.com address that morning, and Chrome turned visitors away before the page loaded. Those visits can&rsquo;t be recovered.</span> The Illinois school board page was viewed <span data-stat="seoSchool">357</span> times, the fourth most of any page.</li>
-      <li id="note-3"><strong>Visits by app.</strong> <span data-stat="ageNote">Older apps have had longer to be found, so read the order as age, not popularity.</span> <span data-stat="residualNote">60 of 5,881 pages viewed were to pages that belong to no app, such as the privacy page, so they are in no bar.</span><span data-stat="zeroInstNote"></span></li>
-      <li id="note-4"><strong>Layers.</strong> <span data-stat="layerScopeNote">Some layers appear in more than one state’s map, and their counts add up across states. Since September 29 each count also records which app it came from: Congress (Illinois 116, New York 51 and San Francisco 7), County (Arkansas 42, Illinois 118, Indiana 13, Iowa 6, Kentucky 7, Louisiana 4, Michigan 18, Minnesota 12, Mississippi 4, North Carolina 12, Oklahoma 16, South Carolina 6, Tennessee 8 and Wisconsin 15), County board (Illinois 102 and Wisconsin 24), U.S. House (Arkansas 13, Indiana 32, Iowa 10, Kentucky 4, Louisiana 6, Michigan 26, Minnesota 5, Mississippi 1, Missouri 1, North Carolina 12, Oklahoma 8, South Carolina 21, Tennessee 22 and Wisconsin 14) and Ward (Illinois 191 and Wisconsin 6). “Not by app” is from before that date, or too small to be listed. The rest belong to one app only: County precinct, IL House, IL Senate, School board and Ward precinct.</span> Only the top ten layers are shown.</li>
-      <li id="note-5"><strong>Visits and sources.</strong> A visit is a page view that arrived from somewhere: a search engine, another site, a shared link, the Google Play app, or nowhere the browser would name, such as a typed address, a bookmark or an app that hides the link, which is &ldquo;Direct / unknown&rdquo;. Another <span data-stat="visitsLeft">1,972</span> pages viewed came with no source at all, and they are counted as pages viewed and not as visits. That they are further pages of visits already counted, opened from a link on districtry itself, is inferred rather than read: the counter names no districtry source, and Google&rsquo;s visits here match the clicks Search Console reports, which they would not if each page a reader opened next were counted as another visit from Google. Measured on October 26, they were 993 against 1,025 for August 25 to October 24, and within eight of each other on each of the 13 days from October 12, the days both record one by one. <span data-stat="refNote">The sources chart shows the eight largest, 3,858 of the 3,909 visits.</span> The campaigns list counts only links tagged for a campaign.</li>
-      <li id="note-6"><strong>Sources day by day.</strong> Each day is counted on its own, for page views alone. &ldquo;Other search engines&rdquo; is Yahoo, Ecosia, Startpage, Brave and the like, and &ldquo;Other sites&rdquo; any other website or shared link that sent a visitor, such as LinkedIn or a news story. The table also gives each day&rsquo;s visits from the Google Play app, the visits with no source named, and the pages viewed with no source at all that note 5 infers were opened from within the site; none of these three is drawn. A number ending in + means that day&rsquo;s list was cut short, so the real figure is higher.</li>
-      <li id="note-7"><strong>Searches.</strong> Google and Bing figures each include both districtry.com and the old chidistricts.com, which still shows up in some results and forwards to the new site. Google leaves out rare searches, so these totals won&rsquo;t match its own reports exactly. The visit counter can&rsquo;t see what anyone searched for, because Google doesn&rsquo;t pass that along. On Bing, districtry.com first appeared on <span data-stat="bingNewFirst">September 13</span>.</li>
-      <li id="note-8"><strong>Shared map links.</strong> Since <span data-stat="mapLinkFrom">October 17</span>, each Google Maps or Apple Maps link read by a search box is counted once, with which maps app it came from, whether it was pasted or shared in, what the search found, and which map read it. The link and the place are never recorded. A link the front page passes on to a state&rsquo;s map is counted by both.<span data-stat="mapLinkCutNote"></span></li>
-      <li id="note-9"><strong>Return visits.</strong> Since <span data-stat="returnSince">October 22</span>, each state&rsquo;s map counts a visit once per browser window, as a first visit or a return. A browser that has opened any of the maps before is a return; the mark that says so stays in the browser and is never sent. A cleared browser, a private window or another device counts as a first visit, and every visit before the count began was unmarked, so for its first weeks the share understates how many people come back and will rise as the count ages. The front page and the other pages are not counted here.</li>
-      <li id="note-10"><strong>What counts as use.</strong> Besides pages viewed, the apps send the counter events, and an event is one of three things: a reader doing something, such as choosing a point, turning on a layer or searching; the result of something a reader did, counted a second time, such as a location found or a hand-off to another state&rsquo;s map; or a count an app sends by itself with nobody doing anything, such as the visit counter every map has sent on opening since October 22, or an install invitation shown. Only the first kind is a reader action on this page. Each is counted once a visit for each thing, so choosing five points counts one and turning on three different layers counts three. A shared link that opens on a point with layers on counts as choosing that point and turning on those layers. Until October 26 this page drew all three kinds together as &ldquo;features used&rdquo;, so after October 22 that chart rose while reader actions did not.</li>
-      <li id="note-11"><strong>The Google Play app.</strong> The Android app on Google Play opens the site with a tag of its own, so its visits are counted apart: <span data-stat="androidVisits">202</span> in <span data-stat="periodThese">these two months</span>. <span data-stat="playNote">The installed app was opened 176 times in these two months, 150 of them outside the United States. Before the last seven days the site barely reached readers abroad: pages viewed from outside the United States averaged 3 a day, against 47 a day in the last seven days. So these launches are more likely people trying the app than readers looking up their own districts.</span></li>
-    </ol>
-  </section>
+  <div class="tab-panel" id="panel-milestones" data-tab="milestones">
+    <!-- ==== TRAFFIC-MILESTONES:BEGIN ==== -->
+    <!-- GENERATED by scripts/build_traffic_page.py from the three data files and data/traffic-milestones.json. Do not hand-edit: rerun the script. -->
+    <section class="ruled milestones">
+      <div class="sec-head">
+        <h2>Milestones</h2>
+        <span class="window-note">Figures through October 26, 2026, read on October 27, 2026</span>
+      </div>
+      <p class="take">Marks to watch for, in two groups: people getting answers, and figures worth showing a state&rsquo;s officials. A mark passed shows the day it was first reached.</p>
+
+      <h3 class="kicker">People getting answers</h3>
+      <p class="take">Choosing a point is when someone gets an answer: the map then names every district at that spot and who holds each seat.</p>
+      <div class="miles">
+        <div class="mile">
+          <h4>Points chosen in the last 30 days</h4>
+          <p class="now"><span class="value">1,676</span><span class="to">824 to go to 2,500</span></p>
+          <div class="meter" aria-hidden="true"><div class="fill" style="width:67%"></div></div>
+          <ol class="marks">
+            <li class="passed"><span class="mark">1,000</span> passed Oct 20</li>
+            <li class="next"><span class="mark">2,500</span></li>
+            <li><span class="mark">5,000</span></li>
+            <li><span class="mark">10,000</span></li>
+          </ol>
+        </div>
+        <div class="mile">
+          <h4>Most points chosen in one day</h4>
+          <p class="now"><span class="value">140</span><span class="to">on October 26; 110 to go to 250</span></p>
+          <div class="meter" aria-hidden="true"><div class="fill" style="width:56%"></div></div>
+          <ol class="marks">
+            <li class="passed"><span class="mark">100</span> passed Oct 19</li>
+            <li class="next"><span class="mark">250</span></li>
+            <li><span class="mark">500</span></li>
+            <li><span class="mark">1,000</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <h3 class="kicker">Figures for state officials</h3>
+      <p class="take">How much the maps were used in the last 30 days, all together and one by one, for a letter or a meeting.</p>
+      <div class="miles">
+        <div class="mile">
+          <h4>Visits in the last 30 days, every map together</h4>
+          <p class="now"><span class="value">3,134</span><span class="to">1,866 to go to 5,000</span></p>
+          <div class="meter" aria-hidden="true"><div class="fill" style="width:63%"></div></div>
+          <ol class="marks">
+            <li class="passed"><span class="mark">2,500</span> passed by Oct 26</li>
+            <li class="next"><span class="mark">5,000</span></li>
+            <li><span class="mark">10,000</span></li>
+            <li><span class="mark">25,000</span></li>
+          </ol>
+        </div>
+        <div class="mile">
+          <h4>Maps past 100 pages viewed in the last 30 days</h4>
+          <p class="now"><span class="value">11 <small>of 17</small></span><span class="to">6 more to go</span></p>
+          <div class="meter" aria-hidden="true"><div class="fill" style="width:65%"></div></div>
+          <ol class="marks">
+            <li class="next"><span class="mark">100 each</span></li>
+            <li><span class="mark">500 each</span></li>
+            <li><span class="mark">1,000 each</span></li>
+          </ol>
+        </div>
+      </div>
+      <div class="tablecard">
+        <table class="q" id="mapMarks">
+          <caption>Each map in the last 30 days</caption>
+          <thead><tr><th scope="col">Map</th><th scope="col" class="num">Pages viewed</th><th scope="col">Passed</th><th scope="col">Next mark</th></tr></thead>
+          <tbody>
+            <tr><td>Illinois</td><td class="num">1,777</td><td>1,000 <small>by Oct 26</small></td><td>5,000 <small>3,223 to go</small></td></tr>
+            <tr><td>New York</td><td class="num">382</td><td>100 <small>by Oct 26</small></td><td>500 <small>118 to go</small></td></tr>
+            <tr><td>Arkansas <small>live 12 days</small></td><td class="num">283</td><td>100 <small>by Oct 26</small></td><td>500 <small>217 to go</small></td></tr>
+            <tr><td>Wisconsin</td><td class="num">204</td><td>100 <small>by Oct 26</small></td><td>500 <small>296 to go</small></td></tr>
+            <tr><td>Indiana <small>live 20 days</small></td><td class="num">183</td><td>100 <small>by Oct 26</small></td><td>500 <small>317 to go</small></td></tr>
+            <tr><td>Iowa</td><td class="num">161</td><td>100 <small>by Oct 26</small></td><td>500 <small>339 to go</small></td></tr>
+            <tr><td>South Carolina <small>live 14 days</small></td><td class="num">153</td><td>100 <small>by Oct 26</small></td><td>500 <small>347 to go</small></td></tr>
+            <tr><td>Oklahoma <small>live 17 days</small></td><td class="num">148</td><td>100 <small>by Oct 26</small></td><td>500 <small>352 to go</small></td></tr>
+            <tr><td>Tennessee <small>live 14 days</small></td><td class="num">147</td><td>100 <small>by Oct 26</small></td><td>500 <small>353 to go</small></td></tr>
+            <tr><td>Michigan</td><td class="num">142</td><td>100 <small>by Oct 26</small></td><td>500 <small>358 to go</small></td></tr>
+            <tr><td>North Carolina <small>live 18 days</small></td><td class="num">126</td><td>100 <small>by Oct 26</small></td><td>500 <small>374 to go</small></td></tr>
+            <tr><td>Kentucky <small>live 27 days</small></td><td class="num">87</td><td>&mdash;</td><td>100 <small>13 to go</small></td></tr>
+            <tr><td>Minnesota <small>live 27 days</small></td><td class="num">87</td><td>&mdash;</td><td>100 <small>13 to go</small></td></tr>
+            <tr><td>Louisiana <small>live 6 days</small></td><td class="num">60</td><td>&mdash;</td><td>100 <small>40 to go</small></td></tr>
+            <tr><td>San Francisco</td><td class="num">49</td><td>&mdash;</td><td>100 <small>51 to go</small></td></tr>
+            <tr><td>Mississippi <small>live 11 days</small></td><td class="num">29</td><td>&mdash;</td><td>100 <small>71 to go</small></td></tr>
+            <tr><td>Missouri <small>live 1 day</small></td><td class="num">5</td><td>&mdash;</td><td>100 <small>95 to go</small></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="ruled notes">
+      <h2>How the marks are counted</h2>
+      <ol>
+        <li><strong>Points chosen.</strong> A point is counted once a visit, so someone who checks three addresses in one visit counts once, and these figures are a floor. The counter does not say which state&rsquo;s map a point was chosen on, so points are counted for every map together.</li>
+        <li><strong>The dates.</strong> Points chosen are kept day by day, so their dates are the day the mark was reached. Visits and each map&rsquo;s pages are kept only as a total for the last 30 days, so their dates are the first daily refresh that found the mark passed, and read &ldquo;by&rdquo;. The record begins with the figures for August 26, 2026, and a mark already passed then reads &ldquo;by&rdquo; too.</li>
+        <li><strong>Each map.</strong> Pages viewed counts every page under a state&rsquo;s address: its map, its question pages and its county pages. It counts readers from anywhere, so someone in Indiana looking up an Illinois address counts for Illinois. A map that went live during the 30 days says how many days it has had.</li>
+        <li><strong>The marks.</strong> They were set on October 27, 2026, and are never lowered to be reached. Once the last is passed, a higher one is added.</li>
+      </ol>
+    </section>
+    <!-- ==== TRAFFIC-MILESTONES:END ==== -->
+  </div>
 
 </main>
 
@@ -1794,9 +1975,90 @@ code {
                dayRefs: dayRefs, barData: barData, META: META };
   var PRISTINE = document.getElementById("page-main").cloneNode(true);
   var keyFromHash = function () {
-    var m = /^#last-(\d+)-days$/.exec(location.hash);
+    var m = /^#(?:insights-)?last-(\d+)-days$/.exec(location.hash);
     return m && WINDOWS[m[1]] ? m[1] : "full";
   };
+
+  /* ---- tabs ----
+     Which tab shows is kept apart from render(), which rebuilds the page from
+     PRISTINE on every timeframe choice: setupTabs() runs at the end of each
+     render, and the listeners are on the document so a rebuilt tab row needs
+     none of its own. The address carries both choices, #insights-last-7-days
+     and so on; Milestones takes no timeframe, so it is #milestones alone. */
+  var TABS = ["numbers", "insights", "milestones"];
+  var tab = "numbers", currentKey = "full";
+  var tabFromHash = function () {
+    var h = location.hash.slice(1);
+    var m = /^(insights|milestones)(?:-|$)/.exec(h);
+    if (m) return m[1];
+    var target = h ? document.getElementById(h) : null;
+    var panel = target && target.closest ? target.closest(".tab-panel") : null;
+    return panel ? panel.getAttribute("data-tab") : "numbers";
+  };
+  var hashFor = function (t, k) {
+    if (t === "milestones") return "#milestones";
+    var win = k === "full" ? "" : "last-" + k + "-days";
+    if (t === "insights") return "#insights" + (win ? "-" + win : "");
+    return win ? "#" + win : "";
+  };
+  var setHash = function () {
+    var h = hashFor(tab, currentKey);
+    try {
+      history.replaceState(null, "", h || location.pathname + location.search);
+    } catch (e) { /* a frame that refuses it keeps the choice for this view only */ }
+  };
+  var setupTabs = function () {
+    var bar = document.querySelector(".tabs");
+    if (!bar) return;
+    document.documentElement.classList.add("tabbed");
+    bar.hidden = false;
+    TABS.forEach(function (t) {
+      var b = document.getElementById("tab-" + t);
+      var p = document.getElementById("panel-" + t);
+      var on = t === tab;
+      b.setAttribute("aria-selected", on ? "true" : "false");
+      b.tabIndex = on ? 0 : -1;
+      p.setAttribute("role", "tabpanel");
+      p.setAttribute("aria-labelledby", "tab-" + t);
+      p.hidden = !on;
+    });
+    var ws = document.getElementById("windowSection");
+    if (ws) ws.hidden = tab === "milestones";
+  };
+  var choose = function (t, focus) {
+    if (TABS.indexOf(t) < 0) return;
+    tab = t;
+    setHash();
+    setupTabs();
+    if (focus) document.getElementById("tab-" + t).focus();
+  };
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest) return;
+    var b = e.target.closest('.tabs [role="tab"]');
+    if (b) { choose(b.id.slice(4)); return; }
+    /* A link to a note on another tab opens that tab before the browser
+       scrolls to it. */
+    var a = e.target.closest('a[href^="#"]');
+    var el = a ? document.getElementById(a.getAttribute("href").slice(1)) : null;
+    var panel = el ? el.closest(".tab-panel") : null;
+    if (panel && panel.hidden) { tab = panel.getAttribute("data-tab"); setupTabs(); }
+  });
+  document.addEventListener("keydown", function (e) {
+    var b = e.target.closest ? e.target.closest('.tabs [role="tab"]') : null;
+    if (!b) return;
+    var i = TABS.indexOf(b.id.slice(4)), j;
+    if (e.key === "ArrowRight") j = (i + 1) % TABS.length;
+    else if (e.key === "ArrowLeft") j = (i + TABS.length - 1) % TABS.length;
+    else if (e.key === "Home") j = 0;
+    else if (e.key === "End") j = TABS.length - 1;
+    else return;
+    e.preventDefault();
+    choose(TABS[j], true);
+  });
+  window.addEventListener("hashchange", function () {
+    var t = tabFromHash();
+    if (t !== tab) { tab = t; setupTabs(); }
+  });
 
   var render = function (key) {
   var WIN = key === "full" ? FULL : WINDOWS[key];
@@ -3025,10 +3287,8 @@ code {
       b.setAttribute("aria-pressed", k === key ? "true" : "false");
       b.addEventListener("click", function () {
         if (k === key) return;
-        try {
-          history.replaceState(null, "", k === "full"
-            ? location.pathname + location.search : "#last-" + k + "-days");
-        } catch (e) { /* a frame that refuses it keeps the choice for this view only */ }
+        currentKey = k;
+        setHash();
         var old = document.getElementById("page-main");
         old.parentNode.replaceChild(PRISTINE.cloneNode(true), old);
         render(k);
@@ -3037,8 +3297,11 @@ code {
       });
     });
   }
+  currentKey = key;
+  setupTabs();
   };
 
+  tab = tabFromHash();
   render(keyFromHash());
   /* The chart's canvas depends on the screen width, so crossing the phone
      breakpoint (a rotated phone, a resized window) draws it again. */
