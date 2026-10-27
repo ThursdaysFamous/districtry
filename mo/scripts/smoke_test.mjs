@@ -101,6 +101,10 @@ const CASS_POINT = "38.7968,-94.45476";
 const HOWARD_POINT = "39.10983,-92.59028";
 // Salem, in Dent County, whose clerk's office listed the whole townships in each district.
 const DENT_POINT = "37.60307,-91.48972";
+// The pole of inaccessibility of Ste. Genevieve's Second District as the
+// shipped file draws it (shapely polylabel, 2026-10-27), traced from the
+// scan its clerk's office sent.
+const STE_GENEVIEVE_POINT = "37.81431,-90.14644";
 // Inside the Census's 2020 Marshall 4 precinct, the half of Marshall township
 // Saline's clerk lists in the Northern District, 4.1 km from any edge.
 const SALINE_POINT = "39.1534,-93.246";
@@ -1254,7 +1258,7 @@ try {
     const drawn = shipped("mo-commission-counties.json");
     const seatOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.seat === p.seat) || {};
     const presidingOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.countywide) || {};
-    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT, HOWARD_POINT, DENT_POINT, SALINE_POINT, PERRY_POINT, IRON_POINT, SCOTT_POINT]) {
+    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT, HOWARD_POINT, DENT_POINT, STE_GENEVIEVE_POINT, SALINE_POINT, PERRY_POINT, IRON_POINT, SCOTT_POINT]) {
       const at = propsAt(fc, pt);
       const p = at[0] || {};
       const mine = seatOf(p), pres = presidingOf(p);
@@ -1268,6 +1272,9 @@ try {
             text.includes(`clerk pointed this app to that map on ${longDate(p.pointedOn)}`)
           : p.source === "sent"
             ? text.includes(`own office sent them to this app on ${longDate(p.sentOn)}`)
+          : p.source === "traced"
+            ? text.includes(`scanned map the county clerk's office sent to this app draws them on ${longDate(p.sentOn)}`) &&
+              text.includes("traced the line by hand") && text.includes("a block can be on the wrong side")
           : p.source === "arcgis"
             ? text.includes(`${p.county}'s own map at SEMO GIS`) &&
               (p.pointedOn ? text.includes(`clerk pointed this app to that map on ${longDate(p.pointedOn)}`)
@@ -1282,7 +1289,7 @@ try {
       check(`county-commissioner card in ${p.county || "a drawn county"} names the ${p.seat || "?"} and its commissioner, the presiding commissioner, and where the line comes from`,
         at.length === 1 && !!drawn[p.countyfips] && !info.error && !!mine.name && !!pres.name &&
           text.includes(p.seat) && text.includes(mine.name) && text.includes(pres.name) &&
-          whereOk && (p.source === "sent" || p.source === "listed" || text.includes(`read on ${longDate(p.read)}`)) &&
+          whereOk && (p.source === "sent" || p.source === "traced" || p.source === "listed" || text.includes(`read on ${longDate(p.read)}`)) &&
           /has not checked this line against the precinct records/.test(text) &&
           /Where these names come from/.test(text),
         `districts here=${at.length} ${text.slice(0, 140)}`);
