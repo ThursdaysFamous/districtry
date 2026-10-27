@@ -1,0 +1,69 @@
+{
+  "_comment": "Written by scripts/build_traffic_page.py: the day each traffic milestone was first passed, for traffic.html's Milestones tab. Append-only; a recorded date is never moved. exact is false where the figure is not kept day by day, so the date is the first refresh that found the mark passed and reads 'by'.",
+  "reached": {
+    "map-pages-30/ar/100": {
+      "date": "2026-10-26",
+      "exact": false
+    },
+    "map-pages-30/ia/100": {
+      "date": "2026-10-26",
+      "exact": false
+    },
+    "map-pages-30/il/100": {
+      "date": "2026-10-26",
+      "exact": false
+    },
+    "map-pages-30/il/1000": {
+      "date": "2026-10-26",
+      "exact": false
+    },
+    "map-pages-30/il/500": {
+      "date": "2026-10-26",
+      "exact": false
+    },
+    "map-pages-30/in/100": {
+      "date": "2026-10-26",
+      "exact": false
+    },
+    "map-pages-30/mi/100": {
+      "date": "2026-10-26",
+      "exact": false
+    },
+    "map-pages-30/nc/100": {
+      "date": "2026-10-26",
+      "exact": false
+    },
+    "map-pages-30/ny/100": {
+      "date": "2026-10-26",
+      "exact": false
+    },
+    "map-pages-30/ok/100": {
+      "date": "2026-10-26",
+      "exact": false
+    },
+    "map-pages-30/sc/100": {
+      "date": "2026-10-26",
+      "exact": false
+    },
+    "map-pages-30/tn/100": {
+      "date": "2026-10-26",
+      "exact": false
+    },
+    "map-pages-30/wi/100": {
+      "date": "2026-10-26",
+      "exact": false
+    },
+    "points-30/1000": {
+      "date": "2026-10-20",
+      "exact": true
+    },
+    "points-day/100": {
+      "date": "2026-10-19",
+      "exact": true
+    },
+    "visits-30/2500": {
+      "date": "2026-10-26",
+      "exact": false
+    }
+  }
+}
