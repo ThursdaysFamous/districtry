@@ -30,13 +30,14 @@ than a county quietly missing:
   district polygons. `build_ia_county_board_directory.py` now counts the
   polygons, the ISAC list of five agrees, and the gate passes on its own.
 
-  WRIGHT is the county this route CANNOT close, and that is a finding rather
-  than a gap. It names five supervisors on its own page, in districts 1 to 5,
-  while the state's supervisor-district layer (vintage 2024-01-30) draws THREE
-  districts for it. Shipping five names against a three-district map would have
-  the card naming a supervisor for a district the map does not draw. The stale
-  thing is the MAP, which is a different repair from a roster, so it is
-  recorded as a gap instead.
+  WRIGHT WAS THE COUNTY THIS ROUTE COULD NOT CLOSE UNTIL 2026-10-26. It names
+  five supervisors on its own page, in districts 1 to 5, while the state's
+  supervisor-district layer (vintage 2024-01-30) draws THREE districts for it,
+  and five names against a three-district map would have the card naming a
+  supervisor for a district the map does not draw. The stale thing was the
+  MAP. Its Auditor sent the county's own five-district map on 2026-10-26, the
+  map now draws five (build_county_supplied_supervisor_districts.py), and
+  the page joined this file -- the sixth county here.
 
   TAMA WAS THE SAME CASE UNTIL 2026-10-07, when the county's own five-district
   map replaced the state's three (build_county_supplied_supervisor_districts.py)
@@ -48,8 +49,8 @@ than a county quietly missing:
   allow). So it is a site-wide block rather than a policy, nothing here works
   around it, and its board stays withheld with the reason it already carries.
 
-THREE PAGE SHAPES FOR FIVE COUNTIES, EACH DECLARED
----------------------------------------------------
+FOUR PAGE SHAPES FOR SIX COUNTIES, EACH DECLARED
+-------------------------------------------------
   board_members   Adair, Lucas, Tama. A `Board Members` heading, then per supervisor
                   a NAME line followed by a role line -- Adair writes the role
                   INTO the name line (`Jerry Walker Chairperson - District 3SW
@@ -65,6 +66,12 @@ THREE PAGE SHAPES FOR FIVE COUNTIES, EACH DECLARED
                   department?did=`), which prints each person's INITIALS on
                   their own line above their name, then the title TWICE, then
                   `Email <Name>`, then the phone.
+
+  name_then_seat  Wright. A name, an optional board-role line (`Chairman`,
+                  `Chairman Pro Tem`), then `District N Supervisor` and the
+                  e-mail. A photo caption above the list names all five
+                  (`From left: Rick Rasmussen, Betty Ellis, ...`) and is not a
+                  name line, because it carries commas and a colon.
 
 TWO TRAPS RECORDED WITH THEIR FIXTURES
 ---------------------------------------
@@ -135,6 +142,15 @@ COUNTIES = [
     # street address never ships.
     {"fips": "171", "name": "Tama", "shape": "board_members",
      "url": "https://www.tamacounty.iowa.gov/supervisors/"},
+    # WRIGHT joined on 2026-10-26, when its five-district map did: Auditor
+    # Amanda Meyer confirmed five districts that day and sent the county's
+    # own map and descriptions (build_county_supplied_supervisor_districts.py).
+    # The page names each supervisor, an optional board role, then `District
+    # N Supervisor` and an e-mail. robots.txt: HTTP 404 (allow all), read
+    # 2026-10-26 with this file's own client.
+    {"fips": "197", "name": "Wright", "shape": "name_then_seat",
+     "url": "https://www.wrightcounty.iowa.gov/departments/"
+            "board_of_supervisors/supervisors.php"},
 ]
 
 TAGS = re.compile(r"(?s)<(script|style|noscript)\b.*?</\1>")
@@ -334,6 +350,26 @@ def parse_staff_directory(lines):
     return _from_hits(lines, hits)
 
 
+def parse_name_then_seat(lines):
+    """Wright: a name, at most one board-role line, then `District N
+    Supervisor`. The role line is optional (only the chair and the chair pro
+    tem carry one), so the seat is looked for on either of the next two
+    lines, and a line between them must be a role and not another name."""
+    hits = []
+    for i, l in enumerate(lines):
+        if not name_like(l):
+            continue
+        for j in (i + 1, i + 2):
+            nxt = lines[j] if j < len(lines) else ""
+            if SEAT_LINE.match(nxt) and ROLE_WORD.search(nxt):
+                if j == i + 2 and not (ROLE_WORD.search(lines[i + 1])
+                                       and not name_like(lines[i + 1])):
+                    break
+                hits.append((i, l, nxt))
+                break
+    return _from_hits(lines, hits)
+
+
 def _from_hits(lines, hits):
     """Bound each member by the next, and the last by the page's own gap.
 
@@ -360,7 +396,8 @@ def _from_hits(lines, hits):
 
 SHAPES = {"board_members": parse_board_members,
           "district_line": parse_district_line,
-          "staff_directory": parse_staff_directory}
+          "staff_directory": parse_staff_directory,
+          "name_then_seat": parse_name_then_seat}
 
 
 def dedupe(members):
@@ -520,6 +557,18 @@ ADAIR_COMMITTEE_PAGE = """
 <div>Jerry Walker Chairperson &middot; District 3SW Supervisor</div>
 """
 
+WRIGHT_PAGE = """
+<p>From left: Rick Rasmussen, Betty Ellis, Ashley Bosch</p>
+<p>(515) 532-3262 - Phone</p>
+<p><strong>Rick Rasmussen</strong><br>Chairman Pro Tem<br>District 1 Supervisor<br>
+<a href="mailto:rrasmussen@wrightco.iowa.gov">rrasmussen@wrightco.iowa.gov</a></p>
+<p><strong>Ashley Bosch</strong><br>Chairman<br>District 2 Supervisor<br>
+<a href="mailto:abosch@wrightco.iowa.gov">abosch@wrightco.iowa.gov</a></p>
+<p><strong>Dean Kluss</strong><br>District 3 Supervisor<br>
+<a href="mailto:dkluss@wrightco.iowa.gov">dkluss@wrightco.iowa.gov</a></p>
+"""
+
+
 def _selftest():
     checks = failed = 0
 
@@ -602,6 +651,17 @@ def _selftest():
        [("Curt Hilmer", "1"), ("David Turner", "2"), ("Heather Knebel", "3")])
     ok("a seat line must open with its number",
        bool(SEAT_LINE.match("6th Judicial District")), False)
+
+    w = dedupe(parse_name_then_seat(text_lines(WRIGHT_PAGE)))
+    ok("Wright: a role line between name and seat still forms a member",
+       [(m["name"], m.get("seat")) for m in w],
+       [("Rick Rasmussen", "1"), ("Ashley Bosch", "2"), ("Dean Kluss", "3")])
+    ok("Wright: each e-mail rides its own supervisor",
+       [m.get("email") for m in w],
+       ["rrasmussen@wrightco.iowa.gov", "abosch@wrightco.iowa.gov",
+        "dkluss@wrightco.iowa.gov"])
+    ok("Wright: the board phone above the list rides nobody",
+       any("phone" in m for m in w), False)
 
     ok("a street address is refused outright",
        _raises(refuse_addresses, [{"name": "A B", "seat": "101 S Main Street"}], "X"),

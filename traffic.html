@@ -894,11 +894,11 @@ footer.site-footer a { color: var(--accent-deep); }
 :root { --shell: 1000px; }   /* three panels abreast; the shell's 820 is a reading column */
 
 .report {
-  --s1: #1d5fd6;         /* page visits: the brand's --data-500 */
+  --s1: #1d5fd6;         /* a state's map; Google; every bar: the brand's --data-500 */
   --s1-track: #eef4fd;   /* the meter's unfilled track, a light step of the same ramp */
-  --s2: #a33b2c;         /* feature interactions: the brand's --layer-fire */
-  --s3: #0f7c86;         /* Bing in the per-day sources chart */
-  --s4: #9a6412;         /* Yahoo in the per-day sources chart */
+  --s2: #a33b2c;         /* points chosen; DuckDuckGo: the brand's --layer-fire */
+  --s3: #0f7c86;         /* the front page; layers turned on; Bing */
+  --s4: #9a6412;         /* searches and location; other search engines */
 }
 :root[data-theme="dark"] .report {
   --s1: #6ea8ff;         /* --data-500 in the dark tier */
@@ -922,6 +922,65 @@ footer.site-footer a { color: var(--accent-deep); }
 main > section { margin-block: 0 30px; }
 main > section:last-child { margin-block-end: 0; }
 main > section.ruled { padding-top: 26px; border-top: 1px solid var(--line); }
+
+/* ---- the three tabs ----
+   Numbers, Insights and Milestones. The panels ship one after another and the
+   script folds them (html.tabbed), so with no script the whole report reads in
+   order. Underlined rather than a pill row, because the pill row under them is
+   the timeframe, which filters a panel rather than choosing one. */
+.tabs {
+  display: flex; flex-wrap: wrap; gap: 0 26px;
+  border-bottom: 1px solid var(--line); margin: 0 0 16px;
+}
+.tabs[hidden] { display: none; }
+.tabs button {
+  font: 600 15.5px/1 var(--font-body); color: var(--slate);
+  background: transparent; border: 0; border-bottom: 3px solid transparent;
+  margin-bottom: -1px; padding: 12px 2px 11px; min-height: 44px; cursor: pointer;
+}
+.tabs button:hover { color: var(--ink); }
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tabs button:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+#windowSection { margin-block-end: 0; }
+.tab-panel > section { margin-block: 0 30px; }
+.tab-panel > section:last-child { margin-block-end: 0; }
+.tab-panel > section.ruled { padding-top: 26px; border-top: 1px solid var(--line); }
+#panel-numbers ~ .tab-panel { margin-top: 30px; }
+/* Folded, a panel's first section sits right under the dates or the tabs and
+   needs no rule of its own. */
+.tabbed #panel-numbers ~ .tab-panel { margin-top: 0; }
+.tabbed .tab-panel > section:first-child { padding-top: 6px; border-top: 0; }
+
+/* ---- milestones ----
+   One card per figure with its marks under it, then a table of each state's
+   map. Written whole by the builder; see the TRAFFIC-MILESTONES markers. */
+.window-note { font-size: 14px; color: var(--slate); }
+.milestones h3.kicker { margin: 26px 0 8px; }
+.miles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.mile {
+  display: flex; flex-direction: column; gap: 8px; min-width: 0;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+  padding: 16px 18px 14px;
+}
+.mile h4 { margin: 0; font-size: 13.5px; font-weight: 400; color: var(--slate); }
+.mile .now { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; margin: 0; }
+.mile .value { font-weight: 600; font-size: 32px; line-height: 1.1; color: var(--ink); }
+.mile .to { font-size: 13.5px; color: var(--slate); }
+.marks { list-style: none; margin: 2px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.marks li {
+  font-size: 13px; line-height: 1.3; color: var(--slate); font-variant-numeric: tabular-nums;
+  border: 1px solid var(--line-strong); border-radius: 999px; padding: 3px 10px;
+}
+.marks .mark { font-weight: 600; }
+.marks li.passed { color: var(--ink); border-color: var(--s1); }
+.marks li.passed .mark::before { content: "\2713\00a0"; }
+.marks li.next { color: var(--ink); border-color: var(--ink); }
+.mile .value small { font-size: 15px; font-weight: 500; color: var(--slate); }
+.milestones .tablecard { margin-top: 16px; }
+#mapMarks caption { text-align: left; padding: 12px 0 6px; font-size: 15px; font-weight: 600; color: var(--ink); }
+#mapMarks td { white-space: nowrap; }
+#mapMarks .mk { padding-left: 24px; }
+#mapMarks small { display: block; font-size: 12.5px; color: var(--slate); }
 
 /* Six of these are the section headings for the panels under .three and three
    more head a panel's second bar group, so they are h2 and h3 rather than
@@ -971,6 +1030,25 @@ main > section.ruled { padding-top: 26px; border-top: 1px solid var(--line); }
 .legend { display: flex; flex-wrap: wrap; gap: 18px; font-size: 13.5px; color: var(--slate); }
 .legend .key { display: inline-flex; align-items: center; gap: 7px; }
 .legend .swatch { width: 11px; height: 11px; border-radius: 3px; }
+.sec-head.second { margin-top: 22px; }
+.sec-head h3 { margin: 0; font-size: 17px; font-weight: 600; color: var(--ink); }
+
+/* ---- visitors and what they do ----
+   Two ledgers side by side: a heading row, then the rows it splits into. They
+   are tables because each row is a label and its figure, and a screen reader
+   reads them as that pair. */
+.ledgers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 36px; }
+.ledger { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+.ledger caption { text-align: left; padding: 0 0 8px; }
+.ledger th, .ledger td { padding: 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.ledger th { text-align: left; font-weight: 400; color: var(--slate); padding-left: 16px; padding-right: 12px; }
+.ledger td { text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ledger tr.head th { padding-left: 0; color: var(--ink); font-weight: 600; }
+.ledger tr.head td { font-weight: 600; }
+.ledger tr.head:not(:first-child) th,
+.ledger tr.head:not(:first-child) td { padding-top: 16px; }
+.ledger th small { display: block; font-size: 12.5px; font-weight: 400; color: var(--slate); margin-top: 1px; }
+.ledger tr:last-child th, .ledger tr:last-child td { border-bottom: 0; }
 
 /* ---- the daily chart ---- */
 .chartcard {
@@ -1021,9 +1099,9 @@ main details.tableview:last-of-type { border-bottom: 0; }
 
 /* ---- where visits came from, day by day ----
    One horizontal stacked bar per day on a shared scale, so a day's length is
-   its search-and-link visits and each segment is one source. The four engines
-   take the chart's own series colours and --s3/--s4; "Other sites" is --slate,
-   the shell's secondary ink, which is already measured on --panel. */
+   its search-and-link visits and each segment is one source. Google, DuckDuckGo,
+   Bing and the other engines take --s1 to --s4; "Other sites" is --slate, the
+   shell's secondary ink, which is already measured on --panel. */
 .dayrefs { display: flex; flex-direction: column; gap: 7px; }
 .dayrow { display: grid; grid-template-columns: 56px minmax(0, 1fr) 44px; align-items: center; gap: 10px; font-variant-numeric: tabular-nums; }
 .dayrow .d { font-size: 13.5px; color: var(--slate); }
@@ -1089,9 +1167,12 @@ code {
 @media (max-width: 760px) {
   .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .reads { grid-template-columns: minmax(0, 1fr); }
+  .miles { grid-template-columns: minmax(0, 1fr); }
+  .tabs { gap: 0 20px; }
   .tile { padding: 13px 14px 11px; }
   .tile .value { font-size: 30px; }
   .three { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .ledgers { grid-template-columns: minmax(0, 1fr); gap: 22px; }
   .notes ol { grid-template-columns: minmax(0, 1fr); }
   /* The chart is drawn on a 900-unit viewBox and used to shrink to whatever
      the column allowed, which at 390px put its 11px labels at about 4px. It
@@ -1101,6 +1182,7 @@ code {
   .chartcard { overflow-x: auto; }
   .chartbox { min-width: 720px; }
   #searchTable, #bingTable { min-width: 540px; }
+  #dailyTable { min-width: 680px; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .barrow .bar, .meter .fill { transition: width .5s ease; }
@@ -1135,10 +1217,22 @@ code {
 
 <main id="page-main" class="report" tabindex="-1">
 
-  <section>
+  <!-- THREE TABS, since 2026-10-27, because the page had grown long: the
+       figures, what they suggest, and the marks to watch for. They ship open,
+       one after another, and the script below folds them into tabs, so a
+       reader with no JavaScript, or a broken script, still gets the whole
+       report. The choice is kept in the address (#insights, #milestones) so a
+       link opens on it. -->
+  <div class="tabs" role="tablist" aria-label="Report sections" hidden>
+    <button type="button" role="tab" id="tab-numbers" aria-controls="panel-numbers" aria-selected="true">Numbers</button>
+    <button type="button" role="tab" id="tab-insights" aria-controls="panel-insights" aria-selected="false" tabindex="-1">Insights</button>
+    <button type="button" role="tab" id="tab-milestones" aria-controls="panel-milestones" aria-selected="false" tabindex="-1">Milestones</button>
+  </div>
+
+  <section id="windowSection">
     <div class="window-row">
       <span class="kicker"><span data-stat="period">The last two months</span></span>
-      <span><span data-stat="range">August 25 – October 25, 2026</span> &middot; <span data-stat="days">62</span> days &middot; read on <span data-stat="exportDate">October 26, 2026</span></span>
+      <span><span data-stat="range">August 26 – October 26, 2026</span> &middot; <span data-stat="days">62</span> days &middot; read on <span data-stat="exportDate">October 27, 2026</span></span>
     </div>
     <div class="timeframe-row">
       <div class="engines" id="timeframe" role="group" aria-label="Timeframe" hidden>
@@ -1148,56 +1242,115 @@ code {
         <button type="button" data-days="full" aria-pressed="true">2 months</button>
       </div>
     </div>
+  </section>
+
+  <div class="tab-panel" id="panel-numbers" data-tab="numbers">
+  <section>
+    <!-- SIX FIGURES, THREE ABOUT VISITORS AND THREE ABOUT USE. Until
+         2026-10-26 the first tile was every page viewed called "page visits",
+         and the daily chart drew every event as "features used", which
+         counted the visit counter each map sends on opening and the results
+         of a reader's action alongside what readers did. See note 10. -->
     <div class="tiles">
       <div class="tile">
-        <span class="label">Page visits</span>
-        <span class="value"><span data-stat="pageviews">5,512</span></span>
-        <span class="sub">&asymp;<span data-stat="perDay">89</span> per day<span data-stat="changeNote"></span></span>
+        <span class="label">Visits<sup class="ref"><a href="#note-5" aria-label="Note 5">5</a></sup></span>
+        <span class="value"><span data-stat="visits">3,966</span></span>
+        <span class="sub">&asymp;<span data-stat="visitsPerDay">64</span> a day, from search, links and typed addresses</span>
+      </div>
+      <div class="tile">
+        <span class="label">Pages viewed</span>
+        <span class="value"><span data-stat="pageviews">5,969</span></span>
+        <span class="sub">&asymp;<span data-stat="perDay">96</span> a day<span data-stat="changeNote"></span></span>
+      </div>
+      <div class="tile">
+        <span class="label">Maps opened</span>
+        <span class="value"><span data-stat="mapOpenings">3,020</span></span>
+        <span class="sub">a point was chosen in about <span data-stat="pointShare">68%</span> of them</span>
+      </div>
+      <div class="tile">
+        <span class="label">Reader actions<sup class="ref"><a href="#note-10" aria-label="Note 10">10</a></sup></span>
+        <span class="value"><span data-stat="readerActions">8,340</span></span>
+        <span class="sub"><span data-stat="actionsPerMap">2.8</span> for each map opened</span>
       </div>
       <div class="tile" id="returnTile" hidden>
         <span class="label">Return visits<sup class="ref"><a href="#note-9" aria-label="Note 9">9</a></sup></span>
         <span class="value"><span data-stat="returnPct">24%</span></span>
-        <span class="sub">of <span data-stat="appVisits">551</span> map visits since <span data-stat="returnSince">October 22</span></span>
+        <span class="sub">of <span data-stat="appVisits">788</span> visits to a map since <span data-stat="returnSince">October 22</span></span>
       </div>
       <div class="tile">
         <span class="label">Clicks from search<sup class="ref"><a href="#note-7" aria-label="Note 7">7</a></sup></span>
-        <span class="value"><span data-stat="searchClicksAll">1,771</span></span>
+        <span class="value"><span data-stat="searchClicksAll">1,798</span></span>
         <span class="sub">Google and Bing, <span data-stat="searchCtrAll">2.5%</span> of appearances</span>
-      </div>
-      <div class="tile">
-        <span class="label">Points chosen</span>
-        <span class="value"><span data-stat="pointsChosen">1,899</span></span>
-        <span class="sub">and <span data-stat="searchesRun">884</span> searches</span>
-      </div>
-      <div class="tile">
-        <span class="label">On phones and tablets</span>
-        <span class="value"><span data-stat="mobilePct">55%</span></span>
-        <span class="sub">iPhone, iPad and Android</span>
-      </div>
-      <div class="tile">
-        <span class="label">Busiest day</span>
-        <span class="value"><span data-stat="peak">993</span></span>
-        <span class="sub"><span data-stat="peakLabel">Wednesday, Oct 21</span></span>
       </div>
     </div>
   </section>
 
-  <section>
+  <section class="ruled">
+    <h2>Visitors and what they do</h2>
+    <p class="take">The counter cannot tell one person from another, so these are visits and what was done in them, not people. Someone who comes back the next day is two visits.<sup class="ref"><a href="#note-5" aria-label="Note 5">5</a></sup></p>
+    <div class="ledgers">
+      <table class="ledger">
+        <caption class="kicker">Visitors</caption>
+        <tbody>
+          <tr class="head"><th scope="row">Visits</th><td><span data-stat="visits">3,966</span></td></tr>
+          <tr><th scope="row">from search engines</th><td><span data-stat="searchVisits">2,746</span></td></tr>
+          <tr><th scope="row">from other sites and shared links</th><td><span data-stat="siteVisits">104</span></td></tr>
+          <tr><th scope="row">from the Google Play app<sup class="ref"><a href="#note-11" aria-label="Note 11">11</a></sup></th><td><span data-stat="androidVisits">219</span></td></tr>
+          <tr><th scope="row">with no source named<small>a typed address, a bookmark, an app that hides the link</small></th><td><span data-stat="directVisits">897</span></td></tr>
+          <tr class="head"><th scope="row">Pages viewed</th><td><span data-stat="pageviews">5,969</span></td></tr>
+          <tr><th scope="row">a state&rsquo;s map</th><td><span data-stat="mapOpenings">3,020</span></td></tr>
+          <tr><th scope="row">the front page</th><td><span data-stat="frontPages">843</span></td></tr>
+          <tr><th scope="row">other pages<small>a question page, a county&rsquo;s board, the privacy page</small></th><td><span data-stat="otherPages">2,106</span></td></tr>
+          <tr class="head"><th scope="row">From outside the United States<sup class="ref"><a href="#note-11" aria-label="Note 11">11</a></sup><small><span data-stat="abroadPct">8%</span> of the pages viewed whose country is known</small></th><td><span data-stat="abroadPages">495</span></td></tr>
+        </tbody>
+      </table>
+      <table class="ledger">
+        <caption class="kicker">What they did</caption>
+        <tbody>
+          <tr class="head"><th scope="row">Reader actions<small><span data-stat="actionsPerMap">2.8</span> for each map opened</small></th><td><span data-stat="readerActions">8,340</span></td></tr>
+          <tr><th scope="row">chose a point</th><td><span data-stat="pointsChosen">2,061</span></td></tr>
+          <tr><th scope="row">turned on a layer<small><span data-stat="layersPerMap">1.4</span> for each map opened</small></th><td><span data-stat="layersOn">4,294</span></td></tr>
+          <tr><th scope="row">searched<small>for an address, a district or a ZIP code</small></th><td><span data-stat="searchesAll">1,054</span></td></tr>
+          <tr><th scope="row">asked for their location</th><td><span data-stat="geoAttempts">403</span></td></tr>
+          <tr><th scope="row">did something else<small>street names, comparisons, sharing, feedback</small></th><td><span data-stat="otherActions">528</span></td></tr>
+          <tr class="head"><th scope="row">Not counted as use</th><td></td></tr>
+          <tr><th scope="row">counts the apps send by themselves<small>the visit counter, an install invitation shown</small></th><td><span data-stat="autoCount">1,419</span></td></tr>
+          <tr><th scope="row">results counted a second time<small>a location found, a hand-off to another state&rsquo;s map</small></th><td><span data-stat="resultCount">494</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="ruled">
     <div class="sec-head">
-      <h2>Daily activity<sup class="ref"><a href="#note-2" aria-label="Note 2">2</a></sup></h2>
+      <h2>Pages viewed, day by day<sup class="ref"><a href="#note-2" aria-label="Note 2">2</a></sup></h2>
       <div class="legend">
-        <span class="key"><span class="swatch" style="background:var(--s1)"></span>Page visits</span>
-        <span class="key"><span class="swatch" style="background:var(--s2)"></span>Features used</span>
+        <span class="key"><span class="swatch" style="background:var(--s1)"></span>A state&rsquo;s map</span>
+        <span class="key"><span class="swatch" style="background:var(--s3)"></span>Front page</span>
+        <span class="key"><span class="swatch" style="background:var(--slate)"></span>Other pages</span>
       </div>
     </div>
-    <p class="take">Every visit, plus every feature used: choosing a point, searching, turning on a layer: <span data-stat="total">14,549</span> in all.<sup class="ref"><a href="#note-1" aria-label="Note 1">1</a></sup></p>
+    <p class="take">Each page is counted once per browser, however often it is reloaded in the same visit.<sup class="ref"><a href="#note-1" aria-label="Note 1">1</a></sup></p>
     <div class="chartcard">
-      <div class="chartbox" id="dailyChart"></div>
+      <div class="chartbox" id="pagesChart"></div>
+    </div>
+    <div class="sec-head second">
+      <h3>What readers did, day by day<sup class="ref"><a href="#note-10" aria-label="Note 10">10</a></sup></h3>
+      <div class="legend">
+        <span class="key"><span class="swatch" style="background:var(--s2)"></span>Chose a point</span>
+        <span class="key"><span class="swatch" style="background:var(--s3)"></span>Turned on a layer</span>
+        <span class="key"><span class="swatch" style="background:var(--s4)"></span>Searched or asked for location</span>
+        <span class="key"><span class="swatch" style="background:var(--slate)"></span>Anything else</span>
+      </div>
+    </div>
+    <p class="take">Not drawn: the <span data-stat="autoCount">1,419</span> counts the apps send by themselves and the <span data-stat="resultCount">494</span> results counted a second time.</p>
+    <div class="chartcard">
+      <div class="chartbox" id="actionsChart"></div>
     </div>
     <details class="tableview">
-      <summary>View as table</summary>
+      <summary>View both as a table</summary>
       <div class="tablecard"><table class="q" id="dailyTable">
-        <thead><tr><th>Date</th><th class="num">Page visits</th><th class="num">Features used</th><th class="num">Total</th></tr></thead>
+        <thead><tr><th>Date</th><th class="num">Maps</th><th class="num">Front page</th><th class="num">Other pages</th><th class="num">Points</th><th class="num">Layers</th><th class="num">Searches</th><th class="num">Anything else</th><th class="num">Counted by the apps</th><th class="num">Results</th></tr></thead>
         <tbody></tbody>
       </table></div>
     </details>
@@ -1206,17 +1359,17 @@ code {
   <section class="ruled three">
     <div class="panel">
       <h2 class="kicker">Which apps people open<sup class="ref"><a href="#note-3" aria-label="Note 3">3</a></sup></h2>
-      <p class="lead">Page visits to each state&rsquo;s map and to the front page.</p>
+      <p class="lead">Pages viewed in each state&rsquo;s app, its map and the pages around it, and on the front page.</p>
       <div class="bars" data-bars="instances"></div>
     </div>
     <div class="panel">
       <h2 class="kicker">Most-used map layers<sup class="ref"><a href="#note-4" aria-label="Note 4">4</a></sup></h2>
-      <p class="lead"><span data-stat="layerLead">County and School board are used about equally, within 7 of each other. Ward and U.S. House come next.</span></p>
+      <p class="lead"><span data-stat="layerLead">County is the most-used layer, turned on 34 more times than School board. Ward and U.S. House come next.</span></p>
       <div class="bars" data-bars="layers"></div>
     </div>
     <div class="panel">
-      <h2 class="kicker">What visitors do</h2>
-      <p class="lead">How many people used each main feature, counted once per person per day. <span data-stat="geoNote">Finding the reader’s location works 56% of the time: 207 of 369 tries.</span></p>
+      <h2 class="kicker">What readers do<sup class="ref"><a href="#note-10" aria-label="Note 10">10</a></sup></h2>
+      <p class="lead">Each thing is counted once a visit: a visit that chose five points counts one, and one that turned on three different layers counts three. <span data-stat="geoNote">Finding the reader’s location works 56% of the time: 226 of 403 tries.</span></p>
       <div class="bars" data-bars="actions"></div>
       <!-- The fill starts at 0 and the boot script sets it from geoPct. It carried a
            hand-typed width:63% from #1004 until 2026-09-20, which no sync touched because
@@ -1231,14 +1384,16 @@ code {
   <section class="ruled three">
     <div class="panel">
       <h2 class="kicker">How people find the site<sup class="ref"><a href="#note-5" aria-label="Note 5">5</a></sup></h2>
-      <p class="lead">Search engines (Google, DuckDuckGo and Bing) sent <span data-stat="searchVisits">4,355</span> visits. &ldquo;Direct&rdquo; means a typed address, a bookmark or an app that hides the link.</p>
+      <p class="lead">Search engines sent <span data-stat="searchVisits">2,746</span> of the <span data-stat="visits">3,966</span> visits. &ldquo;Direct&rdquo; means a typed address, a bookmark or an app that hides the link.</p>
       <div class="bars" data-bars="refs"></div>
       <h3 class="kicker subhead">Campaigns</h3>
       <div class="bars" data-bars="campaigns"></div>
     </div>
     <div class="panel">
       <h2 class="kicker">Devices and browsers</h2>
-      <p class="lead"><span data-stat="mobilePct">55%</span> of visits are on phones and tablets. Chrome and Safari cover <span data-stat="topTwoBrowserPct">96%</span> between them.</p>
+      <p class="lead"><span data-stat="mobilePct">57%</span> of pages viewed were on phones and tablets. Chrome and Safari cover <span data-stat="topTwoBrowserPct">96%</span> between them.</p>
+      <h3 class="kicker subhead">Screens</h3>
+      <div class="bars" data-bars="sizes"></div>
       <h3 class="kicker subhead">Operating systems</h3>
       <div class="bars" data-bars="systems"></div>
       <h3 class="kicker subhead">Browsers</h3>
@@ -1246,7 +1401,7 @@ code {
     </div>
     <div class="panel">
       <h2 class="kicker">Countries</h2>
-      <p class="lead"><span data-stat="usCount">13,337</span> of <span data-stat="total">14,549</span> visits, <span data-stat="usPct">92%</span>, came from the United States.</p>
+      <p class="lead"><span data-stat="usPct">92%</span> of pages viewed came from the United States: <span data-stat="usCount">5,373</span> of the <span data-stat="chartedPages">5,868</span> whose country is known.<sup class="ref"><a href="#note-11" aria-label="Note 11">11</a></sup></p>
       <div class="bars" data-bars="geo"></div>
     </div>
   </section>
@@ -1258,18 +1413,18 @@ code {
         <span class="key"><span class="swatch" style="background:var(--s1)"></span>Google</span>
         <span class="key"><span class="swatch" style="background:var(--s2)"></span>DuckDuckGo</span>
         <span class="key"><span class="swatch" style="background:var(--s3)"></span>Bing</span>
-        <span class="key"><span class="swatch" style="background:var(--s4)"></span>Yahoo</span>
+        <span class="key"><span class="swatch" style="background:var(--s4)"></span>Other search engines</span>
         <span class="key"><span class="swatch" style="background:var(--slate)"></span>Other sites</span>
       </div>
     </div>
     <div class="chartcard">
-      <div class="dayrefs" id="dayRefsChart" role="group" aria-label="Visits from each search engine and other sites, per day"></div>
+      <div class="dayrefs" id="dayRefsChart" role="group" aria-label="Visits from each search engine and from other sites, per day"></div>
       <div class="dayscale" aria-hidden="true"><span></span><div class="ticks" id="dayRefsTicks"></div><span></span></div>
     </div>
     <details class="tableview">
       <summary>View as table</summary>
       <div class="tablecard"><table class="q" id="dayRefsTable">
-        <thead><tr><th>Day</th><th class="num">Google</th><th class="num">DuckDuckGo</th><th class="num">Bing</th><th class="num">Yahoo</th><th class="num">Other sites</th><th class="num">No source</th></tr></thead>
+        <thead><tr><th>Day</th><th class="num">Google</th><th class="num">DuckDuckGo</th><th class="num">Bing</th><th class="num">Other search</th><th class="num">Other sites</th><th class="num">Google Play app</th><th class="num">No source</th><th class="num">From within the site</th></tr></thead>
         <tbody></tbody>
       </table></div>
     </details>
@@ -1279,8 +1434,8 @@ code {
     <div class="sec-head">
       <h2>What people search for<sup class="ref"><a href="#note-7" aria-label="Note 7">7</a></sup></h2>
       <div class="engines" id="engines" role="group" aria-label="Search engine" hidden>
-        <button type="button" data-engine="google" aria-pressed="true">Google &middot; <span data-stat="searchClicks">1,025</span> clicks</button>
-        <button type="button" data-engine="bing" aria-pressed="false">Bing &middot; <span data-stat="bingClicks">746</span> clicks</button>
+        <button type="button" data-engine="google" aria-pressed="true">Google &middot; <span data-stat="searchClicks">1,053</span> clicks</button>
+        <button type="button" data-engine="bing" aria-pressed="false">Bing &middot; <span data-stat="bingClicks">745</span> clicks</button>
       </div>
     </div>
     <p class="take">How often districtry showed up in each engine&rsquo;s results, and how often someone clicked.</p>
@@ -1315,9 +1470,29 @@ code {
   </section>
 
 
+  <section class="ruled notes" id="notes">
+    <h2>Notes</h2>
+    <p class="take">What the figures above can&rsquo;t tell you.</p>
+    <ol>
+      <li id="note-1"><strong>What is counted.</strong> The counter counts each page, and each thing a reader does, once per browser in a visit of up to about eight hours, so reloading a page or choosing a second point adds nothing. Its own total for <span data-stat="periodThese">these two months</span> is <span data-stat="total">15,864</span>: pages viewed and the three kinds of event in note 10 together. The daily columns add up to <span data-stat="dailySum">16,222</span>, <span data-stat="dailyGap">358</span> apart. The gap changes from day to day and its cause is unknown, so both figures are shown. <span data-stat="barSumNote">The screen chart adds up to 5,867, the browser chart to 5,868 and the system chart to 5,868, against 5,969 pages viewed, and the country chart shows only the eight with the most.</span> The counter uses no cookies and does not identify anyone.</li>
+      <li id="note-2"><strong>The dates.</strong> This page covers <span data-stat="periodLast">the last two months</span>, <span data-stat="range">August 26 – October 26, 2026</span> (<span data-stat="days">62</span> days), ending with the last full day. <span data-day="Aug 25"><strong>August 25 is low</strong> because Google wrongly flagged the new districtry.com address that morning, and Chrome turned visitors away before the page loaded. Those visits can&rsquo;t be recovered.</span> The Illinois school board page <span data-stat="seoSchoolNote">was viewed 358 times, the fourth most of any page</span>.</li>
+      <li id="note-3"><strong>Visits by app.</strong> <span data-stat="ageNote">Older apps have had longer to be found, so read the order as age, not popularity.</span> <span data-stat="residualNote">60 of 5,969 pages viewed were to pages that belong to no app, such as the privacy page, so they are in no bar.</span><span data-stat="zeroInstNote"></span></li>
+      <li id="note-4"><strong>Layers.</strong> <span data-stat="layerScopeNote">Some layers appear in more than one state’s map, and their counts add up across states. Since September 29 each count also records which app it came from: Congress (Illinois 116, New York 51 and San Francisco 7), County (Arkansas 43, Illinois 119, Indiana 14, Iowa 7, Kentucky 7, Louisiana 5, Michigan 19, Minnesota 12, Mississippi 4, North Carolina 12, Oklahoma 16, South Carolina 6, Tennessee 8 and Wisconsin 15), County board (Illinois 103 and Wisconsin 25), U.S. House (Arkansas 15, Indiana 32, Iowa 11, Kentucky 4, Louisiana 6, Michigan 26, Minnesota 6, Mississippi 1, Missouri 2, North Carolina 12, Oklahoma 9, South Carolina 21, Tennessee 23 and Wisconsin 15) and Ward (Illinois 192 and Wisconsin 6). “Not by app” is from before that date, or too small to be listed. The rest belong to one app only: County precinct, IL House, IL Senate, School board and Ward precinct.</span> Only the top ten layers are shown.</li>
+      <li id="note-5"><strong>Visits and sources.</strong> A visit is a page view that arrived from somewhere: a search engine, another site, a shared link, the Google Play app, or nowhere the browser would name, such as a typed address, a bookmark or an app that hides the link, which is &ldquo;Direct / unknown&rdquo;. Another <span data-stat="visitsLeft">2,003</span> pages viewed came with no source at all, and they are counted as pages viewed and not as visits. That they are further pages of visits already counted, opened from a link on districtry itself, is inferred rather than read: the counter names no districtry source, and Google&rsquo;s visits here match the clicks Search Console reports, which they would not if each page a reader opened next were counted as another visit from Google. Measured on October 26, they were 993 against 1,025 for August 25 to October 24, and within eight of each other on each of the 13 days from October 12, the days both record one by one. <span data-stat="refNote">The sources chart shows the eight largest, 3,913 of the 3,966 visits.</span> The campaigns list counts only links tagged for a campaign.</li>
+      <li id="note-6"><strong>Sources day by day.</strong> Each day is counted on its own, for page views alone. &ldquo;Other search engines&rdquo; is Yahoo, Ecosia, Startpage, Brave and the like, and &ldquo;Other sites&rdquo; any other website or shared link that sent a visitor, such as LinkedIn or a news story. The table also gives each day&rsquo;s visits from the Google Play app, the visits with no source named, and the pages viewed with no source at all that note 5 infers were opened from within the site; none of these three is drawn. A number ending in + means that day&rsquo;s list was cut short, so the real figure is higher.</li>
+      <li id="note-7"><strong>Searches.</strong> Google and Bing figures each include both districtry.com and the old chidistricts.com, which still shows up in some results and forwards to the new site. Google leaves out rare searches, so these totals won&rsquo;t match its own reports exactly. The visit counter can&rsquo;t see what anyone searched for, because Google doesn&rsquo;t pass that along. On Bing, districtry.com first appeared on <span data-stat="bingNewFirst">September 13</span>.</li>
+      <li id="note-8"><strong>Shared map links.</strong> Since <span data-stat="mapLinkFrom">October 17</span>, each Google Maps or Apple Maps link read by a search box is counted once, with which maps app it came from, whether it was pasted or shared in, what the search found, and which map read it. The link and the place are never recorded. A link the front page passes on to a state&rsquo;s map is counted by both.<span data-stat="mapLinkCutNote"></span></li>
+      <li id="note-9"><strong>Return visits.</strong> Since <span data-stat="returnSince">October 22</span>, each state&rsquo;s map counts a visit once per browser window, as a first visit or a return. A browser that has opened any of the maps before is a return; the mark that says so stays in the browser and is never sent. A cleared browser, a private window or another device counts as a first visit, and every visit before the count began was unmarked, so for its first weeks the share understates how many people come back and will rise as the count ages. The front page and the other pages are not counted here.</li>
+      <li id="note-10"><strong>What counts as use.</strong> Besides pages viewed, the apps send the counter events, and an event is one of three things: a reader doing something, such as choosing a point, turning on a layer or searching; the result of something a reader did, counted a second time, such as a location found or a hand-off to another state&rsquo;s map; or a count an app sends by itself with nobody doing anything, such as the visit counter every map has sent on opening since October 22, or an install invitation shown. Only the first kind is a reader action on this page. Each is counted once a visit for each thing, so choosing five points counts one and turning on three different layers counts three. A shared link that opens on a point with layers on counts as choosing that point and turning on those layers. Until October 26 this page drew all three kinds together as &ldquo;features used&rdquo;, so after October 22 that chart rose while reader actions did not.</li>
+      <li id="note-11"><strong>The Google Play app.</strong> The Android app on Google Play opens the site with a tag of its own, so its visits are counted apart: <span data-stat="androidVisits">219</span> in <span data-stat="periodThese">these two months</span>. <span data-stat="playNote">The installed app was opened 189 times in these two months, 150 of them outside the United States. Before the last seven days the site barely reached readers abroad: pages viewed from outside the United States averaged 3 a day, against 47 a day in the last seven days. So these launches are more likely people trying the app than readers looking up their own districts.</span></li>
+    </ol>
+  </section>
+  </div>
+
+  <div class="tab-panel" id="panel-insights" data-tab="insights">
   <section class="ruled reading" id="reading">
     <h2>What the figures say</h2>
-    <p class="take">The figures above, read for what they suggest about what to work on. Each part names the chart it is about.</p>
+    <p class="take">The report&rsquo;s figures, read for what they suggest about what to work on. Each part names the chart it is about.</p>
     <div class="reads">
       <div class="read wide" id="missedRead" hidden>
         <h3 class="kicker">Searches worth a look</h3>
@@ -1325,50 +1500,140 @@ code {
         <ul class="missed" id="missedList"></ul>
       </div>
       <div class="read">
-        <h3 class="kicker">Daily activity</h3>
-        <p>The four days to <span data-stat="lastDay">October 25</span> ran <span data-stat="recentDays">922, 993, 833 and 930</span>. <span data-stat="peakLabel">Wednesday, Oct 21</span> is the busiest day in <span data-stat="periodThese">these two months</span>, at <span data-stat="peak">993</span><span data-stat="peakTieNote">, tied with Friday, Oct 23</span><span data-stat="sinceRebrandNote"></span>.</p>
+        <h3 class="kicker">Day by day</h3>
+        <p>The four days to <span data-stat="lastDay">October 26</span> had <span data-stat="recentDays">296, 236, 250 and 482</span> pages viewed and <span data-stat="recentActions">449, 356, 434 and 703</span> reader actions. <span data-stat="peakLabel">Monday, Oct 26</span> is the busiest day in <span data-stat="periodThese">these two months</span>, at <span data-stat="peak">482</span> pages viewed<span data-stat="peakTieNote"></span>.</p>
+      </div>
+      <div class="read" id="useRead" hidden>
+        <h3 class="kicker">Use for each map opened</h3>
+        <p><span data-stat="useTrend">In the last seven days readers took 2.9 actions for each map opened and chose a point in about 70% of them, against 2.9 and 71% in the seven days before.</span></p>
       </div>
       <div class="read" id="returnRead" hidden>
         <h3 class="kicker">Return visits</h3>
-        <p><span data-stat="returnNote">134 of 551 map visits since October 22 came from a browser that had opened a districtry map before. The most went to Illinois (27), Wisconsin (24) and South Carolina (15). The count is new, so this share starts low and will rise as more browsers carry the mark.</span></p>
+        <p><span data-stat="returnNote">193 of 788 map visits since October 22 came from a browser that had opened a districtry map before. The most went to Illinois (41), Wisconsin (38) and South Carolina (19). The count is new, so this share starts low and will rise as more browsers carry the mark.</span></p>
       </div>
       <div class="read" id="dayRefsRead" hidden>
         <h3 class="kicker">Search engines, day by day</h3>
-        <p><span data-stat="dayRefLead">On October 25 search engines sent 298 visits, against 343 the day before and 137 on October 12.</span></p>
+        <p><span data-stat="dayRefLead">On October 26 search engines sent 233 visits, against 121 the day before and 76 on October 13.</span></p>
       </div>
       <div class="read" id="googleRead" hidden>
         <h3 class="kicker">Google</h3>
-        <p>How often districtry showed up in Google&rsquo;s results, and how often someone clicked: <span data-stat="searchClicks">1,025</span> clicks from <span data-stat="searchImpressions">48,738</span> appearances across <span data-stat="searchQueries">902</span> different searches, <span data-stat="searchCtr">2.10%</span> overall. <em><span data-stat="searchTopQuery">what district am i in</span></em> is clicked <span data-stat="searchTopCtr">3.6%</span> of the time from an average spot of <span data-stat="searchTopPos">6.8</span> on the page. <em><span data-stat="searchNextQuery">what district am i in by zip code</span></em> sits at about the same spot (<span data-stat="searchNextPos">7.4</span>) and is clicked <span data-stat="searchNextCtr">3.1%</span> of the time, so the title and description people see likely make the difference.</p>
+        <p>How often districtry showed up in Google&rsquo;s results, and how often someone clicked: <span data-stat="searchClicks">1,053</span> clicks from <span data-stat="searchImpressions">50,052</span> appearances across <span data-stat="searchQueries">896</span> different searches, <span data-stat="searchCtr">2.10%</span> overall. <em><span data-stat="searchTopQuery">what district am i in</span></em> is clicked <span data-stat="searchTopCtr">3.6%</span> of the time from an average spot of <span data-stat="searchTopPos">6.8</span> on the page. <em><span data-stat="searchNextQuery">what district am i in by zip code</span></em> <span data-stat="searchNextWhere">sits at about the same spot</span> (<span data-stat="searchNextPos">7.5</span>) and is clicked <span data-stat="searchNextCtr">3.0%</span> of the time<span data-stat="searchNextSo">, about as often</span>.</p>
       </div>
       <div class="read" id="bingRead" hidden>
         <h3 class="kicker">Bing</h3>
-        <p>The same for Bing: <span data-stat="bingClicks">746</span> clicks from <span data-stat="bingImpressions">20,985</span> appearances across <span data-stat="bingQueries">426</span> different searches, <span data-stat="bingCtr">3.55%</span> overall. The most-seen search, <em><span data-stat="bingTopQuery">what district am i in</span></em>, is clicked <span data-stat="bingTopCtr">1.1%</span> of the time from an average spot of <span data-stat="bingTopPos">5.3</span>. <span data-stat="engineCompare">Both engines’ most-seen search is the same phrase. Of the twelve in Bing’s table, zero name a ward or an alderman, against four of Google’s.</span></p>
+        <p>The same for Bing: <span data-stat="bingClicks">745</span> clicks from <span data-stat="bingImpressions">20,935</span> appearances across <span data-stat="bingQueries">426</span> different searches, <span data-stat="bingCtr">3.56%</span> overall. The most-seen search, <em><span data-stat="bingTopQuery">what district am i in</span></em>, is clicked <span data-stat="bingTopCtr">1.1%</span> of the time from an average spot of <span data-stat="bingTopPos">5.3</span>. <span data-stat="engineCompare">Both engines’ most-seen search is the same phrase. Of the twelve in Bing’s table, zero name a ward or an alderman, against three of Google’s.</span></p>
       </div>
     </div>
   </section>
+  </div>
 
-  <section class="ruled notes" id="notes">
-    <h2>Notes</h2>
-    <p class="take">What the figures above can&rsquo;t tell you.</p>
-    <ol>
-      <li id="note-1"><strong>The two totals.</strong> The <span data-stat="total">14,549</span> total is the visit counter&rsquo;s own figure. The daily columns add up to <span data-stat="dailySum">14,719</span>, <span data-stat="dailyGap">170</span> apart. The gap changes from day to day and its cause is unknown, so both figures are shown. <span data-stat="barSumNote">The browser and system charts add up to the total; the country chart is 464 short because it lists only the top entries.</span> The counter uses no cookies and does not identify anyone.</li>
-      <li id="note-2"><strong>The dates.</strong> This page covers <span data-stat="periodLast">the last two months</span>, <span data-stat="range">August 25 – October 25, 2026</span> (<span data-stat="days">62</span> days), ending with the last full day. <span data-day="Aug 25"><strong>August 25 is low</strong> because Google wrongly flagged the new districtry.com address that morning, and Chrome turned visitors away before the page loaded. Those visits can&rsquo;t be recovered.</span> The Illinois school board page had <span data-stat="seoSchool">345</span> visits, the fourth most of any page.</li>
-      <li id="note-3"><strong>Visits by app.</strong> <span data-stat="ageNote">Older apps have had more time to collect visits, so read the order as age, not popularity.</span> <span data-stat="residualNote">58 of 5,512 page visits were to pages that belong to no app, such as the privacy page, so they are in no bar.</span><span data-stat="zeroInstNote"></span></li>
-      <li id="note-4"><strong>Layers.</strong> <span data-stat="layerScopeNote">Some layers appear in more than one state’s map, and their counts add up across states. Since September 29 each count also records which app it came from: Congress (Illinois 109, New York 44 and San Francisco 6), County (Arkansas 37, Illinois 114, Indiana 12, Iowa 6, Kentucky 7, Louisiana 1, Michigan 17, Minnesota 12, Mississippi 2, North Carolina 12, Oklahoma 11, South Carolina 4, Tennessee 8 and Wisconsin 14), County board (Illinois 99 and Wisconsin 22), U.S. House (Arkansas 9, Indiana 31, Iowa 9, Kentucky 4, Louisiana 4, Michigan 25, Minnesota 5, Mississippi 1, North Carolina 12, Oklahoma 7, South Carolina 20, Tennessee 22 and Wisconsin 14) and Ward (Illinois 182 and Wisconsin 5). “Not by app” is from before that date, or too small to be listed. The rest belong to one app only: County precinct, IL House, IL Senate, School board and Ward precinct.</span> Only the top ten layers are shown.</li>
-      <li id="note-5"><strong>Sources.</strong> Only the top six sources are shown. They add up to <span data-stat="refSum">6,505</span> of <span data-stat="total">14,549</span> visits, so a search engine&rsquo;s real total may be a little higher. The campaigns list counts only links tagged for a campaign.</li>
-      <li id="note-6"><strong>Sources day by day.</strong> Each day is counted on its own. &ldquo;Other sites&rdquo; is any other website that sent a visitor, such as LinkedIn or a news story. &ldquo;No source&rdquo; means the browser didn&rsquo;t say where the visitor came from, such as a typed address or a bookmark; it is in the table but not the chart. A number ending in + means that day&rsquo;s list was cut short, so the real figure is higher.</li>
-      <li id="note-7"><strong>Searches.</strong> Google and Bing figures each include both districtry.com and the old chidistricts.com, which still shows up in some results and forwards to the new site. Google leaves out rare searches, so these totals won&rsquo;t match its own reports exactly. The visit counter can&rsquo;t see what anyone searched for, because Google doesn&rsquo;t pass that along. On Bing, districtry.com first appeared on <span data-stat="bingNewFirst">September 13</span>.</li>
-      <li id="note-8"><strong>Shared map links.</strong> Since <span data-stat="mapLinkFrom">October 17</span>, each Google Maps or Apple Maps link read by a search box is counted once, with which maps app it came from, whether it was pasted or shared in, what the search found, and which map read it. The link and the place are never recorded. A link the front page passes on to a state&rsquo;s map is counted by both.<span data-stat="mapLinkCutNote"></span></li>
-      <li id="note-9"><strong>Return visits.</strong> Since <span data-stat="returnSince">October 22</span>, each state&rsquo;s map counts a visit once per browser window, as a first visit or a return. A browser that has opened any of the maps before is a return; the mark that says so stays in the browser and is never sent. A cleared browser, a private window or another device counts as a first visit, and every visit before the count began was unmarked, so for its first weeks the share understates how many people come back and will rise as the count ages. The front page and the other pages are not counted here.</li>
-    </ol>
-  </section>
+  <div class="tab-panel" id="panel-milestones" data-tab="milestones">
+    <!-- ==== TRAFFIC-MILESTONES:BEGIN ==== -->
+    <!-- GENERATED by scripts/build_traffic_page.py from the three data files and data/traffic-milestones.json. Do not hand-edit: rerun the script. -->
+    <section class="ruled milestones">
+      <div class="sec-head">
+        <h2>Milestones</h2>
+        <span class="window-note">Figures through October 26, 2026, read on October 27, 2026</span>
+      </div>
+      <p class="take">Marks to watch for, in two groups: people getting answers, and figures worth showing a state&rsquo;s officials. A mark passed shows the day it was first reached.</p>
+
+      <h3 class="kicker">People getting answers</h3>
+      <p class="take">Choosing a point is when someone gets an answer: the map then names every district at that spot and who holds each seat.</p>
+      <div class="miles">
+        <div class="mile">
+          <h4>Points chosen in the last 30 days</h4>
+          <p class="now"><span class="value">1,703</span><span class="to">797 to go to 2,500</span></p>
+          <div class="meter" aria-hidden="true"><div class="fill" style="width:68%"></div></div>
+          <ol class="marks">
+            <li class="passed"><span class="mark">1,000</span> passed Oct 20</li>
+            <li class="next"><span class="mark">2,500</span></li>
+            <li><span class="mark">5,000</span></li>
+            <li><span class="mark">10,000</span></li>
+          </ol>
+        </div>
+        <div class="mile">
+          <h4>Most points chosen in one day</h4>
+          <p class="now"><span class="value">167</span><span class="to">on October 26; 83 to go to 250</span></p>
+          <div class="meter" aria-hidden="true"><div class="fill" style="width:67%"></div></div>
+          <ol class="marks">
+            <li class="passed"><span class="mark">100</span> passed Oct 19</li>
+            <li class="next"><span class="mark">250</span></li>
+            <li><span class="mark">500</span></li>
+            <li><span class="mark">1,000</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <h3 class="kicker">Figures for state officials</h3>
+      <p class="take">How much the maps were used in the last 30 days, all together and one by one, for a letter or a meeting.</p>
+      <div class="miles">
+        <div class="mile">
+          <h4>Visits in the last 30 days, every map together</h4>
+          <p class="now"><span class="value">3,190</span><span class="to">1,810 to go to 5,000</span></p>
+          <div class="meter" aria-hidden="true"><div class="fill" style="width:64%"></div></div>
+          <ol class="marks">
+            <li class="passed"><span class="mark">2,500</span> passed by Oct 26</li>
+            <li class="next"><span class="mark">5,000</span></li>
+            <li><span class="mark">10,000</span></li>
+            <li><span class="mark">25,000</span></li>
+          </ol>
+        </div>
+        <div class="mile">
+          <h4>Maps past 100 pages viewed in the last 30 days</h4>
+          <p class="now"><span class="value">11 <small>of 17</small></span><span class="to">6 more to go</span></p>
+          <div class="meter" aria-hidden="true"><div class="fill" style="width:65%"></div></div>
+          <ol class="marks">
+            <li class="next"><span class="mark">100 each</span></li>
+            <li><span class="mark">500 each</span></li>
+            <li><span class="mark">1,000 each</span></li>
+          </ol>
+        </div>
+      </div>
+      <div class="tablecard">
+        <table class="q" id="mapMarks">
+          <caption>Each map in the last 30 days</caption>
+          <thead><tr><th scope="col">Map</th><th scope="col" class="num">Pages viewed</th><th scope="col" class="mk">Passed</th><th scope="col">Next mark</th></tr></thead>
+          <tbody>
+            <tr><td>Illinois</td><td class="num">1,794</td><td class="mk">1,000 <small>by Oct 26</small></td><td>5,000 <small>3,206 to go</small></td></tr>
+            <tr><td>New York</td><td class="num">387</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>113 to go</small></td></tr>
+            <tr><td>Arkansas <small>live 12 days</small></td><td class="num">288</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>212 to go</small></td></tr>
+            <tr><td>Wisconsin</td><td class="num">214</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>286 to go</small></td></tr>
+            <tr><td>Indiana <small>live 20 days</small></td><td class="num">185</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>315 to go</small></td></tr>
+            <tr><td>Iowa</td><td class="num">164</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>336 to go</small></td></tr>
+            <tr><td>South Carolina <small>live 14 days</small></td><td class="num">156</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>344 to go</small></td></tr>
+            <tr><td>Oklahoma <small>live 17 days</small></td><td class="num">150</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>350 to go</small></td></tr>
+            <tr><td>Tennessee <small>live 14 days</small></td><td class="num">149</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>351 to go</small></td></tr>
+            <tr><td>Michigan</td><td class="num">146</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>354 to go</small></td></tr>
+            <tr><td>North Carolina <small>live 18 days</small></td><td class="num">130</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>370 to go</small></td></tr>
+            <tr><td>Kentucky <small>live 27 days</small></td><td class="num">89</td><td class="mk">&mdash;</td><td>100 <small>11 to go</small></td></tr>
+            <tr><td>Minnesota <small>live 27 days</small></td><td class="num">89</td><td class="mk">&mdash;</td><td>100 <small>11 to go</small></td></tr>
+            <tr><td>Louisiana <small>live 6 days</small></td><td class="num">64</td><td class="mk">&mdash;</td><td>100 <small>36 to go</small></td></tr>
+            <tr><td>San Francisco</td><td class="num">54</td><td class="mk">&mdash;</td><td>100 <small>46 to go</small></td></tr>
+            <tr><td>Mississippi <small>live 11 days</small></td><td class="num">29</td><td class="mk">&mdash;</td><td>100 <small>71 to go</small></td></tr>
+            <tr><td>Missouri <small>live 1 day</small></td><td class="num">9</td><td class="mk">&mdash;</td><td>100 <small>91 to go</small></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="ruled notes">
+      <h2>How the marks are counted</h2>
+      <ol>
+        <li><strong>Points chosen.</strong> A point is counted once a visit, so someone who checks three addresses in one visit counts once, and these figures are a floor. Until October 27, 2026 the counter did not say which state&rsquo;s map a point was chosen on. Since then each map counts its own, which the table will show once a refresh has read it, and someone who uses two maps in one visit counts once on each.</li>
+        <li><strong>The dates.</strong> Points chosen are kept day by day, so their dates are the day the mark was reached. Visits and each map&rsquo;s pages are kept only as a total for the last 30 days, so their dates are the first daily refresh that found the mark passed, and read &ldquo;by&rdquo;. The record begins with the figures for August 26, 2026, and a mark already passed then reads &ldquo;by&rdquo; too.</li>
+        <li><strong>Each map.</strong> Pages viewed counts every page under a state&rsquo;s address: its map, its question pages and its county pages. It counts readers from anywhere, so someone in Indiana looking up an Illinois address counts for Illinois. A map that went live during the 30 days says how many days it has had.</li>
+        <li><strong>The marks.</strong> They were set on October 27, 2026, and are never lowered to be reached. Once the last is passed, a higher one is added.</li>
+      </ol>
+    </section>
+    <!-- ==== TRAFFIC-MILESTONES:END ==== -->
+  </div>
 
 </main>
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <p>Source: GoatCounter (districtry.goatcounter.com), read-only dashboard export on <span data-stat="exportDate">October 26, 2026</span>.
-      Every app &mdash; <span data-stat="appList">Arkansas, Illinois, Indiana, Iowa, Kentucky, Louisiana, Michigan, Minnesota, Mississippi, New York, North Carolina, Oklahoma, San Francisco, South Carolina, Tennessee and Wisconsin</span> &mdash; reports to this one counter, and each is told apart by its address.
+    <p>Source: GoatCounter (districtry.goatcounter.com), read-only dashboard export on <span data-stat="exportDate">October 27, 2026</span>.
+      Every app &mdash; <span data-stat="appList">Arkansas, Illinois, Indiana, Iowa, Kentucky, Louisiana, Michigan, Minnesota, Mississippi, Missouri, New York, North Carolina, Oklahoma, San Francisco, South Carolina, Tennessee and Wisconsin</span> &mdash; reports to this one counter, and each is told apart by its address.
       Search figures come from Google Search Console and Bing Webmaster Tools. All three are refreshed daily.
       No cookies are used, no one is identified, and the browser&rsquo;s language is not collected.</p>
     <div class="footer-links">
@@ -1440,144 +1705,175 @@ code {
   /* GENERATED by scripts/build_traffic_page.py from data/goatcounter-traffic.json,
      data/search-performance.json and data/bing-search-performance.json, which
      three daily workflows commit. Do not hand-edit: rerun the script. The
-     window is a ROLLING TWO MONTHS ending on the last full day — 2026-08-25 → 2026-10-25 —
+     window is a ROLLING TWO MONTHS ending on the last full day — 2026-08-26 → 2026-10-26 —
      so this page no longer runs from launch and grows without bound.
 
      The PROSE around this block is not generated and can outlive its numbers.
      Read the script's reconciliation output, then read the page. */
 
+  /* One row a day: [day, pages viewed on a state's map, on the front page, on
+     any other page, then what readers did: points chosen, layers turned on,
+     searches and location requests, other actions, then the two kinds of
+     event that are NOT a reader doing something: automatic counts and
+     results]. The first three add up to the day's page visits and the last
+     six to its events, which the builder checks day by day. */
   var daily = [
-    ["Aug 25", 25, 34],
-    ["Aug 26", 41, 24],
-    ["Aug 27", 62, 31],
-    ["Aug 28", 41, 25],
-    ["Aug 29", 30, 42],
-    ["Aug 30", 13, 17],
-    ["Aug 31", 44, 38],
-    ["Sep 1", 27, 29],
-    ["Sep 2", 33, 26],
-    ["Sep 3", 50, 54],
-    ["Sep 4", 36, 73],
-    ["Sep 5", 36, 46],
-    ["Sep 6", 40, 27],
-    ["Sep 7", 34, 20],
-    ["Sep 8", 36, 22],
-    ["Sep 9", 34, 41],
-    ["Sep 10", 27, 44],
-    ["Sep 11", 9, 5],
-    ["Sep 12", 28, 18],
-    ["Sep 13", 33, 94],
-    ["Sep 14", 40, 96],
-    ["Sep 15", 41, 60],
-    ["Sep 16", 44, 43],
-    ["Sep 17", 38, 40],
-    ["Sep 18", 33, 50],
-    ["Sep 19", 43, 67],
-    ["Sep 20", 32, 49],
-    ["Sep 21", 48, 60],
-    ["Sep 22", 52, 75],
-    ["Sep 23", 45, 85],
-    ["Sep 24", 52, 41],
-    ["Sep 25", 40, 59],
-    ["Sep 26", 44, 47],
-    ["Sep 27", 30, 28],
-    ["Sep 28", 79, 100],
-    ["Sep 29", 60, 95],
-    ["Sep 30", 51, 77],
-    ["Oct 1", 156, 134],
-    ["Oct 2", 38, 71],
-    ["Oct 3", 52, 78],
-    ["Oct 4", 45, 70],
-    ["Oct 5", 73, 114],
-    ["Oct 6", 94, 168],
-    ["Oct 7", 96, 129],
-    ["Oct 8", 107, 172],
-    ["Oct 9", 90, 164],
-    ["Oct 10", 55, 116],
-    ["Oct 11", 77, 102],
-    ["Oct 12", 121, 202],
-    ["Oct 13", 139, 191],
-    ["Oct 14", 145, 203],
-    ["Oct 15", 184, 348],
-    ["Oct 16", 211, 354],
-    ["Oct 17", 169, 298],
-    ["Oct 18", 164, 258],
-    ["Oct 19", 293, 475],
-    ["Oct 20", 315, 544],
-    ["Oct 21", 361, 632],
-    ["Oct 22", 294, 628],
-    ["Oct 23", 296, 697],
-    ["Oct 24", 236, 597],
-    ["Oct 25", 250, 680]
+    ["Aug 26", 13, 19, 9, 5, 13, 4, 0, 0, 2],
+    ["Aug 27", 26, 24, 12, 9, 11, 8, 0, 0, 3],
+    ["Aug 28", 14, 17, 10, 6, 14, 5, 0, 0, 0],
+    ["Aug 29", 16, 10, 4, 11, 20, 9, 0, 0, 2],
+    ["Aug 30", 8, 5, 0, 7, 9, 1, 0, 0, 0],
+    ["Aug 31", 19, 21, 4, 12, 20, 4, 0, 0, 2],
+    ["Sep 1", 11, 14, 2, 9, 11, 6, 0, 0, 3],
+    ["Sep 2", 14, 15, 4, 8, 12, 5, 0, 0, 1],
+    ["Sep 3", 32, 13, 5, 16, 33, 5, 0, 0, 0],
+    ["Sep 4", 23, 6, 7, 13, 49, 9, 0, 0, 2],
+    ["Sep 5", 28, 4, 4, 8, 27, 9, 0, 0, 2],
+    ["Sep 6", 21, 9, 10, 5, 17, 5, 0, 0, 0],
+    ["Sep 7", 23, 7, 4, 5, 10, 4, 0, 0, 1],
+    ["Sep 8", 9, 4, 23, 6, 10, 5, 0, 0, 1],
+    ["Sep 9", 23, 3, 8, 13, 12, 11, 0, 0, 5],
+    ["Sep 10", 16, 2, 9, 10, 24, 8, 0, 0, 2],
+    ["Sep 11", 4, 2, 3, 1, 3, 1, 0, 0, 0],
+    ["Sep 12", 19, 6, 3, 7, 5, 6, 0, 0, 0],
+    ["Sep 13", 25, 4, 4, 15, 64, 11, 1, 0, 3],
+    ["Sep 14", 27, 8, 5, 16, 64, 13, 0, 0, 3],
+    ["Sep 15", 25, 3, 13, 18, 22, 15, 0, 0, 5],
+    ["Sep 16", 19, 1, 24, 12, 18, 13, 0, 0, 0],
+    ["Sep 17", 18, 2, 18, 12, 14, 13, 0, 0, 1],
+    ["Sep 18", 17, 1, 15, 12, 27, 11, 0, 0, 0],
+    ["Sep 19", 22, 1, 20, 20, 33, 14, 0, 0, 0],
+    ["Sep 20", 19, 1, 12, 14, 31, 4, 0, 0, 0],
+    ["Sep 21", 20, 5, 23, 15, 29, 14, 0, 0, 2],
+    ["Sep 22", 26, 7, 19, 19, 35, 15, 6, 0, 0],
+    ["Sep 23", 25, 6, 14, 15, 59, 5, 6, 0, 0],
+    ["Sep 24", 20, 9, 23, 10, 20, 7, 1, 0, 3],
+    ["Sep 25", 16, 2, 22, 14, 34, 10, 0, 0, 1],
+    ["Sep 26", 25, 4, 15, 15, 21, 10, 1, 0, 0],
+    ["Sep 27", 15, 7, 8, 12, 11, 5, 0, 0, 0],
+    ["Sep 28", 36, 7, 36, 27, 39, 24, 6, 0, 4],
+    ["Sep 29", 26, 5, 29, 23, 46, 23, 0, 0, 3],
+    ["Sep 30", 21, 4, 26, 18, 39, 16, 3, 0, 1],
+    ["Oct 1", 61, 34, 61, 27, 87, 16, 1, 0, 3],
+    ["Oct 2", 27, 4, 7, 23, 27, 17, 1, 0, 3],
+    ["Oct 3", 27, 8, 17, 20, 39, 16, 2, 0, 1],
+    ["Oct 4", 24, 5, 16, 19, 32, 15, 1, 0, 3],
+    ["Oct 5", 38, 6, 29, 26, 56, 24, 5, 0, 3],
+    ["Oct 6", 46, 9, 39, 35, 83, 35, 7, 0, 8],
+    ["Oct 7", 46, 14, 36, 33, 58, 32, 3, 0, 3],
+    ["Oct 8", 47, 21, 39, 37, 95, 34, 0, 0, 6],
+    ["Oct 9", 46, 8, 36, 32, 98, 21, 3, 0, 10],
+    ["Oct 10", 29, 8, 18, 22, 61, 21, 5, 0, 7],
+    ["Oct 11", 34, 11, 32, 26, 45, 19, 5, 0, 7],
+    ["Oct 12", 61, 12, 48, 45, 92, 37, 7, 0, 21],
+    ["Oct 13", 59, 21, 59, 41, 81, 34, 7, 10, 18],
+    ["Oct 14", 71, 13, 61, 49, 82, 32, 11, 14, 15],
+    ["Oct 15", 87, 25, 72, 66, 177, 51, 9, 21, 24],
+    ["Oct 16", 96, 23, 92, 76, 147, 49, 28, 37, 17],
+    ["Oct 17", 90, 21, 58, 55, 122, 44, 29, 32, 16],
+    ["Oct 18", 73, 17, 74, 55, 116, 39, 14, 24, 10],
+    ["Oct 19", 154, 28, 111, 104, 202, 68, 20, 47, 34],
+    ["Oct 20", 157, 49, 109, 114, 244, 65, 42, 54, 25],
+    ["Oct 21", 168, 53, 140, 121, 302, 72, 53, 57, 27],
+    ["Oct 22", 152, 42, 100, 117, 207, 64, 48, 170, 22],
+    ["Oct 23", 162, 32, 102, 108, 210, 81, 50, 206, 42],
+    ["Oct 24", 141, 31, 64, 96, 160, 59, 41, 207, 34],
+    ["Oct 25", 159, 25, 66, 109, 207, 71, 47, 212, 34],
+    ["Oct 26", 244, 65, 173, 167, 358, 113, 65, 328, 49]
   ];
 
   /* Google Search Console. Both properties are summed: the site renamed
      mid-history and the old domain still appears in results and redirects
      across, so those are two different results for one search rather than one
      counted twice. */
-  var searchData = {"clicks":1025,"impressions":48738,"queries":902,"top":[{"q":"what district am i in","clicks":38,"impressions":1049,"position":6.8},{"q":"what district am i in by zip code","clicks":16,"impressions":516,"position":7.4},{"q":"who is my alderman chicago","clicks":0,"impressions":422,"position":7.5},{"q":"who is my alderman","clicks":0,"impressions":388,"position":7.2},{"q":"randolph county board chairman election results david m. holder","clicks":0,"impressions":296,"position":7.3},{"q":"find my district","clicks":2,"impressions":291,"position":7.4},{"q":"what district am i in by address","clicks":30,"impressions":257,"position":4.2},{"q":"what school district am i in","clicks":7,"impressions":247,"position":7.5},{"q":"who is the alderman in my area","clicks":2,"impressions":238,"position":9.1},{"q":"my district","clicks":1,"impressions":183,"position":14.7},{"q":"district","clicks":0,"impressions":183,"position":21.2},{"q":"find my alderman","clicks":0,"impressions":177,"position":9.2}],"properties":2,"reporting":2,"newest":{"host":"chidistricts.com","first":"2026-08-25","firstLabel":"August 25","clicks":201,"impressions":5135},"first":"2026-08-25","last":"2026-10-24"};
+  var searchData = {"clicks":1053,"impressions":50052,"queries":896,"top":[{"q":"what district am i in","clicks":39,"impressions":1079,"position":6.8},{"q":"what district am i in by zip code","clicks":16,"impressions":530,"position":7.5},{"q":"who is my alderman chicago","clicks":0,"impressions":428,"position":7.5},{"q":"who is my alderman","clicks":0,"impressions":392,"position":7.2},{"q":"randolph county board chairman election results david m. holder","clicks":0,"impressions":300,"position":7.3},{"q":"find my district","clicks":2,"impressions":286,"position":7.4},{"q":"what district am i in by address","clicks":30,"impressions":259,"position":4.3},{"q":"what school district am i in","clicks":7,"impressions":253,"position":7.5},{"q":"who is the alderman in my area","clicks":2,"impressions":241,"position":9.2},{"q":"what district am i in nc","clicks":2,"impressions":202,"position":9.6},{"q":"district","clicks":0,"impressions":193,"position":21.7},{"q":"my district","clicks":1,"impressions":192,"position":14.9}],"properties":2,"reporting":2,"newest":{"host":"chidistricts.com","first":"2026-08-26","firstLabel":"August 26","clicks":198,"impressions":5012},"first":"2026-08-26","last":"2026-10-25"};
 
   /* Bing Webmaster Tools, same window. `reporting` is how many of the verified
      properties returned any rows at all. */
-  var bingData = {"clicks":746,"impressions":20985,"queries":426,"top":[{"q":"what district am i in","clicks":16,"impressions":1421,"position":5.3},{"q":"district","clicks":0,"impressions":162,"position":7.1},{"q":"which district am i in","clicks":1,"impressions":151,"position":5.6},{"q":"nypd precinct finder","clicks":0,"impressions":96,"position":7.5},{"q":"what district am i in for voting","clicks":3,"impressions":85,"position":6.0},{"q":"what precinct am i in","clicks":2,"impressions":46,"position":6.0},{"q":"what voting district am i in","clicks":0,"impressions":43,"position":7.7},{"q":"new york districts","clicks":0,"impressions":30,"position":6.7},{"q":"what district is my address","clicks":1,"impressions":27,"position":6.0},{"q":"what district do i live in","clicks":1,"impressions":26,"position":6.7},{"q":"what district am i in san francisco","clicks":0,"impressions":16,"position":7.7},{"q":"what district am i","clicks":3,"impressions":15,"position":3.0}],"properties":2,"reporting":2,"newest":{"host":"districtry.com","first":"2026-09-13","firstLabel":"September 13","clicks":745,"impressions":20858},"first":"2026-08-25","last":"2026-10-24"};
+  var bingData = {"clicks":745,"impressions":20935,"queries":426,"top":[{"q":"what district am i in","clicks":16,"impressions":1421,"position":5.3},{"q":"district","clicks":0,"impressions":162,"position":7.1},{"q":"which district am i in","clicks":1,"impressions":151,"position":5.6},{"q":"nypd precinct finder","clicks":0,"impressions":96,"position":7.5},{"q":"what district am i in for voting","clicks":3,"impressions":85,"position":6.0},{"q":"what precinct am i in","clicks":2,"impressions":46,"position":6.0},{"q":"what voting district am i in","clicks":0,"impressions":43,"position":7.7},{"q":"new york districts","clicks":0,"impressions":30,"position":6.7},{"q":"what district is my address","clicks":1,"impressions":27,"position":6.0},{"q":"what district do i live in","clicks":1,"impressions":26,"position":6.7},{"q":"what district am i in san francisco","clicks":0,"impressions":16,"position":7.7},{"q":"what district am i","clicks":3,"impressions":15,"position":3.0}],"properties":2,"reporting":2,"newest":{"host":"districtry.com","first":"2026-09-13","firstLabel":"September 13","clicks":745,"impressions":20858},"first":"2026-08-26","last":"2026-10-24"};
 
-  /* Where each of the last days' visits came from, each day asked for on
-     its own: [day, Google, DuckDuckGo, Bing, Yahoo, other sites, no source,
-     list cut short]. Empty when the data file predates the per-day fetch. */
+  /* Where each of the last days' visits came from, each day asked for on its
+     own and for page visits alone: [day, Google, DuckDuckGo, Bing, other
+     search engines, other sites, the Android app, no source, page visits no
+     source row carries (reached from within the site, inferred), list cut
+     short]. Empty when the data file predates the per-day page-visit fetch. */
   var dayRefs = [
-    ["Oct 12", 44, 36, 33, 24, 2, 23, false],
-    ["Oct 13", 49, 30, 29, 8, 2, 40, false],
-    ["Oct 14", 47, 48, 26, 15, 3, 38, false],
-    ["Oct 15", 96, 55, 46, 21, 0, 20, false],
-    ["Oct 16", 79, 68, 58, 19, 7, 36, false],
-    ["Oct 17", 78, 57, 28, 19, 9, 22, false],
-    ["Oct 18", 41, 40, 14, 34, 0, 36, false],
-    ["Oct 19", 109, 112, 111, 34, 7, 60, false],
-    ["Oct 20", 125, 79, 84, 22, 36, 39, false],
-    ["Oct 21", 161, 63, 94, 27, 39, 76, false],
-    ["Oct 22", 61, 86, 71, 39, 42, 69, false],
-    ["Oct 23", 132, 60, 139, 16, 23, 56, false],
-    ["Oct 24", 71, 160, 92, 20, 32, 35, false],
-    ["Oct 25", 73, 132, 61, 32, 81, 37, false]
+    ["Oct 13", 31, 12, 23, 10, 3, 0, 18, 42, false],
+    ["Oct 14", 36, 19, 14, 8, 3, 0, 16, 49, false],
+    ["Oct 15", 43, 27, 28, 11, 3, 0, 17, 55, false],
+    ["Oct 16", 47, 27, 31, 12, 0, 7, 18, 69, false],
+    ["Oct 17", 29, 33, 13, 11, 1, 5, 12, 65, false],
+    ["Oct 18", 33, 19, 11, 12, 10, 2, 20, 57, false],
+    ["Oct 19", 63, 43, 46, 19, 11, 3, 20, 88, false],
+    ["Oct 20", 55, 39, 38, 16, 4, 31, 23, 109, false],
+    ["Oct 21", 82, 31, 50, 24, 6, 27, 34, 107, false],
+    ["Oct 22", 42, 36, 38, 12, 3, 33, 37, 93, false],
+    ["Oct 23", 63, 34, 48, 9, 4, 23, 21, 94, false],
+    ["Oct 24", 35, 52, 21, 11, 0, 27, 20, 70, false],
+    ["Oct 25", 30, 45, 23, 23, 7, 32, 12, 78, false],
+    ["Oct 26", 92, 49, 68, 24, 10, 33, 60, 146, false]
   ];
 
   var barData = {
     instances: [
-      ["Illinois", 2386], ["Front page", 794], ["New York", 443],
-      ["Wisconsin", 293], ["Arkansas", 255], ["Iowa", 168],
-      ["Indiana", 165], ["Michigan", 146], ["Tennessee", 144],
-      ["South Carolina", 138], ["Oklahoma", 125], ["North Carolina", 117],
-      ["Minnesota", 84], ["Kentucky", 80], ["San Francisco", 55],
-      ["Louisiana", 39], ["Mississippi", 22]
+      ["Illinois", 2496], ["Front page", 843], ["New York", 488],
+      ["Wisconsin", 328], ["Arkansas", 288], ["Iowa", 193],
+      ["Indiana", 185], ["Michigan", 160], ["South Carolina", 156],
+      ["Oklahoma", 150], ["Tennessee", 149], ["North Carolina", 130],
+      ["Minnesota", 89], ["Kentucky", 89], ["Louisiana", 64],
+      ["San Francisco", 63], ["Mississippi", 29], ["Missouri", 9]
     ],
     layers: [
-      ["County", 257], ["School board", 250], ["Ward", 187],
-      ["U.S. House", 163], ["Congress", 159], ["Ward precinct", 136],
-      ["IL House", 127], ["County board", 121], ["County precinct", 119],
-      ["IL Senate", 105]
+      ["County", 287], ["School board", 253], ["Ward", 198],
+      ["U.S. House", 183], ["Congress", 174], ["Ward precinct", 147],
+      ["IL House", 132], ["County precinct", 131], ["County board", 128],
+      ["IL Senate", 109]
     ],
+    /* Sources, screens, systems, browsers and countries are PAGE VISITS
+       ONLY. They used to count every hit, so a source weighed what its
+       visitors went on to do as well as how many came. */
     refs: [
-      ["Google", 1815], ["Direct / unknown", 1545], ["DuckDuckGo", 1355],
-      ["Bing", 1185], ["Yahoo", 419], ["Android app", 186]
+      ["Google", 1113], ["Direct / unknown", 897], ["Bing", 702],
+      ["DuckDuckGo", 641], ["Yahoo", 243], ["Android app", 219],
+      ["LinkedIn", 51], ["Ecosia", 47]
+    ],
+    sizes: [
+      ["Phones", 2995], ["Tablets", 375], ["Computers", 2497]
     ],
     systems: [
-      ["Windows", 4630], ["iOS", 4474], ["Android", 3491],
-      ["macOS", 1526], ["Linux", 257], ["Chrome OS", 171]
+      ["Windows", 1942], ["iOS", 1910], ["Android", 1258],
+      ["macOS", 601], ["Linux", 88], ["Chrome OS", 69]
     ],
     browsers: [
-      ["Chrome", 8625], ["Safari", 5340], ["Firefox", 571],
-      ["(unknown)", 13]
+      ["Chrome", 3415], ["Safari", 2241], ["Firefox", 206],
+      ["(unknown)", 6]
     ],
+    /* What readers did, by kind, out of every event path the dashboard holds:
+       never the automatic counts or the results. See ACTION_GROUPS. */
     actions: [
-      ["Points chosen", 1899], ["Searches", 884], ["Location requests", 369]
+      ["Layers turned on", 4294], ["Points chosen", 2061], ["Searches", 928],
+      ["Location requests", 403], ["Street names", 201], ["ZIP searches", 126],
+      ["Install prompts", 122], ["Comparisons", 97], ["Data gaps", 31],
+      ["Sharing", 27], ["Feedback", 16], ["Other", 34]
     ],
     geo: [
-      ["United States", 13337], ["Germany", 166], ["Malaysia", 166],
-      ["Singapore", 161], ["Thailand", 161], ["United Arab Emirates", 94]
+      ["United States", 5373], ["Malaysia", 72], ["Singapore", 68],
+      ["Germany", 55], ["Thailand", 50], ["Canada", 33],
+      ["United Arab Emirates", 31], ["Indonesia", 28]
     ],
     campaigns: [
       ["districtry-launch", 53]
     ],
+    /* Visitors for this window. `visits` is page visits that came with a
+       source, the closest this counter gets to a count of visits; `android`
+       is those from the Google Play app and `direct` those with no source;
+       `pages` is all page visits and `maps`, `front` and `other` split them;
+       `abroad` is page visits from outside the United States; `launches` is
+       the installed app opened, and `launchesAbroad` those outside the United
+       States. */
+    people: {"abroad":495,"android":219,"charted":5868,"direct":897,"front":843,"launches":189,"launchesAbroad":150,"maps":3020,"other":2106,"pages":5969,"search":2746,"sites":104,"us":5373,"visits":3966,"visitsCut":false},
+    /* Reader actions in all, and the two kinds of event left out of them. */
+    use: {"automatic":1419,"results":494,"total":8340},
     /* Google Maps and Apple Maps links the search boxes read, counted since
        mapLinks.from: by which maps app, what the search showed, and which app
        or the front page read it. `measured` is false for a data file fetched
@@ -1592,15 +1888,14 @@ code {
     mapLinkPlaces: [
       ["Illinois", 2]
     ],
-    mapLinks: {"cut": false, "failed": 0, "from": "October 17", "measured": true, "opened": 2, "retried": 0, "short": 2, "total": 2},
-    /* geolocate-success events; the meter is geoSuccess / Geolocations.
-       NULL, NOT ZERO, when the dashboard's ten-row events list does not carry
-       the row. Absence and zero are different facts and `.get(key, 0)` made
-       them the same one: on 2026-09-23 the row fell off the list and the page
-       published "Geolocation succeeds 0% of the time it is tried: 0 of 88".
-       The fetch now asks for it by name, and this stays null-able because a
-       row can go missing for a reason that fix does not cover. */
-    geoSuccess: 207,
+    mapLinks: {"cut": false, "failed": 0, "from": "October 17", "fromInside": true, "measured": true, "opened": 2, "retried": 0, "short": 2, "total": 2},
+    /* Location requests and how many found the reader. geoSuccess is NULL,
+       NOT ZERO, when the file holds no such event at all: absence and zero
+       are different facts, and on 2026-09-23 the row fell off a ten-row list
+       and the page published "succeeds 0% of the time: 0 of 88". Both now
+       come from the per-family series, which hold every event path. */
+    geoTries: 403,
+    geoSuccess: 226,
     /* Which apps register each DRAWN layer id, read from their own layers[].
        A list of two or more means that bar SUMS across them; null means the id
        is in no worksheet and this page will not guess whose it is. See
@@ -1610,18 +1905,18 @@ code {
        per layer and instance, and how much of each layer's total predates it
        and stays pooled. Both are needed during the seam — layerScope says
        which ids CAN pool, these say how much actually is. */
-    layerSplit: {"Congress":{"Illinois":109,"New York":44,"San Francisco":6},"County":{"Arkansas":37,"Illinois":114,"Indiana":12,"Iowa":6,"Kentucky":7,"Louisiana":1,"Michigan":17,"Minnesota":12,"Mississippi":2,"North Carolina":12,"Oklahoma":11,"South Carolina":4,"Tennessee":8,"Wisconsin":14},"County board":{"Illinois":99,"Wisconsin":22},"County precinct":{"Illinois":119},"IL House":{"Illinois":127},"IL Senate":{"Illinois":105},"School board":{"Illinois":119},"U.S. House":{"Arkansas":9,"Indiana":31,"Iowa":9,"Kentucky":4,"Louisiana":4,"Michigan":25,"Minnesota":5,"Mississippi":1,"North Carolina":12,"Oklahoma":7,"South Carolina":20,"Tennessee":22,"Wisconsin":14},"Ward":{"Illinois":182,"Wisconsin":5},"Ward precinct":{"Illinois":136}},
-    layerPooled: {"Congress":0,"County":0,"County board":0,"County precinct":0,"IL House":0,"IL Senate":0,"School board":131,"U.S. House":0,"Ward":0,"Ward precinct":0},
+    layerSplit: {"Congress":{"Illinois":116,"New York":51,"San Francisco":7},"County":{"Arkansas":43,"Illinois":119,"Indiana":14,"Iowa":7,"Kentucky":7,"Louisiana":5,"Michigan":19,"Minnesota":12,"Mississippi":4,"North Carolina":12,"Oklahoma":16,"South Carolina":6,"Tennessee":8,"Wisconsin":15},"County board":{"Illinois":103,"Wisconsin":25},"County precinct":{"Illinois":131},"IL House":{"Illinois":132},"IL Senate":{"Illinois":109},"School board":{"Illinois":123},"U.S. House":{"Arkansas":15,"Indiana":32,"Iowa":11,"Kentucky":4,"Louisiana":6,"Michigan":26,"Minnesota":6,"Mississippi":1,"Missouri":2,"North Carolina":12,"Oklahoma":9,"South Carolina":21,"Tennessee":23,"Wisconsin":15},"Ward":{"Illinois":192,"Wisconsin":6},"Ward precinct":{"Illinois":147}},
+    layerPooled: {"Congress":0,"County":0,"County board":0,"County precinct":0,"IL House":0,"IL Senate":0,"School board":130,"U.S. House":0,"Ward":0,"Ward precinct":0},
     layerSplitFrom: "September 29",
     /* the two Illinois SEO pages the narrative tracks, so the sentence cannot
        claim a figure the path widget has moved past */
-    seo: { police: 0, school: 345 },
+    seo: { police: 0, school: 358, schoolRank: 4 },
     /* Page visits no instance bar carries. Since 2026-10-20 the fetcher reads
        the whole pages list, so these are the site's own pages that belong to
        no app (privacy, about, the Android steps page); pagesCut is true only
        when the list could not be read to its end, and then they are also the
        visits to pages the list never reached. */
-    instResidual: 58,
+    instResidual: 60,
     pagesCut: false,
     /* Instances not LISTED on the front door for any day of this window, by
        display name. Their bars read zero because the app was not being served,
@@ -1629,43 +1924,43 @@ code {
        below has to say which — a claim that their visits "sit in that long
        tail" would be false. Minnesota went live on the day after this window
        ended, which is how the distinction was found. */
-    notListedYet: ["Missouri"],
+    notListedYet: [],
     /* Instances listed on the front door PARTWAY through this window, by
        display name, with the days each was LISTED -- not the days it was
        served. A zero bar for an app a reader could find for one day of this
        window is a weaker measurement than the same zero for one findable
        throughout, and the window rolls, so this is measured on every build
        rather than described in a sentence. */
-    listedPartway: {"Arkansas":11,"Indiana":19,"Iowa":60,"Kentucky":26,"Louisiana":5,"Michigan":53,"Minnesota":26,"Mississippi":10,"North Carolina":17,"Oklahoma":16,"South Carolina":13,"Tennessee":13},
+    listedPartway: {"Arkansas":12,"Indiana":20,"Iowa":61,"Kentucky":27,"Louisiana":6,"Michigan":54,"Minnesota":27,"Mississippi":11,"Missouri":1,"North Carolina":18,"Oklahoma":17,"South Carolina":14,"Tennessee":14},
     /* First and return visits to the apps, counted once per browser window
        since `since` (engine install-app, visit/first and visit/return). NULL
        for a window the fetcher could not reconcile or a file fetched before
        the count was read; the page then shows no return-visit figure. byApp is
        the return visits by app, the ten most. */
-    visits: {"byApp":[["Illinois",27],["Wisconsin",24],["South Carolina",15],["San Francisco",13],["Oklahoma",13],["New York",11],["Iowa",7],["Michigan",6],["Arkansas",5],["Indiana",3]],"first":417,"return":134,"since":"October 22"}
+    visits: {"byApp":[["Illinois",41],["Wisconsin",38],["South Carolina",19],["San Francisco",17],["New York",16],["Oklahoma",14],["Iowa",11],["Michigan",10],["Arkansas",9],["Indiana",5]],"first":595,"return":193,"since":"October 22"}
   };
 
   /* The two facts no arithmetic on this page can recover, so they are stated
      once and used everywhere:
 
        exportDate — the day the dashboard was read.
-       total      — GoatCounter's own js-total-utc for the window. The browser,
-                    system and location bars sum to it EXACTLY (14,549), and the
-                    daily columns sum to 14,719 — 170 apart, and the SIGN FLIPS day
-                    to day (61 the other way on 2026-09-14), which rules out a
-                    fixed offset. Both count the same period and this page does
-                    not know what the difference is, so both are printed and
-                    neither is derived from the other.
+       total      — GoatCounter's own js-total-utc for the window, page visits
+                    and events together. The daily columns sum to 16,222 — 358
+                    apart, and the SIGN FLIPS day to day (61 the other way on
+                    2026-09-14), which rules out a fixed offset. Both count the
+                    same period and this page does not know what the
+                    difference is, so both are printed and neither is derived
+                    from the other.
 
      EVERYTHING ELSE is computed below from `daily` and `barData`. */
-  var META = { exportDate: "October 26, 2026", year: 2026, total: 14549 };
+  var META = { exportDate: "October 27, 2026", year: 2026, total: 15864 };
 
   /* The shorter windows the timeframe buttons offer, keyed by day count, each
      with every variable above for its own period. The lists were read off the
      dashboard for that period; the daily series and the per-day referrer rows
      are the full window's cut to length. Empty when the data file predates
      the per-window fetch, and the page then shows no buttons. */
-  var WINDOWS = {"14":{"META":{"total":9106,"year":2026},"barData":{"actions":[["Points chosen",1156],["Searches",429],["Location requests",245]],"browsers":[["Chrome",5371],["Safari",3402],["Firefox",321],["(unknown)",12]],"campaigns":[],"geo":[["United States",8065],["Malaysia",166],["Singapore",161],["Thailand",161],["Germany",130],["United Arab Emirates",94]],"geoSuccess":144,"instResidual":42,"instances":[["Illinois",1040],["Front page",392],["New York",261],["Arkansas",255],["Indiana",145],["Tennessee",144],["Wisconsin",141],["South Carolina",138],["Oklahoma",124],["North Carolina",114],["Michigan",84],["Kentucky",77],["Minnesota",65],["Iowa",55],["San Francisco",40],["Louisiana",39],["Mississippi",22]],"layerPooled":{"Congress":0,"County":0,"County board":0,"County precinct":0,"IL House":0,"IL Senate":0,"School board":0,"U.S. House":0,"Ward":0,"Ward precinct":0},"layerScope":{"Congress":["Illinois","New York","San Francisco"],"County":["Illinois","New York","Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana","Missouri"],"County board":["Illinois","Wisconsin"],"County precinct":["Illinois"],"IL House":["Illinois"],"IL Senate":["Illinois"],"School board":["Illinois"],"U.S. House":["Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana","Missouri"],"Ward":["Illinois","Wisconsin"],"Ward precinct":["Illinois"]},"layerSplit":{"Congress":{"Illinois":74,"New York":35,"San Francisco":5},"County":{"Arkansas":37,"Illinois":81,"Indiana":12,"Iowa":2,"Kentucky":7,"Louisiana":1,"Michigan":9,"Minnesota":9,"Mississippi":2,"North Carolina":12,"Oklahoma":10,"South Carolina":4,"Tennessee":8,"Wisconsin":13},"County board":{"Illinois":75,"Wisconsin":18},"County precinct":{"Illinois":73},"IL House":{"Illinois":82},"IL Senate":{"Illinois":74},"School board":{"Illinois":57},"U.S. House":{"Arkansas":9,"Indiana":27,"Iowa":4,"Kentucky":2,"Louisiana":4,"Michigan":18,"Minnesota":5,"Mississippi":1,"North Carolina":12,"Oklahoma":7,"South Carolina":20,"Tennessee":22,"Wisconsin":11},"Ward":{"Illinois":117,"Wisconsin":5},"Ward precinct":{"Illinois":88}},"layerSplitFrom":"September 29","layers":[["County",207],["U.S. House",142],["Ward",122],["Congress",114],["County board",93],["Ward precinct",88],["IL House",82],["IL Senate",74],["County precinct",73],["School board",57]],"listedPartway":{"Arkansas":11,"Louisiana":5,"Mississippi":10,"South Carolina":13,"Tennessee":13},"mapLinkPlaces":[["Illinois",2]],"mapLinkResults":[["House pinned",2]],"mapLinkSources":[["Google Maps",2]],"mapLinks":{"cut":false,"failed":0,"from":"October 17","measured":true,"opened":2,"retried":0,"short":2,"total":2},"notListedYet":["Missouri"],"pagesCut":false,"refs":[["Google",1166],["DuckDuckGo",1026],["Bing",886],["Direct / unknown",587],["Yahoo",330],["Android app",186]],"seo":{"police":0,"school":90},"systems":[["iOS",2870],["Windows",2849],["Android",2331],["macOS",814],["Linux",124],["Chrome OS",118]],"visits":{"byApp":[["Illinois",27],["Wisconsin",24],["South Carolina",15],["San Francisco",13],["Oklahoma",13],["New York",11],["Iowa",7],["Michigan",6],["Arkansas",5],["Indiana",3]],"first":417,"return":134,"since":"October 22"}},"bingData":{"clicks":520,"first":"2026-10-12","impressions":13840,"last":"2026-10-24","newest":{"clicks":745,"first":"2026-09-13","firstLabel":"September 13","host":"districtry.com","impressions":20858},"properties":2,"queries":174,"reporting":2,"top":[{"clicks":12,"impressions":947,"position":4.6,"q":"what district am i in"},{"clicks":0,"impressions":110,"position":7.0,"q":"district"},{"clicks":1,"impressions":93,"position":5.0,"q":"which district am i in"},{"clicks":3,"impressions":85,"position":6.0,"q":"what district am i in for voting"},{"clicks":0,"impressions":45,"position":6.1,"q":"what precinct am i in"},{"clicks":0,"impressions":43,"position":7.7,"q":"what voting district am i in"},{"clicks":0,"impressions":41,"position":7.0,"q":"nypd precinct finder"},{"clicks":0,"impressions":27,"position":6.5,"q":"new york districts"},{"clicks":1,"impressions":23,"position":6.0,"q":"what district is my address"},{"clicks":1,"impressions":15,"position":6.4,"q":"what district do i live in"},{"clicks":0,"impressions":14,"position":8.0,"q":"what district am i in san francisco"},{"clicks":1,"impressions":14,"position":6.0,"q":"districtry"}]},"daily":[["Oct 12",121,202],["Oct 13",139,191],["Oct 14",145,203],["Oct 15",184,348],["Oct 16",211,354],["Oct 17",169,298],["Oct 18",164,258],["Oct 19",293,475],["Oct 20",315,544],["Oct 21",361,632],["Oct 22",294,628],["Oct 23",296,697],["Oct 24",236,597],["Oct 25",250,680]],"dayRefs":[["Oct 12",44,36,33,24,2,23,false],["Oct 13",49,30,29,8,2,40,false],["Oct 14",47,48,26,15,3,38,false],["Oct 15",96,55,46,21,0,20,false],["Oct 16",79,68,58,19,7,36,false],["Oct 17",78,57,28,19,9,22,false],["Oct 18",41,40,14,34,0,36,false],["Oct 19",109,112,111,34,7,60,false],["Oct 20",125,79,84,22,36,39,false],["Oct 21",161,63,94,27,39,76,false],["Oct 22",61,86,71,39,42,69,false],["Oct 23",132,60,139,16,23,56,false],["Oct 24",71,160,92,20,32,35,false],["Oct 25",73,132,61,32,81,37,false]],"searchData":{"clicks":570,"first":"2026-10-12","impressions":25951,"last":"2026-10-24","newest":{"clicks":201,"first":"2026-08-25","firstLabel":"August 25","host":"chidistricts.com","impressions":5135},"properties":2,"queries":503,"reporting":2,"top":[{"clicks":15,"impressions":424,"position":6.6,"q":"what district am i in"},{"clicks":12,"impressions":368,"position":7.7,"q":"what district am i in by zip code"},{"clicks":21,"impressions":191,"position":4.0,"q":"what district am i in by address"},{"clicks":2,"impressions":170,"position":9.7,"q":"what district am i in nc"},{"clicks":0,"impressions":139,"position":7.9,"q":"who is my alderman chicago"},{"clicks":0,"impressions":131,"position":7.0,"q":"who is my alderman"},{"clicks":0,"impressions":107,"position":10.2,"q":"chicago wards by zip code"},{"clicks":2,"impressions":106,"position":6.0,"q":"find my district"},{"clicks":0,"impressions":88,"position":8.4,"q":"what is my congressional district by zip code"},{"clicks":0,"impressions":69,"position":10.1,"q":"find my alderman chicago"},{"clicks":0,"impressions":69,"position":10.5,"q":"find my ward"},{"clicks":0,"impressions":69,"position":8.7,"q":"whos my alderman"}]}},"30":{"META":{"total":11908,"year":2026},"barData":{"actions":[["Points chosen",1551],["Searches",695],["Location requests",307]],"browsers":[["Chrome",7178],["Safari",4280],["Firefox",438],["(unknown)",12]],"campaigns":[],"geo":[["United States",10760],["Malaysia",166],["Germany",164],["Singapore",161],["Thailand",161],["United Arab Emirates",94]],"geoSuccess":174,"instResidual":56,"instances":[["Illinois",1705],["Front page",547],["New York",350],["Arkansas",255],["Wisconsin",179],["Indiana",165],["Tennessee",144],["Iowa",139],["South Carolina",138],["Michigan",134],["Oklahoma",125],["North Carolina",117],["Minnesota",84],["Kentucky",80],["San Francisco",46],["Louisiana",39],["Mississippi",22]],"layerPooled":{"Congress":0,"County":0,"County board":0,"County precinct":0,"IL House":0,"IL Senate":0,"School board":0,"U.S. House":0,"Ward":0,"Ward precinct":0},"layerScope":{"Congress":["Illinois","New York","San Francisco"],"County":["Illinois","New York","Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana","Missouri"],"County board":["Illinois","Wisconsin"],"County precinct":["Illinois"],"IL House":["Illinois"],"IL Senate":["Illinois"],"School board":["Illinois"],"U.S. House":["Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana","Missouri"],"Ward":["Illinois","Wisconsin"],"Ward precinct":["Illinois"]},"layerSplit":{"Congress":{"Illinois":109,"New York":44,"San Francisco":6},"County":{"Arkansas":37,"Illinois":114,"Indiana":12,"Iowa":6,"Kentucky":7,"Louisiana":1,"Michigan":17,"Minnesota":12,"Mississippi":2,"North Carolina":12,"Oklahoma":11,"South Carolina":4,"Tennessee":8,"Wisconsin":14},"County board":{"Illinois":99,"Wisconsin":22},"County precinct":{"Illinois":119},"IL House":{"Illinois":127},"IL Senate":{"Illinois":105},"School board":{"Illinois":119},"U.S. House":{"Arkansas":9,"Indiana":31,"Iowa":9,"Kentucky":4,"Louisiana":4,"Michigan":25,"Minnesota":5,"Mississippi":1,"North Carolina":12,"Oklahoma":7,"South Carolina":20,"Tennessee":22,"Wisconsin":14},"Ward":{"Illinois":182,"Wisconsin":5},"Ward precinct":{"Illinois":136}},"layerSplitFrom":"September 29","layers":[["County",257],["Ward",187],["U.S. House",163],["Congress",159],["Ward precinct",136],["IL House",127],["County board",121],["County precinct",119],["School board",119],["IL Senate",105]],"listedPartway":{"Arkansas":11,"Indiana":19,"Kentucky":26,"Louisiana":5,"Minnesota":26,"Mississippi":10,"North Carolina":17,"Oklahoma":16,"South Carolina":13,"Tennessee":13},"mapLinkPlaces":[["Illinois",2]],"mapLinkResults":[["House pinned",2]],"mapLinkSources":[["Google Maps",2]],"mapLinks":{"cut":false,"failed":0,"from":"October 17","measured":true,"opened":2,"retried":0,"short":2,"total":2},"notListedYet":["Missouri"],"pagesCut":false,"refs":[["Google",1516],["DuckDuckGo",1222],["Bing",1079],["Direct / unknown",1017],["Yahoo",392],["Android app",186]],"seo":{"police":0,"school":197},"systems":[["Windows",3946],["iOS",3550],["Android",2904],["macOS",1167],["Linux",209],["Chrome OS",132]],"visits":{"byApp":[["Illinois",27],["Wisconsin",24],["South Carolina",15],["San Francisco",13],["Oklahoma",13],["New York",11],["Iowa",7],["Michigan",6],["Arkansas",5],["Indiana",3]],"first":417,"return":134,"since":"October 22"}},"bingData":{"clicks":683,"first":"2026-09-26","impressions":18902,"last":"2026-10-24","newest":{"clicks":745,"first":"2026-09-13","firstLabel":"September 13","host":"districtry.com","impressions":20858},"properties":2,"queries":295,"reporting":2,"top":[{"clicks":14,"impressions":1319,"position":5.1,"q":"what district am i in"},{"clicks":1,"impressions":139,"position":5.5,"q":"which district am i in"},{"clicks":0,"impressions":127,"position":7.2,"q":"district"},{"clicks":3,"impressions":85,"position":6.0,"q":"what district am i in for voting"},{"clicks":0,"impressions":79,"position":7.5,"q":"nypd precinct finder"},{"clicks":2,"impressions":46,"position":6.0,"q":"what precinct am i in"},{"clicks":0,"impressions":43,"position":7.7,"q":"what voting district am i in"},{"clicks":0,"impressions":30,"position":6.7,"q":"new york districts"},{"clicks":1,"impressions":27,"position":6.0,"q":"what district is my address"},{"clicks":1,"impressions":26,"position":6.7,"q":"what district do i live in"},{"clicks":3,"impressions":15,"position":3.0,"q":"what district am i"},{"clicks":0,"impressions":14,"position":8.0,"q":"what district am i in san francisco"}]},"daily":[["Sep 26",44,47],["Sep 27",30,28],["Sep 28",79,100],["Sep 29",60,95],["Sep 30",51,77],["Oct 1",156,134],["Oct 2",38,71],["Oct 3",52,78],["Oct 4",45,70],["Oct 5",73,114],["Oct 6",94,168],["Oct 7",96,129],["Oct 8",107,172],["Oct 9",90,164],["Oct 10",55,116],["Oct 11",77,102],["Oct 12",121,202],["Oct 13",139,191],["Oct 14",145,203],["Oct 15",184,348],["Oct 16",211,354],["Oct 17",169,298],["Oct 18",164,258],["Oct 19",293,475],["Oct 20",315,544],["Oct 21",361,632],["Oct 22",294,628],["Oct 23",296,697],["Oct 24",236,597],["Oct 25",250,680]],"dayRefs":[["Oct 12",44,36,33,24,2,23,false],["Oct 13",49,30,29,8,2,40,false],["Oct 14",47,48,26,15,3,38,false],["Oct 15",96,55,46,21,0,20,false],["Oct 16",79,68,58,19,7,36,false],["Oct 17",78,57,28,19,9,22,false],["Oct 18",41,40,14,34,0,36,false],["Oct 19",109,112,111,34,7,60,false],["Oct 20",125,79,84,22,36,39,false],["Oct 21",161,63,94,27,39,76,false],["Oct 22",61,86,71,39,42,69,false],["Oct 23",132,60,139,16,23,56,false],["Oct 24",71,160,92,20,32,35,false],["Oct 25",73,132,61,32,81,37,false]],"searchData":{"clicks":776,"first":"2026-09-26","impressions":38090,"last":"2026-10-24","newest":{"clicks":201,"first":"2026-08-25","firstLabel":"August 25","host":"chidistricts.com","impressions":5135},"properties":2,"queries":553,"reporting":2,"top":[{"clicks":18,"impressions":685,"position":6.9,"q":"what district am i in"},{"clicks":16,"impressions":503,"position":7.4,"q":"what district am i in by zip code"},{"clicks":0,"impressions":316,"position":7.6,"q":"who is my alderman chicago"},{"clicks":0,"impressions":290,"position":7.1,"q":"who is my alderman"},{"clicks":0,"impressions":289,"position":7.2,"q":"randolph county board chairman election results david m. holder"},{"clicks":30,"impressions":256,"position":4.2,"q":"what district am i in by address"},{"clicks":2,"impressions":195,"position":7.1,"q":"find my district"},{"clicks":1,"impressions":174,"position":9.5,"q":"who is the alderman in my area"},{"clicks":2,"impressions":170,"position":9.7,"q":"what district am i in nc"},{"clicks":0,"impressions":150,"position":8.5,"q":"whos my alderman"},{"clicks":0,"impressions":147,"position":9.8,"q":"find my alderman chicago"},{"clicks":0,"impressions":131,"position":10.2,"q":"chicago wards by zip code"}]}},"7":{"META":{"total":6179,"year":2026},"barData":{"actions":[["Points chosen",769],["Searches",232],["Location requests",156]],"browsers":[["Chrome",3724],["Safari",2273],["Firefox",180],["(unknown)",2]],"campaigns":[],"geo":[["United States",5273],["Singapore",161],["Thailand",161],["Malaysia",159],["Germany",123],["United Arab Emirates",93]],"geoSuccess":87,"instResidual":26,"instances":[["Illinois",598],["Front page",260],["Arkansas",203],["New York",162],["South Carolina",107],["Tennessee",96],["Wisconsin",91],["Indiana",84],["Oklahoma",81],["North Carolina",73],["Kentucky",47],["Michigan",45],["Iowa",43],["Minnesota",39],["Louisiana",39],["San Francisco",30],["Mississippi",21]],"layerPooled":{"Congress":0,"County":0,"County board":0,"County precinct":0,"IL House":0,"IL Senate":0,"U.S. House":0,"Ward":0,"Ward precinct":0,"ZIP code":0},"layerScope":{"Congress":["Illinois","New York","San Francisco"],"County":["Illinois","New York","Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana","Missouri"],"County board":["Illinois","Wisconsin"],"County precinct":["Illinois"],"IL House":["Illinois"],"IL Senate":["Illinois"],"U.S. House":["Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana","Missouri"],"Ward":["Illinois","Wisconsin"],"Ward precinct":["Illinois"],"ZIP code":["Illinois","New York","San Francisco","Wisconsin","Iowa","Michigan","Minnesota","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana","Missouri"]},"layerSplit":{"Congress":{"Illinois":47,"New York":21,"San Francisco":4},"County":{"Arkansas":29,"Illinois":50,"Indiana":7,"Iowa":1,"Kentucky":4,"Louisiana":1,"Michigan":5,"Minnesota":6,"Mississippi":2,"North Carolina":6,"Oklahoma":9,"Tennessee":5,"Wisconsin":10},"County board":{"Illinois":45,"Wisconsin":13},"County precinct":{"Illinois":49},"IL House":{"Illinois":48},"IL Senate":{"Illinois":44},"U.S. House":{"Arkansas":5,"Indiana":16,"Iowa":3,"Louisiana":4,"Michigan":5,"Minnesota":1,"Mississippi":1,"North Carolina":9,"Oklahoma":6,"South Carolina":14,"Tennessee":17,"Wisconsin":8},"Ward":{"Illinois":80,"Wisconsin":5},"Ward precinct":{"Illinois":59},"ZIP code":{"Arkansas":3,"Illinois":45,"Indiana":5,"Iowa":1,"Louisiana":3,"Minnesota":1,"Mississippi":2,"New York":8,"North Carolina":4,"San Francisco":2,"South Carolina":5,"Tennessee":4,"Wisconsin":2}},"layerSplitFrom":"September 29","layers":[["County",135],["U.S. House",89],["Ward",85],["ZIP code",85],["Congress",72],["Ward precinct",59],["County board",58],["County precinct",49],["IL House",48],["IL Senate",44]],"listedPartway":{"Louisiana":5},"mapLinkPlaces":[],"mapLinkResults":[],"mapLinkSources":[],"mapLinks":{"cut":false,"failed":0,"from":"October 17","measured":true,"opened":0,"retried":0,"short":0,"total":0},"notListedYet":["Missouri"],"pagesCut":false,"refs":[["Google",732],["DuckDuckGo",692],["Bing",652],["Direct / unknown",372],["Yahoo",190],["Android app",172]],"seo":{"police":0,"school":44},"systems":[["iOS",1919],["Windows",1895],["Android",1671],["macOS",507],["Chrome OS",105],["Linux",82]],"visits":{"byApp":[["Illinois",27],["Wisconsin",24],["South Carolina",15],["San Francisco",13],["Oklahoma",13],["New York",11],["Iowa",7],["Michigan",6],["Arkansas",5],["Indiana",3]],"first":417,"return":134,"since":"October 22"}},"bingData":{"clicks":334,"first":"2026-10-19","impressions":8455,"last":"2026-10-24","newest":{"clicks":745,"first":"2026-09-13","firstLabel":"September 13","host":"districtry.com","impressions":20858},"properties":2,"queries":100,"reporting":2,"top":[{"clicks":7,"impressions":591,"position":5.0,"q":"what district am i in"},{"clicks":2,"impressions":78,"position":6.0,"q":"what district am i in for voting"},{"clicks":1,"impressions":64,"position":5.0,"q":"which district am i in"},{"clicks":0,"impressions":42,"position":6.0,"q":"what precinct am i in"},{"clicks":0,"impressions":42,"position":7.0,"q":"district"},{"clicks":0,"impressions":28,"position":7.0,"q":"what voting district am i in"},{"clicks":1,"impressions":23,"position":6.0,"q":"what district is my address"},{"clicks":0,"impressions":23,"position":7.0,"q":"nypd precinct finder"},{"clicks":1,"impressions":14,"position":6.0,"q":"districtry"},{"clicks":0,"impressions":14,"position":7.0,"q":"new york districts"},{"clicks":0,"impressions":13,"position":6.0,"q":"precinct finder"},{"clicks":0,"impressions":12,"position":7.0,"q":"what district do i live in"}]},"daily":[["Oct 19",293,475],["Oct 20",315,544],["Oct 21",361,632],["Oct 22",294,628],["Oct 23",296,697],["Oct 24",236,597],["Oct 25",250,680]],"dayRefs":[["Oct 19",109,112,111,34,7,60,false],["Oct 20",125,79,84,22,36,39,false],["Oct 21",161,63,94,27,39,76,false],["Oct 22",61,86,71,39,42,69,false],["Oct 23",132,60,139,16,23,56,false],["Oct 24",71,160,92,20,32,35,false],["Oct 25",73,132,61,32,81,37,false]],"searchData":{"clicks":326,"first":"2026-10-19","impressions":14105,"last":"2026-10-24","newest":{"clicks":201,"first":"2026-08-25","firstLabel":"August 25","host":"chidistricts.com","impressions":5135},"properties":2,"queries":500,"reporting":2,"top":[{"clicks":11,"impressions":277,"position":6.5,"q":"what district am i in"},{"clicks":2,"impressions":155,"position":7.9,"q":"what district am i in by zip code"},{"clicks":0,"impressions":72,"position":8.0,"q":"who is my alderman chicago"},{"clicks":0,"impressions":67,"position":10.0,"q":"chicago wards by zip code"},{"clicks":2,"impressions":63,"position":9.3,"q":"what district am i in nc"},{"clicks":0,"impressions":58,"position":6.8,"q":"who is my alderman"},{"clicks":2,"impressions":56,"position":5.9,"q":"find my district"},{"clicks":7,"impressions":55,"position":5.3,"q":"what district am i in by address"},{"clicks":2,"impressions":47,"position":5.3,"q":"what is my district"},{"clicks":2,"impressions":43,"position":7.0,"q":"what school district am i in"},{"clicks":0,"impressions":43,"position":10.5,"q":"find my ward"},{"clicks":0,"impressions":41,"position":6.7,"q":"county commission"}]}}};
+  var WINDOWS = {"14":{"META":{"total":10225,"year":2026},"barData":{"actions":[["Layers turned on",2615],["Points chosen",1278],["Searches",450],["Location requests",266],["Street names",181],["ZIP searches",126],["Install prompts",122],["Comparisons",71],["Data gaps",25],["Sharing",24],["Feedback",9],["Other",32]],"browsers":[["Chrome",1992],["Safari",1371],["Firefox",95],["(unknown)",5]],"campaigns":[],"geo":[["United States",3070],["Malaysia",72],["Singapore",68],["Thailand",50],["Germany",42],["United Arab Emirates",31],["Indonesia",28],["India",20]],"geoSuccess":153,"geoTries":266,"instResidual":44,"instances":[["Illinois",1104],["Front page",445],["New York",295],["Arkansas",288],["Wisconsin",163],["Indiana",156],["South Carolina",156],["Oklahoma",149],["Tennessee",149],["North Carolina",126],["Michigan",86],["Kentucky",84],["Iowa",79],["Minnesota",66],["Louisiana",64],["San Francisco",47],["Mississippi",29],["Missouri",9]],"layerPooled":{"Congress":0,"County":0,"County board":0,"County precinct":0,"IL House":0,"IL Senate":0,"U.S. House":0,"Ward":0,"Ward precinct":0,"ZIP code":0},"layerScope":{"Congress":["Illinois","New York","San Francisco"],"County":["Illinois","New York","Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana","Missouri"],"County board":["Illinois","Wisconsin"],"County precinct":["Illinois"],"IL House":["Illinois"],"IL Senate":["Illinois"],"U.S. House":["Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana","Missouri"],"Ward":["Illinois","Wisconsin"],"Ward precinct":["Illinois"],"ZIP code":["Illinois","New York","San Francisco","Wisconsin","Iowa","Michigan","Minnesota","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana","Missouri"]},"layerSplit":{"Congress":{"Illinois":77,"New York":42,"San Francisco":5},"County":{"Arkansas":43,"Illinois":82,"Indiana":13,"Iowa":3,"Kentucky":7,"Louisiana":5,"Michigan":11,"Minnesota":8,"Mississippi":4,"North Carolina":12,"Oklahoma":15,"South Carolina":6,"Tennessee":8,"Wisconsin":13},"County board":{"Illinois":78,"Wisconsin":20},"County precinct":{"Illinois":82},"IL House":{"Illinois":84},"IL Senate":{"Illinois":75},"U.S. House":{"Arkansas":15,"Indiana":27,"Iowa":5,"Kentucky":2,"Louisiana":6,"Michigan":15,"Minnesota":5,"Mississippi":1,"Missouri":2,"North Carolina":12,"Oklahoma":9,"South Carolina":21,"Tennessee":23,"Wisconsin":12},"Ward":{"Illinois":123,"Wisconsin":6},"Ward precinct":{"Illinois":95},"ZIP code":{"Illinois":65,"Indiana":10,"Iowa":1,"Louisiana":4,"Michigan":4,"Mississippi":2,"Missouri":1,"North Carolina":5,"San Francisco":3,"South Carolina":10,"Tennessee":4,"Wisconsin":4}},"layerSplitFrom":"September 29","layers":[["County",230],["U.S. House",155],["Ward",129],["Congress",124],["ZIP code",113],["County board",98],["Ward precinct",95],["IL House",84],["County precinct",82],["IL Senate",75]],"listedPartway":{"Arkansas":12,"Louisiana":6,"Mississippi":11,"Missouri":1},"mapLinkPlaces":[["Illinois",2]],"mapLinkResults":[["House pinned",2]],"mapLinkSources":[["Google Maps",2]],"mapLinks":{"cut":false,"failed":0,"from":"October 17","fromInside":true,"measured":true,"opened":2,"retried":0,"short":2,"total":2},"notListedYet":[],"pagesCut":false,"people":{"abroad":393,"android":219,"charted":3463,"direct":328,"front":445,"launches":189,"launchesAbroad":150,"maps":1813,"other":1281,"pages":3539,"search":1791,"sites":32,"us":3070,"visits":2370,"visitsCut":false},"refs":[["Google",681],["DuckDuckGo",463],["Bing",451],["Direct / unknown",328],["Android app",219],["Yahoo",166],["ChatGPT",32],["Ecosia",30]],"seo":{"police":0,"school":98,"schoolRank":9},"sizes":[["Phones",1833],["Tablets",238],["Computers",1391]],"systems":[["iOS",1175],["Windows",1111],["Android",792],["macOS",308],["Chrome OS",39],["Linux",38]],"use":{"automatic":1419,"results":367,"total":5199},"visits":{"byApp":[["Illinois",41],["Wisconsin",38],["South Carolina",19],["San Francisco",17],["New York",16],["Oklahoma",14],["Iowa",11],["Michigan",10],["Arkansas",9],["Indiana",5]],"first":595,"return":193,"since":"October 22"}},"bingData":{"clicks":496,"first":"2026-10-13","impressions":13254,"last":"2026-10-24","newest":{"clicks":745,"first":"2026-09-13","firstLabel":"September 13","host":"districtry.com","impressions":20858},"properties":2,"queries":174,"reporting":2,"top":[{"clicks":12,"impressions":947,"position":4.6,"q":"what district am i in"},{"clicks":0,"impressions":110,"position":7.0,"q":"district"},{"clicks":1,"impressions":93,"position":5.0,"q":"which district am i in"},{"clicks":3,"impressions":85,"position":6.0,"q":"what district am i in for voting"},{"clicks":0,"impressions":45,"position":6.1,"q":"what precinct am i in"},{"clicks":0,"impressions":43,"position":7.7,"q":"what voting district am i in"},{"clicks":0,"impressions":41,"position":7.0,"q":"nypd precinct finder"},{"clicks":0,"impressions":27,"position":6.5,"q":"new york districts"},{"clicks":1,"impressions":23,"position":6.0,"q":"what district is my address"},{"clicks":1,"impressions":15,"position":6.4,"q":"what district do i live in"},{"clicks":0,"impressions":14,"position":8.0,"q":"what district am i in san francisco"},{"clicks":1,"impressions":14,"position":6.0,"q":"districtry"}]},"daily":[["Oct 13",59,21,59,41,81,34,7,10,18],["Oct 14",71,13,61,49,82,32,11,14,15],["Oct 15",87,25,72,66,177,51,9,21,24],["Oct 16",96,23,92,76,147,49,28,37,17],["Oct 17",90,21,58,55,122,44,29,32,16],["Oct 18",73,17,74,55,116,39,14,24,10],["Oct 19",154,28,111,104,202,68,20,47,34],["Oct 20",157,49,109,114,244,65,42,54,25],["Oct 21",168,53,140,121,302,72,53,57,27],["Oct 22",152,42,100,117,207,64,48,170,22],["Oct 23",162,32,102,108,210,81,50,206,42],["Oct 24",141,31,64,96,160,59,41,207,34],["Oct 25",159,25,66,109,207,71,47,212,34],["Oct 26",244,65,173,167,358,113,65,328,49]],"dayRefs":[["Oct 13",31,12,23,10,3,0,18,42,false],["Oct 14",36,19,14,8,3,0,16,49,false],["Oct 15",43,27,28,11,3,0,17,55,false],["Oct 16",47,27,31,12,0,7,18,69,false],["Oct 17",29,33,13,11,1,5,12,65,false],["Oct 18",33,19,11,12,10,2,20,57,false],["Oct 19",63,43,46,19,11,3,20,88,false],["Oct 20",55,39,38,16,4,31,23,109,false],["Oct 21",82,31,50,24,6,27,34,107,false],["Oct 22",42,36,38,12,3,33,37,93,false],["Oct 23",63,34,48,9,4,23,21,94,false],["Oct 24",35,52,21,11,0,27,20,70,false],["Oct 25",30,45,23,23,7,32,12,78,false],["Oct 26",92,49,68,24,10,33,60,146,false]],"searchData":{"clicks":579,"first":"2026-10-13","impressions":26406,"last":"2026-10-25","newest":{"clicks":198,"first":"2026-08-26","firstLabel":"August 26","host":"chidistricts.com","impressions":5012},"properties":2,"queries":502,"reporting":2,"top":[{"clicks":15,"impressions":439,"position":6.5,"q":"what district am i in"},{"clicks":10,"impressions":350,"position":7.7,"q":"what district am i in by zip code"},{"clicks":2,"impressions":202,"position":9.6,"q":"what district am i in nc"},{"clicks":20,"impressions":166,"position":3.9,"q":"what district am i in by address"},{"clicks":0,"impressions":138,"position":7.9,"q":"who is my alderman chicago"},{"clicks":0,"impressions":124,"position":7.0,"q":"who is my alderman"},{"clicks":0,"impressions":111,"position":10.1,"q":"chicago wards by zip code"},{"clicks":2,"impressions":108,"position":6.0,"q":"find my district"},{"clicks":0,"impressions":80,"position":8.5,"q":"what is my congressional district by zip code"},{"clicks":4,"impressions":77,"position":5.4,"q":"what is my district"},{"clicks":0,"impressions":69,"position":8.8,"q":"whos my alderman"},{"clicks":0,"impressions":68,"position":5.4,"q":"what school board district am i in"}]}},"30":{"META":{"total":13232,"year":2026},"barData":{"actions":[["Layers turned on",3523],["Points chosen",1703],["Searches",730],["Location requests",341],["Street names",201],["ZIP searches",126],["Install prompts",122],["Comparisons",88],["Data gaps",31],["Sharing",24],["Feedback",13],["Other",34]],"browsers":[["Chrome",2754],["Safari",1772],["Firefox",141],["(unknown)",5]],"campaigns":[],"geo":[["United States",4223],["Malaysia",72],["Singapore",68],["Germany",55],["Thailand",50],["United Arab Emirates",31],["Indonesia",28],["Canada",25]],"geoSuccess":194,"geoTries":341,"instResidual":58,"instances":[["Illinois",1794],["Front page",608],["New York",387],["Arkansas",288],["Wisconsin",214],["Indiana",185],["Iowa",164],["South Carolina",156],["Oklahoma",150],["Tennessee",149],["Michigan",146],["North Carolina",130],["Minnesota",89],["Kentucky",89],["Louisiana",64],["San Francisco",54],["Mississippi",29],["Missouri",9]],"layerPooled":{"Congress":0,"County":0,"County board":0,"County precinct":0,"IL House":0,"IL Senate":0,"School board":0,"U.S. House":0,"Ward":0,"Ward precinct":0},"layerScope":{"Congress":["Illinois","New York","San Francisco"],"County":["Illinois","New York","Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana","Missouri"],"County board":["Illinois","Wisconsin"],"County precinct":["Illinois"],"IL House":["Illinois"],"IL Senate":["Illinois"],"School board":["Illinois"],"U.S. House":["Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana","Missouri"],"Ward":["Illinois","Wisconsin"],"Ward precinct":["Illinois"]},"layerSplit":{"Congress":{"Illinois":116,"New York":51,"San Francisco":7},"County":{"Arkansas":43,"Illinois":119,"Indiana":14,"Iowa":7,"Kentucky":7,"Louisiana":5,"Michigan":19,"Minnesota":12,"Mississippi":4,"North Carolina":12,"Oklahoma":16,"South Carolina":6,"Tennessee":8,"Wisconsin":15},"County board":{"Illinois":103,"Wisconsin":25},"County precinct":{"Illinois":131},"IL House":{"Illinois":132},"IL Senate":{"Illinois":109},"School board":{"Illinois":123},"U.S. House":{"Arkansas":15,"Indiana":32,"Iowa":11,"Kentucky":4,"Louisiana":6,"Michigan":26,"Minnesota":6,"Mississippi":1,"Missouri":2,"North Carolina":12,"Oklahoma":9,"South Carolina":21,"Tennessee":23,"Wisconsin":15},"Ward":{"Illinois":192,"Wisconsin":6},"Ward precinct":{"Illinois":147}},"layerSplitFrom":"September 29","layers":[["County",287],["Ward",198],["U.S. House",183],["Congress",174],["Ward precinct",147],["IL House",132],["County precinct",131],["County board",128],["School board",123],["IL Senate",109]],"listedPartway":{"Arkansas":12,"Indiana":20,"Kentucky":27,"Louisiana":6,"Minnesota":27,"Mississippi":11,"Missouri":1,"North Carolina":18,"Oklahoma":17,"South Carolina":14,"Tennessee":14},"mapLinkPlaces":[["Illinois",2]],"mapLinkResults":[["House pinned",2]],"mapLinkSources":[["Google Maps",2]],"mapLinks":{"cut":false,"failed":0,"from":"October 17","fromInside":true,"measured":true,"opened":2,"retried":0,"short":2,"total":2},"notListedYet":[],"pagesCut":false,"people":{"abroad":449,"android":219,"charted":4672,"direct":574,"front":608,"launches":189,"launchesAbroad":150,"maps":2397,"other":1758,"pages":4763,"search":2365,"sites":32,"us":4223,"visits":3190,"visitsCut":false},"refs":[["Google",911],["Bing",605],["DuckDuckGo",583],["Direct / unknown",574],["Yahoo",221],["Android app",219],["Ecosia",45],["ChatGPT",32]],"seo":{"police":0,"school":205,"schoolRank":5},"sizes":[["Phones",2354],["Tablets",304],["Computers",2013]],"systems":[["Windows",1588],["iOS",1489],["Android",1020],["macOS",467],["Linux",60],["Chrome OS",48]],"use":{"automatic":1419,"results":450,"total":6936},"visits":{"byApp":[["Illinois",41],["Wisconsin",38],["South Carolina",19],["San Francisco",17],["New York",16],["Oklahoma",14],["Iowa",11],["Michigan",10],["Arkansas",9],["Indiana",5]],"first":595,"return":193,"since":"October 22"}},"bingData":{"clicks":681,"first":"2026-09-27","impressions":18803,"last":"2026-10-24","newest":{"clicks":745,"first":"2026-09-13","firstLabel":"September 13","host":"districtry.com","impressions":20858},"properties":2,"queries":295,"reporting":2,"top":[{"clicks":14,"impressions":1319,"position":5.1,"q":"what district am i in"},{"clicks":1,"impressions":139,"position":5.5,"q":"which district am i in"},{"clicks":0,"impressions":127,"position":7.2,"q":"district"},{"clicks":3,"impressions":85,"position":6.0,"q":"what district am i in for voting"},{"clicks":0,"impressions":79,"position":7.5,"q":"nypd precinct finder"},{"clicks":2,"impressions":46,"position":6.0,"q":"what precinct am i in"},{"clicks":0,"impressions":43,"position":7.7,"q":"what voting district am i in"},{"clicks":0,"impressions":30,"position":6.7,"q":"new york districts"},{"clicks":1,"impressions":27,"position":6.0,"q":"what district is my address"},{"clicks":1,"impressions":26,"position":6.7,"q":"what district do i live in"},{"clicks":3,"impressions":15,"position":3.0,"q":"what district am i"},{"clicks":0,"impressions":14,"position":8.0,"q":"what district am i in san francisco"}]},"daily":[["Sep 27",15,7,8,12,11,5,0,0,0],["Sep 28",36,7,36,27,39,24,6,0,4],["Sep 29",26,5,29,23,46,23,0,0,3],["Sep 30",21,4,26,18,39,16,3,0,1],["Oct 1",61,34,61,27,87,16,1,0,3],["Oct 2",27,4,7,23,27,17,1,0,3],["Oct 3",27,8,17,20,39,16,2,0,1],["Oct 4",24,5,16,19,32,15,1,0,3],["Oct 5",38,6,29,26,56,24,5,0,3],["Oct 6",46,9,39,35,83,35,7,0,8],["Oct 7",46,14,36,33,58,32,3,0,3],["Oct 8",47,21,39,37,95,34,0,0,6],["Oct 9",46,8,36,32,98,21,3,0,10],["Oct 10",29,8,18,22,61,21,5,0,7],["Oct 11",34,11,32,26,45,19,5,0,7],["Oct 12",61,12,48,45,92,37,7,0,21],["Oct 13",59,21,59,41,81,34,7,10,18],["Oct 14",71,13,61,49,82,32,11,14,15],["Oct 15",87,25,72,66,177,51,9,21,24],["Oct 16",96,23,92,76,147,49,28,37,17],["Oct 17",90,21,58,55,122,44,29,32,16],["Oct 18",73,17,74,55,116,39,14,24,10],["Oct 19",154,28,111,104,202,68,20,47,34],["Oct 20",157,49,109,114,244,65,42,54,25],["Oct 21",168,53,140,121,302,72,53,57,27],["Oct 22",152,42,100,117,207,64,48,170,22],["Oct 23",162,32,102,108,210,81,50,206,42],["Oct 24",141,31,64,96,160,59,41,207,34],["Oct 25",159,25,66,109,207,71,47,212,34],["Oct 26",244,65,173,167,358,113,65,328,49]],"dayRefs":[["Oct 13",31,12,23,10,3,0,18,42,false],["Oct 14",36,19,14,8,3,0,16,49,false],["Oct 15",43,27,28,11,3,0,17,55,false],["Oct 16",47,27,31,12,0,7,18,69,false],["Oct 17",29,33,13,11,1,5,12,65,false],["Oct 18",33,19,11,12,10,2,20,57,false],["Oct 19",63,43,46,19,11,3,20,88,false],["Oct 20",55,39,38,16,4,31,23,109,false],["Oct 21",82,31,50,24,6,27,34,107,false],["Oct 22",42,36,38,12,3,33,37,93,false],["Oct 23",63,34,48,9,4,23,21,94,false],["Oct 24",35,52,21,11,0,27,20,70,false],["Oct 25",30,45,23,23,7,32,12,78,false],["Oct 26",92,49,68,24,10,33,60,146,false]],"searchData":{"clicks":802,"first":"2026-09-27","impressions":39239,"last":"2026-10-25","newest":{"clicks":198,"first":"2026-08-26","firstLabel":"August 26","host":"chidistricts.com","impressions":5012},"properties":2,"queries":551,"reporting":2,"top":[{"clicks":19,"impressions":701,"position":6.8,"q":"what district am i in"},{"clicks":16,"impressions":516,"position":7.4,"q":"what district am i in by zip code"},{"clicks":0,"impressions":320,"position":7.6,"q":"who is my alderman chicago"},{"clicks":0,"impressions":293,"position":7.2,"q":"randolph county board chairman election results david m. holder"},{"clicks":0,"impressions":287,"position":7.0,"q":"who is my alderman"},{"clicks":30,"impressions":258,"position":4.3,"q":"what district am i in by address"},{"clicks":2,"impressions":202,"position":9.6,"q":"what district am i in nc"},{"clicks":2,"impressions":197,"position":7.2,"q":"find my district"},{"clicks":1,"impressions":174,"position":9.4,"q":"who is the alderman in my area"},{"clicks":0,"impressions":148,"position":8.6,"q":"whos my alderman"},{"clicks":0,"impressions":145,"position":9.8,"q":"find my alderman chicago"},{"clicks":0,"impressions":142,"position":10.1,"q":"chicago wards by zip code"}]}},"7":{"META":{"total":6817,"year":2026},"barData":{"actions":[["Layers turned on",1688],["Points chosen",832],["Searches",237],["Location requests",162],["Street names",144],["ZIP searches",126],["Install prompts",82],["Comparisons",45],["Data gaps",23],["Sharing",13],["Feedback",9],["Other",30]],"browsers":[["Chrome",1289],["Safari",817],["Firefox",47],["(unknown)",1]],"campaigns":[],"geo":[["United States",1825],["Malaysia",68],["Singapore",68],["Thailand",50],["Germany",39],["United Arab Emirates",30],["Indonesia",27],["India",12]],"geoSuccess":87,"geoTries":162,"instResidual":22,"instances":[["Illinois",628],["Front page",297],["Arkansas",198],["New York",192],["Wisconsin",113],["South Carolina",101],["Oklahoma",98],["Indiana",88],["Tennessee",79],["North Carolina",78],["Louisiana",64],["Iowa",63],["Michigan",53],["Kentucky",48],["San Francisco",38],["Minnesota",38],["Mississippi",27],["Missouri",9]],"layerPooled":{"Congress":0,"County":0,"County board":0,"County precinct":0,"IL House":0,"IL Senate":0,"U.S. House":0,"Ward":0,"Ward precinct":0,"ZIP code":0},"layerScope":{"Congress":["Illinois","New York","San Francisco"],"County":["Illinois","New York","Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana","Missouri"],"County board":["Illinois","Wisconsin"],"County precinct":["Illinois"],"IL House":["Illinois"],"IL Senate":["Illinois"],"U.S. House":["Wisconsin","Iowa","Michigan","Minnesota","Kentucky","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana","Missouri"],"Ward":["Illinois","Wisconsin"],"Ward precinct":["Illinois"],"ZIP code":["Illinois","New York","San Francisco","Wisconsin","Iowa","Michigan","Minnesota","Indiana","North Carolina","Oklahoma","South Carolina","Tennessee","Arkansas","Mississippi","Louisiana","Missouri"]},"layerSplit":{"Congress":{"Illinois":48,"New York":26,"San Francisco":5},"County":{"Arkansas":28,"Illinois":45,"Indiana":8,"Iowa":2,"Kentucky":4,"Louisiana":5,"Michigan":6,"Minnesota":5,"Mississippi":4,"North Carolina":6,"Oklahoma":13,"South Carolina":4,"Tennessee":4,"Wisconsin":7},"County board":{"Illinois":41,"Wisconsin":11},"County precinct":{"Illinois":57},"IL House":{"Illinois":48},"IL Senate":{"Illinois":42},"U.S. House":{"Arkansas":11,"Indiana":13,"Iowa":4,"Louisiana":6,"Michigan":6,"Minnesota":2,"Mississippi":1,"Missouri":2,"North Carolina":8,"Oklahoma":7,"South Carolina":9,"Tennessee":16,"Wisconsin":8},"Ward":{"Illinois":79,"Wisconsin":6},"Ward precinct":{"Illinois":64},"ZIP code":{"Illinois":63,"Indiana":8,"Iowa":1,"Louisiana":4,"Michigan":2,"Minnesota":1,"Mississippi":2,"Missouri":1,"New York":8,"North Carolina":4,"San Francisco":2,"South Carolina":9,"Tennessee":3,"Wisconsin":4}},"layerSplitFrom":"September 29","layers":[["County",141],["ZIP code",112],["U.S. House",93],["Ward",85],["Congress",79],["Ward precinct",64],["County precinct",57],["County board",52],["IL House",48],["IL Senate",42]],"listedPartway":{"Louisiana":6,"Missouri":1},"mapLinkPlaces":[],"mapLinkResults":[],"mapLinkSources":[],"mapLinks":{"cut":false,"failed":0,"from":"October 17","fromInside":false,"measured":true,"opened":0,"retried":0,"short":0,"total":0},"notListedYet":[],"pagesCut":false,"people":{"abroad":329,"android":210,"charted":2154,"direct":207,"front":297,"launches":172,"launchesAbroad":149,"maps":1183,"other":754,"pages":2234,"search":1082,"sites":21,"us":1825,"visits":1520,"visitsCut":false},"refs":[["Google",399],["Bing",285],["DuckDuckGo",285],["Android app",210],["Direct / unknown",207],["Yahoo",93],["ChatGPT",21],["Ecosia",20]],"seo":{"police":0,"school":47,"schoolRank":11},"sizes":[["Phones",1143],["Tablets",171],["Computers",839]],"systems":[["iOS",707],["Windows",669],["Android",552],["macOS",176],["Chrome OS",31],["Linux",19]],"use":{"automatic":1234,"results":233,"total":3391},"visits":{"byApp":[["Illinois",41],["Wisconsin",38],["South Carolina",19],["San Francisco",17],["New York",16],["Oklahoma",14],["Iowa",11],["Michigan",10],["Arkansas",9],["Indiana",5]],"first":595,"return":193,"since":"October 22"}},"bingData":{"clicks":265,"first":"2026-10-20","impressions":6881,"last":"2026-10-24","newest":{"clicks":745,"first":"2026-09-13","firstLabel":"September 13","host":"districtry.com","impressions":20858},"properties":2,"queries":100,"reporting":2,"top":[{"clicks":7,"impressions":591,"position":5.0,"q":"what district am i in"},{"clicks":2,"impressions":78,"position":6.0,"q":"what district am i in for voting"},{"clicks":1,"impressions":64,"position":5.0,"q":"which district am i in"},{"clicks":0,"impressions":42,"position":6.0,"q":"what precinct am i in"},{"clicks":0,"impressions":42,"position":7.0,"q":"district"},{"clicks":0,"impressions":28,"position":7.0,"q":"what voting district am i in"},{"clicks":1,"impressions":23,"position":6.0,"q":"what district is my address"},{"clicks":0,"impressions":23,"position":7.0,"q":"nypd precinct finder"},{"clicks":1,"impressions":14,"position":6.0,"q":"districtry"},{"clicks":0,"impressions":14,"position":7.0,"q":"new york districts"},{"clicks":0,"impressions":13,"position":6.0,"q":"precinct finder"},{"clicks":0,"impressions":12,"position":7.0,"q":"what district do i live in"}]},"daily":[["Oct 20",157,49,109,114,244,65,42,54,25],["Oct 21",168,53,140,121,302,72,53,57,27],["Oct 22",152,42,100,117,207,64,48,170,22],["Oct 23",162,32,102,108,210,81,50,206,42],["Oct 24",141,31,64,96,160,59,41,207,34],["Oct 25",159,25,66,109,207,71,47,212,34],["Oct 26",244,65,173,167,358,113,65,328,49]],"dayRefs":[["Oct 20",55,39,38,16,4,31,23,109,false],["Oct 21",82,31,50,24,6,27,34,107,false],["Oct 22",42,36,38,12,3,33,37,93,false],["Oct 23",63,34,48,9,4,23,21,94,false],["Oct 24",35,52,21,11,0,27,20,70,false],["Oct 25",30,45,23,23,7,32,12,78,false],["Oct 26",92,49,68,24,10,33,60,146,false]],"searchData":{"clicks":300,"first":"2026-10-20","impressions":13188,"last":"2026-10-25","newest":{"clicks":198,"first":"2026-08-26","firstLabel":"August 26","host":"chidistricts.com","impressions":5012},"properties":2,"queries":500,"reporting":2,"top":[{"clicks":9,"impressions":270,"position":6.6,"q":"what district am i in"},{"clicks":2,"impressions":132,"position":8.2,"q":"what district am i in by zip code"},{"clicks":0,"impressions":69,"position":7.8,"q":"who is my alderman chicago"},{"clicks":1,"impressions":67,"position":8.8,"q":"what district am i in nc"},{"clicks":0,"impressions":66,"position":9.9,"q":"chicago wards by zip code"},{"clicks":0,"impressions":54,"position":6.7,"q":"who is my alderman"},{"clicks":3,"impressions":52,"position":5.8,"q":"what is my district"},{"clicks":2,"impressions":48,"position":6.5,"q":"find my district"},{"clicks":2,"impressions":46,"position":6.5,"q":"what school district am i in"},{"clicks":4,"impressions":42,"position":6.0,"q":"what district am i in by address"},{"clicks":0,"impressions":42,"position":6.9,"q":"county commission"},{"clicks":0,"impressions":40,"position":9.0,"q":"what is my congressional district by zip code"}]}}};
   /* ==== TRAFFIC-DATA:END ==== */
 
   /* ---- timeframe ----
@@ -1680,9 +1975,90 @@ code {
                dayRefs: dayRefs, barData: barData, META: META };
   var PRISTINE = document.getElementById("page-main").cloneNode(true);
   var keyFromHash = function () {
-    var m = /^#last-(\d+)-days$/.exec(location.hash);
+    var m = /^#(?:insights-)?last-(\d+)-days$/.exec(location.hash);
     return m && WINDOWS[m[1]] ? m[1] : "full";
   };
+
+  /* ---- tabs ----
+     Which tab shows is kept apart from render(), which rebuilds the page from
+     PRISTINE on every timeframe choice: setupTabs() runs at the end of each
+     render, and the listeners are on the document so a rebuilt tab row needs
+     none of its own. The address carries both choices, #insights-last-7-days
+     and so on; Milestones takes no timeframe, so it is #milestones alone. */
+  var TABS = ["numbers", "insights", "milestones"];
+  var tab = "numbers", currentKey = "full";
+  var tabFromHash = function () {
+    var h = location.hash.slice(1);
+    var m = /^(insights|milestones)(?:-|$)/.exec(h);
+    if (m) return m[1];
+    var target = h ? document.getElementById(h) : null;
+    var panel = target && target.closest ? target.closest(".tab-panel") : null;
+    return panel ? panel.getAttribute("data-tab") : "numbers";
+  };
+  var hashFor = function (t, k) {
+    if (t === "milestones") return "#milestones";
+    var win = k === "full" ? "" : "last-" + k + "-days";
+    if (t === "insights") return "#insights" + (win ? "-" + win : "");
+    return win ? "#" + win : "";
+  };
+  var setHash = function () {
+    var h = hashFor(tab, currentKey);
+    try {
+      history.replaceState(null, "", h || location.pathname + location.search);
+    } catch (e) { /* a frame that refuses it keeps the choice for this view only */ }
+  };
+  var setupTabs = function () {
+    var bar = document.querySelector(".tabs");
+    if (!bar) return;
+    document.documentElement.classList.add("tabbed");
+    bar.hidden = false;
+    TABS.forEach(function (t) {
+      var b = document.getElementById("tab-" + t);
+      var p = document.getElementById("panel-" + t);
+      var on = t === tab;
+      b.setAttribute("aria-selected", on ? "true" : "false");
+      b.tabIndex = on ? 0 : -1;
+      p.setAttribute("role", "tabpanel");
+      p.setAttribute("aria-labelledby", "tab-" + t);
+      p.hidden = !on;
+    });
+    var ws = document.getElementById("windowSection");
+    if (ws) ws.hidden = tab === "milestones";
+  };
+  var choose = function (t, focus) {
+    if (TABS.indexOf(t) < 0) return;
+    tab = t;
+    setHash();
+    setupTabs();
+    if (focus) document.getElementById("tab-" + t).focus();
+  };
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest) return;
+    var b = e.target.closest('.tabs [role="tab"]');
+    if (b) { choose(b.id.slice(4)); return; }
+    /* A link to a note on another tab opens that tab before the browser
+       scrolls to it. */
+    var a = e.target.closest('a[href^="#"]');
+    var el = a ? document.getElementById(a.getAttribute("href").slice(1)) : null;
+    var panel = el ? el.closest(".tab-panel") : null;
+    if (panel && panel.hidden) { tab = panel.getAttribute("data-tab"); setupTabs(); }
+  });
+  document.addEventListener("keydown", function (e) {
+    var b = e.target.closest ? e.target.closest('.tabs [role="tab"]') : null;
+    if (!b) return;
+    var i = TABS.indexOf(b.id.slice(4)), j;
+    if (e.key === "ArrowRight") j = (i + 1) % TABS.length;
+    else if (e.key === "ArrowLeft") j = (i + TABS.length - 1) % TABS.length;
+    else if (e.key === "Home") j = 0;
+    else if (e.key === "End") j = TABS.length - 1;
+    else return;
+    e.preventDefault();
+    choose(TABS[j], true);
+  });
+  window.addEventListener("hashchange", function () {
+    var t = tabFromHash();
+    if (t !== tab) { tab = t; setupTabs(); }
+  });
 
   var render = function (key) {
   var WIN = key === "full" ? FULL : WINDOWS[key];
@@ -1717,19 +2093,45 @@ code {
     return (MONTHS[bits[0]] || bits[0]) + " " + bits[1];
   };
 
-  var pageviews = daily.reduce(function (t, d) { return t + d[1]; }, 0);
+  /* One day's row is [day, maps, front page, other pages, points, layers,
+     searches and location, other reader actions, automatic counts, results]
+     (see the data block). Pages viewed are the first three; reader actions
+     the next four. */
+  var pagesOf = function (d) { return d[1] + d[2] + d[3]; };
+  var actsOf = function (d) { return d[4] + d[5] + d[6] + d[7]; };
+  var allOf = function (d) {
+    var t = 0;
+    for (var i = 1; i <= 9; i++) t += d[i];
+    return t;
+  };
+  var pageviews = daily.reduce(function (t, d) { return t + pagesOf(d); }, 0);
   var total     = META.total;
-  var peakDay   = daily.reduce(function (b, d) { return (d[1] + d[2]) > (b[1] + b[2]) ? d : b; }, daily[0]);
-  var geoTry    = pick(barData.actions, "Location requests");
+  /* THE BUSIEST DAY IS THE ONE WITH THE MOST PAGES VIEWED, the first of a tie.
+     It was pages and events together until 2026-10-26, and from 2026-10-22
+     every map opening also sends a visit count, which raised that figure by
+     about a third with no change in what readers did. */
+  var peakDay   = daily.reduce(function (b, d) { return pagesOf(d) > pagesOf(b) ? d : b; }, daily[0]);
+  var geoTry    = barData.geoTries;
   /* NOT `|| 0`: the row can be absent, and absent is not zero. See the
      geoSuccess comment in the data block. */
   var geoOk     = (typeof barData.geoSuccess === "number")
                     ? barData.geoSuccess : null;
-  var mobile    = pick(barData.systems, "iOS") + pick(barData.systems, "Android");
+  var people    = barData.people, use = barData.use;
+  /* Phones and tablets by SCREEN, not by operating system: iOS and Android
+     were the measure until 2026-10-26, and an Android tablet and a Windows
+     tablet are not the same split. */
+  var mobile    = pick(barData.sizes, "Phones") + pick(barData.sizes, "Tablets");
   var browsers2 = barData.browsers.slice(0, 2).reduce(function (t, r) { return t + r[1]; }, 0);
-  var search    = ["Google", "DuckDuckGo", "Bing"].reduce(
-                    function (t, n) { return t + pick(barData.refs, n); }, 0);
   var refSum    = sum(barData.refs);
+  var points    = pick(barData.actions, "Points chosen");
+  var layersOn  = pick(barData.actions, "Layers turned on");
+  var searches  = pick(barData.actions, "Searches") + pick(barData.actions, "ZIP searches");
+  var perMap    = function (v) { return people.maps ? (v / people.maps).toFixed(1) : "—"; };
+  var listing   = function (vals) {
+    return vals.reduce(function (acc, v, i, a) {
+      return acc + (i === 0 ? "" : i === a.length - 1 ? " and " : ", ") + fmt(v);
+    }, "");
+  };
   var WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven",
                "eight", "nine", "ten", "eleven", "twelve", "thirteen",
                "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
@@ -1767,19 +2169,10 @@ code {
     };
   };
   var goog = engineStats(searchData), bing = engineStats(bingData);
-  var REBRAND = "Aug 24";
-  var preRebrand = daily.slice(0, daily.map(function (d) { return d[0]; }).indexOf(REBRAND));
-  var preAvgN = preRebrand.reduce(function (t, d) { return t + d[1] + d[2]; }, 0) /
-                (preRebrand.length || 1);
-  var recent = daily.slice(-4);
   var weekday = function (label) {
     var d = new Date(label + ", " + META.year);
     return isNaN(d) ? "" : d.toLocaleDateString("en-US", { weekday: "long" });
   };
-  var afterRebrand = daily.slice(daily.map(function (d) { return d[0]; }).indexOf(REBRAND) + 1);
-  var bestSince = (afterRebrand.length ? afterRebrand : daily).reduce(
-    function (b, d) { return (d[1] + d[2]) > (b[1] + b[2]) ? d : b; },
-    (afterRebrand.length ? afterRebrand : daily)[0]);
 
   var visits = barData.visits || null;
   var STATS = {
@@ -1790,9 +2183,9 @@ code {
        about age than popularity; over a shorter window every app was live
        throughout unless listedPartway names it. */
     ageNote: key === "full"
-      ? "Older apps have had more time to collect visits, so read the order as age, not popularity."
+      ? "Older apps have had longer to be found, so read the order as age, not popularity."
       : (Object.keys(barData.listedPartway).length
-          ? "An app that went live during " + periodThese + " has had fewer days to collect visits."
+          ? "An app that went live during " + periodThese + " has had fewer days to be found."
           : ""),
     range: longMonth(daily[0][0]) + " – " + longMonth(daily[daily.length - 1][0]) +
            ", " + META.year,
@@ -1800,9 +2193,39 @@ code {
     total: fmt(total),
     pageviews: fmt(pageviews),
     perDay: Math.round(pageviews / daily.length),
-    peak: fmt(peakDay[1] + peakDay[2]),
-    usPct: pct(barData.geo[0][1], total),
-    usCount: fmt(barData.geo[0][1]),
+    peak: fmt(pagesOf(peakDay)),
+    /* OF THE PAGES WHOSE COUNTRY IS KNOWN, not of every page viewed: the
+       breakdowns add up to a little less than the total, and the difference
+       has no country (see `charted` in the builder's people()). */
+    usPct: pct(people.us, people.charted),
+    usCount: fmt(people.us),
+    chartedPages: fmt(people.charted),
+    abroadPages: fmt(people.abroad),
+    abroadPct: pct(people.abroad, people.charted),
+    /* WHO CAME, from the page-visit slice: a visit is a page view that names
+       where it came from (see note 5). */
+    visits: fmt(people.visits),
+    visitsPerDay: Math.round(people.visits / daily.length),
+    siteVisits: fmt(people.sites),
+    androidVisits: fmt(people.android),
+    directVisits: fmt(people.direct),
+    visitsLeft: fmt(Math.max(0, people.pages - people.visits)),
+    mapOpenings: fmt(people.maps),
+    frontPages: fmt(people.front),
+    otherPages: fmt(people.other),
+    launches: fmt(people.launches),
+    launchesAbroad: fmt(people.launchesAbroad),
+    /* WHAT THEY DID, from the event families, with the counts the apps send
+       by themselves and the results of an action kept out (note 10). */
+    readerActions: fmt(use.total),
+    actionsPerMap: perMap(use.total),
+    pointShare: pct(points, people.maps),
+    layersOn: fmt(layersOn),
+    layersPerMap: perMap(layersOn),
+    searchesAll: fmt(searches),
+    otherActions: fmt(use.total - points - layersOn - searches - geoTry),
+    autoCount: fmt(use.automatic),
+    resultCount: fmt(use.results),
     instSum: fmt(instTotal),
     otherInst: fmt(instTotal - barData.instances[0][1] - pick(barData.instances, "Front page")),
     topInst: fmt(barData.instances[0][1]),
@@ -1922,14 +2345,14 @@ code {
              (rest.length === 2 ? rest[0] + " and " + rest[1] + " come"
                                 : rest[0] + " comes") + " next.";
     })(),
-    searchVisits: fmt(search),
+    searchVisits: fmt(people.search),
     /* The change from the same number of days just before, read off the full
        window's daily series. The full window has nothing before it. */
     changeNote: (function () {
       if (key === "full") return "";
       var n = daily.length, all = FULL.daily, end = all.length - n;
       if (end < n) return "";
-      var pv = function (rows) { return rows.reduce(function (t, d) { return t + d[1]; }, 0); };
+      var pv = function (rows) { return rows.reduce(function (t, d) { return t + pagesOf(d); }, 0); };
       var now = pv(all.slice(end)), before = pv(all.slice(end - n, end));
       if (!before) return "";
       var ch = Math.round((now - before) / before * 100);
@@ -1953,9 +2376,12 @@ code {
       var i = (searchData ? searchData.impressions : 0) + (bingData ? bingData.impressions : 0);
       return i ? (c / i * 100).toFixed(1) + "%" : "—";
     })(),
-    pointsChosen: fmt(pick(barData.actions, "Points chosen")),
-    searchesRun: fmt(pick(barData.actions, "Searches")),
+    pointsChosen: fmt(points),
     refSum: fmt(refSum),
+    refNote: refSum === people.visits
+      ? "The sources chart shows every source."
+      : "The sources chart shows the " + words(barData.refs.length) + " largest, " +
+        fmt(refSum) + " of the " + fmt(people.visits) + " visits.",
     searchClicks: goog.clicks,
     searchImpressions: goog.impressions,
     searchQueries: goog.queries,
@@ -1967,6 +2393,31 @@ code {
     searchNextQuery: goog.nextQuery,
     searchNextCtr: goog.nextCtr,
     searchNextPos: goog.nextPos,
+    /* What the two most-seen Google searches' figures say, read rather than
+       assumed. The sentence was fixed text from 2026-09-16, when the two sat
+       at about the same spot and were clicked an order of magnitude apart,
+       so it said the title and description likely made the difference. On
+       2026-10-26 they were 3.6% and 3.1%, and in the 7-day view 1.6 spots
+       apart, and the fixed text said the same thing about both. The
+       inference is drawn only when it still holds: within one spot of each
+       other and clicked more than twice as often, one than the other. */
+    searchNextWhere: (function () {
+      var t = searchData && searchData.top;
+      if (!t || t.length < 2) return "sits at about the same spot";
+      var gap = t[1].position - t[0].position;
+      return Math.abs(gap) <= 1 ? "sits at about the same spot"
+        : gap > 0 ? "sits lower on the page" : "sits higher on the page";
+    })(),
+    searchNextSo: (function () {
+      var t = searchData && searchData.top;
+      if (!t || t.length < 2 || !t[0].impressions || !t[1].impressions) return "";
+      if (Math.abs(t[1].position - t[0].position) > 1) return "";
+      var a = t[0].clicks / t[0].impressions, b = t[1].clicks / t[1].impressions;
+      var hi = Math.max(a, b), lo = Math.min(a, b);
+      if (lo > 0 && hi / lo <= 1.5) return ", about as often";
+      if (lo === 0 || hi / lo > 2) return ", so the title and description people see likely make the difference";
+      return b < a ? ", somewhat less often" : ", somewhat more often";
+    })(),
     /* WHY THE TABLE IS RANKED BY IMPRESSIONS, counted on the rows it prints.
        This was the flat clause "a single row in double figures and then a long
        tail of ones and zeros". The first half holds -- one query has reached
@@ -2073,23 +2524,16 @@ code {
       }
       return "The two carry the figure equally.";
     })(),
-    /* Says nothing when the busiest day IS the best since the rebrand, which
-       a rolling window eventually makes true. A sentence repeating the one
-       before it reads as a mistake. */
     /* A TIE IS SAID, because "X is the busiest day" over two days with the
        same total names one of them for no reason but list order (Oct 21 and
        Oct 23 both read 993 on 2026-10-24). */
     peakTieNote: (function () {
-      var top = peakDay[1] + peakDay[2];
+      var top = pagesOf(peakDay);
       var tied = daily.filter(function (d) {
-        return d[0] !== peakDay[0] && (d[1] + d[2]) === top;
+        return d[0] !== peakDay[0] && pagesOf(d) === top;
       }).map(function (d) { return weekday(d[0]) + ", " + d[0]; });
       return tied.length ? ", tied with " + tied.join(" and ") : "";
     })(),
-    sinceRebrandNote: (bestSince[0] === peakDay[0]) ? "" :
-      (" \u2014 and " + longMonth(bestSince[0]) +
-       " remains the busiest day since the rename, at " +
-       fmt(bestSince[1] + bestSince[2])),
     /* WHAT THE VISITS IN NO BAR ARE DEPENDS ON WHETHER THE PAGES LIST WAS READ
        TO ITS END. Until 2026-10-20 the fetcher read its first ten rows, so
        this sentence said the counter lists only the ten most-visited pages;
@@ -2099,10 +2543,10 @@ code {
     residualNote: barData.pagesCut
       ? "The counter lists only the ten most-visited pages, so " +
         fmt(barData.instResidual) + " of " + fmt(pageviews) +
-        " page visits are in no bar."
+        " pages viewed are in no bar."
       : (barData.instResidual
           ? fmt(barData.instResidual) + " of " + fmt(pageviews) +
-            " page visits were to pages that belong to no app, such as the " +
+            " pages viewed were to pages that belong to no app, such as the " +
             "privacy page, so they are in no bar."
           : ""),
     /* The sentence about a bar reading zero used to name Michigan as a
@@ -2189,8 +2633,10 @@ code {
     barCountLower: words(barData.instances.length),
     appCount: words(barData.instances.length - 1),
     otherCount: words(barData.instances.length - 2),
-    mobilePct: pct(mobile, total),
-    topTwoBrowserPct: pct(browsers2, total),
+    /* Shares of the pages viewed, out of each breakdown's own sum, for the
+       reason usPct gives. */
+    mobilePct: pct(mobile, sum(barData.sizes)),
+    topTwoBrowserPct: pct(browsers2, sum(barData.browsers)),
     /* ONE CLAUSE RATHER THAN THREE NUMBERS, because when the success count is
        missing the sentence has to change SHAPE and not just its digits. The
        three spans it replaces read "Geolocation succeeds 0% of the time it is
@@ -2206,76 +2652,82 @@ code {
     exportDate: META.exportDate,
     /* The peak tile named its day in prose — "Monday, Aug 24 — rebrand day" —
        which was true when typed and cannot survive a rolling window: the peak
-       moves, and Aug 24 itself leaves the window. Derived, with the rebrand
-       annotation kept only while the peak IS that day. */
-    peakLabel: weekday(peakDay[0]) + ", " + peakDay[0] +
-               (peakDay[0] === REBRAND ? " — rebrand day" : ""),
-    dailySum: fmt(daily.reduce(function (t, d) { return t + d[1] + d[2]; }, 0)),
-    /* WHICH BARS ACTUALLY SUM TO THE TOTAL, derived rather than asserted.
-       This clause was the flat sentence "the browser, system and location bars
-       sum to it exactly" from 2026-09-14, and it was false about the LOCATIONS
-       on the day it was written and on every fetch since — short by 22 to 29,
-       because that list is a top six like the referrers and the countries below
-       it are in the total and in no bar. The browser and system lists are
-       complete and do sum exactly. It is the evidence sentence for trusting
-       GoatCounter's own total over the daily sum, so an exactness it does not
-       have is the wrong thing to be loose about. Nothing on this page can tell
-       a complete list from a capped one except by adding it up, so the sentence
+       moves, and Aug 24 itself leaves the window. */
+    peakLabel: weekday(peakDay[0]) + ", " + peakDay[0],
+    dailySum: fmt(daily.reduce(function (t, d) { return t + allOf(d); }, 0)),
+    /* WHICH CHARTS ADD UP TO WHAT, derived rather than asserted. This was
+       "the browser, system and location bars sum to it exactly" from
+       2026-09-14, which was false about the locations on the day it was
+       written. Since 2026-10-26 the charts are pages viewed only, and every
+       breakdown of that slice adds up to the same figure, a little under the
+       slice's own count: 5,466 against 5,512 that day. The difference has no
+       screen, browser, system or country, and nothing on this page can tell a
+       complete list from a capped one except by adding it up, so the sentence
        is the addition. */
     barSumNote: (function () {
-      var named = [["browsers", "browser"], ["systems", "system"], ["geo", "country"]];
-      var exact = [], capped = [];
-      named.forEach(function (pair) {
-        var gap = total - sum(barData[pair[0]]);
-        (gap === 0 ? exact : capped).push({ name: pair[1], gap: gap });
-      });
-      var join = function (parts) {
-        return parts.length < 2 ? (parts[0] || "")
-          : parts.slice(0, -1).join(", ") + " and " + parts[parts.length - 1];
-      };
-      var shortList = join(capped.map(function (r) {
-        return r.name + " chart is " + fmt(r.gap) + " short";
-      }));
-      if (!capped.length) {
-        return "The " + join(exact.map(function (r) { return r.name; })) +
-               " charts add up to the total.";
+      var named = [["sizes", "screen"], ["browsers", "browser"], ["systems", "system"]];
+      var sums = named.map(function (pair) { return sum(barData[pair[0]]); });
+      var pages = people.pages;
+      var head;
+      if (sums[0] === sums[1] && sums[1] === sums[2]) {
+        var gap = pages - sums[0];
+        head = "The screen, browser and system charts each add up to " +
+          (gap === 0 ? "the pages viewed"
+           : fmt(sums[0]) + ", " + fmt(Math.abs(gap)) +
+             (gap > 0 ? " fewer" : " more") + " than the pages viewed");
+      } else {
+        head = "The screen chart adds up to " + fmt(sums[0]) + ", the browser chart to " +
+          fmt(sums[1]) + " and the system chart to " + fmt(sums[2]) + ", against " +
+          fmt(pages) + " pages viewed";
       }
-      var tail = "the " + shortList + " because " +
-                 (capped.length === 1 ? "it lists" : "they list") + " only the top entries.";
-      if (!exact.length) return tail.charAt(0).toUpperCase() + tail.slice(1);
-      return "The " + join(exact.map(function (r) { return r.name; })) +
-             " charts add up to the total; " + tail;
+      var geoSum = sum(barData.geo);
+      return head + (geoSum === people.charted
+        ? ", and the country chart adds up to " + fmt(geoSum) + "."
+        : ", and the country chart shows only the " + words(barData.geo.length) +
+          " with the most.");
     })(),
     dailyGap: fmt(Math.abs(total - daily.reduce(
-                function (t, d) { return t + d[1] + d[2]; }, 0))),
+                function (t, d) { return t + allOf(d); }, 0))),
     lastDay: longMonth(daily[daily.length - 1][0]),
     /* The narrative's "steady band" claim names the last four days. Typed by
        hand it was the first thing to rot — this run it still read 65/93/66
        with the fourth day missing entirely. */
-    recentDays: daily.slice(-4).map(function (d) { return d[1] + d[2]; })
-                  .reduce(function (acc, v, i, a) {
-                    return acc + (i === 0 ? "" : i === a.length - 1 ? " and " : ", ") + v;
-                  }, ""),
+    recentDays: listing(daily.slice(-4).map(pagesOf)),
+    recentActions: listing(daily.slice(-4).map(actsOf)),
     /* A path missing from the dashboard's ten-row pages list arrives as 0,
        which means "not listed", not "no visits": the police page fell off
        the list on October 14 and the sentence read "at 0 visits". */
     seoPoliceNote: barData.seo.police
       ? "has " + fmt(barData.seo.police) + " visits"
       : "is no longer among the ten most-visited paths, so this page cannot say how many visits it had",
-    seoSchool: fmt(barData.seo.school),
+    /* Its place is read from the window's own pages list, which holds the top
+       20. Typed by hand it said "the fourth most" in every timeframe while the
+       page was eleventh over the last seven days. Off the list, its count is
+       unknown rather than zero, as with the police page above. */
+    seoSchoolNote: (function () {
+      var r = barData.seo.schoolRank;
+      if (!r) return "is not among the 20 most-viewed pages, so this page cannot say how often it was viewed";
+      var place = ["", "", "second ", "third ", "fourth ", "fifth ", "sixth ",
+                   "seventh ", "eighth ", "ninth ", "tenth "][r];
+      return "was viewed " + fmt(barData.seo.school) + " times, the " +
+        (place === undefined ? r + "th " : place) + "most of any page";
+    })(),
     /* The per-day sources lede: the newest day's search-engine visits against
        the day before and the first day shown. Derived so it cannot name a
        figure the chart below has moved past. */
     dayRefLead: (function () {
       if (!dayRefs.length) return "";
       var eng = function (r) { return r[1] + r[2] + r[3] + r[4]; };
+      /* A day whose source list was cut short (r[9], drawn as "+") gives a
+         floor, and the sentence says so as the table does. */
+      var n = function (r) { return (r[9] ? "at least " : "") + fmt(eng(r)); };
       var last = dayRefs[dayRefs.length - 1];
       var line = "On " + longMonth(last[0]) + " search engines sent " +
-                 fmt(eng(last)) + " visits";
+                 n(last) + " visits";
       if (dayRefs.length > 1) {
         var prev = dayRefs[dayRefs.length - 2];
-        line += ", against " + fmt(eng(prev)) + " the day before";
-        if (dayRefs.length > 2) line += " and " + fmt(eng(dayRefs[0])) + " on " + longMonth(dayRefs[0][0]);
+        line += ", against " + n(prev) + " the day before";
+        if (dayRefs.length > 2) line += " and " + n(dayRefs[0]) + " on " + longMonth(dayRefs[0][0]);
       }
       return line + ".";
     })(),
@@ -2283,9 +2735,15 @@ code {
     mapLinkNote: (function () {
       var m = barData.mapLinks;
       if (!m.measured) return "This window's data was fetched before map links were counted.";
-      if (!m.total) return "No Google Maps or Apple Maps links have been read since " + m.from + ".";
-      var line = fmt(m.total) + (m.total === 1 ? " map link has" : " map links have") +
-        " been read since " + m.from + ": " + fmt(m.short) + " short, " +
+      /* A window that starts after the count began was counted in full, so it
+         is named as the window, not by the count's first day. */
+      var inWin = m.fromInside === false;
+      var when = inWin ? "in " + periodThese : "since " + m.from;
+      if (!m.total) return "No Google Maps or Apple Maps links " +
+        (inWin ? "were" : "have been") + " read " + when + ".";
+      var line = fmt(m.total) + (m.total === 1 ? " map link " : " map links ") +
+        (inWin ? (m.total === 1 ? "was" : "were") : (m.total === 1 ? "has been" : "have been")) +
+        " read " + when + ": " + fmt(m.short) + " short, " +
         fmt(m.opened) + " shared in rather than pasted";
       if (m.failed) line += ", and " + fmt(m.failed) + " short " +
         (m.failed === 1 ? "link" : "links") + " the lookup could not read";
@@ -2296,28 +2754,50 @@ code {
     mapLinkCutNote: barData.mapLinks.cut
       ? " At least one app\u2019s list was cut short, so the real counts may be higher."
       : "",
-    ref3: (barData.refs[2] || ["—"])[0],
-    ref4: (barData.refs[3] || ["—"])[0],
-    /* "strongest day since the rebrand" — the rebrand day itself is the
-       all-time peak, so this is the best of the days AFTER it. Left as a
-       literal it would have quietly outlived the first day that beat it. */
-    bestSinceDay: longMonth(bestSince[0]),
-    bestSince: fmt(bestSince[1] + bestSince[2]),
-    preAvg: fmt(Math.round(preRebrand.reduce(function (t, d) { return t + d[1] + d[2]; }, 0) /
-                           (preRebrand.length || 1))),
-    /* The band sentence used to end "every one of them above the pre-rebrand
-       average", which was true when typed and false eight days later: Aug 30
-       came in under it. A CLAIM ABOUT NUMBERS GOES STALE EVEN WHEN THE NUMBERS
-       BESIDE IT DO NOT, so the claim is computed from the same days it
-       describes rather than asserted once and left. */
-    bandNote: (function () {
-      var below = recent.filter(function (d) { return d[1] + d[2] < preAvgN; });
-      if (!below.length) return "Every one of them is above that average.";
-      if (below.length === recent.length) return "All four sit below it.";
-      var names = below.map(function (d) { return longMonth(d[0]) + " (" + weekday(d[0]) + ")"; });
-      return (below.length === 1
-        ? names[0] + " is the only one below it"
-        : names.join(" and ") + " are below it") + ".";
+    /* WHETHER USE IS CHANGING, read off the full window's last fourteen days
+       whatever the timeframe shown, because "for each map opened" is the only
+       figure here that does not grow with traffic. */
+    useTrend: (function () {
+      var all = FULL.daily;
+      if (all.length < 14) return "";
+      var rate = function (rows) {
+        var maps = 0, acts = 0, pts = 0;
+        rows.forEach(function (d) { maps += d[1]; acts += actsOf(d); pts += d[4]; });
+        return { per: maps ? (acts / maps).toFixed(1) : "—", share: pct(pts, maps) };
+      };
+      var now = rate(all.slice(-7)), before = rate(all.slice(-14, -7));
+      return "In the last seven days readers took " + now.per +
+        " actions for each map opened and chose a point in about " + now.share +
+        " of them, against " + before.per + " and " + before.share +
+        " in the seven days before.";
+    })(),
+    /* THE PLAY APP'S LAUNCHES, and what the countries say about them. Its
+       closed test needs testers, and a launch from a country the site
+       otherwise barely reaches is likelier a tester than a reader. The
+       comparison is of pages viewed from outside the United States in the
+       last seven days against the days before them, from the full window and
+       its seven-day slice. It is said only while most launches are from
+       abroad and that rate rose, and the conclusion is stated as a
+       likelihood because the counter cannot tell a tester from anyone. */
+    playNote: (function () {
+      var x = people.launches, y = people.launchesAbroad;
+      if (!x) return "The installed app was not opened in " + periodThese + ".";
+      var line = "The installed app was opened " + fmt(x) + (x === 1 ? " time" : " times") +
+        " in " + periodThese + ", " + fmt(y) + " of them outside the United States.";
+      var w7 = WINDOWS["7"], full = FULL.barData.people;
+      if (y * 2 > x && w7 && FULL.daily.length > 7) {
+        var nowRate = Math.round(w7.barData.people.abroad / 7);
+        var beforeRate = Math.round((full.abroad - w7.barData.people.abroad) /
+                                    (FULL.daily.length - 7));
+        if (nowRate > beforeRate) {
+          return line + " Before the last seven days the site barely reached readers " +
+            "abroad: pages viewed from outside the United States averaged " + fmt(beforeRate) +
+            " a day, against " + fmt(nowRate) + " a day in the last seven days. So these " +
+            "launches are more likely people trying the app than readers looking up " +
+            "their own districts.";
+        }
+      }
+      return line;
     })()
   };
 
@@ -2391,8 +2871,12 @@ code {
      the per-day fetch draws nothing rather than a chart of zeroes. */
   (function () {
     if (!dayRefs.length) return;
+    /* A row is [day, Google, DuckDuckGo, Bing, other search engines, other
+       sites, the Google Play app, no source, within the site, cut short].
+       The chart draws the first five, where a reader came from by name; the
+       table carries the rest. */
     var SER = [[1, "Google", "--s1"], [2, "DuckDuckGo", "--s2"], [3, "Bing", "--s3"],
-               [4, "Yahoo", "--s4"], [5, "Other sites", "--slate"]];
+               [4, "Other search engines", "--s4"], [5, "Other sites", "--slate"]];
     var shown = function (r) { return r[1] + r[2] + r[3] + r[4] + r[5]; };
     var top = dayRefs.reduce(function (m, r) { return Math.max(m, shown(r)); }, 0);
     /* Whole steps of 50 (100 past 300), so every tick is a round number */
@@ -2421,17 +2905,17 @@ code {
       });
       var t = document.createElement("span");
       t.className = "t";
-      t.textContent = fmt(shown(r)) + (r[7] ? "+" : "");
+      t.textContent = fmt(shown(r)) + (r[9] ? "+" : "");
       row.setAttribute("role", "img");
       row.setAttribute("aria-label", longMonth(r[0]) + ": " +
-        (parts.length ? parts.join(", ") : "none") + (r[7] ? ", list cut short" : ""));
+        (parts.length ? parts.join(", ") : "none") + (r[9] ? ", list cut short" : ""));
       row.appendChild(d); row.appendChild(stack); row.appendChild(t);
       chart.appendChild(row);
       var tr = document.createElement("tr");
-      [r[0], r[1], r[2], r[3], r[4], r[5], r[6]].forEach(function (v, ci) {
+      r.slice(0, 9).forEach(function (v, ci) {
         var td = document.createElement("td");
         if (ci > 0) td.className = "num";
-        td.textContent = typeof v === "number" ? fmt(v) + (ci === 5 && r[7] ? "+" : "") : v;
+        td.textContent = typeof v === "number" ? fmt(v) + (ci === 5 && r[9] ? "+" : "") : v;
         tr.appendChild(td);
       });
       tb.appendChild(tr);
@@ -2547,92 +3031,19 @@ code {
   Array.prototype.forEach.call(document.querySelectorAll("[data-day]"),
     function (el) { if (!haveDay(el.getAttribute("data-day"))) el.remove(); });
 
-  /* ---- daily stacked column chart ---- */
-  var box = document.getElementById("dailyChart");
-  var W = 900, H = 250, padL = 34, padR = 6, padT = 10, padB = 26;
-  /* On a phone the chart keeps its labels legible by drawing at 0.8px per
-     unit and scrolling sideways (the 720px floor in the stylesheet). That
-     floor is for two months of columns; a shorter window is drawn on a
-     narrower canvas, about 11.5 units a day, so 30 days or fewer fits the
-     screen at the same label size instead of scrolling. */
-  var narrow = window.matchMedia && window.matchMedia("(max-width: 760px)").matches;
-  box.style.minWidth = "";
-  if (narrow && daily.length < FULL.daily.length) {
-    W = Math.max(360, Math.min(900, Math.round(padL + padR + daily.length * 11.5)));
-    box.style.minWidth = Math.round(W * 0.8) + "px";
-  }
-  var plotW = W - padL - padR, plotH = H - padT - padB;
-  /* Next clean step above the peak — derived, so a new high cannot overflow
-     the plot and a quiet month cannot leave the chart squashed flat. */
-  /* The gridline step grows with the peak so the axis keeps about five to
-     seven lines: at 50 a day of 993 drew twenty-four. */
-  var peakTop = (peakDay[1] + peakDay[2]) * 1.12;
-  var yStep = peakTop <= 300 ? 50 : peakTop <= 700 ? 100 : peakTop <= 1400 ? 200 : 500;
-  var yMax = Math.max(yStep, Math.ceil(peakTop / yStep) * yStep);
-  var n = daily.length;
-  var band = plotW / n;
-  var colW = Math.min(20, band - 4);
-  var GAP = 2;      /* surface gap between stacked segments */
-  var R = 3;        /* rounded data-end */
-
+  /* ---- the two daily stacked column charts ----
+     Until 2026-10-26 one chart stacked page visits under every event, and
+     from October 22 the events included a visit count every map sends by
+     itself, so the column rose by about a third with nothing changing in
+     what readers did. Pages viewed and reader actions are now two charts
+     drawn by one function, each with its own scale, and the counts the apps
+     send by themselves are in neither (note 10). */
   var svgNS = "http://www.w3.org/2000/svg";
-  var svg = document.createElementNS(svgNS, "svg");
-  svg.setAttribute("viewBox", "0 0 " + W + " " + H);
-  /* A GROUP, not an img: role="img" tells assistive technology to ignore the
-     subtree, and every one of the 62 day columns below carries its own label
-     and its own focus. The two claims cannot both be true, and the labels are
-     the useful half. */
-  svg.setAttribute("role", "group");
-  svg.setAttribute("aria-label", "Daily page visits and feature interactions, " + STATS.range);
-
   function el(tag, attrs) {
     var e = document.createElementNS(svgNS, tag);
     for (var k in attrs) e.setAttribute(k, attrs[k]);
     return e;
   }
-  function y(v) { return padT + plotH * (1 - v / yMax); }
-
-  /* gridlines + y ticks */
-  var ticks = [];
-  for (var tv = 0; tv <= yMax; tv += yStep) ticks.push(tv);
-  ticks.forEach(function (t) {
-    var yy = y(t);
-    svg.appendChild(el("line", {
-      x1: padL, x2: W - padR, y1: yy, y2: yy,
-      stroke: t === 0 ? "var(--line-strong)" : "var(--line)", "stroke-width": 1
-    }));
-    var lab = el("text", {
-      x: padL - 7, y: yy + 4, "text-anchor": "end",
-      "font-size": 11, fill: "var(--slate)", style: "font-variant-numeric:tabular-nums"
-    });
-    lab.textContent = t;
-    svg.appendChild(lab);
-  });
-
-  /* x labels: weekly */
-  /* How many DAYS of separation a label needs, derived from how wide the band
-     actually is rather than fixed at a constant. A "3" was hardcoded here and
-     was right for a short series; at 60 days the band is ~14px, "Sep 4" landed
-     exactly 3 days from the end, survived the guard and sat 2.9px from
-     "Sep 7". The band narrows as the window grows, so the day count that
-     clears a ~46px label has to grow with it. */
-  var labelDays = Math.max(1, Math.ceil(46 / band));
-
-  daily.forEach(function (d, i) {
-    /* weekly ticks + the final day; drop a weekly tick that would crowd it.
-       A window of two weeks or less has room to name every day. */
-    var every = n <= 14 ? labelDays : 7;
-    if (i !== n - 1 && (i % every !== 0 || n - 1 - i < labelDays)) return;
-    var last = i === n - 1;
-    var lab = el("text", {
-      x: last ? W - padR : padL + band * i + band / 2, y: H - 8,
-      "text-anchor": last ? "end" : "middle",
-      "font-size": 11, fill: "var(--slate)"
-    });
-    lab.textContent = d[0];
-    svg.appendChild(lab);
-  });
-
   function roundedTop(x, yTop, w, h, r) {
     r = Math.min(r, h / 2, w / 2);
     return "M" + x + "," + (yTop + h) +
@@ -2642,136 +3053,230 @@ code {
       "Q" + (x + w) + "," + yTop + " " + (x + w) + "," + (yTop + r) +
       "V" + (yTop + h) + "Z";
   }
-
-  var tooltip = document.createElement("div");
-  tooltip.className = "tooltip";
-  box.appendChild(tooltip);
-
-  /* PINNED is what makes the chart work on a touchscreen, where 61% of this
-     page's visits come from. A tap synthesises mouseenter, focus, click and
-     then mouseleave in one gesture, so a click handler alone opens the tooltip
-     and the trailing mouseleave closes it again in the same tick. Pinning on
-     click, and refusing to hide while pinned, leaves it open; a tap anywhere
-     else puts it away. */
-  var pinned = false;
-  /* The 62 day columns are ONE tab stop, not 62. The roving index is the
-     standard pattern for a set of peers: Tab enters the chart, the arrow keys
-     walk the days, Tab leaves. Each column keeps its own label, so the whole
-     series is still reachable without a mouse — which is what role="img" would
-     have thrown away.
-
-     THEIR SIZE IS RECORDED HERE BECAUSE NO GATE CAN SEE IT ANY MORE. These
-     rectangles are pointer targets — they open the tooltip on hover and on tap
-     — and they are 14.8px wide at 1280 and 11.1px at 390, measured
-     2026-09-18, necessarily touching: a chart of a two-month window cannot
-     give each day 24px without showing fewer days. WCAG 2.5.8's Equivalent
-     exception covers them, because the same numbers sit in the `View as
-     table` disclosure below the chart, whose rows are full width. That claim
-     used to live in page_consistency_test.mjs's TARGET_EXCEPTIONS, whose
-     collector finds a target by its tabindex; the roving index above leaves
-     61 of the 62 at -1, so the entry stopped matching anything and was
-     dropped. The obligation did not go with it. */
-  var hits = [];
-  var focusHit = function (i) {
-    if (i < 0 || i >= hits.length) return;
-    hits.forEach(function (h, j) { h.setAttribute("tabindex", j === i ? 0 : -1); });
-    pinned = false;
-    hits[i].focus();
-  };
-  var onKey = function (e) {
-    var i = hits.indexOf(e.currentTarget);
-    var to = e.key === "ArrowRight" ? i + 1 : e.key === "ArrowLeft" ? i - 1
-           : e.key === "Home" ? 0 : e.key === "End" ? hits.length - 1 : -1;
-    if (to === -1 || i === -1) return;
-    e.preventDefault();
-    focusHit(to);
-  };
-  document.addEventListener("click", function () {
-    pinned = false;
-    tooltip.style.display = "none";
-  });
-
-  daily.forEach(function (d, i) {
-    var pv = d[1], ev = d[2];
-    var x = padL + band * i + (band - colW) / 2;
-    var pvTop = y(pv);
-    var pvH = plotH + padT - pvTop;
-    /* pageviews segment: square both ends if events sit above, rounded top if alone */
-    if (pvH > 0) {
-      if (ev > 0) {
-        svg.appendChild(el("rect", { x: x, y: pvTop, width: colW, height: pvH, fill: "var(--s1)" }));
-      } else {
-        svg.appendChild(el("path", { d: roundedTop(x, pvTop, colW, pvH, R), fill: "var(--s1)" }));
-      }
+  /* SER is [[column in the day row, name, colour token], ...], bottom first. */
+  var drawStack = function (boxId, unit, SER) {
+    var box = document.getElementById(boxId);
+    if (!box) return;
+    var W = 900, H = 250, padL = 34, padR = 6, padT = 10, padB = 26;
+    /* On a phone the chart keeps its labels legible by drawing at 0.8px per
+       unit and scrolling sideways (the 720px floor in the stylesheet). That
+       floor is for two months of columns; a shorter window is drawn on a
+       narrower canvas, about 11.5 units a day, so 30 days or fewer fits the
+       screen at the same label size instead of scrolling. */
+    var narrow = window.matchMedia && window.matchMedia("(max-width: 760px)").matches;
+    box.style.minWidth = "";
+    if (narrow && daily.length < FULL.daily.length) {
+      W = Math.max(360, Math.min(900, Math.round(padL + padR + daily.length * 11.5)));
+      box.style.minWidth = Math.round(W * 0.8) + "px";
     }
-    if (ev > 0) {
-      var evTop = y(pv + ev);
-      var evH = pvTop - evTop - GAP;
-      if (evH > 0.5) {
-        svg.appendChild(el("path", { d: roundedTop(x, evTop, colW, evH, R), fill: "var(--s2)" }));
-      }
-    }
-    /* full-band hit target */
-    var hit = el("rect", {
-      x: padL + band * i, y: padT, width: band, height: plotH,
-      "class": "hitcol", tabindex: i === 0 ? 0 : -1,
-      "aria-label": d[0] + ": " + pv + " page visits, " + ev + " interactions, " + (pv + ev) + " total"
-    });
-    var show = function () {
-      tooltip.innerHTML =
-        '<div class="t-date">' + d[0] + ", 2026</div>" +
-        '<div class="row"><span class="dot" style="background:var(--s1)"></span>Page visits&nbsp;<b>' + pv + "</b></div>" +
-        '<div class="row"><span class="dot" style="background:var(--s2)"></span>Interactions&nbsp;<b>' + ev + "</b></div>" +
-        '<div class="row">Total&nbsp;<b>' + (pv + ev) + "</b></div>";
-      tooltip.style.display = "block";
-      var bw = box.clientWidth;
-      var cx = (padL + band * i + band / 2) / W * bw;
-      var left = Math.max(4, Math.min(bw - tooltip.offsetWidth - 4, cx - tooltip.offsetWidth / 2));
-      tooltip.style.left = left + "px";
-      /* Never above the card's top edge: on a phone the card scrolls
-         sideways, which also clips what rises out of it, and the peak
-         column's tooltip would lose its date row. */
-      tooltip.style.top = Math.max(0, y(pv + ev) / H * box.clientHeight - tooltip.offsetHeight - 10) + "px";
+    var plotW = W - padL - padR, plotH = H - padT - padB;
+    var dayTotal = function (d) {
+      return SER.reduce(function (t, sr) { return t + d[sr[0]]; }, 0);
     };
-    var hide = function () { if (!pinned) tooltip.style.display = "none"; };
-    hit.addEventListener("mouseenter", show);
-    hit.addEventListener("mouseleave", hide);
-    hit.addEventListener("focus", show);
-    hit.addEventListener("blur", hide);
-    hit.addEventListener("keydown", onKey);
-    /* stopPropagation so this tap does not reach the document handler above,
-       which is what dismisses a pinned tooltip. */
-    hit.addEventListener("click", function (e) {
-      pinned = true;
-      show();
-      e.stopPropagation();
+    /* Next clean step above the peak — derived, so a new high cannot overflow
+       the plot and a quiet month cannot leave the chart squashed flat. The
+       gridline step grows with the peak so the axis keeps about five to seven
+       lines: at 50 a day of 993 drew twenty-four. */
+    var peak = 0;
+    daily.forEach(function (d, i) { if (dayTotal(d) > dayTotal(daily[peak])) peak = i; });
+    var peakTop = Math.max(1, dayTotal(daily[peak])) * 1.12;
+    var yStep = peakTop <= 300 ? 50 : peakTop <= 700 ? 100 : peakTop <= 1400 ? 200 : 500;
+    var yMax = Math.max(yStep, Math.ceil(peakTop / yStep) * yStep);
+    var n = daily.length;
+    var band = plotW / n;
+    var colW = Math.min(20, band - 4);
+    var GAP = 2;      /* surface gap between stacked segments */
+    var R = 3;        /* rounded data-end */
+    function y(v) { return padT + plotH * (1 - v / yMax); }
+
+    var svg = el("svg", { viewBox: "0 0 " + W + " " + H });
+    /* A GROUP, not an img: role="img" tells assistive technology to ignore the
+       subtree, and every day column below carries its own label and its own
+       focus. The two claims cannot both be true, and the labels are the
+       useful half. */
+    svg.setAttribute("role", "group");
+    svg.setAttribute("aria-label", unit.charAt(0).toUpperCase() + unit.slice(1) +
+                     " each day, " + STATS.range);
+
+    for (var tv = 0; tv <= yMax; tv += yStep) {
+      var yy = y(tv);
+      svg.appendChild(el("line", {
+        x1: padL, x2: W - padR, y1: yy, y2: yy,
+        stroke: tv === 0 ? "var(--line-strong)" : "var(--line)", "stroke-width": 1
+      }));
+      var lab = el("text", {
+        x: padL - 7, y: yy + 4, "text-anchor": "end",
+        "font-size": 11, fill: "var(--slate)", style: "font-variant-numeric:tabular-nums"
+      });
+      lab.textContent = tv;
+      svg.appendChild(lab);
+    }
+
+    /* x labels: weekly. How many DAYS of separation a label needs, derived
+       from how wide the band actually is rather than fixed at a constant. A
+       "3" was hardcoded here and was right for a short series; at 60 days the
+       band is ~14px, "Sep 4" landed exactly 3 days from the end, survived the
+       guard and sat 2.9px from "Sep 7". */
+    var labelDays = Math.max(1, Math.ceil(46 / band));
+    daily.forEach(function (d, i) {
+      /* weekly ticks + the final day; drop a weekly tick that would crowd it.
+         A window of two weeks or less has room to name every day. */
+      var every = n <= 14 ? labelDays : 7;
+      if (i !== n - 1 && (i % every !== 0 || n - 1 - i < labelDays)) return;
+      var last = i === n - 1;
+      var lab = el("text", {
+        x: last ? W - padR : padL + band * i + band / 2, y: H - 8,
+        "text-anchor": last ? "end" : "middle",
+        "font-size": 11, fill: "var(--slate)"
+      });
+      lab.textContent = d[0];
+      svg.appendChild(lab);
     });
-    hits.push(hit);
-    svg.appendChild(hit);
-  });
 
-  /* Direct label on the peak only. DERIVED, never typed: this was a hardcoded
-     index and a hardcoded "96" string, and the first refresh that moved the
-     peak left the old number floating over the wrong column. */
-  var peak = 0;
-  daily.forEach(function (d, i) {
-    if (d[1] + d[2] > daily[peak][1] + daily[peak][2]) peak = i;
-  });
-  var pd = daily[peak];
-  var plab = el("text", {
-    x: padL + band * peak + band / 2, y: y(pd[1] + pd[2]) - 7,
-    "text-anchor": "middle", "font-size": 11.5, "font-weight": 600, fill: "var(--ink)"
-  });
-  plab.textContent = fmt(pd[1] + pd[2]);
-  svg.appendChild(plab);
+    var tooltip = document.createElement("div");
+    tooltip.className = "tooltip";
+    box.appendChild(tooltip);
 
-  box.insertBefore(svg, tooltip);
+    /* PINNED is what makes the chart work on a touchscreen, where most of this
+       page's readers are. A tap synthesises mouseenter, focus, click and then
+       mouseleave in one gesture, so a click handler alone opens the tooltip
+       and the trailing mouseleave closes it again in the same tick. Pinning on
+       click, and refusing to hide while pinned, leaves it open; a tap anywhere
+       else puts it away. */
+    var pinned = false;
+    /* The day columns are ONE tab stop, not one each. The roving index is the
+       standard pattern for a set of peers: Tab enters the chart, the arrow
+       keys walk the days, Tab leaves.
+
+       THEIR SIZE IS RECORDED HERE BECAUSE NO GATE CAN SEE IT ANY MORE. These
+       rectangles are pointer targets, and they are 14.8px wide at 1280 and
+       11.1px at 390 over two months, measured 2026-09-18, necessarily
+       touching: a chart of a two-month window cannot give each day 24px
+       without showing fewer days. WCAG 2.5.8's Equivalent exception covers
+       them, because the same numbers sit in the `View both as a table`
+       disclosure below the charts, whose rows are full width. */
+    var hits = [];
+    var focusHit = function (i) {
+      if (i < 0 || i >= hits.length) return;
+      hits.forEach(function (h, j) { h.setAttribute("tabindex", j === i ? 0 : -1); });
+      pinned = false;
+      hits[i].focus();
+    };
+    var onKey = function (e) {
+      var i = hits.indexOf(e.currentTarget);
+      var to = e.key === "ArrowRight" ? i + 1 : e.key === "ArrowLeft" ? i - 1
+             : e.key === "Home" ? 0 : e.key === "End" ? hits.length - 1 : -1;
+      if (to === -1 || i === -1) return;
+      e.preventDefault();
+      focusHit(to);
+    };
+    document.addEventListener("click", function () {
+      pinned = false;
+      tooltip.style.display = "none";
+    });
+
+    daily.forEach(function (d, i) {
+      var x = padL + band * i + (band - colW) / 2;
+      var tot = dayTotal(d);
+      var topSer = -1;
+      SER.forEach(function (sr, j) { if (d[sr[0]] > 0) topSer = j; });
+      var cum = 0, drawn = 0;
+      SER.forEach(function (sr, j) {
+        var v = d[sr[0]];
+        if (!(v > 0)) return;
+        var segTop = y(cum + v), segBottom = y(cum) - (drawn ? GAP : 0);
+        cum += v;
+        var h = segBottom - segTop;
+        drawn++;
+        if (h <= 0.5) return;
+        svg.appendChild(j === topSer
+          ? el("path", { d: roundedTop(x, segTop, colW, h, R), fill: "var(" + sr[2] + ")" })
+          : el("rect", { x: x, y: segTop, width: colW, height: h, fill: "var(" + sr[2] + ")" }));
+      });
+      var parts = SER.map(function (sr) { return sr[1] + " " + fmt(d[sr[0]]); });
+      /* full-band hit target */
+      var hit = el("rect", {
+        x: padL + band * i, y: padT, width: band, height: plotH,
+        "class": "hitcol", tabindex: i === 0 ? 0 : -1,
+        "aria-label": d[0] + ": " + fmt(tot) + " " + unit + ". " + parts.join(", ")
+      });
+      var show = function () {
+        tooltip.innerHTML = "";
+        var head = document.createElement("div");
+        head.className = "t-date";
+        head.textContent = d[0] + ", " + META.year;
+        tooltip.appendChild(head);
+        SER.slice().reverse().forEach(function (sr) {
+          var row = document.createElement("div");
+          row.className = "row";
+          var dot = document.createElement("span");
+          dot.className = "dot";
+          dot.style.background = "var(" + sr[2] + ")";
+          var b = document.createElement("b");
+          b.textContent = fmt(d[sr[0]]);
+          row.appendChild(dot);
+          row.appendChild(document.createTextNode(sr[1] + " "));
+          row.appendChild(b);
+          tooltip.appendChild(row);
+        });
+        var all = document.createElement("div");
+        all.className = "row";
+        var tb = document.createElement("b");
+        tb.textContent = fmt(tot);
+        all.appendChild(document.createTextNode("Total "));
+        all.appendChild(tb);
+        tooltip.appendChild(all);
+        tooltip.style.display = "block";
+        var bw = box.clientWidth;
+        var cx = (padL + band * i + band / 2) / W * bw;
+        var left = Math.max(4, Math.min(bw - tooltip.offsetWidth - 4, cx - tooltip.offsetWidth / 2));
+        tooltip.style.left = left + "px";
+        /* Never above the card's top edge: on a phone the card scrolls
+           sideways, which also clips what rises out of it, and the peak
+           column's tooltip would lose its date row. */
+        tooltip.style.top = Math.max(0, y(tot) / H * box.clientHeight - tooltip.offsetHeight - 10) + "px";
+      };
+      var hide = function () { if (!pinned) tooltip.style.display = "none"; };
+      hit.addEventListener("mouseenter", show);
+      hit.addEventListener("mouseleave", hide);
+      hit.addEventListener("focus", show);
+      hit.addEventListener("blur", hide);
+      hit.addEventListener("keydown", onKey);
+      /* stopPropagation so this tap does not reach the document handler above,
+         which is what dismisses a pinned tooltip. */
+      hit.addEventListener("click", function (e) {
+        pinned = true;
+        show();
+        e.stopPropagation();
+      });
+      hits.push(hit);
+      svg.appendChild(hit);
+    });
+
+    /* Direct label on the peak only. DERIVED, never typed: this was a
+       hardcoded index and a hardcoded "96" string, and the first refresh that
+       moved the peak left the old number floating over the wrong column. */
+    var plab = el("text", {
+      x: padL + band * peak + band / 2, y: y(dayTotal(daily[peak])) - 7,
+      "text-anchor": "middle", "font-size": 11.5, "font-weight": 600, fill: "var(--ink)"
+    });
+    plab.textContent = fmt(dayTotal(daily[peak]));
+    svg.appendChild(plab);
+
+    box.insertBefore(svg, tooltip);
+  };
+  drawStack("pagesChart", "pages viewed",
+            [[1, "A state’s map", "--s1"], [2, "Front page", "--s3"],
+             [3, "Other pages", "--slate"]]);
+  drawStack("actionsChart", "reader actions",
+            [[4, "Chose a point", "--s2"], [5, "Turned on a layer", "--s3"],
+             [6, "Searched or asked for location", "--s4"], [7, "Anything else", "--slate"]]);
 
   /* ---- table view ---- */
   var tbody = document.querySelector("#dailyTable tbody");
   daily.forEach(function (d) {
     var tr = document.createElement("tr");
-    [d[0], d[1], d[2], d[1] + d[2]].forEach(function (v, ci) {
+    d.forEach(function (v, ci) {
       var td = document.createElement("td");
       if (ci > 0) td.className = "num";
       td.textContent = typeof v === "number" ? fmt(v) : v;
@@ -2779,6 +3284,10 @@ code {
     });
     tbody.appendChild(tr);
   });
+
+  /* Whether use is changing needs two full weeks of days. */
+  var useRead = document.getElementById("useRead");
+  if (useRead) useRead.hidden = !STATS.useTrend;
 
   var tf = document.getElementById("timeframe");
   if (Object.keys(WINDOWS).length) {
@@ -2789,10 +3298,8 @@ code {
       b.setAttribute("aria-pressed", k === key ? "true" : "false");
       b.addEventListener("click", function () {
         if (k === key) return;
-        try {
-          history.replaceState(null, "", k === "full"
-            ? location.pathname + location.search : "#last-" + k + "-days");
-        } catch (e) { /* a frame that refuses it keeps the choice for this view only */ }
+        currentKey = k;
+        setHash();
         var old = document.getElementById("page-main");
         old.parentNode.replaceChild(PRISTINE.cloneNode(true), old);
         render(k);
@@ -2801,8 +3308,11 @@ code {
       });
     });
   }
+  currentKey = key;
+  setupTabs();
   };
 
+  tab = tabFromHash();
   render(keyFromHash());
   /* The chart's canvas depends on the screen width, so crossing the phone
      breakpoint (a rotated phone, a resized window) draws it again. */

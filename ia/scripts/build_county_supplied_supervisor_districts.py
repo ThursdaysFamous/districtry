@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Build data/source/{jones,tama}-supervisor-districts.geojson — the supervisor
-districts of the two Iowa counties whose current lines the statewide layer
-does not draw, from files each county's own office sent this project, resolved
-to whole Census 2020 blocks.
+Build data/source/{jones,tama,wright}-supervisor-districts.geojson — the
+supervisor districts of the three Iowa counties whose current lines the
+statewide layer does not draw, from files each county's own office sent this
+project, resolved to whole Census 2020 blocks.
 
-WHY THESE TWO, AND WHY THEY SHARE A SCRIPT
+WHY THESE THREE, AND WHY THEY SHARE A SCRIPT
 --------------------------------------------
 build_ia_supervisor_districts.py reads the Iowa Legislature's statewide
 CountySupervisorDistricts layer (vintage 2024-01-30). Two counties cannot be
@@ -72,6 +72,27 @@ applied (3,426 / 3,453 / 3,395 / 3,420 / 3,441), and it also requires the block
 itself to land in District 2: any OTHER difference fails, and so does this one
 going away.
 
+WRIGHT: THE COUNTY'S OWN PRINTED MAP, TAMA'S METHOD
+------------------------------------------------------
+The statewide layer draws three districts; the county has elected five since
+1 January 2025. Auditor Amanda Meyer wrote on 2026-10-26 that the county keeps
+no district file, and sent its map ("Wright County - Redistricting Plan #4")
+and written descriptions of the five. The map is read as Tama's is: five
+filled paths, each colour paired to its legend label by its swatch. It is drawn
+in Web Mercator rather than NAD83 / Iowa North (the drawn aspect agrees with
+the county's to 0.008% in Web Mercator against 0.55% in Iowa North), so it is
+fitted there and carried into the plan CRS afterwards.
+
+Its witness is the map's own figures, printed inside each district: 2,599 /
+2,569 / 2,592 / 2,569 / 2,614, which sum to the county's 2020 census count and
+which the block populations must equal exactly. Districts 2 and 4 hold the same
+2,569, so a second gate reads the written descriptions: every incorporated
+city must fall in the districts they name (Goldfield 1, Eagle Grove 1 and 2,
+Woolstock 2, Clarion 2, 3 and 5, Galt, Rowan and Dows 3, Belmond 4 and 5).
+The map leaves one slit uncovered by either fill, along Highway 17 north of
+Eagle Grove between Districts 1 and 2; the two empty blocks in it are declared
+in `slit_blocks` with the district that covers most of them.
+
 NOTHING TRACED SHIPS
 ----------------------
 For both counties, the source geometry only decides which district each block
@@ -107,8 +128,8 @@ BLOCK_URL = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
              "tigerWMS_Census2020/MapServer/10/query")
 
 MIN_BLOCK_SHARE = 0.55        # measured worst: Jones 0.9998, Tama 0.6190
-TAMA_FIT_MEDIAN_CEILING_M = 15.0   # measured 6.2
-TAMA_FIT_P90_CEILING_M = 40.0      # measured 23.3
+FIT_MEDIAN_CEILING_M = 15.0   # measured Tama 6.2
+FIT_P90_CEILING_M = 40.0      # measured Tama 23.3
 COUNTY_IOU_FLOOR = 0.995           # measured Jones 0.99993, Tama 0.99862
 
 COUNTIES = {
@@ -149,12 +170,60 @@ COUNTIES = {
         "source": "TAMA-COUNTY-AUDITOR-MAP-2025",
         "source_url": "https://www.tamacounty.iowa.gov/supervisors/",
         "out": "tama-supervisor-districts.geojson",
+        "pdf": "tama-supervisor-districts-2025.pdf",
+        "legend": ["District_1", "District_2", "District_3", "District_4",
+                   "District_5"],
+        "swatch_gap": 10,
+    },
+    "Wright": {
+        "fips": "197",
+        "blocks": 1614,
+        "population": 12943,
+        "files": {
+            "wright-supervisor-districts-plan4.pdf":
+                "98c43688b30a67d6b5a4b7f86162c178475ab80cb4e16b085682901a4f7386d3",
+        },
+        # Printed inside each district on the map itself, beside its label.
+        "witness": {"1": 2599, "2": 2569, "3": 2592, "4": 2569, "5": 2614},
+        "witness_cite": ("Wright County's own map, 'Wright County - "
+                         "Redistricting Plan #4', district populations"),
+        "source": "WRIGHT-COUNTY-AUDITOR-MAP-PLAN-4",
+        "source_url": ("https://www.wrightcounty.iowa.gov/departments/"
+                       "board_of_supervisors/index.php"),
+        "out": "wright-supervisor-districts.geojson",
+        "pdf": "wright-supervisor-districts-plan4.pdf",
+        "legend": ["District 1", "District 2", "District 3", "District 4",
+                   "District 5"],
+        # Wright's swatches sit 14 pt left of their labels, Tama's under 10.
+        "swatch_gap": 20,
+        # Drawn over web-map tiles: the drawn county's aspect is 0.98886, and
+        # the true county's is 0.98894 in Web Mercator against 0.99436 in
+        # NAD83 / Iowa North (measured 2026-10-26).
+        "drawn_crs": "EPSG:3857",
+        # Two empty blocks sit in the one slit the map leaves between two
+        # districts: a 456 m by 3.2 km strip along Highway 17 north of Eagle
+        # Grove, between District 1 (west of the highway) and District 2
+        # (east of it), covered by neither fill. Each is assigned to the
+        # district holding the most of what the fills do cover. Both hold no
+        # one, so the population gate cannot see them either way; this table
+        # is checked so that a third block in a slit, a populated one, or one
+        # of these coming back inside a fill, fails the build.
+        "slit_blocks": {"191976802002008": "2", "191976802002027": "2"},
+        # Districts 2 and 4 hold the same 2,569 people, so the population
+        # gate cannot tell their labels apart. The county's written
+        # descriptions can: each names the incorporated cities in its
+        # district and where a city is split. Every Census 2020 place in the
+        # county must fall in exactly the districts listed (any share over 2%).
+        "places": {
+            "Goldfield city": ["1"], "Eagle Grove city": ["1", "2"],
+            "Woolstock city": ["2"], "Clarion city": ["2", "3", "5"],
+            "Galt city": ["3"], "Rowan city": ["3"], "Dows city": ["3"],
+            "Belmond city": ["4", "5"],
+        },
     },
 }
 
-TAMA_LEGEND = ["District_1", "District_2", "District_3", "District_4",
-               "District_5"]
-TAMA_MIN_DISTRICT_BOX_PT2 = 5000   # legend swatches are far smaller
+MIN_DISTRICT_BOX_PT2 = 5000   # legend swatches are far smaller
 
 
 def fail(msg):
@@ -274,20 +343,25 @@ def jones_districts(geo):
     return out
 
 
-def tama_districts(geo):
-    """The five filled districts, each colour paired to its legend label."""
+def pdf_districts(county, cfg, geo):
+    """The five filled districts, each colour paired to its legend label.
+
+    A label can be printed twice -- Wright's map writes each district's label
+    inside the district as well as in the legend -- so only the label with a
+    swatch beside it is the legend's."""
     import pymupdf
     Polygon, Point = geo["Polygon"], geo["Point"]
-    page = pymupdf.open(os.path.join(RAW_DIR, "tama-supervisor-districts-2025.pdf"))[0]
-    labels = {}
+    legend = cfg["legend"]
+    page = pymupdf.open(os.path.join(RAW_DIR, cfg["pdf"]))[0]
+    spans = {}
     for blk in page.get_text("dict")["blocks"]:
         for line in blk.get("lines", []):
             for span in line["spans"]:
                 t = span["text"].strip()
-                if t in TAMA_LEGEND:
-                    labels[t] = span["bbox"]
-    if sorted(labels) != TAMA_LEGEND:
-        fail("Tama: the legend carries %s, expected %s" % (sorted(labels), TAMA_LEGEND))
+                if t in legend:
+                    spans.setdefault(t, []).append(span["bbox"])
+    if sorted(spans) != legend:
+        fail("%s: the legend carries %s, expected %s" % (county, sorted(spans), legend))
 
     big, swatches = {}, {}
     for d in page.get_drawings():
@@ -295,7 +369,7 @@ def tama_districts(geo):
         if not fill:
             continue
         k = tuple(round(c, 3) for c in fill)
-        if d["rect"].get_area() > TAMA_MIN_DISTRICT_BOX_PT2:
+        if d["rect"].get_area() > MIN_DISTRICT_BOX_PT2:
             big.setdefault(k, []).append(d)
         else:
             swatches.setdefault(k, []).append(d["rect"])
@@ -306,23 +380,24 @@ def tama_districts(geo):
     # legend rows are 13 pt apart and a text span's box is 19 pt tall, so a
     # within-a-line test accepts the next row's swatch too.
     colour_of = {}
-    for label, (x0, y0, x1, y1) in labels.items():
-        cy = (y0 + y1) / 2
+    for label, boxes in spans.items():
         best = None
-        for k, rects in swatches.items():
-            if k not in big:
-                continue
-            for r in rects:
-                if r.x1 <= x0 + 1 and 0 <= x0 - r.x1 < 10:
-                    dy = abs((r.y0 + r.y1) / 2 - cy)
-                    if best is None or dy < best[0]:
-                        best = (dy, k)
+        for (x0, y0, x1, y1) in boxes:
+            cy = (y0 + y1) / 2
+            for k, rects in swatches.items():
+                if k not in big:
+                    continue
+                for r in rects:
+                    if r.x1 <= x0 + 1 and 0 <= x0 - r.x1 < cfg["swatch_gap"]:
+                        dy = abs((r.y0 + r.y1) / 2 - cy)
+                        if best is None or dy < best[0]:
+                            best = (dy, k)
         if best is None or best[0] > 4:
-            fail("Tama: no district-coloured swatch level with legend label %s "
-                 "(nearest %s pt off)" % (label, best and round(best[0], 1)))
+            fail("%s: no district-coloured swatch level with legend label %s "
+                 "(nearest %s pt off)" % (county, label, best and round(best[0], 1)))
         colour_of[label] = best[1]
-    if len(set(colour_of.values())) != len(TAMA_LEGEND):
-        fail("Tama: two legend labels share a colour: %s" % colour_of)
+    if len(set(colour_of.values())) != len(legend):
+        fail("%s: two legend labels share a colour: %s" % (county, colour_of))
 
     out = {}
     for label, k in colour_of.items():
@@ -349,13 +424,13 @@ def tama_districts(geo):
             if pg.is_empty:
                 continue
             g = pg if g is None else g.symmetric_difference(pg)
-        out[label.split("_")[1]] = g
-    print("Tama: legend pairs %s" % {lbl: c for lbl, c in sorted(colour_of.items())},
+        out[label.replace("_", " ").split()[-1]] = g
+    print("%s: legend pairs %s" % (county, {lbl: c for lbl, c in sorted(colour_of.items())}),
           file=sys.stderr)
     return out
 
 
-def fit_tama(drawn, county, geo):
+def fit_drawn(name, drawn, county, geo, crs=PLAN_CRS):
     """Bounding-box start, then affine least squares against the real outline.
 
     The drawn union's exterior runs into the slits left between districts that
@@ -369,8 +444,8 @@ def fit_tama(drawn, county, geo):
     a_drawn = (db[2] - db[0]) / (db[3] - db[1])
     a_true = (cb[2] - cb[0]) / (cb[3] - cb[1])
     if abs(a_drawn / a_true - 1) > 0.005:
-        fail("Tama: the drawn county's aspect is %.5f against %.5f in %s"
-             % (a_drawn, a_true, PLAN_CRS))
+        fail("%s: the drawn county's aspect is %.5f against %.5f in %s"
+             % (name, a_drawn, a_true, crs))
     sx = (cb[2] - cb[0]) / (db[2] - db[0])
     sy = (cb[3] - cb[1]) / (db[3] - db[1])
     A = np.array([[sx, 0, cb[0] - db[0] * sx], [0, -sy, cb[3] + db[1] * sy]])
@@ -385,13 +460,14 @@ def fit_tama(drawn, county, geo):
         sol, *_ = np.linalg.lstsq(np.c_[src[keep], np.ones(keep.sum())], tgt[keep], rcond=None)
         A = sol.T
     med, p90 = float(np.median(dist)), float(np.percentile(dist, 90))
-    if med > TAMA_FIT_MEDIAN_CEILING_M or p90 > TAMA_FIT_P90_CEILING_M:
-        fail("Tama: the fitted outline sits a median %.1f m / p90 %.1f m from the "
-             "county's own (ceilings %.0f / %.0f)" % (med, p90,
-                                                     TAMA_FIT_MEDIAN_CEILING_M,
-                                                     TAMA_FIT_P90_CEILING_M))
-    print("Tama: georeference %s, aspect %.5f vs %.5f, affine fit residual median "
-          "%.1f m / p90 %.1f m" % (PLAN_CRS, a_drawn, a_true, med, p90), file=sys.stderr)
+    if med > FIT_MEDIAN_CEILING_M or p90 > FIT_P90_CEILING_M:
+        fail("%s: the fitted outline sits a median %.1f m / p90 %.1f m from the "
+             "county's own (ceilings %.0f / %.0f)" % (name, med, p90,
+                                                     FIT_MEDIAN_CEILING_M,
+                                                     FIT_P90_CEILING_M))
+    print("%s: georeference %s, aspect %.5f vs %.5f, affine fit residual median "
+          "%.1f m / p90 %.1f m" % (name, crs, a_drawn, a_true, med, p90),
+          file=sys.stderr)
     place = lambda x, y, z=None: (A[0, 0] * x + A[0, 1] * y + A[0, 2],  # noqa: E731
                                   A[1, 0] * x + A[1, 1] * y + A[1, 2])
     return {k: transform(place, v).buffer(0) for k, v in drawn.items()}
@@ -411,17 +487,33 @@ def resolve(county, cfg, dist, blocks, geo):
     groups = {k: [] for k in ks}
     pops = {k: 0 for k in ks}
     where, worst, marginal = {}, 1.0, 0
+    slits = dict(cfg.get("slit_blocks") or {})
     for f, g in plan_blocks:
         if g.is_empty or g.area == 0:
             continue
         share = {k: g.intersection(dist[k]).area / g.area for k in ks}
         best = max(share, key=share.get)
+        geoid = f["properties"]["GEOID"]
+        if geoid in slits:
+            if share[best] >= MIN_BLOCK_SHARE:
+                fail("%s: block %s is declared to sit in a slit, and now %.1f%% of "
+                     "it is inside district %s; the declaration is stale"
+                     % (county, geoid, 100 * share[best], best))
+            if best != slits.pop(geoid) or int(f["properties"].get("POP100") or 0):
+                fail("%s: slit block %s no longer matches its declaration "
+                     "(most covered by %s, %s people)"
+                     % (county, geoid, best, f["properties"].get("POP100")))
+            groups[best].append(shape(f["geometry"]).buffer(0))
+            where[geoid] = best
+            continue
         worst = min(worst, share[best])
         marginal += share[best] < 0.99
         pop = int(f["properties"].get("POP100") or 0)
         groups[best].append(shape(f["geometry"]).buffer(0))
         pops[best] += pop
         where[f["properties"]["GEOID"]] = best
+    if slits:
+        fail("%s: declared slit blocks %s were not found" % (county, sorted(slits)))
     if worst < MIN_BLOCK_SHARE:
         fail("%s: a block sits only %.1f%% inside its best district (floor %.0f%%)"
              % (county, 100 * worst, 100 * MIN_BLOCK_SHARE))
@@ -432,14 +524,15 @@ def resolve(county, cfg, dist, blocks, geo):
 
 
 def gate(county, cfg, pops, where):
-    if county == "Jones":
+    if "witness" in cfg:
         if pops != cfg["witness"]:
-            fail("Jones: the block populations are %s and the county's own "
-                 "adopted plan publishes %s. A plan drawn on 2020 blocks matches "
+            fail("%s: the block populations are %s and the county's own "
+                 "plan publishes %s. A plan drawn on 2020 blocks matches "
                  "its own figures to the person; a disagreement means this is "
-                 "not the plan in force." % (pops, cfg["witness"]))
-        print("Jones POPULATION GATE: %s equals %s exactly"
-              % (dict(sorted(pops.items())), cfg["witness_cite"]), file=sys.stderr)
+                 "not the plan in force." % (county, pops, cfg["witness"]))
+        print("%s POPULATION GATE: %s equals %s exactly"
+              % (county, dict(sorted(pops.items())), cfg["witness_cite"]),
+              file=sys.stderr)
         return
     mv = cfg["moved"]
     want = dict(cfg["lsa_plan"])
@@ -463,6 +556,43 @@ def gate(county, cfg, pops, where):
           "declared move, block %s (%d people) from district %s to %s"
           % (dict(sorted(pops.items())), cfg["lsa_doc"], mv["geoid"],
              mv["people"], mv["from"], mv["to"]), file=sys.stderr)
+
+
+PLACE_URL = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+             "tigerWMS_Census2020/MapServer/26/query")
+
+
+def place_gate(county, cfg, shipped, geo):
+    """Each incorporated place's districts against the county's own
+    description. `shipped` is in the block geometry's own lng/lat."""
+    hdrs = dict(UA_HEADERS_ROSTER_BOT)
+    q = urllib.parse.urlencode({
+        "where": "STATE='19'",
+        "geometry": json.dumps({"rings": [list(r.coords) for r in
+                                [geo["unary_union"](list(shipped.values())).envelope.exterior]],
+                                "spatialReference": {"wkid": 4326}}),
+        "geometryType": "esriGeometryPolygon", "inSR": "4326",
+        "spatialRel": "esriSpatialRelIntersects",
+        "outFields": "NAME", "returnGeometry": "true", "outSR": "4326",
+        "f": "geojson"})
+    req = urllib.request.Request(PLACE_URL + "?" + q, headers=hdrs)
+    with urllib.request.urlopen(req, timeout=120) as r:
+        data = json.load(r)
+    if "error" in data:
+        fail("TIGERweb answered with an error envelope: %r" % data["error"])
+    got = {}
+    for f in data.get("features") or []:
+        g = geo["shape"](f["geometry"]).buffer(0)
+        ks = sorted(k for k, d in shipped.items()
+                    if g.intersection(d).area / g.area > 0.02)
+        if ks:
+            got[f["properties"]["NAME"]] = ks
+    want = {k: sorted(v) for k, v in cfg["places"].items()}
+    if got != want:
+        fail("%s: the derived districts put the county's cities in %s, and the "
+             "county's own descriptions put them in %s" % (county, got, want))
+    print("%s PLACE GATE: all %d cities fall in the districts the county's "
+          "descriptions name" % (county, len(got)), file=sys.stderr)
 
 
 def rnd(o, p=6):
@@ -500,13 +630,23 @@ def main():
         if county == "Jones":
             dist = jones_districts(geo)
         else:
-            county_shape = unary_union([transform(geo["fwd"], shape(f["geometry"])).buffer(0)
+            crs = cfg.get("drawn_crs", PLAN_CRS)
+            to_drawn = Transformer.from_crs("EPSG:4326", crs, always_xy=True)
+            fwd = lambda x, y, z=None: to_drawn.transform(x, y)  # noqa: E731
+            county_shape = unary_union([transform(fwd, shape(f["geometry"])).buffer(0)
                                         for f in blocks])
-            dist = fit_tama(tama_districts(geo), county_shape, geo)
+            dist = fit_drawn(county, pdf_districts(county, cfg, geo), county_shape,
+                             geo, crs)
+            if crs != PLAN_CRS:
+                to_p = Transformer.from_crs(crs, PLAN_CRS, always_xy=True)
+                dist = {k: transform(lambda x, y, z=None: to_p.transform(x, y), v).buffer(0)
+                        for k, v in dist.items()}
         if sorted(dist) != ["1", "2", "3", "4", "5"]:
             fail("%s: districts %s, expected 1-5" % (county, sorted(dist)))
         shipped, pops, where = resolve(county, cfg, dist, blocks, geo)
         gate(county, cfg, pops, where)
+        if "places" in cfg:
+            place_gate(county, cfg, shipped, geo)
 
         fc = {"type": "FeatureCollection", "features": [
             {"type": "Feature",

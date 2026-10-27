@@ -851,7 +851,8 @@
       "/il/data/app/cumberland-county-board-districts.json",
       "/il/data/app/jersey-county-board-districts.json",
       "/il/data/app/lawrence-county-board-districts.json",
-      "/il/data/app/jasper-county-board-districts.json"
+      "/il/data/app/jasper-county-board-districts.json",
+      "/il/data/app/bond-county-board-districts.json"
      ],
      "whole_set": [
       "arcgispublicmap.co.st-clair.il.us",
@@ -1086,7 +1087,8 @@
        "cumberland",
        "jersey",
        "lawrence",
-       "jasper"
+       "jasper",
+       "bond"
       ],
       "failed": [
        {
@@ -1229,6 +1231,9 @@
        ],
        "jasper": [
         "/il/data/app/jasper-county-board-districts.json"
+       ],
+       "bond": [
+        "/il/data/app/bond-county-board-districts.json"
        ]
       }
      },

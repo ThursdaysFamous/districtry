@@ -747,7 +747,14 @@ try {
     const got = await page.evaluate((ns) => ({
       point: window[ns].state.selectedPoint,
       events: (window.__gcEvents || []).filter((v) => v && v.event).map((v) => v.path),
+      selects: (window.__gcEvents || []).filter((v) => v && v.event && /^select\b/.test(v.path))
+        .map((v) => v.path + " " + v.title),
     }), EXPORTS_NAME);
+    // The point is counted under this app's tag (since 2026-10-27, so each
+    // state's map has its own count) and still rounded to two decimals, the
+    // rounding the privacy page states.
+    check("choosing a point is counted once, under this app, rounded to two decimals",
+      got.selects.join("|") === "select/il 41.88,-87.63", JSON.stringify(got.selects));
     check("a pasted Google Maps link selects the place it names",
       !!got.point && Math.abs(got.point.lat - 41.88395) < 1e-6 && Math.abs(got.point.lng + 87.63022) < 1e-6,
       JSON.stringify(got.point));

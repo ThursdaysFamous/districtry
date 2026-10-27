@@ -25,7 +25,7 @@
 |---|---|---|---|---|---|
 | Adams | 17001 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district` | 3 — `adams-county-board-roster` (no-source); `county-source-library-officials` (no-source); `fire-park-district-officers` (no-source) |
 | Alexander | 17003 | dispatch | at-large — County card | `library-district` | 2 — `alexander-precinct-geometry` (no-source); `statewide-library-officials` (no-source) |
-| Bond | 17005 | dispatch | no board layer — see gaps | `library-district` | 2 — `bond-county-board-districts` (no-source); `bond-precinct-geometry` (no-source) |
+| Bond | 17005 | dispatch | districted | `county-board`, `library-district` | 2 — `bond-county-board-districts` (data-quality); `bond-precinct-geometry` (no-source) |
 | Boone | 17007 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 3 — `boone-fire-belvidere-city` (data-quality); `boone-fire-loves-park` (data-quality); `boone-fire-names` (data-quality) |
 | Brown | 17009 | dispatch | at-large — County card | `library-district` | 1 — `brown-precinct-geometry` (no-source) |
 | Calhoun | 17013 | dispatch | at-large — County card | `county-precinct`, `library-district` | none |
@@ -48,7 +48,7 @@
 | Effingham | 17049 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 3 — `county-source-library-officials` (no-source); `effingham-municipal-officials` (no-source); `fire-park-district-officers` (no-source) |
 | Fayette | 17051 | dispatch | districted | `county-board` | 1 — `fayette-county-board-geometry` (no-source) |
 | Ford | 17053 | dispatch | districted | `county-board` | 1 — `ford-board-contact` (data-quality) |
-| Franklin | 17055 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `county-board-office-addresses` (no-source); `statewide-library-officials` (no-source) |
+| Franklin | 17055 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Fulton | 17057 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Gallatin | 17059 | dispatch | at-large — County card | `county-precinct`, `library-district` | 2 — `gallatin-board-contact` (data-quality); `statewide-library-officials` (no-source) |
 | Greene | 17061 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |

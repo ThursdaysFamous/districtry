@@ -108,9 +108,9 @@ LSA_LAST_EDIT_MS = 1706643533798  # gate: refuse silently if this ever moves wit
 
 KNOWN_TRANSITIONING = {"Black Hawk", "Story", "Johnson"}
 # Counties whose LSA rows are replaced by lines the county itself supplied --
-# see COUNTY_SUPPLIED below. Jones has no LSA row to drop; Tama's three are the
+# see COUNTY_SUPPLIED below. Jones has no LSA row to drop; Tama's and Wright's three are the
 # pre-2024 plan.
-COUNTY_SUPPLIED_REPLACES = {"Jones", "Tama"}
+COUNTY_SUPPLIED_REPLACES = {"Jones", "Tama", "Wright"}
 EXPECTED_MISSING = set()
 EXPECT_TOTAL_COUNTIES = 99
 KNOWN_PLANTYPES = {"PLAN 1", "PLAN 2", "PLAN 3"}
@@ -187,10 +187,10 @@ STORY = {
     ),
 }
 
-# Jones and Tama: real district lines, from files each county's own office
+# Jones, Tama and Wright: real district lines, from files each county's own office
 # sent this project, resolved to whole Census 2020 blocks by
 # ia/scripts/build_county_supplied_supervisor_districts.py and committed in
-# data/source/ (deploy-excluded), the Story arrangement exactly. Both counties
+# data/source/ (deploy-excluded), the Story arrangement exactly. Jones and Tama
 # elect one supervisor per district today, so both are PLAN 3.
 #
 #   * JONES was the one county with no row in the LSA layer at all (by name and
@@ -201,6 +201,17 @@ STORY = {
 #     2022 and LSA drew the five on 2024-02-05, after the layer's vintage. The
 #     Auditor sent the county's own map on 2026-10-01; its block populations
 #     equal LSA's Plan I with one declared, county-witnessed parcel moved.
+#   * WRIGHT's LSA rows draw three districts; the county has elected five
+#     since 1 January 2025. The Auditor sent the county's own map ("Wright
+#     County - Redistricting Plan #4") and written descriptions on
+#     2026-10-26; its block populations equal the figures printed on the
+#     map, and every city falls where the descriptions put it. WRIGHT IS
+#     PLAN 2 (supervisors live in their district and every voter votes on
+#     every seat), the plan the LSA layer records for it, and that is
+#     measured rather than carried over: in the county's certified 2024
+#     general election returns (electionresults.iowa.gov, Wright, election
+#     122421, read 2026-10-26) each of the five "County Board of Supervisors
+#     District N" contests was voted in all ten of the county's precincts.
 #
 # The populations below are re-checked against the committed derivation, so a
 # re-derivation that moved a single block stops this build.
@@ -224,6 +235,18 @@ COUNTY_SUPPLIED = [
         "note": (
             "Tama County's five supervisor districts, from the county "
             "Auditor's own district map sent on 1 October 2026."),
+    },
+    {
+        "county": "Wright",
+        "fips": "197",
+        "path": os.path.join(REPO_ROOT, "data", "source",
+                             "wright-supervisor-districts.geojson"),
+        "populations": {"1": 2599, "2": 2569, "3": 2592, "4": 2569, "5": 2614},
+        "plantype": "PLAN 2",
+        "note": (
+            "Wright County's five supervisor districts, from the county "
+            "Auditor's own district map and descriptions sent on 26 October "
+            "2026."),
     },
 ]
 
@@ -419,7 +442,7 @@ def story_features():
 
 
 def county_supplied_features():
-    """Jones's and Tama's districts, from their committed derivations."""
+    """Jones's, Tama's and Wright's districts, from their committed derivations."""
     out = []
     for rec in COUNTY_SUPPLIED:
         try:
@@ -445,7 +468,7 @@ def county_supplied_features():
                     "COUNTY": rec["county"],
                     "FIPS": rec["fips"],
                     "DISTRICT": p["DISTRICT"],
-                    "PLANTYPE": "PLAN 3",
+                    "PLANTYPE": rec.get("plantype", "PLAN 3"),
                     "NUMDISTRICTS": len(feats),
                     "POPULATION": p["POPULATION"],
                     "SOURCE": p["SOURCE"],

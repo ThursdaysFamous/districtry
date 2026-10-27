@@ -58,6 +58,24 @@ from scraper_common import make_fail, person_phone_problem  # noqa: E402  (share
 
 BOARD_URL = "https://franklincountyil.gov/county-board-members/"
 
+# WHERE THE BOARD MEETS, IN THE CLERK'S OWN WORDS. The members page prints no
+# board address, and the county's site footer gives 100 Public Square beside the
+# county's general number without saying it is the board's, while the state's
+# directory puts the Clerk at 901 Public Square — two numbers on one street and
+# neither attributed to the board. So it was asked, and County Clerk Paris Dunk
+# answered by e-mail on 2026-10-27: "The County Board Meetings are held in the
+# Franklin County Courthouse at 100 Public Square. The elections department is
+# caddy cornered to the Courthouse in the Campbell Building at 901 Public
+# Square." That attributes the address to the board in words, which is the rule
+# every board-office row follows. It is a MEETING place, so the card says
+# "Board meets at" (the Jo Daviess label) rather than "Board office". The ZIP is
+# the one the county's own filing gives for its Benton post-office box. The
+# e-mail is in the operator's mailbox, not in this repository.
+BOARD_MEETS = {
+    "address": "Franklin County Courthouse, 100 Public Square, Benton, IL 62812",
+    "source": "The Franklin County Clerk, by e-mail, 27 October 2026",
+}
+
 EXPECT_DISTRICTS = 3
 EXPECT_MEMBERS = EXPECT_DISTRICTS * SEATS_PER_DISTRICT      # 9 seats
 MIN_PHONES = 7          # measured 8/9 — one member's row carries no number
@@ -163,13 +181,16 @@ def main():
         fail("two members are badged Chairman (%s) — the page names one"
              % ", ".join(chairs))
 
+    districts = list(roster.values())
+    roster["board"] = dict(BOARD_MEETS)
+
     out_path = os.path.join(out_dir, "franklin-county-board-members.json")
     with open(out_path, "w", encoding="utf-8") as handle:
         json.dump(roster, handle, indent=2, ensure_ascii=False, sort_keys=True)
         handle.write("\n")
-    emails = sum(1 for v in roster.values() for m in v["members"] if m.get("email"))
-    roles = sum(1 for v in roster.values() for m in v["members"] if m.get("role"))
-    homes = sum(1 for v in roster.values() for m in v["members"] if m.get("phonesExtra"))
+    emails = sum(1 for v in districts for m in v["members"] if m.get("email"))
+    roles = sum(1 for v in districts for m in v["members"] if m.get("role"))
+    homes = sum(1 for v in districts for m in v["members"] if m.get("phonesExtra"))
     print("franklin-board-roster: wrote %s — %d districts of %d (%d phones, "
           "%d with a home number too, %d e-mail, %d roles printed by the county%s)"
           % (os.path.relpath(out_path, REPO_ROOT), EXPECT_DISTRICTS,

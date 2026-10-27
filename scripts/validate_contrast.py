@@ -453,14 +453,15 @@ TRAFFIC_PAIRS = [
     ("paper",       "accent-deep", "text", ".engines button[aria-pressed=true], the active engine's face — --paper on --accent-deep in BOTH tiers, where the shell's .is-primary paints #fff and records 1.91:1 in dark; this page does not paint that pair"),
     ("accent",      "panel",       "ui",   "the masthead's 3px inset rule; main summary::after, the accordion's + and –; .masthead-actions a:hover border"),
     ("accent-warm", "paper",       "ui",   "the focus ring (--focus-ring) on everything focusable, and .notes li:target"),
-    ("s1",          "panel",       "ui",   "the page-visit series: the daily chart's columns inside .chartcard, the .legend .swatch that names the series, .hitcol:focus-visible's 2px outline, .tooltip .dot"),
+    ("s1",          "panel",       "ui",   "a state's map in the pages-viewed chart and Google in the per-day sources chart, both inside a --panel .chartcard; .hitcol:focus-visible's 2px outline, .tooltip .dot"),
     ("s1",          "paper",       "ui",   ".barrow .bar in the six panels, which sit on the page ground, and .meter .fill"),
     ("s1",          "s1-track",    "ui",   ".meter .fill against its own track. The track reads against the fill and NOT against the page (1.01:1 on --paper light, 1.60:1 dark), so the bar's EXTENT is stated by a 1px --slate border rather than by the track itself — measured by the slate-on-paper row above"),
-    ("s2",          "panel",       "ui",   "the interaction series: the chart's second column, its .legend .swatch and .tooltip .dot"),
-    ("s3",          "panel",       "ui",   "Bing's segment in the per-day sources chart (.dayrow .stack i), inside a --panel .chartcard"),
-    ("s3",          "paper",       "ui",   "Bing's .legend .swatch above the per-day sources chart, on the page ground"),
-    ("s4",          "panel",       "ui",   "Yahoo's segment in the per-day sources chart (.dayrow .stack i), inside a --panel .chartcard"),
-    ("s4",          "paper",       "ui",   "Yahoo's .legend .swatch above the per-day sources chart, on the page ground"),
+    ("s2",          "panel",       "ui",   "points chosen in the reader-actions chart and DuckDuckGo in the per-day sources chart, inside a --panel .chartcard, and its .tooltip .dot"),
+    ("s2",          "paper",       "ui",   "the .legend .swatch for points chosen and for DuckDuckGo, on the page ground"),
+    ("s3",          "panel",       "ui",   "the front page in the pages-viewed chart, layers turned on in the reader-actions chart and Bing in the per-day sources chart, inside a --panel .chartcard"),
+    ("s3",          "paper",       "ui",   "the .legend .swatch for the front page, layers turned on and Bing, on the page ground"),
+    ("s4",          "panel",       "ui",   "searches and location requests in the reader-actions chart and the other search engines in the per-day sources chart, inside a --panel .chartcard"),
+    ("s4",          "paper",       "ui",   "the .legend .swatch for searches and location and for the other search engines, on the page ground"),
     # Gridlines are the 1.4.11 exemption the criterion spells out: the marks
     # that carry the data are gated above, and a reader needs no gridline to
     # read a bar's length or a column's height.

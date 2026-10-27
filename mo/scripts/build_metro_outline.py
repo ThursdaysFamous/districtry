@@ -108,12 +108,12 @@ STATE_COUNTY_FIPS = (
 )
 # The COVERAGE ring: the counties whose commission or council district lines
 # the County Commission District layer draws, exactly the keys of
-# data/app/mo-commission-counties.json (28 on 2026-10-26).
+# data/app/mo-commission-counties.json (31 on 2026-10-26).
 METRO_COUNTY_FIPS = (
     "011", "013", "021", "029", "037", "041", "043", "051",
-    "053", "057", "063", "093", "109", "113", "119", "125",
+    "053", "057", "063", "065", "089", "093", "109", "113", "119", "125",
     "127", "131", "157", "161", "167", "169", "173", "177",
-    "195", "201", "217", "219",
+    "195", "201", "217", "219", "223",
 )
 STATE_FIPS = "29"
 # No dispatch entries: none of this instance's layers is county-dispatched
@@ -319,6 +319,8 @@ RING_COUNTIES = (
     "Cooper",
     "Dade",
     "DeKalb",
+    "Dent",
+    "Howard",
     "Iron",
     "Lawrence",
     "Lincoln",
@@ -336,6 +338,7 @@ RING_COUNTIES = (
     "Scott",
     "Vernon",
     "Warren",
+    "Wayne",
 )
 INSIDE = {name: STATE_INSIDE[name] for name in RING_COUNTIES}
 OUTSIDE = dict(STATE_OUTSIDE)
