@@ -775,7 +775,7 @@ The plan's rule stands: **send to the desk, name the reporter in the first line.
 
 **GENERATED from `sent_on` / `attempted_on` in `docs/press-list.json` — this table is not hand-filled.** `docs/ASK_DRAFTS.md` exists because two ask ledgers in this repo once said *held* about e-mails that had already been sent. A hand-filled press ledger is that same failure waiting to happen with strangers on the other end, so the ledger and the per-outlet rows above are now ONE fact: mark the outlet the day it goes out and both surfaces move together. A bounce is recorded as an ATTEMPT, never as a send — an outlet that was never reached still has a pitch owing.
 
-20 outlets contacted; 20 delivered, 0 bounced and still owing. 2 rows have an outcome recorded; 8 have had their one follow-up.
+20 outlets contacted; 20 delivered, 0 bounced and still owing. 2 rows have an outcome recorded; 9 have had their one follow-up.
 
 | Sent | Wave | Outlet | Address used | State | Follow-up | Outcome |
 |---|---|---|---|---|---|---|
@@ -784,7 +784,7 @@ The plan's rule stands: **send to the desk, name the reporter in the first line.
 | 2026-08-31 | 1 | [Chicago Sun-Times](https://chicago.suntimes.com/) | `tips@suntimes.com` | sent | 2026-10-21 to `tips@suntimes.com` |  |
 | 2026-08-31 | 1 | [City Bureau / Chicago Documenters](https://www.citybureau.org/) | `info@citybureau.org` | sent |  |  |
 | 2026-08-31 | 1 | [City Cast Chicago (and its Hey Chicago newsletter)](https://chicago.citycast.fm/) | `chicago@citycast.fm` | sent | 2026-10-21 to `chicago@citycast.fm` |  |
-| 2026-08-31 | 1 | [Illinois Answers Project](https://illinoisanswers.org/) | `tips@illinoisanswers.org` | sent |  |  |
+| 2026-08-31 | 1 | [Illinois Answers Project](https://illinoisanswers.org/) | `tips@illinoisanswers.org` | sent | 2026-10-27 to `tips@illinoisanswers.org` |  |
 | 2026-08-31 | 1 | [South Side Weekly](https://southsideweekly.com/) | `editor@southsideweekly.com` | sent |  |  |
 | 2026-08-31 | 1 | [WBEZ / Chicago Public Media](https://www.wbez.org/) | `news@wbez.org` | sent | 2026-10-21 to `news@wbez.org` |  |
 | 2026-08-31 | 1 | [WTTW News / Chicago Tonight (WTTW-11)](https://news.wttw.com/) | `hcherone@wttw.com` | sent |  |  |
