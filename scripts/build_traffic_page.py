@@ -789,6 +789,18 @@ def return_visits(gc, start):
                       for r in v["by_app_return"]]}
 
 
+def page_rank(pg, path):
+    """A page's place in its window's pages list, by pages viewed: 1 plus the
+    pages viewed more often, so a tie shares a place. None when the page is
+    not in the list, which holds the window's top 20, so its count and place
+    are unknown rather than zero. The school board sentence said "the fourth
+    most of any page" by hand in every timeframe until 2026-10-27, when it was
+    fourth over two months and eleventh over the last seven days."""
+    if path not in pg:
+        return None
+    return 1 + sum(1 for c in pg.values() if c > pg[path])
+
+
 def bar_data(gc, start, end, full, days):
     """barData for one window, as the page reads it, plus the instance rows
     and their residual for the reconciliation printout.
@@ -874,7 +886,8 @@ def bar_data(gc, start, end, full, days):
         "layerPooled": pooled,
         "layerSplitFrom": long_label(LAYER_SPLIT),
         "seo": {"police": pg.get("/il/police-district.html", 0),
-                "school": pg.get("/il/school-board.html", 0)},
+                "school": pg.get("/il/school-board.html", 0),
+                "schoolRank": page_rank(pg, "/il/school-board.html")},
         "instResidual": residual,
         "pagesCut": bool(gc.get("pages_truncated", True)),
         "notListedYet": not_listed_yet(end),
@@ -1353,7 +1366,7 @@ def build():
     layerSplitFrom: "%s",
     /* the two Illinois SEO pages the narrative tracks, so the sentence cannot
        claim a figure the path widget has moved past */
-    seo: { police: %d, school: %d },
+    seo: { police: %d, school: %d, schoolRank: %s },
     /* Page visits no instance bar carries. Since 2026-10-20 the fetcher reads
        the whole pages list, so these are the site's own pages that belong to
        no app (privacy, about, the Android steps page); pagesCut is true only
@@ -1421,6 +1434,7 @@ def build():
         compact(bd["layerScope"]), compact(bd["layerSplit"]),
         compact(bd["layerPooled"]), bd["layerSplitFrom"],
         bd["seo"]["police"], bd["seo"]["school"],
+        "null" if bd["seo"]["schoolRank"] is None else bd["seo"]["schoolRank"],
         residual,
         "true" if bd["pagesCut"] else "false",
         json.dumps(bd["notListedYet"], separators=(",", ":")),
