@@ -48,7 +48,7 @@
 | Effingham | 17049 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 3 — `county-source-library-officials` (no-source); `effingham-municipal-officials` (no-source); `fire-park-district-officers` (no-source) |
 | Fayette | 17051 | dispatch | districted | `county-board` | 1 — `fayette-county-board-geometry` (no-source) |
 | Ford | 17053 | dispatch | districted | `county-board` | 1 — `ford-board-contact` (data-quality) |
-| Franklin | 17055 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `county-board-office-addresses` (no-source); `statewide-library-officials` (no-source) |
+| Franklin | 17055 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Fulton | 17057 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Gallatin | 17059 | dispatch | at-large — County card | `county-precinct`, `library-district` | 2 — `gallatin-board-contact` (data-quality); `statewide-library-officials` (no-source) |
 | Greene | 17061 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |

@@ -30588,7 +30588,8 @@ function initChiExplorer() {
               seq: seq,
               district: district,
               precincts: findPropCI(props, ["precincts"]),
-              entry: district != null ? results[1][String(district)] : null
+              entry: district != null ? results[1][String(district)] : null,
+              board: results[1].board || null
             };
           });
         },
@@ -30602,11 +30603,21 @@ function initChiExplorer() {
           if (members.length) {
             wrap.appendChild(renderPersonRows(members.map(boardMemberPerson)));
           }
-          if (result.precincts && result.precincts.length) {
-            wrap.appendChild(renderFieldStack([
-              { label: "Precincts", value: result.precincts.join(", ") }
-            ]));
+          var fields = [];
+          // "meets at", not "office": the County Clerk wrote that the board's
+          // meetings are held in the courthouse, which is a meeting place.
+          if (result.board && result.board.address) {
+            fields.push({ label: "Board meets at",
+                          value: String(result.board.address) });
+            if (result.board.source) {
+              fields.push({ label: "Address source",
+                            value: String(result.board.source) });
+            }
           }
+          if (result.precincts && result.precincts.length) {
+            fields.push({ label: "Precincts", value: result.precincts.join(", ") });
+          }
+          if (fields.length) wrap.appendChild(renderFieldStack(fields));
           return wrap;
         },
         cardIdentifier: function (result) {
