@@ -475,11 +475,17 @@ def engine(doc, start, end, key=None):
     }
 
 
-def map_link_summary(gc):
+def map_link_summary(gc, start):
     """The map-link rows as the page draws them: three bar groups and a
     summary the lead sentence reads. Fails on a row whose path is not the
     event's six parts, because a row this cannot read would otherwise drop out
-    of every total without a word."""
+    of every total without a word.
+
+    `fromInside` says whether the count began inside the window starting at
+    `start`. A shorter window that starts after it was counted in full, so
+    its sentence says "in these 7 days" rather than "since October 17": the
+    7-day view used to say no link had been read since October 17 when two
+    had been, on days before the window began."""
     sources, results, places = {}, {}, {}
     total = short = retried = opened = failed = 0
     for r in gc.get("map_links", []):
@@ -513,6 +519,7 @@ def map_link_summary(gc):
         "total": total, "short": short, "retried": retried, "opened": opened,
         "failed": failed, "cut": bool(gc.get("map_links_cut")),
         "from": long_label(MAP_LINKS_FROM),
+        "fromInside": MAP_LINKS_FROM >= start,
         "measured": "map_links" in gc}
 
 
@@ -830,7 +837,7 @@ def bar_data(gc, start, end, full, days):
             split[name] = {INSTANCE_NAMES.get(t, t): n
                            for t, n in sorted(by_tag.items())}
         pooled[name] = total_row - got
-    ml_sources, ml_results, ml_places, ml = map_link_summary(gc)
+    ml_sources, ml_results, ml_places, ml = map_link_summary(gc, start)
     pairs = lambda rows_: [(r["label"] or r["key"], r["count"]) for r in rows_]
     bd = {
         "instances": instances,
