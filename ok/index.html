@@ -6036,7 +6036,9 @@ function initOklahomaExplorer() {
     // selection (map click, address search, geolocate, or a shared/permalink load),
     // coordinates coarsened to ~1km (2 decimals) so it maps interest, never an
     // address. Cookieless and identity-free (GoatCounter), like every event here.
-    trackEvent("select", lat.toFixed(2) + "," + lng.toFixed(2));
+    // The path names the app (`select/il`, since 2026-10-27) so a state's own
+    // officials can be told how many points were chosen on that state's map.
+    trackEvent("select/" + METRO_BRAND.instanceTag, lat.toFixed(2) + "," + lng.toFixed(2));
 
     if (selectedMarker) map.removeLayer(selectedMarker);
     selectedMarker = L.marker([lat, lng], { icon: starDivIcon, alt: "Selected point" }).addTo(map);

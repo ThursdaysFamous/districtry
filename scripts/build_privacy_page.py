@@ -466,7 +466,7 @@ def measure_address_list(src, name):
 # Share menu (the manifest's share_target): `share-in/<tag>` records that a
 # place shared into the app opened that app, and nothing about the place,
 # which travels in the address hash and reaches analytics only as the
-# rounded `select` any selection sends.
+# rounded `select/` any selection sends.
 # `app-shortcut/` joined on 2026-10-21, with the installed app's long-press
 # shortcuts (the manifest's `shortcuts`, scripts/build_manifests.py):
 # `app-shortcut/<tag>/<action>` records that "Use my location" (`locate`) or
@@ -492,7 +492,7 @@ def measure_address_list(src, name):
 # on, pins it and outlines every ward or county board district it crosses, and
 # the event names the ZIP LAYER ("zip-search/zip-code") and nothing else: not
 # the ZIP code, which would say where a reader lives more precisely than the
-# two-decimal rounding `select` is held to. The pin it makes is not counted as
+# two-decimal rounding `select/` is held to. The pin it makes is not counted as
 # `compare/`, which stays the count of readers who pinned by hand. Only an app
 # that keeps a list of its ZIP codes (ZIP_SEARCH_URL, the worksheet's
 # `zip_search` key) can send it, so the sentence names the apps that cannot,
@@ -504,16 +504,21 @@ def measure_address_list(src, name):
 # answers the one question Google Analytics was kept for, how many readers
 # come back, without a cookie or an identifier. It names the app and never a
 # place.
+# `select/` replaced `select` on 2026-10-27 (each app's core-selection block):
+# `select/<tag>` names the app a point was chosen in, so a state's officials
+# can be told how many points were chosen on that state's map. The point it
+# carries is rounded exactly as before, and the tag adds nothing about where a
+# reader is that the page's own address does not already say.
 EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "app-shortcut/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
                    "feedback-open/button", "feedback-open/link", "feedback-send/email",
                    "feedback-send/github", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
-                   "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link-read/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "osm-note", "select",
+                   "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link-read/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "osm-note", "select/",
                    "share-in/", "share-native", "share-open", "share-permalink", "share-qr",
                    "visit/", "zip-search/"]
-EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
+EXPECTED_COORD_EVENTS = ["geolocate-success", "select/"]
 # What the front page (the one untagged surface) sends: the map-link count
 # above, from its address box, and since 2026-10-21 `example-place/<place>`
 # when a reader picks a place in the worked example beside that box
@@ -716,10 +721,15 @@ def measure(rel, name, url, tag):
     app["fingerprint"] = fingerprint(src)
 
     app["events"], app["indirect"] = collect_events(src, app["file"])
+    # A name may be a literal prefix plus one expression (`"select/" +
+    # METRO_BRAND.instanceTag`, since 2026-10-27), the shape collect_events()
+    # already reads by its prefix; without the optional `+ expr` the rounding
+    # gate below would stop seeing `select/` and pass an app that sent its
+    # point at full precision.
     app["coord_events"] = sorted({mm.group(1) for mm in re.finditer(
-        r"trackEvent\(\s*[\"']([^\"']+)[\"']\s*,\s*\w+\.toFixed\((\d)\)", src)})
+        r"trackEvent\(\s*[\"']([^\"']+)[\"']\s*(?:\+\s*[\w$.]+\s*)?,\s*\w+\.toFixed\((\d)\)", src)})
     app["coord_decimals"] = sorted({int(mm.group(1)) for mm in re.finditer(
-        r"trackEvent\(\s*[\"'][^\"']+[\"']\s*,\s*\w+\.toFixed\((\d)\)", src)})
+        r"trackEvent\(\s*[\"'][^\"']+[\"']\s*(?:\+\s*[\w$.]+\s*)?,\s*\w+\.toFixed\((\d)\)", src)})
     return app
 
 
@@ -1798,7 +1808,9 @@ def render_analytics_section(apps):
         'rel="noopener">GoatCounter</a> is cookieless and does not build a profile across '
         "sites. %s. Besides the "
         "page view, each app sends named events for: %s. Exactly two of those — %s — carry "
-        "coordinates, <strong>rounded to %d decimal places</strong>. When the search box reads a "
+        "coordinates, <strong>rounded to %d decimal places</strong>. The select/ event ends in the "
+        "two-letter tag of the app the point was chosen in, such as select/il, which says "
+        "which state\u2019s map was used and nothing more about where. When the search box reads a "
         "Google Maps or Apple Maps link, map-link-read/ says which app it was in, which of the "
         "two the link came from, whether it was a short link, whether it was pasted or "
         "arrived in the page\u2019s address (as a place shared into the installed app does), "

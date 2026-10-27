@@ -979,7 +979,7 @@ main > section.ruled { padding-top: 26px; border-top: 1px solid var(--line); }
 .milestones .tablecard { margin-top: 16px; }
 #mapMarks caption { text-align: left; padding: 12px 0 6px; font-size: 15px; font-weight: 600; color: var(--ink); }
 #mapMarks td { white-space: nowrap; }
-#mapMarks th:nth-child(3), #mapMarks td:nth-child(3) { padding-left: 24px; }
+#mapMarks .mk { padding-left: 24px; }
 #mapMarks small { display: block; font-size: 12.5px; color: var(--slate); }
 
 /* Six of these are the section headings for the panels under .three and three
@@ -1592,25 +1592,25 @@ code {
       <div class="tablecard">
         <table class="q" id="mapMarks">
           <caption>Each map in the last 30 days</caption>
-          <thead><tr><th scope="col">Map</th><th scope="col" class="num">Pages viewed</th><th scope="col">Passed</th><th scope="col">Next mark</th></tr></thead>
+          <thead><tr><th scope="col">Map</th><th scope="col" class="num">Pages viewed</th><th scope="col" class="mk">Passed</th><th scope="col">Next mark</th></tr></thead>
           <tbody>
-            <tr><td>Illinois</td><td class="num">1,777</td><td>1,000 <small>by Oct 26</small></td><td>5,000 <small>3,223 to go</small></td></tr>
-            <tr><td>New York</td><td class="num">382</td><td>100 <small>by Oct 26</small></td><td>500 <small>118 to go</small></td></tr>
-            <tr><td>Arkansas <small>live 12 days</small></td><td class="num">283</td><td>100 <small>by Oct 26</small></td><td>500 <small>217 to go</small></td></tr>
-            <tr><td>Wisconsin</td><td class="num">204</td><td>100 <small>by Oct 26</small></td><td>500 <small>296 to go</small></td></tr>
-            <tr><td>Indiana <small>live 20 days</small></td><td class="num">183</td><td>100 <small>by Oct 26</small></td><td>500 <small>317 to go</small></td></tr>
-            <tr><td>Iowa</td><td class="num">161</td><td>100 <small>by Oct 26</small></td><td>500 <small>339 to go</small></td></tr>
-            <tr><td>South Carolina <small>live 14 days</small></td><td class="num">153</td><td>100 <small>by Oct 26</small></td><td>500 <small>347 to go</small></td></tr>
-            <tr><td>Oklahoma <small>live 17 days</small></td><td class="num">148</td><td>100 <small>by Oct 26</small></td><td>500 <small>352 to go</small></td></tr>
-            <tr><td>Tennessee <small>live 14 days</small></td><td class="num">147</td><td>100 <small>by Oct 26</small></td><td>500 <small>353 to go</small></td></tr>
-            <tr><td>Michigan</td><td class="num">142</td><td>100 <small>by Oct 26</small></td><td>500 <small>358 to go</small></td></tr>
-            <tr><td>North Carolina <small>live 18 days</small></td><td class="num">126</td><td>100 <small>by Oct 26</small></td><td>500 <small>374 to go</small></td></tr>
-            <tr><td>Kentucky <small>live 27 days</small></td><td class="num">87</td><td>&mdash;</td><td>100 <small>13 to go</small></td></tr>
-            <tr><td>Minnesota <small>live 27 days</small></td><td class="num">87</td><td>&mdash;</td><td>100 <small>13 to go</small></td></tr>
-            <tr><td>Louisiana <small>live 6 days</small></td><td class="num">60</td><td>&mdash;</td><td>100 <small>40 to go</small></td></tr>
-            <tr><td>San Francisco</td><td class="num">49</td><td>&mdash;</td><td>100 <small>51 to go</small></td></tr>
-            <tr><td>Mississippi <small>live 11 days</small></td><td class="num">29</td><td>&mdash;</td><td>100 <small>71 to go</small></td></tr>
-            <tr><td>Missouri <small>live 1 day</small></td><td class="num">5</td><td>&mdash;</td><td>100 <small>95 to go</small></td></tr>
+            <tr><td>Illinois</td><td class="num">1,777</td><td class="mk">1,000 <small>by Oct 26</small></td><td>5,000 <small>3,223 to go</small></td></tr>
+            <tr><td>New York</td><td class="num">382</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>118 to go</small></td></tr>
+            <tr><td>Arkansas <small>live 12 days</small></td><td class="num">283</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>217 to go</small></td></tr>
+            <tr><td>Wisconsin</td><td class="num">204</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>296 to go</small></td></tr>
+            <tr><td>Indiana <small>live 20 days</small></td><td class="num">183</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>317 to go</small></td></tr>
+            <tr><td>Iowa</td><td class="num">161</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>339 to go</small></td></tr>
+            <tr><td>South Carolina <small>live 14 days</small></td><td class="num">153</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>347 to go</small></td></tr>
+            <tr><td>Oklahoma <small>live 17 days</small></td><td class="num">148</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>352 to go</small></td></tr>
+            <tr><td>Tennessee <small>live 14 days</small></td><td class="num">147</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>353 to go</small></td></tr>
+            <tr><td>Michigan</td><td class="num">142</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>358 to go</small></td></tr>
+            <tr><td>North Carolina <small>live 18 days</small></td><td class="num">126</td><td class="mk">100 <small>by Oct 26</small></td><td>500 <small>374 to go</small></td></tr>
+            <tr><td>Kentucky <small>live 27 days</small></td><td class="num">87</td><td class="mk">&mdash;</td><td>100 <small>13 to go</small></td></tr>
+            <tr><td>Minnesota <small>live 27 days</small></td><td class="num">87</td><td class="mk">&mdash;</td><td>100 <small>13 to go</small></td></tr>
+            <tr><td>Louisiana <small>live 6 days</small></td><td class="num">60</td><td class="mk">&mdash;</td><td>100 <small>40 to go</small></td></tr>
+            <tr><td>San Francisco</td><td class="num">49</td><td class="mk">&mdash;</td><td>100 <small>51 to go</small></td></tr>
+            <tr><td>Mississippi <small>live 11 days</small></td><td class="num">29</td><td class="mk">&mdash;</td><td>100 <small>71 to go</small></td></tr>
+            <tr><td>Missouri <small>live 1 day</small></td><td class="num">5</td><td class="mk">&mdash;</td><td>100 <small>95 to go</small></td></tr>
           </tbody>
         </table>
       </div>
@@ -1619,7 +1619,7 @@ code {
     <section class="ruled notes">
       <h2>How the marks are counted</h2>
       <ol>
-        <li><strong>Points chosen.</strong> A point is counted once a visit, so someone who checks three addresses in one visit counts once, and these figures are a floor. The counter does not say which state&rsquo;s map a point was chosen on, so points are counted for every map together.</li>
+        <li><strong>Points chosen.</strong> A point is counted once a visit, so someone who checks three addresses in one visit counts once, and these figures are a floor. Until October 27, 2026 the counter did not say which state&rsquo;s map a point was chosen on. Since then each map counts its own, which the table will show once a refresh has read it, and someone who uses two maps in one visit counts once on each.</li>
         <li><strong>The dates.</strong> Points chosen are kept day by day, so their dates are the day the mark was reached. Visits and each map&rsquo;s pages are kept only as a total for the last 30 days, so their dates are the first daily refresh that found the mark passed, and read &ldquo;by&rdquo;. The record begins with the figures for August 26, 2026, and a mark already passed then reads &ldquo;by&rdquo; too.</li>
         <li><strong>Each map.</strong> Pages viewed counts every page under a state&rsquo;s address: its map, its question pages and its county pages. It counts readers from anywhere, so someone in Indiana looking up an Illinois address counts for Illinois. A map that went live during the 30 days says how many days it has had.</li>
         <li><strong>The marks.</strong> They were set on October 27, 2026, and are never lowered to be reached. Once the last is passed, a higher one is added.</li>

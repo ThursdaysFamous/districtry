@@ -954,6 +954,10 @@ MAP_MONTH_MARKS = (100, 500, 1000, 5000)
 # Every live map at once: a state that has just gone live holds this back,
 # which is the point of it, since officials ask about their own state.
 EVERY_MAP_MARKS = (100, 500, 1000)
+# The day the maps began sending a chosen point under their own tag
+# (`select/il`); before it, `select` was one path for every map, so no map's
+# own count reaches further back.
+POINTS_BY_MAP_FROM = "2026-10-27"
 
 
 def load_milestones():
@@ -1088,6 +1092,11 @@ def milestones(gc, record):
 
     pages30 = {r["key"]: r["count"] for r in w30["instances"]}
     live = [t for t in fleet_tags() if FLEET_LISTED[t] <= end]
+    # Each map's points chosen over the same 30 days, when the file carries
+    # the per-map series (goatcounter_fetch.py, since 2026-10-27).
+    by_app = gc.get("event_by_app", {}).get("select")
+    points30 = ({a["tag"]: sum(a["daily"][-30:]) for a in by_app}
+                if by_app is not None else None)
     table = []
     for t in sorted(live, key=lambda t: (-pages30.get(t, 0), INSTANCE_NAMES[t])):
         n = pages30.get(t, 0)
@@ -1106,8 +1115,11 @@ def milestones(gc, record):
                if passed else "&mdash;")
         nx = ("%s <small>%s to go</small>" % (fmt(nxt), fmt(max(0, nxt - n)))
               if nxt else "every mark passed")
-        table.append('<tr><td>%s</td><td class="num">%s</td><td>%s</td>'
-                     '<td>%s</td></tr>' % (name, fmt(n), top, nx))
+        # Last, so the marks sit beside the pages figure they are marks of.
+        pts = ('<td class="num mk">%s</td>' % fmt(points30.get(t, 0))
+               if points30 is not None else "")
+        table.append('<tr><td>%s</td><td class="num">%s</td><td class="mk">%s</td>'
+                     '<td>%s</td>%s</tr>' % (name, fmt(n), top, nx, pts))
     for m in EVERY_MAP_MARKS:
         remember("every-map-30/%d" % m,
                  {"date": end, "exact": False}
@@ -1122,6 +1134,11 @@ def milestones(gc, record):
                 "%s more to go" % fmt(len(live) - over),
                 jsround(over / len(live) * 100) if live else 0, items)
 
+    caption = "Each map in the last 30 days"
+    if points30 is not None and w30["start"] < POINTS_BY_MAP_FROM:
+        caption += (" <small>Points chosen are counted map by map from %s, so "
+                    "they cover fewer days than the pages.</small>"
+                    % (long_label(POINTS_BY_MAP_FROM) + ", " + POINTS_BY_MAP_FROM[:4]))
     read_on = datetime.date.fromisoformat(gc["fetched"][:10]).strftime("%B %-d, %Y")
     html = "\n".join([
         MS_BEGIN,
@@ -1155,10 +1172,12 @@ def milestones(gc, record):
         '      </div>',
         '      <div class="tablecard">',
         '        <table class="q" id="mapMarks">',
-        '          <caption>Each map in the last 30 days</caption>',
+        '          <caption>%s</caption>' % caption,
         '          <thead><tr><th scope="col">Map</th><th scope="col" '
-        'class="num">Pages viewed</th><th scope="col">Passed</th>'
-        '<th scope="col">Next mark</th></tr></thead>',
+        'class="num">Pages viewed</th><th scope="col" class="mk">Passed</th>'
+        '<th scope="col">Next mark</th>%s</tr></thead>'
+        % ('<th scope="col" class="num mk">Points chosen</th>'
+           if points30 is not None else ""),
         '          <tbody>',
         "\n".join("            " + r for r in table),
         '          </tbody>',
@@ -1171,9 +1190,13 @@ def milestones(gc, record):
         '      <ol>',
         '        <li><strong>Points chosen.</strong> A point is counted once a '
         'visit, so someone who checks three addresses in one visit counts once, '
-        'and these figures are a floor. The counter does not say which '
-        'state&rsquo;s map a point was chosen on, so points are counted for '
-        'every map together.</li>',
+        'and these figures are a floor. Until %s the counter did not say '
+        'which state&rsquo;s map a point was chosen on. Since then each map '
+        'counts its own, %s, and someone who uses two maps in one visit counts '
+        'once on each.</li>'
+        % (long_label(POINTS_BY_MAP_FROM) + ", " + POINTS_BY_MAP_FROM[:4],
+           "which the table shows" if points30 is not None else
+           "which the table will show once a refresh has read it"),
         '        <li><strong>The dates.</strong> Points chosen are kept day by '
         'day, so their dates are the day the mark was reached. Visits and each '
         'map&rsquo;s pages are kept only as a total for the last 30 days, so '
