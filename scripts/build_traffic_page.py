@@ -30,6 +30,11 @@ WHAT IT DOES NOT DO, deliberately:
     can outlive — "ward leads", "the four days ran", the 2026-08-24 root-split
     caveat — and a generator that rewrote those would be inventing them. Read
     the reconciliation this prints, then read the page.
+    The one exception is the Milestones tab (added 2026-10-27), which this
+    writes whole between its TRAFFIC-MILESTONES markers, sentences and all,
+    because every sentence there is built from a figure. The day each mark was
+    first passed is kept in data/traffic-milestones.json, which this also
+    writes, and a mark newly passed is printed as a MILESTONE line.
   * It is NOT a CI gate. The three fetch workflows commit their files on their
     own schedule, so between a fetch and the next rebuild the page and the data
     legitimately disagree; a --check in CI would fail main every day for hours.
@@ -475,11 +480,17 @@ def engine(doc, start, end, key=None):
     }
 
 
-def map_link_summary(gc):
+def map_link_summary(gc, start):
     """The map-link rows as the page draws them: three bar groups and a
     summary the lead sentence reads. Fails on a row whose path is not the
     event's six parts, because a row this cannot read would otherwise drop out
-    of every total without a word."""
+    of every total without a word.
+
+    `fromInside` says whether the count began inside the window starting at
+    `start`. A shorter window that starts after it was counted in full, so
+    its sentence says "in these 7 days" rather than "since October 17": the
+    7-day view used to say no link had been read since October 17 when two
+    had been, on days before the window began."""
     sources, results, places = {}, {}, {}
     total = short = retried = opened = failed = 0
     for r in gc.get("map_links", []):
@@ -513,6 +524,7 @@ def map_link_summary(gc):
         "total": total, "short": short, "retried": retried, "opened": opened,
         "failed": failed, "cut": bool(gc.get("map_links_cut")),
         "from": long_label(MAP_LINKS_FROM),
+        "fromInside": MAP_LINKS_FROM >= start,
         "measured": "map_links" in gc}
 
 
@@ -777,6 +789,18 @@ def return_visits(gc, start):
                       for r in v["by_app_return"]]}
 
 
+def page_rank(pg, path):
+    """A page's place in its window's pages list, by pages viewed: 1 plus the
+    pages viewed more often, so a tie shares a place. None when the page is
+    not in the list, which holds the window's top 20, so its count and place
+    are unknown rather than zero. The school board sentence said "the fourth
+    most of any page" by hand in every timeframe until 2026-10-27, when it was
+    fourth over two months and eleventh over the last seven days."""
+    if path not in pg:
+        return None
+    return 1 + sum(1 for c in pg.values() if c > pg[path])
+
+
 def bar_data(gc, start, end, full, days):
     """barData for one window, as the page reads it, plus the instance rows
     and their residual for the reconciliation printout.
@@ -830,7 +854,7 @@ def bar_data(gc, start, end, full, days):
             split[name] = {INSTANCE_NAMES.get(t, t): n
                            for t, n in sorted(by_tag.items())}
         pooled[name] = total_row - got
-    ml_sources, ml_results, ml_places, ml = map_link_summary(gc)
+    ml_sources, ml_results, ml_places, ml = map_link_summary(gc, start)
     pairs = lambda rows_: [(r["label"] or r["key"], r["count"]) for r in rows_]
     bd = {
         "instances": instances,
@@ -862,7 +886,8 @@ def bar_data(gc, start, end, full, days):
         "layerPooled": pooled,
         "layerSplitFrom": long_label(LAYER_SPLIT),
         "seo": {"police": pg.get("/il/police-district.html", 0),
-                "school": pg.get("/il/school-board.html", 0)},
+                "school": pg.get("/il/school-board.html", 0),
+                "schoolRank": page_rank(pg, "/il/school-board.html")},
         "instResidual": residual,
         "pagesCut": bool(gc.get("pages_truncated", True)),
         "notListedYet": not_listed_yet(end),
@@ -913,6 +938,300 @@ def jspct(a, b):
     # a / b * 100 in that order, as the page writes it: 100 * a / b can land
     # on the other side of a half.
     return "%d%%" % jsround(a / b * 100) if b else "—"
+
+
+# ---- milestones --------------------------------------------------------------
+# The Milestones tab, added 2026-10-27 for the two things Adam asked the report
+# to watch: whether people are getting answers, and what the figures can show a
+# state's officials. Unlike the rest of the page, the tab is plain HTML written
+# here whole, between TRAFFIC-MILESTONES markers, sentences included: every one
+# of them is built from a figure, so none can outlive its number, and a reader
+# with no JavaScript and a crawler read exactly what a browser shows.
+MS_BEGIN = "<!-- ==== TRAFFIC-MILESTONES:BEGIN ==== -->"
+MS_END = "<!-- ==== TRAFFIC-MILESTONES:END ==== -->"
+# The day each mark was first passed, kept because the figures behind it roll:
+# the daily series reaches back two months and the per-map and visit figures
+# are a single 30-day total, so a date found today would be gone in a few weeks.
+# APPEND-ONLY. A mark once recorded keeps its date even when the figure falls
+# back under it; a date is never moved and an entry never removed.
+MILESTONE_FILE = os.path.join(ROOT, "data", "traffic-milestones.json")
+# The first day of the figures this record was started from. A mark already
+# passed on that day may have been passed before it, so its date reads "by".
+MILESTONES_FROM = "2026-08-26"
+# SET AHEAD AND NEVER LOWERED, on 2026-10-27. A mark moved down to be reached
+# says nothing; when the last one is passed, add a higher one.
+POINT_MONTH_MARKS = (1000, 2500, 5000, 10000)
+POINT_DAY_MARKS = (100, 250, 500, 1000)
+VISIT_MONTH_MARKS = (2500, 5000, 10000, 25000)
+MAP_MONTH_MARKS = (100, 500, 1000, 5000)
+# Every live map at once: a state that has just gone live holds this back,
+# which is the point of it, since officials ask about their own state.
+EVERY_MAP_MARKS = (100, 500, 1000)
+# The day the maps began sending a chosen point under their own tag
+# (`select/il`); before it, `select` was one path for every map, so no map's
+# own count reaches further back.
+POINTS_BY_MAP_FROM = "2026-10-27"
+
+
+def load_milestones():
+    if not os.path.exists(MILESTONE_FILE):
+        return {"reached": {}}
+    with open(MILESTONE_FILE, encoding="utf-8") as f:
+        doc = json.load(f)
+    if not isinstance(doc.get("reached"), dict):
+        fail("%s carries no `reached` object"
+             % os.path.relpath(MILESTONE_FILE, ROOT))
+    return doc
+
+
+def milestone_json(record):
+    doc = {"_comment": (
+        "Written by scripts/build_traffic_page.py: the day each traffic "
+        "milestone was first passed, for traffic.html's Milestones tab. "
+        "Append-only; a recorded date is never moved. exact is false where the "
+        "figure is not kept day by day, so the date is the first refresh that "
+        "found the mark passed and reads 'by'."),
+        "reached": dict(sorted(record["reached"].items()))}
+    return json.dumps(doc, indent=2, ensure_ascii=False) + "\n"
+
+
+def first_day_at(dates, series, mark):
+    """The first day a one-day figure reached `mark`, or None. The first day
+    of the figures may have had others like it before: not exact."""
+    for i, v in enumerate(series):
+        if v >= mark:
+            return {"date": dates[i], "exact": i > 0}
+    return None
+
+
+def first_rolling_at(dates, series, n, mark):
+    """The first day the sum of the `n` days ending on it reached `mark`, or
+    None. The first day with `n` days behind it is not exact, for the same
+    reason."""
+    for i in range(n - 1, len(series)):
+        if sum(series[i - n + 1:i + 1]) >= mark:
+            return {"date": dates[i], "exact": i > n - 1}
+    return None
+
+
+def milestones(gc, record):
+    """The Milestones tab's HTML, the record with any mark newly passed, and a
+    line per mark newly passed for the run's printout."""
+    fmt = "{:,}".format
+    reached = dict(record["reached"])
+    new = []
+    dates = [d["date"] for d in gc["daily"]]
+    end = gc["window"]["end"]
+    rows_ = daily_rows(gc)
+    points = [r[4] for r in rows_]
+    w30 = gc.get("windows", {}).get("30")
+    if not w30:
+        fail("the data file carries no 30-day window, which the Milestones "
+             "tab reads. Run the fetch workflow again.")
+
+    def remember(key, found, what):
+        if key not in reached and found:
+            reached[key] = found
+            new.append("%s: %s passed, %s%s" % (
+                what, fmt(int(key.rsplit("/", 1)[1])),
+                "" if found["exact"] else "by ", found["date"]))
+
+    def when(entry):
+        return ("" if entry["exact"] else "by ") + label(entry["date"])
+
+    def ladder(prefix, marks, name=fmt):
+        """The marks as list items, and the first not yet passed."""
+        out, nxt = [], None
+        for m in marks:
+            hit = reached.get("%s/%d" % (prefix, m))
+            if hit:
+                out.append('<li class="passed"><span class="mark">%s</span> '
+                           'passed %s</li>' % (name(m), when(hit)))
+            elif nxt is None:
+                nxt = m
+                out.append('<li class="next"><span class="mark">%s</span></li>'
+                           % name(m))
+            else:
+                out.append('<li><span class="mark">%s</span></li>' % name(m))
+        return out, nxt
+
+    def box(title, value, to, width, items):
+        return "\n".join([
+            '<div class="mile">',
+            '          <h4>%s</h4>' % title,
+            '          <p class="now"><span class="value">%s</span>'
+            '<span class="to">%s</span></p>' % (value, to),
+            '          <div class="meter" aria-hidden="true"><div class="fill" '
+            'style="width:%d%%"></div></div>' % width,
+            '          <ol class="marks">',
+            "\n".join("            " + li for li in items),
+            '          </ol>',
+            '        </div>'])
+
+    def card(title, value, after, prefix, marks):
+        items, nxt = ladder(prefix, marks)
+        if nxt is None:
+            to, width = "every mark passed", 100
+        else:
+            to = "%s to go to %s" % (fmt(max(0, nxt - value)), fmt(nxt))
+            width = min(100, jsround(value / nxt * 100))
+        return box(title, fmt(value), after + to, width, items)
+
+    # People getting answers: points chosen over the last 30 days, and on the
+    # best single day of the two months the figures cover.
+    for m in POINT_MONTH_MARKS:
+        remember("points-30/%d" % m, first_rolling_at(dates, points, 30, m),
+                 "Points chosen in 30 days")
+    for m in POINT_DAY_MARKS:
+        remember("points-day/%d" % m, first_day_at(dates, points, m),
+                 "Points chosen in one day")
+    best = max(range(len(points)), key=lambda i: (points[i], -i))
+    answers = [
+        card("Points chosen in the last 30 days", sum(points[-30:]), "",
+             "points-30", POINT_MONTH_MARKS),
+        card("Most points chosen in one day", points[best],
+             "on %s; " % long_label(dates[best]), "points-day",
+             POINT_DAY_MARKS),
+    ]
+
+    # For officials: visits to every map together, then each map's pages.
+    visits = people(w30, rows_[-30:])["visits"]
+    for m in VISIT_MONTH_MARKS:
+        remember("visits-30/%d" % m,
+                 {"date": end, "exact": False} if visits >= m else None,
+                 "Visits in 30 days")
+    reach = card("Visits in the last 30 days, every map together", visits, "",
+                 "visits-30", VISIT_MONTH_MARKS)
+
+    pages30 = {r["key"]: r["count"] for r in w30["instances"]}
+    live = [t for t in fleet_tags() if FLEET_LISTED[t] <= end]
+    # Each map's points chosen over the same 30 days, once the file carries
+    # the per-map series (goatcounter_fetch.py, since 2026-10-27) AND that
+    # series has a map in it. A fetch whose window ends before the first
+    # select/<tag> was sent carries an empty list, and a column of zeros
+    # beside maps where hundreds of points were chosen would read as none.
+    by_app = gc.get("event_by_app", {}).get("select")
+    points30 = ({a["tag"]: sum(a["daily"][-30:]) for a in by_app}
+                if by_app else None)
+    table = []
+    for t in sorted(live, key=lambda t: (-pages30.get(t, 0), INSTANCE_NAMES[t])):
+        n = pages30.get(t, 0)
+        key = lambda m: "map-pages-30/%s/%d" % (t, m)
+        for m in MAP_MONTH_MARKS:
+            remember(key(m), {"date": end, "exact": False} if n >= m else None,
+                     "%s pages viewed in 30 days" % INSTANCE_NAMES[t])
+        passed = [m for m in MAP_MONTH_MARKS if key(m) in reached]
+        nxt = next((m for m in MAP_MONTH_MARKS if key(m) not in reached), None)
+        name = INSTANCE_NAMES[t]
+        if FLEET_LISTED[t] > w30["start"]:
+            age = (datetime.date.fromisoformat(end)
+                   - datetime.date.fromisoformat(FLEET_LISTED[t])).days + 1
+            name += " <small>live %d day%s</small>" % (age, "" if age == 1 else "s")
+        top = ("%s <small>%s</small>" % (fmt(passed[-1]), when(reached[key(passed[-1])]))
+               if passed else "&mdash;")
+        nx = ("%s <small>%s to go</small>" % (fmt(nxt), fmt(max(0, nxt - n)))
+              if nxt else "every mark passed")
+        # Last, so the marks sit beside the pages figure they are marks of.
+        pts = ('<td class="num mk">%s</td>' % fmt(points30.get(t, 0))
+               if points30 is not None else "")
+        table.append('<tr><td>%s</td><td class="num">%s</td><td class="mk">%s</td>'
+                     '<td>%s</td>%s</tr>' % (name, fmt(n), top, nx, pts))
+    for m in EVERY_MAP_MARKS:
+        remember("every-map-30/%d" % m,
+                 {"date": end, "exact": False}
+                 if all(pages30.get(t, 0) >= m for t in live) else None,
+                 "Every map's pages viewed in 30 days")
+    items, nxt = ladder("every-map-30", EVERY_MAP_MARKS, lambda m: fmt(m) + " each")
+    aim = nxt or EVERY_MAP_MARKS[-1]
+    over = sum(1 for t in live if pages30.get(t, 0) >= aim)
+    every = box("Maps past %s pages viewed in the last 30 days" % fmt(aim),
+                "%s <small>of %s</small>" % (fmt(over), fmt(len(live))),
+                "every mark passed" if nxt is None else
+                "%s more to go" % fmt(len(live) - over),
+                jsround(over / len(live) * 100) if live else 0, items)
+
+    caption = "Each map in the last 30 days"
+    if points30 is not None and w30["start"] < POINTS_BY_MAP_FROM:
+        caption += (" <small>Points chosen are counted map by map from %s, so "
+                    "they cover fewer days than the pages.</small>"
+                    % (long_label(POINTS_BY_MAP_FROM) + ", " + POINTS_BY_MAP_FROM[:4]))
+    read_on = datetime.date.fromisoformat(gc["fetched"][:10]).strftime("%B %-d, %Y")
+    html = "\n".join([
+        MS_BEGIN,
+        '    <!-- GENERATED by scripts/build_traffic_page.py from the three data '
+        'files and data/traffic-milestones.json. Do not hand-edit: rerun the '
+        'script. -->',
+        '    <section class="ruled milestones">',
+        '      <div class="sec-head">',
+        '        <h2>Milestones</h2>',
+        '        <span class="window-note">Figures through %s, read on %s</span>'
+        % (long_label(end) + ", " + end[:4], read_on),
+        '      </div>',
+        '      <p class="take">Marks to watch for, in two groups: people getting '
+        'answers, and figures worth showing a state&rsquo;s officials. A mark '
+        'passed shows the day it was first reached.</p>',
+        '',
+        '      <h3 class="kicker">People getting answers</h3>',
+        '      <p class="take">Choosing a point is when someone gets an answer: '
+        'the map then names every district at that spot and who holds each '
+        'seat.</p>',
+        '      <div class="miles">',
+        '        ' + "\n        ".join(answers),
+        '      </div>',
+        '',
+        '      <h3 class="kicker">Figures for state officials</h3>',
+        '      <p class="take">How much the maps were used in the last 30 days, '
+        'all together and one by one, for a letter or a meeting.</p>',
+        '      <div class="miles">',
+        '        ' + reach,
+        '        ' + every,
+        '      </div>',
+        '      <div class="tablecard">',
+        '        <table class="q" id="mapMarks">',
+        '          <caption>%s</caption>' % caption,
+        '          <thead><tr><th scope="col">Map</th><th scope="col" '
+        'class="num">Pages viewed</th><th scope="col" class="mk">Passed</th>'
+        '<th scope="col">Next mark</th>%s</tr></thead>'
+        % ('<th scope="col" class="num mk">Points chosen</th>'
+           if points30 is not None else ""),
+        '          <tbody>',
+        "\n".join("            " + r for r in table),
+        '          </tbody>',
+        '        </table>',
+        '      </div>',
+        '    </section>',
+        '',
+        '    <section class="ruled notes">',
+        '      <h2>How the marks are counted</h2>',
+        '      <ol>',
+        '        <li><strong>Points chosen.</strong> A point is counted once a '
+        'visit, so someone who checks three addresses in one visit counts once, '
+        'and these figures are a floor. Until %s the counter did not say '
+        'which state&rsquo;s map a point was chosen on. Since then each map '
+        'counts its own, %s, and someone who uses two maps in one visit counts '
+        'once on each.</li>'
+        % (long_label(POINTS_BY_MAP_FROM) + ", " + POINTS_BY_MAP_FROM[:4],
+           "which the table shows" if points30 is not None else
+           "which the table will show once a refresh has read it"),
+        '        <li><strong>The dates.</strong> Points chosen are kept day by '
+        'day, so their dates are the day the mark was reached. Visits and each '
+        'map&rsquo;s pages are kept only as a total for the last 30 days, so '
+        'their dates are the first daily refresh that found the mark passed, '
+        'and read &ldquo;by&rdquo;. The record begins with the figures for %s, '
+        'and a mark already passed then reads &ldquo;by&rdquo; too.</li>'
+        % (long_label(MILESTONES_FROM) + ", " + MILESTONES_FROM[:4]),
+        '        <li><strong>Each map.</strong> Pages viewed counts every page '
+        'under a state&rsquo;s address: its map, its question pages and its '
+        'county pages. It counts readers from anywhere, so someone in Indiana '
+        'looking up an Illinois address counts for Illinois. A map that went '
+        'live during the 30 days says how many days it has had.</li>',
+        '        <li><strong>The marks.</strong> They were set on October 27, '
+        '2026, and are never lowered to be reached. Once the last is passed, a '
+        'higher one is added.</li>',
+        '      </ol>',
+        '    </section>',
+        '    ' + MS_END])
+    return html, {"reached": reached}, new
 
 
 def build():
@@ -1047,7 +1366,7 @@ def build():
     layerSplitFrom: "%s",
     /* the two Illinois SEO pages the narrative tracks, so the sentence cannot
        claim a figure the path widget has moved past */
-    seo: { police: %d, school: %d },
+    seo: { police: %d, school: %d, schoolRank: %s },
     /* Page visits no instance bar carries. Since 2026-10-20 the fetcher reads
        the whole pages list, so these are the site's own pages that belong to
        no app (privacy, about, the Android steps page); pagesCut is true only
@@ -1115,6 +1434,7 @@ def build():
         compact(bd["layerScope"]), compact(bd["layerSplit"]),
         compact(bd["layerPooled"]), bd["layerSplitFrom"],
         bd["seo"]["police"], bd["seo"]["school"],
+        "null" if bd["seo"]["schoolRank"] is None else bd["seo"]["schoolRank"],
         residual,
         "true" if bd["pagesCut"] else "false",
         json.dumps(bd["notListedYet"], separators=(",", ":")),
@@ -1344,6 +1664,17 @@ def main():
     head, rest = page.split(BEGIN, 1)
     _, tail = rest.split(END, 1)
     updated, unwritten = apply_fallbacks(head + block + tail, fallbacks)
+    if MS_BEGIN not in updated or MS_END not in updated:
+        fail("traffic.html carries no TRAFFIC-MILESTONES markers. Put them "
+             "inside the Milestones tab's panel.")
+    record = load_milestones()
+    ms_html, record_after, newly = milestones(gc, record)
+    head, rest = updated.split(MS_BEGIN, 1)
+    _, tail = rest.split(MS_END, 1)
+    updated = head + ms_html + tail
+    record_text = milestone_json(record_after)
+    record_old = (open(MILESTONE_FILE, encoding="utf-8").read()
+                  if os.path.exists(MILESTONE_FILE) else "")
 
     print("window %s → %s (%d days), read %s"
           % (gc["window"]["start"], gc["window"]["end"], len(gc["daily"]),
@@ -1374,12 +1705,21 @@ def main():
     print("  %d data-stat span(s) written from the data; %d key(s) keep a "
           "hand-typed fallback a crawler reads: %s"
           % (len(fallbacks), len(unwritten), ", ".join(sorted(unwritten)) or "none"))
+    # A mark newly passed is news for the day's reply, so it is printed in
+    # words a reply can carry. Nothing is printed on a day with none.
+    for line in newly:
+        print("MILESTONE %s" % line)
 
     if args.check:
         print("build-traffic-page: %s"
-              % ("current" if updated == page else "WOULD CHANGE — rerun "
-                 "without --check"))
+              % ("current" if updated == page and record_text == record_old
+                 else "WOULD CHANGE — rerun without --check"))
         return
+    if record_text != record_old:
+        with open(MILESTONE_FILE, "w", encoding="utf-8") as f:
+            f.write(record_text)
+        print("build-traffic-page: wrote %s"
+              % os.path.relpath(MILESTONE_FILE, ROOT))
     if updated == page:
         print("build-traffic-page: OK — no change")
         return
