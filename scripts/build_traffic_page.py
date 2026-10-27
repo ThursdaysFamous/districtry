@@ -1092,11 +1092,14 @@ def milestones(gc, record):
 
     pages30 = {r["key"]: r["count"] for r in w30["instances"]}
     live = [t for t in fleet_tags() if FLEET_LISTED[t] <= end]
-    # Each map's points chosen over the same 30 days, when the file carries
-    # the per-map series (goatcounter_fetch.py, since 2026-10-27).
+    # Each map's points chosen over the same 30 days, once the file carries
+    # the per-map series (goatcounter_fetch.py, since 2026-10-27) AND that
+    # series has a map in it. A fetch whose window ends before the first
+    # select/<tag> was sent carries an empty list, and a column of zeros
+    # beside maps where hundreds of points were chosen would read as none.
     by_app = gc.get("event_by_app", {}).get("select")
     points30 = ({a["tag"]: sum(a["daily"][-30:]) for a in by_app}
-                if by_app is not None else None)
+                if by_app else None)
     table = []
     for t in sorted(live, key=lambda t: (-pages30.get(t, 0), INSTANCE_NAMES[t])):
         n = pages30.get(t, 0)
