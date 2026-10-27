@@ -441,29 +441,47 @@ def event_family(path):
     return parts[0]
 
 
+# Families whose second part is the app the event came from, kept per app and
+# per day as well. `select` gained its tag on 2026-10-27 (`select/il`), so that
+# a state's own officials can be told how many points were chosen on that
+# state's map; before that day it was one path for every app, which stays in
+# the family's total and in no app's row.
+BY_APP_FAMILIES = ("select",)
+
+
 def event_breakdown(s, total, start, end, mx, dates):
     """Every event path in the window, summed per family and per day.
 
     The events list caps at ten rows like the pages list, and gets past the cap
     the same way (all_pages with `exclude`). Each row carries its own daily
     series, so the per-family series below are exact rather than a top ten
-    stretched to cover the rest. Returns (paths, families, cut): paths is every
-    row's total, families {family: {count, daily[]}} with daily aligned to
-    `dates`, cut true when the list could not be read to its end, so every
-    family is then a floor.
+    stretched to cover the rest. Returns (paths, families, by_app, cut): paths
+    is every row's total, families {family: {count, daily[]}} with daily
+    aligned to `dates`, by_app {family: [{tag, count, daily[]}]} for each of
+    BY_APP_FAMILIES, cut true when the list could not be read to its end, so
+    every family is then a floor.
     """
     rows_, cut = all_pages(s, total, start, end, mx, filt="is:event",
                            label="events", pages_max=EVENT_PAGES)
-    fams = {}
+    fams, apps = {}, {f: {} for f in BY_APP_FAMILIES}
     for r in rows_:
         f = fams.setdefault(event_family(r["path"]),
                             {"count": 0, "daily": [0] * len(dates)})
         f["count"] += r["count"]
         for i, d in enumerate(dates):
             f["daily"][i] += r["daily"].get(d, 0)
+        parts = r["path"].split("/")
+        if parts[0] in apps and len(parts) == 2 and parts[1]:
+            a = apps[parts[0]].setdefault(parts[1], {"tag": parts[1], "count": 0,
+                                                     "daily": [0] * len(dates)})
+            a["count"] += r["count"]
+            for i, d in enumerate(dates):
+                a["daily"][i] += r["daily"].get(d, 0)
     paths = sorted(({"path": r["path"], "count": r["count"]} for r in rows_),
                    key=lambda r: (-r["count"], r["path"]))
-    return paths, fams, bool(cut)
+    by_app = {f: sorted(v.values(), key=lambda a: (-a["count"], a["tag"]))
+              for f, v in apps.items()}
+    return paths, fams, by_app, bool(cut)
 
 
 def page_kinds(page_rows, dates, tags):
@@ -636,7 +654,7 @@ def collect(s, total, start, end, per_day=True):
     if per_day:
         # The full window only: each family carries its daily series, so a
         # shorter window's families are the same series cut to length.
-        event_paths, event_families, events_cut = event_breakdown(
+        event_paths, event_families, event_by_app, events_cut = event_breakdown(
             s, total, start, end, mx, dates)
         print("events: %d paths in %d families, sum %d of %d%s"
               % (len(event_paths), len(event_families),
@@ -682,6 +700,8 @@ def collect(s, total, start, end, per_day=True):
     if per_day:
         out.update({"event_paths": event_paths,
                     "event_families": event_families,
+                    # Per app and per day, for BY_APP_FAMILIES only.
+                    "event_by_app": event_by_app,
                     "events_cut": events_cut,
                     "page_kinds": page_kinds(page_rows, dates, fleet_tags())})
     # THE INSTANCE BARS MUST SUM TO THE PAGEVIEW TOTAL, and they are counted
