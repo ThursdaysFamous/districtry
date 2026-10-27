@@ -1985,8 +1985,14 @@ note is drafted and waits on a route rather than on a send.
 
 **SENT 2026-10-01 16:17:55 UTC to `league@lwm-info.org`, subject "Reuse terms for the
 Directory of City and Village Officials". NO REPLY as of 2026-10-15** (read off the operator's
-mailbox that day). **FOLLOWED UP 2026-10-26 at 13:56:03 UTC; a second follow-up is due about
-2026-11-09.** Drafted 2026-09-05. Nothing here has been bought, and nothing should
+mailbox that day). **FOLLOWED UP 2026-10-26 at 13:56:03 UTC. DECLINED 2026-10-27 at 15:19 UTC**,
+by Anand Dogiparthy, the League's Technology and Project Specialist: the League "cannot
+authorize the reuse, redistribution, or republication of data from the League's directories
+or related municipal official lists", and the information "may be available through other
+public sources that you can independently collect and maintain." So nothing from the
+Directory, the Governing Bodies list or the Chief Executives list may be used, the second
+follow-up is cancelled, and no reply was drafted. Both gap records (`alderperson-rosters` and
+`municipal-officers`) record the ask as refused, which is the "No" case below. Drafted 2026-09-05. Nothing here has been bought, and nothing should
 be until this is answered.
 
 **The sweep this draft was waiting on has landed, and the draft names its figures.**
