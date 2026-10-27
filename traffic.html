@@ -1416,7 +1416,7 @@ code {
       </div>
       <div class="read" id="dayRefsRead" hidden>
         <h3 class="kicker">Search engines, day by day</h3>
-        <p><span data-stat="dayRefLead">On October 26 search engines sent 199 visits, against 121 the day before and 76 on October 13.</span></p>
+        <p><span data-stat="dayRefLead">On October 26 search engines sent at least 199 visits, against 121 the day before and 76 on October 13.</span></p>
       </div>
       <div class="read" id="googleRead" hidden>
         <h3 class="kicker">Google</h3>
@@ -2445,13 +2445,16 @@ code {
     dayRefLead: (function () {
       if (!dayRefs.length) return "";
       var eng = function (r) { return r[1] + r[2] + r[3] + r[4]; };
+      /* A day whose source list was cut short (r[9], drawn as "+") gives a
+         floor, and the sentence says so as the table does. */
+      var n = function (r) { return (r[9] ? "at least " : "") + fmt(eng(r)); };
       var last = dayRefs[dayRefs.length - 1];
       var line = "On " + longMonth(last[0]) + " search engines sent " +
-                 fmt(eng(last)) + " visits";
+                 n(last) + " visits";
       if (dayRefs.length > 1) {
         var prev = dayRefs[dayRefs.length - 2];
-        line += ", against " + fmt(eng(prev)) + " the day before";
-        if (dayRefs.length > 2) line += " and " + fmt(eng(dayRefs[0])) + " on " + longMonth(dayRefs[0][0]);
+        line += ", against " + n(prev) + " the day before";
+        if (dayRefs.length > 2) line += " and " + n(dayRefs[0]) + " on " + longMonth(dayRefs[0][0]);
       }
       return line + ".";
     })(),
