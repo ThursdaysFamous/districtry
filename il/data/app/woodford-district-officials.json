@@ -37,7 +37,7 @@
         }
       ],
       "comptrollerCode": "064/040/06",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "McLean",
       "heads": [
         {
@@ -511,21 +511,18 @@
     "Secor Fire District": {
       "board": [
         {
-          "email": "gslayton@hotmail.com",
+          "email": "bobkaty2005@yahoo.com",
+          "name": "Bob Seggerman",
+          "role": "President"
+        },
+        {
           "name": "Greg Slayton",
           "phone": "(309) 922-0816",
           "role": "Treasurer"
         }
       ],
       "comptrollerCode": "102/070/06",
-      "filedFor": "2025",
-      "heads": [
-        {
-          "email": "dotlou49@gmail.com",
-          "name": "Bob Seggerman",
-          "role": "C.E.O."
-        }
-      ],
+      "filedFor": "2026",
       "kind": "fire",
       "office": {
         "address": "PO Box 17",
@@ -587,7 +584,7 @@
       "office": {}
     }
   },
-  "generated": "2026-10-20T00:48:31Z",
+  "generated": "2026-10-27T01:00:32Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
