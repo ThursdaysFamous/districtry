@@ -7723,43 +7723,62 @@ function initChiExplorer() {
     geoStatusEl.textContent = "Locating…";
     geoStatusEl.className = "geo-status";
 
-    navigator.geolocation.getCurrentPosition(
-      function (pos) {
-        locateBtn.disabled = false;
-        var lat = pos.coords.latitude, lng = pos.coords.longitude;
-        // Which app answers where the reader is standing is the hand-off's own
-        // question (ENGINE metro-portal placeOwner), asked of the same outlines,
-        // so a located point and a clicked one can never be routed differently.
-        geoStatusEl.textContent = "Locating…";
-        placeOwner(lat, lng).then(function (owner) {
-          if (owner === "here") { selectLocated(lat, lng); return; }
-          if (owner) {
-            // standing inside a sibling's area: send them there, deep-linking
-            // the located point (the URL fragment stays client-side, same
-            // exposure as the sibling's own geolocate → permalink flow)
-            geoStatusEl.textContent = "You're outside " + appPlaceName() + " — but " +
-              siblingDisplayName(owner) + " covers where you are.";
-            geoStatusEl.className = "geo-status";
-            trackLocateFail("other-app");
-            offerMetroPortal(owner, { point: { lat: lat, lng: lng }, source: "geolocate" });
-            return;
-          }
-          trackLocateFail("outside");
-          geoStatusEl.textContent = "Your current location looks like it's outside the " + appPlaceName() + " area this app covers.";
-          geoStatusEl.className = "geo-status err";
-        });
-      },
-      function (err) {
-        locateBtn.disabled = false;
-        var msg = "Couldn't get your location.", reason = "other";
-        if (err.code === err.PERMISSION_DENIED) { msg = "Location access was denied. Allow it in your browser's site settings to use this."; reason = "denied"; }
-        else if (err.code === err.TIMEOUT) { msg = "Location request timed out. Try again."; reason = "timeout"; }
-        else if (err.code === err.POSITION_UNAVAILABLE) { msg = "Your location is currently unavailable."; reason = "unavailable"; }
-        trackLocateFail(reason);
-        geoStatusEl.textContent = msg;
+    // ASKED TWICE WHEN THE FIRST ANSWER IS "NO POSITION YET" (2026-10-28).
+    // The Google Play app hands location to Android (PWABuilder's location
+    // delegation, on from 1.0.3), and that hand-off asks Google Play services
+    // for a GPS fix at high accuracy and reports POSITION_UNAVAILABLE the
+    // moment the phone says no fix is available yet, which indoors is often
+    // at once; the browser on the same phone waits for one. Adam's 1.0.3
+    // install failed every time while Chrome found him. So an unavailable
+    // first answer is asked again once at normal accuracy, which the hand-off
+    // serves from Wi-Fi and phone towers, accepting a fix up to five minutes
+    // old. A refusal or a timeout is not asked again: the reader said no, or
+    // has already waited. Only the final answer is counted.
+    var LOCATE_FIRST = { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 };
+    var LOCATE_AGAIN = { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 };
+    function locateFailed(err) {
+      locateBtn.disabled = false;
+      var msg = "Couldn't get your location.", reason = "other";
+      if (err.code === err.PERMISSION_DENIED) { msg = "Location access was denied. Allow it in your browser's site settings to use this."; reason = "denied"; }
+      else if (err.code === err.TIMEOUT) { msg = "Location request timed out. Try again."; reason = "timeout"; }
+      else if (err.code === err.POSITION_UNAVAILABLE) { msg = "Your location is currently unavailable."; reason = "unavailable"; }
+      trackLocateFail(reason);
+      geoStatusEl.textContent = msg;
+      geoStatusEl.className = "geo-status err";
+    }
+
+    var located = function (pos) {
+      locateBtn.disabled = false;
+      var lat = pos.coords.latitude, lng = pos.coords.longitude;
+      // Which app answers where the reader is standing is the hand-off's own
+      // question (ENGINE metro-portal placeOwner), asked of the same outlines,
+      // so a located point and a clicked one can never be routed differently.
+      geoStatusEl.textContent = "Locating…";
+      placeOwner(lat, lng).then(function (owner) {
+        if (owner === "here") { selectLocated(lat, lng); return; }
+        if (owner) {
+          // standing inside a sibling's area: send them there, deep-linking
+          // the located point (the URL fragment stays client-side, same
+          // exposure as the sibling's own geolocate → permalink flow)
+          geoStatusEl.textContent = "You're outside " + appPlaceName() + " — but " +
+            siblingDisplayName(owner) + " covers where you are.";
+          geoStatusEl.className = "geo-status";
+          trackLocateFail("other-app");
+          offerMetroPortal(owner, { point: { lat: lat, lng: lng }, source: "geolocate" });
+          return;
+        }
+        trackLocateFail("outside");
+        geoStatusEl.textContent = "Your current location looks like it's outside the " + appPlaceName() + " area this app covers.";
         geoStatusEl.className = "geo-status err";
+      });
+    };
+    navigator.geolocation.getCurrentPosition(
+      located,
+      function (err) {
+        if (err.code !== err.POSITION_UNAVAILABLE) { locateFailed(err); return; }
+        navigator.geolocation.getCurrentPosition(located, locateFailed, LOCATE_AGAIN);
       },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+      LOCATE_FIRST
     );
   });
 

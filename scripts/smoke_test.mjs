@@ -2524,6 +2524,69 @@ try {
         JSON.stringify({ sel, events }));
       await context.close();
     }
+    // "NO POSITION YET" IS ASKED AGAIN ONCE, AT NORMAL ACCURACY (2026-10-28).
+    // The Google Play app's location hand-off answers POSITION_UNAVAILABLE at
+    // once when the phone has no GPS fix yet, which a browser does not do, so
+    // the map asks again without high accuracy. A refusal is not asked again.
+    // The phone's answers are stood in for, since a browser in a test cannot
+    // be told to have no fix.
+    const fakeLocation = (context, answers) => context.addInitScript((list) => {
+      window.__asked = [];
+      const geo = {
+        getCurrentPosition(ok, bad, opts) {
+          window.__asked.push(!!(opts && opts.enableHighAccuracy));
+          const a = list[window.__asked.length - 1] || list[list.length - 1];
+          setTimeout(() => {
+            if (a.code) bad({ code: a.code, PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3, message: "" });
+            else ok({ coords: { latitude: a.lat, longitude: a.lng, accuracy: 30 }, timestamp: Date.now() });
+          }, 50);
+        },
+        watchPosition() { return 0; },
+        clearWatch() {},
+      };
+      Object.defineProperty(navigator, "geolocation", { configurable: true, get: () => geo });
+    }, answers);
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      await fakeLocation(context, [{ code: 2 }, { lat: 41.8789, lng: -87.6359 }]);
+      const page = await booted(context, BASE, stubCounter);
+      await page.evaluate(() => document.getElementById("locate-btn").click());
+      const sel = await page.waitForFunction((n) => !!window[n].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT })
+        .then(() => page.evaluate((n) => window[n].state.selectedPoint, EXPORTS_NAME), () => null);
+      await page.waitForTimeout(300);
+      const asked = await page.evaluate(() => window.__asked);
+      const events = await shortcutEvents(page);
+      check("a location the phone cannot give yet is asked for again at normal accuracy, and the point is selected",
+        !!sel && Math.abs(sel.lat - 41.8789) < 1e-6 && JSON.stringify(asked) === "[true,false]" &&
+          events.slice().sort().join() === ["geolocate", "geolocate-success"].join(),
+        JSON.stringify({ sel, asked, events }));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      await fakeLocation(context, [{ code: 2 }, { code: 2 }]);
+      const page = await booted(context, BASE, stubCounter);
+      await page.evaluate(() => document.getElementById("locate-btn").click());
+      await page.waitForTimeout(800);
+      const asked = await page.evaluate(() => window.__asked);
+      const status = await page.evaluate(() => document.getElementById("geo-status").textContent);
+      const events = await shortcutEvents(page);
+      check("when both asks fail the map says so and counts one failure",
+        JSON.stringify(asked) === "[true,false]" && /unavailable/.test(status) &&
+          events.slice().sort().join() === ["geolocate", `locate-fail/${TAG}/unavailable`].join(),
+        JSON.stringify({ asked, status, events }));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      await fakeLocation(context, [{ code: 1 }]);
+      const page = await booted(context, BASE, stubCounter);
+      await page.evaluate(() => document.getElementById("locate-btn").click());
+      await page.waitForTimeout(800);
+      const asked = await page.evaluate(() => window.__asked);
+      check("a refused location is not asked for again", JSON.stringify(asked) === "[true]", JSON.stringify(asked));
+      await context.close();
+    }
     // "Report a problem" is handed on as #feedback, which opens the report
     // form exactly as a link to it does (check 1h), and is counted once.
     {
