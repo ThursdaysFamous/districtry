@@ -285,6 +285,17 @@
   "spreadPct": 13.6,
   "unplaced2020": 0
  },
+ "29186": {
+  "county": "Ste. Genevieve County",
+  "people2020": {
+   "First District": 9427,
+   "Second District": 9052
+  },
+  "read": "2026-10-27",
+  "source": "traced",
+  "spreadPct": 4.1,
+  "unplaced2020": 0
+ },
  "29195": {
   "county": "Saline County",
   "people2020": {

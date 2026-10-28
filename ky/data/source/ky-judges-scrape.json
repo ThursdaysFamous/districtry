@@ -9,7 +9,7 @@
   "jefferson-family-court-site": 10,
   "supreme-court-page": 7
  },
- "readOn": "2026-10-20",
+ "readOn": "2026-10-27",
  "rows": [
   {
    "court": "Supreme Court",
@@ -1196,7 +1196,7 @@
    "name": "David L. Williams",
    "profileUrl": null,
    "readFrom": "Clinton",
-   "role": "Vice Chief Regional Circuit Judge",
+   "role": "Chief Regional Circuit Judge",
    "tier": "circuit",
    "unit": 40
   },
@@ -1256,7 +1256,7 @@
    "name": "David L. Williams",
    "profileUrl": null,
    "readFrom": "Cumberland",
-   "role": "Vice Chief Regional Circuit Judge",
+   "role": "Chief Regional Circuit Judge",
    "tier": "circuit",
    "unit": 40
   },
@@ -2545,7 +2545,7 @@
    "name": "Gregory A. Lay",
    "profileUrl": null,
    "readFrom": "Knox",
-   "role": "Chief Regional Circuit Judge",
+   "role": "Judge",
    "tier": "circuit",
    "unit": 27
   },
@@ -2635,7 +2635,7 @@
    "name": "Gregory A. Lay",
    "profileUrl": null,
    "readFrom": "Laurel",
-   "role": "Chief Regional Circuit Judge",
+   "role": "Judge",
    "tier": "circuit",
    "unit": 27
   },
@@ -3485,7 +3485,7 @@
    "name": "David L. Williams",
    "profileUrl": null,
    "readFrom": "Monroe",
-   "role": "Vice Chief Regional Circuit Judge",
+   "role": "Chief Regional Circuit Judge",
    "tier": "circuit",
    "unit": 40
   },
@@ -4114,7 +4114,7 @@
    "name": "Sara Beth Gregory",
    "profileUrl": null,
    "readFrom": "Russell",
-   "role": "Judge",
+   "role": "Vice Chief Regional Circuit Judge",
    "tier": "circuit",
    "unit": 57
   },
@@ -4613,7 +4613,7 @@
    "name": "Sara Beth Gregory",
    "profileUrl": null,
    "readFrom": "Wayne",
-   "role": "Judge",
+   "role": "Vice Chief Regional Circuit Judge",
    "tier": "circuit",
    "unit": 57
   },

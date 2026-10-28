@@ -36,8 +36,12 @@ it the same way (St. Francois's, on the same server, is not; see its note
 below), Wayne's clerk's office e-mailed a township map on 2026-10-26
 whose line runs along township lines, Howard's Assessor e-mailed a
 shapefile of its two districts the same day (FILE below), and Dent's clerk's
-office listed the whole townships in each district the same day. Those 31 are
-SOURCES below. The other 83 counties and the City of St. Louis are not
+office listed the whole townships in each district the same day. And
+Ste. Genevieve's clerk's office e-mailed a scanned page of the county's
+district map on 2026-10-27 whose line cuts through townships and precincts,
+so its line was traced by hand from the scan and each district is drawn as
+the 2020 census blocks on its side (TRACED below). Those 32 are SOURCES
+below. The other 82 counties and the City of St. Louis are not
 drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
@@ -72,8 +76,8 @@ edge rather than the viewer's. The line between the two districts is held
 to FIDELITY_MAX_M: every vertex of the source's own dividing line must lie
 within that distance of the drawn one.
 
-Build (network: the viewers, the Cole download and TIGERweb; Cass's and Howard's files are
-read from disk; shapely and
+Build (network: the viewers, the Cole download and TIGERweb; Cass's and Howard's files and
+Ste. Genevieve's traced block list are read from disk; shapely and
 pyproj):
     python3 mo/scripts/build_mo_commission_districts.py
 Check (offline, stdlib only; in CI):
@@ -120,7 +124,8 @@ COUSUB = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
           "Places_CouSub_ConCity_SubMCD/MapServer/1/query")
 VTD2020 = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
            "tigerWMS_Census2020/MapServer/58/query")
-RAW_DIR = os.path.join(REPO_ROOT, "data", "source", "raw")
+SOURCE_DIR = os.path.join(REPO_ROOT, "data", "source")
+RAW_DIR = os.path.join(SOURCE_DIR, "raw")
 SOURCE_COLE = ("the Jefferson City and Cole County GIS office (midmogis.org), "
                "its download of the commissioner districts")
 
@@ -285,6 +290,24 @@ SOURCES = {
                                      "Lost Creek", "St. Francois"],
                 "Western District": ["Benton", "Black River", "Mill Spring", "Williams"]},
             "sent": "2026-10-26"},
+    # Ste. Genevieve's clerk's office e-mailed, on 2026-10-27, a scanned page
+    # of the county's township and commissioner district map (marked
+    # "Copyright Ste. Genevieve County, MO", so not kept here; SHA-256
+    # 4c27e9eb3feab65c819286d1b717f33822e9688be13b255641ecbf07a25cfc8e) and its
+    # polling place list. The line cuts through Ste. Genevieve and Union
+    # townships and splits five of its twelve precincts (Chestnut Ridge,
+    # Community Center, North, South and Zell), so neither townships nor the
+    # Census's 2020 voting districts draw it. On Adam's word of 2026-10-27 it
+    # was traced by hand from the scan, which was first lined up with the
+    # Census Bureau's county and township lines, and each of the county's 888
+    # 2020 census blocks put on its side of the line: the list is the TRACED
+    # file, whose "method" says how. Two stretches of the line are hidden
+    # under printed labels and were joined straight across, so near the line,
+    # most of all in the city of Ste. Genevieve, a block can be on the wrong
+    # side; the card says so. The trace agrees with the clerk's list: the
+    # seven precincts it puts whole in one district are whole there, and the
+    # 2020 populations are 9,427 and 9,052.
+    "186": {"traced": "ste-genevieve-commission-blocks.json", "sent": "2026-10-27"},
     "113": {"viewer": ("phelpsgis", "Lincoln_County_MO", "1", "35"),
             "names": {"DISTRICT I": "First District", "DISTRICT II": "Second District"}},
     "119": {"viewer": ("christiangis", "McDonald_County_MO", "2", "35"), "field": "district_n",
@@ -484,8 +507,46 @@ def fetch_townships(c3, spec):
     return [(seat, unary_union(ps).buffer(0)) for seat, ps in sorted(parts.items())]
 
 
+def read_traced(spec):
+    """A traced county's block list, kept under data/source/."""
+    return load_json(os.path.join(SOURCE_DIR, spec["traced"]))
+
+
+def fetch_traced(c3, spec):
+    """The county's districts as unions of the 2020 census blocks its traced
+    file lists under each seat. Every block the Census draws in the county
+    must be listed exactly once, so a block missing from the file, or a file
+    naming a block the Census does not draw, stops the build."""
+    from shapely.ops import unary_union  # noqa: PLC0415
+    traced = read_traced(spec)
+    if traced.get("countyfips") != STATE + c3:
+        raise RuntimeError("%s is for county %r, not %s%s"
+                           % (spec["traced"], traced.get("countyfips"), STATE, c3))
+    shapes, offset = {}, 0
+    while True:
+        data = _get(BLOCKS, {
+            "where": "STATE='%s' AND COUNTY='%s'" % (STATE, c3), "outFields": "GEOID",
+            "returnGeometry": "true", "outSR": "4326", "orderByFields": "GEOID",
+            "resultOffset": offset, "resultRecordCount": 500, "f": "json"})
+        feats = data.get("features") or []
+        for f in feats:
+            shapes[f["attributes"]["GEOID"]] = _esri_rings_to_shape(f["geometry"]["rings"])
+        if len(feats) < 500:
+            break
+        offset += 500
+    listed = [g for gs in traced["blocks"].values() for g in gs]
+    if sorted(listed) != sorted(shapes) or len(set(listed)) != len(listed):
+        raise RuntimeError("county %s: %s lists %d blocks, the Census draws %d (%d not "
+                           "listed, %d not drawn)"
+                           % (c3, spec["traced"], len(listed), len(shapes),
+                              len(set(shapes) - set(listed)), len(set(listed) - set(shapes))))
+    return [(seat, unary_union([shapes[g] for g in gs]).buffer(0))
+            for seat, gs in sorted(traced["blocks"].items())]
+
+
 def _source_kind(spec):
-    return ("cole" if "zip" in spec else "arcgis" if "arcgis" in spec
+    return ("cole" if "zip" in spec else "traced" if "traced" in spec
+            else "arcgis" if "arcgis" in spec
             else "listed" if "listed" in spec
             else "townships" if "townships" in spec
             else "sent" if "file" in spec else "viewer")
@@ -605,6 +666,9 @@ def build_county(c3, spec, county_feature, roster, today):
     if "townships" in spec:
         got = fetch_townships(c3, spec)
         spec = dict(spec, names={seat: seat for seat in spec["townships"]})
+    elif "traced" in spec:
+        got = fetch_traced(c3, spec)
+        spec = dict(spec, names={seat: seat for seat, _ in got})
     else:
         got = (fetch_zip(spec) if "zip" in spec else read_sent(spec) if "file" in spec
                else fetch_arcgis(spec) if "arcgis" in spec else fetch_viewer(spec))
@@ -874,6 +938,15 @@ def check_problems(fc, records, counties, roster):
                                                               spec.get("listed")))
         if not _ISO_DATE.match(str(p.get("read") or "")):
             problems.append("%s: read %r is not a date" % (where, p.get("read")))
+        if "traced" in spec:
+            t = read_traced(spec)
+            listed = [g for gs in t["blocks"].values() for g in gs]
+            if (t.get("countyfips") != geoid or sorted(t["blocks"]) != sorted(district_seats(roster, geoid))
+                    or len(set(listed)) != len(listed) or t.get("sentOn") != spec.get("sent")
+                    or not all(str(g).startswith(geoid) for g in listed)):
+                problems.append("%s: %s does not list each of the roster's two seats' blocks "
+                                "once, for this county, sent %s" % (where, spec["traced"],
+                                                                   spec.get("sent")))
         g = f.get("geometry") or {}
         if g.get("type") not in ("Polygon", "MultiPolygon"):
             problems.append("%s: geometry %r" % (where, g.get("type")))
