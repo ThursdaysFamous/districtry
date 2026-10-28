@@ -20185,7 +20185,11 @@ function initNorthCarolinaExplorer() {
       // sits at the same foot of a phone's screen
       if (!state.selectedPoint || dstFirstUseOpen()) return;
       clearInterval(poll);
-      setTimeout(fn, DST_INVITE_DELAY_MS);
+      // and if the tip or tour opened during that moment, wait for it again
+      setTimeout(function () {
+        if (dstFirstUseOpen()) dstAfterFirstAnswer(fn);
+        else fn();
+      }, DST_INVITE_DELAY_MS);
     }, 500);
   }
   var dstInviteBar = null;
@@ -20397,6 +20401,9 @@ function initNorthCarolinaExplorer() {
   var DST_FIRST_USE_DELAY_MS = 900;
   var dstFirstUseBox = null;
   var dstTourState = null;
+  /* True from the moment the tip is scheduled until its timer runs, so the
+     install invitation also waits for a tip that is about to show. */
+  var dstFirstUsePending = false;
   function dstFirstUseEvent(what) {
     dstCountWhenReady("first-use/" + what + "/" + METRO_BRAND.instanceTag +
       (document.documentElement.classList.contains("dst-play-app") ? "/play" : ""));
@@ -20410,7 +20417,7 @@ function initNorthCarolinaExplorer() {
   /* Read by the install invitation, so the two never sit on top of each
      other at the foot of a phone's screen. */
   function dstFirstUseOpen() {
-    return !!(dstFirstUseBox || dstTourState);
+    return !!(dstFirstUsePending || dstFirstUseBox || dstTourState);
   }
   function dstEl(tag, cls, text) {
     var el = document.createElement(tag);
@@ -20634,7 +20641,9 @@ function initNorthCarolinaExplorer() {
   }
 
   if (!dstFramed && !dstFirstUseSeen()) {
+    dstFirstUsePending = true;
     setTimeout(function () {
+      dstFirstUsePending = false;
       if (!dstFirstUseSeen()) dstShowFirstUse();
     }, DST_FIRST_USE_DELAY_MS);
   }

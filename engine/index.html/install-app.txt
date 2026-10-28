@@ -162,7 +162,11 @@
       // sits at the same foot of a phone's screen
       if (!state.selectedPoint || dstFirstUseOpen()) return;
       clearInterval(poll);
-      setTimeout(fn, DST_INVITE_DELAY_MS);
+      // and if the tip or tour opened during that moment, wait for it again
+      setTimeout(function () {
+        if (dstFirstUseOpen()) dstAfterFirstAnswer(fn);
+        else fn();
+      }, DST_INVITE_DELAY_MS);
     }, 500);
   }
   var dstInviteBar = null;
