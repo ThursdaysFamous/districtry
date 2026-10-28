@@ -509,11 +509,16 @@ def measure_address_list(src, name):
 # can be told how many points were chosen on that state's map. The point it
 # carries is rounded exactly as before, and the tag adds nothing about where a
 # reader is that the page's own address does not already say.
+# `first-use/` joined on 2026-10-28 (engine `first-use`), after two reviews from
+# the Google Play closed test asked for a tutorial: `first-use/got-it`,
+# `tour`, `tour-done`, `tour-closed` and `help` record what a reader did with
+# the one-time tip shown on a first visit and its optional tour. It names
+# nothing about the reader or the place.
 EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "app-shortcut/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
                    "feedback-open/button", "feedback-open/link", "feedback-send/email",
-                   "feedback-send/github", "gaps-open",
+                   "feedback-send/github", "first-use/", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
                    "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link-read/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "osm-note", "select/",
                    "share-in/", "share-native", "share-open", "share-permalink", "share-qr",
@@ -524,8 +529,11 @@ EXPECTED_COORD_EVENTS = ["geolocate-success", "select/"]
 # when a reader picks a place in the worked example beside that box
 # (scripts/build_landing_page.py EXAMPLE_PLACES), which names one of the
 # page's own example places and nothing about the reader. Gated, because the
-# page says so.
-ROOT_EVENTS = ["example-place/", "map-link-read/front/"]
+# page says so. `first-use/` joined on 2026-10-28: the front page's own
+# first-visit tip and tour (build_landing_page.py FIRST_USE_FRONT_SCRIPT) count
+# a press of their buttons as first-use/<what>/front, the maps' family with
+# "front" where a map puts its tag, and nothing about the reader.
+ROOT_EVENTS = ["example-place/", "first-use/", "map-link-read/front/"]
 
 
 def event_phrase(event, apps):
@@ -1739,6 +1747,21 @@ def render_storage_paragraphs(apps):
                 "\u201cBoundary streets\u201d button off or back on, the choice is kept in %s "
                 "under %s on %s. It is one word, and it never leaves your browser.</p>"
                 % (code(store), code(key), esc(joined(users))))
+        elif key == "districtry-first-use-front":
+            out.append(
+                "<p><strong>The front page\u2019s first-visit tip.</strong> The front page "
+                "shows its own short tip once, about the page itself. Once it has been shown, "
+                "the front page keeps %s in %s, so it is not shown again. It is kept apart from "
+                "the maps\u2019 tip, so the map you open still shows its own once. It is one "
+                "character, and it never leaves your browser.</p>"
+                % (code(key), code(store)))
+        elif key == "districtry-first-use":
+            out.append(
+                "<p><strong>The first-visit tip.</strong> The short tip on how the map "
+                "works is shown once. Once it has been shown, %s keeps %s on %s, so it is "
+                "not shown again on any of them. It is one character, and it never leaves "
+                "your browser.</p>"
+                % (code(store), code(key), esc(joined(users))))
         else:
             out.append(
                 "<p><strong>%s.</strong> Stored in %s on %s. It never leaves your browser.</p>"
@@ -1818,7 +1841,9 @@ def render_analytics_section(apps):
         "The front page sends that event too, as map-link-read/front/, when its address box "
         "reads such a link, and one more, example-place/ followed by the place\u2019s name, "
         "when you pick one of the places in the example beside that box; it names the "
-        "example you picked and nothing about where you are. Any other page that is not an app — a county list, a question "
+        "example you picked and nothing about where you are. Its first-visit tip and "
+        "tour send first-use/ followed by the button pressed and /front, the same family "
+        "the maps\u2019 tip sends, which names the button and nothing about you. Any other page that is not an app — a county list, a question "
         "page, this one — sends the page view and nothing else. <strong>Nothing you type is "
         "ever sent to it.</strong></p>"
         % (where,

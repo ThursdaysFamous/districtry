@@ -1,0 +1,279 @@
+  /* ==== first use: a one-time tip, an optional tour, and a hint ====
+     Two closed-test reviews of the Play app on 2026-10-28 said the map "works
+     but needs a tutorial" and is "biraz karmaşık" (a bit complicated). Adam
+     chose a one-time tip with an optional tour, and a "How to use" page
+     (/help.html), on every app and so on the website as well. He ruled out
+     turning layers on for a new reader, because a layer switched on by the
+     app would be counted as a layer a reader chose.
+
+     1. THE TIP, once per browser on any districtry map. Three numbered lines
+        say how the map is used: pick a place, tick the kinds of district to
+        show, read the cards. "Got it" closes it; "Show me around" closes it
+        and starts the tour. Showing it records DST_FIRST_USE_KEY in local
+        storage, which is shared by every page on the site, so a reader who
+        saw it on one state's map is not shown it on another. Storage that
+        cannot be read shows nothing rather than showing it on every visit,
+        the rule the install invitation follows. Never inside an iframe (an
+        embedded map is someone else's page).
+
+     2. THE TOUR, four steps, each drawing a ring round one part of the page
+        (the search box, the results panel, the map, the How to use link) with
+        a card beside it. Back, Next and Close are buttons; Escape closes it.
+        A part that is not on screen (the How to use link folded into the More
+        menu, say) is replaced by the next thing that is, and with nothing to
+        ring the card sits in the middle of the screen.
+
+     3. THE HINT, whenever a point is selected and no layer is on: a line above
+        the layer list saying to tick a box. A reader who searches an address
+        is shown the list of layers with nothing ticked and no answer, and the
+        reviews suggest that is where they stop. It is not stored and shows
+        every time that is true.
+
+     4. THE COUNTS, never by place: `first-use/<what>` for got-it, tour,
+        tour-done, tour-closed and help (the tip's How to use link followed).
+        The privacy page names the family and the key. */
+  var DST_FIRST_USE_KEY = "districtry-first-use";
+  var DST_HELP_URL = "/help.html";
+  var DST_FIRST_USE_DELAY_MS = 900;
+  var dstFirstUseBox = null;
+  var dstTourState = null;
+  function dstFirstUseEvent(what) {
+    dstCountWhenReady("first-use/" + what);
+  }
+  function dstFirstUseSeen() {
+    try { return !!window.localStorage.getItem(DST_FIRST_USE_KEY); } catch (e) { return true; }
+  }
+  function dstMarkFirstUseSeen() {
+    try { window.localStorage.setItem(DST_FIRST_USE_KEY, "1"); } catch (e) { /* it may show again */ }
+  }
+  /* Read by the install invitation, so the two never sit on top of each
+     other at the foot of a phone's screen. */
+  function dstFirstUseOpen() {
+    return !!(dstFirstUseBox || dstTourState);
+  }
+  function dstEl(tag, cls, text) {
+    var el = document.createElement(tag);
+    if (cls) el.className = cls;
+    if (text) el.textContent = text;
+    return el;
+  }
+  function dstHideFirstUse() {
+    if (dstFirstUseBox && dstFirstUseBox.parentNode) dstFirstUseBox.parentNode.removeChild(dstFirstUseBox);
+    dstFirstUseBox = null;
+  }
+  function dstShowFirstUse() {
+    if (dstFirstUseBox || dstTourState) return;
+    var host = document.querySelector(".map-col") || document.body;
+    var box = dstEl("aside", "first-use");
+    box.setAttribute("aria-labelledby", "first-use-title");
+    var title = dstEl("h2", "first-use-title", "How districtry works");
+    title.id = "first-use-title";
+    box.appendChild(title);
+    var steps = dstEl("ol", "first-use-steps");
+    [
+      "Search your address, or pick the spot on the map where you live.",
+      "Tick the kinds of district you want to see, such as U.S. House District. Nothing is shown until you tick one.",
+      "Each one you tick gets a card saying who represents you there and how to reach them."
+    ].forEach(function (line) { steps.appendChild(dstEl("li", null, line)); });
+    box.appendChild(steps);
+    var actions = dstEl("div", "first-use-actions");
+    var tour = dstEl("button", "first-use-tour", "Show me around");
+    tour.type = "button";
+    tour.addEventListener("click", function () {
+      dstHideFirstUse();
+      dstFirstUseEvent("tour");
+      dstStartTour();
+    });
+    var ok = dstEl("button", "first-use-ok", "Got it");
+    ok.type = "button";
+    ok.addEventListener("click", function () {
+      dstHideFirstUse();
+      dstFirstUseEvent("got-it");
+    });
+    actions.appendChild(tour);
+    actions.appendChild(ok);
+    box.appendChild(actions);
+    var help = dstEl("a", "first-use-help", "How to use districtry");
+    help.href = DST_HELP_URL;
+    help.addEventListener("click", function () { dstFirstUseEvent("help"); });
+    box.appendChild(help);
+    box.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { dstHideFirstUse(); dstFirstUseEvent("got-it"); }
+    });
+    host.appendChild(box);
+    dstFirstUseBox = box;
+    dstMarkFirstUseSeen();
+  }
+
+  /* ---- the tour ---- */
+  /* A target is on screen when it has a box and is not hidden by a closed
+     menu or a display:none ancestor. */
+  function dstVisible(el) {
+    if (!el) return false;
+    var r = el.getBoundingClientRect();
+    return r.width > 0 && r.height > 0 && el.getClientRects().length > 0;
+  }
+  function dstTourSteps() {
+    return [
+      { find: function () { return document.getElementById("geocode-form"); },
+        title: "Find your place",
+        text: "Type your address here and press Search. You can also use your current location, or pick the spot on the map where you live." },
+      { find: function () { return document.getElementById("results-col"); },
+        title: "Choose what to see",
+        text: "Once you have picked a place, a list of the kinds of district appears here. Tick the ones you want, such as U.S. House District or State Senate District. Each one gets a card naming who represents you there." },
+      { find: function () { return document.getElementById("map"); },
+        title: "See it on the map",
+        text: "The map outlines each district you tick. Drag and zoom it to look around, and tap anywhere else to check another place." },
+      { find: function () {
+          var link = document.getElementById("help-link");
+          if (dstVisible(link)) return link;
+          var more = document.getElementById("dst-more-btn");
+          return dstVisible(more) ? more : link;
+        },
+        title: "Help is here",
+        text: "Open How to use for these steps and more, such as comparing districts and sharing what you find." }
+    ];
+  }
+  function dstStartTour() {
+    var ring = dstEl("div", "tour-ring");
+    ring.setAttribute("aria-hidden", "true");
+    var card = dstEl("div", "tour-card");
+    card.setAttribute("role", "dialog");
+    card.setAttribute("aria-modal", "false");
+    card.setAttribute("aria-labelledby", "tour-title");
+    card.tabIndex = -1;
+    document.body.appendChild(ring);
+    document.body.appendChild(card);
+    dstTourState = { i: 0, steps: dstTourSteps(), ring: ring, card: card, target: null };
+    card.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") dstEndTour(false);
+    });
+    window.addEventListener("resize", dstPlaceTour);
+    window.addEventListener("scroll", dstPlaceTour, true);
+    dstShowTourStep(0);
+  }
+  function dstEndTour(done) {
+    if (!dstTourState) return;
+    var t = dstTourState;
+    dstTourState = null;
+    window.removeEventListener("resize", dstPlaceTour);
+    window.removeEventListener("scroll", dstPlaceTour, true);
+    if (t.ring.parentNode) t.ring.parentNode.removeChild(t.ring);
+    if (t.card.parentNode) t.card.parentNode.removeChild(t.card);
+    dstFirstUseEvent(done ? "tour-done" : "tour-closed");
+    var search = document.getElementById("geocode-input");
+    if (search && done) { try { search.focus({ preventScroll: true }); } catch (e) { search.focus(); } }
+  }
+  function dstShowTourStep(i) {
+    var t = dstTourState;
+    if (!t) return;
+    t.i = i;
+    var step = t.steps[i];
+    var target = step.find();
+    t.target = dstVisible(target) ? target : null;
+    if (t.target) {
+      // a tall target (the results panel) is brought to its top, a small one
+      // to the middle of the screen
+      var tall = t.target.getBoundingClientRect().height > window.innerHeight * 0.6;
+      try { t.target.scrollIntoView({ block: tall ? "start" : "center" }); } catch (e) { t.target.scrollIntoView(); }
+    }
+    var card = t.card;
+    card.textContent = "";
+    var count = dstEl("p", "tour-count", "Step " + (i + 1) + " of " + t.steps.length);
+    var title = dstEl("h2", "tour-title", step.title);
+    title.id = "tour-title";
+    card.appendChild(count);
+    card.appendChild(title);
+    card.appendChild(dstEl("p", "tour-text", step.text));
+    var row = dstEl("div", "tour-actions");
+    var close = dstEl("button", "tour-close", "Close");
+    close.type = "button";
+    close.addEventListener("click", function () { dstEndTour(false); });
+    row.appendChild(close);
+    if (i > 0) {
+      var back = dstEl("button", "tour-back", "Back");
+      back.type = "button";
+      back.addEventListener("click", function () { dstShowTourStep(i - 1); });
+      row.appendChild(back);
+    }
+    var last = i === t.steps.length - 1;
+    var next = dstEl("button", "tour-next", last ? "Done" : "Next");
+    next.type = "button";
+    next.addEventListener("click", function () {
+      if (last) dstEndTour(true);
+      else dstShowTourStep(i + 1);
+    });
+    row.appendChild(next);
+    card.appendChild(row);
+    dstPlaceTour();
+    try { next.focus({ preventScroll: true }); } catch (e) { next.focus(); }
+  }
+  /* The ring follows the part of the target that is on screen; the card goes
+     below it when there is room, above it when there is not, and over the
+     ring's foot when neither fits (a tall panel on a phone). */
+  function dstPlaceTour() {
+    var t = dstTourState;
+    if (!t) return;
+    var vw = window.innerWidth, vh = window.innerHeight, gap = 10;
+    var card = t.card, ring = t.ring;
+    card.style.left = card.style.top = "";
+    var cw = Math.min(360, vw - 24);
+    card.style.width = cw + "px";
+    var ch = card.offsetHeight;
+    if (!t.target) {
+      ring.hidden = true;
+      card.style.left = Math.round((vw - cw) / 2) + "px";
+      card.style.top = Math.round(Math.max(12, (vh - ch) / 2)) + "px";
+      return;
+    }
+    var r = t.target.getBoundingClientRect();
+    var top = Math.max(r.top, 4), bottom = Math.min(r.bottom, vh - 4);
+    var left = Math.max(r.left, 4), right = Math.min(r.right, vw - 4);
+    ring.hidden = bottom <= top || right <= left;
+    ring.style.left = (left - 4) + "px";
+    ring.style.top = (top - 4) + "px";
+    ring.style.width = Math.max(0, right - left + 8) + "px";
+    ring.style.height = Math.max(0, bottom - top + 8) + "px";
+    var x = Math.min(Math.max(12, left), vw - cw - 12);
+    var y;
+    if (bottom + gap + ch <= vh - 12) y = bottom + gap;
+    else if (top - gap - ch >= 12) y = top - gap - ch;
+    else y = Math.max(12, vh - ch - 12);
+    card.style.left = Math.round(x) + "px";
+    card.style.top = Math.round(y) + "px";
+  }
+
+  /* ---- the hint ---- */
+  /* Called by syncPanelStats (engine overlay-cards) whenever either count
+     moves, and by runAllActiveLayerQueries on every selection, so it is right
+     after a tick, a relevance change and a new point alike. */
+  function dstSyncNoLayerHint() {
+    var root = document.getElementById("groups-root");
+    if (!root || !root.parentNode) return;
+    var hint = document.getElementById("no-layer-hint");
+    var on = 0, shown = 0;
+    layers.forEach(function (l) {
+      var rt = layerRuntime[l.id];
+      if (l.subOf || (rt && rt.relevant === false)) return;
+      shown++;
+      if (state.layersOn[l.id]) on++;
+    });
+    var want = !!state.selectedPoint && shown > 0 && on === 0;
+    if (!want) {
+      if (hint) hint.hidden = true;
+      return;
+    }
+    if (!hint) {
+      hint = dstEl("p", "no-layer-hint",
+        "Tick a box below to see that district and who represents you there.");
+      hint.id = "no-layer-hint";
+      root.parentNode.insertBefore(hint, root);
+    }
+    hint.hidden = false;
+  }
+
+  if (!dstFramed && !dstFirstUseSeen()) {
+    setTimeout(function () {
+      if (!dstFirstUseSeen()) dstShowFirstUse();
+    }, DST_FIRST_USE_DELAY_MS);
+  }

@@ -162,6 +162,121 @@
     cursor: pointer;
   }
   .install-invite-close:hover { color: var(--ink); }
+  /* The one-time first-use tip and its tour (engine first-use). On a
+     computer the tip sits at the map's top left, clear of the Layers button
+     at its top right and the notices along its foot; on a phone it is fixed
+     to the foot of the screen like the install invitation, which waits for it
+     to close. Same z-index as the invitation: above the skip link, below the
+     share popover, the More menu and the feedback form. The tour's ring and
+     card sit above the More menu (1200) so a ring round the More button is
+     not drawn under the menu, and below the feedback form (2000). Every
+     control is at least 40px tall. */
+  .first-use {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 1050;
+    width: min(360px, calc(100% - 24px));
+    background: var(--panel);
+    border: 1px solid var(--line-strong);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 18px rgba(20, 24, 28, 0.18);
+    padding: 12px 14px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  @media (max-width: 767px) {
+    .first-use {
+      position: fixed;
+      top: auto;
+      left: 12px;
+      right: 12px;
+      bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+      width: auto;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+  }
+  .first-use-title, .tour-title {
+    margin: 0 0 6px;
+    font-family: var(--font-display, var(--font-body));
+    font-size: 17px;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .first-use-steps { margin: 0 0 10px; padding-left: 1.3em; }
+  .first-use-steps li + li { margin-top: 4px; }
+  .first-use-actions, .tour-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .tour-actions { justify-content: flex-end; }
+  .first-use-tour, .first-use-ok, .tour-next, .tour-back, .tour-close {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 5px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .first-use-ok, .tour-next {
+    background: var(--accent);
+    /* --panel, not white: white on the dark tier's accent reads 2.7:1, the
+       panel's own ground on it reads about 7:1, and on the light tier the
+       panel IS white */
+    color: var(--panel);
+    border: 1px solid var(--accent);
+  }
+  .first-use-tour, .tour-back, .tour-close {
+    background: transparent;
+    color: var(--accent-deep, #0B5394);
+    border: 1px solid var(--accent-deep, #0B5394);
+  }
+  .tour-close { margin-right: auto; }
+  .first-use-help {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    margin-top: 4px;
+    color: var(--accent-deep, #0B5394);
+    font-weight: 600;
+  }
+  .tour-ring {
+    position: fixed;
+    z-index: 1250;
+    border: 3px solid var(--accent);
+    border-radius: 8px;
+    box-shadow: 0 0 0 9999px rgba(20, 24, 28, 0.35);
+    pointer-events: none;
+  }
+  .tour-card {
+    position: fixed;
+    z-index: 1260;
+    background: var(--panel);
+    border: 1px solid var(--line-strong);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    box-shadow: 0 6px 24px rgba(20, 24, 28, 0.28);
+    padding: 12px 14px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  .tour-card:focus { outline: none; }
+  .tour-count { margin: 0 0 2px; font-size: 12.5px; color: var(--slate); }
+  .tour-text { margin: 0 0 10px; }
+  /* "Tick a box" while a point is selected and nothing is on. */
+  .no-layer-hint {
+    margin: 0 0 12px;
+    padding: 8px 12px;
+    border-left: 4px solid var(--accent);
+    background: var(--dst-brand-tint);
+    border-radius: 4px;
+    font-size: 14px;
+    color: var(--ink);
+  }
   .hover-toggle-btn {
     font-family: var(--font-body);
     font-size: 12px;
