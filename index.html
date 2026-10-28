@@ -1083,6 +1083,65 @@ footer .support b { color: var(--ink); }
   .chip { min-height: 40px; padding: 9px 14px; }
   .foot-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
 }
+
+/* THE FIRST-VISIT TIP AND TOUR (FIRST_USE_FRONT_SCRIPT). Fixed to the foot of
+   the screen, at the right on a computer and across it on a phone, clear of
+   the notice at the top. Every control is at least 40px tall. The primary
+   button paints the address button's pair, --surface on --brand-600 in light
+   and --paper in dark, for the reason that rule states. */
+.first-use {
+  position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  z-index: 1050; width: min(360px, calc(100% - 24px));
+  background: var(--surface); border: 1px solid var(--brand-border);
+  border-left: 4px solid var(--brand-600); border-radius: var(--radius-card);
+  box-shadow: 0 6px 24px rgba(23, 22, 28, 0.22);
+  padding: 12px 14px; font-size: 15px; line-height: 1.45; color: var(--ink);
+}
+@media (max-width: 560px) {
+  .first-use { left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+               width: auto; max-width: 440px; margin: 0 auto; }
+}
+.first-use-title, .tour-title {
+  margin: 0 0 6px; font: var(--font-heading-weight) 19px/1.2 var(--font-heading); color: var(--ink);
+}
+.first-use-steps { margin: 0 0 10px; padding-left: 1.3em; }
+.first-use-steps li + li { margin-top: 4px; }
+.first-use-actions, .tour-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.tour-actions { justify-content: flex-end; }
+.first-use-tour, .first-use-ok, .tour-next, .tour-back, .tour-close {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px;
+  border-radius: var(--radius-btn); font: 600 14.5px/1.2 var(--font-body); cursor: pointer;
+}
+.first-use-ok, .tour-next { background: var(--brand-600); color: var(--surface); border: 1px solid var(--brand-600); }
+.first-use-ok:hover, .tour-next:hover { background: var(--brand-700); border-color: var(--brand-700); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .first-use-ok, :root:not([data-theme="light"]) .tour-next { color: var(--paper); }
+}
+:root[data-theme="dark"] .first-use-ok, :root[data-theme="dark"] .tour-next { color: var(--paper); }
+.first-use-tour, .tour-back, .tour-close { background: transparent; color: var(--brand-700); border: 1px solid var(--brand-700); }
+.first-use-tour:focus-visible, .first-use-ok:focus-visible, .tour-next:focus-visible,
+.tour-back:focus-visible, .tour-close:focus-visible, .first-use-help:focus-visible {
+  outline: 2px solid var(--brand-600); outline-offset: 2px;
+}
+.tour-close { margin-right: auto; }
+.first-use-help {
+  display: inline-flex; align-items: center; min-height: 40px; margin-top: 4px;
+  color: var(--brand-600); font-weight: 600;
+}
+.first-use-help:hover { color: var(--brand-700); }
+.tour-ring {
+  position: fixed; z-index: 1250; border: 3px solid var(--brand-600); border-radius: 10px;
+  box-shadow: 0 0 0 9999px rgba(23, 22, 28, 0.4); pointer-events: none;
+}
+.tour-card {
+  position: fixed; z-index: 1260; background: var(--surface); border: 1px solid var(--brand-border);
+  border-left: 4px solid var(--brand-600); border-radius: var(--radius-card);
+  box-shadow: 0 6px 24px rgba(23, 22, 28, 0.3);
+  padding: 12px 14px; font-size: 15px; line-height: 1.45; color: var(--ink);
+}
+.tour-card:focus { outline: none; }
+.tour-count { margin: 0 0 2px; font-size: 13px; color: var(--muted); }
+.tour-text { margin: 0 0 10px; }
 </style>
 </head>
 <body>
@@ -1101,6 +1160,7 @@ footer .support b { color: var(--ink); }
         <span class="wordmark">districtry</span>
       </div>
       <nav class="mast-nav" aria-label="Site">
+        <a href="help.html" id="help-link">How to use</a>
         <a href="about.html">About</a>
         <a href="privacy.html">Privacy</a>
         <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">Source</a>
@@ -3103,6 +3163,176 @@ footer .support b { color: var(--ink); }
       input.value = handedText;
       if (form.requestSubmit) form.requestSubmit(); else button.click();
     }
+  }
+
+  /* ---------- the first-visit tip and its tour (FIRST_USE_FRONT_CSS) ---------- */
+  var FIRST_USE_KEY = "districtry-first-use-front";
+  function firstUseSeen() {
+    try { return !!window.localStorage.getItem(FIRST_USE_KEY); } catch (e) { return true; }
+  }
+  function firstUseEvent(what) { trackEvent("first-use/front-" + what); }
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text) n.textContent = text;
+    return n;
+  }
+  var tipBox = null, tour = null;
+  function hideTip() {
+    if (tipBox && tipBox.parentNode) tipBox.parentNode.removeChild(tipBox);
+    tipBox = null;
+  }
+  function showTip() {
+    if (tipBox || tour) return;
+    var box = el("aside", "first-use");
+    box.setAttribute("aria-labelledby", "first-use-title");
+    var title = el("h2", "first-use-title", "How districtry works");
+    title.id = "first-use-title";
+    box.appendChild(title);
+    var steps = el("ol", "first-use-steps");
+    [
+      "Type your address or ZIP code in the box and press Show districts.",
+      "districtry opens the map for your state, with your place picked.",
+      "Tick the kinds of district you want to see. Each one gets a card saying who represents you there."
+    ].forEach(function (line) { steps.appendChild(el("li", null, line)); });
+    box.appendChild(steps);
+    var actions = el("div", "first-use-actions");
+    var around = el("button", "first-use-tour", "Show me around");
+    around.type = "button";
+    around.addEventListener("click", function () { hideTip(); firstUseEvent("tour"); startTour(); });
+    var ok = el("button", "first-use-ok", "Got it");
+    ok.type = "button";
+    ok.addEventListener("click", function () { hideTip(); firstUseEvent("got-it"); });
+    actions.appendChild(around);
+    actions.appendChild(ok);
+    box.appendChild(actions);
+    var help = el("a", "first-use-help", "How to use districtry");
+    help.href = "help.html";
+    help.addEventListener("click", function () { firstUseEvent("help"); });
+    box.appendChild(help);
+    box.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { hideTip(); firstUseEvent("got-it"); }
+    });
+    document.body.appendChild(box);
+    tipBox = box;
+    try { window.localStorage.setItem(FIRST_USE_KEY, "1"); } catch (e) { /* it may show again */ }
+  }
+  function visible(n) {
+    if (!n) return false;
+    var r = n.getBoundingClientRect();
+    return r.width > 0 && r.height > 0 && n.getClientRects().length > 0;
+  }
+  var TOUR = [
+    { sel: ".search-card", title: "Start with an address",
+      text: "Type a street address or a ZIP code and press Show districts. districtry opens the map for that place, with it picked." },
+    { sel: ".example", title: "What you get",
+      text: "This is what the map tells you about a place: each district it is in and who holds the seat there. Press another place's name to see it." },
+    { sel: ".coverage", title: "Where it answers today",
+      text: "The shaded states have a map today. Tap one to open its map, or find your state in the list." },
+    { sel: "#help-link", title: "Help is here",
+      text: "How to use explains the map: choosing the kinds of district to see, reading the cards, comparing districts and sharing what you find." }
+  ];
+  function startTour() {
+    var ring = el("div", "tour-ring");
+    ring.setAttribute("aria-hidden", "true");
+    var card = el("div", "tour-card");
+    card.setAttribute("role", "dialog");
+    card.setAttribute("aria-modal", "false");
+    card.setAttribute("aria-labelledby", "tour-title");
+    card.tabIndex = -1;
+    document.body.appendChild(ring);
+    document.body.appendChild(card);
+    tour = { ring: ring, card: card, target: null };
+    card.addEventListener("keydown", function (e) { if (e.key === "Escape") endTour(false); });
+    window.addEventListener("resize", placeTour);
+    window.addEventListener("scroll", placeTour, true);
+    showStep(0);
+  }
+  function endTour(done) {
+    if (!tour) return;
+    var t = tour;
+    tour = null;
+    window.removeEventListener("resize", placeTour);
+    window.removeEventListener("scroll", placeTour, true);
+    if (t.ring.parentNode) t.ring.parentNode.removeChild(t.ring);
+    if (t.card.parentNode) t.card.parentNode.removeChild(t.card);
+    firstUseEvent(done ? "tour-done" : "tour-closed");
+    if (done && input) { try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); } }
+  }
+  function showStep(i) {
+    var t = tour;
+    if (!t) return;
+    var step = TOUR[i];
+    var target = document.querySelector(step.sel);
+    t.target = visible(target) ? target : null;
+    if (t.target) {
+      var tall = t.target.getBoundingClientRect().height > window.innerHeight * 0.6;
+      try { t.target.scrollIntoView({ block: tall ? "start" : "center" }); } catch (e) { t.target.scrollIntoView(); }
+    }
+    var card = t.card;
+    card.textContent = "";
+    card.appendChild(el("p", "tour-count", "Step " + (i + 1) + " of " + TOUR.length));
+    var title = el("h2", "tour-title", step.title);
+    title.id = "tour-title";
+    card.appendChild(title);
+    card.appendChild(el("p", "tour-text", step.text));
+    var row = el("div", "tour-actions");
+    var close = el("button", "tour-close", "Close");
+    close.type = "button";
+    close.addEventListener("click", function () { endTour(false); });
+    row.appendChild(close);
+    if (i > 0) {
+      var back = el("button", "tour-back", "Back");
+      back.type = "button";
+      back.addEventListener("click", function () { showStep(i - 1); });
+      row.appendChild(back);
+    }
+    var last = i === TOUR.length - 1;
+    var next = el("button", "tour-next", last ? "Done" : "Next");
+    next.type = "button";
+    next.addEventListener("click", function () { if (last) endTour(true); else showStep(i + 1); });
+    row.appendChild(next);
+    card.appendChild(row);
+    placeTour();
+    try { next.focus({ preventScroll: true }); } catch (e) { next.focus(); }
+  }
+  /* The maps' placement (engine first-use dstPlaceTour): the ring follows the
+     part of the target on screen, the card goes below it when there is room,
+     above it when there is not, and over its foot when neither fits. */
+  function placeTour() {
+    var t = tour;
+    if (!t) return;
+    var vw = window.innerWidth, vh = window.innerHeight, gap = 10;
+    var card = t.card, ring = t.ring;
+    var cw = Math.min(360, vw - 24);
+    card.style.width = cw + "px";
+    var ch = card.offsetHeight;
+    if (!t.target) {
+      ring.hidden = true;
+      card.style.left = Math.round((vw - cw) / 2) + "px";
+      card.style.top = Math.round(Math.max(12, (vh - ch) / 2)) + "px";
+      return;
+    }
+    var r = t.target.getBoundingClientRect();
+    var top = Math.max(r.top, 4), bottom = Math.min(r.bottom, vh - 4);
+    var left = Math.max(r.left, 4), right = Math.min(r.right, vw - 4);
+    ring.hidden = bottom <= top || right <= left;
+    ring.style.left = (left - 4) + "px";
+    ring.style.top = (top - 4) + "px";
+    ring.style.width = Math.max(0, right - left + 8) + "px";
+    ring.style.height = Math.max(0, bottom - top + 8) + "px";
+    var x = Math.min(Math.max(12, left), vw - cw - 12);
+    var y;
+    if (bottom + gap + ch <= vh - 12) y = bottom + gap;
+    else if (top - gap - ch >= 12) y = top - gap - ch;
+    else y = Math.max(12, vh - ch - 12);
+    card.style.left = Math.round(x) + "px";
+    card.style.top = Math.round(y) + "px";
+  }
+  var framed = false;
+  try { framed = window.self !== window.top; } catch (e) { framed = true; }
+  if (!framed && !handed && !firstUseSeen()) {
+    setTimeout(function () { if (!firstUseSeen()) showTip(); }, 900);
   }
 })();
 </script>

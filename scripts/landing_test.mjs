@@ -99,6 +99,24 @@ async function textOrNull(page, selector) {
 // leaves the phone. Read at launch, so it is set here rather than in the job.
 process.env.PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS = "1";
 const browser = stubBasemap(await chromium.launch());
+// THE FRONT PAGE'S FIRST-VISIT TIP (build_landing_page.py FIRST_USE_FRONT_SCRIPT)
+// is fixed to the foot of the screen on a first visit, over whatever a block
+// below presses there, so every context marks it seen unless it asks for the
+// tip with `firstUse: true`; block 11 is the one that does.
+const FIRST_USE_FRONT_KEY = "districtry-first-use-front";
+{
+  const plainNewContext = browser.newContext.bind(browser);
+  browser.newContext = async (opts = {}) => {
+    const { firstUse, ...rest } = opts;
+    const ctx = await plainNewContext(rest);
+    if (!firstUse) {
+      await ctx.addInitScript((k) => {
+        try { localStorage.setItem(k, "1"); } catch (e) { /* storage blocked: no tip either */ }
+      }, FIRST_USE_FRONT_KEY);
+    }
+    return ctx;
+  };
+}
 try {
   // --- 1. a bare visit renders the landing page, and does NOT forward -------
   {
@@ -2015,6 +2033,119 @@ try {
       const s = await supportShown(p);
       check(`a page opened from ${referrer} ${inside ? "hides" : "keeps"} the sponsorship links`,
         inside ? hidden(s) : kept(s), JSON.stringify(s));
+      await ctx.close();
+    }
+  }
+  // --- 11. the front page's first-visit tip and tour (2026-10-28) ------------
+  // Adam: "The guide should also function on the landing page with a link to
+  // the how to". Shown once: a reload shows nothing, with its own key so the
+  // maps' tip is left to the maps. "Show me around" runs four steps, each
+  // ringing a part of the page that is there; Done ends it. Each press is
+  // counted once as first-use/front-<what> and nothing is counted on show.
+  // Not shown in a frame or with blocked storage, and the masthead's How to
+  // use link and the tip's own link both open help.html.
+  {
+    console.log("\n11. front page first-visit tip");
+    for (const [name, viewport] of [["computer", { width: 1280, height: 800 }],
+                                    ["phone", { width: 390, height: 844 }]]) {
+      const ctx = await browser.newContext({ firstUse: true, viewport, serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      const counted = [];
+      await page.exposeFunction("__gcCount", (path) => { counted.push(path); });
+      await page.addInitScript(() => {
+        window.goatcounter = { count: (vars) => { if (vars && vars.event) window.__gcCount(vars.path); } };
+      });
+      await page.route("**/gc.zgo.at/**", (r) => r.abort());
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      const shown = await page.waitForSelector(".first-use", { timeout: 5000 }).then(() => true, () => false);
+      check(`${name}: the tip shows on a first visit`, shown);
+      const tip = await page.evaluate(() => {
+        const box = document.querySelector(".first-use");
+        if (!box) return null;
+        const r = box.getBoundingClientRect();
+        const help = box.querySelector(".first-use-help");
+        return { inView: r.top >= 0 && r.bottom <= window.innerHeight && r.left >= 0 && r.right <= window.innerWidth,
+                 help: help && help.getAttribute("href"),
+                 stored: localStorage.getItem("districtry-first-use-front"),
+                 mapKey: localStorage.getItem("districtry-first-use") };
+      });
+      check(`${name}: the tip sits on screen and links the How to use page`,
+        !!tip && tip.inView && tip.help === "help.html", JSON.stringify(tip));
+      check(`${name}: showing it records its own key and not the maps'`,
+        !!tip && tip.stored === "1" && tip.mapKey === null, JSON.stringify(tip));
+      check(`${name}: nothing is counted when the tip is shown`, counted.length === 0, JSON.stringify(counted));
+      await page.click(".first-use-tour");
+      const steps = [];
+      for (let i = 0; i < 4; i++) {
+        await page.waitForSelector(".tour-card .tour-title");
+        steps.push(await page.evaluate(() => {
+          const ring = document.querySelector(".tour-ring");
+          return { title: document.querySelector(".tour-title").textContent, ringed: !!ring && !ring.hidden };
+        }));
+        await page.click(".tour-next");
+      }
+      check(`${name}: the tour runs four steps, each ringing a part of the page`,
+        steps.length === 4 && steps.every((x) => x.ringed) &&
+        steps.map((x) => x.title).join("|") === "Start with an address|What you get|Where it answers today|Help is here",
+        JSON.stringify(steps));
+      const after = await page.evaluate(() => ({ card: !!document.querySelector(".tour-card"),
+                                                 ring: !!document.querySelector(".tour-ring"),
+                                                 focus: document.activeElement && document.activeElement.id }));
+      check(`${name}: Done ends the tour and puts focus in the address box`,
+        !after.card && !after.ring && after.focus === "search-input", JSON.stringify(after));
+      check(`${name}: the tour is counted once at its start and once at its end`,
+        counted.join() === "first-use/front-tour,first-use/front-tour-done", JSON.stringify(counted));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForTimeout(1500);
+      check(`${name}: a reload shows no tip`, (await page.$(".first-use")) === null);
+      await ctx.close();
+    }
+    {
+      const ctx = await browser.newContext({ firstUse: true, serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      const counted = [];
+      await page.exposeFunction("__gcCount", (path) => { counted.push(path); });
+      await page.addInitScript(() => {
+        window.goatcounter = { count: (vars) => { if (vars && vars.event) window.__gcCount(vars.path); } };
+      });
+      await page.route("**/gc.zgo.at/**", (r) => r.abort());
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.waitForSelector(".first-use", { timeout: 5000 });
+      await page.click(".first-use-ok");
+      const gone = (await page.$(".first-use")) === null;
+      check("Got it closes the tip and is counted once", gone && counted.join() === "first-use/front-got-it",
+        JSON.stringify(counted));
+      const mast = await page.getAttribute("#help-link", "href");
+      check("the masthead links the How to use page", mast === "help.html", String(mast));
+      await ctx.close();
+    }
+    {
+      const ctx = await browser.newContext({ firstUse: true, serviceWorkers: "block" });
+      await ctx.addInitScript(() => {
+        Object.defineProperty(window, "localStorage", { get() { throw new Error("blocked"); } });
+      });
+      const page = await ctx.newPage();
+      await page.route("**/gc.zgo.at/**", (r) => r.abort());
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.waitForTimeout(1500);
+      check("with storage blocked the tip is not shown", (await page.$(".first-use")) === null);
+      await ctx.close();
+    }
+    {
+      const ctx = await browser.newContext({ firstUse: true, serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      await page.route("**/gc.zgo.at/**", (r) => r.abort());
+      await page.goto(BASE + "/404.html", { waitUntil: "domcontentloaded" });
+      await page.evaluate((src) => {
+        const f = document.createElement("iframe");
+        f.src = src;
+        f.style.cssText = "width:1000px;height:700px";
+        document.body.appendChild(f);
+      }, BASE + "/");
+      await page.waitForTimeout(2500);
+      const frame = page.frames().find((f) => f.url().startsWith(BASE));
+      const inFrame = frame ? await frame.$(".first-use") : "no frame";
+      check("inside a frame the tip is not shown", inFrame === null, String(inFrame));
       await ctx.close();
     }
   }
