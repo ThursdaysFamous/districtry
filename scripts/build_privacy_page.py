@@ -509,11 +509,16 @@ def measure_address_list(src, name):
 # can be told how many points were chosen on that state's map. The point it
 # carries is rounded exactly as before, and the tag adds nothing about where a
 # reader is that the page's own address does not already say.
+# `first-use/` joined on 2026-10-28 (engine `first-use`), after two reviews from
+# the Google Play closed test asked for a tutorial: `first-use/got-it`,
+# `tour`, `tour-done`, `tour-closed` and `help` record what a reader did with
+# the one-time tip shown on a first visit and its optional tour. It names
+# nothing about the reader or the place.
 EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "app-shortcut/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
                    "feedback-open/button", "feedback-open/link", "feedback-send/email",
-                   "feedback-send/github", "gaps-open",
+                   "feedback-send/github", "first-use/", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
                    "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link-read/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "osm-note", "select/",
                    "share-in/", "share-native", "share-open", "share-permalink", "share-qr",

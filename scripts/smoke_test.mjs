@@ -2318,6 +2318,10 @@ try {
       await p.addInitScript(() => {
         window.__gcEvents = [];
         window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+        // The first-visit tip (engine first-use) holds the invitation back
+        // while it is open; 1n tests that. These checks are about the
+        // invitation, so the tip has already been seen.
+        try { localStorage.setItem("districtry-first-use", "1"); } catch (e) { /* reported below */ }
       });
     };
     const fireInstallEvent = (p) => p.evaluate(() => {
@@ -2777,6 +2781,150 @@ try {
         !web.marked && web.kept === null && web.sentence &&
           web.panel.length >= 3 && web.panel.every((v) => v),
         JSON.stringify(web));
+      await context.close();
+    }
+  }
+
+  // 1n. THE FIRST VISIT (engine first-use, 2026-10-28, after two closed-test
+  //     reviews asked for a tutorial). A first visit shows a short tip once,
+  //     recorded under districtry-first-use, so a reload shows nothing; "Got
+  //     it" closes it and is counted; "Show me around" runs a four-step tour
+  //     whose steps ring something on screen, Back and Done work, and both are
+  //     counted. While the tip is open the install invitation waits. A point
+  //     selected with no layer on shows a "tick a box" hint, which goes once a
+  //     layer is on. No layer is ever switched on for the reader (Adam: a
+  //     layer the app switched on would be counted as one a reader chose),
+  //     and an embedded map shows no tip.
+  {
+    const stub = async (p) => {
+      await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+      await p.addInitScript(() => {
+        window.__gcEvents = [];
+        window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+      });
+    };
+    const firstUse = (p) => p.evaluate(() => (window.__gcEvents || [])
+      .filter((v) => v && v.event && /^first-use\//.test(v.path)).map((v) => v.path));
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 1280, height: 800 } });
+      const page = await booted(context, BASE, stub);
+      const shown = await page.waitForSelector(".first-use .first-use-ok", { timeout: 10000 }).then(() => true, () => false);
+      const state = await page.evaluate((n) => ({
+        stored: localStorage.getItem("districtry-first-use"),
+        steps: document.querySelectorAll(".first-use-steps li").length,
+        help: (document.querySelector(".first-use-help") || {}).getAttribute
+          ? document.querySelector(".first-use-help").getAttribute("href") : null,
+        layersOn: (function (st) { return Object.keys(st.layersOn).filter((k) => st.layersOn[k]).length; })(window[n].state),
+      }), EXPORTS_NAME);
+      check("a first visit shows the tip once, with three steps and the How to use link, and switches no layer on",
+        shown && state.stored === "1" && state.steps === 3 && state.help === "/help.html" && state.layersOn === 0,
+        JSON.stringify(state));
+      await page.click(".first-use-ok");
+      const gone = await page.evaluate(() => !document.querySelector(".first-use"));
+      check("Got it closes the tip and is counted once", gone &&
+        JSON.stringify(await firstUse(page)) === '["first-use/got-it"]', JSON.stringify(await firstUse(page)));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      await page.waitForTimeout(1500);
+      check("a later visit shows no tip", !(await page.$(".first-use")));
+      const link = await page.evaluate(() => {
+        const a = document.getElementById("help-link");
+        return a ? a.getAttribute("href") : null;
+      });
+      check("the masthead links the How to use page", link === "/help.html", String(link));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 1280, height: 800 } });
+      const page = await booted(context, BASE, stub);
+      await page.waitForSelector(".first-use .first-use-tour", { timeout: 10000 });
+      await page.click(".first-use-tour");
+      const seen = [];
+      for (let i = 0; i < 4; i++) {
+        seen.push(await page.evaluate(() => ({
+          title: (document.querySelector(".tour-title") || {}).textContent,
+          ring: (function () { const r = document.querySelector(".tour-ring"); return !!r && !r.hidden && r.getBoundingClientRect().width > 0; })(),
+        })));
+        if (i === 1) {
+          await page.click(".tour-back");
+          const back = await page.evaluate(() => document.querySelector(".tour-title").textContent);
+          seen.push({ back });
+          await page.click(".tour-next");
+        }
+        await page.click(".tour-next");
+      }
+      const left = await page.evaluate(() => !document.querySelector(".tour-card") && !document.querySelector(".tour-ring"));
+      const titles = seen.filter((s) => s.title).map((s) => s.title);
+      check("the tour runs four steps, each ringing something on screen, and Back goes back",
+        titles.length === 4 && new Set(titles).size === 4 && seen.filter((s) => s.title).every((s) => s.ring) &&
+          seen.some((s) => s.back === titles[0]) && left,
+        JSON.stringify(seen));
+      check("the tour is counted when started and when finished",
+        JSON.stringify(await firstUse(page)) === '["first-use/tour","first-use/tour-done"]', JSON.stringify(await firstUse(page)));
+      await context.close();
+    }
+    {
+      // The install invitation waits while the tip is open, on a phone.
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 390, height: 844 } });
+      const page = await booted(context, `${BASE}#p=41.8825,-87.6285&l=cg`, stub);
+      await page.evaluate(() => {
+        const e = new Event("beforeinstallprompt", { cancelable: true });
+        e.prompt = () => Promise.resolve();
+        e.userChoice = Promise.resolve({ outcome: "dismissed", platform: "web" });
+        window.dispatchEvent(e);
+      });
+      await page.waitForSelector(".first-use", { timeout: 10000 });
+      await page.waitForTimeout(4500);
+      const during = !!(await page.$(".install-invite"));
+      await page.click(".first-use-ok");
+      const after = await page.waitForSelector(".install-invite", { timeout: 10000 }).then(() => true, () => false);
+      check("the install invitation waits while the tip is open, then shows", !during && after,
+        `during=${during} after=${after}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 1280, height: 800 } });
+      await context.addInitScript(() => { try { localStorage.setItem("districtry-first-use", "1"); } catch (e) { /* reported below */ } });
+      const page = await booted(context, `${BASE}#p=41.8825,-87.6285`, stub);
+      const hinted = await page.waitForSelector("#no-layer-hint:not([hidden])", { timeout: 15000 }).then(() => true, () => false);
+      await page.evaluate(() => {
+        const box = document.querySelector('#groups-root input[type="checkbox"]');
+        if (box) box.click();
+      });
+      const cleared = await page.waitForFunction(() => {
+        const h = document.getElementById("no-layer-hint");
+        return !h || h.hidden;
+      }, null, { timeout: 10000 }).then(() => true, () => false);
+      check("a point with no layer on shows the tick-a-box hint, and ticking one removes it", hinted && cleared,
+        `hinted=${hinted} cleared=${cleared}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const frame = await context.newPage();
+      await frame.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+      if (VENDORED_LEAFLET) {
+        await frame.route("**/cdnjs.cloudflare.com/**/leaflet.js", (r) =>
+          r.fulfill({ status: 200, contentType: "application/javascript", body: VENDORED_LEAFLET.js }));
+        await frame.route("**/cdnjs.cloudflare.com/**/leaflet.css", (r) =>
+          r.fulfill({ status: 200, contentType: "text/css", body: VENDORED_LEAFLET.css }));
+      }
+      if (VENDORED_MAPLIBRE) {
+        await frame.route("**/cdnjs.cloudflare.com/**/maplibre-gl.min.js", (r) =>
+          r.fulfill({ status: 200, contentType: "application/javascript", body: VENDORED_MAPLIBRE.js }));
+      }
+      await frame.setContent(`<iframe src="${BASE}" width="900" height="600"></iframe>`);
+      let inner = null;
+      for (let i = 0; i < 60 && !inner; i++) {
+        await frame.waitForTimeout(250);
+        inner = frame.frames().find((f) => f.url().startsWith(BASE)) || null;
+      }
+      // booted, so a tip that never appears is not a map that never ran
+      const up = inner ? await inner.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT })
+        .then(() => true, () => false) : false;
+      await frame.waitForTimeout(2000);
+      const tip = up ? !!(await inner.$(".first-use")) : null;
+      check("an embedded map shows no tip", up && tip === false, `booted=${up} tip=${tip}`);
       await context.close();
     }
   }
