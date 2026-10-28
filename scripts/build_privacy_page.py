@@ -1744,6 +1744,13 @@ def render_storage_paragraphs(apps):
                 "\u201cBoundary streets\u201d button off or back on, the choice is kept in %s "
                 "under %s on %s. It is one word, and it never leaves your browser.</p>"
                 % (code(store), code(key), esc(joined(users))))
+        elif key == "districtry-first-use":
+            out.append(
+                "<p><strong>The first-visit tip.</strong> The short tip on how the map "
+                "works is shown once. Once it has been shown, %s keeps %s on %s, so it is "
+                "not shown again on any of them. It is one character, and it never leaves "
+                "your browser.</p>"
+                % (code(store), code(key), esc(joined(users))))
         else:
             out.append(
                 "<p><strong>%s.</strong> Stored in %s on %s. It never leaves your browser.</p>"
