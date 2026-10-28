@@ -208,8 +208,9 @@ AUTOMATIC_FAMILIES = {"visit/first", "visit/return", "app-launch",
 # the map was used. Each step is its own family (TWO_PART_FAMILIES in
 # goatcounter_fetch.py) and, from the day each count began naming its map,
 # kept map by map ("The tutorial stats should track app used on"). The front
-# page's own tip (phone apps thread, PR #1795) sends the same steps with
-# `front-` in front of each (`first-use/front-got-it`), and is its own row. Any
+# page's own tip (PR #1795) sends the same steps with `front` where a map puts
+# its tag (`first-use/got-it/front`, the map-link-read/front convention), and
+# is its own row. Any
 # family under the prefix counts as the help's; one that is not a step here is
 # in the total and in no column, and is PRINTED. The How to use page is an
 # ordinary page and stays in the pages viewed ("keep"); its views are shown
@@ -221,11 +222,11 @@ TUTORIAL_STEPS = [("got-it", "Got it"),
                   ("tour-done", "Finished it"),
                   ("tour-closed", "Left partway"),
                   ("help", "Opened How to use")]
-TUTORIAL_FRONT = "front-"
+TUTORIAL_FRONT_TAG = "front"
 
 
-def tutorial_family(step, front=False):
-    return "%s/%s%s" % (TUTORIAL_PREFIX, TUTORIAL_FRONT if front else "", step)
+def tutorial_family(step):
+    return "%s/%s" % (TUTORIAL_PREFIX, step)
 TUTORIAL_BEGIN = "<!-- ==== TRAFFIC-TUTORIAL:BEGIN ==== -->"
 TUTORIAL_END = "<!-- ==== TRAFFIC-TUTORIAL:END ==== -->"
 
@@ -680,8 +681,7 @@ def families(gc):
             owner[f] = name
     groups = {name: [0] * n for name, _ in ACTION_GROUPS}
     auto, results, tutorial, unknown = [0] * n, [0] * n, [0] * n, {}
-    steps = {tutorial_family(f, front) for f, _ in TUTORIAL_STEPS
-             for front in (False, True)}
+    steps = {tutorial_family(f) for f, _ in TUTORIAL_STEPS}
     for fam, f in ef.items():
         if fam in AUTOMATIC_FAMILIES:
             into = auto
@@ -822,7 +822,7 @@ def tutorial_use(full, days, end):
     map's tag; the presses before that day are in each step's total and in no
     map's row, and the `unnamed` row says how many. `totals` is every press,
     the front page's included. `front` is None until the front page's tip has
-    been pressed. `play` is the maps' presses made inside the Google Play app,
+    been pressed. `play` is the presses made inside the Google Play app,
     which are in the rows above it as well, or None for a file fetched before
     they were kept apart. `helpPage` is None for a file fetched before the
     page's own series was kept.
@@ -830,24 +830,23 @@ def tutorial_use(full, days, end):
     ef = full["event_families"]
     first = len(full["daily"]) - len(days)
     cut = lambda series: sum(series[first:])
-    step_sum = lambda front: [cut(ef[tutorial_family(f, front)]["daily"])
-                              if tutorial_family(f, front) in ef else 0
-                              for f, _ in TUTORIAL_STEPS]
-    on_maps, front = step_sum(False), step_sum(True)
-    totals = [a + b for a, b in zip(on_maps, front)]
+    totals = [cut(ef[tutorial_family(f)]["daily"]) if tutorial_family(f) in ef else 0
+              for f, _ in TUTORIAL_STEPS]
     by_app = full.get("event_by_app", {})
     maps = {}
     for j, (f, _) in enumerate(TUTORIAL_STEPS):
         for a in by_app.get(tutorial_family(f), []):
             maps.setdefault(a["tag"], [0] * len(TUTORIAL_STEPS))[j] += cut(a["daily"])
+    front = maps.pop(TUTORIAL_FRONT_TAG, [0] * len(TUTORIAL_STEPS))
     rows_ = sorted(([INSTANCE_NAMES.get(t, t)] + v for t, v in maps.items() if any(v)),
                    key=lambda r: (-sum(r[1:]), r[0]))
-    unnamed = [on_maps[j] - sum(r[j + 1] for r in rows_)
+    unnamed = [totals[j] - front[j] - sum(r[j + 1] for r in rows_)
                for j in range(len(TUTORIAL_STEPS))]
     if any(n < 0 for n in unnamed):
-        fail("first-visit help: the maps' presses add up to more than a step's "
-             "total (%s against %s). The fetcher keeps both from the same rows."
-             % ([sum(r[j + 1] for r in rows_) for j in range(len(on_maps))], on_maps))
+        fail("first-visit help: the maps' and the front page's presses add up to "
+             "more than a step's total (%s and %s against %s). The fetcher keeps "
+             "them from the same rows."
+             % ([sum(r[j + 1] for r in rows_) for j in range(len(totals))], front, totals))
     in_play = full.get("event_in_play")
     play = None if in_play is None else [
         cut(in_play[tutorial_family(f)]["daily"]) if tutorial_family(f) in in_play else 0
@@ -867,7 +866,7 @@ def tutorial_use(full, days, end):
 def tutorial_rows(t):
     """The first-visit help table's body for one window, as the page's script
     draws it: every map with a press, the front page, the presses named for
-    no map, a total, and the maps' presses inside the Google Play app. Kept in
+    no map, a total, and the presses inside the Google Play app. Kept in
     step with the script's drawTutorial()."""
     fmt = "{:,}".format
     if not any(t["totals"]):
@@ -1463,8 +1462,8 @@ def build():
     /* The first-visit help (engine first-use, since `since`): each step's
        presses in `totals`, in the order of `steps`; one row per map with a
        press, [map, then the same steps]; `unnamed`, the presses before each
-       count named its map, or null; `play`, the maps' presses inside the
-       Google Play app, which are in the rows too, or null for a file fetched
+       count named its map, or null; `play`, the presses inside the Google
+       Play app, which are in the rows too, or null for a file fetched
        before they were kept apart; and `helpPage`, the How to use page's
        views, which are in the pages viewed too, or null for a file fetched
        before they were kept. `before` is true for a window ending before the

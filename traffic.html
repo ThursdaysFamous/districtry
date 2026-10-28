@@ -1905,8 +1905,8 @@ code {
     /* The first-visit help (engine first-use, since `since`): each step's
        presses in `totals`, in the order of `steps`; one row per map with a
        press, [map, then the same steps]; `unnamed`, the presses before each
-       count named its map, or null; `play`, the maps' presses inside the
-       Google Play app, which are in the rows too, or null for a file fetched
+       count named its map, or null; `play`, the presses inside the Google
+       Play app, which are in the rows too, or null for a file fetched
        before they were kept apart; and `helpPage`, the How to use page's
        views, which are in the pages viewed too, or null for a file fetched
        before they were kept. `before` is true for a window ending before the
@@ -3348,8 +3348,8 @@ code {
   /* ---- the first-visit help, map by map ----
      The same rows tutorial_rows() in scripts/build_traffic_page.py writes for
      the full window, drawn for the window chosen: each map, the front page,
-     the presses that name no map, every press in all, and the maps' presses
-     made inside the Google Play app. */
+     the presses that name no map, every press in all, and the presses made
+     inside the Google Play app. */
   (function () {
     var body = document.querySelector("#tutorialTable tbody");
     var t = barData.tutorial;
