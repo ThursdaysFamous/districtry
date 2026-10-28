@@ -750,6 +750,7 @@
     });
     el.textContent = on + " of " + shown +
       (shown === 1 ? " layer on" : " layers on");
+    dstSyncNoLayerHint(); // engine first-use: "tick a box" while nothing is on
   }
 
   function setLayerRelevant(mod, relevant) {
@@ -892,4 +893,5 @@
     layers.forEach(function (mod) {
       if (state.layersOn[mod.id]) runLayerQuery(mod);
     });
+    dstSyncNoLayerHint(); // a new point with nothing on (engine first-use)
   }
