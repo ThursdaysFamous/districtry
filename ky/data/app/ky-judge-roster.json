@@ -1,6 +1,6 @@
 {
  "askedAbout": {},
- "readOn": "2026-10-20",
+ "readOn": "2026-10-27",
  "source": {
   "countyPages": "https://www.kycourts.gov/Courts/County-Information/Pages/<County>.aspx",
   "courtOfAppeals": "https://www.kycourts.gov/Courts/Court-of-Appeals/Pages/default.aspx",
@@ -531,7 +531,7 @@
       "court": "Circuit Court",
       "division": 1,
       "name": "Gregory A. Lay",
-      "role": "Chief Regional Circuit Judge"
+      "role": "Judge"
      },
      {
       "court": "Circuit Court",
@@ -911,7 +911,7 @@
      {
       "court": "Circuit Court",
       "name": "David L. Williams",
-      "role": "Vice Chief Regional Circuit Judge"
+      "role": "Chief Regional Circuit Judge"
      }
     ]
    },
@@ -1189,7 +1189,7 @@
       "court": "Circuit Court",
       "division": 1,
       "name": "Sara Beth Gregory",
-      "role": "Judge"
+      "role": "Vice Chief Regional Circuit Judge"
      },
      {
       "court": "Family Court",
