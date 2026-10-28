@@ -7131,8 +7131,32 @@ function initMinnesotaExplorer() {
     geoStatusEl.textContent = "Locating…";
     geoStatusEl.className = "geo-status";
 
+    // ASKED TWICE WHEN THE FIRST ANSWER IS "NO POSITION YET" (2026-10-28).
+    // The Google Play app hands location to Android (PWABuilder's location
+    // delegation, on from 1.0.3), and that hand-off asks Google Play services
+    // for a GPS fix at high accuracy and reports POSITION_UNAVAILABLE the
+    // moment the phone says no fix is available yet, which indoors is often
+    // at once; the browser on the same phone waits for one. Adam's 1.0.3
+    // install failed every time while Chrome found him. So an unavailable
+    // first answer is asked again once at normal accuracy, which the hand-off
+    // serves from Wi-Fi and phone towers, accepting a fix up to five minutes
+    // old. A refusal or a timeout is not asked again: the reader said no, or
+    // has already waited. Only the final answer is counted.
+    var LOCATE_FIRST = { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 };
+    var LOCATE_AGAIN = { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 };
+    function locateFailed(err) {
+      locateBtn.disabled = false;
+      var msg = "Couldn't get your location.", reason = "other";
+      if (err.code === err.PERMISSION_DENIED) { msg = "Location access was denied. Allow it in your browser's site settings to use this."; reason = "denied"; }
+      else if (err.code === err.TIMEOUT) { msg = "Location request timed out. Try again."; reason = "timeout"; }
+      else if (err.code === err.POSITION_UNAVAILABLE) { msg = "Your location is currently unavailable."; reason = "unavailable"; }
+      trackLocateFail(reason);
+      geoStatusEl.textContent = msg;
+      geoStatusEl.className = "geo-status err";
+    }
+
     navigator.geolocation.getCurrentPosition(
-      function (pos) {
+      function located(pos) {
         locateBtn.disabled = false;
         var lat = pos.coords.latitude, lng = pos.coords.longitude;
         // Which app answers where the reader is standing is the hand-off's own
@@ -7158,16 +7182,10 @@ function initMinnesotaExplorer() {
         });
       },
       function (err) {
-        locateBtn.disabled = false;
-        var msg = "Couldn't get your location.", reason = "other";
-        if (err.code === err.PERMISSION_DENIED) { msg = "Location access was denied. Allow it in your browser's site settings to use this."; reason = "denied"; }
-        else if (err.code === err.TIMEOUT) { msg = "Location request timed out. Try again."; reason = "timeout"; }
-        else if (err.code === err.POSITION_UNAVAILABLE) { msg = "Your location is currently unavailable."; reason = "unavailable"; }
-        trackLocateFail(reason);
-        geoStatusEl.textContent = msg;
-        geoStatusEl.className = "geo-status err";
+        if (err.code !== err.POSITION_UNAVAILABLE) { locateFailed(err); return; }
+        navigator.geolocation.getCurrentPosition(located, locateFailed, LOCATE_AGAIN);
       },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+      LOCATE_FIRST
     );
   });
 
