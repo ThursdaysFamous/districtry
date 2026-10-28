@@ -2041,7 +2041,7 @@ try {
   // the how to". Shown once: a reload shows nothing, with its own key so the
   // maps' tip is left to the maps. "Show me around" runs four steps, each
   // ringing a part of the page that is there; Done ends it. Each press is
-  // counted once as first-use/front-<what> and nothing is counted on show.
+  // counted once as first-use/<what>/front and nothing is counted on show.
   // Not shown in a frame or with blocked storage, and the masthead's How to
   // use link and the tip's own link both open help.html.
   {
@@ -2094,7 +2094,7 @@ try {
       check(`${name}: Done ends the tour and puts focus in the address box`,
         !after.card && !after.ring && after.focus === "search-input", JSON.stringify(after));
       check(`${name}: the tour is counted once at its start and once at its end`,
-        counted.join() === "first-use/front-tour,first-use/front-tour-done", JSON.stringify(counted));
+        counted.join() === "first-use/tour/front,first-use/tour-done/front", JSON.stringify(counted));
       await page.reload({ waitUntil: "domcontentloaded" });
       await page.waitForTimeout(1500);
       check(`${name}: a reload shows no tip`, (await page.$(".first-use")) === null);
@@ -2113,7 +2113,7 @@ try {
       await page.waitForSelector(".first-use", { timeout: 5000 });
       await page.click(".first-use-ok");
       const gone = (await page.$(".first-use")) === null;
-      check("Got it closes the tip and is counted once", gone && counted.join() === "first-use/front-got-it",
+      check("Got it closes the tip and is counted once", gone && counted.join() === "first-use/got-it/front",
         JSON.stringify(counted));
       const mast = await page.getAttribute("#help-link", "href");
       check("the masthead links the How to use page", mast === "help.html", String(mast));

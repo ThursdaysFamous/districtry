@@ -529,11 +529,11 @@ EXPECTED_COORD_EVENTS = ["geolocate-success", "select/"]
 # when a reader picks a place in the worked example beside that box
 # (scripts/build_landing_page.py EXAMPLE_PLACES), which names one of the
 # page's own example places and nothing about the reader. Gated, because the
-# page says so. `first-use/front-` joined on 2026-10-28: the front page's own
+# page says so. `first-use/` joined on 2026-10-28: the front page's own
 # first-visit tip and tour (build_landing_page.py FIRST_USE_FRONT_SCRIPT) count
-# a press of their buttons as first-use/front-<what>, the maps' family with
-# "front-" before the button, and nothing about the reader.
-ROOT_EVENTS = ["example-place/", "first-use/front-", "map-link-read/front/"]
+# a press of their buttons as first-use/<what>/front, the maps' family with
+# "front" where a map puts its tag, and nothing about the reader.
+ROOT_EVENTS = ["example-place/", "first-use/", "map-link-read/front/"]
 
 
 def event_phrase(event, apps):
@@ -1842,8 +1842,8 @@ def render_analytics_section(apps):
         "reads such a link, and one more, example-place/ followed by the place\u2019s name, "
         "when you pick one of the places in the example beside that box; it names the "
         "example you picked and nothing about where you are. Its first-visit tip and "
-        "tour send first-use/front- followed by the button pressed, the same family the "
-        "maps\u2019 tip sends, which names the button and nothing about you. Any other page that is not an app — a county list, a question "
+        "tour send first-use/ followed by the button pressed and /front, the same family "
+        "the maps\u2019 tip sends, which names the button and nothing about you. Any other page that is not an app — a county list, a question "
         "page, this one — sends the page view and nothing else. <strong>Nothing you type is "
         "ever sent to it.</strong></p>"
         % (where,

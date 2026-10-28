@@ -3170,7 +3170,7 @@ footer .support b { color: var(--ink); }
   function firstUseSeen() {
     try { return !!window.localStorage.getItem(FIRST_USE_KEY); } catch (e) { return true; }
   }
-  function firstUseEvent(what) { trackEvent("first-use/front-" + what); }
+  function firstUseEvent(what) { trackEvent("first-use/" + what + "/front"); }
   function el(tag, cls, text) {
     var n = document.createElement(tag);
     if (cls) n.className = cls;

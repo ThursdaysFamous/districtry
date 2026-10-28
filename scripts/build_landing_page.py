@@ -1595,8 +1595,9 @@ def place_layers(place):
 # map's tip on the map, which is where the reviews said readers got stuck.
 # Never in a frame, never with a share handed over in the address (#q=, which
 # sends the reader on at once), and nothing when storage cannot be read, the
-# maps' rule. Counted as first-use/front-<what> (got-it, tour, tour-done,
-# tour-closed, help), never by place; the privacy page names the key and the
+# maps' rule. Counted as first-use/<what>/front (got-it, tour, tour-done,
+# tour-closed, help), the maps' shape with "front" where a map puts its tag,
+# never by place; the privacy page names the key and the
 # family (build_privacy_page.py ROOT_EVENTS).
 FIRST_USE_FRONT_KEY = "districtry-first-use-front"
 FIRST_USE_FRONT_CSS = """
@@ -1665,7 +1666,7 @@ FIRST_USE_FRONT_SCRIPT = """
   function firstUseSeen() {
     try { return !!window.localStorage.getItem(FIRST_USE_KEY); } catch (e) { return true; }
   }
-  function firstUseEvent(what) { trackEvent("first-use/front-" + what); }
+  function firstUseEvent(what) { trackEvent("first-use/" + what + "/front"); }
   function el(tag, cls, text) {
     var n = document.createElement(tag);
     if (cls) n.className = cls;
