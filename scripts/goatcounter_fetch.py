@@ -427,8 +427,10 @@ def return_visits(s, total, start, end, mx, events):
 
 # Event families whose second part changes what they mean. `visit/first` and
 # `visit/return` are counters the apps send on opening; `install-invite/shown`
-# is the app showing a prompt, `install-invite/closed` a reader closing it.
-TWO_PART_FAMILIES = ("visit", "install-invite")
+# is the app showing a prompt, `install-invite/closed` a reader closing it;
+# `first-use/got-it` is a reader closing the first-visit tip and
+# `first-use/tour-done` one finishing its tour (engine first-use, 2026-10-28).
+TWO_PART_FAMILIES = ("visit", "install-invite", "first-use")
 # Ten rows a page. 2026-10-26's 62-day window had several hundred event paths
 # (a layer, a ZIP layer or a map-link outcome per app), so this leaves room.
 EVENT_PAGES = 150
@@ -441,12 +443,32 @@ def event_family(path):
     return parts[0]
 
 
-# Families whose second part is the app the event came from, kept per app and
-# per day as well. `select` gained its tag on 2026-10-27 (`select/il`), so that
-# a state's own officials can be told how many points were chosen on that
-# state's map; before that day it was one path for every app, which stays in
-# the family's total and in no app's row.
-BY_APP_FAMILIES = ("select",)
+# Families whose next part after the family's own name is the app the event
+# came from, kept per app and per day as well. `select` gained its tag on
+# 2026-10-27 (`select/il`), so that a state's own officials can be told how
+# many points were chosen on that state's map; before that day it was one path
+# for every app, which stays in the family's total and in no app's row. The
+# first-visit help's counts gained theirs after the help shipped
+# (`first-use/got-it/il`; Adam, 2026-10-28: "The tutorial stats should track
+# app used on"); a name ending in "/" takes every family under it, each kept
+# under its own family name.
+BY_APP_FAMILIES = ("select", "first-use/")
+
+
+# A by-app event sent inside the Google Play app carries one more part,
+# `play`, after its app's tag (`first-use/got-it/il/play`, the first-visit
+# help's counts; Adam, 2026-10-28, asked whether the Play app should be split
+# from the website: "Yes"). It is in its family's total and its app's row as
+# any other, and kept once more, per family, in `event_in_play`.
+PLAY_MARK = "play"
+
+
+def by_app_family(fam):
+    """The family's name if its events are kept per app, else None."""
+    for b in BY_APP_FAMILIES:
+        if fam == b or (b.endswith("/") and fam.startswith(b)):
+            return fam
+    return None
 
 
 def event_breakdown(s, total, start, end, mx, dates):
@@ -457,31 +479,57 @@ def event_breakdown(s, total, start, end, mx, dates):
     series, so the per-family series below are exact rather than a top ten
     stretched to cover the rest. Returns (paths, families, by_app, cut): paths
     is every row's total, families {family: {count, daily[]}} with daily
-    aligned to `dates`, by_app {family: [{tag, count, daily[]}]} for each of
-    BY_APP_FAMILIES, cut true when the list could not be read to its end, so
-    every family is then a floor.
+    aligned to `dates`, by_app {family: [{tag, count, daily[]}]} for each
+    family BY_APP_FAMILIES names, in_play {family: {count, daily[]}} for the
+    part of those sent inside the Google Play app (PLAY_MARK), cut true when
+    the list could not be read to its end, so every family is then a floor.
     """
     rows_, cut = all_pages(s, total, start, end, mx, filt="is:event",
                            label="events", pages_max=EVENT_PAGES)
-    fams, apps = {}, {f: {} for f in BY_APP_FAMILIES}
+    fams, apps = {}, {f: {} for f in BY_APP_FAMILIES if not f.endswith("/")}
+    in_play = {}
     for r in rows_:
-        f = fams.setdefault(event_family(r["path"]),
-                            {"count": 0, "daily": [0] * len(dates)})
+        name = event_family(r["path"])
+        f = fams.setdefault(name, {"count": 0, "daily": [0] * len(dates)})
         f["count"] += r["count"]
         for i, d in enumerate(dates):
             f["daily"][i] += r["daily"].get(d, 0)
         parts = r["path"].split("/")
-        if parts[0] in apps and len(parts) == 2 and parts[1]:
-            a = apps[parts[0]].setdefault(parts[1], {"tag": parts[1], "count": 0,
-                                                     "daily": [0] * len(dates)})
-            a["count"] += r["count"]
-            for i, d in enumerate(dates):
-                a["daily"][i] += r["daily"].get(d, 0)
+        k = len(name.split("/"))
+        play = len(parts) == k + 2 and parts[k + 1] == PLAY_MARK
+        if by_app_family(name) and (len(parts) == k + 1 or play) and parts[k]:
+            a = apps.setdefault(name, {}).setdefault(
+                parts[k], {"tag": parts[k], "count": 0, "daily": [0] * len(dates)})
+            into = [a]
+            if play:
+                into.append(in_play.setdefault(
+                    name, {"count": 0, "daily": [0] * len(dates)}))
+            for a in into:
+                a["count"] += r["count"]
+                for i, d in enumerate(dates):
+                    a["daily"][i] += r["daily"].get(d, 0)
     paths = sorted(({"path": r["path"], "count": r["count"]} for r in rows_),
                    key=lambda r: (-r["count"], r["path"]))
     by_app = {f: sorted(v.values(), key=lambda a: (-a["count"], a["tag"]))
               for f, v in apps.items()}
-    return paths, fams, by_app, bool(cut)
+    return paths, fams, by_app, in_play, bool(cut)
+
+
+# The How to use page (scripts/build_help_page.py, 2026-10-28), as either
+# address a browser can be served it at.
+HELP_PAGES = ("/help.html", "/help")
+
+
+def path_series(page_rows, dates, paths):
+    """One page's visits, summed over the addresses it is served at, with a
+    daily series aligned to `dates`."""
+    out = {"count": 0, "daily": [0] * len(dates)}
+    for r in page_rows:
+        if r["path"] in paths:
+            out["count"] += r["count"]
+            for i, d in enumerate(dates):
+                out["daily"][i] += r["daily"].get(d, 0)
+    return out
 
 
 def page_kinds(page_rows, dates, tags):
@@ -654,7 +702,8 @@ def collect(s, total, start, end, per_day=True):
     if per_day:
         # The full window only: each family carries its daily series, so a
         # shorter window's families are the same series cut to length.
-        event_paths, event_families, event_by_app, events_cut = event_breakdown(
+        (event_paths, event_families, event_by_app, event_in_play,
+         events_cut) = event_breakdown(
             s, total, start, end, mx, dates)
         print("events: %d paths in %d families, sum %d of %d%s"
               % (len(event_paths), len(event_families),
@@ -702,8 +751,17 @@ def collect(s, total, start, end, per_day=True):
                     "event_families": event_families,
                     # Per app and per day, for BY_APP_FAMILIES only.
                     "event_by_app": event_by_app,
+                    # The part of those sent inside the Google Play app.
+                    "event_in_play": event_in_play,
                     "events_cut": events_cut,
-                    "page_kinds": page_kinds(page_rows, dates, fleet_tags())})
+                    "page_kinds": page_kinds(page_rows, dates, fleet_tags()),
+                    # The How to use page, per day. It is an ordinary page and
+                    # stays in the pages viewed (Adam, 2026-10-28: "keep"),
+                    # and the pages list above holds only the top 20, which
+                    # it rarely reaches, so its own series is kept beside the
+                    # first-visit help's counts. Every row is read for the
+                    # page kinds already, so this asks the dashboard nothing.
+                    "help_page": path_series(page_rows, dates, HELP_PAGES)})
     # THE INSTANCE BARS MUST SUM TO THE PAGEVIEW TOTAL, and they are counted
     # two different ways: the total off the totals widget, the split off the
     # pages list. The pages list caps at ten rows, so every pageview below
