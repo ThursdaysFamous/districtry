@@ -285,6 +285,17 @@
   "spreadPct": 13.6,
   "unplaced2020": 0
  },
+ "29185": {
+  "county": "St. Clair County",
+  "people2020": {
+   "Northern District": 4421,
+   "Southern District": 4863
+  },
+  "read": "2026-10-28",
+  "source": "townships",
+  "spreadPct": 9.5,
+  "unplaced2020": 0
+ },
  "29186": {
   "county": "Ste. Genevieve County",
   "people2020": {

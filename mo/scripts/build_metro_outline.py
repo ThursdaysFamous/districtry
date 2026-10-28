@@ -108,12 +108,12 @@ STATE_COUNTY_FIPS = (
 )
 # The COVERAGE ring: the counties whose commission or council district lines
 # the County Commission District layer draws, exactly the keys of
-# data/app/mo-commission-counties.json (32 on 2026-10-27).
+# data/app/mo-commission-counties.json (33 on 2026-10-28).
 METRO_COUNTY_FIPS = (
     "011", "013", "021", "029", "037", "041", "043", "051",
     "053", "057", "063", "065", "089", "093", "109", "113", "119", "125",
     "127", "131", "157", "161", "167", "169", "173", "177",
-    "186", "195", "201", "217", "219", "223",
+    "185", "186", "195", "201", "217", "219", "223",
 )
 STATE_FIPS = "29"
 # No dispatch entries: none of this instance's layers is county-dispatched
@@ -336,6 +336,7 @@ RING_COUNTIES = (
     "Ray",
     "Saline",
     "Scott",
+    "St. Clair",
     "Ste. Genevieve",
     "Vernon",
     "Warren",
