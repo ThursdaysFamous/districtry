@@ -42,8 +42,11 @@ district map on 2026-10-27 whose line cuts through townships and precincts,
 so its line was traced by hand from the scan and each district is drawn as
 the 2020 census blocks on its side (TRACED below). And St. Clair's clerk's
 office e-mailed, on 2026-10-28, a screenshot of the county's map viewer
-highlighting the eight whole townships of one district. Those 33 are SOURCES
-below. The other 81 counties and the City of St. Louis are not
+highlighting the eight whole townships of one district. And Audrain's clerk
+e-mailed, on 2026-10-28, a report of the district each precinct votes in and
+named the streets that divide the two precincts it splits, so each district
+is drawn as the 2020 census blocks in its precincts (BLOCKS below). Those 34
+are SOURCES below. The other 80 counties and the City of St. Louis are not
 drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
@@ -326,6 +329,20 @@ SOURCES = {
                 "Southern District": ["Collins", "Dallas", "Doyal", "Osceola", "Polk",
                                       "Roscoe", "Speedwell", "Washington"]},
             "sent": "2026-10-28"},
+    # Audrain's clerk (Lisa Smith) e-mailed on 2026-10-28 a report listing
+    # each precinct and the commission district it votes in, kept out of this
+    # repository as the county's own record (SHA-256 6567503db4cfa37164c5c8d6
+    # 4b3dc99ae19f13c87e9ce8ac2f3cf75a86e719b2). It splits two precincts, and
+    # she answered the same day where: in Mexico 3 "Jefferson St, Mexico is
+    # the dividing line", east side Eastern and west side Western, and in
+    # Community "Salt River Township is Western District and Prairie Township
+    # is Eastern District, Route ZZ is the dividing line". The BLOCKS file
+    # puts each 2020 census block in its 2020 voting district's district, and
+    # its "method" says how the two split precincts were divided. On Adam's
+    # word of 2026-10-28, the one Community block east of Route ZZ (12
+    # people) is Eastern, which was read from where the road runs and not
+    # from the clerk.
+    "007": {"blocks": "audrain-commission-blocks.json", "listed": "2026-10-28"},
     "113": {"viewer": ("phelpsgis", "Lincoln_County_MO", "1", "35"),
             "names": {"DISTRICT I": "First District", "DISTRICT II": "Second District"}},
     "119": {"viewer": ("christiangis", "McDonald_County_MO", "2", "35"), "field": "district_n",
@@ -525,21 +542,25 @@ def fetch_townships(c3, spec):
     return [(seat, unary_union(ps).buffer(0)) for seat, ps in sorted(parts.items())]
 
 
+def _blocks_file(spec):
+    return spec.get("traced") or spec["blocks"]
+
+
 def read_traced(spec):
-    """A traced county's block list, kept under data/source/."""
-    return load_json(os.path.join(SOURCE_DIR, spec["traced"]))
+    """A traced or block-listed county's block list, kept under data/source/."""
+    return load_json(os.path.join(SOURCE_DIR, _blocks_file(spec)))
 
 
 def fetch_traced(c3, spec):
     """The county's districts as unions of the 2020 census blocks its traced
-    file lists under each seat. Every block the Census draws in the county
+    or BLOCKS file lists under each seat. Every block the Census draws in the county
     must be listed exactly once, so a block missing from the file, or a file
     naming a block the Census does not draw, stops the build."""
     from shapely.ops import unary_union  # noqa: PLC0415
     traced = read_traced(spec)
     if traced.get("countyfips") != STATE + c3:
         raise RuntimeError("%s is for county %r, not %s%s"
-                           % (spec["traced"], traced.get("countyfips"), STATE, c3))
+                           % (_blocks_file(spec), traced.get("countyfips"), STATE, c3))
     shapes, offset = {}, 0
     while True:
         data = _get(BLOCKS, {
@@ -556,7 +577,7 @@ def fetch_traced(c3, spec):
     if sorted(listed) != sorted(shapes) or len(set(listed)) != len(listed):
         raise RuntimeError("county %s: %s lists %d blocks, the Census draws %d (%d not "
                            "listed, %d not drawn)"
-                           % (c3, spec["traced"], len(listed), len(shapes),
+                           % (c3, _blocks_file(spec), len(listed), len(shapes),
                               len(set(shapes) - set(listed)), len(set(listed) - set(shapes))))
     return [(seat, unary_union([shapes[g] for g in gs]).buffer(0))
             for seat, gs in sorted(traced["blocks"].items())]
@@ -684,7 +705,7 @@ def build_county(c3, spec, county_feature, roster, today):
     if "townships" in spec:
         got = fetch_townships(c3, spec)
         spec = dict(spec, names={seat: seat for seat in spec["townships"]})
-    elif "traced" in spec:
+    elif "traced" in spec or "blocks" in spec:
         got = fetch_traced(c3, spec)
         spec = dict(spec, names={seat: seat for seat, _ in got})
     else:
@@ -781,6 +802,8 @@ def build_county(c3, spec, county_feature, roster, today):
             feats[-1]["properties"]["listedOn"] = spec["listed"]
             if spec.get("precincts"):
                 feats[-1]["properties"]["byPrecinct"] = True
+            if spec.get("blocks"):
+                feats[-1]["properties"]["byStreet"] = True
     people = {spec["names"][n]: 0 for n in names}
     unplaced = 0
     for x, y, p in fetch_block_points(c3):
@@ -956,15 +979,19 @@ def check_problems(fc, records, counties, roster):
                                                               spec.get("listed")))
         if not _ISO_DATE.match(str(p.get("read") or "")):
             problems.append("%s: read %r is not a date" % (where, p.get("read")))
-        if "traced" in spec:
+        if bool(p.get("byStreet")) != ("blocks" in spec):
+            problems.append("%s: byStreet %r" % (where, p.get("byStreet")))
+        if "traced" in spec or "blocks" in spec:
             t = read_traced(spec)
             listed = [g for gs in t["blocks"].values() for g in gs]
+            dated = (t.get("sentOn") == spec.get("sent") if "traced" in spec
+                     else t.get("listedOn") == spec.get("listed"))
             if (t.get("countyfips") != geoid or sorted(t["blocks"]) != sorted(district_seats(roster, geoid))
-                    or len(set(listed)) != len(listed) or t.get("sentOn") != spec.get("sent")
+                    or len(set(listed)) != len(listed) or not dated
                     or not all(str(g).startswith(geoid) for g in listed)):
                 problems.append("%s: %s does not list each of the roster's two seats' blocks "
-                                "once, for this county, sent %s" % (where, spec["traced"],
-                                                                   spec.get("sent")))
+                                "once, for this county, dated as SOURCES dates it"
+                                % (where, _blocks_file(spec)))
         g = f.get("geometry") or {}
         if g.get("type") not in ("Polygon", "MultiPolygon"):
             problems.append("%s: geometry %r" % (where, g.get("type")))
