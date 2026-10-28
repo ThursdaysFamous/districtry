@@ -40,8 +40,10 @@ office listed the whole townships in each district the same day. And
 Ste. Genevieve's clerk's office e-mailed a scanned page of the county's
 district map on 2026-10-27 whose line cuts through townships and precincts,
 so its line was traced by hand from the scan and each district is drawn as
-the 2020 census blocks on its side (TRACED below). Those 32 are SOURCES
-below. The other 82 counties and the City of St. Louis are not
+the 2020 census blocks on its side (TRACED below). And St. Clair's clerk's
+office e-mailed, on 2026-10-28, a screenshot of the county's map viewer
+highlighting the eight whole townships of one district. Those 33 are SOURCES
+below. The other 81 counties and the City of St. Louis are not
 drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
@@ -308,6 +310,22 @@ SOURCES = {
     # seven precincts it puts whole in one district are whole there, and the
     # 2020 populations are 9,427 and 9,052.
     "186": {"traced": "ste-genevieve-commission-blocks.json", "sent": "2026-10-27"},
+    # St. Clair's clerk's office answered on 2026-10-28 with a screenshot of
+    # the county's map viewer, named "North&South Districts", kept out of
+    # this repository because it is the county's image (SHA-256
+    # fa7f73104c385237d1df900113dcf13291a42f05cc9b501de405220d5fb6b523).
+    # It highlights eight political townships, listed beside the map as
+    # Center, Monegaw, Osage, Chalk Level, Taber, Appleton, Butler and
+    # Jackson, which are the county's northern half; the e-mail does not
+    # say which district they are, so they are read as the Northern
+    # District from the file's name and where they lie, and the other eight
+    # as the Southern. The sixteen match TIGER's sixteen.
+    "185": {"townships": {
+                "Northern District": ["Appleton", "Butler", "Center", "Chalk Level",
+                                      "Jackson", "Monegaw", "Osage", "Taber"],
+                "Southern District": ["Collins", "Dallas", "Doyal", "Osceola", "Polk",
+                                      "Roscoe", "Speedwell", "Washington"]},
+            "sent": "2026-10-28"},
     "113": {"viewer": ("phelpsgis", "Lincoln_County_MO", "1", "35"),
             "names": {"DISTRICT I": "First District", "DISTRICT II": "Second District"}},
     "119": {"viewer": ("christiangis", "McDonald_County_MO", "2", "35"), "field": "district_n",
