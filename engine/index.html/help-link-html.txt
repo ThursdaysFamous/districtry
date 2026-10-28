@@ -1,0 +1,1 @@
+      <a class="masthead-action-link" id="help-link" href="/help.html">How to use</a>

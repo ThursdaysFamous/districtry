@@ -509,11 +509,16 @@ def measure_address_list(src, name):
 # can be told how many points were chosen on that state's map. The point it
 # carries is rounded exactly as before, and the tag adds nothing about where a
 # reader is that the page's own address does not already say.
+# `first-use/` joined on 2026-10-28 (engine `first-use`), after two reviews from
+# the Google Play closed test asked for a tutorial: `first-use/got-it`,
+# `tour`, `tour-done`, `tour-closed` and `help` record what a reader did with
+# the one-time tip shown on a first visit and its optional tour. It names
+# nothing about the reader or the place.
 EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "app-shortcut/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
                    "feedback-open/button", "feedback-open/link", "feedback-send/email",
-                   "feedback-send/github", "gaps-open",
+                   "feedback-send/github", "first-use/", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
                    "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link-read/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "osm-note", "select/",
                    "share-in/", "share-native", "share-open", "share-permalink", "share-qr",
@@ -1738,6 +1743,13 @@ def render_storage_paragraphs(apps):
                 "<p><strong>Boundary street names.</strong> If you switch the map's "
                 "\u201cBoundary streets\u201d button off or back on, the choice is kept in %s "
                 "under %s on %s. It is one word, and it never leaves your browser.</p>"
+                % (code(store), code(key), esc(joined(users))))
+        elif key == "districtry-first-use":
+            out.append(
+                "<p><strong>The first-visit tip.</strong> The short tip on how the map "
+                "works is shown once. Once it has been shown, %s keeps %s on %s, so it is "
+                "not shown again on any of them. It is one character, and it never leaves "
+                "your browser.</p>"
                 % (code(store), code(key), esc(joined(users))))
         else:
             out.append(

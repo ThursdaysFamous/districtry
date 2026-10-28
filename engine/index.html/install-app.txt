@@ -158,7 +158,9 @@
      then a moment to read the cards. */
   function dstAfterFirstAnswer(fn) {
     var poll = setInterval(function () {
-      if (!state.selectedPoint) return;
+      // and for the first-use tip or tour to close (engine first-use), which
+      // sits at the same foot of a phone's screen
+      if (!state.selectedPoint || dstFirstUseOpen()) return;
       clearInterval(poll);
       setTimeout(fn, DST_INVITE_DELAY_MS);
     }, 500);
