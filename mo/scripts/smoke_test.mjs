@@ -105,6 +105,10 @@ const DENT_POINT = "37.60307,-91.48972";
 // shipped file draws it (shapely polylabel, 2026-10-28), from the township
 // screenshot its clerk's office sent.
 const ST_CLAIR_POINT = "37.94685,-93.68023";
+// The pole of inaccessibility of Audrain's Eastern District as the shipped
+// file draws it (shapely polylabel, 2026-10-28), from its clerk's precinct
+// report.
+const AUDRAIN_POINT = "39.20527,-91.73550";
 // The pole of inaccessibility of Ste. Genevieve's Second District as the
 // shipped file draws it (shapely polylabel, 2026-10-27), traced from the
 // scan its clerk's office sent.
@@ -1262,7 +1266,7 @@ try {
     const drawn = shipped("mo-commission-counties.json");
     const seatOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.seat === p.seat) || {};
     const presidingOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.countywide) || {};
-    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT, HOWARD_POINT, DENT_POINT, ST_CLAIR_POINT, STE_GENEVIEVE_POINT, SALINE_POINT, PERRY_POINT, IRON_POINT, SCOTT_POINT]) {
+    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT, HOWARD_POINT, DENT_POINT, ST_CLAIR_POINT, AUDRAIN_POINT, STE_GENEVIEVE_POINT, SALINE_POINT, PERRY_POINT, IRON_POINT, SCOTT_POINT]) {
       const at = propsAt(fc, pt);
       const p = at[0] || {};
       const mine = seatOf(p), pres = presidingOf(p);
@@ -1286,6 +1290,10 @@ try {
             ? text.includes(`${p.county}'s own map at SEMO GIS`) &&
               (p.pointedOn ? text.includes(`clerk pointed this app to that map on ${longDate(p.pointedOn)}`)
                 : !text.includes("clerk pointed this app"))
+          : p.source === "listed" && p.byStreet
+            ? text.includes(`county clerk listed them, precinct by precinct on ${longDate(p.listedOn)}`) &&
+              text.includes("on each side of the streets the clerk named") &&
+              text.includes("2020 and may be older than the county's own")
           : p.source === "listed" && p.byPrecinct
             ? text.includes(`county clerk listed them, township by township and precinct by precinct on ${longDate(p.listedOn)}`) &&
               text.includes("2020 voting precinct lines")
@@ -1297,7 +1305,8 @@ try {
         at.length === 1 && !!drawn[p.countyfips] && !info.error && !!mine.name && !!pres.name &&
           text.includes(p.seat) && text.includes(mine.name) && text.includes(pres.name) &&
           whereOk && (p.source === "sent" || p.source === "traced" || p.source === "listed" || (p.source === "townships" && p.sentOn) || text.includes(`read on ${longDate(p.read)}`)) &&
-          /has not checked this line against the precinct records/.test(text) &&
+          (p.byStreet ? !/has not checked this line/.test(text)
+            : /has not checked this line against the precinct records/.test(text)) &&
           /Where these names come from/.test(text),
         `districts here=${at.length} ${text.slice(0, 140)}`);
       await context.close();
