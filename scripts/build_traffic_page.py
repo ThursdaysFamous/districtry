@@ -51,6 +51,7 @@ predicted (that would make the total SMALLER; it is larger).
 import argparse
 import datetime
 import json
+from html import escape as escape_html
 import math
 import os
 import re
@@ -198,6 +199,41 @@ RESULT_FAMILIES = {"geolocate-success", "locate-fail", "metro-portal-go",
 AUTOMATIC_FAMILIES = {"visit/first", "visit/return", "app-launch",
                       "install-invite/shown", "install-invite/tip-shown",
                       "install-invite/test-shown"}
+# THE FIRST-VISIT HELP IS A FOURTH KIND, counted apart from all three (engine
+# first-use, 2026-10-28). Adam, that day: "I want to make sure that the
+# tutorial is properly tracked and excluded from the main traffic stats. i do
+# want to trac kusage though". A press on the tip or its tour is a reader doing
+# something, but to the help rather than to the map, and as a reader action it
+# would have raised that figure the day the help shipped with no change in how
+# the map was used. Each step is its own family (TWO_PART_FAMILIES in
+# goatcounter_fetch.py) and, from the day each count began naming its map,
+# kept map by map ("The tutorial stats should track app used on"). The front
+# page's own tip (phone apps thread, PR #1795) sends the same steps with
+# `front-` in front of each (`first-use/front-got-it`), and is its own row. Any
+# family under the prefix counts as the help's; one that is not a step here is
+# in the total and in no column, and is PRINTED. The How to use page is an
+# ordinary page and stays in the pages viewed ("keep"); its views are shown
+# beside the presses as well.
+TUTORIAL_PREFIX = "first-use"
+TUTORIAL_FROM = "2026-10-28"
+TUTORIAL_STEPS = [("got-it", "Got it"),
+                  ("tour", "Took the tour"),
+                  ("tour-done", "Finished it"),
+                  ("tour-closed", "Left partway"),
+                  ("help", "Opened How to use")]
+TUTORIAL_FRONT = "front-"
+
+
+def tutorial_family(step, front=False):
+    return "%s/%s%s" % (TUTORIAL_PREFIX, TUTORIAL_FRONT if front else "", step)
+TUTORIAL_BEGIN = "<!-- ==== TRAFFIC-TUTORIAL:BEGIN ==== -->"
+TUTORIAL_END = "<!-- ==== TRAFFIC-TUTORIAL:END ==== -->"
+
+
+def is_tutorial(fam):
+    return fam == TUTORIAL_PREFIX or fam.startswith(TUTORIAL_PREFIX + "/")
+
+
 LAYER_NAMES = {"ward": "Ward", "school-board": "School board",
                "congress": "Congress", "il-house": "IL House",
                "il-senate": "IL Senate", "county-board": "County board",
@@ -620,7 +656,8 @@ def families(gc):
     """The event families as the page reads them, one series per kind.
 
     Returns ({group label: daily[]}, automatic daily[], results daily[],
-    unclassified {family: count}). FAILS on a file without the per-family
+    first-visit help daily[], unclassified {family: count}). FAILS on a file
+    without the per-family
     series, and on one whose families do not add up to the daily events, day
     by day: the split below is only worth publishing if it is a split of the
     same events the chart used to draw.
@@ -642,19 +679,25 @@ def families(gc):
         for f in fams:
             owner[f] = name
     groups = {name: [0] * n for name, _ in ACTION_GROUPS}
-    auto, results, unknown = [0] * n, [0] * n, {}
+    auto, results, tutorial, unknown = [0] * n, [0] * n, [0] * n, {}
+    steps = {tutorial_family(f, front) for f, _ in TUTORIAL_STEPS
+             for front in (False, True)}
     for fam, f in ef.items():
         if fam in AUTOMATIC_FAMILIES:
             into = auto
         elif fam in RESULT_FAMILIES:
             into = results
+        elif is_tutorial(fam):
+            if fam not in steps:
+                unknown[fam] = f["count"]
+            into = tutorial
         else:
             if fam not in owner:
                 unknown[fam] = f["count"]
             into = groups[owner.get(fam, "Other")]
         for i, v in enumerate(f["daily"]):
             into[i] += v
-    return groups, auto, results, unknown
+    return groups, auto, results, tutorial, unknown
 
 
 def page_kind_series(gc):
@@ -674,9 +717,10 @@ def page_kind_series(gc):
 
 def daily_rows(gc):
     """[label, maps, front page, other pages, points, layers, searches and
-    location, other reader actions, automatic, results] per day."""
+    location, other reader actions, automatic, results, first-visit help] per
+    day."""
     pk = page_kind_series(gc)
-    groups, auto, results, _ = families(gc)
+    groups, auto, results, tutorial, _ = families(gc)
     band_of = {}
     for band, names in DAY_ACTION_BANDS:
         for nm in names:
@@ -688,7 +732,7 @@ def daily_rows(gc):
             b[band_of.get(name, "other")] += series[i]
         out.append([label(d["date"]), pk["app"][i], pk["front"][i],
                     pk["other"][i], b["points"], b["layers"], b["searches"],
-                    b["other"], auto[i], results[i]])
+                    b["other"], auto[i], results[i], tutorial[i]])
     return out
 
 
@@ -755,8 +799,8 @@ def people(gc, days):
 
 def use(gc, days, start):
     """What readers did in one window: the action groups summed over its
-    days, the automatic counts and the results, and each per map opening."""
-    groups, auto, results, _ = families(gc)
+    days, the automatic counts, the results and the first-visit help."""
+    groups, auto, results, tutorial, _ = families(gc)
     first = len(gc["daily"]) - len(days)
     acts = [(name, sum(groups[name][first:])) for name, _ in ACTION_GROUPS]
     return {
@@ -764,7 +808,88 @@ def use(gc, days, start):
         "total": sum(n for _, n in acts),
         "automatic": sum(auto[first:]),
         "results": sum(results[first:]),
+        "tutorial": sum(tutorial[first:]),
     }
+
+
+def tutorial_use(full, days, end):
+    """The first-visit help for one window: each step's presses, each map's
+    row of them, the front page's, the presses no map is named for, and the
+    How to use page's views. `full` is the whole file, whose per-day series
+    are cut to this window's `days`, as use() cuts them.
+
+    A press is named for its map from the day the counts began carrying the
+    map's tag; the presses before that day are in each step's total and in no
+    map's row, and the `unnamed` row says how many. `totals` is every press,
+    the front page's included. `front` is None until the front page's tip has
+    been pressed. `play` is the maps' presses made inside the Google Play app,
+    which are in the rows above it as well, or None for a file fetched before
+    they were kept apart. `helpPage` is None for a file fetched before the
+    page's own series was kept.
+    """
+    ef = full["event_families"]
+    first = len(full["daily"]) - len(days)
+    cut = lambda series: sum(series[first:])
+    step_sum = lambda front: [cut(ef[tutorial_family(f, front)]["daily"])
+                              if tutorial_family(f, front) in ef else 0
+                              for f, _ in TUTORIAL_STEPS]
+    on_maps, front = step_sum(False), step_sum(True)
+    totals = [a + b for a, b in zip(on_maps, front)]
+    by_app = full.get("event_by_app", {})
+    maps = {}
+    for j, (f, _) in enumerate(TUTORIAL_STEPS):
+        for a in by_app.get(tutorial_family(f), []):
+            maps.setdefault(a["tag"], [0] * len(TUTORIAL_STEPS))[j] += cut(a["daily"])
+    rows_ = sorted(([INSTANCE_NAMES.get(t, t)] + v for t, v in maps.items() if any(v)),
+                   key=lambda r: (-sum(r[1:]), r[0]))
+    unnamed = [on_maps[j] - sum(r[j + 1] for r in rows_)
+               for j in range(len(TUTORIAL_STEPS))]
+    if any(n < 0 for n in unnamed):
+        fail("first-visit help: the maps' presses add up to more than a step's "
+             "total (%s against %s). The fetcher keeps both from the same rows."
+             % ([sum(r[j + 1] for r in rows_) for j in range(len(on_maps))], on_maps))
+    in_play = full.get("event_in_play")
+    play = None if in_play is None else [
+        cut(in_play[tutorial_family(f)]["daily"]) if tutorial_family(f) in in_play else 0
+        for f, _ in TUTORIAL_STEPS]
+    hp = full.get("help_page")
+    return {"steps": [label for _, label in TUTORIAL_STEPS],
+            "totals": totals,
+            "maps": rows_,
+            "front": front if any(front) else None,
+            "unnamed": unnamed if any(unnamed) else None,
+            "play": play,
+            "helpPage": cut(hp["daily"]) if hp else None,
+            "since": long_label(TUTORIAL_FROM),
+            "before": end < TUTORIAL_FROM}
+
+
+def tutorial_rows(t):
+    """The first-visit help table's body for one window, as the page's script
+    draws it: every map with a press, the front page, the presses named for
+    no map, a total, and the maps' presses inside the Google Play app. Kept in
+    step with the script's drawTutorial()."""
+    fmt = "{:,}".format
+    if not any(t["totals"]):
+        return ['<tr><td colspan="%d">Nothing counted yet.</td></tr>'
+                % (len(t["steps"]) + 1)]
+    out = []
+    row = lambda name, vals, cls="": (
+        '<tr%s><td>%s</td>%s</tr>' % (' class="%s"' % cls if cls else "", name,
+                                      "".join('<td class="num">%s</td>' % fmt(v)
+                                              for v in vals)))
+    for r in t["maps"]:
+        out.append(row(escape_html(r[0]), r[1:]))
+    if t["front"]:
+        out.append(row("Front page", t["front"]))
+    if t["unnamed"]:
+        out.append(row("Map not recorded<small>pressed before each count named "
+                       "its map</small>", t["unnamed"]))
+    out.append(row("In all", t["totals"], "total"))
+    if t["play"] is not None:
+        out.append(row("In the Google Play app<small>in the rows above as "
+                       "well</small>", t["play"]))
+    return out
 
 
 def return_visits(gc, start):
@@ -869,7 +994,10 @@ def bar_data(gc, start, end, full, days):
         "geo": pairs(pv["locations"][:8]),
         "people": people(gc, days),
         "use": {"total": u["total"], "automatic": u["automatic"],
-                "results": u["results"]},
+                "results": u["results"], "tutorial": u["tutorial"]},
+        # The first-visit help, counted apart from what readers do with the
+        # map. See TUTORIAL_PREFIX.
+        "tutorial": tutorial_use(full, days, end),
         "campaigns": pairs(gc["campaigns"]),
         "mapLinkSources": ml_sources,
         "mapLinkResults": ml_results,
@@ -1260,10 +1388,11 @@ def build():
 
   /* One row a day: [day, pages viewed on a state's map, on the front page, on
      any other page, then what readers did: points chosen, layers turned on,
-     searches and location requests, other actions, then the two kinds of
-     event that are NOT a reader doing something: automatic counts and
-     results]. The first three add up to the day's page visits and the last
-     six to its events, which the builder checks day by day. */
+     searches and location requests, other actions, then the three kinds of
+     event that are NOT a reader doing something with the map: automatic
+     counts, results and presses on the first-visit help]. The first three
+     add up to the day's page visits and the last seven to its events, which
+     the builder checks day by day. */
   var daily = [
     %s
   ];
@@ -1328,8 +1457,19 @@ def build():
        the installed app opened, and `launchesAbroad` those outside the United
        States. */
     people: %s,
-    /* Reader actions in all, and the two kinds of event left out of them. */
+    /* Reader actions in all, and the three kinds of event left out of them:
+       the apps' own counts, results and presses on the first-visit help. */
     use: %s,
+    /* The first-visit help (engine first-use, since `since`): each step's
+       presses in `totals`, in the order of `steps`; one row per map with a
+       press, [map, then the same steps]; `unnamed`, the presses before each
+       count named its map, or null; `play`, the maps' presses inside the
+       Google Play app, which are in the rows too, or null for a file fetched
+       before they were kept apart; and `helpPage`, the How to use page's
+       views, which are in the pages viewed too, or null for a file fetched
+       before they were kept. `before` is true for a window ending before the
+       help went live. None of it is in the reader actions. */
+    tutorial: %s,
     /* Google Maps and Apple Maps links the search boxes read, counted since
        mapLinks.from: by which maps app, what the search showed, and which app
        or the front page read it. `measured` is false for a data file fetched
@@ -1426,6 +1566,7 @@ def build():
         rows(bd["sizes"]), rows(bd["systems"]), rows(bd["browsers"]),
         rows(bd["actions"]), rows(bd["geo"]), rows(bd["campaigns"], 2),
         compact(bd["people"]), compact(bd["use"]),
+        compact(bd["tutorial"]).replace("</", "<\\/"),
         rows(bd["mapLinkSources"], 2), rows(bd["mapLinkResults"], 2),
         rows(bd["mapLinkPlaces"], 2),
         json.dumps(bd["mapLinks"], separators=(", ", ": "), sort_keys=True),
@@ -1507,6 +1648,7 @@ def build():
                             - bd["geoTries"]),
         "autoCount": fmt(u["automatic"]),
         "resultCount": fmt(u["results"]),
+        "tutorialCount": fmt(u["tutorial"]),
         "refNote": ref_note(bd),
         "lastDay": long_label(gc["daily"][-1]["date"]),
         "recentDays": listing([pages_of(d) for d in days[-4:]]),
@@ -1672,6 +1814,18 @@ def main():
     head, rest = updated.split(MS_BEGIN, 1)
     _, tail = rest.split(MS_END, 1)
     updated = head + ms_html + tail
+    # The first-visit help's table for the full window, which the page's
+    # script redraws for whichever window is chosen; this is what a crawler
+    # and a reader without JavaScript see.
+    if TUTORIAL_BEGIN not in updated or TUTORIAL_END not in updated:
+        fail("traffic.html carries no TRAFFIC-TUTORIAL markers. Put them inside "
+             "the first-visit help table's tbody.")
+    head, rest = updated.split(TUTORIAL_BEGIN, 1)
+    _, tail = rest.split(TUTORIAL_END, 1)
+    t_full = tutorial_use(gc, daily_rows(gc), gc["window"]["end"])
+    updated = (head + TUTORIAL_BEGIN + "\n" +
+               "".join("          %s\n" % r for r in tutorial_rows(t_full)) +
+               "          " + TUTORIAL_END + tail)
     record_text = milestone_json(record_after)
     record_old = (open(MILESTONE_FILE, encoding="utf-8").read()
                   if os.path.exists(MILESTONE_FILE) else "")
@@ -1696,12 +1850,30 @@ def main():
           "%s automatic counts, %s results"
           % (f["readerActions"], f["actionsPerMap"], f["pointsChosen"],
              f["pointShare"], f["layersOn"], f["autoCount"], f["resultCount"]))
-    unknown = families(gc)[3]
+    unknown = families(gc)[4]
+    help_unnamed = {f: n for f, n in unknown.items() if is_tutorial(f)}
+    unknown = {f: n for f, n in unknown.items() if not is_tutorial(f)}
     if unknown:
         # Counted as reader actions under "Other". Name it in ACTION_GROUPS,
         # RESULT_FAMILIES or AUTOMATIC_FAMILIES, whichever it is.
         print("UNCLASSIFIED event families, counted as reader actions: %s"
               % ", ".join("%s (%d)" % kv for kv in sorted(unknown.items())))
+    if help_unnamed:
+        # In the help's total and in no column of its table. A bare
+        # "first-use" is a file fetched before the steps were kept apart;
+        # anything else is a new step for TUTORIAL_STEPS.
+        print("UNNAMED first-visit help families, in its total and no column: %s"
+              % ", ".join("%s (%d)" % kv for kv in sorted(help_unnamed.items())))
+    t = tutorial_use(gc, daily_rows(gc), gc["window"]["end"])
+    print("first-visit help (not reader actions): %s; %s map(s) named, %s, "
+          "%s on the front page, %s in the Google Play app; How to use page "
+          "viewed %s"
+          % (", ".join("%s %d" % kv for kv in zip(t["steps"], t["totals"])),
+             len(t["maps"]),
+             "none unnamed" if not t["unnamed"] else "%d unnamed" % sum(t["unnamed"]),
+             sum(t["front"] or [0]),
+             "unknown" if t["play"] is None else sum(t["play"]),
+             "unknown" if t["helpPage"] is None else t["helpPage"]))
     print("  %d data-stat span(s) written from the data; %d key(s) keep a "
           "hand-typed fallback a crawler reads: %s"
           % (len(fallbacks), len(unwritten), ", ".join(sorted(unwritten)) or "none"))

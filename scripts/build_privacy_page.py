@@ -512,8 +512,12 @@ def measure_address_list(src, name):
 # `first-use/` joined on 2026-10-28 (engine `first-use`), after two reviews from
 # the Google Play closed test asked for a tutorial: `first-use/got-it`,
 # `tour`, `tour-done`, `tour-closed` and `help` record what a reader did with
-# the one-time tip shown on a first visit and its optional tour. It names
-# nothing about the reader or the place.
+# the one-time tip shown on a first visit and its optional tour. Each now ends
+# in the tag of the app it was used in (`first-use/got-it/il`; Adam,
+# 2026-10-28: "The tutorial stats should track app used on"), the select/
+# rule: it names the map and nothing about the reader or the place. Inside the
+# Google Play app `/play` follows the tag, so the report can tell the app from
+# the website; the support-link block already marks that window.
 EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "app-shortcut/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
@@ -1822,7 +1826,10 @@ def render_analytics_section(apps):
         "page view, each app sends named events for: %s. Exactly two of those — %s — carry "
         "coordinates, <strong>rounded to %d decimal places</strong>. The select/ event ends in the "
         "two-letter tag of the app the point was chosen in, such as select/il, which says "
-        "which state\u2019s map was used and nothing more about where. When the search box reads a "
+        "which state\u2019s map was used and nothing more about where; first-use/, sent when "
+        "you answer the tip a map shows on a first visit or take its tour, ends in the same "
+        "tag, such as first-use/got-it/il, and inside the Google Play app in /play after it. "
+        "When the search box reads a "
         "Google Maps or Apple Maps link, map-link-read/ says which app it was in, which of the "
         "two the link came from, whether it was a short link, whether it was pasted or "
         "arrived in the page\u2019s address (as a place shared into the installed app does), "
