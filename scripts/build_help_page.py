@@ -58,7 +58,7 @@ CANONICAL = SITE + "help.html"
 ENGINE_DIR = os.path.join(REPO_ROOT, "engine", "index.html")
 
 TITLE = "How to use districtry"
-DESC = ("How to find who represents you on districtry: search a place, tick the "
+DESC = ("Find who represents you on districtry: search a place, tick the "
         "kinds of district to show, read the cards, compare districts and share "
         "what you find.")
 SUB = "Find your place, choose what to see, and read who represents you."
