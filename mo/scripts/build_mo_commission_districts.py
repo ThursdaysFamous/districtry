@@ -45,8 +45,11 @@ office e-mailed, on 2026-10-28, a screenshot of the county's map viewer
 highlighting the eight whole townships of one district. And Audrain's clerk
 e-mailed, on 2026-10-28, a report of the district each precinct votes in and
 named the streets that divide the two precincts it splits, so each district
-is drawn as the 2020 census blocks in its precincts (BLOCKS below). Those 34
-are SOURCES below. The other 80 counties and the City of St. Louis are not
+is drawn as the 2020 census blocks in its precincts (BLOCKS below). And
+New Madrid's clerk pointed, on 2026-10-29, to the county's posted map of the
+Census Bureau's 2020 blocks by district, so each district is drawn as the
+blocks that map puts in it (POSTED below). Those 35
+are SOURCES below. The other 79 counties and the City of St. Louis are not
 drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
@@ -82,7 +85,7 @@ to FIDELITY_MAX_M: every vertex of the source's own dividing line must lie
 within that distance of the drawn one.
 
 Build (network: the viewers, the Cole download and TIGERweb; Cass's and Howard's files and
-Ste. Genevieve's traced block list are read from disk; shapely and
+Ste. Genevieve's, Audrain's and New Madrid's block lists are read from disk; shapely and
 pyproj):
     python3 mo/scripts/build_mo_commission_districts.py
 Check (offline, stdlib only; in CI):
@@ -343,6 +346,19 @@ SOURCES = {
     # people) is Eastern, which was read from where the road runs and not
     # from the clerk.
     "007": {"blocks": "audrain-commission-blocks.json", "listed": "2026-10-28"},
+    # New Madrid's interim county clerk (Nathanial Bock) answered on 2026-10-29
+    # that the county's website's maps page "click through to 'District
+    # Boundaries' ... contains PDF maps of both the voting precincts and
+    # Commissioner districts". Its "Commissioner Districts (May 2022)" PDF is
+    # a map of the Census Bureau's 2020 blocks by district, which the page
+    # credits to Surveying And Mapping, LLC with all rights reserved, so it is
+    # not kept here (SHA-256 7e1a2e2be4b7794ae2a3fa65518efe556dfc13fdb7fb7ee
+    # 81dc6184ee546908f). Its district outlines are vector lines, read out of
+    # the PDF and lined up with the county's blocks; the POSTED file puts each
+    # block in the district holding most of it, and its "method" says how. The
+    # map prints 9,429 people in District 1 and 7,005 in District 2, and the
+    # blocks add up to the same.
+    "143": {"posted": "new-madrid-commission-blocks.json", "clerk": "2026-10-29"},
     "113": {"viewer": ("phelpsgis", "Lincoln_County_MO", "1", "35"),
             "names": {"DISTRICT I": "First District", "DISTRICT II": "Second District"}},
     "119": {"viewer": ("christiangis", "McDonald_County_MO", "2", "35"), "field": "district_n",
@@ -543,17 +559,17 @@ def fetch_townships(c3, spec):
 
 
 def _blocks_file(spec):
-    return spec.get("traced") or spec["blocks"]
+    return spec.get("traced") or spec.get("posted") or spec["blocks"]
 
 
 def read_traced(spec):
-    """A traced or block-listed county's block list, kept under data/source/."""
+    """A traced, posted or block-listed county's block list, kept under data/source/."""
     return load_json(os.path.join(SOURCE_DIR, _blocks_file(spec)))
 
 
 def fetch_traced(c3, spec):
-    """The county's districts as unions of the 2020 census blocks its traced
-    or BLOCKS file lists under each seat. Every block the Census draws in the county
+    """The county's districts as unions of the 2020 census blocks its traced,
+    POSTED or BLOCKS file lists under each seat. Every block the Census draws in the county
     must be listed exactly once, so a block missing from the file, or a file
     naming a block the Census does not draw, stops the build."""
     from shapely.ops import unary_union  # noqa: PLC0415
@@ -585,6 +601,7 @@ def fetch_traced(c3, spec):
 
 def _source_kind(spec):
     return ("cole" if "zip" in spec else "traced" if "traced" in spec
+            else "posted" if "posted" in spec
             else "arcgis" if "arcgis" in spec
             else "listed" if "listed" in spec
             else "townships" if "townships" in spec
@@ -705,7 +722,7 @@ def build_county(c3, spec, county_feature, roster, today):
     if "townships" in spec:
         got = fetch_townships(c3, spec)
         spec = dict(spec, names={seat: seat for seat in spec["townships"]})
-    elif "traced" in spec or "blocks" in spec:
+    elif "traced" in spec or "posted" in spec or "blocks" in spec:
         got = fetch_traced(c3, spec)
         spec = dict(spec, names={seat: seat for seat, _ in got})
     else:
@@ -981,10 +998,11 @@ def check_problems(fc, records, counties, roster):
             problems.append("%s: read %r is not a date" % (where, p.get("read")))
         if bool(p.get("byStreet")) != ("blocks" in spec):
             problems.append("%s: byStreet %r" % (where, p.get("byStreet")))
-        if "traced" in spec or "blocks" in spec:
+        if "traced" in spec or "posted" in spec or "blocks" in spec:
             t = read_traced(spec)
             listed = [g for gs in t["blocks"].values() for g in gs]
             dated = (t.get("sentOn") == spec.get("sent") if "traced" in spec
+                     else t.get("pointedOn") == spec.get("clerk") if "posted" in spec
                      else t.get("listedOn") == spec.get("listed"))
             if (t.get("countyfips") != geoid or sorted(t["blocks"]) != sorted(district_seats(roster, geoid))
                     or len(set(listed)) != len(listed) or not dated
