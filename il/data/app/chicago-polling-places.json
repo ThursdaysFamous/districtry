@@ -1,7 +1,7 @@
 {
   "election": "General Election",
   "electionDate": "2026-11-03",
-  "listDate": "2026-10-19",
+  "listDate": "2026-10-27",
   "lookupUrl": "https://chicagoelections.gov/voting/your-voter-information",
   "precincts": {
     "1-1": 0,
@@ -3146,10 +3146,10 @@
       "place": "BARTON SCHOOL"
     },
     {
-      "address": "1330 W 76TH ST",
-      "lat": 41.756029,
-      "lng": -87.657056,
-      "place": "CONTINENTAL PLAZA APARTMENTS"
+      "address": "7724 S RACINE AVE",
+      "lat": 41.753661,
+      "lng": -87.653898,
+      "place": "SOUTHSIDE WORSHIP CTR"
     },
     {
       "address": "7931 S HONORE ST",
@@ -5171,7 +5171,7 @@
       "address": "2247 W CHICAGO AVE",
       "lat": 41.895749,
       "lng": -87.683101,
-      "place": "UKRANIAN VILLAGE CULTURAL CTR"
+      "place": "UKRAINIAN VILLAGE CULTURAL CTR"
     },
     {
       "address": "1840 W OHIO ST",
@@ -6585,5 +6585,5 @@
     }
   ],
   "sourcePage": "https://chicagoelections.gov/voting/election-day-voting",
-  "sourceUrl": "https://cboeprod.blob.core.usgovcloudapi.net/prod/2026-10/All%20polling%20place%20list%2010.19.26.pdf"
+  "sourceUrl": "https://cboeprod.blob.core.usgovcloudapi.net/prod/2026-10/10.27.26_Polling%20Place%20List.pdf"
 }
