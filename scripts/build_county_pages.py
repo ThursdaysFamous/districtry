@@ -2968,6 +2968,16 @@ def mo_county_bodies(inst):
                         "which this app has not checked against the precinct "
                         "records the county's elections use, so near the line, "
                         "check with the county clerk.")
+            if any(p.get("byStreet") for p in props):
+                # drawn from the clerk's own precinct report, so the sentence
+                # above would be false; the Census's 2020 precinct lines are
+                # what this app cannot vouch for
+                cta_note = ("Opens the map with the county and commission district "
+                            "layers on. The district lines are drawn from the county "
+                            "clerk's list of the district each precinct votes in, on "
+                            "the Census Bureau's 2020 precinct lines, which may be "
+                            "older than the county's own, so near the line, check "
+                            "with the county clerk.")
         else:
             cta_layers = "county"
             cta_note = ("Opens the map with the county layer on, whose card lists "
