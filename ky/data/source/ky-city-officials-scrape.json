@@ -36487,7 +36487,7 @@
    "name": "Z_Eubank",
    "officials": [],
    "phone": "",
-   "population": "36",
+   "population": "0",
    "searchCounty": "Lincoln",
    "sourceUrl": "https://kydlgweb.ky.gov/Cities/16_CityView.cfm?City_ID=468",
    "zip": "42567"
@@ -36501,7 +36501,7 @@
    "name": "Z_Germantown",
    "officials": [],
    "phone": "(606) 728-2312",
-   "population": "60",
+   "population": "0",
    "searchCounty": "Mason",
    "sourceUrl": "https://kydlgweb.ky.gov/Cities/16_CityView.cfm?City_ID=469",
    "zip": "41044"
@@ -36590,7 +36590,7 @@
    "name": "Z_Pleasureville",
    "officials": [],
    "phone": "(502) 878-5500",
-   "population": "74",
+   "population": "0",
    "searchCounty": "Shelby",
    "sourceUrl": "https://kydlgweb.ky.gov/Cities/16_CityView.cfm?City_ID=470",
    "zip": "40057"
@@ -36604,7 +36604,7 @@
    "name": "Z_Prospect",
    "officials": [],
    "phone": "(502) 228-1121",
-   "population": "62",
+   "population": "0",
    "searchCounty": "Oldham",
    "sourceUrl": "https://kydlgweb.ky.gov/Cities/16_CityView.cfm?City_ID=471",
    "zip": "40059"
@@ -36618,7 +36618,7 @@
    "name": "Z_Upton",
    "officials": [],
    "phone": "(270) 369-7278",
-   "population": "306",
+   "population": "0",
    "searchCounty": "Larue",
    "sourceUrl": "https://kydlgweb.ky.gov/Cities/16_CityView.cfm?City_ID=473",
    "zip": "42701"
@@ -36688,7 +36688,7 @@
    "name": "Z_Corinth",
    "officials": [],
    "phone": "(859) 824-5922",
-   "population": "2",
+   "population": "0",
    "searchCounty": "Scott",
    "sourceUrl": "https://kydlgweb.ky.gov/Cities/16_CityView.cfm?City_ID=479",
    "zip": "41010"
@@ -36900,7 +36900,7 @@
    "name": "Z_Millersburg",
    "officials": [],
    "phone": "(859) 484-3901",
-   "population": "13",
+   "population": "0",
    "searchCounty": "Nicholas",
    "sourceUrl": "https://kydlgweb.ky.gov/Cities/16_CityView.cfm?City_ID=488",
    "zip": "40348"
@@ -37061,7 +37061,7 @@
    "name": "Z_Sardis",
    "officials": [],
    "phone": "(606) 763-6693",
-   "population": "8",
+   "population": "0",
    "searchCounty": "Robertson",
    "sourceUrl": "https://kydlgweb.ky.gov/Cities/16_CityView.cfm?City_ID=491",
    "zip": "41055"
@@ -37117,7 +37117,7 @@
    "name": "Z_Walton",
    "officials": [],
    "phone": "(859) 485-4383",
-   "population": "19",
+   "population": "0",
    "searchCounty": "Kenton",
    "sourceUrl": "https://kydlgweb.ky.gov/Cities/16_CityView.cfm?City_ID=495",
    "zip": "41094"
@@ -41960,7 +41960,7 @@
  "source": {
   "counties": 120,
   "publisher": "Kentucky Department for Local Government",
-  "read": "2026-10-21",
+  "read": "2026-10-28",
   "url": "https://kydlgweb.ky.gov/Cities/16_CityHome.cfm"
  }
 }
