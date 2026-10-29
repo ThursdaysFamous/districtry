@@ -1735,7 +1735,7 @@ FIRST_USE_FRONT_SCRIPT = """
     [
       "Type your address or ZIP code in the box and press Show districts.",
       "districtry opens the map for your state, with your place picked.",
-      "Tick the kinds of district you want to see. Each one gets a card saying who represents you there."
+      "Check the kinds of district you want to see. Each one gets a card saying who represents you there."
     ].forEach(function (line) { steps.appendChild(el("li", null, line)); });
     box.appendChild(steps);
     var actions = el("div", "first-use-actions");
@@ -1772,7 +1772,7 @@ FIRST_USE_FRONT_SCRIPT = """
     { sel: ".coverage", title: "Where it answers today",
       text: "The shaded states have a map today. Tap one to open its map, or find your state in the list." },
     { sel: "#help-link", title: "Help is here",
-      text: "How to use explains the map: choosing the kinds of district to see, reading the cards, comparing districts and sharing what you find." }
+      text: "“How to use” explains the map: choosing the kinds of district to see, reading the cards, comparing districts and sharing what you find." }
   ];
   function startTour() {
     var ring = el("div", "tour-ring");
@@ -1870,6 +1870,18 @@ FIRST_USE_FRONT_SCRIPT = """
     else y = Math.max(12, vh - ch - 12);
     card.style.left = Math.round(x) + "px";
     card.style.top = Math.round(y) + "px";
+  }
+  // Going to the address box is the tip's first step, and what the box says
+  // back opens under it; on a phone the keyboard pushes the tip up over that.
+  // So focusing or typing in the box closes the tip (got-it, as Escape does)
+  // and the tour (tour-closed), the maps' rule (engine first-use).
+  function searchStarted() {
+    if (tipBox) { hideTip(); firstUseEvent("got-it"); }
+    if (tour) endTour(false);
+  }
+  if (input) {
+    input.addEventListener("focus", searchStarted);
+    input.addEventListener("input", searchStarted);
   }
   var framed = false;
   try { framed = window.self !== window.top; } catch (e) { framed = true; }
@@ -3419,13 +3431,26 @@ footer .support b { color: var(--ink); }
         return loadFleetOutlines().then(function (outlines) {
           if (!outlines) return want ? handTo(want, typed) : routeByRectangles(feats);
           // The FIRST result an instance answers for, not result #1 — a bare
-          // place name ambiguous across states gets a fair shot.
+          // place name ambiguous across states gets a fair shot. It opens
+          // with its point selected only when it is the one place any app
+          // answers for (2026-10-29, Adam choosing the apps' own rule for
+          // this page, ENGINE geocoder-search selectClearMatch): with two or
+          // more, the first of them can be the same street in another town,
+          // so its app is handed what was typed and lists its answers there
+          // for the reader to pick from. Answers a few doors apart are one
+          // place, because the geocoder often answers a house and the
+          // building on it.
+          var first = null, places = 0;
           for (var i = 0; i < feats.length; i++) {
             var c = feats[i] && feats[i].geometry && feats[i].geometry.coordinates;
             if (!c || c.length < 2) continue;
             var metro = fleetOwner(c[1], c[0], outlines);
-            if (metro && (!want || metro === want)) { go(metro, { lat: c[1], lng: c[0] }); return; }
+            if (!metro || (want && metro !== want)) continue;
+            if (!first) { first = { metro: metro, lat: c[1], lng: c[0] }; places = 1; }
+            else if (!samePlace(first, c[1], c[0])) places++;
           }
+          if (first && places === 1) { go(first.metro, { lat: first.lat, lng: first.lng }); return; }
+          if (first) return handTo(first.metro, typed);
           if (want) return handTo(want, typed);
           countLinkRead(feats.length ? "uncovered" : "none");
           resetButton();
@@ -3443,6 +3468,12 @@ footer .support b { color: var(--ink); }
         resetButton();
         setStatus("Search failed \\u2014 try again, or pick a place below.", true);
       });
+  }
+
+  // Two answers under 150 m apart (a house and the building on it)
+  function samePlace(a, lat, lng) {
+    var dy = (lat - a.lat) * 111320, dx = (lng - a.lng) * 111320 * Math.cos(a.lat * Math.PI / 180);
+    return dx * dx + dy * dy < 150 * 150;
   }
 
   // A Photon answer's parts in the order the apps label one (photonLabel),

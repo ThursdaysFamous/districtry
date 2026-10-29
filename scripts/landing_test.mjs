@@ -792,6 +792,10 @@ try {
     const HOUSE = at({ housenumber: "9", street: "West Oakley Drive Northwest", city: "Westmont", state: "Illinois" });
     const OTHER_HOUSE = at({ housenumber: "9", street: "Oakley Drive North", city: "Westmont", state: "Illinois", postcode: "60559" });
     const TEXAS = { ...photonFeature(...UNCOVERED_POINT), properties: { name: "Oakley Drive", city: "Dallas", state: "Texas" } };
+    // the same house a few doors on (one place), and in another town
+    const HOUSE_NEXT = { ...photonFeature(41.82230, -87.97949), properties: HOUSE.properties };
+    const HOUSE_ELSEWHERE = { ...photonFeature(42.04510, -87.69010),
+      properties: { housenumber: "9", street: "West Oakley Drive Northwest", city: "Evanston", state: "Illinois" } };
     for (const c of [
       { name: "its street without the number opens /il/ with the address, not a point", text: TYPED, answer: [ON],
         want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
@@ -801,6 +805,10 @@ try {
         text: TYPED, answer: [OTHER], want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
       { name: "an answer that is the house opens its point, as before", text: TYPED, answer: [ON, HOUSE],
         want: "/il/", hash: /^#point=41\.82196,-87\.97949$/ },
+      { name: "the house answered twice a few doors apart opens its point, as one place", text: TYPED,
+        answer: [HOUSE, HOUSE_NEXT], want: "/il/", hash: /^#point=41\.82196,-87\.97949$/ },
+      { name: "the house in two towns opens /il/ with the address to pick from, not the first town's point", text: NO_TOWN,
+        answer: [HOUSE, HOUSE_ELSEWHERE], want: "/il/", hash: "#q=" + encodeURIComponent(NO_TOWN) },
       { name: "its number on another street opens /il/ with the address, not that house's point", text: TYPED,
         answer: [OTHER_HOUSE], want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
       { name: "answers no app covers, to an address that names no state, are said to be outside", text: NO_STATE,
@@ -2125,6 +2133,26 @@ try {
         JSON.stringify(counted));
       const mast = await page.getAttribute("#help-link", "href");
       check("the masthead links the How to use page", mast === "help.html", String(mast));
+      await ctx.close();
+    }
+    for (const how of ["tip", "tour"]) {
+      // Going to the address box closes the tip and the tour, so neither sits
+      // over what the box says back (Adam, 2026-10-29).
+      const ctx = await browser.newContext({ firstUse: true, serviceWorkers: "block", viewport: { width: 390, height: 844 } });
+      const page = await ctx.newPage();
+      const counted = [];
+      await page.exposeFunction("__gcCount", actionsInto(counted));
+      await page.addInitScript(() => {
+        window.goatcounter = { count: (vars) => { if (vars && vars.event) window.__gcCount(vars.path); } };
+      });
+      await page.route("**/gc.zgo.at/**", (r) => r.abort());
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.waitForSelector(".first-use", { timeout: 5000 });
+      if (how === "tour") await page.click(".first-use-tour");
+      await page.focus("#search-input");
+      const gone = (await page.$(".first-use, .tour-card, .tour-ring")) === null;
+      const want = how === "tip" ? "first-use/got-it/front" : "first-use/tour/front,first-use/tour-closed/front";
+      check(`going to the address box closes the ${how}`, gone && counted.join() === want, JSON.stringify(counted));
       await ctx.close();
     }
     {

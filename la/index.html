@@ -10986,20 +10986,30 @@ function initLouisianaExplorer() {
    * 2026-10-17 a question page's address box selected the first, and the
    * cards named the districts of another stretch of the street, and until
    * 2026-10-19 the second. */
+  /* The one row a search the reader sent goes straight to, or none: the
+   * rule prefillGeocodeSearch states above. Search and Enter take it too,
+   * from 2026-10-29 (Adam, choosing it over a list that always waited for a
+   * tap, "go to the match location without needing to click the full
+   * address"): a search with one clear answer that is the house selects it,
+   * and anything else stays a list for the reader to pick from, because the
+   * first of several answers can be the same street in another town and an
+   * answer without the house number is a spot somewhere along the street. */
+  function selectClearMatch() {
+    var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
+    var place = geoResultsList.querySelectorAll("li.link-place > button");
+    var away = geoResultsList.querySelectorAll("li.map-link-away > button, li.zip-away > button");
+    if (own.length === 1) { if (!/\b(?:no-number|other-street|zip-answer)\b/.test(own[0].parentNode.className)) own[0].click(); }
+    else if (place.length === 1) place[0].click();
+    else if (!own.length && away.length === 1) away[0].click();
+  }
+
   function prefillGeocodeSearch(q) {
     linkVia = "opened";
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
     geoStatus.className = "geo-status";
     reengageSearchShell();
-    return runGeocodeSearch(q, null, true).then(function () {
-      var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
-      var place = geoResultsList.querySelectorAll("li.link-place > button");
-      var away = geoResultsList.querySelectorAll("li.map-link-away > button, li.zip-away > button");
-      if (own.length === 1) { if (!/\b(?:no-number|other-street|zip-answer)\b/.test(own[0].parentNode.className)) own[0].click(); }
-      else if (place.length === 1) place[0].click();
-      else if (!own.length && away.length === 1) away[0].click();
-    })["catch"](function (err) {
+    return runGeocodeSearch(q, null, true).then(selectClearMatch)["catch"](function (err) {
       if (err.name === "AbortError") return;
       geoStatus.textContent = "Search failed \u2014 the geocoder may be busy. Try again in a moment.";
       geoStatus.className = "geo-status err";
@@ -11018,6 +11028,10 @@ function initLouisianaExplorer() {
     geoStatus.textContent = "Searching…";
     geoStatus.className = "geo-status";
     runGeocodeSearch(q, null, true)
+      .then(function () {
+        // not once the reader has typed on: the list is for other text now
+        if (document.getElementById("geocode-input").value.trim() === q) selectClearMatch();
+      })
       .catch(function (err) {
         if (err.name === "AbortError") return;
         geoStatus.textContent = "Search failed — the geocoder may be busy. Try again in a moment.";
@@ -20732,8 +20746,8 @@ function initLouisianaExplorer() {
     var steps = dstEl("ol", "first-use-steps");
     [
       "Search your address, or pick the spot on the map where you live.",
-      "Tick the kinds of district you want to see, such as U.S. House District. Nothing is shown until you tick one.",
-      "Each one you tick gets a card saying who represents you there and how to reach them."
+      "Check the kinds of district you want to see, such as U.S. House District. Nothing is shown until you check one.",
+      "Each one you check gets a card saying who represents you there and how to reach them."
     ].forEach(function (line) { steps.appendChild(dstEl("li", null, line)); });
     box.appendChild(steps);
     var actions = dstEl("div", "first-use-actions");
@@ -20780,10 +20794,10 @@ function initLouisianaExplorer() {
         text: "Type your address here and press Search. You can also use your current location, or pick the spot on the map where you live." },
       { find: function () { return document.getElementById("results-col"); },
         title: "Choose what to see",
-        text: "Once you have picked a place, a list of the kinds of district appears here. Tick the ones you want, such as U.S. House District or State Senate District. Each one gets a card naming who represents you there." },
+        text: "Once you have picked a place, a list of the kinds of district appears here. Check the ones you want, such as U.S. House District or State Senate District. Each one gets a card naming who represents you there." },
       { find: function () { return document.getElementById("map"); },
         title: "See it on the map",
-        text: "The map outlines each district you tick. Drag and zoom it to look around, and tap anywhere else to check another place." },
+        text: "The map outlines each district you check. Drag and zoom it to look around, and tap anywhere else to look up another place." },
       { find: function () {
           var link = document.getElementById("help-link");
           if (dstVisible(link)) return link;
@@ -20791,7 +20805,7 @@ function initLouisianaExplorer() {
           return dstVisible(more) ? more : link;
         },
         title: "Help is here",
-        text: "Open How to use for these steps and more, such as comparing districts and sharing what you find." }
+        text: "Open “How to use” for these steps and more, such as comparing districts and sharing what you find." }
     ];
   }
   function dstStartTour() {
@@ -20925,12 +20939,27 @@ function initLouisianaExplorer() {
     }
     if (!hint) {
       hint = dstEl("p", "no-layer-hint",
-        "Tick a box below to see that district and who represents you there.");
+        "Check a box below to see that district and who represents you there.");
       hint.id = "no-layer-hint";
       root.parentNode.insertBefore(hint, root);
     }
     hint.hidden = false;
   }
+
+  /* ---- the search box closes both ----
+     A reader who goes to the search box is doing the tip's first step, and
+     the list of matches opens under the box. On a phone the tip sits at the
+     foot of the screen and the keyboard pushes it up over that list; the
+     tour's card sits just below the box. So focusing or typing in the box
+     closes the tip (counted as got-it, as Escape is) and the tour (counted
+     as tour-closed). Adam reported the tip covering the list, 2026-10-29. */
+  function dstSearchStarted(e) {
+    if (!e.target || e.target.id !== "geocode-input") return;
+    if (dstFirstUseBox) { dstHideFirstUse(); dstFirstUseEvent("got-it"); }
+    if (dstTourState) dstEndTour(false);
+  }
+  document.addEventListener("focusin", dstSearchStarted);
+  document.addEventListener("input", dstSearchStarted);
 
   if (!dstFramed && !dstFirstUseSeen()) {
     dstFirstUsePending = true;
