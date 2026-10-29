@@ -542,14 +542,18 @@ try {
 
     await search(GEOCODER_QUERY_RAW);
     await page
-      .waitForFunction(() => document.querySelectorAll("#geocode-results li").length > 0,
+      .waitForFunction(() => document.querySelectorAll("#geocode-results li").length > 0 ||
+        /^Selected:/.test((document.getElementById("geo-status") || {}).textContent || ""),
         null, { timeout: QUERY_TIMEOUT })
       .catch(() => {});
     const rows = await page.$$eval("#geocode-results li", (ls) => ls.length);
+    // one answer that is the house is selected at once (selectClearMatch),
+    // which empties the list
+    const selected = await page.$eval("#geo-status", (el) => /^Selected:/.test(el.textContent || ""));
     const bounded = seen.filter((c) => c.bounded);
     check("search box retries a unit-fragment miss with the cleaned address",
-      bounded.length === 2 && bounded[0].q.includes(GEOCODER_UNIT_FRAGMENT) && bounded[1].q === GEOCODER_QUERY_CLEANED && rows > 0,
-      `calls=${JSON.stringify(bounded.map((c) => c.q))} rows=${rows}`);
+      bounded.length === 2 && bounded[0].q.includes(GEOCODER_UNIT_FRAGMENT) && bounded[1].q === GEOCODER_QUERY_CLEANED && (rows > 0 || selected),
+      `calls=${JSON.stringify(bounded.map((c) => c.q))} rows=${rows} selected=${selected}`);
 
     seen.length = 0;
     await search("nowhere at all xyzzy");
@@ -609,6 +613,50 @@ try {
     await context.close();
   }
 
+  // 1c2. Search and Enter go straight to the one clear answer (2026-10-29,
+  //      selectClearMatch): one answer that is the house is selected, as
+  //      #q= does above, while two answers with the house number (the same
+  //      street in two towns) stay a list for the reader to pick from,
+  //      because the first may be the wrong town.
+  {
+    const ONE = [{ type: "Feature", geometry: { type: "Point", coordinates: [-87.6301, 41.8801] },
+      properties: { housenumber: "9", street: "Example Avenue", city: "Chicago", state: "Illinois", postcode: "60604" } }];
+    const TWO = ONE.concat([{ type: "Feature", geometry: { type: "Point", coordinates: [-87.6901, 42.0451] },
+      properties: { housenumber: "9", street: "Example Avenue", city: "Evanston", state: "Illinois", postcode: "60201" } }]);
+    async function sent(features) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, BASE, async (p) => {
+        await p.route("**/photon.komoot.io/**", (route) => route.fulfill({ status: 200, contentType: "application/json",
+          body: JSON.stringify({ type: "FeatureCollection", features }) }));
+      });
+      await page.evaluate(() => {
+        const input = document.getElementById("geocode-input");
+        input.value = "9 Example Ave";
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+        document.getElementById("geocode-form").requestSubmit();
+      });
+      await page.waitForFunction(() => document.querySelectorAll("#geocode-results li").length > 0 ||
+        /^Selected:/.test((document.getElementById("geo-status") || {}).textContent || ""),
+        null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      await page.waitForTimeout(300);
+      const out = await page.evaluate((ns) => ({
+        rows: document.querySelectorAll("#geocode-results li").length,
+        status: (document.getElementById("geo-status").textContent || "").trim(),
+        point: window[ns].state.selectedPoint,
+      }), EXPORTS_NAME);
+      await context.close();
+      return out;
+    }
+    const one = await sent(ONE);
+    check("Search goes straight to the one answer that is the house",
+      /^Selected:/.test(one.status) && !!one.point && Math.abs(one.point.lat - 41.8801) < 1e-6,
+      `status=${one.status.slice(0, 70)} point=${JSON.stringify(one.point)}`);
+    const two = await sent(TWO);
+    check("Search with the same street in two towns lists both and selects neither",
+      two.rows === 2 && !two.point && !/^Selected:/.test(two.status),
+      `rows=${two.rows} status=${two.status.slice(0, 70)} point=${JSON.stringify(two.point)}`);
+  }
+
   // 1d. A district by NAME ("33rd ward", "State Senate District 7"), answered
   //     from the same-origin index scripts/build_district_search.py writes —
   //     never by the geocoder. Driven through #q= so the question pages' hand-
@@ -664,8 +712,16 @@ try {
       await page.fill("#geocode-input", q);
       await page.press("#geocode-input", "Enter");
       await page.waitForTimeout(600);
-      return page.evaluate(() => [...document.querySelectorAll("#geocode-results li.district-result")]
-        .map((li) => li.querySelector("button").firstChild.textContent.trim()));
+      // Enter on a name only one district answers selects it at once
+      // (selectClearMatch), which empties the list, so the district it chose
+      // is read off the message it leaves: "Selected: <name> (<layer>)"
+      return page.evaluate(() => {
+        const rows = [...document.querySelectorAll("#geocode-results li.district-result")]
+          .map((li) => li.querySelector("button").firstChild.textContent.trim());
+        const status = (document.getElementById("geo-status").textContent || "").trim();
+        const m = !rows.length && /^Selected: /.test(status) ? status.slice(10) : "";
+        return m ? [m.lastIndexOf(" (") > 0 ? m.slice(0, m.lastIndexOf(" (")) : m] : rows;
+      });
     };
     const dewitt = await byCounty("DeWitt County Board District A");
     const bare = await byCounty("county board district 3");

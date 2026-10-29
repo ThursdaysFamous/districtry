@@ -3431,13 +3431,26 @@ footer .support b { color: var(--ink); }
         return loadFleetOutlines().then(function (outlines) {
           if (!outlines) return want ? handTo(want, typed) : routeByRectangles(feats);
           // The FIRST result an instance answers for, not result #1 — a bare
-          // place name ambiguous across states gets a fair shot.
+          // place name ambiguous across states gets a fair shot. It opens
+          // with its point selected only when it is the one place any app
+          // answers for (2026-10-29, Adam choosing the apps' own rule for
+          // this page, ENGINE geocoder-search selectClearMatch): with two or
+          // more, the first of them can be the same street in another town,
+          // so its app is handed what was typed and lists its answers there
+          // for the reader to pick from. Answers a few doors apart are one
+          // place, because the geocoder often answers a house and the
+          // building on it.
+          var first = null, places = 0;
           for (var i = 0; i < feats.length; i++) {
             var c = feats[i] && feats[i].geometry && feats[i].geometry.coordinates;
             if (!c || c.length < 2) continue;
             var metro = fleetOwner(c[1], c[0], outlines);
-            if (metro && (!want || metro === want)) { go(metro, { lat: c[1], lng: c[0] }); return; }
+            if (!metro || (want && metro !== want)) continue;
+            if (!first) { first = { metro: metro, lat: c[1], lng: c[0] }; places = 1; }
+            else if (!samePlace(first, c[1], c[0])) places++;
           }
+          if (first && places === 1) { go(first.metro, { lat: first.lat, lng: first.lng }); return; }
+          if (first) return handTo(first.metro, typed);
           if (want) return handTo(want, typed);
           countLinkRead(feats.length ? "uncovered" : "none");
           resetButton();
@@ -3455,6 +3468,12 @@ footer .support b { color: var(--ink); }
         resetButton();
         setStatus("Search failed \\u2014 try again, or pick a place below.", true);
       });
+  }
+
+  // Two answers under 150 m apart (a house and the building on it)
+  function samePlace(a, lat, lng) {
+    var dy = (lat - a.lat) * 111320, dx = (lng - a.lng) * 111320 * Math.cos(a.lat * Math.PI / 180);
+    return dx * dx + dy * dy < 150 * 150;
   }
 
   // A Photon answer's parts in the order the apps label one (photonLabel),
