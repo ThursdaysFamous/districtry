@@ -245,7 +245,7 @@ PROVENANCE = [
         "note": (
             "The coverage ring, dissolved by the same builder from the same "
             "fetch: only the counties whose commission district lines are "
-            "drawn (33 on 2026-10-28, 11 rings). --check holds it to one "
+            "drawn (34 on 2026-10-28, 11 rings). --check holds it to one "
             "INSIDE anchor per drawn county and an OUTSIDE anchor in every "
             "other county."
         ),

@@ -704,6 +704,52 @@ def notice_memory():
         % (key.group(1), word.group(1)))
 
 
+# THE FRONT PAGE COUNTS A FIRST OR RETURN VISIT TOO (Adam, 2026-10-29: "Also
+# the front page needs to be counted"). The maps count `visit/first/<tag>` or
+# `visit/return/<tag>` once per browser window (engine install-app), and this
+# page counts `visit/first/front` or `visit/return/front` from the SAME two
+# keys, read off that block so the two cannot drift apart: the one-character
+# mark in localStorage that says this browser has been here before, and the
+# sessionStorage mark that says this window's visit is counted. So a visit is
+# counted once, on whichever of the front page and the maps it starts. A
+# reader who goes on from here to a map is not counted again there, so the
+# mark this page has just written cannot turn that same visit into a return
+# on the map. Not in a
+# frame, as the maps do not count one, and not on a visit the forward guard is
+# sending to /il/, which that map counts. Storage that cannot be read or
+# written counts nothing, rather than counting every visit as a first.
+def visit_count_script():
+    src = read(INSTALL_APP, "the maps' visit count")
+    seen = re.search(r'\bvar DST_SEEN_KEY = "([a-z-]+)";', src)
+    counted = re.search(r'\bvar DST_VISIT_COUNTED_KEY = "([a-z-]+)";', src)
+    if not seen or not counted:
+        fail("the front page counts a first or return visit with the maps' own two "
+             "keys, and engine/index.html/install-app.txt no longer declares "
+             "DST_SEEN_KEY and DST_VISIT_COUNTED_KEY as plain strings, so this page "
+             "cannot know what to read.")
+    return (
+        "  /* ---------- a first or return visit (visit_count_script) ----------\n"
+        "     Counted once per browser window with the maps' own keys\n"
+        "     (engine/index.html/install-app.txt), so a visit is counted on the page\n"
+        "     it starts on and nowhere else in that window. */\n"
+        "  (function () {\n"
+        '    var SEEN_KEY = "%s", COUNTED_KEY = "%s";\n'
+        "    var inFrame = false;\n"
+        "    try { inFrame = window.self !== window.top; } catch (e) { inFrame = true; }\n"
+        "    if (inFrame || window.dstForwarding) return;\n"
+        "    var kind = null;\n"
+        "    try {\n"
+        "      if (!window.sessionStorage.getItem(COUNTED_KEY)) {\n"
+        "        var seen = !!window.localStorage.getItem(SEEN_KEY);\n"
+        '        if (!seen) window.localStorage.setItem(SEEN_KEY, "1");\n'
+        '        window.sessionStorage.setItem(COUNTED_KEY, "1");\n'
+        '        kind = seen ? "return" : "first";\n'
+        "      }\n"
+        "    } catch (e) { kind = null; /* storage blocked: count nothing */ }\n"
+        '    if (kind) trackEvent("visit/" + kind + "/front");\n'
+        "  })();\n"
+        % (seen.group(1), counted.group(1)))
+
 def state_rows(metros):
     """Every state and DC, in alphabetical order, each paired with the fleet
     entry that answers there (or None) and whether that entry covers the whole
@@ -1583,6 +1629,268 @@ def place_layers(place):
 # the boundary (the Chicago Board of Education's, whose boundary numbers its
 # seats 1-20) is not named at all. landing_test.mjs block 1i holds each name to
 # its roster.
+# THE FRONT PAGE'S FIRST-VISIT TIP AND TOUR (Adam, 2026-10-28: "The guide
+# should also function on the landing page with a link to the how to"). The
+# maps carry their own (engine first-use), which teaches the map; this one
+# teaches this page: type an address, districtry opens your state's map, tick
+# what to see there. It is the maps' design on this page's tokens: a tip shown
+# once, "Show me around" for a four-step tour that rings the address box, the
+# worked example, the coverage map and the masthead's How to use link, and
+# "Got it". It is remembered under its OWN key, FIRST_USE_FRONT_KEY, and not
+# the maps' districtry-first-use, so a reader who saw it here still gets the
+# map's tip on the map, which is where the reviews said readers got stuck.
+# Never in a frame, never with a share handed over in the address (#q=, which
+# sends the reader on at once), and nothing when storage cannot be read, the
+# maps' rule. Counted as first-use/<what>/front (got-it, tour, tour-done,
+# tour-closed, help), the maps' shape with "front" where a map puts its tag,
+# never by place; the privacy page names the key and the
+# family (build_privacy_page.py ROOT_EVENTS).
+FIRST_USE_FRONT_KEY = "districtry-first-use-front"
+FIRST_USE_FRONT_CSS = """
+/* THE FIRST-VISIT TIP AND TOUR (FIRST_USE_FRONT_SCRIPT). Fixed to the foot of
+   the screen, at the right on a computer and across it on a phone, clear of
+   the notice at the top. Every control is at least 40px tall. The primary
+   button paints the address button's pair, --surface on --brand-600 in light
+   and --paper in dark, for the reason that rule states. */
+.first-use {
+  position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  z-index: 1050; width: min(360px, calc(100%% - 24px));
+  background: var(--surface); border: 1px solid var(--brand-border);
+  border-left: 4px solid var(--brand-600); border-radius: var(--radius-card);
+  box-shadow: 0 6px 24px rgba(23, 22, 28, 0.22);
+  padding: 12px 14px; font-size: 15px; line-height: 1.45; color: var(--ink);
+}
+@media (max-width: 560px) {
+  .first-use { left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+               width: auto; max-width: 440px; margin: 0 auto; }
+}
+.first-use-title, .tour-title {
+  margin: 0 0 6px; font: var(--font-heading-weight) 19px/1.2 var(--font-heading); color: var(--ink);
+}
+.first-use-steps { margin: 0 0 10px; padding-left: 1.3em; }
+.first-use-steps li + li { margin-top: 4px; }
+.first-use-actions, .tour-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.tour-actions { justify-content: flex-end; }
+.first-use-tour, .first-use-ok, .tour-next, .tour-back, .tour-close {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px;
+  border-radius: var(--radius-btn); font: 600 14.5px/1.2 var(--font-body); cursor: pointer;
+}
+.first-use-ok, .tour-next { background: var(--brand-600); color: var(--surface); border: 1px solid var(--brand-600); }
+.first-use-ok:hover, .tour-next:hover { background: var(--brand-700); border-color: var(--brand-700); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .first-use-ok, :root:not([data-theme="light"]) .tour-next { color: var(--paper); }
+}
+:root[data-theme="dark"] .first-use-ok, :root[data-theme="dark"] .tour-next { color: var(--paper); }
+.first-use-tour, .tour-back, .tour-close { background: transparent; color: var(--brand-700); border: 1px solid var(--brand-700); }
+.first-use-tour:focus-visible, .first-use-ok:focus-visible, .tour-next:focus-visible,
+.tour-back:focus-visible, .tour-close:focus-visible, .first-use-help:focus-visible {
+  outline: 2px solid var(--brand-600); outline-offset: 2px;
+}
+.tour-close { margin-right: auto; }
+.first-use-help {
+  display: inline-flex; align-items: center; min-height: 40px; margin-top: 4px;
+  color: var(--brand-600); font-weight: 600;
+}
+.first-use-help:hover { color: var(--brand-700); }
+.tour-ring {
+  position: fixed; z-index: 1250; border: 3px solid var(--brand-600); border-radius: 10px;
+  box-shadow: 0 0 0 9999px rgba(23, 22, 28, 0.4); pointer-events: none;
+}
+.tour-card {
+  position: fixed; z-index: 1260; background: var(--surface); border: 1px solid var(--brand-border);
+  border-left: 4px solid var(--brand-600); border-radius: var(--radius-card);
+  box-shadow: 0 6px 24px rgba(23, 22, 28, 0.3);
+  padding: 12px 14px; font-size: 15px; line-height: 1.45; color: var(--ink);
+}
+.tour-card:focus { outline: none; }
+.tour-count { margin: 0 0 2px; font-size: 13px; color: var(--muted); }
+.tour-text { margin: 0 0 10px; }
+""".replace("%%", "%")
+FIRST_USE_FRONT_SCRIPT = """
+  /* ---------- the first-visit tip and its tour (FIRST_USE_FRONT_CSS) ---------- */
+  var FIRST_USE_KEY = "%(key)s";
+  function firstUseSeen() {
+    try { return !!window.localStorage.getItem(FIRST_USE_KEY); } catch (e) { return true; }
+  }
+  function firstUseEvent(what) { trackEvent("first-use/" + what + "/front"); }
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text) n.textContent = text;
+    return n;
+  }
+  var tipBox = null, tour = null;
+  function hideTip() {
+    if (tipBox && tipBox.parentNode) tipBox.parentNode.removeChild(tipBox);
+    tipBox = null;
+  }
+  function showTip() {
+    if (tipBox || tour) return;
+    var box = el("aside", "first-use");
+    box.setAttribute("aria-labelledby", "first-use-title");
+    var title = el("h2", "first-use-title", "How districtry works");
+    title.id = "first-use-title";
+    box.appendChild(title);
+    var steps = el("ol", "first-use-steps");
+    [
+      "Type your address or ZIP code in the box and press Show districts.",
+      "districtry opens the map for your state, with your place picked.",
+      "Check the kinds of district you want to see. Each one gets a card saying who represents you there."
+    ].forEach(function (line) { steps.appendChild(el("li", null, line)); });
+    box.appendChild(steps);
+    var actions = el("div", "first-use-actions");
+    var around = el("button", "first-use-tour", "Show me around");
+    around.type = "button";
+    around.addEventListener("click", function () { hideTip(); firstUseEvent("tour"); startTour(); });
+    var ok = el("button", "first-use-ok", "Got it");
+    ok.type = "button";
+    ok.addEventListener("click", function () { hideTip(); firstUseEvent("got-it"); });
+    actions.appendChild(around);
+    actions.appendChild(ok);
+    box.appendChild(actions);
+    var help = el("a", "first-use-help", "How to use districtry");
+    help.href = "help.html";
+    help.addEventListener("click", function () { firstUseEvent("help"); });
+    box.appendChild(help);
+    box.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { hideTip(); firstUseEvent("got-it"); }
+    });
+    document.body.appendChild(box);
+    tipBox = box;
+    try { window.localStorage.setItem(FIRST_USE_KEY, "1"); } catch (e) { /* it may show again */ }
+  }
+  function visible(n) {
+    if (!n) return false;
+    var r = n.getBoundingClientRect();
+    return r.width > 0 && r.height > 0 && n.getClientRects().length > 0;
+  }
+  var TOUR = [
+    { sel: ".search-card", title: "Start with an address",
+      text: "Type a street address or a ZIP code and press Show districts. districtry opens the map for that place, with it picked." },
+    { sel: ".example", title: "What you get",
+      text: "This is what the map tells you about a place: each district it is in and who holds the seat there. Press another place's name to see it." },
+    { sel: ".coverage", title: "Where it answers today",
+      text: "The shaded states have a map today. Tap one to open its map, or find your state in the list." },
+    { sel: "#help-link", title: "Help is here",
+      text: "“How to use” explains the map: choosing the kinds of district to see, reading the cards, comparing districts and sharing what you find." }
+  ];
+  function startTour() {
+    var ring = el("div", "tour-ring");
+    ring.setAttribute("aria-hidden", "true");
+    var card = el("div", "tour-card");
+    card.setAttribute("role", "dialog");
+    card.setAttribute("aria-modal", "false");
+    card.setAttribute("aria-labelledby", "tour-title");
+    card.tabIndex = -1;
+    document.body.appendChild(ring);
+    document.body.appendChild(card);
+    tour = { ring: ring, card: card, target: null };
+    card.addEventListener("keydown", function (e) { if (e.key === "Escape") endTour(false); });
+    window.addEventListener("resize", placeTour);
+    window.addEventListener("scroll", placeTour, true);
+    showStep(0);
+  }
+  function endTour(done) {
+    if (!tour) return;
+    var t = tour;
+    tour = null;
+    window.removeEventListener("resize", placeTour);
+    window.removeEventListener("scroll", placeTour, true);
+    if (t.ring.parentNode) t.ring.parentNode.removeChild(t.ring);
+    if (t.card.parentNode) t.card.parentNode.removeChild(t.card);
+    firstUseEvent(done ? "tour-done" : "tour-closed");
+    if (done && input) { try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); } }
+  }
+  function showStep(i) {
+    var t = tour;
+    if (!t) return;
+    var step = TOUR[i];
+    var target = document.querySelector(step.sel);
+    t.target = visible(target) ? target : null;
+    if (t.target) {
+      var tall = t.target.getBoundingClientRect().height > window.innerHeight * 0.6;
+      try { t.target.scrollIntoView({ block: tall ? "start" : "center" }); } catch (e) { t.target.scrollIntoView(); }
+    }
+    var card = t.card;
+    card.textContent = "";
+    card.appendChild(el("p", "tour-count", "Step " + (i + 1) + " of " + TOUR.length));
+    var title = el("h2", "tour-title", step.title);
+    title.id = "tour-title";
+    card.appendChild(title);
+    card.appendChild(el("p", "tour-text", step.text));
+    var row = el("div", "tour-actions");
+    var close = el("button", "tour-close", "Close");
+    close.type = "button";
+    close.addEventListener("click", function () { endTour(false); });
+    row.appendChild(close);
+    if (i > 0) {
+      var back = el("button", "tour-back", "Back");
+      back.type = "button";
+      back.addEventListener("click", function () { showStep(i - 1); });
+      row.appendChild(back);
+    }
+    var last = i === TOUR.length - 1;
+    var next = el("button", "tour-next", last ? "Done" : "Next");
+    next.type = "button";
+    next.addEventListener("click", function () { if (last) endTour(true); else showStep(i + 1); });
+    row.appendChild(next);
+    card.appendChild(row);
+    placeTour();
+    try { next.focus({ preventScroll: true }); } catch (e) { next.focus(); }
+  }
+  /* The maps' placement (engine first-use dstPlaceTour): the ring follows the
+     part of the target on screen, the card goes below it when there is room,
+     above it when there is not, and over its foot when neither fits. */
+  function placeTour() {
+    var t = tour;
+    if (!t) return;
+    var vw = window.innerWidth, vh = window.innerHeight, gap = 10;
+    var card = t.card, ring = t.ring;
+    var cw = Math.min(360, vw - 24);
+    card.style.width = cw + "px";
+    var ch = card.offsetHeight;
+    if (!t.target) {
+      ring.hidden = true;
+      card.style.left = Math.round((vw - cw) / 2) + "px";
+      card.style.top = Math.round(Math.max(12, (vh - ch) / 2)) + "px";
+      return;
+    }
+    var r = t.target.getBoundingClientRect();
+    var top = Math.max(r.top, 4), bottom = Math.min(r.bottom, vh - 4);
+    var left = Math.max(r.left, 4), right = Math.min(r.right, vw - 4);
+    ring.hidden = bottom <= top || right <= left;
+    ring.style.left = (left - 4) + "px";
+    ring.style.top = (top - 4) + "px";
+    ring.style.width = Math.max(0, right - left + 8) + "px";
+    ring.style.height = Math.max(0, bottom - top + 8) + "px";
+    var x = Math.min(Math.max(12, left), vw - cw - 12);
+    var y;
+    if (bottom + gap + ch <= vh - 12) y = bottom + gap;
+    else if (top - gap - ch >= 12) y = top - gap - ch;
+    else y = Math.max(12, vh - ch - 12);
+    card.style.left = Math.round(x) + "px";
+    card.style.top = Math.round(y) + "px";
+  }
+  // Going to the address box is the tip's first step, and what the box says
+  // back opens under it; on a phone the keyboard pushes the tip up over that.
+  // So focusing or typing in the box closes the tip (got-it, as Escape does)
+  // and the tour (tour-closed), the maps' rule (engine first-use).
+  function searchStarted() {
+    if (tipBox) { hideTip(); firstUseEvent("got-it"); }
+    if (tour) endTour(false);
+  }
+  if (input) {
+    input.addEventListener("focus", searchStarted);
+    input.addEventListener("input", searchStarted);
+  }
+  var framed = false;
+  try { framed = window.self !== window.top; } catch (e) { framed = true; }
+  if (!framed && !handed && !firstUseSeen()) {
+    setTimeout(function () { if (!firstUseSeen()) showTip(); }, 900);
+  }
+""" % {"key": FIRST_USE_FRONT_KEY}
+
+
 EXAMPLE_SCRIPT = """\
       <script>
       (function () {
@@ -1971,6 +2279,9 @@ def build():
   var isPermalink = /(?:^|[#&])(?:point|layers|zoom)=/.test(hash);
   var isTaggedShare = /[?&]utm_source=(?:share|embed)\\b/.test(query);
   if (isPermalink || isTaggedShare) {
+    // Read by the visit count (visit_count_script): a forwarded visit is the
+    // map's to count, not this page's.
+    window.dstForwarding = true;
     location.replace("%(forward)s" + query + hash);
   }
 })();
@@ -2094,6 +2405,23 @@ header.mast {
 }
 .mast-nav a:hover, .mast-nav a:focus-visible { background: var(--brand-tint); color: var(--ink); }
 .mast-nav a:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+/* Feedback and Sponsor (2026-10-29; Adam: a feedback button "a little easier
+   to find", "also add it to the landing page", and "the sponsor button needs
+   to be more visible"). The same pair every map's masthead carries, drawn as
+   that pair is: Feedback outlined in the brand colour and opening the site's
+   feedback form, Sponsor on a tint with the warm heart. Inside the Google Play
+   app the support block in the head hides Sponsor, as it hides every link to
+   GitHub Sponsors. */
+.nav-icon { width: 14px; height: 14px; flex: none; }
+.mast-nav a.nav-feedback, .mast-nav a.nav-sponsor { gap: 6px; font-weight: 600; border-radius: 999px; }
+.mast-nav a.nav-feedback {
+  margin-left: 6px; padding: 5px 13px 5px 11px;
+  border: 1.5px solid var(--brand-600); color: var(--brand-700);
+}
+.mast-nav a.nav-feedback:hover, .mast-nav a.nav-feedback:focus-visible { background: var(--brand-600); color: var(--surface); }
+.mast-nav a.nav-sponsor { padding: 5px 13px 5px 11px; border: 1.5px solid transparent; background: var(--brand-tint); color: var(--ink); }
+.mast-nav a.nav-sponsor .nav-icon { color: var(--brand-warm); }
+.mast-nav a.nav-sponsor:hover, .mast-nav a.nav-sponsor:focus-visible { border-color: var(--brand-warm); background: var(--brand-tint); }
 
 /* The h1 is the promise, and it is now the largest thing on the page. It used
    to be 26px grey under a 52px wordmark, so the biggest words on the fleet's
@@ -2527,7 +2855,7 @@ footer .support b { color: var(--ink); }
   .chip { min-height: 40px; padding: 9px 14px; }
   .foot-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
 }
-</style>
+%(first_use_css)s</style>
 </head>
 <body>
   <a href="#page-main" class="skip-link">Skip to content</a>
@@ -2539,9 +2867,12 @@ footer .support b { color: var(--ink); }
         <span class="wordmark">districtry</span>
       </div>
       <nav class="mast-nav" aria-label="Site">
+        <a href="help.html" id="help-link">How to use</a>
         <a href="about.html">About</a>
         <a href="privacy.html">Privacy</a>
         <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">Source</a>
+        <a href="feedback.html" class="nav-feedback"><svg class="nav-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 3.5h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9.2l-3.6 2.9a.6.6 0 0 1-1-.47V14.5H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg>Feedback</a>
+        <a href="https://github.com/sponsors/ThursdaysFamous" class="nav-sponsor" id="nav-sponsor" target="_blank" rel="noopener" aria-label="Sponsor districtry on GitHub"><svg class="nav-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 17s-6.5-4.1-6.5-8.6A3.6 3.6 0 0 1 10 6.3a3.6 3.6 0 0 1 6.5 2.1C16.5 12.9 10 17 10 17z" fill="currentColor"></path></svg>Sponsor</a>
       </nav>
     </header>
 
@@ -2936,9 +3267,8 @@ footer .support b { color: var(--ink); }
    * uncovered, none, unreadable, search-failed, or failed-<why> when the
    * lookup could not read a short link. A place shared into the installed
    * app reaches this page (as "opened") when no state has been opened yet.
-   * Nothing about the place is in it. It is one of the two events this page
-   * sends, with the worked example's example-place/<place> (EXAMPLE_SCRIPT),
-   * and the privacy page names both (build_privacy_page.py ROOT_EVENTS). The
+   * Nothing about the place is in it. The privacy page names it with every
+   * other event this page sends (build_privacy_page.py ROOT_EVENTS). The
    * counter loads after this script, so a count waits for it, up to ten
    * seconds, as the apps' do. */
   var linkRead = null, linkVia = "pasted";
@@ -2949,6 +3279,11 @@ footer .support b { color: var(--ink); }
     }
     if ((tries || 0) < 40) setTimeout(function () { trackEvent(path, (tries || 0) + 1); }, 250);
   }
+  /* A press of the masthead's Sponsor is counted as sponsor/front, the
+   * maps' sponsor/<tag> with "front" where a map puts its tag, and nothing
+   * about the reader (2026-10-29). */
+  var sponsorLink = document.getElementById("nav-sponsor");
+  if (sponsorLink) sponsorLink.addEventListener("click", function () { trackEvent("sponsor/front"); });
   function countLinkRead(outcome) {
     var r = linkRead;
     if (!r) return;
@@ -3119,13 +3454,26 @@ footer .support b { color: var(--ink); }
         return loadFleetOutlines().then(function (outlines) {
           if (!outlines) return want ? handTo(want, typed) : routeByRectangles(feats);
           // The FIRST result an instance answers for, not result #1 — a bare
-          // place name ambiguous across states gets a fair shot.
+          // place name ambiguous across states gets a fair shot. It opens
+          // with its point selected only when it is the one place any app
+          // answers for (2026-10-29, Adam choosing the apps' own rule for
+          // this page, ENGINE geocoder-search selectClearMatch): with two or
+          // more, the first of them can be the same street in another town,
+          // so its app is handed what was typed and lists its answers there
+          // for the reader to pick from. Answers a few doors apart are one
+          // place, because the geocoder often answers a house and the
+          // building on it.
+          var first = null, places = 0;
           for (var i = 0; i < feats.length; i++) {
             var c = feats[i] && feats[i].geometry && feats[i].geometry.coordinates;
             if (!c || c.length < 2) continue;
             var metro = fleetOwner(c[1], c[0], outlines);
-            if (metro && (!want || metro === want)) { go(metro, { lat: c[1], lng: c[0] }); return; }
+            if (!metro || (want && metro !== want)) continue;
+            if (!first) { first = { metro: metro, lat: c[1], lng: c[0] }; places = 1; }
+            else if (!samePlace(first, c[1], c[0])) places++;
           }
+          if (first && places === 1) { go(first.metro, { lat: first.lat, lng: first.lng }); return; }
+          if (first) return handTo(first.metro, typed);
           if (want) return handTo(want, typed);
           countLinkRead(feats.length ? "uncovered" : "none");
           resetButton();
@@ -3143,6 +3491,12 @@ footer .support b { color: var(--ink); }
         resetButton();
         setStatus("Search failed \\u2014 try again, or pick a place below.", true);
       });
+  }
+
+  // Two answers under 150 m apart (a house and the building on it)
+  function samePlace(a, lat, lng) {
+    var dy = (lat - a.lat) * 111320, dx = (lng - a.lng) * 111320 * Math.cos(a.lat * Math.PI / 180);
+    return dx * dx + dy * dy < 150 * 150;
   }
 
   // A Photon answer's parts in the order the apps label one (photonLabel),
@@ -3302,7 +3656,7 @@ footer .support b { color: var(--ink); }
       if (form.requestSubmit) form.requestSubmit(); else button.click();
     }
   }
-})();
+%(visit)s%(first_use)s})();
 </script>
 </body>
 </html>
@@ -3331,6 +3685,9 @@ footer .support b { color: var(--ink); }
         "answer_verb": answer_verb,
         "key_wash": key_wash,
         "metros_js": render_metros_js(metros),
+        "first_use_css": FIRST_USE_FRONT_CSS,
+        "visit": visit_count_script(),
+        "first_use": FIRST_USE_FRONT_SCRIPT,
     }
 
 

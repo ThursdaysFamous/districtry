@@ -542,14 +542,18 @@ try {
 
     await search(GEOCODER_QUERY_RAW);
     await page
-      .waitForFunction(() => document.querySelectorAll("#geocode-results li").length > 0,
+      .waitForFunction(() => document.querySelectorAll("#geocode-results li").length > 0 ||
+        /^Selected:/.test((document.getElementById("geo-status") || {}).textContent || ""),
         null, { timeout: QUERY_TIMEOUT })
       .catch(() => {});
     const rows = await page.$$eval("#geocode-results li", (ls) => ls.length);
+    // one answer that is the house is selected at once (selectClearMatch),
+    // which empties the list
+    const selected = await page.$eval("#geo-status", (el) => /^Selected:/.test(el.textContent || ""));
     const bounded = seen.filter((c) => c.bounded);
     check("search box retries a unit-fragment miss with the cleaned address",
-      bounded.length === 2 && bounded[0].q.includes(GEOCODER_UNIT_FRAGMENT) && bounded[1].q === GEOCODER_QUERY_CLEANED && rows > 0,
-      `calls=${JSON.stringify(bounded.map((c) => c.q))} rows=${rows}`);
+      bounded.length === 2 && bounded[0].q.includes(GEOCODER_UNIT_FRAGMENT) && bounded[1].q === GEOCODER_QUERY_CLEANED && (rows > 0 || selected),
+      `calls=${JSON.stringify(bounded.map((c) => c.q))} rows=${rows} selected=${selected}`);
 
     seen.length = 0;
     await search("nowhere at all xyzzy");
@@ -609,6 +613,50 @@ try {
     await context.close();
   }
 
+  // 1c2. Search and Enter go straight to the one clear answer (2026-10-29,
+  //      selectClearMatch): one answer that is the house is selected, as
+  //      #q= does above, while two answers with the house number (the same
+  //      street in two towns) stay a list for the reader to pick from,
+  //      because the first may be the wrong town.
+  {
+    const ONE = [{ type: "Feature", geometry: { type: "Point", coordinates: [-87.6301, 41.8801] },
+      properties: { housenumber: "9", street: "Example Avenue", city: "Chicago", state: "Illinois", postcode: "60604" } }];
+    const TWO = ONE.concat([{ type: "Feature", geometry: { type: "Point", coordinates: [-87.6901, 42.0451] },
+      properties: { housenumber: "9", street: "Example Avenue", city: "Evanston", state: "Illinois", postcode: "60201" } }]);
+    async function sent(features) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, BASE, async (p) => {
+        await p.route("**/photon.komoot.io/**", (route) => route.fulfill({ status: 200, contentType: "application/json",
+          body: JSON.stringify({ type: "FeatureCollection", features }) }));
+      });
+      await page.evaluate(() => {
+        const input = document.getElementById("geocode-input");
+        input.value = "9 Example Ave";
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+        document.getElementById("geocode-form").requestSubmit();
+      });
+      await page.waitForFunction(() => document.querySelectorAll("#geocode-results li").length > 0 ||
+        /^Selected:/.test((document.getElementById("geo-status") || {}).textContent || ""),
+        null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      await page.waitForTimeout(300);
+      const out = await page.evaluate((ns) => ({
+        rows: document.querySelectorAll("#geocode-results li").length,
+        status: (document.getElementById("geo-status").textContent || "").trim(),
+        point: window[ns].state.selectedPoint,
+      }), EXPORTS_NAME);
+      await context.close();
+      return out;
+    }
+    const one = await sent(ONE);
+    check("Search goes straight to the one answer that is the house",
+      /^Selected:/.test(one.status) && !!one.point && Math.abs(one.point.lat - 41.8801) < 1e-6,
+      `status=${one.status.slice(0, 70)} point=${JSON.stringify(one.point)}`);
+    const two = await sent(TWO);
+    check("Search with the same street in two towns lists both and selects neither",
+      two.rows === 2 && !two.point && !/^Selected:/.test(two.status),
+      `rows=${two.rows} status=${two.status.slice(0, 70)} point=${JSON.stringify(two.point)}`);
+  }
+
   // 1d. A district by NAME ("33rd ward", "State Senate District 7"), answered
   //     from the same-origin index scripts/build_district_search.py writes —
   //     never by the geocoder. Driven through #q= so the question pages' hand-
@@ -664,8 +712,16 @@ try {
       await page.fill("#geocode-input", q);
       await page.press("#geocode-input", "Enter");
       await page.waitForTimeout(600);
-      return page.evaluate(() => [...document.querySelectorAll("#geocode-results li.district-result")]
-        .map((li) => li.querySelector("button").firstChild.textContent.trim()));
+      // Enter on a name only one district answers selects it at once
+      // (selectClearMatch), which empties the list, so the district it chose
+      // is read off the message it leaves: "Selected: <name> (<layer>)"
+      return page.evaluate(() => {
+        const rows = [...document.querySelectorAll("#geocode-results li.district-result")]
+          .map((li) => li.querySelector("button").firstChild.textContent.trim());
+        const status = (document.getElementById("geo-status").textContent || "").trim();
+        const m = !rows.length && /^Selected: /.test(status) ? status.slice(10) : "";
+        return m ? [m.lastIndexOf(" (") > 0 ? m.slice(0, m.lastIndexOf(" (")) : m] : rows;
+      });
     };
     const dewitt = await byCounty("DeWitt County Board District A");
     const bare = await byCounty("county board district 3");
@@ -1666,9 +1722,15 @@ try {
   // 1e. THE MASTHEAD NEVER WRAPS: its links fold into "More" from the end
   //     (dstFitMastheadActions) before the row would drop them below the
   //     search, which a reader saw as the search bar jumping from the middle
-  //     to the right at ~1,600px. Measured at three widths: all links in the
-  //     row, some folded with "What data is missing?" still in the row, and
-  //     everything folded including the theme toggle, which folds last.
+  //     to the right at ~1,600px. Since 2026-10-29 the row also carries
+  //     Feedback, which never folds, and Sponsor, and the fold has an order:
+  //     the plain links from the end, then the tagline wraps onto a second
+  //     line, then Sponsor, then "How to use", then "What data is missing?",
+  //     then the theme toggle. Measured at five widths: one row at each,
+  //     Feedback always in it, and at each width a door in the row only when
+  //     every door folded after it is in the row too. At 1,280px, the most
+  //     common laptop width, Sponsor and "How to use" both stay in view,
+  //     which they did not before the tagline could wrap.
   {
     const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 1870, height: 900 } });
     const page = await booted(context, BASE);
@@ -1677,32 +1739,46 @@ try {
       await page.setViewportSize({ width: w, height: 900 });
       await page.waitForTimeout(300);
       return page.evaluate(() => {
-        const row = document.querySelector(".masthead-actions").getBoundingClientRect();
+        const actions = document.querySelector(".masthead-actions");
+        const row = actions.getBoundingClientRect();
         const search = document.querySelector(".masthead .map-toolbar").getBoundingClientRect();
         const panel = document.getElementById("dst-more-panel");
+        const inRow = (sel) => { const el = actions.querySelector(":scope > " + sel); return !!el && el.getClientRects().length > 0; };
+        const plain = Array.prototype.some.call(actions.querySelectorAll(":scope > .masthead-action-link:not(.dst-more-btn):not(#help-link)"),
+          (el) => el.getClientRects().length > 0);
         return {
           wrapped: row.top >= search.bottom - 2,
           folded: panel ? panel.children.length : 0,
-          gapsInRow: !!document.querySelector(".masthead-actions > #gaps-btn"),
-          toggleFolded: !!(panel && panel.querySelector(".districtry-theme-toggle")),
+          plain: plain,
+          tagline: document.querySelector("header.masthead").classList.contains("dst-tagline-wrapped"),
+          sponsor: inRow("#sponsor-btn"),
+          help: inRow("#help-link"),
+          gaps: inRow("#gaps-btn"),
+          feedback: inRow("#feedback-btn"),
+          toggle: inRow(".districtry-theme-toggle"),
         };
       });
     };
-    const wide = await at(1870), mid = await at(1400), narrow = await at(800);
-    check("the masthead keeps one row at every desktop width",
-      !wide.wrapped && !mid.wrapped && !narrow.wrapped, JSON.stringify({ wide, mid, narrow }));
-    check("masthead links fold from the end, the data-gaps door last and the theme toggle after it",
-      wide.folded === 0 && mid.folded > 0 && mid.gapsInRow && !mid.toggleFolded && narrow.toggleFolded && !narrow.gapsInRow,
-      `1870:${wide.folded} 1400:${mid.folded} 800:${narrow.folded}`);
+    const widths = [1870, 1400, 1280, 1000, 800];
+    const seen = {};
+    for (const w of widths) seen[w] = await at(w);
+    check("the masthead keeps one row at every desktop width, with Feedback in it",
+      widths.every((w) => !seen[w].wrapped && seen[w].feedback), JSON.stringify(seen));
+    const ordered = (s) => (!s.plain || !s.tagline) && (!s.plain || s.sponsor) && (!s.sponsor || s.help) &&
+      (!s.help || s.gaps) && (!s.gaps || s.toggle);
+    check("masthead doors fold in order: plain links, the tagline wraps, Sponsor, How to use, the data-gaps door, the theme toggle",
+      widths.every((w) => ordered(seen[w])) && seen[1870].sponsor && seen[1400].folded > 0 && seen[1400].gaps &&
+        seen[1280].sponsor && seen[1280].help && seen[800].folded > 0 && !seen[800].toggle && !seen[800].gaps,
+      widths.map((w) => w + ":" + JSON.stringify(seen[w])).join(" "));
     await context.close();
   }
 
   // 1g. THE MORE MENU AND THE GAPS PANEL ARE COUNTED. At 1,400px some
   //     links sit in "More": opening it and picking an item are counted, the
-  //     item by its name; opening the data-gaps panel, expanding a gap's
-  //     explanation and following its "Suggest a source" link are counted,
-  //     the last two by the gap's record id. Links are prevented from
-  //     navigating so the page stays to be read.
+  //     item by its name; a press of Sponsor is counted by the app; opening
+  //     the data-gaps panel, expanding a gap's explanation and following its
+  //     "Suggest a source" link are counted, the last two by the gap's record
+  //     id. Links are prevented from navigating so the page stays to be read.
   {
     const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 1400, height: 900 } });
     const page = await booted(context, BASE, async (p) => {
@@ -1718,6 +1794,13 @@ try {
       if (a) e.preventDefault();
     }, true));
     const events = () => page.evaluate(() => (window.__gcEvents || []).filter((v) => v && v.event).map((v) => v.path));
+    // Sponsor (2026-10-29) is counted by the app it was pressed in, once;
+    // pressed first, since the menu item picked below can open a dialog
+    const sponsorShown = await page.isVisible("#sponsor-btn");
+    if (sponsorShown) await page.click("#sponsor-btn");
+    const sponsor = (await events()).filter((e) => /^sponsor\//.test(e));
+    check("a press of Sponsor is counted once, by the app", sponsorShown && sponsor.join() === "sponsor/il",
+      sponsorShown ? JSON.stringify(sponsor) : "Sponsor is not in the row at 1,400px");
     const hasMore = await page.$("#dst-more-btn:not([hidden])").then((h) => !!h && page.isVisible("#dst-more-btn"));
     if (hasMore) {
       await page.click("#dst-more-btn");
@@ -1733,6 +1816,11 @@ try {
     } else {
       check("the More menu counts being opened and the item picked, once each", false, "no More menu at 1,400px");
     }
+    // the item picked can open a dialog (since 2026-10-29 it is the Bulk
+    // Address Checker's at 1,400px); close it before pressing the gaps door
+    await page.evaluate(() => {
+      document.querySelectorAll(".feedback-modal:not([hidden]) [id$='-close']").forEach((b) => b.click());
+    });
     await page.click("#gaps-btn");
     const why = await page.waitForSelector(".gap-more-label", { state: "attached", timeout: QUERY_TIMEOUT }).then(() => true, () => false);
     if (why) {
@@ -2318,6 +2406,10 @@ try {
       await p.addInitScript(() => {
         window.__gcEvents = [];
         window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+        // The first-visit tip (engine first-use) holds the invitation back
+        // while it is open; 1n tests that. These checks are about the
+        // invitation, so the tip has already been seen.
+        try { localStorage.setItem("districtry-first-use", "1"); } catch (e) { /* reported below */ }
       });
     };
     const fireInstallEvent = (p) => p.evaluate(() => {
@@ -2524,6 +2616,69 @@ try {
         JSON.stringify({ sel, events }));
       await context.close();
     }
+    // "NO POSITION YET" IS ASKED AGAIN ONCE, AT NORMAL ACCURACY (2026-10-28).
+    // The Google Play app's location hand-off answers POSITION_UNAVAILABLE at
+    // once when the phone has no GPS fix yet, which a browser does not do, so
+    // the map asks again without high accuracy. A refusal is not asked again.
+    // The phone's answers are stood in for, since a browser in a test cannot
+    // be told to have no fix.
+    const fakeLocation = (context, answers) => context.addInitScript((list) => {
+      window.__asked = [];
+      const geo = {
+        getCurrentPosition(ok, bad, opts) {
+          window.__asked.push(!!(opts && opts.enableHighAccuracy));
+          const a = list[window.__asked.length - 1] || list[list.length - 1];
+          setTimeout(() => {
+            if (a.code) bad({ code: a.code, PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3, message: "" });
+            else ok({ coords: { latitude: a.lat, longitude: a.lng, accuracy: 30 }, timestamp: Date.now() });
+          }, 50);
+        },
+        watchPosition() { return 0; },
+        clearWatch() {},
+      };
+      Object.defineProperty(navigator, "geolocation", { configurable: true, get: () => geo });
+    }, answers);
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      await fakeLocation(context, [{ code: 2 }, { lat: 41.8789, lng: -87.6359 }]);
+      const page = await booted(context, BASE, stubCounter);
+      await page.evaluate(() => document.getElementById("locate-btn").click());
+      const sel = await page.waitForFunction((n) => !!window[n].state.selectedPoint, EXPORTS_NAME, { timeout: QUERY_TIMEOUT })
+        .then(() => page.evaluate((n) => window[n].state.selectedPoint, EXPORTS_NAME), () => null);
+      await page.waitForTimeout(300);
+      const asked = await page.evaluate(() => window.__asked);
+      const events = await shortcutEvents(page);
+      check("a location the phone cannot give yet is asked for again at normal accuracy, and the point is selected",
+        !!sel && Math.abs(sel.lat - 41.8789) < 1e-6 && JSON.stringify(asked) === "[true,false]" &&
+          events.slice().sort().join() === ["geolocate", "geolocate-success"].join(),
+        JSON.stringify({ sel, asked, events }));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      await fakeLocation(context, [{ code: 2 }, { code: 2 }]);
+      const page = await booted(context, BASE, stubCounter);
+      await page.evaluate(() => document.getElementById("locate-btn").click());
+      await page.waitForTimeout(800);
+      const asked = await page.evaluate(() => window.__asked);
+      const status = await page.evaluate(() => document.getElementById("geo-status").textContent);
+      const events = await shortcutEvents(page);
+      check("when both asks fail the map says so and counts one failure",
+        JSON.stringify(asked) === "[true,false]" && /unavailable/.test(status) &&
+          events.slice().sort().join() === ["geolocate", `locate-fail/${TAG}/unavailable`].join(),
+        JSON.stringify({ asked, status, events }));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE });
+      await fakeLocation(context, [{ code: 1 }]);
+      const page = await booted(context, BASE, stubCounter);
+      await page.evaluate(() => document.getElementById("locate-btn").click());
+      await page.waitForTimeout(800);
+      const asked = await page.evaluate(() => window.__asked);
+      check("a refused location is not asked for again", JSON.stringify(asked) === "[true]", JSON.stringify(asked));
+      await context.close();
+    }
     // "Report a problem" is handed on as #feedback, which opens the report
     // form exactly as a link to it does (check 1h), and is counted once.
     {
@@ -2714,6 +2869,193 @@ try {
         !web.marked && web.kept === null && web.sentence &&
           web.panel.length >= 3 && web.panel.every((v) => v),
         JSON.stringify(web));
+      await context.close();
+    }
+  }
+
+  // 1n. THE FIRST VISIT (engine first-use, 2026-10-28, after two closed-test
+  //     reviews asked for a tutorial). A first visit shows a short tip once,
+  //     recorded under districtry-first-use, so a reload shows nothing; "Got
+  //     it" closes it and is counted; "Show me around" runs a four-step tour
+  //     whose steps ring something on screen, Back and Done work, and both are
+  //     counted. While the tip is open the install invitation waits. A point
+  //     selected with no layer on shows a "check a box" hint, which goes once a
+  //     layer is on. Each count ends in the map's tag (first-use/got-it/il), so
+  //     the traffic page can say which state's map the tutorial was used on,
+  //     and inside the Google Play app in /play after it.
+  //     No layer is ever switched on for the reader (Adam: a
+  //     layer the app switched on would be counted as one a reader chose),
+  //     and an embedded map shows no tip.
+  {
+    const stub = async (p) => {
+      await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+      await p.addInitScript(() => {
+        window.__gcEvents = [];
+        window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+      });
+    };
+    const firstUse = (p) => p.evaluate(() => (window.__gcEvents || [])
+      .filter((v) => v && v.event && /^first-use\//.test(v.path)).map((v) => v.path));
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 1280, height: 800 } });
+      const page = await booted(context, BASE, stub);
+      const shown = await page.waitForSelector(".first-use .first-use-ok", { timeout: 10000 }).then(() => true, () => false);
+      const state = await page.evaluate((n) => ({
+        stored: localStorage.getItem("districtry-first-use"),
+        steps: document.querySelectorAll(".first-use-steps li").length,
+        help: (document.querySelector(".first-use-help") || {}).getAttribute
+          ? document.querySelector(".first-use-help").getAttribute("href") : null,
+        layersOn: (function (st) { return Object.keys(st.layersOn).filter((k) => st.layersOn[k]).length; })(window[n].state),
+      }), EXPORTS_NAME);
+      check("a first visit shows the tip once, with three steps and the How to use link, and switches no layer on",
+        shown && state.stored === "1" && state.steps === 3 && state.help === "/help.html" && state.layersOn === 0,
+        JSON.stringify(state));
+      await page.click(".first-use-ok");
+      const gone = await page.evaluate(() => !document.querySelector(".first-use"));
+      check("Got it closes the tip and is counted once, naming the map it was on", gone &&
+        JSON.stringify(await firstUse(page)) === '["first-use/got-it/il"]', JSON.stringify(await firstUse(page)));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      await page.waitForTimeout(1500);
+      check("a later visit shows no tip", !(await page.$(".first-use")));
+      const link = await page.evaluate(() => {
+        const a = document.getElementById("help-link");
+        return a ? a.getAttribute("href") : null;
+      });
+      check("the masthead links the How to use page", link === "/help.html", String(link));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 1280, height: 800 } });
+      const page = await booted(context, BASE, stub);
+      await page.waitForSelector(".first-use .first-use-tour", { timeout: 10000 });
+      await page.click(".first-use-tour");
+      const seen = [];
+      for (let i = 0; i < 4; i++) {
+        seen.push(await page.evaluate(() => ({
+          title: (document.querySelector(".tour-title") || {}).textContent,
+          ring: (function () { const r = document.querySelector(".tour-ring"); return !!r && !r.hidden && r.getBoundingClientRect().width > 0; })(),
+        })));
+        if (i === 1) {
+          await page.click(".tour-back");
+          const back = await page.evaluate(() => document.querySelector(".tour-title").textContent);
+          seen.push({ back });
+          await page.click(".tour-next");
+        }
+        await page.click(".tour-next");
+      }
+      const left = await page.evaluate(() => !document.querySelector(".tour-card") && !document.querySelector(".tour-ring"));
+      const titles = seen.filter((s) => s.title).map((s) => s.title);
+      check("the tour runs four steps, each ringing something on screen, and Back goes back",
+        titles.length === 4 && new Set(titles).size === 4 && seen.filter((s) => s.title).every((s) => s.ring) &&
+          seen.some((s) => s.back === titles[0]) && left,
+        JSON.stringify(seen));
+      check("the tour is counted when started and when finished, naming the map it was on",
+        JSON.stringify(await firstUse(page)) === '["first-use/tour/il","first-use/tour-done/il"]', JSON.stringify(await firstUse(page)));
+      await context.close();
+    }
+    {
+      // Opened by the Google Play app, which the launcher marks with ref=play.
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 390, height: 844 } });
+      const page = await booted(context, `${BASE}?ref=play`, stub);
+      const shown = await page.waitForSelector(".first-use .first-use-ok", { timeout: 10000 }).then(() => true, () => false);
+      if (shown) await page.click(".first-use-ok");
+      check("inside the Google Play app, Got it is counted with /play after the map's tag",
+        shown && JSON.stringify(await firstUse(page)) === '["first-use/got-it/il/play"]', JSON.stringify(await firstUse(page)));
+      await context.close();
+    }
+    {
+      // Going to the search box closes the tip, and typing there closes the
+      // tour, so neither covers the list of matches (Adam, 2026-10-29: the tip
+      // was "blocking the address selection drop down").
+      const phone = { serviceWorkers: "block", viewport: { width: 390, height: 844 } };
+      const one = await browser.newContext(phone);
+      const tipPage = await booted(one, BASE, stub);
+      const shown = await tipPage.waitForSelector(".first-use .first-use-ok", { timeout: 10000 }).then(() => true, () => false);
+      await tipPage.focus("#geocode-input");
+      const tipGone = await tipPage.evaluate(() => !document.querySelector(".first-use"));
+      const tipCounts = await firstUse(tipPage);
+      await one.close();
+      const two = await browser.newContext(phone);
+      const tourPage = await booted(two, BASE, stub);
+      await tourPage.waitForSelector(".first-use .first-use-tour", { timeout: 10000 });
+      await tourPage.click(".first-use-tour");
+      const tourUp = await tourPage.evaluate(() => !!document.querySelector(".tour-card"));
+      await tourPage.evaluate(() => {
+        const box = document.getElementById("geocode-input");
+        box.value = "9";
+        box.dispatchEvent(new Event("input", { bubbles: true }));
+      });
+      const tourGone = await tourPage.evaluate(() => !document.querySelector(".tour-card") && !document.querySelector(".tour-ring"));
+      const tourCounts = await firstUse(tourPage);
+      check("going to the search box closes the tip, counted as Got it, and typing there closes the tour",
+        shown && tipGone && JSON.stringify(tipCounts) === '["first-use/got-it/il"]' && tourUp && tourGone &&
+          JSON.stringify(tourCounts) === '["first-use/tour/il","first-use/tour-closed/il"]',
+        JSON.stringify({ shown, tipGone, tipCounts, tourUp, tourGone, tourCounts }));
+      await two.close();
+    }
+    {
+      // The install invitation waits while the tip is open, on a phone.
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 390, height: 844 } });
+      const page = await booted(context, `${BASE}#p=41.8825,-87.6285&l=cg`, stub);
+      await page.evaluate(() => {
+        const e = new Event("beforeinstallprompt", { cancelable: true });
+        e.prompt = () => Promise.resolve();
+        e.userChoice = Promise.resolve({ outcome: "dismissed", platform: "web" });
+        window.dispatchEvent(e);
+      });
+      await page.waitForSelector(".first-use", { timeout: 10000 });
+      await page.waitForTimeout(4500);
+      const during = !!(await page.$(".install-invite"));
+      await page.click(".first-use-ok");
+      const after = await page.waitForSelector(".install-invite", { timeout: 10000 }).then(() => true, () => false);
+      check("the install invitation waits while the tip is open, then shows", !during && after,
+        `during=${during} after=${after}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 1280, height: 800 } });
+      await context.addInitScript(() => { try { localStorage.setItem("districtry-first-use", "1"); } catch (e) { /* reported below */ } });
+      const page = await booted(context, `${BASE}#p=41.8825,-87.6285`, stub);
+      const hinted = await page.waitForSelector("#no-layer-hint:not([hidden])", { timeout: 15000 }).then(() => true, () => false);
+      await page.evaluate(() => {
+        const box = document.querySelector('#groups-root input[type="checkbox"]');
+        if (box) box.click();
+      });
+      const cleared = await page.waitForFunction(() => {
+        const h = document.getElementById("no-layer-hint");
+        return !h || h.hidden;
+      }, null, { timeout: 10000 }).then(() => true, () => false);
+      check("a point with no layer on shows the check-a-box hint, and checking one removes it", hinted && cleared,
+        `hinted=${hinted} cleared=${cleared}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const frame = await context.newPage();
+      await frame.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+      if (VENDORED_LEAFLET) {
+        await frame.route("**/cdnjs.cloudflare.com/**/leaflet.js", (r) =>
+          r.fulfill({ status: 200, contentType: "application/javascript", body: VENDORED_LEAFLET.js }));
+        await frame.route("**/cdnjs.cloudflare.com/**/leaflet.css", (r) =>
+          r.fulfill({ status: 200, contentType: "text/css", body: VENDORED_LEAFLET.css }));
+      }
+      if (VENDORED_MAPLIBRE) {
+        await frame.route("**/cdnjs.cloudflare.com/**/maplibre-gl.min.js", (r) =>
+          r.fulfill({ status: 200, contentType: "application/javascript", body: VENDORED_MAPLIBRE.js }));
+      }
+      await frame.setContent(`<iframe src="${BASE}" width="900" height="600"></iframe>`);
+      let inner = null;
+      for (let i = 0; i < 60 && !inner; i++) {
+        await frame.waitForTimeout(250);
+        inner = frame.frames().find((f) => f.url().startsWith(BASE)) || null;
+      }
+      // booted, so a tip that never appears is not a map that never ran
+      const up = inner ? await inner.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT })
+        .then(() => true, () => false) : false;
+      await frame.waitForTimeout(2000);
+      const tip = up ? !!(await inner.$(".first-use")) : null;
+      check("an embedded map shows no tip", up && tip === false, `booted=${up} tip=${tip}`);
       await context.close();
     }
   }

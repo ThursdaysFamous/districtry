@@ -448,6 +448,14 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/build_ai_page.py --check
 
+      # /help.html, the How to use page every map's masthead links and the
+      # first-visit tip points to. Generated on the same root shell; its check
+      # also holds every control it names to the label the maps print, so a
+      # renamed button cannot leave the page describing one nobody can find.
+      - name: Help page matches its generator and the maps' own labels
+        if: ${{ !cancelled() }}
+        run: python3 scripts/build_help_page.py --check
+
       # Which analytics host each page loads, held to the worksheet that
       # declares it. `brand.analytics` is the one place that says whether an
       # instance runs Google Analytics, and the generator emits the tag into

@@ -82,7 +82,7 @@
       "keywords": "Chicago ward map, what ward am I in, Chicago police district, Chicago community area, congressional district, Illinois legislative district, Cook County commissioner, elected school board district, CPS attendance zone, who represents me Chicago",
       "author": { "@id": "https://districtry.com/#author" },
       "isPartOf": { "@id": "https://districtry.com/il/#website" },
-      "dateModified": "2026-09-11",
+      "dateModified": "2026-10-29",
       "sameAs": "https://github.com/ThursdaysFamous/districtry"
     }
   ]
@@ -1467,6 +1467,121 @@ svg.leaflet-image-layer.leaflet-interactive path {
     cursor: pointer;
   }
   .install-invite-close:hover { color: var(--ink); }
+  /* The one-time first-use tip and its tour (engine first-use). On a
+     computer the tip sits at the map's top left, clear of the Layers button
+     at its top right and the notices along its foot; on a phone it is fixed
+     to the foot of the screen like the install invitation, which waits for it
+     to close. Same z-index as the invitation: above the skip link, below the
+     share popover, the More menu and the feedback form. The tour's ring and
+     card sit above the More menu (1200) so a ring round the More button is
+     not drawn under the menu, and below the feedback form (2000). Every
+     control is at least 40px tall. */
+  .first-use {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 1050;
+    width: min(360px, calc(100% - 24px));
+    background: var(--panel);
+    border: 1px solid var(--line-strong);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 18px rgba(20, 24, 28, 0.18);
+    padding: 12px 14px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  @media (max-width: 767px) {
+    .first-use {
+      position: fixed;
+      top: auto;
+      left: 12px;
+      right: 12px;
+      bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+      width: auto;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+  }
+  .first-use-title, .tour-title {
+    margin: 0 0 6px;
+    font-family: var(--font-display, var(--font-body));
+    font-size: 17px;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .first-use-steps { margin: 0 0 10px; padding-left: 1.3em; }
+  .first-use-steps li + li { margin-top: 4px; }
+  .first-use-actions, .tour-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .tour-actions { justify-content: flex-end; }
+  .first-use-tour, .first-use-ok, .tour-next, .tour-back, .tour-close {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 5px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .first-use-ok, .tour-next {
+    background: var(--accent);
+    /* --panel, not white: white on the dark tier's accent reads 2.7:1, the
+       panel's own ground on it reads about 7:1, and on the light tier the
+       panel IS white */
+    color: var(--panel);
+    border: 1px solid var(--accent);
+  }
+  .first-use-tour, .tour-back, .tour-close {
+    background: transparent;
+    color: var(--accent-deep, #0B5394);
+    border: 1px solid var(--accent-deep, #0B5394);
+  }
+  .tour-close { margin-right: auto; }
+  .first-use-help {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    margin-top: 4px;
+    color: var(--accent-deep, #0B5394);
+    font-weight: 600;
+  }
+  .tour-ring {
+    position: fixed;
+    z-index: 1250;
+    border: 3px solid var(--accent);
+    border-radius: 8px;
+    box-shadow: 0 0 0 9999px rgba(20, 24, 28, 0.35);
+    pointer-events: none;
+  }
+  .tour-card {
+    position: fixed;
+    z-index: 1260;
+    background: var(--panel);
+    border: 1px solid var(--line-strong);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    box-shadow: 0 6px 24px rgba(20, 24, 28, 0.28);
+    padding: 12px 14px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  .tour-card:focus { outline: none; }
+  .tour-count { margin: 0 0 2px; font-size: 12.5px; color: var(--slate); }
+  .tour-text { margin: 0 0 10px; }
+  /* "Tick a box" while a point is selected and nothing is on. */
+  .no-layer-hint {
+    margin: 0 0 12px;
+    padding: 8px 12px;
+    border-left: 4px solid var(--accent);
+    background: var(--dst-brand-tint);
+    border-radius: 4px;
+    font-size: 14px;
+    color: var(--ink);
+  }
   .hover-toggle-btn {
     font-family: var(--font-body);
     font-size: 12px;
@@ -3487,8 +3602,67 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .masthead-actions.dst-toggle-folded .districtry-toggle-sep { display: none; }
   header.masthead.dst-tagline-folded .title small,
   header.masthead.dst-tagline-folded .title .title-tagline { display: none; }
+  /* the step before Sponsor leaves the row (districtry-behavior): the tagline
+     takes two balanced lines, which narrows the title by about 200px in most
+     apps and makes the masthead 16px taller */
+  header.masthead.dst-tagline-wrapped .title .title-tagline { max-width: 300px; text-wrap: balance; }
   .dst-more-panel .districtry-theme-toggle { display: block; width: 100%; text-align: left; margin: 0; padding: 7px 13px; border-radius: 7px; }
   .dst-more-panel .districtry-theme-toggle .dtt-labels span::after { content: " theme"; }
+  /* Feedback and Sponsor (engine masthead-buttons-html), 2026-10-29. Both
+     carry an icon, which nothing else in the row does, so the eye finds them
+     without reading the row. Feedback is outlined in the brand colour and
+     never folds; Sponsor is a soft pill with a heart in the mark's warm hue
+     and folds into "More" only after every plain link. Their height matches
+     the row's other pills (28.5px: a 14px icon, 5.75px of padding and a
+     1.5px border), so adding them costs the masthead no height. The hover
+     fill takes --panel for its text rather than #fff, because white on the
+     dark theme's --accent reads 2.7:1. */
+  .dst-feedback-btn,
+  .dst-sponsor-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex: none;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 12.5px;
+    line-height: 12.5px;
+    padding: 5.75px 13px 5.75px 11px;
+    border-radius: 999px;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .dst-btn-icon { width: 14px; height: 14px; flex: none; }
+  .dst-feedback-btn {
+    border: 1.5px solid var(--accent);
+    background: var(--panel);
+    color: var(--accent-deep);
+  }
+  .dst-feedback-btn:hover,
+  .dst-feedback-btn:focus-visible { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+  .dst-sponsor-btn {
+    border: 1.5px solid transparent;
+    background: var(--dst-brand-tint-soft);
+    color: var(--ink);
+  }
+  .dst-sponsor-btn .dst-btn-icon { color: var(--accent-warm); }
+  /* Feedback with its icon alone, where its word would touch the wordmark
+     (districtry-behavior measures it); the word stays for a screen reader */
+  .dst-feedback-btn.dst-compact { gap: 0; min-width: 44px; justify-content: center; padding-left: 10px; padding-right: 10px; }
+  .dst-feedback-btn.dst-compact .dst-btn-label {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+  .dst-feedback-btn.dst-compact .dst-btn-icon { width: 18px; height: 18px; }
+  .dst-sponsor-btn:hover,
+  .dst-sponsor-btn:focus-visible { border-color: var(--accent-warm); color: var(--ink); text-decoration: none; }
+  .masthead-actions .dst-sponsor-btn { margin-right: 2px; }
+  /* folded into "More": a menu row like the others, keeping its heart */
+  .dst-more-panel .dst-sponsor-btn { display: flex; margin: 0; padding: 7px 13px; border-radius: 7px; background: transparent; }
+  .dst-more-panel .dst-sponsor-btn:hover,
+  .dst-more-panel .dst-sponsor-btn:focus-visible { background: var(--dst-brand-tint); border-color: transparent; }
   .masthead-actions .footer-link-btn:hover,
   .masthead-actions .footer-link-btn:focus-visible {
     background: var(--accent);
@@ -3833,6 +4007,22 @@ svg.leaflet-image-layer.leaflet-interactive path {
     }
     .districtry-doors .masthead-action-link,
     .districtry-doors .footer-link-btn { min-height: 44px; }
+    /* Feedback stays in the wordmark row beside the theme toggle; the row
+       has room for one more button at 360px, measured, and not for two, so
+       Sponsor leads the doors at the panel foot instead (dstPlaceDoors). */
+    .masthead-actions .dst-feedback-btn {
+      min-height: 44px;
+      padding: 0 10px 0 8px;
+      font-size: 13px;
+      gap: 4px;
+      margin-right: 2px;
+    }
+    .districtry-doors .dst-sponsor-btn {
+      min-height: 44px;
+      padding: 0 14px 0 12px;
+      font-size: 13.5px;
+      border-color: var(--accent-warm);
+    }
   }
   /* ==== dark mode (operator-approved 2026-08-20 — the one function this
      re-skin ADDS rather than maintains) ====================================
@@ -4298,6 +4488,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <!-- ==== ENGINE:BEGIN gaps-html ==== -->
       <button type="button" id="gaps-btn" class="footer-link-btn">What data is missing?</button>
       <!-- ==== ENGINE:END gaps-html ==== -->
+      <!-- ==== ENGINE:BEGIN help-link-html ==== -->
+      <a class="masthead-action-link" id="help-link" href="/help.html">How to use</a>
+      <!-- ==== ENGINE:END help-link-html ==== -->
       <!-- Batch address check — fork-owned (Illinois), deliberately NOT inside
            the gaps-html fence above: no sibling instance ships this tool. It
            carries .masthead-action-link so the phone layout's door-moving pass
@@ -4325,6 +4518,25 @@ svg.leaflet-image-layer.leaflet-interactive path {
            carries the footer's target/rel convention. Fork-owned chrome, like
            everything in this row except the fenced gaps button. -->
       <a class="masthead-action-link" href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
+      <!-- ==== ENGINE:BEGIN masthead-buttons-html ==== -->
+      <!-- Feedback and Sponsor, the two buttons a reader should never have to
+           hunt for (Adam, 2026-10-29: "Change the report a bug or leave a
+           comment to a feedback button that is a little easier to find", and
+           "the sponsor button needs to be more visible"). Feedback opened the
+           same form from the foot of the results panel until that day; it
+           keeps the id the feedback block binds. Neither carries
+           .masthead-action-link, so neither is one of the row's links that
+           fold into "More" from the end: Feedback never folds and stays in
+           the phone masthead beside the theme toggle, and Sponsor folds only
+           after every plain link (districtry-behavior) and moves to the head
+           of the panel foot's doors on a phone, where the masthead has room
+           for one button. On a phone too narrow for Feedback's word beside the
+           wordmark, it shows its icon alone and keeps the word for a screen
+           reader (dst-compact, measured in districtry-behavior). The play-app block hides every github.com/sponsors
+           link inside the Google Play app, this one included. -->
+      <button type="button" id="feedback-btn" class="dst-feedback-btn"><svg class="dst-btn-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 3.5h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9.2l-3.6 2.9a.6.6 0 0 1-1-.47V14.5H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span class="dst-btn-label">Feedback</span></button>
+      <a class="dst-sponsor-btn" id="sponsor-btn" href="https://github.com/sponsors/ThursdaysFamous" target="_blank" rel="noopener" aria-label="Sponsor districtry on GitHub"><svg class="dst-btn-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 17s-6.5-4.1-6.5-8.6A3.6 3.6 0 0 1 10 6.3a3.6 3.6 0 0 1 6.5 2.1C16.5 12.9 10 17 10 17z" fill="currentColor"></path></svg>Sponsor</a>
+      <!-- ==== ENGINE:END masthead-buttons-html ==== -->
       <span class="districtry-toggle-sep" aria-hidden="true"></span>
       <button type="button" class="districtry-theme-toggle" aria-label="Switch to the dark theme"><span class="dtt-labels"><span class="dtt-dark">Dark</span><span class="dtt-light">Light</span></span></button>
 <!-- ==== TEMPLATE:END body-why-link ==== -->
@@ -4398,7 +4610,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
          it, not be hidden with it. #verified-date is filled at boot,
          #feedback-btn is bound at boot, and #footer-metros is an ENGINE block
          moved VERBATIM: its bytes are untouched, only its slot changed, and
-         placement is the one thing the fences deliberately do not pin. -->
+         placement is the one thing the fences deliberately do not pin.
+         #feedback-btn left this foot for the masthead on 2026-10-29 (engine
+         masthead-buttons-html), as a Feedback button a reader can find
+         without scrolling. -->
     <div class="districtry-panel-foot" id="districtry-panel-foot">
       <p><strong>Not for legal or official use.</strong> Boundary and roster data come from public
       sources that disclaim legal precision — confirm with the relevant government office before
@@ -4426,9 +4641,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
       reachable at <a href="mailto:hello@overberg.co">hello@overberg.co</a>.</p>
       <!-- ==== ENGINE:END footer-independence ==== -->
       <div class="footer-meta" id="footer-meta">
-        <span>Data last verified:
+        <span>Sources last checked:
           <!-- ==== GENERATED:BEGIN verified-date ==== -->
-          <strong id="verified-date">September 11, 2026</strong>
+          <strong id="verified-date">October 29, 2026</strong>
           <!-- ==== GENERATED:END verified-date ==== -->
         </span>
       </div>
@@ -4448,7 +4663,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <a href="https://overberg.co" target="_blank" rel="noopener">overberg.co</a>
       </div>
       <p class="dpf-support">Unfunded and run at personal cost. <a href="https://github.com/sponsors/ThursdaysFamous" target="_blank" rel="noopener">Sponsor it on GitHub</a> to keep the rosters current — it buys no placement and no influence over any answer here (<a href="../sponsorship.html">policy</a>).</p>
-      <button type="button" id="feedback-btn" class="footer-link-btn">💬 Report a bug or leave a comment</button>
     <!-- ==== ENGINE:BEGIN metro-links-html ==== -->
     <div class="footer-metros" id="footer-metros" hidden>
       <span class="footer-metros-label">Explore another metro</span>
@@ -7723,43 +7937,62 @@ function initChiExplorer() {
     geoStatusEl.textContent = "Locating…";
     geoStatusEl.className = "geo-status";
 
-    navigator.geolocation.getCurrentPosition(
-      function (pos) {
-        locateBtn.disabled = false;
-        var lat = pos.coords.latitude, lng = pos.coords.longitude;
-        // Which app answers where the reader is standing is the hand-off's own
-        // question (ENGINE metro-portal placeOwner), asked of the same outlines,
-        // so a located point and a clicked one can never be routed differently.
-        geoStatusEl.textContent = "Locating…";
-        placeOwner(lat, lng).then(function (owner) {
-          if (owner === "here") { selectLocated(lat, lng); return; }
-          if (owner) {
-            // standing inside a sibling's area: send them there, deep-linking
-            // the located point (the URL fragment stays client-side, same
-            // exposure as the sibling's own geolocate → permalink flow)
-            geoStatusEl.textContent = "You're outside " + appPlaceName() + " — but " +
-              siblingDisplayName(owner) + " covers where you are.";
-            geoStatusEl.className = "geo-status";
-            trackLocateFail("other-app");
-            offerMetroPortal(owner, { point: { lat: lat, lng: lng }, source: "geolocate" });
-            return;
-          }
-          trackLocateFail("outside");
-          geoStatusEl.textContent = "Your current location looks like it's outside the " + appPlaceName() + " area this app covers.";
-          geoStatusEl.className = "geo-status err";
-        });
-      },
-      function (err) {
-        locateBtn.disabled = false;
-        var msg = "Couldn't get your location.", reason = "other";
-        if (err.code === err.PERMISSION_DENIED) { msg = "Location access was denied. Allow it in your browser's site settings to use this."; reason = "denied"; }
-        else if (err.code === err.TIMEOUT) { msg = "Location request timed out. Try again."; reason = "timeout"; }
-        else if (err.code === err.POSITION_UNAVAILABLE) { msg = "Your location is currently unavailable."; reason = "unavailable"; }
-        trackLocateFail(reason);
-        geoStatusEl.textContent = msg;
+    // ASKED TWICE WHEN THE FIRST ANSWER IS "NO POSITION YET" (2026-10-28).
+    // The Google Play app hands location to Android (PWABuilder's location
+    // delegation, on from 1.0.3), and that hand-off asks Google Play services
+    // for a GPS fix at high accuracy and reports POSITION_UNAVAILABLE the
+    // moment the phone says no fix is available yet, which indoors is often
+    // at once; the browser on the same phone waits for one. Adam's 1.0.3
+    // install failed every time while Chrome found him. So an unavailable
+    // first answer is asked again once at normal accuracy, which the hand-off
+    // serves from Wi-Fi and phone towers, accepting a fix up to five minutes
+    // old. A refusal or a timeout is not asked again: the reader said no, or
+    // has already waited. Only the final answer is counted.
+    var LOCATE_FIRST = { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 };
+    var LOCATE_AGAIN = { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 };
+    function locateFailed(err) {
+      locateBtn.disabled = false;
+      var msg = "Couldn't get your location.", reason = "other";
+      if (err.code === err.PERMISSION_DENIED) { msg = "Location access was denied. Allow it in your browser's site settings to use this."; reason = "denied"; }
+      else if (err.code === err.TIMEOUT) { msg = "Location request timed out. Try again."; reason = "timeout"; }
+      else if (err.code === err.POSITION_UNAVAILABLE) { msg = "Your location is currently unavailable."; reason = "unavailable"; }
+      trackLocateFail(reason);
+      geoStatusEl.textContent = msg;
+      geoStatusEl.className = "geo-status err";
+    }
+
+    var located = function (pos) {
+      locateBtn.disabled = false;
+      var lat = pos.coords.latitude, lng = pos.coords.longitude;
+      // Which app answers where the reader is standing is the hand-off's own
+      // question (ENGINE metro-portal placeOwner), asked of the same outlines,
+      // so a located point and a clicked one can never be routed differently.
+      geoStatusEl.textContent = "Locating…";
+      placeOwner(lat, lng).then(function (owner) {
+        if (owner === "here") { selectLocated(lat, lng); return; }
+        if (owner) {
+          // standing inside a sibling's area: send them there, deep-linking
+          // the located point (the URL fragment stays client-side, same
+          // exposure as the sibling's own geolocate → permalink flow)
+          geoStatusEl.textContent = "You're outside " + appPlaceName() + " — but " +
+            siblingDisplayName(owner) + " covers where you are.";
+          geoStatusEl.className = "geo-status";
+          trackLocateFail("other-app");
+          offerMetroPortal(owner, { point: { lat: lat, lng: lng }, source: "geolocate" });
+          return;
+        }
+        trackLocateFail("outside");
+        geoStatusEl.textContent = "Your current location looks like it's outside the " + appPlaceName() + " area this app covers.";
         geoStatusEl.className = "geo-status err";
+      });
+    };
+    navigator.geolocation.getCurrentPosition(
+      located,
+      function (err) {
+        if (err.code !== err.POSITION_UNAVAILABLE) { locateFailed(err); return; }
+        navigator.geolocation.getCurrentPosition(located, locateFailed, LOCATE_AGAIN);
       },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+      LOCATE_FIRST
     );
   });
 
@@ -11443,20 +11676,30 @@ function initChiExplorer() {
    * 2026-10-17 a question page's address box selected the first, and the
    * cards named the districts of another stretch of the street, and until
    * 2026-10-19 the second. */
+  /* The one row a search the reader sent goes straight to, or none: the
+   * rule prefillGeocodeSearch states above. Search and Enter take it too,
+   * from 2026-10-29 (Adam, choosing it over a list that always waited for a
+   * tap, "go to the match location without needing to click the full
+   * address"): a search with one clear answer that is the house selects it,
+   * and anything else stays a list for the reader to pick from, because the
+   * first of several answers can be the same street in another town and an
+   * answer without the house number is a spot somewhere along the street. */
+  function selectClearMatch() {
+    var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
+    var place = geoResultsList.querySelectorAll("li.link-place > button");
+    var away = geoResultsList.querySelectorAll("li.map-link-away > button, li.zip-away > button");
+    if (own.length === 1) { if (!/\b(?:no-number|other-street|zip-answer)\b/.test(own[0].parentNode.className)) own[0].click(); }
+    else if (place.length === 1) place[0].click();
+    else if (!own.length && away.length === 1) away[0].click();
+  }
+
   function prefillGeocodeSearch(q) {
     linkVia = "opened";
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
     geoStatus.className = "geo-status";
     reengageSearchShell();
-    return runGeocodeSearch(q, null, true).then(function () {
-      var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
-      var place = geoResultsList.querySelectorAll("li.link-place > button");
-      var away = geoResultsList.querySelectorAll("li.map-link-away > button, li.zip-away > button");
-      if (own.length === 1) { if (!/\b(?:no-number|other-street|zip-answer)\b/.test(own[0].parentNode.className)) own[0].click(); }
-      else if (place.length === 1) place[0].click();
-      else if (!own.length && away.length === 1) away[0].click();
-    })["catch"](function (err) {
+    return runGeocodeSearch(q, null, true).then(selectClearMatch)["catch"](function (err) {
       if (err.name === "AbortError") return;
       geoStatus.textContent = "Search failed \u2014 the geocoder may be busy. Try again in a moment.";
       geoStatus.className = "geo-status err";
@@ -11475,6 +11718,10 @@ function initChiExplorer() {
     geoStatus.textContent = "Searching…";
     geoStatus.className = "geo-status";
     runGeocodeSearch(q, null, true)
+      .then(function () {
+        // not once the reader has typed on: the list is for other text now
+        if (document.getElementById("geocode-input").value.trim() === q) selectClearMatch();
+      })
       .catch(function (err) {
         if (err.name === "AbortError") return;
         geoStatus.textContent = "Search failed — the geocoder may be busy. Try again in a moment.";
@@ -13790,6 +14037,7 @@ function initChiExplorer() {
     });
     el.textContent = on + " of " + shown +
       (shown === 1 ? " layer on" : " layers on");
+    dstSyncNoLayerHint(); // engine first-use: "tick a box" while nothing is on
   }
 
   function setLayerRelevant(mod, relevant) {
@@ -13932,6 +14180,7 @@ function initChiExplorer() {
     layers.forEach(function (mod) {
       if (state.layersOn[mod.id]) runLayerQuery(mod);
     });
+    dstSyncNoLayerHint(); // a new point with nothing on (engine first-use)
   }
   /* ==== ENGINE:END overlay-cards ==== */
 
@@ -40044,12 +40293,18 @@ function initChiExplorer() {
            the masthead. */
         foot.insertBefore(doors, foot.firstChild);
       }
-      var move = actions.querySelectorAll("#gaps-btn, .masthead-action-link");
+      var move = actions.querySelectorAll("#gaps-btn, .masthead-action-link:not(.dst-more-btn)");
       for (var i = 0; i < move.length; i++) doors.appendChild(move[i]);
+      // Sponsor leads the doors: the phone masthead has room for Feedback
+      // beside the theme toggle and not for a second button (2026-10-29)
+      var sponsor = document.getElementById("sponsor-btn");
+      if (sponsor) doors.insertBefore(sponsor, doors.firstChild);
     } else if (doors) {
       var sep = actions.querySelector(".districtry-toggle-sep");
       var back = doors.querySelectorAll("#gaps-btn, .masthead-action-link");
       for (var j = 0; j < back.length; j++) actions.insertBefore(back[j], sep);
+      var home = document.getElementById("sponsor-btn");
+      if (home && doors.contains(home)) actions.insertBefore(home, sep);
       doors.parentNode.removeChild(doors);
     }
   }
@@ -40110,7 +40365,10 @@ function initChiExplorer() {
     wrap.appendChild(btn);
     wrap.appendChild(panel);
     var sep = actions.querySelector(".districtry-toggle-sep");
-    actions.insertBefore(wrap, sep || null);
+    // before Feedback where the row has it, so the menu sits with the links
+    // it holds and Feedback and Sponsor stay together at the row's end
+    var feedback = actions.querySelector(".dst-feedback-btn");
+    actions.insertBefore(wrap, (feedback && feedback.parentNode === actions) ? feedback : (sep || null));
     btn.addEventListener("click", function () {
       var open = panel.hidden;
       panel.hidden = !open;
@@ -40157,17 +40415,62 @@ function initChiExplorer() {
     if (!beside) return false;
     return actions.getBoundingClientRect().top >= beside.getBoundingClientRect().bottom - 2;
   }
+  /* The order the row makes room, first to last: the plain links leave it
+     from the end of the row, then the tagline under the wordmark wraps onto
+     a second line ("tagline", which narrows the title and makes the masthead
+     one line taller), then Sponsor leaves, then "How to use", then "What data
+     is missing?". Sponsor (2026-10-29) is not one of the plain links: it
+     stays in view until every one of them has folded, and "How to use"
+     outlasts it because the first-visit help sends a new reader to it.
+     Measured that day, the masthead before Feedback and Sponsor kept "How to
+     use" in view at 1280px in all 17 apps, and with them and no wrapped
+     tagline only Illinois and New York kept it, their taglines being the
+     two shortest; with the tagline wrapped all four stay at 1280px in every
+     app measured. Feedback is not in the list at all and never folds. */
+  function dstFoldOrder(sponsor) {
+    var gaps = null, help = null, plain = [];
+    dstMoreItems.forEach(function (item) {
+      if (item.id === "gaps-btn") gaps = item;
+      else if (item.id === "help-link") help = item;
+      else plain.push(item);
+    });
+    var order = plain.reverse();
+    order.push("tagline");
+    if (sponsor) order.push(sponsor);
+    if (help) order.push(help);
+    if (gaps) order.push(gaps);
+    return order;
+  }
   function dstFitMastheadActions() {
     var actions = document.querySelector(".masthead-actions");
     if (!actions) return;
     var toggle = actions.querySelector(".districtry-theme-toggle") ||
       (dstMore && dstMore.panel.querySelector(".districtry-theme-toggle"));
     var sep = actions.querySelector(".districtry-toggle-sep");
+    var sponsor = document.getElementById("sponsor-btn");
+    var feedback = document.getElementById("feedback-btn");
+    if (feedback) feedback.classList.remove("dst-compact");
+    if (dstIsPhone()) {
+      // the doors live in the panel foot there. Feedback stays beside the
+      // wordmark, and where the two would touch it shows its icon alone:
+      // measured 2026-10-29, at 360px the word fits beside "districtry / il"
+      // and not beside the wider "districtry / mn"
+      var word = document.querySelector(".masthead .title-text");
+      if (feedback && word && feedback.offsetParent !== null &&
+          feedback.getBoundingClientRect().left < word.getBoundingClientRect().right + 8) {
+        feedback.classList.add("dst-compact");
+      }
+    }
     if (!dstMoreItems) {
+      // read from wherever the links are now: a page that opens at phone
+      // width has already moved them to the panel foot (dstPlaceDoors), and
+      // reading the masthead alone left the list empty for good, so a phone
+      // turned to a tablet's width folded nothing
       dstMoreItems = [];
-      var found = actions.querySelectorAll("#gaps-btn, .masthead-action-link");
+      var found = document.querySelectorAll(".masthead-actions #gaps-btn, .masthead-actions .masthead-action-link, " +
+        ".districtry-doors #gaps-btn, .districtry-doors .masthead-action-link");
       for (var i = 0; i < found.length; i++) dstMoreItems.push(found[i]);
-      if (!dstMoreItems.length) return;
+      if (!dstMoreItems.length) { dstMoreItems = null; return; }
     }
     if (!dstMore) dstMore = dstBuildMore(actions);
     dstMoreClose(false);
@@ -40176,17 +40479,25 @@ function initChiExplorer() {
     dstMoreItems.forEach(function (item) {
       if (actions.contains(item)) actions.insertBefore(item, dstMore.wrap);
     });
+    if (sponsor && sponsor.parentNode === dstMore.panel) actions.insertBefore(sponsor, sep || null);
     if (toggle && sep && toggle.parentNode !== actions) actions.insertBefore(toggle, sep.nextSibling);
     actions.classList.remove("dst-toggle-folded");
     var header = document.querySelector("header.masthead");
-    if (header) header.classList.remove("dst-tagline-folded");
+    if (header) header.classList.remove("dst-tagline-folded", "dst-tagline-wrapped");
     dstMore.wrap.hidden = true;
     if (dstIsPhone()) return; // the doors live in the panel foot there
     if (!dstMastheadWrapped(actions)) return;
     dstMore.wrap.hidden = false;
-    for (var k = dstMoreItems.length - 1; k >= 0 && dstMastheadWrapped(actions); k--) {
-      if (actions.contains(dstMoreItems[k])) dstMore.panel.insertBefore(dstMoreItems[k], dstMore.panel.firstChild);
+    // a Sponsor the Play app hides (play-app) takes no room and is not folded
+    var order = dstFoldOrder(sponsor && actions.contains(sponsor) && sponsor.offsetParent !== null ? sponsor : null);
+    for (var k = 0; k < order.length && dstMastheadWrapped(actions); k++) {
+      if (order[k] === "tagline") { if (header) header.classList.add("dst-tagline-wrapped"); }
+      else if (actions.contains(order[k])) dstMore.panel.appendChild(order[k]);
     }
+    // the menu lists what it holds in the row's own order, Sponsor last
+    dstMoreItems.concat(sponsor ? [sponsor] : []).forEach(function (item) {
+      if (item.parentNode === dstMore.panel) dstMore.panel.appendChild(item);
+    });
     // last resort: every link is in the menu and the row still wraps
     if (toggle && dstMastheadWrapped(actions)) {
       dstMore.panel.appendChild(toggle);
@@ -40197,6 +40508,8 @@ function initChiExplorer() {
     // whose title is wider than Illinois's still wrapped at 768-850px with
     // every link and the toggle folded
     if (header && dstMastheadWrapped(actions)) header.classList.add("dst-tagline-folded");
+    // and only then Feedback's word, keeping its icon
+    if (feedback && dstMastheadWrapped(actions)) feedback.classList.add("dst-compact");
     if (!dstMore.panel.firstChild) dstMore.wrap.hidden = true;
   }
   var dstFitQueued = false;
@@ -40208,6 +40521,13 @@ function initChiExplorer() {
   window.addEventListener("resize", dstQueueFit);
   // the pills' widths change when the web font arrives
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(dstQueueFit);
+
+  // A press of Sponsor is counted by the app it was pressed in, never by
+  // place, so the traffic page shows whether the button is used (2026-10-29)
+  var dstSponsorBtn = document.getElementById("sponsor-btn");
+  if (dstSponsorBtn) dstSponsorBtn.addEventListener("click", function () {
+    trackEvent("sponsor/" + METRO_BRAND.instanceTag);
+  });
 
   dstApplyPhoneLayout();
   if (window.matchMedia) {
@@ -40280,7 +40600,11 @@ function initChiExplorer() {
         is a return. The mark is the single character "1", never a date or an
         identifier, it never leaves the browser, and local storage is shared
         by every page on the site, so "first" means the first time this
-        browser opened any districtry map. Storage that cannot be read or
+        browser opened the front page or any districtry map. The front page
+        counts `visit/first/front` or `visit/return/front` from these same
+        two keys (scripts/build_landing_page.py visit_count_script, which
+        reads them from here), so a window counted there is not counted
+        again on the map it goes on to. Storage that cannot be read or
         written counts nothing, rather than counting every visit as a first.
         It replaced Google Analytics, whose new-user figure needs a cookie
         that carries an identifier (2026-10-22).
@@ -40378,9 +40702,15 @@ function initChiExplorer() {
      then a moment to read the cards. */
   function dstAfterFirstAnswer(fn) {
     var poll = setInterval(function () {
-      if (!state.selectedPoint) return;
+      // and for the first-use tip or tour to close (engine first-use), which
+      // sits at the same foot of a phone's screen
+      if (!state.selectedPoint || dstFirstUseOpen()) return;
       clearInterval(poll);
-      setTimeout(fn, DST_INVITE_DELAY_MS);
+      // and if the tip or tour opened during that moment, wait for it again
+      setTimeout(function () {
+        if (dstFirstUseOpen()) dstAfterFirstAnswer(fn);
+        else fn();
+      }, DST_INVITE_DELAY_MS);
     }, 500);
   }
   var dstInviteBar = null;
@@ -40545,6 +40875,315 @@ function initChiExplorer() {
     });
   }
   /* ==== ENGINE:END install-app ==== */
+  /* ==== ENGINE:BEGIN first-use ==== */
+  /* ==== first use: a one-time tip, an optional tour, and a hint ====
+     Two closed-test reviews of the Play app on 2026-10-28 said the map "works
+     but needs a tutorial" and is "biraz karmaşık" (a bit complicated). Adam
+     chose a one-time tip with an optional tour, and a "How to use" page
+     (/help.html), on every app and so on the website as well. He ruled out
+     turning layers on for a new reader, because a layer switched on by the
+     app would be counted as a layer a reader chose.
+
+     1. THE TIP, once per browser on any districtry map. Three numbered lines
+        say how the map is used: pick a place, tick the kinds of district to
+        show, read the cards. "Got it" closes it; "Show me around" closes it
+        and starts the tour. Showing it records DST_FIRST_USE_KEY in local
+        storage, which is shared by every page on the site, so a reader who
+        saw it on one state's map is not shown it on another. Storage that
+        cannot be read shows nothing rather than showing it on every visit,
+        the rule the install invitation follows. Never inside an iframe (an
+        embedded map is someone else's page).
+
+     2. THE TOUR, four steps, each drawing a ring round one part of the page
+        (the search box, the results panel, the map, the How to use link) with
+        a card beside it. Back, Next and Close are buttons; Escape closes it.
+        A part that is not on screen (the How to use link folded into the More
+        menu, say) is replaced by the next thing that is, and with nothing to
+        ring the card sits in the middle of the screen.
+
+     3. THE HINT, whenever a point is selected and no layer is on: a line above
+        the layer list saying to tick a box. A reader who searches an address
+        is shown the list of layers with nothing ticked and no answer, and the
+        reviews suggest that is where they stop. It is not stored and shows
+        every time that is true.
+
+     4. THE COUNTS, by app and never by place: `first-use/<what>/<tag>` for
+        got-it, tour, tour-done, tour-closed and help (the tip's How to use
+        link followed), the tag naming the state's map it was used on (Adam,
+        2026-10-28: "The tutorial stats should track app used on"), and
+        `/play` after the tag inside the Google Play app, read from the mark
+        engine/shared/play-app.txt sets (asked whether the Play app should be
+        split from the website, Adam answered "Yes" the same day). The
+        traffic page counts them apart from reader actions, so a new feature's
+        own buttons do not read as more use of the map. The privacy page names
+        the family and the key. */
+  var DST_FIRST_USE_KEY = "districtry-first-use";
+  var DST_HELP_URL = "/help.html";
+  var DST_FIRST_USE_DELAY_MS = 900;
+  var dstFirstUseBox = null;
+  var dstTourState = null;
+  /* True from the moment the tip is scheduled until its timer runs, so the
+     install invitation also waits for a tip that is about to show. */
+  var dstFirstUsePending = false;
+  function dstFirstUseEvent(what) {
+    dstCountWhenReady("first-use/" + what + "/" + METRO_BRAND.instanceTag +
+      (document.documentElement.classList.contains("dst-play-app") ? "/play" : ""));
+  }
+  function dstFirstUseSeen() {
+    try { return !!window.localStorage.getItem(DST_FIRST_USE_KEY); } catch (e) { return true; }
+  }
+  function dstMarkFirstUseSeen() {
+    try { window.localStorage.setItem(DST_FIRST_USE_KEY, "1"); } catch (e) { /* it may show again */ }
+  }
+  /* Read by the install invitation, so the two never sit on top of each
+     other at the foot of a phone's screen. */
+  function dstFirstUseOpen() {
+    return !!(dstFirstUsePending || dstFirstUseBox || dstTourState);
+  }
+  function dstEl(tag, cls, text) {
+    var el = document.createElement(tag);
+    if (cls) el.className = cls;
+    if (text) el.textContent = text;
+    return el;
+  }
+  function dstHideFirstUse() {
+    if (dstFirstUseBox && dstFirstUseBox.parentNode) dstFirstUseBox.parentNode.removeChild(dstFirstUseBox);
+    dstFirstUseBox = null;
+  }
+  function dstShowFirstUse() {
+    if (dstFirstUseBox || dstTourState) return;
+    var host = document.querySelector(".map-col") || document.body;
+    var box = dstEl("aside", "first-use");
+    box.setAttribute("aria-labelledby", "first-use-title");
+    var title = dstEl("h2", "first-use-title", "How districtry works");
+    title.id = "first-use-title";
+    box.appendChild(title);
+    var steps = dstEl("ol", "first-use-steps");
+    [
+      "Search your address, or pick the spot on the map where you live.",
+      "Check the kinds of district you want to see, such as U.S. House District. Nothing is shown until you check one.",
+      "Each one you check gets a card saying who represents you there and how to reach them."
+    ].forEach(function (line) { steps.appendChild(dstEl("li", null, line)); });
+    box.appendChild(steps);
+    var actions = dstEl("div", "first-use-actions");
+    var tour = dstEl("button", "first-use-tour", "Show me around");
+    tour.type = "button";
+    tour.addEventListener("click", function () {
+      dstHideFirstUse();
+      dstFirstUseEvent("tour");
+      dstStartTour();
+    });
+    var ok = dstEl("button", "first-use-ok", "Got it");
+    ok.type = "button";
+    ok.addEventListener("click", function () {
+      dstHideFirstUse();
+      dstFirstUseEvent("got-it");
+    });
+    actions.appendChild(tour);
+    actions.appendChild(ok);
+    box.appendChild(actions);
+    var help = dstEl("a", "first-use-help", "How to use districtry");
+    help.href = DST_HELP_URL;
+    help.addEventListener("click", function () { dstFirstUseEvent("help"); });
+    box.appendChild(help);
+    box.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { dstHideFirstUse(); dstFirstUseEvent("got-it"); }
+    });
+    host.appendChild(box);
+    dstFirstUseBox = box;
+    dstMarkFirstUseSeen();
+  }
+
+  /* ---- the tour ---- */
+  /* A target is on screen when it has a box and is not hidden by a closed
+     menu or a display:none ancestor. */
+  function dstVisible(el) {
+    if (!el) return false;
+    var r = el.getBoundingClientRect();
+    return r.width > 0 && r.height > 0 && el.getClientRects().length > 0;
+  }
+  function dstTourSteps() {
+    return [
+      { find: function () { return document.getElementById("geocode-form"); },
+        title: "Find your place",
+        text: "Type your address here and press Search. You can also use your current location, or pick the spot on the map where you live." },
+      { find: function () { return document.getElementById("results-col"); },
+        title: "Choose what to see",
+        text: "Once you have picked a place, a list of the kinds of district appears here. Check the ones you want, such as U.S. House District or State Senate District. Each one gets a card naming who represents you there." },
+      { find: function () { return document.getElementById("map"); },
+        title: "See it on the map",
+        text: "The map outlines each district you check. Drag and zoom it to look around, and tap anywhere else to look up another place." },
+      { find: function () {
+          var link = document.getElementById("help-link");
+          if (dstVisible(link)) return link;
+          var more = document.getElementById("dst-more-btn");
+          return dstVisible(more) ? more : link;
+        },
+        title: "Help is here",
+        text: "Open “How to use” for these steps and more, such as comparing districts and sharing what you find." }
+    ];
+  }
+  function dstStartTour() {
+    var ring = dstEl("div", "tour-ring");
+    ring.setAttribute("aria-hidden", "true");
+    var card = dstEl("div", "tour-card");
+    card.setAttribute("role", "dialog");
+    card.setAttribute("aria-modal", "false");
+    card.setAttribute("aria-labelledby", "tour-title");
+    card.tabIndex = -1;
+    document.body.appendChild(ring);
+    document.body.appendChild(card);
+    dstTourState = { i: 0, steps: dstTourSteps(), ring: ring, card: card, target: null };
+    card.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") dstEndTour(false);
+    });
+    window.addEventListener("resize", dstPlaceTour);
+    window.addEventListener("scroll", dstPlaceTour, true);
+    dstShowTourStep(0);
+  }
+  function dstEndTour(done) {
+    if (!dstTourState) return;
+    var t = dstTourState;
+    dstTourState = null;
+    window.removeEventListener("resize", dstPlaceTour);
+    window.removeEventListener("scroll", dstPlaceTour, true);
+    if (t.ring.parentNode) t.ring.parentNode.removeChild(t.ring);
+    if (t.card.parentNode) t.card.parentNode.removeChild(t.card);
+    dstFirstUseEvent(done ? "tour-done" : "tour-closed");
+    var search = document.getElementById("geocode-input");
+    if (search && done) { try { search.focus({ preventScroll: true }); } catch (e) { search.focus(); } }
+  }
+  function dstShowTourStep(i) {
+    var t = dstTourState;
+    if (!t) return;
+    t.i = i;
+    var step = t.steps[i];
+    var target = step.find();
+    t.target = dstVisible(target) ? target : null;
+    if (t.target) {
+      // a tall target (the results panel) is brought to its top, a small one
+      // to the middle of the screen
+      var tall = t.target.getBoundingClientRect().height > window.innerHeight * 0.6;
+      try { t.target.scrollIntoView({ block: tall ? "start" : "center" }); } catch (e) { t.target.scrollIntoView(); }
+    }
+    var card = t.card;
+    card.textContent = "";
+    var count = dstEl("p", "tour-count", "Step " + (i + 1) + " of " + t.steps.length);
+    var title = dstEl("h2", "tour-title", step.title);
+    title.id = "tour-title";
+    card.appendChild(count);
+    card.appendChild(title);
+    card.appendChild(dstEl("p", "tour-text", step.text));
+    var row = dstEl("div", "tour-actions");
+    var close = dstEl("button", "tour-close", "Close");
+    close.type = "button";
+    close.addEventListener("click", function () { dstEndTour(false); });
+    row.appendChild(close);
+    if (i > 0) {
+      var back = dstEl("button", "tour-back", "Back");
+      back.type = "button";
+      back.addEventListener("click", function () { dstShowTourStep(i - 1); });
+      row.appendChild(back);
+    }
+    var last = i === t.steps.length - 1;
+    var next = dstEl("button", "tour-next", last ? "Done" : "Next");
+    next.type = "button";
+    next.addEventListener("click", function () {
+      if (last) dstEndTour(true);
+      else dstShowTourStep(i + 1);
+    });
+    row.appendChild(next);
+    card.appendChild(row);
+    dstPlaceTour();
+    try { next.focus({ preventScroll: true }); } catch (e) { next.focus(); }
+  }
+  /* The ring follows the part of the target that is on screen; the card goes
+     below it when there is room, above it when there is not, and over the
+     ring's foot when neither fits (a tall panel on a phone). */
+  function dstPlaceTour() {
+    var t = dstTourState;
+    if (!t) return;
+    var vw = window.innerWidth, vh = window.innerHeight, gap = 10;
+    var card = t.card, ring = t.ring;
+    card.style.left = card.style.top = "";
+    var cw = Math.min(360, vw - 24);
+    card.style.width = cw + "px";
+    var ch = card.offsetHeight;
+    if (!t.target) {
+      ring.hidden = true;
+      card.style.left = Math.round((vw - cw) / 2) + "px";
+      card.style.top = Math.round(Math.max(12, (vh - ch) / 2)) + "px";
+      return;
+    }
+    var r = t.target.getBoundingClientRect();
+    var top = Math.max(r.top, 4), bottom = Math.min(r.bottom, vh - 4);
+    var left = Math.max(r.left, 4), right = Math.min(r.right, vw - 4);
+    ring.hidden = bottom <= top || right <= left;
+    ring.style.left = (left - 4) + "px";
+    ring.style.top = (top - 4) + "px";
+    ring.style.width = Math.max(0, right - left + 8) + "px";
+    ring.style.height = Math.max(0, bottom - top + 8) + "px";
+    var x = Math.min(Math.max(12, left), vw - cw - 12);
+    var y;
+    if (bottom + gap + ch <= vh - 12) y = bottom + gap;
+    else if (top - gap - ch >= 12) y = top - gap - ch;
+    else y = Math.max(12, vh - ch - 12);
+    card.style.left = Math.round(x) + "px";
+    card.style.top = Math.round(y) + "px";
+  }
+
+  /* ---- the hint ---- */
+  /* Called by syncPanelStats (engine overlay-cards) whenever either count
+     moves, and by runAllActiveLayerQueries on every selection, so it is right
+     after a tick, a relevance change and a new point alike. */
+  function dstSyncNoLayerHint() {
+    var root = document.getElementById("groups-root");
+    if (!root || !root.parentNode) return;
+    var hint = document.getElementById("no-layer-hint");
+    var on = 0, shown = 0;
+    layers.forEach(function (l) {
+      var rt = layerRuntime[l.id];
+      if (l.subOf || (rt && rt.relevant === false)) return;
+      shown++;
+      if (state.layersOn[l.id]) on++;
+    });
+    var want = !!state.selectedPoint && shown > 0 && on === 0;
+    if (!want) {
+      if (hint) hint.hidden = true;
+      return;
+    }
+    if (!hint) {
+      hint = dstEl("p", "no-layer-hint",
+        "Check a box below to see that district and who represents you there.");
+      hint.id = "no-layer-hint";
+      root.parentNode.insertBefore(hint, root);
+    }
+    hint.hidden = false;
+  }
+
+  /* ---- the search box closes both ----
+     A reader who goes to the search box is doing the tip's first step, and
+     the list of matches opens under the box. On a phone the tip sits at the
+     foot of the screen and the keyboard pushes it up over that list; the
+     tour's card sits just below the box. So focusing or typing in the box
+     closes the tip (counted as got-it, as Escape is) and the tour (counted
+     as tour-closed). Adam reported the tip covering the list, 2026-10-29. */
+  function dstSearchStarted(e) {
+    if (!e.target || e.target.id !== "geocode-input") return;
+    if (dstFirstUseBox) { dstHideFirstUse(); dstFirstUseEvent("got-it"); }
+    if (dstTourState) dstEndTour(false);
+  }
+  document.addEventListener("focusin", dstSearchStarted);
+  document.addEventListener("input", dstSearchStarted);
+
+  if (!dstFramed && !dstFirstUseSeen()) {
+    dstFirstUsePending = true;
+    setTimeout(function () {
+      dstFirstUsePending = false;
+      if (!dstFirstUseSeen()) dstShowFirstUse();
+    }, DST_FIRST_USE_DELAY_MS);
+  }
+  /* ==== ENGINE:END first-use ==== */
 
   /* =========================================================================
    * BATCH ADDRESS CHECK — Illinois-only, fork-owned. Outside every ENGINE

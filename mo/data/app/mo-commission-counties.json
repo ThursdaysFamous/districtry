@@ -1,4 +1,15 @@
 {
+ "29007": {
+  "county": "Audrain County",
+  "people2020": {
+   "Eastern District": 12366,
+   "Western District": 12596
+  },
+  "read": "2026-10-28",
+  "source": "listed",
+  "spreadPct": 1.8,
+  "unplaced2020": 0
+ },
  "29011": {
   "county": "Barton County",
   "people2020": {
