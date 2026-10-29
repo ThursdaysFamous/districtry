@@ -83,7 +83,7 @@ LABELS = {
     "Coverage": "engine",
     "How to use": "engine",
     "What data is missing?": "all",
-    "Report a bug or leave a comment": "all",
+    "Feedback": "engine",
     "Bulk Address Checker": "il",
     "Start with an address": "front",
     "Show districts": "front",
@@ -281,8 +281,8 @@ def body():
     <p>Not every government publishes its districts or its members. Press
       <span class="ui">What data is missing?</span> on any map to see what is missing there and
       why.</p>
-    <p>If an answer is wrong, press <span class="ui">Report a bug or leave a comment</span> at
-      the foot of the map, use the <a href="/feedback.html">report form</a>, or e-mail
+    <p>If an answer is wrong, press <span class="ui">Feedback</span> at the top of any map,
+      which attaches the place you are looking at, use the <a href="/feedback.html">report form</a>, or e-mail
       <a href="mailto:corrections@overberg.co?subject=districtry%20correction">corrections@overberg.co</a>.
       Each state's sources page says where every answer comes from, and the
       <a href="/privacy.html">privacy page</a> says what is sent where.</p>
