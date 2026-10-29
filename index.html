@@ -232,6 +232,9 @@
   var isPermalink = /(?:^|[#&])(?:point|layers|zoom)=/.test(hash);
   var isTaggedShare = /[?&]utm_source=(?:share|embed)\b/.test(query);
   if (isPermalink || isTaggedShare) {
+    // Read by the visit count (visit_count_script): a forwarded visit is the
+    // map's to count, not this page's.
+    window.dstForwarding = true;
     location.replace("/il/" + query + hash);
   }
 })();
@@ -3164,6 +3167,26 @@ footer .support b { color: var(--ink); }
       if (form.requestSubmit) form.requestSubmit(); else button.click();
     }
   }
+  /* ---------- a first or return visit (visit_count_script) ----------
+     Counted once per browser window with the maps' own keys
+     (engine/index.html/install-app.txt), so a visit is counted on the page
+     it starts on and nowhere else in that window. */
+  (function () {
+    var SEEN_KEY = "districtry-seen", COUNTED_KEY = "districtry-visit-counted";
+    var inFrame = false;
+    try { inFrame = window.self !== window.top; } catch (e) { inFrame = true; }
+    if (inFrame || window.dstForwarding) return;
+    var kind = null;
+    try {
+      if (!window.sessionStorage.getItem(COUNTED_KEY)) {
+        var seen = !!window.localStorage.getItem(SEEN_KEY);
+        if (!seen) window.localStorage.setItem(SEEN_KEY, "1");
+        window.sessionStorage.setItem(COUNTED_KEY, "1");
+        kind = seen ? "return" : "first";
+      }
+    } catch (e) { kind = null; /* storage blocked: count nothing */ }
+    if (kind) trackEvent("visit/" + kind + "/front");
+  })();
 
   /* ---------- the first-visit tip and its tour (FIRST_USE_FRONT_CSS) ---------- */
   var FIRST_USE_KEY = "districtry-first-use-front";
