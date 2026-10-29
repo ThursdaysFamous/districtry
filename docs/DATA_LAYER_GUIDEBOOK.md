@@ -67,7 +67,8 @@ in the researched-but-unbuilt backlog.
   "arkansas": ["us-house", "ar-court-of-appeals", "ar-circuit-court", "ar-senate", "county", "ar-house", "school-district-unified", "zip-code", "quorum-court", "county-subdivision", "fire-district", "school-board-district", "voting-precinct", "municipality", "city-ward", "police-station", "fire-station", "post-office"],
   "mississippi": ["us-house", "ms-supreme-court", "ms-court-of-appeals", "ms-senate", "county", "ms-chancery-court", "ms-circuit-court", "ms-house", "county-supervisor", "school-district-unified", "zip-code", "municipality", "city-ward", "tribal-government", "police-station", "fire-station", "post-office"],
   "louisiana": ["us-house", "la-supreme-court", "la-court-of-appeal", "la-senate", "la-district-court", "county", "school-district-unified", "la-house", "zip-code", "parish-district", "voting-precinct", "municipality", "city-ward", "tribal-government", "police-station", "fire-station", "post-office"],
-  "missouri": ["us-house", "mo-senate", "county", "mo-house", "county-commissioner", "school-district-unified", "school-district-elementary", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"]
+  "missouri": ["us-house", "mo-senate", "county", "mo-house", "county-commissioner", "school-district-unified", "school-district-elementary", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"],
+  "georgia": ["us-house", "ga-senate", "county", "ga-house", "school-district-unified", "county-subdivision", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -3863,6 +3864,45 @@ trusted.
             "why": "No statewide list of Missouri's township officers has been found, and no county's or township's own list has been read yet.",
             "wanted": "A statewide list of township officers, or each township's or county's own published list of them.",
             "blocker": "Measured 2026-10-21 across all 1,394 county subdivisions TIGERweb carries for STATE='29' (Places_CouSub_ConCity_SubMCD layer 1): 282 townships with FUNCSTAT A, active governments, in the 20 counties organized into townships under RSMo chapter 65; City township in Barton County (FUNCSTAT B, partly consolidated); Dade County's 16 townships (FUNCSTAT I, inactive); 1,094 townships with no government of their own (FUNCSTAT N); and the City of St. Louis (FUNCSTAT F). No active township had 25,000 people or more in the 2020 census. The Secretary of State's 2025-2026 Missouri Roster does not mention townships at all: the word appears nowhere in its text as pdftotext writes it. No statewide list of township officers was found and no county's or township's own list has been read. NOT YET ASKED."
+      }
+  ],
+  "georgia": [
+      {
+            "id": "ga-county-commission-members",
+            "concept": "County commission",
+            "area": "Georgia — all 159 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names your county and not the people on its board of commissioners, or its sole commissioner, and the map does not draw the districts they are elected from.",
+            "why": "No state office publishes who sits on Georgia's county commissions. Each county's commissioners are elected on its own ballot, and this app has not yet read the state's election results for their names or checked each county's district map.",
+            "wanted": "Each county's own list of its commissioners and the district each one represents, with its current district map.",
+            "blocker": "Measured 2026-10-21 for the Georgia launch plan (Adam's answers of 2026-10-22, 'all three as recommended': draw the county maps from the map office after a precinct check, take the names from election results, count Mableton) and restated 2026-10-29 when the instance was built. NO STATEWIDE ROSTER: the Department of Community Affairs' directory of local government officials sits behind a sign-in, which stays shut; sos.ga.gov answers its own robots.txt with a 5.5 KB challenge page, which is not worked around; the county association's directory was not read. THE NAMES' ROUTE: the Secretary of State's election results at results.sos.ga.gov (robots.txt 404, allow all), whose public API lists every county's contests (/results/public/api/jurisdictions/Georgia, /elections/{county-slug}/{electionId}/data and one contest's per-precinct breakdown). County contests appear from the November 2024 general election on: 439 commission seats in 150 counties on that ballot, matched by a pattern that also catches the misspellings counties file ('Commisson', 'Commmission', 'Comission'), and the May 2026 nonpartisan general and primaries carry the rest, with the 16 June 2026 runoffs settling every May race with no majority. Seven counties have a sole commissioner (Bartow, Bleckley, Chattooga, Murray, Pulaski, Towns, Union). THE DISTRICTS' ROUTE: the General Assembly's Legislative and Congressional Reapportionment Office publishes each county's local plans as map PDFs and shapefiles (its page's data, read through the token the page hands every visitor): 139 counties with a commission map and 152 with a school board map; nineteen of the newest maps in 13 counties predate the 2020 census, and 20 counties have no commission map (sole commissioners, countywide boards, Floyd's residency seats, and Echols's at-large posts from 1 January 2027). THE CHECK: each district map is to be tested against the precincts each 2024 and May 2026 district contest was counted in (about 1,200 contests, read at one request a second), using the office's 2024 statewide precinct map (2,724 precincts, dated 7 March 2025), before it is drawn. Step 3 of the plan, as its own change. NOT YET ASKED: the names and the maps are published; nothing has been asked of a county."
+      },
+      {
+            "id": "ga-school-board-members",
+            "concept": "School board",
+            "area": "Georgia",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "This app names your school district and not the people on its board, and does not draw the districts board members are elected from.",
+            "why": "No statewide list of Georgia's school board members has been read for this app. The boundary this card draws carries the district's name and nothing about its board.",
+            "wanted": "Each school system's own list of its board members and the district each one represents, with its current district map.",
+            "blocker": "Measured 2026-10-21 for the Georgia plan and restated 2026-10-29. The card draws TIGERweb's unified school districts for STATE='13' (School layer 0): 181 districts, the 159 county systems, 21 city systems and the Fort Stewart schools, whose land areas plus the one elementary district (Fort Benning Schools, layer 2, 682 km2) sum to exactly the 159 counties' land; each feature carries a name and a GEOID and nothing about a board. Georgia's school boards are elected, nonpartisan, in May. ROUTE: the same as the county commissions' (gap ga-county-commission-members): the Secretary of State's results carry 227 school board seats in 79 counties on the November 2024 ballot and 233 seats in 83 counties on the May 2026 nonpartisan general, and the Reapportionment Office publishes a school board district map for 152 counties, each to be checked against the precincts its contests were counted in. Measured for the plan: 48 boards elected by district, 3 mixed and 11 countywide on the 2024 ballot. City school systems' boards are not in that feed. NOT YET ASKED."
+      },
+      {
+            "id": "ga-municipal-officeholders",
+            "concept": "City or town government",
+            "area": "Georgia",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City or Town card names the place and says when a city and its county are one government, and not who your mayor and council are.",
+            "why": "No statewide list of Georgia's mayors and council members has been read for this app, and no city's own pages have been read yet.",
+            "wanted": "A statewide roster of every city's and town's mayor and council members by district, or each place's own published list.",
+            "blocker": "Measured 2026-10-29. The boundary is TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4), which carries a name, a code and a functional status and no officeholder field: 538 places for STATE='13' (430 cities, 101 towns, and seven places the Census files for the governments a city and its county share; Columbus, one government with Muscogee County, is filed as a city), all active governments, covering about 9.5% of the state's land by the Census's own AREALAND. 44 places had 25,000 people or more in the 2020 census. The Department of Community Affairs' directory of local officials sits behind a sign-in, which stays shut, and the Georgia Municipal Association's directory was not read. The Secretary of State's election results carry city contests from November 2024 on (about a dozen city seats in specials since June 2025 alone), which is the route the plan names after launch, largest places first, with the consolidated governments' commissions read with the county commissions. NOT YET ASKED."
       }
   ]
 }
