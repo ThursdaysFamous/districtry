@@ -536,8 +536,12 @@ EXPECTED_COORD_EVENTS = ["geolocate-success", "select/"]
 # page says so. `first-use/` joined on 2026-10-28: the front page's own
 # first-visit tip and tour (build_landing_page.py FIRST_USE_FRONT_SCRIPT) count
 # a press of their buttons as first-use/<what>/front, the maps' family with
-# "front" where a map puts its tag, and nothing about the reader.
-ROOT_EVENTS = ["example-place/", "first-use/", "map-link-read/front/"]
+# "front" where a map puts its tag, and nothing about the reader. `visit/`
+# joined on 2026-10-29 (Adam: "Also the front page needs to be counted"): the
+# front page counts visit/first/front or visit/return/front once per window
+# with the maps' own two keys (build_landing_page.py visit_count_script), so a
+# visit is counted once, on the page it starts on.
+ROOT_EVENTS = ["example-place/", "first-use/", "map-link-read/front/", "visit/"]
 
 
 def event_phrase(event, apps):
@@ -1661,15 +1665,23 @@ def render_storage_paragraphs(apps):
                 "browser.</p>"
                 % (code(store), code(key), esc(joined(users))))
         elif key == "districtry-seen":
+            # Who writes it is measured: the front door joined the maps on
+            # 2026-10-29, and the sentence names the front page only while it
+            # does, so the claim cannot outlive the code.
+            front = any(a["name"] in users and not a["tag"] for a in apps)
+            opened = "open districtry\u2019s front page or one of its maps" if front \
+                else "open a districtry map"
             out.append(
                 "<p><strong>Whether you have been here before.</strong> The first time you "
-                "open a districtry map, it writes the single character 1 in %s under %s. "
-                "On later visits the map finds it and counts the visit as a return; "
+                + opened + ", the page writes the single character 1 in %s under %s. "
+                "On later visits the page finds it and counts the visit as a return; "
                 "without it, the visit is counted as a first one. That is how the site "
                 "counts returning readers without a cookie. The mark holds no date and "
                 "no identifier, and it never leaves your browser. It is set by %s, and "
                 "clearing this site's data removes it.</p>"
-                % (code(store), code(key), esc(joined(users))))
+                # "The front door" heads a table cell; in the middle of this
+                # sentence it takes a small letter.
+                % (code(store), code(key), esc(re.sub(r"^The ", "the ", joined(users)))))
         elif key == "districtry-visit-counted":
             out.append(
                 "<p><strong>A visit already counted.</strong> A mark in %s under %s "
@@ -1677,7 +1689,9 @@ def render_storage_paragraphs(apps):
                 "so moving between pages or states does not count it again. This is on "
                 "%s. It is erased when you close the window, and it never leaves your "
                 "browser.</p>"
-                % (code(store), code(key), esc(joined(users))))
+                # "The front door" heads a table cell; in the middle of this
+                # sentence it takes a small letter.
+                % (code(store), code(key), esc(re.sub(r"^The ", "the ", joined(users)))))
         elif key == "districtry-play-app":
             # The launcher is not one of the surfaces this page measures, so
             # the claim that it sets the mark too is the manifest gate's: its
@@ -1850,7 +1864,9 @@ def render_analytics_section(apps):
         "when you pick one of the places in the example beside that box; it names the "
         "example you picked and nothing about where you are. Its first-visit tip and "
         "tour send first-use/ followed by the button pressed and /front, the same family "
-        "the maps\u2019 tip sends, which names the button and nothing about you. Any other page that is not an app — a county list, a question "
+        "the maps\u2019 tip sends, which names the button and nothing about you. Like the maps, it "
+        "counts a visit once per window as visit/first/front or visit/return/front, and a visit "
+        "counted there is not counted again on a map you go on to. Any other page that is not an app — a county list, a question "
         "page, this one — sends the page view and nothing else. <strong>Nothing you type is "
         "ever sent to it.</strong></p>"
         % (where,

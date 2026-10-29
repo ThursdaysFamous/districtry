@@ -223,6 +223,12 @@ TUTORIAL_STEPS = [("got-it", "Got it"),
                   ("tour-closed", "Left partway"),
                   ("help", "Opened How to use")]
 TUTORIAL_FRONT_TAG = "front"
+# The front page counts visit/first/front and visit/return/front, "front"
+# where a map puts its tag (build_landing_page.py visit_count_script), since
+# VISIT_FRONT_FROM. A visit is counted once, on the page it starts on.
+VISIT_FRONT_TAG = "front"
+VISIT_FRONT_NAME = "the front page"
+VISIT_FRONT_FROM = "2026-10-29"
 
 
 def tutorial_family(step):
@@ -717,10 +723,21 @@ def page_kind_series(gc):
 
 def daily_rows(gc):
     """[label, maps, front page, other pages, points, layers, searches and
-    location, other reader actions, automatic, results, first-visit help] per
-    day."""
+    location, other reader actions, automatic, results, first-visit help,
+    first visits, return visits] per day.
+
+    The last two are None on a day before the visit count began (`visits`
+    `since`) and on every day when the file carries no visit counts, so a day
+    nobody counted reads as not counted, never as 0. They are counted with the
+    automatic counts as well (AUTOMATIC_FAMILIES); these two columns split the
+    visit counter's part of them for the first and return visits chart."""
     pk = page_kind_series(gc)
     groups, auto, results, tutorial, _ = families(gc)
+    v = gc.get("visits")
+    if v and not (len(v["first_daily"]) == len(v["return_daily"]) == len(gc["daily"])):
+        fail("visits: %d first and %d return days against %d in the daily "
+             "series" % (len(v["first_daily"]), len(v["return_daily"]),
+                         len(gc["daily"])))
     band_of = {}
     for band, names in DAY_ACTION_BANDS:
         for nm in names:
@@ -730,9 +747,12 @@ def daily_rows(gc):
         b = {"points": 0, "layers": 0, "searches": 0, "other": 0}
         for name, series in groups.items():
             b[band_of.get(name, "other")] += series[i]
+        counted = bool(v) and d["date"] >= v["since"]
         out.append([label(d["date"]), pk["app"][i], pk["front"][i],
                     pk["other"][i], b["points"], b["layers"], b["searches"],
-                    b["other"], auto[i], results[i], tutorial[i]])
+                    b["other"], auto[i], results[i], tutorial[i],
+                    v["first_daily"][i] if counted else None,
+                    v["return_daily"][i] if counted else None])
     return out
 
 
@@ -908,8 +928,9 @@ def return_visits(gc, start):
         fail("visits: %d first and %d return days against %d in the daily "
              "series" % (len(first), len(ret), len(dates)))
     return {"since": long_label(v["since"]), "first": v["first"],
-            "return": v["return"],
-            "byApp": [[INSTANCE_NAMES.get(r["tag"], r["tag"]), r["count"]]
+            "return": v["return"], "frontSince": long_label(VISIT_FRONT_FROM),
+            "byApp": [[VISIT_FRONT_NAME if r["tag"] == VISIT_FRONT_TAG
+                       else INSTANCE_NAMES.get(r["tag"], r["tag"]), r["count"]]
                       for r in v["by_app_return"]]}
 
 

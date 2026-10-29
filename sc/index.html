@@ -19678,7 +19678,11 @@ function initSouthCarolinaExplorer() {
         is a return. The mark is the single character "1", never a date or an
         identifier, it never leaves the browser, and local storage is shared
         by every page on the site, so "first" means the first time this
-        browser opened any districtry map. Storage that cannot be read or
+        browser opened the front page or any districtry map. The front page
+        counts `visit/first/front` or `visit/return/front` from these same
+        two keys (scripts/build_landing_page.py visit_count_script, which
+        reads them from here), so a window counted there is not counted
+        again on the map it goes on to. Storage that cannot be read or
         written counts nothing, rather than counting every visit as a first.
         It replaced Google Analytics, whose new-user figure needs a cookie
         that carries an identifier (2026-10-22).
