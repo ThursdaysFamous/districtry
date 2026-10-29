@@ -58,7 +58,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -328,7 +328,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -446,7 +446,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -511,7 +511,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -699,7 +699,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -826,7 +826,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -961,7 +961,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -1078,7 +1078,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -1131,7 +1131,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -1210,7 +1210,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -1340,7 +1340,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -1406,8 +1406,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant",
-    "phone": "304-824-7990"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -1474,7 +1473,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -1543,7 +1542,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -1664,7 +1663,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -1727,7 +1726,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -1794,7 +1793,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -1926,7 +1925,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -2121,7 +2120,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -2185,8 +2184,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant",
-    "phone": "304-872-7930"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -2318,7 +2316,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -2439,7 +2437,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -2575,7 +2573,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -2637,7 +2635,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -2831,7 +2829,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -3025,7 +3023,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -3298,7 +3296,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,
@@ -3366,7 +3364,7 @@
    },
    {
     "office": "Surveyor",
-    "name": "Vacant"
+    "vacant": true
    }
   ],
   "year": 2025,

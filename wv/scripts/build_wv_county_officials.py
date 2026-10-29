@@ -42,6 +42,13 @@ the commission's office, where at least two commissioners print the same one,
 because a rural official's mailing address can be a home. Fax numbers never
 ship.
 
+A VACANCY IS NOT A NAME. Where the directory prints "Vacant" in the name
+column (measured 2026-10-29: the county surveyor in 28 counties, and nothing
+else), the row ships as `vacant: true` with no name, telephone or e-mail
+address. The page that row links to is still read, for one purpose: a number
+or address it prints that is also printed for a person is an office's, so it
+ships on nobody's row.
+
 Honesty: names are never guessed and nothing is carried over from an earlier
 run. A county whose page does not have the expected shape stops the build.
 
@@ -121,6 +128,9 @@ ROW_RE = re.compile(
 DL_RE = re.compile(r"<dt>\s*(.*?)\s*</dt>\s*<dd>\s*(.*?)\s*</dd>", re.S)
 PHONE_RE = re.compile(r"^\(?\d{3}\)?[-. ]?\d{3}-\d{4}(?:\s*(?:x|ext\.?)\s*\d+)?$", re.I)
 EMAIL_RE = re.compile(r"^[A-Za-z0-9._%+'-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$")
+# The directory fills an office nobody holds with the word "Vacant" where the
+# name goes (the 2025 directory: the surveyor in 28 counties).
+VACANT_RE = re.compile(r"^\s*vacant\.?\s*$", re.I)
 
 _LAST = [0.0]
 
@@ -254,11 +264,16 @@ def build(pages):
                 officers.append((label, held[0]))
                 officer_counts[label] += 1
         people = []
+        # A row the directory fills with "Vacant" is a vacancy, not a person:
+        # it ships as `vacant: true` with no name and no contact. Its own page
+        # is still read, because a number or address printed there and for a
+        # person is an office's, never that person's own.
         for href, name in commissioners:
-            people.append({"role": "seat", "name": name, "d": details(pages, href)})
+            people.append({"role": "seat", "name": name, "d": details(pages, href),
+                           "vacant": bool(VACANT_RE.match(name))})
         for label, (href, name) in officers:
             people.append({"role": "officer", "office": label, "name": name,
-                           "d": details(pages, href)})
+                           "d": details(pages, href), "vacant": bool(VACANT_RE.match(name))})
         # who prints each telephone, e-mail address and mailing address
         phones = collections.defaultdict(list)
         emails = collections.defaultdict(list)
@@ -281,7 +296,7 @@ def build(pages):
             if street and city:
                 addr = "%s, %s, WV%s" % (street, city, (" " + zipc) if zipc else "")
                 addresses[addr].append(i)
-        seat_idx = {i for i, p in enumerate(people) if p["role"] == "seat"}
+        seat_idx = {i for i, p in enumerate(people) if p["role"] == "seat" and not p["vacant"]}
         record = {"county": county_name, "body": county_name + " Commission",
                   "kind": "commission"}
         for table, field, board in ((phones, "phone", "boardPhone"), (emails, "email", "boardEmail")):
@@ -300,10 +315,10 @@ def build(pages):
         seats = []
         officers_out = []
         for p in people:
-            row = {"name": p["name"]}
-            if p.get("phone"):
+            row = {"vacant": True} if p["vacant"] else {"name": p["name"]}
+            if p.get("phone") and not p["vacant"]:
                 row["phone"] = p["phone"]
-            if p.get("email"):
+            if p.get("email") and not p["vacant"]:
                 row["email"] = p["email"]
             if p["role"] == "seat":
                 row = dict([("seat", "Commissioner"), ("countywide", True)] + list(row.items()))
@@ -344,8 +359,12 @@ def check():
         if len(seats) != COMMISSION_SEATS.get(geoid, 3):
             problems.append("%s has %d commissioners" % (rec.get("county"), len(seats)))
         for s in seats + (rec.get("officers") or []):
-            if not s.get("name"):
-                problems.append("%s: a row names nobody" % rec.get("county"))
+            if not s.get("name") and s.get("vacant") is not True:
+                problems.append("%s: a row names nobody and is not marked vacant" % rec.get("county"))
+            if s.get("name") and VACANT_RE.match(s["name"]):
+                problems.append("%s: %r stands where a name goes" % (rec.get("county"), s["name"]))
+            if s.get("vacant") and (s.get("name") or s.get("phone") or s.get("email")):
+                problems.append("%s: a vacancy carries a name or a contact" % rec.get("county"))
             if "fax" in json.dumps(s).lower():
                 problems.append("%s: a row carries a fax number" % rec.get("county"))
         for o in rec.get("officers") or []:

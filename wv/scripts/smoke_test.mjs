@@ -1015,9 +1015,12 @@ try {
   //    credit and link. Four places:
   //      - Kanawha, at the State Capitol: a three-member commission;
   //      - Berkeley and Jefferson: the two five-member commissions;
-  //      - Cabell, whose directory entry lists no assessor.
+  //      - Cabell, whose directory entry lists no assessor;
+  //      - Hancock, whose directory fills the surveyor's name with "Vacant":
+  //        the roster ships that row as `vacant: true` with no name, and the
+  //        card must say "Vacant" beside the office and dial nothing for it.
   //    The other points are poles of inaccessibility of each county as the
-  //    shipped file draws it (shapely polylabel, 2026-10-29), 9 to 11 km from
+  //    shipped file draws it (shapely polylabel, 2026-10-29), 6 to 11 km from
   //    the nearest county line.
   {
     const roster = shipped("wv-county-officials.json");
@@ -1026,6 +1029,7 @@ try {
       { point: "39.45844,-78.05805", geoid: "54003" },
       { point: "39.28956,-77.87265", geoid: "54037" },
       { point: "38.44648,-82.20542", geoid: "54011" },
+      { point: "40.55778,-80.57538", geoid: "54029", vacancy: true },
     ];
     for (const c of cases) {
       const o = roster[c.geoid];
@@ -1049,8 +1053,13 @@ try {
       const seats = (o && o.seats) || [];
       const officers = (o && o.officers) || [];
       const people = seats.concat(officers);
-      const unnamed = seats.filter((s) => !text.includes(s.name)).map((s) => s.name)
-        .concat(officers.filter((p) => !text.includes(p.name) || !text.includes(p.office)).map((p) => p.name));
+      // a vacancy names nobody: the card says "Vacant" beside the office
+      const nameOf = (p) => (p.vacant === true && !p.name ? "Vacant" : p.name);
+      const unnamed = seats.filter((s) => !text.includes(nameOf(s))).map(nameOf)
+        .concat(officers.filter((p) => !text.includes(nameOf(p)) || !text.includes(p.office)).map(nameOf));
+      const vacancies = people.filter((p) => p.vacant === true);
+      const vacancyOk = !c.vacancy || (vacancies.length > 0 &&
+        vacancies.every((p) => !p.name && !p.phone && !p.email) && text.includes("Vacant"));
       const unphoned = people.filter((p) => p.phone && !shown.includes(p.phone)).map((p) => p.name);
       const unmailed = people.filter((p) => p.email && !got.mailto.includes(String(p.email).toLowerCase())).map((p) => p.name);
       const officeOk = (o && (o.boardAddress || o.boardPhone || o.boardEmail))
@@ -1064,11 +1073,12 @@ try {
       const boeOk = /Board of education/i.test(text) && text.includes("is not named here yet");
       const creditOk = /Where these names come from/i.test(text) &&
         text.includes(`read on ${longDate(o && o.read)}`) && got.footer.includes(o && o.sourceUrl);
-      check(`the County card in ${o ? o.county : c.geoid} names all ${wantSeats} commissioners and every other official the directory lists, with their own telephones and e-mail addresses and the directory's credit`,
+      check(`the County card in ${o ? o.county : c.geoid} names all ${wantSeats} commissioners and every other official the directory lists, with their own telephones and e-mail addresses and the directory's credit` +
+          (c.vacancy ? ", and says Vacant beside the office the directory lists as vacant" : ""),
         !!o && !info.error && text.includes(o.county) && seats.length === wantSeats && unnamed.length === 0 &&
-          unphoned.length === 0 && unmailed.length === 0 && officeOk && whichOk && boeOk && creditOk,
+          unphoned.length === 0 && unmailed.length === 0 && officeOk && whichOk && boeOk && creditOk && vacancyOk,
         `seats=${seats.length} unnamed=${unnamed.slice(0, 3)} unphoned=${unphoned.slice(0, 2)} unmailed=${unmailed.slice(0, 2)} ` +
-          `office=${officeOk} which=${whichOk} boe=${boeOk} credit=${creditOk} ${text.slice(0, 100)}`);
+          `office=${officeOk} which=${whichOk} boe=${boeOk} credit=${creditOk} vacancy=${vacancyOk} ${text.slice(0, 100)}`);
       await context.close();
     }
   }
