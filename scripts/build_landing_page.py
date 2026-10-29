@@ -704,6 +704,52 @@ def notice_memory():
         % (key.group(1), word.group(1)))
 
 
+# THE FRONT PAGE COUNTS A FIRST OR RETURN VISIT TOO (Adam, 2026-10-29: "Also
+# the front page needs to be counted"). The maps count `visit/first/<tag>` or
+# `visit/return/<tag>` once per browser window (engine install-app), and this
+# page counts `visit/first/front` or `visit/return/front` from the SAME two
+# keys, read off that block so the two cannot drift apart: the one-character
+# mark in localStorage that says this browser has been here before, and the
+# sessionStorage mark that says this window's visit is counted. So a visit is
+# counted once, on whichever of the front page and the maps it starts. A
+# reader who goes on from here to a map is not counted again there, so the
+# mark this page has just written cannot turn that same visit into a return
+# on the map. Not in a
+# frame, as the maps do not count one, and not on a visit the forward guard is
+# sending to /il/, which that map counts. Storage that cannot be read or
+# written counts nothing, rather than counting every visit as a first.
+def visit_count_script():
+    src = read(INSTALL_APP, "the maps' visit count")
+    seen = re.search(r'\bvar DST_SEEN_KEY = "([a-z-]+)";', src)
+    counted = re.search(r'\bvar DST_VISIT_COUNTED_KEY = "([a-z-]+)";', src)
+    if not seen or not counted:
+        fail("the front page counts a first or return visit with the maps' own two "
+             "keys, and engine/index.html/install-app.txt no longer declares "
+             "DST_SEEN_KEY and DST_VISIT_COUNTED_KEY as plain strings, so this page "
+             "cannot know what to read.")
+    return (
+        "  /* ---------- a first or return visit (visit_count_script) ----------\n"
+        "     Counted once per browser window with the maps' own keys\n"
+        "     (engine/index.html/install-app.txt), so a visit is counted on the page\n"
+        "     it starts on and nowhere else in that window. */\n"
+        "  (function () {\n"
+        '    var SEEN_KEY = "%s", COUNTED_KEY = "%s";\n'
+        "    var inFrame = false;\n"
+        "    try { inFrame = window.self !== window.top; } catch (e) { inFrame = true; }\n"
+        "    if (inFrame || window.dstForwarding) return;\n"
+        "    var kind = null;\n"
+        "    try {\n"
+        "      if (!window.sessionStorage.getItem(COUNTED_KEY)) {\n"
+        "        var seen = !!window.localStorage.getItem(SEEN_KEY);\n"
+        '        if (!seen) window.localStorage.setItem(SEEN_KEY, "1");\n'
+        '        window.sessionStorage.setItem(COUNTED_KEY, "1");\n'
+        '        kind = seen ? "return" : "first";\n'
+        "      }\n"
+        "    } catch (e) { kind = null; /* storage blocked: count nothing */ }\n"
+        '    if (kind) trackEvent("visit/" + kind + "/front");\n'
+        "  })();\n"
+        % (seen.group(1), counted.group(1)))
+
 def state_rows(metros):
     """Every state and DC, in alphabetical order, each paired with the fleet
     entry that answers there (or None) and whether that entry covers the whole
@@ -1689,7 +1735,7 @@ FIRST_USE_FRONT_SCRIPT = """
     [
       "Type your address or ZIP code in the box and press Show districts.",
       "districtry opens the map for your state, with your place picked.",
-      "Tick the kinds of district you want to see. Each one gets a card saying who represents you there."
+      "Check the kinds of district you want to see. Each one gets a card saying who represents you there."
     ].forEach(function (line) { steps.appendChild(el("li", null, line)); });
     box.appendChild(steps);
     var actions = el("div", "first-use-actions");
@@ -1726,7 +1772,7 @@ FIRST_USE_FRONT_SCRIPT = """
     { sel: ".coverage", title: "Where it answers today",
       text: "The shaded states have a map today. Tap one to open its map, or find your state in the list." },
     { sel: "#help-link", title: "Help is here",
-      text: "How to use explains the map: choosing the kinds of district to see, reading the cards, comparing districts and sharing what you find." }
+      text: "“How to use” explains the map: choosing the kinds of district to see, reading the cards, comparing districts and sharing what you find." }
   ];
   function startTour() {
     var ring = el("div", "tour-ring");
@@ -1824,6 +1870,18 @@ FIRST_USE_FRONT_SCRIPT = """
     else y = Math.max(12, vh - ch - 12);
     card.style.left = Math.round(x) + "px";
     card.style.top = Math.round(y) + "px";
+  }
+  // Going to the address box is the tip's first step, and what the box says
+  // back opens under it; on a phone the keyboard pushes the tip up over that.
+  // So focusing or typing in the box closes the tip (got-it, as Escape does)
+  // and the tour (tour-closed), the maps' rule (engine first-use).
+  function searchStarted() {
+    if (tipBox) { hideTip(); firstUseEvent("got-it"); }
+    if (tour) endTour(false);
+  }
+  if (input) {
+    input.addEventListener("focus", searchStarted);
+    input.addEventListener("input", searchStarted);
   }
   var framed = false;
   try { framed = window.self !== window.top; } catch (e) { framed = true; }
@@ -2221,6 +2279,9 @@ def build():
   var isPermalink = /(?:^|[#&])(?:point|layers|zoom)=/.test(hash);
   var isTaggedShare = /[?&]utm_source=(?:share|embed)\\b/.test(query);
   if (isPermalink || isTaggedShare) {
+    // Read by the visit count (visit_count_script): a forwarded visit is the
+    // map's to count, not this page's.
+    window.dstForwarding = true;
     location.replace("%(forward)s" + query + hash);
   }
 })();
@@ -2344,6 +2405,23 @@ header.mast {
 }
 .mast-nav a:hover, .mast-nav a:focus-visible { background: var(--brand-tint); color: var(--ink); }
 .mast-nav a:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+/* Feedback and Sponsor (2026-10-29; Adam: a feedback button "a little easier
+   to find", "also add it to the landing page", and "the sponsor button needs
+   to be more visible"). The same pair every map's masthead carries, drawn as
+   that pair is: Feedback outlined in the brand colour and opening the site's
+   feedback form, Sponsor on a tint with the warm heart. Inside the Google Play
+   app the support block in the head hides Sponsor, as it hides every link to
+   GitHub Sponsors. */
+.nav-icon { width: 14px; height: 14px; flex: none; }
+.mast-nav a.nav-feedback, .mast-nav a.nav-sponsor { gap: 6px; font-weight: 600; border-radius: 999px; }
+.mast-nav a.nav-feedback {
+  margin-left: 6px; padding: 5px 13px 5px 11px;
+  border: 1.5px solid var(--brand-600); color: var(--brand-700);
+}
+.mast-nav a.nav-feedback:hover, .mast-nav a.nav-feedback:focus-visible { background: var(--brand-600); color: var(--surface); }
+.mast-nav a.nav-sponsor { padding: 5px 13px 5px 11px; border: 1.5px solid transparent; background: var(--brand-tint); color: var(--ink); }
+.mast-nav a.nav-sponsor .nav-icon { color: var(--brand-warm); }
+.mast-nav a.nav-sponsor:hover, .mast-nav a.nav-sponsor:focus-visible { border-color: var(--brand-warm); background: var(--brand-tint); }
 
 /* The h1 is the promise, and it is now the largest thing on the page. It used
    to be 26px grey under a 52px wordmark, so the biggest words on the fleet's
@@ -2793,6 +2871,8 @@ footer .support b { color: var(--ink); }
         <a href="about.html">About</a>
         <a href="privacy.html">Privacy</a>
         <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">Source</a>
+        <a href="feedback.html" class="nav-feedback"><svg class="nav-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 3.5h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9.2l-3.6 2.9a.6.6 0 0 1-1-.47V14.5H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg>Feedback</a>
+        <a href="https://github.com/sponsors/ThursdaysFamous" class="nav-sponsor" id="nav-sponsor" target="_blank" rel="noopener" aria-label="Sponsor districtry on GitHub"><svg class="nav-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 17s-6.5-4.1-6.5-8.6A3.6 3.6 0 0 1 10 6.3a3.6 3.6 0 0 1 6.5 2.1C16.5 12.9 10 17 10 17z" fill="currentColor"></path></svg>Sponsor</a>
       </nav>
     </header>
 
@@ -3187,9 +3267,8 @@ footer .support b { color: var(--ink); }
    * uncovered, none, unreadable, search-failed, or failed-<why> when the
    * lookup could not read a short link. A place shared into the installed
    * app reaches this page (as "opened") when no state has been opened yet.
-   * Nothing about the place is in it. It is one of the two events this page
-   * sends, with the worked example's example-place/<place> (EXAMPLE_SCRIPT),
-   * and the privacy page names both (build_privacy_page.py ROOT_EVENTS). The
+   * Nothing about the place is in it. The privacy page names it with every
+   * other event this page sends (build_privacy_page.py ROOT_EVENTS). The
    * counter loads after this script, so a count waits for it, up to ten
    * seconds, as the apps' do. */
   var linkRead = null, linkVia = "pasted";
@@ -3200,6 +3279,11 @@ footer .support b { color: var(--ink); }
     }
     if ((tries || 0) < 40) setTimeout(function () { trackEvent(path, (tries || 0) + 1); }, 250);
   }
+  /* A press of the masthead's Sponsor is counted as sponsor/front, the
+   * maps' sponsor/<tag> with "front" where a map puts its tag, and nothing
+   * about the reader (2026-10-29). */
+  var sponsorLink = document.getElementById("nav-sponsor");
+  if (sponsorLink) sponsorLink.addEventListener("click", function () { trackEvent("sponsor/front"); });
   function countLinkRead(outcome) {
     var r = linkRead;
     if (!r) return;
@@ -3370,13 +3454,26 @@ footer .support b { color: var(--ink); }
         return loadFleetOutlines().then(function (outlines) {
           if (!outlines) return want ? handTo(want, typed) : routeByRectangles(feats);
           // The FIRST result an instance answers for, not result #1 — a bare
-          // place name ambiguous across states gets a fair shot.
+          // place name ambiguous across states gets a fair shot. It opens
+          // with its point selected only when it is the one place any app
+          // answers for (2026-10-29, Adam choosing the apps' own rule for
+          // this page, ENGINE geocoder-search selectClearMatch): with two or
+          // more, the first of them can be the same street in another town,
+          // so its app is handed what was typed and lists its answers there
+          // for the reader to pick from. Answers a few doors apart are one
+          // place, because the geocoder often answers a house and the
+          // building on it.
+          var first = null, places = 0;
           for (var i = 0; i < feats.length; i++) {
             var c = feats[i] && feats[i].geometry && feats[i].geometry.coordinates;
             if (!c || c.length < 2) continue;
             var metro = fleetOwner(c[1], c[0], outlines);
-            if (metro && (!want || metro === want)) { go(metro, { lat: c[1], lng: c[0] }); return; }
+            if (!metro || (want && metro !== want)) continue;
+            if (!first) { first = { metro: metro, lat: c[1], lng: c[0] }; places = 1; }
+            else if (!samePlace(first, c[1], c[0])) places++;
           }
+          if (first && places === 1) { go(first.metro, { lat: first.lat, lng: first.lng }); return; }
+          if (first) return handTo(first.metro, typed);
           if (want) return handTo(want, typed);
           countLinkRead(feats.length ? "uncovered" : "none");
           resetButton();
@@ -3394,6 +3491,12 @@ footer .support b { color: var(--ink); }
         resetButton();
         setStatus("Search failed \\u2014 try again, or pick a place below.", true);
       });
+  }
+
+  // Two answers under 150 m apart (a house and the building on it)
+  function samePlace(a, lat, lng) {
+    var dy = (lat - a.lat) * 111320, dx = (lng - a.lng) * 111320 * Math.cos(a.lat * Math.PI / 180);
+    return dx * dx + dy * dy < 150 * 150;
   }
 
   // A Photon answer's parts in the order the apps label one (photonLabel),
@@ -3553,7 +3656,7 @@ footer .support b { color: var(--ink); }
       if (form.requestSubmit) form.requestSubmit(); else button.click();
     }
   }
-%(first_use)s})();
+%(visit)s%(first_use)s})();
 </script>
 </body>
 </html>
@@ -3583,6 +3686,7 @@ footer .support b { color: var(--ink); }
         "key_wash": key_wash,
         "metros_js": render_metros_js(metros),
         "first_use_css": FIRST_USE_FRONT_CSS,
+        "visit": visit_count_script(),
         "first_use": FIRST_USE_FRONT_SCRIPT,
     }
 
