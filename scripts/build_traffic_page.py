@@ -186,6 +186,10 @@ ACTION_GROUPS = [
                  "copy-coordinates", "share-in"}),
     ("Data gaps", {"gaps-open", "gaps-why", "gaps-suggest"}),
     ("Feedback", {"feedback-open", "feedback-send", "feedback-link"}),
+    # Sponsor became a button beside Feedback on 2026-10-29 (Adam: "the
+    # sponsor button needs to be more visible"); sponsor/<tag>, and
+    # sponsor/front on the front page
+    ("Sponsor", {"sponsor"}),
     ("Other", {"more-open", "more-item", "osm-note", "example-place",
                "app-shortcut"}),
 ]

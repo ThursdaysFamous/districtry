@@ -518,6 +518,12 @@ def measure_address_list(src, name):
 # rule: it names the map and nothing about the reader or the place. Inside the
 # Google Play app `/play` follows the tag, so the report can tell the app from
 # the website; the support-link block already marks that window.
+# `sponsor/` joined on 2026-10-29 (engine `districtry-behavior`), when Sponsor
+# became a button beside Feedback in every map's masthead (Adam: "the sponsor
+# button needs to be more visible"): `sponsor/<tag>` records a press of it by
+# the app it was pressed in and nothing else, so the traffic page can say
+# whether the button is used. The Google Play app hides the button, so it
+# never sends this.
 EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "app-shortcut/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
@@ -526,7 +532,7 @@ EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "app-shortcu
                    "gaps-suggest/", "gaps-why/", "geolocate",
                    "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link-read/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "osm-note", "select/",
                    "share-in/", "share-native", "share-open", "share-permalink", "share-qr",
-                   "visit/", "zip-search/"]
+                   "sponsor/", "visit/", "zip-search/"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select/"]
 # What the front page (the one untagged surface) sends: the map-link count
 # above, from its address box, and since 2026-10-21 `example-place/<place>`
@@ -540,8 +546,9 @@ EXPECTED_COORD_EVENTS = ["geolocate-success", "select/"]
 # joined on 2026-10-29 (Adam: "Also the front page needs to be counted"): the
 # front page counts visit/first/front or visit/return/front once per window
 # with the maps' own two keys (build_landing_page.py visit_count_script), so a
-# visit is counted once, on the page it starts on.
-ROOT_EVENTS = ["example-place/", "first-use/", "map-link-read/front/", "visit/"]
+# visit is counted once, on the page it starts on. `sponsor/` joined on
+# 2026-10-29: a press of the front page's Sponsor is sponsor/front.
+ROOT_EVENTS = ["example-place/", "first-use/", "map-link-read/front/", "sponsor/front", "visit/"]
 
 
 def event_phrase(event, apps):
@@ -1866,7 +1873,9 @@ def render_analytics_section(apps):
         "tour send first-use/ followed by the button pressed and /front, the same family "
         "the maps\u2019 tip sends, which names the button and nothing about you. Like the maps, it "
         "counts a visit once per window as visit/first/front or visit/return/front, and a visit "
-        "counted there is not counted again on a map you go on to. Any other page that is not an app — a county list, a question "
+        "counted there is not counted again on a map you go on to. A press of its Sponsor "
+        "button sends sponsor/front, as a press of a map\u2019s sends sponsor/ followed by that "
+        "map\u2019s tag, and nothing about you. Any other page that is not an app — a county list, a question "
         "page, this one — sends the page view and nothing else. <strong>Nothing you type is "
         "ever sent to it.</strong></p>"
         % (where,
@@ -2269,7 +2278,7 @@ PRIVACY_BODY = """
         is what makes a link shareable — and it means anyone you send the link to, and anything
         that logs it, gets that location. Delete the part of the URL after %(hash)s to share the
         map without it.</p>
-      <p><strong>Bug reports are yours to send.</strong> &#34;Report a bug or leave a comment&#34;
+      <p><strong>Bug reports are yours to send.</strong> The &#34;Feedback&#34; button on every map
         prepares a draft containing what you wrote, the current page URL — which may include your
         point — and your browser's user-agent string. It is only ever a draft: nothing is
         transmitted until you submit the GitHub issue or send the email yourself, and you can

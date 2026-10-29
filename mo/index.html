@@ -3338,8 +3338,67 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .masthead-actions.dst-toggle-folded .districtry-toggle-sep { display: none; }
   header.masthead.dst-tagline-folded .title small,
   header.masthead.dst-tagline-folded .title .title-tagline { display: none; }
+  /* the step before Sponsor leaves the row (districtry-behavior): the tagline
+     takes two balanced lines, which narrows the title by about 200px in most
+     apps and makes the masthead 16px taller */
+  header.masthead.dst-tagline-wrapped .title .title-tagline { max-width: 300px; text-wrap: balance; }
   .dst-more-panel .districtry-theme-toggle { display: block; width: 100%; text-align: left; margin: 0; padding: 7px 13px; border-radius: 7px; }
   .dst-more-panel .districtry-theme-toggle .dtt-labels span::after { content: " theme"; }
+  /* Feedback and Sponsor (engine masthead-buttons-html), 2026-10-29. Both
+     carry an icon, which nothing else in the row does, so the eye finds them
+     without reading the row. Feedback is outlined in the brand colour and
+     never folds; Sponsor is a soft pill with a heart in the mark's warm hue
+     and folds into "More" only after every plain link. Their height matches
+     the row's other pills (28.5px: a 14px icon, 5.75px of padding and a
+     1.5px border), so adding them costs the masthead no height. The hover
+     fill takes --panel for its text rather than #fff, because white on the
+     dark theme's --accent reads 2.7:1. */
+  .dst-feedback-btn,
+  .dst-sponsor-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex: none;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 12.5px;
+    line-height: 12.5px;
+    padding: 5.75px 13px 5.75px 11px;
+    border-radius: 999px;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .dst-btn-icon { width: 14px; height: 14px; flex: none; }
+  .dst-feedback-btn {
+    border: 1.5px solid var(--accent);
+    background: var(--panel);
+    color: var(--accent-deep);
+  }
+  .dst-feedback-btn:hover,
+  .dst-feedback-btn:focus-visible { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+  .dst-sponsor-btn {
+    border: 1.5px solid transparent;
+    background: var(--dst-brand-tint-soft);
+    color: var(--ink);
+  }
+  .dst-sponsor-btn .dst-btn-icon { color: var(--accent-warm); }
+  /* Feedback with its icon alone, where its word would touch the wordmark
+     (districtry-behavior measures it); the word stays for a screen reader */
+  .dst-feedback-btn.dst-compact { gap: 0; min-width: 44px; justify-content: center; padding-left: 10px; padding-right: 10px; }
+  .dst-feedback-btn.dst-compact .dst-btn-label {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+  .dst-feedback-btn.dst-compact .dst-btn-icon { width: 18px; height: 18px; }
+  .dst-sponsor-btn:hover,
+  .dst-sponsor-btn:focus-visible { border-color: var(--accent-warm); color: var(--ink); text-decoration: none; }
+  .masthead-actions .dst-sponsor-btn { margin-right: 2px; }
+  /* folded into "More": a menu row like the others, keeping its heart */
+  .dst-more-panel .dst-sponsor-btn { display: flex; margin: 0; padding: 7px 13px; border-radius: 7px; background: transparent; }
+  .dst-more-panel .dst-sponsor-btn:hover,
+  .dst-more-panel .dst-sponsor-btn:focus-visible { background: var(--dst-brand-tint); border-color: transparent; }
   .masthead-actions .footer-link-btn:hover,
   .masthead-actions .footer-link-btn:focus-visible {
     background: var(--accent);
@@ -3684,6 +3743,22 @@ svg.leaflet-image-layer.leaflet-interactive path {
     }
     .districtry-doors .masthead-action-link,
     .districtry-doors .footer-link-btn { min-height: 44px; }
+    /* Feedback stays in the wordmark row beside the theme toggle; the row
+       has room for one more button at 360px, measured, and not for two, so
+       Sponsor leads the doors at the panel foot instead (dstPlaceDoors). */
+    .masthead-actions .dst-feedback-btn {
+      min-height: 44px;
+      padding: 0 10px 0 8px;
+      font-size: 13px;
+      gap: 4px;
+      margin-right: 2px;
+    }
+    .districtry-doors .dst-sponsor-btn {
+      min-height: 44px;
+      padding: 0 14px 0 12px;
+      font-size: 13.5px;
+      border-color: var(--accent-warm);
+    }
   }
   /* ==== dark mode (operator-approved 2026-08-20 — the one function this
      re-skin ADDS rather than maintains) ====================================
@@ -4156,6 +4231,25 @@ svg.leaflet-image-layer.leaflet-interactive path {
            "Why this exists" link below stays: the maker's motivation is one
            question, this instance's record is another. -->
       <a class="masthead-action-link" href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
+      <!-- ==== ENGINE:BEGIN masthead-buttons-html ==== -->
+      <!-- Feedback and Sponsor, the two buttons a reader should never have to
+           hunt for (Adam, 2026-10-29: "Change the report a bug or leave a
+           comment to a feedback button that is a little easier to find", and
+           "the sponsor button needs to be more visible"). Feedback opened the
+           same form from the foot of the results panel until that day; it
+           keeps the id the feedback block binds. Neither carries
+           .masthead-action-link, so neither is one of the row's links that
+           fold into "More" from the end: Feedback never folds and stays in
+           the phone masthead beside the theme toggle, and Sponsor folds only
+           after every plain link (districtry-behavior) and moves to the head
+           of the panel foot's doors on a phone, where the masthead has room
+           for one button. On a phone too narrow for Feedback's word beside the
+           wordmark, it shows its icon alone and keeps the word for a screen
+           reader (dst-compact, measured in districtry-behavior). The play-app block hides every github.com/sponsors
+           link inside the Google Play app, this one included. -->
+      <button type="button" id="feedback-btn" class="dst-feedback-btn"><svg class="dst-btn-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 3.5h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9.2l-3.6 2.9a.6.6 0 0 1-1-.47V14.5H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span class="dst-btn-label">Feedback</span></button>
+      <a class="dst-sponsor-btn" id="sponsor-btn" href="https://github.com/sponsors/ThursdaysFamous" target="_blank" rel="noopener" aria-label="Sponsor districtry on GitHub"><svg class="dst-btn-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 17s-6.5-4.1-6.5-8.6A3.6 3.6 0 0 1 10 6.3a3.6 3.6 0 0 1 6.5 2.1C16.5 12.9 10 17 10 17z" fill="currentColor"></path></svg>Sponsor</a>
+      <!-- ==== ENGINE:END masthead-buttons-html ==== -->
       <span class="districtry-toggle-sep" aria-hidden="true"></span>
       <button type="button" class="districtry-theme-toggle" aria-label="Switch to the dark theme"><span class="dtt-labels"><span class="dtt-dark">Dark</span><span class="dtt-light">Light</span></span></button>
     </div>
@@ -4218,7 +4312,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
          where a reader can still see them. The fence is moved VERBATIM, so the
          engine splice stays a no-op; placement is the one thing the fences
          deliberately do not pin. Ported from the Chicago reference
-         implementation. -->
+         implementation. #feedback-btn left this foot for the masthead on
+         2026-10-29 (engine masthead-buttons-html), as a Feedback button a
+         reader can find without scrolling. -->
     <div class="districtry-panel-foot" id="districtry-panel-foot">
       <p><strong>Not for legal or official use.</strong> Boundary and roster data come from public
       sources that disclaim legal precision — confirm with the relevant government office before
@@ -4264,7 +4360,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <a href="https://overberg.co" target="_blank" rel="noopener">overberg.co</a>
       </div>
       <p class="dpf-support">Unfunded and run at personal cost. <a href="https://github.com/sponsors/ThursdaysFamous" target="_blank" rel="noopener">Sponsor it on GitHub</a> to keep the rosters current — it buys no placement and no influence over any answer here (<a href="../sponsorship.html">policy</a>).</p>
-      <button type="button" id="feedback-btn" class="footer-link-btn">💬 Report a bug or leave a comment</button>
     <!-- ==== ENGINE:BEGIN metro-links-html ==== -->
     <div class="footer-metros" id="footer-metros" hidden>
       <span class="footer-metros-label">Explore another metro</span>
@@ -18861,12 +18956,18 @@ function initMissouriExplorer() {
            the masthead. */
         foot.insertBefore(doors, foot.firstChild);
       }
-      var move = actions.querySelectorAll("#gaps-btn, .masthead-action-link");
+      var move = actions.querySelectorAll("#gaps-btn, .masthead-action-link:not(.dst-more-btn)");
       for (var i = 0; i < move.length; i++) doors.appendChild(move[i]);
+      // Sponsor leads the doors: the phone masthead has room for Feedback
+      // beside the theme toggle and not for a second button (2026-10-29)
+      var sponsor = document.getElementById("sponsor-btn");
+      if (sponsor) doors.insertBefore(sponsor, doors.firstChild);
     } else if (doors) {
       var sep = actions.querySelector(".districtry-toggle-sep");
       var back = doors.querySelectorAll("#gaps-btn, .masthead-action-link");
       for (var j = 0; j < back.length; j++) actions.insertBefore(back[j], sep);
+      var home = document.getElementById("sponsor-btn");
+      if (home && doors.contains(home)) actions.insertBefore(home, sep);
       doors.parentNode.removeChild(doors);
     }
   }
@@ -18927,7 +19028,10 @@ function initMissouriExplorer() {
     wrap.appendChild(btn);
     wrap.appendChild(panel);
     var sep = actions.querySelector(".districtry-toggle-sep");
-    actions.insertBefore(wrap, sep || null);
+    // before Feedback where the row has it, so the menu sits with the links
+    // it holds and Feedback and Sponsor stay together at the row's end
+    var feedback = actions.querySelector(".dst-feedback-btn");
+    actions.insertBefore(wrap, (feedback && feedback.parentNode === actions) ? feedback : (sep || null));
     btn.addEventListener("click", function () {
       var open = panel.hidden;
       panel.hidden = !open;
@@ -18974,17 +19078,62 @@ function initMissouriExplorer() {
     if (!beside) return false;
     return actions.getBoundingClientRect().top >= beside.getBoundingClientRect().bottom - 2;
   }
+  /* The order the row makes room, first to last: the plain links leave it
+     from the end of the row, then the tagline under the wordmark wraps onto
+     a second line ("tagline", which narrows the title and makes the masthead
+     one line taller), then Sponsor leaves, then "How to use", then "What data
+     is missing?". Sponsor (2026-10-29) is not one of the plain links: it
+     stays in view until every one of them has folded, and "How to use"
+     outlasts it because the first-visit help sends a new reader to it.
+     Measured that day, the masthead before Feedback and Sponsor kept "How to
+     use" in view at 1280px in all 17 apps, and with them and no wrapped
+     tagline only Illinois and New York kept it, their taglines being the
+     two shortest; with the tagline wrapped all four stay at 1280px in every
+     app measured. Feedback is not in the list at all and never folds. */
+  function dstFoldOrder(sponsor) {
+    var gaps = null, help = null, plain = [];
+    dstMoreItems.forEach(function (item) {
+      if (item.id === "gaps-btn") gaps = item;
+      else if (item.id === "help-link") help = item;
+      else plain.push(item);
+    });
+    var order = plain.reverse();
+    order.push("tagline");
+    if (sponsor) order.push(sponsor);
+    if (help) order.push(help);
+    if (gaps) order.push(gaps);
+    return order;
+  }
   function dstFitMastheadActions() {
     var actions = document.querySelector(".masthead-actions");
     if (!actions) return;
     var toggle = actions.querySelector(".districtry-theme-toggle") ||
       (dstMore && dstMore.panel.querySelector(".districtry-theme-toggle"));
     var sep = actions.querySelector(".districtry-toggle-sep");
+    var sponsor = document.getElementById("sponsor-btn");
+    var feedback = document.getElementById("feedback-btn");
+    if (feedback) feedback.classList.remove("dst-compact");
+    if (dstIsPhone()) {
+      // the doors live in the panel foot there. Feedback stays beside the
+      // wordmark, and where the two would touch it shows its icon alone:
+      // measured 2026-10-29, at 360px the word fits beside "districtry / il"
+      // and not beside the wider "districtry / mn"
+      var word = document.querySelector(".masthead .title-text");
+      if (feedback && word && feedback.offsetParent !== null &&
+          feedback.getBoundingClientRect().left < word.getBoundingClientRect().right + 8) {
+        feedback.classList.add("dst-compact");
+      }
+    }
     if (!dstMoreItems) {
+      // read from wherever the links are now: a page that opens at phone
+      // width has already moved them to the panel foot (dstPlaceDoors), and
+      // reading the masthead alone left the list empty for good, so a phone
+      // turned to a tablet's width folded nothing
       dstMoreItems = [];
-      var found = actions.querySelectorAll("#gaps-btn, .masthead-action-link");
+      var found = document.querySelectorAll(".masthead-actions #gaps-btn, .masthead-actions .masthead-action-link, " +
+        ".districtry-doors #gaps-btn, .districtry-doors .masthead-action-link");
       for (var i = 0; i < found.length; i++) dstMoreItems.push(found[i]);
-      if (!dstMoreItems.length) return;
+      if (!dstMoreItems.length) { dstMoreItems = null; return; }
     }
     if (!dstMore) dstMore = dstBuildMore(actions);
     dstMoreClose(false);
@@ -18993,17 +19142,25 @@ function initMissouriExplorer() {
     dstMoreItems.forEach(function (item) {
       if (actions.contains(item)) actions.insertBefore(item, dstMore.wrap);
     });
+    if (sponsor && sponsor.parentNode === dstMore.panel) actions.insertBefore(sponsor, sep || null);
     if (toggle && sep && toggle.parentNode !== actions) actions.insertBefore(toggle, sep.nextSibling);
     actions.classList.remove("dst-toggle-folded");
     var header = document.querySelector("header.masthead");
-    if (header) header.classList.remove("dst-tagline-folded");
+    if (header) header.classList.remove("dst-tagline-folded", "dst-tagline-wrapped");
     dstMore.wrap.hidden = true;
     if (dstIsPhone()) return; // the doors live in the panel foot there
     if (!dstMastheadWrapped(actions)) return;
     dstMore.wrap.hidden = false;
-    for (var k = dstMoreItems.length - 1; k >= 0 && dstMastheadWrapped(actions); k--) {
-      if (actions.contains(dstMoreItems[k])) dstMore.panel.insertBefore(dstMoreItems[k], dstMore.panel.firstChild);
+    // a Sponsor the Play app hides (play-app) takes no room and is not folded
+    var order = dstFoldOrder(sponsor && actions.contains(sponsor) && sponsor.offsetParent !== null ? sponsor : null);
+    for (var k = 0; k < order.length && dstMastheadWrapped(actions); k++) {
+      if (order[k] === "tagline") { if (header) header.classList.add("dst-tagline-wrapped"); }
+      else if (actions.contains(order[k])) dstMore.panel.appendChild(order[k]);
     }
+    // the menu lists what it holds in the row's own order, Sponsor last
+    dstMoreItems.concat(sponsor ? [sponsor] : []).forEach(function (item) {
+      if (item.parentNode === dstMore.panel) dstMore.panel.appendChild(item);
+    });
     // last resort: every link is in the menu and the row still wraps
     if (toggle && dstMastheadWrapped(actions)) {
       dstMore.panel.appendChild(toggle);
@@ -19014,6 +19171,8 @@ function initMissouriExplorer() {
     // whose title is wider than Illinois's still wrapped at 768-850px with
     // every link and the toggle folded
     if (header && dstMastheadWrapped(actions)) header.classList.add("dst-tagline-folded");
+    // and only then Feedback's word, keeping its icon
+    if (feedback && dstMastheadWrapped(actions)) feedback.classList.add("dst-compact");
     if (!dstMore.panel.firstChild) dstMore.wrap.hidden = true;
   }
   var dstFitQueued = false;
@@ -19025,6 +19184,13 @@ function initMissouriExplorer() {
   window.addEventListener("resize", dstQueueFit);
   // the pills' widths change when the web font arrives
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(dstQueueFit);
+
+  // A press of Sponsor is counted by the app it was pressed in, never by
+  // place, so the traffic page shows whether the button is used (2026-10-29)
+  var dstSponsorBtn = document.getElementById("sponsor-btn");
+  if (dstSponsorBtn) dstSponsorBtn.addEventListener("click", function () {
+    trackEvent("sponsor/" + METRO_BRAND.instanceTag);
+  });
 
   dstApplyPhoneLayout();
   if (window.matchMedia) {

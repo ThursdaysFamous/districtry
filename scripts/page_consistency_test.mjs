@@ -441,7 +441,9 @@ try {
         // for weeks with an invisible verified date and no reachable feedback
         // button — past every gate in this repo, because parity of the SHARED
         // engine was checked and parity of what a reader can SEE was not.
-        // Anchored to the map so sub-pages (which have neither) skip it.
+        // The feedback button left the panel foot for the masthead on
+        // 2026-10-29 (engine masthead-buttons-html), and is held here wherever
+        // it sits. Anchored to the map so sub-pages (which have neither) skip it.
         appFoot: (() => {
           if (!document.getElementById("map")) return null;
           const seen = (el) => !!el && el.getClientRects().length > 0 &&
