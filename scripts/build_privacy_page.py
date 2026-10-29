@@ -512,8 +512,18 @@ def measure_address_list(src, name):
 # `first-use/` joined on 2026-10-28 (engine `first-use`), after two reviews from
 # the Google Play closed test asked for a tutorial: `first-use/got-it`,
 # `tour`, `tour-done`, `tour-closed` and `help` record what a reader did with
-# the one-time tip shown on a first visit and its optional tour. It names
-# nothing about the reader or the place.
+# the one-time tip shown on a first visit and its optional tour. Each now ends
+# in the tag of the app it was used in (`first-use/got-it/il`; Adam,
+# 2026-10-28: "The tutorial stats should track app used on"), the select/
+# rule: it names the map and nothing about the reader or the place. Inside the
+# Google Play app `/play` follows the tag, so the report can tell the app from
+# the website; the support-link block already marks that window.
+# `sponsor/` joined on 2026-10-29 (engine `districtry-behavior`), when Sponsor
+# became a button beside Feedback in every map's masthead (Adam: "the sponsor
+# button needs to be more visible"): `sponsor/<tag>` records a press of it by
+# the app it was pressed in and nothing else, so the traffic page can say
+# whether the button is used. The Google Play app hides the button, so it
+# never sends this.
 EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "app-shortcut/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
@@ -522,7 +532,7 @@ EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "app-shortcu
                    "gaps-suggest/", "gaps-why/", "geolocate",
                    "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link-read/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "osm-note", "select/",
                    "share-in/", "share-native", "share-open", "share-permalink", "share-qr",
-                   "visit/", "zip-search/"]
+                   "sponsor/", "visit/", "zip-search/"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select/"]
 # What the front page (the one untagged surface) sends: the map-link count
 # above, from its address box, and since 2026-10-21 `example-place/<place>`
@@ -532,8 +542,13 @@ EXPECTED_COORD_EVENTS = ["geolocate-success", "select/"]
 # page says so. `first-use/` joined on 2026-10-28: the front page's own
 # first-visit tip and tour (build_landing_page.py FIRST_USE_FRONT_SCRIPT) count
 # a press of their buttons as first-use/<what>/front, the maps' family with
-# "front" where a map puts its tag, and nothing about the reader.
-ROOT_EVENTS = ["example-place/", "first-use/", "map-link-read/front/"]
+# "front" where a map puts its tag, and nothing about the reader. `visit/`
+# joined on 2026-10-29 (Adam: "Also the front page needs to be counted"): the
+# front page counts visit/first/front or visit/return/front once per window
+# with the maps' own two keys (build_landing_page.py visit_count_script), so a
+# visit is counted once, on the page it starts on. `sponsor/` joined on
+# 2026-10-29: a press of the front page's Sponsor is sponsor/front.
+ROOT_EVENTS = ["example-place/", "first-use/", "map-link-read/front/", "sponsor/front", "visit/"]
 
 
 def event_phrase(event, apps):
@@ -1657,15 +1672,23 @@ def render_storage_paragraphs(apps):
                 "browser.</p>"
                 % (code(store), code(key), esc(joined(users))))
         elif key == "districtry-seen":
+            # Who writes it is measured: the front door joined the maps on
+            # 2026-10-29, and the sentence names the front page only while it
+            # does, so the claim cannot outlive the code.
+            front = any(a["name"] in users and not a["tag"] for a in apps)
+            opened = "open districtry\u2019s front page or one of its maps" if front \
+                else "open a districtry map"
             out.append(
                 "<p><strong>Whether you have been here before.</strong> The first time you "
-                "open a districtry map, it writes the single character 1 in %s under %s. "
-                "On later visits the map finds it and counts the visit as a return; "
+                + opened + ", the page writes the single character 1 in %s under %s. "
+                "On later visits the page finds it and counts the visit as a return; "
                 "without it, the visit is counted as a first one. That is how the site "
                 "counts returning readers without a cookie. The mark holds no date and "
                 "no identifier, and it never leaves your browser. It is set by %s, and "
                 "clearing this site's data removes it.</p>"
-                % (code(store), code(key), esc(joined(users))))
+                # "The front door" heads a table cell; in the middle of this
+                # sentence it takes a small letter.
+                % (code(store), code(key), esc(re.sub(r"^The ", "the ", joined(users)))))
         elif key == "districtry-visit-counted":
             out.append(
                 "<p><strong>A visit already counted.</strong> A mark in %s under %s "
@@ -1673,7 +1696,9 @@ def render_storage_paragraphs(apps):
                 "so moving between pages or states does not count it again. This is on "
                 "%s. It is erased when you close the window, and it never leaves your "
                 "browser.</p>"
-                % (code(store), code(key), esc(joined(users))))
+                # "The front door" heads a table cell; in the middle of this
+                # sentence it takes a small letter.
+                % (code(store), code(key), esc(re.sub(r"^The ", "the ", joined(users)))))
         elif key == "districtry-play-app":
             # The launcher is not one of the surfaces this page measures, so
             # the claim that it sets the mark too is the manifest gate's: its
@@ -1833,7 +1858,10 @@ def render_analytics_section(apps):
         "page view, each app sends named events for: %s. Exactly two of those — %s — carry "
         "coordinates, <strong>rounded to %d decimal places</strong>. The select/ event ends in the "
         "two-letter tag of the app the point was chosen in, such as select/il, which says "
-        "which state\u2019s map was used and nothing more about where. When the search box reads a "
+        "which state\u2019s map was used and nothing more about where; first-use/, sent when "
+        "you answer the tip a map shows on a first visit or take its tour, ends in the same "
+        "tag, such as first-use/got-it/il, and inside the Google Play app in /play after it. "
+        "When the search box reads a "
         "Google Maps or Apple Maps link, map-link-read/ says which app it was in, which of the "
         "two the link came from, whether it was a short link, whether it was pasted or "
         "arrived in the page\u2019s address (as a place shared into the installed app does), "
@@ -1843,7 +1871,11 @@ def render_analytics_section(apps):
         "when you pick one of the places in the example beside that box; it names the "
         "example you picked and nothing about where you are. Its first-visit tip and "
         "tour send first-use/ followed by the button pressed and /front, the same family "
-        "the maps\u2019 tip sends, which names the button and nothing about you. Any other page that is not an app — a county list, a question "
+        "the maps\u2019 tip sends, which names the button and nothing about you. Like the maps, it "
+        "counts a visit once per window as visit/first/front or visit/return/front, and a visit "
+        "counted there is not counted again on a map you go on to. A press of its Sponsor "
+        "button sends sponsor/front, as a press of a map\u2019s sends sponsor/ followed by that "
+        "map\u2019s tag, and nothing about you. Any other page that is not an app — a county list, a question "
         "page, this one — sends the page view and nothing else. <strong>Nothing you type is "
         "ever sent to it.</strong></p>"
         % (where,
@@ -2246,7 +2278,7 @@ PRIVACY_BODY = """
         is what makes a link shareable — and it means anyone you send the link to, and anything
         that logs it, gets that location. Delete the part of the URL after %(hash)s to share the
         map without it.</p>
-      <p><strong>Bug reports are yours to send.</strong> &#34;Report a bug or leave a comment&#34;
+      <p><strong>Bug reports are yours to send.</strong> The &#34;Feedback&#34; button on every map
         prepares a draft containing what you wrote, the current page URL — which may include your
         point — and your browser's user-agent string. It is only ever a draft: nothing is
         transmitted until you submit the GitHub issue or send the email yourself, and you can
