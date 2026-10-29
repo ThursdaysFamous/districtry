@@ -113,14 +113,19 @@ STATIC_ENTRY_MUNICIPALITIES = {
     # Danville's seven wards on the city's own ArcGIS server (2026-10-15).
     "danville": ["Danville"],
     "st-clair-cities": ["Belleville", "O'Fallon"],
-    # Elmwood alone of the three cities on Peoria County's own Wards layer
-    # (2026-09-05). Chillicothe and West Peoria are on that same service and are
-    # deliberately NOT here: measured against their own Census place polygons
-    # they leave 3.3% and 8.0% of themselves in no ward, against Elmwood's 0.4%
-    # and the 0.1-0.5% the shipped layers manage. A held city is held in this
+    # Elmwood was the first of the three cities on Peoria County's own Wards
+    # layer (2026-09-05). Chillicothe is on that same service and is
+    # deliberately NOT here: measured against its own Census place polygon it
+    # leaves 3.3% of itself in no ward, against Elmwood's 0.4% and the 0.1-0.5%
+    # the shipped layers manage, and its clerk has not said whether it redrew. A held city is held in this
     # table as much as in index.html — an entry here with no dispatch entry
     # would claim coverage the layer cannot answer.
     "elmwood": ["Elmwood"],
+    # West Peoria, from the same layer, once City Clerk Barnes confirmed on
+    # 2026-10-29 that the wards were not redrawn after 2020 and sent the
+    # county's map as the city's current one. Its 8.0% uncovered ground is
+    # unshaded on that map too (railroad and river land, 15 residents in 2020).
+    "west-peoria": ["West Peoria"],
 }
 # Chicago's wards are the city's own Socrata layer with its own coverage test
 # (chicagoCoverage); it is never part of this file.

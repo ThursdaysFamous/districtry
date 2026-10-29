@@ -19556,6 +19556,30 @@ function initChiExplorer() {
         }) };
       });
   });
+  /* WEST PEORIA'S FOUR WARDS (2026-10-29), from the same county layer as
+   * Elmwood's. Held until City Clerk Mary Barnes answered on 2026-10-29 that
+   * the city reviewed its wards with the Peoria County Election Commission
+   * after the 2020 census and found no need to redraw, sending the county map
+   * "in use since 2020" (dated 2020-10-29). Its four wards match this layer's
+   * five polygons (Ward 1 in two pieces). The 8.0% of the Census city limits
+   * that no ward covers is unshaded on her map too: almost all of it is the
+   * railroad and river ground west of Ward 2, where the 2020 census counts 15
+   * people in blocks wholly inside it, so a point there gets no ward, as the
+   * city's own map shows. */
+  var WEST_PEORIA_WARDS = "https://gis.peoriacounty.gov/arcgis/rest/services/DP/Elections/" +
+    "MapServer/13/query?where=CORP_NAME%3D%27WEST+PEORIA%27&outFields=Ward&outSR=4326" +
+    "&f=json&geometryPrecision=5";
+  var loadWestPeoriaWards = makeCached(function () {
+    return fetchArcGISAsGeoJSON(WEST_PEORIA_WARDS, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      .then(function (geojson) {
+        if (!hasUsableGeometry(geojson)) {
+          throw new Error("West Peoria ward layer returned no usable geometry");
+        }
+        return { type: "FeatureCollection", features: (geojson.features || []).map(function (f) {
+          return wardFeature(f, "West Peoria", "Ward", findPropCI(f.properties || {}, ["ward"]));
+        }) };
+      });
+  });
   var loadPeoriaBoardMembers = makeCached(function () {
     return fetchJSONWithRetry("data/app/peoria-county-board-members.json", {}, 2);
   });
@@ -25015,7 +25039,11 @@ function initChiExplorer() {
       // of the pass-9 six whose ward map covers its own limits to the standard
       // the shipped layers set; see loadElmwoodWards for the measurement and
       // for why the other five are held.
-      municipalWardEntry("elmwood", loadElmwoodWards)
+      municipalWardEntry("elmwood", loadElmwoodWards),
+      // West Peoria (Peoria, 2026-10-29) — four wards, eight aldermen, shipped
+      // once its clerk confirmed the county map is the city's current one; see
+      // loadWestPeoriaWards.
+      municipalWardEntry("west-peoria", loadWestPeoriaWards)
     ]
   });
   declareDataSource("ward", {
