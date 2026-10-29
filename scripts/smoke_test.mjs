@@ -1760,6 +1760,11 @@ try {
     } else {
       check("the More menu counts being opened and the item picked, once each", false, "no More menu at 1,400px");
     }
+    // the item picked can open a dialog (since 2026-10-29 it is the Bulk
+    // Address Checker's at 1,400px); close it before pressing the gaps door
+    await page.evaluate(() => {
+      document.querySelectorAll(".feedback-modal:not([hidden]) [id$='-close']").forEach((b) => b.click());
+    });
     await page.click("#gaps-btn");
     const why = await page.waitForSelector(".gap-more-label", { state: "attached", timeout: QUERY_TIMEOUT }).then(() => true, () => false);
     if (why) {
