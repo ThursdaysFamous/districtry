@@ -230,6 +230,17 @@
   "spreadPct": 10.3,
   "unplaced2020": 4
  },
+ "29143": {
+  "county": "New Madrid County",
+  "people2020": {
+   "First District": 9429,
+   "Second District": 7005
+  },
+  "read": "2026-10-29",
+  "source": "posted",
+  "spreadPct": 29.5,
+  "unplaced2020": 0
+ },
  "29157": {
   "county": "Perry County",
   "people2020": {

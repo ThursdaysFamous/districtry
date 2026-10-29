@@ -109,7 +109,7 @@ GEOMETRY_FILES = {
     "congress-districts.json": (8, 8),  # The 8 U.S. House districts, TIGERweb layer 4 (CD119), the 2022 map, kept past 3 January 2027 because the 2026 election uses it.
     "mo-senate-districts.json": (34, 34),  # The 34 Missouri Senate districts, from the state's own map of the 2022 plan.
     "mo-house-districts.json": (163, 163),  # The 163 Missouri House districts, from the state's own map of the 2022 plan.
-    "mo-commission-districts.json": (68, 68),  # The county commission districts of the 34 counties whose map viewer, download, posted township map, GIS office or clerk publishes or sends them (mo/scripts/build_mo_commission_districts.py), two per county, clipped to the Census Bureau's county lines.
+    "mo-commission-districts.json": (70, 70),  # The county commission districts of the 35 counties whose map viewer, download, posted township map, GIS office or clerk publishes or sends them (mo/scripts/build_mo_commission_districts.py), two per county, clipped to the Census Bureau's county lines.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -118,7 +118,7 @@ ROSTER_FILES = {
     "mo-senate-members.json": 34,  # Missouri Senate roster from the Senate's own member pages, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size.
     "mo-house-members.json": 163,  # Missouri House roster from the House's own published member list, on the same terms.
     "mo-county-officials.json": 115,  # Every county's commission or council, county executive and other elected officers from the Secretary of State's Missouri Roster, one record for each of the 114 counties and the City of St. Louis, refreshed weekly by update-mo-county-officials.yml.
-    "mo-commission-counties.json": 34,  # The 34 counties whose commission districts are drawn, by GEOID, with each district's 2020 census population, written by the same build as mo-commission-districts.json and held to it by its --check. The County Commission District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file.
+    "mo-commission-counties.json": 35,  # The 35 counties whose commission districts are drawn, by GEOID, with each district's 2020 census population, written by the same build as mo-commission-districts.json and held to it by its --check. The County Commission District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 
