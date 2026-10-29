@@ -94,11 +94,37 @@ async function textOrNull(page, selector) {
   return page.textContent(selector, { timeout: 2000 }).catch(() => null);
 }
 
+// The front page counts the visit itself, visit/first/front or
+// visit/return/front, once per window as it opens (build_landing_page.py
+// visit_count_script). Block 12 holds that; the blocks that hold what a reader
+// PRESSES leave it out of their lists, which would otherwise begin with it.
+function actionsInto(counted) {
+  return (path) => { if (!/^visit\//.test(path)) counted.push(path); };
+}
+
 // A service worker's own requests reach Playwright only behind this flag, and
 // block 9b counts the launcher worker's requests to prove a share never
 // leaves the phone. Read at launch, so it is set here rather than in the job.
 process.env.PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS = "1";
 const browser = stubBasemap(await chromium.launch());
+// THE FRONT PAGE'S FIRST-VISIT TIP (build_landing_page.py FIRST_USE_FRONT_SCRIPT)
+// is fixed to the foot of the screen on a first visit, over whatever a block
+// below presses there, so every context marks it seen unless it asks for the
+// tip with `firstUse: true`; block 11 is the one that does.
+const FIRST_USE_FRONT_KEY = "districtry-first-use-front";
+{
+  const plainNewContext = browser.newContext.bind(browser);
+  browser.newContext = async (opts = {}) => {
+    const { firstUse, ...rest } = opts;
+    const ctx = await plainNewContext(rest);
+    if (!firstUse) {
+      await ctx.addInitScript((k) => {
+        try { localStorage.setItem(k, "1"); } catch (e) { /* storage blocked: no tip either */ }
+      }, FIRST_USE_FRONT_KEY);
+    }
+    return ctx;
+  };
+}
 try {
   // --- 1. a bare visit renders the landing page, and does NOT forward -------
   {
@@ -588,7 +614,7 @@ try {
     // the page, because the page navigates away straight after counting
     const counted = [];
     await page.route("**/gc.zgo.at/**", (r) => r.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
-    await page.exposeFunction("__gcCount", (path) => { counted.push(path); });
+    await page.exposeFunction("__gcCount", actionsInto(counted));
     await page.addInitScript(() => {
       window.goatcounter = { count: (vars) => { if (vars && vars.event) window.__gcCount(vars.path); } };
     });
@@ -766,6 +792,10 @@ try {
     const HOUSE = at({ housenumber: "9", street: "West Oakley Drive Northwest", city: "Westmont", state: "Illinois" });
     const OTHER_HOUSE = at({ housenumber: "9", street: "Oakley Drive North", city: "Westmont", state: "Illinois", postcode: "60559" });
     const TEXAS = { ...photonFeature(...UNCOVERED_POINT), properties: { name: "Oakley Drive", city: "Dallas", state: "Texas" } };
+    // the same house a few doors on (one place), and in another town
+    const HOUSE_NEXT = { ...photonFeature(41.82230, -87.97949), properties: HOUSE.properties };
+    const HOUSE_ELSEWHERE = { ...photonFeature(42.04510, -87.69010),
+      properties: { housenumber: "9", street: "West Oakley Drive Northwest", city: "Evanston", state: "Illinois" } };
     for (const c of [
       { name: "its street without the number opens /il/ with the address, not a point", text: TYPED, answer: [ON],
         want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
@@ -775,6 +805,10 @@ try {
         text: TYPED, answer: [OTHER], want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
       { name: "an answer that is the house opens its point, as before", text: TYPED, answer: [ON, HOUSE],
         want: "/il/", hash: /^#point=41\.82196,-87\.97949$/ },
+      { name: "the house answered twice a few doors apart opens its point, as one place", text: TYPED,
+        answer: [HOUSE, HOUSE_NEXT], want: "/il/", hash: /^#point=41\.82196,-87\.97949$/ },
+      { name: "the house in two towns opens /il/ with the address to pick from, not the first town's point", text: NO_TOWN,
+        answer: [HOUSE, HOUSE_ELSEWHERE], want: "/il/", hash: "#q=" + encodeURIComponent(NO_TOWN) },
       { name: "its number on another street opens /il/ with the address, not that house's point", text: TYPED,
         answer: [OTHER_HOUSE], want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
       { name: "answers no app covers, to an address that names no state, are said to be outside", text: NO_STATE,
@@ -1181,7 +1215,7 @@ try {
     const page = await ctx.newPage();
     await page.route("**/gc.zgo.at/**", (r) => r.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
     if (counted) {
-      await page.exposeFunction("__gcCount", (path) => { counted.push(path); });
+      await page.exposeFunction("__gcCount", actionsInto(counted));
       await page.addInitScript(() => {
         window.goatcounter = { count: (vars) => { if (vars && vars.event) window.__gcCount(vars.path); } };
       });
@@ -2015,6 +2049,245 @@ try {
       const s = await supportShown(p);
       check(`a page opened from ${referrer} ${inside ? "hides" : "keeps"} the sponsorship links`,
         inside ? hidden(s) : kept(s), JSON.stringify(s));
+      await ctx.close();
+    }
+  }
+  // --- 11. the front page's first-visit tip and tour (2026-10-28) ------------
+  // Adam: "The guide should also function on the landing page with a link to
+  // the how to". Shown once: a reload shows nothing, with its own key so the
+  // maps' tip is left to the maps. "Show me around" runs four steps, each
+  // ringing a part of the page that is there; Done ends it. Each press is
+  // counted once as first-use/<what>/front and nothing is counted on show.
+  // Not shown in a frame or with blocked storage, and the masthead's How to
+  // use link and the tip's own link both open help.html.
+  {
+    console.log("\n11. front page first-visit tip");
+    for (const [name, viewport] of [["computer", { width: 1280, height: 800 }],
+                                    ["phone", { width: 390, height: 844 }]]) {
+      const ctx = await browser.newContext({ firstUse: true, viewport, serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      const counted = [];
+      await page.exposeFunction("__gcCount", actionsInto(counted));
+      await page.addInitScript(() => {
+        window.goatcounter = { count: (vars) => { if (vars && vars.event) window.__gcCount(vars.path); } };
+      });
+      await page.route("**/gc.zgo.at/**", (r) => r.abort());
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      const shown = await page.waitForSelector(".first-use", { timeout: 5000 }).then(() => true, () => false);
+      check(`${name}: the tip shows on a first visit`, shown);
+      const tip = await page.evaluate(() => {
+        const box = document.querySelector(".first-use");
+        if (!box) return null;
+        const r = box.getBoundingClientRect();
+        const help = box.querySelector(".first-use-help");
+        return { inView: r.top >= 0 && r.bottom <= window.innerHeight && r.left >= 0 && r.right <= window.innerWidth,
+                 help: help && help.getAttribute("href"),
+                 stored: localStorage.getItem("districtry-first-use-front"),
+                 mapKey: localStorage.getItem("districtry-first-use") };
+      });
+      check(`${name}: the tip sits on screen and links the How to use page`,
+        !!tip && tip.inView && tip.help === "help.html", JSON.stringify(tip));
+      check(`${name}: showing it records its own key and not the maps'`,
+        !!tip && tip.stored === "1" && tip.mapKey === null, JSON.stringify(tip));
+      check(`${name}: nothing is counted when the tip is shown`, counted.length === 0, JSON.stringify(counted));
+      await page.click(".first-use-tour");
+      const steps = [];
+      for (let i = 0; i < 4; i++) {
+        await page.waitForSelector(".tour-card .tour-title");
+        steps.push(await page.evaluate(() => {
+          const ring = document.querySelector(".tour-ring");
+          return { title: document.querySelector(".tour-title").textContent, ringed: !!ring && !ring.hidden };
+        }));
+        await page.click(".tour-next");
+      }
+      check(`${name}: the tour runs four steps, each ringing a part of the page`,
+        steps.length === 4 && steps.every((x) => x.ringed) &&
+        steps.map((x) => x.title).join("|") === "Start with an address|What you get|Where it answers today|Help is here",
+        JSON.stringify(steps));
+      const after = await page.evaluate(() => ({ card: !!document.querySelector(".tour-card"),
+                                                 ring: !!document.querySelector(".tour-ring"),
+                                                 focus: document.activeElement && document.activeElement.id }));
+      check(`${name}: Done ends the tour and puts focus in the address box`,
+        !after.card && !after.ring && after.focus === "search-input", JSON.stringify(after));
+      check(`${name}: the tour is counted once at its start and once at its end`,
+        counted.join() === "first-use/tour/front,first-use/tour-done/front", JSON.stringify(counted));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForTimeout(1500);
+      check(`${name}: a reload shows no tip`, (await page.$(".first-use")) === null);
+      await ctx.close();
+    }
+    {
+      const ctx = await browser.newContext({ firstUse: true, serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      const counted = [];
+      await page.exposeFunction("__gcCount", actionsInto(counted));
+      await page.addInitScript(() => {
+        window.goatcounter = { count: (vars) => { if (vars && vars.event) window.__gcCount(vars.path); } };
+      });
+      await page.route("**/gc.zgo.at/**", (r) => r.abort());
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.waitForSelector(".first-use", { timeout: 5000 });
+      await page.click(".first-use-ok");
+      const gone = (await page.$(".first-use")) === null;
+      check("Got it closes the tip and is counted once", gone && counted.join() === "first-use/got-it/front",
+        JSON.stringify(counted));
+      const mast = await page.getAttribute("#help-link", "href");
+      check("the masthead links the How to use page", mast === "help.html", String(mast));
+      await ctx.close();
+    }
+    for (const how of ["tip", "tour"]) {
+      // Going to the address box closes the tip and the tour, so neither sits
+      // over what the box says back (Adam, 2026-10-29).
+      const ctx = await browser.newContext({ firstUse: true, serviceWorkers: "block", viewport: { width: 390, height: 844 } });
+      const page = await ctx.newPage();
+      const counted = [];
+      await page.exposeFunction("__gcCount", actionsInto(counted));
+      await page.addInitScript(() => {
+        window.goatcounter = { count: (vars) => { if (vars && vars.event) window.__gcCount(vars.path); } };
+      });
+      await page.route("**/gc.zgo.at/**", (r) => r.abort());
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.waitForSelector(".first-use", { timeout: 5000 });
+      if (how === "tour") await page.click(".first-use-tour");
+      await page.focus("#search-input");
+      const gone = (await page.$(".first-use, .tour-card, .tour-ring")) === null;
+      const want = how === "tip" ? "first-use/got-it/front" : "first-use/tour/front,first-use/tour-closed/front";
+      check(`going to the address box closes the ${how}`, gone && counted.join() === want, JSON.stringify(counted));
+      await ctx.close();
+    }
+    {
+      const ctx = await browser.newContext({ firstUse: true, serviceWorkers: "block" });
+      await ctx.addInitScript(() => {
+        Object.defineProperty(window, "localStorage", { get() { throw new Error("blocked"); } });
+      });
+      const page = await ctx.newPage();
+      await page.route("**/gc.zgo.at/**", (r) => r.abort());
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.waitForTimeout(1500);
+      check("with storage blocked the tip is not shown", (await page.$(".first-use")) === null);
+      await ctx.close();
+    }
+    {
+      const ctx = await browser.newContext({ firstUse: true, serviceWorkers: "block" });
+      const page = await ctx.newPage();
+      await page.route("**/gc.zgo.at/**", (r) => r.abort());
+      await page.goto(BASE + "/404.html", { waitUntil: "domcontentloaded" });
+      await page.evaluate((src) => {
+        const f = document.createElement("iframe");
+        f.src = src;
+        f.style.cssText = "width:1000px;height:700px";
+        document.body.appendChild(f);
+      }, BASE + "/");
+      await page.waitForTimeout(2500);
+      const frame = page.frames().find((f) => f.url().startsWith(BASE));
+      const inFrame = frame ? await frame.$(".first-use") : "no frame";
+      check("inside a frame the tip is not shown", inFrame === null, String(inFrame));
+      await ctx.close();
+    }
+  }
+
+  // --- 12. the front page counts a visit once per window (2026-10-29) -------
+  // Adam: "Also the front page needs to be counted." The maps have counted
+  // visit/first/<tag> or visit/return/<tag> since 2026-10-22 from a mark in
+  // local storage (districtry-seen) and one in session storage
+  // (districtry-visit-counted); the front page reads the same two, so a
+  // browser that opened a map is a return here and a window counted on one
+  // page is counted on no other. Nothing is counted in a frame, or on an old
+  // app link the front page forwards to /il/.
+  {
+    console.log("\n12. front page visit count");
+    const visitsOf = (all) => all.filter((p) => /^visit\//.test(p));
+    async function visitPage(ctx, all) {
+      const page = await ctx.newPage();
+      await page.exposeFunction("__gcCount", (path) => { all.push(path); });
+      await page.addInitScript(() => {
+        window.goatcounter = { count: (vars) => { if (vars && vars.event) window.__gcCount(vars.path); } };
+      });
+      await page.route("**/gc.zgo.at/**", (r) => r.abort());
+      return page;
+    }
+    async function settle(all, n) {
+      for (let i = 0; i < 40 && visitsOf(all).length < n; i++) await new Promise((r) => setTimeout(r, 100));
+      await new Promise((r) => setTimeout(r, 600));
+    }
+    {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const all = [];
+      const page = await visitPage(ctx, all);
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await settle(all, 1);
+      const marks = await page.evaluate(() => ({ seen: localStorage.getItem("districtry-seen"),
+                                                 window: sessionStorage.getItem("districtry-visit-counted") }));
+      check("a first visit is counted once as visit/first/front",
+        visitsOf(all).join() === "visit/first/front", JSON.stringify(all));
+      check("it writes the maps' two marks", marks.seen === "1" && marks.window === "1", JSON.stringify(marks));
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await settle(all, 2);
+      check("a reload in the same window counts nothing more",
+        visitsOf(all).join() === "visit/first/front", JSON.stringify(all));
+      const all2 = [];
+      const page2 = await visitPage(ctx, all2);
+      await page2.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await settle(all2, 1);
+      check("a new window in the same browser counts visit/return/front",
+        visitsOf(all2).join() === "visit/return/front", JSON.stringify(all2));
+      await ctx.close();
+    }
+    {
+      // a browser a map has already marked, in a new window
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      await ctx.addInitScript(() => { try { localStorage.setItem("districtry-seen", "1"); } catch (e) { /* none */ } });
+      const all = [];
+      const page = await visitPage(ctx, all);
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await settle(all, 1);
+      check("a browser a map marked counts a return here",
+        visitsOf(all).join() === "visit/return/front", JSON.stringify(all));
+      await ctx.close();
+    }
+    {
+      // a window a map has already counted
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      await ctx.addInitScript(() => {
+        try { localStorage.setItem("districtry-seen", "1"); sessionStorage.setItem("districtry-visit-counted", "1"); } catch (e) { /* none */ }
+      });
+      const all = [];
+      const page = await visitPage(ctx, all);
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await settle(all, 1);
+      check("a window a map already counted counts nothing here", visitsOf(all).length === 0, JSON.stringify(all));
+      await ctx.close();
+    }
+    {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const all = [];
+      const page = await visitPage(ctx, all);
+      await page.route("**/il/**", (r) =>
+        r.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>il stub</title>" }));
+      await page.goto(BASE + "/#point=41.9,-87.6", { waitUntil: "domcontentloaded" });
+      await settle(all, 1);
+      const marks = await page.evaluate(() => ({ seen: localStorage.getItem("districtry-seen"),
+                                                 window: sessionStorage.getItem("districtry-visit-counted") }));
+      check("an old app link the front page forwards counts nothing there and marks nothing",
+        (await page.title()) === "il stub" && visitsOf(all).length === 0 && marks.seen === null && marks.window === null,
+        JSON.stringify({ all, marks }));
+      await ctx.close();
+    }
+    {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const all = [];
+      const page = await visitPage(ctx, all);
+      await page.goto(BASE + "/404.html", { waitUntil: "domcontentloaded" });
+      await page.evaluate((src) => {
+        const f = document.createElement("iframe");
+        f.src = src;
+        f.style.cssText = "width:1000px;height:700px";
+        document.body.appendChild(f);
+      }, BASE + "/");
+      await page.waitForTimeout(2500);
+      const frame = page.frames().find((f) => f !== page.mainFrame() && f.url().startsWith(BASE));
+      check("inside a frame the front page counts nothing", !!frame && visitsOf(all).length === 0,
+        JSON.stringify({ frame: frame && frame.url(), all }));
       await ctx.close();
     }
   }

@@ -491,14 +491,18 @@ try {
 
     await search(GEOCODER_QUERY_RAW);
     await page
-      .waitForFunction(() => document.querySelectorAll("#geocode-results li").length > 0,
+      .waitForFunction(() => document.querySelectorAll("#geocode-results li").length > 0 ||
+        /^Selected:/.test((document.getElementById("geo-status") || {}).textContent || ""),
         null, { timeout: QUERY_TIMEOUT })
       .catch(() => {});
     const rows = await page.$$eval("#geocode-results li", (ls) => ls.length);
+    // one answer that is the house is selected at once (selectClearMatch),
+    // which empties the list
+    const selected = await page.$eval("#geo-status", (el) => /^Selected:/.test(el.textContent || ""));
     const bounded = seen.filter((c) => c.bounded);
     check("search box retries a unit-fragment miss with the cleaned address",
-      bounded.length === 2 && bounded[0].q.includes(GEOCODER_UNIT_FRAGMENT) && bounded[1].q === GEOCODER_QUERY_CLEANED && rows > 0,
-      `calls=${JSON.stringify(bounded.map((c) => c.q))} rows=${rows}`);
+      bounded.length === 2 && bounded[0].q.includes(GEOCODER_UNIT_FRAGMENT) && bounded[1].q === GEOCODER_QUERY_CLEANED && (rows > 0 || selected),
+      `calls=${JSON.stringify(bounded.map((c) => c.q))} rows=${rows} selected=${selected}`);
 
     seen.length = 0;
     await search("nowhere at all xyzzy");
