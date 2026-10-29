@@ -3216,7 +3216,7 @@ footer .support b { color: var(--ink); }
     [
       "Type your address or ZIP code in the box and press Show districts.",
       "districtry opens the map for your state, with your place picked.",
-      "Tick the kinds of district you want to see. Each one gets a card saying who represents you there."
+      "Check the kinds of district you want to see. Each one gets a card saying who represents you there."
     ].forEach(function (line) { steps.appendChild(el("li", null, line)); });
     box.appendChild(steps);
     var actions = el("div", "first-use-actions");
@@ -3253,7 +3253,7 @@ footer .support b { color: var(--ink); }
     { sel: ".coverage", title: "Where it answers today",
       text: "The shaded states have a map today. Tap one to open its map, or find your state in the list." },
     { sel: "#help-link", title: "Help is here",
-      text: "How to use explains the map: choosing the kinds of district to see, reading the cards, comparing districts and sharing what you find." }
+      text: "“How to use” explains the map: choosing the kinds of district to see, reading the cards, comparing districts and sharing what you find." }
   ];
   function startTour() {
     var ring = el("div", "tour-ring");
@@ -3351,6 +3351,18 @@ footer .support b { color: var(--ink); }
     else y = Math.max(12, vh - ch - 12);
     card.style.left = Math.round(x) + "px";
     card.style.top = Math.round(y) + "px";
+  }
+  // Going to the address box is the tip's first step, and what the box says
+  // back opens under it; on a phone the keyboard pushes the tip up over that.
+  // So focusing or typing in the box closes the tip (got-it, as Escape does)
+  // and the tour (tour-closed), the maps' rule (engine first-use).
+  function searchStarted() {
+    if (tipBox) { hideTip(); firstUseEvent("got-it"); }
+    if (tour) endTour(false);
+  }
+  if (input) {
+    input.addEventListener("focus", searchStarted);
+    input.addEventListener("input", searchStarted);
   }
   var framed = false;
   try { framed = window.self !== window.top; } catch (e) { framed = true; }

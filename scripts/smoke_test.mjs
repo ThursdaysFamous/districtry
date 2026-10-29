@@ -2791,7 +2791,7 @@ try {
   //     it" closes it and is counted; "Show me around" runs a four-step tour
   //     whose steps ring something on screen, Back and Done work, and both are
   //     counted. While the tip is open the install invitation waits. A point
-  //     selected with no layer on shows a "tick a box" hint, which goes once a
+  //     selected with no layer on shows a "check a box" hint, which goes once a
   //     layer is on. Each count ends in the map's tag (first-use/got-it/il), so
   //     the traffic page can say which state's map the tutorial was used on,
   //     and inside the Google Play app in /play after it.
@@ -2877,6 +2877,36 @@ try {
       await context.close();
     }
     {
+      // Going to the search box closes the tip, and typing there closes the
+      // tour, so neither covers the list of matches (Adam, 2026-10-29: the tip
+      // was "blocking the address selection drop down").
+      const phone = { serviceWorkers: "block", viewport: { width: 390, height: 844 } };
+      const one = await browser.newContext(phone);
+      const tipPage = await booted(one, BASE, stub);
+      const shown = await tipPage.waitForSelector(".first-use .first-use-ok", { timeout: 10000 }).then(() => true, () => false);
+      await tipPage.focus("#geocode-input");
+      const tipGone = await tipPage.evaluate(() => !document.querySelector(".first-use"));
+      const tipCounts = await firstUse(tipPage);
+      await one.close();
+      const two = await browser.newContext(phone);
+      const tourPage = await booted(two, BASE, stub);
+      await tourPage.waitForSelector(".first-use .first-use-tour", { timeout: 10000 });
+      await tourPage.click(".first-use-tour");
+      const tourUp = await tourPage.evaluate(() => !!document.querySelector(".tour-card"));
+      await tourPage.evaluate(() => {
+        const box = document.getElementById("geocode-input");
+        box.value = "9";
+        box.dispatchEvent(new Event("input", { bubbles: true }));
+      });
+      const tourGone = await tourPage.evaluate(() => !document.querySelector(".tour-card") && !document.querySelector(".tour-ring"));
+      const tourCounts = await firstUse(tourPage);
+      check("going to the search box closes the tip, counted as Got it, and typing there closes the tour",
+        shown && tipGone && JSON.stringify(tipCounts) === '["first-use/got-it/il"]' && tourUp && tourGone &&
+          JSON.stringify(tourCounts) === '["first-use/tour/il","first-use/tour-closed/il"]',
+        JSON.stringify({ shown, tipGone, tipCounts, tourUp, tourGone, tourCounts }));
+      await two.close();
+    }
+    {
       // The install invitation waits while the tip is open, on a phone.
       const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 390, height: 844 } });
       const page = await booted(context, `${BASE}#p=41.8825,-87.6285&l=cg`, stub);
@@ -2908,7 +2938,7 @@ try {
         const h = document.getElementById("no-layer-hint");
         return !h || h.hidden;
       }, null, { timeout: 10000 }).then(() => true, () => false);
-      check("a point with no layer on shows the tick-a-box hint, and ticking one removes it", hinted && cleared,
+      check("a point with no layer on shows the check-a-box hint, and checking one removes it", hinted && cleared,
         `hinted=${hinted} cleared=${cleared}`);
       await context.close();
     }

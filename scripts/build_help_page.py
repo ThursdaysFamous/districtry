@@ -58,7 +58,7 @@ CANONICAL = SITE + "help.html"
 ENGINE_DIR = os.path.join(REPO_ROOT, "engine", "index.html")
 
 TITLE = "How to use districtry"
-DESC = ("Find who represents you on districtry: search a place, tick the "
+DESC = ("Find who represents you on districtry: search a place, check the "
         "kinds of district to show, read the cards, compare districts and share "
         "what you find.")
 SUB = "Find your place, choose what to see, and read who represents you."
@@ -216,8 +216,8 @@ def body():
     <h2>2. Choose what to see</h2>
     <p>Once a place is picked, a list of the kinds of district appears beside the map, or below
       it on a phone: U.S. House District, State Senate District, County Board District and so
-      on. <strong>Nothing is shown until you tick one.</strong> Tick as many as you like, and
-      untick them to clear the map.</p>
+      on. <strong>Nothing is shown until you check one.</strong> Check as many as you like, and
+      uncheck them to clear the map.</p>
     <p>The list only offers what applies where you are. City wards, for example, appear only
       inside a city that publishes them. Where part of the map is shaded, fewer kinds of district
       are covered there, and the <em>Coverage</em> key on the map says what each shade means.</p>
@@ -225,7 +225,7 @@ def body():
 
   <section id="cards">
     <h2>3. Read the cards</h2>
-    <p>Each kind of district you tick gets a card. It names the district, then who represents
+    <p>Each kind of district you check gets a card. It names the district, then who represents
       you there, their office, phone number and e-mail where the government publishes them,
       and a link to more. The map outlines the district in the same colour as its card.</p>
     <p>If one source is down, only its own card says so, with a button to try again. The rest
@@ -238,7 +238,7 @@ def body():
   <section id="compare">
     <h2>4. Compare districts</h2>
     <p>Press <span class="ui">Compare to this district</span> on a card. The map then outlines
-      the districts of every other kind you have ticked that lie inside it or cross its edge.
+      the districts of every other kind you have checked that lie inside it or cross its edge.
       Press <span class="ui">Stats</span> on that card to list them, with how much of each lies
       inside, by area and, in Illinois, by people.
       <span class="ui">Print or share</span> prints the list or saves it as a PDF.</p>
@@ -247,7 +247,7 @@ def body():
   <section id="share">
     <h2>5. Share what you find</h2>
     <p>Press <span class="ui">Share</span> next to the place's coordinates to copy a link or
-      show a QR code. The link opens the same place with the same kinds of district ticked.</p>
+      show a QR code. The link opens the same place with the same kinds of district checked.</p>
   </section>
 
   <section id="phone">

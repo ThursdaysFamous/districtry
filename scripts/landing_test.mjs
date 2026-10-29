@@ -2127,6 +2127,26 @@ try {
       check("the masthead links the How to use page", mast === "help.html", String(mast));
       await ctx.close();
     }
+    for (const how of ["tip", "tour"]) {
+      // Going to the address box closes the tip and the tour, so neither sits
+      // over what the box says back (Adam, 2026-10-29).
+      const ctx = await browser.newContext({ firstUse: true, serviceWorkers: "block", viewport: { width: 390, height: 844 } });
+      const page = await ctx.newPage();
+      const counted = [];
+      await page.exposeFunction("__gcCount", actionsInto(counted));
+      await page.addInitScript(() => {
+        window.goatcounter = { count: (vars) => { if (vars && vars.event) window.__gcCount(vars.path); } };
+      });
+      await page.route("**/gc.zgo.at/**", (r) => r.abort());
+      await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+      await page.waitForSelector(".first-use", { timeout: 5000 });
+      if (how === "tour") await page.click(".first-use-tour");
+      await page.focus("#search-input");
+      const gone = (await page.$(".first-use, .tour-card, .tour-ring")) === null;
+      const want = how === "tip" ? "first-use/got-it/front" : "first-use/tour/front,first-use/tour-closed/front";
+      check(`going to the address box closes the ${how}`, gone && counted.join() === want, JSON.stringify(counted));
+      await ctx.close();
+    }
     {
       const ctx = await browser.newContext({ firstUse: true, serviceWorkers: "block" });
       await ctx.addInitScript(() => {
