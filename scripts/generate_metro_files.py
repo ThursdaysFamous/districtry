@@ -766,7 +766,7 @@ def render_sources_palette(w):
 
 
 def render_sources_verified(w):
-    return ('        <p class="verified">Data last verified: <strong>%s</strong></p>'
+    return ('        <p class="verified">Sources last checked: <strong>%s</strong></p>'
             % html_esc(w["verified_date"]))
 
 

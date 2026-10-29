@@ -792,6 +792,10 @@ try {
     const HOUSE = at({ housenumber: "9", street: "West Oakley Drive Northwest", city: "Westmont", state: "Illinois" });
     const OTHER_HOUSE = at({ housenumber: "9", street: "Oakley Drive North", city: "Westmont", state: "Illinois", postcode: "60559" });
     const TEXAS = { ...photonFeature(...UNCOVERED_POINT), properties: { name: "Oakley Drive", city: "Dallas", state: "Texas" } };
+    // the same house a few doors on (one place), and in another town
+    const HOUSE_NEXT = { ...photonFeature(41.82230, -87.97949), properties: HOUSE.properties };
+    const HOUSE_ELSEWHERE = { ...photonFeature(42.04510, -87.69010),
+      properties: { housenumber: "9", street: "West Oakley Drive Northwest", city: "Evanston", state: "Illinois" } };
     for (const c of [
       { name: "its street without the number opens /il/ with the address, not a point", text: TYPED, answer: [ON],
         want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
@@ -801,6 +805,10 @@ try {
         text: TYPED, answer: [OTHER], want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
       { name: "an answer that is the house opens its point, as before", text: TYPED, answer: [ON, HOUSE],
         want: "/il/", hash: /^#point=41\.82196,-87\.97949$/ },
+      { name: "the house answered twice a few doors apart opens its point, as one place", text: TYPED,
+        answer: [HOUSE, HOUSE_NEXT], want: "/il/", hash: /^#point=41\.82196,-87\.97949$/ },
+      { name: "the house in two towns opens /il/ with the address to pick from, not the first town's point", text: NO_TOWN,
+        answer: [HOUSE, HOUSE_ELSEWHERE], want: "/il/", hash: "#q=" + encodeURIComponent(NO_TOWN) },
       { name: "its number on another street opens /il/ with the address, not that house's point", text: TYPED,
         answer: [OTHER_HOUSE], want: "/il/", hash: "#q=" + encodeURIComponent(TYPED) },
       { name: "answers no app covers, to an address that names no state, are said to be outside", text: NO_STATE,

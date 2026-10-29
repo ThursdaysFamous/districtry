@@ -4370,7 +4370,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       reachable at <a href="mailto:hello@overberg.co">hello@overberg.co</a>.</p>
       <!-- ==== ENGINE:END footer-independence ==== -->
       <div class="footer-meta" id="footer-meta">
-        <span>Data last verified:
+        <span>Sources last checked:
           <!-- ==== GENERATED:BEGIN verified-date ==== -->
           <strong id="verified-date">September 29, 2026</strong>
           <!-- ==== GENERATED:END verified-date ==== -->
@@ -11109,20 +11109,30 @@ function initNorthCarolinaExplorer() {
    * 2026-10-17 a question page's address box selected the first, and the
    * cards named the districts of another stretch of the street, and until
    * 2026-10-19 the second. */
+  /* The one row a search the reader sent goes straight to, or none: the
+   * rule prefillGeocodeSearch states above. Search and Enter take it too,
+   * from 2026-10-29 (Adam, choosing it over a list that always waited for a
+   * tap, "go to the match location without needing to click the full
+   * address"): a search with one clear answer that is the house selects it,
+   * and anything else stays a list for the reader to pick from, because the
+   * first of several answers can be the same street in another town and an
+   * answer without the house number is a spot somewhere along the street. */
+  function selectClearMatch() {
+    var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
+    var place = geoResultsList.querySelectorAll("li.link-place > button");
+    var away = geoResultsList.querySelectorAll("li.map-link-away > button, li.zip-away > button");
+    if (own.length === 1) { if (!/\b(?:no-number|other-street|zip-answer)\b/.test(own[0].parentNode.className)) own[0].click(); }
+    else if (place.length === 1) place[0].click();
+    else if (!own.length && away.length === 1) away[0].click();
+  }
+
   function prefillGeocodeSearch(q) {
     linkVia = "opened";
     geocodeInputEl.value = q;
     geoStatus.textContent = "Searching\u2026";
     geoStatus.className = "geo-status";
     reengageSearchShell();
-    return runGeocodeSearch(q, null, true).then(function () {
-      var own = geoResultsList.querySelectorAll("li:not(.sibling-result):not(.name-result) > button");
-      var place = geoResultsList.querySelectorAll("li.link-place > button");
-      var away = geoResultsList.querySelectorAll("li.map-link-away > button, li.zip-away > button");
-      if (own.length === 1) { if (!/\b(?:no-number|other-street|zip-answer)\b/.test(own[0].parentNode.className)) own[0].click(); }
-      else if (place.length === 1) place[0].click();
-      else if (!own.length && away.length === 1) away[0].click();
-    })["catch"](function (err) {
+    return runGeocodeSearch(q, null, true).then(selectClearMatch)["catch"](function (err) {
       if (err.name === "AbortError") return;
       geoStatus.textContent = "Search failed \u2014 the geocoder may be busy. Try again in a moment.";
       geoStatus.className = "geo-status err";
@@ -11141,6 +11151,10 @@ function initNorthCarolinaExplorer() {
     geoStatus.textContent = "Searching…";
     geoStatus.className = "geo-status";
     runGeocodeSearch(q, null, true)
+      .then(function () {
+        // not once the reader has typed on: the list is for other text now
+        if (document.getElementById("geocode-input").value.trim() === q) selectClearMatch();
+      })
       .catch(function (err) {
         if (err.name === "AbortError") return;
         geoStatus.textContent = "Search failed — the geocoder may be busy. Try again in a moment.";
