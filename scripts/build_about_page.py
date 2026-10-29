@@ -309,7 +309,7 @@ def body(fleet, pages, seats, tabled, tables, gaps, jobs, signal):
     <h2>Where it answers</h2>
     <div class="table-wrap">
     <table>
-      <thead><tr><th>Place</th><th>Scope</th><th class="num">Layers</th><th>Sources verified</th></tr></thead>
+      <thead><tr><th>Place</th><th>Scope</th><th class="num">Layers</th><th>Sources last checked</th></tr></thead>
       <tbody>
 %(rows)s
       </tbody>
