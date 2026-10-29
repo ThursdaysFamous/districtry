@@ -47,7 +47,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 4
  },
  "55003": {
@@ -238,7 +238,7 @@
    "phone": "920-448-4185"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 7
  },
  "55011": {
@@ -290,7 +290,7 @@
    "phone": "(608) 685-4433"
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 4
  },
  "55013": {
@@ -337,8 +337,9 @@
    "url": "https://burnettcountywi.gov/directory.aspx"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-10-23",
-  "contactCheckedWeekly": 6
+  "contactAsOf": "2026-10-23",
+  "contactRetried": true,
+  "contactAsOfWhy": "The county's pages could not be read on this run: https://burnettcountywi.gov/directory.aspx is not fetched: its own robots.txt refuses this client (robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)). Contacts already built from this host keep their last-good records and read stamp."
  },
  "55015": {
   "county": "Calumet",
@@ -362,19 +363,16 @@
    "url": "https://calumetcounty.org/Directory"
   },
   "clerkOfCircuitCourt": {
-   "name": "Kayla Bembenek",
-   "source": "county-page",
-   "url": "https://calumetcounty.org/Directory"
+   "name": "LeAnne Karls",
+   "party": "Republican"
   },
   "registerOfDeeds": {
-   "name": "Tami Alten",
-   "party": "Republican",
-   "url": "https://calumetcounty.org/Directory"
+   "name": "Tamara Alten",
+   "party": "Republican"
   },
   "districtAttorney": {
-   "name": "Nathan F. Haberman",
-   "party": "Republican",
-   "url": "https://calumetcounty.org/Directory"
+   "name": "Nathan F Haberman",
+   "party": "Republican"
   },
   "sheriff": {
    "name": "Brett Bowe",
@@ -382,13 +380,13 @@
    "url": "https://calumetcounty.org/Directory"
   },
   "coroner": {
-   "name": "Mike Klaeser",
-   "title": "Medical Examiner (appointed)",
-   "url": "https://calumetcounty.org/Directory"
+   "name": "Michael Klaeser",
+   "title": "Medical Examiner (appointed)"
   },
-  "contactChecked": 7,
-  "contactReadOn": "2026-10-23",
-  "contactCheckedWeekly": 7
+  "contactChecked": 3,
+  "contactAsOf": "2026-10-23",
+  "contactRetried": true,
+  "contactAsOfWhy": "The county's pages could not be read on this run: https://calumetcounty.org/Directory is not fetched: its own robots.txt refuses this client (robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)). Contacts already built from this host keep their last-good records and read stamp."
  },
  "55017": {
   "county": "Chippewa",
@@ -407,24 +405,20 @@
    "url": "https://chippewacountywi.gov/Directory"
   },
   "treasurer": {
-   "name": "Melissa Grill",
-   "source": "county-page",
-   "url": "https://chippewacountywi.gov/Directory"
+   "name": "Patricia Schimmel",
+   "party": "Democrat"
   },
   "clerkOfCircuitCourt": {
-   "name": "Nathan A. Liedl",
-   "party": "Republican",
-   "url": "https://chippewacountywi.gov/Directory"
+   "name": "Nathan A Liedl",
+   "party": "Republican"
   },
   "registerOfDeeds": {
-   "name": "Melanie K. McManus",
-   "party": "Democrat",
-   "url": "https://chippewacountywi.gov/Directory"
+   "name": "Melanie K McManus",
+   "party": "Democrat"
   },
   "districtAttorney": {
-   "name": "Wade C. Newell",
-   "party": "Republican",
-   "url": "https://chippewacountywi.gov/Directory"
+   "name": "Wade C Newell",
+   "party": "Republican"
   },
   "sheriff": {
    "name": "Travis Hakes",
@@ -437,9 +431,10 @@
    "title": "Coroner",
    "url": "https://chippewacountywi.gov/Directory"
   },
-  "contactChecked": 7,
-  "contactReadOn": "2026-10-23",
-  "contactCheckedWeekly": 7
+  "contactChecked": 3,
+  "contactAsOf": "2026-10-23",
+  "contactRetried": true,
+  "contactAsOfWhy": "The county's pages could not be read on this run: https://chippewacountywi.gov/Directory is not fetched: its own robots.txt refuses this client (robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)). Contacts already built from this host keep their last-good records and read stamp."
  },
  "55019": {
   "county": "Clark",
@@ -484,7 +479,7 @@
    "url": "https://www.clarkcountywi.gov/corner"
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 4
  },
  "55021": {
@@ -531,7 +526,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 2,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 2
  },
  "55023": {
@@ -616,7 +611,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 4
  },
  "55027": {
@@ -742,7 +737,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 5
  },
  "55033": {
@@ -848,7 +843,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 5
  },
  "55037": {
@@ -903,7 +898,7 @@
    "phone": "715.528.3346"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 5
  },
  "55039": {
@@ -1039,7 +1034,7 @@
    "title": "Coroner"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 6
  },
  "55045": {
@@ -1087,8 +1082,9 @@
    "url": "https://greencountywi.org/directory.aspx"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-10-23",
-  "contactCheckedWeekly": 6
+  "contactAsOf": "2026-10-23",
+  "contactRetried": true,
+  "contactAsOfWhy": "The county's pages could not be read on this run: https://greencountywi.org/directory.aspx is not fetched: its own robots.txt refuses this client (robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)). Contacts already built from this host keep their last-good records and read stamp."
  },
  "55047": {
   "county": "Green Lake",
@@ -1143,7 +1139,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 5
  },
  "55049": {
@@ -1234,7 +1230,7 @@
    "url": "https://www.co.iron.wi.gov/Directory"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 7
  },
  "55053": {
@@ -1326,7 +1322,7 @@
    "phone": "920-674-7119"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 6
  },
  "55057": {
@@ -1373,7 +1369,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 3,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 3
  },
  "55059": {
@@ -1422,7 +1418,7 @@
    "url": "https://www.kenoshacountywi.gov/Directory"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 7
  },
  "55061": {
@@ -1601,7 +1597,7 @@
    "url": "https://www.co.langlade.wi.us/departments/coroner/"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 6
  },
  "55069": {
@@ -1690,7 +1686,7 @@
    "phone": "920-683-4008"
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 4
  },
  "55073": {
@@ -1782,7 +1778,7 @@
    "phone": "715-732-7421"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 6
  },
  "55077": {
@@ -1837,7 +1833,7 @@
    "email": "athoma@marquettecountywi.gov"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 5
  },
  "55078": {
@@ -1975,14 +1971,12 @@
    "url": "https://www.ocontocountywi.gov/Directory"
   },
   "treasurer": {
-   "name": "Nikki Tolzman",
-   "source": "county-page",
-   "url": "https://www.ocontocountywi.gov/Directory"
+   "name": "Tanya Peterson",
+   "party": "Republican"
   },
   "clerkOfCircuitCourt": {
-   "name": "Trisha L. LeFebre",
-   "party": "Republican",
-   "url": "https://www.ocontocountywi.gov/Directory"
+   "name": "Trisha L LeFebre",
+   "party": "Republican"
   },
   "registerOfDeeds": {
    "name": "Laurie Wusterbarth",
@@ -1990,9 +1984,8 @@
    "url": "https://www.ocontocountywi.gov/Directory"
   },
   "districtAttorney": {
-   "name": "Joshua Dryak",
-   "source": "county-page",
-   "url": "https://www.ocontocountywi.gov/Directory"
+   "name": "Hannah N Schuchart",
+   "note": "Appointed to fill a vacancy"
   },
   "sheriff": {
    "name": "Todd Skarban",
@@ -2000,13 +1993,13 @@
    "url": "https://www.ocontocountywi.gov/Directory"
   },
   "coroner": {
-   "name": "Dr. Elizabeth Douglas",
-   "title": "Medical Examiner (appointed)",
-   "url": "https://www.ocontocountywi.gov/Directory"
+   "name": "Elizabeth Douglas",
+   "title": "Medical Examiner (appointed)"
   },
-  "contactChecked": 7,
-  "contactReadOn": "2026-10-23",
-  "contactCheckedWeekly": 7
+  "contactChecked": 3,
+  "contactAsOf": "2026-10-23",
+  "contactRetried": true,
+  "contactAsOfWhy": "The county's pages could not be read on this run: https://www.ocontocountywi.gov/Directory is not fetched: its own robots.txt refuses this client (robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)). Contacts already built from this host keep their last-good records and read stamp."
  },
  "55085": {
   "county": "Oneida",
@@ -2055,7 +2048,7 @@
   },
   "coroner": null,
   "contactChecked": 4,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 4
  },
  "55087": {
@@ -2125,9 +2118,8 @@
    "url": "https://ozaukeecounty.gov/Directory"
   },
   "registerOfDeeds": {
-   "name": "Jennifer J. Laurin",
-   "party": "Republican",
-   "url": "https://ozaukeecounty.gov/Directory"
+   "name": "Jennifer Laurin",
+   "party": "Republican"
   },
   "districtAttorney": {
    "name": "Benjamin Lindsay",
@@ -2143,9 +2135,10 @@
    "name": "Whitney Feiertag",
    "title": "Medical Examiner (appointed)"
   },
-  "contactChecked": 6,
-  "contactReadOn": "2026-10-23",
-  "contactCheckedWeekly": 6
+  "contactChecked": 5,
+  "contactAsOf": "2026-10-23",
+  "contactRetried": true,
+  "contactAsOfWhy": "The county's pages could not be read on this run: https://ozaukeecounty.gov/Directory is not fetched: its own robots.txt refuses this client (robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)). Contacts already built from this host keep their last-good records and read stamp."
  },
  "55091": {
   "county": "Pepin",
@@ -2339,7 +2332,7 @@
    "url": "https://www.co.portage.wi.gov/Directory"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 7
  },
  "55099": {
@@ -2351,15 +2344,13 @@
    "seats": 13
   },
   "executive": {
-   "name": "Nick Trimner",
+   "name": "Nicholas Trimner",
    "title": "County Administrator",
-   "appointed": true,
-   "url": "https://co.price.wi.us/Directory"
+   "appointed": true
   },
   "treasurer": {
-   "name": "Renée Leinfelder",
-   "party": "Republican",
-   "url": "https://co.price.wi.us/Directory"
+   "name": "Renee Leinfelder",
+   "party": "Republican"
   },
   "clerkOfCircuitCourt": {
    "name": "Lisa Walcisak",
@@ -2371,9 +2362,8 @@
    "url": "https://co.price.wi.us/Directory"
   },
   "districtAttorney": {
-   "name": "Alexis N. Nash",
-   "source": "county-page",
-   "url": "https://co.price.wi.us/Directory"
+   "name": "Matthew McElroy",
+   "party": "Independent"
   },
   "sheriff": {
    "name": "Brian Schmidt",
@@ -2381,14 +2371,14 @@
    "url": "https://co.price.wi.us/Directory"
   },
   "coroner": {
-   "name": "Amy Casey",
-   "source": "county-page",
-   "title": "Coroner",
-   "url": "https://co.price.wi.us/Directory"
+   "name": "James Dalbesio, III",
+   "party": "Democrat",
+   "title": "Coroner"
   },
-  "contactChecked": 6,
-  "contactReadOn": "2026-10-23",
-  "contactCheckedWeekly": 6
+  "contactChecked": 2,
+  "contactAsOf": "2026-10-23",
+  "contactRetried": true,
+  "contactAsOfWhy": "The county's pages could not be read on this run: https://co.price.wi.us/Directory is not fetched: its own robots.txt refuses this client (robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)). Contacts already built from this host keep their last-good records and read stamp."
  },
  "55101": {
   "county": "Racine",
@@ -2593,7 +2583,7 @@
    "url": "https://sccwi.gov/Directory"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 7
  },
  "55111": {
@@ -2644,7 +2634,7 @@
    "url": "https://www.co.sauk.wi.us/coroner"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 7
  },
  "55113": {
@@ -2655,13 +2645,7 @@
    "name": "Ron Kinsley",
    "seats": 15
   },
-  "executive": {
-   "name": "Mike Markgren",
-   "title": "County Administrator",
-   "source": "county-page",
-   "appointed": true,
-   "url": "https://www.sawyercounty.gov/Directory"
-  },
+  "executive": null,
   "treasurer": {
    "name": "Brian Lehner",
    "party": "Republican",
@@ -2677,9 +2661,8 @@
    "url": "https://www.sawyercounty.gov/Directory"
   },
   "districtAttorney": {
-   "name": "Bruce R. Poquette",
-   "party": "Republican",
-   "url": "https://www.sawyercounty.gov/Directory"
+   "name": "Bruce R Poquette",
+   "party": "Republican"
   },
   "sheriff": {
    "name": "Doug Mrotek",
@@ -2690,9 +2673,10 @@
    "name": "John Froemel",
    "title": "Medical Examiner (appointed)"
   },
-  "contactChecked": 5,
-  "contactReadOn": "2026-10-23",
-  "contactCheckedWeekly": 5
+  "contactChecked": 3,
+  "contactAsOf": "2026-10-23",
+  "contactRetried": true,
+  "contactAsOfWhy": "The county's pages could not be read on this run: https://www.sawyercounty.gov/Directory is not fetched: its own robots.txt refuses this client (robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)). Contacts already built from this host keep their last-good records and read stamp."
  },
  "55115": {
   "county": "Shawano",
@@ -2784,7 +2768,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 5
  },
  "55119": {
@@ -2830,7 +2814,7 @@
   "asOf": "Wisconsin Blue Book 2025–26 (April 2025)",
   "sourceUrl": "https://docs.legis.wisconsin.gov/misc/lrb/blue_book/2025_2026/210_officials_and_employees.pdf",
   "chair": {
-   "name": "Andy Todd",
+   "name": "Renee Lyon",
    "source": "county-board-page",
    "sourceUrl": "https://co.trempealeau.wi.us/government/agendas_minutes/standing_committees/trempealeau_county_board_of_supervisors.php",
    "seats": 17
@@ -2876,7 +2860,7 @@
    "email": "kindscb@co.trempealeau.wi.us"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 5
  },
  "55123": {
@@ -2930,7 +2914,7 @@
    "email": "bnigh@vernoncountywi.gov"
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 4
  },
  "55125": {
@@ -2980,10 +2964,9 @@
    "seats": 11
   },
   "executive": {
-   "name": "Mark Luberda",
+   "name": "Mark W Luberda",
    "title": "County Administrator",
-   "appointed": true,
-   "url": "https://co.walworth.wi.us/directory.aspx"
+   "appointed": true
   },
   "treasurer": {
    "name": "Valerie Etzel",
@@ -3011,14 +2994,13 @@
    "url": "https://co.walworth.wi.us/directory.aspx"
   },
   "coroner": {
-   "name": "Kimberly Rossi",
-   "source": "county-page",
-   "title": "Medical Examiner (appointed)",
-   "url": "https://co.walworth.wi.us/directory.aspx"
+   "name": "Gina Carver",
+   "title": "Medical Examiner (appointed)"
   },
-  "contactChecked": 7,
-  "contactReadOn": "2026-10-23",
-  "contactCheckedWeekly": 7
+  "contactChecked": 5,
+  "contactAsOf": "2026-10-23",
+  "contactRetried": true,
+  "contactAsOfWhy": "The county's pages could not be read on this run: https://co.walworth.wi.us/directory.aspx is not fetched: its own robots.txt refuses this client (robots.txt unreachable: URLError: <urlopen error timed out> (unchanged after 3 attempts)). Contacts already built from this host keep their last-good records and read stamp."
  },
  "55129": {
   "county": "Washburn",
@@ -3070,7 +3052,7 @@
    "title": "Coroner"
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 4
  },
  "55131": {
@@ -3121,7 +3103,7 @@
    "phone": "414-516-4300"
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 7
  },
  "55133": {
@@ -3175,7 +3157,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 5
  },
  "55135": {
@@ -3229,7 +3211,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 5
  },
  "55137": {
@@ -3280,7 +3262,7 @@
    "phone": "920-787-6612"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 6
  },
  "55139": {
@@ -3327,7 +3309,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 5
  },
  "55141": {
@@ -3380,7 +3362,7 @@
    "phone": "715-421-8702"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-10-23",
+  "contactReadOn": "2026-10-29",
   "contactCheckedWeekly": 5
  }
 }
