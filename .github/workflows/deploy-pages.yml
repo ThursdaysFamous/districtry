@@ -195,6 +195,14 @@ jobs:
             ms/data/state ms/data/source ms/scripts
             la/data/state la/data/source la/scripts
             mo/data/state mo/data/source mo/scripts
+            # Virginia arrives dark: the whole folder is excluded until
+            # go-live, and metros.json deliberately carries no va entry until
+            # then (validate_instance_registration.py holds the two together).
+            # THE BLANKET `<tag>/**` FORM IS LOAD-BEARING, not a style: it is
+            # what dark_instances() reads, and the generators import that to
+            # tell a dark folder from an unregistered one. It goes live only on
+            # the operator's word.
+            'va/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full

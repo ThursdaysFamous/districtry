@@ -135,6 +135,14 @@
     "height": 630,
     "rendered": "2026-10-10"
   },
+  "va": {
+    "path": "va/og-image.png",
+    "label": "va",
+    "sha256": "13d86189144c763f598388237cda76c2494a3807254fa0f373da22639c537f17",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-10-29"
+  },
   "wi": {
     "path": "wi/og-image.png",
     "label": "wi",
