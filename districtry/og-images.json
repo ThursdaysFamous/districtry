@@ -142,5 +142,13 @@
     "width": 1200,
     "height": 630,
     "rendered": "2026-09-13"
+  },
+  "wv": {
+    "path": "wv/og-image.png",
+    "label": "wv",
+    "sha256": "c150a5ac22afa8602af1d2646b8fcb4b79e46ff73ff3a1545c3c1b26f660c89d",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-10-29"
   }
 }

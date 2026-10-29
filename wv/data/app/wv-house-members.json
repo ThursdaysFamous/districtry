@@ -1,0 +1,1202 @@
+{
+  "1": {
+    "name": "Pat McGeehan",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20McGeehan",
+    "capitolOffice": [
+      "Room 228M, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3220"
+    ],
+    "email": "pat.mcgeehan@wvhouse.gov"
+  },
+  "2": {
+    "name": "Mark Zatezalo",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Zatezalo",
+    "capitolOffice": [
+      "Room 201E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3101"
+    ],
+    "email": "mark.zatezalo@wvhouse.gov"
+  },
+  "3": {
+    "name": "Jimmy Willis",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Willis",
+    "capitolOffice": [
+      "Room 224E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3367"
+    ],
+    "email": "jimmy.willis@wvhouse.gov"
+  },
+  "4": {
+    "name": "Shane Stack",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Stack",
+    "capitolOffice": [
+      "Room 150R, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3378"
+    ],
+    "email": "shane.stack@wvhouse.gov"
+  },
+  "5": {
+    "name": "Shawn Fluharty",
+    "party": "Democratic",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Fluharty",
+    "capitolOffice": [
+      "Room 258M, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3270"
+    ],
+    "email": "shawn.fluharty@wvhouse.gov"
+  },
+  "6": {
+    "name": "Jeffrey Stephens",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Stephens",
+    "capitolOffice": [
+      "Room 205E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3151"
+    ],
+    "email": "jeffrey.stephens@wvhouse.gov"
+  },
+  "7": {
+    "name": "Charles Sheedy",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Sheedy",
+    "capitolOffice": [
+      "Room 205E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3111"
+    ],
+    "email": "charles.sheedy@wvhouse.gov"
+  },
+  "8": {
+    "name": "Bill Bell",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Bell",
+    "capitolOffice": [
+      "Room 206E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3226"
+    ],
+    "email": "bill.bell@wvhouse.gov"
+  },
+  "9": {
+    "name": "Betsy Kelly",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Kelly",
+    "capitolOffice": [
+      "Room 208E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3195"
+    ],
+    "email": "betsy.kelly@wvhouse.gov"
+  },
+  "10": {
+    "name": "William Anderson",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Anderson",
+    "capitolOffice": [
+      "Room 200E-C, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3101"
+    ],
+    "email": "bill.anderson@wvhouse.gov"
+  },
+  "11": {
+    "name": "Bob Fehrenbacher",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Fehrenbacher",
+    "capitolOffice": [
+      "Room 150R-A, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3137"
+    ],
+    "email": "bob.fehrenbacher@wvhouse.gov"
+  },
+  "12": {
+    "name": "Vernon Criss",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Criss",
+    "capitolOffice": [
+      "Room 462M, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3230"
+    ],
+    "email": "vernon.criss@wvhouse.gov"
+  },
+  "13": {
+    "name": "Scot C. Heckert",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Heckert",
+    "capitolOffice": [
+      "Room 223E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3394"
+    ],
+    "email": "scot.heckert@wvhouse.gov"
+  },
+  "14": {
+    "name": "Dave Foggin",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Foggin",
+    "capitolOffice": [
+      "Room 208E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3136"
+    ],
+    "email": "dave.foggin@wvhouse.gov"
+  },
+  "15": {
+    "name": "Erica Moore",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Moore",
+    "capitolOffice": [
+      "Room 209E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3185"
+    ],
+    "email": "erica.moore@wvhouse.gov"
+  },
+  "16": {
+    "name": "Joe Parsons",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Parsons",
+    "capitolOffice": [
+      "Room 230E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3140"
+    ],
+    "email": "happyjoe.parsons@wvhouse.gov"
+  },
+  "17": {
+    "name": "Jonathan Pinson",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Pinson",
+    "capitolOffice": [
+      "Room 219E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3146"
+    ],
+    "email": "jonathan.pinson@wvhouse.gov"
+  },
+  "18": {
+    "name": "Jim Butler",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Butler",
+    "capitolOffice": [
+      "Room 225E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3199"
+    ],
+    "email": "jim.butler@wvhouse.gov"
+  },
+  "19": {
+    "name": "Kathie Hess Crouse",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Crouse",
+    "capitolOffice": [
+      "Room 210E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3118"
+    ],
+    "email": "kathie.crouse@wvhouse.gov"
+  },
+  "20": {
+    "name": "Sarah Drennan",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Drennan",
+    "capitolOffice": [
+      "Room 209E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3121"
+    ],
+    "email": "sarah.drennan@wvhouse.gov"
+  },
+  "21": {
+    "name": "Jarred Cannon",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Cannon%2C%20J.",
+    "capitolOffice": [
+      "Room 151R, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3113"
+    ],
+    "email": "jarred.cannon@wvhouse.gov"
+  },
+  "22": {
+    "name": "Aaron Holley",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Holley",
+    "capitolOffice": [
+      "Room 150R, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3277"
+    ],
+    "email": "aaron.holley@wvhouse.gov"
+  },
+  "23": {
+    "name": "Evan Worrell",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Worrell",
+    "capitolOffice": [
+      "Room 217E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3269"
+    ],
+    "email": "evan.worrell@wvhouse.gov"
+  },
+  "24": {
+    "name": "Patrick Lucas",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Lucas",
+    "capitolOffice": [
+      "Room 216E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3280"
+    ],
+    "email": "patrick.lucas@wvhouse.gov"
+  },
+  "25": {
+    "name": "Sean Hornbuckle",
+    "party": "Democratic",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Hornbuckle",
+    "capitolOffice": [
+      "Room 260M, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3395"
+    ],
+    "email": "sean.hornbuckle@wvhouse.gov"
+  },
+  "26": {
+    "name": "Matthew Rohrbach",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Rohrbach",
+    "capitolOffice": [
+      "Room 242M, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3221"
+    ],
+    "email": "matthew.rohrbach@wvhouse.gov"
+  },
+  "27": {
+    "name": "Michael Amos",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Amos",
+    "capitolOffice": [
+      "Room 151R, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3355"
+    ],
+    "email": "michael.amos@wvhouse.gov"
+  },
+  "28": {
+    "name": "Ryan Browning",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Browning",
+    "capitolOffice": [
+      "Room 231E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3126"
+    ],
+    "email": "ryan.browning@wvhouse.gov"
+  },
+  "29": {
+    "name": "Henry Dillon",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Dillon",
+    "capitolOffice": [
+      "Room 228E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3155"
+    ],
+    "email": "henry.dillon@wvhouse.gov"
+  },
+  "30": {
+    "name": "Jeff Eldridge",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Eldridge",
+    "capitolOffice": [
+      "Room 220E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3152"
+    ],
+    "email": "jeff.eldridge@wvhouse.gov"
+  },
+  "31": {
+    "name": "Margitta Mazzocchi",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Mazzocchi",
+    "capitolOffice": [
+      "Room 227E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3174"
+    ],
+    "email": "margitta.mazzocchi@wvhouse.gov"
+  },
+  "32": {
+    "name": "Josh Holstein",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Holstein",
+    "capitolOffice": [
+      "Room 222E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3184"
+    ],
+    "email": "josh.holstein@wvhouse.gov"
+  },
+  "33": {
+    "name": "Jordan Bridges",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Bridges",
+    "capitolOffice": [
+      "Room 212E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3297"
+    ],
+    "email": "jordan.bridges@wvhouse.gov"
+  },
+  "34": {
+    "name": "Mark Dean",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Dean",
+    "capitolOffice": [
+      "Room 212E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3304"
+    ],
+    "email": "mark.dean@wvhouse.gov"
+  },
+  "35": {
+    "name": "Adam Vance",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Vance",
+    "capitolOffice": [
+      "Room 221E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3163"
+    ],
+    "email": "adam.vance@wvhouse.gov"
+  },
+  "36": {
+    "name": "David Green",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Green",
+    "capitolOffice": [
+      "Room 226E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3165"
+    ],
+    "email": "david.green@wvhouse.gov"
+  },
+  "37": {
+    "name": "Marty Gearheart",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Gearheart",
+    "capitolOffice": [
+      "Room 200E-A, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3179"
+    ],
+    "email": "marty.gearheart@wvhouse.gov"
+  },
+  "38": {
+    "name": "Joe Ellington",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Ellington",
+    "capitolOffice": [
+      "Room 246M, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3172"
+    ],
+    "email": "joe.ellington@wvhouse.gov"
+  },
+  "39": {
+    "name": "Doug Smith",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Smith%2C%20D.",
+    "capitolOffice": [
+      "Room 214E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3187"
+    ],
+    "email": "doug.smith@wvhouse.gov"
+  },
+  "40": {
+    "name": "Roy Cooper",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Cooper",
+    "capitolOffice": [
+      "Room 203E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3119"
+    ],
+    "email": "roy.cooper@wvhouse.gov"
+  },
+  "41": {
+    "name": "Jordan Maynor",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Maynor",
+    "capitolOffice": [
+      "Room 408M, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3164"
+    ],
+    "email": "jordan.maynor@wvhouse.gov"
+  },
+  "42": {
+    "name": "John Jordan",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Jordan",
+    "capitolOffice": [
+      "Room 206E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3162"
+    ],
+    "email": "john.jordan@wvhouse.gov"
+  },
+  "43": {
+    "name": "Christopher W. Toney",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Toney",
+    "capitolOffice": [
+      "Room 434M-A, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3265"
+    ],
+    "email": "chris.toney@wvhouse.gov"
+  },
+  "44": {
+    "name": "Carl \"Bill\" Roop",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Roop",
+    "capitolOffice": [
+      "Room 203E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3180"
+    ],
+    "email": "bill.roop@wvhouse.gov"
+  },
+  "45": {
+    "name": "Eric Brooks",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Brooks",
+    "capitolOffice": [
+      "Room 220E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3197"
+    ],
+    "email": "eric.brooks@wvhouse.gov"
+  },
+  "46": {
+    "name": "Jeff Campbell",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Campbell",
+    "capitolOffice": [
+      "Room 204E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3131"
+    ],
+    "email": "jeff.campbell@wvhouse.gov"
+  },
+  "47": {
+    "name": "Ray Canterbury",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Canterbury",
+    "capitolOffice": [
+      "Room 229E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3129"
+    ],
+    "email": "ray.canterbury@wvhouse.gov"
+  },
+  "48": {
+    "name": "Gregory A. Watt",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Watt",
+    "capitolOffice": [
+      "Room 230E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3916"
+    ],
+    "email": "gregory.watt@wvhouse.gov"
+  },
+  "49": {
+    "name": "Stanley Adkins",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Adkins",
+    "capitolOffice": [
+      "Room 230E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3352"
+    ],
+    "email": "stanley.adkins@wvhouse.gov"
+  },
+  "50": {
+    "name": "William J. Vest",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Vest",
+    "capitolOffice": [
+      "Room 229E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3337"
+    ],
+    "email": "william.vest@wvhouse.gov"
+  },
+  "51": {
+    "name": "Marshall W. Clay",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Clay",
+    "capitolOffice": [
+      "Room 233E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3170"
+    ],
+    "email": "marshall.clay@wvhouse.gov"
+  },
+  "52": {
+    "name": "Tresa Howell",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Howell%2C%20T.",
+    "capitolOffice": [
+      "Room 227E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3287"
+    ],
+    "email": "tresa.howell@wvhouse.gov"
+  },
+  "53": {
+    "name": "Tristan Leavitt",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Leavitt",
+    "capitolOffice": [
+      "Room 150R-A, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3156"
+    ],
+    "email": "tristan.leavitt@wvhouse.gov"
+  },
+  "54": {
+    "name": "Mike Pushkin",
+    "party": "Democratic",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Pushkin",
+    "capitolOffice": [
+      "Room 6U-B, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3106"
+    ],
+    "email": "mike.pushkin@wvhouse.gov"
+  },
+  "55": {
+    "name": "James Robert \"JB\" Akers II",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Akers",
+    "capitolOffice": [
+      "Room 418M, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3340"
+    ],
+    "email": "jb.akers@wvhouse.gov"
+  },
+  "56": {
+    "name": "Kayla Young",
+    "party": "Democratic",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Young",
+    "capitolOffice": [
+      "Room 6R-A, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3362"
+    ],
+    "email": "kayla.young@wvhouse.gov"
+  },
+  "57": {
+    "name": "Hollis Lewis",
+    "party": "Democratic",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Lewis",
+    "capitolOffice": [
+      "Room 6U-A, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3183"
+    ],
+    "email": "hollis.lewis@wvhouse.gov"
+  },
+  "58": {
+    "name": "Walter Hall",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Hall",
+    "capitolOffice": [
+      "Room 218E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3181"
+    ],
+    "email": "walter.hall@wvhouse.gov"
+  },
+  "59": {
+    "name": "Andy Shamblin",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Shamblin",
+    "capitolOffice": [
+      "Room 207E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3392"
+    ],
+    "email": "andy.shamblin@wvhouse.gov"
+  },
+  "60": {
+    "name": "Dana Ferrell",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Ferrell",
+    "capitolOffice": [
+      "Room 224E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3194"
+    ],
+    "email": "dana.ferrell@wvhouse.gov"
+  },
+  "61": {
+    "name": "Dean Jeffries",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Jeffries",
+    "capitolOffice": [
+      "Room 221E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3149"
+    ],
+    "email": "dean.jeffries@wvhouse.gov"
+  },
+  "62": {
+    "name": "Roger Hanshaw",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Speaker%20Hanshaw",
+    "capitolOffice": [
+      "Room 228M, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3210"
+    ],
+    "email": "roger.hanshaw@wvhouse.gov"
+  },
+  "63": {
+    "name": "Lori Dittman",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Dittman",
+    "capitolOffice": [
+      "Room 209E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3142"
+    ],
+    "email": "lori.dittman@wvhouse.gov"
+  },
+  "64": {
+    "name": "Adam Burkhammer",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Burkhammer",
+    "capitolOffice": [
+      "Room 219E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3123"
+    ],
+    "email": "adam.burkhammer@wvhouse.gov"
+  },
+  "65": {
+    "name": "Carl Martin",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Martin",
+    "capitolOffice": [
+      "Room 226E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3167"
+    ],
+    "email": "carl.martin@wvhouse.gov"
+  },
+  "66": {
+    "name": "Jonathan Kyle",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Kyle",
+    "capitolOffice": [
+      "Room 231E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3178"
+    ],
+    "email": "jonathan.kyle@wvhouse.gov"
+  },
+  "67": {
+    "name": "Elias Coop-Gonzalez",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Coop-Gonzalez",
+    "capitolOffice": [
+      "Room 228E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3145"
+    ],
+    "email": "elias.coop-gonzalez@wvhouse.gov"
+  },
+  "68": {
+    "name": "Chris Phillips",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Phillips",
+    "capitolOffice": [
+      "Room 213E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3192"
+    ],
+    "email": "chris.phillips@wvhouse.gov"
+  },
+  "69": {
+    "name": "Keith Marple",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Marple",
+    "capitolOffice": [
+      "Room 204E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3141"
+    ],
+    "email": "keith.marple@wvhouse.gov"
+  },
+  "70": {
+    "name": "Mickey Petitto",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Petitto",
+    "capitolOffice": [
+      "Room 210E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3171"
+    ],
+    "email": "mickey.petitto@wvhouse.gov"
+  },
+  "71": {
+    "name": "Laura Kimble",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Kimble",
+    "capitolOffice": [
+      "Room 227E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3102"
+    ],
+    "email": "laura.kimble@wvhouse.gov"
+  },
+  "72": {
+    "name": "Clay Riley",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Riley",
+    "capitolOffice": [
+      "Room 472M, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3144"
+    ],
+    "email": "clay.riley@wvhouse.gov"
+  },
+  "73": {
+    "name": "Bryan Smith",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Smith%2C%20B.",
+    "capitolOffice": [
+      "Room 225E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3139"
+    ],
+    "email": "bryan.smith@wvhouse.gov"
+  },
+  "74": {
+    "name": "Guy Ward",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Ward%2C%20G.",
+    "capitolOffice": [
+      "Room 151R, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3249"
+    ],
+    "email": "guy.ward@wvhouse.gov"
+  },
+  "75": {
+    "name": "Phil Mallow",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Mallow",
+    "capitolOffice": [
+      "Room 202E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3331"
+    ],
+    "email": "phil.mallow@wvhouse.gov"
+  },
+  "76": {
+    "name": "Rick Garcia",
+    "party": "Democratic",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Garcia",
+    "capitolOffice": [
+      "Room 6R, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3124"
+    ],
+    "email": "rick.garcia@wvhouse.gov"
+  },
+  "77": {
+    "name": "Joe Statler",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Statler",
+    "capitolOffice": [
+      "Room 434M, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3265"
+    ],
+    "email": "joe.statler@wvhouse.gov"
+  },
+  "78": {
+    "name": "Geno Chiarelli",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Chiarelli",
+    "capitolOffice": [
+      "Room 223E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3158"
+    ],
+    "email": "geno.chiarelli@wvhouse.gov"
+  },
+  "79": {
+    "name": "Evan Hansen",
+    "party": "Democratic",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Hansen",
+    "capitolOffice": [
+      "Room 2R, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3125"
+    ],
+    "email": "evan.hansen@wvhouse.gov"
+  },
+  "80": {
+    "name": "John Williams",
+    "party": "Democratic",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Williams",
+    "capitolOffice": [
+      "Room 4R, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3173"
+    ],
+    "email": "john.williams@wvhouse.gov"
+  },
+  "81": {
+    "name": "Anitra Hamilton",
+    "party": "Democratic",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Hamilton",
+    "capitolOffice": [
+      "Room 2R, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3900"
+    ],
+    "email": "anitra.hamilton@wvhouse.gov"
+  },
+  "82": {
+    "name": "David McCormick",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20McCormick",
+    "capitolOffice": [
+      "Room 231E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3127"
+    ],
+    "email": "david.mccormick@wvhouse.gov"
+  },
+  "83": {
+    "name": "George Street",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Street",
+    "capitolOffice": [
+      "Room 222E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3160"
+    ],
+    "email": "george.street@wvhouse.gov"
+  },
+  "84": {
+    "name": "D. Rolland Jennings",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Jennings",
+    "capitolOffice": [
+      "Room 207E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3396"
+    ],
+    "email": "buck.jennings@wvhouse.gov"
+  },
+  "85": {
+    "name": "John Paul Hott",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Hott",
+    "capitolOffice": [
+      "Room 150R-A, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3399"
+    ],
+    "email": "johnpaul.hott@wvhouse.gov"
+  },
+  "86": {
+    "name": "Bryan Ward",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Ward%2C%20B.",
+    "capitolOffice": [
+      "Room 201E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3154"
+    ],
+    "email": "bryan.ward@wvhouse.gov"
+  },
+  "87": {
+    "name": "Gary G. Howell",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Howell%2C%20G.",
+    "capitolOffice": [
+      "Room 151R, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3191"
+    ],
+    "email": "gary.howell@wvhouse.gov"
+  },
+  "88": {
+    "name": "Rick Hillenbrand",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Hillenbrand",
+    "capitolOffice": [
+      "Room 218E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3176"
+    ],
+    "email": "rick.hillenbrand@wvhouse.gov"
+  },
+  "89": {
+    "name": "David Cannon",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Cannon%2C%20D.",
+    "capitolOffice": [
+      "Room 231E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3157"
+    ],
+    "email": "david.cannon@wvhouse.gov"
+  },
+  "90": {
+    "name": "George Miller",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Miller",
+    "capitolOffice": [
+      "Room 276M, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3177"
+    ],
+    "email": "george.miller@wvhouse.gov"
+  },
+  "91": {
+    "name": "Ian T. Masters",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Masters",
+    "capitolOffice": [
+      "Room 230E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3147"
+    ],
+    "email": "ian.masters@wvhouse.gov"
+  },
+  "92": {
+    "name": "Michael Hite",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Hite",
+    "capitolOffice": [
+      "Room 215E-C, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3269"
+    ],
+    "email": "michael.hite@wvhouse.gov"
+  },
+  "93": {
+    "name": "Michael Hornby",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Hornby",
+    "capitolOffice": [
+      "Room 214E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3138"
+    ],
+    "email": "michael.hornby@wvhouse.gov"
+  },
+  "94": {
+    "name": "Donald Lee Bennett",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Bennett",
+    "capitolOffice": [
+      "Room MB 68, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3122"
+    ],
+    "email": "donaldlee.bennett@wvhouse.gov"
+  },
+  "95": {
+    "name": "Chuck Horst",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Horst",
+    "capitolOffice": [
+      "Room 202E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3148"
+    ],
+    "email": "charles.horst@wvhouse.gov"
+  },
+  "96": {
+    "name": "Lisa White",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20White",
+    "capitolOffice": [
+      "Room 210E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3274"
+    ],
+    "email": "lisa.white@wvhouse.gov"
+  },
+  "97": {
+    "name": "S. Chris Anders",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Anders",
+    "capitolOffice": [
+      "Room 476M, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3350"
+    ],
+    "email": "chris.anders@wvhouse.gov"
+  },
+  "98": {
+    "name": "Joe Funkhouser",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Funkhouser",
+    "capitolOffice": [
+      "Room 150R, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3130"
+    ],
+    "email": "joe.funkhouser@wvhouse.gov"
+  },
+  "99": {
+    "name": "Wayne Clark",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Clark%2C%20W.",
+    "capitolOffice": [
+      "Room 216E, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3366"
+    ],
+    "email": "wayne.clark@wvhouse.gov"
+  },
+  "100": {
+    "name": "Bill Ridenour",
+    "party": "Republican",
+    "url": "https://www.wvlegislature.gov/House/lawmaker.cfm?member=Delegate%20Ridenour",
+    "capitolOffice": [
+      "Room 150R, Bldg. 1",
+      "1900 Kanawha Blvd. E.",
+      "Charleston, WV 25305",
+      "Phone: (304) 340-3248"
+    ],
+    "email": "bill.ridenour@wvhouse.gov"
+  }
+}
