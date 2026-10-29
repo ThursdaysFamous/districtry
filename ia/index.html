@@ -20839,7 +20839,11 @@ function initIowaExplorer() {
         is a return. The mark is the single character "1", never a date or an
         identifier, it never leaves the browser, and local storage is shared
         by every page on the site, so "first" means the first time this
-        browser opened any districtry map. Storage that cannot be read or
+        browser opened the front page or any districtry map. The front page
+        counts `visit/first/front` or `visit/return/front` from these same
+        two keys (scripts/build_landing_page.py visit_count_script, which
+        reads them from here), so a window counted there is not counted
+        again on the map it goes on to. Storage that cannot be read or
         written counts nothing, rather than counting every visit as a first.
         It replaced Google Analytics, whose new-user figure needs a cookie
         that carries an identifier (2026-10-22).
@@ -20941,7 +20945,11 @@ function initIowaExplorer() {
       // sits at the same foot of a phone's screen
       if (!state.selectedPoint || dstFirstUseOpen()) return;
       clearInterval(poll);
-      setTimeout(fn, DST_INVITE_DELAY_MS);
+      // and if the tip or tour opened during that moment, wait for it again
+      setTimeout(function () {
+        if (dstFirstUseOpen()) dstAfterFirstAnswer(fn);
+        else fn();
+      }, DST_INVITE_DELAY_MS);
     }, 500);
   }
   var dstInviteBar = null;
@@ -21138,16 +21146,27 @@ function initIowaExplorer() {
         reviews suggest that is where they stop. It is not stored and shows
         every time that is true.
 
-     4. THE COUNTS, never by place: `first-use/<what>` for got-it, tour,
-        tour-done, tour-closed and help (the tip's How to use link followed).
-        The privacy page names the family and the key. */
+     4. THE COUNTS, by app and never by place: `first-use/<what>/<tag>` for
+        got-it, tour, tour-done, tour-closed and help (the tip's How to use
+        link followed), the tag naming the state's map it was used on (Adam,
+        2026-10-28: "The tutorial stats should track app used on"), and
+        `/play` after the tag inside the Google Play app, read from the mark
+        engine/shared/play-app.txt sets (asked whether the Play app should be
+        split from the website, Adam answered "Yes" the same day). The
+        traffic page counts them apart from reader actions, so a new feature's
+        own buttons do not read as more use of the map. The privacy page names
+        the family and the key. */
   var DST_FIRST_USE_KEY = "districtry-first-use";
   var DST_HELP_URL = "/help.html";
   var DST_FIRST_USE_DELAY_MS = 900;
   var dstFirstUseBox = null;
   var dstTourState = null;
+  /* True from the moment the tip is scheduled until its timer runs, so the
+     install invitation also waits for a tip that is about to show. */
+  var dstFirstUsePending = false;
   function dstFirstUseEvent(what) {
-    dstCountWhenReady("first-use/" + what);
+    dstCountWhenReady("first-use/" + what + "/" + METRO_BRAND.instanceTag +
+      (document.documentElement.classList.contains("dst-play-app") ? "/play" : ""));
   }
   function dstFirstUseSeen() {
     try { return !!window.localStorage.getItem(DST_FIRST_USE_KEY); } catch (e) { return true; }
@@ -21158,7 +21177,7 @@ function initIowaExplorer() {
   /* Read by the install invitation, so the two never sit on top of each
      other at the foot of a phone's screen. */
   function dstFirstUseOpen() {
-    return !!(dstFirstUseBox || dstTourState);
+    return !!(dstFirstUsePending || dstFirstUseBox || dstTourState);
   }
   function dstEl(tag, cls, text) {
     var el = document.createElement(tag);
@@ -21382,7 +21401,9 @@ function initIowaExplorer() {
   }
 
   if (!dstFramed && !dstFirstUseSeen()) {
+    dstFirstUsePending = true;
     setTimeout(function () {
+      dstFirstUsePending = false;
       if (!dstFirstUseSeen()) dstShowFirstUse();
     }, DST_FIRST_USE_DELAY_MS);
   }

@@ -704,6 +704,52 @@ def notice_memory():
         % (key.group(1), word.group(1)))
 
 
+# THE FRONT PAGE COUNTS A FIRST OR RETURN VISIT TOO (Adam, 2026-10-29: "Also
+# the front page needs to be counted"). The maps count `visit/first/<tag>` or
+# `visit/return/<tag>` once per browser window (engine install-app), and this
+# page counts `visit/first/front` or `visit/return/front` from the SAME two
+# keys, read off that block so the two cannot drift apart: the one-character
+# mark in localStorage that says this browser has been here before, and the
+# sessionStorage mark that says this window's visit is counted. So a visit is
+# counted once, on whichever of the front page and the maps it starts. A
+# reader who goes on from here to a map is not counted again there, so the
+# mark this page has just written cannot turn that same visit into a return
+# on the map. Not in a
+# frame, as the maps do not count one, and not on a visit the forward guard is
+# sending to /il/, which that map counts. Storage that cannot be read or
+# written counts nothing, rather than counting every visit as a first.
+def visit_count_script():
+    src = read(INSTALL_APP, "the maps' visit count")
+    seen = re.search(r'\bvar DST_SEEN_KEY = "([a-z-]+)";', src)
+    counted = re.search(r'\bvar DST_VISIT_COUNTED_KEY = "([a-z-]+)";', src)
+    if not seen or not counted:
+        fail("the front page counts a first or return visit with the maps' own two "
+             "keys, and engine/index.html/install-app.txt no longer declares "
+             "DST_SEEN_KEY and DST_VISIT_COUNTED_KEY as plain strings, so this page "
+             "cannot know what to read.")
+    return (
+        "  /* ---------- a first or return visit (visit_count_script) ----------\n"
+        "     Counted once per browser window with the maps' own keys\n"
+        "     (engine/index.html/install-app.txt), so a visit is counted on the page\n"
+        "     it starts on and nowhere else in that window. */\n"
+        "  (function () {\n"
+        '    var SEEN_KEY = "%s", COUNTED_KEY = "%s";\n'
+        "    var inFrame = false;\n"
+        "    try { inFrame = window.self !== window.top; } catch (e) { inFrame = true; }\n"
+        "    if (inFrame || window.dstForwarding) return;\n"
+        "    var kind = null;\n"
+        "    try {\n"
+        "      if (!window.sessionStorage.getItem(COUNTED_KEY)) {\n"
+        "        var seen = !!window.localStorage.getItem(SEEN_KEY);\n"
+        '        if (!seen) window.localStorage.setItem(SEEN_KEY, "1");\n'
+        '        window.sessionStorage.setItem(COUNTED_KEY, "1");\n'
+        '        kind = seen ? "return" : "first";\n'
+        "      }\n"
+        "    } catch (e) { kind = null; /* storage blocked: count nothing */ }\n"
+        '    if (kind) trackEvent("visit/" + kind + "/front");\n'
+        "  })();\n"
+        % (seen.group(1), counted.group(1)))
+
 def state_rows(metros):
     """Every state and DC, in alphabetical order, each paired with the fleet
     entry that answers there (or None) and whether that entry covers the whole
@@ -2221,6 +2267,9 @@ def build():
   var isPermalink = /(?:^|[#&])(?:point|layers|zoom)=/.test(hash);
   var isTaggedShare = /[?&]utm_source=(?:share|embed)\\b/.test(query);
   if (isPermalink || isTaggedShare) {
+    // Read by the visit count (visit_count_script): a forwarded visit is the
+    // map's to count, not this page's.
+    window.dstForwarding = true;
     location.replace("%(forward)s" + query + hash);
   }
 })();
@@ -3553,7 +3602,7 @@ footer .support b { color: var(--ink); }
       if (form.requestSubmit) form.requestSubmit(); else button.click();
     }
   }
-%(first_use)s})();
+%(visit)s%(first_use)s})();
 </script>
 </body>
 </html>
@@ -3583,6 +3632,7 @@ footer .support b { color: var(--ink); }
         "key_wash": key_wash,
         "metros_js": render_metros_js(metros),
         "first_use_css": FIRST_USE_FRONT_CSS,
+        "visit": visit_count_script(),
         "first_use": FIRST_USE_FRONT_SCRIPT,
     }
 

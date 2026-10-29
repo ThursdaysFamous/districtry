@@ -2792,7 +2792,10 @@ try {
   //     whose steps ring something on screen, Back and Done work, and both are
   //     counted. While the tip is open the install invitation waits. A point
   //     selected with no layer on shows a "tick a box" hint, which goes once a
-  //     layer is on. No layer is ever switched on for the reader (Adam: a
+  //     layer is on. Each count ends in the map's tag (first-use/got-it/il), so
+  //     the traffic page can say which state's map the tutorial was used on,
+  //     and inside the Google Play app in /play after it.
+  //     No layer is ever switched on for the reader (Adam: a
   //     layer the app switched on would be counted as one a reader chose),
   //     and an embedded map shows no tip.
   {
@@ -2821,8 +2824,8 @@ try {
         JSON.stringify(state));
       await page.click(".first-use-ok");
       const gone = await page.evaluate(() => !document.querySelector(".first-use"));
-      check("Got it closes the tip and is counted once", gone &&
-        JSON.stringify(await firstUse(page)) === '["first-use/got-it"]', JSON.stringify(await firstUse(page)));
+      check("Got it closes the tip and is counted once, naming the map it was on", gone &&
+        JSON.stringify(await firstUse(page)) === '["first-use/got-it/il"]', JSON.stringify(await firstUse(page)));
       await page.reload({ waitUntil: "domcontentloaded" });
       await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
       await page.waitForTimeout(1500);
@@ -2859,8 +2862,18 @@ try {
         titles.length === 4 && new Set(titles).size === 4 && seen.filter((s) => s.title).every((s) => s.ring) &&
           seen.some((s) => s.back === titles[0]) && left,
         JSON.stringify(seen));
-      check("the tour is counted when started and when finished",
-        JSON.stringify(await firstUse(page)) === '["first-use/tour","first-use/tour-done"]', JSON.stringify(await firstUse(page)));
+      check("the tour is counted when started and when finished, naming the map it was on",
+        JSON.stringify(await firstUse(page)) === '["first-use/tour/il","first-use/tour-done/il"]', JSON.stringify(await firstUse(page)));
+      await context.close();
+    }
+    {
+      // Opened by the Google Play app, which the launcher marks with ref=play.
+      const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 390, height: 844 } });
+      const page = await booted(context, `${BASE}?ref=play`, stub);
+      const shown = await page.waitForSelector(".first-use .first-use-ok", { timeout: 10000 }).then(() => true, () => false);
+      if (shown) await page.click(".first-use-ok");
+      check("inside the Google Play app, Got it is counted with /play after the map's tag",
+        shown && JSON.stringify(await firstUse(page)) === '["first-use/got-it/il/play"]', JSON.stringify(await firstUse(page)));
       await context.close();
     }
     {

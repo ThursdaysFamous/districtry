@@ -11071,7 +11071,7 @@ function initMissouriExplorer() {
     "mo-senate",         // 34 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 115 counties (114 counties and the independent City of St. Louis), pre-built from TIGERweb; the instance's offline anchor layer
     "mo-house",          // 163 House districts — smaller on average than a county, larger than a school district
-    "county-commissioner", // Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 33 counties whose county map viewer, download, posted township map, GIS office or clerk publishes or sends them
+    "county-commissioner", // Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 34 counties whose county map viewer, download, posted township map, GIS office or clerk publishes or sends them
     "school-district-unified", // 445 unified districts, about 372 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive; with the 71 elementary districts they cover the state exactly
     "school-district-elementary", // 71 elementary districts, about 177 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive; the ground the unified tiling leaves
     "zip-code",          // 1,040 ZIP Code Tabulation Areas overlapping Missouri, of the 1,977 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-26); about 163 km2 of land on average for the 1,977, and ranked by them, which are what the map draws where the archive is not used (on the raster basemap); the layer hides outside Missouri
@@ -15567,6 +15567,9 @@ function initMissouriExplorer() {
       : result.source === "arcgis"
       ? "The commissioner district layer of " + String(result.county) +
         "'s own map at SEMO GIS"
+      : result.source === "listed" && result.byStreet
+      ? String(result.county) + "'s commission districts as the county clerk " +
+        "listed them, precinct by precinct"
       : result.source === "listed" && result.byPrecinct
       ? String(result.county) + "'s commission districts as the county clerk " +
         "listed them, township by township and precinct by precinct"
@@ -15587,6 +15590,11 @@ function initMissouriExplorer() {
       ? " They are drawn here from the Census Bureau's township lines and, " +
         "inside a township the list splits, its 2020 voting precinct lines, " +
         "which may be older than a city's newest ward lines."
+      : result.source === "listed" && result.byStreet
+      ? " They are drawn here from the Census Bureau's 2020 blocks in each " +
+        "precinct and, inside a precinct the clerk said the line divides, on " +
+        "each side of the streets the clerk named, so near those streets a " +
+        "block can be on the wrong side."
       : result.source === "listed"
       ? " They are drawn here from the Census Bureau's township lines."
       : result.source === "traced"
@@ -15596,9 +15604,13 @@ function initMissouriExplorer() {
         "on the wrong side."
       : "") + " Missouri law has " +
       "each county commission draw the line between its two districts, and " +
-      "sets no date by which it must be redrawn. This app has not checked " +
-      "this line against the precinct records the county's elections use, so " +
-      "near the line, check with the county clerk.";
+      "sets no date by which it must be redrawn. " + (result.byStreet
+      ? "The precinct lines drawn here are the Census Bureau's of 2020 and " +
+        "may be older than the county's own, so near the line, check with " +
+        "the county clerk."
+      : "This app has not checked this line against the precinct records " +
+        "the county's elections use, so near the line, check with the county " +
+        "clerk.");
   }
 
   registerLayer({
@@ -15637,6 +15649,7 @@ function initMissouriExplorer() {
           clerk: findPropCI(props, ["pointedon"]),
           listed: findPropCI(props, ["listedon"]),
           byPrecinct: !!findPropCI(props, ["byprecinct"]),
+          byStreet: !!findPropCI(props, ["bystreet"]),
           sent: findPropCI(props, ["senton"]),
           officials: null,
           rosterFailed: false
@@ -19084,7 +19097,11 @@ function initMissouriExplorer() {
         is a return. The mark is the single character "1", never a date or an
         identifier, it never leaves the browser, and local storage is shared
         by every page on the site, so "first" means the first time this
-        browser opened any districtry map. Storage that cannot be read or
+        browser opened the front page or any districtry map. The front page
+        counts `visit/first/front` or `visit/return/front` from these same
+        two keys (scripts/build_landing_page.py visit_count_script, which
+        reads them from here), so a window counted there is not counted
+        again on the map it goes on to. Storage that cannot be read or
         written counts nothing, rather than counting every visit as a first.
         It replaced Google Analytics, whose new-user figure needs a cookie
         that carries an identifier (2026-10-22).
@@ -19186,7 +19203,11 @@ function initMissouriExplorer() {
       // sits at the same foot of a phone's screen
       if (!state.selectedPoint || dstFirstUseOpen()) return;
       clearInterval(poll);
-      setTimeout(fn, DST_INVITE_DELAY_MS);
+      // and if the tip or tour opened during that moment, wait for it again
+      setTimeout(function () {
+        if (dstFirstUseOpen()) dstAfterFirstAnswer(fn);
+        else fn();
+      }, DST_INVITE_DELAY_MS);
     }, 500);
   }
   var dstInviteBar = null;
@@ -19383,16 +19404,27 @@ function initMissouriExplorer() {
         reviews suggest that is where they stop. It is not stored and shows
         every time that is true.
 
-     4. THE COUNTS, never by place: `first-use/<what>` for got-it, tour,
-        tour-done, tour-closed and help (the tip's How to use link followed).
-        The privacy page names the family and the key. */
+     4. THE COUNTS, by app and never by place: `first-use/<what>/<tag>` for
+        got-it, tour, tour-done, tour-closed and help (the tip's How to use
+        link followed), the tag naming the state's map it was used on (Adam,
+        2026-10-28: "The tutorial stats should track app used on"), and
+        `/play` after the tag inside the Google Play app, read from the mark
+        engine/shared/play-app.txt sets (asked whether the Play app should be
+        split from the website, Adam answered "Yes" the same day). The
+        traffic page counts them apart from reader actions, so a new feature's
+        own buttons do not read as more use of the map. The privacy page names
+        the family and the key. */
   var DST_FIRST_USE_KEY = "districtry-first-use";
   var DST_HELP_URL = "/help.html";
   var DST_FIRST_USE_DELAY_MS = 900;
   var dstFirstUseBox = null;
   var dstTourState = null;
+  /* True from the moment the tip is scheduled until its timer runs, so the
+     install invitation also waits for a tip that is about to show. */
+  var dstFirstUsePending = false;
   function dstFirstUseEvent(what) {
-    dstCountWhenReady("first-use/" + what);
+    dstCountWhenReady("first-use/" + what + "/" + METRO_BRAND.instanceTag +
+      (document.documentElement.classList.contains("dst-play-app") ? "/play" : ""));
   }
   function dstFirstUseSeen() {
     try { return !!window.localStorage.getItem(DST_FIRST_USE_KEY); } catch (e) { return true; }
@@ -19403,7 +19435,7 @@ function initMissouriExplorer() {
   /* Read by the install invitation, so the two never sit on top of each
      other at the foot of a phone's screen. */
   function dstFirstUseOpen() {
-    return !!(dstFirstUseBox || dstTourState);
+    return !!(dstFirstUsePending || dstFirstUseBox || dstTourState);
   }
   function dstEl(tag, cls, text) {
     var el = document.createElement(tag);
@@ -19627,7 +19659,9 @@ function initMissouriExplorer() {
   }
 
   if (!dstFramed && !dstFirstUseSeen()) {
+    dstFirstUsePending = true;
     setTimeout(function () {
+      dstFirstUsePending = false;
       if (!dstFirstUseSeen()) dstShowFirstUse();
     }, DST_FIRST_USE_DELAY_MS);
   }
