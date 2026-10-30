@@ -15308,19 +15308,129 @@ function initGeorgiaExplorer() {
    * service-worker cached, so this layer answers even when every
    * third-party host is down. 159 features.
    *
-   * THE CARD NAMES THE COUNTY AND NOBODY ON ITS COMMISSION YET. Every
-   * Georgia county is governed by an elected board of commissioners or, in a
-   * few counties, a sole commissioner, and several counties are one
-   * government with a city. No state office publishes who sits on them (the
-   * Department of Community Affairs' directory of local officials sits
-   * behind a sign-in, which stays shut), so the names will come from the
-   * state's election results, county by county, with each card saying which
-   * election its names come from. Until then the card says so in one
-   * sentence and names no one — gap ga-county-commission-members.
+   * THE CARD NAMES THE COUNTY COMMISSION FROM THE STATE'S ELECTION RESULTS.
+   * Every Georgia county is governed by an elected board of commissioners
+   * or, in a few counties, a sole commissioner, and four counties are one
+   * government with their city. No state office publishes who sits on them
+   * (the Department of Community Affairs' directory of local officials sits
+   * behind a sign-in, which stays shut), so
+   * ga/scripts/build_ga_county_officials.py names each seat for the winner
+   * of its newest election on the Secretary of State's results site whose
+   * winner has taken office (data/app/ga-county-officials.json), and the
+   * card says when each was elected. The site carries county contests only
+   * from November 2024 on, so a seat is listed only once it has been on a
+   * ballot since then, and one whose sitting member was elected earlier is
+   * listed with no one in it; it shows nobody appointed to a vacancy. The
+   * card says both. Gap ga-county-commission-members records the rest.
    * ---------- */
   var loadStateCounties = makeCached(function () {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
   });
+
+  /* County commissioners and county school board members, by county FIPS
+   * code, named from the Secretary of State's official election results
+   * (data/app/ga-county-officials.json, built by
+   * ga/scripts/build_ga_county_officials.py; one record per county, keyed by
+   * FIPS code like the fleet's other county rosters). Each seat carries the winner
+   * of its newest election who has taken office (`name`), or no name, and
+   * the winner who has not taken office yet (`elect`). The County card reads
+   * the commission and the School District card the county school board. */
+  var loadGaCountyOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ga-county-officials.json", {}, 2);
+  });
+  var GA_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  // "2024-11-05" as "November 5, 2024", or null.
+  function gaDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return GA_MONTHS[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1];
+  }
+  // "2027-01-01" as "January 2027", or null.
+  function gaMonth(iso) {
+    var m = /^(\d{4})-(\d{2})/.exec(String(iso || ""));
+    return m ? GA_MONTHS[Number(m[2]) - 1] + " " + m[1] : null;
+  }
+  // The four counties that are one government with a city, by FIPS code, and
+  // the city: the commission is also the city's governing body (Columbus's is
+  // called a council). Named apart from the Municipality card's
+  // GA_CONSOLIDATED, which is keyed by place and is declared later in this
+  // scope, so one name would leave this table unread.
+  var GA_COUNTY_CITY = { "13059": "Athens", "13215": "Columbus", "13245": "Augusta",
+    "13021": "Macon" };
+  function gaJoin(items) {
+    if (items.length < 2) return items.join("");
+    return items.slice(0, -1).join(", ") + " and " + items[items.length - 1];
+  }
+  // One board's seats as person rows and the sentences about the rest:
+  // { people: [row], fields: [{label, value}] }. `member` is the word for one
+  // member ("commissioner", "member"). A seat's winner is one `name`, or the
+  // `members` a contest electing several chose; `runoff` is the day of a
+  // seat's last election when it went to a runoff the results site does not
+  // carry; `special` is true when the site calls that election special.
+  function gaBoardSeats(seats, member) {
+    var people = [], unnamed = [], runoff = [], elect = [];
+    (seats || []).forEach(function (s) {
+      if (!s || !s.seat) return;
+      var seat = String(s.seat);
+      var who = s.members && s.members.length ? s.members : (s.name ? [s] : []);
+      var when = gaDate(s.elected);
+      who.forEach(function (m) {
+        if (!m || !m.name) return;
+        people.push({
+          name: String(m.name),
+          badge: seat,
+          note: m.party ? String(m.party) : null,
+          details: when ? {
+            label: "Elected",
+            items: [when + (s.special === true ? ", in a special election" : "")]
+          } : null
+        });
+      });
+      if (!who.length) {
+        if (s.runoff) runoff.push(seat + "'s last election, on " +
+          (gaDate(s.runoff) || "a date the results give") + ", went to a runoff " +
+          "the Secretary of State's results site does not carry.");
+        else unnamed.push(seat);
+      }
+      var e = s.elect;
+      var chosen = e ? (e.members && e.members.length ? e.members : (e.name ? [e] : [])) : [];
+      if (chosen.length) {
+        elect.push(gaJoin(chosen.map(function (m) { return String(m.name); })) +
+          (chosen.length > 1 ? " were" : " was") + " elected to " + seat + " on " +
+          (gaDate(e.elected) || "a later date") + " and " +
+          (chosen.length > 1 ? "take" : "takes") + " office in " +
+          (gaMonth(e.since) || "the new year") + ".");
+      }
+    });
+    var fields = [];
+    if (unnamed.length) {
+      fields.push({
+        label: unnamed.length === 1 ? "Seat not named here" : "Seats not named here",
+        value: gaJoin(unnamed) + ". " + (unnamed.length === 1 ? "Its " + member + " was" :
+          "Their " + member + "s were") + " last elected before November 2024, and the " +
+          "Secretary of State's results site carries county races only from then on."
+      });
+    }
+    if (runoff.length) {
+      fields.push({
+        label: runoff.length === 1 ? "Seat decided by a runoff" : "Seats decided by a runoff",
+        value: runoff.join(" ")
+      });
+    }
+    if (elect.length) fields.push({ label: "Elected, not yet in office", value: elect.join(" ") });
+    return { people: people, fields: fields };
+  }
+  function gaResultsCredit(o) {
+    var asOf = gaDate(o && o.asOf);
+    return "The Georgia Secretary of State's official election results" +
+      (asOf ? ", read " + asOf : "") + ". They carry county races from November " +
+      "2024 on, so this list holds the seats on a ballot since then, each named " +
+      "for the winner of its newest election there; a seat last filled before " +
+      "then and not on a ballot since is not listed. The results do not show " +
+      "anyone appointed to fill a vacancy, so a seat filled that way since its " +
+      "election still shows the person elected to it.";
+  }
 
   registerLayer({
     id: "county",
@@ -15340,11 +15450,21 @@ function initGeorgiaExplorer() {
       return queryFeatureAt(loadStateCounties, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var result = {
           seq: seq,
           name: findPropCI(props, ["name"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: findPropCI(props, ["geoid"]),
+          officials: null
         };
+        // the roster's own failure is not this layer's failure: a miss
+        // degrades to the sentence naming nobody
+        return loadGaCountyOfficials().then(function (roster) {
+          result.officials = (roster && result.geoid != null)
+            ? roster[String(result.geoid)] || null : null;
+          return result;
+        }, function () {
+          return result;
+        });
       });
     },
     render: function (result) {
@@ -15353,14 +15473,51 @@ function initGeorgiaExplorer() {
         title: result.name != null ? String(result.name) : "Unknown county",
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
-      wrap.appendChild(renderFieldStack([{
-        label: "County commission",
-        value: "Every Georgia county is governed by an elected board of " +
-          "commissioners or, in a few counties, a sole commissioner. This app " +
-          "does not name them yet: no state office publishes who sits on " +
-          "Georgia's county commissions, and this app does not guess."
-      }]));
+      var o = result.officials;
+      if (!o) {
+        wrap.appendChild(renderFieldStack([{
+          label: "County commission",
+          value: "Every Georgia county is governed by an elected board of " +
+            "commissioners or, in a few counties, a sole commissioner. The list " +
+            "of them did not load, so no one is named here."
+        }]));
+        return wrap;
+      }
+      var city = result.geoid != null ? GA_COUNTY_CITY[String(result.geoid)] : null;
+      var council = String(result.geoid) === "13215";
+      var seats = o.commission || [];
+      var sole = seats.length === 1 && /^sole\b/i.test(String(seats[0].seat || ""));
+      var board = gaBoardSeats(seats, "commissioner");
+      if (board.people.length) {
+        wrap.appendChild(renderSectionLabel(sole ? "Sole commissioner"
+          : council ? "Council" : "Board of commissioners"));
+        wrap.appendChild(renderPersonRows(board.people, { tinted: true }));
+      }
+      var rows = [];
+      if (city) {
+        rows.push({
+          label: "One government with " + city,
+          value: (result.name != null ? String(result.name) : "This county") +
+            " and the city of " + city + " are one government, so its " +
+            (council ? "council" : "commission") + " governs both."
+        });
+      }
+      if (!seats.length) {
+        rows.push({
+          label: "County commission",
+          value: "No election for this county's commission is on the Secretary of " +
+            "State's results site, which carries county races only from November " +
+            "2024 on, so no one is named here."
+        });
+      }
+      rows = rows.concat(board.fields);
+      if (seats.length) rows.push({ label: "Where the names come from", value: gaResultsCredit(o) });
+      wrap.appendChild(renderFieldStack(rows));
       return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Election results from the Secretary of State",
+        url: "https://results.sos.ga.gov/results/public/Georgia" };
     }
   });
 
@@ -15707,31 +15864,128 @@ function initGeorgiaExplorer() {
    * says so without claiming the point is there, because outside the state
    * this card is empty too.
    *
-   * NO OFFICEHOLDER. Georgia's school boards are elected, and no statewide
-   * roster of their members has been read for this app; the card names the
-   * district only. Recorded as gap ga-school-board-members.
+   * THE CARD NAMES A COUNTY SYSTEM'S BOARD FROM THE ELECTION RESULTS. Each
+   * of the 159 county school systems is governed by an elected board of
+   * education, and the card names its members from
+   * data/app/ga-county-officials.json the way the County card names the
+   * commission (see there). The census names 158 of them "<county> County
+   * School District" and Dougherty's "Dougherty School District", measured
+   * 2026-10-30, so the card finds the county by name and treats any other
+   * district (the 21 city systems and the Fort Stewart schools) as one whose
+   * board is not named yet. Gap ga-school-board-members records the rest.
    * ---------- */
   var loadSchoolDistrictsUnified = tigerStatewideLoader(
     TIGERWEB_SERVICES + "School/MapServer", 0,
     "GEOID,NAME,STATE", "unified school districts");
 
-  registerPolygonLayer({
+  // The schools on Fort Stewart are run for the Army post rather than by a
+  // city or a county, so no Georgia ballot elects whoever oversees them and
+  // the card must not say "the city systems' boards come later" of them.
+  var GA_FORT_STEWART_SCHOOLS = /^Fort Stewart School District$/;
+
+  // The county a school district belongs to by its census name, for the 159
+  // county systems ("Appling County School District", "Dougherty School
+  // District"), or null for a city system or the Fort Stewart schools.
+  function gaCountySystem(name, roster) {
+    var m = /^(.+?)(?: County)? School District$/.exec(String(name || ""));
+    if (!m || / City$/.test(m[1]) || !roster) return null;
+    var want = m[1].toLowerCase();
+    var found = null;
+    Object.keys(roster).forEach(function (fips) {
+      var c = roster[fips];
+      if (c && String(c.county || "").toLowerCase() === want) found = c;
+    });
+    return found;
+  }
+
+  registerLayer({
     id: "school-district-unified",
     group: "schools",
     label: "School District",
-    loader: loadSchoolDistrictsUnified,
     emptyNote: "No county or city school district covers this point. In " +
       "Georgia that is true only on Fort Benning, the Army post near " +
       "Columbus. The U.S. Census Bureau maps the post's own schools as a " +
       "district for kindergarten to grade 8 and gives its high school grades " +
       "to the Chattahoochee and Muscogee county school systems. This app " +
       "does not draw those districts yet.",
-    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 },
-    fields: [
-      { name: "name", label: "District", keys: ["name"], primary: true },
-      { name: "geoid", label: "GEOID", keys: ["geoid"] }
-    ],
-    compact: true, compactMetaField: "geoid" // 4b name-only card
+    overlay: {
+      load: loadSchoolDistrictsUnified,
+      style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var name = findPropCI(feature.properties || {}, ["name"]);
+      return name != null ? String(name) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadSchoolDistrictsUnified, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var result = {
+          seq: seq,
+          name: findPropCI(props, ["name"]),
+          geoid: findPropCI(props, ["geoid"]),
+          county: null,
+          rosterFailed: false
+        };
+        // the roster's own failure is not this layer's failure: the district
+        // still answers, and the card says no one is named
+        return loadGaCountyOfficials().then(function (roster) {
+          result.county = gaCountySystem(result.name, roster);
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.name != null ? String(result.name) : "Unknown school district",
+        note: result.geoid != null ? "GEOID " + String(result.geoid) : null
+      }));
+      var c = result.county;
+      if (!c) {
+        wrap.appendChild(renderFieldStack([{
+          label: "Board of education",
+          value: result.rosterFailed
+            ? "The list of school board members did not load, so no one is named here."
+            : GA_FORT_STEWART_SCHOOLS.test(String(result.name || ""))
+            ? "These are the schools on Fort Stewart, the Army post, which the " +
+              "state's election results do not cover. This app names only the " +
+              "boards of the 159 county school systems."
+            : "This school system's board is elected, and this app does not name " +
+              "its members yet. It names the boards of the 159 county school " +
+              "systems, from the state's election results; the city systems' " +
+              "boards come later."
+        }]));
+        return wrap;
+      }
+      var seats = c.schoolBoard || [];
+      var board = gaBoardSeats(seats, "member");
+      if (board.people.length) {
+        wrap.appendChild(renderSectionLabel("Board of education"));
+        wrap.appendChild(renderPersonRows(board.people, { tinted: true }));
+      }
+      var rows = [];
+      if (!seats.length) {
+        rows.push({
+          label: "Board of education",
+          value: "No election for this board is on the Secretary of State's results " +
+            "site, which carries county races only from November 2024 on, so no one " +
+            "is named here."
+        });
+      }
+      rows = rows.concat(board.fields);
+      if (seats.length) rows.push({ label: "Where the names come from", value: gaResultsCredit(c) });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      if (!result || !result.county) return null;
+      return { label: "Election results from the Secretary of State",
+        url: "https://results.sos.ga.gov/results/public/Georgia" };
+    }
   });
 
   /* ---------- 8. ZIP Code — live TIGERweb ZCTAs ----------

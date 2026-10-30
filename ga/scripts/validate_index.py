@@ -113,6 +113,7 @@ ROSTER_FILES = {
     "congress-roster.json": 14,  # U.S. House (GA) roster, refreshed weekly by update-ga-congress-roster.yml.
     "ga-senate-members.json": 56,  # Georgia Senate roster from the General Assembly's own member data, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size.
     "ga-house-members.json": 180,  # Georgia House roster from the same member data, on the same terms.
+    "ga-county-officials.json": 159,  # County commissioners and county school board members named from the Secretary of State's official election results, keyed by county FIPS, one record for each of the 159 counties whether or not it has a named seat; refreshed weekly by update-ga-county-officials.yml.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 

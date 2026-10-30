@@ -58,6 +58,7 @@ const ROSTER_URLS = [
   "./data/app/congress-roster.json",
   "./data/app/ga-senate-members.json",
   "./data/app/ga-house-members.json",
+  "./data/app/ga-county-officials.json",
   "./data/app/coverage-gaps.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */

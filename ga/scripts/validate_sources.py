@@ -153,6 +153,19 @@ PROVENANCE = [
     },
     {
         "layer": "county",
+        "app_file": "ga-county-officials.json",
+        "source_url": "https://results.sos.ga.gov/results/public/api/jurisdictions/Georgia",
+        "note": (
+            "County commissioners and county school board members, named from "
+            "the Secretary of State's official election results (county "
+            "contests from 5 November 2024 on) by "
+            "ga/scripts/build_ga_county_officials.py; refreshed weekly by "
+            "update-ga-county-officials.yml. This is the site's list of "
+            "elections, which the builder reads first."
+        ),
+    },
+    {
+        "layer": "county",
         "app_file": "state-counties.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",
         "note": (
