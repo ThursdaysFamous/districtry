@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "ga-senate", "ga-house"];
 const EXPECT_DISTRICT = { "county": "Fulton County", "us-house": "5", "ga-senate": "36", "ga-house": "58" };
 const NEGATIVE_POINT = "30.43830,-84.28070"; // Tallahassee, Florida, about 26 km south of the Georgia line — outside Georgia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state layer names Florida here (controls: the State Capitol returns Georgia, and a point in the open Gulf of Mexico returns no state), and none of the state's shipped boundary files contains it. FLORIDA AND ALABAMA ARE THE TWO NEIGHBOURS NO INSTANCE SERVES, so the change that makes Florida live moves this point into Alabama, the way Kentucky's go-live moved Indiana's.
 const APP_NAME = "districtry Georgia";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "GeorgiaExplorer";
@@ -1144,6 +1144,212 @@ try {
         !info.error && !!p.NAME && text.includes(p.NAME) &&
           /The list of them did not load, so no one is named here/.test(text) && leaked.length === 0,
         text.slice(0, 160));
+      await context.close();
+    }
+  }
+
+  // 10. THE COUNTY COMMISSION AND SCHOOL BOARD DISTRICT LAYERS. Every
+  //     expectation is read from the shipped files (the two district files,
+  //     the counties file the map check described, and the roster), so a
+  //     rebuild moves them; what each case pins is the BRANCH it exercises,
+  //     and a case whose point no longer reaches its branch fails rather than
+  //     passing on whatever the card happens to say there.
+  //
+  //     Points measured 2026-10-30 against the shipped files and, for the two
+  //     empty cards, against the Census Bureau's school district map: the
+  //     Bryan point is inside the Fort Stewart School District (Pembroke, the
+  //     county seat, is outside it), and the Lowndes point inside the Valdosta
+  //     City School District.
+  {
+    const BOARD_FILES = {
+      commission: shipped("ga-commission-districts.json"),
+      schoolBoard: shipped("ga-school-board-districts.json")
+    };
+    const BOARD_DESC = shipped("ga-board-district-counties.json");
+    const LAYER_OF = { commission: "county-commissioner", schoolBoard: "school-board-district" };
+    const COUNTYWIDE = /^(chair|vice chair|chairman|chairperson|president|sole commissioner)\b|\bat[ -]large\b/i;
+    // What the card at a point must say, by the card's own join: the seats the
+    // map check saw elected from each district, else those carrying its
+    // number; then the roster's other seats, by the whole county or from a
+    // district not drawn.
+    function boardCard(body, point) {
+      const hits = propsAt(BOARD_FILES[body], point);
+      if (!hits.length) return { hits };
+      const geoid = hits[0].countyfips;
+      const desc = (BOARD_DESC[geoid] || {})[body] || { districts: {}, atLarge: [], maps: [] };
+      const seats = (OFFICIALS[geoid] || {})[body] || [];
+      const seatsFor = (key) => {
+        const d = desc.districts[key] || {};
+        let out = seats.filter((s) => (d.seats || []).includes(s.seat));
+        if (!out.length && /^\d+$/.test(key)) out = seats.filter((s) => s.district === parseInt(key, 10));
+        return out;
+      };
+      const claimed = new Set();
+      for (const key of Object.keys(desc.districts)) for (const s of seatsFor(key)) claimed.add(s.seat);
+      const rest = seats.filter((s) => s.seat && !claimed.has(s.seat));
+      const whole = rest.filter((s) => (desc.atLarge || []).includes(s.seat) || COUNTYWIDE.test(s.seat));
+      const undrawn = rest.filter((s) => !whole.includes(s)).map((s) => s.seat);
+      return {
+        hits, geoid, desc, seats, whole, undrawn,
+        label: gaJoin(hits.map((h) => h.label + (h.super ? " (super district)" : ""))),
+        want: hits.flatMap((h) => boardWants(seatsFor(h.district))).concat(boardWants(whole)),
+        untested: hits.filter((h) => (desc.districts[h.district] || {}).tested === false),
+        countywide: hits.filter((h) => (desc.districts[h.district] || {}).voted === "county-wide")
+      };
+    }
+    // The parts every drawn card shares, as {name: ok}.
+    function commonParts(e, body, text) {
+      const sup = (e.desc.maps || []).some((m) => m.super);
+      const main = (e.desc.maps || []).find((m) => !m.super) || {};
+      const credit = `official election results, read ${longDate((OFFICIALS[e.geoid] || {}).asOf)}`;
+      return {
+        pill: text.startsWith(e.label),
+        people: e.want.every((re) => re.test(text)),
+        county: text.includes(`${e.hits[0].county} County`),
+        source: text.includes(`${e.hits[0].county} County's ${body === "commission" ? "commission" : "school board"} map of ${main.year}`) &&
+          text.includes(sup ? "publishes them" : "publishes it") &&
+          text.includes(sup ? "checked them against" : "checked it against"),
+        credit: !e.seats.length || text.includes(credit),
+        untested: e.untested.every((h) => text.includes(`${h.label}'s line No contest this app could test`)),
+        undrawn: !e.undrawn.length ||
+          text.includes(`Elected from districts not drawn here ${gaJoin(e.undrawn)}. This app does not draw`),
+        whole: !e.whole.length || /Elected by the whole county/i.test(text)
+      };
+    }
+    const cases = [
+      {
+        name: "a point in a DeKalb super district names both its districts' commissioners",
+        body: "commission", point: "33.94261,-84.32017",
+        reaches: (e) => e.hits.length === 2 && e.hits.some((h) => h.super) && e.hits.some((h) => !h.super)
+      },
+      {
+        name: "a Glynn commission district no contest tested says so, and names the chair the whole county elects",
+        body: "commission", point: "31.34044,-81.62171",
+        reaches: (e) => e.untested.length === 1 && e.whole.length > 0
+      },
+      {
+        name: "a Richmond commission card names a super district it does not draw, and the one government with Augusta",
+        body: "commission", point: "33.41938,-82.11059",
+        reaches: (e) => e.geoid === "13245" && e.undrawn.length > 0,
+        want: [/One government with Augusta Richmond County and the city of Augusta are one government/]
+      },
+      {
+        name: "a Bulloch district the whole county votes for says so, for each of its seats",
+        body: "commission", point: "32.31616,-81.65735",
+        reaches: (e) => e.countywide.length === 1 && ((e.desc.districts[e.countywide[0].district] || {}).seats || []).length > 1,
+        want: [/The whole county votes for these seats, and each member must live in the district/]
+      },
+      {
+        name: "a Glynn school board card names its district's member and those the whole county elects",
+        body: "schoolBoard", point: "31.34044,-81.62171",
+        reaches: (e) => e.hits.length === 1 && e.whole.length > 0,
+        reject: [/One government with/]
+      }
+    ];
+    for (const c of cases) {
+      const e = boardCard(c.body, c.point);
+      if (!e.hits.length || !c.reaches(e)) {
+        check(c.name, false, `the point no longer reaches this branch in the shipped files (hits=${e.hits.length})`);
+        continue;
+      }
+      const layer = LAYER_OF[c.body];
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${c.point}&layers=${layer}`);
+      const info = await cardText(page, layer);
+      const text = info.text || "";
+      const parts = commonParts(e, c.body, text);
+      for (const re of c.want || []) parts[String(re)] = re.test(text);
+      for (const re of c.reject || []) parts["no " + String(re)] = !re.test(text);
+      const wrong = Object.keys(parts).filter((k) => !parts[k]);
+      check(c.name, !info.error && !info.empty && wrong.length === 0,
+        wrong.length ? `wrong=${wrong} text=${text.slice(0, 400)}` : text.slice(0, 120));
+      await context.close();
+    }
+
+    // The two maps' gaps: Fort Stewart in Bryan County, which neither map
+    // puts in a district, and Valdosta's city school system, whose ground
+    // the county school board map does not serve. The layer answers there
+    // (the county has a map) and the card says what the ground is.
+    const gaps = [
+      { name: "a point on Fort Stewart says the commission map leaves the post out",
+        body: "commission", point: "32.02694,-81.47602", county: "13029",
+        want: /In Bryan County that ground is Fort Stewart, the Army post/ },
+      { name: "a point on Fort Stewart says the school board map leaves the post out",
+        body: "schoolBoard", point: "32.02694,-81.47602", county: "13029",
+        want: /In Bryan County the map leaves out Fort Stewart, the Army post/ },
+      { name: "a point in Valdosta's city school system says the city system's board serves",
+        body: "schoolBoard", point: "30.84182,-83.27492", county: "13185",
+        want: /Inside a city school system, such as Valdosta's or Vidalia's, the city system's own board serves/ }
+    ];
+    const counties = shipped("state-counties.json");
+    for (const g of gaps) {
+      const inCounty = (propsAt(counties, g.point)[0] || {}).GEOID === g.county;
+      const hits = propsAt(BOARD_FILES[g.body], g.point).length;
+      if (!inCounty || hits || !(BOARD_DESC[g.county] || {})[g.body]) {
+        check(g.name, false, `the point no longer reaches this branch (county=${inCounty} hits=${hits})`);
+        continue;
+      }
+      const layer = LAYER_OF[g.body];
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${g.point}&layers=${layer}`);
+      const info = await cardText(page, layer);
+      const text = info.text || "";
+      const shown = await page.evaluate((id) => {
+        const box = document.getElementById("toggle-" + id);
+        const block = box && box.closest(".layer-block");
+        return !!block && block.hidden !== true;
+      }, layer);
+      check(g.name, shown && !info.error && g.want.test(text), `shown=${shown} text=${text.slice(0, 160)}`);
+      await context.close();
+    }
+
+    // McDuffie County has no commission map drawn (its map conflicts with
+    // a 2026 contest), so the commission layer HIDES there while the school
+    // board layer, whose map passed, answers. Hiding keeps the layer on, so
+    // a link carrying it still turns it on in a county with a map.
+    {
+      const THOMSON = "33.47070,-82.50460";
+      const geoid = (propsAt(counties, THOMSON)[0] || {}).GEOID;
+      const reaches = geoid === "13189" && !(BOARD_DESC[geoid] || {}).commission &&
+        !!(BOARD_DESC[geoid] || {}).schoolBoard && propsAt(BOARD_FILES.schoolBoard, THOMSON).length > 0;
+      if (!reaches) {
+        check("the commission layer hides in a county with no map drawn, and the school board layer answers", false,
+          `the point no longer reaches this branch (geoid=${geoid})`);
+      } else {
+        const context = await browser.newContext({ serviceWorkers: "block" });
+        const page = await booted(context, `${BASE}#point=${THOMSON}&layers=county-commissioner,school-board-district`);
+        const hidden = await page
+          .waitForFunction(() => {
+            const box = document.getElementById("toggle-county-commissioner");
+            const block = box && box.closest(".layer-block");
+            return block && block.hidden === true;
+          }, null, { timeout: QUERY_TIMEOUT })
+          .then(() => true, () => false);
+        const info = await cardText(page, "school-board-district");
+        const stillOn = await page.evaluate(
+          (n) => window[n].state.layersOn["county-commissioner"] === true, EXPORTS_NAME);
+        check("the commission layer hides in a county with no map drawn, and the school board layer answers",
+          hidden && stillOn && !info.error && !info.empty && /McDuffie County/.test(info.text || ""),
+          `hidden=${hidden} layersOn=${stillOn} text=${(info.text || "").slice(0, 120)}`);
+        await context.close();
+      }
+    }
+
+    // The roster failing to load leaves the district answering and names
+    // nobody, in the card's own words.
+    {
+      const e = boardCard("commission", "31.34044,-81.62171");
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=31.34044,-81.62171&layers=county-commissioner`, async (pg) => {
+        await pg.route("**/data/app/ga-county-officials.json", (r) => r.abort());
+      });
+      const info = await cardText(page, "county-commissioner");
+      const text = info.text || "";
+      const leaked = (e.want || []).filter((re) => re.test(text));
+      check("a commission district whose roster does not load names its district and nobody",
+        !info.error && !!e.label && text.startsWith(e.label) &&
+          /The list of commissioners did not load, so no one is named here/.test(text) && leaked.length === 0,
+        `leaked=${leaked.length} text=${text.slice(0, 160)}`);
       await context.close();
     }
   }
