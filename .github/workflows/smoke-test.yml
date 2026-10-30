@@ -1418,6 +1418,7 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           python3 ar/scripts/build_ar_precincts.py --check
+          python3 ga/scripts/build_ga_precincts.py --check
           python3 in/scripts/build_in_precincts.py --check
           python3 ky/scripts/build_ky_precincts.py --check
           python3 la/scripts/build_la_precincts.py --check
@@ -1675,6 +1676,18 @@ jobs:
       - name: GA county officials follow from their elections
         if: ${{ !cancelled() }}
         run: python3 ga/scripts/build_ga_county_officials.py --check
+
+      # Georgia's judicial circuits are whole counties, each placed by the
+      # newest official ballot carrying a court contest there, and their
+      # judges and district attorneys are named from the same results. This
+      # holds the shipped files to the builder's record, offline: every county
+      # in exactly one circuit, each circuit's area its own counties' area,
+      # every county's recorded contests naming its circuit, every name the
+      # winner of an election in office that day, every winner not yet in
+      # office dated after it, and the floors.
+      - name: GA judicial circuits and their judges follow from their elections
+        if: ${{ !cancelled() }}
+        run: python3 ga/scripts/build_ga_superior_courts.py --check
 
       # Georgia's county commission and school board districts are drawn only
       # from the maps the precinct check passed. This holds the three shipped

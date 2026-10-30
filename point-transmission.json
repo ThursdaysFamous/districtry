@@ -98,12 +98,14 @@
         "fire-station",
         "ga-house",
         "ga-senate",
+        "ga-superior-court",
         "municipality",
         "police-station",
         "post-office",
         "school-board-district",
         "school-district-unified",
         "us-house",
+        "voting-precinct",
         "zip-code"
       ]
     },

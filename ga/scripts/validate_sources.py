@@ -186,6 +186,67 @@ PROVENANCE = [
             "correct) plus 20 OUTSIDE anchors over the state line."
         ),
     },
+    {
+        "layer": "voting-precinct",
+        "app_file": "ga-precincts.json",
+        "source_url": "https://www.legis.ga.gov/joint-office/reapportionment",
+        "note": (
+            "Georgia's 2,724 voting precincts from the Reapportionment "
+            "Office's statewide precinct map for 2024, which this page lists; "
+            "pre-built by ga/scripts/build_ga_precincts.py through "
+            "scripts/statewide_precincts.py, which pins the file by address "
+            "and SHA-256. The page is checked rather than the file because "
+            "the file is a 16 MB zip; the quarterly --watch row in "
+            "ga/WATCH.md reads the listing for a newer map and the file for "
+            "a changed one."
+        ),
+    },
+    {
+        "layer": "county-commissioner",
+        "app_file": "ga-commission-districts.json",
+        "source_url": "https://www.legis.ga.gov/joint-office/reapportionment",
+        "note": (
+            "County commission districts from the Reapportionment Office's "
+            "county maps, drawn by ga/scripts/build_ga_board_districts.py only "
+            "where ga/scripts/check_ga_county_maps.py found the county's own "
+            "district elections agree with the map; each file is pinned by "
+            "SHA-256 in ga/data/source/county-map-check.json."
+        ),
+    },
+    {
+        "layer": "school-board-district",
+        "app_file": "ga-school-board-districts.json",
+        "source_url": "https://www.legis.ga.gov/joint-office/reapportionment",
+        "note": "The same office's county school board maps, by the same builder and check.",
+    },
+    {
+        "layer": "ga-superior-court",
+        "app_file": "ga-judicial-circuits.json",
+        "source_url": "https://results.sos.ga.gov/results/public/api/jurisdictions/Georgia",
+        "note": (
+            "The 51 judicial circuits, each drawn from whole counties of "
+            "state-counties.json by ga/scripts/build_ga_superior_courts.py "
+            "--draw. Which circuit a county is in comes from its newest "
+            "official ballot carrying a court contest, so the source to watch "
+            "is the results site; the weekly run stops if a newer ballot moves "
+            "a county."
+        ),
+    },
+    {
+        "layer": "ga-superior-court",
+        "app_file": "ga-circuit-officials.json",
+        "source_url": "https://georgiacourts.knack.com/gcd2/",
+        "note": (
+            "Each circuit's judges and district attorney, named from the "
+            "Secretary of State's official election results by "
+            "ga/scripts/build_ga_superior_courts.py and refreshed weekly by "
+            "update-ga-county-officials.yml. The URL is the Administrative "
+            "Office of the Courts' directory of judges and court officers, "
+            "which the builder reads as a check (it places a split circuit's "
+            "judges and holds back a person it lists in another office), "
+            "watched here so a moved or retired directory surfaces."
+        ),
+    },
 ]
 
 # Georgia's envelope, as index.html writes it for the ZIP layer
