@@ -1167,7 +1167,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">11 layers — 3 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">13 layers — 4 political and legislative, 2 public safety, 2 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1176,7 +1176,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">3 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1216,6 +1216,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">ga-house-members.json, rebuilt weekly by CI from the General Assembly's own member data, on the same terms as the Senate's.</td>
                 <td data-label="Where it applies">Georgia — statewide, all 180 districts.</td>
+              </tr>
+              <tr id="layer-county-commissioner">
+                <th scope="row"><span class="layer-name">County Commission District</span><code>county-commissioner</code></th>
+                <td data-label="What it answers">The county commission district covering the point, and the commissioner elected from it, in the 109 counties whose commission map passed this app's precinct check (and DeKalb's and Lowndes's super districts). The layer is hidden in the other 50 counties, where the County card still names the commission.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.legis.ga.gov/joint-office/reapportionment" target="_blank" rel="noopener">The Georgia General Assembly's Legislative and Congressional Reapportionment Office — the county maps it publishes as the most recently adopted, each read as published, with the sha256 of the file the map check tested, and drawn only where ga/scripts/check_ga_county_maps.py passed the map: every precinct that voted in a district's contest on 5 November 2024, 19 May 2026 or 16 June 2026 lies at least partly in that district on the office's 2024 precinct map, and no precinct the map puts mostly in a district sat out its contest (record: ga/data/source/county-map-check.json, checked 2026-10-30). Each district is cut to the Census Bureau's county line; a detached piece lying wholly within 8 m of that line is dropped as a difference between two drawings of it, and the lines are simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling (ga/scripts/build_ga_board_districts.py).</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">ga-county-officials.json, the County card's roster from the Secretary of State's official election results, joined to each district by the seat the map check saw elected from it. A seat the whole county elects is named apart, and so is a seat elected from a district this app does not draw. Seats not on a ballot since November 2024 are not named — recorded as gap ga-county-commission-members.</td>
+                <td data-label="Where it applies">Georgia — the 109 counties whose commission map passed; hidden elsewhere, with gap ga-county-commission-district-lines saying why each other county's map is not drawn.</td>
               </tr>
             </tbody>
           </table>
@@ -1259,7 +1270,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="schools">
-        <h2>Schools <span class="matrix-count">1 layer</span></h2>
+        <h2>Schools <span class="matrix-count">2 layers</span></h2>
         <p class="matrix-blurb">The district, the attendance zone, and the schools nearest the point.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1277,6 +1288,18 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">ga-county-officials.json, from the same election results as the County card, names the board of education of each of the 159 county school systems on the same terms. The boards of the 21 city school systems are not named yet, and the state's election results do not cover the schools on Fort Stewart, the Army post — recorded as gap ga-school-board-members.</td>
                 <td data-label="Where it applies">Georgia — everywhere but Fort Benning. Measured 2026-10-29, the unified districts' Census land areas sum to 148,806 km2, and the Census's one elementary district (Fort Benning Schools, kindergarten to grade 8) adds 682 km2 to exactly the 159 counties' 149,488 km2; its two secondary districts split the same ground between the Chattahoochee and Muscogee county systems for grades 9 to 12. Those three are not drawn, and the card says so on the post.</td>
+              </tr>
+              <tr id="layer-school-board-district">
+                <th scope="row"><span class="layer-name">School Board District</span><code>school-board-district</code></th>
+                <td data-label="What it answers">The county school board district covering the point, and the member elected from it, in the 104 counties whose school board map passed this app's precinct check (and Harris's and Richmond's super districts). Inside a city school system no county district is drawn. The layer is hidden in the other 55 counties, where the School District card still names the county board.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.legis.ga.gov/joint-office/reapportionment" target="_blank" rel="noopener">The Georgia General Assembly's Legislative and Congressional Reapportionment Office — the county maps it publishes as the most recently adopted, each read as published, with the sha256 of the file the map check tested, and drawn only where ga/scripts/check_ga_county_maps.py passed the map: every precinct that voted in a district's contest on 5 November 2024, 19 May 2026 or 16 June 2026 lies at least partly in that district on the office's 2024 precinct map, and no precinct the map puts mostly in a district sat out its contest (record: ga/data/source/county-map-check.json, checked 2026-10-30). Each district is cut to the Census Bureau's county line; a detached piece lying wholly within 8 m of that line is dropped as a difference between two drawings of it, and the lines are simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling (ga/scripts/build_ga_board_districts.py).</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" target="_blank" rel="noopener">U.S. Census TIGERweb — School, layer 0, the 21 Georgia unified school districts named &quot;&lt;city&gt; City School District&quot;, read 2026-10-30: each city school system's ground is taken out of the county board's districts, since its own board serves it. The Fort Stewart schools are not taken out.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">ga-county-officials.json, the School District card's roster from the Secretary of State's official election results, joined to each district by the seat the map check saw elected from it. A seat the whole county elects is named apart, and so is a seat elected from a district this app does not draw. Most seats filled in May 2024 are not on the results site and are not named — recorded as gap ga-school-board-members.</td>
+                <td data-label="Where it applies">Georgia — the 104 counties whose county school board map passed, outside the city school systems; hidden elsewhere, with gap ga-school-board-district-lines saying why each other county's map is not drawn.</td>
               </tr>
             </tbody>
           </table>
@@ -1496,6 +1519,55 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Georgia — statewide, all 586 divisions"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ga/sources.html#dataset-county-commissioner",
+      "identifier": "county-commissioner",
+      "name": "County Commission District",
+      "description": "The county commission district covering the point, and the commissioner elected from it, in the 109 counties whose commission map passed this app's precinct check (and DeKalb's and Lowndes's super districts). The layer is hidden in the other 50 counties, where the County card still names the commission. ga-county-officials.json, the County card's roster from the Secretary of State's official election results, joined to each district by the seat the map check saw elected from it. A seat the whole county elects is named apart, and so is a seat elected from a district this app does not draw. Seats not on a ballot since November 2024 are not named — recorded as gap ga-county-commission-members.",
+      "url": "https://districtry.com/ga/sources.html#layer-county-commissioner",
+      "isPartOf": {
+        "@id": "https://districtry.com/ga/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "The Georgia General Assembly's Legislative and Congressional Reapportionment Office — the county maps it publishes as the most recently adopted, each read as published, with the sha256 of the file the map check tested, and drawn only where ga/scripts/check_ga_county_maps.py passed the map: every precinct that voted in a district's contest on 5 November 2024, 19 May 2026 or 16 June 2026 lies at least partly in that district on the office's 2024 precinct map, and no precinct the map puts mostly in a district sat out its contest (record: ga/data/source/county-map-check.json, checked 2026-10-30). Each district is cut to the Census Bureau's county line; a detached piece lying wholly within 8 m of that line is dropped as a difference between two drawings of it, and the lines are simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling (ga/scripts/build_ga_board_districts.py).",
+          "url": "https://www.legis.ga.gov/joint-office/reapportionment"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Georgia — the 109 counties whose commission map passed; hidden elsewhere, with gap ga-county-commission-district-lines saying why each other county's map is not drawn"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ga/sources.html#dataset-school-board-district",
+      "identifier": "school-board-district",
+      "name": "School Board District",
+      "description": "The county school board district covering the point, and the member elected from it, in the 104 counties whose school board map passed this app's precinct check (and Harris's and Richmond's super districts). Inside a city school system no county district is drawn. The layer is hidden in the other 55 counties, where the School District card still names the county board. ga-county-officials.json, the School District card's roster from the Secretary of State's official election results, joined to each district by the seat the map check saw elected from it. A seat the whole county elects is named apart, and so is a seat elected from a district this app does not draw. Most seats filled in May 2024 are not on the results site and are not named — recorded as gap ga-school-board-members.",
+      "url": "https://districtry.com/ga/sources.html#layer-school-board-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/ga/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "The Georgia General Assembly's Legislative and Congressional Reapportionment Office — the county maps it publishes as the most recently adopted, each read as published, with the sha256 of the file the map check tested, and drawn only where ga/scripts/check_ga_county_maps.py passed the map: every precinct that voted in a district's contest on 5 November 2024, 19 May 2026 or 16 June 2026 lies at least partly in that district on the office's 2024 precinct map, and no precinct the map puts mostly in a district sat out its contest (record: ga/data/source/county-map-check.json, checked 2026-10-30). Each district is cut to the Census Bureau's county line; a detached piece lying wholly within 8 m of that line is dropped as a difference between two drawings of it, and the lines are simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling (ga/scripts/build_ga_board_districts.py).",
+          "url": "https://www.legis.ga.gov/joint-office/reapportionment"
+        },
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — School, layer 0, the 21 Georgia unified school districts named \"<city> City School District\", read 2026-10-30: each city school system's ground is taken out of the county board's districts, since its own board serves it. The Fort Stewart schools are not taken out.",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Georgia — the 104 counties whose county school board map passed, outside the city school systems; hidden elsewhere, with gap ga-school-board-district-lines saying why each other county's map is not drawn"
       }
     },
     {

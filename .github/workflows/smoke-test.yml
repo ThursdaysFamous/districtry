@@ -1676,6 +1676,15 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 ga/scripts/build_ga_county_officials.py --check
 
+      # Georgia's county commission and school board districts are drawn only
+      # from the maps the precinct check passed. This holds the three shipped
+      # files to the check's record, offline and without a geometry library:
+      # every passing map drawn, nothing else, and every district's seats,
+      # voting and tested flag as the record says.
+      - name: GA county districts are exactly the maps the check passed
+        if: ${{ !cancelled() }}
+        run: python3 ga/scripts/build_ga_board_districts.py --check
+
       # West Virginia's county commissioners and other elected officers come
       # from the Secretary of State's directory of county officials, whose
       # per-official pages also print fax numbers and mailing addresses. This
