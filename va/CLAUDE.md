@@ -90,8 +90,8 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Virginia (`virginia`) — https://districtry.com/va/
 - Geocoders: address Photon (Virginia-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Virginia-bounded, serial >=1s queue)
 - Ground truth: 37.53850,-77.43370 (Virginia State Capitol, 1000 Bank Street, Richmond (an independent city)) → county Richmond city; us-house 4; va-senate 14; va-house 78. Negative point 37.00000,-75.30000 (Open Atlantic Ocean east of the mouth of Chesapeake Bay, 44 km from the nearest edge of Virginia's outline — outside Virginia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: none of the state's shipped boundary files contains it, none of fleet-outlines.json's outlines does either, and the State Capitol, the control, is inside every shipped file. Water on purpose, the way North Carolina's and Louisiana's are: every land neighbour of Virginia is either live already (Kentucky, Tennessee, North Carolina) or a state the fleet plans to build (West Virginia, Maryland), so a point on a neighbour's land would have to move when that neighbour goes live.).
-- Layers: 12 registered (political 3, safety 2, schools 2, geography 5); `registerLayer(` floor 9. Debug namespace `window.VirginiaExplorer`.
-- Scheduled workflows: `update-va-congress-roster.yml` (Mon 19:07 UTC); `update-va-legislature-roster.yml` (Tue 19:07 UTC); `va-validate-sources.yml` (1st of month 21:43 UTC).
+- Layers: 15 registered (political 4, safety 2, schools 3, geography 6); `registerLayer(` floor 9. Debug namespace `window.VirginiaExplorer`.
+- Scheduled workflows: `update-va-congress-roster.yml` (Mon 19:07 UTC); `update-va-legislature-roster.yml` (Tue 19:07 UTC); `update-va-local-officials.yml` (Wed 19:37 UTC); `va-validate-sources.yml` (1st of month 21:43 UTC).
 - Source registry: `va/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 

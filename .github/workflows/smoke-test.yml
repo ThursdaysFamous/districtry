@@ -1407,7 +1407,7 @@ jobs:
       - name: NC court districts still match the law they are drawn from
         if: ${{ !cancelled() }}
         run: python3 nc/scripts/build_nc_court_districts.py --check
-      # Seven states' precinct layers are built by scripts/statewide_precincts.py.
+      # Eight states' precinct layers are built by scripts/statewide_precincts.py.
       # --check holds each shipped file to the hash and the precincts per county
       # its builder recorded, checks every precinct names its county as the
       # county file does and every county is covered by its own precincts, and
@@ -1422,6 +1422,7 @@ jobs:
           python3 nc/scripts/build_nc_precincts.py --check
           python3 sc/scripts/build_sc_precincts.py --check
           python3 tn/scripts/build_tn_precincts.py --check
+          python3 va/scripts/build_va_precincts.py --check
       # School board districts. Arkansas, Indiana, South Carolina and Tennessee
       # publish theirs as maps, read by scripts/published_district_layers.py,
       # whose --check holds each file to its record and the card to its stated
@@ -1719,6 +1720,19 @@ jobs:
       - name: LA parish districts still match their build record, the list's seats and the Parish layer
         if: ${{ !cancelled() }}
         run: python3 la/scripts/build_la_parish_districts.py --check
+
+      # Virginia's local seats come from the Department of Elections' results of
+      # every local contest, and its supervisor, council and school board
+      # districts are drawn as the union of the precincts in each. The first
+      # --check holds the names file to its build record, every county and city
+      # to its districts and every seat to a member, a reason or a member who
+      # left; the second holds the drawn districts to the precinct file they
+      # were built from and to exactly the districts the names file lists.
+      - name: VA local officials and districts match their records and each other
+        if: ${{ !cancelled() }}
+        run: |
+          python3 va/scripts/build_va_local_officials.py --check
+          python3 va/scripts/build_va_local_districts.py --check
 
       # Louisiana's three courts whose judges are elected by district. The
       # courts of appeal and the district courts are whole parishes, read from

@@ -4477,7 +4477,8 @@ function initVirginiaExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "va-senate": "vas", "va-house": "vah", "county": "co",
-    "school-district-unified": "su", "county-subdivision": "cs", "zip-code": "zp",
+    "school-district-unified": "su", "school-board-district": "bd", "county-subdivision": "cs",
+    "supervisor-district": "sd", "zip-code": "zp", "voting-precinct": "vp",
     "municipality": "mu", "school-district-elementary": "se", "police-station": "ps",
     "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
@@ -11174,8 +11175,11 @@ function initVirginiaExplorer() {
     "va-house",          // 100 House of Delegates districts — larger on average than a county or independent city, smaller than a Senate district
     "county",            // 133 counties and independent cities (95 counties and 38 cities that belong to no county), pre-built from TIGERweb; the instance's offline anchor layer
     "school-district-unified", // 135 school divisions, about 757 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive; with Lexington's they cover the state exactly
+    "school-board-district", // 545 districts in the 98 counties and cities that elect their school board by district, each the union of its precincts in the Department of Elections' layer; 186.1 km2 mean area on the drawn file, land and water (median 158.2), measured 2026-10-30
     "county-subdivision", // 552 records tiling the state — 513 magisterial districts, the 38 independent cities and Arlington County, which the Census files as one each — about 185 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive
+    "supervisor-district", // 597 districts in the 91 counties and 15 cities that elect their board of supervisors or council by district, each the union of its precincts in the Department of Elections' layer; 176.1 km2 mean area on the drawn file, land and water (median 149.5), measured 2026-10-30
     "zip-code",          // 907 ZIP Code Tabulation Areas overlapping Virginia, of the 2,609 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-29); about 94 km2 of land on average for the 2,609, and ranked by them, which are what the map draws where the archive is not used (on the raster basemap); the layer hides outside Virginia
+    "voting-precinct",   // 2,531 precincts tiling the state, pre-built from the Department of Elections' layer — 43.2 km2 mean area on the drawn file, land and water (median 7.8), measured 2026-10-30: smaller on average than a supervisor or council district, larger than a city or town (about 25 km2 of land)
     "municipality",      // 227 incorporated places (38 independent cities and 189 towns), about 25 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive
     "school-district-elementary", // One elementary division, Lexington City Public Schools, 6.5 km2 of land, from TIGERweb, drawn from a mirrored tile archive; the ground the unified tiling leaves
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -15312,6 +15316,216 @@ function initVirginiaExplorer() {
     return load;
   }
 
+  /* ---------- Local officeholders — the state's own election results ----------
+   * Who sits on each county's board of supervisors, each city's council and
+   * each school board, each city's elected mayor and the councils of
+   * Leesburg and Blacksburg, composed from the Department of Elections'
+   * results by va/scripts/build_va_local_officials.py into
+   * data/app/va-local-officials.json (same-origin, refreshed weekly). Adam
+   * chose this source on 22 October 2026, with each card saying which
+   * election its names come from.
+   *
+   * A RESULT NAMES WHO WON, NOT WHO SITS. A member appointed to a vacancy is
+   * not named until a special election fills it, and a seat whose results
+   * do not settle who holds it (the builder's docstring lists when) says so
+   * and names no one. Every name carries the date of the election that
+   * named it, and links that election's result.
+   * ---------- */
+  var loadVaLocalOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/va-local-officials.json", {}, 2);
+  });
+  var VA_RESULTS_SITE = "https://historical.elections.virginia.gov/";
+  var VA_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  function vaReadDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return null;
+    return String(Number(m[3])) + " " + VA_MONTHS[Number(m[2]) - 1] + " " + m[1];
+  }
+  function vaContestUrl(id) {
+    return /^\d+$/.test(String(id == null ? "" : id)) ? VA_RESULTS_SITE + "contest/" + id : null;
+  }
+  // When a November winner takes office: 1 January of the next year (Code of
+  // Virginia §24.2-222); a special election's winner takes office on
+  // qualifying, which the results do not record, so no date is given.
+  function vaTakesOffice(m) {
+    var d = /^(\d{4})-(\d{2})-\d{2}$/.exec(String(m.elected || ""));
+    if (!d || m.election === "special" || Number(d[2]) < 11) return null;
+    return "1 January " + String(Number(d[1]) + 1);
+  }
+  // A member read by hand from the body's own page (`verified`) has no
+  // contest: the card names the role the page gives and links the page.
+  function vaMemberPerson(m, badge, verified) {
+    var when = vaReadDate(m.elected);
+    var url = vaContestUrl(m.contest);
+    var page = verified && /^https:\/\//.test(String(verified.url || "")) ? String(verified.url) : null;
+    return {
+      name: m.name ? String(m.name) : "A write-in candidate the results do not name",
+      badge: badge || null,
+      note: when ? (m.election === "special" ? "Special election, " : "Elected ") + when
+        : (m.role ? String(m.role) : null),
+      links: url ? [{ label: "Result", url: url }] : (page ? [{ label: "Source", url: page }] : null)
+    };
+  }
+  // The people and the explanatory rows for one seat (or one at-large body):
+  // `what` names the seat in a sentence ("this seat", "the at-large seats"),
+  // `place` the county or city.
+  function vaSeat(seat, badge, what, place) {
+    var people = [];
+    var rows = [];
+    if (!seat) return { people: people, rows: rows };
+    (seat.members || []).forEach(function (m) { people.push(vaMemberPerson(m, badge, seat.verified)); });
+    if (seat.unsettled) {
+      var why = String(seat.unsettled);
+      rows.push({
+        label: "Who holds " + what,
+        value: "Not named here. " + why.charAt(0).toUpperCase() + why.slice(1) + ", so this " +
+          "app names no one rather than guessing; " + place + "'s own website is the " +
+          "current source."
+      });
+    }
+    if (seat.left && seat.left.length && !(seat.members || []).length) {
+      rows.push({
+        label: "Who holds " + what,
+        value: seat.left.map(function (m) { return String(m.name); }).join(" and ") +
+          ", elected " + (vaReadDate(seat.left[0].elected) || "earlier") + ", has since been " +
+          "elected to another seat on the same body, and the results do not yet name who " +
+          "holds this one, so this app names no one; " + place + "'s own website is the " +
+          "current source."
+      });
+    }
+    if (seat.verified && seat.verified.read) {
+      rows.push({
+        label: "Where " + (people.length > 1 ? "these names come" : "this name comes") + " from",
+        value: place + "'s own page, read " + (vaReadDate(seat.verified.read) || seat.verified.read) +
+          ", because the election results alone do not settle who holds " + what + "."
+      });
+    }
+    (seat.pending || []).forEach(function (m) {
+      var starts = vaTakesOffice(m);
+      rows.push({
+        label: "Elected, not yet sitting",
+        value: (m.name ? String(m.name) : "A write-in candidate") + " won the election of " +
+          (vaReadDate(m.elected) || m.elected) + (starts ? " and takes office on " + starts : "") +
+          "; until then the member above holds the seat."
+      });
+    });
+    return { people: people, rows: rows };
+  }
+  // How many districts of one body a locality elects from.
+  function vaDistrictCount(loc, body) {
+    var n = 0;
+    Object.keys((loc && loc.districts) || {}).forEach(function (k) {
+      if (((loc.districts[k] || {}).seats || {})[body]) n += 1;
+    });
+    return n;
+  }
+  // The rows and people a County or City card adds for one locality's
+  // elected bodies: the members elected at large are named, and a body
+  // elected by district points to the layer that names each district's.
+  function vaLocalityBodies(loc, kind) {
+    var city = kind === "city";
+    var place = loc.name ? String(loc.name) : (city ? "This city" : "This county");
+    var blocks = [];
+    function row(r) { blocks.push({ row: r }); }
+    function add(got) {
+      if (got.people.length) blocks.push({ people: got.people });
+      got.rows.forEach(function (row) { blocks.push({ row: row }); });
+    }
+    var bodies = loc.bodies || {};
+    var board = bodies.board || {};
+    var boardName = city ? "city council" : (String(loc.name) === "Arlington County"
+      ? "county board" : "board of supervisors");
+    var n = vaDistrictCount(loc, "board");
+    if (board.byDistrict) {
+      row({
+        label: "Your " + boardName,
+        value: "Elected from " + n + " district" + (n === 1 ? "" : "s") +
+          (board.atLarge ? ", with members elected at large beside them" : "") +
+          ". Turn on Supervisor or Council District to see who represents this point."
+      });
+    }
+    if (board.atLarge) {
+      if (!board.byDistrict) {
+        row({ label: "Your " + boardName, value: "Every member is elected at large." });
+      }
+      add(vaSeat(board.atLarge, city ? "Council, at large" : "At large",
+        "the at-large seats", place));
+    }
+    if (bodies.chair && bodies.chair.atLarge) {
+      add(vaSeat(bodies.chair.atLarge, "Chair", "the chair", place));
+    }
+    if (city) {
+      if (bodies.mayor && bodies.mayor.atLarge) {
+        add(vaSeat(bodies.mayor.atLarge, "Mayor", "the mayor's office", place));
+      } else {
+        row({
+          label: "Mayor",
+          value: "The state's results hold no election for this city's mayor since 2015. " +
+            "A Virginia city that does not elect its mayor has the council choose one " +
+            "from among its members, and the city's own website names who."
+        });
+      }
+    }
+    var school = bodies.school || {};
+    var sn = vaDistrictCount(loc, "school");
+    if (school.elected === false) {
+      row({
+        label: "Your school board",
+        value: "The state's results hold no election for this school board since 2015. " +
+          "A Virginia school board that is not elected is appointed by the " +
+          (city ? "city council" : "board of supervisors") + ", so the election results do " +
+          "not name its members and this app names no one; the school division's own " +
+          "website is the current source."
+      });
+    } else {
+      if (school.byDistrict) {
+        row({
+          label: "Your school board",
+          value: "Elected from " + sn + " district" + (sn === 1 ? "" : "s") +
+            (school.atLarge ? ", with members elected at large beside them" : "") +
+            ". Turn on School Board District to see who represents this point."
+        });
+      }
+      if (school.atLarge) {
+        if (!school.byDistrict) {
+          row({ label: "Your school board", value: "Every member is elected at large." });
+        }
+        add(vaSeat(school.atLarge, "School board, at large", "the school board's at-large seats",
+          place));
+      }
+      if (bodies["school-chair"] && bodies["school-chair"].atLarge) {
+        add(vaSeat(bodies["school-chair"].atLarge, "School board chair",
+          "the school board's chair", place));
+      }
+    }
+    return blocks;
+  }
+  // Renders blocks of {row} and {people} in order, consecutive rows sharing
+  // one field stack.
+  function vaRenderBlocks(wrap, blocks) {
+    var rows = [];
+    function flush() {
+      if (rows.length) wrap.appendChild(renderFieldStack(rows));
+      rows = [];
+    }
+    blocks.forEach(function (b) {
+      if (b.row) { rows.push(b.row); return; }
+      flush();
+      wrap.appendChild(renderPersonRows(b.people));
+    });
+    flush();
+  }
+  function vaNamesSource(officials) {
+    var asOf = officials && vaReadDate(officials.asOf);
+    return {
+      label: "Where these names come from",
+      value: "The Department of Elections' results of the election named beside each " +
+        "member" + (asOf ? ", read " + asOf : "") + ". A result names who won; a member " +
+        "appointed to a vacancy since then is not named here until an election fills the seat."
+    };
+  }
+
   /* ---------- 1. County or City — the instance's offline anchor ----------
    * Geometry is pre-built (TIGERweb State_County layer 1, STATE-filtered,
    * va/scripts/build_state_counties.py) and served same-origin +
@@ -15320,11 +15534,12 @@ function initVirginiaExplorer() {
    * independent cities, which belong to no county and which the Census files
    * as county equivalents (GEOIDs 51510 to 51840).
    *
-   * NO OFFICEHOLDER YET. Every county elects a board of supervisors and every
-   * independent city a city council, and no list of their members has been
-   * read for this app, so the card names the county or city and says so.
-   * Recorded as gap va-county-board-members; the plan names them from the
-   * state's election results in the next change.
+   * WHO GOVERNS IT. The card names the members of the county's board of
+   * supervisors or the city's council elected at large, its elected chair
+   * or mayor and its school board's at-large members, from the state's
+   * election results (the officeholder block above), and says where a body
+   * is elected by district, which Supervisor or Council District and School
+   * Board District then name.
    * ---------- */
   var loadStateCounties = makeCached(function () {
     return fetchJSONWithRetry("data/app/state-counties.json", {}, 2);
@@ -15351,13 +15566,24 @@ function initVirginiaExplorer() {
       return name != null ? String(name) : null;
     },
     query: function (point, seq) {
-      return queryFeatureAt(loadStateCounties, point).then(function (feature) {
+      return Promise.all([
+        queryFeatureAt(loadStateCounties, point),
+        // the names are read beside the county, so a names file that fails to
+        // load costs the names and never the county itself
+        loadVaLocalOfficials().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
         if (!feature) return null;
         var props = feature.properties || {};
+        var geoid = findPropCI(props, ["geoid"]);
+        var officials = parts[1];
         return {
           seq: seq,
           name: findPropCI(props, ["name"]),
-          geoid: findPropCI(props, ["geoid"])
+          geoid: geoid,
+          officials: officials,
+          locality: officials && officials.localities && geoid != null
+            ? officials.localities[String(geoid)] || null : null
         };
       });
     },
@@ -15368,27 +15594,28 @@ function initVirginiaExplorer() {
         title: result.name != null ? String(result.name) : "Unknown county or city",
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
-      var rows = [];
       if (city) {
-        rows.push({
+        wrap.appendChild(renderFieldStack([{
           label: "An independent city",
           value: "This city belongs to no county. Its city council governs " +
             "it the way a board of supervisors governs a county, and it elects " +
             "the officers a county elects elsewhere in Virginia."
-        });
+        }]));
       }
-      rows.push({
-        label: city ? "Your city council" : "Your board of supervisors",
-        value: (city
-          ? "Not named here yet. Virginia's cities elect their councils, "
-          : "Not named here yet. Virginia's counties elect their boards of " +
-            "supervisors, ") +
-          "and this app has not yet read who holds each seat. It does not " +
-          "guess in the meantime, so the " + (city ? "city's" : "county's") +
-          " own website is the current source."
-      });
-      wrap.appendChild(renderFieldStack(rows));
+      if (result.locality) {
+        vaRenderBlocks(wrap, vaLocalityBodies(result.locality, city ? "city" : "county"));
+        wrap.appendChild(renderFieldStack([vaNamesSource(result.officials)]));
+      } else {
+        wrap.appendChild(renderFieldStack([{
+          label: city ? "Your city council" : "Your board of supervisors",
+          value: "The list of who holds each seat did not load, so no one is named here; " +
+            "the " + (city ? "city's" : "county's") + " own website is the current source."
+        }]));
+      }
       return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Virginia's election results", url: VA_RESULTS_SITE };
     }
   });
 
@@ -15501,6 +15728,171 @@ function initVirginiaExplorer() {
     if (i > 0 && i + b.length === n.length) return n.slice(0, i).trim().toLowerCase() || null;
     return null;
   }
+
+  /* ---------- Supervisor or Council District + School Board District ----------
+   * The districts each county's board of supervisors, each city's council
+   * and each school board are elected from, drawn by
+   * va/scripts/build_va_local_districts.py into
+   * data/app/va-local-districts.json (same-origin) as the union of the
+   * Department of Elections' precincts in each, so a district's lines are
+   * the precinct file's lines, drawn to within 12 metres. Norfolk's two
+   * superwards come from the city's own map and are drawn from its
+   * precincts the same way; a Norfolk point is in a ward and a superward,
+   * and the card names both.
+   *
+   * A district is drawn only where the state's election results elect
+   * someone from it, so a county or city whose members are all elected at
+   * large has none (its County or City card names them). Each layer draws
+   * only the districts its body is elected from, read from the names file:
+   * in most places the board and the school board share one set of
+   * districts, and where a school board is elected at large or appointed,
+   * School Board District has nothing there.
+   * ---------- */
+  var loadVaLocalDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/va-local-districts.json", {}, 2);
+  });
+  function vaDistrictsFor(body) {
+    return makeCached(function () {
+      return Promise.all([loadVaLocalDistricts(), loadVaLocalOfficials()]).then(function (parts) {
+        var localities = (parts[1] && parts[1].localities) || {};
+        var feats = ((parts[0] && parts[0].features) || []).filter(function (f) {
+          var p = f.properties || {};
+          var loc = localities[String(p.countyFips)];
+          var d = loc && loc.districts && loc.districts[String(p.key)];
+          return !!(d && d.seats && d.seats[body]);
+        });
+        return { type: "FeatureCollection", features: feats };
+      });
+    });
+  }
+  var loadVaBoardDistricts = vaDistrictsFor("board");
+  var loadVaSchoolDistricts = vaDistrictsFor("school");
+
+  function vaDistrictTitle(props) {
+    var name = props.name != null ? String(props.name) : "";
+    return name || null;
+  }
+
+  // A district layer answers only where its body is elected by district:
+  // elsewhere (Arlington, Highland, Madison and Mathews counties and 23
+  // cities for the boards, and wherever a school board is elected at large
+  // or appointed) the layer hides and the County or City card names the
+  // members. The test reads the same drawn districts the overlay draws, so
+  // it costs nothing the overlay does not already fetch.
+  function vaInDrawnDistrict(load) {
+    return function (point) {
+      return load().then(function (fc) {
+        var feats = (fc && fc.features) || [];
+        for (var i = 0; i < feats.length; i++) {
+          if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) return true;
+        }
+        return false;
+      });
+    };
+  }
+
+  function registerVaDistrictLayer(spec) {
+    registerLayer({
+      id: spec.id,
+      group: spec.group,
+      label: spec.label,
+      coverage: vaInDrawnDistrict(spec.load),
+      overlay: { load: spec.load, style: spec.style },
+      hoverName: function (feature) {
+        var p = feature.properties || {};
+        var t = vaDistrictTitle(p);
+        return t && p.locality ? t + ", " + String(p.locality) : t;
+      },
+      query: function (point, seq) {
+        return Promise.all([featureSetAt(spec.load, point), loadVaLocalOfficials()])
+          .then(function (parts) {
+            var feats = ((parts[0] && parts[0].features) || []).filter(function (f) {
+              return pointInGeometry(point, f.geometry);
+            });
+            if (!feats.length) return null;
+            var localities = (parts[1] && parts[1].localities) || {};
+            var found = feats.map(function (f) {
+              var p = f.properties || {};
+              var loc = localities[String(p.countyFips)] || {};
+              var d = (loc.districts || {})[String(p.key)] || {};
+              return {
+                name: vaDistrictTitle(p) || String(d.name || "") || null,
+                locality: p.locality != null ? String(p.locality) : null,
+                kind: p.kind != null ? String(p.kind) : null,
+                seat: (d.seats || {})[spec.body] || null,
+                twoMembers: !!(loc.bodies && loc.bodies[spec.body] &&
+                  ((d.seats || {})[spec.body] || {}).members &&
+                  d.seats[spec.body].members.length > 1)
+              };
+            });
+            return { seq: seq, districts: found, asOf: parts[1] && parts[1].asOf,
+              officials: parts[1] };
+          });
+      },
+      cardIdentifier: function (result) {
+        var d = result.districts[0];
+        return d && d.name ? d.name : "Unknown district";
+      },
+      render: function (result) {
+        var wrap = cardEl("div", "card-flush");
+        result.districts.forEach(function (d, i) {
+          if (i > 0) wrap.appendChild(renderSectionLabel(d.name || "Another district"));
+          var city = d.kind === "city";
+          var place = d.locality || (city ? "This city" : "This county");
+          var seat = vaSeat(d.seat, spec.badge(city, d.locality), "this seat", place);
+          wrap.appendChild(renderBodyIntro({
+            title: d.name || "Unknown district",
+            note: d.locality
+          }));
+          if (seat.people.length) wrap.appendChild(renderPersonRows(seat.people));
+          if (seat.rows.length) wrap.appendChild(renderFieldStack(seat.rows));
+        });
+        wrap.appendChild(renderFieldStack([vaNamesSource(result.officials), {
+          label: "How exact this line is",
+          value: "Each district is drawn from the Department of Elections' precincts, every " +
+            "one of which lies wholly inside one district, so its lines are the precincts' " +
+            "lines, drawn to within 12 metres. For a definitive answer, ask your county or " +
+            "city's general registrar."
+        }]));
+        return wrap;
+      },
+      primaryLink: function (result) {
+        var d = result.districts[0];
+        var m = d && d.seat && d.seat.members && d.seat.members[0];
+        var url = m && vaContestUrl(m.contest);
+        if (url) return { label: "This seat's election result", url: url };
+        return { label: "Virginia's election results", url: VA_RESULTS_SITE };
+      }
+    });
+  }
+
+  registerVaDistrictLayer({
+    id: "supervisor-district",
+    group: "political",
+    label: "Supervisor or Council District",
+    body: "board",
+    load: loadVaBoardDistricts,
+    // the county-board concept's colour and width (root layer-concepts.json);
+    // the layer is also the city-council concept's, as a Virginia city
+    // council governs the way a county's board does
+    style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.06 },
+    badge: function (city, locality) {
+      if (city) return "Council member";
+      return locality === "Arlington County" ? "County board member" : "Supervisor";
+    }
+  });
+
+  registerVaDistrictLayer({
+    id: "school-board-district",
+    group: "schools",
+    label: "School Board District",
+    body: "school",
+    load: loadVaSchoolDistricts,
+    // the school-board-district concept's colour and width (root
+    // layer-concepts.json)
+    style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.06 },
+    badge: function () { return "School board member"; }
+  });
 
   /* ---------- 5. Magisterial District — TIGERweb county subdivisions ----------
    * Which county subdivision a point is in, owed in every state whether or
@@ -15619,9 +16011,13 @@ function initVirginiaExplorer() {
    * km2 of towns and 4,299 km2 of cities, by the Census's own AREALAND,
    * measured 2026-10-29), and the county governs everywhere else.
    *
-   * NO OFFICEHOLDER YET. No list of Virginia's mayors and council members has
-   * been read for this app, so the card names no one rather than guessing.
-   * Recorded as gap va-municipal-officeholders. ---------- */
+   * WHO GOVERNS IT. A city's council, its elected mayor and its school board
+   * are named from the state's election results, the same entry its County
+   * or City card reads (matched by the city's name, as the Census's place
+   * and county files spell it alike). Of the 189 towns, the two above 25,000
+   * people, Leesburg and Blacksburg, have their councils and mayors named the
+   * same way; every other town's card names no one and says so. Recorded as
+   * gap va-municipal-officeholders. ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT", "incorporated places");
@@ -15656,18 +16052,41 @@ function initVirginiaExplorer() {
     query: function (point, seq) {
       // point-first (queryFeatureAt): one place polygon instead of the
       // statewide incorporated-places download
-      return queryFeatureAt(loadPlaces, point).then(function (feature) {
+      return Promise.all([
+        queryFeatureAt(loadPlaces, point),
+        loadVaLocalOfficials().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
         if (!feature) return null; // unincorporated — the engine renders emptyNote
         var props = feature.properties || {};
         var name = findPropCI(props, ["name"]);
         var base = findPropCI(props, ["basename"]);
+        // NAME minus BASENAME, so the style can never contradict the name
+        // above it
+        var kind = subdivisionKind(name, base);
+        var officials = parts[1];
+        var locality = null;
+        var town = null;
+        if (officials && base != null) {
+          if (kind === "city") {
+            Object.keys(officials.localities || {}).forEach(function (g) {
+              var l = officials.localities[g];
+              if (l && l.kind === "city" && String(l.name) === String(base)) locality = l;
+            });
+          } else if (kind === "town" && officials.towns &&
+              Object.prototype.hasOwnProperty.call(officials.towns, String(base))) {
+            town = officials.towns[String(base)];
+          }
+        }
         return {
           seq: seq,
           name: name,
-          // NAME minus BASENAME, so the style can never contradict the name
-          // above it
-          kind: subdivisionKind(name, base),
-          geoid: findPropCI(props, ["geoid"])
+          base: base,
+          kind: kind,
+          geoid: findPropCI(props, ["geoid"]),
+          officials: officials,
+          locality: locality,
+          town: town
         };
       });
     },
@@ -15681,13 +16100,32 @@ function initVirginiaExplorer() {
       if (result.kind && VA_PLACE_KINDS.hasOwnProperty(result.kind)) {
         rows.push({ label: "Type", value: VA_PLACE_KINDS[result.kind] });
       }
-      rows.push({
-        label: result.kind === "town" ? "Your mayor and town council" : "Your mayor and city council",
-        value: "Not named here yet. No list of Virginia's mayors and council " +
-          "members has been read for this app, and it does not guess in the " +
-          "meantime, so this place's own website is the current source."
-      });
-      wrap.appendChild(renderFieldStack(rows));
+      if (rows.length) wrap.appendChild(renderFieldStack(rows));
+      var place = result.base != null ? String(result.base) : "This place";
+      if (result.locality) {
+        vaRenderBlocks(wrap, vaLocalityBodies(result.locality, "city"));
+        wrap.appendChild(renderFieldStack([vaNamesSource(result.officials)]));
+      } else if (result.town) {
+        var blocks = [];
+        [["mayor", "Mayor", "the mayor's office"], ["town", "Town council", "the council's seats"]]
+          .forEach(function (b) {
+            var got = vaSeat(result.town[b[0]], b[1], b[2], place);
+            if (got.people.length) blocks.push({ people: got.people });
+            got.rows.forEach(function (r) { blocks.push({ row: r }); });
+          });
+        vaRenderBlocks(wrap, blocks);
+        wrap.appendChild(renderFieldStack([vaNamesSource(result.officials)]));
+      } else {
+        wrap.appendChild(renderFieldStack([{
+          label: result.kind === "town" ? "Your mayor and town council" : "Your mayor and city council",
+          value: result.kind === "town"
+            ? "Not named here yet. Of Virginia's 189 towns, this app names the councils of " +
+              "Leesburg and Blacksburg, the two above 25,000 people, and no other yet; it " +
+              "does not guess in the meantime, so this town's own website is the current source."
+            : "The list of who holds each seat did not load, so no one is named here; this " +
+              "place's own website is the current source."
+        }]));
+      }
       return wrap;
     }
   });
@@ -15709,9 +16147,11 @@ function initVirginiaExplorer() {
    * "no school division" to every reader in Lexington, which is a wrong
    * answer rather than a missing one.
    *
-   * NO OFFICEHOLDER YET. Most Virginia school boards are elected, and no list
-   * of their members has been read for this app; the card names the division
-   * only. Recorded as gap va-school-board-members. ---------- */
+   * THE BOARD IS NAMED ON OTHER CARDS. The School Board District card names
+   * each district's members, and the County or City card a board elected at
+   * large or says that it is appointed; this card names the division only, so
+   * one board is never named twice beside one point. The seats the state's
+   * results cannot settle are gap va-school-board-members. ---------- */
   var loadSchoolDistrictsUnified = tigerStatewideLoader(
     TIGERWEB_SERVICES + "School/MapServer", 0,
     "GEOID,NAME,STATE", "unified school districts");
@@ -15843,6 +16283,102 @@ function initVirginiaExplorer() {
     ]
   });
 
+
+  /* ---------- Voting precinct — the Department of Elections' statewide layer ----------
+   * Virginia's 2,531 precincts, from the Department of Elections'
+   * statewide layer of districts and precincts. Pre-built by
+   * va/scripts/build_va_precincts.py through scripts/statewide_precincts.py
+   * (Douglas-Peucker at 12 m; data/app/va-precincts.json, same-origin), so
+   * a click is answered in the browser and no point is sent anywhere. The
+   * layer cuts a precinct wherever a legislative line crosses it, and the
+   * builder joins the pieces back into one shape per precinct.
+   *
+   * A PRECINCT ELECTS NO ONE TO PUBLIC OFFICE, so the card has no
+   * officeholder row to be missing and says why. Its title is the
+   * precinct's name as the Department writes it, in capitals in 29 of the
+   * 133 counties and cities; the number beside it is the Department's
+   * precinct number without its leading zeros.
+   * ---------- */
+  var loadVaPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/va-precincts.json", {}, 2);
+  });
+
+  // A precinct elects no one to public office, so the card says so rather
+  // than leaving a reader to wonder which name is missing.
+  var PRECINCT_ELECTS = "No one to public office. A precinct is where you vote " +
+    "and how your ballots are reported, not a district with a representative of its own.";
+
+  // The card's title: a name that is only a number reads "Precinct 25", so
+  // it cannot be taken for a district number; any other name is printed as
+  // the Department publishes it.
+  function precinctTitle(props) {
+    var name = props.name != null ? String(props.name).trim() : "";
+    if (!name) return null;
+    return /^[0-9][0-9-]*$/.test(name) ? "Precinct " + name : name;
+  }
+
+  // The Department's precinct number, "0706", as a reader sees it: 706.
+  function precinctNumber(props) {
+    var num = props.num != null ? String(props.num).trim() : "";
+    num = num.replace(/^0+(?=\d)/, "");
+    return num || null;
+  }
+
+  registerLayer({
+    id: "voting-precinct",
+    group: "geography",
+    label: "Voting Precinct",
+    overlay: {
+      load: loadVaPrecincts,
+      // the voting-precinct concept's colour and width (root
+      // layer-concepts.json): the finest tiling on this map, so it reads
+      // under the broader boundaries rather than competing with them
+      style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      return precinctTitle(feature.properties || {});
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadVaPrecincts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        return {
+          seq: seq,
+          title: precinctTitle(props),
+          number: precinctNumber(props),
+          county: props.county != null ? String(props.county) : null
+        };
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var note = [];
+      if (result.number) note.push("Precinct " + result.number);
+      if (result.county) note.push(result.county);
+      wrap.appendChild(renderBodyIntro({
+        title: result.title || "Unknown precinct",
+        note: note.length ? note.join(" · ") : null
+      }));
+      var rows = [
+        { label: "Who it elects", value: PRECINCT_ELECTS },
+        {
+          label: "How exact this line is",
+          value: "Each county and city's general registrar keeps its precincts, and the " +
+            "Department of Elections publishes them for the whole state. The lines are " +
+            "drawn here to within 12 metres; for a definitive answer, ask your county or " +
+            "city's general registrar."
+        }
+      ];
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return {
+        label: "Find your polling place",
+        url: "https://vote.elections.virginia.gov/VoterInformation"
+      };
+    }
+  });
 
   /* ---------- 10. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
@@ -17517,11 +18053,14 @@ function initVirginiaExplorer() {
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "va-senate", "va-house",
+    // The local seats follow the chambers: the supervisor or council member
+    // and the school board member elected from the point's district.
+    "supervisor-district", "school-board-district",
     // Virginia's school divisions come in two tilings that partition the
     // state between them (Lexington's is the only elementary one), so the
     // two sit together.
     "school-district-unified", "school-district-elementary",
-    "county", "county-subdivision", "municipality", "zip-code",
+    "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -18023,11 +18562,12 @@ function initVirginiaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#2F6B3A": "#6FBE7B",
+  var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
+    "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF",
     "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#A05F00": "#FBA23D", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1",
-    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
+    "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C",
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A05F00": "#FBA23D", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

@@ -182,7 +182,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "NO OFFICEHOLDER YET. Every Virginia county elects a board of supervisors and every independent city a city council, and no list of their members has been read for this app yet, so the card names the county or city only. Recorded as gap va-county-board-members.",
+        "people": "Who governs it: the board of supervisors or city council, the school board where it is elected, and a city's elected mayor, named from va-local-officials.json — the Department of Elections' results of the elections that seated them (historical.elections.virginia.gov), each member's card saying which election and linking its result. Where a body is elected by district the card names everyone and the district layers say which member represents the point. A member appointed to a vacancy is not shown until an election fills the seat, and where the results do not settle who holds a seat the card names no one and says why. Where a school board is appointed the card says so and names no one.",
         "applies": "Virginia — statewide, all 95 counties and 38 independent cities."
       }
     },
@@ -200,15 +200,37 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
           }
         ],
-        "people": "NO OFFICEHOLDER YET, AND THE CARD NAMES THE DIVISION ONLY. Most Virginia school boards are elected, and no list of their members has been read for this app yet — recorded as gap va-school-board-members.",
+        "people": "THE CARD NAMES THE DIVISION ONLY. Its school board's members are named on the County or City card and, where they are elected by district, on the School Board District card, from the state's election results.",
         "applies": "Virginia — every point outside the City of Lexington. The two tilings partition the state: their Census land areas sum to exactly the 133-county-and-city total (102,256 km2), measured 2026-10-29. TIGERweb's secondary tiling is empty for Virginia (0 features)."
+      }
+    },
+    {
+      "id": "school-board-district",
+      "label": "School Board District",
+      "group": "schools",
+      "area_rank": 6,
+      "rank_note": "545 districts in the 98 counties and cities that elect their school board by district, each the union of its precincts in the Department of Elections' layer; 186.1 km2 mean area on the drawn file, land and water (median 158.2), measured 2026-10-30",
+      "source": {
+        "answers": "The district a school board member is elected from at the point, and who holds the seat. In Norfolk the point is in a ward and a superward, and the card names both.",
+        "boundary": [
+          {
+            "label": "Virginia Department of Elections — its statewide layer of election districts and precincts (Districts_Union_Simplified, layer 0), last changed 2026-09-22 and read 2026-10-30: 7,271 pieces joined into the 2,531 precincts they name, where two precincts claimed the same ground each part given to the precinct of the county it lies in, and checked to cover each county and city; pre-built by va/scripts/build_va_precincts.py and shipped with the app, drawn to within 12 metres. A school board district is the union of the precincts the layer puts in it; in 88 counties and 10 cities the school board is elected from the same districts as the supervisors or council.",
+            "url": "https://services5.arcgis.com/M3dium4ePYpmdT4B/arcgis/rest/services/Districts_Union_Simplified/FeatureServer/0"
+          },
+          {
+            "label": "City of Norfolk — its two superwards (OpenData Maps, layer 8), from which two school board members are elected; each Norfolk precinct lies at least 99.2% inside one, so each superward is drawn as the union of its precincts.",
+            "url": "https://gisshare.norfolk.gov/pubserver/rest/services/OpenData/Maps/FeatureServer/8"
+          }
+        ],
+        "people": "va-local-officials.json, read from the Department of Elections' results of every local contest (historical.elections.virginia.gov) by va/scripts/build_va_local_officials.py: the winner of the latest election to each seat, the card saying which election and linking its result. A seat a special election has filled since is named from the special election. A member appointed to a vacancy is not shown until an election fills the seat, and where the results do not settle who holds a seat the card names no one and says why.",
+        "applies": "Virginia — the 88 counties and 10 cities whose school board is elected by district. Elsewhere the board is elected at large or appointed, which the County or City card says; the layer is hidden there."
       }
     },
     {
       "id": "county-subdivision",
       "label": "Magisterial District",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "552 records tiling the state — 513 magisterial districts, the 38 independent cities and Arlington County, which the Census files as one each — about 185 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The magisterial district containing the point, as the Census Bureau maps it, and its county.",
@@ -223,10 +245,32 @@
       }
     },
     {
+      "id": "supervisor-district",
+      "label": "Supervisor or Council District",
+      "group": "political",
+      "area_rank": 8,
+      "rank_note": "597 districts in the 91 counties and 15 cities that elect their board of supervisors or council by district, each the union of its precincts in the Department of Elections' layer; 176.1 km2 mean area on the drawn file, land and water (median 149.5), measured 2026-10-30",
+      "source": {
+        "answers": "The district a county supervisor or city council member is elected from at the point, and who holds the seat. In Norfolk the point is in a ward and a superward, and the card names both.",
+        "boundary": [
+          {
+            "label": "Virginia Department of Elections — its statewide layer of election districts and precincts (Districts_Union_Simplified, layer 0), last changed 2026-09-22 and read 2026-10-30: 7,271 pieces joined into the 2,531 precincts they name, where two precincts claimed the same ground each part given to the precinct of the county it lies in, and checked to cover each county and city; pre-built by va/scripts/build_va_precincts.py and shipped with the app, drawn to within 12 metres. A district is the union of the precincts the layer puts in it, keyed by the layer's district number except in Southampton County (by name, its numbers being stale), Poquoson and Waynesboro (whose council districts the layer records as precincts); a district name the layer gets wrong is corrected against the name the election results give it.",
+            "url": "https://services5.arcgis.com/M3dium4ePYpmdT4B/arcgis/rest/services/Districts_Union_Simplified/FeatureServer/0"
+          },
+          {
+            "label": "City of Norfolk — its two superwards (OpenData Maps, layer 8), from which two council members are elected; each Norfolk precinct lies at least 99.2% inside one, so each superward is drawn as the union of its precincts.",
+            "url": "https://gisshare.norfolk.gov/pubserver/rest/services/OpenData/Maps/FeatureServer/8"
+          }
+        ],
+        "people": "va-local-officials.json, read from the Department of Elections' results of every local contest (historical.elections.virginia.gov) by va/scripts/build_va_local_officials.py: the winner of the latest election to each seat, the card saying which election and linking its result. A seat a special election has filled since is named from the special election. A member appointed to a vacancy is not shown until an election fills the seat, and where the results do not settle who holds a seat the card names no one and says why.",
+        "applies": "Virginia — the 91 counties and 15 cities that elect their board or council by district. Arlington, Highland, Madison and Mathews counties and 23 cities elect at large; the layer is hidden there and the County or City card names the members."
+      }
+    },
+    {
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 9,
       "rank_note": "907 ZIP Code Tabulation Areas overlapping Virginia, of the 2,609 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-29); about 94 km2 of land on average for the 2,609, and ranked by them, which are what the map draws where the archive is not used (on the raster basemap); the layer hides outside Virginia",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -241,10 +285,28 @@
       }
     },
     {
+      "id": "voting-precinct",
+      "label": "Voting Precinct",
+      "group": "geography",
+      "area_rank": 10,
+      "rank_note": "2,531 precincts tiling the state, pre-built from the Department of Elections' layer — 43.2 km2 mean area on the drawn file, land and water (median 7.8), measured 2026-10-30: smaller on average than a supervisor or council district, larger than a city or town (about 25 km2 of land)",
+      "source": {
+        "answers": "The voting precinct containing the point, and the county or city it is in.",
+        "boundary": [
+          {
+            "label": "Virginia Department of Elections — its statewide layer of election districts and precincts (Districts_Union_Simplified, layer 0), last changed 2026-09-22 and read 2026-10-30: 7,271 pieces joined into the 2,531 precincts they name, where two precincts claimed the same ground each part given to the precinct of the county it lies in, and checked to cover each county and city; pre-built by va/scripts/build_va_precincts.py and shipped with the app, drawn to within 12 metres.",
+            "url": "https://services5.arcgis.com/M3dium4ePYpmdT4B/arcgis/rest/services/Districts_Union_Simplified/FeatureServer/0"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, and none is missing. A precinct elects nobody; it is where a voter's ballot is cast and counted. The card links the Department of Elections' lookup for the polling place.",
+        "applies": "Virginia — statewide, all 133 counties and cities."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 11,
       "rank_note": "227 incorporated places (38 independent cities and 189 towns), about 25 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The independent city or town containing the point, if any.",
@@ -254,7 +316,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
-        "people": "NO OFFICEHOLDER YET. Virginia's cities and towns elect their own councils, and no list of them has been read for this app yet; the card names the place and links nothing it has not verified. Recorded as gap va-municipal-officeholders.",
+        "people": "A city's council, elected mayor and school board are named from va-local-officials.json, the same entry its County or City card reads. Of the 189 towns, the councils and mayors of the two above 25,000 people, Leesburg and Blacksburg, are named the same way; every other town's card names no one and says so (gap va-municipal-officeholders).",
         "applies": "Virginia — statewide. A point in a county outside every town is not in any city or town, which the card states."
       }
     },
@@ -262,7 +324,7 @@
       "id": "school-district-elementary",
       "label": "School Division (Elementary)",
       "group": "schools",
-      "area_rank": 9,
+      "area_rank": 12,
       "rank_note": "One elementary division, Lexington City Public Schools, 6.5 km2 of land, from TIGERweb, drawn from a mirrored tile archive; the ground the unified tiling leaves",
       "source": {
         "answers": "The elementary school division covering the point, where the point is in one.",
@@ -272,7 +334,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
           }
         ],
-        "people": "NO OFFICEHOLDER YET, AND THE CARD NAMES THE DIVISION ONLY — the same gap as the School Division layer (va-school-board-members).",
+        "people": "THE CARD NAMES THE DIVISION ONLY. Lexington's school board is elected at large and named on the County or City card, from the state's election results.",
         "applies": "Virginia — the City of Lexington only. Everywhere else the School Division card is the answer."
       }
     },
@@ -280,7 +342,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 13,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -298,7 +360,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 14,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -316,7 +378,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 15,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -395,6 +457,18 @@
         "min_features": 100,
         "max_features": 100,
         "note": "The 100 House of Delegates districts, TIGERweb layer 2, the 2021 plan."
+      },
+      {
+        "file": "va-precincts.json",
+        "min_features": 2531,
+        "max_features": 2531,
+        "note": "Every Virginia voting precinct, pre-built by va/scripts/build_va_precincts.py through scripts/statewide_precincts.py from the Department of Elections' statewide layer of election districts and precincts (changed 2026-09-22, read 2026-10-30): 7,271 pieces joined into 2,531 precincts, overlaps between neighbours resolved by county, Douglas-Peucker at 12 m. 8.7 MB, 2.17 MB gzipped, fetched only when a reader switches a layer on that reads it."
+      },
+      {
+        "file": "va-local-districts.json",
+        "min_features": 600,
+        "max_features": 600,
+        "note": "The 600 supervisor, council and school board districts of the 107 counties and cities that elect by district (va/scripts/build_va_local_districts.py), each the union of its precincts in va-precincts.json; Norfolk's two superwards from the city's own map. Drawn only where va-local-officials.json names seats for the district, and the builder's --check holds the two to each other."
       }
     ],
     "rosters": [
@@ -414,6 +488,11 @@
         "note": "House of Delegates roster from the House's own member list and member pages, on the same terms."
       },
       {
+        "file": "va-local-officials.json",
+        "min_keys": 4,
+        "note": "Every county's board of supervisors, every city's council, every elected school board and every city's elected mayor, plus Leesburg's and Blacksburg's councils, from the Department of Elections' results (va/scripts/build_va_local_officials.py), refreshed weekly by update-va-local-officials.yml. Four top-level keys (asOf, source, localities, towns); the builder's --check holds all 133 counties and cities and every district seat."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
@@ -421,7 +500,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-va-shell-v1",
+    "cache_name": "districtry-va-shell-v2",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
@@ -443,6 +522,11 @@
       "file": "update-va-legislature-roster.yml",
       "purpose": "Virginia Senate and House of Delegates rosters (each chamber's own member list and member pages)",
       "schedule": "Tue 19:07 UTC"
+    },
+    {
+      "file": "update-va-local-officials.yml",
+      "purpose": "Virginia's county boards, city councils, school boards and mayors (the Department of Elections' results)",
+      "schedule": "Wed 19:37 UTC"
     },
     {
       "file": "va-validate-sources.yml",
