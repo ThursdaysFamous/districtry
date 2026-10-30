@@ -75,6 +75,22 @@ layer's empty card points at the other.
 service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline, and
 the smoke test asserts both halves.
 
+**THE TRIBAL GOVERNMENT LAYER DRAWS THREE PIECES OF LAND, AND ONE NATION IS RECOGNIZED BY THE
+COMMONWEALTH ONLY.** The Census's current map holds the Pamunkey and Mattaponi state reservations
+and the Rappahannock Trust Land (`scripts/build_tribal_areas.py --state Virginia --tag va`). The
+Bureau of Indian Affairs lists the Pamunkey Indian Tribe and the Rappahannock Tribe; it does not
+list the Mattaponi Tribe, whose name, seat and website therefore come from the Secretary of the
+Commonwealth's list of state-recognized tribes (`stateRecognition` in
+`data/tribal-government-join.json`), and its card says the Commonwealth and not the United States
+recognizes it, as New York's Poospatuck card does. The councils are read weekly from each nation's
+own page by `scripts/tribal_council_scraper.py`, in the fleet's one `update-tribal-councils.yml`.
+The Rappahannock Tribe's site names no council and the state's list names only its chief and
+assistant chief, so its card names nobody (`ROSTER_BLOCKED` in `scripts/build_tribal_areas.py`,
+gap `va-tribal-government`), because part of a council is never shown as the whole of it. The
+Chickahominy and Eastern Chickahominy areas on the Census's map are statistical areas, not land a
+government answers for, and are not drawn; the Monacan, Nansemond and Upper Mattaponi hold no land
+the Census draws.
+
 **There is no build step, no framework, and no server-side code.** The app — styles, engine,
 and layer modules — lives inline in `index.html`. `sw.js` is the service worker;
 `data/app/*.json` are runtime-fetched data files; `data/state/` carries the bootstrap state
@@ -90,7 +106,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Virginia (`virginia`) — https://districtry.com/va/
 - Geocoders: address Photon (Virginia-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Virginia-bounded, serial >=1s queue)
 - Ground truth: 37.53850,-77.43370 (Virginia State Capitol, 1000 Bank Street, Richmond (an independent city)) → county Richmond city; us-house 4; va-senate 14; va-house 78. Negative point 37.00000,-75.30000 (Open Atlantic Ocean east of the mouth of Chesapeake Bay, 44 km from the nearest edge of Virginia's outline — outside Virginia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: none of the state's shipped boundary files contains it, none of fleet-outlines.json's outlines does either, and the State Capitol, the control, is inside every shipped file. Water on purpose, the way North Carolina's and Louisiana's are: every land neighbour of Virginia is either live already (Kentucky, Tennessee, North Carolina) or a state the fleet plans to build (West Virginia, Maryland), so a point on a neighbour's land would have to move when that neighbour goes live.).
-- Layers: 15 registered (political 4, safety 2, schools 3, geography 6); `registerLayer(` floor 9. Debug namespace `window.VirginiaExplorer`.
+- Layers: 16 registered (political 5, safety 2, schools 3, geography 6); `registerLayer(` floor 9. Debug namespace `window.VirginiaExplorer`.
 - Scheduled workflows: `update-va-congress-roster.yml` (Mon 19:07 UTC); `update-va-legislature-roster.yml` (Tue 19:07 UTC); `update-va-local-officials.yml` (Wed 19:37 UTC); `va-validate-sources.yml` (1st of month 21:43 UTC).
 - Source registry: `va/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

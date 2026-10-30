@@ -172,6 +172,20 @@ NATIONS = {
              "pages": ["https://www.jenachoctaw.org/about-jbci/tribal-leaders"], "seats": 5},
     "4315": {"nation": "Tunica-Biloxi",
              "pages": ["https://www.tunicabiloxi.org/tribal-info/tribal-council/"], "seats": 7},
+    # Virginia (read 2026-10-30, each robots.txt with this scraper's client;
+    # both allow these paths). The Pamunkey Indian Tribe's page says its
+    # government is "one Chief and seven council members", the Assistant
+    # Chief being selected by the council from among them, and names the
+    # Chief, the Assistant Chief and six more. The Mattaponi Tribe's page says
+    # its council is "seven members and the chiefs", and names the Chief, the
+    # Assistant Chief and seven council members. The Mattaponi are recognized
+    # by Virginia and not by the United States, which
+    # data/tribal-government-join.json records. The Rappahannock Tribe's site
+    # names no council, which ROSTER_BLOCKED in build_tribal_areas.py records.
+    "9260": {"nation": "Pamunkey",
+             "pages": ["https://www.pamunkey.org/tribal-government"], "seats": 8},
+    "9230": {"nation": "Mattaponi",
+             "pages": ["https://www.mattaponi.gov/mattaponi-tribal-council"], "seats": 9},
 }
 
 _BLOCK = (r"(?:p|div|h[1-6]|li|ul|ol|td|th|tr|table|section|article|header|footer|"
@@ -909,6 +923,57 @@ def p_tunica_biloxi(pages):
     return out
 
 
+def p_pamunkey(pages):
+    # "Chief <name>" and "Assistant Chief <name>" head their biographies, and
+    # the six other council members are the lines under "Tribal Council" up to
+    # "Tribal Administration", which opens the staff list.
+    # A heading is the office and a name of two to four words with no full
+    # stop at its end; the biographies under them are whole sentences.
+    ls = pages[0]
+    out = []
+    for role in ("Chief", "Assistant Chief"):
+        heads = [l for l in ls
+                 if re.match(r"%s (?:[A-Z][^ ]* ?){2,4}$" % role, l) and not l.endswith(".")]
+        if len(heads) != 1:
+            raise ValueError("Pamunkey: expected one %r heading, found %r" % (role, heads))
+        out.append(_m(heads[0][len(role) + 1:], role))
+    ls = _after(ls, "Tribal Council")
+    ls = ls[:ls.index("Tribal Administration")]
+    out.extend(_m(name, "Council Member") for name in ls)
+    return out
+
+
+def p_mattaponi(pages):
+    # The list headed "Mattaponi Tribal Council": "Chief:", the name,
+    # "Assistant Chief:", the name, then "Council Members:" and one name a
+    # line, ending at the site's footer ("All materials used on this
+    # website..."). THE SAME PAGE'S LEADERSHIP PANEL, above the list, names
+    # another assistant chief under a placeholder biography; the list agrees
+    # with the nation's own front page and with the Secretary of the
+    # Commonwealth's list of state-recognized tribes (both read 2026-10-30),
+    # so the list ships and the other name is stated on the row, as Bad
+    # River's two spellings are.
+    ls = pages[0]
+    panel = {}
+    for i, line in enumerate(ls[:-1]):
+        if ls[i + 1] in ("CHIEF", "ASSISTANT CHIEF"):
+            panel[ls[i + 1].title()] = line
+    ls = _after(ls, "Mattaponi Tribal Council")
+    if ls[0] != "Chief:" or ls[2] != "Assistant Chief:" or ls[4] != "Council Members:":
+        raise ValueError("Mattaponi: the list is not Chief, Assistant Chief, Council "
+                         "Members: %r" % ls[:5])
+    out = []
+    for name, role in ((ls[1], "Chief"), (ls[3], "Assistant Chief")):
+        other = panel.get(role)
+        out.append(_m(name, role, note=("the same page's leadership panel names %s as %s"
+                                         % (other, role.lower())) if other and other != name else None))
+    for line in ls[5:]:
+        if line.startswith("All materials used on this website"):
+            break
+        out.append(_m(line, "Council Member"))
+    return out
+
+
 PARSERS = {
     "0140": p_bad_river, "0170": p_bay_mills, "1125": p_fond_du_lac,
     "1135": p_forest_county, "1370": p_grand_traverse, "1450": p_ho_chunk,
@@ -920,6 +985,7 @@ PARSERS = {
     "3085": p_red_cliff, "3305": p_st_croix, "3635": p_sault,
     "4015": p_stockbridge, "0525": p_catawba, "2300": p_choctaw,
     "0635": p_chitimacha, "1690": p_jena, "4315": p_tunica_biloxi,
+    "9260": p_pamunkey, "9230": p_mattaponi,
 }
 STATE_LIST_HEADINGS = {"1825": "Lac du Flambeau Band of Lake", "3885": "Sokaogon Chippewa Community"}
 
@@ -1097,6 +1163,27 @@ def selftest():
                            "Tunica Biloxi Tribe of Louisiana", "150 Example Road"]])
     assert tb[0] == _m("Ann Example", "Chairman"), tb
     assert tb[1]["note"] == "the same page also writes Bob Sample, Sr.", tb
+    # Virginia's two shapes (names invented): Pamunkey's "Chief <name>"
+    # headings above biographies, and Mattaponi's list under a leadership
+    # panel that names another assistant chief
+    pk = p_pamunkey([["Tribal Government", "Chief Ann Example",
+                      "Chief Ann Example serves as the leader of the tribe.",
+                      "Assistant Chief Bob Sample", "Bob Sample is the Assistant Chief.",
+                      "Tribal Council", "Cy Person", "Di Person Jr.",
+                      "Tribal Administration", "Executive Director: Ed Staff"]])
+    assert pk == [_m("Ann Example", "Chief"), _m("Bob Sample", "Assistant Chief"),
+                  _m("Cy Person", "Council Member"),
+                  _m("Di Person Jr.", "Council Member")], pk
+    mt = p_mattaponi([["Tribal Council Leadership", "Ann Example", "CHIEF", "A bio.",
+                       "Old Name", "ASSISTANT CHIEF", "A short bio.",
+                       "Mattaponi Tribal Council", "Chief:", "Ann Example",
+                       "Assistant Chief:", "Bob Sample", "Council Members:",
+                       "Cy Person", "Di Person, Jr",
+                       "All materials used on this website belong to the tribe."]])
+    assert mt[0] == _m("Ann Example", "Chief"), mt
+    assert mt[1] == _m("Bob Sample", "Assistant Chief",
+                       note="the same page's leadership panel names Old Name as assistant chief"), mt
+    assert [m["name"] for m in mt[2:]] == ["Cy Person", "Di Person, Jr"], mt
     NATIONS["9999"] = {"nation": "Test", "seats": 2}
     try:
         for bad in ([_m("A B", "Chair")],

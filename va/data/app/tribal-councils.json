@@ -1,0 +1,93 @@
+{
+ "9230": {
+  "roster": [
+   {
+    "name": "Mark T Fallingstar Custalow",
+    "role": "Chief"
+   },
+   {
+    "name": "Brandon G. Thundercloud Custalow",
+    "role": "Assistant Chief",
+    "note": "the same page's leadership panel names B. Leon Two Feathers Custalow I as assistant chief"
+   },
+   {
+    "name": "Diane Lynn Curry",
+    "role": "Council Member"
+   },
+   {
+    "name": "Jack A Custalow",
+    "role": "Council Member"
+   },
+   {
+    "name": "Jacob V. Custalow, Jr",
+    "role": "Council Member"
+   },
+   {
+    "name": "Malcolm T Custalow, Sr",
+    "role": "Council Member"
+   },
+   {
+    "name": "Richard Custalow",
+    "role": "Council Member"
+   },
+   {
+    "name": "Ernest \"Chip\" Langston, Jr",
+    "role": "Council Member"
+   },
+   {
+    "name": "Michael A \"Tony\" Waldrop II",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-30.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.mattaponi.gov/mattaponi-tribal-council",
+  "rosterRead": "2026-10-30",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "9260": {
+  "roster": [
+   {
+    "name": "Kevin Brown",
+    "role": "Chief"
+   },
+   {
+    "name": "Tim Langston",
+    "role": "Assistant Chief"
+   },
+   {
+    "name": "Walter Hill Jr.",
+    "role": "Council Member"
+   },
+   {
+    "name": "Rebecca Hill",
+    "role": "Council Member"
+   },
+   {
+    "name": "Gordon Atkinson",
+    "role": "Council Member"
+   },
+   {
+    "name": "Terry Langston",
+    "role": "Council Member"
+   },
+   {
+    "name": "Jennifer Dixon",
+    "role": "Council Member"
+   },
+   {
+    "name": "Allyson Gray",
+    "role": "Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-10-30.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.pamunkey.org/tribal-government",
+  "rosterRead": "2026-10-30",
+  "rosterHost": null,
+  "rosterMeasured": null
+ }
+}
