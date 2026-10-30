@@ -1039,7 +1039,14 @@ try {
   //        TIGER files as a Virginia county subdivision is (a magisterial
   //        district, an independent city, and Arlington County, which is not
   //        divided), names the county from the app's own county file, and
-  //        says nothing about a status it does not know.
+  //        says nothing about a status it does not know. A magisterial
+  //        district says which drawing it is: the Department's lines, where
+  //        it is the district the county's board is elected from, or the
+  //        Census's copy, in a county whose election districts differ or
+  //        that elects its board at large, read from the officials file the
+  //        Supervisor or Council District card reads. These cases serve the
+  //        layer's one shipped file as a one-feature fixture; the two checks
+  //        after them read the real file at real points.
   //    (c) The two school tilings partition the state, so each answers under
   //        its own label, and a miss on either points at the other card
   //        rather than saying no school division is here.
@@ -1072,7 +1079,6 @@ try {
     function nameRe(name) {
       return new RegExp(String(name).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
     }
-    const COUSUB = "Places_CouSub_ConCity_SubMCD/MapServer/1";
     // a ring in far southwest Virginia, nowhere near the point
     const FAR = [[-82.9, 36.6], [-82.7, 36.6], [-82.7, 36.8], [-82.9, 36.8], [-82.9, 36.6]];
     const cases = [
@@ -1132,32 +1138,60 @@ try {
         reject: [/Independent city/, /Incorporated town/]
       },
       {
-        name: "a magisterial district names its county and says it has no government of its own",
-        layer: "county-subdivision", also: "county", service: COUSUB,
-        props: { GEOID: "5116390568", NAME: "Buffalo district", BASENAME: "Buffalo", STATE: "51", COUNTY: "163", LSADC: "27", FUNCSTAT: "N" },
-        want: [/Buffalo district/, /Rockbridge County/, /A magisterial district, as the U\.S\. Census Bureau maps it/, /does not use them to say who represents this point/],
-        reject: [/belongs to no county/, /does not divide this county/]
+        // the shipped file's real Rockbridge entry is drawn from the
+        // Department's lines, and the county elects its board and its school
+        // board by district (va-local-officials.json, read as shipped)
+        name: "a magisterial district drawn from the Department's lines says whose election district it is",
+        layer: "county-subdivision", also: "county", file: true,
+        props: { GEOID: "5116390568", NAME: "Buffalo district", BASENAME: "Buffalo", COUNTY: "163", LSADC: "27", FUNCSTAT: "N", lines: "department", district: "51163-01" },
+        want: [/Buffalo district/, /Rockbridge County/, /the districts the board of supervisors and the school board are elected from/,
+          /Department of Elections' precinct lines/, /Supervisor or Council District card names its supervisor/],
+        reject: [/as the U\.S\. Census Bureau maps it/, /belongs to no county/, /does not divide this county/]
+      },
+      {
+        name: "the Census's copy in a county whose election districts differ says it is not them",
+        layer: "county-subdivision", also: "county", file: true,
+        props: { GEOID: "5110790400", NAME: "Blue Ridge district", BASENAME: "Blue Ridge", COUNTY: "107", LSADC: "27", FUNCSTAT: "N", lines: "census" },
+        want: [/Blue Ridge district/, /Loudoun County/, /A magisterial district, as the U\.S\. Census Bureau maps it/,
+          /Loudoun County elects its board of supervisors from districts whose names or number differ from these/],
+        reject: [/Department of Elections' precinct lines/, /at large/]
+      },
+      {
+        name: "the Census's copy in a county that elects its board at large says so",
+        layer: "county-subdivision", also: "county", file: true,
+        props: { GEOID: "5109190368", NAME: "Blue Grass district", BASENAME: "Blue Grass", COUNTY: "091", LSADC: "27", FUNCSTAT: "N", lines: "census" },
+        want: [/Blue Grass district/, /Highland County/, /Highland County elects its board of supervisors at large/, /County or City card names the board/],
+        reject: [/Department of Elections' precinct lines/, /names or number differ/]
+      },
+      {
+        // the officials file refused: the card cannot say which bodies the
+        // county elects by district, so it says only what the district is
+        name: "with the officials file refused, a magisterial district says only what it is",
+        layer: "county-subdivision", also: "county", file: true, refuseOfficials: true,
+        props: { GEOID: "5110790400", NAME: "Blue Ridge district", BASENAME: "Blue Ridge", COUNTY: "107", LSADC: "27", FUNCSTAT: "N", lines: "census" },
+        want: [/Blue Ridge district/, /A magisterial district, as the U\.S\. Census Bureau maps it/, /does not use them to say who represents this point/],
+        reject: [/names or number differ/, /at large/]
       },
       {
         name: "an independent city is not divided into magisterial districts",
-        layer: "county-subdivision", also: "county", service: COUSUB,
-        props: { GEOID: "5151090020", NAME: "Alexandria city", BASENAME: "Alexandria", STATE: "51", COUNTY: "510", LSADC: "25", FUNCSTAT: "F" },
+        layer: "county-subdivision", also: "county", file: true,
+        props: { GEOID: "5151090020", NAME: "Alexandria city", BASENAME: "Alexandria", COUNTY: "510", LSADC: "25", FUNCSTAT: "F", lines: "census" },
         want: [/Alexandria city/, /belongs to no county and is not divided into magisterial districts/],
-        reject: [/A magisterial district, as/, /does not divide this county/]
+        reject: [/A magisterial district/, /does not divide this county/]
       },
       {
         name: "Arlington County, which the Census does not divide, says so",
-        layer: "county-subdivision", also: "county", service: COUSUB,
-        props: { GEOID: "5101390072", NAME: "Arlington", BASENAME: "Arlington", STATE: "51", COUNTY: "013", LSADC: "00", FUNCSTAT: "F" },
+        layer: "county-subdivision", also: "county", file: true,
+        props: { GEOID: "5101390072", NAME: "Arlington", BASENAME: "Arlington", COUNTY: "013", LSADC: "00", FUNCSTAT: "F", lines: "census" },
         want: [/Arlington/, /does not divide this county into magisterial districts/],
-        reject: [/A magisterial district, as/, /belongs to no county/]
+        reject: [/A magisterial district/, /belongs to no county/]
       },
       {
         name: "a subdivision status the card does not carry says nothing about what it is",
-        layer: "county-subdivision", also: "county", service: COUSUB,
-        props: { GEOID: "5116390568", NAME: "Buffalo district", BASENAME: "Buffalo", STATE: "51", COUNTY: "163", LSADC: "27", FUNCSTAT: "S" },
+        layer: "county-subdivision", also: "county", file: true,
+        props: { GEOID: "5116390568", NAME: "Buffalo district", BASENAME: "Buffalo", COUNTY: "163", LSADC: "27", FUNCSTAT: "S", lines: "census" },
         want: [/Buffalo district/, /Rockbridge County/],
-        reject: [/what this is/i, /A magisterial district, as/, /belongs to no county/, /does not divide this county/]
+        reject: [/what this is/i, /A magisterial district/, /belongs to no county/, /does not divide this county/]
       },
       {
         name: "the School Division card names the division",
@@ -1200,6 +1234,17 @@ try {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const layers = c.also ? `${c.also},${c.layer}` : c.layer;
       const page = await booted(context, `${BASE}#point=${POINT}&layers=${layers}`, async (p) => {
+        if (c.refuseOfficials) await p.route("**/data/app/va-local-officials.json", (r) => r.abort());
+        if (c.file) {
+          // the Magisterial District layer reads one shipped file; the
+          // fixture is one feature on the default ring, around the point
+          await p.route("**/data/app/va-magisterial-districts.json", (r) => r.fulfill({
+            status: 200, contentType: "application/json",
+            body: JSON.stringify({ type: "FeatureCollection", features: [{ type: "Feature", properties: c.props,
+              geometry: { type: "Polygon", coordinates: [esriPolygon(c.props).geometry.rings[0]] } }] })
+          }));
+          return;
+        }
         await p.route(`**/data/app/tiles/${c.layer}.pmtiles`, (r) => r.abort());
         await p.route(`**/${c.service}/query**`, (r) => {
           const point = /esriGeometryPoint/.test(r.request().url());
@@ -1217,6 +1262,45 @@ try {
         missing.length || present.length
           ? `missing=${missing} unwanted=${present} text=${text.slice(0, 160)}`
           : text.slice(0, 90));
+      await context.close();
+    }
+  }
+
+  // 7b. THE MAGISTERIAL DISTRICT LAYER DRAWS THE DEPARTMENT'S LINES WHERE THE
+  //     NAMES MATCH, read from the real shipped file at real points. In
+  //     Dinwiddie County, at 37.07655,-77.7137, the Census's copy says District
+  //     5 and the Department's lines say District 1, more than 400 m from
+  //     either line (measured 2026-10-30, va/scripts/
+  //     build_va_magisterial_districts.py). A layer drawing the Census's copy
+  //     there would name District 5, so this is the check that the
+  //     Department's lines are the ones drawn, and the Supervisor or Council
+  //     District card at the same point must name the same district. In
+  //     Leesburg, in Loudoun County, whose election districts differ from the
+  //     Census's names, the card says the Census's copy is not them.
+  {
+    const DINWIDDIE = "37.07655,-77.71370";
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${DINWIDDIE}&layers=county,county-subdivision,supervisor-district`);
+      const mag = await cardText(page, "county-subdivision");
+      const sup = await cardText(page, "supervisor-district");
+      const m = mag.text || "", su = sup.text || "";
+      check("a Dinwiddie point names the Department's district, not the Census's copy's",
+        !mag.error && /District 1/.test(m) && !/District 5/.test(m) && /Dinwiddie County/.test(m) &&
+          /Department of Elections' precinct lines/.test(m),
+        m.slice(0, 200));
+      check("the Supervisor or Council District card names the same district there",
+        !sup.error && /District 1/.test(su) && !/District 5/.test(su), su.slice(0, 160));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=39.11570,-77.56360&layers=county,county-subdivision`);
+      const info = await cardText(page, "county-subdivision");
+      const t = info.text || "";
+      check("a Loudoun point says the Census's copy is not the county's election districts",
+        !info.error && /Leesburg district/.test(t) && /Loudoun County elects its board of supervisors from districts whose names or number differ/.test(t),
+        t.slice(0, 200));
       await context.close();
     }
   }
@@ -1306,8 +1390,10 @@ try {
   //        list does, says the Commonwealth and not the United States
   //        recognizes it, names its council with the assistant chief's note
   //        and links the Commonwealth's list.
-  //      - The Rappahannock Trust Land names nobody and says why, and says
-  //        the land was not counted in 2020.
+  //      - The Rappahannock Trust Land names the tribe's Chief and Assistant
+  //        Chief from the Commonwealth's list under that heading, not
+  //        "Council", says only they are named and links the list (Adam's
+  //        ruling of 2026-10-30), and says the land was not counted in 2020.
   //      - The councils file is refused: the land still answers, naming the
   //        tribe and nobody on its council.
   //      - The State Capitol is on no tribal land, and the card says so in
@@ -1333,6 +1419,8 @@ try {
       const fields = await fieldsOf(page);
       // the footer link (primaryLink) sits beside the card body, in the
       // layer's block, so the links are read from the whole block
+      const intro = await page.$$eval("#card-tribal-government .card-intro-title",
+        (els) => els.map((e) => (e.textContent || "").trim()));
       const links = await page.evaluate(() => {
         const card = document.getElementById("card-tribal-government");
         const block = (card && card.closest(".layer-block")) || card;
@@ -1340,7 +1428,7 @@ try {
           ({ text: (a.textContent || "").trim(), href: a.getAttribute("href") })) : [];
       });
       await context.close();
-      return { text: card.text || "", error: card.error, links,
+      return { text: card.text || "", error: card.error, links, intro,
                by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
     };
 
@@ -1355,7 +1443,8 @@ try {
           c.by("Seat of government") === p.seat && p.seat === "King William, VA" &&
           c.by("Land") === "Pamunkey (state) Reservation" &&
           council.every((m) => c.text.includes(m.name)) &&
-          c.text.includes("Council") && c.text.includes("From the nation's own council page") &&
+          JSON.stringify(c.intro) === JSON.stringify(["Council"]) &&
+          c.text.includes("From the nation's own council page") &&
           c.text.includes("Where these names come from") &&
           c.by("Districts drawn here").indexOf("no council seat") !== -1 &&
           !c.by("Why no names") && !c.by("Recognized by"),
@@ -1385,15 +1474,23 @@ try {
     {
       const land = propsAt(areas, RAPPAHANNOCK);
       const p = land[0] || {};
+      const named = councils[p.aiannh] || {};
+      const leaders = named.roster || [];
       const c = await at(RAPPAHANNOCK);
-      check("the Rappahannock Trust Land names nobody, says why, and says the land was not counted in 2020",
-        land.length === 1 && !councils[p.aiannh] && !c.error &&
+      check("the Rappahannock Trust Land names the Chief and the Assistant Chief from the Commonwealth's list, says only they are named, and says the land was not counted in 2020",
+        land.length === 1 && !c.error &&
+          leaders.map((m) => m.role).join() === "Chief,Assistant Chief" &&
           c.by("Tribal government") === "Rappahannock Tribe, Inc." &&
           c.by("Land") === "Rappahannock Trust Land" &&
-          c.by("Why no names") === p.rosterWhy && c.by("Why no names").indexOf("names no council") !== -1 &&
+          leaders.every((m) => c.text.includes(m.name)) &&
+          JSON.stringify(c.intro) === JSON.stringify(["Chief and Assistant Chief"]) &&
+          c.text.includes(named.rosterNote) && named.rosterNote.indexOf("Only the Chief and Assistant Chief") === 0 &&
+          c.links.some((l) => l.href === named.rosterPage &&
+                              l.href.indexOf("commonwealth.virginia.gov") !== -1) &&
+          !c.by("Why no names") && !p.rosterWhy &&
           c.by("Population").indexOf("Not counted") !== -1 &&
           !c.text.includes("From the nation's own council page"),
-        `land here=${land.length} ${JSON.stringify(c.text.slice(0, 200))}`);
+        `land here=${land.length} leaders=${leaders.length} intro=${JSON.stringify(c.intro)} ${JSON.stringify(c.text.slice(0, 200))}`);
     }
 
     {

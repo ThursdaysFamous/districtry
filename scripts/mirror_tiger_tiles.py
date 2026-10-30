@@ -2,10 +2,12 @@
 """Mirror the Census TIGERweb layers the apps fetch live into tile archives
 (docs/OPTIMIZATION_PLAYBOOK.md §10, phase 6).
 
-Fifty-eight polygon layers across sixteen apps — sixteen in four apps at phase
+Fifty-seven polygon layers across sixteen apps — sixteen in four apps at phase
 6a, thirty-two in the nine newest at phase 6d (2026-10-17), Louisiana's two
 before it went live (2026-10-21), Missouri's four before it went live
-(2026-10-26) and Virginia's four while it is dark (2026-10-29) — download a
+(2026-10-26) and Virginia's three while it is dark (2026-10-29; its fourth,
+the county subdivisions, became a shipped file drawn partly from the
+Department of Elections' lines on 2026-10-30) — download a
 whole state from tigerweb.geo.census.gov the first time they are switched on —
 Illinois's county subdivisions alone are 14.5 MB — and ask that server about
 the reader's point on every first click; the ZIP layers (ZIP_MIRRORS, phases
@@ -190,7 +192,6 @@ MIRRORS = [
     ("mo", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
     ("mo", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
     ("mo", "school-district-elementary", "School", 2, "GEOID,NAME,STATE"),
-    ("va", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
     ("va", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
     ("va", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
     ("va", "school-district-elementary", "School", 2, "GEOID,NAME,STATE"),

@@ -15,7 +15,7 @@ The national tier, and both chambers of the General Assembly named from each cha
 | | House of Delegates District (100) | TIGERweb's 2026 state legislative districts, drawn in one topology with the Senate's + the House of Delegates' own member list and member pages: name, party, e-mail address, Capitol office and telephone, and a vacant seat named as vacant |
 | **Schools** | School Division (135), School Division (Elementary) (1, Lexington) | TIGERweb unified and elementary school districts, which between them tile the whole state; identity only, recorded as a gap |
 | **Geography** | County or City (133) | TIGERweb State_County, pre-built — the 95 counties and the 38 independent cities, the app's offline anchor and the coverage ring |
-| | Magisterial District | TIGERweb county subdivisions: the Census Bureau's copy of each county's magisterial districts |
+| | Magisterial District | The Department of Elections' election district lines in the 72 counties whose census subdivisions carry the same names; elsewhere TIGERweb's county subdivisions, the Census Bureau's copy |
 | | City or Town | TIGERweb incorporated places: 38 independent cities and 189 towns |
 | | ZIP Code | TIGERweb ZCTA, fetched by the state's bounding box and hidden outside Virginia |
 | **Safety** | Police Station, Fire & EMS Station | USGS National Map structures, nearest-N by straight-line distance |

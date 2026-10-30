@@ -96,6 +96,7 @@ STATE_COUNTY = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/St
 DISTRICTS_UNION = ("https://services5.arcgis.com/M3dium4ePYpmdT4B/arcgis/rest/services/"
                    "Districts_Union_Simplified/FeatureServer/0")
 NORFOLK_SUPERWARDS = "https://gisshare.norfolk.gov/pubserver/rest/services/OpenData/Maps/FeatureServer/8"
+COUSUB = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
 
 # Same-origin data/app files and the upstream source each was built from.
 PROVENANCE = [
@@ -208,6 +209,21 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "county-subdivision",
+        "app_file": "va-magisterial-districts.json",
+        "source_url": COUSUB + "?f=json",
+        "note": (
+            "All 552 county subdivisions, pre-built by "
+            "va/scripts/build_va_magisterial_districts.py: the 405 magisterial "
+            "districts of the 72 counties whose census names are their election "
+            "districts drawn from the Department of Elections' lines "
+            "(va-local-districts.json), the rest from TIGERweb at 12 m. Its "
+            "--watch compares the Census's names and areas with the fingerprint "
+            "recorded at the build; run it each year once the Census publishes "
+            "its new vintage (va/WATCH.md)."
+        ),
+    },
+    {
         "layer": "supervisor-district",
         "app_file": "va-local-officials.json",
         "source_url": "https://historical.elections.virginia.gov/",
@@ -255,8 +271,10 @@ ENDPOINTS = [
     #
     # The counts below are measured 2026-10-29 and are RECORDED, not asserted:
     # this validator reports, it never edits the app. Incorporated places 227 ·
-    # county subdivisions 552 · unified school districts 135 · elementary
-    # school districts 1 (Lexington City Public Schools).
+    # unified school districts 135 · elementary school districts 1 (Lexington
+    # City Public Schools). The county subdivisions left this list on
+    # 2026-10-30: they ship as va-magisterial-districts.json, a PROVENANCE
+    # entry above.
     #
     # SCHOOL LAYER 1 (SECONDARY) ANSWERS ZERO FOR VIRGINIA, measured the same
     # day: the unified and elementary layers tile the state between them. It
@@ -266,11 +284,6 @@ ENDPOINTS = [
         "layer": "municipality",
         "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=STATE%3D%2751%27&returnCountOnly=true&f=json",
         "min_count": 215,   # 227 measured 2026-10-29; floor set below it, not at it
-    },
-    {
-        "layer": "county-subdivision",
-        "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query?where=STATE%3D%2751%27&returnCountOnly=true&f=json",
-        "min_count": 520,   # 552 measured 2026-10-29
     },
     {
         "layer": "school-district-unified",

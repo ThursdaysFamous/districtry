@@ -1804,12 +1804,18 @@ jobs:
       # third holds the soil and water conservation directors to their build
       # record, every county and city to its district and the seats state law
       # gives it, and the County or City card to its sentences on the boards.
+      # The fourth holds the magisterial districts to their build record and to
+      # the drawn districts: it re-derives which 72 counties take the
+      # Department's lines, and every point it puts inside one of their
+      # districts, and 3,000 across the state, must be answered once and by the
+      # right district.
       - name: VA local officials and districts match their records and each other
         if: ${{ !cancelled() }}
         run: |
           python3 va/scripts/build_va_local_officials.py --check
           python3 va/scripts/build_va_local_districts.py --check
           python3 va/scripts/build_va_conservation_boards.py --check
+          python3 va/scripts/build_va_magisterial_districts.py --check
 
       # Louisiana's three courts whose judges are elected by district. The
       # courts of appeal and the district courts are whole parishes, read from
