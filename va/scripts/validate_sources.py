@@ -213,7 +213,7 @@ PROVENANCE = [
         "source_url": "https://historical.elections.virginia.gov/",
         "note": (
             "Every county board, city council, elected school board and elected "
-            "mayor, and Leesburg's and Blacksburg's councils and mayors, from the "
+            "mayor, and every town's council and mayor, from the "
             "Department of Elections' results; rebuilt weekly by "
             "update-va-local-officials.yml."
         ),

@@ -421,7 +421,37 @@
    "bodies": {
     "school": {
      "atLarge": {
-      "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+      "members": [
+       {
+        "name": "Jon Lanford",
+        "role": "Chairman"
+       },
+       {
+        "name": "Jay Woodson",
+        "role": "Vice-Chairman"
+       },
+       {
+        "name": "Jonathan Arritt"
+       },
+       {
+        "name": "Nicole Clemons"
+       },
+       {
+        "name": "John Littleton"
+       },
+       {
+        "name": "Danielle Morgan"
+       },
+       {
+        "name": "Bob Umstead"
+       }
+      ],
+      "verified": {
+       "url": "https://www.ahps.k12.va.us/school_board/current_school_board_members",
+       "read": "2026-10-30",
+       "by": "Alleghany Highlands Public Schools",
+       "note": "Alleghany County and the City of Covington share one school board, Alleghany Highlands Public Schools. Its page lists the board's seven members without saying which of the two places elected each, so the whole board is named for both."
+      }
      },
      "byDistrict": false
     },
@@ -655,7 +685,7 @@
       "board": {
        "members": [
         {
-         "name": "R. Todd  Robinson",
+         "name": "R. Todd Robinson",
          "elected": "2025-11-04",
          "election": "regular",
          "contest": "165025"
@@ -682,7 +712,20 @@
    "bodies": {
     "school": {
      "atLarge": {
-      "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+      "members": [
+       {
+        "name": "David Childress",
+        "role": "Chair"
+       },
+       {
+        "name": "Jason Childress"
+       }
+      ],
+      "verified": {
+       "url": "https://www.amherst.k12.va.us/school-board-members",
+       "read": "2026-10-30",
+       "by": "Amherst County Public Schools"
+      }
      },
      "byDistrict": true
     },
@@ -2883,7 +2926,7 @@
       "school": {
        "members": [
         {
-         "name": "Rodney L.  Tyler",
+         "name": "Rodney L. Tyler",
          "elected": "2023-11-07",
          "election": "regular",
          "contest": "163538"
@@ -3022,7 +3065,7 @@
       "school": {
        "members": [
         {
-         "name": "R.B.  \"Jay\" George, III",
+         "name": "R.B. \"Jay\" George, III",
          "elected": "2025-11-04",
          "election": "regular",
          "contest": "165123"
@@ -4283,7 +4326,23 @@
     },
     "school": {
      "atLarge": {
-      "unsettled": "3 seats were on the ballot in 2023 and 1 a term before, so the number of seats seems to have changed"
+      "members": [
+       {
+        "name": "Kyle McDaniel",
+        "role": "Vice-Chairman"
+       },
+       {
+        "name": "Ryan McElveen"
+       },
+       {
+        "name": "Ilryong Moon"
+       }
+      ],
+      "verified": {
+       "url": "https://www.fcps.edu/school-board/school-board-members",
+       "read": "2026-10-30",
+       "by": "Fairfax County Public Schools"
+      }
      },
      "byDistrict": true
     },
@@ -6237,7 +6296,7 @@
       "board": {
        "members": [
         {
-         "name": "Dennis G.  Witt",
+         "name": "Dennis G. Witt",
          "elected": "2023-11-07",
          "election": "regular",
          "contest": "163725"
@@ -7272,7 +7331,7 @@
      "atLarge": {
       "members": [
        {
-        "name": "David D.  \"Sully\" Sullins",
+        "name": "David D. \"Sully\" Sullins",
         "elected": "2023-11-07",
         "election": "regular",
         "contest": "163782"
@@ -8079,7 +8138,7 @@
       "school": {
        "members": [
         {
-         "name": "Deborah A. \"Debbie\"  Hoffman",
+         "name": "Deborah A. \"Debbie\" Hoffman",
          "elected": "2025-11-04",
          "election": "regular",
          "contest": "165369"
@@ -8435,7 +8494,29 @@
    "bodies": {
     "board": {
      "atLarge": {
-      "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+      "members": [
+       {
+        "name": "Carty Yowell",
+        "role": "Chairman"
+       },
+       {
+        "name": "James Jewett",
+        "role": "Vice-Chairman"
+       },
+       {
+        "name": "Jud Buchanan"
+       },
+       {
+        "name": "Mike Snider"
+       },
+       {
+        "name": "Nancy Sharman"
+       }
+      ],
+      "verified": {
+       "url": "https://www.madisonco.virginia.gov/217/Board-of-Supervisors",
+       "read": "2026-10-30"
+      }
      },
      "byDistrict": false
     },
@@ -8485,7 +8566,29 @@
    "bodies": {
     "board": {
      "atLarge": {
-      "unsettled": "3 seats were on the ballot in 2023 and 1 a term before, so the number of seats seems to have changed"
+      "members": [
+       {
+        "name": "Janice Hudgins Phillips"
+       },
+       {
+        "name": "Tim Doss"
+       },
+       {
+        "name": "Tom Bowen",
+        "role": "2026 Chairperson"
+       },
+       {
+        "name": "David Walsh"
+       },
+       {
+        "name": "Patrick Beattie",
+        "role": "2026 Vice-Chair"
+       }
+      ],
+      "verified": {
+       "url": "https://www.mathewscountyva.gov/directory.aspx?did=15",
+       "read": "2026-10-30"
+      }
      },
      "byDistrict": false
     },
@@ -8526,12 +8629,14 @@
       "school": {
        "members": [
         {
-         "name": "Lindell T. Palmer",
-         "elected": "2023-11-07",
-         "election": "regular",
-         "contest": "163851"
+         "name": "Roger G. Clark"
         }
-       ]
+       ],
+       "verified": {
+        "url": "https://www.mcpsweb.org/o/mcps/page/school-board-members",
+        "read": "2026-10-30",
+        "by": "Mecklenburg County Public Schools"
+       }
       }
      }
     },
@@ -8599,7 +8704,16 @@
        ]
       },
       "school": {
-       "unsettled": "the state's election results do not give the winner of the most recent election to it"
+       "members": [
+        {
+         "name": "Justin Rose"
+        }
+       ],
+       "verified": {
+        "url": "https://www.mcpsweb.org/o/mcps/page/school-board-members",
+        "read": "2026-10-30",
+        "by": "Mecklenburg County Public Schools"
+       }
       }
      }
     },
@@ -8617,7 +8731,16 @@
        ]
       },
       "school": {
-       "unsettled": "the state's election results do not give the winner of the most recent election to it"
+       "members": [
+        {
+         "name": "Eleesha Chaney"
+        }
+       ],
+       "verified": {
+        "url": "https://www.mcpsweb.org/o/mcps/page/school-board-members",
+        "read": "2026-10-30",
+        "by": "Mecklenburg County Public Schools"
+       }
       }
      }
     },
@@ -9243,7 +9366,7 @@
       "school": {
        "members": [
         {
-         "name": "Helena M.  Cunha",
+         "name": "Helena M. Cunha",
          "elected": "2023-11-07",
          "election": "regular",
          "contest": "163889"
@@ -9741,7 +9864,7 @@
       "board": {
        "members": [
         {
-         "name": "W. J. \"Bill\"  Collins III",
+         "name": "W. J. \"Bill\" Collins III",
          "elected": "2023-11-07",
          "election": "regular",
          "contest": "163915"
@@ -12551,7 +12674,22 @@
    "bodies": {
     "school": {
      "atLarge": {
-      "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+      "members": [
+       {
+        "name": "Natalie Dever King"
+       },
+       {
+        "name": "Michael T. Grizzard"
+       },
+       {
+        "name": "Jayson C. Williams"
+       }
+      ],
+      "verified": {
+       "url": "https://www.southampton.k12.va.us/about-us/school-board",
+       "read": "2026-10-30",
+       "by": "Southampton County Public Schools"
+      }
      },
      "byDistrict": true
     },
@@ -13829,7 +13967,7 @@
       "school": {
        "members": [
         {
-         "name": "Jenny D.  Nichols",
+         "name": "Jenny D. Nichols",
          "elected": "2025-11-04",
          "election": "regular",
          "contest": "165626"
@@ -14470,7 +14608,31 @@
    "bodies": {
     "board": {
      "atLarge": {
-      "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+      "members": [
+       {
+        "name": "Sarah Bagley",
+        "role": "Vice Mayor"
+       },
+       {
+        "name": "Canek Aguirre"
+       },
+       {
+        "name": "John Chapman"
+       },
+       {
+        "name": "Abdel-Rahman Elnoubi"
+       },
+       {
+        "name": "Jacinta E. Greene"
+       },
+       {
+        "name": "Sandy Marks"
+       }
+      ],
+      "verified": {
+       "url": "https://www.alexandriava.gov/Council",
+       "read": "2026-10-30"
+      }
      },
      "byDistrict": false
     },
@@ -14661,7 +14823,32 @@
    "bodies": {
     "board": {
      "atLarge": {
-      "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+      "members": [
+       {
+        "name": "Danny Staton",
+        "role": "Vice-Mayor"
+       },
+       {
+        "name": "Michelle Poluikis"
+       },
+       {
+        "name": "Ron Cash"
+       },
+       {
+        "name": "Amy Gilliam"
+       },
+       {
+        "name": "Stephanie Noel-Branch"
+       },
+       {
+        "name": "William Kerr",
+        "role": "Appointed 19 February 2026"
+       }
+      ],
+      "verified": {
+       "url": "https://buenavistava.gov/government/city-council/city-council-members/",
+       "read": "2026-10-30"
+      }
      },
      "byDistrict": false
     },
@@ -14679,7 +14866,36 @@
     },
     "school": {
      "atLarge": {
-      "unsettled": "1 seat was on the ballot in 2023 and 3 a term before, so the number of seats seems to have changed"
+      "members": [
+       {
+        "name": "Teresa Ellison",
+        "role": "Chairperson"
+       },
+       {
+        "name": "Lisa Kerr",
+        "role": "Vice Chairperson"
+       },
+       {
+        "name": "Paula Charlton"
+       },
+       {
+        "name": "Mac Felts"
+       },
+       {
+        "name": "Roy Mohler"
+       },
+       {
+        "name": "Charles Jolley"
+       },
+       {
+        "name": "Ray Gilbert"
+       }
+      ],
+      "verified": {
+       "url": "https://www.bvcps.net/about_us/school_board",
+       "read": "2026-10-30",
+       "by": "Buena Vista City Public Schools"
+      }
      },
      "byDistrict": false
     }
@@ -14692,13 +14908,64 @@
    "bodies": {
     "board": {
      "atLarge": {
-      "unsettled": "1 seat was on the ballot in 2023 and 3 a term before, so the number of seats seems to have changed"
+      "members": [
+       {
+        "name": "Juandiego Wade",
+        "role": "Mayor"
+       },
+       {
+        "name": "Natalie Oschrin",
+        "role": "Vice Mayor"
+       },
+       {
+        "name": "Jen Fleisher"
+       },
+       {
+        "name": "Michael Payne"
+       },
+       {
+        "name": "Lloyd Snook"
+       }
+      ],
+      "verified": {
+       "url": "https://charlottesville.gov/677",
+       "read": "2026-10-30"
+      }
      },
      "byDistrict": false
     },
     "school": {
      "atLarge": {
-      "unsettled": "1 seat was on the ballot in 2023 and 4 a term before, so the number of seats seems to have changed"
+      "members": [
+       {
+        "name": "Lisa Torres",
+        "role": "Board Chair"
+       },
+       {
+        "name": "Amanda Burns",
+        "role": "Vice-Chair"
+       },
+       {
+        "name": "Zyahna Bryant"
+       },
+       {
+        "name": "Shymora Cooper"
+       },
+       {
+        "name": "Emily Dooley"
+       },
+       {
+        "name": "Chris Meyer"
+       },
+       {
+        "name": "Nicole Richardson"
+       }
+      ],
+      "verified": {
+       "url": "https://charlottesvilleschools.org/schoolboard",
+       "read": "2026-10-30",
+       "by": "Charlottesville City Schools"
+      }
      },
      "byDistrict": false
     }
@@ -14778,7 +15045,42 @@
     },
     "school": {
      "atLarge": {
-      "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+      "members": [
+       {
+        "name": "Kim Scott",
+        "role": "Chairman"
+       },
+       {
+        "name": "Michael Lamonea",
+        "role": "Vice Chairman"
+       },
+       {
+        "name": "Amanda Walker"
+       },
+       {
+        "name": "John McCormick"
+       },
+       {
+        "name": "Amanda Quillin"
+       },
+       {
+        "name": "Angie Swygert"
+       },
+       {
+        "name": "Norman Pool"
+       },
+       {
+        "name": "Malia Huddle"
+       },
+       {
+        "name": "Elijah Colon"
+       }
+      ],
+      "verified": {
+       "url": "https://www.cpschools.com/o/cps/page/school-board",
+       "read": "2026-10-30",
+       "by": "Chesapeake Public Schools"
+      }
      },
      "byDistrict": false
     }
@@ -14884,7 +15186,37 @@
    "bodies": {
     "school": {
      "atLarge": {
-      "unsettled": "the state's election results do not give the winner of the most recent election to it"
+      "members": [
+       {
+        "name": "Jon Lanford",
+        "role": "Chairman"
+       },
+       {
+        "name": "Jay Woodson",
+        "role": "Vice-Chairman"
+       },
+       {
+        "name": "Jonathan Arritt"
+       },
+       {
+        "name": "Nicole Clemons"
+       },
+       {
+        "name": "John Littleton"
+       },
+       {
+        "name": "Danielle Morgan"
+       },
+       {
+        "name": "Bob Umstead"
+       }
+      ],
+      "verified": {
+       "url": "https://www.ahps.k12.va.us/school_board/current_school_board_members",
+       "read": "2026-10-30",
+       "by": "Alleghany Highlands Public Schools",
+       "note": "Alleghany County and the City of Covington share one school board, Alleghany Highlands Public Schools. Its page lists the board's seven members without saying which of the two places elected each, so the whole board is named for both."
+      }
      },
      "byDistrict": false
     },
@@ -14899,12 +15231,14 @@
       "board": {
        "members": [
         {
-         "name": "Total Ballots Cast",
-         "elected": "2025-11-04",
-         "election": "regular",
-         "contest": "165158"
+         "name": "David B. Goff",
+         "role": "Interim member"
         }
-       ]
+       ],
+       "verified": {
+        "url": "https://covington.va.us/about-covington/city-council.html",
+        "read": "2026-10-30"
+       }
       }
      }
     },
@@ -14914,12 +15248,14 @@
       "board": {
        "members": [
         {
-         "name": "Fred Fenton Forbes, III",
-         "elected": "2022-11-08",
-         "election": "regular",
-         "contest": "156730"
+         "name": "Stephen Allan Tucker",
+         "role": "Interim member"
         }
-       ]
+       ],
+       "verified": {
+        "url": "https://covington.va.us/about-covington/city-council.html",
+        "read": "2026-10-30"
+       }
       }
      }
     },
@@ -15273,7 +15609,27 @@
     },
     "school": {
      "atLarge": {
-      "unsettled": "the results show the same person winning two of the current seats"
+      "members": [
+       {
+        "name": "Lauren Bartelme"
+       },
+       {
+        "name": "Kristina Cecere"
+       },
+       {
+        "name": "Amit Hickman"
+       },
+       {
+        "name": "Sarah Kelsey"
+       },
+       {
+        "name": "Carolyn Pitches"
+       }
+      ],
+      "verified": {
+       "url": "https://www.fairfaxva.gov/Government/Council/All-Elected-Officials",
+       "read": "2026-10-30"
+      }
      },
      "byDistrict": false
     }
@@ -15292,7 +15648,36 @@
     },
     "school": {
      "atLarge": {
-      "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+      "members": [
+       {
+        "name": "Kathleen Tysse",
+        "role": "School Board Chair"
+       },
+       {
+        "name": "Anne Sherwood",
+        "role": "School Board Vice Chair"
+       },
+       {
+        "name": "MaryKate \"MK\" Hughes"
+       },
+       {
+        "name": "Bethany Henderson"
+       },
+       {
+        "name": "Jerrod Anderson"
+       },
+       {
+        "name": "Amie Murphy"
+       },
+       {
+        "name": "Lori Silverman"
+       }
+      ],
+      "verified": {
+       "url": "https://www.fccps.org/page/school-board",
+       "read": "2026-10-30",
+       "by": "Falls Church City Public Schools"
+      }
      },
      "byDistrict": false
     }
@@ -15580,7 +15965,35 @@
    "bodies": {
     "board": {
      "atLarge": {
-      "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+      "members": [
+       {
+        "name": "Beth White",
+        "role": "Mayor"
+       },
+       {
+        "name": "Willie Greene",
+        "role": "Vice Mayor"
+       },
+       {
+        "name": "Sharon Ritchie"
+       },
+       {
+        "name": "Martin Warr"
+       },
+       {
+        "name": "Evan Henck"
+       },
+       {
+        "name": "Kathy Burnett"
+       },
+       {
+        "name": "Shane Coomes"
+       }
+      ],
+      "verified": {
+       "url": "https://galaxva.com/galax-city-council/",
+       "read": "2026-10-30"
+      }
      },
      "byDistrict": false
     },
@@ -15708,7 +16121,32 @@
     },
     "school": {
      "atLarge": {
-      "unsettled": "3 seats were on the ballot in 2024 and 1 a term before, so the number of seats seems to have changed"
+      "members": [
+       {
+        "name": "Tim Howley"
+       },
+       {
+        "name": "Matt Snyder",
+        "role": "Vice Chair"
+       },
+       {
+        "name": "Andrew Kohen"
+       },
+       {
+        "name": "Kristen Loflin"
+       },
+       {
+        "name": "Emma Phillips"
+       },
+       {
+        "name": "Kaylene Seigle"
+       }
+      ],
+      "verified": {
+       "url": "https://www.harrisonburg.k12.va.us/District/1125-School-Board.html",
+       "read": "2026-10-30",
+       "by": "Harrisonburg City Public Schools"
+      }
      },
      "byDistrict": false
     }
@@ -16128,7 +16566,29 @@
    "bodies": {
     "board": {
      "atLarge": {
-      "unsettled": "3 seats were on the ballot in 2024 and 1 a term before, so the number of seats seems to have changed"
+      "members": [
+       {
+        "name": "LC Jones",
+        "role": "Mayor"
+       },
+       {
+        "name": "Kathy C. Lawson",
+        "role": "Vice Mayor"
+       },
+       {
+        "name": "Aaron Rawls"
+       },
+       {
+        "name": "Rayshaun Gravely"
+       },
+       {
+        "name": "Julian Mei"
+       }
+      ],
+      "verified": {
+       "url": "https://www.martinsville-va.gov/285/City-Council",
+       "read": "2026-10-30"
+      }
      },
      "byDistrict": false
     },
@@ -16905,7 +17365,42 @@
     },
     "school": {
      "atLarge": {
-      "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+      "members": [
+       {
+        "name": "Cardell C. Patillo, Jr.",
+        "role": "Chair"
+       },
+       {
+        "name": "Melvin Cotton, Jr.",
+        "role": "Vice-Chair"
+       },
+       {
+        "name": "LaKeesha S. \"Klu\" Atkinson"
+       },
+       {
+        "name": "Irene S. Boone"
+       },
+       {
+        "name": "Quniana D. Futrell"
+       },
+       {
+        "name": "Arnette D. McSwain"
+       },
+       {
+        "name": "Lateacia A. Sessoms"
+       },
+       {
+        "name": "Tamara L. Shewmake"
+       },
+       {
+        "name": "Jaclyn T. \"Jackie\" Walker"
+       }
+      ],
+      "verified": {
+       "url": "https://www.ppsk12.us/page/school-board",
+       "read": "2026-10-30",
+       "by": "Portsmouth Public Schools"
+      }
      },
      "byDistrict": false
     }
@@ -16918,7 +17413,25 @@
    "bodies": {
     "board": {
      "atLarge": {
-      "unsettled": "4 seats were on the ballot in 2022 and 2 a term before, so the number of seats seems to have changed"
+      "members": [
+       {
+        "name": "Seth Gillespie",
+        "role": "Vice-Mayor"
+       },
+       {
+        "name": "Kellie Artrip"
+       },
+       {
+        "name": "Jessie Foster"
+       },
+       {
+        "name": "Guy Wohlford"
+       }
+      ],
+      "verified": {
+       "url": "https://www.radfordva.gov/179/City-Council",
+       "read": "2026-10-30"
+      }
      },
      "byDistrict": false
     },
@@ -16936,7 +17449,30 @@
     },
     "school": {
      "atLarge": {
-      "unsettled": "2 seats were on the ballot in 2024 and 1 a term before, so the number of seats seems to have changed"
+      "members": [
+       {
+        "name": "Gloria Boyd",
+        "role": "Chairperson"
+       },
+       {
+        "name": "Jane Swing",
+        "role": "Vice-Chairperson"
+       },
+       {
+        "name": "Chris Calfee"
+       },
+       {
+        "name": "Brian Dobbins"
+       },
+       {
+        "name": "Amanda Winter"
+       }
+      ],
+      "verified": {
+       "url": "https://www.rcps.org/division_information/school_board",
+       "read": "2026-10-30",
+       "by": "Radford City Public Schools"
+      }
      },
      "byDistrict": false
     }
@@ -17229,7 +17765,29 @@
    "bodies": {
     "board": {
      "atLarge": {
-      "unsettled": "1 seat was on the ballot in 2024 and 3 a term before, so the number of seats seems to have changed"
+      "members": [
+       {
+        "name": "Renée Turk",
+        "role": "Mayor"
+       },
+       {
+        "name": "Anne Marie Green",
+        "role": "Vice Mayor"
+       },
+       {
+        "name": "Byron \"Randy\" Foley"
+       },
+       {
+        "name": "Hunter Holliday"
+       },
+       {
+        "name": "Joe Foley"
+       }
+      ],
+      "verified": {
+       "url": "https://www.salemva.gov/458/Council",
+       "read": "2026-10-30"
+      }
      },
      "byDistrict": false
     },
@@ -17515,7 +18073,16 @@
     },
     "school": {
      "atLarge": {
-      "unsettled": "1 seat was on the ballot in 2024 and 2 a term before, so the number of seats seems to have changed"
+      "members": [
+       {
+        "name": "Sharon Felton"
+       }
+      ],
+      "verified": {
+       "url": "https://schoolboard.vbschools.com/board",
+       "read": "2026-10-30",
+       "by": "Virginia Beach City Public Schools"
+      }
      },
      "byDistrict": true
     },
@@ -17916,7 +18483,29 @@
    "bodies": {
     "board": {
      "atLarge": {
-      "unsettled": "3 seats were on the ballot in 2024 and 1 a term before, so the number of seats seems to have changed"
+      "members": [
+       {
+        "name": "Douglas G. Pons",
+        "role": "Mayor"
+       },
+       {
+        "name": "W. Pat Dent",
+        "role": "Vice Mayor"
+       },
+       {
+        "name": "Barbara L. Ramsey"
+       },
+       {
+        "name": "Stacy Kern-Scheerer"
+       },
+       {
+        "name": "Ayanna T. Williams"
+       }
+      ],
+      "verified": {
+       "url": "https://www.williamsburgva.gov/369/City-Council",
+       "read": "2026-10-30"
+      }
      },
      "byDistrict": false
     },
@@ -17945,7 +18534,22 @@
     },
     "school": {
      "atLarge": {
-      "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+      "members": [
+       {
+        "name": "Mary Tedrow"
+       },
+       {
+        "name": "Melissa Harris"
+       },
+       {
+        "name": "Kylie Zoller"
+       }
+      ],
+      "verified": {
+       "url": "https://www.wps.k12.va.us/school-board/meet-our-school-board",
+       "read": "2026-10-30",
+       "by": "Winchester Public Schools"
+      }
      },
      "byDistrict": true
     },
@@ -18081,29 +18685,308 @@
   }
  },
  "towns": {
-  "Leesburg": {
+  "Abingdon": {
    "town": {
-    "term": 4,
-    "pending": [],
-    "unsettled": "3 seats were on the ballot in 2022 and 1 a term before, so the number of seats seems to have changed"
-   },
-   "mayor": {
-    "term": 2,
-    "pending": [],
     "members": [
      {
-      "name": "C. B. \"Kelly\" Burk",
-      "elected": "2024-11-05",
+      "name": "Dwyane Anderson",
+      "role": "Mayor"
+     },
+     {
+      "name": "Wayne Austin",
+      "role": "Vice Mayor"
+     },
+     {
+      "name": "Donna Quetsch"
+     },
+     {
+      "name": "Derek Webb"
+     },
+     {
+      "name": "Amanda Pillion"
+     }
+    ],
+    "verified": {
+     "url": "https://www.abingdon-va.gov/page/town-council",
+     "read": "2026-10-30"
+    }
+   }
+  },
+  "Accomac": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2024 and 6 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Shawn L. Boutet",
+      "elected": "2025-11-04",
       "election": "regular",
-      "contest": "161456"
+      "contest": "165000"
      }
     ]
    }
   },
+  "Alberta": {
+   "town": {
+    "members": [
+     {
+      "name": "Frances Peterson Weddington",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156379"
+     },
+     {
+      "name": "Rebecca Louise Spengler",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156379"
+     },
+     {
+      "name": "Elena Scalzi",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156379"
+     },
+     {
+      "name": "Curtis Denton Williams",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156379"
+     },
+     {
+      "name": "Charles K. Moore, Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161323"
+     },
+     {
+      "name": "Delita D. \"Dee Dee\" Crawford",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161323"
+     },
+     {
+      "name": "William Lee Holmes",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161323"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Robert W. Hayes, Sr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161322"
+     }
+    ]
+   }
+  },
+  "Altavista": {
+   "town": {
+    "members": [
+     {
+      "name": "Wayne Mitchell",
+      "role": "Vice Mayor"
+     },
+     {
+      "name": "Tracy Emerson"
+     },
+     {
+      "name": "Timothy George"
+     },
+     {
+      "name": "Scott Lowman"
+     },
+     {
+      "name": "Victoria Mattox"
+     },
+     {
+      "name": "Gary Penn"
+     }
+    ],
+    "verified": {
+     "url": "https://www.altavistava.gov/government/town_officials/index.php",
+     "read": "2026-10-30"
+    }
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Reggie C. Bennett",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161329"
+     }
+    ]
+   }
+  },
+  "Amherst": {
+   "town": {
+    "unsettled": "1 seat was on the ballot in 2022 and 2 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Darryl Dwayne Tuggle",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156352"
+     }
+    ]
+   }
+  },
+  "Appalachia": {
+   "town": {
+    "members": [
+     {
+      "name": "Gary Wayne Williams, Sr",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156708"
+     },
+     {
+      "name": "Jackie Lee Johnson",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156708"
+     },
+     {
+      "name": "Johnny L. Chandler",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161722"
+     },
+     {
+      "name": "Chris A. Williams",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161722"
+     },
+     {
+      "name": "Eddie R. Gollaway",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161722"
+     }
+    ]
+   }
+  },
+  "Appomattox": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2024 and 6 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Richard C. Conner",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161307"
+     }
+    ]
+   }
+  },
+  "Ashland": {
+   "town": {
+    "members": [
+     {
+      "name": "Steve Trivett",
+      "role": "Mayor"
+     },
+     {
+      "name": "Daniel McGraw",
+      "role": "Vice Mayor"
+     },
+     {
+      "name": "Anita Barnhart"
+     },
+     {
+      "name": "Pamela Sopall"
+     },
+     {
+      "name": "Drew Molloy"
+     }
+    ],
+    "verified": {
+     "url": "https://www.ashlandva.gov/91/Ashland-Town-Council",
+     "read": "2026-10-30"
+    }
+   }
+  },
+  "Bedford": {
+   "town": {
+    "members": [
+     {
+      "name": "C. G. Stanley",
+      "role": "Mayor"
+     },
+     {
+      "name": "Darryl A. Updike",
+      "role": "Vice Mayor"
+     },
+     {
+      "name": "Stacey Hailey"
+     },
+     {
+      "name": "Todd Foreman"
+     },
+     {
+      "name": "Jai Ippolito"
+     },
+     {
+      "name": "Dave Foster"
+     },
+     {
+      "name": "Dwight Evans"
+     }
+    ],
+    "verified": {
+     "url": "https://www.bedfordva.gov/1197/Town-Council",
+     "read": "2026-10-30"
+    }
+   }
+  },
+  "Belle Haven": {
+   "town": {
+    "unsettled": "5 seats were on the ballot in 2024 and 10 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "George H. Ludlow, Jr",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161283"
+     }
+    ]
+   }
+  },
+  "Berryville": {
+   "town": {
+    "unsettled": "the town elects council members by ward, and this map does not draw its wards or name their members yet"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Harry Lee \"Jay\" Arnold, Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161350"
+     }
+    ]
+   }
+  },
+  "Big Stone Gap": {
+   "town": {
+    "unsettled": "7 seats were on the ballot in the 4 years to 2025 and 11 in the 4 years before, so the number of seats seems to have changed"
+   }
+  },
   "Blacksburg": {
    "town": {
-    "term": 4,
-    "pending": [],
     "members": [
      {
       "name": "Jerry R. Ford, Jr",
@@ -18144,14 +19027,5261 @@
     ]
    },
    "mayor": {
-    "term": 4,
-    "pending": [],
     "members": [
      {
       "name": "Michael D. Sutphin",
       "elected": "2025-11-04",
       "election": "regular",
       "contest": "165411"
+     }
+    ]
+   }
+  },
+  "Blackstone": {
+   "town": {
+    "unsettled": "the town elects council members by ward, and this map does not draw its wards or name their members yet"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Lafayette Dickens",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165454"
+     }
+    ]
+   }
+  },
+  "Bloxom": {
+   "town": {
+    "unsettled": "the state's election results do not give the winner of the most recent election to it"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Christopher F. Kreisl",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161261"
+     }
+    ]
+   }
+  },
+  "Bluefield": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Donald Scott Linkous",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161678"
+     }
+    ]
+   }
+  },
+  "Boones Mill": {
+   "town": {
+    "members": [
+     {
+      "name": "Peggy Brown Steele",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156434"
+     },
+     {
+      "name": "Michael Murray Smith",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156434"
+     },
+     {
+      "name": "Jason Robert Masching",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156434"
+     },
+     {
+      "name": "Emilee R. Conner",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161403"
+     },
+     {
+      "name": "Sam C. Calhoun",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161403"
+     },
+     {
+      "name": "W. Dale Fisher",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161403"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Victor E. Conner",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161402"
+     }
+    ]
+   }
+  },
+  "Bowling Green": {
+   "town": {
+    "members": [
+     {
+      "name": "Randal Scott Hageman",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156387"
+     },
+     {
+      "name": "Daniel Collins Webb",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156387"
+     },
+     {
+      "name": "Jean M. Davis",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156387"
+     },
+     {
+      "name": "David W. Storke",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161334"
+     },
+     {
+      "name": "Jeffrey A. Voit",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161334"
+     },
+     {
+      "name": "Valarie G. Coyle",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161334"
+     },
+     {
+      "name": "John C. Chinault Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161334"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Tina M. Gambill",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161333"
+     }
+    ]
+   }
+  },
+  "Boyce": {
+   "town": {
+    "members": [
+     {
+      "name": "Floyd O. Hudson",
+      "elected": "2023-11-07",
+      "election": "regular",
+      "contest": "164824"
+     },
+     {
+      "name": "Berkeley H. Reynolds",
+      "elected": "2023-11-07",
+      "election": "regular",
+      "contest": "164824"
+     },
+     {
+      "name": "Steve F. Hott",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165148"
+     },
+     {
+      "name": "Cathy Albright",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165148"
+     }
+    ]
+   },
+   "mayor": {
+    "unsettled": "the results hold no election to it recent enough for its winners to be still in office"
+   }
+  },
+  "Boydton": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2022 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Christopher D. Starke",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161486"
+     }
+    ]
+   }
+  },
+  "Boykins": {
+   "town": {
+    "unsettled": "5 seats were on the ballot in the 2 years to 2024 and 6 in the 2 years before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Cletis W. Lassiter",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161638"
+     }
+    ]
+   }
+  },
+  "Branchville": {
+   "town": {
+    "members": [
+     {
+      "name": "W. Harvey Umphlett Jr.",
+      "elected": "2023-11-07",
+      "election": "regular",
+      "contest": "164950"
+     },
+     {
+      "name": "Silvie L. Worrell Murphy",
+      "elected": "2023-11-07",
+      "election": "regular",
+      "contest": "164950"
+     },
+     {
+      "name": "Patricia D. Peterson",
+      "elected": "2023-11-07",
+      "election": "regular",
+      "contest": "164950"
+     },
+     {
+      "name": "Betty M. Smith",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165574"
+     },
+     {
+      "name": "Kelly Joe Ray",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165574"
+     },
+     {
+      "name": "Christopher M. Fatherly",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165574"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Nancy Phelps Barrett",
+      "elected": "2023-11-07",
+      "election": "regular",
+      "contest": "164949"
+     }
+    ]
+   }
+  },
+  "Bridgewater": {
+   "town": {
+    "members": [
+     {
+      "name": "A. Fontaine Canada",
+      "role": "Vice Mayor"
+     },
+     {
+      "name": "Travis Bowman"
+     },
+     {
+      "name": "Steven A. Schofield"
+     },
+     {
+      "name": "Stephanie Curtis"
+     },
+     {
+      "name": "Jim Tongue"
+     },
+     {
+      "name": "Bill Kyger"
+     }
+    ],
+    "verified": {
+     "url": "https://www.bridgewater.town/town_hall/town_council/index.php",
+     "read": "2026-10-30"
+    }
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Theodore Ted W. Flory",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156618"
+     }
+    ]
+   }
+  },
+  "Broadway": {
+   "town": {
+    "members": [
+     {
+      "name": "Travis M. Driver",
+      "role": "Vice Mayor"
+     },
+     {
+      "name": "Richard Fulk"
+     },
+     {
+      "name": "Joan H. Shifflett"
+     },
+     {
+      "name": "Tristan J. Sinnett"
+     },
+     {
+      "name": "Douglas W. Harpine"
+     },
+     {
+      "name": "Elizabeth \"Liz\" M. Fawley"
+     }
+    ],
+    "verified": {
+     "url": "https://broadwayva.gov/town-council/",
+     "read": "2026-10-30"
+    }
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Dave Jordan",
+      "role": "Mayor"
+     }
+    ],
+    "verified": {
+     "url": "https://broadwayva.gov/town-council/",
+     "read": "2026-10-30"
+    }
+   }
+  },
+  "Brodnax": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2023 and 5 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Don E. Dugger",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165083"
+     }
+    ]
+   }
+  },
+  "Brookneal": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2024 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Barbara M. Laprade",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161331"
+     }
+    ]
+   }
+  },
+  "Buchanan": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "M. Susan \"Sue\" Way",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161314"
+     }
+    ]
+   }
+  },
+  "Burkeville": {
+   "town": {
+    "members": [
+     {
+      "name": "Gary L. Simmons",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161517"
+     },
+     {
+      "name": "Kevin E. Jones Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161517"
+     },
+     {
+      "name": "Ivory G. Oliver",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161517"
+     },
+     {
+      "name": "Joshua D. Knight",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161517"
+     },
+     {
+      "name": "Winifred Ann R Wolven",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161517"
+     },
+     {
+      "name": "Brian A. Weltch",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161517"
+     },
+     {
+      "name": "Deborah J. Weltch",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161517"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Gerald E. Smith",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161515"
+     }
+    ]
+   }
+  },
+  "Cape Charles": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2024 and 4 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Adam Mack Charney",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156541"
+     }
+    ]
+   }
+  },
+  "Capron": {
+   "town": {
+    "members": [
+     {
+      "name": "Phillip C. McGee",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161641"
+     },
+     {
+      "name": "Allene S. Edwards",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161641"
+     },
+     {
+      "name": "Ronald E. Carr Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161641"
+     },
+     {
+      "name": "Reginald T. Vaughan, Sr",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161641"
+     },
+     {
+      "name": "Timothy M. Futrell",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161641"
+     },
+     {
+      "name": "Joshua Kiley Talbott",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161641"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "W. Nick Kitchen IV",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161640"
+     }
+    ]
+   }
+  },
+  "Cedar Bluff": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Kenneth A. McVey",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161674"
+     }
+    ]
+   }
+  },
+  "Charlotte Court House": {
+   "town": {
+    "members": [
+     {
+      "name": "Debra Price Andrews",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156398"
+     },
+     {
+      "name": "Brenda Diggs Haskins",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156398"
+     },
+     {
+      "name": "Laurie Fannon Michaelson",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156398"
+     },
+     {
+      "name": "Terrill Watkins Ramsey",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156398"
+     },
+     {
+      "name": "Nemiah Daniel Braxton, Jr",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156398"
+     },
+     {
+      "name": "Brette Allen Arbogast",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156398"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "David C. Watkins, Jr",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156394"
+     }
+    ]
+   }
+  },
+  "Chase City": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2022 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Alden D. Fahringer",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161478"
+     }
+    ]
+   }
+  },
+  "Chatham": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Alisa B. Davis",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161536"
+     }
+    ]
+   }
+  },
+  "Cheriton": {
+   "town": {
+    "members": [
+     {
+      "name": "B. B. \"Barry\" Downing, Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161506"
+     },
+     {
+      "name": "Terri Lynn Tatem",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161506"
+     },
+     {
+      "name": "Robert K. \"Bo\" Lewis, Sr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161506"
+     },
+     {
+      "name": "Norma P. Spencer",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161506"
+     },
+     {
+      "name": "Jason Bryan Sparrow",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161506"
+     },
+     {
+      "name": "Sheila M. Traina",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161506"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Stacey A. Sparrow",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161505"
+     }
+    ]
+   }
+  },
+  "Chilhowie": {
+   "town": {
+    "members": [
+     {
+      "name": "John Brent Foster",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156651"
+     },
+     {
+      "name": "Shannon Craig Donnelly",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156651"
+     },
+     {
+      "name": "Robert Lewis Jeter",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156651"
+     },
+     {
+      "name": "Julie W. Sturgill",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161630"
+     },
+     {
+      "name": "Bill L. \"Coach\" Clear",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161630"
+     },
+     {
+      "name": "P.J. Wolfe",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161630"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Gary L. Heninger",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161629"
+     }
+    ]
+   }
+  },
+  "Chincoteague": {
+   "town": {
+    "members": [
+     {
+      "name": "Christopher Duer Bott",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156316"
+     },
+     {
+      "name": "Kenneth Jay Savage",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156316"
+     },
+     {
+      "name": "Ellen Ward Richardson",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156316"
+     },
+     {
+      "name": "John N. \"Nick\" Howard",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161260"
+     },
+     {
+      "name": "William T. \"Bill\" McComb, Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161260"
+     },
+     {
+      "name": "Gene Wayne Taylor",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161260"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Denise P. Bowden",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161259"
+     }
+    ]
+   }
+  },
+  "Christiansburg": {
+   "town": {
+    "members": [
+     {
+      "name": "Johana Hicks",
+      "elected": "2023-11-07",
+      "election": "regular",
+      "contest": "164902"
+     },
+     {
+      "name": "Kim A. Bowman",
+      "elected": "2023-11-07",
+      "election": "regular",
+      "contest": "164902"
+     },
+     {
+      "name": "Samuel M. Bishop III",
+      "elected": "2023-11-07",
+      "election": "regular",
+      "contest": "164902"
+     },
+     {
+      "name": "Tanya J. Hockett",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165414"
+     },
+     {
+      "name": "Christine A. Waltz",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165414"
+     },
+     {
+      "name": "E.S. \"Beth\" Umberger",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165414"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "D. Michael Barber",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165413"
+     }
+    ]
+   }
+  },
+  "Claremont": {
+   "town": {
+    "members": [
+     {
+      "name": "Sue W. Gilbert",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161663"
+     },
+     {
+      "name": "Terrie B. Foster",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161663"
+     },
+     {
+      "name": "Rodney Dale Perkinson, Jr",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161663"
+     },
+     {
+      "name": "Phillip C. Yerby IV",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161663"
+     },
+     {
+      "name": "Louise A. Hansch",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161663"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Daryl W. Graham",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161662"
+     }
+    ]
+   }
+  },
+  "Clarksville": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2022 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Bruce F. Woerner",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161476"
+     }
+    ]
+   }
+  },
+  "Cleveland": {
+   "town": {
+    "members": [
+     {
+      "name": "Megan Guinn Chumbley",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161603"
+     },
+     {
+      "name": "Thomas A. Vance",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161603"
+     },
+     {
+      "name": "Ty Logan Harris",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161603"
+     },
+     {
+      "name": "Marcus Allen Combs",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161603"
+     },
+     {
+      "name": "Jeremiah W. \"Tiny\" Neal",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161603"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Linda I. Couch",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161602"
+     }
+    ]
+   }
+  },
+  "Clifton": {
+   "town": {
+    "members": [
+     {
+      "name": "John L. Davis, III",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165213"
+     },
+     {
+      "name": "Stephen R. \"Steve\" Effros",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165213"
+     },
+     {
+      "name": "Darrell D. Poe",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165213"
+     },
+     {
+      "name": "Amanda Hencken",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165213"
+     },
+     {
+      "name": "John Paul \"JP\" Hess",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165213"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Lynn M. Screen",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165212"
+     }
+    ]
+   }
+  },
+  "Clifton Forge": {
+   "town": {
+    "unsettled": "2 seats were on the ballot in 2024 and 1 a term before, so the number of seats seems to have changed"
+   }
+  },
+  "Clinchco": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Jelane R. Mock",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161366"
+     }
+    ]
+   }
+  },
+  "Clinchport": {
+   "town": {
+    "members": [
+     {
+      "name": "Andy Meade",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161615"
+     },
+     {
+      "name": "Carter, Mary Jane",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161615"
+     },
+     {
+      "name": "Phillips, Alisha",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161615"
+     },
+     {
+      "name": "Potts, Austin",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161615"
+     },
+     {
+      "name": "Merrill, Richard",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161615"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Sherry Lynn Carter",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161614"
+     }
+    ]
+   }
+  },
+  "Clintwood": {
+   "town": {
+    "unsettled": "2 seats were on the ballot in 2022 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Danny Wayne Lambert",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156414"
+     }
+    ]
+   }
+  },
+  "Coeburn": {
+   "town": {
+    "unsettled": "2 seats were on the ballot in 2022 and 3 a term before, so the number of seats seems to have changed"
+   }
+  },
+  "Colonial Beach": {
+   "town": {
+    "members": [
+     {
+      "name": "Kenneth Eugene Allison, Jr",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156704"
+     },
+     {
+      "name": "David Lynn Williams",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156704"
+     },
+     {
+      "name": "Richard Wesley Wood, Jr",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156704"
+     },
+     {
+      "name": "Thomas C. \"Tom\" Larson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161709"
+     },
+     {
+      "name": "Lisa M. Grandstaff",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161709"
+     },
+     {
+      "name": "Maggie Lane Sanford",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161709"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Robin M. Schick",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161708"
+     }
+    ]
+   },
+   "school": {
+    "members": [
+     {
+      "name": "Laura Tabler Allison",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156706"
+     },
+     {
+      "name": "Patrice Ashton Lyburn",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156706"
+     },
+     {
+      "name": "Audra M. Lucas-Peyton",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "164980"
+     },
+     {
+      "name": "Michelle J. Payne",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "164980"
+     },
+     {
+      "name": "Michele M. Mehrling",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "164980"
+     }
+    ]
+   }
+  },
+  "Courtland": {
+   "town": {
+    "unsettled": "the town elects council members by ward, and this map does not draw its wards or name their members yet"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Danny R. Williams",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161642"
+     }
+    ]
+   }
+  },
+  "Craigsville": {
+   "town": {
+    "members": [
+     {
+      "name": "Veronica Leigh Moran",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156361"
+     },
+     {
+      "name": "Joseph S. Colvin, Sr",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156361"
+     },
+     {
+      "name": "Richard Lee Fox",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156361"
+     },
+     {
+      "name": "Brad N. Ingram",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161311"
+     },
+     {
+      "name": "Cynthia B. Doyle",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161311"
+     },
+     {
+      "name": "Harvey R. Sprouse",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161311"
+     }
+    ]
+   }
+  },
+  "Crewe": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "unsettled": "the results hold no election to it recent enough for its winners to be still in office"
+   }
+  },
+  "Culpeper": {
+   "town": {
+    "members": [
+     {
+      "name": "Joe Short",
+      "role": "Vice Mayor"
+     },
+     {
+      "name": "Jamie Dyke"
+     },
+     {
+      "name": "Michael T. Olinger"
+     },
+     {
+      "name": "Pranas A. Rimeikis"
+     },
+     {
+      "name": "Jon D. Russell"
+     },
+     {
+      "name": "Janie Schmidt"
+     },
+     {
+      "name": "Max B. Sternberg"
+     },
+     {
+      "name": "William M. \"Bill\" Yowell"
+     }
+    ],
+    "verified": {
+     "url": "https://www.culpeperva.gov/government/mayor_and_council/town_council_bios/index.php",
+     "read": "2026-10-30"
+    }
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Frank Reaves, Jr",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165165"
+     }
+    ]
+   }
+  },
+  "Damascus": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Katie M. Lamb",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161698"
+     }
+    ]
+   }
+  },
+  "Dayton": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Samuel S. Lee",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161593"
+     }
+    ]
+   }
+  },
+  "Dendron": {
+   "town": {
+    "members": [
+     {
+      "name": "Patricia Y. Byrd",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161661"
+     },
+     {
+      "name": "W.E. \"Bill\" Richardson Jr",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161661"
+     },
+     {
+      "name": "Edward Eugene Joyner",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161661"
+     },
+     {
+      "name": "Adam E. Chubb Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161661"
+     },
+     {
+      "name": "Hunter Lackey",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161661"
+     },
+     {
+      "name": "Thomas Byrd",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161661"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Wallace E. Faison Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161660"
+     }
+    ]
+   }
+  },
+  "Dillwyn": {
+   "town": {
+    "unsettled": "1 seat was on the ballot in 2023 and 6 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Karen S. Frable-Moss",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165086"
+     }
+    ]
+   }
+  },
+  "Drakes Branch": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Deborah T. Kennedy",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165119"
+     }
+    ]
+   }
+  },
+  "Dublin": {
+   "town": {
+    "unsettled": "2 seats were on the ballot in 2025 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Debbie M. Lyons",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161559"
+     }
+    ]
+   }
+  },
+  "Duffield": {
+   "town": {
+    "unsettled": "5 seats were on the ballot in the 4 years to 2022 and 1 in the 4 years before, so the number of seats seems to have changed"
+   }
+  },
+  "Dumfries": {
+   "town": {
+    "members": [
+     {
+      "name": "Selonia Bernice Miles",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156594"
+     },
+     {
+      "name": "Monae' Satriece Nickerson",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156594"
+     },
+     {
+      "name": "Caetrina Antoninette Peterson",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156594"
+     },
+     {
+      "name": "Shaun R. Peet",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161552"
+     },
+     {
+      "name": "Russell A. Young",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161552"
+     },
+     {
+      "name": "Brian K. Fields",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161552"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Derrick Rashaad Wood",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156597"
+     }
+    ]
+   }
+  },
+  "Dungannon": {
+   "town": {
+    "members": [
+     {
+      "name": "Kristi Summey Farmer",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161613"
+     },
+     {
+      "name": "Nina L. Begley",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161613"
+     },
+     {
+      "name": "Melissa Hensley Gillenwater",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161613"
+     },
+     {
+      "name": "Mary Elizabeth \"Beth\" Hensley",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161613"
+     },
+     {
+      "name": "Kirsten B. Record",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161613"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Debra B. Horne",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161612"
+     }
+    ]
+   }
+  },
+  "Eastville": {
+   "town": {
+    "unsettled": "the state's election results do not give the winner of the most recent election to it"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "James C. Sturgis",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161509"
+     }
+    ]
+   }
+  },
+  "Edinburg": {
+   "town": {
+    "members": [
+     {
+      "name": "Steven Dwight Wood",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156649"
+     },
+     {
+      "name": "Bradley Mark Dellinger",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156649"
+     },
+     {
+      "name": "Fay Miller Wymer",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156649"
+     },
+     {
+      "name": "Tabatha R. Dellinger",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161620"
+     },
+     {
+      "name": "Steven W. Crisman",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161620"
+     },
+     {
+      "name": "Barbara S. Strong",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161620"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Daniel James Harshman",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156647"
+     }
+    ]
+   }
+  },
+  "Elkton": {
+   "town": {
+    "members": [
+     {
+      "name": "Phillip \"Rick\" Workman",
+      "role": "Vice Mayor"
+     },
+     {
+      "name": "Virginia Fulginiti"
+     },
+     {
+      "name": "Aaron Napotnik"
+     },
+     {
+      "name": "Rachel Michael"
+     },
+     {
+      "name": "Jan Hensley"
+     },
+     {
+      "name": "Louis Heidel"
+     }
+    ],
+    "verified": {
+     "url": "https://www.elktonva.gov/government/council/index.php",
+     "read": "2026-10-30"
+    }
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Joshua J. Gooden",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161600"
+     }
+    ]
+   }
+  },
+  "Exmore": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Douglas Wayne Greer",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156546"
+     }
+    ]
+   }
+  },
+  "Farmville": {
+   "town": {
+    "unsettled": "the town elects council members by ward, and this map does not draw its wards or name their members yet"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Brian Richard Vincent",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156412"
+     }
+    ]
+   }
+  },
+  "Fincastle": {
+   "town": {
+    "members": [
+     {
+      "name": "Mary Bess Obenshain Smith",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156373"
+     },
+     {
+      "name": "Paige Wright Ware",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156373"
+     },
+     {
+      "name": "Pamela Denise Binns",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156373"
+     },
+     {
+      "name": "James C. Reynolds",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161316"
+     },
+     {
+      "name": "Barry A. Rakes",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161316"
+     },
+     {
+      "name": "Clay O. Fitzgerald",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161316"
+     }
+    ]
+   }
+  },
+  "Floyd": {
+   "town": {
+    "unsettled": "1 seat was on the ballot in 2023 and 2 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "William R. Griffin",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165223"
+     }
+    ]
+   }
+  },
+  "Fries": {
+   "town": {
+    "members": [
+     {
+      "name": "James H. D. \"Junior\" Young, Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161417"
+     },
+     {
+      "name": "JoAnn E. Gunter",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161417"
+     },
+     {
+      "name": "William A. \"Bill\" Davis",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161417"
+     },
+     {
+      "name": "Richard L. \"Dickie\" Hawks",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161417"
+     },
+     {
+      "name": "Cynthia Pickett Grant",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161417"
+     },
+     {
+      "name": "Sarah Yvonne Burr",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161417"
+     },
+     {
+      "name": "MaryAnn F. Cubbage",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161417"
+     }
+    ]
+   }
+  },
+  "Front Royal": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Lori Athey Cockrell",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161694"
+     }
+    ]
+   }
+  },
+  "Gate City": {
+   "town": {
+    "unsettled": "2 seats were on the ballot in 2022 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "James C. \"Jamie\" Lawson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161610"
+     }
+    ]
+   }
+  },
+  "Glade Spring": {
+   "town": {
+    "unsettled": "6 seats were on the ballot in the 4 years to 2024 and 7 in the 4 years before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Cassandra Leighann Lloyd",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156703"
+     }
+    ]
+   }
+  },
+  "Glasgow": {
+   "town": {
+    "members": [
+     {
+      "name": "Marcie R. Hill",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161588"
+     },
+     {
+      "name": "Natalie H. Harris",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161588"
+     },
+     {
+      "name": "Brandall B. Branch",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161588"
+     },
+     {
+      "name": "Thomas E. \"Tom\" Camden",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165543"
+     },
+     {
+      "name": "Kent W. Dunn",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165543"
+     },
+     {
+      "name": "Lisa B. Rogers",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165543"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Paul W. Williams",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165542"
+     }
+    ]
+   }
+  },
+  "Glen Lyn": {
+   "town": {
+    "members": [
+     {
+      "name": "Rickey L. Crawford",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161412"
+     },
+     {
+      "name": "Latasha L. Waldron",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161412"
+     },
+     {
+      "name": "Cody A. Hamm",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161412"
+     },
+     {
+      "name": "Rhonda S. Sartin",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161412"
+     },
+     {
+      "name": "Nila J. Spencer",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161412"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Roger W. Whitt",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161411"
+     }
+    ]
+   }
+  },
+  "Gordonsville": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Ronald E. \"Ron\" Brooks III",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161518"
+     }
+    ]
+   }
+  },
+  "Goshen": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2022 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Thomas Odell McCraw",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156611"
+     }
+    ]
+   }
+  },
+  "Gretna": {
+   "town": {
+    "members": [
+     {
+      "name": "Deborah Price Moran",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156577"
+     },
+     {
+      "name": "Michael L. Bond",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156577"
+     },
+     {
+      "name": "Michael David Burnette",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156577"
+     },
+     {
+      "name": "Dianne W. Jennings",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161539"
+     },
+     {
+      "name": "James D. Gilbert",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161539"
+     },
+     {
+      "name": "Riverra L. Jackson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161539"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "R.keith Motley",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161538"
+     }
+    ]
+   }
+  },
+  "Grottoes": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2024 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Joanne L. \"Jo\" Plaster",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161595"
+     }
+    ]
+   }
+  },
+  "Grundy": {
+   "town": {
+    "members": [
+     {
+      "name": "Taylor Raymond Burgess",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156382"
+     },
+     {
+      "name": "Rebecca Lynn Shortridge-Elkins",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156382"
+     },
+     {
+      "name": "Patty Lester Street",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156382"
+     },
+     {
+      "name": "Danny F. Hawks",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161327"
+     },
+     {
+      "name": "W. C. \"Bill\" Raines",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161327"
+     },
+     {
+      "name": "Mike Lewis",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161327"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Chris A. Mitchell",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161326"
+     }
+    ]
+   }
+  },
+  "Halifax": {
+   "town": {
+    "unsettled": "the town elects council members by ward, and this map does not draw its wards or name their members yet"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Dabney Thomas Poindexter Gilliam, Jr",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156466"
+     }
+    ]
+   }
+  },
+  "Hallwood": {
+   "town": {
+    "members": [
+     {
+      "name": "Claude M. Linton",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161264"
+     },
+     {
+      "name": "Pamela G. Riffey",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161264"
+     },
+     {
+      "name": "Betty L. McConnell",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161264"
+     },
+     {
+      "name": "Timothy C. Clougherty, Sr",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161264"
+     },
+     {
+      "name": "Betty Jo Dawson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161264"
+     },
+     {
+      "name": "Dustyn W. Gibson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161264"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "John W. Poulson, Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161262"
+     }
+    ]
+   }
+  },
+  "Hamilton": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Kenneth Coles Wine",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156503"
+     }
+    ]
+   }
+  },
+  "Haymarket": {
+   "town": {
+    "members": [
+     {
+      "name": "Mary A. Ramirez",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161556"
+     },
+     {
+      "name": "Matthew J. Gallagher",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161556"
+     },
+     {
+      "name": "Justin L. Baker",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161556"
+     },
+     {
+      "name": "Kenneth M. \"Ken\" Luersen",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161556"
+     },
+     {
+      "name": "Joseph R. \"Joe\" Pasanello",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161556"
+     },
+     {
+      "name": "Alexander M. Beyene",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161556"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Tracy Lynn Pater",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161555"
+     }
+    ]
+   }
+  },
+  "Haysi": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2022 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Larry D. Yates",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161368"
+     }
+    ]
+   }
+  },
+  "Herndon": {
+   "town": {
+    "members": [
+     {
+      "name": "Michael T Lloyd",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161383"
+     },
+     {
+      "name": "Clark A. Hedrick",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161383"
+     },
+     {
+      "name": "Alexis \"Alex\" Reyes",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161383"
+     },
+     {
+      "name": "Kelvin Garcia",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161383"
+     },
+     {
+      "name": "Cesar A. Del Aguila",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161383"
+     },
+     {
+      "name": "Naila Alam",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161383"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Keven J LeBlanc Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161382"
+     }
+    ]
+   }
+  },
+  "Hillsboro": {
+   "town": {
+    "members": [
+     {
+      "name": "David MacDuffee",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161455"
+     },
+     {
+      "name": "Stephen Moskal",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161455"
+     },
+     {
+      "name": "Laney Oxman",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161455"
+     },
+     {
+      "name": "Paul Hrebenak",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161455"
+     },
+     {
+      "name": "Kathleen Baddley",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161455"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Roger Vance",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161454"
+     }
+    ]
+   }
+  },
+  "Hillsville": {
+   "town": {
+    "unsettled": "the town elects council members by ward, and this map does not draw its wards or name their members yet"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Gregory Nelson Crowder",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161336"
+     }
+    ]
+   }
+  },
+  "Honaker": {
+   "town": {
+    "unsettled": "6 seats were on the ballot in the 4 years to 2024 and 7 in the 4 years before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Jodi Lynn Mullins Eaton",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156628"
+     }
+    ]
+   }
+  },
+  "Hurt": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Gary K. Hodnett",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161540"
+     }
+    ]
+   }
+  },
+  "Independence": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Ronald Leon Sexton",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156448"
+     }
+    ]
+   }
+  },
+  "Iron Gate": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2024 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Kawahna C. Persinger",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161301"
+     }
+    ]
+   }
+  },
+  "Irvington": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Julie W. Harris",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161444"
+     }
+    ]
+   }
+  },
+  "Ivor": {
+   "town": {
+    "unsettled": "4 seats were on the ballot in 2024 and 6 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Tara B. Kea",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161636"
+     }
+    ]
+   }
+  },
+  "Jarratt": {
+   "town": {
+    "unsettled": "6 seats were on the ballot in 2024 and 12 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Brandon Michael Rawlings",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161421"
+     }
+    ]
+   }
+  },
+  "Jonesville": {
+   "town": {
+    "unsettled": "the results hold no election to it recent enough for its winners to be still in office"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Jerry Lee Harris",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156492"
+     }
+    ]
+   }
+  },
+  "Keller": {
+   "town": {
+    "members": [
+     {
+      "name": "Anna L. Hart",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161278"
+     },
+     {
+      "name": "Teresa E. Guy",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161278"
+     },
+     {
+      "name": "Linda A. Guy",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161278"
+     },
+     {
+      "name": "Rose Anna Moore",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161278"
+     },
+     {
+      "name": "Heather M.A.Q. Littlefield",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161278"
+     },
+     {
+      "name": "Carole A. Elliott",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161278"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "S. Beth J. Hart",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161277"
+     }
+    ]
+   }
+  },
+  "Kenbridge": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Wanda G. Morrison",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161462"
+     }
+    ]
+   }
+  },
+  "Keysville": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Robert J. Schaefer",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161339"
+     }
+    ]
+   }
+  },
+  "Kilmarnock": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Shawn E. Donahue",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156485"
+     }
+    ]
+   }
+  },
+  "La Crosse": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2022 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Michael T. Clark",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161480"
+     }
+    ]
+   }
+  },
+  "Lawrenceville": {
+   "town": {
+    "unsettled": "the town elects council members by ward, and this map does not draw its wards or name their members yet"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Lawanda Vincent Tatum",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156376"
+     }
+    ]
+   }
+  },
+  "Lebanon": {
+   "town": {
+    "members": [
+     {
+      "name": "J. Leonard Kegley"
+     },
+     {
+      "name": "Scott Gilmer"
+     },
+     {
+      "name": "M. Elijah Leonard"
+     },
+     {
+      "name": "Nina Fields"
+     },
+     {
+      "name": "DeAnna Jackson"
+     },
+     {
+      "name": "W. Bradley Lambert"
+     }
+    ],
+    "verified": {
+     "url": "https://lebanonva.net/government/council/",
+     "read": "2026-10-30"
+    }
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Nelson A. \"Tony\" Dodi",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161605"
+     }
+    ]
+   }
+  },
+  "Leesburg": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2022 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "C. B. \"Kelly\" Burk",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161456"
+     }
+    ]
+   }
+  },
+  "Louisa": {
+   "town": {
+    "members": [
+     {
+      "name": "John Jerl Purcell, IV",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156510"
+     },
+     {
+      "name": "Vicky Ann Harte",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156510"
+     },
+     {
+      "name": "Roger W. Henry",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161458"
+     },
+     {
+      "name": "Sylvia L. Rigsby",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161458"
+     },
+     {
+      "name": "Daniel R. Crawford",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161458"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Ashley B. Michael",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165370"
+     }
+    ]
+   }
+  },
+  "Lovettsville": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Christopher M. Hornbaker",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161449"
+     }
+    ]
+   }
+  },
+  "Luray": {
+   "town": {
+    "members": [
+     {
+      "name": "Ron Vickers",
+      "role": "Vice Mayor"
+     },
+     {
+      "name": "Jerry Dofflemyer"
+     },
+     {
+      "name": "Joey Sours"
+     },
+     {
+      "name": "Jason Pettit"
+     },
+     {
+      "name": "Charles Allen Butler, Jr."
+     },
+     {
+      "name": "Ryan Dean"
+     }
+    ],
+    "verified": {
+     "url": "https://www.townofluray.com/government/town-council",
+     "read": "2026-10-30"
+    }
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Stephanie L. Lillard",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161521"
+     }
+    ]
+   }
+  },
+  "Madison": {
+   "town": {
+    "members": [
+     {
+      "name": "Nancy H. Knighting",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161469"
+     },
+     {
+      "name": "Kimberly A. Pumphrey",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161469"
+     },
+     {
+      "name": "Charles A. Carter Sr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161469"
+     },
+     {
+      "name": "Deborah P. Byram",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161469"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Jennifer A. Campbell",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161468"
+     }
+    ]
+   }
+  },
+  "Marion": {
+   "town": {
+    "members": [
+     {
+      "name": "Jim Gates",
+      "role": "Vice Mayor"
+     },
+     {
+      "name": "Suzanne Jennings"
+     },
+     {
+      "name": "Tricia Spencer"
+     },
+     {
+      "name": "Hunter Atwell"
+     },
+     {
+      "name": "Todd May"
+     },
+     {
+      "name": "Larry Carter"
+     },
+     {
+      "name": "Debra Hayes"
+     }
+    ],
+    "verified": {
+     "url": "https://www.marionva.org/1426/Mayor-Town-Council",
+     "read": "2026-10-30"
+    }
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Avery Sherwood Cornett",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161632"
+     }
+    ]
+   }
+  },
+  "McKenney": {
+   "town": {
+    "members": [
+     {
+      "name": "Becky S. Wallace",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161371"
+     },
+     {
+      "name": "Shirley A. Ruppert",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161371"
+     },
+     {
+      "name": "Cheryl A. Epps",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161371"
+     },
+     {
+      "name": "Margaret E. \"Beth\" Anderson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161371"
+     },
+     {
+      "name": "Sarah A. Woodland",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161371"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Meagan S. Haire Abbey",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161370"
+     }
+    ]
+   }
+  },
+  "Melfa": {
+   "town": {
+    "members": [
+     {
+      "name": "James R. Wilson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161280"
+     },
+     {
+      "name": "Raymond W. Lewis, Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161280"
+     },
+     {
+      "name": "Gregory J. Spady",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161280"
+     },
+     {
+      "name": "David A. Peffer",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161280"
+     },
+     {
+      "name": "Daniel Macca",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161280"
+     },
+     {
+      "name": "Brian B. Langley",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161280"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Charles R. Wilbur",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161279"
+     }
+    ]
+   }
+  },
+  "Middleburg": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Trowbridge M. \"Bridge\" Littleton",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165361"
+     }
+    ]
+   }
+  },
+  "Middletown": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Charles H. Harbaugh, IV",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161405"
+     }
+    ]
+   }
+  },
+  "Mineral": {
+   "town": {
+    "unsettled": "6 seats were on the ballot in 2022 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Pamela R. Harlowe",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165375"
+     }
+    ]
+   }
+  },
+  "Monterey": {
+   "town": {
+    "members": [
+     {
+      "name": "Denise Stewart Botkin",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156472"
+     },
+     {
+      "name": "Robert Allan Weiss",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156472"
+     },
+     {
+      "name": "Erik Jolivette Sax",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156472"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Warren Edward Garber, Jr.",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156473"
+     }
+    ]
+   }
+  },
+  "Montross": {
+   "town": {
+    "members": [
+     {
+      "name": "Carolyn Hurd Carlson",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156707"
+     },
+     {
+      "name": "Clinton Allen Watson, Jr.",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156707"
+     },
+     {
+      "name": "Aaron Lee Hooks",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156707"
+     },
+     {
+      "name": "Kathryn S. Wittman",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161707"
+     },
+     {
+      "name": "Joseph P. \"Joey\" King",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161707"
+     },
+     {
+      "name": "David L. \"Smitty\" Smith",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161707"
+     },
+     {
+      "name": "John Lewis",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161707"
+     }
+    ]
+   }
+  },
+  "Mount Crawford": {
+   "town": {
+    "members": [
+     {
+      "name": "Robert Edward Taylor, Jr",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156619"
+     },
+     {
+      "name": "Toni Belinda Ray",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156619"
+     },
+     {
+      "name": "Tasha Lynne Hoover",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156619"
+     },
+     {
+      "name": "Dennis S. Driver",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161599"
+     },
+     {
+      "name": "Kathleen L. Campbell",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161599"
+     },
+     {
+      "name": "Alfred L. Cook",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161599"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "James Neal Dillard, Jr",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161598"
+     }
+    ]
+   }
+  },
+  "Mount Jackson": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2022 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "unsettled": "the results hold no election to it recent enough for its winners to be still in office"
+   }
+  },
+  "Narrows": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Calvin D. \"Tom\" Spangler, Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161413"
+     }
+    ]
+   }
+  },
+  "Nassawadox": {
+   "town": {
+    "members": [
+     {
+      "name": "Andrea D. Fox",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161508"
+     },
+     {
+      "name": "John W. Hallett, Sr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161508"
+     },
+     {
+      "name": "Thomas Wilson Rippon, Jr",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161508"
+     },
+     {
+      "name": "Claude F. Jones",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161508"
+     },
+     {
+      "name": "Marianne DiAngelo",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161508"
+     },
+     {
+      "name": "Georgette J. Press",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161508"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Patricia S. Stith",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161507"
+     }
+    ]
+   }
+  },
+  "New Castle": {
+   "town": {
+    "members": [
+     {
+      "name": "Robert Edward Lee",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156408"
+     },
+     {
+      "name": "Robyn Leigh Foster",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156408"
+     },
+     {
+      "name": "Karen Shires Crush",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156408"
+     },
+     {
+      "name": "Thomas Alton Zimmerman",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156408"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "James Leonard Macdonald",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156409"
+     }
+    ]
+   }
+  },
+  "New Market": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Peter R. Hughes",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161617"
+     }
+    ]
+   }
+  },
+  "Newsoms": {
+   "town": {
+    "members": [
+     {
+      "name": "Raymond Neil Drake",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161647"
+     },
+     {
+      "name": "Pete T. Twisdale II",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161647"
+     },
+     {
+      "name": "John Barham Carter",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161647"
+     },
+     {
+      "name": "Damian P. Dwyer",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161647"
+     },
+     {
+      "name": "Carol D. Majors",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161647"
+     },
+     {
+      "name": "Diane L. Dovell",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161647"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Stephanie Y. Ellsworth-Co",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161646"
+     }
+    ]
+   }
+  },
+  "Nickelsville": {
+   "town": {
+    "unsettled": "6 seats were on the ballot in 2022 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "unsettled": "the results hold no election to it recent enough for its winners to be still in office"
+   }
+  },
+  "Occoquan": {
+   "town": {
+    "unsettled": "1 seat was on the ballot in the 2 years to 2025 and 5 in the 2 years before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "unsettled": "the results hold no election to it recent enough for its winners to be still in office"
+   }
+  },
+  "Onancock": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Fletcher D. Fosque",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161273"
+     }
+    ]
+   }
+  },
+  "Onley": {
+   "town": {
+    "members": [
+     {
+      "name": "W. R. \"Bill\" Ferguson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161276"
+     },
+     {
+      "name": "Woody W. Zember",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161276"
+     },
+     {
+      "name": "Jason A. Campbell",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161276"
+     },
+     {
+      "name": "A. Brian Corbin",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161276"
+     },
+     {
+      "name": "Daniel Keith Bloxom, Jr",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161276"
+     },
+     {
+      "name": "Rodney C. Lang",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161276"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Henry E. \"Ned\" Finney",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161274"
+     }
+    ]
+   }
+  },
+  "Orange": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2022 and 2 a term before, so the number of seats seems to have changed"
+   }
+  },
+  "Painter": {
+   "town": {
+    "members": [
+     {
+      "name": "James N. Sturgis",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161286"
+     },
+     {
+      "name": "Thomas L. Willett",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161286"
+     },
+     {
+      "name": "Eric Talmadge Harris",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161286"
+     },
+     {
+      "name": "Samuel L. Lewis, Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161286"
+     },
+     {
+      "name": "Josephine B. Hearne",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161286"
+     },
+     {
+      "name": "F. C. Duer III",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161286"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Connie Widgeon Campbell",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161284"
+     }
+    ]
+   }
+  },
+  "Pamplin City": {
+   "town": {
+    "unsettled": "6 seats were on the ballot in 2024 and 12 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Sarah Hamlett Blackwell",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161305"
+     }
+    ]
+   }
+  },
+  "Parksley": {
+   "town": {
+    "unsettled": "7 seats were on the ballot in the 4 years to 2024 and 6 in the 4 years before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Frank A. Russell, II",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161265"
+     }
+    ]
+   }
+  },
+  "Pearisburg": {
+   "town": {
+    "members": [
+     {
+      "name": "Gary L. Fields, Sr.",
+      "elected": "2023-11-07",
+      "election": "regular",
+      "contest": "164856"
+     },
+     {
+      "name": "Zachary B. Smith",
+      "elected": "2023-11-07",
+      "election": "regular",
+      "contest": "164856"
+     },
+     {
+      "name": "Frank C. Tanner",
+      "elected": "2023-11-07",
+      "election": "regular",
+      "contest": "164856"
+     },
+     {
+      "name": "Kristi D. Eaton",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165274"
+     },
+     {
+      "name": "Amanda M. Davis",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165274"
+     },
+     {
+      "name": "Cathy M. Clark",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165274"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Robert L. Dickerson",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165273"
+     }
+    ]
+   }
+  },
+  "Pembroke": {
+   "town": {
+    "members": [
+     {
+      "name": "Christopher T. Collins",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165276"
+     },
+     {
+      "name": "Douglas Wayne Sadler",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165276"
+     },
+     {
+      "name": "C. B. Andrews, Jr.",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165276"
+     },
+     {
+      "name": "Peggy R. Hale",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165276"
+     },
+     {
+      "name": "Jonathan M. Hale",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165276"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Dana D. \"Ace\" Munsey",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165275"
+     }
+    ]
+   }
+  },
+  "Pennington Gap": {
+   "town": {
+    "members": [
+     {
+      "name": "Terry K. Pope",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156495"
+     },
+     {
+      "name": "Doris M. Carson",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156495"
+     },
+     {
+      "name": "Jeffery Lee Martin",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156495"
+     },
+     {
+      "name": "Jimmy Lynn Warner",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156495"
+     },
+     {
+      "name": "Gary Allen McElyea",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156495"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Larry Wayne Holbrook",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156494"
+     }
+    ]
+   }
+  },
+  "Phenix": {
+   "town": {
+    "members": [
+     {
+      "name": "Emily M. Lawhorne",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161343"
+     },
+     {
+      "name": "Rodney J. Childress",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161343"
+     },
+     {
+      "name": "Amanda R. Letterman",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161343"
+     },
+     {
+      "name": "Gladys Haskins Reid",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161343"
+     },
+     {
+      "name": "Larry Wilson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161343"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Dean Evans",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161342"
+     }
+    ]
+   }
+  },
+  "Pocahontas": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Benjamin A. Gibson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161670"
+     }
+    ]
+   }
+  },
+  "Port Royal": {
+   "town": {
+    "members": [
+     {
+      "name": "William D. Carpenter II",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161335"
+     },
+     {
+      "name": "Angela F. \"Angie\" Golden",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161335"
+     },
+     {
+      "name": "Monica G. Chenault",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161335"
+     },
+     {
+      "name": "Donna W. Wilkerson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161335"
+     },
+     {
+      "name": "Alexander Long, IV",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161335"
+     }
+    ]
+   }
+  },
+  "Pound": {
+   "town": {
+    "unsettled": "2 seats were on the ballot in 2022 and 3 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "John Thomas Cauthorne",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161723"
+     }
+    ]
+   }
+  },
+  "Pulaski": {
+   "town": {
+    "members": [
+     {
+      "name": "Brooks Reed Dawson",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156601"
+     },
+     {
+      "name": "Jeremy Lee Clark",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156601"
+     },
+     {
+      "name": "Grayson Tyler Clontz",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156601"
+     },
+     {
+      "name": "Joel B. Burchett Sr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161558"
+     },
+     {
+      "name": "Sunshine N. Cope",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161558"
+     },
+     {
+      "name": "Steven W. Erickson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161558"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "W. Shannon Collins",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161557"
+     }
+    ]
+   }
+  },
+  "Purcellville": {
+   "town": {
+    "members": [
+     {
+      "name": "Erin Rayner"
+     },
+     {
+      "name": "Carol Luke"
+     },
+     {
+      "name": "Kevin Wright"
+     },
+     {
+      "name": "Caleb Stought"
+     },
+     {
+      "name": "Brian Dean"
+     }
+    ],
+    "verified": {
+     "url": "https://www.purcellvilleva.gov/524/Council-Bios",
+     "read": "2026-10-30",
+     "note": "The town's page lists five council members. Its charter gives the council six members besides the mayor, so one seat is not named here."
+    }
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Christopher M. Bertaut",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161452"
+     }
+    ]
+   }
+  },
+  "Quantico": {
+   "town": {
+    "members": [
+     {
+      "name": "S. \"Steve\" Kang",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161554"
+     },
+     {
+      "name": "Jason Robert Stoltz",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161554"
+     },
+     {
+      "name": "Robert Teron Freeman",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161554"
+     },
+     {
+      "name": "Brandi M. Maly",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161554"
+     },
+     {
+      "name": "Nadia Madjid",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161554"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Kevin P. Brown",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161553"
+     }
+    ]
+   }
+  },
+  "Remington": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "William E. Polk Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161392"
+     }
+    ]
+   }
+  },
+  "Rich Creek": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Paul A. Morrison",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165270"
+     }
+    ]
+   }
+  },
+  "Richlands": {
+   "town": {
+    "members": [
+     {
+      "name": "Jannis Ratliff White",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156687"
+     },
+     {
+      "name": "Laura Ann Mollo",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156687"
+     },
+     {
+      "name": "Richard Lon Wood",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156687"
+     },
+     {
+      "name": "Jordan Christopher Bales",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161677"
+     },
+     {
+      "name": "Gary W. Jackson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161677"
+     },
+     {
+      "name": "Seth R. White",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161677"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Rod D. Cury",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161676"
+     }
+    ]
+   }
+  },
+  "Ridgeway": {
+   "town": {
+    "unsettled": "the results show the same person winning two of the current seats"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Craig G A. O'Der, Jr",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156469"
+     }
+    ]
+   }
+  },
+  "Rocky Mount": {
+   "town": {
+    "members": [
+     {
+      "name": "Benjamin Kyle Mullins",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156435"
+     },
+     {
+      "name": "David Kirby Clements",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156435"
+     },
+     {
+      "name": "Abron Ralph Casey",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156435"
+     },
+     {
+      "name": "Mark H. Newbill",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161404"
+     },
+     {
+      "name": "Lucas A. Tuning",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161404"
+     },
+     {
+      "name": "J. Tyler Lee",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161404"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Clyde Holland Perdue, III",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156438"
+     }
+    ]
+   }
+  },
+  "Round Hill": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Scott T. Ramsey",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165363"
+     }
+    ]
+   }
+  },
+  "Rural Retreat": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Timothy Gale Litz",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156717"
+     }
+    ]
+   }
+  },
+  "Saltville": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Cheri Heath Fullen",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161627"
+     }
+    ]
+   }
+  },
+  "Saxis": {
+   "town": {
+    "members": [
+     {
+      "name": "Denise E. Chance",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161268"
+     },
+     {
+      "name": "Beverly L. Hart",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161268"
+     },
+     {
+      "name": "Aubrey Lee Miles, Jr",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161268"
+     },
+     {
+      "name": "Bryan P. Shreaves, Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161268"
+     },
+     {
+      "name": "Wayne E. McCleary",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161268"
+     },
+     {
+      "name": "Darrell D. Marshall",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161268"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Denise L. Drewer",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161267"
+     }
+    ]
+   }
+  },
+  "Scottsburg": {
+   "town": {
+    "members": [
+     {
+      "name": "Russell I. Puckett, Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161427"
+     },
+     {
+      "name": "Robert D. Elliott",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161427"
+     },
+     {
+      "name": "Connie H. Glass",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161427"
+     },
+     {
+      "name": "James E. Stoner",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161427"
+     },
+     {
+      "name": "Joe B. Allred III",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161427"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "James L. Gordon",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161426"
+     }
+    ]
+   }
+  },
+  "Scottsville": {
+   "town": {
+    "unsettled": "the state's election results do not give the winner of the most recent election to it"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Ronald L. \"Ron\" Smith",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "164981"
+     }
+    ]
+   }
+  },
+  "Shenandoah": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Clinton O. Lucas, Jr",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161525"
+     }
+    ]
+   }
+  },
+  "Smithfield": {
+   "town": {
+    "members": [
+     {
+      "name": "Michael G. Smith",
+      "role": "Mayor"
+     },
+     {
+      "name": "Bill Harris",
+      "role": "Vice Mayor"
+     },
+     {
+      "name": "Steven G. Bowman"
+     },
+     {
+      "name": "Valerie Butler"
+     },
+     {
+      "name": "Jeff Brooks"
+     },
+     {
+      "name": "Darren Cutler"
+     },
+     {
+      "name": "Mary Ellen Bebermeyer"
+     }
+    ],
+    "verified": {
+     "url": "https://www.smithfieldva.gov/287/Town-Council",
+     "read": "2026-10-30"
+    }
+   }
+  },
+  "South Boston": {
+   "town": {
+    "members": [
+     {
+      "name": "Sharon Mosley Harris",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156458"
+     },
+     {
+      "name": "Barbara Crews Speece",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156458"
+     },
+     {
+      "name": "Joseph Brian Burton",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156458"
+     },
+     {
+      "name": "Tina Wyatt Younger",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161424"
+     },
+     {
+      "name": "Joe B. Chandler III",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161424"
+     },
+     {
+      "name": "Thomas R \"Tommy\" Elliott",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161424"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Edward \"Ed\" Owens",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161423"
+     }
+    ]
+   }
+  },
+  "South Hill": {
+   "town": {
+    "unsettled": "the town elects council members by ward, and this map does not draw its wards or name their members yet"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "W.M. \"Mike\" Moody",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161483"
+     }
+    ]
+   }
+  },
+  "St. Paul": {
+   "town": {
+    "unsettled": "the state's election results do not give the winner of the most recent election to it"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Ken R. Holbrook",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165552"
+     }
+    ]
+   }
+  },
+  "Stanardsville": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Michael Alan Payne",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156452"
+     }
+    ]
+   }
+  },
+  "Stanley": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Michael A. Knight",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161523"
+     }
+    ]
+   }
+  },
+  "Stephens City": {
+   "town": {
+    "unsettled": "the results show the same person winning two of the current seats"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Michael Adolph Diaz, Jr",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156439"
+     }
+    ]
+   }
+  },
+  "Stony Creek": {
+   "town": {
+    "members": [
+     {
+      "name": "John F. Kollmann",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161667"
+     },
+     {
+      "name": "Anne Johnson Petts",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161667"
+     },
+     {
+      "name": "Bruce W. Norfleet",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161667"
+     },
+     {
+      "name": "C.M. \"Chet\" Bulls, Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161667"
+     },
+     {
+      "name": "Gerald A. Lacerte",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161667"
+     },
+     {
+      "name": "James M. \"Jimmy\" Matthews",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161667"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Melinda Gayle Baicy",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161666"
+     }
+    ]
+   }
+  },
+  "Strasburg": {
+   "town": {
+    "members": [
+     {
+      "name": "Hugh Bradley Stover",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156642"
+     },
+     {
+      "name": "Emily Lorraine Reynolds",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156642"
+     },
+     {
+      "name": "Alford Dennis Carter, IV",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156642"
+     },
+     {
+      "name": "Andrew Lowder",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156642"
+     },
+     {
+      "name": "Ashleigh A. Kimmons",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161625"
+     },
+     {
+      "name": "David T. Woodson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161625"
+     },
+     {
+      "name": "Jonathan W. Price",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161625"
+     },
+     {
+      "name": "Christie A. Monahan",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161625"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Brandy Hawkins Boies",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161624"
+     }
+    ]
+   }
+  },
+  "Stuart": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2022 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Terry W. Dalton",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161528"
+     }
+    ]
+   }
+  },
+  "Surry": {
+   "town": {
+    "members": [
+     {
+      "name": "Milton E. Berryman",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161659"
+     },
+     {
+      "name": "Robert T. Berryman",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161659"
+     },
+     {
+      "name": "Jason N. Wiedel",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161659"
+     },
+     {
+      "name": "Joe A. Garcia",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161659"
+     },
+     {
+      "name": "Brian L. Agor",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161659"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Bennie Junior Savedge",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161658"
+     }
+    ]
+   }
+  },
+  "Tangier": {
+   "town": {
+    "members": [
+     {
+      "name": "Elizabeth P. Thomas",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161272"
+     },
+     {
+      "name": "Sharon K. Haynie",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161272"
+     },
+     {
+      "name": "Kelly C. Wheatley",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161272"
+     },
+     {
+      "name": "William T. \"Tommy\" Eskridge III",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161272"
+     },
+     {
+      "name": "Tracy King Pruitt",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161272"
+     },
+     {
+      "name": "Anna E. Pruitt-Parks",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161272"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "James W. \"Ooker\" Eskridge",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161271"
+     }
+    ]
+   }
+  },
+  "Tappahannock": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Roy Montgomery Gladding",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156420"
+     }
+    ]
+   }
+  },
+  "Tazewell": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Michael F. Hoops",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161672"
+     }
+    ]
+   }
+  },
+  "The Plains": {
+   "town": {
+    "members": [
+     {
+      "name": "Heidi Hanzel Van Voorhis",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156430"
+     },
+     {
+      "name": "Noah Jason Portugal",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156430"
+     },
+     {
+      "name": "Joyce Walter Heflin",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156430"
+     },
+     {
+      "name": "C. Robin Gant Melton",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161395"
+     },
+     {
+      "name": "Riley C. Berg",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161395"
+     },
+     {
+      "name": "Bruce G. Lelacheur",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161395"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Lori B. Sisson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161394"
+     }
+    ]
+   }
+  },
+  "Timberville": {
+   "town": {
+    "members": [
+     {
+      "name": "Sharon Paige May Jones",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156623"
+     },
+     {
+      "name": "Sarah Catherine Berry",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156623"
+     },
+     {
+      "name": "Isaac Grant Kelley",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156623"
+     },
+     {
+      "name": "Clarence L. Fox",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161592"
+     },
+     {
+      "name": "Kevin Allan Farmer",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161592"
+     },
+     {
+      "name": "John Coffman",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161592"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Don P. Delaughter, Jr",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161591"
+     }
+    ]
+   }
+  },
+  "Toms Brook": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Lisa G. Currie",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161622"
+     }
+    ]
+   }
+  },
+  "Troutdale": {
+   "town": {
+    "members": [
+     {
+      "name": "Tina Michelle Delp",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156446"
+     },
+     {
+      "name": "Gary Erwin Tilson",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156446"
+     },
+     {
+      "name": "Scott Lee Cornett",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156446"
+     },
+     {
+      "name": "Ira Kenneth McGrady, Jr.",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156446"
+     },
+     {
+      "name": "Deborah Reedy Cornett",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156446"
+     },
+     {
+      "name": "Samuel Joseph Pennington",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156446"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "William Calvin Mitchell, Jr.",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156451"
+     }
+    ]
+   }
+  },
+  "Troutville": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Spurgeon O. Vaughan",
+      "elected": "2025-11-04",
+      "election": "special",
+      "contest": "165075"
+     }
+    ]
+   }
+  },
+  "Urbanna": {
+   "town": {
+    "unsettled": "3 seats were on the ballot in 2024 and 6 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "unsettled": "the results hold no election to it recent enough for its winners to be still in office"
+   }
+  },
+  "Victoria": {
+   "town": {
+    "members": [
+     {
+      "name": "Christopher Thomas Garrett",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156516"
+     },
+     {
+      "name": "J Greg G. Elam, Jr",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156516"
+     },
+     {
+      "name": "Johnnie W. Brame",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156516"
+     },
+     {
+      "name": "Sandra V. Jones",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161461"
+     },
+     {
+      "name": "Ronald E. Mattox",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161461"
+     },
+     {
+      "name": "Christopher H. Gill",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161461"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Allen D. Smith",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161460"
+     }
+    ]
+   }
+  },
+  "Vienna": {
+   "town": {
+    "members": [
+     {
+      "name": "Jessica H. Ramakis",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165206"
+     },
+     {
+      "name": "Howard J. Springsteen",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165206"
+     },
+     {
+      "name": "Charles L. \"Chuck\" Anderson",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165206"
+     },
+     {
+      "name": "Douglas K. \"Doug\" Francis",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165206"
+     },
+     {
+      "name": "Roy J. Baldwin",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165206"
+     },
+     {
+      "name": "Daniel R. \"Dann\" Nash",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165206"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Linda Jane Colbert",
+      "elected": "2025-11-04",
+      "election": "regular",
+      "contest": "165205"
+     }
+    ]
+   }
+  },
+  "Vinton": {
+   "town": {
+    "members": [
+     {
+      "name": "Michael Wayne Stovall",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156609"
+     },
+     {
+      "name": "Sabrina Mitchen McCarty",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156609"
+     },
+     {
+      "name": "Laurie Jacobs Mullins",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161587"
+     },
+     {
+      "name": "Keith N. Liles",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161587"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Bradley E. \"Brad\" Grose",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161586"
+     }
+    ]
+   }
+  },
+  "Virgilina": {
+   "town": {
+    "members": [
+     {
+      "name": "Catherine A. Ellixson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161429"
+     },
+     {
+      "name": "Susan A. Bagbey",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161429"
+     },
+     {
+      "name": "Patricia E. Honeycutt",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161429"
+     },
+     {
+      "name": "Tommie S. Glasscock",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161429"
+     },
+     {
+      "name": "Kirke C. Hooper",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161429"
+     },
+     {
+      "name": "Jason H. Johnson",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161429"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Ralph O. Murray, Jr",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161428"
+     }
+    ]
+   }
+  },
+  "Wachapreague": {
+   "town": {
+    "unsettled": "the state's election results do not give the winner of the most recent election to it"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Charles A. Elliott",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161281"
+     }
+    ]
+   }
+  },
+  "Wakefield": {
+   "town": {
+    "members": [
+     {
+      "name": "Michael W. Kessinger",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161669"
+     },
+     {
+      "name": "O.E. \"Chip\" Parker III",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161669"
+     },
+     {
+      "name": "Dennis P. Mason",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161669"
+     },
+     {
+      "name": "Darlean Robinson Whiting",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161669"
+     },
+     {
+      "name": "Brian K. Wills",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161669"
+     },
+     {
+      "name": "Frances J. Chambers",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161669"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Brian Magee Laine",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161668"
+     }
+    ]
+   }
+  },
+  "Warrenton": {
+   "town": {
+    "unsettled": "the town elects council members by ward, and this map does not draw its wards or name their members yet"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Hugh Edward Carter Nevill",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156431"
+     }
+    ]
+   }
+  },
+  "Warsaw": {
+   "town": {
+    "unsettled": "4 seats were on the ballot in 2024 and 1 a term before, so the number of seats seems to have changed"
+   }
+  },
+  "Washington": {
+   "town": {
+    "unsettled": "5 seats were on the ballot in 2022 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Joseph Justin Whited",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156607"
+     }
+    ]
+   }
+  },
+  "Waverly": {
+   "town": {
+    "members": [
+     {
+      "name": "Kevin D. Jones",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161665"
+     },
+     {
+      "name": "Tara L. Norris",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161665"
+     },
+     {
+      "name": "Thomas H. Jones, Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161665"
+     },
+     {
+      "name": "B. Franklin Cox",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161665"
+     },
+     {
+      "name": "B. Allen Bernstorf, Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161665"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Angela W. McPhaul",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161664"
+     }
+    ]
+   }
+  },
+  "Weber City": {
+   "town": {
+    "unsettled": "6 seats were on the ballot in 2022 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "unsettled": "the results hold no election to it recent enough for its winners to be still in office"
+   }
+  },
+  "West Point": {
+   "town": {
+    "unsettled": "4 seats were on the ballot in 2024 and 1 a term before, so the number of seats seems to have changed"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Joshua Thurston Lawson",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156482"
+     }
+    ]
+   },
+   "school": {
+    "unsettled": "2 seats were on the ballot in 2024 and 1 a term before, so the number of seats seems to have changed"
+   }
+  },
+  "White Stone": {
+   "town": {
+    "unsettled": "a special election filled one of the seats, and the results do not say whose term it finished"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "William Benjamin Hubbard",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156488"
+     }
+    ]
+   }
+  },
+  "Windsor": {
+   "town": {
+    "unsettled": "its seats are elected in two different years, and the results show only one election in one of those years, so it is not clear which seats are still current"
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "George Latham Stubbs, Jr",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156474"
+     }
+    ]
+   }
+  },
+  "Wise": {
+   "town": {
+    "members": [
+     {
+      "name": "Robin Dale Dotson",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156709"
+     },
+     {
+      "name": "Teresa Ann Adkins",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156709"
+     },
+     {
+      "name": "Caynor Allen Smith, Jr.",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156709"
+     },
+     {
+      "name": "Laura A. Taylor",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161726"
+     },
+     {
+      "name": "S. Duane Phillips",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161726"
+     }
+    ]
+   }
+  },
+  "Woodstock": {
+   "town": {
+    "members": [
+     {
+      "name": "Stephen Dennis Heishman",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156646"
+     },
+     {
+      "name": "A. Paje Cross",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156646"
+     },
+     {
+      "name": "Frank H. Haun",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156646"
+     },
+     {
+      "name": "Michael F. Funkhouser",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161621"
+     },
+     {
+      "name": "Laura A. Bennett",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161621"
+     },
+     {
+      "name": "Michelle R. Manning",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161621"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Jeremy Daniel McCleary",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156645"
+     }
+    ]
+   }
+  },
+  "Wytheville": {
+   "town": {
+    "members": [
+     {
+      "name": "Candice Nicole Johnson",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156714"
+     },
+     {
+      "name": "Cathy Dunkley Pattison",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156714"
+     },
+     {
+      "name": "Holly E. Atkins",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161728"
+     },
+     {
+      "name": "Joseph E. Hand Jr.",
+      "elected": "2024-11-05",
+      "election": "regular",
+      "contest": "161728"
+     }
+    ]
+   },
+   "mayor": {
+    "members": [
+     {
+      "name": "Beth Ann Taylor",
+      "elected": "2022-11-08",
+      "election": "regular",
+      "contest": "156716"
      }
     ]
    }
