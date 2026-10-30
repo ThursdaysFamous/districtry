@@ -362,7 +362,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "NOT NAMED YET. Every Georgia county is governed by an elected board of commissioners or, in a few, a sole commissioner, and no state office publishes who they are. The names will come from the state's election results — recorded as gap ga-county-commission-members.",
+        "people": "ga-county-officials.json, rebuilt weekly by CI from the Georgia Secretary of State's official election results, which carry county races from November 2024 on. Each commission seat on a ballot since then is named for the winner of its newest election who has taken office, and a winner not yet in office is named apart. No state office publishes who sits on the commissions. A seat last filled before November 2024 and not on a ballot since is not listed, and nobody appointed to fill a vacancy is shown — recorded as gap ga-county-commission-members.",
         "applies": "Georgia — statewide, all 159 counties."
       }
     },
@@ -398,7 +398,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
           }
         ],
-        "people": "NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. Georgia's school boards are elected, and no statewide roster of their members has been read for this app — recorded as gap ga-school-board-members.",
+        "people": "ga-county-officials.json, from the same election results as the County card, names the board of education of each of the 159 county school systems on the same terms. The boards of the 21 city school systems are not named yet, and the state's election results do not cover the schools on Fort Stewart, the Army post — recorded as gap ga-school-board-members.",
         "applies": "Georgia — everywhere but Fort Benning. Measured 2026-10-29, the unified districts' Census land areas sum to 148,806 km2, and the Census's one elementary district (Fort Benning Schools, kindergarten to grade 8) adds 682 km2 to exactly the 159 counties' 149,488 km2; its two secondary districts split the same ground between the Chattahoochee and Muscogee county systems for grades 9 to 12. Those three are not drawn, and the card says so on the post."
       }
     },
@@ -594,6 +594,11 @@
         "note": "Georgia House roster from the same member data, on the same terms."
       },
       {
+        "file": "ga-county-officials.json",
+        "min_keys": 159,
+        "note": "County commissioners and county school board members named from the Secretary of State's official election results, keyed by county FIPS, one record for each of the 159 counties whether or not it has a named seat; refreshed weekly by update-ga-county-officials.yml."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
@@ -623,6 +628,11 @@
       "file": "update-ga-legislature-roster.yml",
       "purpose": "Georgia Senate and Georgia House rosters (the General Assembly's own member data)",
       "schedule": "Tue 19:23 UTC"
+    },
+    {
+      "file": "update-ga-county-officials.yml",
+      "purpose": "County commissioners and county school board members (the Secretary of State's official election results)",
+      "schedule": "Wed 19:41 UTC"
     },
     {
       "file": "ga-validate-sources.yml",
