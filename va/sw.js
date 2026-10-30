@@ -61,6 +61,7 @@ const ROSTER_URLS = [
   "./data/app/va-senate-members.json",
   "./data/app/va-house-members.json",
   "./data/app/va-local-officials.json",
+  "./data/app/va-conservation-boards.json",
   "./data/app/coverage-gaps.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */

@@ -24,6 +24,14 @@ the package's, 99 in 100 within 1.3 m) and is the newer of the two: Norfolk's
 package, dated March 2026, has no precinct 416, which the layer carves out of
 precinct 405, and five packages dated 11 September 2026 match the layer.
 
+THE TERMS. Asked by letter on 2026-10-27 whether its district and precinct
+files may be used with credit, the Department answered on 2026-10-30 (Brian
+Tynes): "The shapefiles on the website are available to anyone pursuant to
+§ 24.2-103.1 of the Code of Virginia." The answer names the county and city
+shapefiles; this layer holds the same precincts with the same lines, as
+measured above, so it is read as covering both. The card and the sources
+page credit the Department.
+
 A PRECINCT IS CUT INTO PIECES WHEREVER A LEGISLATIVE LINE CROSSES IT. The
 layer is the union of the precinct map with the three legislative maps, so a
 precinct split between two House districts is two records, and 7,271 records

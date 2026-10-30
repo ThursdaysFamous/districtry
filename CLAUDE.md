@@ -101,7 +101,7 @@ This list undercounts what actually runs, and **the figure is stated WITH ITS ME
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
 them used. MEASURED 2026-10-30 on this branch, AFTER its last edit: a static gate is
 one NAMED step in the `static` job, which is **139**;
-counted instead as script invocations the whole battery is **259 — 235 that need no browser and
+counted instead as script invocations the whole battery is **260 — 236 that need no browser and
 24 that boot Chromium** (a Playwright smoke test per instance
 `il`/`ca`/`ny`/`wi`/`ia`/`mi`/`mn`/`in`/`nc`/`ky`/`ok`/`sc`/`tn`/`ar`/`ms`/`la`/`mo`/`ga`/`va`/`wv`, 2 root-page tests, and the two fleet-wide probes
 for point transmission and contrast pairs), the per-instance `validate_index.py` runs included, and
@@ -125,8 +125,8 @@ and how each went wrong are in this section's git history.
 
 Treat the workflow file as the source of truth for the full battery and its order;
 `.claude/skills/steward/SKILL.md` mirrors it as locally-runnable commands with per-gate
-rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-10-30, **259
-invocations for 259**, diffed both ways with each side's trailing rationale comment stripped
+rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-10-30, **260
+invocations for 260**, diffed both ways with each side's trailing rationale comment stripped
 and `$BASE` resolved to the branch point the skill spells `origin/main`,
 after four gates were found missing from it on 2026-09-12 (`build_sitemap.py`,
 `undeliverable.py`, the circuit-court join self-test, and that change's own) and **three more on

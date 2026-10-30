@@ -15568,6 +15568,124 @@ function initVirginiaExplorer() {
     return !!m && Number(m[1]) >= 510;
   }
 
+  /* ---------- The soil and water conservation district, on the card ----------
+   * Which of the 47 districts covers each county and city, from the
+   * Department of Conservation and Recreation's list, and the directors its
+   * voters elected, from the Department of Elections' results
+   * (va/scripts/build_va_conservation_boards.py;
+   * data/app/va-conservation-boards.json, keyed by GEOID). Each district is
+   * made of whole counties and cities, so no layer is drawn. The builder's
+   * --check requires the sentences on how a board is chosen to stay as the
+   * builder states them (Code of Virginia sections 10.1-515, 10.1-529 and
+   * 10.1-530).
+   * ---------- */
+  var VA_CONSERVATION_LIST = "https://www.dcr.virginia.gov/soil-and-water/swcdlist";
+  var loadVaConservationBoards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/va-conservation-boards.json", {}, 2);
+  });
+  function vaPlaceList(names) {
+    if (names.length < 2) return names.join("");
+    return names.slice(0, -1).join(", ") + " and " + names[names.length - 1];
+  }
+  function vaConservationSection(wrap, result) {
+    var boards = result.conservation;
+    var place = result.name != null ? String(result.name) : "This county or city";
+    var entry = boards && boards.localities && result.geoid != null
+      ? boards.localities[String(result.geoid)] : null;
+    if (!entry) {
+      wrap.appendChild(renderFieldStack([{
+        label: "Soil and water conservation district",
+        value: boards
+          ? "This app's list of conservation districts does not hold " + place + "."
+          : "The list of conservation districts did not load, so none is named here."
+      }]));
+      return;
+    }
+    if (!entry.district) {
+      wrap.appendChild(renderFieldStack([{
+        label: "Soil and water conservation district",
+        value: "None. The Department of Conservation and Recreation's list of Virginia's " +
+          "47 soil and water conservation districts places " + place + " in none of them."
+      }]));
+      return;
+    }
+    var dist = (boards.districts || {})[entry.district] || {};
+    var others = (dist.localities || []).filter(function (g) {
+      return g !== String(result.geoid);
+    }).map(function (g) {
+      var e = boards.localities[g];
+      return e && e.name ? String(e.name) : g;
+    });
+    wrap.appendChild(renderSectionLabel(String(entry.district) +
+      " Soil and Water Conservation District"));
+    var rows = [{
+      label: "What it covers",
+      value: others.length
+        ? place + ", with " + vaPlaceList(others) + "."
+        : place + " alone."
+    }];
+    var people = (entry.members || []).map(function (m) {
+      return vaMemberPerson(m, "Elected director", null);
+    });
+    if (people.length) wrap.appendChild(renderPersonRows(people));
+    if (entry.unsettled) {
+      rows.push({
+        label: "Who the voters elected",
+        value: "Not named here: " + String(entry.unsettled) + "."
+      });
+    }
+    if (entry.listed && entry.listed < entry.seats) {
+      rows.push({
+        label: "A seat not named",
+        value: "State law gives " + place + " " + entry.seats + " elected seats on this " +
+          "board, and the results of its last election list " + entry.listed + ", so " +
+          (entry.seats - entry.listed === 1 ? "the other is" : "the others are") +
+          " not named here."
+      });
+    }
+    (entry.pending || []).forEach(function (m) {
+      var starts = vaTakesOffice(m);
+      rows.push({
+        label: "Elected, not yet sitting",
+        value: (m.name ? String(m.name) : "A write-in candidate") + " won the election of " +
+          (vaReadDate(m.elected) || m.elected) + (starts ? " and takes office on " + starts : "") +
+          "."
+      });
+    });
+    rows.push({
+      label: "How the board is chosen",
+      // each sentence the builder's CARD_CLAIMS names sits in one literal
+      value: (others.length
+        ? "In a district of more than one county or city, " +
+          "two directors are elected by the voters of each county and city in the district"
+        : "In a district of one county or city, " +
+          "three directors are elected by the voters of the district") +
+        ", for four years, and " +
+        "two more are appointed by the Virginia Soil and Water Conservation Board" +
+        ", one of them the local extension agent. " +
+        "A seat that falls vacant is filled by the Board's appointment" +
+        " for the rest of the term (Code of Virginia sections 10.1-515, 10.1-529 and " +
+        "10.1-530)."
+    });
+    rows.push({
+      label: "Who is not named here",
+      value: "The two appointed directors, and anyone appointed to an elected seat that " +
+        "fell vacant, are on no list this app reads, so only the directors the voters " +
+        "elected are named."
+    });
+    rows.push({
+      label: "Where these names come from",
+      value: "The Department of Elections' results of the election named beside each " +
+        "director, and the Department of Conservation and Recreation's list of the " +
+        "districts and the counties and cities each covers" +
+        (vaReadDate(boards.listRead) ? ", read " + vaReadDate(boards.listRead) : "") + "."
+    });
+    wrap.appendChild(renderFieldStack(rows));
+    wrap.appendChild(renderLinkRow({
+      links: [{ label: "The state's list of conservation districts ↗", url: VA_CONSERVATION_LIST }]
+    }));
+  }
+
   registerLayer({
     id: "county",
     group: "geography",
@@ -15587,7 +15705,8 @@ function initVirginiaExplorer() {
         queryFeatureAt(loadStateCounties, point),
         // the names are read beside the county, so a names file that fails to
         // load costs the names and never the county itself
-        loadVaLocalOfficials().catch(function () { return null; })
+        loadVaLocalOfficials().catch(function () { return null; }),
+        loadVaConservationBoards().catch(function () { return null; })
       ]).then(function (parts) {
         var feature = parts[0];
         if (!feature) return null;
@@ -15599,6 +15718,7 @@ function initVirginiaExplorer() {
           name: findPropCI(props, ["name"]),
           geoid: geoid,
           officials: officials,
+          conservation: parts[2],
           locality: officials && officials.localities && geoid != null
             ? officials.localities[String(geoid)] || null : null
         };
@@ -15629,6 +15749,7 @@ function initVirginiaExplorer() {
             "the " + (city ? "city's" : "county's") + " own website is the current source."
         }]));
       }
+      vaConservationSection(wrap, result);
       return wrap;
     },
     primaryLink: function () {
