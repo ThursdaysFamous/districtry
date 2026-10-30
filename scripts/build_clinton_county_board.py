@@ -21,8 +21,9 @@ week, and this asserts both against the shipped dissolve. It COUNTS rather than
 names — two requests instead of thirty-four — and both events that would
 invalidate the boundary (a re-precincting or a redistricting) move the counts.
 
-WHAT SHIPS: name, district, phone, e-mail, term-expiry year, and the Chair and
-Vice-Chair roles the county itself prints. WHAT DOES NOT: party, which the page
+WHAT SHIPS: name, district, phone, e-mail, term-expiry year, the Chair and
+Vice-Chair roles the county itself prints, and a `board` block naming where the
+board meets, from the County Clerk's own answer (BOARD_MEETS). WHAT DOES NOT: party, which the page
 does not publish.
 
 Usage:
@@ -53,6 +54,20 @@ DEFAULT_OUT_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
 
 
 fail = make_fail("clinton-board-roster")
+
+# WHERE THE BOARD MEETS, from the County Clerk's own answer. Clinton's filing
+# gives only PO Box 308, Carlyle, which is not a place a reader can go, so the
+# card had no address until Clerk Vicky Albers wrote on 2026-10-05 that the
+# board meets in the board room on the first floor of the jail building, 810
+# Franklin Street, Carlyle. It is a MEETING place, so the card says "Board
+# meets at" (the Franklin and Jo Daviess label). The ZIP is the one the
+# county's own filing gives for its Carlyle post-office box. The e-mail is in
+# the operator's mailbox, not in this repository.
+BOARD_MEETS = {
+    "address": "Board room, first floor of the jail building, "
+               "810 Franklin Street, Carlyle, IL 62231",
+    "source": "The Clinton County Clerk, by e-mail, 5 October 2026",
+}
 
 
 def main():
@@ -134,6 +149,8 @@ def main():
                 if STREET_RE.search(str(value)):
                     fail("a street address reached %s's %s (%r)"
                          % (member["name"], key, value))
+
+    roster["board"] = dict(BOARD_MEETS)
 
     out_path = os.path.join(out_dir, "clinton-county-board-members.json")
     with open(out_path, "w", encoding="utf-8") as handle:

@@ -153,6 +153,33 @@ park card carries it (from 2026-10-09). If you redistribute these three files, t
 notice is a courteous one to carry. If the county later says otherwise, that is a real outcome
 and this file will say so.
 
+### 6. Whiteside County fire and park districts — derived, shown with the county's written permission
+
+`il/data/app/whiteside-fire-districts.json` and `whiteside-park-districts.json`
+are derived, not copied. `scripts/build_parcel_fabric_districts.py` reads the
+`CVTTXCD` tax code on the county's public Tax Parcels layer, matches each code to
+the districts the County Clerk's District Rates by Taxcode Report says it pays
+into, and merges the parcels into one outline per district; no parcel, owner or
+assessment information is shipped.
+
+Whiteside licenses its GIS data, and its License Agreement for Data Sharing
+forbids redistributing "the data or products derived therefrom" without "express
+written permission of Whiteside County". So this project asked for that
+permission (Ask 19 in `docs/ASK_DRAFTS.md`), and the county's GIS office gave it
+by e-mail on 2026-10-02: districtry may display the derived fire, library and
+park districts, crediting Whiteside County. The e-mail is in the operator's
+mailbox, not in this repository.
+
+What that permission covers is **display in this app, with credit**. It is the
+Jo Daviess shape (§3) rather than the Grundy one (§5): these two files are **not**
+offered under the ODbL grant above, and anyone wanting the boundaries for their
+own use should ask Whiteside County GIS. Every Whiteside fire and park card says
+the outline is derived from the county's parcel data and the Clerk's tax rates,
+that it is not surveyed and not for legal boundary determination, and that it is
+shown with the county's written permission. If the county withdraws permission,
+the two layers come down. Whiteside's library districts are still drawn from the
+statewide library layer, which is not the county's data.
+
 ### Two related things this file does not cover
 
 * **Map tiles.** The coverage map draws CARTO basemap tiles built from

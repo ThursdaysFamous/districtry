@@ -44,13 +44,6 @@
    "name": "Linn County",
    "slug": "linn"
   },
-  "pottawattamie": {
-   "fips": "155",
-   "lat": 41.3401835,
-   "lng": -95.5449053,
-   "name": "Pottawattamie County",
-   "slug": "pottawattamie"
-  },
   "tama": {
    "fips": "171",
    "lat": 42.074848,
