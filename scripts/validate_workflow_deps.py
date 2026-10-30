@@ -91,6 +91,7 @@ IMPORT_NAME = {
     "pillow": "PIL",
     "python-dateutil": "dateutil",
     "pyyaml": "yaml",
+    "pyshp": "shapefile",
     # google-auth ships INTO the shared `google` namespace package, so both
     # `google.auth` and `google.oauth2` resolve to a top-level `google` that no
     # distribution is named after. Without this the gate reads a correct pip

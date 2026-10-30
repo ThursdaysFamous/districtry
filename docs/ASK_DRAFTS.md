@@ -9068,3 +9068,91 @@ same month. Only the district lines are used, as the letter says.
 | a referral | A letter to whoever is named, recorded under this ask as its follow-up. |
 | a no | Recorded with its date in gap `la-municipal-ward-lines`, and Shreveport moves to a gap record of its own whose `ask` carries this letter, so the refusal is counted the way the done standard counts one. Shreveport stays undrawn. |
 | no reply | A follow-up about 2026-11-11, a second two weeks after that, and then `UNRESPONSIVE`, which is a claim about the ask and never about the Council or the City. |
+
+---
+
+## Ask wv-charleston-ward-map — City of Charleston, West Virginia, City Clerk (through the Mayor's office): the twenty wards as a map file
+
+> **ROUTED 2026-10-21 at 20:59 UTC**: the Mayor's Constituent Services Liaison replied that she
+> had passed the request to the City Clerk's office and asked them to look into it. Nothing from
+> the Clerk yet. A follow-up is due about 2026-11-11 if nothing has come back.
+>
+> **ASKED 2026-10-21 at 17:26:40 UTC**, from the operator's own mailbox to the Mayor's office at
+> `mayorsoffice@cityofcharleston.org`, asking it to pass the letter to City Clerk Miles Cary,
+> because the city's website publishes no e-mail address for the Clerk. The send time was read off
+> the sent folder by the thread that drafts the letters. The letter's text was not copied into
+> this file when it was recorded, so the sent copy is the record of what was asked: the current
+> ward boundaries as a map file such as a shapefile or GeoJSON, or where the city publishes them,
+> and the terms on which districtry may use them. Gap `wv-city-wards` carries the ask.
+
+**Why this is asked.** Charleston elects twenty council members by ward and six at large, and its
+wards were last redrawn in November 2021. West Virginia's map is being built and is not yet
+published. It will name the council, and it cannot draw the wards, because no map file of them
+has been found and the Census Bureau does not map city wards. A traced picture would be a guess
+about where a line runs, so a reader near it could be shown the wrong ward.
+
+**What each answer means.** A file, or a pointer to a published one: read after the host's
+robots.txt, held to Charleston's Census outline, measured against the 2020 census as every drawn
+city's map is, and drawn as the city's wards, with any terms recorded beside it. A map published
+only as a picture: recorded, not traced. A no: recorded with its date in gap `wv-city-wards`. No
+reply after the follow-ups: `UNRESPONSIVE`, a claim about the ask and never about the city.
+
+---
+
+## Ask wv-huntington-ward-map — City of Huntington, West Virginia, City Clerk: the nine council districts as a map file
+
+> **ASKED 2026-10-21 at 17:26:30 UTC**, from the operator's own mailbox to City Clerk Lisa
+> Adkins at `adkinsl@huntingtonwv.gov`, the address on the city's own City Clerk page. The send
+> time was read off the sent folder by the thread that drafts the letters. The letter's text was
+> not copied into this file when it was recorded, so the sent copy is the record of what was
+> asked: the current council district boundaries as a map file such as a shapefile or GeoJSON,
+> or where the city publishes them, and the terms on which districtry may use them. A follow-up is
+> due about 2026-11-11 if nothing has come back. Gap `wv-city-wards` carries the ask.
+
+**Why this is asked.** Huntington elects nine council members by district and two at large.
+West Virginia's map is being built and is not yet published. It will name the council, and it
+cannot draw the districts, because no map file of them has been found and the Census Bureau does
+not map city wards.
+
+**What each answer means.** The same as Ask wv-charleston-ward-map: a file or a pointer to one is
+read, measured and drawn with its terms recorded; a picture is recorded and not traced; a no is
+recorded with its date; silence after the follow-ups is recorded as `UNRESPONSIVE`.
+
+---
+
+## Ask wv-parkersburg-ward-map — City of Parkersburg, West Virginia, City Clerk: the nine council districts as a map file
+
+> **ASKED 2026-10-21 at 17:26:20 UTC**, from the operator's own mailbox to City Clerk Connie
+> Shaffer at `connie.shaffer@parkersburgwv.gov`, the address on the city's own city council page.
+> The send time was read off the sent folder by the thread that drafts the letters. The letter's
+> text was not copied into this file when it was recorded, so the sent copy is the record of what
+> was asked: the current council district boundaries as a map file such as a shapefile or
+> GeoJSON, or where the city publishes them, and the terms on which districtry may use them. A
+> follow-up is due about 2026-11-11 if nothing has come back. Gap `wv-city-wards` carries the ask.
+
+**Why this is asked.** Parkersburg elects its nine council members by district. West Virginia's
+map is being built and is not yet published. It will name the council, and it cannot draw the
+districts, because no map file of them has been found and the Census Bureau does not map city
+wards.
+
+**What each answer means.** The same as Ask wv-charleston-ward-map.
+
+---
+
+## Ask wv-wheeling-ward-map — City of Wheeling, West Virginia, City Clerk: the six wards as a map file
+
+> **ASKED 2026-10-21 at 17:25:58 UTC**, from the operator's own mailbox to City Clerk Jessica
+> Holloway at `jessica.holloway@wheelingwv.gov`. The city's council contact page names her; its
+> staff directory also lists "Jessica Zalenski" at the same telephone number. The send time was
+> read off the sent folder by the thread that drafts the letters. The letter's text was not copied
+> into this file when it was recorded, so the sent copy is the record of what was asked: the
+> current ward boundaries as a map file such as a shapefile or GeoJSON, or where the city
+> publishes them, and the terms on which districtry may use them. A follow-up is due about
+> 2026-11-11 if nothing has come back. Gap `wv-city-wards` carries the ask.
+
+**Why this is asked.** Wheeling elects one council member from each of six wards. West
+Virginia's map is being built and is not yet published. It will name the council, and it cannot
+draw the wards, because no map file of them has been found and the Census Bureau does not map
+city wards.
+
+**What each answer means.** The same as Ask wv-charleston-ward-map.

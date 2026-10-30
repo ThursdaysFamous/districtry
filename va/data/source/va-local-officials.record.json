@@ -1,0 +1,8 @@
+{
+ "api": "https://historical.elections.virginia.gov/api/graphql_pr",
+ "asOf": "2026-10-30",
+ "contests": 6427,
+ "fetched": "2026-10-30",
+ "shipped_sha256": "2831e7eb27480c3de41eb886a8df093c32eae409eaa6b972761f226380726642",
+ "source_sha256": "133671596c6340aa8bf5f32981967fde45779c3b073979dc7ffa9f3c685ece66"
+}

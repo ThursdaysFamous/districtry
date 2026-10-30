@@ -3,15 +3,15 @@
 Build one state's election-precinct file from the one layer that state
 publishes for every precinct, for the app to read same-origin.
 
-Seven states use this, each through a short builder of its own
+Eight states use this, each through a short builder of its own
 (<tag>/scripts/build_<tag>_precincts.py): Kentucky, North Carolina, Indiana,
 South Carolina, Arkansas and Tennessee, all measured 2026-10-15 to publish a
 current statewide precinct layer from a government office (the research is
 /mnt/project-files/research/precinct-sources-six-states-2026-10-15.md in the
-project's shared folder), and Louisiana since 2026-10-21. A state's builder
-says where its layer is, how to read one record and what to expect;
-everything else lives here once, because seven copies of Minnesota's builder
-would be seven readers of one question.
+project's shared folder), Louisiana since 2026-10-21 and Virginia since
+2026-10-30. A state's builder says where its layer is, how to read one record
+and what to expect; everything else lives here once, because eight copies of
+Minnesota's builder would be eight readers of one question.
 
 THE SHAPE IS MINNESOTA'S (mn/scripts/build_mn_precincts.py): fetch the whole
 layer, check it, simplify it with Douglas-Peucker, refuse to write unless the
@@ -25,6 +25,16 @@ edition) names a `fetcher` instead of reading an ArcGIS layer. ShapefileZip
 is that fetcher: robots.txt first, the listing page held to the edition the
 builder names, the whole zip read through mapshaper, and the file's own
 digest kept in the record. Everything after the fetch is the same code.
+
+A STATE WHOSE LAYER CUTS A PRECINCT INTO PIECES ALONG OTHER LINES (Virginia,
+2026-10-30: the Department of Elections publishes each precinct cut wherever
+a congressional or legislative line crosses it) names a fetcher too, which
+reads the layer through fetch_layer() and joins each precinct's pieces into
+one shape before anything here sees them, so the drawn file carries no line
+inside a precinct that is not a precinct's line. Its precincts also overlap
+where two counties drew a shared line differently, so it names a resolve
+step as well, which gives each overlap to one precinct before the file is
+drawn.
 
 WHAT IS HELD, IN ORDER
   1. robots.txt is read before the first request with the client that crawls,
@@ -129,7 +139,7 @@ class Spec(object):
                  tiling_max_other=0.02, tiling_samples=200, edit_date=None,
                  required=("key", "name", "countyFips"), extra_check=None,
                  multipart_records=0, part_latest=(), card_claims=(),
-                 fetcher=None, tiling_floor_by_county=None):
+                 fetcher=None, tiling_floor_by_county=None, resolve=None):
         self.tag = tag
         self.label = label
         self.layer = layer.rstrip("/")
@@ -166,6 +176,11 @@ class Spec(object):
         # supplies fetcher(spec, geometry) -> (records, meta), records shaped
         # as fetch() returns them; ShapefileZip below is the one in use.
         self.fetcher = fetcher
+        # A state whose precincts overlap one another in its own layer
+        # supplies resolve(features, counties) -> features, run on the read
+        # precincts before they are drawn, in a build from a fetch and from a
+        # saved one alike; it says in its own builder what it gives to whom.
+        self.resolve = resolve
         # A county whose own share is lower for a reason the builder measured
         # and states (Louisiana's precinct file leaves Lake Pontchartrain
         # undefined, and the county file carries the lake): GEOID -> its own
@@ -303,6 +318,13 @@ def fetch(spec, geometry=True):
     fetcher = getattr(spec, "fetcher", None)
     if fetcher is not None:
         return fetcher(spec, geometry)
+    return fetch_layer(spec, geometry)
+
+
+def fetch_layer(spec, geometry=True):
+    """Every record of the spec's ArcGIS layer, with its metadata. A fetcher
+    that reshapes the records (Virginia's, which joins a precinct's pieces)
+    reads the layer through this and works on what it returns."""
     f = Fetcher(spec)
     meta = f.metadata()
     oid = meta.get("objectIdField") or next(
@@ -880,6 +902,8 @@ def run_build(spec, source_path=None, save_source=None):
     feats, dupes = normalise(spec, records, counties)
     if spec.extra_check:
         spec.extra_check(feats)
+    if spec.resolve:
+        feats = spec.resolve(feats, counties)
     problems = gate_counts(spec, feats, counties)
     if problems:
         for p in problems:

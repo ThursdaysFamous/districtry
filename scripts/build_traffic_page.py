@@ -931,7 +931,12 @@ def return_visits(gc, start):
     if dates is not None and not (len(first) == len(ret) == len(dates)):
         fail("visits: %d first and %d return days against %d in the daily "
              "series" % (len(first), len(ret), len(dates)))
-    return {"since": long_label(v["since"]), "first": v["first"],
+    # `since` is when the count began and `from` the first day this window's
+    # figures cover, which is later once the window starts after the count
+    # did: the 7-day view from 2026-10-30 said "visits since October 22" over
+    # a total that began on October 23.
+    return {"since": long_label(v["since"]),
+            "from": long_label(max(v["since"], start)), "first": v["first"],
             "return": v["return"], "frontSince": long_label(VISIT_FRONT_FROM),
             "byApp": [[VISIT_FRONT_NAME if r["tag"] == VISIT_FRONT_TAG
                        else INSTANCE_NAMES.get(r["tag"], r["tag"]), r["count"]]

@@ -2,10 +2,10 @@
 """Mirror the Census TIGERweb layers the apps fetch live into tile archives
 (docs/OPTIMIZATION_PLAYBOOK.md §10, phase 6).
 
-Fifty-four polygon layers across fifteen apps — sixteen in four apps at phase
+Fifty-eight polygon layers across sixteen apps — sixteen in four apps at phase
 6a, thirty-two in the nine newest at phase 6d (2026-10-17), Louisiana's two
-before it went live (2026-10-21) and Missouri's four before it went live
-(2026-10-26) — download a
+before it went live (2026-10-21), Missouri's four before it went live
+(2026-10-26) and Virginia's four while it is dark (2026-10-29) — download a
 whole state from tigerweb.geo.census.gov the first time they are switched on —
 Illinois's county subdivisions alone are 14.5 MB — and ask that server about
 the reader's point on every first click; the ZIP layers (ZIP_MIRRORS, phases
@@ -111,7 +111,8 @@ PIP_BLOCK = os.path.join(REPO_ROOT, "engine", "index.html", "point-in-polygon.tx
 SERVICES = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
 STATE_FIPS = {"il": "17", "ia": "19", "mi": "26", "wi": "55", "ny": "36", "ca": "06",
               "mn": "27", "ky": "21", "in": "18", "nc": "37", "ok": "40", "sc": "45",
-              "tn": "47", "ar": "05", "ms": "28", "la": "22", "mo": "29"}
+              "tn": "47", "ar": "05", "ms": "28", "la": "22", "mo": "29",
+              "va": "51"}
 # WHO THIS FETCHES AS, and it used to be nobody: the first version shelled out to
 # curl with no -A, so the Census saw `curl/8.x` and nothing read robots.txt.
 # Nothing was breached — measured 2026-09-27 as that client, the host's
@@ -189,6 +190,10 @@ MIRRORS = [
     ("mo", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
     ("mo", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
     ("mo", "school-district-elementary", "School", 2, "GEOID,NAME,STATE"),
+    ("va", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("va", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("va", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
+    ("va", "school-district-elementary", "School", 2, "GEOID,NAME,STATE"),
 ]
 
 # THE ZIP LAYERS (phase 6b). TIGERweb's ZCTA layer has NO STATE field — a ZCTA
@@ -225,6 +230,7 @@ ZIP_MIRRORS = [
     ("ms", "zip-code", "MS_BBOX_ENVELOPE", (-91.75, 30.05, -88.00, 35.10)),
     ("la", "zip-code", "LA_BBOX_ENVELOPE", (-94.15, 28.75, -88.65, 33.12)),
     ("mo", "zip-code", "MO_BBOX_ENVELOPE", (-95.78, 35.99, -89.09, 40.62)),
+    ("va", "zip-code", "VA_BBOX_ENVELOPE", (-83.7, 36.5, -75.15, 39.5)),
 ]
 ZCTA_SERVICE, ZCTA_INDEX, ZCTA_FIELDS = "PUMA_TAD_TAZ_UGA_ZCTA", 11, "ZCTA5"
 PAGE_SIZE = 250
