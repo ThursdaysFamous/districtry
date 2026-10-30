@@ -58,6 +58,7 @@ python3 scripts/build_coverage_gaps.py --check --metro arkansas --out ar/data/ap
 python3 scripts/build_coverage_gaps.py --check --metro mississippi --out ms/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro louisiana --out la/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro missouri --out mo/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro georgia --out ga/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro virginia --out va/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro nyc       --out ny/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro sf        --out ca/data/app/coverage-gaps.json
@@ -135,6 +136,7 @@ python3 wi/scripts/build_metro_outline.py --check
 python3 ia/scripts/build_metro_outline.py --check
 python3 mi/scripts/build_metro_outline.py --check
 python3 mo/scripts/build_metro_outline.py --check
+python3 ga/scripts/build_metro_outline.py --check
 python3 va/scripts/build_metro_outline.py --check
 python3 scripts/build_press_list.py --check                # PRESS_LIST.md vs press-list.json
 python3 scripts/validate_doc_counts.py                    # "N layers" in prose vs the worksheets
@@ -262,6 +264,7 @@ python3 ar/scripts/validate_index.py ar/index.html
 python3 ms/scripts/validate_index.py ms/index.html
 python3 la/scripts/validate_index.py la/index.html
 python3 mo/scripts/validate_index.py mo/index.html
+python3 ga/scripts/validate_index.py ga/index.html
 python3 va/scripts/validate_index.py va/index.html
 
 # --- browser gates: ONE server at the repo root, every instance
@@ -284,6 +287,7 @@ BASE_URL=http://localhost:8000/ar/ node ar/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/ms/ node ms/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/la/ node la/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/mo/ node mo/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/ga/ node ga/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000      node scripts/landing_test.mjs
 BASE_URL=http://localhost:8000      node scripts/page_consistency_test.mjs
 BASE_URL=http://localhost:8000      node scripts/probe_point_transmission.mjs --check
