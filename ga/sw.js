@@ -49,6 +49,8 @@ const GEOMETRY_URLS = [
   "./data/app/congress-districts.json",
   "./data/app/ga-senate-districts.json",
   "./data/app/ga-house-districts.json",
+  "./data/app/ga-commission-districts.json",
+  "./data/app/ga-school-board-districts.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
@@ -59,6 +61,7 @@ const ROSTER_URLS = [
   "./data/app/ga-senate-members.json",
   "./data/app/ga-house-members.json",
   "./data/app/ga-county-officials.json",
+  "./data/app/ga-board-district-counties.json",
   "./data/app/coverage-gaps.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
