@@ -607,17 +607,20 @@ def fail(msg):
 
 
 # ---------- fetch ----------
-def fetch(today):
+def fetch(today, offices=None, label="build_va_local_officials"):
+    """Every contest for `offices` (the results' office ids, OFFICES by
+    default) from FIRST_YEAR to today's year. The conservation boards'
+    builder asks for its own office through this one reader."""
     import requests  # noqa: PLC0415
     from scraper_common import require_robots_once  # noqa: PLC0415
 
-    require_robots_once(API, USER_AGENT, label="build_va_local_officials")
+    require_robots_once(API, USER_AGENT, label=label)
     s = requests.Session()
     s.headers.update({"User-Agent": USER_AGENT, "Content-Type": "application/json"})
     contests = {}
     last = 0.0
     for year in range(FIRST_YEAR, today.year + 1):
-        for office in OFFICES:
+        for office in (offices or OFFICES):
             page = 1
             while True:
                 wait = PACE - (time.time() - last)

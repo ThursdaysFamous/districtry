@@ -182,7 +182,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
           }
         ],
-        "people": "Who governs it: the board of supervisors or city council, the school board where it is elected, and a city's elected mayor, named from va-local-officials.json — the Department of Elections' results of the elections that seated them (historical.elections.virginia.gov), each member's card saying which election and linking its result. Where a body is elected by district the card names everyone and the district layers say which member represents the point. A member appointed to a vacancy is not shown until an election fills the seat, and where the results do not settle who holds a seat the card names no one and says why. Where a school board is appointed the card says so and names no one.",
+        "people": "Who governs it: the board of supervisors or city council, the school board where it is elected, and a city's elected mayor, named from va-local-officials.json — the Department of Elections' results of the elections that seated them (historical.elections.virginia.gov), each member's card saying which election and linking its result. Where a body is elected by district the card names everyone and the district layers say which member represents the point. A member appointed to a vacancy is not shown until an election fills the seat, and where the results do not settle who holds a seat the card names no one and says why. Where a school board is appointed the card says so and names no one. The soil and water conservation district covering the county or city is named from the Department of Conservation and Recreation's list (dcr.virginia.gov), with the directors its voters elected from the same results, in va-conservation-boards.json; the two directors each board has appointed are not named.",
         "applies": "Virginia — statewide, all 95 counties and 38 independent cities."
       }
     },
@@ -491,6 +491,11 @@
         "file": "va-local-officials.json",
         "min_keys": 4,
         "note": "Every county's board of supervisors, every city's council, every elected school board and every city's elected mayor, plus every town's council and mayor, from the Department of Elections' results (va/scripts/build_va_local_officials.py), refreshed weekly by update-va-local-officials.yml. Four top-level keys (asOf, source, localities, towns); the builder's --check holds all 133 counties and cities and every district seat."
+      },
+      {
+        "file": "va-conservation-boards.json",
+        "min_keys": 4,
+        "note": "Which of the 47 soil and water conservation districts covers each county and city, from the Department of Conservation and Recreation's list, and the directors each county's and city's voters elected, from the Department of Elections' results (va/scripts/build_va_conservation_boards.py), refreshed weekly by update-va-local-officials.yml. Four top-level keys (asOf, listRead, districts, localities); the builder's --check holds all 133 counties and cities and the seats state law gives each."
       },
       {
         "file": "coverage-gaps.json",

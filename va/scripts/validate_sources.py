@@ -218,6 +218,18 @@ PROVENANCE = [
             "update-va-local-officials.yml."
         ),
     },
+    {
+        "layer": "county",
+        "app_file": "va-conservation-boards.json",
+        "source_url": "https://www.dcr.virginia.gov/soil-and-water/swcdlist",
+        "note": (
+            "Which of the 47 soil and water conservation districts covers each "
+            "county and city, from the Department of Conservation and "
+            "Recreation's list, with the directors each locality's voters "
+            "elected from the same results; rebuilt weekly by "
+            "update-va-local-officials.yml."
+        ),
+    },
 ]
 
 # Virginia's envelope, as index.html writes it for the ZIP layer

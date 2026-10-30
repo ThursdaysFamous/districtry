@@ -753,6 +753,67 @@ try {
     }
   }
 
+  // 2a5. THE SOIL AND WATER CONSERVATION DISTRICT, on the County or City
+  //     card. Chesterfield County is in a district of two localities, whose
+  //     card must name the district, the other county and both directors its
+  //     voters elected; Fairfax County is a district alone, which elects three;
+  //     Alleghany County's last election lists one of its two seats, and the
+  //     card must say the other is not named; the City of Richmond is in no
+  //     district, and the card must say the state's list places it in none.
+  //     Every name, count and district is read from the shipped file.
+  {
+    const boards = shipped("va-conservation-boards.json");
+    const counties = shipped("state-counties.json");
+    const cases = [
+      [COUNTY_POINT, "51041", "shared"],
+      ["38.85300,-77.35820", "51059", "alone"],   // Fairfax County Government Center
+      ["37.78870,-79.88200", "51005", "listed"],  // Low Moor, Alleghany County
+      [POINT, "51760", "none"],
+    ];
+    for (const [pt, fips, kind] of cases) {
+      const props = propsAt(counties, pt)[0] || {};
+      const e = boards.localities[fips] || {};
+      const dist = e.district ? boards.districts[e.district] || {} : {};
+      const others = (dist.localities || []).filter((g) => g !== fips)
+        .map((g) => (boards.localities[g] || {}).name);
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=county`);
+      const info = await cardText(page, "county");
+      const text = info.text || "";
+      // The section label is set in capitals by the stylesheet, and innerText
+      // returns it that way, so a district's name is compared without case.
+      const lower = text.toLowerCase();
+      const at = lower.indexOf("conservation district");
+      const names = (e.members || []).map((m) => m.name);
+      let ok = !info.error && String(props.GEOID || "") === fips;
+      if (kind === "none") {
+        ok = ok && e.district === null && /places Richmond city in none of them/.test(text) &&
+          !Object.keys(boards.districts).some((d) => lower.includes(`${d} soil and water conservation district`.toLowerCase()));
+      } else {
+        ok = ok && !!e.district && lower.includes(`${e.district} Soil and Water Conservation District`.toLowerCase()) &&
+          names.length > 0 && names.every((n) => text.includes(n)) &&
+          /Elected director/.test(text) && /two more are appointed by the Virginia Soil and Water Conservation Board/.test(text);
+        if (kind === "shared") {
+          ok = ok && others.length > 0 && others.every((n) => text.includes(n)) && names.length === 2 &&
+            /two directors are elected by the voters of each county and city in the district/.test(text);
+        }
+        if (kind === "alone") {
+          ok = ok && others.length === 0 && names.length === 3 && /Fairfax County alone/.test(text) &&
+            /three directors are elected by the voters of the district/.test(text);
+        }
+        if (kind === "listed") {
+          ok = ok && e.listed === 1 && e.seats === 2 && names.length === 1 &&
+            /the results of its last election list 1, so the other is not named here/.test(text);
+        }
+      }
+      check(kind === "none"
+          ? "in the City of Richmond the County or City card says no conservation district covers it"
+          : `the County or City card names ${props.NAME || fips}'s conservation district (${kind}) and its elected directors`,
+        ok, text.slice(Math.max(0, at - 80), at + 220));
+      await context.close();
+    }
+  }
+
   // 2b. The negative ground-truth point (from the worksheet: a point outside
   //     every anchor layer). Anchors that declare a location-relevance test
   //     (mod.coverage — see NEGATIVE_HIDDEN above) HIDE there: the toggle

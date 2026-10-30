@@ -118,6 +118,7 @@ ROSTER_FILES = {
     "va-senate-members.json": 40,  # Virginia Senate roster from the Senate's own member list and member pages, one record per seat, refreshed weekly by update-va-legislature-roster.yml. A vacant seat carries a record saying so, so the floor is the chamber's size.
     "va-house-members.json": 100,  # House of Delegates roster from the House's own member list and member pages, on the same terms.
     "va-local-officials.json": 4,  # Every county's board of supervisors, every city's council, every elected school board and every city's elected mayor, plus every town's council and mayor, from the Department of Elections' results (va/scripts/build_va_local_officials.py), refreshed weekly by update-va-local-officials.yml. Four top-level keys (asOf, source, localities, towns); the builder's --check holds all 133 counties and cities and every district seat.
+    "va-conservation-boards.json": 4,  # Which of the 47 soil and water conservation districts covers each county and city, from the Department of Conservation and Recreation's list, and the directors each county's and city's voters elected, from the Department of Elections' results (va/scripts/build_va_conservation_boards.py), refreshed weekly by update-va-local-officials.yml. Four top-level keys (asOf, listRead, districts, localities); the builder's --check holds all 133 counties and cities and the seats state law gives each.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 
