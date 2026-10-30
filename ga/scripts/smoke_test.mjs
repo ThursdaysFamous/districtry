@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "ga-senate", "ga-house"];
 const EXPECT_DISTRICT = { "county": "Fulton County", "us-house": "5", "ga-senate": "36", "ga-house": "58" };
 const NEGATIVE_POINT = "30.43830,-84.28070"; // Tallahassee, Florida, about 26 km south of the Georgia line — outside Georgia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state layer names Florida here (controls: the State Capitol returns Georgia, and a point in the open Gulf of Mexico returns no state), and none of the state's shipped boundary files contains it. FLORIDA AND ALABAMA ARE THE TWO NEIGHBOURS NO INSTANCE SERVES, so the change that makes Florida live moves this point into Alabama, the way Kentucky's go-live moved Indiana's.
 const APP_NAME = "districtry Georgia";
-const EXPECT_LAYERS = 14;
+const EXPECT_LAYERS = 15;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "GeorgiaExplorer";
@@ -1437,6 +1437,115 @@ try {
       check("a point outside Georgia gets no precinct, and the card says the map holds Georgia's only",
         propsAt(PRECINCTS, NEGATIVE_POINT).length === 0 && !info.error &&
           /This map holds Georgia's precincts, so a point outside the state gets none/.test(info.text || ""),
+        (info.text || "").slice(0, 160));
+      await context.close();
+    }
+  }
+
+  // 12. THE JUDICIAL CIRCUIT LAYER. Each case reads its circuit from the
+  //     shipped file and its people from the shipped roster
+  //     (ga-circuit-officials.json), pins the BRANCH it exercises, and requires
+  //     every sentence the card owes that circuit in the card's own words, so
+  //     a weekly rebuild that moves a name moves the check with it: a seat
+  //     whose ballot marked a different judge as its incumbent, a district
+  //     attorney and a judge not named because the court directory lists them
+  //     in another office, a circuit formed from another with no district
+  //     attorney elected yet, and a seat whose winner takes office later with
+  //     no incumbent marked. Points measured 2026-10-30 on the drawn file,
+  //     each 4 km or more inside its circuit.
+  {
+    const CIRCUITS = shipped("ga-judicial-circuits.json");
+    const COURTS = shipped("ga-circuit-officials.json");
+    function circuitWant(rec, name) {
+      const want = [`${name} Judicial Circuit`, "Where the names come from",
+        "The superior court hears serious crimes (felonies)"];
+      for (const s of rec.judges || []) {
+        const e = s.elect && s.elect.name ? s.elect : null;
+        if (s.withheld) {
+          want.push(`${s.withheld.name} `, `as a ${s.withheld.listedAs} of this circuit, so that seat's judge is not named here.`);
+        }
+        if (s.name) want.push(s.name);
+        if (e && e.name !== s.name) {
+          want.push(`${e.name} was elected to`, s.name ? `the ballot marked ${s.name} as holding it.`
+            : s.withheld ? `${e.name} was elected to` : "the ballot marked no candidate as holding it.");
+        }
+        if (s.ballotCircuit && s.ballotCircuit !== name && (s.name || s.withheld)) {
+          want.push(`elected on the ${s.ballotCircuit} circuit's ballot, when this circuit's counties voted in that circuit's contests`);
+        }
+      }
+      const da = rec.districtAttorney || {};
+      if (da.name) want.push(da.name);
+      else if (da.withheld) {
+        want.push(`${da.withheld.name} was elected district attorney on ${longDate(da.withheld.elected)}`,
+          "so the district attorney is not named here.");
+      } else if (!da.runoff) {
+        want.push("No general election on the Secretary of State's results site has chosen a district attorney for this circuit");
+        if (rec.formedFrom) want.push(`its counties voted in the ${rec.formedFrom.circuit} circuit's contests on ${longDate(rec.formedFrom.through)}`);
+        if (da.nominated) want.push(`Party primaries on ${longDate(da.nominated)} chose nominees for the office`);
+      }
+      return want;
+    }
+    const cases = [
+      { name: "an Atlanta circuit seat names the judge its ballot marked as the incumbent beside the winner taking office later",
+        point: POINT,
+        reaches: (r) => !!r.districtAttorney.name &&
+          r.judges.some((s) => s.name && s.elect && s.elect.name && s.elect.name !== s.name) },
+      { name: "the Atlantic circuit names neither the district attorney nor the judge the court directory lists in another office",
+        point: "31.84680,-81.59600",
+        reaches: (r) => !!r.districtAttorney.withheld && r.districtAttorney.withheld.listedBy === "directory" &&
+          r.judges.some((s) => s.withheld) },
+      { name: "West Georgia, formed from Coweta, says no district attorney has been elected yet and places its 2024 judges from Coweta's ballot",
+        point: "33.58010,-85.07660",
+        reaches: (r) => !r.districtAttorney.name && !r.districtAttorney.withheld && !!r.formedFrom &&
+          !!r.districtAttorney.nominated && r.judges.some((s) => s.ballotCircuit && s.name && !s.elect) },
+      { name: "a Towaliga seat whose ballot marked no incumbent names its judge-elect and nobody in office",
+        point: "33.03430,-83.93820",
+        reaches: (r) => r.judges.some((s) => !s.name && !s.withheld && s.elect && s.elect.name) },
+    ];
+    for (const c of cases) {
+      const hits = propsAt(CIRCUITS, c.point);
+      const rec = hits.length === 1 ? COURTS[hits[0].unit] : null;
+      if (!rec || !c.reaches(rec)) {
+        check(c.name, false, `the point no longer reaches this branch (${hits.length} circuits: ${JSON.stringify((hits[0] || {}).unit || null)})`);
+        continue;
+      }
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${c.point}&layers=ga-superior-court`);
+      const info = await cardText(page, "ga-superior-court");
+      const text = info.text || "";
+      const missing = circuitWant(rec, hits[0].unit).filter((w) => !text.includes(w));
+      check(c.name, !info.error && !info.empty && missing.length === 0,
+        `missing=${JSON.stringify(missing)} text=${text.slice(0, 200)}`);
+      await context.close();
+    }
+    // The roster failing to load leaves the circuit and its counties, and
+    // names nobody.
+    {
+      const hits = propsAt(CIRCUITS, POINT);
+      const rec = hits.length === 1 ? COURTS[hits[0].unit] : null;
+      const names = rec ? rec.judges.map((s) => s.name).filter(Boolean).concat(
+        rec.districtAttorney.name ? [rec.districtAttorney.name] : []) : [];
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=ga-superior-court`, async (pg) => {
+        await pg.route("**/data/app/ga-circuit-officials.json", (r) => r.abort());
+      });
+      const info = await cardText(page, "ga-superior-court");
+      const text = info.text || "";
+      const leaked = names.filter((n) => text.includes(n));
+      check("a judicial circuit whose roster does not load names its circuit and counties and nobody",
+        !!rec && names.length > 0 && !info.error && text.includes(`${hits[0].unit} Judicial Circuit`) &&
+          text.includes("Fulton County") &&
+          /The list of them did not load, so no one is named here/.test(text) && leaked.length === 0,
+        `leaked=${leaked.length} text=${text.slice(0, 160)}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=ga-superior-court`);
+      const info = await cardText(page, "ga-superior-court");
+      check("a point outside Georgia gets no judicial circuit, and the card says the map holds Georgia's only",
+        propsAt(CIRCUITS, NEGATIVE_POINT).length === 0 && !info.error &&
+          /This map holds Georgia's circuits, so a point outside the state gets none/.test(info.text || ""),
         (info.text || "").slice(0, 160));
       await context.close();
     }

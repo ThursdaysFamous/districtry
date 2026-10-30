@@ -26,7 +26,9 @@ Assembly's Reapportionment Office publishes, drawn only where the county's own d
 confirm them: **County Commission District** (`county-commissioner`, 109 counties) and **School
 Board District** (`school-board-district`, 104 counties), each naming its district's member from the
 Secretary of State's election results, and the office's 2024 statewide precinct map: **Voting
-Precinct** (`voting-precinct`, 2,724).
+Precinct** (`voting-precinct`, 2,724). **Judicial Circuit** (`ga-superior-court`, 51) is drawn from
+whole counties and names each circuit's superior court judges and district attorney from the same
+election results.
 
 **THE THREE DISTRICT MAPS ARE THE GENERAL ASSEMBLY'S OWN FILES, NOT TIGERweb's, AND THAT IS A
 MEASUREMENT.** The Legislative and Congressional Reapportionment Office lists each enacted 2023 plan
@@ -114,7 +116,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Georgia (`georgia`) — https://districtry.com/ga/
 - Geocoders: address Photon (Georgia-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Georgia-bounded, serial >=1s queue)
 - Ground truth: 33.74900,-84.38900 (Georgia State Capitol grounds, 206 Washington Street SW, Atlanta, Fulton County — the west side of the grounds, chosen 123 m from the line between House Districts 58 and 59, which runs east of the Capitol (the Capitol's own address point sits 51 m from it), measured 2026-10-29 against the shipped files) → county Fulton County; us-house 5; ga-senate 36; ga-house 58. Negative point 30.43830,-84.28070 (Tallahassee, Florida, about 26 km south of the Georgia line — outside Georgia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state layer names Florida here (controls: the State Capitol returns Georgia, and a point in the open Gulf of Mexico returns no state), and none of the state's shipped boundary files contains it. FLORIDA AND ALABAMA ARE THE TWO NEIGHBOURS NO INSTANCE SERVES, so the change that makes Florida live moves this point into Alabama, the way Kentucky's go-live moved Indiana's.).
-- Layers: 14 registered (political 4, safety 2, schools 2, geography 6); `registerLayer(` floor 10. Debug namespace `window.GeorgiaExplorer`.
+- Layers: 15 registered (political 5, safety 2, schools 2, geography 6); `registerLayer(` floor 10. Debug namespace `window.GeorgiaExplorer`.
 - Scheduled workflows: `update-ga-congress-roster.yml` (Mon 19:23 UTC); `update-ga-legislature-roster.yml` (Tue 19:23 UTC); `update-ga-county-officials.yml` (Wed 19:41 UTC); `ga-validate-sources.yml` (1st of month 21:43 UTC).
 - Source registry: `ga/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -265,6 +267,27 @@ so rebuilding the record without rebuilding the precincts fails CI. The counties
 `ga-precinct-lines-since-2024`. 692 precincts carry only a code for a name (462 of Fulton's 480),
 and the card titles them "Precinct <code>". The card links no polling-place lookup: the Secretary of
 State's voter page answered this app's reader with a challenge on 2026-10-30.
+
+**The judicial circuits are drawn from whole counties, and both the counties and the people come
+from the ballots** (`ga-judicial-circuits.json` and `ga-circuit-officials.json`,
+`ga/scripts/build_ga_superior_courts.py` on the shared `scripts/whole_county_courts.py`,
+2026-10-30). Every county votes for its own circuit's judges and district attorney, so the newest
+official ballot carrying a court contest in a county decides its circuit: the May 2026 primary places
+119 counties in 43 circuits and the November 2024 general election the other 40 in eight, which
+makes 51, each county in one (`--draw` draws them; the weekly run STOPS rather than redraws if a
+newer ballot moves a county, because the file is cache-first). **NOT THE COUNCIL'S TABLE OF
+COUNTIES**, which disagrees with the ballots about 18 counties. Judges are named from the two newest
+May elections, each seat for its ballot's winner once they take office on 1 January, and the
+ballot's "(I)" judge until then; a district attorney from the circuit's newest general, runoff or
+special election, a primary naming nobody. **THE ADMINISTRATIVE OFFICE OF THE COURTS' DIRECTORY IS
+A CHECK AND NEVER A SOURCE**: read through the Knack api id its page hands every visitor, it places
+the 2024 Coweta judgeships in Coweta or West Georgia, which the ballot cannot, and holds back a
+person it lists in another office in the same circuit (a district attorney now a judge, a judge now
+a senior judge), the card saying why; its other disagreements print every run and change nothing,
+because it carries no dates. Names match by surname and an in-order fit of the given names
+(`same_person`), so a shared initial alone is not a match. A governor's appointment is on no ballot,
+so a card names the seat's last winner with that election's date and says so. `pacga.org` is not
+read: its robots.txt permits it, and every page says it is restricted to official state business.
 
 robots.txt is read before the first fetch through `scripts/robots_policy.py`, with the same client
 the fetches send, and a stated Crawl-delay is honoured; the legislature builder paces every host at

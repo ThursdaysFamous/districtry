@@ -4477,9 +4477,10 @@ function initGeorgiaExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "ga-senate": "gas", "county": "co", "ga-house": "gah",
-    "school-district-unified": "su", "county-subdivision": "cs", "county-commissioner": "cm",
-    "school-board-district": "bd", "zip-code": "zp", "voting-precinct": "vp",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "ga-superior-court": "gau", "school-district-unified": "su", "county-subdivision": "cs",
+    "county-commissioner": "cm", "school-board-district": "bd", "zip-code": "zp",
+    "voting-precinct": "vp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
+    "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -11170,6 +11171,7 @@ function initGeorgiaExplorer() {
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
     "us-house",          // 14 congressional districts — the largest districts Georgia carries below the state itself
+    "ga-superior-court", // 51 judicial circuits of whole counties, 3,020 km2 mean area, land and water, measured 2026-10-30 on the drawn file — larger on average than a Georgia Senate district (2,750 km2), smaller than a congressional district (11,000 km2)
     "ga-senate",         // 56 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 159 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "ga-house",          // 180 House districts — smaller on average than a county, about the size of a school district
@@ -16069,6 +16071,304 @@ function initGeorgiaExplorer() {
     style: { color: "#8C2E4A", weight: 2, fillColor: "#8C2E4A", fillOpacity: 0.05 }
   });
 
+  /* ---------- 4a. Judicial Circuit — the superior courts, drawn from whole counties ----------
+   * Georgia's 51 judicial circuits, each one or more whole counties, with
+   * the superior court judges and the district attorney each circuit's
+   * voters elect. ga/scripts/build_ga_superior_courts.py places each county
+   * in the circuit whose contests are on its newest official ballot that
+   * carries a superior court judge's or district attorney's contest, and
+   * dissolves the county fabric this app already ships
+   * (data/app/ga-judicial-circuits.json); no map of the circuits is read.
+   *
+   * THE NAMES ARE THE ELECTION RESULTS' (data/app/ga-circuit-officials.json,
+   * from the same builder). Judges are elected without party labels by the
+   * whole circuit, about half of its judgeships in May of each even year,
+   * and the district attorney on a party ballot in November; each office is
+   * named for the winner of its newest election who has taken office, and a
+   * seat whose winner takes office later names the judge its ballot marked
+   * as the incumbent. The results show no one appointed to fill a vacancy,
+   * which the card says. The court system's directory of judges and court
+   * officers is a check: a person it lists in another office in the same
+   * circuit is not named, and the card says why. The roster failing to load
+   * leaves the circuit and its counties, and names nobody. The roster is keyed
+   * by the circuit's name, which is the drawn feature's `unit`.
+   *
+   * MEAN AREA 3,020 km2, land and water, against the Georgia Senate's 2,750
+   * (measured 2026-10-30 on the drawn files), which puts the layer second in
+   * the area rank, under the U.S. House. ---------- */
+  var loadGaJudicialCircuits = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ga-judicial-circuits.json", {}, 2);
+  });
+  var loadGaCircuitOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ga-circuit-officials.json", {}, 2);
+  });
+
+  function gaCircuitName(feature) {
+    var unit = findPropCI((feature || {}).properties || {}, ["unit"]);
+    return unit == null ? null : String(unit);
+  }
+
+  // "Atkinson, Berrien, Clinch, Cook and Lanier counties"
+  function gaCountyPhrase(names) {
+    var list = (names || []).map(function (n) { return String(n); });
+    if (!list.length) return null;
+    return gaJoin(list) + (list.length === 1 ? " County" : " counties");
+  }
+
+  // When one person was elected and when they took office:
+  // "Elected May 21, 2024; in office since January 2025".
+  function gaHeldSince(who) {
+    if (!who) return null;
+    var when = gaDate(who.elected);
+    var parts = [];
+    if (when) parts.push("Elected " + when + (who.special === true ? ", in a special election" : ""));
+    var since = gaMonth(who.since);
+    if (since) parts.push("in office since " + since);
+    return parts.length ? parts.join("; ") : null;
+  }
+
+  // A ballot names each judgeship for the judge who held it ("Judge -
+  // Superior Court - Alcovy Judicial Circuit (Foster)"), mostly the judge
+  // named on it now, so the seat is printed only when it is someone else's:
+  // "Smith seat".
+  function gaSeatBadge(seat, name) {
+    if (!seat) return null;
+    var surname = String(seat).split(",")[0].trim().toLowerCase().split(/\s+/).pop();
+    var words = String(name || "").toLowerCase().split(/[\s,\-]+/);
+    return surname && words.indexOf(surname) >= 0 ? null : String(seat) + " seat";
+  }
+
+  // One circuit's judgeships as person rows and the sentences about the
+  // rest: { people: [row], fields: [{label, value}] }. `circuit` is the
+  // circuit's name, so a judge elected on another circuit's ballot (one
+  // since split) is said to be.
+  function gaCircuitJudges(seats, circuit) {
+    var people = [], elect = [], held = [], runoff = [], moved = {};
+    (seats || []).forEach(function (s) {
+      if (!s) return;
+      var seat = s.seat ? String(s.seat) : null;
+      var seatWords = seat ? "the seat the ballot listed as " + seat + "'s" : "its seat";
+      var e = s.elect && s.elect.name ? s.elect : null;
+      var w = s.withheld && s.withheld.name ? s.withheld : null;
+      if (w) {
+        held.push(String(w.name) + (w.sittingFrom
+          ? " was marked on the ballot of " + (gaDate(w.sittingFrom) || "a later election") +
+            " as holding " + seatWords
+          : " was elected to " + seatWords + " on " + (gaDate(w.elected) || "an earlier date")) +
+          ", and the state court system's directory now lists " + String(w.listedName) +
+          " as a " + String(w.listedAs) + " of this circuit, so that seat's judge is not named here.");
+      }
+      var other = s.ballotCircuit && String(s.ballotCircuit) !== circuit ? String(s.ballotCircuit) : null;
+      if (other && (s.name || w)) {
+        (moved[other] = moved[other] || []).push(String(s.name || w.name));
+      }
+      if (s.name) {
+        var details = [];
+        if (e && e.name === s.name) {
+          details.push("Re-elected " + (gaDate(e.elected) || "this year") + " for a term from " +
+            (gaMonth(e.since) || "the new year"));
+        } else if (e) {
+          details.push("Marked on the ballot of " + (gaDate(s.sittingFrom) || "this year") +
+            " as holding this seat");
+        } else {
+          var line = gaHeldSince(s);
+          if (line) details.push(line);
+        }
+        people.push({
+          name: String(s.name),
+          badge: gaSeatBadge(seat, s.name),
+          details: details.length ? { label: "Elected", items: details } : null
+        });
+      }
+      if (e && e.name !== s.name) {
+        elect.push(String(e.name) + " was elected to " + seatWords + " on " +
+          (gaDate(e.elected) || "a later date") + " and takes office in " +
+          (gaMonth(e.since) || "the new year") + (s.name
+            ? "; the ballot marked " + String(s.name) + " as holding it."
+            : w ? "." : "; the ballot marked no candidate as holding it."));
+      }
+      if (s.runoff) {
+        runoff.push((seat ? seat + "'s seat" : "A seat") + " went to a runoff after the election of " +
+          (gaDate(s.elected) || "its date") + ", and the Secretary of State's results site does " +
+          "not carry the runoff, so no one is named for it.");
+      }
+    });
+    var fields = [];
+    if (elect.length) fields.push({ label: "Elected, not yet in office", value: elect.join(" ") });
+    if (held.length) {
+      fields.push({ label: held.length === 1 ? "Judge not named here" : "Judges not named here",
+        value: held.join(" ") });
+    }
+    if (runoff.length) {
+      fields.push({ label: runoff.length === 1 ? "Seat decided by a runoff" : "Seats decided by a runoff",
+        value: runoff.join(" ") });
+    }
+    Object.keys(moved).forEach(function (other) {
+      var names = moved[other];
+      fields.push({
+        label: "Elected on the " + other + " circuit's ballot",
+        value: gaJoin(names) + (names.length > 1 ? " were" : " was") + " elected on the " + other +
+          " circuit's ballot, when this circuit's counties voted in that circuit's contests; " +
+          "the state court system's directory lists " + (names.length > 1 ? "each of them" :
+            "that judge") + " in this circuit."
+      });
+    });
+    return { people: people, fields: fields };
+  }
+
+  // The district attorney as a person row, or the sentence that says why
+  // nobody is named: { people: [row], fields: [{label, value}] }.
+  function gaCircuitProsecutor(da, circuit) {
+    var out = { people: [], fields: [] };
+    da = da || {};
+    var e = da.elect && da.elect.name ? da.elect : null;
+    if (da.name) {
+      var line = gaHeldSince(da);
+      out.people.push({
+        name: String(da.name),
+        note: da.party ? String(da.party) : null,
+        details: line ? { label: "Elected", items: [line] } : null
+      });
+    } else if (da.withheld && da.withheld.name) {
+      var w = da.withheld;
+      out.fields.push({
+        label: "District attorney",
+        value: String(w.name) + " was elected district attorney on " +
+          (gaDate(w.elected) || "an earlier date") + ", and " +
+          (w.listedBy === "ballot"
+            ? "the ballots name the same person a judge of this circuit who has taken office"
+            : "the state court system's directory now lists " + String(w.listedName) +
+              " as a " + String(w.listedAs) + " of this circuit") +
+          ", so the district attorney is not named here. The election results do not show " +
+          "anyone appointed to the office since."
+      });
+    } else if (da.runoff) {
+      out.fields.push({
+        label: "District attorney",
+        value: "The office's last election, on " + (gaDate(da.elected) || "its date") +
+          ", went to a runoff the Secretary of State's results site does not carry, so no one " +
+          "is named here."
+      });
+    } else {
+      out.fields.push({
+        label: "District attorney",
+        value: "No general election on the Secretary of State's results site has chosen a " +
+          "district attorney for this circuit" +
+          (circuit && circuit.formedFrom ? ": its counties voted in the " +
+            String(circuit.formedFrom.circuit) + " circuit's contests on " +
+            (gaDate(circuit.formedFrom.through) || "its last election") : "") + ", so no one " +
+          "is named here." + (da.nominated ? " Party primaries on " + gaDate(da.nominated) +
+            " chose nominees for the office, and the general election that follows elects one." : "")
+      });
+    }
+    if (e) {
+      out.fields.push({
+        label: "Elected, not yet in office",
+        value: String(e.name) + (e.party ? " (" + String(e.party) + ")" : "") +
+          " was elected district attorney on " + (gaDate(e.elected) || "a later date") +
+          " and takes office in " + (gaMonth(e.since) || "the new year") + "."
+      });
+    }
+    return out;
+  }
+
+  function gaCircuitCredit(circuit) {
+    var asOf = gaDate(circuit && circuit.asOf);
+    return "The Georgia Secretary of State's official election results" +
+      (asOf ? ", read " + asOf : "") + ". The whole circuit elects its judges without " +
+      "party labels, about half of them in May of each even year, and its district " +
+      "attorney on a party ballot in November; each is named for the winner of the " +
+      "office's newest election who has taken office. The results do not show anyone " +
+      "appointed to fill a vacancy, so an office filled that way since its election " +
+      "still shows the person elected to it. The state court system's directory of " +
+      "judges and court officers is read as a check, and a person it lists in another " +
+      "office of the same circuit is not named.";
+  }
+
+  registerLayer({
+    id: "ga-superior-court",
+    group: "political",
+    label: "Judicial Circuit",
+    // The file holds Georgia's circuits only, so outside the state this is
+    // the answer.
+    emptyNote: "No judicial circuit here. This map holds Georgia's circuits, so a point " +
+      "outside the state gets none.",
+    overlay: {
+      load: loadGaJudicialCircuits,
+      // the fleet's trial-court purple and width (root layer-concepts.json
+      // `colors` and `lines`, trial-court-district)
+      style: { color: "#9550B2", weight: 1.5, fillColor: "#9550B2", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var name = gaCircuitName(feature);
+      return name == null ? null : name + " Judicial Circuit";
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadGaJudicialCircuits, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var result = {
+          seq: seq,
+          name: gaCircuitName(feature),
+          counties: findPropCI(props, ["counties"]),
+          circuit: null
+        };
+        // the roster's own failure is not this layer's failure: a miss
+        // degrades to the circuit and its counties, naming nobody
+        return loadGaCircuitOfficials().then(function (roster) {
+          result.circuit = roster && result.name != null ? roster[result.name] || null : null;
+          return result;
+        }, function () {
+          return result;
+        });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.name != null ? result.name + " Judicial Circuit" : "Unknown judicial circuit",
+        note: gaCountyPhrase(result.counties)
+      }));
+      var c = result.circuit;
+      var rows = [];
+      if (!c) {
+        rows.push({
+          label: "Judges and district attorney",
+          value: "The circuit's voters elect its superior court judges and its district " +
+            "attorney. The list of them did not load, so no one is named here."
+        });
+      } else {
+        var da = gaCircuitProsecutor(c.districtAttorney, c);
+        if (da.people.length) {
+          wrap.appendChild(renderSectionLabel("District attorney"));
+          wrap.appendChild(renderPersonRows(da.people, { tinted: true }));
+        }
+        var judges = gaCircuitJudges(c.judges, result.name);
+        if (judges.people.length) {
+          wrap.appendChild(renderSectionLabel("Superior court judges"));
+          wrap.appendChild(renderPersonRows(judges.people, { tinted: true }));
+        }
+        rows = rows.concat(da.fields, judges.fields);
+        rows.push({ label: "Where the names come from", value: gaCircuitCredit(c) });
+      }
+      rows.push({
+        label: "The court",
+        value: "The superior court hears serious crimes (felonies), civil disputes, " +
+          "real estate matters and family and domestic relations cases."
+      });
+      rows.push({
+        label: "How the map is drawn",
+        value: "From whole counties: each county is in the circuit whose judges' or " +
+          "district attorney's contests are on its newest official ballot that carries one."
+      });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Georgia's superior courts", url: "https://georgiasuperiorcourts.org/" };
+    }
+  });
+
   // The affix TIGER's own NAME carries beyond its BASENAME, as a suffix
   // ("Bellview" + " CCD") or a prefix. Returns null when the two are equal
   // or unrelated, so a TIGER change shows up as a missing type row rather
@@ -18228,8 +18528,11 @@ function initGeorgiaExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "ga-senate", "ga-house", "county-commissioner",
-    "school-district-unified", "school-board-district",
+  var LAYER_SIDEBAR_RANK = ["us-house", "ga-senate", "ga-house",
+    // The judicial circuit follows the chambers, as South Carolina's and
+    // Kentucky's courts do: its voters elect its judges and district attorney.
+    "ga-superior-court",
+    "county-commissioner", "school-district-unified", "school-board-district",
     "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
@@ -18737,8 +19040,8 @@ function initGeorgiaExplorer() {
     "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF",
     "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
     "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1",
-    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#9550B2": "#DF9BFE", "#A3341F": "#FE8269",
+    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

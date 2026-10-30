@@ -1167,7 +1167,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">14 layers — 4 political and legislative, 2 public safety, 2 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">15 layers — 5 political and legislative, 2 public safety, 2 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1176,7 +1176,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">5 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1194,6 +1194,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.</td>
                 <td data-label="Where it applies">Georgia — statewide, all 14 districts.</td>
+              </tr>
+              <tr id="layer-ga-superior-court">
+                <th scope="row"><span class="layer-name">Judicial Circuit</span><code>ga-superior-court</code></th>
+                <td data-label="What it answers">The judicial circuit covering the point, its counties, the superior court judges its voters elect, and its district attorney.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://results.sos.ga.gov/results/public/Georgia" target="_blank" rel="noopener">Dissolved from the shipped county fabric by ga/scripts/build_ga_superior_courts.py, each county placed in the circuit whose superior court judge's or district attorney's contests are on its newest official ballot that carries one, on the Secretary of State's results site: the ballot of 19 May 2026 places 119 counties in 43 circuits and the general election of 5 November 2024 the other 40 in eight (read 2026-10-30, record: ga/data/source/ga-judicial-circuits.source.json). No map of the circuits is read; the Council of Superior Court Judges' county table disagrees with the ballots about 18 counties, so it is not read either.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">ga-circuit-officials.json, rebuilt weekly by CI from the same official results: each judgeship named for the winner of its newest election in May 2024 or May 2026 who has taken office, a seat whose winner takes office in January 2027 naming the judge its ballot marked as the incumbent, and each district attorney for the winner of the office's newest general, runoff or special election. The results show nobody appointed to fill a vacancy. The state court system's directory of judges and court officers (read the way its own page reads it) is a check: it places the judges Coweta elected in 2024 in Coweta or West Georgia, and a person it lists in another office of the same circuit is not named — on 2026-10-30 three judges it lists as senior judges and four district attorneys it lists as judges.</td>
+                <td data-label="Where it applies">Georgia — statewide, all 51 circuits and 159 counties.</td>
               </tr>
               <tr id="layer-ga-senate">
                 <th scope="row"><span class="layer-name">Georgia Senate District</span><code>ga-senate</code></th>
@@ -1420,6 +1431,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Georgia — statewide, all 14 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ga/sources.html#dataset-ga-superior-court",
+      "identifier": "ga-superior-court",
+      "name": "Judicial Circuit",
+      "description": "The judicial circuit covering the point, its counties, the superior court judges its voters elect, and its district attorney. ga-circuit-officials.json, rebuilt weekly by CI from the same official results: each judgeship named for the winner of its newest election in May 2024 or May 2026 who has taken office, a seat whose winner takes office in January 2027 naming the judge its ballot marked as the incumbent, and each district attorney for the winner of the office's newest general, runoff or special election. The results show nobody appointed to fill a vacancy. The state court system's directory of judges and court officers (read the way its own page reads it) is a check: it places the judges Coweta elected in 2024 in Coweta or West Georgia, and a person it lists in another office of the same circuit is not named — on 2026-10-30 three judges it lists as senior judges and four district attorneys it lists as judges.",
+      "url": "https://districtry.com/ga/sources.html#layer-ga-superior-court",
+      "isPartOf": {
+        "@id": "https://districtry.com/ga/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Dissolved from the shipped county fabric by ga/scripts/build_ga_superior_courts.py, each county placed in the circuit whose superior court judge's or district attorney's contests are on its newest official ballot that carries one, on the Secretary of State's results site: the ballot of 19 May 2026 places 119 counties in 43 circuits and the general election of 5 November 2024 the other 40 in eight (read 2026-10-30, record: ga/data/source/ga-judicial-circuits.source.json). No map of the circuits is read; the Council of Superior Court Judges' county table disagrees with the ballots about 18 counties, so it is not read either.",
+          "url": "https://results.sos.ga.gov/results/public/Georgia"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Georgia — statewide, all 51 circuits and 159 counties"
       }
     },
     {

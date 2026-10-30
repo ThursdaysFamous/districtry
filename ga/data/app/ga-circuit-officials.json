@@ -1,0 +1,3343 @@
+{
+ "Alapaha": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Perryman, III",
+    "name": "Dick Perryman",
+    "elect": {
+     "name": "Dick Perryman",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Tomlinson",
+    "name": "Clayton 'Clay' Alan Tomlinson",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Chase L. Studstill",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Alcovy": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Foster",
+    "name": "Jeffrey L. Foster",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "McCamy",
+    "name": "Cheveda D. McCamy",
+    "elect": {
+     "name": "Cheveda D. McCamy",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Morris",
+    "name": "G. Kevin Morris",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Wynne",
+    "name": "Ken Wynne",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Zon",
+    "name": "Layla H. Zon",
+    "elect": {
+     "name": "Layla H. Zon",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   }
+  ],
+  "districtAttorney": {
+   "name": null,
+   "withheld": {
+    "name": "Randal Matthew McGinley",
+    "party": "Republican",
+    "elected": "2024-11-05",
+    "election": "2024NovGen",
+    "electionName": "November General Election",
+    "since": "2025-01-01",
+    "listedAs": "superior court judge",
+    "listedName": "Randal M. McGinley",
+    "listedBy": "directory"
+   }
+  }
+ },
+ "Appalachian": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Priest",
+    "name": "Mary E. Priest",
+    "elect": {
+     "name": "Mary E. Priest",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Sosebee",
+    "name": "B. Alison Sosebee",
+    "elect": {
+     "name": "B. Alison Sosebee",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Weaver",
+    "name": "Brenda S. Weaver",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Frank Wood",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Atlanta": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Adams",
+    "name": "Kimberly Esmond Adams",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Benton",
+    "name": "Alice Benton",
+    "elect": {
+     "name": "Alice Benton",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Carnesale",
+    "name": "Rachelle Carnesale",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Cox, Jr.",
+    "name": "Thomas Cox",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Dunaway",
+    "name": "Eric Kernard Dunaway",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Eaton",
+    "name": "Chuck Eaton",
+    "elect": {
+     "name": "Chuck Eaton",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Edwards",
+    "name": "Belinda E. Edwards",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Ellerbe",
+    "name": "Kelly Lee Ellerbe",
+    "elect": {
+     "name": "Kelly Lee Ellerbe",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Farmer",
+    "name": "Kevin M. Farmer",
+    "elect": {
+     "name": "Kevin M. Farmer",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Glanville",
+    "name": "Ural Glanville",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Harris",
+    "name": "Melynee Leftridge Harris",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Ingram",
+    "name": "Shukura Lageane Ingram",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Krause",
+    "name": "Rachel R. Krause",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "McAfee",
+    "name": "Scott F. McAfee",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "McBurney",
+    "name": "Robert C.I. McBurney",
+    "elect": {
+     "name": "Robert C.I. McBurney",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Richardson",
+    "name": "Emily K. Richardson",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Schwall",
+    "name": "Craig L. Schwall",
+    "elect": {
+     "name": "Janice Moore",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Whitaker",
+    "name": "Paige Reese Whitaker",
+    "elect": {
+     "name": "Nikia Smith Sellers",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Williams",
+    "name": "Shermela J. Williams",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Fani T. Willis",
+   "party": "Democratic",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Atlantic": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Hendrix",
+    "name": "Mark A. Hendrix",
+    "elect": {
+     "name": "Mark A. Hendrix",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Rose, Jr.",
+    "name": "Charles Paul Rose, Jr.",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Russell",
+    "name": null,
+    "withheld": {
+     "name": "Robert L. Russell",
+     "elected": "2024-05-21",
+     "election": "2024MayGenPri",
+     "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+     "since": "2025-01-01",
+     "listedAs": "senior judge",
+     "listedName": "Robert L. Russell"
+    }
+   },
+   {
+    "seat": "Stewart",
+    "name": "D. Jay Stewart",
+    "elect": {
+     "name": "D. Jay Stewart",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   }
+  ],
+  "districtAttorney": {
+   "name": null,
+   "withheld": {
+    "name": "Billy Joe Nelson, Jr.",
+    "party": "Republican",
+    "elected": "2022-11-08",
+    "election": "2022NovGen",
+    "electionName": "November 8, 2022 - General/Special Election",
+    "since": "2023-01-01",
+    "listedAs": "superior court judge",
+    "listedName": "Billy Joe Nelson",
+    "listedBy": "directory"
+   }
+  }
+ },
+ "Augusta": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Flythe",
+    "name": "John Flythe",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Heath",
+    "name": "Amanda Nichole Heath",
+    "elect": {
+     "name": "Amanda Nichole Heath",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Craig",
+    "name": "Charles Lyons",
+    "elected": "2024-06-18",
+    "election": "2024JunPriRunoff",
+    "electionName": "June 18, 2024 - General Primary / Nonpartisan General Election Runoff",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Stone",
+    "name": "Jesse Stone",
+    "elect": {
+     "name": "Jesse Stone",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Wright",
+    "name": "Ashley Wright",
+    "elect": {
+     "name": "Ashley Wright",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Jared T. Williams",
+   "party": "Democratic",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Bell-Forsyth": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Bagley",
+    "name": "Jeffrey Bagley",
+    "elect": {
+     "name": "Jeffrey Bagley",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Dickinson",
+    "name": "David L. Dickinson",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Smith",
+    "name": "Philip C. Smith",
+    "elect": {
+     "name": "Philip C. Smith",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Penny A. Penn",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Blue Ridge": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Baker",
+    "name": "M. Anthony \"Tony\" Baker",
+    "elect": {
+     "name": "M. Anthony \"Tony\" Baker",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Cannon, Jr.",
+    "name": "David Lee Cannon, Jr.",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "McElyea",
+    "name": "Jennifer L. Davis",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Wallace",
+    "name": "B. Shannon Wallace",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Susan K. Treadaway",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Brunswick": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Guy",
+    "name": "Bert Guy",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Harrison",
+    "name": "Anthony Harrison",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Kelley",
+    "name": "Stephen D. Kelley",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Lane",
+    "name": "Roger B. Lane",
+    "elect": {
+     "name": "Roger B. Lane",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Scarlett",
+    "name": "Stephen G. Scarlett",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Keith Higgins",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Chattahoochee": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Burch",
+    "name": "Tippi Cain Burch",
+    "elect": {
+     "name": "Tippi Cain Burch",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Gottfried",
+    "name": "Maureen Gottfried",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Martin, Sr.",
+    "name": "John T. Martin, Sr.",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "McBride",
+    "name": "Gil McBride",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Peters",
+    "name": "Bobby G. Peters",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Richardson",
+    "name": "Benjamin S. Richardson",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Smith",
+    "name": "Art Smith",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Don Kelly",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Cherokee": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Greene",
+    "name": "Rosemary M. Greene",
+    "elect": {
+     "name": "Rosemary M. Greene",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Patel",
+    "name": "Samir J. Patel",
+    "elect": {
+     "name": "Samir J. Patel",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Smith",
+    "name": "Suzanne H. Smith",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Smith",
+    "name": "D. Scott Smith",
+    "elect": {
+     "name": "D. Scott Smith",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Erle J. Newton, III",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Clayton": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Carter",
+    "name": "Geronda V. Carter",
+    "elect": {
+     "name": "Geronda V. Carter",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Mack",
+    "name": "Robert L. Mack, Jr.",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Malone",
+    "name": "Shana Rooks Malone",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Mason",
+    "name": "Aaron B. Mason",
+    "elect": {
+     "name": "Deitra Butler",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Scott",
+    "name": "Jewel Scott",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Tasha M. Mosley",
+   "party": "Democratic",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Cobb": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Brown",
+    "name": "Angela Z. Brown",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Brown",
+    "name": "Sonja N. Brown",
+    "elect": {
+     "name": "Sonja N. Brown",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Childs",
+    "name": "Kimberly A. Childs",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Harris",
+    "name": "Ann Bethune Harris",
+    "elect": {
+     "name": "Ann Bethune Harris",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Hill",
+    "name": "Kellie S. Hill",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Jacobs",
+    "name": "Julie Jacobs",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Leonard",
+    "name": "Robert D. Leonard II",
+    "elect": {
+     "name": "Robert D. Leonard II",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Marbutt",
+    "name": "Jason D. Marbutt",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Poole",
+    "name": null,
+    "withheld": {
+     "name": "Greg Poole",
+     "elected": "2024-05-21",
+     "election": "2024MayGenPri",
+     "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+     "since": "2025-01-01",
+     "listedAs": "senior judge",
+     "listedName": "A. Gregory Poole"
+    }
+   },
+   {
+    "seat": "Reynolds",
+    "name": "Vic Reynolds",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Thompson",
+    "name": "Henry R. Thompson",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Sonya F. Allen",
+   "party": "Democratic",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Columbia": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Blanchard",
+    "name": "J. Grady Blanchard",
+    "elect": {
+     "name": "J. Grady Blanchard",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Fleming",
+    "name": "Barry A. Fleming",
+    "elect": {
+     "name": "Barry A. Fleming",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Jolly",
+    "name": "Sheryl B. Jolly-Turner",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Bobby L. Christine",
+   "party": "Republican",
+   "elected": "2022-11-08",
+   "election": "2022NovGen",
+   "electionName": "November 8, 2022 - General/Special Election",
+   "since": "2023-01-01"
+  }
+ },
+ "Conasauga": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Minter",
+    "name": "B. Scott Minter",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Morris",
+    "name": "Maxine C. \"Cindy\" Morris",
+    "elect": {
+     "name": "Maxine C. \"Cindy\" Morris",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Poston",
+    "name": "Bert Poston",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Wilbanks",
+    "name": null,
+    "elect": {
+     "name": "George Jason Souther",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    }
+   }
+  ],
+  "districtAttorney": {
+   "name": "Benjamin Kenemer",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Cordele": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Chasteen",
+    "name": "Gill Braddy",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Fachini",
+    "name": "Amy Bryant",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Hughes",
+    "name": "Chris Hughes",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Bradford L. Rigby",
+   "party": "Republican",
+   "elected": "2022-11-08",
+   "election": "2022NovGen",
+   "electionName": "November 8, 2022 - General/Special Election",
+   "since": "2023-01-01"
+  }
+ },
+ "Coweta": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Baker",
+    "name": "Nina Markette Baker",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01",
+    "ballotCircuit": "Coweta"
+   },
+   {
+    "seat": "Bendinger",
+    "name": "Jephson \"Jep\" Bendinger",
+    "elect": {
+     "name": "Jephson \"Jep\" Bendinger",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Palmer",
+    "name": "Emory L. Palmer",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01",
+    "ballotCircuit": "Coweta"
+   },
+   {
+    "seat": "Sakrison",
+    "name": "W. Travis Sakrison",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01",
+    "ballotCircuit": "Coweta"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Herb Cranford",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01",
+   "ballotCircuit": "Coweta"
+  }
+ },
+ "DeKalb": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Adams",
+    "name": "Gregory A. Adams",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Barrie",
+    "name": "Tangela M. Barrie",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Hydrick",
+    "name": "Stacey K. Hydrick",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "A. Jackson",
+    "name": "Asha F. Jackson",
+    "elect": {
+     "name": "Asha F. Jackson",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "L. Jackson",
+    "name": "LaTisha Dear Jackson",
+    "elect": {
+     "name": "LaTisha Dear Jackson",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Johnson",
+    "name": "Courtney L. Johnson",
+    "elect": {
+     "name": "Courtney L. Johnson",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Lake",
+    "name": "Brian E. Lake",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Morris",
+    "name": "Shondeana Crews Morris",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Parker-Smith",
+    "name": "Yolanda C. Parker-Smith",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Polk",
+    "name": "Nora Polk",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Sherry Boston",
+   "party": "Democratic",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Dougherty": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Darrisaw",
+    "name": "Victoria S. Darrisaw",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Dent",
+    "name": "Joe Dent",
+    "elect": {
+     "name": "Joe Dent",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Lockette",
+    "name": "Victoria Johnson",
+    "elected": "2024-06-18",
+    "election": "2024JunPriRunoff",
+    "electionName": "June 18, 2024 - General Primary / Nonpartisan General Election Runoff",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Marshall",
+    "name": "Denise Marshall",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Gregory W. Edwards",
+   "party": "Democratic",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Douglas": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Adams",
+    "name": "Cynthia C. Adams",
+    "elect": {
+     "name": "Cynthia C. Adams",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "McClain",
+    "name": "Lauren Wallace",
+    "elected": "2024-06-18",
+    "election": "2024JunPriRunoff",
+    "electionName": "June 18, 2024 - General Primary / Nonpartisan General Election Runoff",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Warren",
+    "name": "Deah B. Warren",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Dalia Racine",
+   "party": "Democratic",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Dublin": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "2024NovGen",
+    "elected": "2024-11-05"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Green",
+    "name": "Jud Green",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Helton",
+    "name": "Jon Franklin Helton",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Taylor",
+    "name": "Trey Taylor",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Harold D. McLendon",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Eastern": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Colbert",
+    "name": "Lisa Colbert",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Karpf",
+    "name": "Benjamin W. Karpf",
+    "elect": {
+     "name": "Benjamin W. Karpf",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Freesemann",
+    "name": "Chris Middleton",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Morse, Jr.",
+    "name": "John \"Pancho\" Morse, Jr.",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Stokes",
+    "name": "Tammy M. Stokes",
+    "elect": {
+     "name": "Tammy M. Stokes",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Walmsley",
+    "name": "Timothy R. Walmsley",
+    "elect": {
+     "name": "Timothy R. Walmsley",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Shalena Cook Jones",
+   "party": "Democratic",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Enotah": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "George",
+    "name": null,
+    "elect": {
+     "name": "Jeremy Clough",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    }
+   },
+   {
+    "seat": "Levins",
+    "name": "Buck Levins",
+    "elect": {
+     "name": "Buck Levins",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Parks",
+    "name": "Joy R. Parks",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Jeff Langley",
+   "party": "Republican",
+   "elected": "2022-11-08",
+   "election": "2022NovGen",
+   "electionName": "November 8, 2022 - General/Special Election",
+   "since": "2023-01-01"
+  }
+ },
+ "Flint": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Lewis",
+    "name": "Chaundra D. Lewis",
+    "elect": {
+     "name": "Chaundra D. Lewis",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Palmer",
+    "name": "Pandora Elaine Palmer",
+    "elect": {
+     "name": "Pandora Elaine Palmer",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Roberts",
+    "name": "Danielle P. Roberts",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Veal",
+    "name": "Holly Veal",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Darius Pattillo",
+   "party": "Democratic",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Griffin": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Ballard",
+    "name": "Scott L. Ballard",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Coker",
+    "name": "Benjamin David Coker",
+    "elect": {
+     "name": "Benjamin David Coker",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Kreuziger",
+    "name": "Rhonda Bender Kreuziger",
+    "elect": {
+     "name": "Rhonda Bender Kreuziger",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Miller",
+    "name": "Ben J. Miller, Jr.",
+    "elect": {
+     "name": "Ben J. Miller, Jr.",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Sams",
+    "name": null,
+    "withheld": {
+     "name": "W. Fletcher Sams",
+     "elected": "2024-05-21",
+     "election": "2024MayGenPri",
+     "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+     "since": "2025-01-01",
+     "listedAs": "senior judge",
+     "listedName": "W. Fletcher Sams"
+    }
+   }
+  ],
+  "districtAttorney": {
+   "name": "Marie Greene Broder",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Gwinnett": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Adkins",
+    "name": "Tamela Adkins",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Cason",
+    "name": "Tracie H. Cason",
+    "elect": {
+     "name": "Tracie H. Cason",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Davis",
+    "name": "Warren Davis",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Duncan",
+    "name": "Angela D. Duncan",
+    "elect": {
+     "name": "Angela D. Duncan",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Fluker",
+    "name": "Deborah R. Fluker",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Batchelor",
+    "name": "Kimberly Gallant",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Hamil",
+    "name": "Tim Hamil",
+    "elect": {
+     "name": "Tim Hamil",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Mason",
+    "name": "Tracey D. Mason",
+    "elect": {
+     "name": "Tracey D. Mason",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Hutchinson",
+    "name": null,
+    "elect": {
+     "name": "Regina J. Matthews",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    }
+   },
+   {
+    "seat": "Whitner",
+    "name": "Tadia Whitner",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Beyers",
+    "name": "Tuwanda Rush Williams",
+    "elected": "2024-06-18",
+    "election": "2024JunPriRunoff",
+    "electionName": "June 18, 2024 - General Primary / Nonpartisan General Election Runoff",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Patsy Austin-Gatson",
+   "party": "Democratic",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Houston": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Adams",
+    "name": "G. E. Bo Adams",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Lukemire",
+    "name": "Edward D. Lukemire",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Lumsden",
+    "name": "Katherine K. Lumsden",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Smith",
+    "name": "Amy E. Smith",
+    "elect": {
+     "name": "Amy E. Smith",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Eric Z. Edwards",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Lookout Mountain": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Arnt",
+    "name": "Chris A. Arnt",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Graham",
+    "name": "Melissa Gifford Hise",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "House",
+    "name": "Brian House",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Thompson",
+    "name": "Don W. Thompson",
+    "elect": {
+     "name": "Don W. Thompson",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Clayton Fuller",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Macon": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Williford",
+    "name": "Connie Williford Marsh",
+    "elect": {
+     "name": "Connie Williford Marsh",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Mincey",
+    "name": "David L. Mincey, III",
+    "elect": {
+     "name": "David L. Mincey, III",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Monroe",
+    "name": "Jeffrey O. Monroe",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Raymond",
+    "name": "Philip T. Raymond, III",
+    "elect": {
+     "name": "Philip T. Raymond, III",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Smith",
+    "name": "Ken Smith",
+    "elect": {
+     "name": "Ken Smith",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Anita Reynolds Howard",
+   "party": "Democratic",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Middle": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Reeves",
+    "name": null,
+    "elect": {
+     "name": "J. Kendall Gross",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    }
+   },
+   {
+    "seat": "Smith",
+    "name": "Tommy J. Smith",
+    "elect": {
+     "name": "Tommy J. Smith",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Tripp Fitzner",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Mountain": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Carswell",
+    "name": "B. Nichole Carswell",
+    "elect": {
+     "name": "B. Nichole Carswell",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Caudell",
+    "name": "B. Chan Caudell",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Jones, III",
+    "name": "Carlton Hobie Jones III",
+    "elect": {
+     "name": "Carlton Hobie Jones III",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Oliver",
+    "name": "William R. \"Bill\" Oliver",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "George R. Christian",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Northeastern": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Bearden",
+    "name": "Clint Garry Bearden",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Gosselin",
+    "name": "John G. Breakfield",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Burton",
+    "name": "Lindsay H. Burton",
+    "elect": {
+     "name": "Lindsay H. Burton",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Deal",
+    "name": "Jason Jonathan Deal",
+    "elect": {
+     "name": "Jason Jonathan Deal",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Oliver",
+    "name": "Bonnie Chessher Oliver",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Lee Darragh",
+   "party": "Republican",
+   "elected": "2022-11-08",
+   "election": "2022NovGen",
+   "electionName": "November 8, 2022 - General/Special Election",
+   "since": "2023-01-01"
+  }
+ },
+ "Northern": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "2024NovGen",
+    "elected": "2024-11-05"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Malcom",
+    "name": "Chris NeSmith",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Phelps",
+    "name": "R. Chris Phelps",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Wasserman",
+    "name": "Harvey S. Wasserman",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "D. Parks White",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Ocmulgee": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "2024NovGen",
+    "elected": "2024-11-05"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Bradley",
+    "name": "Stephen A. Bradley",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Burleson",
+    "name": "Alison T. Burleson",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Massey",
+    "name": "Terry N. Massey",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Petty",
+    "name": "Amanda S. Petty",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Trammell",
+    "name": "Brenda Trammell",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "T. Wright Barksdale",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Oconee": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "2024NovGen",
+    "elected": "2024-11-05"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Johnson",
+    "name": "C. Michael 'Mike' Johnson",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Kaulfold, Jr.",
+    "name": "Howard C. Kaufold, Jr",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Wall",
+    "name": "Sarah F. Wall",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Timothy G. Vaughn",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Ogeechee": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "2024NovGen",
+    "elected": "2024-11-05"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Bennett, Jr.",
+    "name": "Lovett Bennett, Jr.",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Peed",
+    "name": "Matthew Karl Hube",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Muldrew",
+    "name": "Michael T. Muldrew",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Thompson",
+    "name": "Ronnie Thompson",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Robert Busbee",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Pataula": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Balkcom",
+    "name": "Henry Balkcom",
+    "elect": {
+     "name": "Henry Balkcom",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "",
+    "name": "T. Craig Earnest",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Vic McNease",
+   "party": "Republican",
+   "elected": "2022-11-08",
+   "election": "2022NovGen",
+   "electionName": "November 8, 2022 - General/Special Election",
+   "since": "2023-01-01"
+  }
+ },
+ "Paulding": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Bucci",
+    "name": "Dean C. Bucci",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Lyles",
+    "name": "T. David Lyles",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Rollins",
+    "name": "Matthew W. Rollins",
+    "elect": {
+     "name": "Matthew W. Rollins",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   }
+  ],
+  "districtAttorney": {
+   "name": null,
+   "withheld": {
+    "name": "Matthew W. Rollins",
+    "party": "Republican",
+    "elected": "2022-11-08",
+    "election": "2022NovGen",
+    "electionName": "November 8, 2022 - General/Special Election",
+    "since": "2023-01-01",
+    "listedAs": "superior court judge",
+    "listedName": "Matthew W. Rollins",
+    "listedBy": "directory"
+   }
+  }
+ },
+ "Piedmont": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Mingledorff",
+    "name": "Andy Crawford",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Booth",
+    "name": "Ben Green",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Griffie",
+    "name": "Sarah Griffie",
+    "elect": {
+     "name": "Sarah Griffie",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Primm",
+    "name": "Nicholas Primm",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "J. Bradley Smith",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Rockdale": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Bills",
+    "name": "Nancy Bills",
+    "elect": {
+     "name": "Nancy Bills",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Mumford",
+    "name": "Maureen Elizabeth Wood",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Alisha Adams Johnson",
+   "party": "Democratic",
+   "elected": "2022-11-08",
+   "election": "2022NovGen",
+   "electionName": "November 8, 2022 - General/Special Election",
+   "since": "2023-01-01"
+  }
+ },
+ "Rome": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Johnson",
+    "name": "Bryan Thomas Johnson",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "King",
+    "name": "Kay Ann King",
+    "elect": {
+     "name": "Kay Ann King",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Niedrach",
+    "name": "John E \"Jack\" Niedrach",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Sparks",
+    "name": "William F. \"Billy\" Sparks",
+    "elect": {
+     "name": "William F. \"Billy\" Sparks",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Leigh E. Patterson",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "South Georgia": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "2024NovGen",
+    "elected": "2024-11-05"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Chason",
+    "name": "Margaret Claire Chason",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Heard, Jr.",
+    "name": "Lawton Chad Heard, Jr.",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Lanier",
+    "name": "Heather Hendricks Lanier",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Joe Mulholland",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Southern": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Prine",
+    "name": "James L. Prine",
+    "elect": {
+     "name": "James L. Prine",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Smith",
+    "name": "Catherine Mims Smith",
+    "elect": {
+     "name": "Catherine Mims Smith",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Voyles",
+    "name": "Gregory A. Voyles",
+    "elect": {
+     "name": "Gregory A. Voyles",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "",
+    "name": "William Whitesell",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Brad Shealy",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Southwestern": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Brown",
+    "name": "Jimmie Brown",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Sizemore",
+    "name": null,
+    "elect": {
+     "name": "Lisa Jones",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    }
+   },
+   {
+    "seat": "Smith",
+    "name": "Richard Rucker Smith",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Lewis R. Lamb",
+   "party": "Independent",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Tallapoosa": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "2024NovGen",
+    "elected": "2024-11-05"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Murphy",
+    "name": "Mark H. Murphy",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Roper",
+    "name": "Andrew B. Roper",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Jaeson Robert Smith",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Tifton": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "",
+    "name": "Melanie B. Cross",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Powell",
+    "name": "Ralph Powell",
+    "elect": {
+     "name": "Ralph Powell",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Reinhardt",
+    "name": "Bill Reinhardt",
+    "elect": {
+     "name": "Bill Reinhardt",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Bryce Johnson",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Toombs": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "2024NovGen",
+    "elected": "2024-11-05"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Hammond",
+    "name": "Britt Hammond",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Hinesley",
+    "name": "Chip Hardin",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Bill Doupé",
+   "party": "Democratic",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Towaliga": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Wilson",
+    "name": null,
+    "elect": {
+     "name": "Jonathan Adams",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    }
+   },
+   {
+    "seat": "Fears",
+    "name": "Bill Fears",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Jonathan L. Adams",
+   "party": "Republican",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ },
+ "Waycross": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Brooks",
+    "name": "J Kelly Brooks",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Kight",
+    "name": "Jeffrey Kight",
+    "elect": {
+     "name": "Jeffrey Kight",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Spivey",
+    "name": "Andrew C Spivey",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": null,
+   "withheld": {
+    "name": "Marilyn Bennett",
+    "party": "Republican",
+    "elected": "2022-11-08",
+    "election": "2022NovGen",
+    "electionName": "November 8, 2022 - General/Special Election",
+    "since": "2023-01-01",
+    "listedAs": "superior court judge",
+    "listedName": "Marilyn Parker Bennett",
+    "listedBy": "directory"
+   }
+  }
+ },
+ "West Georgia": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Blackmon",
+    "name": "Dennis T. Blackmon",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01",
+    "ballotCircuit": "Coweta"
+   },
+   {
+    "seat": "Hightower",
+    "name": "Dustin W. Hightower",
+    "elect": {
+     "name": "Dustin W. Hightower",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Simpson",
+    "name": "John Simpson",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01",
+    "ballotCircuit": "Coweta"
+   },
+   {
+    "seat": "Tisinger",
+    "name": "Erica L. Tisinger",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01",
+    "ballotCircuit": "Coweta"
+   }
+  ],
+  "districtAttorney": {
+   "name": null,
+   "nominated": "2026-05-19"
+  },
+  "formedFrom": {
+   "circuit": "Coweta",
+   "through": "2024-11-05"
+  }
+ },
+ "Western": {
+  "asOf": "2026-10-30",
+  "judgeElections": [
+   "2024",
+   "2026"
+  ],
+  "countiesFrom": [
+   {
+    "election": "GeneralPrimary51926",
+    "elected": "2026-05-19"
+   }
+  ],
+  "judges": [
+   {
+    "seat": "Haggard",
+    "name": "H. Patrick Haggard",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   },
+   {
+    "seat": "Lott",
+    "name": "Lisa Lott",
+    "elect": {
+     "name": "Lisa Lott",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Norris",
+    "name": "Eric Wayne Norris",
+    "elect": {
+     "name": "Eric Wayne Norris",
+     "elected": "2026-05-19",
+     "election": "GeneralPrimary51926",
+     "electionName": "May 19, 2026 - General Primary",
+     "since": "2027-01-01"
+    },
+    "sittingFrom": "2026-05-19"
+   },
+   {
+    "seat": "Stephens",
+    "name": "Lawton Evans Stephens",
+    "elected": "2024-05-21",
+    "election": "2024MayGenPri",
+    "electionName": "May 21, 2024 - General Primary - Nonpartisan Election",
+    "since": "2025-01-01"
+   }
+  ],
+  "districtAttorney": {
+   "name": "Kalki Yalamanchili",
+   "party": "Independent",
+   "elected": "2024-11-05",
+   "election": "2024NovGen",
+   "electionName": "November General Election",
+   "since": "2025-01-01"
+  }
+ }
+}

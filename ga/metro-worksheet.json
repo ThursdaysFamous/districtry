@@ -334,7 +334,7 @@
       "id": "ga-senate",
       "label": "Georgia Senate District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 3,
       "rank_note": "56 Senate districts — larger on average than a county, smaller than a congressional district",
       "source": {
         "answers": "The Georgia Senate district covering the point, and the senator holding it.",
@@ -352,7 +352,7 @@
       "id": "county",
       "label": "County",
       "group": "geography",
-      "area_rank": 3,
+      "area_rank": 4,
       "rank_note": "159 counties, pre-built from TIGERweb; the instance's offline anchor layer",
       "source": {
         "answers": "Which county contains the point.",
@@ -370,7 +370,7 @@
       "id": "ga-house",
       "label": "Georgia House District",
       "group": "political",
-      "area_rank": 4,
+      "area_rank": 5,
       "rank_note": "180 House districts — smaller on average than a county, about the size of a school district",
       "source": {
         "answers": "The Georgia House district covering the point, and the representative holding it.",
@@ -385,10 +385,28 @@
       }
     },
     {
+      "id": "ga-superior-court",
+      "label": "Judicial Circuit",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "51 judicial circuits of whole counties, 3,020 km2 mean area, land and water, measured 2026-10-30 on the drawn file — larger on average than a Georgia Senate district (2,750 km2), smaller than a congressional district (11,000 km2)",
+      "source": {
+        "answers": "The judicial circuit covering the point, its counties, the superior court judges its voters elect, and its district attorney.",
+        "boundary": [
+          {
+            "label": "Dissolved from the shipped county fabric by ga/scripts/build_ga_superior_courts.py, each county placed in the circuit whose superior court judge's or district attorney's contests are on its newest official ballot that carries one, on the Secretary of State's results site: the ballot of 19 May 2026 places 119 counties in 43 circuits and the general election of 5 November 2024 the other 40 in eight (read 2026-10-30, record: ga/data/source/ga-judicial-circuits.source.json). No map of the circuits is read; the Council of Superior Court Judges' county table disagrees with the ballots about 18 counties, so it is not read either.",
+            "url": "https://results.sos.ga.gov/results/public/Georgia"
+          }
+        ],
+        "people": "ga-circuit-officials.json, rebuilt weekly by CI from the same official results: each judgeship named for the winner of its newest election in May 2024 or May 2026 who has taken office, a seat whose winner takes office in January 2027 naming the judge its ballot marked as the incumbent, and each district attorney for the winner of the office's newest general, runoff or special election. The results show nobody appointed to fill a vacancy. The state court system's directory of judges and court officers (read the way its own page reads it) is a check: it places the judges Coweta elected in 2024 in Coweta or West Georgia, and a person it lists in another office of the same circuit is not named — on 2026-10-30 three judges it lists as senior judges and four district attorneys it lists as judges.",
+        "applies": "Georgia — statewide, all 51 circuits and 159 counties."
+      }
+    },
+    {
       "id": "school-district-unified",
       "label": "School District",
       "group": "schools",
-      "area_rank": 5,
+      "area_rank": 6,
       "rank_note": "181 unified districts, about 822 km2 of land on average, live from TIGERweb (no data/app file); they cover all of Georgia but Fort Benning",
       "source": {
         "answers": "The public school district covering the point.",
@@ -406,7 +424,7 @@
       "id": "county-subdivision",
       "label": "Census County Division",
       "group": "geography",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "586 census county divisions tiling the state, about 255 km2 of land on average, live from TIGERweb (no data/app file)",
       "source": {
         "answers": "The census county division containing the point and its county.",
@@ -424,7 +442,7 @@
       "id": "county-commissioner",
       "label": "County Commission District",
       "group": "political",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "527 commission districts and 4 super districts in the 109 counties whose map passed the precinct check, about 220 km2 on average",
       "source": {
         "answers": "The county commission district covering the point, and the commissioner elected from it, in the 109 counties whose commission map passed this app's precinct check (and DeKalb's and Lowndes's super districts). The layer is hidden in the other 50 counties, where the County card still names the commission.",
@@ -442,7 +460,7 @@
       "id": "school-board-district",
       "label": "School Board District",
       "group": "schools",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "556 school board districts and 4 super districts in the 104 counties whose map passed the precinct check, about 196 km2 on average, with the city school systems' ground taken out",
       "source": {
         "answers": "The county school board district covering the point, and the member elected from it, in the 104 counties whose school board map passed this app's precinct check (and Harris's and Richmond's super districts). Inside a city school system no county district is drawn. The layer is hidden in the other 55 counties, where the School District card still names the county board.",
@@ -464,7 +482,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "1,202 ZIP Code Tabulation Areas in the state's own bounding box, about 196 km2 of land on average, fetched live by envelope; the layer hides outside Georgia",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -482,7 +500,7 @@
       "id": "voting-precinct",
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "2,724 precincts tiling the state, pre-built from the Reapportionment Office's 2024 statewide precinct map — 56.50 km2 mean area, land and water (median 11.79), measured 2026-10-30 on the drawn file: smaller on average than a county commission district (about 220 km2), larger than a city or town (about 26 km2 of land)",
       "source": {
         "answers": "The voting precinct containing the point — where a reader votes and how their ballots are reported — as the state's 2024 precinct map draws it, with what the 2026 ballots say about whether its county has changed its precincts since.",
@@ -500,7 +518,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "538 incorporated places, about 26 km2 of land on average, live from TIGERweb (no data/app file)",
       "source": {
         "answers": "The city or town containing the point, if any, and whether it is one government with its county.",
@@ -518,7 +536,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -536,7 +554,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -554,7 +572,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -651,6 +669,12 @@
         "min_features": 2724,
         "max_features": 2724,
         "note": "Every Georgia voting precinct, pre-built by ga/scripts/build_ga_precincts.py through scripts/statewide_precincts.py from the Reapportionment Office's 2024 statewide precinct map (Douglas-Peucker at 12 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.92% with zero overlaps; an exact 2,724 count), each precinct carrying what the map check found about its county's precincts on the 2026 ballots. 8.7 MB, 2.16 MB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "ga-judicial-circuits.json",
+        "min_features": 51,
+        "max_features": 51,
+        "note": "Georgia's 51 judicial circuits, dissolved from the county fabric by ga/scripts/build_ga_superior_courts.py --draw and held to the record of which ballot placed each county by its --check."
       }
     ],
     "rosters": [
@@ -673,6 +697,11 @@
         "file": "ga-county-officials.json",
         "min_keys": 159,
         "note": "County commissioners and county school board members named from the Secretary of State's official election results, keyed by county FIPS, one record for each of the 159 counties whether or not it has a named seat; refreshed weekly by update-ga-county-officials.yml."
+      },
+      {
+        "file": "ga-circuit-officials.json",
+        "min_keys": 51,
+        "note": "Each judicial circuit's superior court judges and district attorney named from the Secretary of State's official election results, keyed by circuit name, one record for each of the 51 circuits whether or not it has a named district attorney; refreshed weekly by update-ga-county-officials.yml."
       },
       {
         "file": "ga-board-district-counties.json",
@@ -712,7 +741,7 @@
     },
     {
       "file": "update-ga-county-officials.yml",
-      "purpose": "County commissioners and county school board members (the Secretary of State's official election results)",
+      "purpose": "County commissioners, county school board members, and each judicial circuit's superior court judges and district attorney (the Secretary of State's official election results)",
       "schedule": "Wed 19:41 UTC"
     },
     {
