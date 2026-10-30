@@ -700,7 +700,6 @@
       "layers_sending_point": 0,
       "layers": [],
       "layers_holding_hook_but_silent": [
-        "county-subdivision",
         "municipality",
         "school-district-elementary",
         "school-district-unified",

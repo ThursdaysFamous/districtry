@@ -17,10 +17,11 @@ or each chamber's own pages: **County or City** (`county`, 133 — the 95 counti
 independent cities, Census TIGERweb, the coverage ring), **U.S. House** (11 districts, TIGERweb
 geometry joined to the public-domain unitedstates/congress-legislators roster), **Virginia Senate**
 and **House of Delegates** (40 and 100 districts, TIGERweb's 2026 state legislative districts
-joined to each chamber's own member pages), the TIGERweb fabric drawn from mirrored tile archives —
-**Magisterial District** (`county-subdivision`, 552, shown under the County or City layer), **City
-or Town** (`municipality`, 227), **School Division** (`school-district-unified`, 135), **School
-Division (Elementary)** (1, Lexington) and **ZIP Code** — and three nearest-N layers from the USGS
+joined to each chamber's own member pages), **Magisterial District** (`county-subdivision`, 552,
+shown under the County or City layer, shipped as `va-magisterial-districts.json` and drawn from the
+Department of Elections' lines in 72 counties), the TIGERweb fabric drawn from mirrored tile
+archives — **City or Town** (`municipality`, 227), **School Division** (`school-district-unified`,
+135), **School Division (Elementary)** (1, Lexington) and **ZIP Code** — and three nearest-N layers from the USGS
 National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
 
 **VIRGINIA'S 38 INDEPENDENT CITIES BELONG TO NO COUNTY.** A city's council does what a board of
@@ -61,10 +62,19 @@ city's council and most school boards are elected, none is named yet, and the Co
 or Town and School Division cards say so. The plan (Adam's answers of 22 October 2026, in the
 Virginia plan) draws every local election district and precinct from the Department of Elections'
 per-locality map files and names the winners from the state's election results, each card saying
-which election a name comes from; `va/WATCH.md` carries the order and the checks it owes. The
-Magisterial District card is the Census Bureau's copy of each county's magisterial districts and
-does not say who represents the point, because a county's election districts can differ from those
-lines and the Census copy can lag a redistricting.
+which election a name comes from; `va/WATCH.md` carries the order and the checks it owes.
+
+**THE MAGISTERIAL DISTRICTS ARE THE DEPARTMENT'S LINES WHERE THE NAMES ARE THE SAME** (the plan's
+fifth change, Adam's choice of 22 October 2026). `va/scripts/build_va_magisterial_districts.py`
+ships all 552 of the Census's county subdivisions, and in the 72 counties whose census subdivisions
+and election districts are one set of names it draws each district from `va-local-districts.json`
+inside the county's census ground, because the Census's copy lags a redistricting (measured
+2026-10-30: another district on more than 1% of the county's ground in 45 of the 72, and on 54.8% of
+Dinwiddie County's). In 19 counties the two differ in name or number and the Census's copy is drawn;
+Highland, Madison and Mathews elect their boards at large. The card names nobody: it says which
+drawing the point is in and points to the Supervisor or Council District card, reading which bodies
+a county elects by district from `va-local-officials.json`. The builder's `--check` fails when
+`va-local-districts.json` changes and this file is not rebuilt.
 
 **TWO SCHOOL LAYERS TILE THE STATE BETWEEN THEM.** TIGER holds 135 unified school districts and one
 elementary one, Lexington City Public Schools, for Virginia and no secondary ones, and the two
@@ -185,8 +195,10 @@ in the neighbouring states, the District of Columbia and the water), `state-coun
 (`va/scripts/build_state_counties.py`), and `congress-districts.json`, `va-senate-districts.json`,
 `va-house-districts.json` (`va/scripts/build_legislative_boundaries.py` — Douglas-Peucker at 5 m,
 refused unless BOTH the 2,000-random-point agreement gate and the 8 m fidelity ceiling pass).
-The five TIGERweb fabric layers draw from tile archives under `data/app/tiles/`, mirrored by
-`scripts/mirror_tiger_tiles.py` and refreshed by `update-tiger-tiles.yml`. Rosters:
+The four TIGERweb fabric layers draw from tile archives under `data/app/tiles/`, mirrored by
+`scripts/mirror_tiger_tiles.py` and refreshed by `update-tiger-tiles.yml`; the county subdivisions
+ship as `va-magisterial-districts.json` (`va/scripts/build_va_magisterial_districts.py`, Douglas-Peucker
+at 12 m under a 15 m fidelity ceiling, its `--check` in CI and its `--watch` in `va/WATCH.md`). Rosters:
 `congress-roster.json` (`va/scripts/build_congress_roster.py`, from unitedstates/congress-legislators)
 and `va-{senate,house}-members.json` (`va/scripts/build_va_legislature_roster.py`, from each
 chamber's own pages) — count-guarded, refreshed weekly by CI as reviewed PRs.
