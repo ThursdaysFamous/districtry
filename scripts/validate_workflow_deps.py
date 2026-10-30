@@ -217,11 +217,21 @@ ALWAYS_AVAILABLE = {"setuptools", "pip", "pkg_resources"}
 # strays must not be answered differently per state, which is this list's test.
 # Stdlib-only (math and sys), and the court builder imports it inside its build,
 # which its --check never calls.
+#
+# `build_landing_page` (2026-10-30) is the fifteenth, added when Virginia's
+# local officials builder began reading the City or Town layer's vector-tile
+# archive in its --check, to prove each town's entry is found by the name the
+# map's own tile carries at the town's point. The front page's generator holds
+# the fleet's one stdlib reader of PMTiles and vector tiles (`tile_features`,
+# measured against the `pmtiles` and `mapbox-vector-tile` packages), and a
+# second reader would be a second answer to what a tile holds. Its module-scope
+# imports are `build_coverage_map` and `build_dark_map_palette`, both
+# stdlib-only, so the walk below finds no package for it.
 FLEET_SHARED = {"undeliverable", "robots_policy", "arcgis_error", "scraper_common",
                 "workflow_run_evidence", "validate_officeholder_names", "aia_bundle",
                 "city_councils", "statewide_precincts", "published_district_layers",
                 "whole_county_courts", "city_ward_maps", "conservation_boards",
-                "boundary_fidelity"}
+                "boundary_fidelity", "build_landing_page"}
 ROOT_SCRIPTS = os.path.join(REPO_ROOT, "scripts")
 
 PIP_RE = re.compile(r"pip3?\s+install\s+([^\n]*)")

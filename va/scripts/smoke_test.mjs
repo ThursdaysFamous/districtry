@@ -1001,6 +1001,16 @@ try {
       });
     }
     const PLACES = "Places_CouSub_ConCity_SubMCD/MapServer/4";
+    // the town cases' names are read from the shipped file, so a rebuild that
+    // changes a seat fails here rather than passing on stale words; each
+    // case also fails if the file names nobody it expects
+    function townNames(town, body) {
+      const names = ((((officials.towns || {})[town] || {})[body] || {}).members || []).map((m) => m.name);
+      return names.length ? names : ["(the shipped file names no one for " + town + "'s " + body + ")"];
+    }
+    function nameRe(name) {
+      return new RegExp(String(name).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+    }
     const COUSUB = "Places_CouSub_ConCity_SubMCD/MapServer/1";
     // a ring in far southwest Virginia, nowhere near the point
     const FAR = [[-82.9, 36.6], [-82.7, 36.6], [-82.7, 36.8], [-82.9, 36.8], [-82.9, 36.6]];
@@ -1013,11 +1023,45 @@ try {
         reject: [/alongside the county/, /Incorporated town/, /town council/i]
       },
       {
-        name: "a town says it governs alongside its county, and names a town council",
+        // Abingdon's council chooses its mayor, and its page lists the mayor
+        // with the council, so the card names the council from the page and
+        // says nothing about a missing mayor's election
+        name: "a town says it governs alongside its county, and names its council from its own page",
         layer: "municipality", service: PLACES,
         props: { GEOID: "5100148", NAME: "Abingdon town", BASENAME: "Abingdon", STATE: "51", LSADC: "43", FUNCSTAT: "A" },
-        want: [/Abingdon town/, /Incorporated town — a local government over this point, alongside the county it lies in/, /your mayor and town council/i],
-        reject: [/Independent city/, /city council/i]
+        want: [/Abingdon town/, /Incorporated town — a local government over this point, alongside the county it lies in/,
+          ...townNames("Abingdon", "town").map(nameRe), /Abingdon's own page, read/],
+        reject: [/Independent city/, /city council/i, /no election for this town's mayor/, /Not named here/]
+      },
+      {
+        name: "a town's council and mayor are named from the state's results, each with its election",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "5116608", NAME: "Christiansburg town", BASENAME: "Christiansburg", STATE: "51", LSADC: "43", FUNCSTAT: "A" },
+        want: [/Christiansburg town/, ...townNames("Christiansburg", "mayor").map(nameRe),
+          ...townNames("Christiansburg", "town").map(nameRe), /Elected \d+ November 20\d\d/],
+        reject: [/Not named here/, /own page, read/, /no election for this town's mayor/]
+      },
+      {
+        name: "a town that elects its council by ward names no council member and says why",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "5183136", NAME: "Warrenton town", BASENAME: "Warrenton", STATE: "51", LSADC: "43", FUNCSTAT: "A" },
+        want: [/Warrenton town/, /elects council members by ward/, /Warrenton's own website is the current source/,
+          ...townNames("Warrenton", "mayor").map(nameRe)],
+        reject: [/own page, read/]
+      },
+      {
+        name: "a town with no mayor's election in the results says so and names its council",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "5187072", NAME: "Wise town", BASENAME: "Wise", STATE: "51", LSADC: "43", FUNCSTAT: "A" },
+        want: [/Wise town/, /no election for this town's mayor since 2015/, ...townNames("Wise", "town").map(nameRe)],
+        reject: [/Not named here/]
+      },
+      {
+        name: "a town with a school division of its own names its school board",
+        layer: "municipality", service: PLACES,
+        props: { GEOID: "5118400", NAME: "Colonial Beach town", BASENAME: "Colonial Beach", STATE: "51", LSADC: "43", FUNCSTAT: "A" },
+        want: [/Colonial Beach town/, /Town school board/, ...townNames("Colonial Beach", "school").map(nameRe)],
+        reject: []
       },
       {
         name: "an affix the card does not carry prints NO type row",

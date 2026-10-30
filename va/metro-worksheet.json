@@ -316,7 +316,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
           }
         ],
-        "people": "A city's council, elected mayor and school board are named from va-local-officials.json, the same entry its County or City card reads. Of the 189 towns, the councils and mayors of the two above 25,000 people, Leesburg and Blacksburg, are named the same way; every other town's card names no one and says so (gap va-municipal-officeholders).",
+        "people": "A city's council, elected mayor and school board are named from va-local-officials.json, the same entry its County or City card reads. Each of the 189 towns has its council and mayor named from the same results, or from the town's own page where the results do not settle the council; a council still not settled (the town elects by ward, or a special election filled a seat) names no one and says why (gap va-municipal-officeholders).",
         "applies": "Virginia — statewide. A point in a county outside every town is not in any city or town, which the card states."
       }
     },
@@ -490,7 +490,7 @@
       {
         "file": "va-local-officials.json",
         "min_keys": 4,
-        "note": "Every county's board of supervisors, every city's council, every elected school board and every city's elected mayor, plus Leesburg's and Blacksburg's councils, from the Department of Elections' results (va/scripts/build_va_local_officials.py), refreshed weekly by update-va-local-officials.yml. Four top-level keys (asOf, source, localities, towns); the builder's --check holds all 133 counties and cities and every district seat."
+        "note": "Every county's board of supervisors, every city's council, every elected school board and every city's elected mayor, plus every town's council and mayor, from the Department of Elections' results (va/scripts/build_va_local_officials.py), refreshed weekly by update-va-local-officials.yml. Four top-level keys (asOf, source, localities, towns); the builder's --check holds all 133 counties and cities and every district seat."
       },
       {
         "file": "coverage-gaps.json",

@@ -3954,14 +3954,14 @@ trusted.
     {
       "id": "va-municipal-officeholders",
       "concept": "City or town government",
-      "area": "Virginia — every incorporated town but Leesburg and Blacksburg",
+      "area": "Virginia — the towns whose councils the state's results do not settle",
       "counties": [],
       "kind": "no-source",
       "layer": "municipality",
-      "summary": "The City or Town card names every city's council and elected mayor, and Leesburg's and Blacksburg's, and not yet the mayor or council of any other town.",
-      "why": "The state's results name most towns' mayors and councils, and this app has read them for its two largest towns only so far.",
-      "wanted": "Nothing from a reader — the state's results name them, and reading them is ours to do.",
-      "blocker": "NARROWED 2026-10-30 by the Virginia plan's second change, which reads the town council and mayor contests for Leesburg and Blacksburg, the two towns above 25,000 people, and no others; the plan of 2026-10-21 measured council contests in about 190 towns and 173 town mayors in the results. The boundary is TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4): 38 cities and 189 towns for STATE='51', every one FUNCSTAT A, measured 2026-10-29. Every city's council and elected mayor is named, from the same entry the County or City card reads; a city whose mayor holds no election in the results since 2015 is said to have its council choose one. The other towns' card names no one and points to the town's own website. Reading the rest is one change of its own, with the same tests the cities pass."
+      "summary": "The City or Town card names every city's council and elected mayor and most towns' mayors. About half of the towns' councils are not named yet, and the card says why for each.",
+      "why": "For those councils the state's results do not settle who sits: a special election filled a seat without saying which, the number of seats on the ballot changed, or the town elects by ward, and this map does not draw its wards.",
+      "wanted": "Nothing from a reader — most towns publish their council members, and reading them is ours to do.",
+      "blocker": "NARROWED again 2026-10-30 by the follow-up to the Virginia plan's second change: every one of the 189 towns on the Census's list (TIGERweb Places_CouSub_ConCity_SubMCD layer 4, LSADC 43) has an entry from the state's results, matched by its BASENAME. Measured that day: 88 councils named, 13 of them read by hand from the town's own page (Abingdon, Altavista, Ashland, Bedford, Bridgewater, Broadway, Culpeper, Elkton, Lebanon, Luray, Marion, Purcellville and Smithfield); 9 towns elect by ward (Berryville, Blackstone, Courtland, Farmville, Halifax, Hillsville, Lawrenceville, South Hill and Warrenton) and name no council; 92 more name no council because their results do not settle it. 165 mayors are named, 7 are not, and 17 towns hold no mayor election in the results since 2015, where the card says the council may choose one. Checked against the town charters in the Code of Virginia for the 69 named councils found there: 65 matched the number of seats, 2 charters give none, and Kenbridge's three-of-six cycle was misread and is now not named. Of seven town pages read in full, six matched the results name for name and Luray's named one appointee the results cannot see. Not read: Leesburg's, Herndon's and Lovettsville's pages (each answered 403) and Front Royal's (no member list found on its own site); Grottoes's and West Point's robots.txt could not be read from here."
     },
     {
       "id": "va-local-official-contacts",

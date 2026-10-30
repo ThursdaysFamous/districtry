@@ -15318,8 +15318,8 @@ function initVirginiaExplorer() {
 
   /* ---------- Local officeholders — the state's own election results ----------
    * Who sits on each county's board of supervisors, each city's council and
-   * each school board, each city's elected mayor and the councils of
-   * Leesburg and Blacksburg, composed from the Department of Elections'
+   * each school board, each city's elected mayor, and each town's council
+   * and mayor, composed from the Department of Elections'
    * results by va/scripts/build_va_local_officials.py into
    * data/app/va-local-officials.json (same-origin, refreshed weekly). Adam
    * chose this source on 22 October 2026, with each card saying which
@@ -15394,12 +15394,29 @@ function initVirginiaExplorer() {
           "current source."
       });
     }
+    if (seat.left && seat.left.length && (seat.members || []).length) {
+      rows.push({
+        label: "A seat not named",
+        value: seat.left.map(function (m) { return String(m.name); }).join(" and ") +
+          ", elected " + (vaReadDate(seat.left[0].elected) || "earlier") + ", has since been " +
+          "elected to another seat on the same body. The results do not yet name who holds " +
+          "the seat that was left, so it is not named here; " + place + "'s own website is " +
+          "the current source."
+      });
+    }
     if (seat.verified && seat.verified.read) {
+      // `by` names whose page it is when that is not the county's or the
+      // city's (a school division's); `note` is a sentence the builder
+      // records beside the names.
       rows.push({
         label: "Where " + (people.length > 1 ? "these names come" : "this name comes") + " from",
-        value: place + "'s own page, read " + (vaReadDate(seat.verified.read) || seat.verified.read) +
+        value: (seat.verified.by ? String(seat.verified.by) : place) + "'s own page, read " +
+          (vaReadDate(seat.verified.read) || seat.verified.read) +
           ", because the election results alone do not settle who holds " + what + "."
       });
+      if (seat.verified.note) {
+        rows.push({ label: "About these members", value: String(seat.verified.note) });
+      }
     }
     (seat.pending || []).forEach(function (m) {
       var starts = vaTakesOffice(m);
@@ -16014,10 +16031,13 @@ function initVirginiaExplorer() {
    * WHO GOVERNS IT. A city's council, its elected mayor and its school board
    * are named from the state's election results, the same entry its County
    * or City card reads (matched by the city's name, as the Census's place
-   * and county files spell it alike). Of the 189 towns, the two above 25,000
-   * people, Leesburg and Blacksburg, have their councils and mayors named the
-   * same way; every other town's card names no one and says so. Recorded as
-   * gap va-municipal-officeholders. ---------- */
+   * and county files spell it alike). Each of the 189 towns on the Census's
+   * list has an entry of its own, matched by its BASENAME: its council, its
+   * mayor where the town elects one on a ballot of its own, and West Point's
+   * school board. A council the results do not settle (the town elects by
+   * ward, a special election filled a seat, the seats per election changed)
+   * names no one and says why, and the larger of those towns are named from
+   * their own pages. Recorded as gap va-municipal-officeholders. ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
     "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT", "incorporated places");
@@ -16107,8 +16127,25 @@ function initVirginiaExplorer() {
         wrap.appendChild(renderFieldStack([vaNamesSource(result.officials)]));
       } else if (result.town) {
         var blocks = [];
-        [["mayor", "Mayor", "the mayor's office"], ["town", "Town council", "the council's seats"]]
+        var council = result.town.town || {};
+        // a town whose charter makes its mayor one of the council, or whose
+        // council chooses the mayor, lists the mayor with the council
+        var mayorOnCouncil = (council.members || []).some(function (m) {
+          return /^mayor$/i.test(String(m.role || ""));
+        });
+        if (!result.town.mayor && !mayorOnCouncil) {
+          blocks.push({ row: {
+            label: "Mayor",
+            value: "The state's election results hold no election for this town's mayor " +
+              "since 2015, so this app names no one as mayor. In many Virginia towns the " +
+              "council chooses the mayor from among its members; " + place + "'s own " +
+              "website names its mayor."
+          } });
+        }
+        [["mayor", "Mayor", "the mayor's office"], ["town", "Town council", "the council's seats"],
+          ["school", "Town school board", "the school board's seats"]]
           .forEach(function (b) {
+            if (!result.town[b[0]]) return;
             var got = vaSeat(result.town[b[0]], b[1], b[2], place);
             if (got.people.length) blocks.push({ people: got.people });
             got.rows.forEach(function (r) { blocks.push({ row: r }); });
@@ -16118,12 +16155,11 @@ function initVirginiaExplorer() {
       } else {
         wrap.appendChild(renderFieldStack([{
           label: result.kind === "town" ? "Your mayor and town council" : "Your mayor and city council",
-          value: result.kind === "town"
-            ? "Not named here yet. Of Virginia's 189 towns, this app names the councils of " +
-              "Leesburg and Blacksburg, the two above 25,000 people, and no other yet; it " +
-              "does not guess in the meantime, so this town's own website is the current source."
-            : "The list of who holds each seat did not load, so no one is named here; this " +
-              "place's own website is the current source."
+          value: result.officials
+            ? "This app's list of who holds each seat does not hold this place yet, so no " +
+              "one is named here; " + place + "'s own website is the current source."
+            : "The list of who holds each seat did not load, so no one is named here; " +
+              place + "'s own website is the current source."
         }]));
       }
       return wrap;
