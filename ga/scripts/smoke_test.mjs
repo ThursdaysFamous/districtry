@@ -1115,6 +1115,24 @@ try {
       await context.close();
     }
     {
+      // Augusta's municipal building, 535 Telfair Street, inside Richmond
+      // County 0.0063 degrees from its edge (measured 2026-10-30 against the
+      // shipped county file): the county and the city are one government,
+      // which the card says. A second declaration of GA_CONSOLIDATED once
+      // left this sentence unread.
+      const AUGUSTA = "33.47350,-81.96600";
+      const q = propsAt(fc, AUGUSTA)[0] || {};
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${AUGUSTA}&layers=county`);
+      const info = await cardText(page, "county");
+      const text = info.text || "";
+      check("the County card in Richmond says the county and Augusta are one government",
+        !info.error && q.GEOID === "13245" &&
+          text.includes("Richmond County and the city of Augusta are one government"),
+        `geoid=${q.GEOID} text=${text.slice(0, 200)}`);
+      await context.close();
+    }
+    {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=county`, async (pg) => {
         await pg.route("**/data/app/ga-county-officials.json", (r) => r.abort());

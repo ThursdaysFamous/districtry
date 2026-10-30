@@ -15353,8 +15353,10 @@ function initGeorgiaExplorer() {
   }
   // The four counties that are one government with a city, by FIPS code, and
   // the city: the commission is also the city's governing body (Columbus's is
-  // called a council).
-  var GA_CONSOLIDATED = { "13059": "Athens", "13215": "Columbus", "13245": "Augusta",
+  // called a council). Named apart from the Municipality card's
+  // GA_CONSOLIDATED, which is keyed by place and is declared later in this
+  // scope, so one name would leave this table unread.
+  var GA_COUNTY_CITY = { "13059": "Athens", "13215": "Columbus", "13245": "Augusta",
     "13021": "Macon" };
   function gaJoin(items) {
     if (items.length < 2) return items.join("");
@@ -15481,7 +15483,7 @@ function initGeorgiaExplorer() {
         }]));
         return wrap;
       }
-      var city = result.geoid != null ? GA_CONSOLIDATED[String(result.geoid)] : null;
+      var city = result.geoid != null ? GA_COUNTY_CITY[String(result.geoid)] : null;
       var council = String(result.geoid) === "13215";
       var seats = o.commission || [];
       var sole = seats.length === 1 && /^sole\b/i.test(String(seats[0].seat || ""));
