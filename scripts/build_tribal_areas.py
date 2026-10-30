@@ -292,6 +292,24 @@ ROSTER_BLOCKED = {
                "members, without naming the other four (read 2026-10-20). A "
                "partial council is not carried, so the card links the tribe.",
     },
+    # Measured 2026-10-30 with tribal_council_scraper.py's client. The Bureau
+    # lists http://www.rappahannocktribe.org; its robots.txt (126 bytes)
+    # disallows only /wp-admin/. Its front page and every page its own
+    # sitemap lists were looked at, and none names a council: the tribal
+    # history page says G. Anne Richardson was sworn in as Chief in 1998,
+    # and the staff directory sits under /portal/, behind the tribe's member
+    # sign-in. The Secretary of the Commonwealth's list of state-recognized
+    # tribes (read the same day) names the Chief and the Assistant Chief and
+    # no council member, so it does not fill the council either.
+    "3075": {
+        "host": "www.rappahannocktribe.org",
+        "measured": "2026-10-30",
+        "why": "The tribe's own site names no council (read 2026-10-30). Its "
+               "history page says G. Anne Richardson has been Chief since 1998, "
+               "and the Secretary of the Commonwealth's list names her and the "
+               "Assistant Chief, Mark Fortune, but no council member. A partial "
+               "council is not carried, so the card links the tribe.",
+    },
 }
 
 # Where a nation publishes its own council, for the nations whose page answers
@@ -591,17 +609,22 @@ def government_of(entry, bia):
     """The government record a join entry names, or None.
 
     Every entry names a government the Bureau of Indian Affairs lists, with one
-    exception: a nation New York State recognizes and the United States does
-    not, which the Bureau's list cannot carry. Adam ruled on 2026-10-10 that
-    its land is drawn, named only where a state government source names it.
-    Such an entry carries `stateRecognition` naming that source, and the record
-    returned here has no seat and no website, because the state source gives
-    neither and this project supplies none.
+    exception: a nation a state recognizes and the United States does not,
+    which the Bureau's list cannot carry. Adam ruled on 2026-10-10 that such a
+    nation's land in New York is drawn, named only where a state government
+    source names it, and the Virginia plan (claude.ai artifact
+    R4apNobGbZaZRpCDiWRxVc), whose choices he answered on 2026-10-22, draws the
+    Mattaponi Reservation the same way. Such an entry carries
+    `stateRecognition` naming that source. The record returned here carries a
+    seat and a website only where that state source gives them (Virginia's
+    list of state-recognized tribes gives both; New York's Indian Law gives
+    neither), because this project supplies none of its own.
     """
     rec = entry.get("stateRecognition")
     if rec:
-        return {"name": entry["government"], "state": None, "city": None,
-                "website": None, "stateRecognition": rec}
+        return {"name": entry["government"], "state": rec.get("state"),
+                "city": rec.get("city"), "website": rec.get("website"),
+                "stateRecognition": rec}
     return bia.get(entry["government"])
 
 
@@ -610,8 +633,12 @@ def recognition_note(entry):
     rec = entry.get("stateRecognition")
     if not rec:
         return None
+    # The name comes from the law where nothing else is named, as in New
+    # York; Virginia's comes from the state's list of the tribes it
+    # recognizes, because the resolution itself was not read.
     return ("Recognized by %s under %s, and not by the federal government. "
-            "The name is the one that law gives." % (rec["by"], rec["law"]))
+            "The name is the one %s gives."
+            % (rec["by"], rec["law"], rec.get("nameFrom") or "that law"))
 
 
 def check_join(areas, join, bia):

@@ -339,10 +339,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 13,
+      "rank_note": "Tribal land — Virginia has 3 pieces held by three nations, MEASURED by scripts/build_tribal_areas.py on 2026-10-30: the Pamunkey (state) Reservation (6.380 km², King William County), the Mattaponi (state) Reservation (0.311 km², King William County) and the Rappahannock Trust Land (0.556 km² in 4 parts, 76% of it in King and Queen County and the rest in Essex County). About 2.4 km² a piece on average against 6.5 km² for Lexington's elementary division, so ranked after it and before the point layers, and drawn above the larger areas around it. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — Virginia has 3 such areas, held by the Pamunkey Indian Tribe, the Mattaponi Tribe and the Rappahannock Tribe.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — state reservations and off-reservation trust land, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "Each nation's council from that nation's own page, read weekly by scripts/tribal_council_scraper.py and dated on the card: the Pamunkey Indian Tribe's Chief, Assistant Chief and six council members (pamunkey.org) and the Mattaponi Tribe's Chief, Assistant Chief and seven council members (mattaponi.gov). The Rappahannock Tribe's own site names no council, so its card names nobody and says why. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), except the Mattaponi Tribe's, which the Bureau does not list because the tribe is recognized by the Commonwealth and not by the federal government: its name, seat and website come from the Secretary of the Commonwealth's list of state-recognized tribes, and the card says so. The land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Virginia — the three pieces of land above, in King William, King and Queen and Essex counties. Every other point in the state is on no tribal land the Census draws for a government: Virginia's other recognized tribes hold no reservation or trust land the Census draws."
+      }
+    },
+    {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -360,7 +378,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -378,7 +396,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -469,6 +487,12 @@
         "min_features": 600,
         "max_features": 600,
         "note": "The 600 supervisor, council and school board districts of the 107 counties and cities that elect by district (va/scripts/build_va_local_districts.py), each the union of its precincts in va-precincts.json; Norfolk's two superwards from the city's own map. Drawn only where va-local-officials.json names seats for the district, and the builder's --check holds the two to each other."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 3,
+        "max_features": 3,
+        "note": "Virginia's tribal land (scripts/build_tribal_areas.py) — the Pamunkey and Mattaponi state reservations and the Rappahannock Trust Land, held by three nations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-30; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -498,6 +522,11 @@
         "note": "Which of the 47 soil and water conservation districts covers each county and city, from the Department of Conservation and Recreation's list, and the directors each county's and city's voters elected, from the Department of Elections' results (va/scripts/build_va_conservation_boards.py), refreshed weekly by update-va-local-officials.yml. Four top-level keys (asOf, listRead, districts, localities); the builder's --check holds all 133 counties and cities and the seats state law gives each."
       },
       {
+        "file": "tribal-councils.json",
+        "min_keys": 2,
+        "note": "The councils of the two Virginia nations whose own pages name them (the Pamunkey Indian Tribe and the Mattaponi Tribe), keyed by the Census AIANNH code of their land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
@@ -505,7 +534,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-va-shell-v2",
+    "cache_name": "districtry-va-shell-v3",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

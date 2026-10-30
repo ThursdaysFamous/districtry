@@ -4479,8 +4479,8 @@ function initVirginiaExplorer() {
   var LAYER_CODES = { "us-house": "us", "va-senate": "vas", "va-house": "vah", "county": "co",
     "school-district-unified": "su", "school-board-district": "bd", "county-subdivision": "cs",
     "supervisor-district": "sd", "zip-code": "zp", "voting-precinct": "vp",
-    "municipality": "mu", "school-district-elementary": "se", "police-station": "ps",
-    "fire-station": "fs", "post-office": "po" };
+    "municipality": "mu", "school-district-elementary": "se", "tribal-government": "tg",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -11182,6 +11182,7 @@ function initVirginiaExplorer() {
     "voting-precinct",   // 2,531 precincts tiling the state, pre-built from the Department of Elections' layer — 43.2 km2 mean area on the drawn file, land and water (median 7.8), measured 2026-10-30: smaller on average than a supervisor or council district, larger than a city or town (about 25 km2 of land)
     "municipality",      // 227 incorporated places (38 independent cities and 189 towns), about 25 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive
     "school-district-elementary", // One elementary division, Lexington City Public Schools, 6.5 km2 of land, from TIGERweb, drawn from a mirrored tile archive; the ground the unified tiling leaves
+    "tribal-government", // Tribal land — Virginia has 3 pieces held by three nations, MEASURED by scripts/build_tribal_areas.py on 2026-10-30: the Pamunkey (state) Reservation (6.380 km², King William County), the Mattaponi (state) Reservation (0.311 km², King William County) and the Rappahannock Trust Land (0.556 km² in 4 parts, 76% of it in King and Queen County and the rest in Essex County). About 2.4 km² a piece on average against 6.5 km² for Lexington's elementary division, so ranked after it and before the point layers, and drawn above the larger areas around it. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -16537,6 +16538,153 @@ function initVirginiaExplorer() {
     }
   });
 
+  /* ---------- Tribal Government — Virginia's tribal land, 3 pieces, three nations.
+   *
+   * Two state reservations and one piece of off-reservation trust land,
+   * measured 2026-10-30 by scripts/build_tribal_areas.py, with the counties
+   * measured against this app's own county layer: the Pamunkey (state)
+   * Reservation (6.380 km², 114 people at the 2020 census, King William
+   * County); the Mattaponi (state) Reservation (0.311 km², 48 people, King
+   * William County); and the Rappahannock Trust Land (0.556 km² in 4 parts,
+   * not counted in 2020 because the Census added it to its map afterwards,
+   * 76% of it in King and Queen County and the rest in Essex County). Every
+   * piece lies wholly in Virginia, and the Census draws no tribal
+   * subdivision on any of them.
+   *
+   * ONE NATION HERE IS RECOGNIZED BY THE COMMONWEALTH AND NOT BY THE UNITED
+   * STATES. The Mattaponi Tribe is not in the Bureau of Indian Affairs'
+   * list, so its name, seat and website come from the Secretary of the
+   * Commonwealth's list of state-recognized tribes, and its card says so and
+   * links that list — New York's Poospatuck Reservation is the same case.
+   * The Pamunkey Indian Tribe's land is also a state reservation, but the
+   * tribe is federally recognized and is named as the Bureau names it.
+   *
+   * WHO THE CARD NAMES. The authority for who sits on a nation's council is
+   * that nation's own published list. The Pamunkey's and the Mattaponi's own
+   * pages name their councils, and the card names each with the date it was
+   * read and a link to the page. The Rappahannock Tribe's own site names no
+   * council, so its card names nobody and says why. The names and the reason
+   * are read from files rather than written here:
+   * scripts/tribal_council_scraper.py reads the councils weekly into
+   * data/app/tribal-councils.json, which the loader merges onto the land, and
+   * ROSTER_BLOCKED in scripts/build_tribal_areas.py writes the reason onto
+   * the land itself.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling
+   * of 2026-09-30, a government answers for that ground, so a reader who
+   * clicks it should be told which one.
+   *
+   * PARTIAL COVERAGE: almost every point in Virginia is on no tribal land,
+   * so the layer declares its own emptyNote rather than letting the generic
+   * "not inside any district" stand.
+   * ---------- */
+  // THE NAMES ARE A SEPARATE FILE FROM THE LAND, on purpose: the land is
+  // served cache-first and changes about once a decade, while a council
+  // changes at every election, so the names live in tribal-councils.json,
+  // which the service worker serves network-first like every other roster.
+  // A councils file that cannot be read leaves the land answering on its own.
+  var loadVaTribalAreas = makeCached(function () {
+    return Promise.all([
+      fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2),
+      fetchJSONWithRetry("data/app/tribal-councils.json", {}, 2).catch(function () { return null; })
+    ]).then(function (both) {
+      var councils = both[1] || {};
+      both[0].features.forEach(function (f) {
+        var c = councils[f.properties.aiannh];
+        if (!c) return;
+        for (var k in c) {
+          if (Object.prototype.hasOwnProperty.call(c, k)) f.properties[k] = c[k];
+        }
+      });
+      return both[0];
+    });
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadVaTribalAreas,
+    // the tribal-government concept's own colour and width (root layer-concepts.json)
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, or for the
+      // Mattaponi as the Commonwealth's list does, not the Census's text for
+      // the parcel. findPropCI lowercases the property key, so every `keys`
+      // entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      // Only the Mattaponi Reservation carries this: the tribe is recognized
+      // by the Commonwealth and not by the United States, which the card says.
+      { name: "recognition", label: "Recognized by", keys: ["recognition"] },
+      { name: "recognitionUrl", label: "", keys: ["recognitionurl"], when: function () { return false; } },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs (or for the
+    // Mattaponi, the Commonwealth's list) publishes it. LINKED and never
+    // fetched here.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      if (result && result.recognitionUrl) {
+        return { label: "The Commonwealth's list of recognized tribes", url: String(result.recognitionUrl) };
+      }
+      return null;
+    },
+    // THE COUNCIL, where the nation's own page names it, merged onto the land
+    // by the loader above, so the card makes no request of its own; and, for
+    // a nation the Commonwealth recognizes, a link to the list that names it.
+    people: function (result) {
+      var roster = result && result.roster;
+      var hasRoster = !!(roster && roster.length);
+      var recognition = result && result.recognitionUrl && result.url;
+      if (!hasRoster && !recognition) return null;
+      var wrap = cardEl("div");
+      var links = [];
+      if (hasRoster) {
+        wrap.appendChild(renderBodyIntro({
+          title: "Council",
+          note: result.rosterNote ? String(result.rosterNote) : null
+        }));
+        wrap.appendChild(renderPersonRows(roster.map(function (m) {
+          var person = { name: String(m.name) };
+          if (m.role) person.badge = String(m.role);
+          var notes = [];
+          if (m.district) notes.push(String(m.district));
+          if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+          if (m.note) notes.push(String(m.note));
+          if (notes.length) person.note = notes.join(" · ");
+          if (m.phone) person.phone = String(m.phone);
+          if (m.phonesExtra && m.phonesExtra.length) {
+            person.phonesExtra = m.phonesExtra.map(String);
+          }
+          if (m.email) person.email = String(m.email);
+          return person;
+        })));
+        if (result.rosterPage) {
+          links.push({ label: "Where these names come from ↗", url: String(result.rosterPage) });
+        }
+      }
+      if (recognition) {
+        links.push({ label: "The Commonwealth's list of recognized tribes ↗",
+                     url: String(result.recognitionUrl) });
+      }
+      if (links.length) wrap.appendChild(renderLinkRow({ links: links }));
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. Virginia has 3 tribal areas across 3 nations, two state reservations and one piece of off-reservation trust land, and this point is on none of them."
+  });
+
   /* ---------- 10. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -18218,6 +18366,7 @@ function initVirginiaExplorer() {
     // two sit together.
     "school-district-unified", "school-district-elementary",
     "county", "county-subdivision", "municipality", "voting-precinct", "zip-code",
+    "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -18720,11 +18869,12 @@ function initVirginiaExplorer() {
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#06375E": "#528DC6", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
-    "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF",
-    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C",
-    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A05F00": "#FBA23D", "#A3341F": "#FE8269",
-    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
+    "#1F6F6B": "#5DC0BA", "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE", "#2F6B3A": "#6FBE7B",
+    "#3B8FD4": "#A2D2FF", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD",
+    "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
+    "#A05F00": "#FBA23D", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
+    "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
