@@ -133,6 +133,10 @@ python3 ga/scripts/build_metro_outline.py --check
 # The three plans' shapefiles are still listed where they were chosen:
 python3 ga/scripts/build_legislative_boundaries.py --check-listing
 
+# The county map check's record: every map's verdict follows from its districts,
+# every district's from its contests (offline, the record alone):
+python3 ga/scripts/check_ga_county_maps.py --check
+
 # Generated-region gate: per-instance facts live ONCE in ga/metro-worksheet.json;
 # GENERATED regions are emitted from it. NEVER hand-edit a GENERATED region:
 pip install -c scripts/requirements.txt jsonschema
@@ -197,6 +201,13 @@ gate and the 8 m fidelity ceiling pass). Rosters: `congress-roster.json`
 `ga-{senate,house}-members.json` (`ga/scripts/build_ga_legislature_roster.py`, from the General
 Assembly's own member data) — both count-guarded, both refreshed weekly by CI as reviewed PRs.
 `scripts/validate_chamber_rosters.py` holds both chamber files to one record per seat.
+
+The county commission and school board maps are not drawn yet (step 3 of the launch plan). Step 2,
+`ga/scripts/check_ga_county_maps.py`, tested each of the map office's 296 county maps against the
+precincts that voted in each district contest of November 2024 and May and June 2026, read
+against the office's 2024 statewide precinct map, and wrote `ga/data/source/county-map-check.json`:
+which maps pass, fail, conflict with a 2026 contest, or no contest tested. Step 3 draws only maps
+it says pass. It is an operator step, run again after each election with county contests.
 
 robots.txt is read before the first fetch through `scripts/robots_policy.py`, with the same client
 the fetches send, and a stated Crawl-delay is honoured; the legislature builder paces every host at

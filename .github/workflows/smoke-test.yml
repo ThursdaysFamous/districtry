@@ -1648,6 +1648,16 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 mo/scripts/build_mo_commission_districts.py --check
 
+      # Georgia draws a county's commission or school board districts only
+      # from a map office file the precinct check passed: each district
+      # contest on the 2024 and 2026 ballots read against the 2024 precinct
+      # map. The check needs the network and shapely and is an operator step;
+      # this reads its record alone and holds every map's verdict to its
+      # districts and every district's to its contests.
+      - name: GA county map check verdicts follow from their contests
+        if: ${{ !cancelled() }}
+        run: python3 ga/scripts/check_ga_county_maps.py --check
+
       # West Virginia's county commissioners and other elected officers come
       # from the Secretary of State's directory of county officials, whose
       # per-official pages also print fax numbers and mailing addresses. This
