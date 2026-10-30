@@ -19535,6 +19535,8 @@ function initChiExplorer() {
    * who HAS a ward that they have none, which is a wrong answer rather than a
    * missing one. The five are held pending their clerks (asks drafted, unsent)
    * and `pass9-ward-seats-without-maps` carries the measurement.
+   * West Peoria (2026-10-29) and Chillicothe (2026-10-30) have since shipped
+   * on their clerks' answers; see their loaders below.
    *
    * Filtered to ELMWOOD in the QUERY rather than after the fetch, so the two
    * cities this entry does not serve are never downloaded and can never be
@@ -19577,6 +19579,31 @@ function initChiExplorer() {
         }
         return { type: "FeatureCollection", features: (geojson.features || []).map(function (f) {
           return wardFeature(f, "West Peoria", "Ward", findPropCI(f.properties || {}, ["ward"]));
+        }) };
+      });
+  });
+  /* CHILLICOTHE'S FOUR WARDS (2026-10-30), the third city on the county's
+   * layer and the first ward map this layer ships as a FILE rather than
+   * fetching. Held since 2026-09-05 because the county's wards leave 3.3% of
+   * the city (115.7 acres) in no ward. City Clerk Jill Byrnes answered on
+   * 2026-10-05 with the map and City Code section 34-2, which defines each
+   * ward as all territory within the city limits on one side of named street
+   * centre lines extended to the city boundary. The county's internal lines
+   * follow those streets, so scripts/build_chillicothe_wards.py keeps them,
+   * clips the wards to the Census city limits and carries each line on to the
+   * edge to place the uncovered ground, which is the code's rule rather than a
+   * surveyed map; the card's note says so. */
+  var CHILLICOTHE_WARD_NOTE = "Drawn from Peoria County's ward map and carried to the " +
+    "city limits as the City Code describes the wards, not surveyed.";
+  var loadChillicotheWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/chillicothe-wards.json", {}, 2)
+      .then(function (geojson) {
+        if (!hasUsableGeometry(geojson)) {
+          throw new Error("Chillicothe ward file has no usable geometry");
+        }
+        return { type: "FeatureCollection", features: (geojson.features || []).map(function (f) {
+          return wardFeature(f, "Chillicothe", "Ward", findPropCI(f.properties || {}, ["ward"]),
+            { dxWardNote: CHILLICOTHE_WARD_NOTE });
         }) };
       });
   });
@@ -21968,6 +21995,33 @@ function initChiExplorer() {
   var loadWoodfordParkDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/woodford-park-districts.json", {}, 2);
   });
+  /* ---------- Whiteside's fire and park districts ----------------------
+   * Boone's shape: the county's public parcel layer carries a bare tax code
+   * (`CVTTXCD`), and the County Clerk's District Rates by Taxcode Report says
+   * which districts each code pays into, so each district is the merge of the
+   * parcels paying its levy (scripts/build_parcel_fabric_districts.py). The
+   * names are the Clerk's own ("Albany Fire") and are not expanded.
+   *
+   * SHOWN WITH THE COUNTY'S WRITTEN PERMISSION. Whiteside licenses its GIS
+   * data and its licence forbids redistributing products derived from it
+   * without the county's express written permission; its GIS office gave that
+   * permission by e-mail on 2026-10-02, crediting Whiteside County. So every
+   * card says where the outline comes from, that it is derived from tax codes
+   * rather than surveyed, and on what terms it is shown. Sterling, Rock Falls
+   * and Morrison pay into no fire protection district and are left undrawn,
+   * so the fire card finds nothing there. */
+  var loadWhitesideFireDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/whiteside-fire-districts.json", {}, 2);
+  });
+  var loadWhitesideParkDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/whiteside-park-districts.json", {}, 2);
+  });
+  var WHITESIDE_DISTRICT_SOURCE = "Derived from Whiteside County GIS parcel "
+    + "data and the County Clerk's tax rates, and shown with Whiteside "
+    + "County's written permission.";
+  var WHITESIDE_DISTRICT_NOTE = "Drawn by merging the parcels whose tax codes "
+    + "pay this district's levy, not surveyed. Not for legal boundary "
+    + "determination.";
   var BOONE_DISTRICT_SITES = {
     "BELVIDERE PARK DISTRICT": { url: "https://www.belviderepark.org/" },
     "ROCKFORD PARK DISTRICT": { url: "https://www.rockfordparkdistrict.org/" },
@@ -24786,6 +24840,7 @@ function initChiExplorer() {
             gisEmail2: p.dxEmail2 || null,
             gisPhone2: p.dxPhone2 || null,
             gisUrl: p.dxUrl || null,
+            wardNote: p.dxWardNote || null,
             municipalityUrl: entry && entry.url ? entry.url : null
           };
         });
@@ -24795,7 +24850,9 @@ function initChiExplorer() {
         var wrap = cardEl("div", "card-flush");
         wrap.appendChild(renderBodyIntro({
           title: String(result.municipality || "") +
-            (result.bodyLabel ? " " + result.bodyLabel : " Council")
+            (result.bodyLabel ? " " + result.bodyLabel : " Council"),
+          // A ward map this project derived says how (Chillicothe's).
+          note: result.wardNote ? String(result.wardNote) : null
         }));
         // Contact only where the SOURCE publishes it per seat. The GIS
         // attributes are one such source (Evanston); the roster's PERSON fields
@@ -25043,7 +25100,10 @@ function initChiExplorer() {
       // West Peoria (Peoria, 2026-10-29) — four wards, eight aldermen, shipped
       // once its clerk confirmed the county map is the city's current one; see
       // loadWestPeoriaWards.
-      municipalWardEntry("west-peoria", loadWestPeoriaWards)
+      municipalWardEntry("west-peoria", loadWestPeoriaWards),
+      // Chillicothe (Peoria, 2026-10-30) — four wards, eight aldermen, drawn to
+      // the city limits by the City Code's own rule; see loadChillicotheWards.
+      municipalWardEntry("chillicothe", loadChillicotheWards)
     ]
   });
   declareDataSource("ward", {
@@ -30945,7 +31005,8 @@ function initChiExplorer() {
               seq: seq,
               district: district,
               precincts: findPropCI(props, ["precincts"]),
-              entry: district != null ? results[1][String(district)] : null
+              entry: district != null ? results[1][String(district)] : null,
+              board: results[1].board || null
             };
           });
         },
@@ -30959,11 +31020,21 @@ function initChiExplorer() {
           if (members.length) {
             wrap.appendChild(renderPersonRows(members.map(boardMemberPerson)));
           }
-          if (result.precincts && result.precincts.length) {
-            wrap.appendChild(renderFieldStack([
-              { label: "Precincts", value: result.precincts.join(", ") }
-            ]));
+          var fields = [];
+          // "meets at", not "office": the County Clerk wrote that the board
+          // meets in the board room of the jail building, a meeting place.
+          if (result.board && result.board.address) {
+            fields.push({ label: "Board meets at",
+                          value: String(result.board.address) });
+            if (result.board.source) {
+              fields.push({ label: "Address source",
+                            value: String(result.board.source) });
+            }
           }
+          if (result.precincts && result.precincts.length) {
+            fields.push({ label: "Precincts", value: result.precincts.join(", ") });
+          }
+          if (fields.length) wrap.appendChild(renderFieldStack(fields));
           return wrap;
         },
         cardIdentifier: function (result) {
@@ -32856,6 +32927,22 @@ function initChiExplorer() {
         ],
         people: afrDistrictPeople
       }),
+      // Whiteside — 13 districts dissolved from the county's parcel fabric,
+      // shown with the county's written permission (see the loader block).
+      polygonCountyEntry({
+        key: "whiteside",
+        coverage: whitesideCountyCoverage,
+        loader: withIlDistrictOfficials("whiteside", "fire", ["district"])(loadWhitesideFireDistricts),
+        snapFeet: PARCEL_FABRIC_SNAP_FT,
+        fields: [
+          { name: "name", label: "Fire District", keys: ["district"], primary: true },
+          { label: "County", value: "Whiteside County" },
+          { label: "Note", value: WHITESIDE_DISTRICT_NOTE },
+          { label: "Source", value: WHITESIDE_DISTRICT_SOURCE },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
+      }),
       // Hamilton — three named districts from the county's own layer (a
       // fourth, unnamed ~0.4 km² sliver is excluded in the loader); most of
       // the county sits in none, and the empty state says so
@@ -33195,6 +33282,22 @@ function initChiExplorer() {
         fields: [
           { name: "name", label: "Park District", keys: ["district"], primary: true },
           { label: "County", value: "Woodford County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
+      }),
+      // Whiteside — 5 districts dissolved from the county's parcel fabric,
+      // shown with the county's written permission (see the loader block).
+      polygonCountyEntry({
+        key: "whiteside",
+        coverage: whitesideCountyCoverage,
+        loader: withIlDistrictOfficials("whiteside", "park", ["district"])(loadWhitesideParkDistricts),
+        snapFeet: PARCEL_FABRIC_SNAP_FT,
+        fields: [
+          { name: "name", label: "Park District", keys: ["district"], primary: true },
+          { label: "County", value: "Whiteside County" },
+          { label: "Note", value: WHITESIDE_DISTRICT_NOTE },
+          { label: "Source", value: WHITESIDE_DISTRICT_SOURCE },
           { name: "officials", keys: ["dxofficials"], hidden: true }
         ],
         people: afrDistrictPeople

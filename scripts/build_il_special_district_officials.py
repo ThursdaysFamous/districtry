@@ -105,7 +105,10 @@ MIN_OFFICER_EMAILS = 499
 EXPECT_COUNTIES = {"cook", "kendall", "macon", "rock-island", "stark",
                    "stephenson", "dupage", "mchenry", "dekalb", "lee", "adams",
                    "iroquois", "sangamon", "st-clair", "boone", "effingham",
-                   "hamilton", "monroe", "madison", "lake"}
+                   "hamilton", "monroe", "madison", "lake",
+                   # Whiteside joined 2026-10-30, when its fire and park
+                   # districts shipped under the county's written permission.
+                   "whiteside"}
 EXPECT_LAYERS = {"fire", "park"}
 
 

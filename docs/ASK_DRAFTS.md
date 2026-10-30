@@ -130,16 +130,16 @@ with, working as intended.
 | Dickinson County Auditor (IA) | the same | none | **ANSWERED same day**: a bare "no", which the letter itself had offered as a complete answer. It settles that the office will not supply the pairing; it says NOTHING about whether the board is elected by district, and must not be read as if it did |
 | Black Hawk and Guthrie county auditors (IA) | the same | none | — |
 | Calhoun County Auditor (IA) | the same | none | — |
-| Wright County Auditor and Pottawattamie County elections office (IA) | how many supervisors, and who | none | — |
+| Wright County Auditor and Pottawattamie County elections office (IA) | how many supervisors, and who | none | Pottawattamie **ANSWERED 2026-10-26** after the follow-up that morning: five supervisors, elected at large, the five the County card already names; its gap retired 2026-10-30 |
 | Tama County Auditor (IA) | the same | none | **ANSWERED same day**, in full: five supervisors with districts, and contact details that need care — District 1's address is a personal one and his telephone is outside the county's own number block, so neither ships until she says which lines are the county's |
 | Franklin County Clerk (IL) | which Public Square address the board meets at | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
-| Clinton County Clerk (IL) | the address where the board meets | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
+| Clinton County Clerk (IL) | the address where the board meets | **asked 2026-08-05, followed up 2026-08-16, no reply** | **ANSWERED 2026-10-05**: the board meets in the board room on the first floor of the jail building, 810 Franklin Street, Carlyle; the board card says so from 2026-10-30 |
 | nine Michigan city and township clerks | may an automated reader see your board page | none | Ypsilanti Township **ANSWERED same day**: the clerk was passing the request to the township's technology staff, and the correction reached her at 15:23. Lansing acknowledged automatically, with no content |
 | Cass County Auditor (IA) | which supervisor represents which district | none | **ANSWERED same day, USABLE 2026-10-07 and SHIPPED.** Her 2026-10-01 reply carried the pairing as an inline image that this project's mail tools could not open; the operator supplied the image on 2026-10-07 and it reads District 1 Stephen Green, 2 Mark O'Brien, 3 Wendy Richter, 4 Steve Baier, 5 Bernard Pettinger. The county's own Resolution 2022-12 names the precincts in each district, and every one of our twelve Cass precincts lies in the same-numbered district of our map, including Atlantic's five wards (1 in District 1, 2 and 3 in District 2, 4 and 5 in District 3), so the numbering is checked and the cards name the five. The reply asking her to type the list out is withdrawn and was never sent. |
 | Calumet (Brillion), Pepin (Durand) county clerks (WI) | ward-to-district filing | Pepin followed up 2026-10-26 | **BOTH ANSWERED.** Calumet the same day: Brillion elects its council at large and wards 5 and 6 have no residents. Pepin 2026-10-26, after the follow-up: Durand ward 3 is Aldermanic District 3 |
 | Outagamie County Clerk (WI) | the New London filing | none | **ANSWERED same day**, settled: New London wards 10, 11 and 12 are all in Aldermanic District 5 |
 | Brown County Clerk (WI) | how Bellevue elects its board | none | **ANSWERED same day, HEDGED**: "They appear to be at large", with the village clerk's address and a question back about whether the village had been asked. A hedge is not a statement the village has made, so it settles nothing by itself |
-| Chillicothe, West Peoria, Galva city clerks (IL) | ward boundaries | none | — |
+| Chillicothe, West Peoria, Galva city clerks (IL) | ward boundaries | none | Chillicothe **ANSWERED 2026-10-05** with its ward map and City Code section 34-2; its four wards ship 2026-10-30, drawn to the city limits by that section's rule. West Peoria **ANSWERED 2026-10-29** and shipped. Galva followed up 2026-10-26, no reply |
 | Oklahoma State Election Board | precinct maps in the CSA Data Warehouse | none | — |
 | Cherokee Nation Election Commission | council district maps | none | — |
 | NYS Dept of State, Division of Local Government Services, cc the Comptroller's local-government division | is there a directory of local elected officials | none | — |
@@ -179,9 +179,9 @@ which is a claim about the ask and never about the source.
 | Christian County Clerk | **asked 2026-08-05, followed up 08-16, 08-21 and 09-04 — four letters, no reply** | REWRITTEN 2026-10-01: cites all four, states that the question they asked is now closed from the county's own 2021 reapportionment plan, and asks only for the sixteen members. **ANSWERED 2026-10-07**: Clerk Jodie L. Badman sent two screenshots of the county's own board member list naming all sixteen by district; they ship on the board card, and the `christian-county-board-roster` gap record is retired |
 | Henderson County Clerk | **asked 2026-07-21 (seal), 2026-08-05 and 08-16, no reply** | REWRITTEN 2026-10-01: cites them and says the August questions are answered. **SENT 2026-10-07**, no reply as of 2026-10-15 |
 | Logan County Clerk | **same mailbox written to 2026-07-21** about the county seal | REWRITTEN 2026-10-01: opens by naming that letter |
-| Will County Clerk | none | first contact, correct |
+| Will County Clerk | none | first contact, correct. **ANSWERED 2026-10-01** by Rebecca Leder, Election Analyst, with the 2025 directory as a PDF (updated 2026-08-21); from 2026-10-30 the weekly refresh reads it whenever the flipbook refuses (Ask 28) |
 | Grundy County GIS | the county CLERK was written 2026-07-21; this is a different mailbox | first contact to this office, correct  **SENT 2026-10-01** (redrafted to the GIS Director after the office mailbox bounced) and **ANSWERED 2026-10-08**: the fee schedule does not apply to outlines derived from the public map service; the county will not vouch for them; a source notice is optional (Ask 18) |
-| Whiteside County GIS (Lisa Lee) | the county CLERK answered three times in August 2026; this is a different mailbox | first contact to this office, correct |
+| Whiteside County GIS (Lisa Lee) | the county CLERK answered three times in August 2026; this is a different mailbox | first contact to this office, correct. **ANSWERED 2026-10-02**: display of the derived fire, library and park districts is permitted, crediting Whiteside County. Fire and park ship 2026-10-30 with the credit on each card; library is not shipped because the statewide layer already answers there (Ask 19) |
 | Hardin County Clerk (IL) | who holds the commissioner seats | **seal 2026-07-21; board 08-05, 08-16, 08-21; ANSWERED 08-24** — countywide board, and NO county website | **SENT 2026-10-01 and ANSWERED IN SEVEN MINUTES**: three commissioners, with Darrick Armstrong as chairman, Ricky Williams as vice-chairman and Michael Belford the third (she first wrote "Belfor" and corrected it herself at 19:27 the same day: "I left the d off"). That closes the county's roster gap, and it is the clearest argument this file has for the prior-contact check — the question was answered at the fourth attempt, by a clerk who had already told us twice what the county does not have. Illinois's wording said the county's web address "leads to a parked page"; the Clerk had already said there is no website, so that claim is gone |
 | Johnson County Clerk (IL) | the same | **seal 07-21, ANSWERED twice that day** ("We don't have a website to point back to"); board 08-05 and 08-16, no reply | drafted 2026-10-01. Illinois's wording said the county's website "declines automated visits"; the Clerk had already said there is none **ANSWERED 2026-10-07**: Clerk Robin Harper-Whitehead named all three commissioners — Jason Taylor (Chairman), Matthew Hayden (Vice Chairman) and John McCuan — with one e-mail for the board and her own office's telephone. They ship on the County card and the `johnson-county-board` gap record is retired |
 | Perry County Clerk (IL) | the same | seal 07-20; two questions 08-05; follow-up 08-16; no reply | drafted 2026-10-01 with an opening citing all three. **SENT 2026-10-07**, no reply as of 2026-10-15. **SETTLED WITHOUT A REPLY 2026-10-20**: the county's own site served its commissioners page and all three ship, so neither of the letter's questions is open and its follow-up must not ask who is serving |
@@ -2259,6 +2259,14 @@ Many thanks,
 
 ## Ask 19 — Whiteside County GIS: permission to display three derived boundaries
 
+> **ANSWERED 2026-10-02 AND SHIPPED 2026-10-30.** Sent 2026-10-01. Whiteside County
+> GIS wrote that displaying the derived fire, library and park districts is
+> permitted, crediting Whiteside County. The fire (13) and park (5) districts ship
+> with "shown with Whiteside County's written permission" on every card, a section
+> in LICENSE-DATA.md and a row in docs/SOURCE_CREDITS.md. The library districts do
+> not ship: the statewide library layer already answers in Whiteside and a second
+> file would name the same districts twice.
+>
 > **DRAFTED 2026-09-05, HELD. Not sent.** Ask 18 is Grundy's; this takes 19 so
 > the two cannot collide whichever lands first. Revised 2026-09-05 on review to
 > put the question the record already carried — whether the agreement binds a
@@ -3058,6 +3066,11 @@ nobody.
 
 ## Ask 28 — Will County Clerk: the 2025 directory as a document
 
+> **ANSWERED 2026-10-01 AND READ 2026-10-30.** Sent 2026-10-01; Rebecca Leder, Election
+> Analyst, replied the same day with "2025 Will County Directory.pdf", "the most current
+> version" (updated 2026-08-21). It is committed under il/data/source/raw/ and the weekly
+> refresh reads it with `--pdf` whenever the flipbook refuses.
+>
 > **NOT YET ASKED — DRAFTED 2026-09-18.** One note to the Will County Clerk. Adam sends;
 > nothing here sends mail.
 
