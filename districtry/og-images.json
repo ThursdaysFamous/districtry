@@ -23,6 +23,14 @@
     "height": 630,
     "rendered": "2026-09-13"
   },
+  "ga": {
+    "path": "ga/og-image.png",
+    "label": "ga",
+    "sha256": "6ef9991a51b6df5a09525e9ef531a3b5a35c5a676e2fbcf73d5d83b7becffab6",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-10-29"
+  },
   "ia": {
     "path": "ia/og-image.png",
     "label": "ia",
