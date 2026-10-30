@@ -1,0 +1,121 @@
+name: Update Georgia county officials
+
+# Weekly refresh of ga/data/app/ga-county-officials.json, the county
+# commissioners and county school board members the County and School
+# District cards name. The builder reads the Secretary of State's official
+# election results (results.sos.ga.gov) for every election from 5 November
+# 2024 on and names each seat for the winner of its newest election who has
+# taken office. If anything changed, it opens a PR rather than committing to
+# main.
+#
+# THE JOB IS WEEKLY FOR TWO REASONS: a new election (a special election, a
+# runoff, or a general election once the site marks its results official),
+# and a winner taking office. Winners of the regular elections take office on
+# 1 January, so the first run of each year moves every seat elected the year
+# before from "elected, not yet in office" to named, with no new election at
+# all.
+#
+# OFFICIAL RESULTS ARE KEPT BETWEEN RUNS. The builder reads a county's results
+# back from the kept copy only once the site marks them official, which is
+# when they stop changing, and fetches everything else again: the list of
+# elections, each election's list of counties, and any county whose results
+# are not official yet. Measured 2026-10-30, when the site carried 21
+# elections from November 2024 on: a first run with nothing kept reads 1,041
+# pages (1,019 of them a county's results in one election) at one second
+# apiece or more, about 20 minutes, and a later run reads 22 (the list of
+# elections and each election's list of counties) plus any county whose
+# results are not official yet. Each new election adds to both.
+#
+# GEORGIA IS DARK, so nothing this job writes is published until Georgia goes
+# live (ga/WATCH.md).
+
+on:
+  schedule:
+    - cron: "41 19 * * 3" # Wednesday 19:41 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-officials:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # requests for the builder's session (it retries a reset or a timeout).
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Restore the kept copy of official results
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/ga-results
+          key: ga-results-${{ github.run_id }}
+          restore-keys: |
+            ga-results-
+
+      - name: Rebuild Georgia county officials
+        run: python3 ga/scripts/build_ga_county_officials.py --cache ~/.cache/ga-results
+
+      - name: Keep the copy for the next run
+        if: ${{ !cancelled() }}
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.cache/ga-results
+          key: ga-results-${{ github.run_id }}-${{ github.run_attempt }}
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, every data/app file must be present and
+      # well formed, and every name must follow from its election.
+      - name: Validate app + data files
+        run: |
+          python3 ga/scripts/validate_index.py ga/index.html
+          python3 ga/scripts/build_ga_county_officials.py --check
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- ga/data/app/ga-county-officials.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/ga-county-officials-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history; the rebuilt file
+          # rides across the checkout as a working-tree change.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add ga/data/app/ga-county-officials.json
+          git commit -m "Update Georgia county officials from the Secretary of State's election results"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Georgia county officials" \
+              --body "Automated weekly refresh of the county commissioners and county school board members the Georgia County and School District cards name, from the Secretary of State's official election results, generated by \`ga/scripts/build_ga_county_officials.py\`. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi
