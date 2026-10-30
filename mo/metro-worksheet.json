@@ -195,9 +195,9 @@
       "label": "County Commission District",
       "group": "political",
       "area_rank": 5,
-      "rank_note": "Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 36 counties whose county map viewer, download, posted township map, GIS office or clerk publishes or sends them",
+      "rank_note": "Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 38 counties whose county map viewer, download, posted township map, GIS office or clerk publishes or sends them",
       "source": {
-        "answers": "The county commission district covering the point, and the district commissioner elected from it, in the 36 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner.",
+        "answers": "The county commission district covering the point, and the district commissioner elected from it, in the 38 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner.",
         "boundary": [
           {
             "label": "Integrity GIS county map viewers — the commission district layer each county's own public map viewer carries, for Barton, Bates, Buchanan, Camden, Chariton, Christian, Cooper, Dade, DeKalb, Lincoln, Maries, Marion, McDonald, Miller, Phelps, Polk, Pulaski, Ralls, Ray, Vernon and Warren counties, read 2026-10-23. Each answers exactly two districts, whose names match the seats the Secretary of State's Missouri Roster lists for that county. Clipped to the Census Bureau's county line, with the few slivers the viewer leaves between its two districts given to the district beside them. Whether each viewer's line is the one the county's elections use today is NOT established: no viewer gives a date for its lines, and Missouri law sets no date by which a county must redraw them.",
@@ -248,6 +248,14 @@
             "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
           },
           {
+            "label": "Douglas County — a page of the county's township map, e-mailed to this project by the county clerk on 30 October 2026, with a red line along township lines marking Political District #1 (Benton, Buchanan, Findley, Lincoln, Spencer and Washington townships) and Political District #2 (the other seventeen). The districts are drawn from the Census Bureau's township lines.",
+            "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
+          },
+          {
+            "label": "Linn County — the county's map of its political townships with the commissioners' districts, e-mailed to this project by the county clerk on 30 October 2026, shading the 1st District (Brookfield, Grantsville, Jefferson and Yellow Creek townships) and the 2nd District (the other ten). The districts are drawn from the Census Bureau's township lines.",
+            "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
+          },
+          {
             "label": "Saline County — the county clerk's list, sent to this project on 23 October 2026, of the townships and precincts in each of its two commission districts: Cambridge, Clay, Grand Pass and Miami townships and Marshall Wards 3 and 4 in the Northern District, and Arrow Rock, Blackwater, Elmwood, Liberty, Salt Fork and Salt Pond townships and Marshall Wards 1 and 2 in the Southern District, as the 2011 map sent with it also draws them. Drawn from the Census Bureau's (TIGER) township lines and, inside Marshall township, its 2020 voting districts Marshall 1 to 4, which tile that township; Marshall may have redrawn its wards since 2020.",
             "url": "https://www.salinecountyclerk.com/"
           },
@@ -265,7 +273,7 @@
           }
         ],
         "people": "mo-county-officials.json, the roster the County card reads: each county's district commissioners from the Secretary of State's Missouri Roster, joined by seat name.",
-        "applies": "36 of Missouri's 114 counties; hidden in the other 78 and in the City of St. Louis, which the Data gaps panel lists and explains."
+        "applies": "38 of Missouri's 114 counties; hidden in the other 76 and in the City of St. Louis, which the Data gaps panel lists and explains."
       }
     },
     {
@@ -496,9 +504,9 @@
       },
       {
         "file": "mo-commission-districts.json",
-        "min_features": 72,
-        "max_features": 72,
-        "note": "The county commission districts of the 36 counties whose map viewer, download, posted township map, GIS office or clerk publishes or sends them (mo/scripts/build_mo_commission_districts.py), two per county, clipped to the Census Bureau's county lines."
+        "min_features": 76,
+        "max_features": 76,
+        "note": "The county commission districts of the 38 counties whose map viewer, download, posted township map, GIS office or clerk publishes or sends them (mo/scripts/build_mo_commission_districts.py), two per county, clipped to the Census Bureau's county lines."
       }
     ],
     "rosters": [
@@ -524,8 +532,8 @@
       },
       {
         "file": "mo-commission-counties.json",
-        "min_keys": 36,
-        "note": "The 36 counties whose commission districts are drawn, by GEOID, with each district's 2020 census population, written by the same build as mo-commission-districts.json and held to it by its --check. The County Commission District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file."
+        "min_keys": 38,
+        "note": "The 38 counties whose commission districts are drawn, by GEOID, with each district's 2020 census population, written by the same build as mo-commission-districts.json and held to it by its --check. The County Commission District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file."
       },
       {
         "file": "coverage-gaps.json",
@@ -535,7 +543,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mo-shell-v14",
+    "cache_name": "districtry-mo-shell-v15",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

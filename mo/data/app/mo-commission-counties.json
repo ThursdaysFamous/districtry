@@ -153,6 +153,17 @@
   "spreadPct": 1.5,
   "unplaced2020": 0
  },
+ "29067": {
+  "county": "Douglas County",
+  "people2020": {
+   "District 1": 6242,
+   "District 2": 5336
+  },
+  "read": "2026-10-30",
+  "source": "townships",
+  "spreadPct": 15.7,
+  "unplaced2020": 0
+ },
  "29089": {
   "county": "Howard County",
   "people2020": {
@@ -195,6 +206,17 @@
   "read": "2026-10-26",
   "source": "viewer",
   "spreadPct": 7.9,
+  "unplaced2020": 0
+ },
+ "29115": {
+  "county": "Linn County",
+  "people2020": {
+   "District 1": 6011,
+   "District 2": 5863
+  },
+  "read": "2026-10-30",
+  "source": "townships",
+  "spreadPct": 2.5,
   "unplaced2020": 0
  },
  "29119": {

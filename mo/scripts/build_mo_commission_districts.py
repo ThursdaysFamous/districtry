@@ -51,8 +51,9 @@ Census Bureau's 2020 blocks by district, so each district is drawn as the
 blocks that map puts in it (POSTED below). And Cape Girardeau's clerk
 wrote, on 2026-10-30, that one district is the City of Cape Girardeau and the
 other the rest of the county, so the first is drawn from the city limits on
-the county's own map at SEMO GIS (CITY below). Those 36
-are SOURCES below. The other 78 counties and the City of St. Louis are not
+the county's own map at SEMO GIS (CITY below). And Douglas's and Linn's
+clerks e-mailed, the same day, maps whose lines run along whole townships.
+Those 38 are SOURCES below. The other 76 counties and the City of St. Louis are not
 drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
@@ -335,6 +336,39 @@ SOURCES = {
                 "Southern District": ["Collins", "Dallas", "Doyal", "Osceola", "Polk",
                                       "Roscoe", "Speedwell", "Washington"]},
             "sent": "2026-10-28"},
+    # Douglas's clerk (Karry Davis) e-mailed on 2026-10-30 "Douglas County
+    # Commissioner District Map.pdf", a page of a 2025 Mapping Solutions plat
+    # book with a red line drawn on it, kept out of this repository because
+    # it is that publisher's page (SHA-256 da5c0ceb9a6658487cd88c33de4cceb4
+    # 655b2355220906523e54260b04db0cec). The line runs along township lines
+    # only, with Findley, Benton, Lincoln, Washington, Spencer and Buchanan
+    # west of it, marked "Political District #1", and the other seventeen
+    # townships east of it, marked "Political District #2". The 23 match
+    # TIGER's 23, and the Missouri Roster names the seats District 1 and 2.
+    "067": {"townships": {
+                "District 1": ["Benton", "Buchanan", "Findley", "Lincoln", "Spencer",
+                               "Washington"],
+                "District 2": ["Boone", "Brown", "Brush Creek", "Bryan", "Campbell",
+                               "Cass", "Champion", "Clay", "Clinton", "Jackson",
+                               "McKinley", "McMurtrey", "Miller", "Richland",
+                               "Spring Creek", "Walls", "Wood"]},
+            "sent": "2026-10-30"},
+    # Linn's clerk (Suzan Stephenson) e-mailed on 2026-10-30 a scanned map,
+    # "Political Townships with Commissioners' Districts", kept out of this
+    # repository as the county's own record (SHA-256 81593a4b380c2cff64e2ef25
+    # 48c5a9c9bcb01aa5a5b732edd53aa20ef5deadb9). It shades the edge of the
+    # 1st District green, around Brookfield, Grantsville, Jefferson and
+    # Yellow Creek townships, and of the 2nd District blue, around the other
+    # ten. It prints Benton and Marceline townships in two parts each (a
+    # township road district and a special road district), both parts in the
+    # 2nd District, so the 14 match TIGER's 14, and the Missouri Roster names
+    # the seats District 1 and 2.
+    "115": {"townships": {
+                "District 1": ["Brookfield", "Grantsville", "Jefferson", "Yellow Creek"],
+                "District 2": ["Baker", "Benton", "Bucklin", "Clay", "Enterprise",
+                               "Jackson", "Locust Creek", "Marceline", "North Salem",
+                               "Parson Creek"]},
+            "sent": "2026-10-30"},
     # Audrain's clerk (Lisa Smith) e-mailed on 2026-10-28 a report listing
     # each precinct and the commission district it votes in, kept out of this
     # repository as the county's own record (SHA-256 6567503db4cfa37164c5c8d6

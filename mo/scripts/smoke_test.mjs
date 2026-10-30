@@ -117,6 +117,13 @@ const NEW_MADRID_POINT = "36.48690,-89.63032";
 // shipped file draws it (shapely polylabel, 2026-10-30), the City of Cape
 // Girardeau as the county's own city-limits layer draws it.
 const CAPE_GIRARDEAU_POINT = "37.30892,-89.54767";
+// The pole of inaccessibility of Douglas's District 1 as the shipped file
+// draws it (shapely polylabel, 2026-10-30), from the township map its clerk
+// sent.
+const DOUGLAS_POINT = "36.98067,-92.75875";
+// The pole of inaccessibility of Linn's District 2 as the shipped file draws
+// it (shapely polylabel, 2026-10-30), from the township map its clerk sent.
+const LINN_POINT = "39.93356,-93.25998";
 // The pole of inaccessibility of Ste. Genevieve's Second District as the
 // shipped file draws it (shapely polylabel, 2026-10-27), traced from the
 // scan its clerk's office sent.
@@ -1278,7 +1285,7 @@ try {
     const drawn = shipped("mo-commission-counties.json");
     const seatOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.seat === p.seat) || {};
     const presidingOf = (p) => ((roster[p.countyfips] || {}).seats || []).find((s) => s.countywide) || {};
-    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT, HOWARD_POINT, DENT_POINT, ST_CLAIR_POINT, AUDRAIN_POINT, NEW_MADRID_POINT, CAPE_GIRARDEAU_POINT, STE_GENEVIEVE_POINT, SALINE_POINT, PERRY_POINT, IRON_POINT, SCOTT_POINT]) {
+    for (const pt of [POINT, CHRISTIAN_POINT, LAWRENCE_POINT, CASS_POINT, HOWARD_POINT, DENT_POINT, ST_CLAIR_POINT, AUDRAIN_POINT, NEW_MADRID_POINT, CAPE_GIRARDEAU_POINT, DOUGLAS_POINT, LINN_POINT, STE_GENEVIEVE_POINT, SALINE_POINT, PERRY_POINT, IRON_POINT, SCOTT_POINT]) {
       const at = propsAt(fc, pt);
       const p = at[0] || {};
       const mine = seatOf(p), pres = presidingOf(p);
