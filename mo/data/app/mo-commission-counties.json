@@ -54,6 +54,17 @@
   "spreadPct": 10.1,
   "unplaced2020": 36
  },
+ "29031": {
+  "county": "Cape Girardeau County",
+  "people2020": {
+   "First District": 42183,
+   "Second District": 39527
+  },
+  "read": "2026-10-30",
+  "source": "city",
+  "spreadPct": 6.5,
+  "unplaced2020": 0
+ },
  "29037": {
   "county": "Cass County",
   "people2020": {

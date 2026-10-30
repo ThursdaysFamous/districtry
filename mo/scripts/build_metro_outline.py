@@ -108,9 +108,9 @@ STATE_COUNTY_FIPS = (
 )
 # The COVERAGE ring: the counties whose commission or council district lines
 # the County Commission District layer draws, exactly the keys of
-# data/app/mo-commission-counties.json (35 on 2026-10-29).
+# data/app/mo-commission-counties.json (36 on 2026-10-30).
 METRO_COUNTY_FIPS = (
-    "007", "011", "013", "021", "029", "037", "041", "043", "051",
+    "007", "011", "013", "021", "029", "031", "037", "041", "043", "051",
     "053", "057", "063", "065", "089", "093", "109", "113", "119", "125",
     "127", "131", "143", "157", "161", "167", "169", "173", "177",
     "185", "186", "195", "201", "217", "219", "223",
@@ -313,6 +313,7 @@ RING_COUNTIES = (
     "Bates",
     "Buchanan",
     "Camden",
+    "Cape Girardeau",
     "Cass",
     "Chariton",
     "Christian",

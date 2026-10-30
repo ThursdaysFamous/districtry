@@ -11180,7 +11180,7 @@ function initMissouriExplorer() {
     "mo-senate",         // 34 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 115 counties (114 counties and the independent City of St. Louis), pre-built from TIGERweb; the instance's offline anchor layer
     "mo-house",          // 163 House districts — smaller on average than a county, larger than a school district
-    "county-commissioner", // Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 35 counties whose county map viewer, download, posted township map, GIS office or clerk publishes or sends them
+    "county-commissioner", // Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 36 counties whose county map viewer, download, posted township map, GIS office or clerk publishes or sends them
     "school-district-unified", // 445 unified districts, about 372 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive; with the 71 elementary districts they cover the state exactly
     "school-district-elementary", // 71 elementary districts, about 177 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive; the ground the unified tiling leaves
     "zip-code",          // 1,040 ZIP Code Tabulation Areas overlapping Missouri, of the 1,977 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-26); about 163 km2 of land on average for the 1,977, and ranked by them, which are what the map draws where the archive is not used (on the raster basemap); the layer hides outside Missouri
@@ -15676,6 +15676,11 @@ function initMissouriExplorer() {
       : result.source === "sent"
       ? String(result.county) + "'s commission districts as the county's own " +
         "office sent them to this app"
+      : result.source === "city"
+      ? String(result.county) + "'s commission districts as the county clerk " +
+        "described them to this app on " + moDate(result.described) + ": the " +
+        String(result.cityDistrict) + " is the City of " + String(result.city) +
+        " and the other district is the rest of the county"
       : result.source === "arcgis"
       ? "The commissioner district layer of " + String(result.county) +
         "'s own map at SEMO GIS"
@@ -15696,6 +15701,7 @@ function initMissouriExplorer() {
     if (result.source === "sent" || result.source === "traced" ||
         (result.source === "townships" && sent)) read = sent;
     if (result.source === "listed") read = listed;
+    if (result.source === "city") read = "";
     return where + (read ? (sent || listed ? " on " : ", read on ") + read : "") + "." + (clerk
       ? " The county clerk pointed this app to that map on " + clerk + "."
       : "") + (result.source === "listed" && result.byPrecinct
@@ -15716,6 +15722,11 @@ function initMissouriExplorer() {
         "on the wrong side."
       : result.source === "posted"
       ? " Each district is drawn here from the 2020 blocks the map puts in it."
+      : result.source === "city"
+      ? " The city limits are drawn here from the county's own map at SEMO " +
+        "GIS, read on " + moDate(result.read) + ". The line moves when the " +
+        "city annexes land, so near the city limits, check with the county " +
+        "clerk."
       : "") + " Missouri law has " +
       "each county commission draw the line between its two districts, and " +
       "sets no date by which it must be redrawn. " + (result.byStreet
@@ -15765,6 +15776,9 @@ function initMissouriExplorer() {
           byPrecinct: !!findPropCI(props, ["byprecinct"]),
           byStreet: !!findPropCI(props, ["bystreet"]),
           sent: findPropCI(props, ["senton"]),
+          described: findPropCI(props, ["describedon"]),
+          city: findPropCI(props, ["city"]),
+          cityDistrict: findPropCI(props, ["citydistrict"]),
           officials: null,
           rosterFailed: false
         };
