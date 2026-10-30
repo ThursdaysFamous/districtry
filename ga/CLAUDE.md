@@ -110,7 +110,7 @@ every other instance via `scripts/compose_app.py`.
 - Geocoders: address Photon (Georgia-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Georgia-bounded, serial >=1s queue)
 - Ground truth: 33.74900,-84.38900 (Georgia State Capitol grounds, 206 Washington Street SW, Atlanta, Fulton County — the west side of the grounds, chosen 123 m from the line between House Districts 58 and 59, which runs east of the Capitol (the Capitol's own address point sits 51 m from it), measured 2026-10-29 against the shipped files) → county Fulton County; us-house 5; ga-senate 36; ga-house 58. Negative point 30.43830,-84.28070 (Tallahassee, Florida, about 26 km south of the Georgia line — outside Georgia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state layer names Florida here (controls: the State Capitol returns Georgia, and a point in the open Gulf of Mexico returns no state), and none of the state's shipped boundary files contains it. FLORIDA AND ALABAMA ARE THE TWO NEIGHBOURS NO INSTANCE SERVES, so the change that makes Florida live moves this point into Alabama, the way Kentucky's go-live moved Indiana's.).
 - Layers: 11 registered (political 3, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.GeorgiaExplorer`.
-- Scheduled workflows: `update-ga-congress-roster.yml` (Mon 19:23 UTC); `update-ga-legislature-roster.yml` (Tue 19:23 UTC); `ga-validate-sources.yml` (1st of month 21:43 UTC).
+- Scheduled workflows: `update-ga-congress-roster.yml` (Mon 19:23 UTC); `update-ga-legislature-roster.yml` (Tue 19:23 UTC); `update-ga-county-officials.yml` (Wed 19:41 UTC); `ga-validate-sources.yml` (1st of month 21:43 UTC).
 - Source registry: `ga/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 
@@ -202,7 +202,25 @@ gate and the 8 m fidelity ceiling pass). Rosters: `congress-roster.json`
 Assembly's own member data) — both count-guarded, both refreshed weekly by CI as reviewed PRs.
 `scripts/validate_chamber_rosters.py` holds both chamber files to one record per seat.
 
-The county commission and school board maps are not drawn yet (step 3 of the launch plan). Step 2,
+**County commissioners and county school board members are named from the Secretary of State's
+official election results** (`ga-county-officials.json`, `ga/scripts/build_ga_county_officials.py`,
+refreshed weekly by `update-ga-county-officials.yml`), because no state office publishes who sits
+on them: the Department of Community Affairs' directory sits behind a sign-in, which stays shut.
+The County card reads a county's `commission` and the School District card its `schoolBoard`; a
+city school system's board is not named, and the card says so. Each seat is named for the winner of
+its newest contest on `results.sos.ga.gov` whose winner has taken office (a regular winner on
+1 January after the election, a special election's on election day), and a winner not yet in
+office is shown as elected with the month they take office. **THE SITE CARRIES COUNTY CONTESTS ONLY
+FROM 5 NOVEMBER 2024 ON**, so a seat not on a ballot since then is not listed and one whose sitting
+member was elected earlier is listed with no one in it, and it shows nobody appointed to a vacancy;
+the card's "Where the names come from" says all three. A primary names nobody, a contest nobody won
+outright waits for its runoff, a city's board on a county ballot is set aside by its name
+(`city_board`, every run printing what it set aside), and a contest naming its seat in words the
+builder has not seen stops the build until a person records it in `SEAT_NAMES` with the reason.
+Its `--check` (offline, in CI) re-derives every name's rule from the shipped file.
+
+The county commission and school board maps are not drawn yet (the rest of step 3 of the launch
+plan). Step 2,
 `ga/scripts/check_ga_county_maps.py`, tested each of the map office's 296 county maps against the
 precincts that voted in each district contest of November 2024 and May and June 2026, read
 against the office's 2024 statewide precinct map, and wrote `ga/data/source/county-map-check.json`:

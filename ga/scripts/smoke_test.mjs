@@ -122,6 +122,31 @@ function longDate(iso) {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
   return m ? `${MONTHS[Number(m[2]) - 1]} ${Number(m[3])}, ${m[1]}` : null;
 }
+// The county commissioners and school board members the County and School
+// District cards name (ga-county-officials.json), and what a card must print
+// for one board's seats: every person named now, and the sentence for each
+// winner who has not taken office yet, in the card's own wording.
+const OFFICIALS = shipped("ga-county-officials.json");
+const esc = (s) => String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+function gaJoin(items) {
+  return items.length < 2 ? items.join("") : items.slice(0, -1).join(", ") + " and " + items[items.length - 1];
+}
+function boardWants(seats) {
+  const want = [];
+  for (const s of seats || []) {
+    const who = (s.members && s.members.length) ? s.members : (s.name ? [s] : []);
+    for (const m of who) want.push(new RegExp(esc(m.name)));
+    const e = s.elect;
+    const chosen = e ? ((e.members && e.members.length) ? e.members : (e.name ? [e] : [])) : [];
+    if (chosen.length) {
+      const m = /^(\d{4})-(\d{2})/.exec(e.since);
+      want.push(new RegExp(esc(`${gaJoin(chosen.map((c) => c.name))} ${chosen.length > 1 ? "were" : "was"} ` +
+        `elected to ${s.seat} on ${longDate(e.elected)} and ${chosen.length > 1 ? "take" : "takes"} ` +
+        `office in ${MONTHS[Number(m[2]) - 1]} ${m[1]}.`)));
+    }
+  }
+  return want;
+}
 // A card writes a telephone with non-breaking hyphens (U+2011).
 const plain = (s) => String(s || "").replace(/‑/g, "-");
 
@@ -915,8 +940,19 @@ try {
         name: "the school district card names the district",
         layer: "school-district-unified", service: "School/MapServer/0",
         props: { GEOID: "1300120", NAME: "Atlanta City School District", STATE: "13" },
-        want: [/Atlanta City School District/],
-        reject: [/Fort Benning/]
+        want: [/Atlanta City School District/, /This school system's board is elected, and this app does not name its members yet/],
+        reject: [/Fort Benning/, /Where the names come from/]
+      },
+      {
+        // A county system's board is named from the shipped roster, and a
+        // member elected in May 2026 is named as elected and not yet in
+        // office, never as the member now.
+        name: "a county school system names its board, and its members elected and not yet in office",
+        layer: "school-district-unified", service: "School/MapServer/0",
+        props: { GEOID: "1302280", NAME: "Fulton County School District", STATE: "13" },
+        want: [/Fulton County School District/, ...boardWants((OFFICIALS["13121"] || {}).schoolBoard),
+          /Where the names come from/],
+        reject: [/does not name its members yet/, /did not load/]
       },
       {
         // The point query answers nothing and the whole set holds only a
@@ -1029,23 +1065,52 @@ try {
     }
   }
 
-  // 9. THE COUNTY CARD NAMES THE COUNTY AND NO COMMISSIONER. No state office
-  //    publishes Georgia's county commissioners, and this instance ships no
-  //    roster of them yet (gap ga-county-commission-members), so the card must
-  //    say so in its own words and must never print a person. Fulton County at
-  //    the State Capitol, read from the shipped county file.
+  // 9. THE COUNTY CARD NAMES THE COMMISSION FROM THE SHIPPED ROSTER, and the
+  //    seats it names nobody for. Fulton County at the State Capitol, read
+  //    from the shipped county file: every commissioner the roster names now,
+  //    each winner not yet in office in the card's sentence, the seats whose
+  //    members were elected before the results site's first county races,
+  //    and where the names come from. Then the roster failing to load: the
+  //    card still names the county and names nobody.
   {
     const fc = shipped("state-counties.json");
     const p = propsAt(fc, POINT)[0] || {};
-    const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, `${BASE}#point=${POINT}&layers=county`);
-    const info = await cardText(page, "county");
-    const text = info.text || "";
-    check("the County card names the county and says no commissioner is named yet",
-      !info.error && !!p.NAME && text.includes(p.NAME) && text.includes(`FIPS ${p.GEOID}`) &&
-        /This app does not name them yet: no state office publishes who sits on Georgia's county commissions/.test(text),
-      text.slice(0, 160));
-    await context.close();
+    const seats = (OFFICIALS[p.GEOID] || {}).commission || [];
+    const want = boardWants(seats);
+    const unnamed = seats.filter((s) => !s.name && !(s.members || []).length && !s.runoff)
+      .map((s) => s.seat);
+    check("the shipped roster names someone on Fulton's commission and school board",
+      want.length > 0 && boardWants((OFFICIALS["13121"] || {}).schoolBoard).length > 0,
+      `commission=${want.length}`);
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=county`);
+      const info = await cardText(page, "county");
+      const text = info.text || "";
+      const missing = want.filter((re) => !re.test(text));
+      const credit = `official election results, read ${longDate((OFFICIALS[p.GEOID] || {}).asOf)}`;
+      check("the County card names the commission from the election results",
+        !info.error && !!p.NAME && text.includes(p.NAME) && text.includes(`FIPS ${p.GEOID}`) &&
+          /Board of commissioners/.test(text) && missing.length === 0 &&
+          (!unnamed.length || text.includes(gaJoin(unnamed) + ". ")) &&
+          text.includes(credit),
+        missing.length ? `missing=${missing} text=${text.slice(0, 200)}` : text.slice(0, 160));
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=county`, async (pg) => {
+        await pg.route("**/data/app/ga-county-officials.json", (r) => r.abort());
+      });
+      const info = await cardText(page, "county");
+      const text = info.text || "";
+      const leaked = want.filter((re) => re.test(text));
+      check("a County card whose roster does not load names the county and nobody",
+        !info.error && !!p.NAME && text.includes(p.NAME) &&
+          /The list of them did not load, so no one is named here/.test(text) && leaked.length === 0,
+        text.slice(0, 160));
+      await context.close();
+    }
   }
 } finally {
   await browser.close();
