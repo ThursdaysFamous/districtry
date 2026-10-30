@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "va-senate", "va-house"];
 const EXPECT_DISTRICT = { "county": "Richmond city", "us-house": "4", "va-senate": "14", "va-house": "78" };
 const NEGATIVE_POINT = "37.00000,-75.30000"; // Open Atlantic Ocean east of the mouth of Chesapeake Bay, 44 km from the nearest edge of Virginia's outline — outside Virginia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: none of the state's shipped boundary files contains it, none of fleet-outlines.json's outlines does either, and the State Capitol, the control, is inside every shipped file. Water on purpose, the way North Carolina's and Louisiana's are: every land neighbour of Virginia is either live already (Kentucky, Tennessee, North Carolina) or a state the fleet plans to build (West Virginia, Maryland), so a point on a neighbour's land would have to move when that neighbour goes live.
 const APP_NAME = "districtry Virginia";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 15;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "VirginiaExplorer";
@@ -596,30 +596,159 @@ try {
     await context.close();
   }
 
-  // 2a3. THE COUNTY OR CITY CARD TELLS A CITY FROM A COUNTY. Virginia's 38
-  //     independent cities belong to no county, so at the State Capitol, in
-  //     the City of Richmond, the card must say the city belongs to no county
-  //     and that its city council is not named yet; in Chesterfield County it
-  //     must name the board of supervisors as not named yet and claim no
-  //     city. Both names are read from the shipped file, so a rebuild that
-  //     moved either point would fail here rather than pass on stale words.
+  // 2a3. THE COUNTY OR CITY CARD TELLS A CITY FROM A COUNTY, AND NAMES WHO
+  //     GOVERNS IT. Virginia's 38 independent cities belong to no county, so
+  //     at the State Capitol, in the City of Richmond, the card must say the
+  //     city belongs to no county, that its council is elected from the
+  //     number of districts the names file holds, and name the mayor the
+  //     names file gives; in Chesterfield County it must say the board of
+  //     supervisors is elected from that county's districts and claim no
+  //     city. Every name and count is read from the shipped files, so a
+  //     rebuild that moved either point or changed a seat fails here rather
+  //     than passing on stale words.
+  const officials = shipped("va-local-officials.json");
+  function boardDistricts(fips, body) {
+    const loc = officials.localities[fips] || {};
+    return Object.values(loc.districts || {}).filter((d) => d.seats && d.seats[body]).length;
+  }
   {
     const counties = shipped("state-counties.json");
     for (const [pt, isCity] of [[POINT, true], [COUNTY_POINT, false]]) {
-      const name = (propsAt(counties, pt)[0] || {}).NAME || "";
+      const props = propsAt(counties, pt)[0] || {};
+      const name = props.NAME || "";
+      const fips = String(props.GEOID || "");
+      const loc = officials.localities[fips] || {};
+      const n = boardDistricts(fips, "board");
+      const mayor = (((loc.bodies || {}).mayor || {}).atLarge || {}).members || [];
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${pt}&layers=county`);
       const info = await cardText(page, "county");
       const text = info.text || "";
       const ok = isCity
         ? / city$/.test(name) && /An independent city/.test(text) && /Your city council/.test(text) &&
-          /Not named here yet/.test(text) && !/board of supervisors\b(?! governs)/.test(text.replace(/the way a board of supervisors governs a county/, ""))
-        : / County$/.test(name) && /Your board of supervisors/.test(text) && /Not named here yet/.test(text) &&
-          !/An independent city/.test(text);
+          text.includes(`Elected from ${n} districts`) && mayor.length === 1 && text.includes(mayor[0].name) &&
+          !/Your board of supervisors/.test(text)
+        : / County$/.test(name) && /Your board of supervisors/.test(text) &&
+          text.includes(`Elected from ${n} districts`) && !/An independent city/.test(text);
       check(isCity
-          ? `the County or City card says ${name || "the city"} belongs to no county and names no council member`
-          : `the County or City card names ${name || "the county"}'s board of supervisors as not named yet and claims no city`,
-        !info.error && !!name && text.includes(name) && ok, text.slice(0, 160));
+          ? `the County or City card says ${name || "the city"} belongs to no county and names its council's ${n} districts and its mayor`
+          : `the County or City card says ${name || "the county"}'s board of supervisors is elected from ${n} districts and claims no city`,
+        !info.error && !!name && n > 0 && text.includes(name) && ok, text.slice(0, 200));
+      await context.close();
+    }
+  }
+
+  // 2a4. THE LOCAL DISTRICT AND PRECINCT CARDS name what the shipped files
+  //     put at the point. In Chesterfield County the Supervisor or Council
+  //     District and School Board District cards must name the district the
+  //     district file draws there and the member the names file seats in it,
+  //     with the election that seated them, and the Voting Precinct card the
+  //     precinct the precinct file draws there. At Norfolk's City Hall the
+  //     point is in a ward and a superward, and the council card must name
+  //     both districts and both members. In Arlington, whose County Board is
+  //     elected at large, the district layer hides rather than saying no
+  //     district is here, and the County or City card names the members.
+  //     In Hanover County, whose school board is appointed, the County or
+  //     City card says so and names no one. In Poquoson's Eastern District,
+  //     read by hand from the city's own page, the card names the page.
+  {
+    const districts = shipped("va-local-districts.json");
+    const precincts = shipped("va-precincts.json");
+    function seated(p, body) {
+      const d = ((officials.localities[String(p.countyFips)] || {}).districts || {})[p.key] || {};
+      return ((d.seats || {})[body] || {}).members || [];
+    }
+    function drawnAt(pt, body) {
+      return propsAt(districts, pt).filter((p) => seated(p, body).length);
+    }
+    for (const [id, body] of [["supervisor-district", "board"], ["school-board-district", "school"]]) {
+      const here = drawnAt(COUNTY_POINT, body);
+      const members = here.length === 1 ? seated(here[0], body) : [];
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${COUNTY_POINT}&layers=${id}`);
+      const info = await cardText(page, id);
+      const text = info.text || "";
+      check(`${id} names ${here.length === 1 ? here[0].name : "the district"} and the member the names file seats there`,
+        !info.error && here.length === 1 && members.length > 0 && text.includes(here[0].name) &&
+          members.every((m) => text.includes(m.name)) && /Elected \d{1,2} \w+ \d{4}/.test(text),
+        text.slice(0, 160));
+      await context.close();
+    }
+    {
+      const here = propsAt(precincts, COUNTY_POINT);
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${COUNTY_POINT}&layers=voting-precinct`);
+      const info = await cardText(page, "voting-precinct");
+      const text = info.text || "";
+      check(`voting-precinct names ${here.length === 1 ? here[0].name : "the precinct"}, the one the precinct file draws at the point`,
+        !info.error && here.length === 1 && text.includes(String(here[0].name)) && /No one to public office/.test(text),
+        text.slice(0, 120));
+      await context.close();
+    }
+    {
+      const NORFOLK_POINT = "36.84680,-76.28520"; // Norfolk City Hall, 810 Union Street
+      const here = drawnAt(NORFOLK_POINT, "board");
+      const people = here.flatMap((p) => seated(p, "board"));
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${NORFOLK_POINT}&layers=supervisor-district`);
+      const info = await cardText(page, "supervisor-district");
+      const text = info.text || "";
+      check("at Norfolk's City Hall the council card names the ward and the superward and both members",
+        !info.error && here.length === 2 && here.some((p) => /^Ward /.test(p.name)) &&
+          here.some((p) => /^Superward /.test(p.name)) && here.every((p) => text.includes(p.name)) &&
+          people.length >= 2 && people.every((m) => text.includes(m.name)),
+        `${here.map((p) => p.name)} ${text.slice(0, 160)}`);
+      await context.close();
+    }
+    {
+      // A seat read by hand from the city's own page: Poquoson's Eastern
+      // District, which the results could not settle. Its card names both
+      // members, the page it read them from and the day.
+      const POQUOSON_POINT = "37.13344,-76.34268"; // inside the Eastern District
+      const here = drawnAt(POQUOSON_POINT, "board");
+      const seat = here.length === 1
+        ? (((officials.localities["51735"] || {}).districts || {})[here[0].key] || {}).seats.board : {};
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POQUOSON_POINT}&layers=supervisor-district`);
+      const info = await cardText(page, "supervisor-district");
+      const text = info.text || "";
+      check("in Poquoson's Eastern District the card names the members read from the city's own page, and says so",
+        !info.error && here.length === 1 && !!(seat.verified && seat.verified.url) &&
+          (seat.members || []).length === 2 && seat.members.every((m) => text.includes(m.name)) &&
+          /Poquoson's own page, read \d{1,2} \w+ \d{4}/.test(text),
+        text.slice(0, 200));
+      await context.close();
+    }
+    {
+      const ARLINGTON_POINT = "38.88990,-77.08580"; // Arlington County courthouse
+      const members = ((((officials.localities["51013"] || {}).bodies || {}).board || {}).atLarge || {}).members || [];
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${ARLINGTON_POINT}&layers=supervisor-district,county`);
+      const hidden = await page
+        .waitForFunction(() => {
+          const box = document.getElementById("toggle-supervisor-district");
+          const block = box && box.closest(".layer-block");
+          return block && block.hidden === true;
+        }, null, { timeout: QUERY_TIMEOUT })
+        .then(() => true, () => false);
+      const info = await cardText(page, "county");
+      const text = info.text || "";
+      check("in Arlington, elected at large, the district layer hides and the County card names the board",
+        hidden && drawnAt(ARLINGTON_POINT, "board").length === 0 && members.length > 1 &&
+          members.every((m) => text.includes(m.name)) && /elected at large/.test(text),
+        `hidden=${hidden} ${text.slice(0, 160)}`);
+      await context.close();
+    }
+    {
+      const HANOVER_POINT = "37.76290,-77.36830"; // Hanover County courthouse
+      const school = (((officials.localities["51085"] || {}).bodies || {}).school) || {};
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${HANOVER_POINT}&layers=county`);
+      const info = await cardText(page, "county");
+      const text = info.text || "";
+      check("in Hanover County, whose school board is appointed, the County card says so and names no one",
+        !info.error && school.elected === false && /is appointed by the board of supervisors/.test(text),
+        text.slice(0, 160));
       await context.close();
     }
   }
@@ -880,7 +1009,7 @@ try {
         name: "a city says it belongs to no county, never alongside one",
         layer: "municipality", service: PLACES,
         props: { GEOID: "5101000", NAME: "Alexandria city", BASENAME: "Alexandria", STATE: "51", LSADC: "25", FUNCSTAT: "A" },
-        want: [/Alexandria city/, /Independent city — it belongs to no county/, /your mayor and city council/i, /Not named here yet/],
+        want: [/Alexandria city/, /Independent city — it belongs to no county/, /Your city council/, /Every member is elected at large/],
         reject: [/alongside the county/, /Incorporated town/, /town council/i]
       },
       {

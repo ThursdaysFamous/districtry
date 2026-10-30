@@ -69,7 +69,7 @@ in the researched-but-unbuilt backlog.
   "louisiana": ["us-house", "la-supreme-court", "la-court-of-appeal", "la-senate", "la-district-court", "county", "school-district-unified", "la-house", "zip-code", "parish-district", "voting-precinct", "municipality", "city-ward", "tribal-government", "police-station", "fire-station", "post-office"],
   "missouri": ["us-house", "mo-senate", "county", "mo-house", "county-commissioner", "school-district-unified", "school-district-elementary", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"],
   "georgia": ["us-house", "ga-senate", "county", "ga-house", "school-district-unified", "county-subdivision", "county-commissioner", "school-board-district", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "virginia": ["us-house", "va-senate", "va-house", "county", "school-district-unified", "county-subdivision", "zip-code", "municipality", "school-district-elementary", "police-station", "fire-station", "post-office"],
+  "virginia": ["us-house", "va-senate", "va-house", "county", "school-district-unified", "school-board-district", "county-subdivision", "supervisor-district", "zip-code", "voting-precinct", "municipality", "school-district-elementary", "police-station", "fire-station", "post-office"],
   "westvirginia": ["us-house", "wv-senate", "county", "school-district-unified", "wv-house", "county-subdivision", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
@@ -3934,51 +3934,51 @@ trusted.
     {
       "id": "va-county-board-members",
       "concept": "County governing body",
-      "area": "Virginia — all 95 counties and 38 independent cities",
+      "area": "Virginia — the counties and cities whose current members the state's results cannot settle",
       "counties": [],
-      "everyCounty": true,
       "kind": "no-source",
-      "layer": "county",
-      "summary": "The County or City card names your county or independent city, and not the members of its board of supervisors or city council, nor which member represents the spot you picked.",
-      "why": "This app has not yet read the state's election results, which name every member, or drawn the districts most of them are elected from.",
-      "wanted": "Nothing from a reader — the state publishes both, and building them is ours to do.",
-      "blocker": "UNBUILT, NOT ABSENT. Recorded 2026-10-29 while the instance is dark, by the first of the five changes in the Virginia plan (claude.ai artifact R4apNobGbZaZRpCDiWRxVc). The Department of Elections posts a file of election districts and precincts for every county and city on its GIS page (Code of Virginia 24.2-103.1 requires current maps of each locality there) and a statewide layer last changed 2026-09-22; the plan measured that in 88 of the 91 counties electing supervisors by district its districts are exactly the districts the state's election results name. The results site names the winner of every district seat on every board of supervisors (94 counties; Arlington's County Board is at large) and city council (all 38 cities). The plan's second change draws those districts and names their members, each card saying which election the name comes from; it does not show a member appointed to a vacancy until a special election. A letter to the Department of Elections went out 2026-10-27 through the Letters thread asking whether the district files may be used with credit and whether appointments are recorded; follow-up due about 2026-11-17. The terms are treated as unstated until it answers; the build does not wait on it."
+      "layer": "supervisor-district",
+      "summary": "The Supervisor or Council District card names each member the state's election results settle. For a few seats it names no one and says why, most often a special election the results do not tie to one seat.",
+      "why": "The results list every contest, and a few of them do not say which seat they filled or whose term they finished.",
+      "wanted": "A county's or city's own list of its board or council members, or the Department of Elections' record of members appointed to fill vacancies.",
+      "blocker": "NARROWED 2026-10-30 by the second of the five changes in the Virginia plan (claude.ai artifact R4apNobGbZaZRpCDiWRxVc): 597 board and council districts in 106 counties and cities are drawn as unions of the Department of Elections' precincts and their members named from historical.elections.virginia.gov, each card naming the election; the bodies elected at large (Arlington, Highland, Madison and Mathews counties' boards and 23 cities' councils) are named on the County or City card. va/scripts/build_va_local_officials.py leaves a seat unnamed when the results cannot settle who holds it today: 16 board and council seats or at-large bodies on 2026-10-30, among them Alexandria's, Hampton's and Staunton's councils (a special election that does not say whose term it finished) and Madison's and Mathews's boards (seats elected in different years with one election missing, or a change in the number of seats). Six seats were read by hand from the body's own page on 2026-10-30, in the check of the eight bodies the results seat two to a district; Wise County's school board and Newport News's council could not be compared (one host reset every connection, the other's member list is on a host whose robots.txt disallows us). The names file does not show a member appointed to a vacancy until a special election. The letter to the Department of Elections sent 2026-10-27 through the Letters thread asks whether the district files may be used with credit and whether appointments are recorded; follow-up due about 2026-11-17. The remaining seats wait on a hand reading of each body's own page, recorded in the builder's HAND table."
     },
     {
       "id": "va-school-board-members",
       "concept": "School board",
-      "area": "Virginia",
+      "area": "Virginia — the school boards that are appointed, and the elected seats the state's results cannot settle",
       "counties": [],
       "kind": "no-source",
-      "layer": "school-district-unified",
-      "summary": "The School Division card names your division, and not the members of its school board, nor which member represents the spot you picked.",
-      "why": "Most Virginia school boards are elected, and this app has not yet read the state's election results that name them or drawn the districts they are elected from.",
-      "wanted": "Nothing from a reader — the state publishes both, and building them is ours to do.",
-      "blocker": "UNBUILT. Recorded 2026-10-29 while the instance is dark. The Virginia plan measured school board contests in the state's results in 93 counties and 27 cities from 2021 to 2025: 88 counties elect by district on the supervisors' district lines, 5 at large, 10 cities by ward or district on their council lines, 17 cities at large, and 11 cities and 2 counties (Hanover, Richmond County) hold no school board contest, their boards being appointed or shared, which is to be checked one by one before a card says which. The boundary this card draws is TIGERweb's School service layer 0 (135 divisions) with layer 2 holding Lexington's alone; it carries the division's name and nothing about its board. The plan's second change names the members and draws the districts."
+      "layer": "school-board-district",
+      "summary": "The School Board District card names each member the state's results settle. A few seats are not named, and where a school board is appointed the County or City card says so and names no one.",
+      "why": "An appointed board is not on any ballot, and a few elected seats' contests do not say which seat they filled.",
+      "wanted": "Each school division's own list of its board members.",
+      "blocker": "NARROWED 2026-10-30 by the Virginia plan's second change: 545 school board districts in 98 counties and cities are drawn on the supervisors' and councils' district lines and their members named from the state's results; boards elected at large are named on the County or City card. Thirteen boards hold no election in the results since 2015 and are explained as appointed (Hanover and Richmond counties and 11 cities, among them Emporia, Lynchburg, Roanoke and Williamsburg), naming nobody. va/scripts/build_va_local_officials.py leaves 20 elected seats or at-large bodies unnamed on 2026-10-30 (Chesapeake's and Portsmouth's after a special election, Fairfax County's and Charlottesville's after an apparent change in the number of seats, Mecklenburg's Districts 4 and 5 with no winner in the results, and others), and 2 more whose member has since won another seat on the same board (Henry County's at-large seat and Page County's District 4). Two were read by hand that day (Prince George's District 2 and Newport News's South District). The appointed boards' members and the unsettled seats wait on each division's own page."
     },
     {
       "id": "va-municipal-officeholders",
       "concept": "City or town government",
-      "area": "Virginia",
+      "area": "Virginia — every incorporated town but Leesburg and Blacksburg",
       "counties": [],
       "kind": "no-source",
       "layer": "municipality",
-      "summary": "The City or Town card names the place and says whether it is a city or a town, and not its mayor or council members.",
-      "why": "This app has not yet read the state's election results, which name the mayor and council of most cities and towns.",
-      "wanted": "Nothing from a reader — the state's election results name them, and reading them is ours to do.",
-      "blocker": "UNBUILT. Recorded 2026-10-29 while the instance is dark. The boundary is TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4): 38 cities and 189 towns for STATE='51', every one FUNCSTAT A, measured 2026-10-29, carrying a name, a code and a status and no officeholder field. The Virginia plan measured council contests in about 190 towns and all 38 cities in the state's results, 173 town mayors and 21 city mayors; the other 17 cities hold no mayoral election there, which usually means the council chooses its mayor and is to be confirmed city by city before a card says so. A city's council is also its county-level government, so its members belong on the County or City card too (gap va-county-board-members)."
+      "summary": "The City or Town card names every city's council and elected mayor, and Leesburg's and Blacksburg's, and not yet the mayor or council of any other town.",
+      "why": "The state's results name most towns' mayors and councils, and this app has read them for its two largest towns only so far.",
+      "wanted": "Nothing from a reader — the state's results name them, and reading them is ours to do.",
+      "blocker": "NARROWED 2026-10-30 by the Virginia plan's second change, which reads the town council and mayor contests for Leesburg and Blacksburg, the two towns above 25,000 people, and no others; the plan of 2026-10-21 measured council contests in about 190 towns and 173 town mayors in the results. The boundary is TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4): 38 cities and 189 towns for STATE='51', every one FUNCSTAT A, measured 2026-10-29. Every city's council and elected mayor is named, from the same entry the County or City card reads; a city whose mayor holds no election in the results since 2015 is said to have its council choose one. The other towns' card names no one and points to the town's own website. Reading the rest is one change of its own, with the same tests the cities pass."
     },
     {
-      "id": "va-voting-precincts",
-      "concept": "Voting precinct",
+      "id": "va-local-official-contacts",
+      "concept": "Local officials' contact details",
       "area": "Virginia",
       "counties": [],
+      "everyCounty": true,
       "kind": "no-source",
-      "layer": null,
-      "summary": "This app does not draw Virginia's voting precincts yet, so it cannot tell you which precinct your spot is in.",
-      "why": "The state's Department of Elections publishes a map of every county's and city's precincts, and this app has not built it yet.",
-      "wanted": "Nothing from a reader — this one is ours to build.",
-      "blocker": "UNBUILT. Recorded 2026-10-29 while the instance is dark. The Department of Elections' statewide layer covers all 133 counties and cities and all 2,531 precincts and was last changed 2026-09-22; its per-locality files on the Department's GIS page were found 2026-10-27 and not yet downloaded. Neither states terms of use; the 2026-10-27 letter (gap va-county-board-members) asks. The plan's second change draws them, after measuring the statewide layer's lines against five counties' own maps, because its name says it is simplified."
+      "layer": "supervisor-district",
+      "summary": "The local district and County or City cards name your supervisors, council members and school board members, and not yet their telephone numbers, e-mail addresses or offices.",
+      "why": "The state's election results carry names only, and this app has not yet read each county's and city's own pages for contact details.",
+      "wanted": "Nothing from a reader — most counties and cities publish them, and reading them is ours to do.",
+      "blocker": "Recorded 2026-10-30 with the Virginia plan's second change. historical.elections.virginia.gov gives each contest's candidates, votes and winner and nothing else about a person. The hand check of the same day found members' own telephones and e-mail addresses printed beside them on Prince George's, Wise County's, Newport News's schools' and Winchester's pages, which the fleet's rule of 2026-10-17 would let ship; none was taken, so that one reading method covers all 133 counties and cities. Street addresses such pages print beside members are never taken."
     },
     {
       "id": "va-magisterial-district-lines",

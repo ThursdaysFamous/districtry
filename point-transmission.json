@@ -718,11 +718,14 @@
         "municipality",
         "police-station",
         "post-office",
+        "school-board-district",
         "school-district-elementary",
         "school-district-unified",
+        "supervisor-district",
         "us-house",
         "va-house",
         "va-senate",
+        "voting-precinct",
         "zip-code"
       ]
     },

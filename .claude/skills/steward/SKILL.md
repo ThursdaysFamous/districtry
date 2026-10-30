@@ -191,6 +191,7 @@ python3 la/scripts/build_la_precincts.py --check                     # the same 
 python3 nc/scripts/build_nc_precincts.py --check                     # the same for North Carolina
 python3 sc/scripts/build_sc_precincts.py --check                     # the same for South Carolina
 python3 tn/scripts/build_tn_precincts.py --check                     # the same for Tennessee
+python3 va/scripts/build_va_precincts.py --check                     # the same for Virginia
 python3 ar/scripts/build_ar_school_board_districts.py --check        # a published school board map: hash and per-board counts against its record, the builder's test points in the districts it names, the card's stated wording
 python3 in/scripts/build_in_school_board_districts.py --check        # the same for Indiana (Indianapolis Public Schools)
 python3 sc/scripts/build_sc_school_board_districts.py --check        # the same for South Carolina
@@ -239,6 +240,8 @@ python3 ms/scripts/build_ms_city_councils.py --check              # the 15 citie
 python3 ms/scripts/build_ms_city_wards.py --check                 # the nine cities' wards against their councils' ward seats, the card's empty state, the sources page and the record of what each ward layer served
 python3 la/scripts/build_la_parish_officials.py --check          # Louisiana's parish governing bodies as shipped: all 64 parishes, every member named and seated, the member, telephone and party floors, no telephone on two members' rows, and no field the builder does not read
 python3 la/scripts/build_la_parish_districts.py --check          # Louisiana's parish districts against their build record, the list's seats, the Census edition the card names, and the Parish layer
+python3 va/scripts/build_va_local_officials.py --check          # Virginia's local seats against their build record: every county and city, its districts, and a member, a reason or a member who left for every seat
+python3 va/scripts/build_va_local_districts.py --check          # Virginia's drawn local districts against the precinct file and exactly the districts the names file lists
 python3 la/scripts/build_la_court_districts.py --check          # Louisiana's courts of appeal and district courts against the parish lists in the kept text of La. R.S. 13:312 and 13:477, and the Supreme Court map against its build record
 python3 la/scripts/build_la_judges.py --check                   # Louisiana's judges as shipped: their shape, the justice, appeal and district floors, the party and telephone shares, and the districts the three court maps draw
 python3 la/scripts/build_la_city_wards.py --check               # Louisiana's city council districts against their build record, the council seats the list names, and the sentences that name the four drawn cities
