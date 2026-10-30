@@ -16671,6 +16671,7 @@ function initVirginiaExplorer() {
       { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
       { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
       { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterTitle", label: "", keys: ["rostertitle"], when: function () { return false; } },
       { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
       { name: "url", label: "", keys: ["url"], when: function () { return false; } },
       { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
@@ -16691,6 +16692,9 @@ function initVirginiaExplorer() {
     // THE COUNCIL, where the nation's own page names it, merged onto the land
     // by the loader above, so the card makes no request of its own; and, for
     // a nation the Commonwealth recognizes, a link to the list that names it.
+    // The Rappahannock Tribe publishes no council, and the Commonwealth's list
+    // names only its Chief and Assistant Chief, so its names come headed
+    // "Chief and Assistant Chief" (rosterTitle) rather than "Council".
     people: function (result) {
       var roster = result && result.roster;
       var hasRoster = !!(roster && roster.length);
@@ -16700,7 +16704,7 @@ function initVirginiaExplorer() {
       var links = [];
       if (hasRoster) {
         wrap.appendChild(renderBodyIntro({
-          title: "Council",
+          title: result.rosterTitle ? String(result.rosterTitle) : "Council",
           note: result.rosterNote ? String(result.rosterNote) : null
         }));
         wrap.appendChild(renderPersonRows(roster.map(function (m) {

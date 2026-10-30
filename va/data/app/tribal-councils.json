@@ -1,4 +1,24 @@
 {
+ "3075": {
+  "roster": [
+   {
+    "name": "Anne Richardson",
+    "role": "Chief"
+   },
+   {
+    "name": "Mark Fortune",
+    "role": "Assistant Chief"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "Only the Chief and Assistant Chief are named here, from the Secretary of the Commonwealth of Virginia's list of state-recognized tribes, read 2026-10-30. The tribe publishes no council of its own, and the list names no council member.",
+  "rosterSource": "state-list",
+  "rosterPage": "https://www.commonwealth.virginia.gov/virginia-indians/state-recognized-tribes/",
+  "rosterRead": "2026-10-30",
+  "rosterHost": null,
+  "rosterMeasured": null,
+  "rosterTitle": "Chief and Assistant Chief"
+ },
  "9230": {
   "roster": [
    {
