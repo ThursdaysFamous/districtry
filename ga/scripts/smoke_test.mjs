@@ -944,6 +944,16 @@ try {
         reject: [/Fort Benning/, /Where the names come from/]
       },
       {
+        // The Fort Stewart schools are neither a county's nor a city's, so
+        // the card says the election results do not cover them rather than
+        // promising a city system's board later.
+        name: "the Fort Stewart schools say the election results do not cover them",
+        layer: "school-district-unified", service: "School/MapServer/0",
+        props: { GEOID: "1300003", NAME: "Fort Stewart School District", STATE: "13" },
+        want: [/Fort Stewart School District/, /These are the schools on Fort Stewart, the Army post, which the state's election results do not cover/],
+        reject: [/board is elected/, /city systems' boards come later/, /Where the names come from/]
+      },
+      {
         // A county system's board is named from the shipped roster, and a
         // member elected in May 2026 is named as elected and not yet in
         // office, never as the member now.

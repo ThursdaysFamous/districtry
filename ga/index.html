@@ -15876,6 +15876,11 @@ function initGeorgiaExplorer() {
     TIGERWEB_SERVICES + "School/MapServer", 0,
     "GEOID,NAME,STATE", "unified school districts");
 
+  // The schools on Fort Stewart are run for the Army post rather than by a
+  // city or a county, so no Georgia ballot elects whoever oversees them and
+  // the card must not say "the city systems' boards come later" of them.
+  var GA_FORT_STEWART_SCHOOLS = /^Fort Stewart School District$/;
+
   // The county a school district belongs to by its census name, for the 159
   // county systems ("Appling County School District", "Dougherty School
   // District"), or null for a city system or the Fort Stewart schools.
@@ -15943,6 +15948,10 @@ function initGeorgiaExplorer() {
           label: "Board of education",
           value: result.rosterFailed
             ? "The list of school board members did not load, so no one is named here."
+            : GA_FORT_STEWART_SCHOOLS.test(String(result.name || ""))
+            ? "These are the schools on Fort Stewart, the Army post, which the " +
+              "state's election results do not cover. This app names only the " +
+              "boards of the 159 county school systems."
             : "This school system's board is elected, and this app does not name " +
               "its members yet. It names the boards of the 159 county school " +
               "systems, from the state's election results; the city systems' " +
