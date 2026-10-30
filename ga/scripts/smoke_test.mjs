@@ -1089,12 +1089,19 @@ try {
       const text = info.text || "";
       const missing = want.filter((re) => !re.test(text));
       const credit = `official election results, read ${longDate((OFFICIALS[p.GEOID] || {}).asOf)}`;
+      // the section label is set in capitals by the stylesheet, which
+      // innerText reports, so the heading is matched without case
+      const parts = {
+        county: !!p.NAME && text.includes(p.NAME) && text.includes(`FIPS ${p.GEOID}`),
+        heading: /Board of commissioners/i.test(text),
+        people: missing.length === 0,
+        unnamed: !unnamed.length || text.includes(gaJoin(unnamed) + ". "),
+        credit: text.includes(credit)
+      };
+      const wrong = Object.keys(parts).filter((k) => !parts[k]);
       check("the County card names the commission from the election results",
-        !info.error && !!p.NAME && text.includes(p.NAME) && text.includes(`FIPS ${p.GEOID}`) &&
-          /Board of commissioners/.test(text) && missing.length === 0 &&
-          (!unnamed.length || text.includes(gaJoin(unnamed) + ". ")) &&
-          text.includes(credit),
-        missing.length ? `missing=${missing} text=${text.slice(0, 200)}` : text.slice(0, 160));
+        !info.error && wrong.length === 0,
+        wrong.length ? `wrong=${wrong} missing=${missing} text=${text.slice(0, 400)}` : text.slice(0, 160));
       await context.close();
     }
     {

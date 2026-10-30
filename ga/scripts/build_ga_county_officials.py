@@ -474,12 +474,13 @@ def unmarked_special(c, seasons):
     """True when a contest the site does not call special must be one,
     because it falls where no regular county election does: in an odd year,
     in a month other than May, June, November or December, or in the other
-    season from its board's regular one. Measured 2026-10-30 against every
-    won contest, this marks Chatham's "County Commissioner - District 4
-    (Farrell)" on the May 2026 ballot (the commission's other nine seats were
-    all elected in November 2024, Pat Farrell's among them), Emanuel's two
-    school board seats on the November 2024 ballot (its board's other
-    contests are all in May), and five county contests on the municipal
+    season from its board's regular one. Measured 2026-10-30 against the
+    935 won county board contests (27 of them marked special by the site),
+    this marks 16: Chatham's "County Commissioner - District 4 (Farrell)" on
+    the May 2026 ballot (the commission's other nine seats were all elected
+    in November 2024, Pat Farrell's among them), Emanuel's and Seminole's
+    two school board seats each on the November 2024 ballot (both boards'
+    other contests are in May), and 11 county contests on the municipal
     ballot of November 2025.
 
     The roster records such a contest as "special": "inferred", and its
