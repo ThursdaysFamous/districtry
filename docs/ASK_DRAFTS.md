@@ -130,7 +130,7 @@ with, working as intended.
 | Dickinson County Auditor (IA) | the same | none | **ANSWERED same day**: a bare "no", which the letter itself had offered as a complete answer. It settles that the office will not supply the pairing; it says NOTHING about whether the board is elected by district, and must not be read as if it did |
 | Black Hawk and Guthrie county auditors (IA) | the same | none | — |
 | Calhoun County Auditor (IA) | the same | none | — |
-| Wright County Auditor and Pottawattamie County elections office (IA) | how many supervisors, and who | none | — |
+| Wright County Auditor and Pottawattamie County elections office (IA) | how many supervisors, and who | none | Pottawattamie **ANSWERED 2026-10-26** after the follow-up that morning: five supervisors, elected at large, the five the County card already names; its gap retired 2026-10-30 |
 | Tama County Auditor (IA) | the same | none | **ANSWERED same day**, in full: five supervisors with districts, and contact details that need care — District 1's address is a personal one and his telephone is outside the county's own number block, so neither ships until she says which lines are the county's |
 | Franklin County Clerk (IL) | which Public Square address the board meets at | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |
 | Clinton County Clerk (IL) | the address where the board meets | **asked 2026-08-05, followed up 2026-08-16, no reply** | — |

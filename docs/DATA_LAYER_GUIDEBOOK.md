@@ -2477,26 +2477,7 @@ trusted.
         }
       ]
     },
-    {
-      "id": "ia-supervisor-count-impossible",
-      "concept": "County supervisor",
-      "area": "Pottawattamie County, Iowa",
-      "counties": [
-        "pottawattamie"
-      ],
-      "ask": {
-        "who": "County elections office (letter addressed to Auditor Mary Ann Hanusa)",
-        "asked": "2026-10-01",
-        "followedUp": "2026-10-26",
-        "outcome": "answered"
-      },
-      "kind": "data-quality",
-      "layer": "county-supervisor",
-      "summary": "In Pottawattamie County your supervisor card names the county and no supervisors. The directory this app reads gives the board a size Iowa law does not allow, so nothing here can say who sits on it.",
-      "why": "Iowa law puts a board of supervisors at three members or five. The statewide directory lists six for this county, which makes that table stale rather than the board unusual, so the names beside it are not printed.",
-      "wanted": "The county's own published list of its supervisors in a form this app is allowed to read, or a corrected statewide directory whose board size matches what the county itself reports.",
-      "blocker": "MEASURED 2026-09-22 and RE-MEASURED 2026-10-01, WHEN FOUR OF THE SIX CLOSED BY THE ROUTE THIS RECORD HAD ALREADY NAMED AND NOBODY HAD WALKED. Its own last paragraph said the ask was \"worth drafting only after someone checks whether each county's own site already names its supervisors -- which would close this without writing to anybody\". That check was run and it closed four counties: Adair, Floyd, Humboldt and Lucas each publish their own board page naming a lawful board whose size agrees with the district geometry this repo ships, so ia/scripts/ia_county_board_page_scraper.py reads those four pages and build_ia_county_officers.py prefers them for a county it would otherwise withhold. A MEASUREMENT WRITTEN DOWN AND NOT RUN IS A MEASUREMENT THE NEXT PASS REPEATS: the route sat in this field for nine days.\n\nONE OF THE FOUR WAS BLOCKED BY A WRONG ADDRESS IN THIS REPO rather than by anything the county does. Floyd's recorded host www.floydco.iowa.gov resets the connection; bare floydco.iowa.gov answers 200 and serves the board. Measure the address the scraper fetches, never a spelling of it.\n\nPOTTAWATTAMIE IS A SITE-WIDE BLOCK AND IS NEVER WORKED AROUND. The directory lists six, which Iowa Code 331.201 does not allow, and the county's own page is the obvious repair. GET https://www.pottcounty-ia.gov/ and its board path, 2026-10-01: HTTP 403 to the districtry token AND 403 to a pinned Chrome string with its client hints, at the www host and at the apex, while robots.txt answers 404 at both -- no policy published, so fetching is permitted and the refusal is the edge rather than the publisher. Reading robots.txt as permission and then escalating clients until one gets through is defeating an access control, so nothing further was tried.\n\nTAMA LEFT THIS RECORD ON 2026-10-01, ANSWERED. The directory listed four supervisors for it, which is not a lawful board size, and that is exactly what the letter settled: the county's own Auditor named five with their districts, so the directory's four was the stale half and the board is not unusual. What still stops Tama's card is this project's own map, which is a different gap and now has its own record, ia-tama-supervisor-map. A RECORD DESCRIBES ONE BLOCKER: holding two counties in one record was tolerable while both were blocked the same way, and the moment one answered the record could no longer state either county's state honestly -- nor carry an ask block, which names one desk.\n\nFIXED THE SAME DAY, HAVING BEEN RECORDED HERE AND LEFT: build_ia_county_officers.py's module docstring said \"Seven counties fail one or both (measured 2026-08-28)\" and named Henry. It now states the count the builder prints rather than a figure beside it.\n\nASK: ASKED 2026-10-01 -- sent to the county's elections office mailbox, elections@pottcounty-ia.gov, which is the address ia-county-auditors.json carries for the Auditor, with the letter addressed to Auditor Mary Ann Hanusa by name; it did not go to a mailbox of her own. Confirmed in the operator's own sent folder at 14:54:03 UTC. One letter asking for the board's size and its members, which is the only route left here, the county's own site being shut to every client. No answer yet; the follow-up falls due at about three weeks (2026-10-22) and the thirty-day silence mark at 2026-10-31. A record earns nothing toward the fourth test until that letter has been refused, or followed up once and met thirty days of silence, so the `covers` tag here names which level is open and claims nothing closed, and the `ask` block says `pending` for the same reason. ASK LEDGER CORRECTED 2026-10-30 from the mailbox, read by the Letters thread: Adam sent the follow-up on 2026-10-26 13:41 UTC. Auditor Mary Ann Hanusa replied the same day, 20:44 UTC, naming five supervisors (Susan Miller, Keith Jones, Tim Wichman, Jeff Jorgensen, Brian Shea), and at 21:25 UTC, asked which district each represents: \"The Supervisors are elected at- large, and do not represent individual districts.\" So the board is five, elected at large, and the names are obtainable from the county's own Auditor and not yet shipped. The covers tag is removed because an answered ask claims nothing; the open level is now this project's work."
-    },
+
     {
       "id": "ia-supervisor-district-seats",
       "kind": "data-quality",
@@ -4316,6 +4297,44 @@ ia/data/app/ia-supervisor-districts.json draws THREE features for Tama, sourced 
 NAMES WITHOUT A MAP ARE NOT SHIPPED, AND NEITHER IS A NAME WITHOUT ITS OFFICE CONTACT. The reply also carried a personal e-mail address for District 1 and five telephone numbers whose status is unstated; this instance publishes office contact only, so the address is not kept and the Auditor has been asked which numbers are county lines.
 
 ASK: NOT YET ASKED -- A FOLLOW-UP IS DRAFTED, ia-tama-supervisor-map, asking the same Auditor for the county's current five-district map, which is the one thing left between this reply and a card naming all five. It reads ASKED <date> only on the day it goes. The reply sent in the operator's name says the entry will list all five supervisors with their districts, so this follow-up matters to a promise already made. A record earns nothing toward the fourth test until an ask has gone and been refused, or gone, been followed up once and met thirty days of silence; the answer already in hand closes the NAMES and not this level, because the level asks that the card name the body and it cannot yet.
+
+## Closed record — Pottawattamie County's supervisors (opened 2026-09-22, closed 2026-10-30)
+
+This was the `ia-supervisor-count-impossible` gap in the Iowa block above. The
+statewide county directory listed six supervisors for Pottawattamie, a board
+size Iowa Code 331.201 does not allow, so `build_ia_county_officers.py` withheld
+the board and the County card named nobody.
+
+CLOSED 2026-10-30, and it had been answered twice before anyone wrote it down.
+The weekly county-officer refresh of 2026-10-17 (#1599) found the directory
+listing five, which passes both of the builder's gates, so the County card has
+named Susan Miller, Keith Jones, Tim Wichman, Jeff Jorgensen and Brian Shea
+since that day while this record went on telling readers in the county that it
+named none. Then Auditor Mary Ann Hanusa answered the 2026-10-01 letter on
+2026-10-26, after Adam's follow-up that morning: the same five names, and, asked
+which district each represents, "The Supervisors are elected at- large, and do
+not represent individual districts." That matches PLAN 1 in
+`ia-county-board-directory.json`, so the County card's unkeyed list is the whole
+answer and there is no district to draw. The record and its gap-location outline
+`pottawattamie-county-outline.json` are retired together (cache bumped, since the
+outline was cache-first).
+
+THE LESSON IS THE DIRECTION OF THE STALENESS. A gap record is written against a
+source's failure and nothing re-reads it when the source recovers, so a weekly
+job can close a gap silently and leave the panel saying the opposite of the
+card beside it. The record's blocker as it stood at retirement follows.
+
+> MEASURED 2026-09-22 and RE-MEASURED 2026-10-01, WHEN FOUR OF THE SIX CLOSED BY THE ROUTE THIS RECORD HAD ALREADY NAMED AND NOBODY HAD WALKED. Its own last paragraph said the ask was "worth drafting only after someone checks whether each county's own site already names its supervisors -- which would close this without writing to anybody". That check was run and it closed four counties: Adair, Floyd, Humboldt and Lucas each publish their own board page naming a lawful board whose size agrees with the district geometry this repo ships, so ia/scripts/ia_county_board_page_scraper.py reads those four pages and build_ia_county_officers.py prefers them for a county it would otherwise withhold. A MEASUREMENT WRITTEN DOWN AND NOT RUN IS A MEASUREMENT THE NEXT PASS REPEATS: the route sat in this field for nine days.
+>
+> ONE OF THE FOUR WAS BLOCKED BY A WRONG ADDRESS IN THIS REPO rather than by anything the county does. Floyd's recorded host www.floydco.iowa.gov resets the connection; bare floydco.iowa.gov answers 200 and serves the board. Measure the address the scraper fetches, never a spelling of it.
+>
+> POTTAWATTAMIE IS A SITE-WIDE BLOCK AND IS NEVER WORKED AROUND. The directory lists six, which Iowa Code 331.201 does not allow, and the county's own page is the obvious repair. GET https://www.pottcounty-ia.gov/ and its board path, 2026-10-01: HTTP 403 to the districtry token AND 403 to a pinned Chrome string with its client hints, at the www host and at the apex, while robots.txt answers 404 at both -- no policy published, so fetching is permitted and the refusal is the edge rather than the publisher. Reading robots.txt as permission and then escalating clients until one gets through is defeating an access control, so nothing further was tried.
+>
+> TAMA LEFT THIS RECORD ON 2026-10-01, ANSWERED. The directory listed four supervisors for it, which is not a lawful board size, and that is exactly what the letter settled: the county's own Auditor named five with their districts, so the directory's four was the stale half and the board is not unusual. What still stops Tama's card is this project's own map, which is a different gap and now has its own record, ia-tama-supervisor-map. A RECORD DESCRIBES ONE BLOCKER: holding two counties in one record was tolerable while both were blocked the same way, and the moment one answered the record could no longer state either county's state honestly -- nor carry an ask block, which names one desk.
+>
+> FIXED THE SAME DAY, HAVING BEEN RECORDED HERE AND LEFT: build_ia_county_officers.py's module docstring said "Seven counties fail one or both (measured 2026-08-28)" and named Henry. It now states the count the builder prints rather than a figure beside it.
+>
+> ASK: ASKED 2026-10-01 -- sent to the county's elections office mailbox, elections@pottcounty-ia.gov, which is the address ia-county-auditors.json carries for the Auditor, with the letter addressed to Auditor Mary Ann Hanusa by name; it did not go to a mailbox of her own. Confirmed in the operator's own sent folder at 14:54:03 UTC. One letter asking for the board's size and its members, which is the only route left here, the county's own site being shut to every client. No answer yet; the follow-up falls due at about three weeks (2026-10-22) and the thirty-day silence mark at 2026-10-31. A record earns nothing toward the fourth test until that letter has been refused, or followed up once and met thirty days of silence, so the `covers` tag here names which level is open and claims nothing closed, and the `ask` block says `pending` for the same reason. ASK LEDGER CORRECTED 2026-10-30 from the mailbox, read by the Letters thread: Adam sent the follow-up on 2026-10-26 13:41 UTC. Auditor Mary Ann Hanusa replied the same day, 20:44 UTC, naming five supervisors (Susan Miller, Keith Jones, Tim Wichman, Jeff Jorgensen, Brian Shea), and at 21:25 UTC, asked which district each represents: "The Supervisors are elected at- large, and do not represent individual districts." So the board is five, elected at large, and the names are obtainable from the county's own Auditor and not yet shipped. The covers tag is removed because an answered ask claims nothing; the open level is now this project's work.
 
 ## Closed record — Perry County's commissioners (opened 2026-08-03, closed 2026-10-20)
 

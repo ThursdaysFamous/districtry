@@ -753,13 +753,6 @@
         "note": "West Des Moines's 3 council wards, from the city's own CouncilPrecinctsExt layer 4, 31 precincts dissolved to three wards, built by ia/scripts/build_ia_city_wards.py. Gated against the Census Bureau's incorporated place for the city (area ratio near 1, no compact uncovered part, seam under a measured ceiling) and simplified by Douglas-Peucker under a 99.5% point-agreement gate."
       },
       {
-        "file": "pottawattamie-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Pottawattamie County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Pottawattamie County which recorded gap affects them: the statewide directory gives it a board size Iowa law does not allow, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
-      },
-      {
         "file": "tama-county-outline.json",
         "min_features": 1,
         "max_features": 1,
@@ -918,7 +911,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ia-shell-v29",
+    "cache_name": "districtry-ia-shell-v30",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
