@@ -69,7 +69,8 @@ in the researched-but-unbuilt backlog.
   "louisiana": ["us-house", "la-supreme-court", "la-court-of-appeal", "la-senate", "la-district-court", "county", "school-district-unified", "la-house", "zip-code", "parish-district", "voting-precinct", "municipality", "city-ward", "tribal-government", "police-station", "fire-station", "post-office"],
   "missouri": ["us-house", "mo-senate", "county", "mo-house", "county-commissioner", "school-district-unified", "school-district-elementary", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"],
   "georgia": ["us-house", "ga-senate", "county", "ga-house", "school-district-unified", "county-subdivision", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "virginia": ["us-house", "va-senate", "va-house", "county", "school-district-unified", "county-subdivision", "zip-code", "municipality", "school-district-elementary", "police-station", "fire-station", "post-office"]
+  "virginia": ["us-house", "va-senate", "va-house", "county", "school-district-unified", "county-subdivision", "zip-code", "municipality", "school-district-elementary", "police-station", "fire-station", "post-office"],
+  "westvirginia": ["us-house", "wv-senate", "county", "school-district-unified", "wv-house", "county-subdivision", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -3967,6 +3968,57 @@ trusted.
       "wanted": "Nothing from a reader — the state publishes the current lines, and drawing them here is ours to do.",
       "blocker": "Measured by the Virginia plan on 2026-10-21: compared with the Department of Elections' statewide district layer, TIGER's county subdivisions cover the same ground, to within 1% of the area, in 32 of 91 counties, to within 5% in 53, and differ by more than 5% in 38, Russell County most of all (47% agreement). TIGERweb Places_CouSub_ConCity_SubMCD layer 1 carries 552 records for STATE='51', measured 2026-10-29: 513 magisterial districts (FUNCSTAT N) in 94 counties, the 38 independent cities and Arlington County (FUNCSTAT F). The card says what a magisterial district is and deliberately does not say who represents the point. Adam's choice of 2026-10-22: draw this level from the Department's lines where a county's census subdivisions carry the same names as its election districts (about 71 of 94) and the census copy elsewhere; that is the plan's fifth change."
     }
+  ],
+  "westvirginia": [
+      {
+            "id": "wv-school-board-members",
+            "concept": "School board",
+            "area": "West Virginia",
+            "counties": [],
+            "kind": "data-quality",
+            "layer": "school-district-unified",
+            "summary": "The County card names the county commission and the county's other elected officers, and not the members of the county board of education.",
+            "why": "The state's latest list of county officials is from before the boards changed in July, and this app has not yet read who won the May election instead.",
+            "wanted": "Nothing from a reader. The certified results of the May primary name every board, and reading them is ours to do.",
+            "blocker": "Measured 2026-10-29 by wv/scripts/build_wv_county_officials.py, which reads the Secretary of State's directory of county officials (https://apps.sos.wv.gov/elections/Officials/?Year=<year>&County=<county>, one page per county per year, robots.txt read first with the client the builder sends: nothing the builder reads is disallowed). The directory has pages for 2022 to 2025 and none for 2026, and 2025 is the newest year listing all 55 counties. Each county's page lists its board of education members beside its commissioners and officers. Board members are elected in the nonpartisan May primary and take office on 1 July of even years, so the 2025 list names the boards seated before 1 July 2026, and the builder does not ship them: the County card says the board of education is not named here yet. ROUTE, from the research for this instance's plan (2026-10-21, the county results pages of the May 2024 and May 2026 primaries read for all 55 counties): 120 board seats were filled in 2024 and 174 in 2026 (three in 46 counties and four in 9), which together name all five members of every board. Reading them, and checking that a member elected in 2024 still holds the seat, is its own change. Whether the 2027 directory will list the boards seated on 1 July 2026 is not established. NOT YET ASKED."
+      },
+      {
+            "id": "wv-municipal-officeholders",
+            "concept": "City or town government",
+            "area": "West Virginia",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City, Town or Village card names the place you picked, and not its mayor or council.",
+            "why": "No statewide list of West Virginia's city and town officials has been read, and no city's or town's own pages have been read yet.",
+            "wanted": "Each city's, town's and village's own published list of its mayor and council, or one statewide list of them.",
+            "blocker": "Measured 2026-10-29 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='54': 229 places, 78 cities, 144 towns, 6 villages and Ranson, which the Census styles a corporation, covering about 1.9% of the state's land by their AREALAND. The layer carries a name, a code and a functional status and no officeholder field. From the research for this instance's plan (2026-10-21): five places had 25,000 people or more in the 2020 census, Charleston, Huntington, Morgantown, Parkersburg and Wheeling, and their councils are elected as follows: Charleston, twenty members by ward and six at large; Huntington, nine by district and two at large; Parkersburg, nine by district; Wheeling, six by ward; Morgantown, seven wards elected citywide. No statewide roster of mayors and council members was read for this record, and no city's own pages have been read. ADAM'S ANSWER of 2026-10-29 to the plan: launch naming every council member. So the councils are named from each city's own pages, largest first, each proved against its page on every build as the Mississippi and Arkansas instances do, before go-live. The wards are gap wv-city-wards. NOT YET ASKED."
+      },
+      {
+            "id": "wv-city-wards",
+            "concept": "City ward",
+            "area": "Charleston, Huntington, Parkersburg and Wheeling",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "This app does not draw any West Virginia city's wards, so in Charleston, Huntington, Parkersburg or Wheeling it cannot say which ward or council district you live in.",
+            "why": "No map file of the four cities' wards has been found, and the Census Bureau does not map city wards.",
+            "wanted": "Each city's current ward map as a map file, such as a shapefile, or a pointer to where the city publishes one.",
+            "blocker": "From the research for this instance's plan (2026-10-21): no ward map file was found for any of the four cities that elect council members by ward or district (Charleston 20 wards, redrawn November 2021; Huntington 9 districts; Parkersburg 9 districts; Wheeling 6 wards). Morgantown's seven wards are elected citywide, so a ward there says where a member lives and not who represents a point. TIGERweb maps no city ward. ADAM'S ANSWER of 2026-10-29 to the plan: ask the four cities for ward files by letter. ASKED 2026-10-21, from the operator's mailbox, between 17:25:58 and 17:26:40 UTC: Ask wv-wheeling-ward-map (City Clerk Jessica Holloway), Ask wv-parkersburg-ward-map (City Clerk Connie Shaffer), Ask wv-huntington-ward-map (City Clerk Lisa Adkins) and Ask wv-charleston-ward-map (the Mayor's office, asked to pass it to City Clerk Miles Cary, because the city publishes no e-mail address for the Clerk). Each asked for the current boundaries as a map file, or where they are published, and the terms of use. Charleston's Mayor's office replied at 20:59 UTC the same day that it had passed the request to the City Clerk's office; nothing from the Clerk yet. Follow-ups to all four are due about 2026-11-11. A file that arrives is held to the city's Census outline and measured against the 2020 census before it is drawn; a map published only as a picture is recorded and not traced.",
+            "ask": {"who": "the City Clerks of Charleston (Miles Cary, through the Mayor's office), Huntington (Lisa Adkins), Parkersburg (Connie Shaffer) and Wheeling (Jessica Holloway), by letter", "asked": "2026-10-21", "outcome": "pending"}
+      },
+      {
+            "id": "wv-voting-precincts",
+            "concept": "Voting precinct",
+            "area": "West Virginia",
+            "counties": [],
+            "kind": "data-quality",
+            "layer": null,
+            "summary": "This app does not draw West Virginia's voting precincts yet, so it cannot say which precinct you vote in.",
+            "why": "The state's precinct map was last changed four years ago, and it matches the counties' own spring election results in only 29 of the 55 counties, so the rest may be out of date.",
+            "wanted": "Each county's current precinct map as a map file, or a statewide precinct map that the state keeps current.",
+            "blocker": "From the research for this instance's plan (2026-10-21): the WV GIS Technical Center's map service (services.wvgis.wvu.edu, folder Boundaries/WV_Election_Layers, robots.txt 404, no licence stated) carries layer 3, 'Precinct 2026', 1,646 polygons across all 55 counties, every last_edited_date between 2022-09-27 and 2022-10-03. Its precinct count per county was compared with the number of precincts reporting in each county's results of the May 2026 primary: 29 counties equal, 14 differ (among them Ohio 35 against 41, Putnam 45 against 39, Mingo 28 against 24, Wood 69 against 72 and Harrison 65 against 63) and 12 list none. W. Va. Code 3-1-5, as amended in 2022, has the Secretary of State post each county's precinct and magisterial district maps, according to the plan's research; no such maps were found on the Secretary of State's election pages. The same service's Applications/WV_Election folder holds a layer of individual voter locations, which is never read by any builder, probe or agent. ADAM'S ANSWER of 2026-10-29 to the plan: draw precincts only in the 29 counties whose current map is confirmed, as its own change, hidden in the other 26. NOT YET ASKED."
+      }
   ]
 }
 ```

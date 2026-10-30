@@ -41,6 +41,16 @@ seat are different statements and only one of them is the chamber's:
   * no `name` and no `vacant` means our source named nobody. It must carry
     `asOf` and nothing is claimed about the seat.
 
+A CHAMBER THAT ELECTS SEVERAL MEMBERS FROM EACH DISTRICT states it as
+`per_district` beside `seats` (West Virginia's Senate: 17 districts, two
+senators each, 2026-10-29). Its record for a district is `{"seats": N,
+"members": [...]}`: `seats` must equal `per_district`, there may be no more
+members than that, every member must carry a name, and a district listing
+fewer members than it elects must carry `asOf`, because the card then says how
+many the roster listed and on what day. A record that names one member under a
+`name` key in such a chamber is refused, because the card for that chamber
+reads `members` and would name nobody.
+
 Usage:
     python3 scripts/validate_chamber_rosters.py            # the gate
     python3 scripts/validate_chamber_rosters.py --selftest  # proves both ways
@@ -67,6 +77,7 @@ BUILDERS = (
     "mo/scripts/build_mo_legislature_roster.py",
     "ga/scripts/build_ga_legislature_roster.py",
     "va/scripts/build_va_legislature_roster.py",
+    "wv/scripts/build_wv_legislature_roster.py",
 )
 
 
@@ -89,10 +100,12 @@ def load_builder(rel):
     return chambers, None
 
 
-def check_record(label, district, rec):
+def check_record(label, district, rec, per_district=1):
     """What a seat's record is allowed to say. Returns a list of problems."""
     if not isinstance(rec, dict):
         return ["%s district %s is not a record" % (label, district)]
+    if per_district > 1:
+        return check_multi_record(label, district, rec, per_district)
     if rec.get("name"):
         return []
     bad = []
@@ -116,6 +129,30 @@ def check_record(label, district, rec):
     return bad
 
 
+def check_multi_record(label, district, rec, per_district):
+    """A district that elects several members: see the docstring."""
+    bad = []
+    members = rec.get("members")
+    if not isinstance(members, list):
+        return ["%s district %s carries no `members` list, and this chamber "
+                "elects %d members per district, so its card would name nobody"
+                % (label, district, per_district)]
+    if rec.get("seats") != per_district:
+        bad.append("%s district %s says it elects %r members, and the builder "
+                   "says %d" % (label, district, rec.get("seats"), per_district))
+    if len(members) > per_district:
+        bad.append("%s district %s lists %d members for %d seats"
+                   % (label, district, len(members), per_district))
+    for m in members:
+        if not isinstance(m, dict) or not m.get("name"):
+            bad.append("%s district %s lists a member with no name" % (label, district))
+    if len(members) < per_district and not rec.get("asOf"):
+        bad.append("%s district %s lists %d of its %d members and carries no "
+                   "asOf, so the card cannot say when the roster said so"
+                   % (label, district, len(members), per_district))
+    return bad
+
+
 def run():
     problems = []
     lines = []
@@ -128,6 +165,7 @@ def run():
         for key, cfg in sorted(chambers.items()):
             label = "%s %s" % (tag, cfg.get("label") or key)
             seats = cfg.get("seats")
+            per = cfg.get("per_district") or 1
             out = cfg.get("out")
             if not seats or not out:
                 problems.append(
@@ -158,8 +196,12 @@ def run():
                 rec = roster.get(str(d))
                 if rec is None:
                     continue
-                problems.extend(check_record(label, d, rec))
-                if isinstance(rec, dict) and rec.get("name"):
+                problems.extend(check_record(label, d, rec, per))
+                if per > 1 and isinstance(rec, dict):
+                    listed = len([m for m in rec.get("members") or [] if isinstance(m, dict) and m.get("name")])
+                    named += listed
+                    unlisted += max(0, per - listed)
+                elif isinstance(rec, dict) and rec.get("name"):
                     named += 1
                 elif isinstance(rec, dict) and rec.get("vacant"):
                     vacant += 1
@@ -172,7 +214,8 @@ def run():
                     "key that is not one of its seats cannot be rendered by the "
                     "chamber card." % (label, seats, ", ".join(sorted(extra))))
             lines.append("  %-16s %3d seats — %3d named, %d vacant, %d no member "
-                         "listed" % (label, seats, named, vacant, unlisted))
+                         "listed%s" % (label, seats * per, named, vacant, unlisted,
+                                       "" if per == 1 else " (%d districts, %d each)" % (seats, per)))
     return problems, lines
 
 
@@ -199,6 +242,20 @@ CASES = (
      2, 1, "a vacancy whose sentence is blank"),
 )
 
+# The same, for a chamber electing two members from each district.
+MULTI_CASES = (
+    ({"seats": 2, "members": [{"name": "A"}, {"name": "B"}]}, 0, "both members named"),
+    ({"seats": 2, "members": [{"name": "A"}], "asOf": "2026-10-29"}, 0,
+     "one member listed, dated"),
+    ({"seats": 2, "members": [{"name": "A"}]}, 1, "one member listed, undated"),
+    ({"seats": 2, "members": [{"name": "A"}, {"name": "B"}, {"name": "C"}]}, 1,
+     "three members for two seats"),
+    ({"seats": 1, "members": [{"name": "A"}, {"name": "B"}]}, 1,
+     "a seat count that disagrees with the builder"),
+    ({"seats": 2, "members": [{"name": "A"}, {}]}, 1, "a member with no name"),
+    ({"name": "A"}, 1, "a single-member record in a two-member chamber"),
+)
+
 
 def selftest():
     bad = 0
@@ -216,10 +273,19 @@ def selftest():
     print("  SEAT  %d roster case(s), %d clean / %d refused"
           % (len(CASES), sum(1 for _, _, w, _ in CASES if not w),
              sum(1 for _, _, w, _ in CASES if w)))
+    for rec, want, why in MULTI_CASES:
+        got = 1 if check_record("selftest", 1, rec, 2) else 0
+        if got != want:
+            bad += 1
+            print("  MULTI want=%d got=%d  (%s)" % (want, got, why))
+    print("  MULTI %d two-member case(s), %d clean / %d refused"
+          % (len(MULTI_CASES), sum(1 for _, w, _ in MULTI_CASES if not w),
+             sum(1 for _, w, _ in MULTI_CASES if w)))
     if bad:
         print("validate-chamber-rosters: SELFTEST FAILED")
         return 1
-    print("validate-chamber-rosters: selftest OK — %d roster case(s)" % len(CASES))
+    print("validate-chamber-rosters: selftest OK — %d roster case(s)"
+          % (len(CASES) + len(MULTI_CASES)))
     return 0
 
 
