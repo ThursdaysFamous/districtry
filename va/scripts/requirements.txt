@@ -1,0 +1,26 @@
+# Pinned dependencies for this instance's scraper pipeline (playbook R10 —
+# heuristic HTML parsers are exactly the code that breaks on silent
+# dependency drift). Used by the weekly and monthly workflows:
+#   .github/workflows/update-va-congress-roster.yml     (stdlib only)
+#   .github/workflows/update-va-legislature-roster.yml  (+ requests)
+#   .github/workflows/va-validate-sources.yml           (+ requests)
+#
+# The workflows install with `-c scripts/requirements.txt`, the fleet's one
+# set of pins; these lines repeat the versions so a local run can install
+# from this file alone.
+#
+# va/scripts/build_state_counties.py and build_legislative_boundaries.py run
+# npx mapshaper; build_legislative_boundaries.py and build_metro_outline.py
+# import requests inside their one fetching function, and
+# build_legislative_boundaries.py imports shapely inside check_same_map, which
+# compares the 120th and 119th Congress layers district by district.
+#
+# The legislature builder fetches with requests and parses both chambers'
+# member pages with the stdlib (re, html).
+requests==2.33.1
+shapely==2.1.2
+
+# Conversion 2 (docs/MECHANIZATION_PLAYBOOK.md): worksheet validation in
+# scripts/generate_metro_files.py. The generator is otherwise stdlib-only;
+# validate_index.py deliberately stays stdlib and does NOT import this.
+jsonschema==4.26.0

@@ -4537,6 +4537,25 @@ def check_workflows(read_by_instance):
 # are the wrong home for it. Nobody has to remember, and nothing is generated
 # from a guess about a shape nobody has looked at.
 NOT_COUNTY_BOARDS = {
+    "ga/data/app/ga-county-officials.json": dict(
+        date="2026-10-30",
+        reason="Georgia's county commissioners and county school board "
+               "members, named from the Secretary of State's official "
+               "election results. The commissioners ARE these pages' "
+               "subject, and are recorded here only while the instance is "
+               "dark: an adapter would write pages for a folder the deploy "
+               "does not publish. Georgia's go-live writes the adapter and "
+               "drops this entry.",
+    ),
+    "wv/data/app/wv-county-officials.json": dict(
+        date="2026-10-29",
+        reason="West Virginia's 55 county commissions and their other elected "
+               "officers, named from the Secretary of State's directory of "
+               "county officials. They ARE these pages' subject, and are "
+               "recorded here only while the instance is dark: an adapter "
+               "would write pages for a folder the deploy does not publish. "
+               "West Virginia's go-live writes the adapter and drops this entry.",
+    ),
     "mn/data/app/mn-swcd-supervisors.json": dict(
         date="2026-10-26",
         reason="the elected supervisors of Minnesota's 88 soil and water "

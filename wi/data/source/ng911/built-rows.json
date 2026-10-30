@@ -1,22 +1,22 @@
 {
   "_comment": "What the OEC's own service reported at the last operator build of build_wi_ng911_service_areas.py: `rows` as its returnCountOnly endpoints answered, and `dataLastEdit` as its editingInfo.dataLastEditDate. validate_sources.py compares BOTH monthly and WARNs when either has moved \u2014 a REDRAW does not change a row count, which is how the 2026-08-31 edit moved 397 features silently. Written by the build; never edit by hand.",
   "agencies": {
-    "ems": 580,
+    "ems": 577,
     "fire": 1046,
-    "law": 680,
+    "law": 681,
     "psap": 95
   },
-  "builtOn": "2026-09-29",
+  "builtOn": "2026-10-29",
   "dataLastEdit": {
-    "ems": "2026-09-28",
-    "fire": "2026-09-28",
-    "law": "2026-09-28",
-    "psap": "2026-09-28"
+    "ems": "2026-10-26",
+    "fire": "2026-10-26",
+    "law": "2026-10-26",
+    "psap": "2026-10-26"
   },
   "rows": {
-    "ems": 2476,
+    "ems": 2475,
     "fire": 3042,
-    "law": 3101,
+    "law": 3104,
     "psap": 218
   }
 }

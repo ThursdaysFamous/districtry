@@ -75,6 +75,36 @@
         "zip-code"
       ]
     },
+    "ga": {
+      "layers_sending_point": 4,
+      "layers": [
+        "county-subdivision",
+        "municipality",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_holding_hook_but_silent": [],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 2,
+      "layer_ids": [
+        "county",
+        "county-subdivision",
+        "fire-station",
+        "ga-house",
+        "ga-senate",
+        "municipality",
+        "police-station",
+        "post-office",
+        "school-district-unified",
+        "us-house",
+        "zip-code"
+      ]
+    },
     "ia": {
       "layers_sending_point": 0,
       "layers": [],
@@ -662,6 +692,41 @@
         "zip-code"
       ]
     },
+    "va": {
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
+        "county-subdivision",
+        "municipality",
+        "school-district-elementary",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 0,
+      "layer_ids": [
+        "county",
+        "county-subdivision",
+        "fire-station",
+        "municipality",
+        "police-station",
+        "post-office",
+        "school-board-district",
+        "school-district-elementary",
+        "school-district-unified",
+        "supervisor-district",
+        "us-house",
+        "va-house",
+        "va-senate",
+        "voting-precinct",
+        "zip-code"
+      ]
+    },
     "wi": {
       "layers_sending_point": 1,
       "layers": [
@@ -714,6 +779,35 @@
         "wi-court-of-appeals",
         "wi-senate",
         "wtcs-district",
+        "zip-code"
+      ]
+    },
+    "wv": {
+      "layers_sending_point": 3,
+      "layers": [
+        "municipality",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_holding_hook_but_silent": [],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 2,
+      "layer_ids": [
+        "county",
+        "county-subdivision",
+        "fire-station",
+        "municipality",
+        "police-station",
+        "post-office",
+        "school-district-unified",
+        "us-house",
+        "wv-house",
+        "wv-senate",
         "zip-code"
       ]
     }

@@ -69,10 +69,10 @@ column; every expired fire/law row at first build (37 + 18) was
 superseded history, and a FUTURE Expire date is a still-effective row
 that must ship. The drop is computed against the clock each run.
 
-WHAT THE DATA DOES NOT COVER IS MEASURED AND PINNED. Five authorities'
+WHAT THE DATA DOES NOT COVER IS MEASURED AND PINNED. Four authorities'
 filings are absent or partial (Iowa, Vilas and Walworth file none of the
-four tilings; Jefferson files law and PSAP but neither fire nor EMS;
-Polk's law filing covers ~60% while its other three file in full),
+four tilings; Jefferson files law and PSAP but neither fire nor EMS; Polk's
+law filing, ~60% at first measurement, was completed in October 2026),
 and LANGLADE COUNTY HAS NO PROVISIONING BOUNDARY AT ALL — 72 provisioning
 polygons where the other 71 counties plus the City of Milwaukee each
 carry one. Every rate is recomputed per run inside the counties' own
@@ -190,7 +190,11 @@ UNFILED = {
     "vilascountywi.gov": {"fire", "law", "psap", "ems"},
     "co.walworth.wi.us": {"fire", "law", "psap", "ems"},
     "jeffersoncountywi.gov": {"fire", "ems"},  # law and PSAP file in full
-    "polkcountywi.gov": {"law"},          # partial: ~60% covered at pin time
+    # polkcountywi.gov ({"law"}, ~60% covered at pin time) retired 2026-10-29:
+    # the county completed its law tiling (rows dated 2026-10-14 and -15),
+    # 1,000 of 1,000 seeded points inside its provisioning polygon now land in
+    # a law area. Its sheriff's ground is filed as three zones named NORTH,
+    # SOUTHEAST and SOUTHWEST, which ship as filed.
 }
 EXPECT_PROVISIONING = 72   # 71 counties + the City of Milwaukee; Langlade absent
 NO_PROVISIONING = "langlade"
@@ -328,7 +332,10 @@ FIDELITY_MAX_M = {"fire": 3.77, "law": 3.51, "psap": 2.70, "ems": 3.17}
 # undeclared harm appeared on any of the four, and each layer's fidelity ceiling
 # still held. So this count is the one thing an ordinary source refresh moves on
 # its own, which is the case the gate was written to make somebody read.
-GAP_CLOSED = {"fire": 108, "law": 58, "psap": 8, "ems": 102}
+# The rebuild of 2026-10-29, against the OEC's 2026-10-26 refresh, moved only
+# ems 102 -> 101 (rows ems 2,476 -> 2,475, law 3,101 -> 3,104); fire, law and
+# psap held, and again no declaration lost its ring.
+GAP_CLOSED = {"fire": 108, "law": 58, "psap": 8, "ems": 101}
 
 # Every dropped ring that changes the agency a reader is told answers at their
 # point, declared one by one, per layer. `drings.check` FAILS the build on an
