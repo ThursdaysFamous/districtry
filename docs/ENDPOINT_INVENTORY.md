@@ -184,9 +184,9 @@ measured until the next run describes it.
 | Municipality (`municipality`) | `tigerweb.geo.census.gov` | — |
 | Judicial Subcircuit (`judicial-subcircuit`) | 4 of 9 county sources, from `gis.cookcountyil.gov`, `services.arcgis.com`, `services3.arcgis.com`; 5 shipped with the app | — |
 | County Board District (`county-board`) | 26 of 72 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`; 45 shipped with the app; 1 did not answer the probe (kane) | `gis.cookcountyil.gov` |
-| Fire Protection District (`fire-district`) | 17 of 26 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.leecountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`; 9 shipped with the app | — |
+| Fire Protection District (`fire-district`) | 17 of 27 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.leecountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`; 10 shipped with the app | — |
 | DuPage Special Police District (`dupage-county-special-police`) | `services.arcgis.com` | — |
-| Park District (`park-district`) | 10 of 18 county sources, from `gis.cookcountyil.gov`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services7.arcgis.com`; 8 shipped with the app | — |
+| Park District (`park-district`) | 10 of 19 county sources, from `gis.cookcountyil.gov`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services7.arcgis.com`; 9 shipped with the app | — |
 | Library District (`library-district`) | 12 of 91 county sources, from `gis.cookcountyil.gov`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services7.arcgis.com`; 79 shipped with the app | — |
 | CPS Network (High School, admin office) (`cps-hs-network`) | `data.cityofchicago.org` | — |
 | CPS Network (K-8, admin office) (`cps-network`) | `data.cityofchicago.org` | — |
@@ -387,7 +387,7 @@ measured until the next run describes it.
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
-| il | 131 | 412 | 6 |
+| il | 131 | 415 | 6 |
 | ny | 38 | 36 | 0 |
 | ca | 17 | 15 | 0 |
 | wi | 92 | 267 | 5 |
@@ -404,7 +404,7 @@ measured until the next run describes it.
 | ms | 41 | 24 | 0 |
 | la | 28 | 24 | 0 |
 | mo | 23 | 14 | 0 |
-| **total** | **736** | **1078** | **12** |
+| **total** | **736** | **1081** | **12** |
 
 **215 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
@@ -430,6 +430,7 @@ underlying records. The categories of underlying terms it records:
 - [3. Jo Daviess County board districts — licensed, display-only, NOT redistributable](../LICENSE-DATA.md#3-jo-daviess-county-board-districts-licensed-display-only-not-redistributable)
 - [4. The *Wisconsin Blue Book* — used by permission, on terms the Bureau stated](../LICENSE-DATA.md#4-the-wisconsin-blue-book-used-by-permission-on-terms-the-bureau-stated)
 - [5. Grundy County fire, library and park districts — derived, and the county's answer on record](../LICENSE-DATA.md#5-grundy-county-fire-library-and-park-districts-derived-and-the-countys-answer-on-record)
+- [6. Whiteside County fire and park districts — derived, shown with the county's written permission](../LICENSE-DATA.md#6-whiteside-county-fire-and-park-districts-derived-shown-with-the-countys-written-permission)
 
 See also its [Attribution](../LICENSE-DATA.md#attribution) and [Warranty](../LICENSE-DATA.md#warranty)
 sections. Two runtime things that document deliberately does not cover are

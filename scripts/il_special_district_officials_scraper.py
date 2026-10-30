@@ -175,6 +175,8 @@ BOUNDARIES = {
     ("stark", "fire"): {"file": "stark-fire-districts.json", "key": "name"},
     ("stark", "park"): {"file": "stark-park-districts.json", "key": "name"},
     ("stephenson", "fire"): {"file": "stephenson-fire-districts.json", "key": "district"},
+    ("whiteside", "fire"): {"file": "whiteside-fire-districts.json", "key": "district"},
+    ("whiteside", "park"): {"file": "whiteside-park-districts.json", "key": "district"},
     ("cook", "park"): {"service": COOK_GIS + "/23", "where": "1=1",
                        "field": "AGENCY_DESCRIPTION"},
     ("dupage", "fire"): {"service": DUPAGE_GIS + "Fire_Protection_Districts_/FeatureServer/3",
@@ -248,7 +250,7 @@ SLUG_COUNTY = {
     "adams": "Adams", "iroquois": "Iroquois", "sangamon": "Sangamon",
     "st-clair": "St. Clair", "boone": "Boone", "effingham": "Effingham",
     "hamilton": "Hamilton", "monroe": "Monroe", "madison": "Madison",
-    "lake": "Lake",
+    "lake": "Lake", "whiteside": "Whiteside",
 }
 
 # THE WAREHOUSE'S SPELLING OF A COUNTY IS NOT ALWAYS THE COUNTY'S OWN, and

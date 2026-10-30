@@ -1185,6 +1185,24 @@
         "note": "Woodford's 3 park districts, pre-built by scripts/build_parcel_fabric_districts.py from the Park_Distr column of the same 25,824-row parcel fabric; the county's own 2025 settlement sheets levy for exactly these 3. Bounds are an EQUALITY: most of the county genuinely sits in no park district, and only 4,113 of its parcels are in one."
       },
       {
+        "file": "whiteside-fire-districts.json",
+        "min_features": 13,
+        "max_features": 13,
+        "note": "Whiteside's 13 fire protection districts, pre-built by scripts/build_parcel_fabric_districts.py from the CVTTXCD tax code on the county's public Tax Parcels layer and the County Clerk's 2025 District Rates by Taxcode Report, with the same 75 ft closing and probe gates as Boone's. Shown with the county's written permission of 2026-10-02 (its licence forbids derived products without it), so every card credits the county and says the outline is derived. Bounds are an EQUALITY: the Clerk's report levies exactly these 13, and Sterling, Rock Falls and Morrison pay into none."
+      },
+      {
+        "file": "whiteside-park-districts.json",
+        "min_features": 5,
+        "max_features": 5,
+        "note": "Whiteside's 5 park districts, pre-built by scripts/build_parcel_fabric_districts.py from the same tax-code crosswalk as its fire sibling and shown under the same written permission of 2026-10-02. Bounds are an EQUALITY: the Clerk's report levies exactly these 5, and most of the county sits in no park district."
+      },
+      {
+        "file": "chillicothe-wards.json",
+        "min_features": 4,
+        "max_features": 4,
+        "note": "The City of Chillicothe's 4 wards, pre-built by scripts/build_chillicothe_wards.py from Peoria County's ward layer, clipped to the Census city limits and carried to them by City Code section 34-2's rule (each ward is all territory within the city limits on one side of named streets extended to the city boundary), which City Clerk Jill Byrnes sent on 2026-10-05. The first ward map the ward layer ships as a file. Bounds are an EQUALITY: the city elects from exactly 4 wards."
+      },
+      {
         "file": "brown-county-outline.json",
         "min_features": 1,
         "max_features": 1,
@@ -3499,7 +3517,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v49",
+    "cache_name": "districtry-il-shell-v50",
     "shell_urls": [
       "./",
       "./sources.html",

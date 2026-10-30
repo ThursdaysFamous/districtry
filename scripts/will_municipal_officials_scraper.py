@@ -220,6 +220,26 @@ def page_texts(book_owner, book_id):
     return pages
 
 
+def pdf_page_texts(path):
+    """Every page's text from a copy of the directory as a PDF.
+
+    THE CLERK'S OFFICE SENT THE DIRECTORY AS A DOCUMENT. The flipbook's text
+    view has answered a managed challenge since 2026-09-17, which this project
+    does not work around, so the shipped names were carried forward unread.
+    Asked for the directory in another format, Rebecca Leder, Election Analyst,
+    replied for the County Clerk on 2026-10-01 attaching "2025 Will County
+    Directory.pdf" as "the most current version" (its cover: Version May 2025 -
+    May 2027, Updated 8/21/2026). It is committed under il/data/source/raw/ and
+    read here with pypdf's plain text extraction, which yields the same text the
+    flipbook's /basic view carried, so the parse below is unchanged. Measured
+    2026-10-30: all 37 entries parse, Crete's header included, so the Crete
+    recovery stands down on this copy.
+    """
+    import pypdf  # imported here so the flipbook path needs nothing new
+    reader = pypdf.PdfReader(path)
+    return [clean(page.extract_text() or "") or "" for page in reader.pages]
+
+
 def municipal_section(pages):
     """The run of pages holding Section 5, Municipal Government Officials."""
     start = None
@@ -247,6 +267,10 @@ def strip_precincts(text):
     including the head/officer labels, since the entry's first precinct list
     is followed by the hall contact block and then "Mayor"/"President".
     """
+    # The "+" footnote on an appointee's term is a note about the seat, not a
+    # person, and its "in 2027" would otherwise read as a name and a year.
+    text = re.sub(r"\+\s*Will need to run in 20\d{2} as an unexpired [\w-]+ term",
+                  " ", text)
     return re.sub(
         r"Precincts?:.*?(?=(?:Ward|District)\s+\d+\s*-|"
         r"Attorney\b|Trustees?\b|Councilmembers?\b|Alderpersons?\b|Aldermen\b|"
@@ -420,7 +444,11 @@ PERSON = re.compile(
     r"(?:\s*\((?P<party_lead>" + PARTY_RE + r")\))?"
     r"(?P<appt>\s*-\s*Appt\.?(?:[^0-9]*\d{1,2}/\d{4})?)?"
     r"\s*(?:\((?P<party>" + PARTY_RE + r")\))?"
-    r"\s*(?P<year>20\d{2})")
+    # Lockport's 2026-08-21 edition marks an appointee's year with a "+" that
+    # points at a footnote ("Robin Lif - Appt. 1/2026 +2029 + Will need to run
+    # in 2027 as an unexpired 2-year term"); without the optional "+" the run
+    # failed and she was dropped, and the footnote shipped as a seat.
+    r"\s*\+?\s*(?P<year>20\d{2})")
 
 
 def parse_members(text, office):
@@ -624,12 +652,16 @@ def recover_crete(entries, parsed_jurisdictions):
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[1])
     parser.add_argument("--out", default="will_municipal_officials.json")
+    parser.add_argument("--pdf", metavar="PATH",
+                        help="read the directory from a copy sent as a PDF "
+                             "instead of the flipbook's text view")
     args = parser.parse_args()
 
     scraped_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     owner, book = discover_flipbook(fetch(CLERK_PAGE))
     directory_url = "%s/%s/%s/" % (FLIPBOOK_HOST, owner, book)
-    section = municipal_section(page_texts(owner, book))
+    section = municipal_section(pdf_page_texts(args.pdf) if args.pdf
+                                else page_texts(owner, book))
 
     entries = split_entries(section)
     if len(entries) < MIN_ENTRIES:
