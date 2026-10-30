@@ -185,6 +185,7 @@ python3 sc/scripts/build_sc_judicial_circuits.py --check             # the same 
 python3 tn/scripts/build_tn_judicial_districts.py --check            # the same for Tennessee's judicial districts
 python3 nc/scripts/build_nc_court_districts.py --check              # North Carolina's superior and district court districts against the kept text of G.S. 7A-41 and 7A-133: the parse, the judge counts, each district's area from the county file and the 2010 pieces, the interior points, and a county file that has not moved
 python3 ar/scripts/build_ar_precincts.py --check                     # a statewide precinct layer: hash and per-county counts against its record, each county covered by its own precincts, the card's stated wording
+python3 ga/scripts/build_ga_precincts.py --check                     # the same for Georgia, and each precinct's note on what the 2026 ballots say about its county matches the county map check's record
 python3 in/scripts/build_in_precincts.py --check                     # the same for Indiana
 python3 ky/scripts/build_ky_precincts.py --check                     # the same for Kentucky
 python3 la/scripts/build_la_precincts.py --check                     # the same for Louisiana

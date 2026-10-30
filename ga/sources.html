@@ -1167,7 +1167,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">13 layers — 4 political and legislative, 2 public safety, 2 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">14 layers — 4 political and legislative, 2 public safety, 2 schools, 6 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1307,7 +1307,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="geography">
-        <h2>Geography &amp; amenities <span class="matrix-count">5 layers</span></h2>
+        <h2>Geography &amp; amenities <span class="matrix-count">6 layers</span></h2>
         <p class="matrix-blurb">The boundaries that place an address without electing anyone, plus the nearest public services.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1347,6 +1347,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more.</td>
                 <td data-label="Where it applies">Georgia. The layer is hidden outside the state outline, because outside it the Census's point query answers with a neighbouring state's real ZIP code (Phenix City, Alabama gives 36867 and North Augusta, South Carolina 29841, measured 2026-10-29).</td>
+              </tr>
+              <tr id="layer-voting-precinct">
+                <th scope="row"><span class="layer-name">Voting Precinct</span><code>voting-precinct</code></th>
+                <td data-label="What it answers">The voting precinct containing the point — where a reader votes and how their ballots are reported — as the state's 2024 precinct map draws it, with what the 2026 ballots say about whether its county has changed its precincts since.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.legis.ga.gov/joint-office/reapportionment" target="_blank" rel="noopener">The Georgia General Assembly's Legislative and Congressional Reapportionment Office — its statewide precinct map for 2024 (gaprec_2024-website-shapefile.zip, whose files are dated 7 March 2025), one zipped shapefile of every precinct in all 159 counties, listed on the office's page and pinned by address and SHA-256; 2,724 precincts, pre-built for the state by ga/scripts/build_ga_precincts.py and shipped with the app (Douglas-Peucker at 12 m). Each precinct carries what ga/scripts/check_ga_county_maps.py found when it compared its county's precincts on the ballots of 19 May and 16 June 2026 with those on the November 2024 ballot (record: ga/data/source/county-map-check.json): in 48 counties the 2026 ballots carry precincts that are new, have lost precincts, or have precincts that kept their names while their registered voters changed by more than a fifth against the county's, and in 5 the November 2024 ballot names precincts the check could not match with the map.</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent.</td>
+                <td data-label="Where it applies">Georgia — statewide, from a 2024 map: in the 48 counties whose 2026 ballots differ from their November 2024 ballot, and the 5 whose 2024 ballot did not match the map, the card says the line may be out of date.</td>
               </tr>
               <tr id="layer-municipality">
                 <th scope="row"><span class="layer-name">City or Town</span><code>municipality</code></th>
@@ -1590,6 +1601,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "Georgia. The layer is hidden outside the state outline, because outside it the Census's point query answers with a neighbouring state's real ZIP code (Phenix City, Alabama gives 36867 and North Augusta, South Carolina 29841, measured 2026-10-29)"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ga/sources.html#dataset-voting-precinct",
+      "identifier": "voting-precinct",
+      "name": "Voting Precinct",
+      "description": "The voting precinct containing the point — where a reader votes and how their ballots are reported — as the state's 2024 precinct map draws it, with what the 2026 ballots say about whether its county has changed its precincts since. NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent.",
+      "url": "https://districtry.com/ga/sources.html#layer-voting-precinct",
+      "isPartOf": {
+        "@id": "https://districtry.com/ga/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "The Georgia General Assembly's Legislative and Congressional Reapportionment Office — its statewide precinct map for 2024 (gaprec_2024-website-shapefile.zip, whose files are dated 7 March 2025), one zipped shapefile of every precinct in all 159 counties, listed on the office's page and pinned by address and SHA-256; 2,724 precincts, pre-built for the state by ga/scripts/build_ga_precincts.py and shipped with the app (Douglas-Peucker at 12 m). Each precinct carries what ga/scripts/check_ga_county_maps.py found when it compared its county's precincts on the ballots of 19 May and 16 June 2026 with those on the November 2024 ballot (record: ga/data/source/county-map-check.json): in 48 counties the 2026 ballots carry precincts that are new, have lost precincts, or have precincts that kept their names while their registered voters changed by more than a fifth against the county's, and in 5 the November 2024 ballot names precincts the check could not match with the map.",
+          "url": "https://www.legis.ga.gov/joint-office/reapportionment"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Georgia — statewide, from a 2024 map: in the 48 counties whose 2026 ballots differ from their November 2024 ballot, and the 5 whose 2024 ballot did not match the map, the card says the line may be out of date"
       }
     },
     {

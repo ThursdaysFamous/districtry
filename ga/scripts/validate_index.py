@@ -87,7 +87,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 9
+MIN_REGISTER_LAYER = 10
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -96,8 +96,8 @@ MIN_REGISTER_LAYER = 9
 EXPECT_LAYER_IDS = [
     "us-house", "ga-senate", "county", "ga-house", "school-district-unified",
     "county-subdivision", "county-commissioner", "school-board-district",
-    "zip-code", "municipality", "police-station", "fire-station",
-    "post-office",
+    "zip-code", "voting-precinct", "municipality", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -109,6 +109,7 @@ GEOMETRY_FILES = {
     "ga-house-districts.json": (180, 180),  # The 180 Georgia House districts, from the General Assembly's file of the 2023 plan.
     "ga-commission-districts.json": (531, 531),  # The commission districts of the 109 counties whose map passed the precinct check, and DeKalb's and Lowndes's super districts (ga/scripts/build_ga_board_districts.py, held to the map check's record by its --check).
     "ga-school-board-districts.json": (560, 560),  # The county school board districts of the 104 counties whose map passed the precinct check, and Harris's and Richmond's super districts, with the city school systems' ground taken out (same builder).
+    "ga-precincts.json": (2724, 2724),  # Every Georgia voting precinct, pre-built by ga/scripts/build_ga_precincts.py through scripts/statewide_precincts.py from the Reapportionment Office's 2024 statewide precinct map (Douglas-Peucker at 12 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.92% with zero overlaps; an exact 2,724 count), each precinct carrying what the map check found about its county's precincts on the 2026 ballots. 8.7 MB, 2.16 MB gzipped, fetched only when a reader switches the layer on.
 }
 
 # file -> minimum key count (officeholder rosters).

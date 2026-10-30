@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "ga-senate", "ga-house"];
 const EXPECT_DISTRICT = { "county": "Fulton County", "us-house": "5", "ga-senate": "36", "ga-house": "58" };
 const NEGATIVE_POINT = "30.43830,-84.28070"; // Tallahassee, Florida, about 26 km south of the Georgia line — outside Georgia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state layer names Florida here (controls: the State Capitol returns Georgia, and a point in the open Gulf of Mexico returns no state), and none of the state's shipped boundary files contains it. FLORIDA AND ALABAMA ARE THE TWO NEIGHBOURS NO INSTANCE SERVES, so the change that makes Florida live moves this point into Alabama, the way Kentucky's go-live moved Indiana's.
 const APP_NAME = "districtry Georgia";
-const EXPECT_LAYERS = 13;
+const EXPECT_LAYERS = 14;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "GeorgiaExplorer";
@@ -1350,6 +1350,94 @@ try {
         !info.error && !!e.label && text.startsWith(e.label) &&
           /The list of commissioners did not load, so no one is named here/.test(text) && leaked.length === 0,
         `leaked=${leaked.length} text=${text.slice(0, 160)}`);
+      await context.close();
+    }
+  }
+
+  // 11. THE VOTING PRECINCT LAYER. Each case reads its precinct from the
+  //     shipped file and pins the BRANCH it exercises: a title that is only
+  //     the precinct's code, a named precinct with its code in the pill, a
+  //     county whose 2026 ballots changed its precincts (all three kinds, and
+  //     one kind alone), a county they did not, and one whose 2024 ballot the
+  //     map check could not match with the map. A case whose point no longer
+  //     reaches its branch fails rather than passing on whatever the card
+  //     says. Points measured 2026-10-30 on the drawn file, each 98 m or more
+  //     inside its precinct.
+  {
+    const PRECINCTS = shipped("ga-precincts.json");
+    const BALLOTS = "the ballots of 19 May and 16 June 2026";
+    const n = (k, one, many) => `${k} ${k === 1 ? one : many}`;
+    // The fragments the card must print for a precinct's props, from its
+    // own fields, so a rebuild with new counts moves them.
+    function precinctWant(p) {
+      const want = [`${p.county}`, "No one to public office", "drawn here to within 12 metres",
+        "its map for 2024, whose files are dated 7 March 2025"];
+      const s = p.since;
+      if (s) {
+        want.push(`${p.county}'s precincts on ${BALLOTS} are not all the ones on its November 2024 ballot, which this app matched with this map:`);
+        if (s.new) want.push(`${n(s.new, "precinct is", "precincts are")} new;`);
+        if (s.gone) want.push(`${n(s.gone, "precinct", "precincts")} on that ballot ${s.gone === 1 ? "is" : "are"} gone`);
+        if (s.moved) want.push(`${n(s.moved, "precinct", "precincts")} kept ${s.moved === 1 ? "its name" : "their names"} while`,
+          "a change that size can mean a precinct gained or lost ground");
+        want.push("So this line may be out of date.");
+      }
+      if (p.unmatched) {
+        want.push(`${p.county}'s November 2024 ballot named ${n(p.unmatched, "precinct", "precincts")} this app could not match`);
+      }
+      if (!s && !p.unmatched) {
+        want.push(`${p.county}'s precincts on ${BALLOTS} are the ones on its November 2024 ballot`);
+      }
+      return want;
+    }
+    const cases = [
+      { name: "a Fulton precinct named only by its code is titled with it, and says its county changed precincts in all three ways",
+        point: POINT,
+        reaches: (p) => p.name === p.code && p.since && p.since.new && p.since.gone && p.since.moved && !p.unmatched },
+      { name: "a named precinct carries its code in the pill, in a county whose 2026 ballots kept its precincts",
+        point: "32.84070,-83.63240",
+        reaches: (p) => p.name !== p.code && !p.since && !p.unmatched },
+      { name: "a precinct in a county whose 2026 ballots moved precincts without renaming them says so",
+        point: "33.95260,-84.54990",
+        reaches: (p) => p.since && p.since.moved && !p.since.new && !p.since.gone },
+      { name: "a precinct in a county whose 2024 ballot did not match the map says the map may not show its precincts",
+        point: "31.70800,-81.74400",
+        reaches: (p) => p.unmatched > 0 && !p.since },
+      { name: "a precinct named only by its code in an unchanged county is titled with it",
+        point: "33.95810,-83.37500",
+        reaches: (p) => p.name === p.code && !p.since && !p.unmatched },
+    ];
+    for (const c of cases) {
+      const hits = propsAt(PRECINCTS, c.point);
+      const p = hits[0];
+      if (hits.length !== 1 || !c.reaches(p)) {
+        check(c.name, false, `the point no longer reaches this branch (${hits.length} precincts: ${JSON.stringify(p || null)})`);
+        continue;
+      }
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${c.point}&layers=voting-precinct`);
+      const info = await cardText(page, "voting-precinct");
+      const text = info.text || "";
+      const pill = await page.evaluate(() => {
+        const box = document.getElementById("toggle-voting-precinct");
+        const block = box && box.closest(".layer-block");
+        const el = block && block.querySelector(".card-id-pill:not([hidden])");
+        return el ? el.textContent.trim() : null;
+      });
+      const title = p.name === p.code ? `Precinct ${p.code}` : p.name;
+      const missing = precinctWant(p).filter((w) => !text.includes(w));
+      const pillOk = p.name === p.code ? pill === null : pill === p.code;
+      check(c.name, !info.error && !info.empty && text.includes(title) && pillOk && missing.length === 0,
+        `pill=${pill} missing=${JSON.stringify(missing)} text=${text.slice(0, 200)}`);
+      await context.close();
+    }
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=voting-precinct`);
+      const info = await cardText(page, "voting-precinct");
+      check("a point outside Georgia gets no precinct, and the card says the map holds Georgia's only",
+        propsAt(PRECINCTS, NEGATIVE_POINT).length === 0 && !info.error &&
+          /This map holds Georgia's precincts, so a point outside the state gets none/.test(info.text || ""),
+        (info.text || "").slice(0, 160));
       await context.close();
     }
   }

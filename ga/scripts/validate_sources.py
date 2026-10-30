@@ -186,6 +186,21 @@ PROVENANCE = [
             "correct) plus 20 OUTSIDE anchors over the state line."
         ),
     },
+    {
+        "layer": "voting-precinct",
+        "app_file": "ga-precincts.json",
+        "source_url": "https://www.legis.ga.gov/joint-office/reapportionment",
+        "note": (
+            "Georgia's 2,724 voting precincts from the Reapportionment "
+            "Office's statewide precinct map for 2024, which this page lists; "
+            "pre-built by ga/scripts/build_ga_precincts.py through "
+            "scripts/statewide_precincts.py, which pins the file by address "
+            "and SHA-256. The page is checked rather than the file because "
+            "the file is a 16 MB zip; the quarterly --watch row in "
+            "ga/WATCH.md reads the listing for a newer map and the file for "
+            "a changed one."
+        ),
+    },
 ]
 
 # Georgia's envelope, as index.html writes it for the ZIP layer

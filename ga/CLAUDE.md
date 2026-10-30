@@ -25,7 +25,8 @@ Map (**Police Station**, **Fire & EMS Station**, **Post Office**), and the count
 Assembly's Reapportionment Office publishes, drawn only where the county's own district elections
 confirm them: **County Commission District** (`county-commissioner`, 109 counties) and **School
 Board District** (`school-board-district`, 104 counties), each naming its district's member from the
-Secretary of State's election results.
+Secretary of State's election results, and the office's 2024 statewide precinct map: **Voting
+Precinct** (`voting-precinct`, 2,724).
 
 **THE THREE DISTRICT MAPS ARE THE GENERAL ASSEMBLY'S OWN FILES, NOT TIGERweb's, AND THAT IS A
 MEASUREMENT.** The Legislative and Congressional Reapportionment Office lists each enacted 2023 plan
@@ -113,7 +114,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Georgia (`georgia`) — https://districtry.com/ga/
 - Geocoders: address Photon (Georgia-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Georgia-bounded, serial >=1s queue)
 - Ground truth: 33.74900,-84.38900 (Georgia State Capitol grounds, 206 Washington Street SW, Atlanta, Fulton County — the west side of the grounds, chosen 123 m from the line between House Districts 58 and 59, which runs east of the Capitol (the Capitol's own address point sits 51 m from it), measured 2026-10-29 against the shipped files) → county Fulton County; us-house 5; ga-senate 36; ga-house 58. Negative point 30.43830,-84.28070 (Tallahassee, Florida, about 26 km south of the Georgia line — outside Georgia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state layer names Florida here (controls: the State Capitol returns Georgia, and a point in the open Gulf of Mexico returns no state), and none of the state's shipped boundary files contains it. FLORIDA AND ALABAMA ARE THE TWO NEIGHBOURS NO INSTANCE SERVES, so the change that makes Florida live moves this point into Alabama, the way Kentucky's go-live moved Indiana's.).
-- Layers: 13 registered (political 4, safety 2, schools 2, geography 5); `registerLayer(` floor 9. Debug namespace `window.GeorgiaExplorer`.
+- Layers: 14 registered (political 4, safety 2, schools 2, geography 6); `registerLayer(` floor 10. Debug namespace `window.GeorgiaExplorer`.
 - Scheduled workflows: `update-ga-congress-roster.yml` (Mon 19:23 UTC); `update-ga-legislature-roster.yml` (Tue 19:23 UTC); `update-ga-county-officials.yml` (Wed 19:41 UTC); `ga-validate-sources.yml` (1st of month 21:43 UTC).
 - Source registry: `ga/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -143,6 +144,10 @@ python3 ga/scripts/check_ga_county_maps.py --check
 
 # The drawn county districts are exactly the maps that record passes:
 python3 ga/scripts/build_ga_board_districts.py --check
+
+# The precinct layer matches its record, every county is covered by its own
+# precincts, and each precinct's note matches the county map check's record:
+python3 ga/scripts/build_ga_precincts.py --check
 
 # Generated-region gate: per-instance facts live ONCE in ga/metro-worksheet.json;
 # GENERATED regions are emitted from it. NEVER hand-edit a GENERATED region:
@@ -245,6 +250,21 @@ check saw elected from it, whether the whole county voted for them, and whether 
 confirmed its line. Every map not drawn is in gap `ga-county-commission-district-lines` or
 `ga-school-board-district-lines`. Both scripts are operator steps, run again after each election
 with county contests; `--check` on each runs offline in CI.
+
+**The precincts are the office's 2024 statewide map, and each card says what the ballots since say
+about its county** (`ga-precincts.json`, `ga/scripts/build_ga_precincts.py` on the shared
+`scripts/statewide_precincts.py`, 2026-10-30). The file is the one the map check read (the same
+address and SHA-256, which the builder holds to the record), and the builder stops if the office's
+page lists a year after 2024. The map is a year older than the 2026 ballots: in 48 counties those
+ballots carry precincts that are new, lost ones, or kept names whose registered voters changed by
+more than a fifth against the county's, and in 5 the November 2024 ballot named precincts the check
+could not match with the map. **THE CARD STATES THIS PER COUNTY, NOT PER PRECINCT**, because the
+check pairs a ballot's precinct with one on the map by name and cannot say which line moved; every
+precinct carries its county's counts (`since`, `unmatched`) and `--check` holds each to the record,
+so rebuilding the record without rebuilding the precincts fails CI. The counties are in gap
+`ga-precinct-lines-since-2024`. 692 precincts carry only a code for a name (462 of Fulton's 480),
+and the card titles them "Precinct <code>". The card links no polling-place lookup: the Secretary of
+State's voter page answered this app's reader with a challenge on 2026-10-30.
 
 robots.txt is read before the first fetch through `scripts/robots_policy.py`, with the same client
 the fetches send, and a stated Crawl-delay is honoured; the legislature builder paces every host at

@@ -1418,6 +1418,7 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           python3 ar/scripts/build_ar_precincts.py --check
+          python3 ga/scripts/build_ga_precincts.py --check
           python3 in/scripts/build_in_precincts.py --check
           python3 ky/scripts/build_ky_precincts.py --check
           python3 la/scripts/build_la_precincts.py --check
