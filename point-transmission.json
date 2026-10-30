@@ -692,6 +692,38 @@
         "zip-code"
       ]
     },
+    "va": {
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
+        "county-subdivision",
+        "municipality",
+        "school-district-elementary",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 0,
+      "layer_ids": [
+        "county",
+        "county-subdivision",
+        "fire-station",
+        "municipality",
+        "police-station",
+        "post-office",
+        "school-district-elementary",
+        "school-district-unified",
+        "us-house",
+        "va-house",
+        "va-senate",
+        "zip-code"
+      ]
+    },
     "wi": {
       "layers_sending_point": 1,
       "layers": [

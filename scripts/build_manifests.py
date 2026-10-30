@@ -161,6 +161,7 @@ INSTANCES = [
     ("la", "la/metro-worksheet.json"),
     ("mo", "mo/metro-worksheet.json"),
     ("ga", "ga/metro-worksheet.json"),
+    ("va", "va/metro-worksheet.json"),
 ]
 
 MANIFEST = "manifest.webmanifest"

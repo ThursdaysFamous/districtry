@@ -59,6 +59,7 @@ python3 scripts/build_coverage_gaps.py --check --metro mississippi --out ms/data
 python3 scripts/build_coverage_gaps.py --check --metro louisiana --out la/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro missouri --out mo/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro georgia --out ga/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro virginia --out va/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro nyc       --out ny/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro sf        --out ca/data/app/coverage-gaps.json
 python3 scripts/validate_gap_counts.py --selftest                 # the claim/label split, both directions, offline
@@ -136,6 +137,7 @@ python3 ia/scripts/build_metro_outline.py --check
 python3 mi/scripts/build_metro_outline.py --check
 python3 mo/scripts/build_metro_outline.py --check
 python3 ga/scripts/build_metro_outline.py --check
+python3 va/scripts/build_metro_outline.py --check
 python3 scripts/build_press_list.py --check                # PRESS_LIST.md vs press-list.json
 python3 scripts/validate_doc_counts.py                    # "N layers" in prose vs the worksheets
 python3 scripts/validate_doc_counts.py --selftest         # pattern C reads the one real "N for <instance>" count and not the four sentences sharing its shape
@@ -263,11 +265,13 @@ python3 ms/scripts/validate_index.py ms/index.html
 python3 la/scripts/validate_index.py la/index.html
 python3 mo/scripts/validate_index.py mo/index.html
 python3 ga/scripts/validate_index.py ga/index.html
+python3 va/scripts/validate_index.py va/index.html
 
 # --- browser gates: ONE server at the repo root, every instance
 python3 -m http.server 8000 &
 BASE_URL=http://localhost:8000/il/ node scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/ca/ node ca/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/va/ node va/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/ny/ node ny/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/wi/ node wi/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/ia/ node ia/scripts/smoke_test.mjs
