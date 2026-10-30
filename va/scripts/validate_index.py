@@ -95,7 +95,8 @@ MIN_REGISTER_LAYER = 9
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "va-senate", "va-house", "county", "school-district-unified",
-    "county-subdivision", "zip-code", "municipality",
+    "school-board-district", "county-subdivision", "supervisor-district",
+    "zip-code", "voting-precinct", "municipality",
     "school-district-elementary", "police-station", "fire-station",
     "post-office",
 ]
@@ -107,6 +108,8 @@ GEOMETRY_FILES = {
     "congress-districts.json": (11, 11),  # The 11 U.S. House districts, TIGERweb layer 0 (CD120), the 2021 map, which is also layer 4's and stays in force for the 2026 election.
     "va-senate-districts.json": (40, 40),  # The 40 Virginia Senate districts, TIGERweb layer 1, the 2021 plan.
     "va-house-districts.json": (100, 100),  # The 100 House of Delegates districts, TIGERweb layer 2, the 2021 plan.
+    "va-precincts.json": (2531, 2531),  # Every Virginia voting precinct, pre-built by va/scripts/build_va_precincts.py through scripts/statewide_precincts.py from the Department of Elections' statewide layer of election districts and precincts (changed 2026-09-22, read 2026-10-30): 7,271 pieces joined into 2,531 precincts, overlaps between neighbours resolved by county, Douglas-Peucker at 12 m. 8.7 MB, 2.17 MB gzipped, fetched only when a reader switches a layer on that reads it.
+    "va-local-districts.json": (600, 600),  # The 600 supervisor, council and school board districts of the 107 counties and cities that elect by district (va/scripts/build_va_local_districts.py), each the union of its precincts in va-precincts.json; Norfolk's two superwards from the city's own map. Drawn only where va-local-officials.json names seats for the district, and the builder's --check holds the two to each other.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -114,6 +117,7 @@ ROSTER_FILES = {
     "congress-roster.json": 11,  # U.S. House (VA) roster, refreshed weekly by update-va-congress-roster.yml.
     "va-senate-members.json": 40,  # Virginia Senate roster from the Senate's own member list and member pages, one record per seat, refreshed weekly by update-va-legislature-roster.yml. A vacant seat carries a record saying so, so the floor is the chamber's size.
     "va-house-members.json": 100,  # House of Delegates roster from the House's own member list and member pages, on the same terms.
+    "va-local-officials.json": 4,  # Every county's board of supervisors, every city's council, every elected school board and every city's elected mayor, plus Leesburg's and Blacksburg's councils, from the Department of Elections' results (va/scripts/build_va_local_officials.py), refreshed weekly by update-va-local-officials.yml. Four top-level keys (asOf, source, localities, towns); the builder's --check holds all 133 counties and cities and every district seat.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 
@@ -691,13 +695,14 @@ def check_coverage_ring_tracks_counties(repo_root, app_dir):
     same shape, closed this after seven counties sat greyed out for two days
     with every gate in the repo green; Iowa carried the identical hole.
 
-    ONE COMPARAND WHILE THE INSTANCE IS DARK. state-counties.json draws
-    Virginia's 95 counties and 38 independent cities, and the County or City
-    card answers in every one, so the ring and the geometry must name the same
-    133: the wash may not grey out a county or city whose card answers, and
-    may not promise one the app cannot draw. No list of county boards or city
-    councils ships yet (gap va-county-board-members); when one does, it joins
-    this check as a second comparand, the way Louisiana's parish roster does.
+    TWO COMPARANDS. state-counties.json draws Virginia's 95 counties and 38
+    independent cities, and the County or City card answers in every one, so
+    the ring and the geometry must name the same 133: the wash may not grey out
+    a county or city whose card answers, and may not promise one the app cannot
+    draw. va-local-officials.json, the names file that card reads for each
+    county's board and each city's council, must carry the same 133 too, the way
+    Louisiana's parish roster does, so no card in the ring is left without its
+    governing body's entry.
     """
     outline_py = os.path.join(repo_root, "scripts", "build_metro_outline.py")
     counties_path = os.path.join(app_dir, "state-counties.json")
@@ -737,6 +742,19 @@ def check_coverage_ring_tracks_counties(repo_root, app_dir):
              "data/app/metro-outline.json."
              % ("counties or cities" if len(masked) > 1 else "a county or city",
                 ", ".join(masked)))
+    officials_path = os.path.join(app_dir, "va-local-officials.json")
+    if os.path.exists(officials_path):
+        with open(officials_path, encoding="utf-8") as f:
+            named = {str(k)[-3:] for k in (json.load(f).get("localities") or {})}
+        if named != in_ring:
+            fail("va-local-officials.json names %d counties and cities and the ring "
+                 "holds %d (only in the names file: %s; only in the ring: %s) — "
+                 "rebuild the names file with va/scripts/build_va_local_officials.py"
+                 % (len(named), len(in_ring), ", ".join(sorted(named - in_ring)) or "none",
+                    ", ".join(sorted(in_ring - named)) or "none"))
+    else:
+        fail("va-local-officials.json not found — the County or City card has no "
+             "governing body to name")
     promised = sorted(in_ring - drawn)
     if promised:
         fail("FIPS %s inside METRO_COUNTY_FIPS with no feature in "

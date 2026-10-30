@@ -93,6 +93,9 @@ SOCRATA = []
 
 LEGISLATIVE = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer"
 STATE_COUNTY = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+DISTRICTS_UNION = ("https://services5.arcgis.com/M3dium4ePYpmdT4B/arcgis/rest/services/"
+                   "Districts_Union_Simplified/FeatureServer/0")
+NORFOLK_SUPERWARDS = "https://gisshare.norfolk.gov/pubserver/rest/services/OpenData/Maps/FeatureServer/8"
 
 # Same-origin data/app files and the upstream source each was built from.
 PROVENANCE = [
@@ -179,6 +182,40 @@ PROVENANCE = [
             "--check is offline and holds the shipped file to one INSIDE "
             "anchor per county and city plus OUTSIDE anchors over the state "
             "line."
+        ),
+    },
+    {
+        "layer": "voting-precinct",
+        "app_file": "va-precincts.json",
+        "source_url": DISTRICTS_UNION + "?f=json",
+        "note": (
+            "All 2,531 precincts, joined from the 7,271 pieces of the Department "
+            "of Elections' Districts Union Simplified layer by "
+            "va/scripts/build_va_precincts.py (data last edited 22 September "
+            "2026, measured 2026-10-30). Its --watch compares the layer with the "
+            "fingerprint recorded at the build; run it quarterly (va/WATCH.md)."
+        ),
+    },
+    {
+        "layer": "supervisor-district",
+        "app_file": "va-local-districts.json",
+        "source_url": NORFOLK_SUPERWARDS + "?f=json",
+        "note": (
+            "Every supervisor, council and school board district, each the union "
+            "of the precincts that vote in it, by "
+            "va/scripts/build_va_local_districts.py; Norfolk's superwards 6 and 7 "
+            "come from the city's own OpenData layer, the source watched here."
+        ),
+    },
+    {
+        "layer": "supervisor-district",
+        "app_file": "va-local-officials.json",
+        "source_url": "https://historical.elections.virginia.gov/",
+        "note": (
+            "Every county board, city council, elected school board and elected "
+            "mayor, and Leesburg's and Blacksburg's councils and mayors, from the "
+            "Department of Elections' results; rebuilt weekly by "
+            "update-va-local-officials.yml."
         ),
     },
 ]
@@ -269,6 +306,14 @@ ENDPOINTS = [
                 "?where=1%3D1" + USGS_ENVELOPE_QUERY + "&returnCountOnly=true&f=json"),
         "min_count": 890,   # 998 measured 2026-10-29
         "envelope": USGS_ENVELOPE_LITERAL,
+    },
+    # The Department of Elections' precinct pieces, counted because a layer
+    # that empties or is re-scoped still answers its metadata. The builder
+    # holds the exact count; this floor only says the layer still answers.
+    {
+        "layer": "voting-precinct",
+        "url": DISTRICTS_UNION + "/query?where=1%3D1&returnCountOnly=true&f=json",
+        "min_count": 7000,  # 7,426 pieces measured 2026-10-30, 155 of them naming no precinct
     },
     # ZCTAs carry NO STATE field, so this one is counted by ENVELOPE, in Esri's
     # own comma form -- the {minLng,...} shape makes TIGERweb answer HTTP 200
