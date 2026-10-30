@@ -20,8 +20,12 @@ TIGERweb, the coverage ring), **U.S. House** (14 districts), **Georgia Senate** 
 House members from the public-domain unitedstates/congress-legislators roster and the legislators
 from the General Assembly's own member data — the LIVE TIGERweb fabric — **Census County Division**
 (`county-subdivision`, 586), **City or Town** (`municipality`, 538), **School District**
-(`school-district-unified`, 181) and **ZIP Code** — and three nearest-N layers from the USGS National
-Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
+(`school-district-unified`, 181) and **ZIP Code** — three nearest-N layers from the USGS National
+Map (**Police Station**, **Fire & EMS Station**, **Post Office**), and the county maps the General
+Assembly's Reapportionment Office publishes, drawn only where the county's own district elections
+confirm them: **County Commission District** (`county-commissioner`, 109 counties) and **School
+Board District** (`school-board-district`, 104 counties), each naming its district's member from the
+Secretary of State's election results.
 
 **THE THREE DISTRICT MAPS ARE THE GENERAL ASSEMBLY'S OWN FILES, NOT TIGERweb's, AND THAT IS A
 MEASUREMENT.** The Legislative and Congressional Reapportionment Office lists each enacted 2023 plan
@@ -109,7 +113,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Georgia (`georgia`) — https://districtry.com/ga/
 - Geocoders: address Photon (Georgia-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Georgia-bounded, serial >=1s queue)
 - Ground truth: 33.74900,-84.38900 (Georgia State Capitol grounds, 206 Washington Street SW, Atlanta, Fulton County — the west side of the grounds, chosen 123 m from the line between House Districts 58 and 59, which runs east of the Capitol (the Capitol's own address point sits 51 m from it), measured 2026-10-29 against the shipped files) → county Fulton County; us-house 5; ga-senate 36; ga-house 58. Negative point 30.43830,-84.28070 (Tallahassee, Florida, about 26 km south of the Georgia line — outside Georgia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state layer names Florida here (controls: the State Capitol returns Georgia, and a point in the open Gulf of Mexico returns no state), and none of the state's shipped boundary files contains it. FLORIDA AND ALABAMA ARE THE TWO NEIGHBOURS NO INSTANCE SERVES, so the change that makes Florida live moves this point into Alabama, the way Kentucky's go-live moved Indiana's.).
-- Layers: 11 registered (political 3, safety 2, schools 1, geography 5); `registerLayer(` floor 9. Debug namespace `window.GeorgiaExplorer`.
+- Layers: 13 registered (political 4, safety 2, schools 2, geography 5); `registerLayer(` floor 9. Debug namespace `window.GeorgiaExplorer`.
 - Scheduled workflows: `update-ga-congress-roster.yml` (Mon 19:23 UTC); `update-ga-legislature-roster.yml` (Tue 19:23 UTC); `update-ga-county-officials.yml` (Wed 19:41 UTC); `ga-validate-sources.yml` (1st of month 21:43 UTC).
 - Source registry: `ga/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -136,6 +140,9 @@ python3 ga/scripts/build_legislative_boundaries.py --check-listing
 # The county map check's record: every map's verdict follows from its districts,
 # every district's from its contests (offline, the record alone):
 python3 ga/scripts/check_ga_county_maps.py --check
+
+# The drawn county districts are exactly the maps that record passes:
+python3 ga/scripts/build_ga_board_districts.py --check
 
 # Generated-region gate: per-instance facts live ONCE in ga/metro-worksheet.json;
 # GENERATED regions are emitted from it. NEVER hand-edit a GENERATED region:
@@ -174,7 +181,10 @@ this instance's three chamber layers use the fenced factory helper `registerIlga
 generic chamber factory both state chambers and the U.S. House card use, which renders a
 vacancy record as a vacant seat with its reason and source), the four TIGERweb layers
 `registerPolygonLayer` or a bespoke block, and the three nearest-N layers
-`registerNearestPointLayer`. The County card is a bespoke `registerLayer` block. Two invariants
+`registerNearestPointLayer`. The County card is a bespoke `registerLayer` block, and the two county
+district layers share `registerGaBoardDistricts`, which answers every district a point is in (a
+super district and the regular one under it both answer) and joins the roster by the seats the map
+check saw elected from each district. Two invariants
 pervade the code: the **stale-async guard** (`if (seq !== state.sequence) return;` after every
 await) and **per-layer failure isolation** (a layer's failure shows a Retry inside its own card,
 never breaks the others).
@@ -182,8 +192,9 @@ never breaks the others).
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
 roster source exists, cards link to the official body instead of inventing a name. Both chamber
 cards degrade to the district number + the chamber's own member list on a roster miss, and a
-vacant seat says it is vacant; the county, school-district, census-county-division and
-municipality cards carry no roster at all and **say so on the card**. External strings always
+vacant seat says it is vacant; the census-county-division and municipality cards carry no roster
+at all and **say so on the card**, and the county, school-district and two county district cards say
+which seats the election results cannot name and why. External strings always
 render through `sanitize()`/`textContent`. Roster refreshes always land as PRs for review — never
 as direct commits to main.
 
@@ -219,13 +230,21 @@ outright waits for its runoff, a city's board on a county ballot is set aside by
 builder has not seen stops the build until a person records it in `SEAT_NAMES` with the reason.
 Its `--check` (offline, in CI) re-derives every name's rule from the shipped file.
 
-The county commission and school board maps are not drawn yet (the rest of step 3 of the launch
-plan). Step 2,
+**The county commission and school board maps are drawn only where the precinct check passed**
+(`ga-commission-districts.json`, `ga-school-board-districts.json` and `ga-board-district-counties.json`,
+`ga/scripts/build_ga_board_districts.py`, step 3b of the launch plan, 2026-10-30). The check, step 2,
 `ga/scripts/check_ga_county_maps.py`, tested each of the map office's 296 county maps against the
 precincts that voted in each district contest of November 2024 and May and June 2026, read
 against the office's 2024 statewide precinct map, and wrote `ga/data/source/county-map-check.json`:
-which maps pass, fail, conflict with a 2026 contest, or no contest tested. Step 3 draws only maps
-it says pass. It is an operator step, run again after each election with county contests.
+which maps pass, fail, conflict with a 2026 contest, or no contest tested. The builder draws only
+maps it says pass, from the very files it tested (each pinned by SHA-256 in the record), cuts each
+to the Census Bureau's county line and, for a school board, takes out any city school system's
+ground; it drops a detached part lying wholly within the 8 m fidelity ceiling of the line it was
+cut along, and prints each one. The counties file tells the card, per district, which seats the
+check saw elected from it, whether the whole county voted for them, and whether a contest of its own
+confirmed its line. Every map not drawn is in gap `ga-county-commission-district-lines` or
+`ga-school-board-district-lines`. Both scripts are operator steps, run again after each election
+with county contests; `--check` on each runs offline in CI.
 
 robots.txt is read before the first fetch through `scripts/robots_policy.py`, with the same client
 the fetches send, and a stated Crawl-delay is honoured; the legislature builder paces every host at

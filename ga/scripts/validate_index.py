@@ -95,8 +95,9 @@ MIN_REGISTER_LAYER = 9
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "ga-senate", "county", "ga-house", "school-district-unified",
-    "county-subdivision", "zip-code", "municipality", "police-station",
-    "fire-station", "post-office",
+    "county-subdivision", "county-commissioner", "school-board-district",
+    "zip-code", "municipality", "police-station", "fire-station",
+    "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -106,6 +107,8 @@ GEOMETRY_FILES = {
     "congress-districts.json": (14, 14),  # The 14 U.S. House districts, from the General Assembly's file of the 2023 congressional plan.
     "ga-senate-districts.json": (56, 56),  # The 56 Georgia Senate districts, from the General Assembly's file of the 2023 plan.
     "ga-house-districts.json": (180, 180),  # The 180 Georgia House districts, from the General Assembly's file of the 2023 plan.
+    "ga-commission-districts.json": (531, 531),  # The commission districts of the 109 counties whose map passed the precinct check, and DeKalb's and Lowndes's super districts (ga/scripts/build_ga_board_districts.py, held to the map check's record by its --check).
+    "ga-school-board-districts.json": (560, 560),  # The county school board districts of the 104 counties whose map passed the precinct check, and Harris's and Richmond's super districts, with the city school systems' ground taken out (same builder).
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -114,6 +117,7 @@ ROSTER_FILES = {
     "ga-senate-members.json": 56,  # Georgia Senate roster from the General Assembly's own member data, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size.
     "ga-house-members.json": 180,  # Georgia House roster from the same member data, on the same terms.
     "ga-county-officials.json": 159,  # County commissioners and county school board members named from the Secretary of State's official election results, keyed by county FIPS, one record for each of the 159 counties whether or not it has a named seat; refreshed weekly by update-ga-county-officials.yml.
+    "ga-board-district-counties.json": 116,  # The 116 counties with a drawn commission or school board map, by FIPS code, with each district's seats as the map check saw them elected, written by the same build as the two district files and held to the map check's record by its --check. The two layers' coverage test reads it beside state-counties.json, so a reader's first selection does not download a whole districts file.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 
