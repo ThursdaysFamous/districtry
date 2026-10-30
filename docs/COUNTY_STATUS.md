@@ -34,7 +34,7 @@
 | Christian | 17021 | dispatch | districted | `county-board` | 1 — `christian-precinct-geometry` (no-source) |
 | Clark | 17023 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `clark-board-contact` (data-quality); `clark-precinct-polling` (data-quality) |
 | Clay | 17025 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | none |
-| Clinton | 17027 | dispatch | districted | `county-board`, `library-district` | 3 — `clinton-precinct-geometry` (data-quality); `county-board-office-addresses` (no-source); `statewide-library-officials` (no-source) |
+| Clinton | 17027 | dispatch | districted | `county-board`, `library-district` | 2 — `clinton-precinct-geometry` (data-quality); `statewide-library-officials` (no-source) |
 | Coles | 17029 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Cook | 17031 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | none |
 | Crawford | 17033 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
@@ -91,7 +91,7 @@
 | Morgan | 17137 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Moultrie | 17139 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Ogle | 17141 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 3 — `ogle-lasalle-special-districts` (no-source); `ogle-municipal-wards` (no-source); `statewide-library-officials` (no-source) |
-| Peoria | 17143 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 2 — `pass9-ward-seats-without-maps` (no-source); `peoria-fire-park-library-contact` (data-quality) |
+| Peoria | 17143 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 1 — `peoria-fire-park-library-contact` (data-quality) |
 | Perry | 17145 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Pike | 17149 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Pulaski | 17153 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
@@ -115,7 +115,7 @@
 | Washington | 17189 | dispatch | districted | `county-board`, `library-district` | 2 — `statewide-library-officials` (no-source); `washington-precinct-geometry` (no-source) |
 | Wayne | 17191 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | White | 17193 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `statewide-library-officials` (no-source); `white-special-districts` (no-source) |
-| Whiteside | 17195 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 5 — `statewide-library-officials` (no-source); `whiteside-municipal-officials` (no-source); `whiteside-precinct-polling` (data-quality); `whiteside-special-district-boards` (no-source); `whiteside-special-districts` (blocked) |
+| Whiteside | 17195 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 4 — `statewide-library-officials` (no-source); `whiteside-municipal-officials` (no-source); `whiteside-precinct-polling` (data-quality); `whiteside-special-district-boards` (no-source) |
 | Will | 17197 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 4 — `aurora-council-contact` (blocked); `crete-municipal-clerk` (no-source); `joliet-municipal-contact` (blocked); `will-municipal-directory-freeze` (blocked) |
 | Williamson | 17199 | dispatch | at-large — County card | `library-district` | 3 — `captcha-county-commissioner-contact` (blocked); `statewide-library-officials` (no-source); `williamson-precinct-geometry` (no-source) |
 | Winnebago | 17201 | dispatch | districted | `county-board`, `county-precinct`, `judicial-subcircuit`, `library-district` | 3 — `rockford-city-precincts` (no-source); `statewide-library-officials` (no-source); `winnebago-special-districts` (no-source) |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (2)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 101 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 100 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.

@@ -26,6 +26,7 @@ does not spend time on it — but it does not earn a row here.
 |---|---|---|---|
 | `jones-county-supervisor` (Iowa) | The county's own supervisor-district file, `BOS_2022`, sent on request | Jones County GIS Coordinator, through the County Auditor's office | 2026-10-07 |
 | `ia-tama-supervisor-map` (Iowa) | The county's own 2025 supervisor-district and precinct maps, sent on request | Tama County Auditor | 2026-10-07 |
+| `whiteside-special-districts` (Illinois) | Written permission to display fire and park districts derived from the county's parcel data, given on request | Whiteside County GIS | 2026-10-30 |
 
 ## Maintainers: adding a credit
 

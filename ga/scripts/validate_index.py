@@ -87,17 +87,17 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 9
+MIN_REGISTER_LAYER = 10
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "us-house", "ga-senate", "county", "ga-house", "school-district-unified",
-    "county-subdivision", "county-commissioner", "school-board-district",
-    "zip-code", "municipality", "police-station", "fire-station",
-    "post-office",
+    "us-house", "ga-superior-court", "ga-senate", "county", "ga-house",
+    "school-district-unified", "county-subdivision", "county-commissioner",
+    "school-board-district", "zip-code", "voting-precinct", "municipality",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -109,6 +109,8 @@ GEOMETRY_FILES = {
     "ga-house-districts.json": (180, 180),  # The 180 Georgia House districts, from the General Assembly's file of the 2023 plan.
     "ga-commission-districts.json": (531, 531),  # The commission districts of the 109 counties whose map passed the precinct check, and DeKalb's and Lowndes's super districts (ga/scripts/build_ga_board_districts.py, held to the map check's record by its --check).
     "ga-school-board-districts.json": (560, 560),  # The county school board districts of the 104 counties whose map passed the precinct check, and Harris's and Richmond's super districts, with the city school systems' ground taken out (same builder).
+    "ga-precincts.json": (2724, 2724),  # Every Georgia voting precinct, pre-built by ga/scripts/build_ga_precincts.py through scripts/statewide_precincts.py from the Reapportionment Office's 2024 statewide precinct map (Douglas-Peucker at 12 m, the smallest of 4, 8 and 12 m that keeps the file at or under 2.5 MB gzipped; a 6,000-point agreement gate, measured 99.92% with zero overlaps; an exact 2,724 count), each precinct carrying what the map check found about its county's precincts on the 2026 ballots. 8.7 MB, 2.16 MB gzipped, fetched only when a reader switches the layer on.
+    "ga-judicial-circuits.json": (51, 51),  # Georgia's 51 judicial circuits, dissolved from the county fabric by ga/scripts/build_ga_superior_courts.py --draw and held to the record of which ballot placed each county by its --check.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -117,6 +119,7 @@ ROSTER_FILES = {
     "ga-senate-members.json": 56,  # Georgia Senate roster from the General Assembly's own member data, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size.
     "ga-house-members.json": 180,  # Georgia House roster from the same member data, on the same terms.
     "ga-county-officials.json": 159,  # County commissioners and county school board members named from the Secretary of State's official election results, keyed by county FIPS, one record for each of the 159 counties whether or not it has a named seat; refreshed weekly by update-ga-county-officials.yml.
+    "ga-circuit-officials.json": 51,  # Each judicial circuit's superior court judges and district attorney named from the Secretary of State's official election results, keyed by circuit name, one record for each of the 51 circuits whether or not it has a named district attorney; refreshed weekly by update-ga-county-officials.yml.
     "ga-board-district-counties.json": 116,  # The 116 counties with a drawn commission or school board map, by FIPS code, with each district's seats as the map check saw them elected, written by the same build as the two district files and held to the map check's record by its --check. The two layers' coverage test reads it beside state-counties.json, so a reader's first selection does not download a whole districts file.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }

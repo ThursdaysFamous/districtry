@@ -185,6 +185,7 @@ python3 sc/scripts/build_sc_judicial_circuits.py --check             # the same 
 python3 tn/scripts/build_tn_judicial_districts.py --check            # the same for Tennessee's judicial districts
 python3 nc/scripts/build_nc_court_districts.py --check              # North Carolina's superior and district court districts against the kept text of G.S. 7A-41 and 7A-133: the parse, the judge counts, each district's area from the county file and the 2010 pieces, the interior points, and a county file that has not moved
 python3 ar/scripts/build_ar_precincts.py --check                     # a statewide precinct layer: hash and per-county counts against its record, each county covered by its own precincts, the card's stated wording
+python3 ga/scripts/build_ga_precincts.py --check                     # the same for Georgia, and each precinct's note on what the 2026 ballots say about its county matches the county map check's record
 python3 in/scripts/build_in_precincts.py --check                     # the same for Indiana
 python3 ky/scripts/build_ky_precincts.py --check                     # the same for Kentucky
 python3 la/scripts/build_la_precincts.py --check                     # the same for Louisiana
@@ -228,6 +229,7 @@ python3 mo/scripts/build_mo_county_officials.py --check         # Missouri's cou
 python3 mo/scripts/build_mo_commission_districts.py --check     # Missouri's commission districts: two per drawn county, the roster's seats, each pair the county's whole area, and the County layer agreeing at 2,000 points
 python3 ga/scripts/check_ga_county_maps.py --check           # Georgia's county map check: every map's verdict follows from its districts, every district's from its contests (the record alone, offline)
 python3 ga/scripts/build_ga_county_officials.py --check       # Georgia's county commissioners and school board members as shipped: one record per county, every name the winner of its seat's newest contest in office that day, every winner not yet in office dated after it, and the floors
+python3 ga/scripts/build_ga_superior_courts.py --check        # Georgia's judicial circuits: whole counties, every county in exactly one, each placed by its recorded court contests, and every judge and district attorney the winner of an election in office that day (offline)
 python3 ga/scripts/build_ga_board_districts.py --check         # Georgia's drawn county commission and school board districts: exactly the maps the county map check passes, and each district's seats, voting and tested flag as its record says (offline, no geometry library)
 python3 wv/scripts/build_wv_county_officials.py --check         # West Virginia's county commissioners and officers as shipped: one record per county, a commission of three (five in Berkeley and Jefferson), a mailing address only as the commission's office, and no fax number
 python3 wv/scripts/build_wv_magisterial_districts.py --check     # West Virginia's 195 magisterial districts: the exact count, the number per county, and the County layer agreeing at 2,000 points
