@@ -70,6 +70,8 @@
     "fire-service": "fv",
     "fire-station": "fs",
     "fiscal-court": "fc",
+    "ga-house": "gah",
+    "ga-senate": "gas",
     "hs-zone": "hz",
     "ia-house": "iah",
     "ia-judicial-district": "iaj",
@@ -168,6 +170,8 @@
     "township": "tw",
     "tribal-government": "tg",
     "us-house": "us",
+    "va-house": "vah",
+    "va-senate": "vas",
     "village": "vg",
     "voting-precinct": "vp",
     "ward": "wd",
@@ -178,6 +182,8 @@
     "wi-court-of-appeals": "wap",
     "wi-senate": "wis",
     "wtcs-district": "tc",
+    "wv-house": "wvh",
+    "wv-senate": "wvs",
     "zip-code": "zp"
   }
 }

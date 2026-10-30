@@ -1,0 +1,167 @@
+{
+  "1": {
+    "name": "Robert J. Wittman",
+    "party": "Republican",
+    "url": "https://wittman.house.gov",
+    "capitolOffice": [
+      "2055 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4261"
+    ],
+    "districtOffice": [
+      "4201 Dominion Blvd, Suite 110",
+      "Glen Allen, VA 23060",
+      "Phone: 804-401-4120"
+    ]
+  },
+  "2": {
+    "name": "Jennifer A. Kiggans",
+    "party": "Republican",
+    "url": "https://kiggans.house.gov",
+    "capitolOffice": [
+      "152 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4215"
+    ],
+    "districtOffice": [
+      "25020 Shore Parkway, 1B",
+      "Onley, VA 23418",
+      "Phone: 757-666-6020"
+    ]
+  },
+  "3": {
+    "name": "Robert C. \"Bobby\" Scott",
+    "party": "Democrat",
+    "url": "https://bobbyscott.house.gov",
+    "capitolOffice": [
+      "2328 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-8351"
+    ],
+    "districtOffice": [
+      "2600 Washington Ave., Suite 1010",
+      "Newport News, VA 23607",
+      "Phone: 757-380-1000"
+    ]
+  },
+  "4": {
+    "name": "Jennifer L. McClellan",
+    "party": "Democrat",
+    "url": "https://mcclellan.house.gov",
+    "capitolOffice": [
+      "1628 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6365"
+    ],
+    "districtOffice": [
+      "11 S. 12th Street, Suite 401",
+      "Richmond, VA 23219",
+      "Phone: 804-486-1840"
+    ]
+  },
+  "5": {
+    "name": "John J. McGuire III",
+    "party": "Republican",
+    "url": "https://mcguire.house.gov",
+    "capitolOffice": [
+      "1013 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4711"
+    ],
+    "districtOffice": [
+      "900 Church St",
+      "Lynchburg, VA 24505",
+      "Phone: 202-225-4711"
+    ]
+  },
+  "6": {
+    "name": "Ben Cline",
+    "party": "Republican",
+    "url": "https://cline.house.gov",
+    "capitolOffice": [
+      "2443 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5431"
+    ],
+    "districtOffice": [
+      "70 N Mason St, Suite 110",
+      "Harrisonburg, VA 22802-4126",
+      "Phone: 540-432-2391"
+    ]
+  },
+  "7": {
+    "name": "Eugene Simon Vindman",
+    "party": "Democrat",
+    "url": "https://vindman.house.gov",
+    "capitolOffice": [
+      "1005 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2815"
+    ],
+    "districtOffice": [
+      "2241D Tacketts Mill Dr.",
+      "Woodbridge, VA 22192",
+      "Phone: 703-987-2180"
+    ]
+  },
+  "8": {
+    "name": "Donald S. Beyer, Jr.",
+    "party": "Democrat",
+    "url": "https://beyer.house.gov",
+    "capitolOffice": [
+      "1226 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4376"
+    ],
+    "districtOffice": [
+      "700 N Fairfax St., Suite 510",
+      "Alexandria, VA 22314",
+      "Phone: 703-658-5403"
+    ]
+  },
+  "9": {
+    "name": "H. Morgan Griffith",
+    "party": "Republican",
+    "url": "https://morgangriffith.house.gov",
+    "capitolOffice": [
+      "2110 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3861"
+    ],
+    "districtOffice": [
+      "323 W. Main St.",
+      "Abingdon, VA 24210",
+      "Phone: 276-525-1405"
+    ]
+  },
+  "10": {
+    "name": "Suhas Subramanyam",
+    "party": "Democrat",
+    "url": "https://subramanyam.house.gov",
+    "capitolOffice": [
+      "1009 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5136"
+    ],
+    "districtOffice": [
+      "210 Wirt Street SW, Unit 102",
+      "Leesburg, VA 20175",
+      "Phone: 703-236-1300"
+    ]
+  },
+  "11": {
+    "name": "James R. Walkinshaw",
+    "party": "Democrat",
+    "url": "https://walkinshaw.house.gov",
+    "capitolOffice": [
+      "2265 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-1492"
+    ],
+    "districtOffice": [
+      "10680 Main Street District, Suite 140",
+      "Fairfax, VA 22030",
+      "Phone: 703-256-3071"
+    ]
+  }
+}

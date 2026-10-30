@@ -1,0 +1,109 @@
+name: Update Virginia county, city and school board officials
+
+# Weekly refresh of va/data/app/va-local-officials.json, which va/index.html's
+# County or City, City or Town, Supervisor or Council District and School
+# Board District cards read: every county's board of supervisors, every
+# city's council, every elected school board, every city's elected mayor, and
+# the councils and mayors of Leesburg and Blacksburg. It rebuilds the file
+# from the Department of Elections' results of every local contest
+# (historical.elections.virginia.gov, through the GraphQL interface its own
+# pages read) with va/scripts/build_va_local_officials.py and, if anything
+# changed, opens a PR rather than committing directly to main — officeholder
+# data gets a look before it ships.
+#
+# The builder asks the results for every contest of nine offices in each year
+# from 2015, a second apart, after reading the host's robots.txt (25 bytes,
+# disallowing nothing, read 2026-10-30). A week whose seats are unchanged
+# leaves the file, its date and its record as they are, so most weeks open no
+# PR. What this job exists to catch: a special election, a regular election's
+# winners (November's are held as pending until they take office on 1
+# January), and a county or city whose results stop matching its districts,
+# which stops the build rather than writing.
+#
+# THE DISTRICT FILE IS HELD TO THIS ONE, so the validate step runs both
+# builders' --check: va-local-districts.json draws a district exactly where
+# the names file lists seats for it, and a week in which that set changes
+# fails here, before a PR. Redrawing the districts is a person's job: run
+# va/scripts/build_va_local_districts.py (it reads Norfolk's superward map and
+# needs shapely) and read what moved.
+#
+# VIRGINIA IS DARK, so nothing here regenerates a page; go-live adds the steps
+# its per-county pages need (va/WATCH.md has the list).
+
+on:
+  schedule:
+    - cron: "37 19 * * 3" # Wednesday 19:37 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    # About two hundred requests a second apart; bounded so a run that hangs
+    # dies visibly rather than holding a runner for six hours.
+    timeout-minutes: 60
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR runs CI; see
+      # update-va-legislature-roster.yml for why.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # requests for the builder's session (it retries a reset or a timeout).
+      # shapely is not used by the district builder's --check below, only by
+      # its build; it is installed because validate_workflow_deps.py reads
+      # every import in a script this workflow runs and cannot tell which
+      # functions run.
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests shapely
+
+      - name: Rebuild the county, city and school board officials
+        run: python3 va/scripts/build_va_local_officials.py
+
+      - name: Validate app + data files
+        run: |
+          python3 va/scripts/build_va_local_officials.py --check
+          python3 va/scripts/build_va_local_districts.py --check
+          python3 va/scripts/validate_index.py va/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- va/data/app/va-local-officials.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/va-local-officials-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history; the rebuilt file and
+          # its record are carried over the checkout as uncommitted changes.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add va/data/app/va-local-officials.json va/data/source/va-local-officials.record.json
+          git commit -m "Update Virginia county, city and school board officials"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Virginia county, city and school board officials" \
+              --body "Automated weekly refresh of every Virginia county's board of supervisors, city council, elected school board and elected mayor, and Leesburg's and Blacksburg's councils, from the Department of Elections' results, generated by \`va/scripts/build_va_local_officials.py\`. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi
