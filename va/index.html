@@ -11176,7 +11176,7 @@ function initVirginiaExplorer() {
     "county",            // 133 counties and independent cities (95 counties and 38 cities that belong to no county), pre-built from TIGERweb; the instance's offline anchor layer
     "school-district-unified", // 135 school divisions, about 757 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive; with Lexington's they cover the state exactly
     "school-board-district", // 545 districts in the 98 counties and cities that elect their school board by district, each the union of its precincts in the Department of Elections' layer; 186.1 km2 mean area on the drawn file, land and water (median 158.2), measured 2026-10-30
-    "county-subdivision", // 552 records tiling the state — 513 magisterial districts, the 38 independent cities and Arlington County, which the Census files as one each — about 185 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive
+    "county-subdivision", // 552 records tiling the state — 513 magisterial districts, the 38 independent cities and Arlington County, which the Census files as one each — about 185 km2 of land on average, shipped with the app in va-magisterial-districts.json, the 405 districts of 72 counties drawn from the Department of Elections' lines and the rest from TIGERweb
     "supervisor-district", // 597 districts in the 91 counties and 15 cities that elect their board of supervisors or council by district, each the union of its precincts in the Department of Elections' layer; 176.1 km2 mean area on the drawn file, land and water (median 149.5), measured 2026-10-30
     "zip-code",          // 907 ZIP Code Tabulation Areas overlapping Virginia, of the 2,609 in the state's own bounding box, in a mirrored tile archive (measured 2026-10-29); about 94 km2 of land on average for the 2,609, and ranked by them, which are what the map draws where the archive is not used (on the raster basemap); the layer hides outside Virginia
     "voting-precinct",   // 2,531 precincts tiling the state, pre-built from the Department of Elections' layer — 43.2 km2 mean area on the drawn file, land and water (median 7.8), measured 2026-10-30: smaller on average than a supervisor or council district, larger than a city or town (about 25 km2 of land)
@@ -16033,7 +16033,7 @@ function initVirginiaExplorer() {
     badge: function () { return "School board member"; }
   });
 
-  /* ---------- 5. Magisterial District — TIGERweb county subdivisions ----------
+  /* ---------- 5. Magisterial District — the Department's lines where the census names them ----------
    * Which county subdivision a point is in, owed in every state whether or
    * not the units govern anyone (docs/DONE_STANDARD.md, level 14). Virginia's
    * counties are divided into magisterial districts, and the Census Bureau's
@@ -16045,16 +16045,25 @@ function initVirginiaExplorer() {
    *   38 independent cities, each its own subdivision (status F);
    *   Arlington County, which the Census does not divide (status F).
    *
-   * THE CARD DOES NOT SAY WHO REPRESENTS THE POINT. In many counties each
-   * magisterial district elects a member of the board of supervisors, but a
-   * county's election districts can differ from these lines, and the Census
-   * Bureau's copy can lag a county's redistricting. The plan's fifth change
-   * replaces these lines with the Department of Elections' own where its
-   * election district names match; until then the card names the district
-   * and says what it is. ---------- */
-  var loadCountySubdivisions = tigerStatewideLoader(
-    TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 1,
-    "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT", "county subdivisions");
+   * THE LINES ARE THE DEPARTMENT OF ELECTIONS' WHERE THE NAMES ARE THE SAME.
+   * data/app/va-magisterial-districts.json (va/scripts/
+   * build_va_magisterial_districts.py) carries all 552. In the 72 counties
+   * whose census subdivisions and election districts are one set of names,
+   * each district is drawn from the Department's precinct lines, the lines
+   * the Supervisor or Council District layer draws (`lines: "department"`),
+   * because the Census's copy lags a county's redistricting: it puts a point
+   * in another district on more than 1% of the county's ground in 45 of the
+   * 72. Elsewhere the file carries the Census's copy (`lines: "census"`).
+   * Adam's choice of 22 October 2026.
+   *
+   * THE CARD STILL NAMES NOBODY. A magisterial district has no government of
+   * its own; the Supervisor or Council District card names who is elected
+   * from it. Which bodies a county elects by district is read from
+   * va-local-officials.json, the file that card reads, and when it does not
+   * load the card says only what the district is. ---------- */
+  var loadCountySubdivisions = makeCached(function () {
+    return fetchJSONWithRetry("data/app/va-magisterial-districts.json", {}, 2);
+  });
 
   // The county a magisterial district lies in, named from this app's own
   // county file by the three-digit code TIGER carries; null when that file
@@ -16072,9 +16081,45 @@ function initVirginiaExplorer() {
     return null;
   }
 
+  // What the Magisterial District card says a district is. `bodies` is the
+  // county's entry in va-local-officials.json, or null when that file did
+  // not load.
+  function magisterialWhatThisIs(result) {
+    var place = result.county || "this county";
+    var bodies = result.bodies;
+    var board = !!(bodies && bodies.board && bodies.board.byDistrict);
+    var school = !!(bodies && bodies.school && bodies.school.byDistrict);
+    if (result.lines === "department") {
+      return "A magisterial district. In " + place + ", the magisterial districts " +
+        "are the districts " + (school ? "the board of supervisors and the school " +
+        "board are" : "the board of supervisors is") + " elected from, so this map " +
+        "draws them from the Department of Elections' precinct lines, to within 12 " +
+        "metres, the same lines as the Supervisor or Council District layer. The " +
+        "district has no government of its own; the Supervisor or Council District " +
+        "card names its supervisor.";
+    }
+    var census = "A magisterial district, as the U.S. Census Bureau maps it. It " +
+      "has no government of its own.";
+    if (bodies && board) {
+      return census + " " + place.charAt(0).toUpperCase() + place.slice(1) +
+        " elects its board of supervisors from districts whose names or number " +
+        "differ from these, so these lines are not its election districts: the " +
+        "Supervisor or Council District card draws those and names who " +
+        "represents this point.";
+    }
+    if (bodies && bodies.board) {
+      return census + " " + place.charAt(0).toUpperCase() + place.slice(1) +
+        " elects its board of supervisors at large, so no supervisor is elected " +
+        "from this district: the County or City card names the board.";
+    }
+    return census + " In many Virginia counties each magisterial district elects " +
+      "a member of the board of supervisors, but a county's election districts " +
+      "can differ from these lines, so this app does not use them to say who " +
+      "represents this point.";
+  }
+
   registerLayer({
     id: "county-subdivision",
-    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "Magisterial District",
     subOf: "county",
@@ -16091,18 +16136,24 @@ function initVirginiaExplorer() {
     query: function (point, seq) {
       return Promise.all([
         queryFeatureAt(loadCountySubdivisions, point),
-        loadStateCounties().catch(function () { return null; })
+        loadStateCounties().catch(function () { return null; }),
+        loadVaLocalOfficials().catch(function () { return null; })
       ]).then(function (parts) {
         var feature = parts[0];
         if (!feature) return null;
         var props = feature.properties || {};
+        var code = findPropCI(props, ["county"]);
+        var localities = (parts[2] && parts[2].localities) || null;
+        var entry = localities && code != null ? localities["51" + String(code)] : null;
         return {
           seq: seq,
           name: findPropCI(props, ["name"]),
           funcstat: findPropCI(props, ["funcstat"]),
           geoid: findPropCI(props, ["geoid"]),
-          countyCode: findPropCI(props, ["county"]),
-          county: subdivisionCounty(parts[1], findPropCI(props, ["county"]))
+          lines: findPropCI(props, ["lines"]),
+          countyCode: code,
+          county: subdivisionCounty(parts[1], code),
+          bodies: entry ? (entry.bodies || null) : null
         };
       });
     },
@@ -16118,11 +16169,7 @@ function initVirginiaExplorer() {
       }));
       var value;
       if (status === "N") {
-        value = "A magisterial district, as the U.S. Census Bureau maps it. It " +
-          "has no government of its own. In many Virginia counties each " +
-          "magisterial district elects a member of the board of supervisors, " +
-          "but a county's election districts can differ from these lines, so " +
-          "this app does not use them to say who represents this point.";
+        value = magisterialWhatThisIs(result);
       } else if (status === "F" && city) {
         value = "An independent city belongs to no county and is not divided " +
           "into magisterial districts. The U.S. Census Bureau counts the whole " +

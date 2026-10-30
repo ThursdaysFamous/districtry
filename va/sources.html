@@ -1355,13 +1355,14 @@ table.matrix code {
               </tr>
               <tr id="layer-county-subdivision">
                 <th scope="row"><span class="layer-name">Magisterial District</span><code>county-subdivision</code></th>
-                <td data-label="What it answers">The magisterial district containing the point, as the Census Bureau maps it, and its county.</td>
+                <td data-label="What it answers">The magisterial district containing the point and its county, drawn from the Department of Elections' current lines in the 72 counties whose census subdivisions are their election districts, and as the Census Bureau maps it elsewhere.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 552 features for Virginia, measured 2026-10-29: 513 magisterial districts in 94 counties, every one recorded with no government of its own; the 38 independent cities; and Arlington County, which the Census does not divide.</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), read 2026-10-30 and pre-built by va/scripts/build_va_magisterial_districts.py, drawn to within 12 metres and shipped with the app: 552 features for Virginia, 513 magisterial districts in 94 counties, every one recorded with no government of its own; the 38 independent cities; and Arlington County, which the Census does not divide. Its names, and its lines outside the 72 counties below.</a></li>
+                    <li><a href="https://services5.arcgis.com/M3dium4ePYpmdT4B/arcgis/rest/services/Districts_Union_Simplified/FeatureServer/0" target="_blank" rel="noopener">Virginia Department of Elections — its statewide layer of election districts and precincts (Districts_Union_Simplified, layer 0), through va-local-districts.json: in the 72 counties whose census subdivisions and election districts are one set of names (Adam's choice of 2026-10-22), each magisterial district is the Department's district inside the county's census ground, so its lines are the precincts' lines, drawn to within 12 metres. Available to anyone under § 24.2-103.1 of the Code of Virginia, as the Department told this project on 2026-10-30.</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD SAYS WHY. A magisterial district has no government of its own. In many counties each one elects a member of the board of supervisors, but the Census Bureau's copy can lag a county's redistricting, so this card does not use it to say who represents the point.</td>
+                <td data-label="Who it names">NO OFFICEHOLDER, AND THE CARD SAYS WHY. A magisterial district has no government of its own. In the 72 counties drawn from the Department's lines the card says the district is the one the board of supervisors is elected from and points to the Supervisor or Council District card, which names the member; in the 19 counties whose election districts differ from the Census's copy it says the lines are not the election districts; in Highland, Madison and Mathews it says the board is elected at large. Which bodies a county elects by district is read from va-local-officials.json.</td>
                 <td data-label="Where it applies">Virginia — statewide, all 552 records.</td>
               </tr>
               <tr id="layer-zip-code">
@@ -1569,7 +1570,7 @@ table.matrix code {
       "@id": "https://districtry.com/va/sources.html#dataset-county-subdivision",
       "identifier": "county-subdivision",
       "name": "Magisterial District",
-      "description": "The magisterial district containing the point, as the Census Bureau maps it, and its county. NO OFFICEHOLDER, AND THE CARD SAYS WHY. A magisterial district has no government of its own. In many counties each one elects a member of the board of supervisors, but the Census Bureau's copy can lag a county's redistricting, so this card does not use it to say who represents the point.",
+      "description": "The magisterial district containing the point and its county, drawn from the Department of Elections' current lines in the 72 counties whose census subdivisions are their election districts, and as the Census Bureau maps it elsewhere. NO OFFICEHOLDER, AND THE CARD SAYS WHY. A magisterial district has no government of its own. In the 72 counties drawn from the Department's lines the card says the district is the one the board of supervisors is elected from and points to the Supervisor or Council District card, which names the member; in the 19 counties whose election districts differ from the Census's copy it says the lines are not the election districts; in Highland, Madison and Mathews it says the board is elected at large. Which bodies a county elects by district is read from va-local-officials.json.",
       "url": "https://districtry.com/va/sources.html#layer-county-subdivision",
       "isPartOf": {
         "@id": "https://districtry.com/va/sources.html#catalog"
@@ -1577,8 +1578,13 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 552 features for Virginia, measured 2026-10-29: 513 magisterial districts in 94 counties, every one recorded with no government of its own; the 38 independent cities; and Arlington County, which the Census does not divide.",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), read 2026-10-30 and pre-built by va/scripts/build_va_magisterial_districts.py, drawn to within 12 metres and shipped with the app: 552 features for Virginia, 513 magisterial districts in 94 counties, every one recorded with no government of its own; the 38 independent cities; and Arlington County, which the Census does not divide. Its names, and its lines outside the 72 counties below.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Virginia Department of Elections — its statewide layer of election districts and precincts (Districts_Union_Simplified, layer 0), through va-local-districts.json: in the 72 counties whose census subdivisions and election districts are one set of names (Adam's choice of 2026-10-22), each magisterial district is the Department's district inside the county's census ground, so its lines are the precincts' lines, drawn to within 12 metres. Available to anyone under § 24.2-103.1 of the Code of Virginia, as the Department told this project on 2026-10-30.",
+          "url": "https://services5.arcgis.com/M3dium4ePYpmdT4B/arcgis/rest/services/Districts_Union_Simplified/FeatureServer/0"
         }
       ],
       "spatialCoverage": {
