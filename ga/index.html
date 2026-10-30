@@ -4477,8 +4477,9 @@ function initGeorgiaExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "ga-senate": "gas", "county": "co", "ga-house": "gah",
-    "school-district-unified": "su", "county-subdivision": "cs", "zip-code": "zp",
-    "municipality": "mu", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "school-district-unified": "su", "county-subdivision": "cs", "county-commissioner": "cm",
+    "school-board-district": "bd", "zip-code": "zp", "municipality": "mu",
+    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -11174,6 +11175,8 @@ function initGeorgiaExplorer() {
     "ga-house",          // 180 House districts — smaller on average than a county, about the size of a school district
     "school-district-unified", // 181 unified districts, about 822 km2 of land on average, live from TIGERweb (no data/app file); they cover all of Georgia but Fort Benning
     "county-subdivision", // 586 census county divisions tiling the state, about 255 km2 of land on average, live from TIGERweb (no data/app file)
+    "county-commissioner", // 527 commission districts and 4 super districts in the 109 counties whose map passed the precinct check, about 220 km2 on average
+    "school-board-district", // 556 school board districts and 4 super districts in the 104 counties whose map passed the precinct check, about 196 km2 on average, with the city school systems' ground taken out
     "zip-code",          // 1,202 ZIP Code Tabulation Areas in the state's own bounding box, about 196 km2 of land on average, fetched live by envelope; the layer hides outside Georgia
     "municipality",      // 538 incorporated places, about 26 km2 of land on average, live from TIGERweb (no data/app file)
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -15521,6 +15524,283 @@ function initGeorgiaExplorer() {
     }
   });
 
+  /* ---------- 1a. County Commission District and School Board District ----------
+   * The district a county commissioner or county school board member is
+   * elected from, drawn ONLY where the county's map passed this app's
+   * precinct check (data/app/ga-commission-districts.json and
+   * ga-school-board-districts.json, built by
+   * ga/scripts/build_ga_board_districts.py from the maps the General
+   * Assembly's Reapportionment Office publishes as each county's most
+   * recently adopted). The check (ga/scripts/check_ga_county_maps.py, its
+   * record in data/source/county-map-check.json) puts each precinct that
+   * voted in a district's contests on the office's 2024 precinct map and
+   * passes a map whose precincts lie inside the districts they voted in.
+   * Everywhere else the layers are hidden (coverage), and gaps
+   * ga-county-commission-district-lines and ga-school-board-district-lines
+   * say why.
+   *
+   * THE COVERAGE TEST ASKS THE COUNTY LAYER, NOT THESE FILES, the shape
+   * Missouri's commission districts use: the point's county is found in
+   * state-counties.json, which the County card loads anyway, and looked up
+   * in data/app/ga-board-district-counties.json, which also carries, per
+   * district, the seats the map check saw elected from it and whether the
+   * whole county voted for them.
+   *
+   * A POINT CAN BE IN TWO DISTRICTS OF ONE BOARD. Four maps are of "super
+   * districts", each electing a member of its own over several regular
+   * districts (DeKalb's and Lowndes's commissions, Harris's and Richmond's
+   * school boards); each file holds them after the county's other districts,
+   * so the map lights the regular one, and the card names both.
+   *
+   * THE NAMES ARE THE ROSTER'S (data/app/ga-county-officials.json), joined by
+   * the seat labels the counties file gives each district, or else by the
+   * district number a roster seat carries. A seat the roster lists that no
+   * drawn district claims is named apart: elected by the whole county, or
+   * from a district this app does not draw. ---------- */
+  var loadGaBoardCounties = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ga-board-district-counties.json", {}, 2);
+  });
+  var loadGaCommissionDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ga-commission-districts.json", {}, 2);
+  });
+  var loadGaSchoolBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ga-school-board-districts.json", {}, 2);
+  });
+  // The point's county FIPS code, from the file the County card reads, or null.
+  function gaCountyAt(point) {
+    return loadStateCounties().then(function (fc) {
+      var feats = (fc && fc.features) || [];
+      for (var i = 0; i < feats.length; i++) {
+        if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+          var geoid = findPropCI(feats[i].properties || {}, ["geoid"]);
+          return geoid != null ? String(geoid) : null;
+        }
+      }
+      return null;
+    });
+  }
+  // A seat named for the whole county rather than for a district.
+  var GA_COUNTYWIDE_SEAT = /^(chair|vice chair|chairman|chairperson|president|sole commissioner)\b|\bat[ -]large\b/i;
+
+  function registerGaBoardDistricts(spec) {
+    function drawnHere(point) {
+      return Promise.all([gaCountyAt(point), loadGaBoardCounties()]).then(function (got) {
+        var c = got[0] != null ? (got[1] || {})[got[0]] : null;
+        return !!(c && c[spec.body]);
+      });
+    }
+    function districtName(d) {
+      return String(d.label) + (d.super ? " (super district)" : "");
+    }
+    registerLayer({
+      id: spec.id,
+      group: spec.group,
+      label: spec.label,
+      coverage: drawnHere,
+      emptyNote: spec.emptyNote,
+      overlay: { load: spec.load, style: spec.style },
+      hoverName: function (feature) {
+        var props = feature.properties || {};
+        var county = findPropCI(props, ["county"]);
+        var name = findPropCI(props, ["label"]);
+        if (county == null || name == null) return null;
+        return String(county) + " " + String(name) +
+          (findPropCI(props, ["super"]) === true ? " (super district)" : "");
+      },
+      query: function (point, seq) {
+        return featureSetAt(spec.load, point).then(function (fc) {
+          var hits = [];
+          ((fc && fc.features) || []).forEach(function (f) {
+            if (!f.geometry) return;
+            var bb = featureBBox(f);
+            if (point.lng < bb[0] || point.lng > bb[2] || point.lat < bb[1] || point.lat > bb[3]) return;
+            if (pointInGeometry(point, f.geometry)) hits.push(f);
+          });
+          if (!hits.length) return null;
+          var props = hits[0].properties || {};
+          var result = {
+            seq: seq,
+            county: findPropCI(props, ["county"]),
+            geoid: findPropCI(props, ["countyfips"]),
+            districts: hits.map(function (f) {
+              var p = f.properties || {};
+              return { key: String(findPropCI(p, ["district"])), label: findPropCI(p, ["label"]),
+                super: findPropCI(p, ["super"]) === true };
+            }),
+            desc: null,
+            seats: null,
+            rosterFailed: false
+          };
+          // the roster's own failure is not this layer's failure: the
+          // district still answers, and the card says no one is named
+          return Promise.all([
+            loadGaBoardCounties().then(null, function () { return null; }),
+            loadGaCountyOfficials().then(null, function () { result.rosterFailed = true; return null; })
+          ]).then(function (got) {
+            var c = got[0] && result.geoid != null ? got[0][String(result.geoid)] : null;
+            result.desc = c ? c[spec.body] || null : null;
+            var o = got[1] && result.geoid != null ? got[1][String(result.geoid)] : null;
+            result.officials = o;
+            result.seats = o ? o[spec.body] || [] : null;
+            return result;
+          });
+        });
+      },
+      cardIdentifier: function (result) {
+        return gaJoin(result.districts.map(function (d) { return districtName(d); }));
+      },
+      render: function (result) {
+        var wrap = cardEl("div", "card-flush");
+        var desc = result.desc || { districts: {}, atLarge: [], maps: [] };
+        var seats = result.seats || [];
+        var bySeat = {};
+        seats.forEach(function (s) { if (s && s.seat) bySeat[String(s.seat)] = s; });
+        // The roster's seats for one drawn district: those the map check saw
+        // elected from it, else those carrying its number.
+        function seatsFor(key) {
+          var d = desc.districts[key] || {};
+          var out = [];
+          (d.seats || []).forEach(function (l) { if (bySeat[l]) out.push(bySeat[l]); });
+          if (!out.length && /^\d+$/.test(key)) {
+            seats.forEach(function (s) {
+              if (s && s.district === parseInt(key, 10)) out.push(s);
+            });
+          }
+          return out;
+        }
+        var claimed = {};
+        Object.keys(desc.districts).forEach(function (key) {
+          seatsFor(key).forEach(function (s) { claimed[String(s.seat)] = true; });
+        });
+        var atLarge = {};
+        (desc.atLarge || []).forEach(function (l) { atLarge[l] = true; });
+        var whole = [], undrawn = [];
+        seats.forEach(function (s) {
+          if (!s || !s.seat || claimed[String(s.seat)]) return;
+          if (atLarge[String(s.seat)] || GA_COUNTYWIDE_SEAT.test(String(s.seat))) whole.push(s);
+          else undrawn.push(String(s.seat));
+        });
+
+        var rows = [];
+        var two = result.districts.length > 1;
+        result.districts.forEach(function (d) {
+          var mine = seatsFor(d.key);
+          var board = gaBoardSeats(mine, spec.member);
+          if (two) wrap.appendChild(renderSectionLabel(districtName(d)));
+          if (board.people.length) wrap.appendChild(renderPersonRows(board.people, { tinted: true }));
+          var info = desc.districts[d.key] || {};
+          if (!mine.length) {
+            rows.push({
+              label: two ? String(d.label) : spec.memberLabel,
+              value: result.rosterFailed
+                ? "The list of " + spec.members + " did not load, so no one is named here."
+                : "No election for this district's seat is on the Secretary of State's " +
+                  "results site, which carries county races only from November 2024 on, " +
+                  "so no one is named here."
+            });
+          }
+          rows = rows.concat(board.fields);
+          if (info.voted === "county-wide") {
+            rows.push({
+              label: "How " + String(d.label) + " is elected",
+              value: (info.seats && info.seats.length > 1
+                ? "The whole county votes for these seats, and each member must live "
+                : "The whole county votes for this seat, and its member must live ") +
+                "in the district."
+            });
+          }
+          if (info.tested === false) {
+            rows.push({
+              label: String(d.label) + "'s line",
+              value: "No contest this app could test was voted in this district alone, " +
+                "so its own line has not been checked against the ballots. The map's " +
+                "other districts were."
+            });
+          }
+        });
+        if (whole.length) {
+          var w = gaBoardSeats(whole, spec.member);
+          if (w.people.length) {
+            wrap.appendChild(renderSectionLabel("Elected by the whole county"));
+            wrap.appendChild(renderPersonRows(w.people));
+          }
+          rows = rows.concat(w.fields);
+        }
+        if (undrawn.length) {
+          rows.push({
+            label: "Elected from districts not drawn here",
+            value: gaJoin(undrawn) + ". This app does not draw " +
+              (undrawn.length === 1 ? "that district." : "those districts.")
+          });
+        }
+        var city = result.geoid != null ? GA_COUNTY_CITY[String(result.geoid)] : null;
+        if (city && spec.body === "commission") {
+          rows.push({
+            label: "One government with " + city,
+            value: String(result.county) + " County and the city of " + city +
+              " are one government, so this commission governs both."
+          });
+        }
+        rows.push({ label: "County",
+          value: result.county != null ? String(result.county) + " County" : "Unknown county",
+          primary: true });
+        rows.push({ label: "Where this line comes from", value: gaBoardMapSource(result, desc, spec) });
+        if (result.officials && seats.length) {
+          rows.push({ label: "Where the names come from", value: gaResultsCredit(result.officials) });
+        }
+        wrap.appendChild(renderFieldStack(rows));
+        return wrap;
+      },
+      primaryLink: function () {
+        return { label: "County maps from the Reapportionment Office",
+          url: "https://www.legis.ga.gov/joint-office/reapportionment" };
+      }
+    });
+  }
+  // "The map ... (2022), checked on October 30, 2026 against ...".
+  function gaBoardMapSource(result, desc, spec) {
+    var maps = desc.maps || [];
+    var main = null, sup = null;
+    maps.forEach(function (m) { if (m.super) sup = sup || m; else main = main || m; });
+    var when = (desc.elections || []).map(gaDate).filter(Boolean);
+    var county = result.county != null ? String(result.county) + " County's" : "The county's";
+    return county + " " + spec.mapName + " map" + (main && main.year ? " of " + main.year : "") +
+      (sup ? ", and its map of super districts" + (sup.year ? " of " + sup.year : "") : "") +
+      ", as the General Assembly's Reapportionment Office publishes " +
+      (sup ? "them" : "it") + " among each county's most recently adopted maps. " +
+      "On " + (gaDate(desc.checked) || "the day it was read") + " this app checked " +
+      (sup ? "them" : "it") + " against the board's district contests" + (when.length ? " on " + gaJoin(when) : "") +
+      ", on the office's 2024 precinct map: every precinct that voted in a district's " +
+      "contest lies at least partly in that district, and no precinct the map puts " +
+      "mostly in a district sat out its contest. The lines are the map office's, cut " +
+      "to the Census Bureau's county line" + (spec.body === "schoolBoard"
+        ? ", with any city school system's ground taken out" : "") + ".";
+  }
+
+  registerGaBoardDistricts({
+    id: "county-commissioner",
+    group: "political",
+    label: "County Commission District",
+    body: "commission",
+    mapName: "commission",
+    member: "commissioner",
+    members: "commissioners",
+    memberLabel: "Commissioner",
+    load: loadGaCommissionDistricts,
+    // Bryan County's map leaves out Fort Stewart, measured against the
+    // Census Bureau's map of the post's school district (442.9 of the 443.0
+    // km2 the map leaves out of Bryan, 2026-10-30); a few maps leave other
+    // ground out of every district, most of it along the county line.
+    emptyNote: "The county's map puts no commission district at this point. In " +
+      "Bryan County that ground is Fort Stewart, the Army post; elsewhere it is " +
+      "ground the county's map leaves out of every district. The County card " +
+      "names the whole commission.",
+    // the fleet's county-board blue and width (root layer-concepts.json
+    // `colors` and `lines`)
+    style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.06 }
+  });
+
+
   /* ---------- 2. U.S. House — boundary + roster join ----------
    * Pre-built geometry (data/app/congress-districts.json) joined by district
    * number to a same-origin roster (data/app/congress-roster.json — built by
@@ -15986,6 +16266,32 @@ function initGeorgiaExplorer() {
       return { label: "Election results from the Secretary of State",
         url: "https://results.sos.ga.gov/results/public/Georgia" };
     }
+  });
+
+  // 7a. School Board District: the same layer for the county school
+  // systems' boards (registerGaBoardDistricts, under the County card).
+  registerGaBoardDistricts({
+    id: "school-board-district",
+    group: "schools",
+    label: "School Board District",
+    body: "schoolBoard",
+    mapName: "school board",
+    member: "member",
+    members: "school board members",
+    memberLabel: "Board member",
+    load: loadGaSchoolBoardDistricts,
+    // Inside a drawn county a point in no district is in a city school
+    // system, whose ground the builder takes out, on Fort Stewart in Bryan
+    // County, or on the little ground a county's map leaves out of every
+    // district (measured 2026-10-30).
+    emptyNote: "The county's map puts no school board district at this point. " +
+      "Inside a city school system, such as Valdosta's or Vidalia's, the city " +
+      "system's own board serves, and the School District card names the system. " +
+      "In Bryan County the map leaves out Fort Stewart, the Army post, and a few " +
+      "other maps leave a little ground out of every district.",
+    // the fleet's school-board-district violet and width (root
+    // layer-concepts.json `colors` and `lines`)
+    style: { color: "#585EDD", weight: 2, fillColor: "#585EDD", fillOpacity: 0.06 }
   });
 
   /* ---------- 8. ZIP Code — live TIGERweb ZCTAs ----------
@@ -17757,8 +18063,8 @@ function initGeorgiaExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "ga-senate", "ga-house",
-    "school-district-unified",
+  var LAYER_SIDEBAR_RANK = ["us-house", "ga-senate", "ga-house", "county-commissioner",
+    "school-district-unified", "school-board-district",
     "county", "county-subdivision", "municipality", "zip-code",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
@@ -18262,11 +18568,11 @@ function initGeorgiaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#2F6B3A": "#6FBE7B",
-    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
-    "#D06A9C": "#FEBDDA"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6FB2": "#74BBFF",
+    "#2F6B3A": "#6FBE7B", "#3B8FD4": "#A2D2FF", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#585EDD": "#A7B4FD",
+    "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
+    "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

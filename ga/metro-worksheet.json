@@ -421,10 +421,50 @@
       }
     },
     {
+      "id": "county-commissioner",
+      "label": "County Commission District",
+      "group": "political",
+      "area_rank": 7,
+      "rank_note": "527 commission districts and 4 super districts in the 109 counties whose map passed the precinct check, about 220 km2 on average",
+      "source": {
+        "answers": "The county commission district covering the point, and the commissioner elected from it, in the 109 counties whose commission map passed this app's precinct check (and DeKalb's and Lowndes's super districts). The layer is hidden in the other 50 counties, where the County card still names the commission.",
+        "boundary": [
+          {
+            "label": "The Georgia General Assembly's Legislative and Congressional Reapportionment Office — the county maps it publishes as the most recently adopted, each read as published, with the sha256 of the file the map check tested, and drawn only where ga/scripts/check_ga_county_maps.py passed the map: every precinct that voted in a district's contest on 5 November 2024, 19 May 2026 or 16 June 2026 lies at least partly in that district on the office's 2024 precinct map, and no precinct the map puts mostly in a district sat out its contest (record: ga/data/source/county-map-check.json, checked 2026-10-30). Each district is cut to the Census Bureau's county line; a detached piece lying wholly within 8 m of that line is dropped as a difference between two drawings of it, and the lines are simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling (ga/scripts/build_ga_board_districts.py).",
+            "url": "https://www.legis.ga.gov/joint-office/reapportionment"
+          }
+        ],
+        "people": "ga-county-officials.json, the County card's roster from the Secretary of State's official election results, joined to each district by the seat the map check saw elected from it. A seat the whole county elects is named apart, and so is a seat elected from a district this app does not draw. Seats not on a ballot since November 2024 are not named — recorded as gap ga-county-commission-members.",
+        "applies": "Georgia — the 109 counties whose commission map passed; hidden elsewhere, with gap ga-county-commission-district-lines saying why each other county's map is not drawn."
+      }
+    },
+    {
+      "id": "school-board-district",
+      "label": "School Board District",
+      "group": "schools",
+      "area_rank": 8,
+      "rank_note": "556 school board districts and 4 super districts in the 104 counties whose map passed the precinct check, about 196 km2 on average, with the city school systems' ground taken out",
+      "source": {
+        "answers": "The county school board district covering the point, and the member elected from it, in the 104 counties whose school board map passed this app's precinct check (and Harris's and Richmond's super districts). Inside a city school system no county district is drawn. The layer is hidden in the other 55 counties, where the School District card still names the county board.",
+        "boundary": [
+          {
+            "label": "The Georgia General Assembly's Legislative and Congressional Reapportionment Office — the county maps it publishes as the most recently adopted, each read as published, with the sha256 of the file the map check tested, and drawn only where ga/scripts/check_ga_county_maps.py passed the map: every precinct that voted in a district's contest on 5 November 2024, 19 May 2026 or 16 June 2026 lies at least partly in that district on the office's 2024 precinct map, and no precinct the map puts mostly in a district sat out its contest (record: ga/data/source/county-map-check.json, checked 2026-10-30). Each district is cut to the Census Bureau's county line; a detached piece lying wholly within 8 m of that line is dropped as a difference between two drawings of it, and the lines are simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling (ga/scripts/build_ga_board_districts.py).",
+            "url": "https://www.legis.ga.gov/joint-office/reapportionment"
+          },
+          {
+            "label": "U.S. Census TIGERweb — School, layer 0, the 21 Georgia unified school districts named \"<city> City School District\", read 2026-10-30: each city school system's ground is taken out of the county board's districts, since its own board serves it. The Fort Stewart schools are not taken out.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+          }
+        ],
+        "people": "ga-county-officials.json, the School District card's roster from the Secretary of State's official election results, joined to each district by the seat the map check saw elected from it. A seat the whole county elects is named apart, and so is a seat elected from a district this app does not draw. Most seats filled in May 2024 are not on the results site and are not named — recorded as gap ga-school-board-members.",
+        "applies": "Georgia — the 104 counties whose county school board map passed, outside the city school systems; hidden elsewhere, with gap ga-school-board-district-lines saying why each other county's map is not drawn."
+      }
+    },
+    {
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 7,
+      "area_rank": 9,
       "rank_note": "1,202 ZIP Code Tabulation Areas in the state's own bounding box, about 196 km2 of land on average, fetched live by envelope; the layer hides outside Georgia",
       "source": {
         "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
@@ -442,7 +482,7 @@
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 10,
       "rank_note": "538 incorporated places, about 26 km2 of land on average, live from TIGERweb (no data/app file)",
       "source": {
         "answers": "The city or town containing the point, if any, and whether it is one government with its county.",
@@ -460,7 +500,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 11,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -478,7 +518,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 12,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -496,7 +536,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 13,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -575,6 +615,18 @@
         "min_features": 180,
         "max_features": 180,
         "note": "The 180 Georgia House districts, from the General Assembly's file of the 2023 plan."
+      },
+      {
+        "file": "ga-commission-districts.json",
+        "min_features": 531,
+        "max_features": 531,
+        "note": "The commission districts of the 109 counties whose map passed the precinct check, and DeKalb's and Lowndes's super districts (ga/scripts/build_ga_board_districts.py, held to the map check's record by its --check)."
+      },
+      {
+        "file": "ga-school-board-districts.json",
+        "min_features": 560,
+        "max_features": 560,
+        "note": "The county school board districts of the 104 counties whose map passed the precinct check, and Harris's and Richmond's super districts, with the city school systems' ground taken out (same builder)."
       }
     ],
     "rosters": [
@@ -597,6 +649,11 @@
         "file": "ga-county-officials.json",
         "min_keys": 159,
         "note": "County commissioners and county school board members named from the Secretary of State's official election results, keyed by county FIPS, one record for each of the 159 counties whether or not it has a named seat; refreshed weekly by update-ga-county-officials.yml."
+      },
+      {
+        "file": "ga-board-district-counties.json",
+        "min_keys": 116,
+        "note": "The 116 counties with a drawn commission or school board map, by FIPS code, with each district's seats as the map check saw them elected, written by the same build as the two district files and held to the map check's record by its --check. The two layers' coverage test reads it beside state-counties.json, so a reader's first selection does not download a whole districts file."
       },
       {
         "file": "coverage-gaps.json",
