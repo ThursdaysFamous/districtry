@@ -206,6 +206,9 @@ jobs:
             # Virginia arrives dark the same way, with no va entry in
             # metros.json until the operator's word.
             'va/**'
+            # West Virginia arrives dark the same way, with no wv entry in
+            # metros.json until the operator's word.
+            'wv/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full

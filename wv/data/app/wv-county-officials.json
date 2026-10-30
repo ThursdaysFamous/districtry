@@ -1,0 +1,3566 @@
+{
+ "54001": {
+  "county": "Barbour County",
+  "body": "Barbour County Commission",
+  "kind": "commission",
+  "boardPhone": "304-457-4339",
+  "boardAddress": "26 N Main St, Philippi, WV 26416",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Robert Richardson",
+    "email": "rrichardson@barbourcountywv.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Jed Schola",
+    "email": "jschola@barbourcountywv.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "David Strait",
+    "email": "dstrait@barbourcountywv.org"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Laurie Austin",
+    "phone": "304-457-2232",
+    "email": "laustin@barbourcountywv.org"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Gerald Fogg",
+    "phone": "304-457-3454",
+    "email": "gerald.fogg@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Derick Spencer",
+    "phone": "304-457-2336",
+    "email": "dspencer@barbourcountywv.org"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Brett Carpenter",
+    "phone": "304-457-2352",
+    "email": "bcarpenter@barbourcountywv.org"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Andrew Phillips",
+    "phone": "304-457-1811",
+    "email": "aphillips@barbourcountywv.org"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Barbour",
+  "read": "2026-10-29"
+ },
+ "54003": {
+  "county": "Berkeley County",
+  "body": "Berkeley County Commission",
+  "kind": "commission",
+  "boardPhone": "304-264-1923",
+  "boardAddress": "400 W. Stephen St, Martinsburg, WV 25401",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Howard Boyd"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "steve catlett",
+    "email": "scatlett@berkeleywv.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Eddie Gochenour",
+    "email": "eddiegochenour@berkelywv.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "John Hardy"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Jim Whitacre",
+    "email": "jwhitacre@berkeleywv.org"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Anthony Petrucci",
+    "phone": "304-264-1927",
+    "email": "apetrucci@berkeleywv.org"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Michelle Schoppert",
+    "phone": "304-264-1918"
+   },
+   {
+    "office": "Assessor",
+    "name": "No Person Was Elected No One"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Rob Blair",
+    "phone": "304-267-7000",
+    "email": "rblair@berkeleywv.org"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Joe Kinser",
+    "phone": "304-264-1971",
+    "email": "jkinser@berkeleywv.org"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Larry Hess",
+    "phone": "304-264-1904"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Berkeley",
+  "read": "2026-10-29"
+ },
+ "54005": {
+  "county": "Boone County",
+  "body": "Boone County Commission",
+  "kind": "commission",
+  "boardAddress": "206 Court Street, Madison, WV 25130",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Brett Kuhn",
+    "phone": "304-369-7476"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Jacob Messer",
+    "phone": "304-369-7463"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Jeff Petry",
+    "phone": "304-369-7376"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Roger Toney",
+    "phone": "304-369-7330",
+    "email": "rtoney@boonecountywv.gov"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Sam Burns",
+    "phone": "304-369-7320"
+   },
+   {
+    "office": "Assessor",
+    "name": "Scotty Cook",
+    "phone": "304-369-7307"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Chad Barker",
+    "phone": "304-369-7390"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Daniel Holstein",
+    "phone": "304-369-7389"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Lantz Rankin",
+    "phone": "304-369-3424"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Boone",
+  "read": "2026-10-29"
+ },
+ "54007": {
+  "county": "Braxton County",
+  "body": "Braxton County Commission",
+  "kind": "commission",
+  "boardPhone": "(304) 765-2835",
+  "boardEmail": "commission@braxtoncountywv.gov",
+  "boardAddress": "300 Main St, Sutton, WV 26601",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Brent Boggs"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Larry Clifton"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Lisa Godwin"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Sue Rutherford",
+    "phone": "(304) 765-2833",
+    "email": "braxtoncounty@wvsos.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Susan Lemon",
+    "phone": "(304) 765-2837"
+   },
+   {
+    "office": "Assessor",
+    "name": "Edith \"Edie\" Tichner",
+    "phone": "(304) 765-2805",
+    "email": "etichner@assessor.state.wv.us"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Eddie Williams",
+    "phone": "(304) 765-2838",
+    "email": "braxtonlaw1@gmail.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Dwayne Vandevender",
+    "phone": "(304) 765-3880",
+    "email": "braxtonpa.circuit@gmail.com"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Duane Hall",
+    "phone": "(304) 619-4763"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Braxton",
+  "read": "2026-10-29"
+ },
+ "54009": {
+  "county": "Brooke County",
+  "body": "Brooke County Commission",
+  "kind": "commission",
+  "boardPhone": "304-737-4024",
+  "boardAddress": "632 Main Street, Wellsburg, WV 26070",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Thomas Diserio",
+    "email": "tdiserio@commission.state.wv.us"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Andrew Thomas",
+    "email": "Thms2011@gmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Stacey Wise",
+    "email": "swise@yahoo.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Kimberly Barbetta",
+    "phone": "304-737-3661",
+    "email": "barbetta@clerk.state.wv.us"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Glenda Brooks",
+    "phone": "304-737-3662",
+    "email": "glenda.brooks@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Thomas Oughton",
+    "phone": "304-737-3667",
+    "email": "toughton@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Richard Beatty, Jr.",
+    "phone": "304-737-3660",
+    "email": "rbeatty@sheriff.state.wv.us"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Allison Cowden",
+    "phone": "304-737-8022",
+    "email": "acowden@brookecountywv.gov"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Brooke",
+  "read": "2026-10-29"
+ },
+ "54011": {
+  "county": "Cabell County",
+  "body": "Cabell County Commission",
+  "kind": "commission",
+  "boardAddress": "750 5Th Ave, Ste 300, Huntington, WV 25701",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Liza Caldwell",
+    "email": "lcaldwell@cabellcounty.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "John Mandt Jr.",
+    "email": "jmandtjr@cabellcounty.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Kelli Sobonya",
+    "email": "ksobonya@cabellcounty.org"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Scott Caserta",
+    "email": "scaserta@cabellcountyclerk.org"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Mike Woelfel",
+    "email": "mwoelfel@cabellcounty.org"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Doug Adams",
+    "email": "dadams@cabellcounty.org"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Jason Spears",
+    "email": "jspears@cabellcounty.org"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Richard \"Dick\" Wilson"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Cabell",
+  "read": "2026-10-29"
+ },
+ "54013": {
+  "county": "Calhoun County",
+  "body": "Calhoun County Commission",
+  "kind": "commission",
+  "boardPhone": "304-354-6725",
+  "boardAddress": "363 Main Street, Grantsville, WV 26147",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Craig Arthur"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Eric Lupardus",
+    "email": "elupardus@theoutdoorstorellc.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Jacob Mccumbers",
+    "email": "jacobmccumers@frontiernet.net"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Jean Simers",
+    "email": "calhounclerk@gmail.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Sheila Garretson",
+    "phone": "304-354-6910",
+    "email": "circuitcl@hotmail.com"
+   },
+   {
+    "office": "Assessor",
+    "name": "Jason Nettles",
+    "email": "jnettles@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Graham Knight",
+    "email": "grahamknight1989@gmail.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Michael Hicks",
+    "email": "michael.a.hicks@wv.gov"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Calhoun",
+  "read": "2026-10-29"
+ },
+ "54015": {
+  "county": "Clay County",
+  "body": "Clay County Commission",
+  "kind": "commission",
+  "boardPhone": "304-587-2849",
+  "boardAddress": "246 Main St., Clay, WV 25043",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Wanda Johnson",
+    "email": "commissioner.j.johnson@outlook.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Duane Legg",
+    "email": "legg.duane@gmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "David Schoolcraft",
+    "email": "david.a.schoolcraft@gmail.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Sheila Stone",
+    "phone": "304-587-4259",
+    "email": "claycoclerk@outlook.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Clarissa Hanshaw",
+    "phone": "304-587-4256"
+   },
+   {
+    "office": "Assessor",
+    "name": "Teresa Davis",
+    "phone": "304-587-4258",
+    "email": "tdavis@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Allen King",
+    "phone": "304-587-4260",
+    "email": "claywvsheriff@gmail.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Arthur King",
+    "phone": "304-587-2702"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Clay",
+  "read": "2026-10-29"
+ },
+ "54017": {
+  "county": "Doddridge County",
+  "body": "Doddridge County Commission",
+  "kind": "commission",
+  "boardPhone": "304-873-1373",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Tim Bowen",
+    "email": "tbowen63@aol.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Shaun Glaspell",
+    "email": "shawnglaspell@aol.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Ronnie Travis",
+    "email": "ronleetravis@gmail.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Lorena \"Catee\" Slater",
+    "phone": "304-873-2631",
+    "email": "cateeslater@outlook.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Michele Britton",
+    "phone": "304-873-2331",
+    "email": "michele.britton@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "David Sponaugle",
+    "phone": "304-873-1261",
+    "email": "dsponaug@assessor.state.wv.us"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Clinton Boring",
+    "phone": "304-873-1944",
+    "email": "mcass@wvsheriff.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Lennie \"Betsy\" Coffey",
+    "phone": "304-873-1737",
+    "email": "bcoffey@court.state.wv.us"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Dan Wellings"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Doddridge",
+  "read": "2026-10-29"
+ },
+ "54019": {
+  "county": "Fayette County",
+  "body": "Fayette County Commission",
+  "kind": "commission",
+  "boardAddress": "100 N Court St, Fayetteville, WV 25840",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "John Brenemen",
+    "email": "john.brenemen@fayettecountywv.gov"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Greg Fernett",
+    "email": "greg.fernett@fayettecountywv.gov"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Allison Taylor",
+    "email": "allison.taylor@fayettecountywv.gov"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Michelle Holly",
+    "phone": "304-574-4225",
+    "email": "michelle.holly@fayettecountywv.gov"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Travis Prince",
+    "email": "travisw.prince@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Eddie Young",
+    "email": "harvey.young@fayettecountywv.gov"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Jess Mcmullen"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Anthony Ciliberti",
+    "email": "anthony.ciliberti@fayettecountywv.gov"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Jack Booda"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Fayette",
+  "read": "2026-10-29"
+ },
+ "54021": {
+  "county": "Gilmer County",
+  "body": "Gilmer County Commission",
+  "kind": "commission",
+  "boardPhone": "304-462-7641",
+  "boardEmail": "commission@gilmercountywv.gov",
+  "boardAddress": "10 Howard Street, Glenville Wv, WV 26351",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Larry Gerwig"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Jacqueline Hashman"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Lance Woodford"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Jean Butcher",
+    "email": "jean.butcher@gilmercountywv.gov"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Pamela Starsick",
+    "phone": "304-462-7241"
+   },
+   {
+    "office": "Assessor",
+    "name": "Melissa Jedamski",
+    "phone": "304-462-7731",
+    "email": "mjedamski@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Donald E. Belin",
+    "phone": "304-462-7441"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Gerald Hough",
+    "phone": "304-462-7007"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Gilmer",
+  "read": "2026-10-29"
+ },
+ "54023": {
+  "county": "Grant County",
+  "body": "Grant County Commission",
+  "kind": "commission",
+  "boardPhone": "304-257-4422",
+  "boardAddress": "5 Highland Ave., Petersburg, WV 26847",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Kevin Hagerty",
+    "email": "kevinhagerty10@gmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Scotty Miley",
+    "email": "scottymiley@icloud.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Tyson Riggleman",
+    "email": "tysonriggleman@yahoo.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Lora Bennett",
+    "email": "county.clerk@grantcountywv.org"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Melanie R. Redman",
+    "email": "melanie.biggs@courtswv.org"
+   },
+   {
+    "office": "Assessor",
+    "name": "Elizabeth Mallow",
+    "phone": "304-257-1050",
+    "email": "emallow@assessor.state.wv.us"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Steven Wratchford",
+    "phone": "304-257-1818",
+    "email": "gcsher@sheriff.state.wv.us"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "John Ours",
+    "phone": "304-257-2323",
+    "email": "grantcopoa@gmail.com"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Mark Geary",
+    "phone": "304-257-2022"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Grant",
+  "read": "2026-10-29"
+ },
+ "54025": {
+  "county": "Greenbrier County",
+  "body": "Greenbrier County Commission",
+  "kind": "commission",
+  "boardAddress": "912 Court Street N, Greenbrier, WV 24901",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Richie Holliday",
+    "email": "hollidaycommissioner@gmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Lowell Rose",
+    "email": "Lowellrose.rose@gmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Tammy Tincher",
+    "email": "tammyshifflett.tincher@gmail.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Robin Loudermilk",
+    "email": "robin.loudermilk@greenbriercounty.net"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Jamie Baker",
+    "email": "jamie.baker@greenbriercounty.net"
+   },
+   {
+    "office": "Assessor",
+    "name": "Joe Darnell",
+    "email": "jdarnell@assessor.state.wv.us"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Bart Baker",
+    "email": "rbbaker@gbrsd.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Nicole Campbell",
+    "email": "nicole.graybeal@greenbriercounty.net"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Greenbrier",
+  "read": "2026-10-29"
+ },
+ "54027": {
+  "county": "Hampshire County",
+  "body": "Hampshire County Commission",
+  "kind": "commission",
+  "boardPhone": "304-822-5112",
+  "boardAddress": "Po Box 806, 19 East Main St., Romney, WV 26757",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "David Cannon",
+    "email": "CommissionerCannon@outlook.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Brian Eglinger",
+    "email": "beglingeer@hampshirewv.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Logan Mantz",
+    "email": "lmantz@hampshirewv.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Eric Strite",
+    "email": "estrite@hampshirewv.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Sonja Embrey",
+    "phone": "304-822-5022",
+    "email": "sonja.embrey@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Lacee Haines",
+    "phone": "304-822-3326",
+    "email": "lhaines@assessor.state.wv.us"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Nathan Sions",
+    "phone": "304-822-3894",
+    "email": "njsions@sheriff.state.wv.us"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Rebecca Miller",
+    "phone": "304-822-3567",
+    "email": "rmillerhcpa@outlook.com"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Richard Moreland",
+    "phone": "304-822-4441"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Hampshire",
+  "read": "2026-10-29"
+ },
+ "54029": {
+  "county": "Hancock County",
+  "body": "Hancock County Commission",
+  "kind": "commission",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Eron Chek",
+    "phone": "304-564-3311",
+    "email": "echek@hancockwv.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Paul Cowey",
+    "phone": "304-564-3311 Ext 352",
+    "email": "pcowey@hancockwv.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Tom Ogden",
+    "phone": "304-564-3311 Ext 241",
+    "email": "togden@hancockwv.org"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Karan Valenti",
+    "phone": "304-564-3311 Ext 266",
+    "email": "kvalenti@hancockwv.org"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Sandy Casto",
+    "phone": "304-564-3311 Ext 287",
+    "email": "scasto@hancockwv.org"
+   },
+   {
+    "office": "Assessor",
+    "name": "Joseph Alongi",
+    "phone": "304-564-3311 Ext 256",
+    "email": "jalongi@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Scott Gittings",
+    "phone": "304-564-3311 Ext 230",
+    "email": "sgittings@hcsowv.org"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Steven Dragisich",
+    "phone": "304-564-3933 Ext 406",
+    "email": "sdragisich@hanwvpros.org"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Hancock",
+  "read": "2026-10-29"
+ },
+ "54031": {
+  "county": "Hardy County",
+  "body": "Hardy County Commission",
+  "kind": "commission",
+  "boardPhone": "304-530-0284",
+  "boardAddress": "204 Washington Street, Moorefield, WV 26836",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "David \"Jay\" Fansler"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Steven Schetrom II"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "David Workman"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Loretta Humbertson",
+    "phone": "304-530-0250",
+    "email": "hdyclerk@court.state.wv.us"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Kelly Shockey",
+    "phone": "304-530-0230"
+   },
+   {
+    "office": "Assessor",
+    "name": "Jim B Wratchford"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Steven Dawson",
+    "phone": "304-530-0222"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Jeff Weatherholt",
+    "phone": "304-530-0200"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Dave Jopling"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Hardy",
+  "read": "2026-10-29"
+ },
+ "54033": {
+  "county": "Harrison County",
+  "body": "Harrison County Commission",
+  "kind": "commission",
+  "boardAddress": "South Third Street, Clarksburg, WV 26301",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "David Hinkle",
+    "email": "dhinkle@harrisoncountywv.gov"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Susan Thomas",
+    "email": "sthomas@harrisoncountywv.gov"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Patsy Trecost",
+    "email": "ptrecost2@harrisoncountywv.gov"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "John Spires",
+    "email": "jspires@harrisoncountywv.gov"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Albert Marano",
+    "email": "amarano@harrisoncountywv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Allen Ferree"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Robert Matheny"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Rachel Romano"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Harrison",
+  "read": "2026-10-29"
+ },
+ "54035": {
+  "county": "Jackson County",
+  "body": "Jackson County Commission",
+  "kind": "commission",
+  "boardAddress": "100 Court St N, Ripley, WV 25271",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Mitch Morrison"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Dick Waybright"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Steve Westfall"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Christina Gossett"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Bruce Dewees"
+   },
+   {
+    "office": "Assessor",
+    "name": "Tim Quesenberry"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Ross Mellinger"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Kyle Moore"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Jackson",
+  "read": "2026-10-29"
+ },
+ "54037": {
+  "county": "Jefferson County",
+  "body": "Jefferson County Commission",
+  "kind": "commission",
+  "boardPhone": "304-728-3284",
+  "boardAddress": "124 E Washington St, Charles Town, WV 25414",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Jack Hefestay",
+    "email": "jhefestay@jeffersoncountywv.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Cara Keys",
+    "email": "ckeys@jeffersoncountywv.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Pasha Majdi",
+    "email": "pmajdi@jeffersoncountywv.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Mike Mood",
+    "email": "mmood@jeffersoncountywv.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Steve Stolipher",
+    "email": "sstolipher@jeffersoncountywv.org"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Jacqueline Shadle",
+    "phone": "304-728-3215",
+    "email": "jshadle@jeffersoncountywv.org"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Tina Renner",
+    "phone": "304-728-3231",
+    "email": "trenner@jeffersoncountywv.org"
+   },
+   {
+    "office": "Assessor",
+    "name": "Angela Banks",
+    "phone": "304-728-3224",
+    "email": "abanks@jeffersoncountywv.org"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Thomas Hansen",
+    "phone": "304-728-3205",
+    "email": "thansen@jcsdwv.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Matthew Harvey",
+    "phone": "304-728-3243",
+    "email": "paoffice@jeffersoncountywv.org"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Jefferson",
+  "read": "2026-10-29"
+ },
+ "54039": {
+  "county": "Kanawha County",
+  "body": "Kanawha County Commission",
+  "kind": "commission",
+  "boardPhone": "304-357-0101",
+  "boardAddress": "407 Virginia St E, Charleston, WV 25301",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Ben Salango",
+    "email": "bensalango@kanawha.us"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Natalie Tennant",
+    "email": "natalietennant@kanawha.us"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Lance Wheeler"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Vera McCormick",
+    "phone": "304-357-0130",
+    "email": "veramccormick@kanawha.us"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Cathy Gatson",
+    "phone": "304-357-0440",
+    "email": "cathy.gatson@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Sallie Robinson"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Joey Crawford",
+    "phone": "304-357-0200",
+    "email": "josephcrawford@kcso.us"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Debra Rusnak",
+    "phone": "304-357-0300"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Mark Shamblin"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Kanawha",
+  "read": "2026-10-29"
+ },
+ "54041": {
+  "county": "Lewis County",
+  "body": "Lewis County Commission",
+  "kind": "commission",
+  "boardPhone": "304-269-8200",
+  "boardAddress": "110 Center Avenue, 2Nd Floor, Weston, WV 26452",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Agnes G. Queen",
+    "email": "aqueen4500@aol.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Robert Stewart Iii",
+    "email": "bobbystewart00@gmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Roderick B. Wyman",
+    "email": "cenrtalwv@yahoo.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Cynthia S. Rowan",
+    "phone": "304-269-8215",
+    "email": "crowan@lewiscountywv.org"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Beth Burkhart",
+    "phone": "304-269-8210",
+    "email": "lewiscircuitclerk@yahoo.com"
+   },
+   {
+    "office": "Assessor",
+    "name": "John L. Breen",
+    "phone": "304-269-8205",
+    "email": "jbreen@assessor.state.wv.us"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Mickey E. Metz",
+    "phone": "304-269-8251",
+    "email": "mmetz@lewiscountywv.org"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Christina C. Flanigan",
+    "phone": "304-269-8240",
+    "email": "cflanigan@lewiscountywv.org"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Lewis",
+  "read": "2026-10-29"
+ },
+ "54043": {
+  "county": "Lincoln County",
+  "body": "Lincoln County Commission",
+  "kind": "commission",
+  "boardPhone": "304-824-7990 ext 221",
+  "boardAddress": "Po Box 497, Hamlin, WV 25523",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Kim Blair",
+    "email": "kimberlycollinsblair@gmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Phoebe Harless",
+    "email": "pharlessB@aol.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Josh Stowers",
+    "email": "josh.stowers@gmail.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Kristy Scraggs",
+    "phone": "304-824-7990 EXT 233",
+    "email": "lincolncounty@wvsos.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Jackie Stevens",
+    "phone": "304-824-7990 EXT 239"
+   },
+   {
+    "office": "Assessor",
+    "name": "Angel Barclay",
+    "phone": "304-824-7990 X 245",
+    "email": "angelbarclay@lincolncountywv.org"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Brian Graley",
+    "phone": "304-824-7990 EXT 279",
+    "email": "briangraley@lincolncountywv.org"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Jeff Bowen",
+    "phone": "304-824-7990 X 247",
+    "email": "jeffbowen@lincolncountywv.org"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Lincoln",
+  "read": "2026-10-29"
+ },
+ "54045": {
+  "county": "Logan County",
+  "body": "Logan County Commission",
+  "kind": "commission",
+  "boardPhone": "304-792-8626",
+  "boardAddress": "325 Stratton Street, Logan, WV 25601",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Dianna Barnette",
+    "email": "dbarnette@lccwv.us"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Billy Jack Dickerson",
+    "email": "bdickerson@lccwv.us"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Eric Porter",
+    "email": "eporter@lccwv.us"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "John Turner",
+    "phone": "304-792-8600",
+    "email": "jturn4@yahoo.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Mark Mcgrew",
+    "phone": "304-792-8550",
+    "email": "mark.mcgrew@courtswv.org"
+   },
+   {
+    "office": "Assessor",
+    "name": "Glen D. \"Houn'Dog\" Adkins",
+    "phone": "304-792-8520",
+    "email": "gadkins@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Paul \"P.D.\" Clemons",
+    "phone": "304-792-8590",
+    "email": "pdclemons@lccwv.us"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "David Wandling",
+    "phone": "304-792-8670",
+    "email": "dwandling@lccwv.us"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Logan",
+  "read": "2026-10-29"
+ },
+ "54049": {
+  "county": "Marion County",
+  "body": "Marion County Commission",
+  "kind": "commission",
+  "boardAddress": "200 Jackson St, Fairmont, WV 26554",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Bobby Devaul",
+    "phone": "304-367-5429",
+    "email": "bdevaul@marioncountywv.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Linda Longstreth",
+    "phone": "304-367-5427",
+    "email": "llongstreth@marioncountywv.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Ernie Vangilder",
+    "phone": "304-367-5430",
+    "email": "evangilder@marioncountywv.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Julie Kincaid",
+    "phone": "304-367-5445",
+    "email": "jkincaid@marioncountywv.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Mary Allen",
+    "phone": "304-367-5360",
+    "email": "Mary.Allen@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Jason Smith",
+    "phone": "304-367-5404",
+    "email": "jsmith@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Roger Cunningham",
+    "phone": "304-367-5379",
+    "email": "sheriffrcunningham@marioncountywv.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Jeff Freeman",
+    "phone": "304-367-5380",
+    "email": "jfreeman@marioncountywv.com"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Marion",
+  "read": "2026-10-29"
+ },
+ "54051": {
+  "county": "Marshall County",
+  "body": "Marshall County Commission",
+  "kind": "commission",
+  "boardPhone": "304-845-0482",
+  "boardAddress": "600 Seventh St., Moundsville, WV 26041",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "John Gruzinskas",
+    "email": "mulligunz@hotmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Dave Mclaughlin",
+    "email": "dmclaughlin@marshallcountywv.gov"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Scott Varner",
+    "email": "sgvarner@gmail.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Connie Howard",
+    "phone": "304-845-1220",
+    "email": "choward@marshallcountywv.gov"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Joe Rucki",
+    "phone": "304-845-2130",
+    "email": "Joe.Rucki@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Eric Buzzard",
+    "phone": "304-845-1490",
+    "email": "Ebuzzard@marshallcountywv.gov"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Michael \"Mike\" Dougherty",
+    "phone": "304-843-1500",
+    "email": "Mdougherty@marshallcountywv.gov"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Joe Canestraro",
+    "phone": "304-845-3580",
+    "email": "Jcanestraro@marshallcountywv.gov"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Jim Ruckman",
+    "phone": "304-639-5553"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Marshall",
+  "read": "2026-10-29"
+ },
+ "54053": {
+  "county": "Mason County",
+  "body": "Mason County Commission",
+  "kind": "commission",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Rick Handley"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Christopher Johnson"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Sam Nibert"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Diana Cromley",
+    "email": "masoncountyclerk@yahoo.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Elizabeth Jones"
+   },
+   {
+    "office": "Assessor",
+    "name": "Aimee Duncan"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Corey Miller"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Seth Gaskins"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Mason",
+  "read": "2026-10-29"
+ },
+ "54047": {
+  "county": "McDowell County",
+  "body": "McDowell County Commission",
+  "kind": "commission",
+  "boardEmail": "jennifer.wimmer@mcdowellcountywv.gov",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Michael Brooks",
+    "phone": "304 436-8568"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Dewayne Dotson",
+    "phone": "304 436-8579"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Cecil Patterson"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Donald Hicks",
+    "phone": "304 436-8544"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Francine Spencer",
+    "phone": "304 436-8560"
+   },
+   {
+    "office": "Assessor",
+    "name": "Sherry Burton",
+    "phone": "304 436-8528",
+    "email": "sburton1@assessor.state.wv.us"
+   },
+   {
+    "office": "Sheriff",
+    "name": "James \"Boomer\" Muncy",
+    "phone": "304 436-8523",
+    "email": "james.muncy@leo.gov"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Brittany Puckett",
+    "phone": "304 436-8551",
+    "email": "mcdowell.prosecutor@gmail.com"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=McDowell",
+  "read": "2026-10-29"
+ },
+ "54055": {
+  "county": "Mercer County",
+  "body": "Mercer County Commission",
+  "kind": "commission",
+  "boardEmail": "mercercocommission@frontiernet.net",
+  "boardAddress": "1501 West Main Street, Suite 210, Princeton, WV 24740",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "William(Bill) Archer",
+    "phone": "304-487-8310"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Brian Blankenship",
+    "phone": "304-487-8309"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Greg Puckett",
+    "phone": "304-431-8527"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Verlin Moye",
+    "phone": "304-487-8338",
+    "email": "mercercounty@wvsos.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Julie Ball",
+    "phone": "304-487-8371",
+    "email": "julie.ball@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Tommy Bailey",
+    "phone": "304-487-8397",
+    "email": "Tommy.Bailey@mercercountywv.org"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Alan Christian",
+    "phone": "304-487-8364",
+    "email": "achristian@wvmcs.org"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Brian Cochran",
+    "phone": "(304) 487-8360",
+    "email": "briancochranmcpa@gmail.com"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Mercer",
+  "read": "2026-10-29"
+ },
+ "54057": {
+  "county": "Mineral County",
+  "body": "Mineral County Commission",
+  "kind": "commission",
+  "boardAddress": "150 Armstrong Street, Keyser, WV 26726",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Roger Leatherman",
+    "phone": "304-790-4165",
+    "email": "rdlivl70@gmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Charles Staggs",
+    "phone": "304-813-8760",
+    "email": "commissionerstaggs@mineralwv.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Jason Whitlock",
+    "phone": "304-209-9300",
+    "email": "commissionerwhitlock@mineralwv.org"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Lauren Ellifritz",
+    "email": "countyclerk@mineralwv.org"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Krista Dixon",
+    "phone": "304-788-1562",
+    "email": "krista.dixon@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Jill Cosner",
+    "phone": "304-788-3753",
+    "email": "jcosner@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Joel Whisner",
+    "phone": "304-788-0341",
+    "email": "jewhisner@mineralsheriff.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Charlie Johnson",
+    "phone": "304-788-0300"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Greg Vanscoy"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Mineral",
+  "read": "2026-10-29"
+ },
+ "54059": {
+  "county": "Mingo County",
+  "body": "Mingo County Commission",
+  "kind": "commission",
+  "boardPhone": "304-235-0380",
+  "boardAddress": "78 East 2Nd Ave, Williamson, WV 25661",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Nathan Brown",
+    "email": "nathan@ferrellandbrown.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Diann Hannah",
+    "email": "dianna@hotmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Thomas Taylor",
+    "email": "gaylorenterprise@yahoo.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Larry (Yogi) Croaff",
+    "phone": "304-235-0330",
+    "email": "yogic30@yahoo.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Lonnie Hannah",
+    "phone": "304-235-0320"
+   },
+   {
+    "office": "Assessor",
+    "name": "Beth Cisco",
+    "email": "bcisco@assessor.state.wv.us"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Joe Smith",
+    "phone": "304-235-0300",
+    "email": "wvarney@mingocountywv.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Ricky/Brock Mounts",
+    "phone": "304-235-0350",
+    "email": "mingo.prosecutor@gmail.com"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Mingo",
+  "read": "2026-10-29"
+ },
+ "54061": {
+  "county": "Monongalia County",
+  "body": "Monongalia County Commission",
+  "kind": "commission",
+  "boardPhone": "(304) 291-7257",
+  "boardAddress": "243 High St Rm 202, Morgantown, WV 26505",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Jeff Arnett"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Tom Bloom"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Sean Sikora"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Carye Blaney",
+    "phone": "(304) 291-7230",
+    "email": "clerk@monongaliacountyclerk.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Donna Hidock",
+    "phone": "(304) 291-7240"
+   },
+   {
+    "office": "Assessor",
+    "name": "Mark Musick",
+    "phone": "(304) 291-7222"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Todd Forbes",
+    "phone": "(304) 291-7260"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Gabrielle Mucciola",
+    "phone": "(304) 291-7250"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Robert Andriotto",
+    "phone": "(304) 777-3974",
+    "email": "robert.andriotto@gmail.com"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Monongalia",
+  "read": "2026-10-29"
+ },
+ "54063": {
+  "county": "Monroe County",
+  "body": "Monroe County Commission",
+  "kind": "commission",
+  "boardPhone": "304-772-3096 ext 3",
+  "boardAddress": "350 Main Street, Union, WV 24983",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Kevin Galford",
+    "email": "kgalford@monroecountywv.gov"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Kenny Mann",
+    "email": "kenny.mann@monroecountywv.gov"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Melvin Young",
+    "email": "myoung@monroecountywv.gov"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Jeremy Meadows",
+    "email": "jmeadows@monroecountywv.gov"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Daniel Tickle Ii",
+    "phone": "304-772-3096 ext 4",
+    "email": "daniel.tickle@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Sarah Martin",
+    "phone": "304-772-3096 ext 2",
+    "email": "smartin@assessor.state.wv.us"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Michael Heller",
+    "phone": "304-772-3096 ext 1",
+    "email": "mheller@monroecountywv.gov"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Justin St. Clair",
+    "phone": "304-772-0598",
+    "email": "jstclair@monroecountywv.gov"
+   },
+   {
+    "office": "Surveyor",
+    "name": "David Holz"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Monroe",
+  "read": "2026-10-29"
+ },
+ "54065": {
+  "county": "Morgan County",
+  "body": "Morgan County Commission",
+  "kind": "commission",
+  "boardPhone": "304-258-8540",
+  "boardAddress": "77 Fairfax Street, Berkeley Springs, WV 25411",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "William Clark",
+    "email": "bclark@morgancountywv.gov"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Sean Forney",
+    "email": "sforney@morgancountywv.gov"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Joel Tuttle",
+    "email": "jtuttle@morgancountywv.gov"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Kimberly Nickles",
+    "phone": "304-258-8547",
+    "email": "knickles@morgancountywv.gov"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Melanie Shambaugh",
+    "phone": "304-258-8554",
+    "email": "melanie.shambaugh@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Debbie Weaver",
+    "phone": "304-258-8570",
+    "email": "dweaver1@assessor.state.wv.us"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Johnnie Walter",
+    "phone": "304-258-1067",
+    "email": "jwalter@morgancountywv.gov"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Dan James",
+    "phone": "304-258-8621",
+    "email": "djamesmcpa@outlook.com"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Morgan",
+  "read": "2026-10-29"
+ },
+ "54067": {
+  "county": "Nicholas County",
+  "body": "Nicholas County Commission",
+  "kind": "commission",
+  "boardPhone": "304-872-7830",
+  "boardAddress": "700 Main Street Suite 2, Summersville, WV 26651",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "D. Craig Chapman",
+    "email": "dcc.nccwv@gmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Garrett E. Cole",
+    "email": "gcole_ncc@yahoo.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Gary E. Roberts",
+    "email": "groberts72@yahoo.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Robert Painter II",
+    "phone": "304-872-7820",
+    "email": "paintercpa@gmail.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Debbie Facemire",
+    "phone": "304-872-7810",
+    "email": "deborahr.facemire@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Betty Griffin",
+    "phone": "304-872-7800"
+   },
+   {
+    "office": "Sheriff",
+    "name": "John W \"Johnny\" Evans Jr",
+    "phone": "304-872-7880"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Paul Williams",
+    "phone": "304-872-7870"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Nicholas",
+  "read": "2026-10-29"
+ },
+ "54069": {
+  "county": "Ohio County",
+  "body": "Ohio County Commission",
+  "kind": "commission",
+  "boardPhone": "304-234-3628",
+  "boardAddress": "1500 Chapline St #215, Wheeling, WV 26003",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Zachary Abraham",
+    "email": "zabraham@ohiocountywv.gov"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Don Nickerson",
+    "email": "DNickerson@ohiocountywv.gov"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Randy Wharton",
+    "email": "rwharton@ocdawv.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Michael Kelly",
+    "phone": "304-234-3656"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Brenda Miller",
+    "phone": "304-234-3611",
+    "email": "brenda.miller@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Tiffany Hoffman",
+    "phone": "304-234-3626",
+    "email": "thoffman@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Nelson Croft",
+    "phone": "304-234-3680",
+    "email": "ncroft@ohcoso.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Shawn Turak",
+    "phone": "304-234-3631",
+    "email": "sturak@wvocpa.org"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Michael Austen",
+    "email": "maustenps@gmail.com"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Ohio",
+  "read": "2026-10-29"
+ },
+ "54071": {
+  "county": "Pendleton County",
+  "body": "Pendleton County Commission",
+  "kind": "commission",
+  "boardPhone": "(304) 358-7573",
+  "boardEmail": "karenp@pendletoncountywv.gov",
+  "boardAddress": "100 S. Main Street, Franklin, WV 26807",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Jimmie Bennett"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Roger Dahmer"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Carl Hevener"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Elise White",
+    "phone": "(304) 358-2505",
+    "email": "countyclerk@pendletoncountywv.gov"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Shalee Wilburn",
+    "phone": "(304) 358-7067",
+    "email": "shalee.wilburn@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Sandie Smith",
+    "phone": "(304) 358-2563",
+    "email": "ssmith3@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Bradley Kimble",
+    "phone": "(304) 358-2214",
+    "email": "pcsdlaw@pendletoncountywv.gov"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "April Mallow",
+    "phone": "(304) 902-7104",
+    "email": "pcpa@pendletoncountywv.gov"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Pendleton",
+  "read": "2026-10-29"
+ },
+ "54073": {
+  "county": "Pleasants County",
+  "body": "Pleasants County Commission",
+  "kind": "commission",
+  "boardAddress": "301 Court Lane, St. Marys, WV 26170",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Jay Powell"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Doug Renner"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Mike Smith"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Jody Davis",
+    "email": "jdavis@pleasantscountywv.gov"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Millie Farnsworth",
+    "email": "millie.farnsworth@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Ben Sweeney",
+    "email": "bsweeney@assessor.state.wv.us"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Chuck Mankins",
+    "email": "cmankins@sheriff.state.wv.us"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Krista Fleegle"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Josh Moody"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Pleasants",
+  "read": "2026-10-29"
+ },
+ "54075": {
+  "county": "Pocahontas County",
+  "body": "Pocahontas County Commission",
+  "kind": "commission",
+  "boardPhone": "304-799-6063",
+  "boardEmail": "Pocahontas.Commission@outlook.com",
+  "boardAddress": "900 Tenth Avenue, Marlinton, WV 24954",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "John Rebinski"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Thane Ryder"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Jamie Walker"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Melissa Bennett",
+    "phone": "304-799-4549",
+    "email": "pocaclk@clerk.state.wv.us"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Connie Carr",
+    "phone": "304-799-4604",
+    "email": "Connie.Carr@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Johnny Pritt",
+    "phone": "304-799-4750",
+    "email": "jpritt@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Troy Mccoy",
+    "phone": "304-799-4710",
+    "email": "tamccoy@sheriff.state.wv.us"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Laura Finch",
+    "phone": "304-799-6424"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Pocahontas",
+  "read": "2026-10-29"
+ },
+ "54077": {
+  "county": "Preston County",
+  "body": "Preston County Commission",
+  "kind": "commission",
+  "boardPhone": "304-329-1805",
+  "boardAddress": "106 W Main St. Suite 202, Kingwood, WV 26537",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Don Smith",
+    "email": "dmsmith@prestoncountywv.gov"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Samantha Stone",
+    "email": "sstone@prestoncountywv.gov"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Hunter Thomas",
+    "email": "hthomas@prestoncountywv.gov"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Linda Huggins",
+    "phone": "304-329-0070",
+    "email": "lhuggins@prestoncountywv.gov"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Lisa Leishman",
+    "phone": "304-329-0047",
+    "email": "lisa.leishman@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "David J Nestor Ii",
+    "phone": "304-329-1220",
+    "email": "dnestor@prestoncountywv.gov"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Scott Spiker",
+    "phone": "304-329-1611",
+    "email": "sspiker@prestonsheriff.net"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "James E. Shay Jr.",
+    "phone": "304-329-1885",
+    "email": "jshay@prestoncountywv.gov"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Kenneth Moran",
+    "phone": "304-288-9499",
+    "email": "kmoran@prosurvey.com"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Preston",
+  "read": "2026-10-29"
+ },
+ "54079": {
+  "county": "Putnam County",
+  "body": "Putnam County Commission",
+  "kind": "commission",
+  "boardPhone": "304-586-0201",
+  "boardAddress": "12093 Winfield Rd, Winfield, WV 25213",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Brian Ellis",
+    "email": "bellis@putnamwv.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Doug Pierson",
+    "email": "dpierson@putnamwv.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Andy Skidmore",
+    "email": "askidmore@putnamwv.org"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Brian Wood",
+    "phone": "304-586-0202",
+    "email": "bwood@putnamwv.org"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Stephanie Smith",
+    "phone": "304-586-0203",
+    "email": "Stephanie.Smith@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Gary Warner",
+    "phone": "304-586-0206",
+    "email": "gwarner@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Bobby Eggleton",
+    "phone": "304-586-0256",
+    "email": "beggleton@putnamwv.org"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Kris Raynes",
+    "phone": "304-586-0205",
+    "email": "kraynes@putnamwv.org"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Putnam",
+  "read": "2026-10-29"
+ },
+ "54081": {
+  "county": "Raleigh County",
+  "body": "Raleigh County Commission",
+  "kind": "commission",
+  "boardPhone": "304-255-9146",
+  "boardEmail": "ralcom@raleighcounty.com",
+  "boardAddress": "116 1/2 N. Heber St, Beckley, WV 25801",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Gregory Duckworth"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Linda Epling"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Daniel Hall"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Scott Van Meter",
+    "phone": "304-255-9126",
+    "email": "sfvanmeterclerk@raleighcounty.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Brianne Steele",
+    "phone": "304-255-9135"
+   },
+   {
+    "office": "Assessor",
+    "name": "Linda Sumner",
+    "phone": "304-255-9179",
+    "email": "lsumner@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Frank Priddy",
+    "phone": "304-255-9162"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Tom Truman",
+    "phone": "304-255-9148"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Raleigh",
+  "read": "2026-10-29"
+ },
+ "54083": {
+  "county": "Randolph County",
+  "body": "Randolph County Commission",
+  "kind": "commission",
+  "boardPhone": "304-636-2057",
+  "boardAddress": "4 Randolph Avenue, Elkins, WV 26241",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "David Kesling",
+    "email": "dkesling@randolphctywv.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Chris See",
+    "email": "csee@randolphctywv.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Chris Siler",
+    "email": "csiler@randolphctywv.org"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Brenda Wiseman",
+    "phone": "304-636-0543",
+    "email": "bwiseman@randolphctywv.org"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Philip Riggleman",
+    "phone": "304-636-2765",
+    "email": "phil.riggleman@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Lance Marcum",
+    "phone": "304-636-2114",
+    "email": "lmarcum@assessor.state.wv.us"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Robert (Rob) Elbon, Jr.",
+    "phone": "304-636-2100"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Michael Parker",
+    "phone": "304-636-2053",
+    "email": "mparker@rcpwv.com"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Leon Mallow",
+    "phone": "304-642-7278",
+    "email": "leon@mallowsurveying.com"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Randolph",
+  "read": "2026-10-29"
+ },
+ "54085": {
+  "county": "Ritchie County",
+  "body": "Ritchie County Commission",
+  "kind": "commission",
+  "boardPhone": "304-643-2164",
+  "boardAddress": "115 E Main Street, Harrisville, WV 26362",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Randall Riggs",
+    "email": "randallriggs@hotmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Steve Ritter",
+    "email": "sritter.5073@gmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Samuel Rogers",
+    "email": "samuelrogers459@gmail.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Tracie Mcdonald",
+    "phone": "304-643-2464",
+    "email": "tdmcdona@clerk.state.wv.us"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Melanie Wilson"
+   },
+   {
+    "office": "Assessor",
+    "name": "Meredith Kuhn",
+    "email": "mkuhn@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Bryan Davis"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Samuel Rogers, Ii"
+   },
+   {
+    "office": "Surveyor",
+    "name": "William Mossor"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Ritchie",
+  "read": "2026-10-29"
+ },
+ "54087": {
+  "county": "Roane County",
+  "body": "Roane County Commission",
+  "kind": "commission",
+  "boardPhone": "304-927-0078",
+  "boardAddress": "200 Main Street, Spencer, WV 25276",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Caleb Greathouse",
+    "email": "greathouse.calebj@gmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Merlin Shamblin",
+    "email": "shamblinmd@yahoo.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Randall Whited",
+    "email": "rwhited279@frontier.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Sena Mcdonald",
+    "email": "smcdonald@clerk.state.wv.us"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Andrea Stockner",
+    "phone": "304-927-2750",
+    "email": "andrea.stockner@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Emily Westfall",
+    "phone": "304-927-3020",
+    "email": "ewestfall@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Philip Dever",
+    "phone": "304-927-2540",
+    "email": "pdever@sheriff.state.wv.us"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Daniel Minardi",
+    "phone": "304-927-2091",
+    "email": "dfminardi@gmail.com"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Roane",
+  "read": "2026-10-29"
+ },
+ "54089": {
+  "county": "Summers County",
+  "body": "Summers County Commission",
+  "kind": "commission",
+  "boardAddress": "120 Ballengee St Ste 203, Hinton, WV 25951",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Mike Gore",
+    "email": "mike.gore@summerscountywv.gov"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Ted Kula",
+    "email": "ted.kula@summerscountywv.gov"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Charles Saunders",
+    "email": "charles.saunders@summerscountywv.gov"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Lynn Reed",
+    "email": "lynn.reed@summerscountywv.gov"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Stacy Ford",
+    "email": "stacy.ford@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Gregory Vandall",
+    "email": "gvandall@assessor.state.wv.us"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Justin Faris",
+    "email": "justin.faris@summerscountywv.gov"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Christopher Lefler",
+    "email": "christopher.lefler@summerscountywv.gov"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Jeffery Chambers",
+    "email": "surveyjeff@hotmail.com"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Summers",
+  "read": "2026-10-29"
+ },
+ "54091": {
+  "county": "Taylor County",
+  "body": "Taylor County Commission",
+  "kind": "commission",
+  "boardPhone": "304-265-5450",
+  "boardAddress": "128 West Main St Annex 2, Grafton, WV 26354",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Sam Gerkin",
+    "email": "samgerkintcc19@gmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Tony Veltri"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Orville Wright",
+    "email": "ogwright51@gmail.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Jaron Freeman",
+    "phone": "304-265-1401",
+    "email": "jfreeman.clerktc@icloud.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Vonda Reneman",
+    "phone": "304-265-2480"
+   },
+   {
+    "office": "Assessor",
+    "name": "Christa Kinsey",
+    "phone": "304-265-2420",
+    "email": "ckinsey@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Randy Durrett",
+    "phone": "304-265-3428"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "John Bord",
+    "phone": "304-265-3211",
+    "email": "prosattytayco@aol.com"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Timothy Brake",
+    "phone": "304-476-1979"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Taylor",
+  "read": "2026-10-29"
+ },
+ "54093": {
+  "county": "Tucker County",
+  "body": "Tucker County Commission",
+  "kind": "commission",
+  "boardPhone": "304-478-2866 ext.1207",
+  "boardAddress": "211 1St St, Suite 307, Parsons, WV 26287",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Fred Davis",
+    "email": "fdavis@tuckercountycommission.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Tim Knotts",
+    "email": "tknotts@tuckercountycommission.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Michael Rosenau",
+    "email": "mrosenau@tuckercountycommission.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Sherry Simmons",
+    "phone": "304-478-2414",
+    "email": "countyclerk@tuckercountycommission.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Sharon Moats",
+    "phone": "304-478-2606",
+    "email": "sharon.moats@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Greg Stevens",
+    "phone": "304-478-3727",
+    "email": "gstevens@tuckerassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Jacob \"Jake\" Kopec",
+    "phone": "304-478-2321",
+    "email": "sheriff@tuckercountycommission.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Savannah Hull Wilkins",
+    "phone": "304-478-3511 ext.7003",
+    "email": "swilkins@tuckercountycommission.com"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Tucker",
+  "read": "2026-10-29"
+ },
+ "54095": {
+  "county": "Tyler County",
+  "body": "Tyler County Commission",
+  "kind": "commission",
+  "boardAddress": "P.O. Box 66, Middlebourne, WV 26149",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Lance Hickman",
+    "email": "root2rack@gmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Mike Smith",
+    "phone": "304-758-4139",
+    "email": "commissionermsmith@gmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Eric H Vincent",
+    "email": "ehvcmv@yahoo.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Neil Archer II",
+    "phone": "304-758-4110",
+    "email": "tylerco@clerk.state.wv.us"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Candy L. Warner",
+    "phone": "304-758-4811 ext. 2",
+    "email": "candy.warner@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Lisa J. Jackson",
+    "phone": "304-758-4781 ext. 1",
+    "email": "ljackson@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Dean Pratt",
+    "phone": "304-758-4201",
+    "email": "dpratt202@live.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "D. Luke Furbee",
+    "phone": "304-758-2860",
+    "email": "dlfurbee@court.state.wv.us"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Roy D. Haught",
+    "phone": "304-771-7154",
+    "email": "ps2333@icloud.com"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Tyler",
+  "read": "2026-10-29"
+ },
+ "54097": {
+  "county": "Upshur County",
+  "body": "Upshur County Commission",
+  "kind": "commission",
+  "boardPhone": "(304) 472-0535",
+  "boardAddress": "91 W Main Street, Suite 101, Buckhannon, WV 26201",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Douglas Bush",
+    "phone": "(304) 473-0535",
+    "email": "dkbush@upshurcounty.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Samuel Nolte",
+    "email": "srnolte@upshurcounty.org"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Kristie Tenney",
+    "email": "kgtenney@upshurcounty.org"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Carol Smith",
+    "phone": "(304) 472-1068",
+    "email": "cjsmith@upshurcounty.org"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Brian Gaudet",
+    "phone": "(304) 472-2370",
+    "email": "bpgaudet@upshurcounty.org"
+   },
+   {
+    "office": "Assessor",
+    "name": "Dustin Zickefoose",
+    "phone": "(304) 472-4650",
+    "email": "dwzickefoose@upshurcounty.org"
+   },
+   {
+    "office": "Sheriff",
+    "name": "John Coffman",
+    "phone": "(304) 472-1182",
+    "email": "jmcoffman@upshurcounty.org"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Bryan Hinkle",
+    "phone": "(304) 472-9699",
+    "email": "bshinkle@upshurcounty.org"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Dale Bennett",
+    "phone": "(304) 472-0817"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Upshur",
+  "read": "2026-10-29"
+ },
+ "54099": {
+  "county": "Wayne County",
+  "body": "Wayne County Commission",
+  "kind": "commission",
+  "boardPhone": "304-272-6350",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Enoch Marcum",
+    "email": "ejaymarcum@gmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Robert Thompson",
+    "email": "robt1687@yahoo.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Travis Thompson",
+    "email": "travisthompson@waynecountywv.org"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Craig Evans",
+    "phone": "304-272-6369",
+    "email": "craigevans@waynecountywv.org"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Reggie Thompson",
+    "phone": "304-272-6360",
+    "email": "regina.thompson@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "John Ric Browning",
+    "phone": "304-272-6353",
+    "email": "jrbrowni@assessor.state.wv.us"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Charles \"Eddie\" Bradshaw",
+    "phone": "304-272-6478",
+    "email": "ebradshawpdwv@gmail.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Richard Thompson",
+    "phone": "304-272-6395",
+    "email": "waynepa@hotmail.com"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Matthew Strogen",
+    "phone": "304-272-6366",
+    "email": "mstrogen@assessor.state.wv.us"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Wayne",
+  "read": "2026-10-29"
+ },
+ "54101": {
+  "county": "Webster County",
+  "body": "Webster County Commission",
+  "kind": "commission",
+  "boardPhone": "(304) 847-5780",
+  "boardAddress": "2 Court Square, Room G-1, Webster Springs, WV 262881049",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Robert A. Chericalo",
+    "email": "Robert.chericalo@webstercountywv.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "James B. Cutlip",
+    "email": "Jim.cutlip@webstercountywv.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "M. Kimble Tanner",
+    "email": "Kimble.tanner@webstercountywv.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Eva R. Green",
+    "phone": "(304) 847-2508",
+    "email": "egreen6367@gmail.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Keith G. Stout",
+    "phone": "(304) 847-2421",
+    "email": "webstercountycircuitclerk@yahoo.com"
+   },
+   {
+    "office": "Assessor",
+    "name": "Bruce M. Green",
+    "phone": "(304) 847-2110",
+    "email": "green@assessor.state.wv.us"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Richard J. Clayton",
+    "phone": "(304) 847-2006",
+    "email": "webcosd300@yahoo.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Mary E. Snead",
+    "phone": "(304) 847-7164",
+    "email": "Beth.Snead@webstercountywv.com"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Webster",
+  "read": "2026-10-29"
+ },
+ "54103": {
+  "county": "Wetzel County",
+  "body": "Wetzel County Commission",
+  "kind": "commission",
+  "boardPhone": "304-455-8801",
+  "boardAddress": "255 Main Street, New Martinsville, WV 26155",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Lisa Heasley",
+    "email": "lheasley@wetzelwv.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Carla Mcbee",
+    "email": "cmcbee@wetzelwv.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Kelly Nelsen",
+    "phone": "304-455-8803",
+    "email": "knelsen@wetzelwv.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Jessica Davis",
+    "phone": "304-455-8205",
+    "email": "jdavis@wetzelwv.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Lori Mccoy",
+    "phone": "304-455-8234",
+    "email": "lori.mccoy@courtswv.gov"
+   },
+   {
+    "office": "Assessor",
+    "name": "Scott Lemley",
+    "phone": "304-455-8216",
+    "email": "slemley@wvassessor.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Eric Daugherty",
+    "phone": "304-455-8231",
+    "email": "edaugherty@wetzelsheriff.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Timothy Haught",
+    "phone": "304-455-8220",
+    "email": "thaught@frontier.com"
+   },
+   {
+    "office": "Surveyor",
+    "vacant": true
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Wetzel",
+  "read": "2026-10-29"
+ },
+ "54105": {
+  "county": "Wirt County",
+  "body": "Wirt County Commission",
+  "kind": "commission",
+  "boardPhone": "304-275-4271",
+  "boardAddress": "Washington Street, Elizabeth, WV 26143",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Niki Garrett"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "John Griffin"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Robert Gunnoe, Jr."
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Marolyn Baldrige"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Carol Frame",
+    "phone": "304-275-6597"
+   },
+   {
+    "office": "Assessor",
+    "name": "D. Keith Wilson",
+    "phone": "304-275-3192"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Michael Mcfee",
+    "phone": "304-275-4222"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Austin Grimmett",
+    "phone": "304-275-8901"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Darrell Boice"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Wirt",
+  "read": "2026-10-29"
+ },
+ "54107": {
+  "county": "Wood County",
+  "body": "Wood County Commission",
+  "kind": "commission",
+  "boardPhone": "304-424-1984",
+  "boardAddress": "1 Court Square Suite 203, Parkersburg, WV 26101",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "James Colombo",
+    "email": "jcolombo@woodcountywv.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "David Blair Couch",
+    "email": "dbc@woodcountywv.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Robert Tebay",
+    "email": "bobtebay@woodcountywv.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Joe Gonzales",
+    "phone": "304-424-1850"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Celeste Ridgway",
+    "phone": "304-424-1700",
+    "email": "cridgway@woodcountywv.com"
+   },
+   {
+    "office": "Assessor",
+    "name": "John Kelly",
+    "phone": "304-424-1888",
+    "email": "jrkelly@woodcountywv.com"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Rick Woodyard",
+    "phone": "304-424-1834",
+    "email": "rwoodyard@woodcountywv.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Pat Lefebure",
+    "phone": "304-424-1776",
+    "email": "plefebure@woodcountywv.com"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Charles Hughes Jr.",
+    "phone": "304-424-1991"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Wood",
+  "read": "2026-10-29"
+ },
+ "54109": {
+  "county": "Wyoming County",
+  "body": "Wyoming County Commission",
+  "kind": "commission",
+  "boardPhone": "304-732-8000",
+  "boardAddress": "24 Main Avenue, Pineville, WV 24849",
+  "seats": [
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Randall Aliff",
+    "email": "randallaliff@hotmail.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Jason Mullins",
+    "email": "jasonmullins2008@yahoo.com"
+   },
+   {
+    "seat": "Commissioner",
+    "countywide": true,
+    "name": "Dr. Samuel A Muscari Sr",
+    "email": "doc@fhcawv.com"
+   }
+  ],
+  "officers": [
+   {
+    "office": "County Clerk",
+    "name": "Jewell L Aguilar",
+    "phone": "304-732-8000 EXT 2260",
+    "email": "jewell.aguilar@wycowv.com"
+   },
+   {
+    "office": "Circuit Clerk",
+    "name": "Tony Paynter"
+   },
+   {
+    "office": "Assessor",
+    "name": "Mike E Cook",
+    "phone": "304-732-8000 EXT 2330",
+    "email": "mecook@assessor.state.wv.us"
+   },
+   {
+    "office": "Sheriff",
+    "name": "Bradley G Ellison",
+    "phone": "304-732-8000 EXT 101",
+    "email": "brad.ellison@wycowv.com"
+   },
+   {
+    "office": "Prosecuting Attorney",
+    "name": "Gregory Bishop",
+    "email": "greg.bishop@wyomingcountyprosecutor.com"
+   },
+   {
+    "office": "Surveyor",
+    "name": "Sefton Stewart",
+    "phone": "304-732-7800",
+    "email": "ashrynsurveying@gmail.com"
+   }
+  ],
+  "year": 2025,
+  "source": "the West Virginia Secretary of State's 2025 directory of county officials",
+  "sourceUrl": "https://apps.sos.wv.gov/elections/Officials/?Year=2025&County=Wyoming",
+  "read": "2026-10-29"
+ }
+}
