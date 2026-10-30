@@ -116,6 +116,8 @@ INSTANCES = (("il", "metro-worksheet.json"),
              ("ms", "ms/metro-worksheet.json"),
              ("la", "la/metro-worksheet.json"),
              ("mo", "mo/metro-worksheet.json"),
+             ("ga", "ga/metro-worksheet.json"),
+             ("va", "va/metro-worksheet.json"),
              ("wv", "wv/metro-worksheet.json"))
 
 # The metric grammar and its evaluator are shared with validate_gap_counts.py;

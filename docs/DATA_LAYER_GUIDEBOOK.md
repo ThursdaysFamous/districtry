@@ -68,6 +68,8 @@ in the researched-but-unbuilt backlog.
   "mississippi": ["us-house", "ms-supreme-court", "ms-court-of-appeals", "ms-senate", "county", "ms-chancery-court", "ms-circuit-court", "ms-house", "county-supervisor", "school-district-unified", "zip-code", "municipality", "city-ward", "tribal-government", "police-station", "fire-station", "post-office"],
   "louisiana": ["us-house", "la-supreme-court", "la-court-of-appeal", "la-senate", "la-district-court", "county", "school-district-unified", "la-house", "zip-code", "parish-district", "voting-precinct", "municipality", "city-ward", "tribal-government", "police-station", "fire-station", "post-office"],
   "missouri": ["us-house", "mo-senate", "county", "mo-house", "county-commissioner", "school-district-unified", "school-district-elementary", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"],
+  "georgia": ["us-house", "ga-senate", "county", "ga-house", "school-district-unified", "county-subdivision", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "virginia": ["us-house", "va-senate", "va-house", "county", "school-district-unified", "county-subdivision", "zip-code", "municipality", "school-district-elementary", "police-station", "fire-station", "post-office"],
   "westvirginia": ["us-house", "wv-senate", "county", "school-district-unified", "wv-house", "county-subdivision", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
@@ -3864,6 +3866,108 @@ trusted.
             "wanted": "A statewide list of township officers, or each township's or county's own published list of them.",
             "blocker": "Measured 2026-10-21 across all 1,394 county subdivisions TIGERweb carries for STATE='29' (Places_CouSub_ConCity_SubMCD layer 1): 282 townships with FUNCSTAT A, active governments, in the 20 counties organized into townships under RSMo chapter 65; City township in Barton County (FUNCSTAT B, partly consolidated); Dade County's 16 townships (FUNCSTAT I, inactive); 1,094 townships with no government of their own (FUNCSTAT N); and the City of St. Louis (FUNCSTAT F). No active township had 25,000 people or more in the 2020 census. The Secretary of State's 2025-2026 Missouri Roster does not mention townships at all: the word appears nowhere in its text as pdftotext writes it. No statewide list of township officers was found and no county's or township's own list has been read. NOT YET ASKED."
       }
+  ],
+  "georgia": [
+      {
+            "id": "ga-county-commission-members",
+            "concept": "County commission",
+            "area": "Georgia — all 159 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names your county and not the people on its board of commissioners, or its sole commissioner, and the map does not draw the districts they are elected from.",
+            "why": "No state office publishes who sits on Georgia's county commissions. Each county's commissioners are elected on its own ballot, and this app has not yet read the state's election results for their names or checked each county's district map.",
+            "wanted": "Each county's own list of its commissioners and the district each one represents, with its current district map.",
+            "blocker": "Measured 2026-10-21 for the Georgia launch plan (Adam's answers of 2026-10-22, 'all three as recommended': draw the county maps from the map office after a precinct check, take the names from election results, count Mableton) and restated 2026-10-29 when the instance was built. NO STATEWIDE ROSTER: the Department of Community Affairs' directory of local government officials sits behind a sign-in, which stays shut; sos.ga.gov answers its own robots.txt with a 5.5 KB challenge page, which is not worked around; the county association's directory was not read. THE NAMES' ROUTE: the Secretary of State's election results at results.sos.ga.gov (robots.txt 404, allow all), whose public API lists every county's contests (/results/public/api/jurisdictions/Georgia, /elections/{county-slug}/{electionId}/data and one contest's per-precinct breakdown). County contests appear from the November 2024 general election on: 439 commission seats in 150 counties on that ballot, matched by a pattern that also catches the misspellings counties file ('Commisson', 'Commmission', 'Comission'), and the May 2026 nonpartisan general and primaries carry the rest, with the 16 June 2026 runoffs settling every May race with no majority. Seven counties have a sole commissioner (Bartow, Bleckley, Chattooga, Murray, Pulaski, Towns, Union). THE DISTRICTS' ROUTE: the General Assembly's Legislative and Congressional Reapportionment Office publishes each county's local plans as map PDFs and shapefiles (its page's data, read through the token the page hands every visitor): 139 counties with a commission map and 152 with a school board map; nineteen of the newest maps in 13 counties predate the 2020 census, and 20 counties have no commission map (sole commissioners, countywide boards, Floyd's residency seats, and Echols's at-large posts from 1 January 2027). THE CHECK: each district map is to be tested against the precincts each 2024 and May 2026 district contest was counted in (about 1,200 contests, read at one request a second), using the office's 2024 statewide precinct map (2,724 precincts, dated 7 March 2025), before it is drawn. Step 3 of the plan, as its own change. NOT YET ASKED: the names and the maps are published; nothing has been asked of a county."
+      },
+      {
+            "id": "ga-school-board-members",
+            "concept": "School board",
+            "area": "Georgia",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "This app names your school district and not the people on its board, and does not draw the districts board members are elected from.",
+            "why": "No statewide list of Georgia's school board members has been read for this app. The boundary this card draws carries the district's name and nothing about its board.",
+            "wanted": "Each school system's own list of its board members and the district each one represents, with its current district map.",
+            "blocker": "Measured 2026-10-21 for the Georgia plan and restated 2026-10-29. The card draws TIGERweb's unified school districts for STATE='13' (School layer 0): 181 districts, the 159 county systems, 21 city systems and the Fort Stewart schools, whose land areas plus the one elementary district (Fort Benning Schools, layer 2, 682 km2) sum to exactly the 159 counties' land; each feature carries a name and a GEOID and nothing about a board. Georgia's school boards are elected, nonpartisan, in May. ROUTE: the same as the county commissions' (gap ga-county-commission-members): the Secretary of State's results carry 227 school board seats in 79 counties on the November 2024 ballot and 233 seats in 83 counties on the May 2026 nonpartisan general, and the Reapportionment Office publishes a school board district map for 152 counties, each to be checked against the precincts its contests were counted in. Measured for the plan: 48 boards elected by district, 3 mixed and 11 countywide on the 2024 ballot. City school systems' boards are not in that feed. NOT YET ASKED."
+      },
+      {
+            "id": "ga-municipal-officeholders",
+            "concept": "City or town government",
+            "area": "Georgia",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City or Town card names the place and says when a city and its county are one government, and not who your mayor and council are.",
+            "why": "No statewide list of Georgia's mayors and council members has been read for this app, and no city's own pages have been read yet.",
+            "wanted": "A statewide roster of every city's and town's mayor and council members by district, or each place's own published list.",
+            "blocker": "Measured 2026-10-29. The boundary is TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4), which carries a name, a code and a functional status and no officeholder field: 538 places for STATE='13' (430 cities, 101 towns, and seven places the Census files for the governments a city and its county share; Columbus, one government with Muscogee County, is filed as a city), all active governments, covering about 9.5% of the state's land by the Census's own AREALAND. 44 places had 25,000 people or more in the 2020 census. The Department of Community Affairs' directory of local officials sits behind a sign-in, which stays shut, and the Georgia Municipal Association's directory was not read. The Secretary of State's election results carry city contests from November 2024 on (about a dozen city seats in specials since June 2025 alone), which is the route the plan names after launch, largest places first, with the consolidated governments' commissions read with the county commissions. NOT YET ASKED."
+      }
+  ],
+  "virginia": [
+    {
+      "id": "va-county-board-members",
+      "concept": "County governing body",
+      "area": "Virginia — all 95 counties and 38 independent cities",
+      "counties": [],
+      "everyCounty": true,
+      "kind": "no-source",
+      "layer": "county",
+      "summary": "The County or City card names your county or independent city, and not the members of its board of supervisors or city council, nor which member represents the spot you picked.",
+      "why": "This app has not yet read the state's election results, which name every member, or drawn the districts most of them are elected from.",
+      "wanted": "Nothing from a reader — the state publishes both, and building them is ours to do.",
+      "blocker": "UNBUILT, NOT ABSENT. Recorded 2026-10-29 while the instance is dark, by the first of the five changes in the Virginia plan (claude.ai artifact R4apNobGbZaZRpCDiWRxVc). The Department of Elections posts a file of election districts and precincts for every county and city on its GIS page (Code of Virginia 24.2-103.1 requires current maps of each locality there) and a statewide layer last changed 2026-09-22; the plan measured that in 88 of the 91 counties electing supervisors by district its districts are exactly the districts the state's election results name. The results site names the winner of every district seat on every board of supervisors (94 counties; Arlington's County Board is at large) and city council (all 38 cities). The plan's second change draws those districts and names their members, each card saying which election the name comes from; it does not show a member appointed to a vacancy until a special election. A letter to the Department of Elections went out 2026-10-27 through the Letters thread asking whether the district files may be used with credit and whether appointments are recorded; follow-up due about 2026-11-17. The terms are treated as unstated until it answers; the build does not wait on it."
+    },
+    {
+      "id": "va-school-board-members",
+      "concept": "School board",
+      "area": "Virginia",
+      "counties": [],
+      "kind": "no-source",
+      "layer": "school-district-unified",
+      "summary": "The School Division card names your division, and not the members of its school board, nor which member represents the spot you picked.",
+      "why": "Most Virginia school boards are elected, and this app has not yet read the state's election results that name them or drawn the districts they are elected from.",
+      "wanted": "Nothing from a reader — the state publishes both, and building them is ours to do.",
+      "blocker": "UNBUILT. Recorded 2026-10-29 while the instance is dark. The Virginia plan measured school board contests in the state's results in 93 counties and 27 cities from 2021 to 2025: 88 counties elect by district on the supervisors' district lines, 5 at large, 10 cities by ward or district on their council lines, 17 cities at large, and 11 cities and 2 counties (Hanover, Richmond County) hold no school board contest, their boards being appointed or shared, which is to be checked one by one before a card says which. The boundary this card draws is TIGERweb's School service layer 0 (135 divisions) with layer 2 holding Lexington's alone; it carries the division's name and nothing about its board. The plan's second change names the members and draws the districts."
+    },
+    {
+      "id": "va-municipal-officeholders",
+      "concept": "City or town government",
+      "area": "Virginia",
+      "counties": [],
+      "kind": "no-source",
+      "layer": "municipality",
+      "summary": "The City or Town card names the place and says whether it is a city or a town, and not its mayor or council members.",
+      "why": "This app has not yet read the state's election results, which name the mayor and council of most cities and towns.",
+      "wanted": "Nothing from a reader — the state's election results name them, and reading them is ours to do.",
+      "blocker": "UNBUILT. Recorded 2026-10-29 while the instance is dark. The boundary is TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4): 38 cities and 189 towns for STATE='51', every one FUNCSTAT A, measured 2026-10-29, carrying a name, a code and a status and no officeholder field. The Virginia plan measured council contests in about 190 towns and all 38 cities in the state's results, 173 town mayors and 21 city mayors; the other 17 cities hold no mayoral election there, which usually means the council chooses its mayor and is to be confirmed city by city before a card says so. A city's council is also its county-level government, so its members belong on the County or City card too (gap va-county-board-members)."
+    },
+    {
+      "id": "va-voting-precincts",
+      "concept": "Voting precinct",
+      "area": "Virginia",
+      "counties": [],
+      "kind": "no-source",
+      "layer": null,
+      "summary": "This app does not draw Virginia's voting precincts yet, so it cannot tell you which precinct your spot is in.",
+      "why": "The state's Department of Elections publishes a map of every county's and city's precincts, and this app has not built it yet.",
+      "wanted": "Nothing from a reader — this one is ours to build.",
+      "blocker": "UNBUILT. Recorded 2026-10-29 while the instance is dark. The Department of Elections' statewide layer covers all 133 counties and cities and all 2,531 precincts and was last changed 2026-09-22; its per-locality files on the Department's GIS page were found 2026-10-27 and not yet downloaded. Neither states terms of use; the 2026-10-27 letter (gap va-county-board-members) asks. The plan's second change draws them, after measuring the statewide layer's lines against five counties' own maps, because its name says it is simplified."
+    },
+    {
+      "id": "va-magisterial-district-lines",
+      "concept": "County subdivision",
+      "area": "Virginia — the counties whose current election districts differ from the Census Bureau's copy",
+      "counties": [],
+      "kind": "data-quality",
+      "layer": "county-subdivision",
+      "summary": "The Magisterial District card draws the Census Bureau's copy of each county's districts, which in many counties is older than the county's current lines.",
+      "why": "The Census Bureau's map matches the state's current election districts closely in only about a third of the counties that elect by district.",
+      "wanted": "Nothing from a reader — the state publishes the current lines, and drawing them here is ours to do.",
+      "blocker": "Measured by the Virginia plan on 2026-10-21: compared with the Department of Elections' statewide district layer, TIGER's county subdivisions cover the same ground, to within 1% of the area, in 32 of 91 counties, to within 5% in 53, and differ by more than 5% in 38, Russell County most of all (47% agreement). TIGERweb Places_CouSub_ConCity_SubMCD layer 1 carries 552 records for STATE='51', measured 2026-10-29: 513 magisterial districts (FUNCSTAT N) in 94 counties, the 38 independent cities and Arlington County (FUNCSTAT F). The card says what a magisterial district is and deliberately does not say who represents the point. Adam's choice of 2026-10-22: draw this level from the Department's lines where a county's census subdivisions carry the same names as its election districts (about 71 of 94) and the census copy elsewhere; that is the plan's fifth change."
+    }
   ],
   "westvirginia": [
       {

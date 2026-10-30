@@ -1,0 +1,482 @@
+{
+  "1": {
+    "name": "Timmy French",
+    "party": "Republican",
+    "email": "senatorfrench@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 603",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7501"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S121"
+  },
+  "2": {
+    "name": "Mark D. Obenshain",
+    "party": "Republican",
+    "email": "senatorobenshain@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 609",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7502"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S68"
+  },
+  "3": {
+    "name": "Christopher T. Head",
+    "party": "Republican",
+    "email": "senatorhead@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 619",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7503"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S122"
+  },
+  "4": {
+    "name": "David R. Suetterlein",
+    "party": "Republican",
+    "email": "senatorsuetterlein@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 606",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7504"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S101"
+  },
+  "5": {
+    "name": "T. Travis Hackworth",
+    "party": "Republican",
+    "email": "senatorhackworth@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 512",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7505"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S112"
+  },
+  "6": {
+    "name": "Todd E. Pillion",
+    "party": "Republican",
+    "email": "senatorpillion@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 513",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7506"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S111"
+  },
+  "7": {
+    "name": "William M. Stanley Jr.",
+    "party": "Republican",
+    "email": "senatorstanley@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 514",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7507"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S82"
+  },
+  "8": {
+    "name": "Mark J. Peake",
+    "party": "Republican",
+    "email": "senatorpeake@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 605",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7508"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S105"
+  },
+  "9": {
+    "name": "Tammy Brankley Mulchi",
+    "party": "Republican",
+    "email": "senatormulchi@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 502",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7509"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S131"
+  },
+  "10": {
+    "name": "Luther H. Cifers III",
+    "party": "Republican",
+    "email": "senatorcifers@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 620",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7510"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S132"
+  },
+  "11": {
+    "name": "R. Creigh Deeds",
+    "party": "Democratic",
+    "email": "senatordeeds@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 612",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7511"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S62"
+  },
+  "12": {
+    "name": "Glen H. Sturtevant Jr.",
+    "party": "Republican",
+    "email": "senatorsturtevant@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 611",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7512"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S99"
+  },
+  "13": {
+    "name": "Lashrecse D. Aird",
+    "party": "Democratic",
+    "email": "senatoraird@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 615",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7513"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S115"
+  },
+  "14": {
+    "name": "Lamont Bagby",
+    "party": "Democratic",
+    "email": "senatorbagby@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 601",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7514"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S114"
+  },
+  "15": {
+    "name": "Michael J. Jones",
+    "party": "Democratic",
+    "email": "senatorjones@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 604",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "804-698-7515"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S134"
+  },
+  "16": {
+    "name": "Schuyler T. VanValkenburg",
+    "party": "Democratic",
+    "email": "senatorvanvalkenburg@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 602",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7516"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S129"
+  },
+  "17": {
+    "name": "Emily M. Jordan",
+    "party": "Republican",
+    "email": "senatorjordan@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 521",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7517"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S116"
+  },
+  "18": {
+    "name": "L. Louise Lucas",
+    "party": "Democratic",
+    "email": "senatorlucas@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 1404",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7518"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S19"
+  },
+  "19": {
+    "name": "Christie New Craig",
+    "party": "Republican",
+    "email": "senatorcraig@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 508",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7519"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S118"
+  },
+  "20": {
+    "name": "Bill DeSteph",
+    "party": "Republican",
+    "email": "senatordesteph@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 608",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7520"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S96"
+  },
+  "21": {
+    "name": "Angelia Williams Graves",
+    "party": "Democratic",
+    "email": "senatorwilliamsgraves@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 507",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7521"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S130"
+  },
+  "22": {
+    "name": "Aaron R. Rouse",
+    "party": "Democratic",
+    "email": "senatorrouse@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 519",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7522"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S113"
+  },
+  "23": {
+    "name": "Mamie E. Locke",
+    "party": "Democratic",
+    "email": "senatorlocke@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 1407",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7523"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S67"
+  },
+  "24": {
+    "name": "J.D. \"Danny\" Diggs",
+    "party": "Republican",
+    "email": "senatordiggs@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 503",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7524"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S119"
+  },
+  "25": {
+    "name": "Richard H. Stuart",
+    "party": "Republican",
+    "email": "senatorstuart@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 510",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7525"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S78"
+  },
+  "26": {
+    "name": "Ryan T. McDougle",
+    "party": "Republican",
+    "email": "senatormcdougle@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 1406",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7526"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S69"
+  },
+  "27": {
+    "name": "Tara A. Durant",
+    "party": "Republican",
+    "email": "senatordurant@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 505",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7527"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S120"
+  },
+  "28": {
+    "name": "Bryce E. Reeves",
+    "party": "Republican",
+    "email": "senatorreeves@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 614",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7528"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S88"
+  },
+  "29": {
+    "name": "Jeremy S. McPike",
+    "party": "Democratic",
+    "email": "senatormcpike@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 607",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7529"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S98"
+  },
+  "30": {
+    "name": "Danica A. Roem",
+    "party": "Democratic",
+    "email": "senatorroem@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 520",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7530"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S126"
+  },
+  "31": {
+    "name": "Russet W. Perry",
+    "party": "Democratic",
+    "email": "senatorperry@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 506",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7531"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S125"
+  },
+  "32": {
+    "name": "Kannan Srinivasan",
+    "party": "Democratic",
+    "email": "senatorsrinivasan@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 504",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7532"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S133"
+  },
+  "33": {
+    "name": "Jennifer D. Carroll Foy",
+    "party": "Democratic",
+    "email": "senatorcarrollfoy@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 501",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7533"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S117"
+  },
+  "34": {
+    "name": "Scott A. Surovell",
+    "party": "Democratic",
+    "email": "senatorsurovell@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 1405",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7534"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S100"
+  },
+  "35": {
+    "name": "David W. Marsden",
+    "party": "Democratic",
+    "email": "senatormarsden@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 610",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7535"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S80"
+  },
+  "36": {
+    "name": "Stella G. Pekarsky",
+    "party": "Democratic",
+    "email": "senatorpekarsky@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 621",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7536"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S124"
+  },
+  "37": {
+    "name": "Saddam Azlan Salim",
+    "party": "Democratic",
+    "email": "senatorsalim@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 618",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7537"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S127"
+  },
+  "38": {
+    "name": "Jennifer B. Boysko",
+    "party": "Democratic",
+    "email": "senatorboysko@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 613",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7538"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S106"
+  },
+  "39": {
+    "name": "Elizabeth Bennett-Parker",
+    "party": "Democratic",
+    "email": "senatorbennett-parker@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 616",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7539"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S135"
+  },
+  "40": {
+    "name": "Barbara A. Favola",
+    "party": "Democratic",
+    "email": "senatorfavola@senate.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 509",
+      "P. O. Box 396",
+      "Richmond, VA 23218",
+      "(804) 698-7540"
+    ],
+    "url": "https://apps.senate.virginia.gov/Senator/memberpage.php?id=S86"
+  }
+}

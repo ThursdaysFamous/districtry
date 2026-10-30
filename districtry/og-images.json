@@ -23,6 +23,14 @@
     "height": 630,
     "rendered": "2026-09-13"
   },
+  "ga": {
+    "path": "ga/og-image.png",
+    "label": "ga",
+    "sha256": "6ef9991a51b6df5a09525e9ef531a3b5a35c5a676e2fbcf73d5d83b7becffab6",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-10-29"
+  },
   "ia": {
     "path": "ia/og-image.png",
     "label": "ia",
@@ -134,6 +142,14 @@
     "width": 1200,
     "height": 630,
     "rendered": "2026-10-10"
+  },
+  "va": {
+    "path": "va/og-image.png",
+    "label": "va",
+    "sha256": "13d86189144c763f598388237cda76c2494a3807254fa0f373da22639c537f17",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-10-29"
   },
   "wi": {
     "path": "wi/og-image.png",

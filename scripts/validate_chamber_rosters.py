@@ -75,6 +75,8 @@ BUILDERS = (
     "ms/scripts/build_ms_legislature_roster.py",
     "la/scripts/build_la_legislature_roster.py",
     "mo/scripts/build_mo_legislature_roster.py",
+    "ga/scripts/build_ga_legislature_roster.py",
+    "va/scripts/build_va_legislature_roster.py",
     "wv/scripts/build_wv_legislature_roster.py",
 )
 
