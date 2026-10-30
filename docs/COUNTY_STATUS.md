@@ -34,7 +34,7 @@
 | Christian | 17021 | dispatch | districted | `county-board` | 1 — `christian-precinct-geometry` (no-source) |
 | Clark | 17023 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `clark-board-contact` (data-quality); `clark-precinct-polling` (data-quality) |
 | Clay | 17025 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | none |
-| Clinton | 17027 | dispatch | districted | `county-board`, `library-district` | 3 — `clinton-precinct-geometry` (data-quality); `county-board-office-addresses` (no-source); `statewide-library-officials` (no-source) |
+| Clinton | 17027 | dispatch | districted | `county-board`, `library-district` | 2 — `clinton-precinct-geometry` (data-quality); `statewide-library-officials` (no-source) |
 | Coles | 17029 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Cook | 17031 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | none |
 | Crawford | 17033 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
