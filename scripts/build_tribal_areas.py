@@ -292,24 +292,6 @@ ROSTER_BLOCKED = {
                "members, without naming the other four (read 2026-10-20). A "
                "partial council is not carried, so the card links the tribe.",
     },
-    # Measured 2026-10-30 with tribal_council_scraper.py's client. The Bureau
-    # lists http://www.rappahannocktribe.org; its robots.txt (126 bytes)
-    # disallows only /wp-admin/. Its front page and every page its own
-    # sitemap lists were looked at, and none names a council: the tribal
-    # history page says G. Anne Richardson was sworn in as Chief in 1998,
-    # and the staff directory sits under /portal/, behind the tribe's member
-    # sign-in. The Secretary of the Commonwealth's list of state-recognized
-    # tribes (read the same day) names the Chief and the Assistant Chief and
-    # no council member, so it does not fill the council either.
-    "3075": {
-        "host": "www.rappahannocktribe.org",
-        "measured": "2026-10-30",
-        "why": "The tribe's own site names no council (read 2026-10-30). Its "
-               "history page says G. Anne Richardson has been Chief since 1998, "
-               "and the Secretary of the Commonwealth's list names her and the "
-               "Assistant Chief, Mark Fortune, but no council member. A partial "
-               "council is not carried, so the card links the tribe.",
-    },
 }
 
 # Where a nation publishes its own council, for the nations whose page answers
@@ -392,6 +374,16 @@ def load_councils():
 def _roster_note(rec):
     """The card's own sentence for where the names came from and when."""
     when = rec.get("carriedFrom") or rec["read"]
+    if rec.get("officersOnly"):
+        # A list that names a nation's leading officers and no council member
+        # (the Rappahannock Tribe's, on Adam's ruling of 2026-10-30): the
+        # sentence says that only they are named, so two names never read as
+        # a whole council.
+        read = ("last read %s; the list could not be read on the most recent "
+                "weekly run" % when if rec.get("carriedFrom") else "read %s" % when)
+        return ("Only the %s are named here, from the %s's %s, %s. The tribe "
+                "publishes no council of its own, and the list names no council "
+                "member." % (_and(_roles(rec)), rec["publisher"], rec["list"], read))
     if rec["source"] == "state-list":
         return ("Named by the %s's list of Wisconsin tribal officials, updated %s, "
                 "because the nation publishes no council of its own. Read %s."
@@ -402,13 +394,27 @@ def _roster_note(rec):
     return "From the nation's own council page, read %s." % when
 
 
+def _roles(rec):
+    """Each office the record names, once, in card order."""
+    out = []
+    for m in sorted(rec["members"], key=lambda m: _office_rank(m["role"])):
+        if m["role"] not in out:
+            out.append(m["role"])
+    return out
+
+
+def _and(items):
+    items = list(items)
+    return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
+
+
 def roster_props(code, councils):
     """The roster fields a feature carries, or None when no council is carried."""
     rec = councils.get(code)
     if rec is None:
         return None
     members = sorted(rec["members"], key=lambda m: _office_rank(m["role"]))
-    return {
+    out = {
         "roster": members,
         "rosterWhy": None,
         "rosterNote": _roster_note(rec),
@@ -418,6 +424,11 @@ def roster_props(code, councils):
         "rosterHost": None,
         "rosterMeasured": None,
     }
+    # The card's heading over the names. Written only where it is not
+    # "Council", so every other nation's file is unchanged.
+    if rec.get("officersOnly"):
+        out["rosterTitle"] = _and(_roles(rec))
+    return out
 
 
 def load_join():
@@ -1483,6 +1494,16 @@ def selftest():
     state = roster_props("0001", {"0001": dict(rec, source="state-list", listUpdated="2026-07-08",
                                                publisher="Wisconsin Department of Administration")})
     assert "updated 2026-07-08" in state["rosterNote"] and "no council of its own" in state["rosterNote"]
+    assert "rosterTitle" not in got and "rosterTitle" not in state
+    officers = roster_props("0001", {"0001": {
+        "source": "state-list", "page": "https://example.invalid/list", "read": "2026-10-30",
+        "publisher": "Example Office", "list": "list of example tribes", "officersOnly": True,
+        "members": [{"name": "A B", "role": "Assistant Chief"}, {"name": "C D", "role": "Chief"}]}})
+    assert officers["rosterTitle"] == "Chief and Assistant Chief", officers
+    assert officers["rosterNote"] == (
+        "Only the Chief and Assistant Chief are named here, from the Example Office's "
+        "list of example tribes, read 2026-10-30. The tribe publishes no council of "
+        "its own, and the list names no council member."), officers["rosterNote"]
     assert roster_props("0002", {"0001": rec}) is None
 
     assert _districts_note([], "otsa") == "None. The Census draws no tribal subdivision on this area."
