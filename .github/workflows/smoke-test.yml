@@ -1656,7 +1656,14 @@ jobs:
       # districts and every district's to its contests.
       - name: GA county map check verdicts follow from their contests
         if: ${{ !cancelled() }}
-        run: python3 ga/scripts/check_ga_county_maps.py --check
+        run: |
+          # pyshp is real for the build path, which reads the map office's
+          # shapefiles, and validate_workflow_deps.py reads an entry point's
+          # function-local imports as what running it needs, so it is
+          # installed here rather than the check split into a second entry
+          # point (the metro-outline gates' rule).
+          pip install -c scripts/requirements.txt pyshp
+          python3 ga/scripts/check_ga_county_maps.py --check
 
       # West Virginia's county commissioners and other elected officers come
       # from the Secretary of State's directory of county officials, whose
