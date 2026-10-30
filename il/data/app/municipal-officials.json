@@ -6364,9 +6364,16 @@
     },
     "name": "Village of Crete",
     "office": {
-      "email": "ktellef@villageofcrete.org"
+      "address": "524 W. Exchange St., Crete 60417",
+      "email": "ktellef@villageofcrete.org",
+      "phone": "708-672-5431"
     },
     "officers": [
+      {
+        "appointed": true,
+        "name": "Karen Tellef",
+        "role": "Clerk"
+      },
       {
         "appointed": true,
         "name": "Gary Paape",
@@ -13810,7 +13817,7 @@
     },
     "name": "City of Joliet",
     "office": {
-      "address": "19150 W. Jefferson St., Joliet 60432",
+      "address": "19 150 W. Jefferson St., Joliet 60432",
       "email": "cityclerk@joliet.gov",
       "phone": "815-724-4000"
     },
@@ -15901,66 +15908,79 @@
       {
         "district": "Ward 1",
         "name": "Jonathan Pugh",
-        "role": "Alderperson"
+        "role": "Alderperson",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 1",
         "name": "Susan King",
-        "role": "Alderperson"
+        "role": "Alderperson",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 2",
-        "name": "JR Gillogly",
-        "role": "Alderperson"
+        "name": "J.R. Gillogly",
+        "role": "Alderperson",
+        "termExpires": "2027"
       },
       {
+        "appointed": true,
         "district": "Ward 2",
         "name": "Robin Lif",
-        "role": "Alderperson"
+        "role": "Alderperson",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 3",
         "name": "Christina Bergbower",
-        "role": "Alderperson"
+        "role": "Alderperson",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 3",
-        "name": "Darren Deskin",
-        "role": "Alderperson"
+        "name": "Darren A. Deskin",
+        "role": "Alderperson",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 4",
         "name": "Joanne Bartelsen",
-        "role": "Alderperson"
+        "role": "Alderperson",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 4",
-        "name": "Steve Cardamone",
-        "role": "Alderperson"
+        "name": "Steven Cardamone",
+        "role": "Alderperson",
+        "termExpires": "2029"
       }
     ],
     "county": "Will",
     "head": {
       "name": "Steven Streit",
-      "role": "Mayor"
+      "role": "Mayor",
+      "termExpires": "2029"
     },
     "name": "City of Lockport",
     "office": {
-      "address": "222 East 9th Street, Lockport IL 60441",
+      "address": "222 E. 9th St., Lockport 60441",
+      "email": "kgentile@lockport.org",
       "phone": "815-838-0549"
     },
     "officers": [
       {
         "name": "Kathleen Gentile",
-        "role": "Clerk"
+        "role": "Clerk",
+        "termExpires": "2029"
       },
       {
-        "name": "David Palya",
-        "role": "Treasurer"
+        "name": "David H. Palya",
+        "role": "Treasurer",
+        "termExpires": "2029"
       }
     ],
-    "sourceUrl": "https://www.wcgl.org/municipal-members.html",
-    "url": "https://www.cityoflockport.net"
+    "sourceUrl": "https://fliphtml5.com/hbvu/bbmp/",
+    "url": "https://cityoflockport.net"
   },
   "1744407": {
     "county": "DuPage",
@@ -16641,9 +16661,8 @@
       },
       {
         "appointed": true,
-        "name": "Justin VanVooren TrusteesRobert A. Dilling",
-        "role": "Treasurer",
-        "termExpires": "2027"
+        "name": "Justin VanVooren",
+        "role": "Treasurer"
       }
     ],
     "sourceUrl": "https://fliphtml5.com/hbvu/bbmp/",
@@ -30137,52 +30156,61 @@
     "board": [
       {
         "district": "Ward 1",
-        "email": "kkirwin@wilmington-il.gov",
-        "name": "Kevin Kirwin",
-        "role": "Alderperson"
+        "email": "morr@wilmington-il.gov",
+        "name": "J. Marty Orr",
+        "role": "Alderperson",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 1",
-        "email": "morr@wilmington-il.gov",
-        "name": "Marty Orr",
-        "role": "Alderperson"
+        "email": "kkirwin@wilmington-il.gov",
+        "name": "Kevin J. Kirwin",
+        "role": "Alderperson",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 2",
         "email": "dvice@wilmington-il.gov",
-        "name": "Dennis Vice",
-        "role": "Alderperson"
+        "name": "Dennis P. Vice",
+        "role": "Alderperson",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 2",
         "email": "rknight@wilmington-il.gov",
         "name": "Ryan Knight",
-        "role": "Alderperson"
+        "role": "Alderperson",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 3",
         "email": "jmietzner@wilmington-il.gov",
         "name": "Jonathan Mietzner",
         "phone": "815-476-4479",
-        "role": "Alderperson"
+        "role": "Alderperson",
+        "termExpires": "2029"
       },
       {
+        "appointed": true,
         "district": "Ward 3",
         "email": "rconforti@wilmington-il.gov",
         "name": "Rachel Conforti",
-        "role": "Alderperson"
+        "role": "Alderperson",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 4",
         "email": "tsmith@wilmington-il.gov",
-        "name": "Thomas Smith",
-        "role": "Alderperson"
+        "name": "Thomas “Tom” Smith",
+        "role": "Alderperson",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 4",
         "email": "tholmes@wilmington-il.gov",
         "name": "Todd Holmes",
-        "role": "Alderperson"
+        "role": "Alderperson",
+        "termExpires": "2027"
       }
     ],
     "county": "Will",
@@ -30190,15 +30218,24 @@
       "email": "bdietz@wilmington-il.gov",
       "name": "Ben Dietz",
       "phone": "779-279-4005",
-      "role": "Mayor"
+      "role": "Mayor",
+      "termExpires": "2029"
     },
     "name": "City of Wilmington",
     "office": {
-      "address": "1165 S. Water Street, Wilmington IL 60481",
+      "address": "3 1165 S. Water St., Wilmington 60481",
+      "email": "jziller@wilmington-il.gov",
       "phone": "815-476-2175"
     },
-    "sourceUrl": "https://www.wcgl.org/municipal-members.html",
-    "url": "https://www.wilmington-il.com"
+    "officers": [
+      {
+        "appointed": true,
+        "name": "Nancy Gross",
+        "role": "Treasurer"
+      }
+    ],
+    "sourceUrl": "https://fliphtml5.com/hbvu/bbmp/",
+    "url": "https://wilmington-il.gov"
   },
   "1782218": {
     "board": [
