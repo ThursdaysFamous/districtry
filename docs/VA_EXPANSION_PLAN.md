@@ -81,6 +81,10 @@ day the instance arrived. North Carolina's smoke test clicked Danville, Virginia
 case; it now must open `/va/`, and the uncovered case moved to the Atlantic east of Cape Fear.
 Tennessee's smoke test gained Abingdon, Virginia, as a case that must open `/va/`.
 
+**Virginia's hand-off box in `metros.json` stops at latitude 38.91**, because Virginia wraps round
+West Virginia and the state's own box holds West Virginia's center, which West Virginia's own
+checks refuse. The box decides nothing unless `fleet-outlines.json` cannot be read.
+
 **House of Delegates District 20 lost its card at go-live.** The House's list printed it "Vacant"
 on 2026-10-29 and printed no card for it on 2026-10-31, so the roster builder now carries a vacancy
 it recorded when the seat's card disappears.
