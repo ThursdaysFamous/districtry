@@ -1523,6 +1523,24 @@
    ],
    "read": "2026-10-27"
   },
+  "3075": {
+   "source": "state-list",
+   "publisher": "Secretary of the Commonwealth of Virginia",
+   "page": "https://www.commonwealth.virginia.gov/virginia-indians/state-recognized-tribes/",
+   "list": "list of state-recognized tribes",
+   "officersOnly": true,
+   "members": [
+    {
+     "name": "Anne Richardson",
+     "role": "Chief"
+    },
+    {
+     "name": "Mark Fortune",
+     "role": "Assistant Chief"
+    }
+   ],
+   "read": "2026-10-30"
+  },
   "3085": {
    "source": "nation",
    "page": "https://www.redcliff-nsn.gov/government/tribal_government/index.php",

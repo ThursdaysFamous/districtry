@@ -1390,8 +1390,10 @@ try {
   //        list does, says the Commonwealth and not the United States
   //        recognizes it, names its council with the assistant chief's note
   //        and links the Commonwealth's list.
-  //      - The Rappahannock Trust Land names nobody and says why, and says
-  //        the land was not counted in 2020.
+  //      - The Rappahannock Trust Land names the tribe's Chief and Assistant
+  //        Chief from the Commonwealth's list under that heading, not
+  //        "Council", says only they are named and links the list (Adam's
+  //        ruling of 2026-10-30), and says the land was not counted in 2020.
   //      - The councils file is refused: the land still answers, naming the
   //        tribe and nobody on its council.
   //      - The State Capitol is on no tribal land, and the card says so in
@@ -1417,6 +1419,8 @@ try {
       const fields = await fieldsOf(page);
       // the footer link (primaryLink) sits beside the card body, in the
       // layer's block, so the links are read from the whole block
+      const intro = await page.$$eval("#card-tribal-government .card-intro-title",
+        (els) => els.map((e) => (e.textContent || "").trim()));
       const links = await page.evaluate(() => {
         const card = document.getElementById("card-tribal-government");
         const block = (card && card.closest(".layer-block")) || card;
@@ -1424,7 +1428,7 @@ try {
           ({ text: (a.textContent || "").trim(), href: a.getAttribute("href") })) : [];
       });
       await context.close();
-      return { text: card.text || "", error: card.error, links,
+      return { text: card.text || "", error: card.error, links, intro,
                by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
     };
 
@@ -1439,7 +1443,8 @@ try {
           c.by("Seat of government") === p.seat && p.seat === "King William, VA" &&
           c.by("Land") === "Pamunkey (state) Reservation" &&
           council.every((m) => c.text.includes(m.name)) &&
-          c.text.includes("Council") && c.text.includes("From the nation's own council page") &&
+          JSON.stringify(c.intro) === JSON.stringify(["Council"]) &&
+          c.text.includes("From the nation's own council page") &&
           c.text.includes("Where these names come from") &&
           c.by("Districts drawn here").indexOf("no council seat") !== -1 &&
           !c.by("Why no names") && !c.by("Recognized by"),
@@ -1469,15 +1474,23 @@ try {
     {
       const land = propsAt(areas, RAPPAHANNOCK);
       const p = land[0] || {};
+      const named = councils[p.aiannh] || {};
+      const leaders = named.roster || [];
       const c = await at(RAPPAHANNOCK);
-      check("the Rappahannock Trust Land names nobody, says why, and says the land was not counted in 2020",
-        land.length === 1 && !councils[p.aiannh] && !c.error &&
+      check("the Rappahannock Trust Land names the Chief and the Assistant Chief from the Commonwealth's list, says only they are named, and says the land was not counted in 2020",
+        land.length === 1 && !c.error &&
+          leaders.map((m) => m.role).join() === "Chief,Assistant Chief" &&
           c.by("Tribal government") === "Rappahannock Tribe, Inc." &&
           c.by("Land") === "Rappahannock Trust Land" &&
-          c.by("Why no names") === p.rosterWhy && c.by("Why no names").indexOf("names no council") !== -1 &&
+          leaders.every((m) => c.text.includes(m.name)) &&
+          JSON.stringify(c.intro) === JSON.stringify(["Chief and Assistant Chief"]) &&
+          c.text.includes(named.rosterNote) && named.rosterNote.indexOf("Only the Chief and Assistant Chief") === 0 &&
+          c.links.some((l) => l.href === named.rosterPage &&
+                              l.href.indexOf("commonwealth.virginia.gov") !== -1) &&
+          !c.by("Why no names") && !p.rosterWhy &&
           c.by("Population").indexOf("Not counted") !== -1 &&
           !c.text.includes("From the nation's own council page"),
-        `land here=${land.length} ${JSON.stringify(c.text.slice(0, 200))}`);
+        `land here=${land.length} leaders=${leaders.length} intro=${JSON.stringify(c.intro)} ${JSON.stringify(c.text.slice(0, 200))}`);
     }
 
     {
