@@ -420,6 +420,32 @@ INSTANCES = {
             title="Who is my U.S. representative?",
             layer="us-house", roster="congress-roster.json",
             state="Missouri"),
+    ),
+    # Virginia joined at its go-live with both chambers named from each
+    # chamber's own member list (the House of Delegates' list prints District
+    # 20 as vacant, so that seat prints as a vacancy, on 2026-10-29). Va.
+    # Const. art. IV, secs. 2 and 3, as the Legislative Information System
+    # prints them (read 2026-10-30), elect senators "quadrennially" and
+    # delegates "biennially".
+    "va": dict(
+        worksheet="va/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Virginia legislator?",
+            body="the Virginia General Assembly",
+            short="Virginia General Assembly",
+            term="Senators serve four-year terms and delegates two-year terms.",
+            chambers=[
+                dict(layer="va-senate", name="Senate of Virginia", short="Senate",
+                     holder="Senator", roster="va-senate-members.json"),
+                dict(layer="va-house", name="Virginia House of Delegates", short="House of Delegates",
+                     holder="Delegate", roster="va-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Virginia"),
     ),}
 
 

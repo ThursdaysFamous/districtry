@@ -115,8 +115,40 @@ from build_county_status import ALL_COUNTIES, scan_dispatch_tables, slug_of  # n
 # both have a Winnebago County, Wisconsin has a county named IOWA, and eleven
 # other names are shared between the two states — a bare county name would let
 # an entry written about one state silence a real regression in another.
-NAMES_NOBODY = {}
-# It is EMPTY since 2026-10-15. From 2026-10-11 it carried North Carolina's
+NAMES_NOBODY = {
+    # Six Virginia cities whose councils are elected at large and whose
+    # results do not settle who sits on them (va/scripts/
+    # build_va_local_officials.py records each reason, and the County or City
+    # card prints it). Recorded 2026-10-31, when Virginia went live; each
+    # city's own website names its council, and reading those pages is the
+    # remedy (gap va-county-board-members).
+    "va/Falls Church City": {
+        "date": "2026-10-31",
+        "reason": "1 council seat was on the ballot in 2023 and 3 a term "
+                  "before, so the number of seats seems to have changed"},
+    "va/Hampton City": {
+        "date": "2026-10-31",
+        "reason": "a special election filled one council seat and the results "
+                  "do not say whose term it finished"},
+    "va/Lexington City": {
+        "date": "2026-10-31",
+        "reason": "3 council seats were on the ballot in 2022 and 1 a term "
+                  "before, so the number of seats seems to have changed"},
+    "va/Manassas Park City": {
+        "date": "2026-10-31",
+        "reason": "the council's seats are elected in two different years and "
+                  "the results show only one election in one of them"},
+    "va/Roanoke City": {
+        "date": "2026-10-31",
+        "reason": "3 council seats were on the ballot in 2024 and 1 a term "
+                  "before, so the number of seats seems to have changed"},
+    "va/Staunton City": {
+        "date": "2026-10-31",
+        "reason": "a special election filled one council seat and the results "
+                  "do not say whose term it finished"},
+}
+# It was EMPTY from 2026-10-15 until Virginia's six cities above. From
+# 2026-10-11 it carried North Carolina's
 # Tyrrell, whose board seats the election results alone could not settle
 # until the county's own page was read. Before that it was empty from
 # 2026-09-15, and carried one entry from 2026-09-13 — Illinois's Winnebago, whose data/app file is 20 flat records
@@ -443,6 +475,31 @@ INSTANCES = [
                           "Missouri Roster prints it, or the county's own "
                           "website where its page is kept up to date between "
                           "editions"),
+    # VIRGINIA'S PAGES ARE ABOUT COUNTIES AND CITIES. Its 38 independent
+    # cities belong to no county, so a city's council governs it as a county's
+    # board of supervisors governs a county, and each record names its own
+    # body: "Accomack County Board of Supervisors", "Arlington County Board",
+    # "Richmond City Council". The record's name is the whole place, so
+    # `county_word` is empty and `place_name` joins nothing to it. The names
+    # are the Department of Elections' results of each local contest, the file
+    # the app's County or City and Supervisor or Council District cards read.
+    dict(tag="va", state="Virginia", concept="local-government",
+         index_page="local-government.html",
+         heading="%(county)s governing body",
+         page_title="%(county)s governing body",
+         phrase="board of supervisors or city council",
+         index_label="County and city governments",
+         all_label="All Virginia county and city governments",
+         app_name="districtry Virginia", app_url="https://districtry.com/va/",
+         district_word="", member_word="Member",
+         county_word="", county_noun="county or city",
+         county_plural="counties and cities",
+         district_layer="supervisor-district",
+         adapters=("va_local_bodies",),
+         index_provenance="each name the winner of an election in the Virginia "
+                          "Department of Elections' results, or read from the "
+                          "county's or city's own website where those results "
+                          "do not settle a seat"),
     # NEW YORK IS THE FIRST INSTANCE WHOSE COUNTIES DO NOT ALL HAVE A BODY
     # THESE PAGES CAN BE ABOUT, which is why its `phrase` names one form
     # rather than the county tier: a county legislature is elected from
@@ -503,6 +560,16 @@ def heading_of(inst, county, rec=None):
         return rec["heading"]
     own = (inst.get("heading_for") or {}).get(county)
     return own or inst["heading"] % {"county": county}
+
+
+def place_name(inst, county):
+    """The county's whole name as a reader says it: "Cook County", "Caddo
+    Parish". AN INSTANCE WHOSE RECORDS CARRY THE WHOLE NAME sets `county_word`
+    to the empty string: Virginia's pages are about counties and independent
+    cities, "Accomack County" and "Richmond City", so no one word can follow
+    the name, and joining an empty one would leave a trailing space."""
+    word = inst.get("county_word", "County")
+    return "%s %s" % (county, word) if word else county
 
 
 def inst_key(inst):
@@ -3058,6 +3125,347 @@ def mo_county_bodies(inst):
     return out, problems, nameless, [path, listed_path, map_path], note
 
 
+VA_MONTHS = ("January", "February", "March", "April", "May", "June", "July",
+             "August", "September", "October", "November", "December")
+VA_RESULTS_URL = "https://historical.elections.virginia.gov/"
+VA_STANDFIRST = ("Every member of the %(heading)s, as the Virginia Department "
+                 "of Elections' results name them.")
+VA_STANDFIRST_OWN = ("Every member of the %(heading)s, as the Virginia Department "
+                     "of Elections' results name them or, where they do not "
+                     "settle a seat, the %(kind)s's own website lists them.")
+VA_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above won an "
+                 "election in the Virginia Department of Elections' results or "
+                 "is listed on the county's or city's own website,\nand where "
+                 "neither settles a seat this page says so rather than filling "
+                 "the gap.")
+
+
+def _va_date(iso):
+    """7 November 2023, the way the app's own cards write a date."""
+    m = re.match(r"^(\d{4})-(\d{2})-(\d{2})$", str(iso or ""))
+    if not m:
+        return None
+    return "%d %s %s" % (int(m.group(3)), VA_MONTHS[int(m.group(2)) - 1], m.group(1))
+
+
+def _va_takes_office(m):
+    """1 January after a November regular election (Code of Virginia
+    §24.2-222), the card's rule; a special election's winner takes office on
+    qualifying, which the results do not record."""
+    d = re.match(r"^(\d{4})-(\d{2})-\d{2}$", str(m.get("elected") or ""))
+    if not d or m.get("election") == "special" or int(d.group(2)) < 11:
+        return None
+    return "1 January %d" % (int(d.group(1)) + 1)
+
+
+def va_local_bodies(inst):
+    """Virginia: ONE file, va/data/app/va-local-officials.json, keyed by the
+    county or city's GEOID ("51001"), each record one locality's elected
+    bodies as the Department of Elections' results of its local contests name
+    the winners (va/scripts/build_va_local_officials.py). The app's County or
+    City and Supervisor or Council District cards read the same file.
+
+    A PAGE FOR EVERY COUNTY AND EVERY INDEPENDENT CITY, because Virginia's 38
+    cities belong to no county: a city's council governs it as a county's
+    board of supervisors governs a county, and a reader in Richmond has no
+    county board above the council. So the record's name is the whole place,
+    "Accomack County" or "Richmond City" as the Department of Elections writes
+    it, and the slug tells Richmond City from Richmond County.
+
+    A RESULT NAMES WHO WON, NOT WHO SITS. Every member carries the date of the
+    election that named them; a member read from the county's or city's own
+    page because the results do not settle a seat says so instead; a seat the
+    results do not settle names no one and says why, which is the card's own
+    rule (`vaSeat` in va/index.html). A November winner who has not yet taken
+    office is not a member: the sitting member is listed and the winner is
+    named in a sentence beside the seat.
+
+    AN ELECTED CHAIR IS A MEMBER, AND AN ELECTED MAYOR IS NAMED IN THE LEDE.
+    A county chair elected at large sits on the board (Code of Virginia
+    §15.2-1422), so the chair is a section of their own before the districts.
+    Whether a city's elected mayor sits on its council differs by charter, and
+    this page claims neither: the mayor is named in the lede and is in no
+    section.
+
+    THE SCHOOL BOARD IS NOT ON THESE PAGES. It is a separate body, and the
+    map's County or City and School Board District cards name it.
+
+    THE MAP LINK OPENS THE DISTRICTS WHERE THE BODY HAS THEM. Every district
+    the names file lists a seat for is drawn (build_va_local_districts.py
+    --check holds the two files to each other, and this holds each locality's
+    board districts to the districts file); a body elected wholly at large
+    opens the County or City layer, whose card names it.
+
+    A LOCALITY WHOSE BOARD OR COUNCIL NAMES NO ONE GETS NO PAGE: six cities
+    whose results do not settle who sits on the council, recorded in
+    NAMES_NOBODY with the reason."""
+    path = os.path.join(app_data(inst["tag"]), "va-local-officials.json")
+    map_path = os.path.join(app_data(inst["tag"]), "va-local-districts.json")
+    drawn = {}
+    for f in _read(map_path).get("features") or []:
+        props = f.get("properties") or {}
+        drawn.setdefault(str(props.get("countyFips")), set()).add(str(props.get("key")))
+    doc = _read(path)
+    asof = _va_date(doc.get("asOf"))
+    localities = doc.get("localities") or {}
+    out, problems, nameless = {}, [], set()
+    if not asof:
+        problems.append("va-local-officials.json carries no read date")
+    if len(localities) != 133:
+        problems.append("va-local-officials.json carries %d localities, not "
+                        "Virginia's 95 counties and 38 cities" % len(localities))
+    for geoid, loc in sorted(localities.items()):
+        city = loc.get("kind") == "city"
+        raw = (loc.get("name") or "").strip()
+        if not raw or loc.get("kind") not in ("city", "county") \
+                or city == raw.endswith(" County"):
+            problems.append("va-local-officials.json %r carries no name or no "
+                            "kind of locality this page knows" % geoid)
+            continue
+        name = raw + " City" if city else raw
+        place = "the city" if city else "the county"
+        kind = "city" if city else "county"
+        arlington = raw == "Arlington County"
+        if city:
+            heading, title, member = ("%s Council" % name, "%s Council" % name,
+                                      "Council member")
+        elif arlington:
+            heading = title = "Arlington County Board"
+            member = "County board member"
+        else:
+            heading, title, member = ("%s Board of Supervisors" % name,
+                                      "%s Supervisors" % name, "Supervisor")
+        body_word = ("city council" if city else
+                     "county board" if arlington else "board of supervisors")
+        bodies = loc.get("bodies") or {}
+        board = bodies.get("board") or {}
+        own_page = [False]
+        closing = []
+
+        def person(m, role, verified):
+            p = {"name": (m.get("name") or "").strip(), "role": role}
+            when = _va_date(m.get("elected"))
+            if when:
+                p["elected"] = ("Won a special election on %s." % when
+                                if m.get("election") == "special"
+                                else "Elected %s." % when)
+            elif verified and _va_date(verified.get("read")):
+                own_page[0] = True
+                p["elected"] = ("Listed on %s's own page, read %s."
+                                % (verified.get("by") or raw,
+                                   _va_date(verified["read"])))
+                if (m.get("role") or "").strip():
+                    p["role"] = "%s, %s" % (role, m["role"].strip())
+            else:
+                return None
+            return p
+
+        def seated(seat, role, what):
+            """The people one seat (or one at-large body) names, the
+            sentences it owes a reader, and why it names no one if it
+            does not."""
+            people, after, why = [], [], None
+            for m in seat.get("members") or []:
+                p = person(m, role, seat.get("verified"))
+                if not p or not p["name"]:
+                    problems.append("va %s: a member of %s carries no name, or "
+                                    "no election date and no page it was read "
+                                    "from" % (name, what))
+                    continue
+                people.append(p)
+            for m in seat.get("pending") or []:
+                starts = _va_takes_office(m)
+                after.append("%s won the election of %s%s; until then the "
+                             "member%s above %s."
+                             % ((m.get("name") or "").strip()
+                                or "A write-in candidate",
+                                _va_date(m.get("elected")) or "this year",
+                                " and takes office on %s" % starts if starts else "",
+                                "s" if len(people) > 1 else "",
+                                "sit" if len(people) > 1 else "holds the seat"))
+            left = [(x.get("name") or "").strip() for x in seat.get("left") or []]
+            if left and people:
+                after.append("%s, elected %s, has since been elected to another "
+                             "seat on the same body, and the results do not yet "
+                             "name who holds the seat that was left, so it is "
+                             "not named here; %s's own website is the current "
+                             "source." % (" and ".join(left),
+                                          _va_date(seat["left"][0].get("elected"))
+                                          or "earlier", raw))
+            elif left:
+                why = ("%s, elected %s, has since been elected to another seat "
+                       "on the same body, and the results do not yet name who "
+                       "holds this one; %s's own website is the current source."
+                       % (" and ".join(left),
+                          _va_date(seat["left"][0].get("elected")) or "earlier",
+                          raw))
+            if (seat.get("unsettled") or "").strip():
+                why = ("%s, so this page names no one rather than guessing; %s's "
+                       "own website is the current source."
+                       % (seat["unsettled"].strip(), raw))
+            if seat.get("verified") and (seat["verified"].get("note") or "").strip():
+                after.append(seat["verified"]["note"].strip())
+            return people, after, why
+
+        districts = []
+        for key in sorted(loc.get("districts") or {}):
+            d = loc["districts"][key]
+            seat = (d.get("seats") or {}).get("board")
+            if seat is None:
+                continue                    # a school board district only
+            label = (d.get("name") or "").strip()
+            if not label:
+                problems.append("va %s: district %s carries no name" % (name, key))
+                continue
+            people, after, why = seated(seat, member, label)
+            entry = district(label, people, note=None if people else
+                             why or "the Department of Elections' results name "
+                                    "no one for this seat.")
+            if after:
+                entry["after"] = after
+            districts.append(entry)
+        if bool(districts) != bool(board.get("byDistrict")):
+            problems.append("va %s: the board %s elected by district and the "
+                            "file lists %d district seat(s)"
+                            % (name, "is" if board.get("byDistrict") else "is not",
+                               len(districts)))
+            continue
+        board_keys = {k for k, d in (loc.get("districts") or {}).items()
+                      if "board" in (d.get("seats") or {})}
+        if not board_keys <= drawn.get(geoid, set()):
+            problems.append("va %s: va-local-districts.json does not draw every "
+                            "district the board is elected from" % name)
+            continue
+
+        extras = []
+        chair = (bodies.get("chair") or {}).get("atLarge")
+        if chair:
+            people, after, why = seated(chair, "Chair", "the chair")
+            if people:
+                extras.append(("chair", "Chair, elected by the whole county",
+                               people))
+            closing += after
+            if why:
+                closing.append("The chair is not named here: " + why)
+        at_large = board.get("atLarge")
+        n_at_large = 0
+        if at_large:
+            people, after, why = seated(at_large, member, "the at-large seats")
+            n_at_large = len(people)
+            if people:
+                extras.append(("at-large", "Elected at large", people))
+            closing += after
+            if why:
+                closing.append("The members elected at large are not named "
+                               "here: " + why)
+        n_district = sum(len(d["members"]) for d in districts)
+
+        said = ["The %s is %s's governing body." % (heading, name)]
+        if city:
+            said[0] = ("%s is an independent city, which belongs to no county, "
+                       "and the %s is its governing body." % (name, heading))
+        how = []
+        if districts:
+            how.append("%d %s elected from districts"
+                       % (n_district, "is" if n_district == 1 else "are"))
+        if at_large:
+            how.append("%d at large" % n_at_large if n_at_large
+                       else "some at large")
+        if chair:
+            how.append("the chair by the whole county")
+        if districts and not (chair or at_large):
+            said.append("Its members are elected from %d district%s."
+                        % (len(districts), "" if len(districts) == 1 else "s"))
+        elif not districts:
+            said.append("Every member is elected at large, by the whole %s."
+                        % kind)
+        else:
+            said.append("Of the members this page names, %s."
+                        % (", ".join(how[:-1]) + " and " + how[-1]))
+        mayor = (bodies.get("mayor") or {}).get("atLarge") or {}
+        named_mayor = [m for m in mayor.get("members") or []
+                       if (m.get("name") or "").strip()]
+        if named_mayor:
+            when = _va_date(named_mayor[0].get("elected"))
+            said.append("%s is the city's mayor, elected by the whole city%s."
+                        % (named_mayor[0]["name"].strip(),
+                           " on %s" % when if when else ""))
+        for m in mayor.get("pending") or []:
+            starts = _va_takes_office(m)
+            said.append("%s won the election for mayor of %s%s."
+                        % ((m.get("name") or "").strip() or "A write-in candidate",
+                           _va_date(m.get("elected")) or "this year",
+                           " and takes office on %s" % starts if starts else ""))
+        said.append("Each name is the winner of an election in the Virginia "
+                    "Department of Elections' results, dated beside it%s. A "
+                    "result names who won, not who sits now, so a member "
+                    "appointed to a vacancy is not named until an election fills "
+                    "the seat. The map's %s the same file. The school board is a "
+                    "separate body, and the map's County or City card says who "
+                    "sits on it."
+                    % (", unless it says it was read from %s's own page because "
+                       "the results do not settle that seat" % place
+                       if own_page[0] else "",
+                       "County or City and Supervisor or Council District cards "
+                       "read" if districts else "County or City card reads"))
+        lede = esc(" ".join(said)).replace("%", "%%")
+
+        if districts:
+            cta_layers = None
+            cta_note = ("Opens the map with the County or City and Supervisor or "
+                        "Council District layers on. Each district is drawn from "
+                        "the Department of Elections' precincts, to within 12 "
+                        "metres; for a definitive answer, ask the %s's general "
+                        "registrar." % kind)
+        else:
+            cta_layers = "county"
+            cta_note = ("Opens the map with the County or City layer on, whose "
+                        "card names every member of the %s. A body elected at "
+                        "large has no districts, so its members represent the "
+                        "whole %s." % (body_word, kind))
+        source_html = ('Source: <a href="%s" rel="noopener" target="_blank">the '
+                       "Virginia Department of Elections' results</a>, read on "
+                       "%s and re-read every week, with each member's own "
+                       "election dated beside their name." % (esc(VA_RESULTS_URL),
+                                                              esc(asof or "")))
+        methods = (" by district and at large" if districts and (chair or at_large)
+                   else " by district" if districts else " at large")
+        # 155 characters is validate_serp_lengths.py's ceiling.
+        desc = ("Who sits on the %(heading)s," + methods
+                + (", from Virginia's election results and the %s's own website."
+                   % kind if own_page[0] else ", from Virginia's election results."))
+        entry = {"districts": districts, "extras": extras, "skipped": [],
+                 "slug": county_slug(name), "at_large": False,
+                 "source_file": path, "lede": lede, "heading": heading,
+                 "page_title": title, "member_word": member,
+                 "standfirst": ((VA_STANDFIRST_OWN % {"heading": "%(heading)s",
+                                                       "kind": kind})
+                                if own_page[0] else VA_STANDFIRST),
+                 "desc": desc, "disclaimer": VA_DISCLAIMER, "cta_note": cta_note,
+                 "source_html": source_html}
+        if closing:
+            entry["closing"] = closing
+        if cta_layers:
+            entry["cta_layers"] = cta_layers
+        if city:
+            # Read by build_eam_status.py, which scores an independent city
+            # once, under the done standard's city tier, and not as a county.
+            entry["independent_city"] = True
+        if not _count_named(districts, extras):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("va %s names nobody on its %s" % (name, body_word))
+            nameless.add(name)
+            continue
+        out[name] = entry
+    counties = sum(1 for n in out if n.endswith(" County"))
+    note = ("%d of Virginia's 95 counties and %d of its 38 cities, %d with a "
+            "board or council elected by district, every district drawn"
+            % (counties, len(out) - counties,
+               sum(1 for r in out.values() if r["districts"])))
+    return out, problems, nameless, [path, map_path], note
+
+
 def _mn_date(iso):
     m = re.match(r"^(\d{4})-(\d{2})-(\d{2})$", str(iso or ""))
     if not m:
@@ -3306,6 +3714,7 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "ms_supervisors": ms_supervisors,
             "la_parish_bodies": la_parish_bodies,
             "mo_county_bodies": mo_county_bodies,
+            "va_local_bodies": va_local_bodies,
             "ny_supervisors": ny_supervisors,
             "ny_legislature": ny_legislature}
 
@@ -3574,9 +3983,8 @@ def board_graph(rec, inst, canonical, head, name):
            "name": head,
            "url": canonical,
            "areaServed": {"@type": "AdministrativeArea",
-                          "name": "%s %s, %s" % (name,
-                                                 inst.get("county_word", "County"),
-                                                 inst["state"])}}
+                          "name": "%s, %s" % (place_name(inst, name),
+                                              inst["state"])}}
     if roles:
         org["member"] = roles
     roster = None
@@ -3772,20 +4180,20 @@ def districted_body(inst, name, rec):
     # A LOUISIANA PAGE IS ABOUT A PARISH, and its concept path is the parish's
     # government rather than the map's district layer, so an instance may name
     # both words. One that names neither reads exactly as before.
-    word = inst.get("county_word", "County")
     if cta_layers:
         # An instance whose board has no district layer yet opens the layer
         # whose card lists it, rather than a layer id its app does not register.
         out.append('<a class="cta" href="../#layers=%s">'
-                   'See %s %s on the map →</a>'
-                   % (esc(cta_layers), esc(name), esc(word)))
+                   'See %s on the map →</a>'
+                   % (esc(cta_layers), esc(place_name(inst, name))))
     else:
         # A record may name its seats: an Assumption Parish juror is elected
         # from a ward, and the link says so. One that does not reads "district".
         out.append('<a class="cta" href="../#layers=%s,county">'
-                   'Find your %s %s %s on the map →</a>'
+                   'Find your %s %s on the map →</a>'
                    % (esc(inst.get("district_layer", inst["concept"])),
-                      esc(name), esc(word), esc(rec.get("seat_word", "district"))))
+                      esc(place_name(inst, name)),
+                      esc(rec.get("seat_word", "district"))))
     out.append('<p class="cta-note">%s</p>'
                % (esc(rec["cta_note"]) if rec.get("cta_note") else
                   "Opens the map with the county and %s layers on. Search your "
@@ -3849,8 +4257,16 @@ def districted_body(inst, name, rec):
             # board of n-1.
             out.append('<p class="unlisted">Not listed in the county\'s '
                        'directory.</p>')
+        # A SEAT MAY OWE A READER A SENTENCE BESIDE ITS MEMBER: Virginia names
+        # a November winner who has not yet taken office here, rather than as
+        # a member. A district without the key renders exactly as before.
+        for line in d.get("after") or ():
+            out.append('<p class="unlisted">%s</p>' % esc(line))
         out.append('</section>')
     extra_sections(True)
+    # The same for the body as a whole: Virginia's at-large seats and chairs.
+    for line in rec.get("closing") or ():
+        out.append('<p class="unlisted">%s</p>' % esc(line))
     unnamed = seats - named
     if unnamed:
         out.append('<p class="unlisted">%d of %d listed seats are not named by '
@@ -4296,7 +4712,7 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
                  "name": inst["index_label"],
                  "item": inst["app_url"] + inst["index_page"]},
                 {"@type": "ListItem", "position": 3,
-                 "name": "%s %s" % (name, inst.get("county_word", "County"))},
+                 "name": place_name(inst, name)},
             ],
         },
     }
@@ -4357,10 +4773,10 @@ def render_index(inst, rows):
               if at_large else ""),
            '    <ul class="county-index">']
     for name, slug, seats, note, _kind in rows:
-        out.append('      <li><a href="%s/%s.html">%s %s</a> '
+        out.append('      <li><a href="%s/%s.html">%s</a> '
                    '<span class="county-index-n">%d %s%s</span></li>'
-                   % (esc(inst["concept"]), esc(slug), esc(name),
-                      esc(inst.get("county_word", "County")), seats,
+                   % (esc(inst["concept"]), esc(slug),
+                      esc(place_name(inst, name)), seats,
                       "member" if seats == 1 else "members", esc(note)))
     out.append("    </ul>")
     return "\n".join(out)

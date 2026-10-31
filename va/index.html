@@ -4485,7 +4485,15 @@ function initVirginiaExplorer() {
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
-  var LAYER_CONCEPTS = { };
+  var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["va-senate"],
+    "state-house": ["va-house"], "county": ["county"], "county-board": ["supervisor-district"],
+    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
+    "city-council": ["supervisor-district"], "voting-precinct": ["voting-precinct"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "school-district-elementary": ["school-district-elementary"],
+    "school-board-district": ["school-board-district"], "police-station": ["police-station"],
+    "fire-station": ["fire-station"], "post-office": ["post-office"],
+    "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -4493,6 +4501,9 @@ function initVirginiaExplorer() {
   // clean the address is. Set from the worksheet's poi_geocode_bbox — widen
   // it there whenever a layer's cards start naming farther-away offices.
   var POI_GEOCODE_BBOX = { minLng: -84.2, minLat: 36.0, maxLng: -74.6, maxLat: 40.0 };
+  // ZIP code index (scripts/build_zip_index.mjs): a typed ZIP code selects a
+  // spot inside it, and its ZIP layer is turned on and pinned for comparison.
+  var ZIP_SEARCH_URL = "data/app/zip-index.json";
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -4556,7 +4567,7 @@ function initVirginiaExplorer() {
     { id: "missouri", label: "Missouri", url: "https://districtry.com/mo/", emoji: "🏞️", explorerName: "districtry Missouri",
       bbox: { minLng: -95.78, minLat: 35.99, maxLng: -89.09, maxLat: 40.62 } },
     { id: "virginia", label: "Virginia", url: "https://districtry.com/va/", emoji: "🌸", explorerName: "districtry Virginia",
-      bbox: { minLng: -83.68, minLat: 36.54, maxLng: -75.16, maxLat: 39.47 } }
+      bbox: { minLng: -83.68, minLat: 36.54, maxLng: -75.16, maxLat: 38.91 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only

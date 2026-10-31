@@ -6,11 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 districtry Virginia: a single-file, dependency-light web app. Click a point in Virginia (or search
 an address) and it reports every civic district containing that point and who represents you
-there. It will serve at **districtry.com/va/** as a folder of the consolidated districtry repo —
+there. It serves at **districtry.com/va/** as a folder of the consolidated districtry repo —
 following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. **The instance is DARK**: no `metros.json` entry, `va/**` excluded from the
-Pages deploy, nothing served and no landing card naming it. `va/WATCH.md` lists what go-live has to
-do in one change, and what the plan builds before it.
+root-scripts shape. **The instance is LIVE**, on Adam's word of 2026-10-30, which opened it before
+the 3 November 2026 election rather than in January as the plan first had it.
+`docs/VA_EXPANSION_PLAN.md` is the record of the launch, and `va/WATCH.md` of what is still owed.
 
 **The layers** draw their shapes from a national publisher and name people from a national roster
 or each chamber's own pages: **County or City** (`county`, 133 — the 95 counties and the 38
@@ -52,17 +52,24 @@ and each senator's page prints the session office in the General Assembly Buildi
 and the senator's e-mail address. The House's member list (`house.vga.virginia.gov/members`) prints
 one card per seat with the delegate's e-mail address, and each delegate's page the name in reading
 order, the party and the Capitol office. On 2026-10-29 the Senate named all 40 and the House named
-99, with District 20 printed "Vacant". A district office is printed for every member and is never
+99, with District 20 printed "Vacant"; on 2026-10-31 the House's list printed no card for District
+20 at all, and the builder carries a seat it last recorded vacant when its card disappears. A district office is printed for every member and is never
 read, because the builder has no way to tell it apart from a member's home. robots.txt read that
 day: `apps.senate.virginia.gov` has none (404), and `house.vga.virginia.gov` serves a 99-byte file
 that binds nobody; both are paced at one request a second.
 
-**THE LOCAL DISTRICTS ARE THE PLAN'S NEXT CHANGE.** Every county's board of supervisors, every
-city's council and most school boards are elected, none is named yet, and the County or City, City
-or Town and School Division cards say so. The plan (Adam's answers of 22 October 2026, in the
-Virginia plan) draws every local election district and precinct from the Department of Elections'
-per-locality map files and names the winners from the state's election results, each card saying
-which election a name comes from; `va/WATCH.md` carries the order and the checks it owes.
+**THE LOCAL DISTRICTS ARE DRAWN FROM THE DEPARTMENT OF ELECTIONS' PRECINCTS, AND THEIR MEMBERS ARE
+NAMED FROM THE STATE'S ELECTION RESULTS** (Adam's answers of 22 October 2026, in the Virginia plan).
+`va/scripts/build_va_precincts.py` ships all 2,531 precincts from the Department's statewide layer,
+and `va/scripts/build_va_local_districts.py` draws every supervisor, council and school board
+district as the union of the precincts that vote in it (Norfolk's superwards from the city's own
+map). `va/scripts/build_va_local_officials.py` names each member from the Department's results,
+each card saying which election the name comes from, and leaves a seat unnamed, saying why, where
+the results cannot settle who holds it today. Bodies elected at large are named on the County or
+City card, and town councils and mayors on the City or Town card. The weekly
+`update-va-local-officials.yml` rebuilds the names, the page for each county and independent city
+under `va/local-government/`, and the done-standard scorecard; `va/WATCH.md` carries what is still
+unnamed.
 
 **THE MAGISTERIAL DISTRICTS ARE THE DEPARTMENT'S LINES WHERE THE NAMES ARE THE SAME** (the plan's
 fifth change, Adam's choice of 22 October 2026). `va/scripts/build_va_magisterial_districts.py`
@@ -186,8 +193,10 @@ layer's failure shows a Retry inside its own card, never breaks the others).
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
 roster source exists, cards say who is not named instead of inventing a name. Both chamber
 cards degrade to the district number + the chamber's own member list on a roster miss, and
-a vacant seat says it is vacant; the County or City, Magisterial District, City or Town and School
-Division cards carry no roster at all and **say so on the card**. External strings always render
+a vacant seat says it is vacant; a local seat the election results cannot settle is left unnamed
+and the card says why, and the Magisterial District and School Division cards name nobody,
+because the Supervisor or Council District, School Board District and County or City cards name
+those bodies. External strings always render
 through `sanitize()`/`textContent`. Roster refreshes always land as PRs for review — never as direct
 commits to main.
 
