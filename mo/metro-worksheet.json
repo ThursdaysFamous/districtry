@@ -195,9 +195,9 @@
       "label": "County Commission District",
       "group": "political",
       "area_rank": 5,
-      "rank_note": "Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 35 counties whose county map viewer, download, posted township map, GIS office or clerk publishes or sends them",
+      "rank_note": "Two commission districts per county, about 780 km2 of land on average against about 1,090 km2 for a Missouri House district; drawn only in the 38 counties whose county map viewer, download, posted township map, GIS office or clerk publishes or sends them",
       "source": {
-        "answers": "The county commission district covering the point, and the district commissioner elected from it, in the 35 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner.",
+        "answers": "The county commission district covering the point, and the district commissioner elected from it, in the 38 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner.",
         "boundary": [
           {
             "label": "Integrity GIS county map viewers — the commission district layer each county's own public map viewer carries, for Barton, Bates, Buchanan, Camden, Chariton, Christian, Cooper, Dade, DeKalb, Lincoln, Maries, Marion, McDonald, Miller, Phelps, Polk, Pulaski, Ralls, Ray, Vernon and Warren counties, read 2026-10-23. Each answers exactly two districts, whose names match the seats the Secretary of State's Missouri Roster lists for that county. Clipped to the Census Bureau's county line, with the few slivers the viewer leaves between its two districts given to the district beside them. Whether each viewer's line is the one the county's elections use today is NOT established: no viewer gives a date for its lines, and Missouri law sets no date by which a county must redraw them.",
@@ -232,6 +232,10 @@
             "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
           },
           {
+            "label": "Cape Girardeau County — the county clerk's answer of 30 October 2026, that Commission District 1 is the City of Jackson and every unincorporated part of the county and Commission District 2 the City of Cape Girardeau with all its annexed land, with the precincts in each; the Second District is drawn from the City of Cape Girardeau's limits on the county's own map at SEMO GIS (CapeCo_PublicBase, Corp_Limit layer), and the First District is the rest of the county.",
+            "url": "https://www.capecounty.us/cape-girardeau-county-clerk/precinct-and-district-maps"
+          },
+          {
             "label": "New Madrid County — the 'Commissioner Districts (May 2022)' map on the District Boundaries page of the county's website, a map of the Census Bureau's 2020 blocks by commissioner district, to which the county clerk pointed this project on 29 October 2026. Its district outlines were read out of the PDF and lined up with the county's blocks, and each district is drawn from the 2020 blocks the map puts in it; the blocks add up to the map's own populations, 9,429 and 7,005.",
             "url": "https://www.newmadridcountymo.gov/pollinglocations"
           },
@@ -241,6 +245,14 @@
           },
           {
             "label": "St. Clair County — a screenshot of the county's map viewer, e-mailed to this project by the county clerk's office on 28 October 2026, highlighting eight whole townships: Appleton, Butler, Center, Chalk Level, Jackson, Monegaw, Osage and Taber, the county's northern half, read as the Northern District, with the other eight townships as the Southern. The districts are drawn from the Census Bureau's township lines.",
+            "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
+          },
+          {
+            "label": "Douglas County — a page of the county's township map, e-mailed to this project by the county clerk on 30 October 2026, with a red line along township lines marking Political District #1 (Benton, Buchanan, Findley, Lincoln, Spencer and Washington townships) and Political District #2 (the other seventeen). The districts are drawn from the Census Bureau's township lines.",
+            "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
+          },
+          {
+            "label": "Linn County — the county's map of its political townships with the commissioners' districts, e-mailed to this project by the county clerk on 30 October 2026, shading the 1st District (Brookfield, Grantsville, Jefferson and Yellow Creek townships) and the 2nd District (the other ten). The districts are drawn from the Census Bureau's township lines.",
             "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
           },
           {
@@ -261,7 +273,7 @@
           }
         ],
         "people": "mo-county-officials.json, the roster the County card reads: each county's district commissioners from the Secretary of State's Missouri Roster, joined by seat name.",
-        "applies": "35 of Missouri's 114 counties; hidden in the other 79 and in the City of St. Louis, which the Data gaps panel lists and explains."
+        "applies": "38 of Missouri's 114 counties; hidden in the other 76 and in the City of St. Louis, which the Data gaps panel lists and explains."
       }
     },
     {
@@ -492,9 +504,9 @@
       },
       {
         "file": "mo-commission-districts.json",
-        "min_features": 70,
-        "max_features": 70,
-        "note": "The county commission districts of the 35 counties whose map viewer, download, posted township map, GIS office or clerk publishes or sends them (mo/scripts/build_mo_commission_districts.py), two per county, clipped to the Census Bureau's county lines."
+        "min_features": 76,
+        "max_features": 76,
+        "note": "The county commission districts of the 38 counties whose map viewer, download, posted township map, GIS office or clerk publishes or sends them (mo/scripts/build_mo_commission_districts.py), two per county, clipped to the Census Bureau's county lines."
       }
     ],
     "rosters": [
@@ -520,8 +532,8 @@
       },
       {
         "file": "mo-commission-counties.json",
-        "min_keys": 35,
-        "note": "The 35 counties whose commission districts are drawn, by GEOID, with each district's 2020 census population, written by the same build as mo-commission-districts.json and held to it by its --check. The County Commission District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file."
+        "min_keys": 38,
+        "note": "The 38 counties whose commission districts are drawn, by GEOID, with each district's 2020 census population, written by the same build as mo-commission-districts.json and held to it by its --check. The County Commission District layer's coverage test reads it beside state-counties.json, so a reader's first selection does not download the whole districts file."
       },
       {
         "file": "coverage-gaps.json",
@@ -531,7 +543,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mo-shell-v13",
+    "cache_name": "districtry-mo-shell-v15",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
