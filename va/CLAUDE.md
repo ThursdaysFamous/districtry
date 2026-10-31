@@ -95,8 +95,13 @@ Commonwealth's list of state-recognized tribes (`stateRecognition` in
 recognizes it, as New York's Poospatuck card does. The councils are read weekly from each nation's
 own page by `scripts/tribal_council_scraper.py`, in the fleet's one `update-tribal-councils.yml`.
 The Rappahannock Tribe's site names no council and the state's list names only its chief and
-assistant chief, so its card names nobody (`ROSTER_BLOCKED` in `scripts/build_tribal_areas.py`,
-gap `va-tribal-government`), because part of a council is never shown as the whole of it. The
+assistant chief. Every other nation in the fleet is named with its whole council or not at all,
+and the Rappahannock card first named nobody for that reason; on Adam's ruling of 2026-10-30
+("name the tribe leaders") it names the two the Secretary of the Commonwealth's list names, read
+weekly as a `state-list` source marked `officersOnly` in `scripts/tribal_council_scraper.py`. The
+card heads them "Chief and Assistant Chief" rather than "Council" (`rosterTitle`) and says the rest
+of the council is not named (gap `va-tribal-government`), so two names never read as the whole
+council. The
 Chickahominy and Eastern Chickahominy areas on the Census's map are statistical areas, not land a
 government answers for, and are not drawn; the Monacan, Nansemond and Upper Mattaponi hold no land
 the Census draws.

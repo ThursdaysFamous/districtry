@@ -216,7 +216,7 @@ All 64 parishes and their police juries and councils: cities, towns and villages
 
 All 114 counties and the City of St. Louis: cities, towns and villages, townships, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Missouri Senate, House and U.S. House districts, with who holds each seat. Every county's commission, council or legislature and its elected officers are named from the Secretary of State's Missouri Roster, and three charter councils from the counties' own websites. County commission district lines are drawn in the 30 counties whose map has been found or sent, and the map shades the other 84 until theirs are.
 
-- [Missouri district lookup](https://districtry.com/mo/): 13 layers, 35 counties in depth.
+- [Missouri district lookup](https://districtry.com/mo/): 13 layers, 38 counties in depth.
 - [Who is my U.S. representative?](https://districtry.com/mo/congress.html)
 - [Who runs my county?](https://districtry.com/mo/county-government.html): links a page per county, 114 of them, each naming every member with the telephone and e-mail the Secretary of State's Missouri Roster, or a charter county's own website, prints beside each member.
 - [Sources & data layers](https://districtry.com/mo/sources.html)
