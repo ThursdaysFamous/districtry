@@ -229,7 +229,7 @@
   },
   "20": {
     "vacant": true,
-    "vacantWhy": "The Virginia House of Delegates' member list shows this seat as vacant.",
+    "vacantWhy": "The Virginia House of Delegates' member list showed this seat as vacant and now prints no member for it.",
     "sourceUrl": "https://house.vga.virginia.gov/members",
     "asOf": "2026-10-29"
   },

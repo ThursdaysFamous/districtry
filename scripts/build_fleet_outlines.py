@@ -110,6 +110,10 @@ SOURCES = {
     # drawn, a part of the state, so its widest ground is the state outline,
     # where the national tier and the County card answer (Illinois's shape).
     "mo": "mo/data/app/mo-state-outline.json",
+    # Virginia's coverage ring IS its state outline: every layer answers
+    # statewide, so the dissolve of its 95 counties and 38 independent cities
+    # is the widest ground it answers on.
+    "va": "va/data/app/metro-outline.json",
 }
 
 # Degrees. 0.002 is about 220 m north-south and 165 m east-west at 42 N.

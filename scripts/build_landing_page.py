@@ -268,13 +268,16 @@ QUESTION_ROWS = [
     # police jury or a council in Louisiana, and
     # somebody asking who sits on it does not know or care which word their
     # state uses. One row, so the front door asks the question once.
+    # Virginia's page answers for its 38 independent cities too, whose councils
+    # govern as a county's board does, and it sits here for its counties.
     ("Who sits on my county board?", ("county-board.html", "county-supervisor.html",
                                       "county-commissioner.html",
                                       "county-legislature.html",
                                       "county-government.html",
                                       "county-council.html",
                                       "quorum-court.html",
-                                      "parish-government.html")),
+                                      "parish-government.html",
+                                      "local-government.html")),
     ("Who represents me on the city council?", ("ward.html", "council-district.html",
                                                 "supervisor-district.html",
                                                 "city-council.html")),
@@ -326,6 +329,7 @@ CHIP_TOPIC = {
     "county-council.html": "county council",
     "quorum-court.html": "quorum court",
     "parish-government.html": "police jury or council",
+    "local-government.html": "supervisors or council",
     "county-legislature.html": "county legislature",
     "city-council.html": "city council",
     "county-auditor.html": "county auditor",

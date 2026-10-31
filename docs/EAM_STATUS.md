@@ -59,6 +59,7 @@ different thing from one it failed.
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 19 | all | 10 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 20 | all | 13 of 14 levels |
 | tn | **EAM·** | 95 | 95/95 § | 605 | 1,062 | all | 21 | all | 10 of 14 levels |
+| va | **EAM·** | 95 | 95/95 | 510 | 517 | all | 17 | all | 13 of 14 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,577 | all | 267 | all | 13 of 14 levels |
 
 § Examined in part by a record covering the whole state rather
@@ -242,6 +243,15 @@ this instance is in maintenance.
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Tennessee has no sub-county general-purpose government — outside a city or town limit the county governs. The 855 sub-county units the Census publishes for Tennessee are civil districts, which the Census records as having no functioning government.
+
+### va — EAM·
+
+- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `state-counties.json`, `va-house-districts.json`, `va-local-districts.json`, `va-magisterial-districts.json`, `va-precincts.json`, `va-senate-districts.json`
+- **Covered: no.** 1 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open. 18 of 22 units at 25,000+ name a governing body; unanswered: Hampton city, Leesburg town, Roanoke city, Staunton city
+- **Does not apply here (2):** each one below is counted towards Covered by a stated fact rather than by work.
+  - **8. Courts whose judges are elected by district** — Virginia's voters elect no judge: the General Assembly elects the judges of every court (Constitution of Virginia, Article VI, section 7), so there is no district a voter elects a judge from.
+  - **9. Townships or other general-purpose sub-county governments** — Virginia has no general-purpose government that divides a county. The 513 county subdivisions the Census publishes inside Virginia's counties are its magisterial and election districts, which the Census records as having no functioning government, and its other 38 are the independent cities, which belong to no county. Virginia's towns do govern inside their counties, and they are municipalities, scored with the cities.
 
 ### wi — EAM·
 
