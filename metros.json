@@ -306,6 +306,24 @@
       "landing_name": "Missouri",
       "blurb": "All 114 counties and the City of St. Louis: cities, towns and villages, townships, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Missouri Senate, House and U.S. House districts, with who holds each seat. Every county's commission, council or legislature and its elected officers are named from the Secretary of State's Missouri Roster, and three charter councils from the counties' own websites. County commission district lines are drawn in the 30 counties whose map has been found or sent, and the map shades the other 84 until theirs are.",
       "scope": "35 counties in depth"
+    },
+    {
+      "id": "virginia",
+      "explorer_name": "districtry Virginia",
+      "label": "Virginia",
+      "url": "https://districtry.com/va/",
+      "emoji": "🌸",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -83.68,
+        "minLat": 36.54,
+        "maxLng": -75.16,
+        "maxLat": 39.47
+      },
+      "tag": "va",
+      "landing_name": "Virginia",
+      "blurb": "All 95 counties and 38 independent cities: each county's board and each city's council and the districts they are elected from, magisterial districts, cities and towns, voting precincts, school divisions and school board districts, ZIP codes, the land of the Pamunkey, Mattaponi and Rappahannock tribes, and the nearest police station, fire station and post office — plus the Virginia Senate, House of Delegates and U.S. House districts, with who holds each seat. Board, council, school board and soil and water conservation members are named from the Department of Elections' results, as are 165 of the 189 towns' mayors and 88 of their councils, a few of them from the town's own page. The Data gaps panel says which seats are not named and why.",
+      "scope": "all 133 counties and cities"
     }
   ]
 }
