@@ -9,115 +9,109 @@
        it makes the whole sitemap unparseable. One did, from 2026-09-12. -->
   <url>
     <loc>https://districtry.com/il/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://districtry.com/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/ar/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/ca/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/in/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/ky/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/la/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/mn/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/ms/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/nc/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/ny/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/ok/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/sc/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -333,7 +327,7 @@
   </url>
   <url>
     <loc>https://districtry.com/la/congress.html</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -351,7 +345,7 @@
   </url>
   <url>
     <loc>https://districtry.com/la/state-legislature.html</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -399,7 +393,7 @@
   </url>
   <url>
     <loc>https://districtry.com/mo/congress.html</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -417,7 +411,7 @@
   </url>
   <url>
     <loc>https://districtry.com/mo/state-legislature.html</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -592,30 +586,6 @@
   <url>
     <loc>https://districtry.com/tn/state-legislature.html</loc>
     <lastmod>2026-10-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/congress.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/faq.html</loc>
-    <lastmod>2026-10-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/state-legislature.html</loc>
-    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -5121,7 +5091,7 @@
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/cape-girardeau.html</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -5229,7 +5199,7 @@
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/douglas.html</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -5373,7 +5343,7 @@
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/linn.html</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -5715,7 +5685,7 @@
   </url>
   <url>
     <loc>https://districtry.com/mo/sources.html</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -8006,774 +7976,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://districtry.com/va/local-government/accomack-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/albemarle-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/alexandria-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/alleghany-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/amelia-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/amherst-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/appomattox-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/arlington-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/augusta-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/bath-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/bedford-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/bland-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/botetourt-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/bristol-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/brunswick-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/buchanan-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/buckingham-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/buena-vista-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/campbell-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/caroline-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/carroll-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/charles-city-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/charlotte-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/charlottesville-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/chesapeake-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/chesterfield-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/clarke-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/colonial-heights-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/covington-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/craig-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/culpeper-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/cumberland-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/danville-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/dickenson-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/dinwiddie-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/emporia-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/essex-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/fairfax-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/fairfax-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/fauquier-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/floyd-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/fluvanna-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/franklin-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/franklin-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/frederick-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/fredericksburg-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/galax-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/giles-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/gloucester-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/goochland-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/grayson-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/greene-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/greensville-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/halifax-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/hanover-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/harrisonburg-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/henrico-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/henry-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/highland-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/hopewell-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/isle-of-wight-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/james-city-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/king-and-queen-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/king-george-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/king-william-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/lancaster-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/lee-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/loudoun-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/louisa-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/lunenburg-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/lynchburg-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/madison-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/manassas-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/martinsville-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/mathews-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/mecklenburg-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/middlesex-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/montgomery-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/nelson-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/new-kent-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/newport-news-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/norfolk-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/northampton-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/northumberland-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/norton-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/nottoway-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/orange-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/page-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/patrick-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/petersburg-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/pittsylvania-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/poquoson-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/portsmouth-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/powhatan-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/prince-edward-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/prince-george-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/prince-william-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/pulaski-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/radford-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/rappahannock-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/richmond-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/richmond-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/roanoke-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/rockbridge-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/rockingham-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/russell-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/salem-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/scott-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/shenandoah-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/smyth-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/southampton-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/spotsylvania-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/stafford-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/suffolk-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/surry-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/sussex-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/tazewell-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/virginia-beach-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/warren-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/washington-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/waynesboro-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/westmoreland-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/williamsburg-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/winchester-city.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/wise-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/wythe-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/local-government/york-county.html</loc>
-    <lastmod>2026-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://districtry.com/va/sources.html</loc>
-    <lastmod>2026-10-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://districtry.com/wi/county-board/adams.html</loc>
     <lastmod>2026-10-23</lastmod>
     <changefreq>weekly</changefreq>
@@ -9237,7 +8439,7 @@
   </url>
   <url>
     <loc>https://districtry.com/about.html</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -9249,7 +8451,7 @@
   </url>
   <url>
     <loc>https://districtry.com/feedback.html</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -9261,7 +8463,7 @@
   </url>
   <url>
     <loc>https://districtry.com/privacy.html</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
