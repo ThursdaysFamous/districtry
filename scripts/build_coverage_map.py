@@ -155,6 +155,10 @@ AREAS = {
     # its lines are confirmed. The two are different files, read from the
     # worksheet's coverage_key, which carries a `region`.
     "mo": {"outline": "mo/data/app/metro-outline.json", "state_outline": "mo/data/app/mo-state-outline.json"},
+    # Virginia joined at its go-live. ONE tier, like la: every layer answers
+    # over the whole state, its 95 counties and 38 independent cities, so the
+    # coverage ring IS the state and the coverage_key carries `outside` alone.
+    "va": {"outline": "va/data/app/metro-outline.json", "state_outline": None},
     # New York joined at the 2026-09-19 go-live. It is a TWO-TIER area and the
     # two geometries are genuinely different: the dashed wash is the whole
     # state, where the county, municipality, village, school-district,

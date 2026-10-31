@@ -374,6 +374,16 @@ def load_councils():
 def _roster_note(rec):
     """The card's own sentence for where the names came from and when."""
     when = rec.get("carriedFrom") or rec["read"]
+    if rec.get("officersOnly"):
+        # A list that names a nation's leading officers and no council member
+        # (the Rappahannock Tribe's, on Adam's ruling of 2026-10-30): the
+        # sentence says that only they are named, so two names never read as
+        # a whole council.
+        read = ("last read %s; the list could not be read on the most recent "
+                "weekly run" % when if rec.get("carriedFrom") else "read %s" % when)
+        return ("Only the %s are named here, from the %s's %s, %s. The tribe "
+                "publishes no council of its own, and the list names no council "
+                "member." % (_and(_roles(rec)), rec["publisher"], rec["list"], read))
     if rec["source"] == "state-list":
         return ("Named by the %s's list of Wisconsin tribal officials, updated %s, "
                 "because the nation publishes no council of its own. Read %s."
@@ -384,13 +394,27 @@ def _roster_note(rec):
     return "From the nation's own council page, read %s." % when
 
 
+def _roles(rec):
+    """Each office the record names, once, in card order."""
+    out = []
+    for m in sorted(rec["members"], key=lambda m: _office_rank(m["role"])):
+        if m["role"] not in out:
+            out.append(m["role"])
+    return out
+
+
+def _and(items):
+    items = list(items)
+    return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
+
+
 def roster_props(code, councils):
     """The roster fields a feature carries, or None when no council is carried."""
     rec = councils.get(code)
     if rec is None:
         return None
     members = sorted(rec["members"], key=lambda m: _office_rank(m["role"]))
-    return {
+    out = {
         "roster": members,
         "rosterWhy": None,
         "rosterNote": _roster_note(rec),
@@ -400,6 +424,11 @@ def roster_props(code, councils):
         "rosterHost": None,
         "rosterMeasured": None,
     }
+    # The card's heading over the names. Written only where it is not
+    # "Council", so every other nation's file is unchanged.
+    if rec.get("officersOnly"):
+        out["rosterTitle"] = _and(_roles(rec))
+    return out
 
 
 def load_join():
@@ -591,17 +620,22 @@ def government_of(entry, bia):
     """The government record a join entry names, or None.
 
     Every entry names a government the Bureau of Indian Affairs lists, with one
-    exception: a nation New York State recognizes and the United States does
-    not, which the Bureau's list cannot carry. Adam ruled on 2026-10-10 that
-    its land is drawn, named only where a state government source names it.
-    Such an entry carries `stateRecognition` naming that source, and the record
-    returned here has no seat and no website, because the state source gives
-    neither and this project supplies none.
+    exception: a nation a state recognizes and the United States does not,
+    which the Bureau's list cannot carry. Adam ruled on 2026-10-10 that such a
+    nation's land in New York is drawn, named only where a state government
+    source names it, and the Virginia plan (claude.ai artifact
+    R4apNobGbZaZRpCDiWRxVc), whose choices he answered on 2026-10-22, draws the
+    Mattaponi Reservation the same way. Such an entry carries
+    `stateRecognition` naming that source. The record returned here carries a
+    seat and a website only where that state source gives them (Virginia's
+    list of state-recognized tribes gives both; New York's Indian Law gives
+    neither), because this project supplies none of its own.
     """
     rec = entry.get("stateRecognition")
     if rec:
-        return {"name": entry["government"], "state": None, "city": None,
-                "website": None, "stateRecognition": rec}
+        return {"name": entry["government"], "state": rec.get("state"),
+                "city": rec.get("city"), "website": rec.get("website"),
+                "stateRecognition": rec}
     return bia.get(entry["government"])
 
 
@@ -610,8 +644,12 @@ def recognition_note(entry):
     rec = entry.get("stateRecognition")
     if not rec:
         return None
+    # The name comes from the law where nothing else is named, as in New
+    # York; Virginia's comes from the state's list of the tribes it
+    # recognizes, because the resolution itself was not read.
     return ("Recognized by %s under %s, and not by the federal government. "
-            "The name is the one that law gives." % (rec["by"], rec["law"]))
+            "The name is the one %s gives."
+            % (rec["by"], rec["law"], rec.get("nameFrom") or "that law"))
 
 
 def check_join(areas, join, bia):
@@ -1456,6 +1494,16 @@ def selftest():
     state = roster_props("0001", {"0001": dict(rec, source="state-list", listUpdated="2026-07-08",
                                                publisher="Wisconsin Department of Administration")})
     assert "updated 2026-07-08" in state["rosterNote"] and "no council of its own" in state["rosterNote"]
+    assert "rosterTitle" not in got and "rosterTitle" not in state
+    officers = roster_props("0001", {"0001": {
+        "source": "state-list", "page": "https://example.invalid/list", "read": "2026-10-30",
+        "publisher": "Example Office", "list": "list of example tribes", "officersOnly": True,
+        "members": [{"name": "A B", "role": "Assistant Chief"}, {"name": "C D", "role": "Chief"}]}})
+    assert officers["rosterTitle"] == "Chief and Assistant Chief", officers
+    assert officers["rosterNote"] == (
+        "Only the Chief and Assistant Chief are named here, from the Example Office's "
+        "list of example tribes, read 2026-10-30. The tribe publishes no council of "
+        "its own, and the list names no council member."), officers["rosterNote"]
     assert roster_props("0002", {"0001": rec}) is None
 
     assert _districts_note([], "otsa") == "None. The Census draws no tribal subdivision on this area."

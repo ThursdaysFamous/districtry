@@ -97,8 +97,8 @@ EXPECT_LAYER_IDS = [
     "us-house", "va-senate", "va-house", "county", "school-district-unified",
     "school-board-district", "county-subdivision", "supervisor-district",
     "zip-code", "voting-precinct", "municipality",
-    "school-district-elementary", "police-station", "fire-station",
-    "post-office",
+    "school-district-elementary", "tribal-government", "police-station",
+    "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -110,6 +110,9 @@ GEOMETRY_FILES = {
     "va-house-districts.json": (100, 100),  # The 100 House of Delegates districts, TIGERweb layer 2, the 2021 plan.
     "va-precincts.json": (2531, 2531),  # Every Virginia voting precinct, pre-built by va/scripts/build_va_precincts.py through scripts/statewide_precincts.py from the Department of Elections' statewide layer of election districts and precincts (changed 2026-09-22, read 2026-10-30): 7,271 pieces joined into 2,531 precincts, overlaps between neighbours resolved by county, Douglas-Peucker at 12 m. 8.7 MB, 2.17 MB gzipped, fetched only when a reader switches a layer on that reads it.
     "va-local-districts.json": (600, 600),  # The 600 supervisor, council and school board districts of the 107 counties and cities that elect by district (va/scripts/build_va_local_districts.py), each the union of its precincts in va-precincts.json; Norfolk's two superwards from the city's own map. Drawn only where va-local-officials.json names seats for the district, and the builder's --check holds the two to each other.
+    "tribal-areas.json": (3, 3),  # Virginia's tribal land (scripts/build_tribal_areas.py) — the Pamunkey and Mattaponi state reservations and the Rappahannock Trust Land, held by three nations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-30; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
+    "va-magisterial-districts.json": (552, 552),  # Every county subdivision the Census files for Virginia (va/scripts/build_va_magisterial_districts.py): 513 magisterial districts, the 38 cities and Arlington County. In the 72 counties whose census subdivisions carry the names of their election districts, each district is drawn from the Department of Elections' lines in va-local-districts.json, and the builder's --check fails when that file changes and this one is not rebuilt; elsewhere the Census's copy, Douglas-Peucker at 12 m. 5.1 MB, 1.36 MB gzipped, fetched only when a reader switches the layer on.
+    "zip-index.json": (902, 902),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -119,6 +122,7 @@ ROSTER_FILES = {
     "va-house-members.json": 100,  # House of Delegates roster from the House's own member list and member pages, on the same terms.
     "va-local-officials.json": 4,  # Every county's board of supervisors, every city's council, every elected school board and every city's elected mayor, plus every town's council and mayor, from the Department of Elections' results (va/scripts/build_va_local_officials.py), refreshed weekly by update-va-local-officials.yml. Four top-level keys (asOf, source, localities, towns); the builder's --check holds all 133 counties and cities and every district seat.
     "va-conservation-boards.json": 4,  # Which of the 47 soil and water conservation districts covers each county and city, from the Department of Conservation and Recreation's list, and the directors each county's and city's voters elected, from the Department of Elections' results (va/scripts/build_va_conservation_boards.py), refreshed weekly by update-va-local-officials.yml. Four top-level keys (asOf, listRead, districts, localities); the builder's --check holds all 133 counties and cities and the seats state law gives each.
+    "tribal-councils.json": 3,  # The councils of the two Virginia nations whose own pages name them (the Pamunkey Indian Tribe and the Mattaponi Tribe), and the Rappahannock Tribe's Chief and Assistant Chief from the Secretary of the Commonwealth's list of state-recognized tribes, keyed by the Census AIANNH code of their land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 

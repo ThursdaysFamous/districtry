@@ -92,7 +92,7 @@
     { "id": "missouri", "label": "Missouri", "url": "https://districtry.com/mo/", "emoji": "🏞️", "explorer_name": "districtry Missouri",
       "bbox": { "minLng": -95.78, "minLat": 35.99, "maxLng": -89.09, "maxLat": 40.62 } },
     { "id": "virginia", "label": "Virginia", "url": "https://districtry.com/va/", "emoji": "🌸", "explorer_name": "districtry Virginia",
-      "bbox": { "minLng": -83.68, "minLat": 36.54, "maxLng": -75.16, "maxLat": 39.47 } }
+      "bbox": { "minLng": -83.68, "minLat": 36.54, "maxLng": -75.16, "maxLat": 38.91 } }
   ],
   "hover_number_keys": [
     [
@@ -231,16 +231,20 @@
       "label": "Magisterial District",
       "group": "geography",
       "area_rank": 7,
-      "rank_note": "552 records tiling the state — 513 magisterial districts, the 38 independent cities and Arlington County, which the Census files as one each — about 185 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive",
+      "rank_note": "552 records tiling the state — 513 magisterial districts, the 38 independent cities and Arlington County, which the Census files as one each — about 185 km2 of land on average, shipped with the app in va-magisterial-districts.json, the 405 districts of 72 counties drawn from the Department of Elections' lines and the rest from TIGERweb",
       "source": {
-        "answers": "The magisterial district containing the point, as the Census Bureau maps it, and its county.",
+        "answers": "The magisterial district containing the point and its county, drawn from the Department of Elections' current lines in the 72 counties whose census subdivisions are their election districts, and as the Census Bureau maps it elsewhere.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 552 features for Virginia, measured 2026-10-29: 513 magisterial districts in 94 counties, every one recorded with no government of its own; the 38 independent cities; and Arlington County, which the Census does not divide.",
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), read 2026-10-30 and pre-built by va/scripts/build_va_magisterial_districts.py, drawn to within 12 metres and shipped with the app: 552 features for Virginia, 513 magisterial districts in 94 counties, every one recorded with no government of its own; the 38 independent cities; and Arlington County, which the Census does not divide. Its names, and its lines outside the 72 counties below.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          },
+          {
+            "label": "Virginia Department of Elections — its statewide layer of election districts and precincts (Districts_Union_Simplified, layer 0), through va-local-districts.json: in the 72 counties whose census subdivisions and election districts are one set of names (Adam's choice of 2026-10-22), each magisterial district is the Department's district inside the county's census ground, so its lines are the precincts' lines, drawn to within 12 metres. Available to anyone under § 24.2-103.1 of the Code of Virginia, as the Department told this project on 2026-10-30.",
+            "url": "https://services5.arcgis.com/M3dium4ePYpmdT4B/arcgis/rest/services/Districts_Union_Simplified/FeatureServer/0"
           }
         ],
-        "people": "NO OFFICEHOLDER, AND THE CARD SAYS WHY. A magisterial district has no government of its own. In many counties each one elects a member of the board of supervisors, but the Census Bureau's copy can lag a county's redistricting, so this card does not use it to say who represents the point.",
+        "people": "NO OFFICEHOLDER, AND THE CARD SAYS WHY. A magisterial district has no government of its own. In the 72 counties drawn from the Department's lines the card says the district is the one the board of supervisors is elected from and points to the Supervisor or Council District card, which names the member; in the 19 counties whose election districts differ from the Census's copy it says the lines are not the election districts; in Highland, Madison and Mathews it says the board is elected at large. Which bodies a county elects by district is read from va-local-officials.json.",
         "applies": "Virginia — statewide, all 552 records."
       }
     },
@@ -339,10 +343,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 13,
+      "rank_note": "Tribal land — Virginia has 3 pieces held by three nations, MEASURED by scripts/build_tribal_areas.py on 2026-10-30: the Pamunkey (state) Reservation (6.380 km², King William County), the Mattaponi (state) Reservation (0.311 km², King William County) and the Rappahannock Trust Land (0.556 km² in 4 parts, 76% of it in King and Queen County and the rest in Essex County). About 2.4 km² a piece on average against 6.5 km² for Lexington's elementary division, so ranked after it and before the point layers, and drawn above the larger areas around it. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — Virginia has 3 such areas, held by the Pamunkey Indian Tribe, the Mattaponi Tribe and the Rappahannock Tribe.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — state reservations and off-reservation trust land, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "Each nation's council from that nation's own page, read weekly by scripts/tribal_council_scraper.py and dated on the card: the Pamunkey Indian Tribe's Chief, Assistant Chief and six council members (pamunkey.org) and the Mattaponi Tribe's Chief, Assistant Chief and seven council members (mattaponi.gov). The Rappahannock Tribe's own site names no council, so its card names only its Chief and Assistant Chief, from the Secretary of the Commonwealth's list of state-recognized tribes (also read weekly), and says the rest of its council is not named. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), except the Mattaponi Tribe's, which the Bureau does not list because the tribe is recognized by the Commonwealth and not by the federal government: its name, seat and website come from the Secretary of the Commonwealth's list of state-recognized tribes, and the card says so. The land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Virginia — the three pieces of land above, in King William, King and Queen and Essex counties. Every other point in the state is on no tribal land the Census draws for a government: Virginia's other recognized tribes hold no reservation or trust land the Census draws."
+      }
+    },
+    {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -360,7 +382,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -378,7 +400,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -421,6 +443,12 @@
     "lat": 37.0,
     "lng": -75.3,
     "note": "Open Atlantic Ocean east of the mouth of Chesapeake Bay, 44 km from the nearest edge of Virginia's outline — outside Virginia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: none of the state's shipped boundary files contains it, none of fleet-outlines.json's outlines does either, and the State Capitol, the control, is inside every shipped file. Water on purpose, the way North Carolina's and Louisiana's are: every land neighbour of Virginia is either live already (Kentucky, Tennessee, North Carolina) or a state the fleet plans to build (West Virginia, Maryland), so a point on a neighbour's land would have to move when that neighbour goes live."
+  },
+  "zip_search": {
+    "file": "zip-index.json",
+    "layers": [
+      {"id": "zip-code", "field": "ZCTA5", "inside": ["metro-outline.json"]}
+    ]
   },
   "coverage_key": {
     "outside": "Outside Virginia",
@@ -469,6 +497,24 @@
         "min_features": 600,
         "max_features": 600,
         "note": "The 600 supervisor, council and school board districts of the 107 counties and cities that elect by district (va/scripts/build_va_local_districts.py), each the union of its precincts in va-precincts.json; Norfolk's two superwards from the city's own map. Drawn only where va-local-officials.json names seats for the district, and the builder's --check holds the two to each other."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 3,
+        "max_features": 3,
+        "note": "Virginia's tribal land (scripts/build_tribal_areas.py) — the Pamunkey and Mattaponi state reservations and the Rappahannock Trust Land, held by three nations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-10-30; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
+      },
+      {
+        "file": "va-magisterial-districts.json",
+        "min_features": 552,
+        "max_features": 552,
+        "note": "Every county subdivision the Census files for Virginia (va/scripts/build_va_magisterial_districts.py): 513 magisterial districts, the 38 cities and Arlington County. In the 72 counties whose census subdivisions carry the names of their election districts, each district is drawn from the Department of Elections' lines in va-local-districts.json, and the builder's --check fails when that file changes and this one is not rebuilt; elsewhere the Census's copy, Douglas-Peucker at 12 m. 5.1 MB, 1.36 MB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "zip-index.json",
+        "min_features": 902,
+        "max_features": 902,
+        "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -498,6 +544,11 @@
         "note": "Which of the 47 soil and water conservation districts covers each county and city, from the Department of Conservation and Recreation's list, and the directors each county's and city's voters elected, from the Department of Elections' results (va/scripts/build_va_conservation_boards.py), refreshed weekly by update-va-local-officials.yml. Four top-level keys (asOf, listRead, districts, localities); the builder's --check holds all 133 counties and cities and the seats state law gives each."
       },
       {
+        "file": "tribal-councils.json",
+        "min_keys": 3,
+        "note": "The councils of the two Virginia nations whose own pages name them (the Pamunkey Indian Tribe and the Mattaponi Tribe), and the Rappahannock Tribe's Chief and Assistant Chief from the Secretary of the Commonwealth's list of state-recognized tribes, keyed by the Census AIANNH code of their land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
@@ -505,7 +556,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-va-shell-v2",
+    "cache_name": "districtry-va-shell-v6",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

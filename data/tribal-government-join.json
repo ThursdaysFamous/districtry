@@ -2,7 +2,7 @@
  "measured": "2026-10-10",
  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer",
  "vintage": "current",
- "note": "Land to government. The key is the Census's own AIANNH code, which a reservation and its off-reservation trust land share. Governments are named exactly as the Bureau of Indian Affairs names them in data/bia-tribal-governments.json. Kentucky is covered with NO AREAS, which is a measurement rather than an omission: all six AIANNH layers return zero features over the state's whole extent, with North Carolina run as a control on the same six queries and answering 7, 2 and 2 on three of them, so the queries work. Re-measured 2026-09-30 at that instance's go-live. Arkansas is covered with no areas too, measured 2026-10-15 at its go-live: the three drawn classes return 499 features nationally and none is kept inside Arkansas, with Tennessee run as a control on the same queries and keeping its one known piece, the Mississippi Choctaw trust land near Henning (0.695 km2). The Cherokee and Choctaw statistical areas that reach over Arkansas's western line are statistical areas, which are drawn only in Oklahoma. OKLAHOMA IS THE ONE STATE WHERE STATISTICAL AREAS ARE ENTERED (Adam, 2026-10-10, \"Make an exception for OK\"): its Oklahoma Tribal Statistical Areas and joint-use areas carry land classes `otsa` and `joint-use`, and tribal_areas.DRAWN_STATISTICAL is what allows them. Where the Census's own name for one area names several nations, the entry lists each under `governments`, matched to the Bureau's list by that name; nations seated inside an area whose name does not name them (the United Keetoowah Band, the Delaware Tribe of Indians and the Alabama-Quassarte, Kialegee and Thlopthlocco tribal towns) are not entered here; scripts/build_tribal_areas.py places them by their seat city and the card lists them as seated in that area. The Shawnee Trust Land is matched to the Shawnee Tribe by the Census's basename. Mississippi is covered from 2026-10-15, measured while its instance was still dark: the Census keeps two pieces there, both the Mississippi Band of Choctaw Indians' (code 2300), the Mississippi Choctaw Reservation (123.468 km2, all of it in the state) and its off-reservation trust land (16.396 km2 of 17.092, 95.9%). The trust land's other 0.695 km2 is Tennessee's piece, entered with Tennessee. Louisiana is covered from 2026-10-20, measured while its instance was still dark: the Census keeps six pieces there, four reservations and two off-reservation trust lands, held by four governments, every piece wholly inside the state: the Chitimacha Tribe of Louisiana (code 0635, its reservation, 1.819 km2), the Coushatta Tribe of Louisiana (0795, its reservation, 2.761 km2, and its trust land, 8.592 km2), the Jena Band of Choctaw Indians (1690, its reservation, 1.763 km2) and the Tunica-Biloxi Indian Tribe (4315, its reservation, 1.690 km2, and its trust land, 4.412 km2). Missouri is covered with no areas, measured 2026-10-26 at its go-live (scripts/tribal_areas.py --report Missouri): the three drawn classes keep no feature inside the state, with Missouri resolving to state code 29 as the control.",
+ "note": "Land to government. The key is the Census's own AIANNH code, which a reservation and its off-reservation trust land share. Governments are named exactly as the Bureau of Indian Affairs names them in data/bia-tribal-governments.json. Kentucky is covered with NO AREAS, which is a measurement rather than an omission: all six AIANNH layers return zero features over the state's whole extent, with North Carolina run as a control on the same six queries and answering 7, 2 and 2 on three of them, so the queries work. Re-measured 2026-09-30 at that instance's go-live. Arkansas is covered with no areas too, measured 2026-10-15 at its go-live: the three drawn classes return 499 features nationally and none is kept inside Arkansas, with Tennessee run as a control on the same queries and keeping its one known piece, the Mississippi Choctaw trust land near Henning (0.695 km2). The Cherokee and Choctaw statistical areas that reach over Arkansas's western line are statistical areas, which are drawn only in Oklahoma. OKLAHOMA IS THE ONE STATE WHERE STATISTICAL AREAS ARE ENTERED (Adam, 2026-10-10, \"Make an exception for OK\"): its Oklahoma Tribal Statistical Areas and joint-use areas carry land classes `otsa` and `joint-use`, and tribal_areas.DRAWN_STATISTICAL is what allows them. Where the Census's own name for one area names several nations, the entry lists each under `governments`, matched to the Bureau's list by that name; nations seated inside an area whose name does not name them (the United Keetoowah Band, the Delaware Tribe of Indians and the Alabama-Quassarte, Kialegee and Thlopthlocco tribal towns) are not entered here; scripts/build_tribal_areas.py places them by their seat city and the card lists them as seated in that area. The Shawnee Trust Land is matched to the Shawnee Tribe by the Census's basename. Mississippi is covered from 2026-10-15, measured while its instance was still dark: the Census keeps two pieces there, both the Mississippi Band of Choctaw Indians' (code 2300), the Mississippi Choctaw Reservation (123.468 km2, all of it in the state) and its off-reservation trust land (16.396 km2 of 17.092, 95.9%). The trust land's other 0.695 km2 is Tennessee's piece, entered with Tennessee. Louisiana is covered from 2026-10-20, measured while its instance was still dark: the Census keeps six pieces there, four reservations and two off-reservation trust lands, held by four governments, every piece wholly inside the state: the Chitimacha Tribe of Louisiana (code 0635, its reservation, 1.819 km2), the Coushatta Tribe of Louisiana (0795, its reservation, 2.761 km2, and its trust land, 8.592 km2), the Jena Band of Choctaw Indians (1690, its reservation, 1.763 km2) and the Tunica-Biloxi Indian Tribe (4315, its reservation, 1.690 km2, and its trust land, 4.412 km2). Missouri is covered with no areas, measured 2026-10-26 at its go-live (scripts/tribal_areas.py --report Missouri): the three drawn classes keep no feature inside the state, with Missouri resolving to state code 29 as the control. Virginia is covered from 2026-10-30, measured while its instance was still dark (scripts/tribal_areas.py --report Virginia): the Census keeps three pieces there, every one wholly inside the state. Two are State American Indian Reservations, the Pamunkey (state) Reservation (code 9260, 6.380 km2), held by the Pamunkey Indian Tribe, which the United States has recognized since 2016 and the Bureau lists, and the Mattaponi (state) Reservation (9230, 0.311 km2), held by the Mattaponi Tribe, which Virginia recognizes and the United States does not. The third is the Rappahannock Trust Land (3075, 0.556 km2), held by the Rappahannock Tribe. The Chickahominy and Eastern Chickahominy statistical areas are statistical areas, drawn only in Oklahoma, and the Monacan, Nansemond and Upper Mattaponi hold no land the Census draws.",
  "statesCovered": [
   "Arkansas",
   "Illinois",
@@ -19,6 +19,7 @@
   "Oklahoma",
   "South Carolina",
   "Tennessee",
+  "Virginia",
   "Wisconsin"
  ],
  "statesNotYetCovered": [
@@ -999,6 +1000,24 @@
     }
    ]
   },
+  "3075": {
+   "government": "Rappahannock Tribe, Inc.",
+   "parentGovernment": null,
+   "governmentState": "VA",
+   "states": [
+    "Virginia"
+   ],
+   "lands": [
+    {
+     "class": "trust-land",
+     "geoid": "3075T",
+     "name": "Rappahannock Trust Land",
+     "state": "Virginia",
+     "km2": 0.556,
+     "share": 1.0
+    }
+   ]
+  },
   "3085": {
    "government": "Red Cliff Band of Lake Superior Chippewa Indians of Wisconsin",
    "parentGovernment": null,
@@ -1951,6 +1970,54 @@
      "name": "Miami/Peoria joint-use OTSA",
      "state": "Oklahoma",
      "km2": 32.688,
+     "share": 1.0
+    }
+   ]
+  },
+  "9230": {
+   "government": "Mattaponi Tribe",
+   "parentGovernment": null,
+   "governmentState": "VA",
+   "stateRecognition": {
+    "by": "the Commonwealth of Virginia",
+    "law": "Joint Resolution 54 of the General Assembly, 25 March 1983",
+    "publisher": "Secretary of the Commonwealth of Virginia",
+    "url": "https://www.commonwealth.virginia.gov/virginia-indians/state-recognized-tribes/mattaponi-tribe-/",
+    "read": "2026-10-30",
+    "nameFrom": "the Secretary of the Commonwealth's list of state-recognized tribes",
+    "city": "West Point",
+    "state": "VA",
+    "website": "https://www.mattaponi.gov",
+    "why": "The United States does not recognize this tribe, so the Bureau of Indian Affairs lists no government for this land. The Secretary of the Commonwealth's page on the tribe says Joint Resolution 54 recognized it on 25 March 1983 and that it is governed by a chief, an assistant chief and seven council members; the Secretary's list of state-recognized tribes gives its office in West Point and its website. Drawn on the Virginia plan's recommendation, which Adam accepted on 2026-10-22, as New York's state reservations are drawn on his ruling of 2026-10-10."
+   },
+   "states": [
+    "Virginia"
+   ],
+   "lands": [
+    {
+     "class": "state-reservation",
+     "geoid": "9230R",
+     "name": "Mattaponi (state) Reservation",
+     "state": "Virginia",
+     "km2": 0.311,
+     "share": 1.0
+    }
+   ]
+  },
+  "9260": {
+   "government": "Pamunkey Indian Tribe",
+   "parentGovernment": null,
+   "governmentState": "VA",
+   "states": [
+    "Virginia"
+   ],
+   "lands": [
+    {
+     "class": "state-reservation",
+     "geoid": "9260R",
+     "name": "Pamunkey (state) Reservation",
+     "state": "Virginia",
+     "km2": 6.38,
      "share": 1.0
     }
    ]

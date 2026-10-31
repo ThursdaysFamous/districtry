@@ -6,21 +6,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 districtry Virginia: a single-file, dependency-light web app. Click a point in Virginia (or search
 an address) and it reports every civic district containing that point and who represents you
-there. It will serve at **districtry.com/va/** as a folder of the consolidated districtry repo —
+there. It serves at **districtry.com/va/** as a folder of the consolidated districtry repo —
 following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. **The instance is DARK**: no `metros.json` entry, `va/**` excluded from the
-Pages deploy, nothing served and no landing card naming it. `va/WATCH.md` lists what go-live has to
-do in one change, and what the plan builds before it.
+root-scripts shape. **The instance is LIVE**, on Adam's word of 2026-10-30, which opened it before
+the 3 November 2026 election rather than in January as the plan first had it.
+`docs/VA_EXPANSION_PLAN.md` is the record of the launch, and `va/WATCH.md` of what is still owed.
 
 **The layers** draw their shapes from a national publisher and name people from a national roster
 or each chamber's own pages: **County or City** (`county`, 133 — the 95 counties and the 38
 independent cities, Census TIGERweb, the coverage ring), **U.S. House** (11 districts, TIGERweb
 geometry joined to the public-domain unitedstates/congress-legislators roster), **Virginia Senate**
 and **House of Delegates** (40 and 100 districts, TIGERweb's 2026 state legislative districts
-joined to each chamber's own member pages), the TIGERweb fabric drawn from mirrored tile archives —
-**Magisterial District** (`county-subdivision`, 552, shown under the County or City layer), **City
-or Town** (`municipality`, 227), **School Division** (`school-district-unified`, 135), **School
-Division (Elementary)** (1, Lexington) and **ZIP Code** — and three nearest-N layers from the USGS
+joined to each chamber's own member pages), **Magisterial District** (`county-subdivision`, 552,
+shown under the County or City layer, shipped as `va-magisterial-districts.json` and drawn from the
+Department of Elections' lines in 72 counties), the TIGERweb fabric drawn from mirrored tile
+archives — **City or Town** (`municipality`, 227), **School Division** (`school-district-unified`,
+135), **School Division (Elementary)** (1, Lexington) and **ZIP Code** — and three nearest-N layers from the USGS
 National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
 
 **VIRGINIA'S 38 INDEPENDENT CITIES BELONG TO NO COUNTY.** A city's council does what a board of
@@ -51,20 +52,36 @@ and each senator's page prints the session office in the General Assembly Buildi
 and the senator's e-mail address. The House's member list (`house.vga.virginia.gov/members`) prints
 one card per seat with the delegate's e-mail address, and each delegate's page the name in reading
 order, the party and the Capitol office. On 2026-10-29 the Senate named all 40 and the House named
-99, with District 20 printed "Vacant". A district office is printed for every member and is never
+99, with District 20 printed "Vacant"; on 2026-10-31 the House's list printed no card for District
+20 at all, and the builder carries a seat it last recorded vacant when its card disappears. A district office is printed for every member and is never
 read, because the builder has no way to tell it apart from a member's home. robots.txt read that
 day: `apps.senate.virginia.gov` has none (404), and `house.vga.virginia.gov` serves a 99-byte file
 that binds nobody; both are paced at one request a second.
 
-**THE LOCAL DISTRICTS ARE THE PLAN'S NEXT CHANGE.** Every county's board of supervisors, every
-city's council and most school boards are elected, none is named yet, and the County or City, City
-or Town and School Division cards say so. The plan (Adam's answers of 22 October 2026, in the
-Virginia plan) draws every local election district and precinct from the Department of Elections'
-per-locality map files and names the winners from the state's election results, each card saying
-which election a name comes from; `va/WATCH.md` carries the order and the checks it owes. The
-Magisterial District card is the Census Bureau's copy of each county's magisterial districts and
-does not say who represents the point, because a county's election districts can differ from those
-lines and the Census copy can lag a redistricting.
+**THE LOCAL DISTRICTS ARE DRAWN FROM THE DEPARTMENT OF ELECTIONS' PRECINCTS, AND THEIR MEMBERS ARE
+NAMED FROM THE STATE'S ELECTION RESULTS** (Adam's answers of 22 October 2026, in the Virginia plan).
+`va/scripts/build_va_precincts.py` ships all 2,531 precincts from the Department's statewide layer,
+and `va/scripts/build_va_local_districts.py` draws every supervisor, council and school board
+district as the union of the precincts that vote in it (Norfolk's superwards from the city's own
+map). `va/scripts/build_va_local_officials.py` names each member from the Department's results,
+each card saying which election the name comes from, and leaves a seat unnamed, saying why, where
+the results cannot settle who holds it today. Bodies elected at large are named on the County or
+City card, and town councils and mayors on the City or Town card. The weekly
+`update-va-local-officials.yml` rebuilds the names, the page for each county and independent city
+under `va/local-government/`, and the done-standard scorecard; `va/WATCH.md` carries what is still
+unnamed.
+
+**THE MAGISTERIAL DISTRICTS ARE THE DEPARTMENT'S LINES WHERE THE NAMES ARE THE SAME** (the plan's
+fifth change, Adam's choice of 22 October 2026). `va/scripts/build_va_magisterial_districts.py`
+ships all 552 of the Census's county subdivisions, and in the 72 counties whose census subdivisions
+and election districts are one set of names it draws each district from `va-local-districts.json`
+inside the county's census ground, because the Census's copy lags a redistricting (measured
+2026-10-30: another district on more than 1% of the county's ground in 45 of the 72, and on 54.8% of
+Dinwiddie County's). In 19 counties the two differ in name or number and the Census's copy is drawn;
+Highland, Madison and Mathews elect their boards at large. The card names nobody: it says which
+drawing the point is in and points to the Supervisor or Council District card, reading which bodies
+a county elects by district from `va-local-officials.json`. The builder's `--check` fails when
+`va-local-districts.json` changes and this file is not rebuilt.
 
 **TWO SCHOOL LAYERS TILE THE STATE BETWEEN THEM.** TIGER holds 135 unified school districts and one
 elementary one, Lexington City Public Schools, for Virginia and no secondary ones, and the two
@@ -74,6 +91,27 @@ layer's empty card points at the other.
 **THE ZIP LAYER HIDES OUTSIDE VIRGINIA.** A ZCTA carries no state field, so over the line the live
 service answers with a neighbouring state's ZIP. The coverage test reads the shipped outline, and
 the smoke test asserts both halves.
+
+**THE TRIBAL GOVERNMENT LAYER DRAWS THREE PIECES OF LAND, AND ONE NATION IS RECOGNIZED BY THE
+COMMONWEALTH ONLY.** The Census's current map holds the Pamunkey and Mattaponi state reservations
+and the Rappahannock Trust Land (`scripts/build_tribal_areas.py --state Virginia --tag va`). The
+Bureau of Indian Affairs lists the Pamunkey Indian Tribe and the Rappahannock Tribe; it does not
+list the Mattaponi Tribe, whose name, seat and website therefore come from the Secretary of the
+Commonwealth's list of state-recognized tribes (`stateRecognition` in
+`data/tribal-government-join.json`), and its card says the Commonwealth and not the United States
+recognizes it, as New York's Poospatuck card does. The councils are read weekly from each nation's
+own page by `scripts/tribal_council_scraper.py`, in the fleet's one `update-tribal-councils.yml`.
+The Rappahannock Tribe's site names no council and the state's list names only its chief and
+assistant chief. Every other nation in the fleet is named with its whole council or not at all,
+and the Rappahannock card first named nobody for that reason; on Adam's ruling of 2026-10-30
+("name the tribe leaders") it names the two the Secretary of the Commonwealth's list names, read
+weekly as a `state-list` source marked `officersOnly` in `scripts/tribal_council_scraper.py`. The
+card heads them "Chief and Assistant Chief" rather than "Council" (`rosterTitle`) and says the rest
+of the council is not named (gap `va-tribal-government`), so two names never read as the whole
+council. The
+Chickahominy and Eastern Chickahominy areas on the Census's map are statistical areas, not land a
+government answers for, and are not drawn; the Monacan, Nansemond and Upper Mattaponi hold no land
+the Census draws.
 
 **There is no build step, no framework, and no server-side code.** The app — styles, engine,
 and layer modules — lives inline in `index.html`. `sw.js` is the service worker;
@@ -90,7 +128,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Virginia (`virginia`) — https://districtry.com/va/
 - Geocoders: address Photon (Virginia-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Virginia-bounded, serial >=1s queue)
 - Ground truth: 37.53850,-77.43370 (Virginia State Capitol, 1000 Bank Street, Richmond (an independent city)) → county Richmond city; us-house 4; va-senate 14; va-house 78. Negative point 37.00000,-75.30000 (Open Atlantic Ocean east of the mouth of Chesapeake Bay, 44 km from the nearest edge of Virginia's outline — outside Virginia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: none of the state's shipped boundary files contains it, none of fleet-outlines.json's outlines does either, and the State Capitol, the control, is inside every shipped file. Water on purpose, the way North Carolina's and Louisiana's are: every land neighbour of Virginia is either live already (Kentucky, Tennessee, North Carolina) or a state the fleet plans to build (West Virginia, Maryland), so a point on a neighbour's land would have to move when that neighbour goes live.).
-- Layers: 15 registered (political 4, safety 2, schools 3, geography 6); `registerLayer(` floor 9. Debug namespace `window.VirginiaExplorer`.
+- Layers: 16 registered (political 5, safety 2, schools 3, geography 6); `registerLayer(` floor 9. Debug namespace `window.VirginiaExplorer`.
 - Scheduled workflows: `update-va-congress-roster.yml` (Mon 19:07 UTC); `update-va-legislature-roster.yml` (Tue 19:07 UTC); `update-va-local-officials.yml` (Wed 19:37 UTC); `va-validate-sources.yml` (1st of month 21:43 UTC).
 - Source registry: `va/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
@@ -155,8 +193,10 @@ layer's failure shows a Retry inside its own card, never breaks the others).
 **Honesty rules (non-negotiable):** officeholder data is never guessed — where no verifiable
 roster source exists, cards say who is not named instead of inventing a name. Both chamber
 cards degrade to the district number + the chamber's own member list on a roster miss, and
-a vacant seat says it is vacant; the County or City, Magisterial District, City or Town and School
-Division cards carry no roster at all and **say so on the card**. External strings always render
+a vacant seat says it is vacant; a local seat the election results cannot settle is left unnamed
+and the card says why, and the Magisterial District and School Division cards name nobody,
+because the Supervisor or Council District, School Board District and County or City cards name
+those bodies. External strings always render
 through `sanitize()`/`textContent`. Roster refreshes always land as PRs for review — never as direct
 commits to main.
 
@@ -169,8 +209,10 @@ in the neighbouring states, the District of Columbia and the water), `state-coun
 (`va/scripts/build_state_counties.py`), and `congress-districts.json`, `va-senate-districts.json`,
 `va-house-districts.json` (`va/scripts/build_legislative_boundaries.py` — Douglas-Peucker at 5 m,
 refused unless BOTH the 2,000-random-point agreement gate and the 8 m fidelity ceiling pass).
-The five TIGERweb fabric layers draw from tile archives under `data/app/tiles/`, mirrored by
-`scripts/mirror_tiger_tiles.py` and refreshed by `update-tiger-tiles.yml`. Rosters:
+The four TIGERweb fabric layers draw from tile archives under `data/app/tiles/`, mirrored by
+`scripts/mirror_tiger_tiles.py` and refreshed by `update-tiger-tiles.yml`; the county subdivisions
+ship as `va-magisterial-districts.json` (`va/scripts/build_va_magisterial_districts.py`, Douglas-Peucker
+at 12 m under a 15 m fidelity ceiling, its `--check` in CI and its `--watch` in `va/WATCH.md`). Rosters:
 `congress-roster.json` (`va/scripts/build_congress_roster.py`, from unitedstates/congress-legislators)
 and `va-{senate,house}-members.json` (`va/scripts/build_va_legislature_roster.py`, from each
 chamber's own pages) — count-guarded, refreshed weekly by CI as reviewed PRs.

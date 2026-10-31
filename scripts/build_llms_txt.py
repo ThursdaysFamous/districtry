@@ -108,11 +108,18 @@ CONTACT_NOTE = {
     "mo": "with the telephone and e-mail the Secretary of State's Missouri "
           "Roster, or a charter county's own website, prints beside each "
           "member",
+    # Virginia's name each member with the date of the election that named
+    # them, from the Department of Elections' results, or the county's or
+    # city's own page where the results do not settle a seat, and carry no
+    # contact details yet (gap va-local-official-contacts).
+    "va": "with the election, or the county's or city's own page, that names "
+          "each one, and no contact details yet",
 }
 DEFAULT_CONTACT_NOTE = "with whatever contact details that county publishes"
 # The unit each instance's per-county pages are one per, where it is not a
-# county.
-UNIT_NOUN = {"la": "parish"}
+# county. Virginia's are one per county and one per independent city, because
+# its 38 cities belong to no county.
+UNIT_NOUN = {"la": "parish", "va": "county or city"}
 
 # Written out to twelve because "6 instances" reads as a log line; past that the
 # digit is used, which is honest rather than wrong.

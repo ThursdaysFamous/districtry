@@ -1523,6 +1523,24 @@
    ],
    "read": "2026-10-27"
   },
+  "3075": {
+   "source": "state-list",
+   "publisher": "Secretary of the Commonwealth of Virginia",
+   "page": "https://www.commonwealth.virginia.gov/virginia-indians/state-recognized-tribes/",
+   "list": "list of state-recognized tribes",
+   "officersOnly": true,
+   "members": [
+    {
+     "name": "Anne Richardson",
+     "role": "Chief"
+    },
+    {
+     "name": "Mark Fortune",
+     "role": "Assistant Chief"
+    }
+   ],
+   "read": "2026-10-30"
+  },
   "3085": {
    "source": "nation",
    "page": "https://www.redcliff-nsn.gov/government/tribal_government/index.php",
@@ -2006,6 +2024,95 @@
     }
    ],
    "read": "2026-10-27"
+  },
+  "9230": {
+   "source": "nation",
+   "page": "https://www.mattaponi.gov/mattaponi-tribal-council",
+   "pages": [
+    "https://www.mattaponi.gov/mattaponi-tribal-council"
+   ],
+   "members": [
+    {
+     "name": "Mark T Fallingstar Custalow",
+     "role": "Chief"
+    },
+    {
+     "name": "Brandon G. Thundercloud Custalow",
+     "role": "Assistant Chief",
+     "note": "the same page's leadership panel names B. Leon Two Feathers Custalow I as assistant chief"
+    },
+    {
+     "name": "Diane Lynn Curry",
+     "role": "Council Member"
+    },
+    {
+     "name": "Jack A Custalow",
+     "role": "Council Member"
+    },
+    {
+     "name": "Jacob V. Custalow, Jr",
+     "role": "Council Member"
+    },
+    {
+     "name": "Malcolm T Custalow, Sr",
+     "role": "Council Member"
+    },
+    {
+     "name": "Richard Custalow",
+     "role": "Council Member"
+    },
+    {
+     "name": "Ernest \"Chip\" Langston, Jr",
+     "role": "Council Member"
+    },
+    {
+     "name": "Michael A \"Tony\" Waldrop II",
+     "role": "Council Member"
+    }
+   ],
+   "read": "2026-10-30"
+  },
+  "9260": {
+   "source": "nation",
+   "page": "https://www.pamunkey.org/tribal-government",
+   "pages": [
+    "https://www.pamunkey.org/tribal-government"
+   ],
+   "members": [
+    {
+     "name": "Kevin Brown",
+     "role": "Chief"
+    },
+    {
+     "name": "Tim Langston",
+     "role": "Assistant Chief"
+    },
+    {
+     "name": "Walter Hill Jr.",
+     "role": "Council Member"
+    },
+    {
+     "name": "Rebecca Hill",
+     "role": "Council Member"
+    },
+    {
+     "name": "Gordon Atkinson",
+     "role": "Council Member"
+    },
+    {
+     "name": "Terry Langston",
+     "role": "Council Member"
+    },
+    {
+     "name": "Jennifer Dixon",
+     "role": "Council Member"
+    },
+    {
+     "name": "Allyson Gray",
+     "role": "Council Member"
+    }
+   ],
+   "read": "2026-10-30"
   }
  }
 }
