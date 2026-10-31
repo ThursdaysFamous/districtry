@@ -188,7 +188,19 @@ STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
                   # of its own; its governing body is a city's, so it is scored
                   # once, under level 6 with the other places of 25,000 or more
                   # (gap mo-st-louis-aldermen), rather than here as well.
-                  "mo": 114}
+                  "mo": 114,
+                  # Virginia's 95 counties. Its 38 independent cities belong to
+                  # no county and the Census files each as a county equivalent,
+                  # so they are in the coverage ring; each is scored once, as
+                  # St. Louis is, under level 6 with the other places of 25,000
+                  # or more (INDEPENDENT_CITIES below).
+                  "va": 95}
+
+# County equivalents that are cities, scored under level 6 and not here. The
+# number is STATED and checked: the coverage ring must hold the state's counties
+# plus these, and the county pages' adapter must mark no more records as
+# independent cities than this.
+INDEPENDENT_CITIES = {"va": 38}
 
 # Instances with no county tier at all. Recorded with a reason rather than
 # skipped, because a silently absent row reads as a passing one.
@@ -337,6 +349,18 @@ def load_rosters():
             # Indianapolis City-County Council), so each entry ADDS to its
             # tag. Assigning here let the second entry replace the first, and
             # New York's Tompkins County read as naming nobody.
+            # AN INDEPENDENT CITY IS NOT A COUNTY HERE. Virginia's county
+            # pages hold its 38 cities beside its 95 counties, because a reader
+            # in Richmond has no county above the council; scored as counties
+            # they would push Examined past 95 of 95. The city tier reads them
+            # from the city roster (CITY_ROSTERS), so they are dropped here.
+            cities = [n for n, r in merged.items() if r.get("independent_city")]
+            if len(cities) > INDEPENDENT_CITIES.get(tag, 0):
+                fail("%s: the county pages mark %d record(s) as independent "
+                     "cities and INDEPENDENT_CITIES allows %d"
+                     % (tag, len(cities), INDEPENDENT_CITIES.get(tag, 0)))
+            for n in cities:
+                del merged[n]
             counties.setdefault(tag, {}).update(merged)
             paths.setdefault(tag, []).extend(read)
     return counties, paths, B
@@ -2429,6 +2453,62 @@ ANSWERS = {
             "state reservation and no off-reservation trust land in the state, "
             "measured 2026-10-21 with a control on the state's own code."),
     },
+    "va": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("va-senate", "va-house"),
+        "county-boundaries": answers("county"),
+        # Every county's board of supervisors is named from the Department of
+        # Elections' results, and every district a board is elected from is
+        # drawn from the Department's precincts
+        # (va/scripts/build_va_local_districts.py). The 38 independent cities
+        # are scored under level 6 (INDEPENDENT_CITIES).
+        "county-government": depth("supervisor-district"),
+        "municipal-boundaries": answers("municipality"),
+        # The 20 independent cities and two towns of 25,000 or more, read
+        # from the same results (`va_place_units`). Hampton's, Roanoke's and
+        # Staunton's councils and Leesburg's are not named, because the results
+        # do not settle who sits (gap va-municipal-officeholders).
+        "local-government": depth("supervisor-district", "municipality"),
+        "school-district-boundaries": answers("school-district-unified",
+                                              "school-district-elementary"),
+        "subdivision-boundaries": answers("county-subdivision"),
+        # Virginia's voters elect no judge. The General Assembly elects every
+        # judge of every court (Constitution of Virginia, Article VI, section
+        # 7), so no court has a district a voter chooses a judge from.
+        "courts-by-district": na(
+            "Virginia's voters elect no judge: the General Assembly elects the "
+            "judges of every court (Constitution of Virginia, Article VI, "
+            "section 7), so there is no district a voter elects a judge from."),
+        # Measured 2026-10-31 on TIGERweb's county subdivisions, with
+        # Illinois's townships (1,411 recorded as active governments) as the
+        # control: Virginia's 513 subdivisions inside its counties are all
+        # recorded as having no functioning government, and its other 38 are
+        # the independent cities, each standing in for itself.
+        "sub-county-government": na(
+            "Virginia has no general-purpose government that divides a county. "
+            "The 513 county subdivisions the Census publishes inside Virginia's "
+            "counties are its magisterial and election districts, which the "
+            "Census records as having no functioning government, and its other "
+            "38 are the independent cities, which belong to no county. "
+            "Virginia's towns do govern inside their counties, and they are "
+            "municipalities, scored with the cities."),
+        # Every elected school board's members are named from the same results
+        # and every district a board is elected from is drawn.
+        "school-boards-by-district": answers("school-board-district"),
+        "precincts": answers("voting-precinct"),
+        # ANSWERED ON THE COUNTY OR CITY CARD, the Kentucky, North Carolina and
+        # South Carolina shape: each of the 47 soil and water conservation
+        # districts is made of whole counties and cities, so its elected
+        # directors are named on the County or City card from the Department
+        # of Elections' results rather than drawn
+        # (va/scripts/build_va_conservation_boards.py). It is the one kind of
+        # special district whose board Virginia's voters elect.
+        "special-districts": answers("county"),
+        # The Pamunkey Indian Tribe's and the Mattaponi Tribe's land is drawn
+        # and their councils named; for the Rappahannock Tribe the card names
+        # the Chief and the Assistant Chief (gap va-tribal-government).
+        "tribal-government": answers("tribal-government"),
+    },
     "ny": {
         "us-house": answers("congress"),
         "state-legislature": answers("state-senate", "state-assembly"),
@@ -2569,6 +2649,11 @@ CITY_ROSTERS = {
     # the place's Census id: every place but the three whose governments are
     # their parishes' (COUNTY_GOVERNED_UNITS below).
     "la": [("la/data/app/la-municipal-officials.json", "geoid7")],
+    # The Department of Elections' results for every independent city's council
+    # and every town's, in the file the County or City and City or Town cards
+    # read. It is keyed by county-equivalent GEOID and by town name rather than
+    # by place id, so it is joined by name (`va_place_units` says how).
+    "va": [("va/data/app/va-local-officials.json", "va-localities")],
 }
 
 # One file per city, so the unit is declared rather than keyed. A filename is
@@ -3146,6 +3231,14 @@ WARD_MAPS = {
         owed={"2200975": "Alexandria", "2239475": "Kenner",
               "2241155": "Lake Charles", "2251410": "Monroe",
               "2254035": "New Iberia", "2270000": "Shreveport"}),
+    # Virginia's nine cities at the floor whose councils are elected by ward
+    # or district are drawn by the Supervisor or Council District layer, which
+    # draws every district the names file seats anybody in
+    # (va/scripts/build_va_local_districts.py --check holds the two files to
+    # each other). Its other cities and both towns elect at large.
+    "va": dict(
+        drawn={"5129744", "5147672", "5156000", "5157000", "5161832",
+               "5167000", "5176432", "5182000", "5186720"}),
 }
 
 
@@ -3370,6 +3463,60 @@ def _named_anywhere(record):
     return False
 
 
+def va_place_units(tag, roster, units, rel):
+    """(place id, governing-body record) for Virginia's units at the floor.
+
+    va-local-officials.json keys an independent city by its county-equivalent
+    GEOID and writes its name without the word "city", and keys a town by its
+    name, so each unit is found by its Census name: "Richmond city" is the
+    city locality named "Richmond", and "Leesburg town" is the town named
+    "Leesburg". A unit the file does not hold FAILS, because a join that
+    finds nothing reads exactly like a council that names nobody.
+
+    ONLY THE SITTING COUNCIL IS PASSED ON. A city's record also holds its
+    school board, its mayor, its districts' names ("Ward 1"), a member who has
+    left and a winner who has not yet taken office, and any of them would let a
+    council that names nobody read as answered: an elected mayor is not the
+    council, the school board is level 10's, and Blacksburg's record lists as
+    `left` a member who is now its mayor. So the record handed to the sweep is
+    the sitting members of the council's at-large seats and of each district's
+    council seat.
+    """
+    def sitting(seat):
+        return {"members": list((seat or {}).get("members") or [])}
+
+    cities = {}
+    for rec in (roster.get("localities") or {}).values():
+        if rec.get("kind") == "city":
+            cities[rec.get("name")] = rec
+    towns = roster.get("towns") or {}
+    pairs = []
+    for geoid, unit in sorted(units.items()):
+        name = unit["name"]
+        if name.endswith(" city"):
+            rec = cities.get(name[:-len(" city")])
+            if rec is None:
+                fail("%s: `%s` holds no city locality named for %s"
+                     % (tag, rel, name))
+            board = (rec.get("bodies") or {}).get("board") or {}
+            council = {"atLarge": sitting(board.get("atLarge"))}
+            seats = {k: sitting((d.get("seats") or {}).get("board"))
+                     for k, d in (rec.get("districts") or {}).items()
+                     if (d.get("seats") or {}).get("board")}
+            if seats:
+                council["districts"] = seats
+        elif name.endswith(" town"):
+            rec = towns.get(name[:-len(" town")])
+            if rec is None:
+                fail("%s: `%s` holds no town named for %s" % (tag, rel, name))
+            council = {"atLarge": sitting(rec.get("town"))}
+        else:
+            fail("%s: %s is neither a city nor a town, and `%s` keys only "
+                 "those" % (tag, name, rel))
+        pairs.append((geoid, council))
+    return pairs
+
+
 def city_tier(tag, expected):
     """Which of this state's 25,000+ units the app names a governing body for.
 
@@ -3402,14 +3549,15 @@ def city_tier(tag, expected):
             fail("%s: `%s` is not keyed by unit, so the city-tier join cannot "
                  "be made" % (tag, rel))
         hit = 0
-        for key, record in roster.items():
-            if keyed_by == "geoid7":
-                geoid = str(key)
-            elif keyed_by == "place5":
-                geoid = STATE_FIPS_OF.get(tag, "") + str(key)
-            else:
-                fail("%s: CITY_ROSTERS asks for an unknown join `%s`"
-                     % (tag, keyed_by))
+        if keyed_by == "va-localities":
+            pairs = va_place_units(tag, roster, units, rel)
+        elif keyed_by in ("geoid7", "place5"):
+            prefix = STATE_FIPS_OF.get(tag, "") if keyed_by == "place5" else ""
+            pairs = [(prefix + str(k), r) for k, r in roster.items()]
+        else:
+            fail("%s: CITY_ROSTERS asks for an unknown join `%s`"
+                 % (tag, keyed_by))
+        for geoid, record in pairs:
             if geoid in units and _named_anywhere(record):
                 named.add(geoid)
                 hit += 1
@@ -3828,6 +3976,18 @@ def _names_a_body(rec):
     for m in rec.get("members") or []:
         if isinstance(m, dict) and m.get("name"):
             return True
+    # A THIRD SHAPE, VIRGINIA'S: a board with some or all of its members elected
+    # by the whole county keeps them in an `at-large` section of their own
+    # beside the districts, because its pages also give an elected chair a
+    # section. Arlington, Highland, Madison and Mathews elect every member that
+    # way and have no districts, so read through the first two shapes alone
+    # they named nobody. Only the `at-large` anchor counts: other sections
+    # beside the districts hold an office, a clerk or a meeting time.
+    for extra in rec.get("extras") or []:
+        if extra[0] == "at-large":
+            for m in extra[2] or []:
+                if isinstance(m, dict) and m.get("name"):
+                    return True
     return False
 
 
@@ -4065,10 +4225,14 @@ def measure(counties, paths, B):
             if ring is None:
                 fail("%s: no METRO_COUNTY_FIPS in %s — the county universe cannot "
                      "be checked" % (tag, os.path.relpath(outline_path(tag), REPO_ROOT)))
-            if ring > total:
-                fail("%s: the coverage ring holds %d counties and STATE_COUNTIES "
-                     "says the state has %d. One of the two is wrong, and E's "
-                     "denominator depends on it." % (tag, ring, total))
+            if ring - INDEPENDENT_CITIES.get(tag, 0) > total:
+                fail("%s: the coverage ring holds %d counties%s and "
+                     "STATE_COUNTIES says the state has %d. One of the two is "
+                     "wrong, and E's denominator depends on it."
+                     % (tag, ring,
+                        " (%d of them independent cities)"
+                        % INDEPENDENT_CITIES[tag]
+                        if tag in INDEPENDENT_CITIES else "", total))
 
         served = {B.slug_of(name) for name in counties.get(tag, {})}
         recorded, statewide = gap_counties(tag)
