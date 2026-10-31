@@ -1,7 +1,7 @@
 {
  "built_by": "scripts/build_expected_governments.py",
  "floor": 25000,
- "measured": "2026-10-26",
+ "measured": "2026-10-30",
  "read_by": "scripts/build_eam_status.py",
  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer",
  "source": "U.S. Census Bureau TIGERweb, tigerWMS_Census2020 \u2014 layer 26 (Incorporated Places) and layer 20 (County Subdivisions, FUNCSTAT='A'); POP100 is the 2020 decennial count.",
@@ -21,6 +21,7 @@
   "ok": null,
   "sc": null,
   "tn": null,
+  "va": null,
   "wi": null
  },
  "units": {
@@ -4035,6 +4036,162 @@
     "lsadc": "25",
     "name": "Bristol city",
     "pop": 27147
+   }
+  ],
+  "va": [
+   {
+    "geoid": "5182000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Virginia Beach city",
+    "pop": 459470
+   },
+   {
+    "geoid": "5116000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Chesapeake city",
+    "pop": 249422
+   },
+   {
+    "geoid": "5157000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Norfolk city",
+    "pop": 238005
+   },
+   {
+    "geoid": "5167000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Richmond city",
+    "pop": 226610
+   },
+   {
+    "geoid": "5156000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Newport News city",
+    "pop": 186247
+   },
+   {
+    "geoid": "5101000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Alexandria city",
+    "pop": 159467
+   },
+   {
+    "geoid": "5135000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hampton city",
+    "pop": 137148
+   },
+   {
+    "geoid": "5168000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Roanoke city",
+    "pop": 100011
+   },
+   {
+    "geoid": "5164000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Portsmouth city",
+    "pop": 97915
+   },
+   {
+    "geoid": "5176432",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Suffolk city",
+    "pop": 94324
+   },
+   {
+    "geoid": "5147672",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lynchburg city",
+    "pop": 79009
+   },
+   {
+    "geoid": "5135624",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Harrisonburg city",
+    "pop": 51814
+   },
+   {
+    "geoid": "5144984",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Leesburg town",
+    "pop": 48250
+   },
+   {
+    "geoid": "5114968",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Charlottesville city",
+    "pop": 46553
+   },
+   {
+    "geoid": "5107784",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Blacksburg town",
+    "pop": 44826
+   },
+   {
+    "geoid": "5148952",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Manassas city",
+    "pop": 42772
+   },
+   {
+    "geoid": "5121344",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Danville city",
+    "pop": 42590
+   },
+   {
+    "geoid": "5161832",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Petersburg city",
+    "pop": 33458
+   },
+   {
+    "geoid": "5186720",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Winchester city",
+    "pop": 28120
+   },
+   {
+    "geoid": "5129744",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fredericksburg city",
+    "pop": 27982
+   },
+   {
+    "geoid": "5175216",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Staunton city",
+    "pop": 25750
+   },
+   {
+    "geoid": "5170000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Salem city",
+    "pop": 25346
    }
   ],
   "wi": [

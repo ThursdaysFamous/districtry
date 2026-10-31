@@ -34,8 +34,9 @@ name: Update Virginia county, city and school board officials
 # robots.txt read first, disallowing no path it reads) and the results' one
 # director office, and leaves the file as it is in a week nothing changed.
 #
-# VIRGINIA IS DARK, so nothing here regenerates a page; go-live adds the steps
-# its per-county pages need (va/WATCH.md has the list).
+# The per-county and per-city pages (va/local-government/) are GENERATED from
+# the officials file this job rewrites, so the PR step regenerates them, and
+# the pages and indexes that count them, before committing.
 
 on:
   schedule:
@@ -109,7 +110,18 @@ jobs:
           # va-towns.json is the Census's list of towns the builder reads each
           # week; a town added or renamed there changes the officials file too,
           # and the builder's --check holds the two to each other
-          git add va/data/app/va-local-officials.json va/data/source/va-local-officials.record.json va/data/source/va-towns.json
+          # The per-county and per-city pages (va/local-government/) are
+          # GENERATED from the officials file this job just rewrote, so
+          # regenerate them here or the smoke gate's
+          # `build_county_pages.py --check` fails on this PR with a page naming
+          # last week's members. llms.txt COUNTS those pages, and
+          # docs/EAM_STATUS.md the seats the file names.
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          python3 scripts/build_llms_txt.py
+          python3 scripts/build_eam_status.py
+          git add va/data/app/va-local-officials.json va/data/source/va-local-officials.record.json va/data/source/va-towns.json va/local-government va/local-government.html about.html sitemap.xml llms.txt docs/EAM_STATUS.md
           git add va/data/app/va-conservation-boards.json va/data/source/va-conservation-boards.record.json
           git commit -m "Update Virginia county, city and school board officials"
           git push -u origin "$branch" --force

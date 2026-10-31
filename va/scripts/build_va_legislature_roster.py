@@ -57,7 +57,8 @@ binds nobody. Every host is paced at one request a second regardless.
 
 Honesty: names are never guessed. A seat a chamber shows as vacant gets a
 vacancy record naming that chamber's own list; a seat with no record, or with
-two, stops the build.
+two, stops the build, except a House seat the last run recorded vacant that the
+list has since stopped printing a card for, whose vacancy is carried.
 
 Usage:
     python3 va/scripts/build_va_legislature_roster.py [output_dir]
@@ -458,6 +459,20 @@ def build_house(pages, previous, today):
             member["capitolOffice"] = office
         member["url"] = url
         seats[district] = member
+    # The list printed District 20 as a "Vacant" card on 2026-10-29 and no
+    # card at all on 2026-10-31. A seat the last run recorded vacant that now
+    # has no card is still a seat the House names nobody for, so its vacancy
+    # is carried with the day it was first read. A seat whose last record
+    # named a member and that loses its card still stops the build in check().
+    for district in range(1, cfg["seats"] + 1):
+        prev = previous.get(str(district)) or {}
+        if district in seats or not prev.get("vacant"):
+            continue
+        seats[district] = vacancy(
+            "The Virginia House of Delegates' member list showed this seat as vacant "
+            "and now prints no member for it.", HOUSE_LIST, previous, district, today)
+        notes.append("House %d: no card on the list; the vacancy read on %s is carried"
+                     % (district, seats[district]["asOf"]))
     return seats, notes
 
 
