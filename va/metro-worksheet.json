@@ -92,7 +92,7 @@
     { "id": "missouri", "label": "Missouri", "url": "https://districtry.com/mo/", "emoji": "🏞️", "explorer_name": "districtry Missouri",
       "bbox": { "minLng": -95.78, "minLat": 35.99, "maxLng": -89.09, "maxLat": 40.62 } },
     { "id": "virginia", "label": "Virginia", "url": "https://districtry.com/va/", "emoji": "🌸", "explorer_name": "districtry Virginia",
-      "bbox": { "minLng": -83.68, "minLat": 36.54, "maxLng": -75.16, "maxLat": 39.47 } }
+      "bbox": { "minLng": -83.68, "minLat": 36.54, "maxLng": -75.16, "maxLat": 38.91 } }
   ],
   "hover_number_keys": [
     [
@@ -356,7 +356,7 @@
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
           }
         ],
-        "people": "Each nation's council from that nation's own page, read weekly by scripts/tribal_council_scraper.py and dated on the card: the Pamunkey Indian Tribe's Chief, Assistant Chief and six council members (pamunkey.org) and the Mattaponi Tribe's Chief, Assistant Chief and seven council members (mattaponi.gov). The Rappahannock Tribe's own site names no council, so its card names nobody and says why. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), except the Mattaponi Tribe's, which the Bureau does not list because the tribe is recognized by the Commonwealth and not by the federal government: its name, seat and website come from the Secretary of the Commonwealth's list of state-recognized tribes, and the card says so. The land is joined to the government by this project's own data/tribal-government-join.json.",
+        "people": "Each nation's council from that nation's own page, read weekly by scripts/tribal_council_scraper.py and dated on the card: the Pamunkey Indian Tribe's Chief, Assistant Chief and six council members (pamunkey.org) and the Mattaponi Tribe's Chief, Assistant Chief and seven council members (mattaponi.gov). The Rappahannock Tribe's own site names no council, so its card names only its Chief and Assistant Chief, from the Secretary of the Commonwealth's list of state-recognized tribes (also read weekly), and says the rest of its council is not named. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), except the Mattaponi Tribe's, which the Bureau does not list because the tribe is recognized by the Commonwealth and not by the federal government: its name, seat and website come from the Secretary of the Commonwealth's list of state-recognized tribes, and the card says so. The land is joined to the government by this project's own data/tribal-government-join.json.",
         "applies": "Virginia — the three pieces of land above, in King William, King and Queen and Essex counties. Every other point in the state is on no tribal land the Census draws for a government: Virginia's other recognized tribes hold no reservation or trust land the Census draws."
       }
     },
@@ -444,6 +444,12 @@
     "lng": -75.3,
     "note": "Open Atlantic Ocean east of the mouth of Chesapeake Bay, 44 km from the nearest edge of Virginia's outline — outside Virginia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: none of the state's shipped boundary files contains it, none of fleet-outlines.json's outlines does either, and the State Capitol, the control, is inside every shipped file. Water on purpose, the way North Carolina's and Louisiana's are: every land neighbour of Virginia is either live already (Kentucky, Tennessee, North Carolina) or a state the fleet plans to build (West Virginia, Maryland), so a point on a neighbour's land would have to move when that neighbour goes live."
   },
+  "zip_search": {
+    "file": "zip-index.json",
+    "layers": [
+      {"id": "zip-code", "field": "ZCTA5", "inside": ["metro-outline.json"]}
+    ]
+  },
   "coverage_key": {
     "outside": "Outside Virginia",
     "edge": "Virginia"
@@ -503,6 +509,12 @@
         "min_features": 552,
         "max_features": 552,
         "note": "Every county subdivision the Census files for Virginia (va/scripts/build_va_magisterial_districts.py): 513 magisterial districts, the 38 cities and Arlington County. In the 72 counties whose census subdivisions carry the names of their election districts, each district is drawn from the Department of Elections' lines in va-local-districts.json, and the builder's --check fails when that file changes and this one is not rebuilt; elsewhere the Census's copy, Douglas-Peucker at 12 m. 5.1 MB, 1.36 MB gzipped, fetched only when a reader switches the layer on."
+      },
+      {
+        "file": "zip-index.json",
+        "min_features": 902,
+        "max_features": 902,
+        "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -533,8 +545,8 @@
       },
       {
         "file": "tribal-councils.json",
-        "min_keys": 2,
-        "note": "The councils of the two Virginia nations whose own pages name them (the Pamunkey Indian Tribe and the Mattaponi Tribe), keyed by the Census AIANNH code of their land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+        "min_keys": 3,
+        "note": "The councils of the two Virginia nations whose own pages name them (the Pamunkey Indian Tribe and the Mattaponi Tribe), and the Rappahannock Tribe's Chief and Assistant Chief from the Secretary of the Commonwealth's list of state-recognized tribes, keyed by the Census AIANNH code of their land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
       },
       {
         "file": "coverage-gaps.json",
@@ -544,7 +556,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-va-shell-v4",
+    "cache_name": "districtry-va-shell-v6",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

@@ -14,7 +14,7 @@ served this project normally on three reads on 2026-10-10, which is when it was
 added. scripts/build_tribal_areas.py
 --rosters stamps it onto each instance's tribal-areas.json, offline.
 
-ONE SECOND SOURCE, AND ONLY WHERE THE NATION PUBLISHES NOTHING. The Wisconsin
+A STATE'S LIST, AND ONLY WHERE THE NATION PUBLISHES NOTHING. The Wisconsin
 Department of Administration publishes "Wisconsin Tribal Head Officials", a
 one-page PDF naming every Wisconsin nation's council (updated 8 July 2026 when
 this was written). It is a government publisher, but it is a state's list of
@@ -28,6 +28,16 @@ whose whole navigation names none. The card says the names are the state's and
 gives the state's own date. Michigan has no current equivalent (the state's
 own directory is dated January 2017), so Michigan's unreadable councils stay
 unnamed.
+
+Virginia's Secretary of the Commonwealth publishes a list of the state's
+recognized tribes that names each tribe's chief and assistant chief and no
+council member. It is used for the one Virginia nation with land on the map
+that publishes no council, the Rappahannock Tribe, and for its two leaders
+only, on Adam's ruling of 2026-10-30. Every other nation here is carried with
+its whole council, so the card heads these two names "Chief and Assistant
+Chief" rather than "Council" and says the rest of the council is not named.
+The list writes the office "Assistant Cheif"; the office is read and written
+correctly, and the names are carried as the list prints them.
 
 WHAT A PARSER MAY NOT DO. A parser returns exactly the seats its page states,
 and `SEATS` pins how many that is: a page that loses a member, gains a staff
@@ -81,6 +91,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(REPO, "data", "tribal-councils.json")
 
 WI_DOA_LIST = "https://doa.wi.gov/DIR/Tribal-Leaders.pdf"
+VA_SOC_LIST = "https://www.commonwealth.virginia.gov/virginia-indians/state-recognized-tribes/"
 
 # The councils file's own description. It names no state, because a list of
 # states here went stale the day a state was added without it (Mississippi's
@@ -105,7 +116,7 @@ NATIONS = {
     "1550": {"nation": "Nottawaseppi Huron", "pages": ["https://nhbp-nsn.gov/tribal-council/"], "seats": 5},
     "1610": {"nation": "Saginaw Chippewa", "pages": ["https://www.sagchip.org/council/councilprofiles.aspx"], "seats": 12},
     "1815": {"nation": "Lac Courte Oreilles", "pages": ["https://lco-nsn.gov/tribal-governing-board/"], "seats": 7},
-    "1825": {"nation": "Lac du Flambeau", "pages": [WI_DOA_LIST], "seats": 12, "stateList": True},
+    "1825": {"nation": "Lac du Flambeau", "pages": [WI_DOA_LIST], "seats": 12, "stateList": "wi"},
     "1830": {"nation": "Lac Vieux Desert", "pages": ["https://lvd-nsn.gov/Content/Tribal-Council.cfm"], "seats": 9, "br": " "},
     "1963": {"nation": "Little Traverse Bay", "pages": [
         "https://ltbbodawa-nsn.gov/government/executive/tribal-chairman-tribal-vice-chairperson/",
@@ -142,7 +153,7 @@ NATIONS = {
     "3085": {"nation": "Red Cliff", "pages": ["https://www.redcliff-nsn.gov/government/tribal_government/index.php"], "seats": 9},
     "3305": {"nation": "St. Croix", "pages": ["https://stcroixojibwe-nsn.gov/tribal-council/"], "seats": 5},
     "3635": {"nation": "Sault Ste. Marie", "pages": ["https://www.saulttribe.com/government/board-of-directors/29-government/board-of-directors/109-board-members-and-reports"], "seats": 13},
-    "3885": {"nation": "Sokaogon", "pages": [WI_DOA_LIST], "seats": 6, "stateList": True},
+    "3885": {"nation": "Sokaogon", "pages": [WI_DOA_LIST], "seats": 6, "stateList": "wi"},
     "4015": {"nation": "Stockbridge-Munsee", "pages": ["https://mohican-nsn.gov/tribal-council/"], "seats": 7},
     # South Carolina. The Bureau lists www.catawbaindian.net, which reset the
     # connection on every read here (2026-10-12); the nation's own site is
@@ -180,12 +191,24 @@ NATIONS = {
     # its council is "seven members and the chiefs", and names the Chief, the
     # Assistant Chief and seven council members. The Mattaponi are recognized
     # by Virginia and not by the United States, which
-    # data/tribal-government-join.json records. The Rappahannock Tribe's site
-    # names no council, which ROSTER_BLOCKED in build_tribal_areas.py records.
+    # data/tribal-government-join.json records.
     "9260": {"nation": "Pamunkey",
              "pages": ["https://www.pamunkey.org/tribal-government"], "seats": 8},
     "9230": {"nation": "Mattaponi",
              "pages": ["https://www.mattaponi.gov/mattaponi-tribal-council"], "seats": 9},
+    # The Rappahannock Tribe's own site names no council (read 2026-10-30:
+    # its front page and every page its sitemap lists; its staff directory is
+    # behind the tribe's member sign-in, which stays shut). The Secretary of
+    # the Commonwealth's list of state-recognized tribes names its Chief and
+    # its Assistant Chief and no council member; that page's robots.txt (299
+    # bytes, read 2026-10-30 with this scraper's client) has no rule matching
+    # it. Every other nation here is carried only with its whole council, so
+    # these two names are carried on Adam's ruling of 2026-10-30 ("name the
+    # tribe leaders"), and the card says that only the two are named. The
+    # list's other lines for the tribe (its administrator, its finance officer
+    # and its consultation contacts) are staff, not officers, and are not read.
+    "3075": {"nation": "Rappahannock", "pages": [VA_SOC_LIST], "seats": 2,
+             "stateList": "va"},
 }
 
 _BLOCK = (r"(?:p|div|h[1-6]|li|ul|ol|td|th|tr|table|section|article|header|footer|"
@@ -451,6 +474,59 @@ def _state_list(pdf_bytes, heading, count):
         raise ValueError("the state list gives %d for %r, expected %d: %r"
                          % (len(out), heading, count, out))
     return out, updated
+
+
+# The two offices the Secretary of the Commonwealth's list gives a tribe's
+# leaders. The list writes "Assistant Cheif" for the Rappahannock (read
+# 2026-10-30), so both spellings are read and the office is written correctly.
+_VA_OFFICES = (("Assistant Chief", r"Assistant Ch(?:ie|ei)f"), ("Chief", r"Chief"))
+
+
+def _va_state_list(html_bytes, heading, count):
+    """One tribe's block of the Secretary of the Commonwealth's list of
+    Virginia's state-recognized tribes: the tribe's name on a line of its own,
+    then "Chief <name>" and "Assistant Chief <name>", then lines for staff,
+    until "Contact information". Only the Chief and the Assistant Chief are
+    read. A line such as "Chief Financial Officer <name>" names a staff office
+    and is not a chief, so a name that starts with an office word is refused.
+    The list prints no date of its own, so it gives none."""
+    lines = lines_of(html_bytes.decode("utf-8", "replace"))
+    hits = [k for k, l in enumerate(lines) if l == heading]
+    if len(hits) != 1:
+        raise ValueError("the state list has %d line(s) reading %r, expected 1"
+                         % (len(hits), heading))
+    out = []
+    for line in lines[hits[0] + 1:]:
+        if line == "Contact information":
+            break
+        for role, pat in _VA_OFFICES:
+            m = re.match(r"(?:%s) (.+)$" % pat, line)
+            if m and not re.match(r"(?i)(financial|executive|operating|officer|"
+                                  r"administrator)\b", m.group(1)):
+                out.append(_m(m.group(1), role))
+                break
+    else:
+        raise ValueError("the state list's block for %r has no contact line"
+                         % heading)
+    if [m["role"] for m in out] != ["Chief", "Assistant Chief"][:count]:
+        raise ValueError("the state list gives %r for %r, expected the Chief and "
+                         "the Assistant Chief" % (out, heading))
+    return out, None
+
+
+# Each state's list of tribal officials that names a nation's leaders where
+# the nation publishes no council of its own. `officersOnly` marks a list that
+# names a nation's leading officers and no council member, so the card can say
+# that only they are named.
+STATE_LISTS = {
+    "wi": {"publisher": "Wisconsin Department of Administration",
+           "list": "list of Wisconsin tribal officials",
+           "page": WI_DOA_LIST, "key": "wi-doa.pdf", "parse": _state_list},
+    "va": {"publisher": "Secretary of the Commonwealth of Virginia",
+           "list": "list of state-recognized tribes",
+           "page": VA_SOC_LIST, "key": "va-soc.html", "parse": _va_state_list,
+           "officersOnly": True},
+}
 
 
 def p_lvd(pages):
@@ -987,7 +1063,8 @@ PARSERS = {
     "0635": p_chitimacha, "1690": p_jena, "4315": p_tunica_biloxi,
     "9260": p_pamunkey, "9230": p_mattaponi,
 }
-STATE_LIST_HEADINGS = {"1825": "Lac du Flambeau Band of Lake", "3885": "Sokaogon Chippewa Community"}
+STATE_LIST_HEADINGS = {"1825": "Lac du Flambeau Band of Lake", "3885": "Sokaogon Chippewa Community",
+                       "3075": "Rappahannock"}
 
 _ROLE_OK = re.compile(r"(chair|president|chief|secretary|treasurer|member|representative|"
                       r"director|legislator|councilor|council|sergeant|chaplain|leader)", re.I)
@@ -1064,11 +1141,16 @@ def run(from_dir=None, today=None):
         spec = NATIONS[code]
         try:
             if spec.get("stateList"):
-                members, updated = _state_list(get(WI_DOA_LIST, "wi-doa.pdf"),
+                sl = STATE_LISTS[spec["stateList"]]
+                members, updated = sl["parse"](get(sl["page"], sl["key"]),
                                                STATE_LIST_HEADINGS[code], spec["seats"])
-                rec = {"source": "state-list",
-                       "publisher": "Wisconsin Department of Administration",
-                       "page": WI_DOA_LIST, "listUpdated": updated}
+                rec = {"source": "state-list", "publisher": sl["publisher"],
+                       "page": sl["page"]}
+                if updated:
+                    rec["listUpdated"] = updated
+                if sl.get("officersOnly"):
+                    rec["list"] = sl["list"]
+                    rec["officersOnly"] = True
             else:
                 pages = [lines_of(get(u, "%s-%d.html" % (code, k)).decode("utf-8", "replace"),
                                   spec.get("br", "\n"))
@@ -1199,6 +1281,26 @@ def selftest():
         assert validate("9999", [_m("A B", "Chair"), _m("C D", "Secretary")])
     finally:
         del NATIONS["9999"]
+    # The Commonwealth's list (names invented): a staff line beginning
+    # "Chief" is not a chief, and the list's own misspelling is read
+    va_page = ("<p>Upper Example</p><p>Chief Zed Other</p><p>Contact information</p>"
+               "<p>Example</p><p>Chief Ann Example</p><p>Assistant Cheif Bob Sample</p>"
+               "<p>Tribal Administrator Chief Example</p>"
+               "<p>Chief Financial Officer Cy Person</p><p>Contact information</p>"
+               "<p>Ed Staff</p>").encode()
+    va, upd = _va_state_list(va_page, "Example", 2)
+    assert va == [_m("Ann Example", "Chief"), _m("Bob Sample", "Assistant Chief")], va
+    assert upd is None
+    for bad in (va_page.replace(b"<p>Assistant Cheif Bob Sample</p>", b""),
+                va_page.replace(b"<p>Upper Example</p>", b"<p>Example</p>")):
+        try:
+            _va_state_list(bad, "Example", 2)
+        except ValueError:
+            continue
+        raise AssertionError("the Commonwealth's list parsed %r" % bad)
+    for code, spec in NATIONS.items():
+        if spec.get("stateList"):
+            assert spec["pages"] == [STATE_LISTS[spec["stateList"]]["page"]], code
     assert set(PARSERS) | set(STATE_LIST_HEADINGS) == set(NATIONS)
     print("tribal-council-scraper --selftest: OK — %d nation(s), %d parser(s), "
           "%d from the state list" % (len(NATIONS), len(PARSERS), len(STATE_LIST_HEADINGS)))

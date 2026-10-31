@@ -240,21 +240,6 @@ ACCEPTED_DROPS = {
         "the county-level contactChecked and contactCheckedWeekly, which the "
         "card and the history tiles do read, are unchanged.",
 
-    # Palo, Iowa (place GEOID 1961230), removed on purpose 2026-09-05, and NOT
-    # because the city stopped publishing -- its council page parses perfectly
-    # today. `cityofpalo.com/robots.txt` names six crawlers, allows each of them
-    # everything but /admin/ and /manager/, and ends `User-agent: * /
-    # Disallow: /`, which refuses this project's agent on every path. The
-    # scraper now consults robots.txt before any fetch
-    # (`ia/scripts/robots_gate.py`), so the page is never requested and the six
-    # officials leave the card. THE ENTRY STAYS IN THE SCRAPER'S TABLE and the
-    # check runs weekly, so Palo re-enters by itself if that file changes --
-    # at which point this exception goes stale and this gate says so.
-    "ia/data/app/ia-city-officials.json:1961230":
-        "2026-09-05 -- cityofpalo.com's robots.txt refuses `districtry` on "
-        "every path, so the scraper asks before it fetches and never requests "
-        "the page. The city still publishes; this project declines to read it.",
-
     # Adams County, Wisconsin. All three land in one change, 2026-09-17, and
     # all three have ONE cause: the county was re-sourced off the Clerk's
     # directory PDF and onto the county's own per-district pages, because
