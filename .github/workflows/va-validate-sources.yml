@@ -24,9 +24,10 @@ name: Validate layer sources (Virginia)
 # monthly runs. A scheduled run here starts hours late anyway (measured across
 # the fleet: 3 to 5.3 hours), so the slot is a request rather than an ordering.
 #
-# This job is scheduled while Virginia is dark, on purpose: a publisher that
-# supersedes a dataset while the instance is unserved is exactly the drift a
-# go-live would otherwise inherit silently. Its checks 5 and 6 also watch the
+# This job was scheduled while Virginia was dark, from 2026-10-29 until its
+# go-live, on purpose: a publisher that supersedes a dataset while the
+# instance is unserved is exactly the drift a go-live would otherwise inherit
+# silently. Its checks 5 and 6 also watch the
 # names of the TIGERweb layers the congressional and chamber maps are drawn
 # from, so a rolled vintage is read by a person within a month rather than on
 # the day somebody rebuilds.
