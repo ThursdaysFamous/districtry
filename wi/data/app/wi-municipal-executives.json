@@ -110,12 +110,14 @@
     "withheldWhy": "the county layer's link to the municipality's page is dead, so no name is witnessed"
   },
   "5570650": {
+    "email": "ken.tutaj@stfranwi.org",
     "municipality": "St. Francis",
+    "name": "Ken Tutaj",
     "office": "City of St. Francis Mayor",
+    "phone": "414-316-4323",
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
-    "withheld": true,
-    "withheldWhy": "the municipality's own site asks automated clients not to read it, so its page is not fetched and no name is witnessed"
+    "witnessUrl": "https://www.stfranciswi.org/mayor"
   },
   "5573725": {
     "email": "PresidentMcKaig@villageofshorewood.org",

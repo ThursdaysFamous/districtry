@@ -1,6 +1,6 @@
 {
   "note": "The unit each fire and park district card joins to, and the cards that join to none. Rebuilt by il_special_district_officials_scraper.py --propose; every row is re-verified against the Warehouse on every scrape.",
-  "generated": "2026-09-12T11:04:41Z",
+  "generated": "2026-10-30T14:25:27Z",
   "districts": [
     {
       "county": "adams",
@@ -5090,6 +5090,186 @@
       "label": "Winslow",
       "type": "Fire Protection District",
       "warehouseCounty": "Stephenson",
+      "rule": "normalised"
+    },
+    {
+      "county": "whiteside",
+      "layer": "fire",
+      "card": "Albany Fire",
+      "code": "098/010/06",
+      "label": "Albany",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Whiteside",
+      "rule": "normalised"
+    },
+    {
+      "county": "whiteside",
+      "layer": "fire",
+      "card": "Chadwick Fire",
+      "code": "008/010/06",
+      "label": "Chadwick",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Carroll",
+      "rule": "normalised"
+    },
+    {
+      "county": "whiteside",
+      "layer": "fire",
+      "card": "Erie Fire",
+      "code": "098/020/06",
+      "label": "Erie",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Whiteside",
+      "rule": "normalised"
+    },
+    {
+      "county": "whiteside",
+      "layer": "fire",
+      "card": "Fulton Fire",
+      "code": "098/030/06",
+      "label": "Fulton",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Whiteside",
+      "rule": "normalised"
+    },
+    {
+      "county": "whiteside",
+      "layer": "fire",
+      "card": "Hillsdale Fire",
+      "code": "081/120/06",
+      "label": "Hillsdale",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Rock Island",
+      "rule": "normalised"
+    },
+    {
+      "county": "whiteside",
+      "layer": "fire",
+      "card": "Milledgeville Fire",
+      "code": "008/030/06",
+      "label": "Milledgeville",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Carroll",
+      "rule": "normalised"
+    },
+    {
+      "county": "whiteside",
+      "layer": "fire",
+      "card": "Polo Fire",
+      "code": "071/080/06",
+      "label": "Polo",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Ogle",
+      "rule": "normalised"
+    },
+    {
+      "county": "whiteside",
+      "layer": "fire",
+      "card": "Prophetstown Fire",
+      "code": "098/040/06",
+      "label": "Prophetstown",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Whiteside",
+      "rule": "normalised"
+    },
+    {
+      "county": "whiteside",
+      "layer": "fire",
+      "card": "Rock Falls Fire",
+      "code": "098/050/06",
+      "label": "Rock Falls Rural",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Whiteside",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "whiteside",
+      "layer": "fire",
+      "card": "Sterling Fire",
+      "code": "098/060/06",
+      "label": "Sterling",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Whiteside",
+      "rule": "normalised"
+    },
+    {
+      "county": "whiteside",
+      "layer": "fire",
+      "card": "Tampico Fire",
+      "code": "098/070/06",
+      "label": "Tampico Rural",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Whiteside",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "whiteside",
+      "layer": "fire",
+      "card": "Thomson Fire",
+      "code": "008/060/06",
+      "label": "Thomson",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Carroll",
+      "rule": "normalised"
+    },
+    {
+      "county": "whiteside",
+      "layer": "fire",
+      "card": "Walnut Fire",
+      "code": "006/165/06",
+      "label": "Walnut",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Bureau",
+      "rule": "normalised"
+    },
+    {
+      "county": "whiteside",
+      "layer": "park",
+      "card": "Coloma Park",
+      "code": "098/010/12",
+      "label": "Coloma",
+      "type": "Park District",
+      "warehouseCounty": "Whiteside",
+      "rule": "normalised"
+    },
+    {
+      "county": "whiteside",
+      "layer": "park",
+      "card": "Milledgeville Park",
+      "code": "008/010/12",
+      "label": "Milledgeville",
+      "type": "Park District",
+      "warehouseCounty": "Carroll",
+      "rule": "normalised"
+    },
+    {
+      "county": "whiteside",
+      "layer": "park",
+      "card": "Prophetstown Park",
+      "code": "098/020/12",
+      "label": "Prophetstown",
+      "type": "Park District",
+      "warehouseCounty": "Whiteside",
+      "rule": "normalised"
+    },
+    {
+      "county": "whiteside",
+      "layer": "park",
+      "card": "Sterling Park",
+      "code": "098/030/12",
+      "label": "Sterling",
+      "type": "Park District",
+      "warehouseCounty": "Whiteside",
+      "rule": "normalised"
+    },
+    {
+      "county": "whiteside",
+      "layer": "park",
+      "card": "Walnut Park",
+      "code": "006/020/12",
+      "label": "Walnut",
+      "type": "Park District",
+      "warehouseCounty": "Bureau",
       "rule": "normalised"
     }
   ],

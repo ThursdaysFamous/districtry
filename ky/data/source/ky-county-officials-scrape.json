@@ -5413,18 +5413,18 @@
      "title": "County Magistrate"
     },
     {
-     "email": "treasurer@hickmancoky.com",
-     "first": "Amy",
-     "last": "Crump",
-     "phone": "(270) 653-6195",
-     "title": "County Treasurer"
-    },
-    {
      "email": "rhopkinsjailer@gmail.com",
      "first": "Robert",
      "last": "Hopkins",
      "phone": "(270) 653-9933",
      "title": "County Jailer"
+    },
+    {
+     "email": "treasurer@hickmancoky.com",
+     "first": "Amy",
+     "last": "Leslie",
+     "phone": "(270) 653-6195",
+     "title": "County Treasurer"
     },
     {
      "email": "aknaranjo@hotmail.com",
@@ -12303,7 +12303,7 @@
  },
  "source": {
   "publisher": "Kentucky Department for Local Government",
-  "read": "2026-10-22",
+  "read": "2026-10-29",
   "url": "https://kydlgweb.ky.gov/Counties/16_CountyHome.cfm"
  }
 }

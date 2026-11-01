@@ -165,6 +165,46 @@ UNDELIVERABLE = {
         "florwi.org is NXDOMAIN (2026-09-04): no SOA, NS, A or MX. Florence "
         "County. Recorded on 2026-09-03 as an address that 'routes mail fine' "
         "— that claim was never measured and was wrong."),
+
+    # ---- West Virginia: wv-county-officials.json, from the Secretary of
+    #      State's 2025 directory of county officials, which prints each
+    #      address in the official's own entry. Measured 2026-10-29 on
+    #      Google's and Cloudflare's DoH resolvers; a made-up .gov name
+    #      (madeupname12345.gov) answered the same way as the two .gov
+    #      entries below, the docstring's test for a .gov name.
+    "lancewheeler@kanwha.us": (
+        "wv-county-officials.json",
+        "kanwha.us is NXDOMAIN (2026-10-29) — 'kanwha' for 'kanawha'. Kanawha "
+        "County, Commissioner; the other two commissioners' addresses are on "
+        "kanawha.us, which resolves and carries MX."),
+    "sallierobinson@kanwha.us": (
+        "wv-county-officials.json",
+        "kanwha.us is NXDOMAIN (2026-10-29). Kanawha County, Assessor."),
+    "info@kanwha.us": (
+        "wv-county-officials.json",
+        "kanwha.us is NXDOMAIN (2026-10-29). Kanawha County, Surveyor."),
+    "drusnak@kanawhaprocecutor.us": (
+        "wv-county-officials.json",
+        "kanawhaprocecutor.us is NXDOMAIN (2026-10-29) — 'procecutor' for "
+        "'prosecutor'. Kanawha County, Prosecuting Attorney."),
+    "susan.lemon@courts.wv.gov": (
+        "wv-county-officials.json",
+        "courts.wv.gov is NXDOMAIN (2026-10-29); the state's court system "
+        "is at courtswv.gov. Braxton County, Circuit Clerk."),
+    "william.stevens@courts.wv": (
+        "wv-county-officials.json",
+        "courts.wv is NXDOMAIN (2026-10-29) — '.wv' is not a TLD. Lincoln "
+        "County, Circuit Clerk."),
+    "lonnie.hannah@courtyswv.gov": (
+        "wv-county-officials.json",
+        "courtyswv.gov answers exactly as a made-up .gov name does: no NS "
+        "delegation, no MX, no A and no AAAA record (2026-10-29) — 'courtys' "
+        "for 'courts'. Mingo County, Circuit Clerk."),
+    "jess.mcmullen@fayettecountwv.gov": (
+        "wv-county-officials.json",
+        "fayettecountwv.gov answers exactly as a made-up .gov name does "
+        "(2026-10-29) — 'countwv' for 'countywv'; fayettecountywv.gov "
+        "resolves and carries MX. Fayette County, Sheriff."),
 }
 
 

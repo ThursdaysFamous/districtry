@@ -149,6 +149,9 @@ INSTANCE_WORKSHEET = {
     "ms": "ms/metro-worksheet.json",
     "la": "la/metro-worksheet.json",
     "mo": "mo/metro-worksheet.json",
+    "ga": "ga/metro-worksheet.json",
+    "va": "va/metro-worksheet.json",
+    "wv": "wv/metro-worksheet.json",
 }
 FONTFACE = os.path.join(REPO_ROOT, "fonts", "barlow-fontface.css")
 THEME_BOOT = os.path.join(REPO_ROOT, "engine", "shared", "theme-boot.txt")
@@ -265,13 +268,16 @@ QUESTION_ROWS = [
     # police jury or a council in Louisiana, and
     # somebody asking who sits on it does not know or care which word their
     # state uses. One row, so the front door asks the question once.
+    # Virginia's page answers for its 38 independent cities too, whose councils
+    # govern as a county's board does, and it sits here for its counties.
     ("Who sits on my county board?", ("county-board.html", "county-supervisor.html",
                                       "county-commissioner.html",
                                       "county-legislature.html",
                                       "county-government.html",
                                       "county-council.html",
                                       "quorum-court.html",
-                                      "parish-government.html")),
+                                      "parish-government.html",
+                                      "local-government.html")),
     ("Who represents me on the city council?", ("ward.html", "council-district.html",
                                                 "supervisor-district.html",
                                                 "city-council.html")),
@@ -323,6 +329,7 @@ CHIP_TOPIC = {
     "county-council.html": "county council",
     "quorum-court.html": "quorum court",
     "parish-government.html": "police jury or council",
+    "local-government.html": "supervisors or council",
     "county-legislature.html": "county legislature",
     "city-council.html": "city council",
     "county-auditor.html": "county auditor",
@@ -2405,6 +2412,23 @@ header.mast {
 }
 .mast-nav a:hover, .mast-nav a:focus-visible { background: var(--brand-tint); color: var(--ink); }
 .mast-nav a:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+/* Feedback and Sponsor (2026-10-29; Adam: a feedback button "a little easier
+   to find", "also add it to the landing page", and "the sponsor button needs
+   to be more visible"). The same pair every map's masthead carries, drawn as
+   that pair is: Feedback outlined in the brand colour and opening the site's
+   feedback form, Sponsor on a tint with the warm heart. Inside the Google Play
+   app the support block in the head hides Sponsor, as it hides every link to
+   GitHub Sponsors. */
+.nav-icon { width: 14px; height: 14px; flex: none; }
+.mast-nav a.nav-feedback, .mast-nav a.nav-sponsor { gap: 6px; font-weight: 600; border-radius: 999px; }
+.mast-nav a.nav-feedback {
+  margin-left: 6px; padding: 5px 13px 5px 11px;
+  border: 1.5px solid var(--brand-600); color: var(--brand-700);
+}
+.mast-nav a.nav-feedback:hover, .mast-nav a.nav-feedback:focus-visible { background: var(--brand-600); color: var(--surface); }
+.mast-nav a.nav-sponsor { padding: 5px 13px 5px 11px; border: 1.5px solid transparent; background: var(--brand-tint); color: var(--ink); }
+.mast-nav a.nav-sponsor .nav-icon { color: var(--brand-warm); }
+.mast-nav a.nav-sponsor:hover, .mast-nav a.nav-sponsor:focus-visible { border-color: var(--brand-warm); background: var(--brand-tint); }
 
 /* The h1 is the promise, and it is now the largest thing on the page. It used
    to be 26px grey under a 52px wordmark, so the biggest words on the fleet's
@@ -2854,6 +2878,8 @@ footer .support b { color: var(--ink); }
         <a href="about.html">About</a>
         <a href="privacy.html">Privacy</a>
         <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">Source</a>
+        <a href="feedback.html" class="nav-feedback"><svg class="nav-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 3.5h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9.2l-3.6 2.9a.6.6 0 0 1-1-.47V14.5H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg>Feedback</a>
+        <a href="https://github.com/sponsors/ThursdaysFamous" class="nav-sponsor" id="nav-sponsor" target="_blank" rel="noopener" aria-label="Sponsor districtry on GitHub"><svg class="nav-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 17s-6.5-4.1-6.5-8.6A3.6 3.6 0 0 1 10 6.3a3.6 3.6 0 0 1 6.5 2.1C16.5 12.9 10 17 10 17z" fill="currentColor"></path></svg>Sponsor</a>
       </nav>
     </header>
 
@@ -2982,7 +3008,7 @@ footer .support b { color: var(--ink); }
           <li><a href="privacy.html">Privacy</a></li>
           <li><a href="sponsorship.html">Sponsorship</a></li>
           <li><a href="traffic.html">Traffic</a></li>
-          <li><a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a></li>
+          <li><a href="https://overberg.co/why/still-incomplete/" target="_blank" rel="noopener">Why this exists</a></li>
           <li><a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">Source on GitHub</a></li>
         </ul>
       </div>
@@ -3248,9 +3274,8 @@ footer .support b { color: var(--ink); }
    * uncovered, none, unreadable, search-failed, or failed-<why> when the
    * lookup could not read a short link. A place shared into the installed
    * app reaches this page (as "opened") when no state has been opened yet.
-   * Nothing about the place is in it. It is one of the two events this page
-   * sends, with the worked example's example-place/<place> (EXAMPLE_SCRIPT),
-   * and the privacy page names both (build_privacy_page.py ROOT_EVENTS). The
+   * Nothing about the place is in it. The privacy page names it with every
+   * other event this page sends (build_privacy_page.py ROOT_EVENTS). The
    * counter loads after this script, so a count waits for it, up to ten
    * seconds, as the apps' do. */
   var linkRead = null, linkVia = "pasted";
@@ -3261,6 +3286,11 @@ footer .support b { color: var(--ink); }
     }
     if ((tries || 0) < 40) setTimeout(function () { trackEvent(path, (tries || 0) + 1); }, 250);
   }
+  /* A press of the masthead's Sponsor is counted as sponsor/front, the
+   * maps' sponsor/<tag> with "front" where a map puts its tag, and nothing
+   * about the reader (2026-10-29). */
+  var sponsorLink = document.getElementById("nav-sponsor");
+  if (sponsorLink) sponsorLink.addEventListener("click", function () { trackEvent("sponsor/front"); });
   function countLinkRead(outcome) {
     var r = linkRead;
     if (!r) return;

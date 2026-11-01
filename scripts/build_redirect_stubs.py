@@ -235,10 +235,10 @@ SHORT_LINKS = {
                 "then pick districtry.",
             ]),
             ("h2", "Report a problem"),
-            ("p", "Scroll to the bottom of the app’s panel and tap **Report a "
-                  "bug or leave a comment**. It attaches the map view you’re "
-                  "looking at, so pick a spot you’re happy to share. You can "
-                  "also email [hello@overberg.co](mailto:hello@overberg.co)."),
+            ("p", "Tap **Feedback** at the top of the map. It attaches the "
+                  "map view you’re looking at, so pick a spot you’re happy to "
+                  "share. You can also email "
+                  "[hello@overberg.co](mailto:hello@overberg.co)."),
             ("note", "Only Android phones can join this test. On an iPhone or "
                      "a computer, districtry works in the browser at "
                      "[districtry.com](/)."),

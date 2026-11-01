@@ -1,0 +1,17 @@
+      <!-- Feedback and Sponsor, the two buttons a reader should never have to
+           hunt for (Adam, 2026-10-29: "Change the report a bug or leave a
+           comment to a feedback button that is a little easier to find", and
+           "the sponsor button needs to be more visible"). Feedback opened the
+           same form from the foot of the results panel until that day; it
+           keeps the id the feedback block binds. Neither carries
+           .masthead-action-link, so neither is one of the row's links that
+           fold into "More" from the end: Feedback never folds and stays in
+           the phone masthead beside the theme toggle, and Sponsor folds only
+           after every plain link (districtry-behavior) and moves to the head
+           of the panel foot's doors on a phone, where the masthead has room
+           for one button. On a phone too narrow for Feedback's word beside the
+           wordmark, it shows its icon alone and keeps the word for a screen
+           reader (dst-compact, measured in districtry-behavior). The play-app block hides every github.com/sponsors
+           link inside the Google Play app, this one included. -->
+      <button type="button" id="feedback-btn" class="dst-feedback-btn"><svg class="dst-btn-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 3.5h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9.2l-3.6 2.9a.6.6 0 0 1-1-.47V14.5H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg><span class="dst-btn-label">Feedback</span></button>
+      <a class="dst-sponsor-btn" id="sponsor-btn" href="https://github.com/sponsors/ThursdaysFamous" target="_blank" rel="noopener" aria-label="Sponsor districtry on GitHub"><svg class="dst-btn-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 17s-6.5-4.1-6.5-8.6A3.6 3.6 0 0 1 10 6.3a3.6 3.6 0 0 1 6.5 2.1C16.5 12.9 10 17 10 17z" fill="currentColor"></path></svg>Sponsor</a>

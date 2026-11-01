@@ -86,7 +86,7 @@
       "@type": "ItemList",
       "name": "districtry instances",
       "itemListOrder": "https://schema.org/ItemListUnordered",
-      "numberOfItems": 17,
+      "numberOfItems": 18,
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -189,6 +189,12 @@
           "position": 17,
           "name": "Missouri",
           "url": "https://districtry.com/mo/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 18,
+          "name": "Virginia",
+          "url": "https://districtry.com/va/"
         }
       ]
     }
@@ -653,6 +659,23 @@ header.mast {
 }
 .mast-nav a:hover, .mast-nav a:focus-visible { background: var(--brand-tint); color: var(--ink); }
 .mast-nav a:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+/* Feedback and Sponsor (2026-10-29; Adam: a feedback button "a little easier
+   to find", "also add it to the landing page", and "the sponsor button needs
+   to be more visible"). The same pair every map's masthead carries, drawn as
+   that pair is: Feedback outlined in the brand colour and opening the site's
+   feedback form, Sponsor on a tint with the warm heart. Inside the Google Play
+   app the support block in the head hides Sponsor, as it hides every link to
+   GitHub Sponsors. */
+.nav-icon { width: 14px; height: 14px; flex: none; }
+.mast-nav a.nav-feedback, .mast-nav a.nav-sponsor { gap: 6px; font-weight: 600; border-radius: 999px; }
+.mast-nav a.nav-feedback {
+  margin-left: 6px; padding: 5px 13px 5px 11px;
+  border: 1.5px solid var(--brand-600); color: var(--brand-700);
+}
+.mast-nav a.nav-feedback:hover, .mast-nav a.nav-feedback:focus-visible { background: var(--brand-600); color: var(--surface); }
+.mast-nav a.nav-sponsor { padding: 5px 13px 5px 11px; border: 1.5px solid transparent; background: var(--brand-tint); color: var(--ink); }
+.mast-nav a.nav-sponsor .nav-icon { color: var(--brand-warm); }
+.mast-nav a.nav-sponsor:hover, .mast-nav a.nav-sponsor:focus-visible { border-color: var(--brand-warm); background: var(--brand-tint); }
 
 /* The h1 is the promise, and it is now the largest thing on the page. It used
    to be 26px grey under a 52px wordmark, so the biggest words on the fleet's
@@ -1167,6 +1190,8 @@ footer .support b { color: var(--ink); }
         <a href="about.html">About</a>
         <a href="privacy.html">Privacy</a>
         <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">Source</a>
+        <a href="feedback.html" class="nav-feedback"><svg class="nav-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 3.5h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9.2l-3.6 2.9a.6.6 0 0 1-1-.47V14.5H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg>Feedback</a>
+        <a href="https://github.com/sponsors/ThursdaysFamous" class="nav-sponsor" id="nav-sponsor" target="_blank" rel="noopener" aria-label="Sponsor districtry on GitHub"><svg class="nav-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 17s-6.5-4.1-6.5-8.6A3.6 3.6 0 0 1 10 6.3a3.6 3.6 0 0 1 6.5 2.1C16.5 12.9 10 17 10 17z" fill="currentColor"></path></svg>Sponsor</a>
       </nav>
     </header>
 
@@ -1183,7 +1208,7 @@ footer .support b { color: var(--ink); }
                    placeholder="Street address or ZIP" autocomplete="off" />
             <button type="submit" id="search-button" class="search-button">Show districts</button>
           </form>
-          <p class="search-help">districtry opens the map that covers the point. 16 states and San Francisco
+          <p class="search-help">districtry opens the map that covers the point. 17 states and San Francisco
              answer today — an address anywhere else says so instead of guessing.</p>
           <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
         </div>
@@ -1380,7 +1405,7 @@ footer .support b { color: var(--ink); }
               title="Map of the areas districtry covers today"
               loading="lazy"></iframe>
       <div class="cov-head">
-        <p class="cov-count"><strong>16 states and San Francisco answer today.</strong>
+        <p class="cov-count"><strong>17 states and San Francisco answer today.</strong>
           Pick one to open its map.</p>
         <ul class="cov-key" aria-label="Key">
           <li><span class="sw sw-on" aria-hidden="true"></span>Answers here</li>
@@ -1416,7 +1441,7 @@ footer .support b { color: var(--ink); }
         <li><a class="st" href="https://districtry.com/mi/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Michigan</span><span class="st-scope">all 83 counties &#183; <span class="st-n">19</span>&nbsp;layers</span></a></li>
         <li><a class="st" href="https://districtry.com/mn/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Minnesota</span><span class="st-scope">all 87 counties &#183; <span class="st-n">21</span>&nbsp;layers</span></a></li>
         <li><a class="st" href="https://districtry.com/ms/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Mississippi</span><span class="st-scope">all 82 counties &#183; <span class="st-n">17</span>&nbsp;layers</span></a></li>
-        <li><a class="st" href="https://districtry.com/mo/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Missouri</span><span class="st-scope">34 counties in depth &#183; <span class="st-n">13</span>&nbsp;layers</span></a></li>
+        <li><a class="st" href="https://districtry.com/mo/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Missouri</span><span class="st-scope">38 counties in depth &#183; <span class="st-n">13</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Montana</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Nebraska</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Nevada</span><span class="vh">, not yet</span></span></li>
@@ -1437,7 +1462,7 @@ footer .support b { color: var(--ink); }
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Texas</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Utah</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Vermont</span><span class="vh">, not yet</span></span></li>
-        <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Virginia</span><span class="vh">, not yet</span></span></li>
+        <li><a class="st" href="https://districtry.com/va/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Virginia</span><span class="st-scope">all 133 counties and cities &#183; <span class="st-n">16</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Washington</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">West Virginia</span><span class="vh">, not yet</span></span></li>
         <li><a class="st" href="https://districtry.com/wi/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Wisconsin</span><span class="st-scope">all 72 counties &#183; <span class="st-n">32</span>&nbsp;layers</span></a></li>
@@ -1467,7 +1492,7 @@ footer .support b { color: var(--ink); }
        stood on the day it was checked, and a link that opens the map with the right layers on.</p>
     <div class="asks">
       <details class="ask" style="--lc-l:#14181C;--lc-d:#696F76" open>
-        <summary><span class="ask-sw" aria-hidden="true"></span><h3>Who is my U.S. representative?</h3><span class="ask-n">17 places</span></summary>
+        <summary><span class="ask-sw" aria-hidden="true"></span><h3>Who is my U.S. representative?</h3><span class="ask-n">18 places</span></summary>
         <ul class="ask-chips">
           <li><a class="chip" href="/il/congress.html">Illinois<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/ny/congress.html">New York<span class="chip-topic"> &#183; U.S. House</span></a></li>
@@ -1486,10 +1511,11 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/ms/congress.html">Mississippi<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/la/congress.html">Louisiana<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/mo/congress.html">Missouri<span class="chip-topic"> &#183; U.S. House</span></a></li>
+          <li><a class="chip" href="/va/congress.html">Virginia<span class="chip-topic"> &#183; U.S. House</span></a></li>
         </ul>
       </details>
       <details class="ask" style="--lc-l:#4A2E8C;--lc-d:#9B7CFD" open>
-        <summary><span class="ask-sw" aria-hidden="true"></span><h3>Who is my state legislator?</h3><span class="ask-n">14 places</span></summary>
+        <summary><span class="ask-sw" aria-hidden="true"></span><h3>Who is my state legislator?</h3><span class="ask-n">15 places</span></summary>
         <ul class="ask-chips">
           <li><a class="chip" href="/il/state-legislature.html">Illinois<span class="chip-topic"> &#183; General Assembly</span></a></li>
           <li><a class="chip" href="/ny/state-legislature.html">New York<span class="chip-topic"> &#183; NY Legislature</span></a></li>
@@ -1505,10 +1531,11 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/ms/state-legislature.html">Mississippi<span class="chip-topic"> &#183; Legislature</span></a></li>
           <li><a class="chip" href="/la/state-legislature.html">Louisiana<span class="chip-topic"> &#183; Legislature</span></a></li>
           <li><a class="chip" href="/mo/state-legislature.html">Missouri<span class="chip-topic"> &#183; Legislature</span></a></li>
+          <li><a class="chip" href="/va/state-legislature.html">Virginia<span class="chip-topic"> &#183; Legislature</span></a></li>
         </ul>
       </details>
       <details class="ask" style="--lc-l:#1F6FB2;--lc-d:#74BBFF" open>
-        <summary><span class="ask-sw" aria-hidden="true"></span><h3>Who sits on my county board?</h3><span class="ask-n">17 pages in 16 places</span></summary>
+        <summary><span class="ask-sw" aria-hidden="true"></span><h3>Who sits on my county board?</h3><span class="ask-n">18 pages in 17 places</span></summary>
         <ul class="ask-chips">
           <li><a class="chip" href="/il/county-board.html">Illinois<span class="chip-topic"> &#183; commissioners</span></a></li>
           <li><a class="chip" href="/ny/county-supervisor.html">New York<span class="chip-topic"> &#183; supervisors</span></a></li>
@@ -1527,6 +1554,7 @@ footer .support b { color: var(--ink); }
           <li><a class="chip" href="/ms/county-supervisor.html">Mississippi<span class="chip-topic"> &#183; supervisors</span></a></li>
           <li><a class="chip" href="/la/parish-government.html">Louisiana<span class="chip-topic"> &#183; police jury or council</span></a></li>
           <li><a class="chip" href="/mo/county-government.html">Missouri<span class="chip-topic"> &#183; county commission</span></a></li>
+          <li><a class="chip" href="/va/local-government.html">Virginia<span class="chip-topic"> &#183; supervisors or council</span></a></li>
         </ul>
       </details>
       <details class="ask" style="--lc-l:#0B5394;--lc-d:#4FA4FE" open>
@@ -1643,7 +1671,7 @@ footer .support b { color: var(--ink); }
           <li><a href="privacy.html">Privacy</a></li>
           <li><a href="sponsorship.html">Sponsorship</a></li>
           <li><a href="traffic.html">Traffic</a></li>
-          <li><a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a></li>
+          <li><a href="https://overberg.co/why/still-incomplete/" target="_blank" rel="noopener">Why this exists</a></li>
           <li><a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">Source on GitHub</a></li>
         </ul>
       </div>
@@ -1760,7 +1788,10 @@ footer .support b { color: var(--ink); }
       bbox: { minLat: 28.85, maxLat: 33.02, minLng: -94.05, maxLng: -89.71 } },
     { id: "missouri", tag: "mo", name: "Missouri", url: "https://districtry.com/mo/", whole: true,
       outline: "mo/data/app/metro-outline.json",
-      bbox: { minLat: 35.99, maxLat: 40.62, minLng: -95.78, maxLng: -89.09 } }
+      bbox: { minLat: 35.99, maxLat: 40.62, minLng: -95.78, maxLng: -89.09 } },
+    { id: "virginia", tag: "va", name: "Virginia", url: "https://districtry.com/va/", whole: true,
+      outline: "va/data/app/metro-outline.json",
+      bbox: { minLat: 36.54, maxLat: 38.91, minLng: -83.68, maxLng: -75.16 } }
   ];
 
   function metrosClaiming(lat, lng) {
@@ -2801,9 +2832,8 @@ footer .support b { color: var(--ink); }
    * uncovered, none, unreadable, search-failed, or failed-<why> when the
    * lookup could not read a short link. A place shared into the installed
    * app reaches this page (as "opened") when no state has been opened yet.
-   * Nothing about the place is in it. It is one of the two events this page
-   * sends, with the worked example's example-place/<place> (EXAMPLE_SCRIPT),
-   * and the privacy page names both (build_privacy_page.py ROOT_EVENTS). The
+   * Nothing about the place is in it. The privacy page names it with every
+   * other event this page sends (build_privacy_page.py ROOT_EVENTS). The
    * counter loads after this script, so a count waits for it, up to ten
    * seconds, as the apps' do. */
   var linkRead = null, linkVia = "pasted";
@@ -2814,6 +2844,11 @@ footer .support b { color: var(--ink); }
     }
     if ((tries || 0) < 40) setTimeout(function () { trackEvent(path, (tries || 0) + 1); }, 250);
   }
+  /* A press of the masthead's Sponsor is counted as sponsor/front, the
+   * maps' sponsor/<tag> with "front" where a map puts its tag, and nothing
+   * about the reader (2026-10-29). */
+  var sponsorLink = document.getElementById("nav-sponsor");
+  if (sponsorLink) sponsorLink.addEventListener("click", function () { trackEvent("sponsor/front"); });
   function countLinkRead(outcome) {
     var r = linkRead;
     if (!r) return;

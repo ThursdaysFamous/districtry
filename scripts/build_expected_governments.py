@@ -63,7 +63,8 @@ FLOOR = 25000
 STATE_FIPS = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
               "mn": "27", "ky": "21", "ny": "36", "in": "18",
               "nc": "37", "ok": "40", "sc": "45", "tn": "47",
-              "ar": "05", "ms": "28", "la": "22", "mo": "29"}
+              "ar": "05", "ms": "28", "la": "22", "mo": "29",
+              "va": "51"}
 
 # Is a county subdivision the GENERAL-PURPOSE government for residents outside
 # incorporated places in this state? A fact of that state's law, recorded with
@@ -117,6 +118,13 @@ SUBDIVISION_IS_GENERAL_PURPOSE = {
     # no active one reaches the floor, which the build checks (none did on
     # 2026-10-26).
     "mo": None,
+    # Virginia's county subdivisions are its counties' magisterial districts
+    # and, in the independent cities, one subdivision per city: a magisterial
+    # district elects a member of the county's board of supervisors and
+    # governs nobody itself, and a city is already counted as a place. Added
+    # at its go-live; None while no active subdivision reaches the floor,
+    # which the build checks.
+    "va": None,
 }
 
 

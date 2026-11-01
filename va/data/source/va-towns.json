@@ -1,0 +1,1140 @@
+{
+ "fetched": "2026-10-30",
+ "source": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4",
+ "towns": [
+  {
+   "geoid": "5100148",
+   "name": "Abingdon",
+   "lat": 36.7066646,
+   "lng": -81.9716269
+  },
+  {
+   "geoid": "5100180",
+   "name": "Accomac",
+   "lat": 37.7195614,
+   "lng": -75.6677838
+  },
+  {
+   "geoid": "5100724",
+   "name": "Alberta",
+   "lat": 36.8559328,
+   "lng": -77.8914746
+  },
+  {
+   "geoid": "5101528",
+   "name": "Altavista",
+   "lat": 37.1235664,
+   "lng": -79.2833298
+  },
+  {
+   "geoid": "5101672",
+   "name": "Amherst",
+   "lat": 37.581894,
+   "lng": -79.0519948
+  },
+  {
+   "geoid": "5102040",
+   "name": "Appalachia",
+   "lat": 36.9127532,
+   "lng": -82.7950215
+  },
+  {
+   "geoid": "5102072",
+   "name": "Appomattox",
+   "lat": 37.3587375,
+   "lng": -78.8264458
+  },
+  {
+   "geoid": "5103368",
+   "name": "Ashland",
+   "lat": 37.760417,
+   "lng": -77.4724138
+  },
+  {
+   "geoid": "5105544",
+   "name": "Bedford",
+   "lat": 37.3399923,
+   "lng": -79.5141123
+  },
+  {
+   "geoid": "5105912",
+   "name": "Belle Haven",
+   "lat": 37.5545916,
+   "lng": -75.828663
+  },
+  {
+   "geoid": "5106968",
+   "name": "Berryville",
+   "lat": 39.1477265,
+   "lng": -77.9801604
+  },
+  {
+   "geoid": "5107480",
+   "name": "Big Stone Gap",
+   "lat": 36.8627395,
+   "lng": -82.7760893
+  },
+  {
+   "geoid": "5107784",
+   "name": "Blacksburg",
+   "lat": 37.2312641,
+   "lng": -80.4267452
+  },
+  {
+   "geoid": "5107832",
+   "name": "Blackstone",
+   "lat": 37.0818217,
+   "lng": -78.0028118
+  },
+  {
+   "geoid": "5108120",
+   "name": "Bloxom",
+   "lat": 37.8292413,
+   "lng": -75.6214366
+  },
+  {
+   "geoid": "5108152",
+   "name": "Bluefield",
+   "lat": 37.2352251,
+   "lng": -81.2746595
+  },
+  {
+   "geoid": "5108584",
+   "name": "Boones Mill",
+   "lat": 37.1155623,
+   "lng": -79.9514144
+  },
+  {
+   "geoid": "5108888",
+   "name": "Bowling Green",
+   "lat": 38.053088,
+   "lng": -77.3473758
+  },
+  {
+   "geoid": "5108984",
+   "name": "Boyce",
+   "lat": 39.0932231,
+   "lng": -78.060108
+  },
+  {
+   "geoid": "5109016",
+   "name": "Boydton",
+   "lat": 36.6660604,
+   "lng": -78.3907267
+  },
+  {
+   "geoid": "5109032",
+   "name": "Boykins",
+   "lat": 36.5778249,
+   "lng": -77.1989186
+  },
+  {
+   "geoid": "5109208",
+   "name": "Branchville",
+   "lat": 36.5697935,
+   "lng": -77.2500956
+  },
+  {
+   "geoid": "5109656",
+   "name": "Bridgewater",
+   "lat": 38.3884844,
+   "lng": -78.9644685
+  },
+  {
+   "geoid": "5110040",
+   "name": "Broadway",
+   "lat": 38.6084852,
+   "lng": -78.8013657
+  },
+  {
+   "geoid": "5110072",
+   "name": "Brodnax",
+   "lat": 36.7029531,
+   "lng": -78.0319373
+  },
+  {
+   "geoid": "5110296",
+   "name": "Brookneal",
+   "lat": 37.0479839,
+   "lng": -78.9538557
+  },
+  {
+   "geoid": "5110744",
+   "name": "Buchanan",
+   "lat": 37.5208662,
+   "lng": -79.6910475
+  },
+  {
+   "geoid": "5111560",
+   "name": "Burkeville",
+   "lat": 37.1879053,
+   "lng": -78.1944128
+  },
+  {
+   "geoid": "5112808",
+   "name": "Cape Charles",
+   "lat": 37.2508417,
+   "lng": -76.0096621
+  },
+  {
+   "geoid": "5112904",
+   "name": "Capron",
+   "lat": 36.7093288,
+   "lng": -77.2012815
+  },
+  {
+   "geoid": "5113784",
+   "name": "Cedar Bluff",
+   "lat": 37.086956,
+   "lng": -81.7637253
+  },
+  {
+   "geoid": "5114952",
+   "name": "Charlotte Court House",
+   "lat": 37.0562474,
+   "lng": -78.6376868
+  },
+  {
+   "geoid": "5114984",
+   "name": "Chase City",
+   "lat": 36.7998444,
+   "lng": -78.4609509
+  },
+  {
+   "geoid": "5115000",
+   "name": "Chatham",
+   "lat": 36.8121715,
+   "lng": -79.4001721
+  },
+  {
+   "geoid": "5115112",
+   "name": "Cheriton",
+   "lat": 37.2943894,
+   "lng": -75.9654316
+  },
+  {
+   "geoid": "5116480",
+   "name": "Chilhowie",
+   "lat": 36.8001726,
+   "lng": -81.6829132
+  },
+  {
+   "geoid": "5116512",
+   "name": "Chincoteague",
+   "lat": 37.9499481,
+   "lng": -75.3512654
+  },
+  {
+   "geoid": "5116608",
+   "name": "Christiansburg",
+   "lat": 37.1406627,
+   "lng": -80.4045125
+  },
+  {
+   "geoid": "5116880",
+   "name": "Claremont",
+   "lat": 37.2272961,
+   "lng": -76.9665638
+  },
+  {
+   "geoid": "5116992",
+   "name": "Clarksville",
+   "lat": 36.616044,
+   "lng": -78.5648022
+  },
+  {
+   "geoid": "5117296",
+   "name": "Cleveland",
+   "lat": 36.9436687,
+   "lng": -82.1526316
+  },
+  {
+   "geoid": "5117376",
+   "name": "Clifton",
+   "lat": 38.7801282,
+   "lng": -77.3859899
+  },
+  {
+   "geoid": "5117440",
+   "name": "Clifton Forge",
+   "lat": 37.8233205,
+   "lng": -79.8251938
+  },
+  {
+   "geoid": "5117504",
+   "name": "Clinchco",
+   "lat": 37.1573975,
+   "lng": -82.3544616
+  },
+  {
+   "geoid": "5117536",
+   "name": "Clinchport",
+   "lat": 36.6800224,
+   "lng": -82.7441682
+  },
+  {
+   "geoid": "5117552",
+   "name": "Clintwood",
+   "lat": 37.1532287,
+   "lng": -82.4599469
+  },
+  {
+   "geoid": "5117952",
+   "name": "Coeburn",
+   "lat": 36.945648,
+   "lng": -82.4703981
+  },
+  {
+   "geoid": "5118400",
+   "name": "Colonial Beach",
+   "lat": 38.2611057,
+   "lng": -76.9944683
+  },
+  {
+   "geoid": "5119600",
+   "name": "Courtland",
+   "lat": 36.7122597,
+   "lng": -77.0619572
+  },
+  {
+   "geoid": "5119904",
+   "name": "Craigsville",
+   "lat": 38.0865248,
+   "lng": -79.3907875
+  },
+  {
+   "geoid": "5120160",
+   "name": "Crewe",
+   "lat": 37.1809939,
+   "lng": -78.1304065
+  },
+  {
+   "geoid": "5120752",
+   "name": "Culpeper",
+   "lat": 38.4702917,
+   "lng": -77.9997639
+  },
+  {
+   "geoid": "5121184",
+   "name": "Damascus",
+   "lat": 36.6326703,
+   "lng": -81.7893594
+  },
+  {
+   "geoid": "5121648",
+   "name": "Dayton",
+   "lat": 38.417296,
+   "lng": -78.9411073
+  },
+  {
+   "geoid": "5122160",
+   "name": "Dendron",
+   "lat": 37.0364146,
+   "lng": -76.9240558
+  },
+  {
+   "geoid": "5122560",
+   "name": "Dillwyn",
+   "lat": 37.5405113,
+   "lng": -78.4612103
+  },
+  {
+   "geoid": "5123376",
+   "name": "Drakes Branch",
+   "lat": 36.9933467,
+   "lng": -78.6009396
+  },
+  {
+   "geoid": "5123648",
+   "name": "Dublin",
+   "lat": 37.1055029,
+   "lng": -80.6896997
+  },
+  {
+   "geoid": "5123680",
+   "name": "Duffield",
+   "lat": 36.7196295,
+   "lng": -82.7959672
+  },
+  {
+   "geoid": "5123760",
+   "name": "Dumfries",
+   "lat": 38.5661154,
+   "lng": -77.3160522
+  },
+  {
+   "geoid": "5123952",
+   "name": "Dungannon",
+   "lat": 36.8283968,
+   "lng": -82.4681084
+  },
+  {
+   "geoid": "5124752",
+   "name": "Eastville",
+   "lat": 37.3509988,
+   "lng": -75.9407676
+  },
+  {
+   "geoid": "5125008",
+   "name": "Edinburg",
+   "lat": 38.8228633,
+   "lng": -78.5626894
+  },
+  {
+   "geoid": "5125408",
+   "name": "Elkton",
+   "lat": 38.4106902,
+   "lng": -78.6161169
+  },
+  {
+   "geoid": "5126416",
+   "name": "Exmore",
+   "lat": 37.5294946,
+   "lng": -75.8283172
+  },
+  {
+   "geoid": "5127440",
+   "name": "Farmville",
+   "lat": 37.2961154,
+   "lng": -78.4004468
+  },
+  {
+   "geoid": "5127824",
+   "name": "Fincastle",
+   "lat": 37.5015731,
+   "lng": -79.8748267
+  },
+  {
+   "geoid": "5128544",
+   "name": "Floyd",
+   "lat": 36.9121601,
+   "lng": -80.3181166
+  },
+  {
+   "geoid": "5129920",
+   "name": "Fries",
+   "lat": 36.7150541,
+   "lng": -80.9776087
+  },
+  {
+   "geoid": "5129968",
+   "name": "Front Royal",
+   "lat": 38.9249525,
+   "lng": -78.1834257
+  },
+  {
+   "geoid": "5130496",
+   "name": "Gate City",
+   "lat": 36.6461392,
+   "lng": -82.5783868
+  },
+  {
+   "geoid": "5131056",
+   "name": "Glade Spring",
+   "lat": 36.7899439,
+   "lng": -81.772253
+  },
+  {
+   "geoid": "5131136",
+   "name": "Glasgow",
+   "lat": 37.6318139,
+   "lng": -79.4581695
+  },
+  {
+   "geoid": "5131376",
+   "name": "Glen Lyn",
+   "lat": 37.3726692,
+   "lng": -80.8589356
+  },
+  {
+   "geoid": "5131936",
+   "name": "Gordonsville",
+   "lat": 38.1355523,
+   "lng": -78.1874056
+  },
+  {
+   "geoid": "5131968",
+   "name": "Goshen",
+   "lat": 37.9881595,
+   "lng": -79.5040575
+  },
+  {
+   "geoid": "5133232",
+   "name": "Gretna",
+   "lat": 36.9495478,
+   "lng": -79.3626048
+  },
+  {
+   "geoid": "5133488",
+   "name": "Grottoes",
+   "lat": 38.2697035,
+   "lng": -78.8259053
+  },
+  {
+   "geoid": "5133648",
+   "name": "Grundy",
+   "lat": 37.2671646,
+   "lng": -82.0944549
+  },
+  {
+   "geoid": "5134064",
+   "name": "Halifax",
+   "lat": 36.7611415,
+   "lng": -78.9274599
+  },
+  {
+   "geoid": "5134176",
+   "name": "Hallwood",
+   "lat": 37.8774288,
+   "lng": -75.5895159
+  },
+  {
+   "geoid": "5134240",
+   "name": "Hamilton",
+   "lat": 39.1350318,
+   "lng": -77.6640034
+  },
+  {
+   "geoid": "5135976",
+   "name": "Haymarket",
+   "lat": 38.8121691,
+   "lng": -77.6363314
+  },
+  {
+   "geoid": "5136008",
+   "name": "Haysi",
+   "lat": 37.2159002,
+   "lng": -82.286741
+  },
+  {
+   "geoid": "5136648",
+   "name": "Herndon",
+   "lat": 38.9704119,
+   "lng": -77.3870725
+  },
+  {
+   "geoid": "5137288",
+   "name": "Hillsboro",
+   "lat": 39.200797,
+   "lng": -77.7234
+  },
+  {
+   "geoid": "5137336",
+   "name": "Hillsville",
+   "lat": 36.7616129,
+   "lng": -80.7367035
+  },
+  {
+   "geoid": "5138280",
+   "name": "Honaker",
+   "lat": 37.0155873,
+   "lng": -81.9685385
+  },
+  {
+   "geoid": "5139224",
+   "name": "Hurt",
+   "lat": 37.0963749,
+   "lng": -79.3033404
+  },
+  {
+   "geoid": "5139528",
+   "name": "Independence",
+   "lat": 36.6274823,
+   "lng": -81.1492481
+  },
+  {
+   "geoid": "5140024",
+   "name": "Iron Gate",
+   "lat": 37.7989141,
+   "lng": -79.7905669
+  },
+  {
+   "geoid": "5140088",
+   "name": "Irvington",
+   "lat": 37.6623723,
+   "lng": -76.4199982
+  },
+  {
+   "geoid": "5140232",
+   "name": "Ivor",
+   "lat": 36.9010567,
+   "lng": -76.8946516
+  },
+  {
+   "geoid": "5140536",
+   "name": "Jarratt",
+   "lat": 36.8159906,
+   "lng": -77.4689108
+  },
+  {
+   "geoid": "5141272",
+   "name": "Jonesville",
+   "lat": 36.6871118,
+   "lng": -83.1153126
+  },
+  {
+   "geoid": "5141656",
+   "name": "Keller",
+   "lat": 37.6211385,
+   "lng": -75.7643916
+  },
+  {
+   "geoid": "5141832",
+   "name": "Kenbridge",
+   "lat": 36.9608586,
+   "lng": -78.1283822
+  },
+  {
+   "geoid": "5142264",
+   "name": "Keysville",
+   "lat": 37.0389887,
+   "lng": -78.4804366
+  },
+  {
+   "geoid": "5142424",
+   "name": "Kilmarnock",
+   "lat": 37.7149294,
+   "lng": -76.3884922
+  },
+  {
+   "geoid": "5143176",
+   "name": "La Crosse",
+   "lat": 36.701388,
+   "lng": -78.0944516
+  },
+  {
+   "geoid": "5144520",
+   "name": "Lawrenceville",
+   "lat": 36.7564997,
+   "lng": -77.8538734
+  },
+  {
+   "geoid": "5144696",
+   "name": "Lebanon",
+   "lat": 36.8994919,
+   "lng": -82.078511
+  },
+  {
+   "geoid": "5144984",
+   "name": "Leesburg",
+   "lat": 39.1028474,
+   "lng": -77.554525
+  },
+  {
+   "geoid": "5147144",
+   "name": "Louisa",
+   "lat": 38.016624,
+   "lng": -77.9997371
+  },
+  {
+   "geoid": "5147208",
+   "name": "Lovettsville",
+   "lat": 39.2698341,
+   "lng": -77.6403877
+  },
+  {
+   "geoid": "5147528",
+   "name": "Luray",
+   "lat": 38.6641843,
+   "lng": -78.4544761
+  },
+  {
+   "geoid": "5148344",
+   "name": "McKenney",
+   "lat": 36.9853667,
+   "lng": -77.7219091
+  },
+  {
+   "geoid": "5148488",
+   "name": "Madison",
+   "lat": 38.3793543,
+   "lng": -78.2585984
+  },
+  {
+   "geoid": "5149464",
+   "name": "Marion",
+   "lat": 36.8373932,
+   "lng": -81.5156636
+  },
+  {
+   "geoid": "5150984",
+   "name": "Melfa",
+   "lat": 37.6489676,
+   "lng": -75.7407431
+  },
+  {
+   "geoid": "5151448",
+   "name": "Middleburg",
+   "lat": 38.9734548,
+   "lng": -77.7454708
+  },
+  {
+   "geoid": "5151512",
+   "name": "Middletown",
+   "lat": 39.0290926,
+   "lng": -78.2777801
+  },
+  {
+   "geoid": "5152120",
+   "name": "Mineral",
+   "lat": 38.0075845,
+   "lng": -77.9062355
+  },
+  {
+   "geoid": "5152680",
+   "name": "Monterey",
+   "lat": 38.4115591,
+   "lng": -79.5808833
+  },
+  {
+   "geoid": "5152952",
+   "name": "Montross",
+   "lat": 38.0924165,
+   "lng": -76.8158849
+  },
+  {
+   "geoid": "5153864",
+   "name": "Mount Crawford",
+   "lat": 38.3623719,
+   "lng": -78.9416452
+  },
+  {
+   "geoid": "5153992",
+   "name": "Mount Jackson",
+   "lat": 38.7388781,
+   "lng": -78.6509176
+  },
+  {
+   "geoid": "5154904",
+   "name": "Narrows",
+   "lat": 37.3314795,
+   "lng": -80.8074268
+  },
+  {
+   "geoid": "5154984",
+   "name": "Nassawadox",
+   "lat": 37.4762935,
+   "lng": -75.8591755
+  },
+  {
+   "geoid": "5155592",
+   "name": "New Castle",
+   "lat": 37.5009923,
+   "lng": -80.111017
+  },
+  {
+   "geoid": "5155848",
+   "name": "New Market",
+   "lat": 38.645218,
+   "lng": -78.6710657
+  },
+  {
+   "geoid": "5156096",
+   "name": "Newsoms",
+   "lat": 36.626208,
+   "lng": -77.1248368
+  },
+  {
+   "geoid": "5156304",
+   "name": "Nickelsville",
+   "lat": 36.7488134,
+   "lng": -82.4171872
+  },
+  {
+   "geoid": "5158696",
+   "name": "Occoquan",
+   "lat": 38.681729,
+   "lng": -77.2618611
+  },
+  {
+   "geoid": "5159336",
+   "name": "Onancock",
+   "lat": 37.7099933,
+   "lng": -75.7436703
+  },
+  {
+   "geoid": "5159384",
+   "name": "Onley",
+   "lat": 37.6913248,
+   "lng": -75.717141
+  },
+  {
+   "geoid": "5159496",
+   "name": "Orange",
+   "lat": 38.2478452,
+   "lng": -78.1131865
+  },
+  {
+   "geoid": "5160296",
+   "name": "Painter",
+   "lat": 37.5851843,
+   "lng": -75.783759
+  },
+  {
+   "geoid": "5160488",
+   "name": "Pamplin City",
+   "lat": 37.266276,
+   "lng": -78.6837363
+  },
+  {
+   "geoid": "5160680",
+   "name": "Parksley",
+   "lat": 37.7863033,
+   "lng": -75.6539039
+  },
+  {
+   "geoid": "5161208",
+   "name": "Pearisburg",
+   "lat": 37.3286828,
+   "lng": -80.727293
+  },
+  {
+   "geoid": "5161336",
+   "name": "Pembroke",
+   "lat": 37.3218757,
+   "lng": -80.6365012
+  },
+  {
+   "geoid": "5161560",
+   "name": "Pennington Gap",
+   "lat": 36.7578211,
+   "lng": -83.0354086
+  },
+  {
+   "geoid": "5161896",
+   "name": "Phenix",
+   "lat": 37.0810591,
+   "lng": -78.7484998
+  },
+  {
+   "geoid": "5163288",
+   "name": "Pocahontas",
+   "lat": 37.3097449,
+   "lng": -81.3458097
+  },
+  {
+   "geoid": "5163928",
+   "name": "Port Royal",
+   "lat": 38.1648862,
+   "lng": -77.1992636
+  },
+  {
+   "geoid": "5164272",
+   "name": "Pound",
+   "lat": 37.1260869,
+   "lng": -82.6073738
+  },
+  {
+   "geoid": "5164880",
+   "name": "Pulaski",
+   "lat": 37.0527704,
+   "lng": -80.7619186
+  },
+  {
+   "geoid": "5165008",
+   "name": "Purcellville",
+   "lat": 39.138389,
+   "lng": -77.7081629
+  },
+  {
+   "geoid": "5165120",
+   "name": "Quantico",
+   "lat": 38.5224374,
+   "lng": -77.2901462
+  },
+  {
+   "geoid": "5166512",
+   "name": "Remington",
+   "lat": 38.5346103,
+   "lng": -77.8081781
+  },
+  {
+   "geoid": "5166896",
+   "name": "Rich Creek",
+   "lat": 37.384617,
+   "lng": -80.818728
+  },
+  {
+   "geoid": "5166928",
+   "name": "Richlands",
+   "lat": 37.0880385,
+   "lng": -81.8104252
+  },
+  {
+   "geoid": "5167208",
+   "name": "Ridgeway",
+   "lat": 36.5781741,
+   "lng": -79.8582902
+  },
+  {
+   "geoid": "5168496",
+   "name": "Rocky Mount",
+   "lat": 37.0043976,
+   "lng": -79.8847624
+  },
+  {
+   "geoid": "5169168",
+   "name": "Round Hill",
+   "lat": 39.131102,
+   "lng": -77.7705985
+  },
+  {
+   "geoid": "5169456",
+   "name": "Rural Retreat",
+   "lat": 36.9051319,
+   "lng": -81.2772498
+  },
+  {
+   "geoid": "5169936",
+   "name": "St. Paul",
+   "lat": 36.9067087,
+   "lng": -82.3170166
+  },
+  {
+   "geoid": "5170096",
+   "name": "Saltville",
+   "lat": 36.8759146,
+   "lng": -81.7629088
+  },
+  {
+   "geoid": "5170576",
+   "name": "Saxis",
+   "lat": 37.92648,
+   "lng": -75.7229732
+  },
+  {
+   "geoid": "5170752",
+   "name": "Scottsburg",
+   "lat": 36.7591923,
+   "lng": -78.7911744
+  },
+  {
+   "geoid": "5170800",
+   "name": "Scottsville",
+   "lat": 37.8113465,
+   "lng": -78.4881682
+  },
+  {
+   "geoid": "5171776",
+   "name": "Shenandoah",
+   "lat": 38.4871306,
+   "lng": -78.6164509
+  },
+  {
+   "geoid": "5173200",
+   "name": "Smithfield",
+   "lat": 36.9735467,
+   "lng": -76.6146201
+  },
+  {
+   "geoid": "5173712",
+   "name": "South Boston",
+   "lat": 36.7118251,
+   "lng": -78.9133543
+  },
+  {
+   "geoid": "5173904",
+   "name": "South Hill",
+   "lat": 36.7256615,
+   "lng": -78.1288865
+  },
+  {
+   "geoid": "5175008",
+   "name": "Stanardsville",
+   "lat": 38.299056,
+   "lng": -78.4368258
+  },
+  {
+   "geoid": "5175024",
+   "name": "Stanley",
+   "lat": 38.5810401,
+   "lng": -78.4994036
+  },
+  {
+   "geoid": "5175344",
+   "name": "Stephens City",
+   "lat": 39.0958013,
+   "lng": -78.2170198
+  },
+  {
+   "geoid": "5175840",
+   "name": "Stony Creek",
+   "lat": 36.9480104,
+   "lng": -77.4000673
+  },
+  {
+   "geoid": "5176000",
+   "name": "Strasburg",
+   "lat": 39.002477,
+   "lng": -78.348505
+  },
+  {
+   "geoid": "5176256",
+   "name": "Stuart",
+   "lat": 36.6403627,
+   "lng": -80.2686416
+  },
+  {
+   "geoid": "5176880",
+   "name": "Surry",
+   "lat": 37.1370707,
+   "lng": -76.833275
+  },
+  {
+   "geoid": "5177520",
+   "name": "Tangier",
+   "lat": 37.8234357,
+   "lng": -75.9928106
+  },
+  {
+   "geoid": "5177568",
+   "name": "Tappahannock",
+   "lat": 37.9103951,
+   "lng": -76.8671593
+  },
+  {
+   "geoid": "5177792",
+   "name": "Tazewell",
+   "lat": 37.128862,
+   "lng": -81.5063078
+  },
+  {
+   "geoid": "5178192",
+   "name": "The Plains",
+   "lat": 38.8621767,
+   "lng": -77.7742039
+  },
+  {
+   "geoid": "5178736",
+   "name": "Timberville",
+   "lat": 38.6326601,
+   "lng": -78.7737174
+  },
+  {
+   "geoid": "5179024",
+   "name": "Toms Brook",
+   "lat": 38.9465418,
+   "lng": -78.4400456
+  },
+  {
+   "geoid": "5179456",
+   "name": "Troutdale",
+   "lat": 36.6960712,
+   "lng": -81.4375603
+  },
+  {
+   "geoid": "5179472",
+   "name": "Troutville",
+   "lat": 37.4166543,
+   "lng": -79.8780962
+  },
+  {
+   "geoid": "5180272",
+   "name": "Urbanna",
+   "lat": 37.6382032,
+   "lng": -76.5759099
+  },
+  {
+   "geoid": "5181024",
+   "name": "Victoria",
+   "lat": 36.9944442,
+   "lng": -78.2242978
+  },
+  {
+   "geoid": "5181072",
+   "name": "Vienna",
+   "lat": 38.8985761,
+   "lng": -77.2583226
+  },
+  {
+   "geoid": "5181280",
+   "name": "Vinton",
+   "lat": 37.2752855,
+   "lng": -79.8868732
+  },
+  {
+   "geoid": "5181312",
+   "name": "Virgilina",
+   "lat": 36.5456746,
+   "lng": -78.7752134
+  },
+  {
+   "geoid": "5182320",
+   "name": "Wachapreague",
+   "lat": 37.6064146,
+   "lng": -75.6892731
+  },
+  {
+   "geoid": "5182384",
+   "name": "Wakefield",
+   "lat": 36.9691255,
+   "lng": -76.9880965
+  },
+  {
+   "geoid": "5183136",
+   "name": "Warrenton",
+   "lat": 38.7153763,
+   "lng": -77.7975626
+  },
+  {
+   "geoid": "5183168",
+   "name": "Warsaw",
+   "lat": 37.9603118,
+   "lng": -76.7611879
+  },
+  {
+   "geoid": "5183248",
+   "name": "Washington",
+   "lat": 38.7117328,
+   "lng": -78.1599586
+  },
+  {
+   "geoid": "5183600",
+   "name": "Waverly",
+   "lat": 37.0340244,
+   "lng": -77.0955955
+  },
+  {
+   "geoid": "5183808",
+   "name": "Weber City",
+   "lat": 36.6237208,
+   "lng": -82.5633507
+  },
+  {
+   "geoid": "5184960",
+   "name": "West Point",
+   "lat": 37.5522614,
+   "lng": -76.8018476
+  },
+  {
+   "geoid": "5185600",
+   "name": "White Stone",
+   "lat": 37.6452371,
+   "lng": -76.3906381
+  },
+  {
+   "geoid": "5186784",
+   "name": "Windsor",
+   "lat": 36.8111898,
+   "lng": -76.7384103
+  },
+  {
+   "geoid": "5187072",
+   "name": "Wise",
+   "lat": 36.976869,
+   "lng": -82.5810866
+  },
+  {
+   "geoid": "5187712",
+   "name": "Woodstock",
+   "lat": 38.8721146,
+   "lng": -78.5171305
+  },
+  {
+   "geoid": "5188000",
+   "name": "Wytheville",
+   "lat": 36.9533853,
+   "lng": -81.0884377
+  }
+ ]
+}

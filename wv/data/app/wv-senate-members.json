@@ -1,0 +1,495 @@
+{
+  "1": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Laura Wakim Chapman",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Chapman",
+        "capitolOffice": [
+          "Room 218W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7918"
+        ],
+        "email": "laura.chapman@wvsenate.gov"
+      },
+      {
+        "name": "Ryan Weld",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Weld",
+        "capitolOffice": [
+          "Room 216W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7984"
+        ],
+        "email": "ryan.weld@wvsenate.gov"
+      }
+    ]
+  },
+  "2": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Charles H. Clements",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Clements",
+        "capitolOffice": [
+          "Room 417M, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7827"
+        ],
+        "email": "charles.clements@wvsenate.gov"
+      },
+      {
+        "name": "Chris Rose",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Rose",
+        "capitolOffice": [
+          "Room 209W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7902"
+        ],
+        "email": "chris.rose@wvsenate.gov"
+      }
+    ]
+  },
+  "3": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mike Azinger",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Azinger",
+        "capitolOffice": [
+          "Room 441M, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7970"
+        ],
+        "email": "mike.azinger@wvsenate.gov"
+      },
+      {
+        "name": "Trenton Barnhart",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Barnhart",
+        "capitolOffice": [
+          "Room 223W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7905"
+        ],
+        "email": "trenton.barnhart@wvsenate.gov"
+      }
+    ]
+  },
+  "4": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Amy Grady",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Grady",
+        "capitolOffice": [
+          "Room 417M, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7855"
+        ],
+        "email": "amy.grady@wvsenate.gov"
+      },
+      {
+        "name": "Eric Tarr",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Tarr",
+        "capitolOffice": [
+          "Room 213W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7901"
+        ],
+        "email": "eric.tarr@wvsenate.gov"
+      }
+    ]
+  },
+  "5": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Scott Fuller",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Fuller",
+        "capitolOffice": [
+          "Room 218W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7937"
+        ],
+        "email": "scott.fuller@wvsenate.gov"
+      },
+      {
+        "name": "Mike Woelfel",
+        "party": "Democratic",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Woelfel",
+        "capitolOffice": [
+          "Room 245M, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7956"
+        ],
+        "email": "mike.woelfel@wvsenate.gov"
+      }
+    ]
+  },
+  "6": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Craig A. Hart",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Hart",
+        "capitolOffice": [
+          "Room 209W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7843"
+        ],
+        "email": "craig.hart@wvsenate.gov"
+      },
+      {
+        "name": "Mark R. Maynard",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Maynard%2C%20M.",
+        "capitolOffice": [
+          "Room 441M, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7808"
+        ],
+        "email": "mark.maynard@wvsenate.gov"
+      }
+    ]
+  },
+  "7": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Zack Maynard",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Maynard%2C%20Z.",
+        "capitolOffice": [
+          "Room 204W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7939"
+        ],
+        "email": "zack.maynard@wvsenate.gov"
+      },
+      {
+        "name": "Rupie Phillips",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Phillips",
+        "capitolOffice": [
+          "Room 217W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7857"
+        ],
+        "email": "rupie.phillips@wvsenate.gov"
+      }
+    ]
+  },
+  "8": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "T. Kevan Bartlett",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Bartlett",
+        "capitolOffice": [
+          "Room 216W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7841"
+        ],
+        "email": "kevan.bartlett@wvsenate.gov"
+      },
+      {
+        "name": "Glenn Jeffries",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Jeffries",
+        "capitolOffice": [
+          "Room 214W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7866"
+        ],
+        "email": "glenn.jeffries@wvsenate.gov"
+      }
+    ]
+  },
+  "9": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Brian Helton",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Helton",
+        "capitolOffice": [
+          "Room 439M, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7807"
+        ],
+        "email": "brian.helton@wvsenate.gov"
+      },
+      {
+        "name": "Rollan A. Roberts",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Roberts",
+        "capitolOffice": [
+          "Room 229W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7831"
+        ],
+        "email": "rollan.roberts@wvsenate.gov"
+      }
+    ]
+  },
+  "10": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Vince Deeds",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Deeds",
+        "capitolOffice": [
+          "Room 200W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7959"
+        ],
+        "email": "vince.deeds@wvsenate.gov"
+      },
+      {
+        "name": "Jack Woodrum",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Woodrum",
+        "capitolOffice": [
+          "Room 229W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7849"
+        ],
+        "email": "jack.woodrum@wvsenate.gov"
+      }
+    ]
+  },
+  "11": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Bill Hamilton",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Hamilton",
+        "capitolOffice": [
+          "Room 223W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7906"
+        ],
+        "email": "bill.hamilton@wvsenate.gov"
+      },
+      {
+        "name": "Robbie Morris",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Morris",
+        "capitolOffice": [
+          "Room 214W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7973"
+        ],
+        "email": "robbie.morris@wvsenate.gov"
+      }
+    ]
+  },
+  "12": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Patrick Martin",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Martin",
+        "capitolOffice": [
+          "Room 227M, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7845"
+        ],
+        "email": "patrick.martin@wvsenate.gov"
+      },
+      {
+        "name": "Ben Queen",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Queen",
+        "capitolOffice": [
+          "Room 204W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7904"
+        ],
+        "email": "ben.queen@wvsenate.gov"
+      }
+    ]
+  },
+  "13": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Joey Garcia",
+        "party": "Democratic",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Garcia",
+        "capitolOffice": [
+          "Room 213W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7961"
+        ],
+        "email": "joey.garcia@wvsenate.gov"
+      },
+      {
+        "name": "Mike Oliverio",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Oliverio",
+        "capitolOffice": [
+          "Room 206W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7919"
+        ],
+        "email": "mike.oliverio@wvsenate.gov"
+      }
+    ]
+  },
+  "14": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Randy E. Smith",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=President%20Smith",
+        "capitolOffice": [
+          "Room 229M, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7995"
+        ],
+        "email": "randy.smith@wvsenate.gov"
+      },
+      {
+        "name": "Jay Taylor",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Taylor",
+        "capitolOffice": [
+          "Room 217W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7914"
+        ],
+        "email": "jay.taylor@wvsenate.gov"
+      }
+    ]
+  },
+  "15": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Darren Thorne",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Thorne",
+        "capitolOffice": [
+          "Room 200W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7980"
+        ],
+        "email": "darren.thorne@wvsenate.gov"
+      },
+      {
+        "name": "Tom Willis",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Willis",
+        "capitolOffice": [
+          "Room 210W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7867"
+        ],
+        "email": "tom.willis@wvsenate.gov"
+      }
+    ]
+  },
+  "16": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jason Barrett",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Barrett",
+        "capitolOffice": [
+          "Room 461M, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7933"
+        ],
+        "email": "jason.barrett@wvsenate.gov"
+      },
+      {
+        "name": "Patricia Rucker",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Rucker",
+        "capitolOffice": [
+          "Room 206W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7957"
+        ],
+        "email": "patricia.rucker@wvsenate.gov"
+      }
+    ]
+  },
+  "17": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Anne B. Charnock",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Charnock",
+        "capitolOffice": [
+          "Room 203W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7854"
+        ],
+        "email": "anne.charnock@wvsenate.gov"
+      },
+      {
+        "name": "Tom Takubo",
+        "party": "Republican",
+        "url": "https://www.wvlegislature.gov/Senate1/lawmaker.cfm?member=Senator%20Takubo",
+        "capitolOffice": [
+          "Room 203W, Bldg. 1",
+          "1900 Kanawha Blvd. E.",
+          "Charleston, WV 25305",
+          "Phone: (304) 357-7990"
+        ],
+        "email": "tom.takubo@wvsenate.gov"
+      }
+    ]
+  }
+}

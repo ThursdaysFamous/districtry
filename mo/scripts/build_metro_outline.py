@@ -108,12 +108,12 @@ STATE_COUNTY_FIPS = (
 )
 # The COVERAGE ring: the counties whose commission or council district lines
 # the County Commission District layer draws, exactly the keys of
-# data/app/mo-commission-counties.json (34 on 2026-10-28).
+# data/app/mo-commission-counties.json (38 on 2026-10-30).
 METRO_COUNTY_FIPS = (
-    "007", "011", "013", "021", "029", "037", "041", "043", "051",
-    "053", "057", "063", "065", "089", "093", "109", "113", "119", "125",
-    "127", "131", "157", "161", "167", "169", "173", "177",
-    "185", "186", "195", "201", "217", "219", "223",
+    "007", "011", "013", "021", "029", "031", "037", "041", "043", "051",
+    "053", "057", "063", "065", "067", "089", "093", "109", "113", "115",
+    "119", "125", "127", "131", "143", "157", "161", "167", "169", "173",
+    "177", "185", "186", "195", "201", "217", "219", "223",
 )
 STATE_FIPS = "29"
 # No dispatch entries: none of this instance's layers is county-dispatched
@@ -313,6 +313,7 @@ RING_COUNTIES = (
     "Bates",
     "Buchanan",
     "Camden",
+    "Cape Girardeau",
     "Cass",
     "Chariton",
     "Christian",
@@ -321,14 +322,17 @@ RING_COUNTIES = (
     "Dade",
     "DeKalb",
     "Dent",
+    "Douglas",
     "Howard",
     "Iron",
     "Lawrence",
     "Lincoln",
+    "Linn",
     "Maries",
     "Marion",
     "McDonald",
     "Miller",
+    "New Madrid",
     "Perry",
     "Phelps",
     "Polk",

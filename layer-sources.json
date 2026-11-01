@@ -1264,7 +1264,8 @@
       "/il/data/app/rock-island-fire-districts.json",
       "/il/data/app/macon-fire-districts.json",
       "/il/data/app/woodford-fire-districts.json",
-      "/il/data/app/grundy-fire-districts.json"
+      "/il/data/app/grundy-fire-districts.json",
+      "/il/data/app/whiteside-fire-districts.json"
      ],
      "whole_set": [
       "arcgispublicmap.co.st-clair.il.us",
@@ -1398,7 +1399,8 @@
        "stark",
        "macon",
        "woodford",
-       "grundy"
+       "grundy",
+       "whiteside"
       ],
       "failed": [],
       "files": {
@@ -1428,6 +1430,9 @@
        ],
        "grundy": [
         "/il/data/app/grundy-fire-districts.json"
+       ],
+       "whiteside": [
+        "/il/data/app/whiteside-fire-districts.json"
        ]
       }
      },
@@ -1456,7 +1461,8 @@
       "/il/data/app/grundy-park-districts.json",
       "/il/data/app/logan-park-districts.json",
       "/il/data/app/stark-park-districts.json",
-      "/il/data/app/woodford-park-districts.json"
+      "/il/data/app/woodford-park-districts.json",
+      "/il/data/app/whiteside-park-districts.json"
      ],
      "whole_set": [
       "gis.cookcountyil.gov",
@@ -1544,7 +1550,8 @@
        "logan",
        "macon",
        "grundy",
-       "woodford"
+       "woodford",
+       "whiteside"
       ],
       "failed": [],
       "files": {
@@ -1571,6 +1578,9 @@
        ],
        "woodford": [
         "/il/data/app/woodford-park-districts.json"
+       ],
+       "whiteside": [
+        "/il/data/app/whiteside-park-districts.json"
        ]
       }
      },

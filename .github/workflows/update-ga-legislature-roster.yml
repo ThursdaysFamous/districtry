@@ -1,0 +1,112 @@
+name: Update Georgia legislature roster
+
+# Weekly refresh of the Georgia Senate + House rosters
+# (ga/data/app/ga-senate-members.json and ga-house-members.json, fetched by
+# ga/index.html's chamber cards). Rebuilds both chambers from the General
+# Assembly's own member data and — if anything changed — opens a PR rather
+# than committing directly to main.
+#
+# www.legis.ga.gov is one page whose script reads every member from the
+# assembly's data service at /api/, which answers 401 until a visitor presents
+# a token the page's script obtains for every visitor. The builder reads the
+# token's ingredients out of the page's own script on every run (a key a page
+# hands every anonymous visitor is page configuration, not a credential:
+# Adam's rule of 2026-10-06) and stops, saying so, if the script changes how
+# it builds the key. It never signs in.
+#
+# About 240 requests at one second apiece (the builder paces every host at a
+# second even though www.legis.ga.gov states no Crawl-delay), so a run takes
+# about five minutes; the timeout below stops a run that hangs.
+#
+# A seat with no sitting member ships as a vacancy record naming the
+# chamber's own member list. The builder never ships a member's home or cell
+# telephone, which the member data carries for some members and the General
+# Assembly's page never displays, nor a district address (ga/WATCH.md).
+#
+# THE REBUILT FILES ARE CARRIED ACROSS THE BRANCH CUT RATHER THAN SCRAPED A
+# SECOND TIME, the update-ilga-roster.yml pattern: a second pass would ask the
+# General Assembly's server for the same records again for nothing. A run
+# where main changed those same files meanwhile errors at the checkout instead
+# of pushing, which is right.
+#
+# GEORGIA IS DARK, so this job does not regenerate ga/state-legislature.html:
+# build_legislator_pages.py refuses an instance metros.json does not carry, so
+# that page is not built yet. Go-live adds the step in the same change that
+# adds ga to metros.json — ga/WATCH.md has the list.
+
+on:
+  schedule:
+    - cron: "23 19 * * 2" # Tuesday 19:23 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # requests for the builder's session (it retries a reset or a timeout).
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Rebuild Georgia Senate + House rosters
+        run: python3 ga/scripts/build_ga_legislature_roster.py
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, every data/app file must be present and
+      # well formed, and every seat must carry a record.
+      - name: Validate app + data files
+        run: |
+          python3 ga/scripts/validate_index.py ga/index.html
+          python3 scripts/validate_chamber_rosters.py
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- ga/data/app/ga-senate-members.json ga/data/app/ga-house-members.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/ga-legislature-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history — see the sibling
+          # workflows' own comments for why both halves matter. The two rebuilt
+          # files ride across the checkout as working-tree changes.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add ga/data/app/ga-senate-members.json ga/data/app/ga-house-members.json
+          git commit -m "Update Georgia Senate + House rosters from the Georgia General Assembly"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Georgia Senate + House rosters" \
+              --body "Automated weekly refresh of the Georgia Senate and Georgia House chamber cards' rosters, from the General Assembly's own member data, generated by \`ga/scripts/build_ga_legislature_roster.py\`. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

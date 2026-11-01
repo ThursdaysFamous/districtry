@@ -54,7 +54,7 @@ def mailtos(fragment):
     for m in re.finditer(r'mailto:\s*(?:%20)*([^"\'?>\s]+)', fragment, re.I):
         out.append(_html.unescape(m.group(1)).strip())
     for m in re.finditer(r'(?:data-cfemail="|/cdn-cgi/l/email-protection#)([0-9a-fA-F]{6,})', fragment):
-        out.append(cf_decode(m.group(1)))
+        out.append(cf_decode(m.group(1)).strip())
     seen, res = set(), []
     for e in out:
         if e.lower() not in seen:

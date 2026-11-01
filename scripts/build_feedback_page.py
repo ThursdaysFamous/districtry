@@ -203,7 +203,7 @@ def body(apps):
       by e-mail. Either one opens a draft for you to read and edit first; nothing is sent until
       you send it. Every report gets a reply.</p>
     <p class="cta-note">Reporting something on a map? Use the form inside the app instead
-      (&ldquo;Report a bug or leave a comment&rdquo; at the foot of its panel): it attaches the
+      (&ldquo;Feedback&rdquo; at the top of the map): it attaches the
       point and layers you were looking at. The apps: %(apps)s.</p>
     <form class="fb-form" onsubmit="return false">
       <label for="fb-page">Which page is this about?</label>

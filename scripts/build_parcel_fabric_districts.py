@@ -734,7 +734,15 @@ WOODFORD_PARK_PROBES = [
 #   4. The county website's copyright page reserves its content.
 #   5. robots.txt, honoured here as an honesty rule rather than an obstacle.
 # The operative document is the LICENCE, not the terms page — EXPANSION_GUIDE
-# §5.1 — and permission is drafted and held as Ask 19.
+# §5.1 — and permission was asked as Ask 19.
+#
+# AND THE COUNTY SAID YES (2026-10-02). Its GIS office answered Ask 19 in
+# writing, permitting display of the derived fire, library and park districts
+# with credit to Whiteside County, which is the "express written permission"
+# the clause's tail names. So the fire and park sources are no longer blocked;
+# every card they draw credits the county and says the boundary is derived
+# from tax codes. The library source stays held for a different reason, given
+# on its entry.
 #
 # A SECOND CHECK WAS TRIED AND IS NOT CLAIMED. The Tax Computation Report gives
 # each district's County Total EAV, so summing the parcel layer's CNTASSDVAL
@@ -746,6 +754,12 @@ WOODFORD_PARK_PROBES = [
 WHITESIDE_PARCELS = ("https://services.arcgis.com/l0M0OC6J9QAHCiGx/arcgis/rest/"
                      "services/Tax_Parcels_Ver_2_Parcels_Only/FeatureServer/0")
 WHITESIDE_TAX_YEAR = 2025
+# The county's written permission (Ask 19, answered 2026-10-02), which the
+# licence clause asks for: "without express written permission of Whiteside
+# County". It is shown on every card the two shipped layers draw.
+WHITESIDE_PERMISSION = ("Whiteside County GIS, by e-mail, 2 October 2026: "
+                        "display of the derived fire, library and park "
+                        "districts permitted, crediting Whiteside County")
 WHITESIDE_REPORTS = {
     # the membership list, and the ONLY one this county publishes
     "rates": "https://www.whitesidecountyil.gov/DocumentCenter/View/1285/"
@@ -1087,14 +1101,24 @@ SOURCES = [
     # and 01111 (library and park). They are declared rather than skipped, so a
     # county that starts or stops using one fails the build.
     {"slug": "whiteside-fire", "out": "whiteside-fire-districts.json",
-     "edit_pin": 1788362255421,   # the service DOES publish one
+     "edit_pin": 1793282826326,   # the service DOES publish one
      "code_universe": WHITESIDE_CODE_UNIVERSE,
-     "blocked": "Whiteside County LICENSES its GIS data and its Data License Agreement forbids redistributing products derived from it. Nothing here ships until the county gives written permission — docs/ASK_DRAFTS.md Ask 19, and the gap record whiteside-special-districts.",
+     # PERMITTED 2026-10-02: the county's GIS office answered Ask 19 in
+     # writing, permitting display of the derived fire, library and park
+     # districts with credit to Whiteside County. The e-mail is in the
+     # operator's mailbox, not in this repository.
+     "permission": WHITESIDE_PERMISSION,
      "layer": WHITESIDE_PARCELS, "name_prop": "CVTTXCD", "expect": 13,
      "where": _in_clause(WHITESIDE_FIRE_CODES, "CVTTXCD"),
      "out_prop": "district", "code_map": WHITESIDE_FIRE_CODES,
      "code_split": WHITESIDE_CODE_RE,
-     "expect_rows": 19805, "expect_empty_codes": ["00923"],
+     # RE-PINNED 2026-10-30: the county edited the fabric on 2026-10-29
+     # (36,499 parcels to 36,476). Measured that day against the service: 0
+     # parcels carry a code outside the 140-code universe and 138 codes are in
+     # use, as before, so the change is ordinary roll churn and the crosswalk
+     # stands; the fire set went 19,805 to 19,779 and the park set 15,931 to
+     # 15,892, and every probe below still answers as written.
+     "expect_rows": 19779, "expect_empty_codes": ["00923"],
      "probes": [(41.78613, -90.21635, "Albany Fire"),
                 (41.86500, -90.15932, "Fulton Fire"),
                 (41.65885, -90.08136, "Erie Fire"),
@@ -1114,7 +1138,15 @@ SOURCES = [
     {"slug": "whiteside-library", "out": "whiteside-library-districts.json",
      "edit_pin": 1788362255421,   # the service DOES publish one
      "code_universe": WHITESIDE_CODE_UNIVERSE,
-     "blocked": "Whiteside County LICENSES its GIS data and its Data License Agreement forbids redistributing products derived from it. Nothing here ships until the county gives written permission — docs/ASK_DRAFTS.md Ask 19, and the gap record whiteside-special-districts.",
+     # STILL NOT BUILT, BUT NO LONGER FOR THE LICENCE: the 2026-10-02
+     # permission covers libraries too, and the map already answers for
+     # Whiteside's libraries from the statewide library layer, so this source
+     # stays held until that is compared rather than swapped by default.
+     # Its `out` is ALSO the statewide library builder's file name for this
+     # county (build_statewide_library_districts.py writes the shipped
+     # whiteside-library-districts.json), so building this source would
+     # overwrite the layer the map draws today. Rename `out` before any swap.
+     "blocked": "Not built: the county permitted display on 2026-10-02, but Whiteside's libraries already answer from the statewide library layer, which ships under this source's own file name, and swapping sources waits for a comparison of the two.",
      "layer": WHITESIDE_PARCELS, "name_prop": "CVTTXCD", "expect": 7,
      "where": _in_clause(WHITESIDE_LIBRARY_CODES, "CVTTXCD"),
      "out_prop": "district", "code_map": WHITESIDE_LIBRARY_CODES,
@@ -1128,14 +1160,18 @@ SOURCES = [
                 (41.79961, -89.69553, None),   # Sterling — no library line on its tax codes
                 (41.80764, -89.96170, None)]}, # Morrison — no library line on its tax codes
     {"slug": "whiteside-park", "out": "whiteside-park-districts.json",
-     "edit_pin": 1788362255421,   # the service DOES publish one
+     "edit_pin": 1793282826326,   # the service DOES publish one
      "code_universe": WHITESIDE_CODE_UNIVERSE,
-     "blocked": "Whiteside County LICENSES its GIS data and its Data License Agreement forbids redistributing products derived from it. Nothing here ships until the county gives written permission — docs/ASK_DRAFTS.md Ask 19, and the gap record whiteside-special-districts.",
+     # PERMITTED 2026-10-02: the county's GIS office answered Ask 19 in
+     # writing, permitting display of the derived fire, library and park
+     # districts with credit to Whiteside County. The e-mail is in the
+     # operator's mailbox, not in this repository.
+     "permission": WHITESIDE_PERMISSION,
      "layer": WHITESIDE_PARCELS, "name_prop": "CVTTXCD", "expect": 5,
      "where": _in_clause(WHITESIDE_PARK_CODES, "CVTTXCD"),
      "out_prop": "district", "code_map": WHITESIDE_PARK_CODES,
      "code_split": WHITESIDE_CODE_RE,
-     "expect_rows": 15931, "expect_empty_codes": ["01111"],
+     "expect_rows": 15892, "expect_empty_codes": ["01111"],   # re-pinned 2026-10-30, see whiteside-fire
      "expect_no_geometry": 1,   # the same parcel — 01110 is in both sets
 
      "probes": [(41.79961, -89.69553, "Sterling Park"),

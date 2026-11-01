@@ -1,0 +1,17 @@
+{
+ "asOf": "2026-10-30",
+ "list": {
+  "bytes": 32630,
+  "read": "2026-10-30",
+  "sha256": "b8bbeb27e440023193ebd28083665bcdc27fc13abdf150165e2fec80830e8e6b",
+  "url": "https://www.dcr.virginia.gov/soil-and-water/swcdlist"
+ },
+ "results": {
+  "api": "https://historical.elections.virginia.gov/api/graphql_pr",
+  "contests": 333,
+  "fetched": "2026-10-30",
+  "office": "553",
+  "sha256": "2bff20cc245d04bd331396a3bf70f5212fa038d337efe5e3ab5c3bbe1050676e"
+ },
+ "shipped_sha256": "12bb463c13add1ae85d9ad6094f50500bbe66968326e31aa364e1229f002c7ad"
+}

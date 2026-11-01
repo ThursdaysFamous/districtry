@@ -1,0 +1,2381 @@
+{
+ "asOf": "2026-10-30",
+ "listRead": "2026-10-30",
+ "districts": {
+  "Appomattox River": {
+   "localities": [
+    "51053",
+    "51730"
+   ],
+   "elected": 2
+  },
+  "Big Sandy": {
+   "localities": [
+    "51027"
+   ],
+   "elected": 3
+  },
+  "Big Walker": {
+   "localities": [
+    "51021",
+    "51197"
+   ],
+   "elected": 2
+  },
+  "Blue Ridge": {
+   "localities": [
+    "51067",
+    "51089",
+    "51161",
+    "51770"
+   ],
+   "elected": 2
+  },
+  "Chowan Basin": {
+   "localities": [
+    "51081",
+    "51175",
+    "51183"
+   ],
+   "elected": 2
+  },
+  "Clinch Valley": {
+   "localities": [
+    "51167"
+   ],
+   "elected": 3
+  },
+  "Colonial": {
+   "localities": [
+    "51036",
+    "51095",
+    "51127",
+    "51199",
+    "51830"
+   ],
+   "elected": 2
+  },
+  "Culpeper": {
+   "localities": [
+    "51047",
+    "51079",
+    "51113",
+    "51137",
+    "51157"
+   ],
+   "elected": 2
+  },
+  "Daniel Boone": {
+   "localities": [
+    "51105"
+   ],
+   "elected": 3
+  },
+  "Eastern Shore": {
+   "localities": [
+    "51001",
+    "51131"
+   ],
+   "elected": 2
+  },
+  "Evergreen": {
+   "localities": [
+    "51173"
+   ],
+   "elected": 3
+  },
+  "Halifax": {
+   "localities": [
+    "51083"
+   ],
+   "elected": 3
+  },
+  "Hanover-Caroline": {
+   "localities": [
+    "51033",
+    "51085"
+   ],
+   "elected": 2
+  },
+  "Headwaters": {
+   "localities": [
+    "51015",
+    "51790",
+    "51820"
+   ],
+   "elected": 2
+  },
+  "Henricopolis": {
+   "localities": [
+    "51087"
+   ],
+   "elected": 3
+  },
+  "Holston River": {
+   "localities": [
+    "51191"
+   ],
+   "elected": 3
+  },
+  "James River": {
+   "localities": [
+    "51041",
+    "51149"
+   ],
+   "elected": 2
+  },
+  "John Marshall": {
+   "localities": [
+    "51061"
+   ],
+   "elected": 3
+  },
+  "Lake Country": {
+   "localities": [
+    "51025",
+    "51117"
+   ],
+   "elected": 2
+  },
+  "Lonesome Pine": {
+   "localities": [
+    "51051",
+    "51195"
+   ],
+   "elected": 2
+  },
+  "Lord Fairfax": {
+   "localities": [
+    "51043",
+    "51069",
+    "51171",
+    "51187",
+    "51840"
+   ],
+   "elected": 2
+  },
+  "Loudoun": {
+   "localities": [
+    "51107"
+   ],
+   "elected": 3
+  },
+  "Monacan": {
+   "localities": [
+    "51075",
+    "51145"
+   ],
+   "elected": 2
+  },
+  "Mountain": {
+   "localities": [
+    "51005",
+    "51017",
+    "51091",
+    "51580"
+   ],
+   "elected": 2
+  },
+  "Mountain Castles": {
+   "localities": [
+    "51023",
+    "51045"
+   ],
+   "elected": 2
+  },
+  "Natural Bridge": {
+   "localities": [
+    "51163",
+    "51530",
+    "51678"
+   ],
+   "elected": 2
+  },
+  "New River": {
+   "localities": [
+    "51035",
+    "51077",
+    "51640"
+   ],
+   "elected": 2
+  },
+  "Northern Neck": {
+   "localities": [
+    "51103",
+    "51133",
+    "51159",
+    "51193"
+   ],
+   "elected": 2
+  },
+  "Northern Virginia": {
+   "localities": [
+    "51059"
+   ],
+   "elected": 3
+  },
+  "Patrick": {
+   "localities": [
+    "51141"
+   ],
+   "elected": 3
+  },
+  "Peaks of Otter": {
+   "localities": [
+    "51019"
+   ],
+   "elected": 3
+  },
+  "Peanut": {
+   "localities": [
+    "51093",
+    "51181",
+    "51800"
+   ],
+   "elected": 2
+  },
+  "Peter Francisco": {
+   "localities": [
+    "51029",
+    "51049"
+   ],
+   "elected": 2
+  },
+  "Piedmont": {
+   "localities": [
+    "51007",
+    "51135",
+    "51147"
+   ],
+   "elected": 2
+  },
+  "Pittsylvania": {
+   "localities": [
+    "51143"
+   ],
+   "elected": 3
+  },
+  "Prince William": {
+   "localities": [
+    "51153"
+   ],
+   "elected": 3
+  },
+  "Robert E. Lee": {
+   "localities": [
+    "51009",
+    "51011",
+    "51031",
+    "51680"
+   ],
+   "elected": 2
+  },
+  "Scott County": {
+   "localities": [
+    "51169"
+   ],
+   "elected": 3
+  },
+  "Shenandoah Valley": {
+   "localities": [
+    "51139",
+    "51165",
+    "51660"
+   ],
+   "elected": 2
+  },
+  "Skyline": {
+   "localities": [
+    "51063",
+    "51071",
+    "51121",
+    "51155"
+   ],
+   "elected": 2
+  },
+  "Southside": {
+   "localities": [
+    "51037",
+    "51111"
+   ],
+   "elected": 2
+  },
+  "Tazewell": {
+   "localities": [
+    "51185"
+   ],
+   "elected": 3
+  },
+  "Thomas Jefferson": {
+   "localities": [
+    "51003",
+    "51065",
+    "51109",
+    "51125",
+    "51540"
+   ],
+   "elected": 2
+  },
+  "Three Rivers": {
+   "localities": [
+    "51057",
+    "51097",
+    "51101"
+   ],
+   "elected": 2
+  },
+  "Tidewater": {
+   "localities": [
+    "51073",
+    "51115",
+    "51119"
+   ],
+   "elected": 2
+  },
+  "Tri-County/City": {
+   "localities": [
+    "51099",
+    "51177",
+    "51179",
+    "51630"
+   ],
+   "elected": 2
+  },
+  "Virginia Dare": {
+   "localities": [
+    "51550",
+    "51810"
+   ],
+   "elected": 2
+  }
+ },
+ "localities": {
+  "51001": {
+   "name": "Accomack County",
+   "district": "Eastern Shore",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Jim A. Evans",
+     "elected": "2023-11-07",
+     "contest": "164784"
+    },
+    {
+     "name": "Sands A. Gayle",
+     "elected": "2023-11-07",
+     "contest": "164784"
+    }
+   ]
+  },
+  "51003": {
+   "name": "Albemarle County",
+   "district": "Thomas Jefferson",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Steven G. Meeks",
+     "elected": "2023-11-07",
+     "contest": "164788"
+    },
+    {
+     "name": "Mark William Wastler",
+     "elected": "2023-11-07",
+     "contest": "164788"
+    }
+   ]
+  },
+  "51005": {
+   "name": "Alleghany County",
+   "district": "Mountain",
+   "seats": 2,
+   "members": [
+    {
+     "name": "John M. Quantz Sr.",
+     "elected": "2023-11-07",
+     "contest": "164790"
+    }
+   ],
+   "listed": 1
+  },
+  "51007": {
+   "name": "Amelia County",
+   "district": "Piedmont",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Jennifer L. Morris",
+     "elected": "2023-11-07",
+     "contest": "164791"
+    },
+    {
+     "name": "Larkin D. Moyer",
+     "elected": "2023-11-07",
+     "contest": "164791"
+    }
+   ]
+  },
+  "51009": {
+   "name": "Amherst County",
+   "district": "Robert E. Lee",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Zachary Campbell",
+     "elected": "2023-11-07",
+     "contest": "164792"
+    }
+   ],
+   "listed": 1
+  },
+  "51011": {
+   "name": "Appomattox County",
+   "district": "Robert E. Lee",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Bonnie A. Swanson",
+     "elected": "2023-11-07",
+     "contest": "164794"
+    },
+    {
+     "name": "Joetricia Humbles",
+     "elected": "2023-11-07",
+     "contest": "164794"
+    }
+   ]
+  },
+  "51013": {
+   "name": "Arlington County",
+   "district": null
+  },
+  "51015": {
+   "name": "Augusta County",
+   "district": "Headwaters",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Robert T. Drumheller",
+     "elected": "2023-11-07",
+     "contest": "164795"
+    },
+    {
+     "name": "Kevin H. Phillips",
+     "elected": "2023-11-07",
+     "contest": "164795"
+    }
+   ]
+  },
+  "51017": {
+   "name": "Bath County",
+   "district": "Mountain",
+   "seats": 2,
+   "members": [
+    {
+     "name": "L. Ryan Hodges",
+     "elected": "2023-11-07",
+     "contest": "164796"
+    },
+    {
+     "name": "Bartlett Lee \"Bart\" Ailstock",
+     "elected": "2023-11-07",
+     "contest": "164796"
+    }
+   ]
+  },
+  "51019": {
+   "name": "Bedford County",
+   "district": "Peaks of Otter",
+   "seats": 3,
+   "members": [
+    {
+     "name": "Richard P. Chaffin",
+     "elected": "2023-11-07",
+     "contest": "164797"
+    },
+    {
+     "name": "Glen F. Witt",
+     "elected": "2023-11-07",
+     "contest": "164797"
+    },
+    {
+     "name": "W. Terrell May, Jr.",
+     "elected": "2023-11-07",
+     "contest": "164797"
+    }
+   ]
+  },
+  "51021": {
+   "name": "Bland County",
+   "district": "Big Walker",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Charles Douglas Eastep",
+     "elected": "2023-11-07",
+     "contest": "164799"
+    },
+    {
+     "name": "W. Laymond Barger",
+     "elected": "2023-11-07",
+     "contest": "164799"
+    }
+   ]
+  },
+  "51023": {
+   "name": "Botetourt County",
+   "district": "Mountain Castles",
+   "seats": 2,
+   "members": [
+    {
+     "name": "F. Preston Wickline III",
+     "elected": "2023-11-07",
+     "contest": "164800"
+    },
+    {
+     "name": "Jeffrey W. Henderson",
+     "elected": "2023-11-07",
+     "contest": "164800"
+    }
+   ]
+  },
+  "51025": {
+   "name": "Brunswick County",
+   "district": "Lake Country",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Sam G. Griffin",
+     "elected": "2023-11-07",
+     "contest": "164803"
+    }
+   ],
+   "listed": 1
+  },
+  "51027": {
+   "name": "Buchanan County",
+   "district": "Big Sandy",
+   "seats": 3,
+   "members": [
+    {
+     "name": "Bobby A. Looney",
+     "elected": "2023-11-07",
+     "contest": "164805"
+    },
+    {
+     "name": "James N. Horn",
+     "elected": "2023-11-07",
+     "contest": "164805"
+    },
+    {
+     "name": "Jerry D. Helton",
+     "elected": "2023-11-07",
+     "contest": "164805"
+    }
+   ]
+  },
+  "51029": {
+   "name": "Buckingham County",
+   "district": "Peter Francisco",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Kevin Earl Dunn",
+     "elected": "2023-11-07",
+     "contest": "164806"
+    },
+    {
+     "name": "Donna L. McRae-Jones",
+     "elected": "2023-11-07",
+     "contest": "164806"
+    }
+   ]
+  },
+  "51031": {
+   "name": "Campbell County",
+   "district": "Robert E. Lee",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Douglas D. Perrow",
+     "elected": "2023-11-07",
+     "contest": "164812"
+    },
+    {
+     "name": "Andrew Rousseau",
+     "elected": "2023-11-07",
+     "contest": "164812"
+    }
+   ]
+  },
+  "51033": {
+   "name": "Caroline County",
+   "district": "Hanover-Caroline",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Cynthia C. Smith",
+     "elected": "2023-11-07",
+     "contest": "164813"
+    },
+    {
+     "name": "Joseph H. Stepp, III",
+     "elected": "2023-11-07",
+     "contest": "164813"
+    }
+   ]
+  },
+  "51035": {
+   "name": "Carroll County",
+   "district": "New River",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Cynthia V. \"Cindy\" Webb",
+     "elected": "2023-11-07",
+     "contest": "164814"
+    }
+   ],
+   "listed": 1
+  },
+  "51036": {
+   "name": "Charles City County",
+   "district": "Colonial",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Larkin G. Scott",
+     "elected": "2023-11-07",
+     "contest": "164815"
+    }
+   ],
+   "listed": 1
+  },
+  "51037": {
+   "name": "Charlotte County",
+   "district": "Southside",
+   "seats": 2,
+   "members": [
+    {
+     "name": "William V. Nichols Jr.",
+     "elected": "2023-11-07",
+     "contest": "164816"
+    },
+    {
+     "name": "Davey E. Ferrell",
+     "elected": "2023-11-07",
+     "contest": "164816"
+    }
+   ]
+  },
+  "51041": {
+   "name": "Chesterfield County",
+   "district": "James River",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Laura Lee Thompson",
+     "elected": "2023-11-07",
+     "contest": "164820"
+    },
+    {
+     "name": "Carey Lynn Allen",
+     "elected": "2023-11-07",
+     "contest": "164820"
+    }
+   ]
+  },
+  "51043": {
+   "name": "Clarke County",
+   "district": "Lord Fairfax",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Randy M. Buckley",
+     "elected": "2023-11-07",
+     "contest": "164821"
+    },
+    {
+     "name": "Justin Mackay-Smith",
+     "elected": "2023-11-07",
+     "contest": "164821"
+    }
+   ]
+  },
+  "51045": {
+   "name": "Craig County",
+   "district": "Mountain Castles",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Jason Williams",
+     "elected": "2023-11-07",
+     "contest": "164826"
+    },
+    {
+     "name": "Andrew Keffer",
+     "elected": "2023-11-07",
+     "contest": "164826"
+    }
+   ]
+  },
+  "51047": {
+   "name": "Culpeper County",
+   "district": "Culpeper",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Tom A. O'Halloran Jr.",
+     "elected": "2023-11-07",
+     "contest": "164827"
+    },
+    {
+     "name": "Dennis F. Verhoff",
+     "elected": "2023-11-07",
+     "contest": "164827"
+    }
+   ]
+  },
+  "51049": {
+   "name": "Cumberland County",
+   "district": "Peter Francisco",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Terry D. Seal",
+     "elected": "2023-11-07",
+     "contest": "164829"
+    },
+    {
+     "name": "M. Todd Smith",
+     "elected": "2023-11-07",
+     "contest": "164829"
+    }
+   ]
+  },
+  "51051": {
+   "name": "Dickenson County",
+   "district": "Lonesome Pine",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Johnnie C. Stanley",
+     "elected": "2023-11-07",
+     "contest": "164830"
+    },
+    {
+     "name": "Tauna F. Gulley",
+     "elected": "2023-11-07",
+     "contest": "164830"
+    }
+   ]
+  },
+  "51053": {
+   "name": "Dinwiddie County",
+   "district": "Appomattox River",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Granville Miles Maitland",
+     "elected": "2023-11-07",
+     "contest": "164832"
+    },
+    {
+     "name": "Mark C. Spiers",
+     "elected": "2023-11-07",
+     "contest": "164832"
+    }
+   ]
+  },
+  "51057": {
+   "name": "Essex County",
+   "district": "Three Rivers",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Benjamin B. Ellis, Jr.",
+     "elected": "2023-11-07",
+     "contest": "164833"
+    },
+    {
+     "name": "A. J. Brooks",
+     "elected": "2023-11-07",
+     "contest": "164833"
+    }
+   ]
+  },
+  "51059": {
+   "name": "Fairfax County",
+   "district": "Northern Virginia",
+   "seats": 3,
+   "members": [
+    {
+     "name": "Chris E. Koerner",
+     "elected": "2023-11-07",
+     "contest": "164834"
+    },
+    {
+     "name": "Rhonda J. Bitterli",
+     "elected": "2023-11-07",
+     "contest": "164834"
+    },
+    {
+     "name": "Dana H. Barakat",
+     "elected": "2023-11-07",
+     "contest": "164834"
+    }
+   ]
+  },
+  "51061": {
+   "name": "Fauquier County",
+   "district": "John Marshall",
+   "seats": 3,
+   "members": [
+    {
+     "name": "Deirdre B. Clark",
+     "elected": "2023-11-07",
+     "contest": "164840"
+    },
+    {
+     "name": "Arthur Gray Coyner",
+     "elected": "2023-11-07",
+     "contest": "164840"
+    },
+    {
+     "name": "Ken R. Alm",
+     "elected": "2023-11-07",
+     "contest": "164840"
+    }
+   ]
+  },
+  "51063": {
+   "name": "Floyd County",
+   "district": "Skyline",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Curtis R. Sowers",
+     "elected": "2023-11-07",
+     "contest": "164842"
+    },
+    {
+     "name": "John H. \"Jack\" Lawson",
+     "elected": "2023-11-07",
+     "contest": "164842"
+    }
+   ]
+  },
+  "51065": {
+   "name": "Fluvanna County",
+   "district": "Thomas Jefferson",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Charles Haden Thomas Parrish",
+     "elected": "2023-11-07",
+     "contest": "164844"
+    },
+    {
+     "name": "Angus A. Murdock",
+     "elected": "2023-11-07",
+     "contest": "164844"
+    }
+   ]
+  },
+  "51067": {
+   "name": "Franklin County",
+   "district": "Blue Ridge",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Joel Hubert Bowman",
+     "elected": "2023-11-07",
+     "contest": "164846"
+    },
+    {
+     "name": "Daphne W. Jamison",
+     "elected": "2023-11-07",
+     "contest": "164846"
+    }
+   ]
+  },
+  "51069": {
+   "name": "Frederick County",
+   "district": "Lord Fairfax",
+   "seats": 2,
+   "members": [
+    {
+     "name": "J. Kermit Gaither",
+     "elected": "2023-11-07",
+     "contest": "164847"
+    },
+    {
+     "name": "Jack Owens",
+     "elected": "2023-11-07",
+     "contest": "164847"
+    }
+   ]
+  },
+  "51071": {
+   "name": "Giles County",
+   "district": "Skyline",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Ricky L. Johnston",
+     "elected": "2023-11-07",
+     "contest": "164854"
+    },
+    {
+     "name": "Frank G. \"Billy\" Farrier, III",
+     "elected": "2023-11-07",
+     "contest": "164854"
+    }
+   ]
+  },
+  "51073": {
+   "name": "Gloucester County",
+   "district": "Tidewater",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Amanda S. Armstrong",
+     "elected": "2023-11-07",
+     "contest": "164858"
+    },
+    {
+     "name": "Allen Keith Horsley",
+     "elected": "2023-11-07",
+     "contest": "164858"
+    }
+   ]
+  },
+  "51075": {
+   "name": "Goochland County",
+   "district": "Monacan",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Sebastian Volcker",
+     "elected": "2023-11-07",
+     "contest": "164859"
+    },
+    {
+     "name": "Kate T. Anderson",
+     "elected": "2023-11-07",
+     "contest": "164859"
+    }
+   ]
+  },
+  "51077": {
+   "name": "Grayson County",
+   "district": "New River",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Michael L. Rhudy",
+     "elected": "2023-11-07",
+     "contest": "164860"
+    },
+    {
+     "name": "Kevin S. Kirk",
+     "elected": "2023-11-07",
+     "contest": "164860"
+    }
+   ]
+  },
+  "51079": {
+   "name": "Greene County",
+   "district": "Culpeper",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Robert E. Runkle",
+     "elected": "2023-11-07",
+     "contest": "164862"
+    },
+    {
+     "name": "David L. Cox",
+     "elected": "2023-11-07",
+     "contest": "164862"
+    }
+   ]
+  },
+  "51081": {
+   "name": "Greensville County",
+   "district": "Chowan Basin",
+   "seats": 2,
+   "members": [
+    {
+     "name": "James S. \"Jim\" Ferguson Sr.",
+     "elected": "2023-11-07",
+     "contest": "164863"
+    },
+    {
+     "name": "Jeffrey C. Roach",
+     "elected": "2023-11-07",
+     "contest": "164863"
+    }
+   ]
+  },
+  "51083": {
+   "name": "Halifax County",
+   "district": "Halifax",
+   "seats": 3,
+   "members": [
+    {
+     "name": "A. Scott Hudson",
+     "elected": "2023-11-07",
+     "contest": "164864"
+    },
+    {
+     "name": "Blair Waller Hall",
+     "elected": "2023-11-07",
+     "contest": "164864"
+    },
+    {
+     "name": "Bruce E. Pearce",
+     "elected": "2023-11-07",
+     "contest": "164864"
+    }
+   ]
+  },
+  "51085": {
+   "name": "Hanover County",
+   "district": "Hanover-Caroline",
+   "seats": 2,
+   "members": [
+    {
+     "name": "C. Leigh H. Pemberton",
+     "elected": "2023-11-07",
+     "contest": "164865"
+    },
+    {
+     "name": "George T. Rice",
+     "elected": "2023-11-07",
+     "contest": "164865"
+    }
+   ]
+  },
+  "51087": {
+   "name": "Henrico County",
+   "district": "Henricopolis",
+   "seats": 3,
+   "members": [
+    {
+     "name": "Claiborne Ewing Yarbrough",
+     "elected": "2023-11-07",
+     "contest": "164868"
+    },
+    {
+     "name": "Brittany E. Rose",
+     "elected": "2023-11-07",
+     "contest": "164868"
+    },
+    {
+     "name": "Becky L. Lakin",
+     "elected": "2023-11-07",
+     "contest": "164868"
+    }
+   ]
+  },
+  "51089": {
+   "name": "Henry County",
+   "district": "Blue Ridge",
+   "seats": 2,
+   "members": [
+    {
+     "name": "R. Darryl Holland",
+     "elected": "2023-11-07",
+     "contest": "164869"
+    },
+    {
+     "name": "Andrew L. Barker, Jr.",
+     "elected": "2023-11-07",
+     "contest": "164869"
+    }
+   ]
+  },
+  "51091": {
+   "name": "Highland County",
+   "district": "Mountain",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Wesley R. White",
+     "elected": "2023-11-07",
+     "contest": "164870"
+    },
+    {
+     "name": "Ariel D. Daniels",
+     "elected": "2023-11-07",
+     "contest": "164870"
+    }
+   ]
+  },
+  "51093": {
+   "name": "Isle of Wight County",
+   "district": "Peanut",
+   "seats": 2,
+   "members": [
+    {
+     "name": "William A. Gwaltney, Jr",
+     "elected": "2023-11-07",
+     "contest": "164871"
+    },
+    {
+     "name": "J. Larry Darden",
+     "elected": "2023-11-07",
+     "contest": "164871"
+    }
+   ]
+  },
+  "51095": {
+   "name": "James City County",
+   "district": "Colonial",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Robert E. \"Bob\" Lund, Jr.",
+     "elected": "2023-11-07",
+     "contest": "164873"
+    },
+    {
+     "name": "Stephen M. Zabinski, Jr.",
+     "elected": "2023-11-07",
+     "contest": "164873"
+    }
+   ]
+  },
+  "51097": {
+   "name": "King and Queen County",
+   "district": "Three Rivers",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Sara Kay Henley",
+     "elected": "2023-11-07",
+     "contest": "164874"
+    }
+   ],
+   "listed": 1
+  },
+  "51099": {
+   "name": "King George County",
+   "district": "Tri-County/City",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Janet Gayle Harris",
+     "elected": "2023-11-07",
+     "contest": "164875"
+    },
+    {
+     "name": "Anthony Staats",
+     "elected": "2023-11-07",
+     "contest": "164875"
+    }
+   ]
+  },
+  "51101": {
+   "name": "King William County",
+   "district": "Three Rivers",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Langdon P. Townsend",
+     "elected": "2023-11-07",
+     "contest": "164876"
+    },
+    {
+     "name": "Thomas H. Fox, Jr.",
+     "elected": "2023-11-07",
+     "contest": "164876"
+    }
+   ]
+  },
+  "51103": {
+   "name": "Lancaster County",
+   "district": "Northern Neck",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Lewis Kendall Walker III",
+     "elected": "2023-11-07",
+     "contest": "164878"
+    },
+    {
+     "name": "James A. Rowland",
+     "elected": "2023-11-07",
+     "contest": "164878"
+    }
+   ]
+  },
+  "51105": {
+   "name": "Lee County",
+   "district": "Daniel Boone",
+   "seats": 3,
+   "members": [
+    {
+     "name": "Roger B. Elkins",
+     "elected": "2023-11-07",
+     "contest": "164880"
+    },
+    {
+     "name": "Michael W. Hobbs",
+     "elected": "2023-11-07",
+     "contest": "164880"
+    },
+    {
+     "name": "Gary Lynn Martin",
+     "elected": "2023-11-07",
+     "contest": "164880"
+    }
+   ]
+  },
+  "51107": {
+   "name": "Loudoun County",
+   "district": "Loudoun",
+   "seats": 3,
+   "members": [
+    {
+     "name": "John P. Flannery, II",
+     "elected": "2023-11-07",
+     "contest": "164882"
+    },
+    {
+     "name": "Peter R. Holden",
+     "elected": "2023-11-07",
+     "contest": "164882"
+    },
+    {
+     "name": "Uzma A. Rasheed",
+     "elected": "2023-11-07",
+     "contest": "164882"
+    }
+   ]
+  },
+  "51109": {
+   "name": "Louisa County",
+   "district": "Thomas Jefferson",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Stephen J. Lucas",
+     "elected": "2023-11-07",
+     "contest": "164891"
+    },
+    {
+     "name": "Carolyn Daughters",
+     "elected": "2023-11-07",
+     "contest": "164891"
+    }
+   ]
+  },
+  "51111": {
+   "name": "Lunenburg County",
+   "district": "Southside",
+   "seats": 2,
+   "members": [
+    {
+     "name": "James C. \"Buck\" Tharpe Jr",
+     "elected": "2023-11-07",
+     "contest": "164893"
+    },
+    {
+     "name": "Mark L. Palmer",
+     "elected": "2023-11-07",
+     "contest": "164893"
+    }
+   ]
+  },
+  "51113": {
+   "name": "Madison County",
+   "district": "Culpeper",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Lynn N. Graves",
+     "elected": "2023-11-07",
+     "contest": "164896"
+    },
+    {
+     "name": "Anthony W. Jewett",
+     "elected": "2023-11-07",
+     "contest": "164896"
+    }
+   ]
+  },
+  "51115": {
+   "name": "Mathews County",
+   "district": "Tidewater",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Richard M. Hicks",
+     "elected": "2023-11-07",
+     "contest": "164897"
+    },
+    {
+     "name": "Laura J. Howard",
+     "elected": "2023-11-07",
+     "contest": "164897"
+    }
+   ]
+  },
+  "51117": {
+   "name": "Mecklenburg County",
+   "district": "Lake Country",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Mark B. Warren",
+     "elected": "2023-11-07",
+     "contest": "164898"
+    },
+    {
+     "name": "Andrew T. Pittard III",
+     "elected": "2023-11-07",
+     "contest": "164898"
+    }
+   ]
+  },
+  "51119": {
+   "name": "Middlesex County",
+   "district": "Tidewater",
+   "seats": 2,
+   "members": [
+    {
+     "name": "T. Jacob Kirby",
+     "elected": "2023-11-07",
+     "contest": "164899"
+    },
+    {
+     "name": "Amy M. Wright Maloney",
+     "elected": "2023-11-07",
+     "contest": "164899"
+    }
+   ]
+  },
+  "51121": {
+   "name": "Montgomery County",
+   "district": "Skyline",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Richard F. \"Rick\" Wall",
+     "elected": "2023-11-07",
+     "contest": "164900"
+    },
+    {
+     "name": "Carl E. Zipper",
+     "elected": "2023-11-07",
+     "contest": "164900"
+    }
+   ]
+  },
+  "51125": {
+   "name": "Nelson County",
+   "district": "Thomas Jefferson",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Mark H. Campbell",
+     "elected": "2023-11-07",
+     "contest": "164903"
+    },
+    {
+     "name": "David L. Collins",
+     "elected": "2023-11-07",
+     "contest": "164903"
+    }
+   ]
+  },
+  "51127": {
+   "name": "New Kent County",
+   "district": "Colonial",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Philip S. Thomson",
+     "elected": "2023-11-07",
+     "contest": "164904"
+    },
+    {
+     "name": "E. Wayne Davis",
+     "elected": "2023-11-07",
+     "contest": "164904"
+    }
+   ]
+  },
+  "51131": {
+   "name": "Northampton County",
+   "district": "Eastern Shore",
+   "seats": 2,
+   "members": [
+    {
+     "name": "S. Kyle Sturgis",
+     "elected": "2023-11-07",
+     "contest": "164905"
+    },
+    {
+     "name": "Sally Young Williams",
+     "elected": "2023-11-07",
+     "contest": "164905"
+    }
+   ]
+  },
+  "51133": {
+   "name": "Northumberland County",
+   "district": "Northern Neck",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Robert G. Vanlandingham",
+     "elected": "2023-11-07",
+     "contest": "164906"
+    },
+    {
+     "name": "Robert E. Pickett",
+     "elected": "2023-11-07",
+     "contest": "164906"
+    }
+   ]
+  },
+  "51135": {
+   "name": "Nottoway County",
+   "district": "Piedmont",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Richard O. \"Ricky\" Rash",
+     "elected": "2023-11-07",
+     "contest": "164907"
+    },
+    {
+     "name": "Charles A. \"Chuck\" Arnason",
+     "elected": "2023-11-07",
+     "contest": "164907"
+    }
+   ]
+  },
+  "51137": {
+   "name": "Orange County",
+   "district": "Culpeper",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Robert A. Bradford",
+     "elected": "2023-11-07",
+     "contest": "164908"
+    },
+    {
+     "name": "J. Robert \"Bob\" Brame III",
+     "elected": "2023-11-07",
+     "contest": "164908"
+    }
+   ]
+  },
+  "51139": {
+   "name": "Page County",
+   "district": "Shenandoah Valley",
+   "seats": 2,
+   "members": [
+    {
+     "name": "James W. \"Jimmy\" Burke",
+     "elected": "2023-11-07",
+     "contest": "164910"
+    },
+    {
+     "name": "Charles A. Newton",
+     "elected": "2023-11-07",
+     "contest": "164910"
+    }
+   ]
+  },
+  "51141": {
+   "name": "Patrick County",
+   "district": "Patrick",
+   "seats": 3,
+   "members": [
+    {
+     "name": "E. Wayne Clark",
+     "elected": "2023-11-07",
+     "contest": "164912"
+    },
+    {
+     "name": "Joseph A. Sparks",
+     "elected": "2023-11-07",
+     "contest": "164912"
+    },
+    {
+     "name": "Richard E. Kreh, Sr.",
+     "elected": "2023-11-07",
+     "contest": "164912"
+    }
+   ]
+  },
+  "51143": {
+   "name": "Pittsylvania County",
+   "district": "Pittsylvania",
+   "seats": 3,
+   "members": [
+    {
+     "name": "James F. \"Jimmy\" Rigney, Jr.",
+     "elected": "2023-11-07",
+     "contest": "164914"
+    },
+    {
+     "name": "Steven A. Cassada",
+     "elected": "2023-11-07",
+     "contest": "164914"
+    },
+    {
+     "name": "John T. Kelley III",
+     "elected": "2023-11-07",
+     "contest": "164914"
+    }
+   ]
+  },
+  "51145": {
+   "name": "Powhatan County",
+   "district": "Monacan",
+   "seats": 2,
+   "members": [
+    {
+     "name": "John D. Kochensparger",
+     "elected": "2023-11-07",
+     "contest": "164920"
+    },
+    {
+     "name": "Sandra E. Brindley",
+     "elected": "2023-11-07",
+     "contest": "164920"
+    }
+   ]
+  },
+  "51147": {
+   "name": "Prince Edward County",
+   "district": "Piedmont",
+   "seats": 2,
+   "members": [
+    {
+     "name": "James B. Gates Jr.",
+     "elected": "2023-11-07",
+     "contest": "164921"
+    },
+    {
+     "name": "Horace J. Adams",
+     "elected": "2023-11-07",
+     "contest": "164921"
+    }
+   ]
+  },
+  "51149": {
+   "name": "Prince George County",
+   "district": "James River",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Avis Epps Bennett",
+     "elected": "2023-11-07",
+     "contest": "164922"
+    },
+    {
+     "name": "Andy M. Petik",
+     "elected": "2023-11-07",
+     "contest": "164922"
+    }
+   ]
+  },
+  "51153": {
+   "name": "Prince William County",
+   "district": "Prince William",
+   "seats": 3,
+   "members": [
+    {
+     "name": "Jennifer S. Reed",
+     "elected": "2023-11-07",
+     "contest": "164923"
+    },
+    {
+     "name": "Nancy J. Vehrs",
+     "elected": "2023-11-07",
+     "contest": "164923"
+    },
+    {
+     "name": "Mansimran Singh Kahlon",
+     "elected": "2023-11-07",
+     "contest": "164923"
+    }
+   ]
+  },
+  "51155": {
+   "name": "Pulaski County",
+   "district": "Skyline",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Lewis A. \"Andy\" Pratt",
+     "elected": "2023-11-07",
+     "contest": "164926"
+    },
+    {
+     "name": "George W. Hudson",
+     "elected": "2023-11-07",
+     "contest": "164926"
+    }
+   ]
+  },
+  "51157": {
+   "name": "Rappahannock County",
+   "district": "Culpeper",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Michael W. Sands",
+     "elected": "2023-11-07",
+     "contest": "164927"
+    },
+    {
+     "name": "Michael J. Biniek",
+     "elected": "2023-11-07",
+     "contest": "164927"
+    }
+   ]
+  },
+  "51159": {
+   "name": "Richmond County",
+   "district": "Northern Neck",
+   "seats": 2,
+   "members": [
+    {
+     "name": "James V. Garland IV",
+     "elected": "2023-11-07",
+     "contest": "164928"
+    },
+    {
+     "name": "Frank A. Johnson Jr.",
+     "elected": "2023-11-07",
+     "contest": "164928"
+    }
+   ]
+  },
+  "51161": {
+   "name": "Roanoke County",
+   "district": "Blue Ridge",
+   "seats": 2,
+   "members": [
+    {
+     "name": "N. H. \"Nick\" Beasley",
+     "elected": "2023-11-07",
+     "contest": "164930"
+    },
+    {
+     "name": "Roger B. Holnback",
+     "elected": "2023-11-07",
+     "contest": "164930"
+    }
+   ]
+  },
+  "51163": {
+   "name": "Rockbridge County",
+   "district": "Natural Bridge",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Timothy L. Goodbar Sr.",
+     "elected": "2023-11-07",
+     "contest": "164931"
+    },
+    {
+     "name": "Charles L. Cummings III",
+     "elected": "2023-11-07",
+     "contest": "164931"
+    }
+   ]
+  },
+  "51165": {
+   "name": "Rockingham County",
+   "district": "Shenandoah Valley",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Kevin C. Craun",
+     "elected": "2023-11-07",
+     "contest": "164934"
+    },
+    {
+     "name": "Betty J. Reese",
+     "elected": "2023-11-07",
+     "contest": "164934"
+    }
+   ]
+  },
+  "51167": {
+   "name": "Russell County",
+   "district": "Clinch Valley",
+   "seats": 3,
+   "members": [
+    {
+     "name": "J. Kelly Gilmer, Jr.",
+     "elected": "2023-11-07",
+     "contest": "164938"
+    },
+    {
+     "name": "Zac M. Ketron",
+     "elected": "2023-11-07",
+     "contest": "164938"
+    },
+    {
+     "name": "J.H.A. \"Andy\" Smith IV",
+     "elected": "2023-11-07",
+     "contest": "164938"
+    }
+   ]
+  },
+  "51169": {
+   "name": "Scott County",
+   "district": "Scott County",
+   "seats": 3,
+   "members": [
+    {
+     "name": "Danny R. Meade",
+     "elected": "2023-11-07",
+     "contest": "164941"
+    },
+    {
+     "name": "James M. \"Pete\" Odle",
+     "elected": "2023-11-07",
+     "contest": "164941"
+    },
+    {
+     "name": "Billy R. Nash",
+     "elected": "2023-11-07",
+     "contest": "164941"
+    }
+   ]
+  },
+  "51171": {
+   "name": "Shenandoah County",
+   "district": "Lord Fairfax",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Joan M. Comanor",
+     "elected": "2023-11-07",
+     "contest": "164945"
+    },
+    {
+     "name": "Mary L. Gessner",
+     "elected": "2023-11-07",
+     "contest": "164945"
+    }
+   ]
+  },
+  "51173": {
+   "name": "Smyth County",
+   "district": "Evergreen",
+   "seats": 3,
+   "members": [
+    {
+     "name": "David L. Spence",
+     "elected": "2023-11-07",
+     "contest": "164947"
+    },
+    {
+     "name": "Sarah Beth N. Gillespie",
+     "elected": "2023-11-07",
+     "contest": "164947"
+    },
+    {
+     "name": "Kristina N. \"Kristy\" Waller",
+     "elected": "2023-11-07",
+     "contest": "164947"
+    }
+   ]
+  },
+  "51175": {
+   "name": "Southampton County",
+   "district": "Chowan Basin",
+   "seats": 2,
+   "members": [
+    {
+     "name": "M. L. Everett, Jr",
+     "elected": "2023-11-07",
+     "contest": "164948"
+    },
+    {
+     "name": "Gary D. Cross",
+     "elected": "2023-11-07",
+     "contest": "164948"
+    }
+   ]
+  },
+  "51177": {
+   "name": "Spotsylvania County",
+   "district": "Tri-County/City",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Jan L. Massey",
+     "elected": "2023-11-07",
+     "contest": "164951"
+    },
+    {
+     "name": "Wayne W. Miller",
+     "elected": "2023-11-07",
+     "contest": "164951"
+    }
+   ]
+  },
+  "51179": {
+   "name": "Stafford County",
+   "district": "Tri-County/City",
+   "seats": 2,
+   "members": [
+    {
+     "name": "John E. Howe",
+     "elected": "2023-11-07",
+     "contest": "164952"
+    },
+    {
+     "name": "Daniel Goodale-Porter",
+     "elected": "2023-11-07",
+     "contest": "164952"
+    }
+   ]
+  },
+  "51181": {
+   "name": "Surry County",
+   "district": "Peanut",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Daniel Thomas Judkins",
+     "elected": "2023-11-07",
+     "contest": "164956"
+    },
+    {
+     "name": "Earrett W. Parson",
+     "elected": "2023-11-07",
+     "contest": "164956"
+    }
+   ]
+  },
+  "51183": {
+   "name": "Sussex County",
+   "district": "Chowan Basin",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Harvey M. Dunn, Jr.",
+     "elected": "2023-11-07",
+     "contest": "164957"
+    },
+    {
+     "name": "J. Wyatt Cox",
+     "elected": "2023-11-07",
+     "contest": "164957"
+    }
+   ]
+  },
+  "51185": {
+   "name": "Tazewell County",
+   "district": "Tazewell",
+   "seats": 3,
+   "members": [
+    {
+     "name": "Jack W. Asbury",
+     "elected": "2023-11-07",
+     "contest": "164958"
+    },
+    {
+     "name": "Malcolm E. \"Eddie\" Rhudy",
+     "elected": "2023-11-07",
+     "contest": "164958"
+    },
+    {
+     "name": "David W. Simmons",
+     "elected": "2023-11-07",
+     "contest": "164958"
+    }
+   ]
+  },
+  "51187": {
+   "name": "Warren County",
+   "district": "Lord Fairfax",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Mark W. Huddleston",
+     "elected": "2023-11-07",
+     "contest": "164960"
+    },
+    {
+     "name": "Emma E. Bricker",
+     "elected": "2023-11-07",
+     "contest": "164960"
+    }
+   ]
+  },
+  "51191": {
+   "name": "Washington County",
+   "district": "Holston River",
+   "seats": 3,
+   "members": [
+    {
+     "name": "Adam A. Wilson",
+     "elected": "2023-11-07",
+     "contest": "164962"
+    },
+    {
+     "name": "Aaron N. Scyphers",
+     "elected": "2023-11-07",
+     "contest": "164962"
+    },
+    {
+     "name": "Martha W. Chapman",
+     "elected": "2023-11-07",
+     "contest": "164962"
+    }
+   ]
+  },
+  "51193": {
+   "name": "Westmoreland County",
+   "district": "Northern Neck",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Richard E. Wilkins",
+     "elected": "2023-11-07",
+     "contest": "164964"
+    },
+    {
+     "name": "Benson C. Braxton",
+     "elected": "2023-11-07",
+     "contest": "164964"
+    }
+   ]
+  },
+  "51195": {
+   "name": "Wise County",
+   "district": "Lonesome Pine",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Danny R. Cantrell",
+     "elected": "2023-11-07",
+     "contest": "164967"
+    },
+    {
+     "name": "Walter H. \"Wally\" Smith",
+     "elected": "2023-11-07",
+     "contest": "164967"
+    }
+   ]
+  },
+  "51197": {
+   "name": "Wythe County",
+   "district": "Big Walker",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Brian M. Umberger",
+     "elected": "2023-11-07",
+     "contest": "164971"
+    },
+    {
+     "name": "Christopher C. King",
+     "elected": "2023-11-07",
+     "contest": "164971"
+    }
+   ]
+  },
+  "51199": {
+   "name": "York County",
+   "district": "Colonial",
+   "seats": 2,
+   "members": [
+    {
+     "name": "David C. Westcott, Jr.",
+     "elected": "2023-11-07",
+     "contest": "164972"
+    },
+    {
+     "name": "Pamela A. Mason",
+     "elected": "2023-11-07",
+     "contest": "164972"
+    }
+   ]
+  },
+  "51510": {
+   "name": "Alexandria city",
+   "district": null
+  },
+  "51520": {
+   "name": "Bristol city",
+   "district": null
+  },
+  "51530": {
+   "name": "Buena Vista city",
+   "district": "Natural Bridge",
+   "seats": 2,
+   "members": [
+    {
+     "name": "H. W. \"Herbie\" Huffman",
+     "elected": "2023-11-07",
+     "contest": "164811"
+    },
+    {
+     "name": "Robert G. Deyo",
+     "elected": "2023-11-07",
+     "contest": "164811"
+    }
+   ]
+  },
+  "51540": {
+   "name": "Charlottesville city",
+   "district": "Thomas Jefferson",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Joseph W. Thompson",
+     "elected": "2023-11-07",
+     "contest": "164818"
+    }
+   ],
+   "listed": 1
+  },
+  "51550": {
+   "name": "Chesapeake city",
+   "district": "Virginia Dare",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Vickie J. Greene",
+     "elected": "2023-11-07",
+     "contest": "164819"
+    },
+    {
+     "name": "Lawrence J. Mason",
+     "elected": "2023-11-07",
+     "contest": "164819"
+    }
+   ]
+  },
+  "51570": {
+   "name": "Colonial Heights city",
+   "district": null
+  },
+  "51580": {
+   "name": "Covington city",
+   "district": "Mountain",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Allen L. Dressler",
+     "elected": "2023-11-07",
+     "contest": "164825"
+    },
+    {
+     "name": "Xavier C. Storey",
+     "elected": "2023-11-07",
+     "contest": "164825"
+    }
+   ]
+  },
+  "51590": {
+   "name": "Danville city",
+   "district": null
+  },
+  "51595": {
+   "name": "Emporia city",
+   "district": null
+  },
+  "51600": {
+   "name": "Fairfax city",
+   "district": null
+  },
+  "51610": {
+   "name": "Falls Church city",
+   "district": null
+  },
+  "51620": {
+   "name": "Franklin city",
+   "district": null
+  },
+  "51630": {
+   "name": "Fredericksburg city",
+   "district": "Tri-County/City",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Charles M. Koch Jr.",
+     "elected": "2023-11-07",
+     "contest": "164851"
+    },
+    {
+     "name": "Devin M Schwers",
+     "elected": "2023-11-07",
+     "contest": "164851"
+    }
+   ]
+  },
+  "51640": {
+   "name": "Galax city",
+   "district": "New River",
+   "seats": 2,
+   "members": [
+    {
+     "name": "J. D. Testerman",
+     "elected": "2023-11-07",
+     "contest": "164853"
+    },
+    {
+     "name": "Rudolph W. \"Pete\" Farmer",
+     "elected": "2023-11-07",
+     "contest": "164853"
+    }
+   ]
+  },
+  "51650": {
+   "name": "Hampton city",
+   "district": null
+  },
+  "51660": {
+   "name": "Harrisonburg city",
+   "district": "Shenandoah Valley",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Jeff Heie",
+     "elected": "2023-11-07",
+     "contest": "164867"
+    },
+    {
+     "name": "Tyler Adams",
+     "elected": "2023-11-07",
+     "contest": "164867"
+    }
+   ]
+  },
+  "51670": {
+   "name": "Hopewell city",
+   "district": null
+  },
+  "51678": {
+   "name": "Lexington city",
+   "district": "Natural Bridge",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Charles T. Winder",
+     "elected": "2023-11-07",
+     "contest": "164881"
+    },
+    {
+     "name": "B.H. \"Billy\" Grose Jr.",
+     "elected": "2023-11-07",
+     "contest": "164881"
+    }
+   ]
+  },
+  "51680": {
+   "name": "Lynchburg city",
+   "district": "Robert E. Lee",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Leslie Clyde Whealton II",
+     "elected": "2023-11-07",
+     "contest": "164895"
+    },
+    {
+     "name": "Shepard Landrum",
+     "elected": "2023-11-07",
+     "contest": "164895"
+    }
+   ]
+  },
+  "51683": {
+   "name": "Manassas city",
+   "district": null
+  },
+  "51685": {
+   "name": "Manassas Park city",
+   "district": null
+  },
+  "51690": {
+   "name": "Martinsville city",
+   "district": null
+  },
+  "51700": {
+   "name": "Newport News city",
+   "district": null
+  },
+  "51710": {
+   "name": "Norfolk city",
+   "district": null
+  },
+  "51720": {
+   "name": "Norton city",
+   "district": null
+  },
+  "51730": {
+   "name": "Petersburg city",
+   "district": "Appomattox River",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Michael L. Moore-Storrs",
+     "elected": "2023-11-07",
+     "contest": "164913"
+    },
+    {
+     "name": "Richard B. Taylor",
+     "elected": "2023-11-07",
+     "contest": "164913"
+    }
+   ]
+  },
+  "51735": {
+   "name": "Poquoson city",
+   "district": null
+  },
+  "51740": {
+   "name": "Portsmouth city",
+   "district": null
+  },
+  "51750": {
+   "name": "Radford city",
+   "district": null
+  },
+  "51760": {
+   "name": "Richmond city",
+   "district": null
+  },
+  "51770": {
+   "name": "Roanoke city",
+   "district": "Blue Ridge",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Sarah R. Baumgardner",
+     "elected": "2023-11-07",
+     "contest": "164929"
+    },
+    {
+     "name": "Freeda L. Cathcart",
+     "elected": "2023-11-07",
+     "contest": "164929"
+    }
+   ]
+  },
+  "51775": {
+   "name": "Salem city",
+   "district": null
+  },
+  "51790": {
+   "name": "Staunton city",
+   "district": "Headwaters",
+   "seats": 2,
+   "members": [
+    {
+     "name": "J. W. \"Buzz\" Easterling",
+     "elected": "2023-11-07",
+     "contest": "164954"
+    },
+    {
+     "name": "Jimmy W. Kilbourne Jr.",
+     "elected": "2023-11-07",
+     "contest": "164954"
+    }
+   ]
+  },
+  "51800": {
+   "name": "Suffolk city",
+   "district": "Peanut",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Charles L. Owens",
+     "elected": "2023-11-07",
+     "contest": "164955"
+    },
+    {
+     "name": "Richard A. Gwaltney",
+     "elected": "2023-11-07",
+     "contest": "164955"
+    }
+   ]
+  },
+  "51810": {
+   "name": "Virginia Beach city",
+   "district": "Virginia Dare",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Leslie A. Jones",
+     "elected": "2023-11-07",
+     "contest": "164959"
+    },
+    {
+     "name": "William W. \"Bill\" Fleming",
+     "elected": "2023-11-07",
+     "contest": "164959"
+    }
+   ]
+  },
+  "51820": {
+   "name": "Waynesboro city",
+   "district": "Headwaters",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Dubose Egleston, Jr.",
+     "elected": "2023-11-07",
+     "contest": "164963"
+    },
+    {
+     "name": "Todd C. Showalter",
+     "elected": "2023-11-07",
+     "contest": "164963"
+    }
+   ]
+  },
+  "51830": {
+   "name": "Williamsburg city",
+   "district": "Colonial",
+   "seats": 2,
+   "members": [
+    {
+     "name": "David C. Beals",
+     "elected": "2023-11-07",
+     "contest": "164965"
+    },
+    {
+     "name": "Charles Stevenson",
+     "elected": "2023-11-07",
+     "contest": "164965"
+    }
+   ]
+  },
+  "51840": {
+   "name": "Winchester city",
+   "district": "Lord Fairfax",
+   "seats": 2,
+   "members": [
+    {
+     "name": "Paul Gentry Burkholder",
+     "elected": "2023-11-07",
+     "contest": "164966"
+    },
+    {
+     "name": "Roy Reid Hoak III",
+     "elected": "2023-11-07",
+     "contest": "164966"
+    }
+   ]
+  }
+ }
+}

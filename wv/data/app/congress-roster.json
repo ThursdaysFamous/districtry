@@ -1,0 +1,32 @@
+{
+  "1": {
+    "name": "Carol D. Miller",
+    "party": "Republican",
+    "url": "https://miller.house.gov",
+    "capitolOffice": [
+      "465 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3452"
+    ],
+    "districtOffice": [
+      "3 Tennessee Ave",
+      "Charleston, WV 25302",
+      "Phone: 681-945-6556"
+    ]
+  },
+  "2": {
+    "name": "Riley M. Moore",
+    "party": "Republican",
+    "url": "https://rileymoore.house.gov",
+    "capitolOffice": [
+      "1337 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2711"
+    ],
+    "districtOffice": [
+      "8 Suburban Ct",
+      "Morgantown, WV 26505",
+      "Phone: 304-350-6995"
+    ]
+  }
+}

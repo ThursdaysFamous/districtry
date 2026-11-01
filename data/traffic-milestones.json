@@ -25,8 +25,24 @@
       "date": "2026-10-26",
       "exact": false
     },
+    "map-pages-30/ky/100": {
+      "date": "2026-10-28",
+      "exact": false
+    },
+    "map-pages-30/la/100": {
+      "date": "2026-10-29",
+      "exact": false
+    },
     "map-pages-30/mi/100": {
       "date": "2026-10-26",
+      "exact": false
+    },
+    "map-pages-30/mn/100": {
+      "date": "2026-10-28",
+      "exact": false
+    },
+    "map-pages-30/mo/100": {
+      "date": "2026-10-31",
       "exact": false
     },
     "map-pages-30/nc/100": {
@@ -35,6 +51,10 @@
     },
     "map-pages-30/ny/100": {
       "date": "2026-10-26",
+      "exact": false
+    },
+    "map-pages-30/ny/500": {
+      "date": "2026-10-30",
       "exact": false
     },
     "map-pages-30/ok/100": {

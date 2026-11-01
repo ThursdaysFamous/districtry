@@ -73,6 +73,7 @@ the audit asked for an item about the project.
 | P1001 (applies to jurisdiction) | Q1494 (Mississippi) | the `/ms/` instance |
 | P1001 (applies to jurisdiction) | Q1588 (Louisiana) | the `/la/` instance |
 | P1001 (applies to jurisdiction) | Q1581 (Missouri) | the `/mo/` instance |
+| P1001 (applies to jurisdiction) | Q1370 (Virginia) | the `/va/` instance |
 
 ### What is deliberately absent
 
@@ -121,6 +122,7 @@ endpoint used.
 | `Q1166` | Michigan |
 | `Q1204` | Illinois |
 | `Q1224853` | Open Database License |
+| `Q1370` | Virginia |
 | `Q13785927` | Apache Software License 2.0 |
 | `Q1384` | New York |
 | `Q1415` | Indiana |

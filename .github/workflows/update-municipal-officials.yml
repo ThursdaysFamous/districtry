@@ -128,10 +128,21 @@ jobs:
         continue-on-error: true
         run: python3 scripts/cook_municipal_officials_scraper.py --out /tmp/cook_municipal_officials.json
 
+      # The flipbook's text view has answered a managed challenge since
+      # 2026-09-17, which this project does not work around. When it refuses,
+      # the directory is read from the copy the Clerk's office sent on
+      # 2026-10-01 ("the most current version", updated 2026-08-21), so the
+      # names come from the county's document rather than carrying forward
+      # unread. The flipbook is still tried first, so a newer edition is read
+      # the week the challenge lifts. Only when both fail does this step fail
+      # and Will go to --preserved below.
       - name: Scrape the Will County Clerk directory
         id: scrape_will
         continue-on-error: true
-        run: python3 scripts/will_municipal_officials_scraper.py --out /tmp/will_municipal_officials.json
+        run: |
+          python3 scripts/will_municipal_officials_scraper.py --out /tmp/will_municipal_officials.json \
+            || python3 scripts/will_municipal_officials_scraper.py --out /tmp/will_municipal_officials.json \
+                 --pdf "il/data/source/raw/2025 Will County Directory (updated 2026-08-21).pdf"
 
       - name: Scrape the DuPage Mayors and Managers Conference directory
         id: scrape_dupage

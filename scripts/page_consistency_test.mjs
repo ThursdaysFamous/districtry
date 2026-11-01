@@ -65,7 +65,7 @@ const LEAFLET = existsSync(join(VENDOR, "leaflet.js")) && existsSync(join(VENDOR
   : null;
 if (LEAFLET) console.log("  (serving Leaflet from scripts/vendor/leaflet — CDN unreachable in this env)");
 const BASE = (process.env.BASE_URL || "http://localhost:8000").replace(/\/$/, "");
-const WHY = "https://overberg.co/why/";
+const WHY = "https://overberg.co/why/still-incomplete/";
 
 // GENERATED PER-COUNTY PAGES ARE SAMPLED, NOT SWEPT, and the reason is a
 // measurement rather than a preference: this gate costs 5.1s a page (3m8s for
@@ -441,7 +441,9 @@ try {
         // for weeks with an invisible verified date and no reachable feedback
         // button — past every gate in this repo, because parity of the SHARED
         // engine was checked and parity of what a reader can SEE was not.
-        // Anchored to the map so sub-pages (which have neither) skip it.
+        // The feedback button left the panel foot for the masthead on
+        // 2026-10-29 (engine masthead-buttons-html), and is held here wherever
+        // it sits. Anchored to the map so sub-pages (which have neither) skip it.
         appFoot: (() => {
           if (!document.getElementById("map")) return null;
           const seen = (el) => !!el && el.getClientRects().length > 0 &&

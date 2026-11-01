@@ -149,12 +149,18 @@
            the masthead. */
         foot.insertBefore(doors, foot.firstChild);
       }
-      var move = actions.querySelectorAll("#gaps-btn, .masthead-action-link");
+      var move = actions.querySelectorAll("#gaps-btn, .masthead-action-link:not(.dst-more-btn)");
       for (var i = 0; i < move.length; i++) doors.appendChild(move[i]);
+      // Sponsor leads the doors: the phone masthead has room for Feedback
+      // beside the theme toggle and not for a second button (2026-10-29)
+      var sponsor = document.getElementById("sponsor-btn");
+      if (sponsor) doors.insertBefore(sponsor, doors.firstChild);
     } else if (doors) {
       var sep = actions.querySelector(".districtry-toggle-sep");
       var back = doors.querySelectorAll("#gaps-btn, .masthead-action-link");
       for (var j = 0; j < back.length; j++) actions.insertBefore(back[j], sep);
+      var home = document.getElementById("sponsor-btn");
+      if (home && doors.contains(home)) actions.insertBefore(home, sep);
       doors.parentNode.removeChild(doors);
     }
   }
@@ -215,7 +221,10 @@
     wrap.appendChild(btn);
     wrap.appendChild(panel);
     var sep = actions.querySelector(".districtry-toggle-sep");
-    actions.insertBefore(wrap, sep || null);
+    // before Feedback where the row has it, so the menu sits with the links
+    // it holds and Feedback and Sponsor stay together at the row's end
+    var feedback = actions.querySelector(".dst-feedback-btn");
+    actions.insertBefore(wrap, (feedback && feedback.parentNode === actions) ? feedback : (sep || null));
     btn.addEventListener("click", function () {
       var open = panel.hidden;
       panel.hidden = !open;
@@ -262,17 +271,62 @@
     if (!beside) return false;
     return actions.getBoundingClientRect().top >= beside.getBoundingClientRect().bottom - 2;
   }
+  /* The order the row makes room, first to last: the plain links leave it
+     from the end of the row, then the tagline under the wordmark wraps onto
+     a second line ("tagline", which narrows the title and makes the masthead
+     one line taller), then Sponsor leaves, then "How to use", then "What data
+     is missing?". Sponsor (2026-10-29) is not one of the plain links: it
+     stays in view until every one of them has folded, and "How to use"
+     outlasts it because the first-visit help sends a new reader to it.
+     Measured that day, the masthead before Feedback and Sponsor kept "How to
+     use" in view at 1280px in all 17 apps, and with them and no wrapped
+     tagline only Illinois and New York kept it, their taglines being the
+     two shortest; with the tagline wrapped all four stay at 1280px in every
+     app measured. Feedback is not in the list at all and never folds. */
+  function dstFoldOrder(sponsor) {
+    var gaps = null, help = null, plain = [];
+    dstMoreItems.forEach(function (item) {
+      if (item.id === "gaps-btn") gaps = item;
+      else if (item.id === "help-link") help = item;
+      else plain.push(item);
+    });
+    var order = plain.reverse();
+    order.push("tagline");
+    if (sponsor) order.push(sponsor);
+    if (help) order.push(help);
+    if (gaps) order.push(gaps);
+    return order;
+  }
   function dstFitMastheadActions() {
     var actions = document.querySelector(".masthead-actions");
     if (!actions) return;
     var toggle = actions.querySelector(".districtry-theme-toggle") ||
       (dstMore && dstMore.panel.querySelector(".districtry-theme-toggle"));
     var sep = actions.querySelector(".districtry-toggle-sep");
+    var sponsor = document.getElementById("sponsor-btn");
+    var feedback = document.getElementById("feedback-btn");
+    if (feedback) feedback.classList.remove("dst-compact");
+    if (dstIsPhone()) {
+      // the doors live in the panel foot there. Feedback stays beside the
+      // wordmark, and where the two would touch it shows its icon alone:
+      // measured 2026-10-29, at 360px the word fits beside "districtry / il"
+      // and not beside the wider "districtry / mn"
+      var word = document.querySelector(".masthead .title-text");
+      if (feedback && word && feedback.offsetParent !== null &&
+          feedback.getBoundingClientRect().left < word.getBoundingClientRect().right + 8) {
+        feedback.classList.add("dst-compact");
+      }
+    }
     if (!dstMoreItems) {
+      // read from wherever the links are now: a page that opens at phone
+      // width has already moved them to the panel foot (dstPlaceDoors), and
+      // reading the masthead alone left the list empty for good, so a phone
+      // turned to a tablet's width folded nothing
       dstMoreItems = [];
-      var found = actions.querySelectorAll("#gaps-btn, .masthead-action-link");
+      var found = document.querySelectorAll(".masthead-actions #gaps-btn, .masthead-actions .masthead-action-link, " +
+        ".districtry-doors #gaps-btn, .districtry-doors .masthead-action-link");
       for (var i = 0; i < found.length; i++) dstMoreItems.push(found[i]);
-      if (!dstMoreItems.length) return;
+      if (!dstMoreItems.length) { dstMoreItems = null; return; }
     }
     if (!dstMore) dstMore = dstBuildMore(actions);
     dstMoreClose(false);
@@ -281,17 +335,25 @@
     dstMoreItems.forEach(function (item) {
       if (actions.contains(item)) actions.insertBefore(item, dstMore.wrap);
     });
+    if (sponsor && sponsor.parentNode === dstMore.panel) actions.insertBefore(sponsor, sep || null);
     if (toggle && sep && toggle.parentNode !== actions) actions.insertBefore(toggle, sep.nextSibling);
     actions.classList.remove("dst-toggle-folded");
     var header = document.querySelector("header.masthead");
-    if (header) header.classList.remove("dst-tagline-folded");
+    if (header) header.classList.remove("dst-tagline-folded", "dst-tagline-wrapped");
     dstMore.wrap.hidden = true;
     if (dstIsPhone()) return; // the doors live in the panel foot there
     if (!dstMastheadWrapped(actions)) return;
     dstMore.wrap.hidden = false;
-    for (var k = dstMoreItems.length - 1; k >= 0 && dstMastheadWrapped(actions); k--) {
-      if (actions.contains(dstMoreItems[k])) dstMore.panel.insertBefore(dstMoreItems[k], dstMore.panel.firstChild);
+    // a Sponsor the Play app hides (play-app) takes no room and is not folded
+    var order = dstFoldOrder(sponsor && actions.contains(sponsor) && sponsor.offsetParent !== null ? sponsor : null);
+    for (var k = 0; k < order.length && dstMastheadWrapped(actions); k++) {
+      if (order[k] === "tagline") { if (header) header.classList.add("dst-tagline-wrapped"); }
+      else if (actions.contains(order[k])) dstMore.panel.appendChild(order[k]);
     }
+    // the menu lists what it holds in the row's own order, Sponsor last
+    dstMoreItems.concat(sponsor ? [sponsor] : []).forEach(function (item) {
+      if (item.parentNode === dstMore.panel) dstMore.panel.appendChild(item);
+    });
     // last resort: every link is in the menu and the row still wraps
     if (toggle && dstMastheadWrapped(actions)) {
       dstMore.panel.appendChild(toggle);
@@ -302,6 +364,8 @@
     // whose title is wider than Illinois's still wrapped at 768-850px with
     // every link and the toggle folded
     if (header && dstMastheadWrapped(actions)) header.classList.add("dst-tagline-folded");
+    // and only then Feedback's word, keeping its icon
+    if (feedback && dstMastheadWrapped(actions)) feedback.classList.add("dst-compact");
     if (!dstMore.panel.firstChild) dstMore.wrap.hidden = true;
   }
   var dstFitQueued = false;
@@ -313,6 +377,13 @@
   window.addEventListener("resize", dstQueueFit);
   // the pills' widths change when the web font arrives
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(dstQueueFit);
+
+  // A press of Sponsor is counted by the app it was pressed in, never by
+  // place, so the traffic page shows whether the button is used (2026-10-29)
+  var dstSponsorBtn = document.getElementById("sponsor-btn");
+  if (dstSponsorBtn) dstSponsorBtn.addEventListener("click", function () {
+    trackEvent("sponsor/" + METRO_BRAND.instanceTag);
+  });
 
   dstApplyPhoneLayout();
   if (window.matchMedia) {

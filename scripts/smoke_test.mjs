@@ -1722,9 +1722,15 @@ try {
   // 1e. THE MASTHEAD NEVER WRAPS: its links fold into "More" from the end
   //     (dstFitMastheadActions) before the row would drop them below the
   //     search, which a reader saw as the search bar jumping from the middle
-  //     to the right at ~1,600px. Measured at three widths: all links in the
-  //     row, some folded with "What data is missing?" still in the row, and
-  //     everything folded including the theme toggle, which folds last.
+  //     to the right at ~1,600px. Since 2026-10-29 the row also carries
+  //     Feedback, which never folds, and Sponsor, and the fold has an order:
+  //     the plain links from the end, then the tagline wraps onto a second
+  //     line, then Sponsor, then "How to use", then "What data is missing?",
+  //     then the theme toggle. Measured at five widths: one row at each,
+  //     Feedback always in it, and at each width a door in the row only when
+  //     every door folded after it is in the row too. At 1,280px, the most
+  //     common laptop width, Sponsor and "How to use" both stay in view,
+  //     which they did not before the tagline could wrap.
   {
     const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 1870, height: 900 } });
     const page = await booted(context, BASE);
@@ -1733,32 +1739,46 @@ try {
       await page.setViewportSize({ width: w, height: 900 });
       await page.waitForTimeout(300);
       return page.evaluate(() => {
-        const row = document.querySelector(".masthead-actions").getBoundingClientRect();
+        const actions = document.querySelector(".masthead-actions");
+        const row = actions.getBoundingClientRect();
         const search = document.querySelector(".masthead .map-toolbar").getBoundingClientRect();
         const panel = document.getElementById("dst-more-panel");
+        const inRow = (sel) => { const el = actions.querySelector(":scope > " + sel); return !!el && el.getClientRects().length > 0; };
+        const plain = Array.prototype.some.call(actions.querySelectorAll(":scope > .masthead-action-link:not(.dst-more-btn):not(#help-link)"),
+          (el) => el.getClientRects().length > 0);
         return {
           wrapped: row.top >= search.bottom - 2,
           folded: panel ? panel.children.length : 0,
-          gapsInRow: !!document.querySelector(".masthead-actions > #gaps-btn"),
-          toggleFolded: !!(panel && panel.querySelector(".districtry-theme-toggle")),
+          plain: plain,
+          tagline: document.querySelector("header.masthead").classList.contains("dst-tagline-wrapped"),
+          sponsor: inRow("#sponsor-btn"),
+          help: inRow("#help-link"),
+          gaps: inRow("#gaps-btn"),
+          feedback: inRow("#feedback-btn"),
+          toggle: inRow(".districtry-theme-toggle"),
         };
       });
     };
-    const wide = await at(1870), mid = await at(1400), narrow = await at(800);
-    check("the masthead keeps one row at every desktop width",
-      !wide.wrapped && !mid.wrapped && !narrow.wrapped, JSON.stringify({ wide, mid, narrow }));
-    check("masthead links fold from the end, the data-gaps door last and the theme toggle after it",
-      wide.folded === 0 && mid.folded > 0 && mid.gapsInRow && !mid.toggleFolded && narrow.toggleFolded && !narrow.gapsInRow,
-      `1870:${wide.folded} 1400:${mid.folded} 800:${narrow.folded}`);
+    const widths = [1870, 1400, 1280, 1000, 800];
+    const seen = {};
+    for (const w of widths) seen[w] = await at(w);
+    check("the masthead keeps one row at every desktop width, with Feedback in it",
+      widths.every((w) => !seen[w].wrapped && seen[w].feedback), JSON.stringify(seen));
+    const ordered = (s) => (!s.plain || !s.tagline) && (!s.plain || s.sponsor) && (!s.sponsor || s.help) &&
+      (!s.help || s.gaps) && (!s.gaps || s.toggle);
+    check("masthead doors fold in order: plain links, the tagline wraps, Sponsor, How to use, the data-gaps door, the theme toggle",
+      widths.every((w) => ordered(seen[w])) && seen[1870].sponsor && seen[1400].folded > 0 && seen[1400].gaps &&
+        seen[1280].sponsor && seen[1280].help && seen[800].folded > 0 && !seen[800].toggle && !seen[800].gaps,
+      widths.map((w) => w + ":" + JSON.stringify(seen[w])).join(" "));
     await context.close();
   }
 
   // 1g. THE MORE MENU AND THE GAPS PANEL ARE COUNTED. At 1,400px some
   //     links sit in "More": opening it and picking an item are counted, the
-  //     item by its name; opening the data-gaps panel, expanding a gap's
-  //     explanation and following its "Suggest a source" link are counted,
-  //     the last two by the gap's record id. Links are prevented from
-  //     navigating so the page stays to be read.
+  //     item by its name; a press of Sponsor is counted by the app; opening
+  //     the data-gaps panel, expanding a gap's explanation and following its
+  //     "Suggest a source" link are counted, the last two by the gap's record
+  //     id. Links are prevented from navigating so the page stays to be read.
   {
     const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 1400, height: 900 } });
     const page = await booted(context, BASE, async (p) => {
@@ -1774,6 +1794,13 @@ try {
       if (a) e.preventDefault();
     }, true));
     const events = () => page.evaluate(() => (window.__gcEvents || []).filter((v) => v && v.event).map((v) => v.path));
+    // Sponsor (2026-10-29) is counted by the app it was pressed in, once;
+    // pressed first, since the menu item picked below can open a dialog
+    const sponsorShown = await page.isVisible("#sponsor-btn");
+    if (sponsorShown) await page.click("#sponsor-btn");
+    const sponsor = (await events()).filter((e) => /^sponsor\//.test(e));
+    check("a press of Sponsor is counted once, by the app", sponsorShown && sponsor.join() === "sponsor/il",
+      sponsorShown ? JSON.stringify(sponsor) : "Sponsor is not in the row at 1,400px");
     const hasMore = await page.$("#dst-more-btn:not([hidden])").then((h) => !!h && page.isVisible("#dst-more-btn"));
     if (hasMore) {
       await page.click("#dst-more-btn");
@@ -1789,6 +1816,11 @@ try {
     } else {
       check("the More menu counts being opened and the item picked, once each", false, "no More menu at 1,400px");
     }
+    // the item picked can open a dialog (since 2026-10-29 it is the Bulk
+    // Address Checker's at 1,400px); close it before pressing the gaps door
+    await page.evaluate(() => {
+      document.querySelectorAll(".feedback-modal:not([hidden]) [id$='-close']").forEach((b) => b.click());
+    });
     await page.click("#gaps-btn");
     const why = await page.waitForSelector(".gap-more-label", { state: "attached", timeout: QUERY_TIMEOUT }).then(() => true, () => false);
     if (why) {

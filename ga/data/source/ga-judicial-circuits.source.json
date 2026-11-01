@@ -1,0 +1,1445 @@
+{
+ "built": "2026-10-30",
+ "source": "https://results.sos.ga.gov/results/public/Georgia",
+ "directory": "https://georgiacourts.knack.com/gcd2/#home/",
+ "rule": "Each county's circuit is the one whose contests are on its newest official ballot carrying a court contest.",
+ "circuits": {
+  "Alapaha": {
+   "counties": {
+    "Atkinson": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Alapaha Judicial Circuit (Perryman, III)"
+     ]
+    },
+    "Berrien": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Alapaha Judicial Circuit (Perryman, III)"
+     ]
+    },
+    "Clinch": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Alapaha Judicial Circuit (Perryman, III)"
+     ]
+    },
+    "Cook": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Alapaha Judicial Circuit (Perryman, III)"
+     ]
+    },
+    "Lanier": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Alapaha Judicial Circuit (Perryman, III)"
+     ]
+    }
+   }
+  },
+  "Alcovy": {
+   "counties": {
+    "Newton": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Alcovy Judicial Circuit (McCamy)",
+      "Judge - Superior Court - Alcovy Judicial Circuit (Zon)"
+     ]
+    },
+    "Walton": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Alcovy Judicial Circuit (McCamy)",
+      "Judge - Superior Court - Alcovy Judicial Circuit (Zon)"
+     ]
+    }
+   }
+  },
+  "Appalachian": {
+   "counties": {
+    "Fannin": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Appalachian Judicial Circuit (Priest)",
+      "Judge - Superior Court - Appalachian Judicial Circuit (Sosebee)"
+     ]
+    },
+    "Gilmer": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Appalachian Judicial Circuit (Priest)",
+      "Judge - Superior Court - Appalachian Judicial Circuit (Sosebee)"
+     ]
+    },
+    "Pickens": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Appalachian Judicial Circuit (Priest)",
+      "Judge - Superior Court - Appalachian Judicial Circuit (Sosebee)"
+     ]
+    }
+   }
+  },
+  "Atlanta": {
+   "counties": {
+    "Fulton": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Atlanta Judicial Circuit (Benton)",
+      "Judge - Superior Court - Atlanta Judicial Circuit (Eaton)",
+      "Judge - Superior Court - Atlanta Judicial Circuit (Ellerbe)",
+      "Judge - Superior Court - Atlanta Judicial Circuit (Farmer)",
+      "Judge - Superior Court - Atlanta Judicial Circuit (McBurney)",
+      "Judge - Superior Court - Atlanta Judicial Circuit (Schwall)",
+      "Judge - Superior Court - Atlanta Judicial Circuit (Whitaker)"
+     ]
+    }
+   }
+  },
+  "Atlantic": {
+   "counties": {
+    "Bryan": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Atlantic Judicial Circuit - Rep",
+      "Judge - Superior Court - Atlantic Judicial Circuit (Hendrix)",
+      "Judge - Superior Court - Atlantic Judicial Circuit (Stewart)"
+     ]
+    },
+    "Evans": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Atlantic Judicial Circuit - Rep",
+      "Judge - Superior Court - Atlantic Judicial Circuit (Hendrix)",
+      "Judge - Superior Court - Atlantic Judicial Circuit (Stewart)"
+     ]
+    },
+    "Liberty": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Atlantic Judicial Circuit - Rep",
+      "Judge - Superior Court - Atlantic Judicial Circuit (Hendrix)",
+      "Judge - Superior Court - Atlantic Judicial Circuit (Stewart)"
+     ]
+    },
+    "Long": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Atlantic Judicial Circuit - Rep",
+      "Judge - Superior Court - Atlantic Judicial Circuit (Hendrix)",
+      "Judge - Superior Court - Atlantic Judicial Circuit (Stewart)"
+     ]
+    },
+    "McIntosh": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Atlantic Judicial Circuit - Rep",
+      "Judge - Superior Court - Atlantic Judicial Circuit (Hendrix)",
+      "Judge - Superior Court - Atlantic Judicial Circuit (Stewart)"
+     ]
+    },
+    "Tattnall": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Atlantic Judicial Circuit - Rep",
+      "Judge - Superior Court - Atlantic Judicial Circuit (Hendrix)",
+      "Judge - Superior Court - Atlantic Judicial Circuit (Stewart)"
+     ]
+    }
+   }
+  },
+  "Augusta": {
+   "counties": {
+    "Burke": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Augusta Judicial Circuit (Heath)",
+      "Judge - Superior Court - Augusta Judicial Circuit (Stone)",
+      "Judge - Superior Court - Augusta Judicial Circuit (Wright)"
+     ]
+    },
+    "Richmond": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Augusta Judicial Circuit (Heath)",
+      "Judge - Superior Court - Augusta Judicial Circuit (Stone)",
+      "Judge - Superior Court - Augusta Judicial Circuit (Wright)"
+     ]
+    }
+   }
+  },
+  "Bell-Forsyth": {
+   "counties": {
+    "Forsyth": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Bell-Forsyth Judicial Circuit (Bagley)",
+      "Judge - Superior Court - Bell-Forsyth Judicial Circuit (Smith)"
+     ]
+    }
+   }
+  },
+  "Blue Ridge": {
+   "counties": {
+    "Cherokee": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Blue Ridge Judicial Circuit (Baker)"
+     ]
+    }
+   }
+  },
+  "Brunswick": {
+   "counties": {
+    "Appling": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Brunswick Judicial Circuit (Lane)"
+     ]
+    },
+    "Camden": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Brunswick Judicial Circuit (Lane)"
+     ]
+    },
+    "Glynn": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Brunswick Judicial Circuit (Lane)"
+     ]
+    },
+    "Jeff Davis": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Brunswick Judicial Circuit (Lane)"
+     ]
+    },
+    "Wayne": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Brunswick Judicial Circuit (Lane)"
+     ]
+    }
+   }
+  },
+  "Chattahoochee": {
+   "counties": {
+    "Chattahoochee": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Chattahoochee Judicial Circuit (Burch)"
+     ]
+    },
+    "Harris": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Chattahoochee Judicial Circuit (Burch)"
+     ]
+    },
+    "Marion": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Chattahoochee Judicial Circuit (Burch)"
+     ]
+    },
+    "Muscogee": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Chattahoochee Judicial Circuit (Burch)"
+     ]
+    },
+    "Talbot": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Chattahoochee Judicial Circuit (Burch)"
+     ]
+    },
+    "Taylor": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Chattahoochee Judicial Circuit (Burch)"
+     ]
+    }
+   }
+  },
+  "Cherokee": {
+   "counties": {
+    "Bartow": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Cherokee Judicial Circuit (Greene)",
+      "Judge - Superior Court - Cherokee Judicial Circuit (Patel)",
+      "Judge - Superior Court - Cherokee Judicial Circuit (Smith)"
+     ]
+    },
+    "Gordon": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Cherokee Judicial Circuit (Greene)",
+      "Judge - Superior Court - Cherokee Judicial Circuit (Patel)",
+      "Judge - Superior Court - Cherokee Judicial Circuit (Smith)"
+     ]
+    }
+   }
+  },
+  "Clayton": {
+   "counties": {
+    "Clayton": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Clayton Judicial Circuit (Carter)",
+      "Judge - Superior Court - Clayton Judicial Circuit (Mason)"
+     ]
+    }
+   }
+  },
+  "Cobb": {
+   "counties": {
+    "Cobb": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Cobb Judicial Circuit (Brown)",
+      "Judge - Superior Court - Cobb Judicial Circuit (Harris)",
+      "Judge - Superior Court - Cobb Judicial Circuit (Leonard)"
+     ]
+    }
+   }
+  },
+  "Columbia": {
+   "counties": {
+    "Columbia": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Columbia Judicial Circuit - Rep",
+      "Judge - Superior Court - Columbia Judicial Circuit (Blanchard)",
+      "Judge - Superior Court - Columbia Judicial Circuit (Fleming)"
+     ]
+    }
+   }
+  },
+  "Conasauga": {
+   "counties": {
+    "Murray": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Conasauga Judicial Circuit (Morris)",
+      "Judge - Superior Court - Conasauga Judicial Circuit (Wilbanks)"
+     ]
+    },
+    "Whitfield": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Conasauga Judicial Circuit (Morris)",
+      "Judge - Superior Court - Conasauga Judicial Circuit (Wilbanks)"
+     ]
+    }
+   }
+  },
+  "Cordele": {
+   "counties": {
+    "Ben Hill": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Cordele Judicial Circuit - Rep"
+     ]
+    },
+    "Crisp": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Cordele Judicial Circuit - Rep"
+     ]
+    },
+    "Dooly": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Cordele Judicial Circuit - Rep"
+     ]
+    },
+    "Wilcox": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Cordele Judicial Circuit - Rep"
+     ]
+    }
+   }
+  },
+  "Coweta": {
+   "counties": {
+    "Coweta": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Coweta Judicial Circuit (Bendinger)"
+     ]
+    },
+    "Meriwether": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Coweta Judicial Circuit (Bendinger)"
+     ]
+    },
+    "Troup": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Coweta Judicial Circuit (Bendinger)"
+     ]
+    }
+   }
+  },
+  "DeKalb": {
+   "counties": {
+    "DeKalb": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - DeKalb Judicial Circuit (A. Jackson)",
+      "Judge - Superior Court - DeKalb Judicial Circuit (Johnson)",
+      "Judge - Superior Court - DeKalb Judicial Circuit (L. Jackson)"
+     ]
+    }
+   }
+  },
+  "Dougherty": {
+   "counties": {
+    "Dougherty": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Dougherty Judicial Circuit (Dent)"
+     ]
+    }
+   }
+  },
+  "Douglas": {
+   "counties": {
+    "Douglas": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Douglas Judicial Circuit (Adams)"
+     ]
+    }
+   }
+  },
+  "Dublin": {
+   "counties": {
+    "Johnson": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Dublin Judicial Circuit"
+     ]
+    },
+    "Laurens": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Dublin Judicial Circuit"
+     ]
+    },
+    "Treutlen": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Dublin Judicial Circuit"
+     ]
+    },
+    "Twiggs": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Dublin Judicial Circuit"
+     ]
+    }
+   }
+  },
+  "Eastern": {
+   "counties": {
+    "Chatham": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Eastern Judicial Circuit (Karpf)",
+      "Judge - Superior Court - Eastern Judicial Circuit (Stokes)",
+      "Judge - Superior Court - Eastern Judicial Circuit (Walmsley)"
+     ]
+    }
+   }
+  },
+  "Enotah": {
+   "counties": {
+    "Lumpkin": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Enotah Judicial Circuit - Rep",
+      "Judge - Superior Court - Enotah Judicial Circuit (George)",
+      "Judge - Superior Court - Enotah Judicial Circuit (Levins)"
+     ]
+    },
+    "Towns": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Enotah Judicial Circuit - Rep",
+      "Judge - Superior Court - Enotah Judicial Circuit (George)",
+      "Judge - Superior Court - Enotah Judicial Circuit (Levins)"
+     ]
+    },
+    "Union": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Enotah Judicial Circuit - Rep",
+      "Judge - Superior Court - Enotah Judicial Circuit (George)",
+      "Judge - Superior Court - Enotah Judicial Circuit (Levins)"
+     ]
+    },
+    "White": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Enotah Judicial Circuit - Rep",
+      "Judge - Superior Court - Enotah Judicial Circuit (George)",
+      "Judge - Superior Court - Enotah Judicial Circuit (Levins)"
+     ]
+    }
+   }
+  },
+  "Flint": {
+   "counties": {
+    "Henry": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Flint Judicial Circuit (Lewis)",
+      "Judge - Superior Court - Flint Judicial Circuit (Palmer)"
+     ]
+    }
+   }
+  },
+  "Griffin": {
+   "counties": {
+    "Fayette": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Griffin Judicial Circuit (Coker)",
+      "Judge - Superior Court - Griffin Judicial Circuit (Kreuziger)",
+      "Judge - Superior Court - Griffin Judicial Circuit (Miller)"
+     ]
+    },
+    "Pike": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Griffin Judicial Circuit (Coker)",
+      "Judge - Superior Court - Griffin Judicial Circuit (Kreuziger)",
+      "Judge - Superior Court - Griffin Judicial Circuit (Miller)"
+     ]
+    },
+    "Spalding": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Griffin Judicial Circuit (Coker)",
+      "Judge - Superior Court - Griffin Judicial Circuit (Kreuziger)",
+      "Judge - Superior Court - Griffin Judicial Circuit (Miller)"
+     ]
+    },
+    "Upson": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Griffin Judicial Circuit (Coker)",
+      "Judge - Superior Court - Griffin Judicial Circuit (Kreuziger)",
+      "Judge - Superior Court - Griffin Judicial Circuit (Miller)"
+     ]
+    }
+   }
+  },
+  "Gwinnett": {
+   "counties": {
+    "Gwinnett": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Gwinnett Judicial Circuit/Para Juez, Tribunal Estatal del Condado de Gwinnett (Cason)",
+      "Judge - Superior Court - Gwinnett Judicial Circuit/Para Juez, Tribunal Estatal del Condado de Gwinnett (Duncan)",
+      "Judge - Superior Court - Gwinnett Judicial Circuit/Para Juez, Tribunal Estatal del Condado de Gwinnett (Hamil)",
+      "Judge - Superior Court - Gwinnett Judicial Circuit/Para Juez, Tribunal Estatal del Condado de Gwinnett (Hutchinson)",
+      "Judge - Superior Court - Gwinnett Judicial Circuit/Para Juez, Tribunal Estatal del Condado de Gwinnett (Mason)"
+     ]
+    }
+   }
+  },
+  "Houston": {
+   "counties": {
+    "Houston": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Houston Judicial Circuit (Smith)"
+     ]
+    }
+   }
+  },
+  "Lookout Mountain": {
+   "counties": {
+    "Catoosa": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Lookout Mountain Judicial Circuit (Thompson)"
+     ]
+    },
+    "Chattooga": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Lookout Mountain Judicial Circuit (Thompson)"
+     ]
+    },
+    "Dade": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Lookout Mountain Judicial Circuit (Thompson)"
+     ]
+    },
+    "Walker": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Lookout Mountain Judicial Circuit (Thompson)"
+     ]
+    }
+   }
+  },
+  "Macon": {
+   "counties": {
+    "Bibb": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Macon Judicial Circuit (Mincey)",
+      "Judge - Superior Court - Macon Judicial Circuit (Raymond)",
+      "Judge - Superior Court - Macon Judicial Circuit (Smith)",
+      "Judge - Superior Court - Macon Judicial Circuit (Williford)"
+     ]
+    },
+    "Crawford": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Macon Judicial Circuit (Mincey)",
+      "Judge - Superior Court - Macon Judicial Circuit (Raymond)",
+      "Judge - Superior Court - Macon Judicial Circuit (Smith)",
+      "Judge - Superior Court - Macon Judicial Circuit (Williford)"
+     ]
+    },
+    "Peach": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Macon Judicial Circuit (Mincey III)",
+      "Judge - Superior Court - Macon Judicial Circuit (Raymond III)",
+      "Judge - Superior Court - Macon Judicial Circuit (Smith)",
+      "Judge - Superior Court - Macon Judicial Circuit (Williford)"
+     ]
+    }
+   }
+  },
+  "Middle": {
+   "counties": {
+    "Candler": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Middle Judicial Circuit (Reeves)",
+      "Judge - Superior Court - Middle Judicial Circuit (Smith)"
+     ]
+    },
+    "Emanuel": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Middle Judicial Circuit (Reeves)",
+      "Judge - Superior Court - Middle Judicial Circuit (Smith)"
+     ]
+    },
+    "Jefferson": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Middle Judicial Circuit (Reeves)",
+      "Judge - Superior Court - Middle Judicial Circuit (Smith)"
+     ]
+    },
+    "Toombs": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Middle Judicial Circuit (Reeves)",
+      "Judge - Superior Court - Middle Judicial Circuit (Smith)"
+     ]
+    },
+    "Washington": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Middle Judicial Circuit (Reeves)",
+      "Judge - Superior Court - Middle Judicial Circuit (Smith)"
+     ]
+    }
+   }
+  },
+  "Mountain": {
+   "counties": {
+    "Banks": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Mountain Judicial Circuit (Carswell)",
+      "Judge - Superior Court - Mountain Judicial Circuit (Jones, III)"
+     ]
+    },
+    "Habersham": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Mountain Judicial Circuit (Carswell)",
+      "Judge - Superior Court - Mountain Judicial Circuit (Jones, III)"
+     ]
+    },
+    "Rabun": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Mountain Judicial Circuit (Carswell)",
+      "Judge - Superior Court - Mountain Judicial Circuit (Jones, III)"
+     ]
+    },
+    "Stephens": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Mountain Judicial Circuit (Carswell)",
+      "Judge - Superior Court - Mountain Judicial Circuit (Jones, III)"
+     ]
+    }
+   }
+  },
+  "Northeastern": {
+   "counties": {
+    "Dawson": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Northeastern Judicial Circuit - Rep",
+      "Judge - Superior Court - Northeastern Judicial Circuit (Burton)",
+      "Judge - Superior Court - Northeastern Judicial Circuit (Deal)"
+     ]
+    },
+    "Hall": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Northeastern Judicial Circuit - Rep",
+      "Judge - Superior Court - Northeastern Judicial Circuit (Burton)",
+      "Judge - Superior Court - Northeastern Judicial Circuit (Deal)"
+     ]
+    }
+   }
+  },
+  "Northern": {
+   "counties": {
+    "Elbert": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Northern Judicial Circuit"
+     ]
+    },
+    "Franklin": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Northern Judicial Circuit"
+     ]
+    },
+    "Hart": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Northern Judicial Circuit"
+     ]
+    },
+    "Madison": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Northern Judicial Circuit"
+     ]
+    },
+    "Oglethorpe": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Northern Judicial Circuit"
+     ]
+    }
+   }
+  },
+  "Ocmulgee": {
+   "counties": {
+    "Baldwin": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Ocmulgee Judicial Circuit"
+     ]
+    },
+    "Greene": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Ocmulgee  Judicial Circuit"
+     ]
+    },
+    "Hancock": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Ocmulgee Judicial Circuit"
+     ]
+    },
+    "Jasper": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Ocmulgee Judicial Circuit"
+     ]
+    },
+    "Jones": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Ocmulgee Judicial Circuit"
+     ]
+    },
+    "Morgan": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Ocmulgee  Judicial Circuit"
+     ]
+    },
+    "Putnam": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Ocmulgee Judicial Circuit"
+     ]
+    },
+    "Wilkinson": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Ocmulgee Judicial Circuit"
+     ]
+    }
+   }
+  },
+  "Oconee": {
+   "counties": {
+    "Bleckley": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Oconee Judicial Circuit"
+     ]
+    },
+    "Dodge": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Oconee Judicial Circuit"
+     ]
+    },
+    "Montgomery": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Oconee Judicial Circuit"
+     ]
+    },
+    "Pulaski": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Oconee Judicial Circuit"
+     ]
+    },
+    "Telfair": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Oconee Judicial Circuit"
+     ]
+    },
+    "Wheeler": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Oconee Judicial Circuit"
+     ]
+    }
+   }
+  },
+  "Ogeechee": {
+   "counties": {
+    "Bulloch": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Ogeechee Judicial Circuit"
+     ]
+    },
+    "Effingham": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Ogeechee Judicial Circuit"
+     ]
+    },
+    "Jenkins": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Ogeechee Judicial Circuit"
+     ]
+    },
+    "Screven": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Ogeechee Judicial Circuit"
+     ]
+    }
+   }
+  },
+  "Pataula": {
+   "counties": {
+    "Clay": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Pataula Judicial Circuit - Rep",
+      "Judge - Superior Court - Pataula Judicial Circuit (Balkcom)"
+     ]
+    },
+    "Early": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Pataula Judicial Circuit - Rep",
+      "Judge - Superior Court - Pataula Judicial Circuit (Balkcom)"
+     ]
+    },
+    "Miller": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Pataula Judicial Circuit - Rep",
+      "Judge - Superior Court - Pataula Judicial Circuit (Balkcom)"
+     ]
+    },
+    "Quitman": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Pataula Judicial Circuit - Rep",
+      "Judge - Superior Court - Pataula Judicial Circuit (Balkcom)"
+     ]
+    },
+    "Randolph": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Pataula Judicial Circuit - Rep",
+      "Judge - Superior Court - Pataula Judicial Circuit (Balkcom)"
+     ]
+    },
+    "Seminole": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Pataula Judicial Circuit - Rep",
+      "Judge - Superior Court - Pataula Judicial Circuit (Balkcom)"
+     ]
+    },
+    "Terrell": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Pataula Judicial Circuit - Rep",
+      "Judge - Superior Court - Pataula Judicial Circuit (Balkcom)"
+     ]
+    }
+   }
+  },
+  "Paulding": {
+   "counties": {
+    "Paulding": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Paulding Judicial Circuit - Rep",
+      "Judge - Superior Court - Paulding Judicial Circuit (Rollins)"
+     ]
+    }
+   }
+  },
+  "Piedmont": {
+   "counties": {
+    "Barrow": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Piedmont Judicial Circuit (Griffie)"
+     ]
+    },
+    "Jackson": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Piedmont Judicial Circuit (Griffie)"
+     ]
+    }
+   }
+  },
+  "Rockdale": {
+   "counties": {
+    "Rockdale": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Rockdale Judicial Circuit - Dem",
+      "Judge - Superior Court - Rockdale Judicial Circuit (Bills)"
+     ]
+    }
+   }
+  },
+  "Rome": {
+   "counties": {
+    "Floyd": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Rome Judicial Circuit (King)",
+      "Judge - Superior Court - Rome Judicial Circuit (Sparks)"
+     ]
+    }
+   }
+  },
+  "South Georgia": {
+   "counties": {
+    "Baker": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - South Georgia Judicial Circuit"
+     ]
+    },
+    "Calhoun": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - South Georgia Judicial Circuit"
+     ]
+    },
+    "Decatur": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - South Georgia Judicial Circuit"
+     ]
+    },
+    "Grady": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - South Georgia Judicial Circuit"
+     ]
+    },
+    "Mitchell": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - South Georgia Judicial Circuit"
+     ]
+    }
+   }
+  },
+  "Southern": {
+   "counties": {
+    "Brooks": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Southern Judicial Circuit (Prine)",
+      "Judge - Superior Court - Southern Judicial Circuit (Smith)",
+      "Judge - Superior Court - Southern Judicial Circuit (Voyles)"
+     ]
+    },
+    "Colquitt": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Southern Judicial Circuit (Prine)",
+      "Judge - Superior Court - Southern Judicial Circuit (Smith)",
+      "Judge - Superior Court - Southern Judicial Circuit (Voyles)"
+     ]
+    },
+    "Echols": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Southern Judicial Circuit (Prine)",
+      "Judge - Superior Court - Southern Judicial Circuit (Smith)",
+      "Judge - Superior Court - Southern Judicial Circuit (Voyles)"
+     ]
+    },
+    "Lowndes": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Southern Judicial Circuit (Prine)",
+      "Judge - Superior Court - Southern Judicial Circuit (Smith)",
+      "Judge - Superior Court - Southern Judicial Circuit (Voyles)"
+     ]
+    },
+    "Thomas": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Southern Judicial Circuit (Prine)",
+      "Judge - Superior Court - Southern Judicial Circuit (Smith)",
+      "Judge - Superior Court - Southern Judicial Circuit (Voyles)"
+     ]
+    }
+   }
+  },
+  "Southwestern": {
+   "counties": {
+    "Lee": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Southwestern Judicial Circuit (Sizemore)"
+     ]
+    },
+    "Macon": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Southwestern Judicial Circuit (Sizemore)"
+     ]
+    },
+    "Schley": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Southwestern Judicial Circuit (Sizemore)"
+     ]
+    },
+    "Stewart": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Southwestern Judicial Circuit (Sizemore)"
+     ]
+    },
+    "Sumter": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Southwestern Judicial Circuit (Sizemore)"
+     ]
+    },
+    "Webster": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Southwestern Judicial Circuit (Sizemore)"
+     ]
+    }
+   }
+  },
+  "Tallapoosa": {
+   "counties": {
+    "Haralson": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Tallapoosa Judicial Circuit"
+     ]
+    },
+    "Polk": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Tallapoosa Judicial Circuit"
+     ]
+    }
+   }
+  },
+  "Tifton": {
+   "counties": {
+    "Irwin": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Tifton Judicial Circuit (Powell)",
+      "Judge - Superior Court - Tifton Judicial Circuit (Reinhardt)"
+     ]
+    },
+    "Tift": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Tifton Judicial Circuit (Powell)",
+      "Judge - Superior Court - Tifton Judicial Circuit (Reinhardt)"
+     ]
+    },
+    "Turner": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Tifton Judicial Circuit (Powell)",
+      "Judge - Superior Court - Tifton Judicial Circuit (Reinhardt)"
+     ]
+    },
+    "Worth": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Tifton Judicial Circuit (Powell)",
+      "Judge - Superior Court - Tifton Judicial Circuit (Reinhardt)"
+     ]
+    }
+   }
+  },
+  "Toombs": {
+   "counties": {
+    "Glascock": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Toombs Judicial Circuit"
+     ]
+    },
+    "Lincoln": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Toombs Judicial Circuit"
+     ]
+    },
+    "McDuffie": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Toombs Judicial Circuit"
+     ]
+    },
+    "Taliaferro": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Toombs Judicial Circuit"
+     ]
+    },
+    "Warren": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Toombs Judicial Circuit"
+     ]
+    },
+    "Wilkes": {
+     "election": "2024NovGen",
+     "date": "2024-11-05",
+     "contests": [
+      "District Attorney - Toombs Judicial Circuit"
+     ]
+    }
+   }
+  },
+  "Towaliga": {
+   "counties": {
+    "Butts": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Towaliga Judicial Circuit (Wilson)"
+     ]
+    },
+    "Lamar": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Towaliga Judicial Circuit (Wilson)"
+     ]
+    },
+    "Monroe": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Towaliga Judicial Circuit (Wilson)"
+     ]
+    }
+   }
+  },
+  "Waycross": {
+   "counties": {
+    "Bacon": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Waycross Judicial Circuit - Rep",
+      "Judge - Superior Court - Waycross Judicial Circuit (Kight)"
+     ]
+    },
+    "Brantley": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Waycross Judicial Circuit - Rep",
+      "Judge - Superior Court - Waycross Judicial Circuit (Kight)"
+     ]
+    },
+    "Charlton": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Waycross Judicial Circuit - Rep",
+      "Judge - Superior Court - Waycross Judicial Circuit (Kight)"
+     ]
+    },
+    "Coffee": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Waycross Judicial Circuit - Rep",
+      "Judge - Superior Court - Waycross Judicial Circuit (Kight)"
+     ]
+    },
+    "Pierce": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Waycross Judicial Circuit - Rep",
+      "Judge - Superior Court - Waycross Judicial Circuit (Kight)"
+     ]
+    },
+    "Ware": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - Waycross Judicial Circuit - Rep",
+      "Judge - Superior Court - Waycross Judicial Circuit (Kight)"
+     ]
+    }
+   }
+  },
+  "West Georgia": {
+   "counties": {
+    "Carroll": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - West Georgia Judicial Circuit - Rep",
+      "Judge - Superior Court - West Georgia Judicial Circuit (Hightower)"
+     ]
+    },
+    "Heard": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "District Attorney - West Georgia Judicial Circuit - Rep",
+      "Judge - Superior Court - West Georgia Judicial Circuit (Hightower)"
+     ]
+    }
+   }
+  },
+  "Western": {
+   "counties": {
+    "Clarke": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Western Judicial Circuit (Lott)",
+      "Judge - Superior Court - Western Judicial Circuit (Norris)"
+     ]
+    },
+    "Oconee": {
+     "election": "GeneralPrimary51926",
+     "date": "2026-05-19",
+     "contests": [
+      "Judge - Superior Court - Western Judicial Circuit (Lott)",
+      "Judge - Superior Court - Western Judicial Circuit (Norris)"
+     ]
+    }
+   }
+  }
+ }
+}

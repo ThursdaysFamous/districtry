@@ -45,8 +45,15 @@ office e-mailed, on 2026-10-28, a screenshot of the county's map viewer
 highlighting the eight whole townships of one district. And Audrain's clerk
 e-mailed, on 2026-10-28, a report of the district each precinct votes in and
 named the streets that divide the two precincts it splits, so each district
-is drawn as the 2020 census blocks in its precincts (BLOCKS below). Those 34
-are SOURCES below. The other 80 counties and the City of St. Louis are not
+is drawn as the 2020 census blocks in its precincts (BLOCKS below). And
+New Madrid's clerk pointed, on 2026-10-29, to the county's posted map of the
+Census Bureau's 2020 blocks by district, so each district is drawn as the
+blocks that map puts in it (POSTED below). And Cape Girardeau's clerk
+wrote, on 2026-10-30, that one district is the City of Cape Girardeau and the
+other the rest of the county, so the first is drawn from the city limits on
+the county's own map at SEMO GIS (CITY below). And Douglas's and Linn's
+clerks e-mailed, the same day, maps whose lines run along whole townships.
+Those 38 are SOURCES below. The other 76 counties and the City of St. Louis are not
 drawn, and the layer is hidden there; the County card names every county's commissioners either
 way.
 
@@ -82,7 +89,7 @@ to FIDELITY_MAX_M: every vertex of the source's own dividing line must lie
 within that distance of the drawn one.
 
 Build (network: the viewers, the Cole download and TIGERweb; Cass's and Howard's files and
-Ste. Genevieve's traced block list are read from disk; shapely and
+Ste. Genevieve's, Audrain's and New Madrid's block lists are read from disk; shapely and
 pyproj):
     python3 mo/scripts/build_mo_commission_districts.py
 Check (offline, stdlib only; in CI):
@@ -329,6 +336,39 @@ SOURCES = {
                 "Southern District": ["Collins", "Dallas", "Doyal", "Osceola", "Polk",
                                       "Roscoe", "Speedwell", "Washington"]},
             "sent": "2026-10-28"},
+    # Douglas's clerk (Karry Davis) e-mailed on 2026-10-30 "Douglas County
+    # Commissioner District Map.pdf", a page of a 2025 Mapping Solutions plat
+    # book with a red line drawn on it, kept out of this repository because
+    # it is that publisher's page (SHA-256 da5c0ceb9a6658487cd88c33de4cceb4
+    # 655b2355220906523e54260b04db0cec). The line runs along township lines
+    # only, with Findley, Benton, Lincoln, Washington, Spencer and Buchanan
+    # west of it, marked "Political District #1", and the other seventeen
+    # townships east of it, marked "Political District #2". The 23 match
+    # TIGER's 23, and the Missouri Roster names the seats District 1 and 2.
+    "067": {"townships": {
+                "District 1": ["Benton", "Buchanan", "Findley", "Lincoln", "Spencer",
+                               "Washington"],
+                "District 2": ["Boone", "Brown", "Brush Creek", "Bryan", "Campbell",
+                               "Cass", "Champion", "Clay", "Clinton", "Jackson",
+                               "McKinley", "McMurtrey", "Miller", "Richland",
+                               "Spring Creek", "Walls", "Wood"]},
+            "sent": "2026-10-30"},
+    # Linn's clerk (Suzan Stephenson) e-mailed on 2026-10-30 a scanned map,
+    # "Political Townships with Commissioners' Districts", kept out of this
+    # repository as the county's own record (SHA-256 81593a4b380c2cff64e2ef25
+    # 48c5a9c9bcb01aa5a5b732edd53aa20ef5deadb9). It shades the edge of the
+    # 1st District green, around Brookfield, Grantsville, Jefferson and
+    # Yellow Creek townships, and of the 2nd District blue, around the other
+    # ten. It prints Benton and Marceline townships in two parts each (a
+    # township road district and a special road district), both parts in the
+    # 2nd District, so the 14 match TIGER's 14, and the Missouri Roster names
+    # the seats District 1 and 2.
+    "115": {"townships": {
+                "District 1": ["Brookfield", "Grantsville", "Jefferson", "Yellow Creek"],
+                "District 2": ["Baker", "Benton", "Bucklin", "Clay", "Enterprise",
+                               "Jackson", "Locust Creek", "Marceline", "North Salem",
+                               "Parson Creek"]},
+            "sent": "2026-10-30"},
     # Audrain's clerk (Lisa Smith) e-mailed on 2026-10-28 a report listing
     # each precinct and the commission district it votes in, kept out of this
     # repository as the county's own record (SHA-256 6567503db4cfa37164c5c8d6
@@ -343,6 +383,36 @@ SOURCES = {
     # people) is Eastern, which was read from where the road runs and not
     # from the clerk.
     "007": {"blocks": "audrain-commission-blocks.json", "listed": "2026-10-28"},
+    # New Madrid's interim county clerk (Nathanial Bock) answered on 2026-10-29
+    # that the county's website's maps page "click through to 'District
+    # Boundaries' ... contains PDF maps of both the voting precincts and
+    # Commissioner districts". Its "Commissioner Districts (May 2022)" PDF is
+    # a map of the Census Bureau's 2020 blocks by district, which the page
+    # credits to Surveying And Mapping, LLC with all rights reserved, so it is
+    # not kept here (SHA-256 7e1a2e2be4b7794ae2a3fa65518efe556dfc13fdb7fb7ee
+    # 81dc6184ee546908f). Its district outlines are vector lines, read out of
+    # the PDF and lined up with the county's blocks; the POSTED file puts each
+    # block in the district holding most of it, and its "method" says how. The
+    # map prints 9,429 people in District 1 and 7,005 in District 2, and the
+    # blocks add up to the same.
+    # Cape Girardeau's clerk (Kara Clark Summers) answered on 2026-10-30:
+    # "Commission District 1 includes the City of Jackson and all of the
+    # Unincorporated areas of the County. Commission District 2 includes the
+    # City of Cape Girardeau and all annexed areas of the City of Cape
+    # Girardeau." Her precinct lists put every precinct outside the City of
+    # Cape Girardeau in District 1, the precincts of Delta, Oak Ridge,
+    # Pocahontas, Whitewater and Gordonville among them, and the county's
+    # posted map (Commission-Districts.pdf, May 2024, SHA-256 7c04b421...8847)
+    # draws District 2 as the city alone, with the part of Scott City inside
+    # the county in District 1. So the Second District is the City of Cape
+    # Girardeau as the county's own city-limits layer at SEMO GIS draws it
+    # (CapeCo_PublicBase/MapServer/0, Corp_Limit), and the First District is
+    # the rest of the county. The roster prints First and Second District.
+    "031": {"city": ("https://maps.semogis.com/server/rest/services/CapeGirardeau_CO/"
+                     "CapeCo_PublicBase/MapServer/0", "CITY OF CAPE GIRARDEAU"),
+            "cityName": "Cape Girardeau", "inside": "Second District",
+            "outside": "First District", "described": "2026-10-30"},
+    "143": {"posted": "new-madrid-commission-blocks.json", "clerk": "2026-10-29"},
     "113": {"viewer": ("phelpsgis", "Lincoln_County_MO", "1", "35"),
             "names": {"DISTRICT I": "First District", "DISTRICT II": "Second District"}},
     "119": {"viewer": ("christiangis", "McDonald_County_MO", "2", "35"), "field": "district_n",
@@ -486,6 +556,25 @@ def fetch_arcgis(spec):
             for f in data.get("features") or []]
 
 
+def fetch_city(spec, county):
+    """A county whose clerk describes one district as a city and the other as
+    the rest of the county: the city as the county's own city-limits layer
+    draws it, cut to the County card's county, and the rest. The layer's own
+    name must still be Corp_Limit and the city must be one feature in it."""
+    url, city = spec["city"]
+    name = _get(url, {"f": "json"}).get("name")
+    if name != "Corp_Limit":
+        raise RuntimeError("%s is %r, not the Corp_Limit layer" % (url, name))
+    data = _get(url + "/query", {
+        "where": "NAME='%s'" % city, "outFields": "NAME", "returnGeometry": "true",
+        "outSR": "4326", "f": "json"})
+    feats = data.get("features") or []
+    if data.get("exceededTransferLimit") or len(feats) != 1:
+        raise RuntimeError("%s: %d features named %s, not 1" % (url, len(feats), city))
+    inside = _esri_rings_to_shape(feats[0]["geometry"]["rings"]).intersection(county)
+    return [(spec["inside"], inside), (spec["outside"], county.difference(inside))]
+
+
 def fetch_split_township(c3, township, shape_, seats):
     """A township a county splits by precinct, as {seat: part}, from the
     Census Bureau's 2020 voting districts. The precincts named must be every
@@ -543,17 +632,17 @@ def fetch_townships(c3, spec):
 
 
 def _blocks_file(spec):
-    return spec.get("traced") or spec["blocks"]
+    return spec.get("traced") or spec.get("posted") or spec["blocks"]
 
 
 def read_traced(spec):
-    """A traced or block-listed county's block list, kept under data/source/."""
+    """A traced, posted or block-listed county's block list, kept under data/source/."""
     return load_json(os.path.join(SOURCE_DIR, _blocks_file(spec)))
 
 
 def fetch_traced(c3, spec):
-    """The county's districts as unions of the 2020 census blocks its traced
-    or BLOCKS file lists under each seat. Every block the Census draws in the county
+    """The county's districts as unions of the 2020 census blocks its traced,
+    POSTED or BLOCKS file lists under each seat. Every block the Census draws in the county
     must be listed exactly once, so a block missing from the file, or a file
     naming a block the Census does not draw, stops the build."""
     from shapely.ops import unary_union  # noqa: PLC0415
@@ -585,6 +674,8 @@ def fetch_traced(c3, spec):
 
 def _source_kind(spec):
     return ("cole" if "zip" in spec else "traced" if "traced" in spec
+            else "posted" if "posted" in spec
+            else "city" if "city" in spec
             else "arcgis" if "arcgis" in spec
             else "listed" if "listed" in spec
             else "townships" if "townships" in spec
@@ -705,8 +796,11 @@ def build_county(c3, spec, county_feature, roster, today):
     if "townships" in spec:
         got = fetch_townships(c3, spec)
         spec = dict(spec, names={seat: seat for seat in spec["townships"]})
-    elif "traced" in spec or "blocks" in spec:
+    elif "traced" in spec or "posted" in spec or "blocks" in spec:
         got = fetch_traced(c3, spec)
+        spec = dict(spec, names={seat: seat for seat, _ in got})
+    elif "city" in spec:
+        got = fetch_city(spec, shape(county_feature["geometry"]).buffer(0))
         spec = dict(spec, names={seat: seat for seat, _ in got})
     else:
         got = (fetch_zip(spec) if "zip" in spec else read_sent(spec) if "file" in spec
@@ -798,6 +892,10 @@ def build_county(c3, spec, county_feature, roster, today):
             feats[-1]["properties"]["pointedOn"] = spec["clerk"]
         if spec.get("sent"):
             feats[-1]["properties"]["sentOn"] = spec["sent"]
+        if spec.get("described"):
+            feats[-1]["properties"]["describedOn"] = spec["described"]
+            feats[-1]["properties"]["city"] = spec["cityName"]
+            feats[-1]["properties"]["cityDistrict"] = spec["inside"]
         if spec.get("listed"):
             feats[-1]["properties"]["listedOn"] = spec["listed"]
             if spec.get("precincts"):
@@ -977,14 +1075,20 @@ def check_problems(fc, records, counties, roster):
         if p.get("listedOn") != spec.get("listed"):
             problems.append("%s: listedOn %r, SOURCES says %r" % (where, p.get("listedOn"),
                                                               spec.get("listed")))
+        if (p.get("describedOn"), p.get("city"), p.get("cityDistrict")) != (
+                spec.get("described"), spec.get("cityName"), spec.get("inside")):
+            problems.append("%s: describedOn, city and cityDistrict %r, SOURCES says %r"
+                            % (where, (p.get("describedOn"), p.get("city"), p.get("cityDistrict")),
+                               (spec.get("described"), spec.get("cityName"), spec.get("inside"))))
         if not _ISO_DATE.match(str(p.get("read") or "")):
             problems.append("%s: read %r is not a date" % (where, p.get("read")))
         if bool(p.get("byStreet")) != ("blocks" in spec):
             problems.append("%s: byStreet %r" % (where, p.get("byStreet")))
-        if "traced" in spec or "blocks" in spec:
+        if "traced" in spec or "posted" in spec or "blocks" in spec:
             t = read_traced(spec)
             listed = [g for gs in t["blocks"].values() for g in gs]
             dated = (t.get("sentOn") == spec.get("sent") if "traced" in spec
+                     else t.get("pointedOn") == spec.get("clerk") if "posted" in spec
                      else t.get("listedOn") == spec.get("listed"))
             if (t.get("countyfips") != geoid or sorted(t["blocks"]) != sorted(district_seats(roster, geoid))
                     or len(set(listed)) != len(listed) or not dated

@@ -1,0 +1,112 @@
+name: Update West Virginia legislature roster
+
+# Weekly refresh of the West Virginia Senate + House of Delegates rosters
+# (wv/data/app/wv-senate-members.json and wv-house-members.json, fetched by
+# wv/index.html's chamber cards). Rebuilds both chambers from the Legislature's
+# own roster pages and, if anything changed, opens a PR rather than committing
+# directly to main.
+#
+# The Legislature publishes one roster page per chamber,
+# www.wvlegislature.gov/Senate1/roster.cfm and www.wvlegislature.gov/House/roster.cfm,
+# each a table with one row per member: name, party, district, Capitol office,
+# telephone and e-mail address. Two pages, fetched one second apart, so the run
+# takes seconds.
+#
+# THE SENATE ELECTS TWO MEMBERS FROM EACH OF ITS 17 DISTRICTS, so its file
+# carries a `members` list of two per district with `seats` 2;
+# scripts/validate_chamber_rosters.py reads the instance's per-district count
+# and holds every district to it. The builder stops if a row prints an address
+# other than the Capitol's, rather than ship one that could be a home, and it
+# never reads the Senate page's home-county column.
+#
+# robots.txt: www.wvlegislature.gov's (read 2026-10-29) disallows 21
+# directories, none of them read here, and states no delay; the builder reads
+# it before its first fetch with the User-Agent its fetches send.
+#
+# THE REBUILT FILES ARE CARRIED ACROSS THE BRANCH CUT RATHER THAN FETCHED A
+# SECOND TIME, the update-ilga-roster.yml pattern. A run where main changed
+# those same files meanwhile errors at the checkout instead of pushing, which
+# is right.
+#
+# WEST VIRGINIA IS DARK, so this job does not regenerate
+# wv/state-legislature.html: build_legislator_pages.py refuses an instance
+# metros.json does not carry, so that page is not built yet. Go-live adds the
+# step in the same change that adds wv to metros.json — wv/WATCH.md has the list.
+
+on:
+  schedule:
+    - cron: "53 19 * * 2" # Tuesday 19:53 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # requests for the shared robots.txt reader; the pages themselves are
+      # fetched and parsed with the stdlib.
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Rebuild West Virginia Senate + House of Delegates rosters
+        run: python3 wv/scripts/build_wv_legislature_roster.py
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, every data/app file must be present and
+      # well formed, and every seat must carry a record.
+      - name: Validate app + data files
+        run: |
+          python3 wv/scripts/validate_index.py wv/index.html
+          python3 scripts/validate_chamber_rosters.py
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- wv/data/app/wv-senate-members.json wv/data/app/wv-house-members.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/wv-legislature-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history — see the sibling
+          # workflows' own comments for why both halves matter. The two rebuilt
+          # files ride across the checkout as working-tree changes.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add wv/data/app/wv-senate-members.json wv/data/app/wv-house-members.json
+          git commit -m "Update West Virginia Senate + House of Delegates rosters from the Legislature"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update West Virginia Senate + House of Delegates rosters" \
+              --body "Automated weekly refresh of the West Virginia Senate and House of Delegates chamber cards' rosters, from the Legislature's two roster pages, generated by \`wv/scripts/build_wv_legislature_roster.py\`. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

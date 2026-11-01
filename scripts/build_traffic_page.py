@@ -86,6 +86,7 @@ INSTANCE_NAMES = {"il": "Illinois", "ny": "New York", "ca": "San Francisco",
                   "ms": "Mississippi",
                   "la": "Louisiana",
                   "mo": "Missouri",
+                  "va": "Virginia",
                   "landing": "Front page"}
 # The day each instance was first LISTED on the front door, measured once with
 #   git log --reverse --format=%cs -S'"tag": "<tag>"' -- metros.json
@@ -106,7 +107,7 @@ FLEET_LISTED = {"il": "2026-08-24", "ny": "2026-08-24", "ca": "2026-08-24",
                 "ok": "2026-10-10", "sc": "2026-10-13",
                 "tn": "2026-10-13", "ar": "2026-10-15",
                 "ms": "2026-10-16", "la": "2026-10-21",
-                "mo": "2026-10-26"}
+                "mo": "2026-10-26", "va": "2026-10-31"}
 # GoatCounter publishes a referrer's HOST; these are the names a reader knows.
 # A host with no entry ships exactly as GoatCounter spells it.
 REF_NAMES = {"(unknown)": "Direct / unknown", "duckduckgo.com": "DuckDuckGo",
@@ -186,6 +187,10 @@ ACTION_GROUPS = [
                  "copy-coordinates", "share-in"}),
     ("Data gaps", {"gaps-open", "gaps-why", "gaps-suggest"}),
     ("Feedback", {"feedback-open", "feedback-send", "feedback-link"}),
+    # Sponsor became a button beside Feedback on 2026-10-29 (Adam: "the
+    # sponsor button needs to be more visible"); sponsor/<tag>, and
+    # sponsor/front on the front page
+    ("Sponsor", {"sponsor"}),
     ("Other", {"more-open", "more-item", "osm-note", "example-place",
                "app-shortcut"}),
 ]
@@ -927,7 +932,12 @@ def return_visits(gc, start):
     if dates is not None and not (len(first) == len(ret) == len(dates)):
         fail("visits: %d first and %d return days against %d in the daily "
              "series" % (len(first), len(ret), len(dates)))
-    return {"since": long_label(v["since"]), "first": v["first"],
+    # `since` is when the count began and `from` the first day this window's
+    # figures cover, which is later once the window starts after the count
+    # did: the 7-day view from 2026-10-30 said "visits since October 22" over
+    # a total that began on October 23.
+    return {"since": long_label(v["since"]),
+            "from": long_label(max(v["since"], start)), "first": v["first"],
             "return": v["return"], "frontSince": long_label(VISIT_FRONT_FROM),
             "byApp": [[VISIT_FRONT_NAME if r["tag"] == VISIT_FRONT_TAG
                        else INSTANCE_NAMES.get(r["tag"], r["tag"]), r["count"]]

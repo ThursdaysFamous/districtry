@@ -115,7 +115,10 @@ INSTANCES = (("il", "metro-worksheet.json"),
              ("ar", "ar/metro-worksheet.json"),
              ("ms", "ms/metro-worksheet.json"),
              ("la", "la/metro-worksheet.json"),
-             ("mo", "mo/metro-worksheet.json"))
+             ("mo", "mo/metro-worksheet.json"),
+             ("ga", "ga/metro-worksheet.json"),
+             ("va", "va/metro-worksheet.json"),
+             ("wv", "wv/metro-worksheet.json"))
 
 # The metric grammar and its evaluator are shared with validate_gap_counts.py;
 # see scripts/measured_metric.py for why they are not a second copy here.
@@ -461,7 +464,7 @@ at the diff.</p>
 <a href="./sources.html">Sources &amp; data layers</a>
 <a href="./faq.html">Common questions</a>
 <a href="../privacy.html">Privacy</a>
-<a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
+<a href="https://overberg.co/why/still-incomplete/" target="_blank" rel="noopener">Why this exists</a>
 </p>
 %(byline)s
 </main>
