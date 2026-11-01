@@ -2148,7 +2148,7 @@ SHELL_TAIL = """
     <div class="footer-links">
       <a href="/">&larr; districtry</a>
       %(footerlinks)s
-      <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
+      <a href="https://overberg.co/why/still-incomplete/" target="_blank" rel="noopener">Why this exists</a>
       <a href="%(repo)s" target="_blank" rel="noopener">View source on GitHub</a>
 %(byline)s
     </div>

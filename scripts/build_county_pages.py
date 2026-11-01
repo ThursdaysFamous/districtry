@@ -4564,7 +4564,7 @@ h1 {
 <a href="../">Back to the map</a>
 <a href="../sources.html">Sources &amp; data layers</a>
 %(faq_link)s<a href="../../privacy.html">Privacy</a>
-<a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
+<a href="https://overberg.co/why/still-incomplete/" target="_blank" rel="noopener">Why this exists</a>
 </p>
 %(byline)s
 </main>
