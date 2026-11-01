@@ -367,7 +367,7 @@
         }
       ],
       "comptrollerCode": "046/030/12",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "heads": [
         {
           "name": "Samuel Jordan",
@@ -376,7 +376,7 @@
       ],
       "kind": "park",
       "office": {
-        "address": "PO Box 665",
+        "address": "79 Mill St",
         "city": "Momence IL 60954",
         "email": "momenceparkdist@sbcglobal.net",
         "phone": "(815) 472-2670"
@@ -411,20 +411,20 @@
           "name": "Charlene Ashley",
           "phone": "(815) 592-2555",
           "role": "President"
+        },
+        {
+          "name": "David Dortch",
+          "phone": "(779) 264-4184",
+          "role": "Treasurer"
         }
       ],
       "comptrollerCode": "046/120/06",
-      "filedFor": "2025",
-      "heads": [
-        {
-          "email": "SUSIEBELL40@YAHOO.COM",
-          "name": "Glenda Griffin",
-          "phone": "(815) 592-9804",
-          "role": "Asst. Treasurer"
-        }
-      ],
+      "filedFor": "2026",
       "kind": "fire",
-      "office": {}
+      "office": {
+        "address": "P O BOX 575",
+        "city": "HOPKINS PARK IL 60944"
+      }
     },
     "PEMBROKE PUBLIC LIBRARY": {
       "board": [
@@ -449,11 +449,12 @@
       "board": [
         {
           "name": "Susan Mosier",
+          "phone": "(815) 573-1393",
           "role": "Trustee"
         }
       ],
       "comptrollerCode": "046/130/06",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "kind": "fire",
       "office": {}
     },
@@ -516,7 +517,12 @@
       "office": {}
     }
   },
-  "generated": "2026-10-24T23:51:00Z",
+  "generated": "2026-11-01T16:27:53Z",
+  "mailGivenForTwo": {
+    "46b876bf8dafe6a7": [
+      "2448ff72c1d1403d"
+    ]
+  },
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"

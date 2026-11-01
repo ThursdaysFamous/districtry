@@ -72,8 +72,21 @@ import sys
 
 from comptroller_afr import (  # noqa: E402  (shared -- do not fork)
     count_officer_emails, count_officer_phones, drop_lines_from_officers,
-    drop_mail_given_for_two, library_directory_lines, mail_elsewhere,
-    MAIL_GIVEN_FOR_TWO, suspect_emails_in, suspect_names_in, suspect_phones_in)
+    drop_mail_given_for_two, library_directory_lines, mail_digest,
+    mail_elsewhere, MAIL_GIVEN_FOR_TWO, suspect_emails_in, suspect_names_in,
+    suspect_phones_in, _flat)
+
+# AN ADDRESS ONE YEAR'S FILING GAVE BESIDE ONE OFFICER AND THE NEXT YEAR'S
+# BESIDE ANOTHER IS GIVEN FOR TWO (Adam, 2026-11-01, "2 skip"). Pembroke Fire
+# Protection District's 2025 report printed one Yahoo address beside its
+# Assistant Treasurer, Glenda Griffin; its 2026 report printed the same address
+# beside its Treasurer, David Dortch. drop_mail_given_for_two compares only the
+# filings on hand, so the earlier name is recorded here, keyed by the address's
+# digest (comptroller_afr.mail_digest, so the address is not written out), and
+# the address rides nobody. An entry the filings no longer carry is printed.
+PRIOR_YEAR_MAIL = {
+    "46b876bf8dafe6a7": ("Glenda Griffin",),
+}
 
 import sys as _sys, os as _os
 _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
@@ -149,6 +162,17 @@ def main():
     mail_withheld = {}
     elsewhere = mail_elsewhere(os.path.dirname(OUT_PATH),
                                os.path.basename(OUT_PATH))
+    for digest, earlier in PRIOR_YEAR_MAIL.items():
+        elsewhere.setdefault(digest, set()).update(
+            mail_digest(_flat(name)) for name in earlier)
+    filed = set()
+    for d in districts.values():
+        for person in ((d.get("board") or []) + (d.get("heads") or [])
+                       if isinstance(d, dict) else []):
+            if isinstance(person.get("email"), str):
+                filed.add(mail_digest(person["email"].casefold()))
+    for digest in sorted(set(PRIOR_YEAR_MAIL) - filed):
+        print("  NOTE: PRIOR_YEAR_MAIL %s is no longer filed by anyone" % digest)
     shared_mail = drop_mail_given_for_two(districts, elsewhere, mail_withheld)
     print("  %d officer address(es) taken off as given beside two people, "
           "in this roster's filings or another's" % shared_mail)
