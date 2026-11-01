@@ -401,7 +401,8 @@ def return_visits(s, total, start, end, mx, events):
                   "listed, %d events in the period" % (prefix, n, shown, events))
             return None
         out[kind] = n
-        out[kind + "_daily"] = [days.get(d, 0) for d in sorted(days)]
+        days = in_window(days, start, end, "visits " + kind)
+        out[kind + "_daily"] = [days[d] for d in sorted(days)]
         out["by_app_" + kind] = sorted(
             ({"tag": r["path"][len(prefix):], "count": r["count"]}
              for r in listed), key=lambda r: (-r["count"], r["tag"]))
@@ -641,6 +642,26 @@ def explore(s, total, start, end):
                                                  if head else "?"), len(h)))
 
 
+def in_window(days, start, end, label):
+    """A daily series cut to the days of the window.
+
+    SINCE THE CLOCKS WENT BACK ON 2026-11-01 THE DASHBOARD ANSWERS WITH A DAY
+    BEFORE THE WINDOW. Asked for 2026-08-31 to 2026-10-31, its series began
+    with an empty 2026-08-30, and the report then said its two months began on
+    August 30, covered 63 days and recorded nothing on the first. Every day's
+    counts moved by one or two that morning, both ways, which reads as the
+    dashboard moving each day's boundary by an hour now that daylight saving
+    time has ended (inferred, not read). A day outside the window is dropped,
+    and one that carries counts is printed, because the hour it holds is then
+    missing from the daily series.
+    """
+    lost = {d: n for d, n in days.items() if n and not start <= d <= end}
+    if lost:
+        print("%s: days outside %s..%s dropped with counts: %s"
+              % (label, start, end, lost))
+    return {d: n for d, n in days.items() if start <= d <= end}
+
+
 def collect(s, total, start, end, per_day=True):
     """Everything the traffic report reads, in one pass over the dashboard.
 
@@ -652,8 +673,10 @@ def collect(s, total, start, end, per_day=True):
     if not mx:
         sys.exit("totals widget carries no data-max; run --explore.")
     mx = mx.group(1)
-    hits, views = series(hits), series(
-        widget(s, 1, total, start, end, filter="is:pageview"))
+    hits = in_window(series(hits), start, end, "hits")
+    views = in_window(series(
+        widget(s, 1, total, start, end, filter="is:pageview")), start, end,
+        "pageviews")
 
     daily = []
     for date in sorted(hits):
