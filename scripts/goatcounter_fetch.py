@@ -198,7 +198,24 @@ def series(html):
         raise SystemExit("totals widget carries no data-stats; the dashboard's "
                          "markup has changed — run --explore.")
     stats = json.loads(html_lib.unescape(m.group(1)))
-    return {row["day"]: row.get("daily", 0) for row in stats}
+    out = {}
+    for row in stats:
+        day, n = row["day"], row.get("daily", 0)
+        if FOLD and not FOLD[0] <= day <= FOLD[1]:
+            # SINCE THE CLOCKS WENT BACK ON 2026-11-01 THE DASHBOARD ANSWERS
+            # WITH A DAY OUTSIDE THE PERIOD ASKED FOR. Every day's counts moved
+            # by one or two that morning, both ways, which reads as the
+            # dashboard moving each day's boundary by an hour now that
+            # daylight saving time has ended (inferred, not read), so the hour
+            # that opens the first day comes back dated the day before: empty
+            # for the two months, 27 hits for the seven days. Dropping it put
+            # the pages list 8 page visits above the daily total, and keeping
+            # it made the two months begin on August 30 with nothing recorded,
+            # so its counts are added to the window's first day (or last).
+            FOLD[2] += n
+            day = FOLD[0] if day < FOLD[0] else FOLD[1]
+        out[day] = out.get(day, 0) + n
+    return out
 
 
 def rows(html):
@@ -641,7 +658,25 @@ def explore(s, total, start, end):
                                                  if head else "?"), len(h)))
 
 
+# The window collect() is reading, [start, end, counts moved], while it reads
+# it; empty otherwise. See series().
+FOLD = []
+
+
 def collect(s, total, start, end, per_day=True):
+    """collect_window() with every daily series folded into the window."""
+    FOLD[:] = [start, end, 0]
+    try:
+        return collect_window(s, total, start, end, per_day)
+    finally:
+        if FOLD[2]:
+            print("days outside %s..%s folded into the window's first or "
+                  "last day: %d counts across every series read"
+                  % (start, end, FOLD[2]))
+        FOLD[:] = []
+
+
+def collect_window(s, total, start, end, per_day=True):
     """Everything the traffic report reads, in one pass over the dashboard.
 
     per_day=False leaves out the per-day referrer lists, which are about the
@@ -664,7 +699,7 @@ def collect(s, total, start, end, per_day=True):
         daily.append({"date": date, "pageviews": pv,
                       "events": hits[date] - pv})
 
-    page_rows, pages_truncated = all_pages(s, total, start, end, mx)
+    page_rows, pages_truncated = pages_in_parts(s, total, start, end, mx)
     event_rows = pages(widget(s, 0, total, start, end, max=mx,
                               filter="is:event"))
     # THE EVENTS LIST IS CAPPED AT TEN ROWS AND THE PAGE NEEDS A ROW THAT FELL
@@ -928,6 +963,58 @@ def all_pages(s, total, start, end, mx, filt="is:pageview", label="pages",
             return out, False
     print("%s list: stopped at %d rows, list still cut short" % (label, len(out)))
     return out, True
+
+
+# How many times a window is halved before a cut list is accepted as cut.
+# Three halvings is an eighth of the window, about eight days of two months.
+SPLIT_DEPTH = 3
+
+
+def pages_in_parts(s, total, start, end, mx, depth=0):
+    """Every row of the pages list, asking for halves of the window when one
+    list for the whole window is longer than all_pages() follows.
+
+    THE TWO-MONTH LIST PASSED 600 ROWS ON 2026-11-01, which is PAGE_PAGES
+    pages of ten, and the report's check that the map, front page and other
+    pages add up to each day's page visits failed on eleven September days, 18
+    page visits in all. Raising PAGE_PAGES is not the fix: every request
+    carries the id of every row already read in `exclude`, about 12
+    characters an id in the address, so the 60th request was already about 7
+    KB, and a server that limits an address to 8 KB would refuse the 68th. A
+    half of the window holds fewer distinct pages (the 30-day list was 504
+    rows that day), and every row carries its own daily series, so the halves'
+    rows are summed path by path and each day's counts are exactly what one
+    list would have given. Returns (rows, cut), cut being true only when even
+    an eighth of the window was cut short.
+    """
+    rows_, cut = all_pages(s, total, start, end, mx)
+    a = datetime.date.fromisoformat(start)
+    b = datetime.date.fromisoformat(end)
+    if not cut or depth >= SPLIT_DEPTH or a >= b:
+        return rows_, cut
+    mid = a + (b - a) // 2
+    parts = [(start, mid.isoformat()),
+             ((mid + datetime.timedelta(days=1)).isoformat(), end)]
+    merged, cut = {}, False
+    for ps, pe in parts:
+        print("pages list: reading %s..%s on its own" % (ps, pe))
+        part, part_cut = pages_in_parts(s, period_total(s, ps, pe), ps, pe,
+                                        mx, depth + 1)
+        cut = cut or part_cut
+        for r in part:
+            m = merged.setdefault(r["path"], {"path": r["path"], "id": r["id"],
+                                              "title": r["title"], "count": 0,
+                                              "daily": {}})
+            m["count"] += r["count"]
+            if m["id"] is None:
+                m["id"] = r["id"]
+            if m["title"] is None:
+                m["title"] = r["title"]
+            for d, n in r["daily"].items():
+                m["daily"][d] = m["daily"].get(d, 0) + n
+    print("pages list: %s..%s read in two parts, %d rows%s"
+          % (start, end, len(merged), ", still cut short" if cut else ""))
+    return sorted(merged.values(), key=lambda r: (-r["count"], r["path"])), cut
 
 
 def daily_referrers(s, end):

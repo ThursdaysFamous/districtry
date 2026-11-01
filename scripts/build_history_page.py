@@ -464,7 +464,7 @@ at the diff.</p>
 <a href="./sources.html">Sources &amp; data layers</a>
 <a href="./faq.html">Common questions</a>
 <a href="../privacy.html">Privacy</a>
-<a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
+<a href="https://overberg.co/why/still-incomplete/" target="_blank" rel="noopener">Why this exists</a>
 </p>
 %(byline)s
 </main>

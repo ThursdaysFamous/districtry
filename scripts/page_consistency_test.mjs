@@ -65,7 +65,7 @@ const LEAFLET = existsSync(join(VENDOR, "leaflet.js")) && existsSync(join(VENDOR
   : null;
 if (LEAFLET) console.log("  (serving Leaflet from scripts/vendor/leaflet — CDN unreachable in this env)");
 const BASE = (process.env.BASE_URL || "http://localhost:8000").replace(/\/$/, "");
-const WHY = "https://overberg.co/why/";
+const WHY = "https://overberg.co/why/still-incomplete/";
 
 // GENERATED PER-COUNTY PAGES ARE SAMPLED, NOT SWEPT, and the reason is a
 // measurement rather than a preference: this gate costs 5.1s a page (3m8s for
