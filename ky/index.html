@@ -7799,6 +7799,19 @@ function initKentuckyExplorer() {
         }
         body.appendChild(lede);
 
+        // One line pointing at the essay on why the maps are still
+        // incomplete, so a reader whose area is missing gets the reason as
+        // well as the list. Built through the DOM, like everything here.
+        var whyLine = cardEl("p", "gaps-lede gaps-why-page");
+        whyLine.appendChild(document.createTextNode("Don't see your area? I'm still building it. "));
+        var whyLink = document.createElement("a");
+        whyLink.href = "https://overberg.co/why/still-incomplete/";
+        whyLink.target = "_blank";
+        whyLink.rel = "noopener";
+        whyLink.textContent = "Here's why.";
+        whyLine.appendChild(whyLink);
+        body.appendChild(whyLine);
+
         if (here.length) body.appendChild(section("Where you clicked", here, true));
         // The rest is grouped by KIND rather than run together, because the
         // three kinds ask different things of a reader: one needs a publisher
