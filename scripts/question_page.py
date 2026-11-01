@@ -309,7 +309,7 @@ def shell(app_name, title, subtitle, lede, sections, related,
     <div class="footer-links">
       <a href="./">← Back to the map</a>
 %(subpage_links)s      <a href="../privacy.html">Privacy</a>
-      <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
+      <a href="https://overberg.co/why/still-incomplete/" target="_blank" rel="noopener">Why this exists</a>
       <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">View source on GitHub</a>
       %(byline_begin)s
 %(byline_body)s

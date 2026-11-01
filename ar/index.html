@@ -4230,7 +4230,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
            that gives the instance a history worth reading. The fleet-wide
            "Why this exists" link below stays: the maker's motivation is one
            question, this instance's record is another. -->
-      <a class="masthead-action-link" href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
+      <a class="masthead-action-link" href="https://overberg.co/why/still-incomplete/" target="_blank" rel="noopener">Why this exists</a>
       <!-- ==== ENGINE:BEGIN masthead-buttons-html ==== -->
       <!-- Feedback and Sponsor, the two buttons a reader should never have to
            hunt for (Adam, 2026-10-29: "Change the report a bug or leave a
@@ -7799,6 +7799,19 @@ function initArkansasExplorer() {
             "affect you. Otherwise, here is everything that is missing and why.";
         }
         body.appendChild(lede);
+
+        // One line pointing at the essay on why the maps are still
+        // incomplete, so a reader whose area is missing gets the reason as
+        // well as the list. Built through the DOM, like everything here.
+        var whyLine = cardEl("p", "gaps-lede gaps-why-page");
+        whyLine.appendChild(document.createTextNode("Don't see your area? I'm still building it. "));
+        var whyLink = document.createElement("a");
+        whyLink.href = "https://overberg.co/why/still-incomplete/";
+        whyLink.target = "_blank";
+        whyLink.rel = "noopener";
+        whyLink.textContent = "Here's why.";
+        whyLine.appendChild(whyLink);
+        body.appendChild(whyLine);
 
         if (here.length) body.appendChild(section("Where you clicked", here, true));
         // The rest is grouped by KIND rather than run together, because the
