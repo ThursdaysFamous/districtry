@@ -355,8 +355,8 @@ def body(fleet, pages, seats, tabled, tables, gaps, jobs, signal):
       correction gets a reply. The fastest route is
       <a href="mailto:corrections@overberg.co?subject=districtry%%20correction">corrections@overberg.co</a>;
       <a href="%(repo)s/issues/new" target="_blank" rel="noopener">an issue on GitHub</a> works
-      too, and the whole history of every file is
-      <a href="%(repo)s" target="_blank" rel="noopener">there to read</a>.</p>
+      too<span class="dst-play-hide">, and the whole history of every file is
+      <a href="%(repo)s" target="_blank" rel="noopener">there to read</a></span>.</p>
   </section>
 
   <section>

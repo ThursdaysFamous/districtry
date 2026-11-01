@@ -2817,7 +2817,8 @@ try {
     }
   }
 
-  // 1m. INSIDE THE GOOGLE PLAY APP THE SUPPORT LINKS ARE HIDDEN, AND ONLY
+  // 1m. INSIDE THE GOOGLE PLAY APP THE SUPPORT LINKS (AND, SINCE 2026-11-01,
+  //     THE LINK TO THE CODE ON GITHUB) ARE HIDDEN, AND ONLY
   //     THERE (engine/shared/play-app.txt). The Play app is this site in a
   //     full-screen Chrome window and Google Play does not allow an app to
   //     send readers to an outside payment page, so a window the app opened
@@ -2840,6 +2841,9 @@ try {
         sentence: visible(document.querySelector(".dpf-support")),
         panel: all(support.map((sel) => "#districtry-panel-foot " + sel).join(", ")).map(visible),
         anywhere: all(support.join(", ")).filter(visible).length,
+        // The link to the code on GitHub is hidden there too (2026-11-01):
+        // the repository's page shows a Sponsor button.
+        repo: all('a[href="https://github.com/ThursdaysFamous/districtry"]').map(visible),
       };
     });
     const noCounter = async (p) => {
@@ -2851,7 +2855,8 @@ try {
       const inApp = await supportShown(page);
       check("in the Play app every support link on the map page is hidden",
         inApp.marked && inApp.kept === "1" && !inApp.sentence &&
-          inApp.panel.length >= 3 && inApp.panel.every((v) => !v) && inApp.anywhere === 0,
+          inApp.panel.length >= 3 && inApp.panel.every((v) => !v) && inApp.anywhere === 0 &&
+          inApp.repo.length >= 1 && inApp.repo.every((v) => !v),
         JSON.stringify(inApp));
       await page.goto(`${BASE}sources.html`, { waitUntil: "domcontentloaded" });
       const next = await supportShown(page);
@@ -2867,7 +2872,7 @@ try {
       const web = await supportShown(page);
       check("on the website the map page keeps its support links",
         !web.marked && web.kept === null && web.sentence &&
-          web.panel.length >= 3 && web.panel.every((v) => v),
+          web.panel.length >= 3 && web.panel.every((v) => v) && web.repo.some((v) => v),
         JSON.stringify(web));
       await context.close();
     }

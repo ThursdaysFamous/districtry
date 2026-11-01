@@ -110,6 +110,19 @@ def shared_theme_boot():
         return fh.read().rstrip("\n")
 
 
+def shared_play_app():
+    """The Google Play app's mark, read from its ONE source.
+
+    Same contract as the theme boot: the block is JavaScript and is returned
+    verbatim, so every root page hides inside the Play app exactly what the
+    apps hide. It is here because each root page's footer links this
+    project's code on GitHub, whose page shows a Sponsor button.
+    """
+    path = os.path.join(REPO_ROOT, "engine", "shared", "play-app.txt")
+    with open(path, encoding="utf-8") as fh:
+        return fh.read().rstrip("\n")
+
+
 def shared_mono_faces():
     """The self-hosted IBM Plex Mono face, read from its ONE source.
 
@@ -1974,6 +1987,9 @@ SHELL_HEAD = """<!DOCTYPE html>
 <script>
 %(themeboot)s
 </script>
+<script>
+%(playapp)s
+</script>
 <style>
 %(fontface)s
 
@@ -2320,8 +2336,9 @@ PRIVACY_BODY = """
       <li>No unrounded location in any analytics event this project sends.</li>
     </ul>
     <p>Every app here is a single open-source page. If a claim on this page and the code ever
-      disagree, the code is the truth and this page is the bug:
-      <a href="%(repo)s" target="_blank" rel="noopener">read it, or file the discrepancy</a>.</p>
+      disagree, the code is the truth and this page is the bug.
+      <span class="dst-play-hide">The code is <a href="%(repo)s" target="_blank" rel="noopener">on GitHub</a>.</span>
+      Please report a difference with the <a href="/feedback.html">report form</a>.</p>
     <p>How AI coding agents are used in building districtry, and where AI is never used, is on its
       own page: <a href="/ai.html">How districtry uses AI</a>.</p>
   </section>
@@ -2383,6 +2400,7 @@ def render_page(pagetitle, pagesub, generator, body, title, desc, jsonld,
         "favicon": esc(favicon_uri),
         "fontface": fontface + "\n" + FALLBACK_FACE + "\n" + shared_mono_faces(),
         "themeboot": shared_theme_boot(),
+        "playapp": shared_play_app(),
         "light": token_css(LIGHT_TOKENS, light, ":root"),
         "dark": token_css(DARK_TOKENS, dark, '[data-theme="dark"]', DARK_EXTRA,
                           indent="    "),
