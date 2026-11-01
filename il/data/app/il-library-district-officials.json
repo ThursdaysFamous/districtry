@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-25T16:07:44Z",
+  "generated": "2026-11-01T18:02:24Z",
   "libraries": {
     "Alpha Park Public Library District": {
       "comptrollerCode": "072/010/10",
@@ -2024,13 +2024,13 @@
         }
       ],
       "comptrollerCode": "034/008/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Hancock",
       "heads": [
         {
           "email": "princessofdv@yahoo.com",
           "name": "Brenda Coulter",
-          "role": "Director"
+          "role": "Acting Director"
         }
       ],
       "office": {
@@ -2893,7 +2893,7 @@
     },
     "Odell Public Library District": {
       "comptrollerCode": "053/060/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Livingston",
       "heads": [
         {
@@ -3473,16 +3473,18 @@
         {
           "name": "Bryan Reynolds",
           "role": "President"
-        },
-        {
-          "email": "shostetler@mediacombb.net",
-          "name": "Susan Hostetler",
-          "role": "Treasurer"
         }
       ],
       "comptrollerCode": "048/020/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Knox",
+      "heads": [
+        {
+          "email": "shostetler@mediacombb.net",
+          "name": "Susan Hostetler",
+          "role": "Treas./Admin."
+        }
+      ],
       "office": {
         "phone": "(309) 358-1678"
       }
@@ -3625,7 +3627,7 @@
         }
       ],
       "comptrollerCode": "092/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Vermilion",
       "heads": [
         {
@@ -4195,7 +4197,7 @@
     },
     "Westville Public Library District": {
       "comptrollerCode": "092/012/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Vermilion",
       "heads": [
         {
