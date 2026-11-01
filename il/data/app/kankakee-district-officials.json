@@ -413,7 +413,6 @@
           "role": "President"
         },
         {
-          "email": "susiebell40@yahoo.com",
           "name": "David Dortch",
           "phone": "(779) 264-4184",
           "role": "Treasurer"
@@ -518,7 +517,12 @@
       "office": {}
     }
   },
-  "generated": "2026-11-01T00:31:37Z",
+  "generated": "2026-11-01T16:27:53Z",
+  "mailGivenForTwo": {
+    "46b876bf8dafe6a7": [
+      "2448ff72c1d1403d"
+    ]
+  },
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
