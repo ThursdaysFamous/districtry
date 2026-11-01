@@ -444,9 +444,9 @@ def body():
       <a href="mailto:corrections@overberg.co?subject=districtry%%20correction">corrections@overberg.co</a>,
       the <a href="/feedback.html">report form</a> linked at the foot of each page, or
       <a href="%(repo)s/issues/new" target="_blank" rel="noopener">an issue on GitHub</a>.
-      The code and its full history are
-      <a href="%(repo)s" target="_blank" rel="noopener">public</a>,
-      and commits made with an AI agent usually name it as a co-author.</p>
+      Commits made with an AI agent usually name it as a
+      co-author<span class="dst-play-hide">, and the code and its full history are
+      <a href="%(repo)s" target="_blank" rel="noopener">public</a></span>.</p>
   </section>
 
   <section>
