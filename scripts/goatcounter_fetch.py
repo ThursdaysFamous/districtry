@@ -664,7 +664,7 @@ def collect(s, total, start, end, per_day=True):
         daily.append({"date": date, "pageviews": pv,
                       "events": hits[date] - pv})
 
-    page_rows, pages_truncated = all_pages(s, total, start, end, mx)
+    page_rows, pages_truncated = pages_in_parts(s, total, start, end, mx)
     event_rows = pages(widget(s, 0, total, start, end, max=mx,
                               filter="is:event"))
     # THE EVENTS LIST IS CAPPED AT TEN ROWS AND THE PAGE NEEDS A ROW THAT FELL
@@ -928,6 +928,58 @@ def all_pages(s, total, start, end, mx, filt="is:pageview", label="pages",
             return out, False
     print("%s list: stopped at %d rows, list still cut short" % (label, len(out)))
     return out, True
+
+
+# How many times a window is halved before a cut list is accepted as cut.
+# Three halvings is an eighth of the window, about eight days of two months.
+SPLIT_DEPTH = 3
+
+
+def pages_in_parts(s, total, start, end, mx, depth=0):
+    """Every row of the pages list, asking for halves of the window when one
+    list for the whole window is longer than all_pages() follows.
+
+    THE TWO-MONTH LIST PASSED 600 ROWS ON 2026-11-01, which is PAGE_PAGES
+    pages of ten, and the report's check that the map, front page and other
+    pages add up to each day's page visits failed on eleven September days, 18
+    page visits in all. Raising PAGE_PAGES is not the fix: every request
+    carries the id of every row already read in `exclude`, about 12
+    characters an id in the address, so the 60th request was already about 7
+    KB, and a server that limits an address to 8 KB would refuse the 68th. A
+    half of the window holds fewer distinct pages (the 30-day list was 504
+    rows that day), and every row carries its own daily series, so the halves'
+    rows are summed path by path and each day's counts are exactly what one
+    list would have given. Returns (rows, cut), cut being true only when even
+    an eighth of the window was cut short.
+    """
+    rows_, cut = all_pages(s, total, start, end, mx)
+    a = datetime.date.fromisoformat(start)
+    b = datetime.date.fromisoformat(end)
+    if not cut or depth >= SPLIT_DEPTH or a >= b:
+        return rows_, cut
+    mid = a + (b - a) // 2
+    parts = [(start, mid.isoformat()),
+             ((mid + datetime.timedelta(days=1)).isoformat(), end)]
+    merged, cut = {}, False
+    for ps, pe in parts:
+        print("pages list: reading %s..%s on its own" % (ps, pe))
+        part, part_cut = pages_in_parts(s, period_total(s, ps, pe), ps, pe,
+                                        mx, depth + 1)
+        cut = cut or part_cut
+        for r in part:
+            m = merged.setdefault(r["path"], {"path": r["path"], "id": r["id"],
+                                              "title": r["title"], "count": 0,
+                                              "daily": {}})
+            m["count"] += r["count"]
+            if m["id"] is None:
+                m["id"] = r["id"]
+            if m["title"] is None:
+                m["title"] = r["title"]
+            for d, n in r["daily"].items():
+                m["daily"][d] = m["daily"].get(d, 0) + n
+    print("pages list: %s..%s read in two parts, %d rows%s"
+          % (start, end, len(merged), ", still cut short" if cut else ""))
+    return sorted(merged.values(), key=lambda r: (-r["count"], r["path"])), cut
 
 
 def daily_referrers(s, end):
