@@ -9086,6 +9086,19 @@ same month. Only the district lines are used, as the letter says.
 
 ## Ask wv-charleston-ward-map — City of Charleston, West Virginia, City Clerk (through the Mayor's office): the twenty wards as a map file
 
+> **ANSWERED 2026-11-02**: Deputy City Clerk Nikki Smith e-mailed a shapefile of the twenty wards
+> (W1 to W20), after review by the city's Information Systems department and the City Attorney.
+> Her covering e-mail gave the terms: the city's GIS information is in the public domain and is
+> intended for public use without monetary gain, it may not be copied without permission, and
+> citing the source is appreciated. The operator asked the same day whether districtry may show
+> the wards and whether this is the current file, and at 16:33 UTC she replied: "Yes, you have
+> permission. Yes, that is the current file for the Ward boundaries. They have not changed since
+> the redistricting in 2021." The files are kept as sent under
+> `wv/data/source/raw/charleston-wards/` and drawn by the City Council Ward layer
+> (`wv/scripts/build_wv_city_wards.py`), cut at the Census Bureau's map of the city and credited
+> to the City of Charleston on every card. On the 2020 census the wards hold 2,314 to 2,558 people
+> each, 10.0% apart, which agrees with lines drawn in 2021. No follow-up is due.
+>
 > **ROUTED 2026-10-21 at 20:59 UTC**: the Mayor's Constituent Services Liaison replied that she
 > had passed the request to the City Clerk's office and asked them to look into it. Nothing from
 > the Clerk yet. A follow-up is due about 2026-11-11 if nothing has come back.

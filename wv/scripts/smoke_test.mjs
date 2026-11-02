@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "wv-senate", "wv-house"];
 const EXPECT_DISTRICT = { "county": "Kanawha County", "us-house": "1", "wv-senate": "8", "wv-house": "54" };
 const NEGATIVE_POINT = "39.55000,-79.25000"; // Garrett County, Maryland, about 20 km east of the West Virginia line at Preston County — outside West Virginia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state and county layers name Maryland and Garrett County here (control: the State Capitol returns West Virginia and Kanawha County), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. A POINT ON A NEIGHBOUR'S LAND WILL HAVE TO MOVE THE DAY THAT NEIGHBOUR GOES LIVE: Kentucky is live already, and Maryland, Pennsylvania, Ohio and Virginia are not, so the change that makes Maryland live moves this point, the way Kentucky's go-live moved Indiana's.
 const APP_NAME = "districtry West Virginia";
-const EXPECT_LAYERS = 11;
+const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 // Instance constants this file owns (the worksheet emits the block above).
@@ -873,15 +873,18 @@ try {
         name: "a city names itself a city, alongside the county",
         layer: "municipality", service: PLACES,
         props: { GEOID: "5414600", NAME: "Charleston city", BASENAME: "Charleston", STATE: "54", LSADC: "25", FUNCSTAT: "A" },
-        want: [/Charleston city/, /Incorporated city — a general-purpose local government over this point, alongside the county/, /Not named here/],
-        reject: [/Incorporated town/, /Incorporated village/, /styled a corporation/]
+        // Charleston's wards are drawn, so the card says its council is
+        // named on the City Council Ward card
+        want: [/Charleston city/, /Incorporated city — a general-purpose local government over this point, alongside the county/,
+          /The council members are named on the City Council Ward card/],
+        reject: [/Incorporated town/, /Incorporated village/, /styled a corporation/, /Not named here/]
       },
       {
         name: "a town names itself a town, not a city",
         layer: "municipality", service: PLACES,
         props: { GEOID: "5401000", NAME: "Alderson town", BASENAME: "Alderson", STATE: "54", LSADC: "43", FUNCSTAT: "A" },
-        want: [/Alderson town/, /Incorporated town/],
-        reject: [/Incorporated city/, /Incorporated village/]
+        want: [/Alderson town/, /Incorporated town/, /Not named here/],
+        reject: [/Incorporated city/, /Incorporated village/, /City Council Ward card/]
       },
       {
         name: "a village names itself a village",
@@ -1128,6 +1131,143 @@ try {
           /no two county commissioners may live in the same/.test(text) &&
           /West Virginia GIS Technical Center/.test(text),
         `districts here=${at.length} others=${others} ${text.slice(0, 120)}`);
+      await context.close();
+    }
+  }
+
+  // 11. CHARLESTON'S COUNCIL WARDS, from the City's own map
+  //     (data/app/wv-city-wards.json) with the council from the city's own
+  //     page (data/app/wv-city-councils.json). The ward and the members are
+  //     read from the shipped files, so a rebuild or a new council moves the
+  //     expectation. At the Capitol the card must name the ward's member with
+  //     every telephone and e-mail address the roster carries, all six
+  //     members elected at large, City Hall as the council's office, the
+  //     City's credit and the council page; a ward the page names no one for
+  //     (Ward 16 on 2026-11-02) must say so; ground in the city's limits that
+  //     the city's map puts in no ward, and a point outside the state, must
+  //     not be given a ward.
+  {
+    const fc = shipped("wv-city-wards.json");
+    const roster = shipped("wv-city-councils.json");
+    const council = roster["5414600"];
+    // the pole of inaccessibility of Ward 16 as drawn (shapely polylabel,
+    // 2026-11-02), 840 m from its edge
+    const W16 = "38.33166,-81.63350";
+    for (const pt of [POINT, W16]) {
+      const at = propsAt(fc, pt);
+      const ward = at.length === 1 ? at[0].ward : null;
+      const seat = ward && council ? council.wards[ward] : null;
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=city-ward`);
+      const info = await cardText(page, "city-ward");
+      const text = info.text || "";
+      const got = await page.evaluate((cid) => {
+        const el = document.getElementById("card-" + cid);
+        const block = el && el.closest(".layer-block");
+        return {
+          all: el ? el.textContent.replace(/\s+/g, " ") : "",
+          mailto: el ? Array.from(el.querySelectorAll("a[href^='mailto:']"))
+            .map((a) => decodeURIComponent(a.getAttribute("href").slice(7)).toLowerCase()) : [],
+          links: el ? Array.from(el.querySelectorAll("a[href^='http']")).map((a) => a.href) : [],
+          footer: block ? Array.from(block.querySelectorAll(".card-footer a[href]")).map((a) => a.href) : [],
+        };
+      }, "city-ward");
+      const shown = plain(got.all);
+      const members = (seat && seat.name ? [seat] : []).concat((council && council.atLarge) || []);
+      const unnamed = members.filter((p) => !text.includes(p.name)).map((p) => p.name);
+      const unphoned = members.filter((p) => (p.phones || []).some((ph) => !shown.includes(ph.number))).map((p) => p.name);
+      const unmailed = members.filter((p) => p.email && !got.mailto.includes(String(p.email).toLowerCase())).map((p) => p.name);
+      const unlinked = members.filter((p) => p.url && !got.links.includes(p.url)).map((p) => p.name);
+      const seatOk = seat && seat.name ? true
+        : text.includes(`The city's council page names no one for Ward ${ward}, so no one is named here`);
+      const officeOk = got.all.includes("The council's office") && got.all.includes("City Hall") &&
+        council.office.lines.every((l) => got.all.includes(l)) && shown.includes(council.office.phone);
+      const creditOk = /City of Charleston's own map of its 20 wards/.test(text) &&
+        text.includes(`read on ${longDate(council.asOf)}`) && got.footer.includes(council.source);
+      check(`city-ward names Charleston Ward ${ward || "?"} at ${pt}, ` +
+          (seat && seat.name ? "its member" : "that the city's page names no one for it") +
+          ", the six members elected at large with their own telephones and e-mail addresses, City Hall and the City's credit",
+        at.length === 1 && !!council && !info.error && text.includes(`Ward ${ward}`) && seatOk &&
+          unnamed.length === 0 && unphoned.length === 0 && unmailed.length === 0 && unlinked.length === 0 &&
+          (council.atLarge || []).length === 6 && officeOk && creditOk,
+        `wards here=${at.length} unnamed=${unnamed.slice(0, 2)} unphoned=${unphoned.slice(0, 2)} unmailed=${unmailed.slice(0, 2)} ` +
+          `unlinked=${unlinked.slice(0, 2)} seat=${seatOk} office=${officeOk} credit=${creditOk} ${text.slice(0, 100)}`);
+      await context.close();
+    }
+
+    // Inside the Census Bureau's Charleston and in no ward on the city's map:
+    // the largest such piece, measured 2026-11-02 (build_wv_city_wards.py's
+    // docstring), where 185 people lived in 2020.
+    {
+      const pt = "38.40095,-81.63961";
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=city-ward`);
+      const info = await cardText(page, "city-ward");
+      check("city-ward says no ward is drawn on ground in Charleston's limits that the city's map puts in no ward",
+        propsAt(fc, pt).length === 0 && info.empty && !info.error &&
+          /This map draws the wards of Charleston/.test(info.text),
+        info.text.slice(0, 90));
+      await context.close();
+    }
+
+    // Two wards at one point: the city's file draws the line between Wards 7
+    // and 11 twice, and the drawn copies cross over a sliver 4 cm wide, too
+    // thin for a permalink's five decimals to land in. So the file is stood
+    // in for by two squares over the Capitol, and the card must name both
+    // wards and both members.
+    {
+      const sq = [[-81.62, 38.33], [-81.60, 38.33], [-81.60, 38.34], [-81.62, 38.34], [-81.62, 38.33]];
+      const props = (w) => Object.assign({}, fc.features[0].properties, { ward: w, seat: `Ward ${w}` });
+      const fixture = { type: "FeatureCollection", features: ["7", "11"].map((w) => ({
+        type: "Feature", properties: props(w), geometry: { type: "Polygon", coordinates: [sq] } })) };
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=city-ward`, async (p) => {
+        await p.route("**/data/app/wv-city-wards.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(fixture) }));
+      });
+      const info = await cardText(page, "city-ward");
+      const text = info.text || "";
+      const names = ["7", "11"].map((w) => council.wards[w]).filter((s) => s && s.name).map((s) => s.name);
+      check("city-ward names both wards and both members where two wards cover a point",
+        !info.error && text.includes("Ward 7 and Ward 11") && /More than one ward here/.test(text) &&
+          names.length === 2 && names.every((n) => text.includes(n)),
+        text.slice(0, 120));
+      await context.close();
+    }
+
+    // The roster is refused: the ward still answers, and the card names nobody.
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=city-ward`, async (p) => {
+        await p.route("**/data/app/wv-city-councils.json", (r) => r.fulfill({ status: 503, body: "down" }));
+      });
+      const info = await cardText(page, "city-ward");
+      const text = info.text || "";
+      const ward = (propsAt(fc, POINT)[0] || {}).ward;
+      const named = Object.values(council.wards).concat(council.atLarge)
+        .filter((p) => p && p.name && text.includes(p.name)).map((p) => p.name);
+      check("city-ward degrades to naming nobody when the council list fails",
+        !info.error && text.includes(`Ward ${ward}`) &&
+          /The list of council members did not load, so no one is named here/.test(text) && named.length === 0,
+        `named=${named.slice(0, 2)} text=${text.slice(0, 90)}`);
+      await context.close();
+    }
+
+    // Outside West Virginia the layer hides (coverage inWestVirginia), with
+    // the permalink left intact.
+    {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=city-ward`);
+      const hidden = await page
+        .waitForFunction(() => {
+          const box = document.getElementById("toggle-city-ward");
+          const block = box && box.closest(".layer-block");
+          return block && block.hidden === true;
+        }, null, { timeout: QUERY_TIMEOUT })
+        .then(() => true, () => false);
+      const stillOn = await page.evaluate((n) => window[n].state.layersOn["city-ward"] === true, EXPORTS_NAME);
+      check("city-ward hides at the negative point (out of coverage, permalink intact)",
+        hidden && stillOn, `hidden=${hidden} layersOn=${stillOn}`);
       await context.close();
     }
   }

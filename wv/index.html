@@ -4489,8 +4489,8 @@ function initWestVirginiaExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "wv-senate": "wvs", "county": "co",
     "school-district-unified": "su", "wv-house": "wvh", "county-subdivision": "cs",
-    "zip-code": "zp", "municipality": "mu", "police-station": "ps", "fire-station": "fs",
-    "post-office": "po" };
+    "zip-code": "zp", "municipality": "mu", "city-ward": "cw", "police-station": "ps",
+    "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -11203,6 +11203,7 @@ function initWestVirginiaExplorer() {
     "county-subdivision", // 195 magisterial districts, three to eight in each county, pre-built from the state's own map
     "zip-code",          // 2,017 ZIP Code Tabulation Areas in the state's own bounding box, fetched live by envelope; the layer hides outside West Virginia
     "municipality",      // 229 incorporated places, about 5 km2 of land on average, live from TIGERweb
+    "city-ward",         // 20 wards in Charleston, the one city whose ward map this app has, a mean 4.07 km2 (median 3.12, from 1.00 for Ward 3 to 10.14 for Ward 20), measured 2026-11-02 — ranked just after City, Town or Village, which each one divides, so a ward draws on top of its city
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -15806,7 +15807,9 @@ function initWestVirginiaExplorer() {
    *
    * NO OFFICEHOLDER YET. No statewide roster of West Virginia's mayors and
    * council members has been read, so the card names no one rather than
-   * guessing. Recorded as gap wv-municipal-officeholders.
+   * guessing. Recorded as gap wv-municipal-officeholders. A city whose wards
+   * the City Council Ward layer draws (WV_WARD_CITIES) has its council named
+   * there, and this card says so.
    * ---------- */
   var loadPlaces = tigerStatewideLoader(
     TIGERWEB_SERVICES + "Places_CouSub_ConCity_SubMCD/MapServer", 4,
@@ -15866,15 +15869,227 @@ function initWestVirginiaExplorer() {
       if (result.kind && WV_PLACE_KINDS.hasOwnProperty(result.kind)) {
         rows.push({ label: "Type", value: WV_PLACE_KINDS[result.kind] });
       }
-      rows.push({
-        label: "Your mayor and council",
-        value: "Not named here. No statewide list of West Virginia's mayors " +
-          "and council members has been read for this app, and it does not " +
-          "guess in the meantime, so this place's own website is the current " +
-          "source."
-      });
+      if (result.geoid != null && WV_WARD_CITIES.indexOf(String(result.geoid)) !== -1) {
+        // a city whose wards the City Council Ward layer draws: that card
+        // names its council from the city's own page
+        rows.push({
+          label: "Your mayor and council",
+          value: "The council members are named on the City Council Ward card, " +
+            "from the city's own council page. The mayor is not named here, so " +
+            "the city's own website is the current source."
+        });
+      } else {
+        rows.push({
+          label: "Your mayor and council",
+          value: "Not named here. No statewide list of West Virginia's mayors " +
+            "and council members has been read for this app, and it does not " +
+            "guess in the meantime, so this place's own website is the current " +
+            "source."
+        });
+      }
       wrap.appendChild(renderFieldStack(rows));
       return wrap;
+    }
+  });
+
+  /* ---------- 6b. City Council Ward ----------
+   * The council wards of the West Virginia cities whose ward maps this app
+   * has (data/app/wv-city-wards.json, built by
+   * wv/scripts/build_wv_city_wards.py): today Charleston, whose City Clerk's
+   * office sent its map of the 20 wards on 2026-11-02 and gave permission to
+   * show it. Every line between two wards is the city's own, never redrawn;
+   * the outer edge is the Census Bureau's map of the city, the one the City,
+   * Town or Village card reads, so the two cards never disagree about
+   * whether a point is in the city. Each feature carries the sentence saying
+   * whose map it is, and the card prints it, which is the credit the City
+   * asked for.
+   *
+   * EVERY WARD AT A POINT IS NAMED. The city's file draws the line between
+   * Wards 7 and 11 twice, a few centimetres apart, and the drawn copies cross
+   * over 1.78 m2 (measured 2026-11-02, no 2020 census point there), so the
+   * query keeps every ward covering the point and the card names each.
+   *
+   * The members are the city's own council page, read every week
+   * (data/app/wv-city-councils.json, built by
+   * wv/scripts/build_wv_city_councils.py): the ward's member, then the six
+   * members elected by the whole city. A roster that fails to load leaves the
+   * ward standing and says so.
+   * ---------- */
+  var WV_WARD_CITIES = ["5414600"];
+  var loadWvCityWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/wv-city-wards.json", {}, 2);
+  });
+  var loadWvCityCouncils = makeCached(function () {
+    return fetchJSONWithRetry("data/app/wv-city-councils.json", {}, 2);
+  });
+  // One council member's row: the name as the page prints it, the seat, each
+  // telephone the page prints in that member's own row with the label it
+  // gives ("(304) 553-2588 (cell)"), the e-mail address and the member's page.
+  function wvCouncilRow(p) {
+    var phones = (p.phones || []).map(function (ph) {
+      return String(ph.number) + (ph.label ? " (" + String(ph.label).toLowerCase() + ")" : "");
+    });
+    var row = { name: String(p.name), note: p.seat ? String(p.seat) : null };
+    if (phones.length) row.phone = phones[0];
+    if (phones.length > 1) row.phonesExtra = phones.slice(1);
+    if (p.email) row.email = String(p.email);
+    var url = safeHttpUrl(p.url);
+    if (url) row.links = [{ label: "Member page", url: url }];
+    return row;
+  }
+  function wvList(items) {
+    if (items.length < 2) return items.join("");
+    return items.slice(0, -1).join(", ") + " and " + items[items.length - 1];
+  }
+
+  registerLayer({
+    id: "city-ward",
+    group: "political",
+    label: "City Council Ward",
+    coverage: inWestVirginia,
+    // Gated by wv/scripts/build_wv_city_wards.py --check, which fails when
+    // this sentence and the ward file disagree about which cities are drawn.
+    emptyNote: "No city council ward is drawn at this point. " +
+      "This map draws the wards of Charleston, and a few small pieces of " +
+      "ground inside the city's limits are in no ward on the city's own map. " +
+      "Huntington, Parkersburg and Wheeling also elect council members by " +
+      "ward, and their ward maps have been asked for. Elsewhere the City, " +
+      "Town or Village card names the place but not its council.",
+    overlay: {
+      load: loadWvCityWards,
+      // the fleet's city-council blue and width (root layer-concepts.json
+      // `colors` and `lines`)
+      style: { color: "#0B5394", weight: 2, fillColor: "#41B6E6", fillOpacity: 0.07 }
+    },
+    hoverName: function (feature) {
+      var p = feature.properties || {};
+      return p.city != null && p.seat != null ? String(p.city) + ", " + String(p.seat) : null;
+    },
+    query: function (point, seq) {
+      return featureSetAt(loadWvCityWards, point).then(function (geo) {
+        var feats = (geo && geo.features) ? geo.features : [];
+        var hits = [];
+        for (var i = 0; i < feats.length; i++) {
+          if (feats[i].geometry && pointInGeometry(point, feats[i].geometry)) {
+            hits.push(feats[i].properties || {});
+          }
+        }
+        if (!hits.length) return null;
+        hits.sort(function (a, b) {
+          if (String(a.city) !== String(b.city)) return String(a.city) < String(b.city) ? -1 : 1;
+          return Number(a.ward) - Number(b.ward);
+        });
+        var result = { seq: seq, hits: hits, council: null, rosterFailed: false };
+        // the roster's own failure is not this layer's failure: the ward
+        // still answers the question, and the card says no one is named
+        return loadWvCityCouncils().then(function (roster) {
+          result.council = roster ? roster[String(hits[0].geoid)] || null : null;
+          return result;
+        }, function () {
+          result.rosterFailed = true;
+          return result;
+        });
+      });
+    },
+    cardIdentifier: function (result) {
+      return wvList(result.hits.map(function (h) { return String(h.seat); }));
+    },
+    render: function (result) {
+      var hits = result.hits;
+      var council = result.council;
+      var city = String(hits[0].city);
+      var wrap = cardEl("div", "card-flush");
+      // Card convention: the member elected from the ward, then the members
+      // elected by the whole city, who represent this point too.
+      var people = [], rows = [];
+      hits.forEach(function (h) {
+        var seat = council && council.wards ? council.wards[String(h.ward)] : null;
+        if (seat && seat.name) {
+          people.push(wvCouncilRow(seat));
+        } else if (council) {
+          rows.push({
+            label: String(h.seat),
+            value: "The city's council page names no one for " + String(h.seat) +
+              ", so no one is named here."
+          });
+        }
+      });
+      var atLarge = (council && council.atLarge ? council.atLarge : []).filter(function (p) {
+        return p && p.name;
+      });
+      atLarge.forEach(function (p) { people.push(wvCouncilRow(p)); });
+      if (people.length) wrap.appendChild(renderPersonRows(people));
+      if (result.rosterFailed) {
+        rows.push({
+          label: "Members",
+          value: "The list of council members did not load, so no one is named here."
+        });
+      } else if (!council) {
+        rows.push({
+          label: "Members",
+          value: "No list of " + city + "'s council members has been read for this " +
+            "app, so no one is named here."
+        });
+      }
+      rows.push({ label: "City", value: city, primary: true });
+      if (hits.length > 1) {
+        rows.push({
+          label: "More than one ward here",
+          value: "Along the line between " + wvList(hits.map(function (h) {
+            return String(h.seat);
+          })) + ", the city's own map draws the line twice, a few centimetres " +
+            "apart, so this app names " + (hits.length === 2 ? "both wards" : "each ward") +
+            " rather than choosing one."
+        });
+      }
+      if (atLarge.length) {
+        rows.push({
+          label: "Members elected at large",
+          value: "The council also has " + String(atLarge.length) + " members elected " +
+            "by the whole city, listed above, who represent every point in it."
+        });
+      }
+      var src = hits[0].source != null ? String(hits[0].source) : "";
+      if (src) {
+        rows.push({
+          label: "Where this line comes from",
+          value: src.charAt(0).toUpperCase() + src.slice(1) + ". The line drawn here " +
+            "is within 4 metres of that map's own. Near a line, check with the City " +
+            "Clerk."
+        });
+      }
+      if (council) {
+        var read = wvDate(council.asOf);
+        rows.push({
+          label: people.length > 1 ? "Where the names come from" : "Where the name comes from",
+          value: "The City of " + city + "'s own council page" +
+            (read ? ", read on " + read : "") + ". This app reads it again every " +
+            "week. Each telephone number and e-mail address shown on a member's row " +
+            "is one the page prints in that member's own row, with the label the " +
+            "page gives it."
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      if (council && council.office) {
+        var o = council.office;
+        wrap.appendChild(renderOfficeGroup({
+          label: "The council's office",
+          offices: [{
+            label: String(o.label),
+            lines: (o.lines || []).map(String),
+            phone: o.phone ? String(o.phone) : null
+          }]
+        }));
+      }
+      return wrap;
+    },
+    primaryLink: function (result) {
+      var url = result && result.council ? safeHttpUrl(result.council.source) : null;
+      if (!url) {
+        var h = result && result.hits && result.hits[0];
+        url = h ? safeHttpUrl(h.sourceUrl) : null;
+      }
+      return url ? { label: "The city's council page", url: url } : null;
     }
   });
 
@@ -17678,7 +17893,7 @@ function initWestVirginiaExplorer() {
   // standard"): representation first, then services, then geography broad ->
   // specific. validate_index.py asserts this list matches the registered id
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
-  var LAYER_SIDEBAR_RANK = ["us-house", "wv-senate", "wv-house",
+  var LAYER_SIDEBAR_RANK = ["us-house", "wv-senate", "wv-house", "city-ward",
     "school-district-unified",
     "county", "county-subdivision", "municipality", "zip-code",
     "police-station", "fire-station", "post-office"];
@@ -18182,11 +18397,11 @@ function initWestVirginiaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#2F6B3A": "#6FBE7B",
-    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C", "#88637C": "#DAA7C9",
-    "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8",
-    "#D06A9C": "#FEBDDA"};
+  var DST_DARK_MAP_COLORS = { "#0B5394": "#4FA4FE", "#14181C": "#696F76", "#1B4F8C": "#5CA0F5",
+    "#2F6B3A": "#6FBE7B", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD",
+    "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#7A5C3E": "#CFA57C",
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#A98B6C": "#F3CAA1",
+    "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

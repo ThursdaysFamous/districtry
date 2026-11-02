@@ -261,10 +261,32 @@
       }
     },
     {
+      "id": "city-ward",
+      "label": "City Council Ward",
+      "group": "political",
+      "area_rank": 9,
+      "rank_note": "20 wards in Charleston, the one city whose ward map this app has, a mean 4.07 km2 (median 3.12, from 1.00 for Ward 3 to 10.14 for Ward 20), measured 2026-11-02 — ranked just after City, Town or Village, which each one divides, so a ward draws on top of its city",
+      "source": {
+        "answers": "The council ward containing the point, in the West Virginia cities whose ward map this app has (today Charleston), the council member elected from it and the members the city elects at large.",
+        "boundary": [
+          {
+            "label": "City of Charleston — its map of the City Council's 20 wards, sent by the City Clerk's office on November 2, 2026, which the City says is current since the 2021 redistricting, shown with the City's permission and credited to it; on the 2020 census the wards hold 2,314 to 2,558 people each",
+            "url": "https://www.charlestonwv.gov/government/city-council"
+          },
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places): the city's outer edge, where its wards are cut so the City Council Ward and City, Town or Village cards agree about whether a point is in the city",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+          }
+        ],
+        "people": "wv-city-councils.json, rebuilt weekly from the City of Charleston's own council page: the member elected from each ward and the six elected at large, with each telephone number and e-mail address the page prints in that member's own row and the label it gives (home, cell or office). The page also prints a street address for every member, most of them homes, and no street address is kept.",
+        "applies": "Charleston. Huntington, Parkersburg and Wheeling also elect council members by ward and were asked for their ward maps on October 21, 2026; until a city sends one, its wards are not drawn and the City, Town or Village card names the place but not its council."
+      }
+    },
+    {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -282,7 +304,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -300,7 +322,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -385,6 +407,12 @@
         "min_features": 195,
         "max_features": 195,
         "note": "The 195 magisterial districts, from the state GIS centre's Magisterial 2026 layer. Exact count, because a change is a county redistricting, which wants reading rather than a widened bound."
+      },
+      {
+        "file": "wv-city-wards.json",
+        "min_features": 20,
+        "max_features": 20,
+        "note": "The 20 council wards of Charleston, from the City's own map, cut at the city's limits on the Census Bureau's map (wv/scripts/build_wv_city_wards.py). Every ward's 2020 census people are pinned in the builder, so the floor and the ceiling are equal: a new city or a new ward plan changes this entry in the same change."
       }
     ],
     "rosters": [
@@ -409,6 +437,11 @@
         "note": "Every county's commissioners and other elected officers from the Secretary of State's directory of county officials, one record for each of the 55 counties, refreshed weekly by update-wv-county-officials.yml."
       },
       {
+        "file": "wv-city-councils.json",
+        "min_keys": 1,
+        "note": "The council members of each city whose wards the City Council Ward layer draws, from the city's own council page, one record per city keyed by its Census place id, refreshed weekly by update-wv-city-councils.yml."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
@@ -416,7 +449,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-wv-shell-v1",
+    "cache_name": "districtry-wv-shell-v2",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",
@@ -443,6 +476,11 @@
       "file": "update-wv-county-officials.yml",
       "purpose": "West Virginia county commissioners and other elected county officers (the Secretary of State's directory of county officials)",
       "schedule": "Wed 19:53 UTC"
+    },
+    {
+      "file": "update-wv-city-councils.yml",
+      "purpose": "Charleston's city council members (the city's own council page)",
+      "schedule": "Thu 19:53 UTC"
     },
     {
       "file": "wv-validate-sources.yml",

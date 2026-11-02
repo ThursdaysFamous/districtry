@@ -95,8 +95,8 @@ MIN_REGISTER_LAYER = 10
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
     "us-house", "wv-senate", "county", "school-district-unified", "wv-house",
-    "county-subdivision", "zip-code", "municipality", "police-station",
-    "fire-station", "post-office",
+    "county-subdivision", "zip-code", "municipality", "city-ward",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -107,6 +107,7 @@ GEOMETRY_FILES = {
     "wv-senate-districts.json": (17, 17),  # The 17 West Virginia Senate districts, from the Legislature's own file of the 2021 plan.
     "wv-house-districts.json": (100, 100),  # The 100 House of Delegates districts, from the Legislature's own file of the 2021 plan.
     "wv-magisterial-districts.json": (195, 195),  # The 195 magisterial districts, from the state GIS centre's Magisterial 2026 layer. Exact count, because a change is a county redistricting, which wants reading rather than a widened bound.
+    "wv-city-wards.json": (20, 20),  # The 20 council wards of Charleston, from the City's own map, cut at the city's limits on the Census Bureau's map (wv/scripts/build_wv_city_wards.py). Every ward's 2020 census people are pinned in the builder, so the floor and the ceiling are equal: a new city or a new ward plan changes this entry in the same change.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -115,6 +116,7 @@ ROSTER_FILES = {
     "wv-senate-members.json": 17,  # West Virginia Senate roster from the Senate's own roster page, one record per district holding its two senators, refreshed weekly.
     "wv-house-members.json": 100,  # House of Delegates roster from the House's own roster page, one record per district, refreshed weekly.
     "wv-county-officials.json": 55,  # Every county's commissioners and other elected officers from the Secretary of State's directory of county officials, one record for each of the 55 counties, refreshed weekly by update-wv-county-officials.yml.
+    "wv-city-councils.json": 1,  # The council members of each city whose wards the City Council Ward layer draws, from the city's own council page, one record per city keyed by its Census place id, refreshed weekly by update-wv-city-councils.yml.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
 }
 

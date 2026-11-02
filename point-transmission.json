@@ -802,6 +802,7 @@
       ],
       "atpoint_hooks_fired": 2,
       "layer_ids": [
+        "city-ward",
         "county",
         "county-subdivision",
         "fire-station",

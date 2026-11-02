@@ -172,6 +172,29 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "city-ward",
+        "app_file": "wv-city-wards.json",
+        "source_url": "https://www.charlestonwv.gov/government/city-council",
+        "note": (
+            "Charleston's 20 wards, from the shapefile the City Clerk's office "
+            "e-mailed on 2026-11-02 with permission to show it, kept as sent "
+            "under data/source/raw/charleston-wards/ and drawn by "
+            "wv/scripts/build_wv_city_wards.py, cut at the Census Bureau's map "
+            "of the city. Nothing here can re-read an e-mailed file, so this "
+            "entry watches the council page the card links; the wards stand "
+            "until the city redistricts after the 2030 census."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "wv-city-councils.json",
+        "source_url": "https://www.charlestonwv.gov/government/city-council",
+        "note": (
+            "Charleston's council members from the city's own council page; "
+            "rebuilt weekly by wv/scripts/build_wv_city_councils.py."
+        ),
+    },
+    {
         "layer": "county",
         "app_file": "metro-outline.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",

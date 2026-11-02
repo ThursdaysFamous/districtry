@@ -1,0 +1,325 @@
+{
+ "5414600": {
+  "city": "Charleston",
+  "body": "Charleston City Council",
+  "source": "https://www.charlestonwv.gov/government/city-council",
+  "office": {
+   "label": "City Hall",
+   "lines": [
+    "501 Virginia St. East",
+    "Charleston, WV 25301"
+   ],
+   "phone": "(304) 348-8000"
+  },
+  "wards": {
+   "1": {
+    "name": "Pat Jones",
+    "email": "pj1council@yahoo.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward1",
+    "seat": "Ward 1"
+   },
+   "2": {
+    "name": "Bobby Haas",
+    "phones": [
+     {
+      "number": "(304) 345-2236",
+      "label": "Home"
+     },
+     {
+      "number": "(304) 389-8177",
+      "label": "Cell"
+     }
+    ],
+    "email": "bobbyhaas1586@yahoo.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward2",
+    "seat": "Ward 2"
+   },
+   "3": {
+    "name": "Chuck Overstreet",
+    "phones": [
+     {
+      "number": "(304) 346-9417",
+      "label": "Home"
+     },
+     {
+      "number": "(304) 543-7050",
+      "label": "Cell"
+     }
+    ],
+    "email": "covers6053@aol.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward3",
+    "seat": "Ward 3"
+   },
+   "4": {
+    "name": "Larry Moore",
+    "phones": [
+     {
+      "number": "(304) 989-6792",
+      "label": "Cell"
+     }
+    ],
+    "email": "larry.moore@cityofcharleston.org",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward4",
+    "seat": "Ward 4"
+   },
+   "5": {
+    "name": "Jeanine Faegre",
+    "phones": [
+     {
+      "number": "(304) 545-8018",
+      "label": "Cell"
+     }
+    ],
+    "email": "jafaegre@gmail.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward5",
+    "seat": "Ward 5"
+   },
+   "6": {
+    "name": "Michael Ferrell",
+    "phones": [
+     {
+      "number": "(304) 380-2082",
+      "label": "Cell"
+     }
+    ],
+    "email": "mrwmferrell@yahoo.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward6",
+    "seat": "Ward 6"
+   },
+   "7": {
+    "name": "Beth Kerns",
+    "phones": [
+     {
+      "number": "(304) 549-5813",
+      "label": "Cell"
+     }
+    ],
+    "email": "bethkernscrw@yahoo.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward7",
+    "seat": "Ward 7"
+   },
+   "8": {
+    "name": "Kathy Rubio",
+    "phones": [
+     {
+      "number": "(304) 541-3442",
+      "label": "Cell"
+     }
+    ],
+    "email": "rubioforcharleston@gmail.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward8",
+    "seat": "Ward 8"
+   },
+   "9": {
+    "name": "Mary Beth Hoover",
+    "phones": [
+     {
+      "number": "(304) 543-4082",
+      "label": "Cell"
+     }
+    ],
+    "email": "hoovermb74@hotmail.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward9",
+    "seat": "Ward 9"
+   },
+   "10": {
+    "name": "Chelsea Steelhammer",
+    "phones": [
+     {
+      "number": "(304) 553-2588",
+      "label": "Cell"
+     }
+    ],
+    "email": "Chelsea.steelhammer@cityofcharleston.org",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward10",
+    "seat": "Ward 10"
+   },
+   "11": {
+    "name": "Shannon Snodgrass",
+    "phones": [
+     {
+      "number": "(304) 545-2032",
+      "label": "Office"
+     }
+    ],
+    "email": "snodgrassshannon@aol.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward11",
+    "seat": "Ward 11"
+   },
+   "12": {
+    "name": "Joseph Jenkins",
+    "phones": [
+     {
+      "number": "(304) 575-9202",
+      "label": "Cell"
+     }
+    ],
+    "email": "joseph.jenkins@cityofcharleston.org",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward12",
+    "seat": "Ward 12"
+   },
+   "13": {
+    "name": "Frank H Annie",
+    "phones": [
+     {
+      "number": "(304) 395-3830",
+      "label": "Cell"
+     }
+    ],
+    "email": "frank.annie@cityofcharleston.org",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward13",
+    "seat": "Ward 13"
+   },
+   "14": {
+    "name": "Patrick Salango",
+    "phones": [
+     {
+      "number": "(304) 573-5007",
+      "label": "Cell"
+     }
+    ],
+    "email": "patrick@salangolegalfirm.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward14",
+    "seat": "Ward 14"
+   },
+   "15": {
+    "name": "Harper Gardner",
+    "phones": [
+     {
+      "number": "(304) 545-2765",
+      "label": "Cell"
+     }
+    ],
+    "email": "gardnerd@gmail.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward15",
+    "seat": "Ward 15"
+   },
+   "16": {
+    "name": null,
+    "seat": "Ward 16"
+   },
+   "17": {
+    "name": "Bruce King",
+    "phones": [
+     {
+      "number": "(304) 216-1785",
+      "label": "Cell"
+     }
+    ],
+    "email": "rbrucekingjr@yahoo.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward17",
+    "seat": "Ward 17"
+   },
+   "18": {
+    "name": "Jessica Hudson",
+    "phones": [
+     {
+      "number": "(304) 549-7166",
+      "label": "Cell"
+     }
+    ],
+    "email": "Jess.hudson714@gmail.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward18",
+    "seat": "Ward 18"
+   },
+   "19": {
+    "name": "Brent Burton",
+    "phones": [
+     {
+      "number": "(304) 541-0991",
+      "label": "Cell"
+     }
+    ],
+    "email": "brent.burton@assuredpartners.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward19",
+    "seat": "Ward 19"
+   },
+   "20": {
+    "name": "Chad Robinson",
+    "phones": [
+     {
+      "number": "(304) 389-7373",
+      "label": "Cell"
+     }
+    ],
+    "email": "chad.robinson@cityofcharleston.org",
+    "url": "https://www.charlestonwv.gov/government/city-council/ward20",
+    "seat": "Ward 20"
+   }
+  },
+  "atLarge": [
+   {
+    "name": "Becky Ceperley",
+    "phones": [
+     {
+      "number": "(304) 343-2353",
+      "label": "Home"
+     }
+    ],
+    "email": "ceperleyb@gmail.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/at-large2",
+    "seat": "At large"
+   },
+   {
+    "name": "Caitlin Cook",
+    "phones": [
+     {
+      "number": "(304) 543-4879",
+      "label": "Cell"
+     }
+    ],
+    "email": "caitlin.cook@cityofcharleston.org",
+    "url": "https://www.charlestonwv.gov/government/city-council/at-large5",
+    "seat": "At large"
+   },
+   {
+    "name": "Emmett Pepper",
+    "phones": [
+     {
+      "number": "(917) 617-8208",
+      "label": "Cell"
+     }
+    ],
+    "email": "Emmett.pepper@cityofcharleston.org",
+    "url": "https://www.charlestonwv.gov/node/1984",
+    "seat": "At large"
+   },
+   {
+    "name": "Jennifer Pharr",
+    "phones": [
+     {
+      "number": "(304) 615-7574",
+      "label": "Cell"
+     }
+    ],
+    "email": "jennifer.pharr@cityofcharleston.org",
+    "url": "https://www.charlestonwv.gov/government/city-council/at-large4",
+    "seat": "At large"
+   },
+   {
+    "name": "Joe Solomon",
+    "phones": [
+     {
+      "number": "(415) 683-6185"
+     }
+    ],
+    "email": "josolomon@gmail.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/at-large1",
+    "seat": "At large"
+   },
+   {
+    "name": "Shawn Taylor",
+    "phones": [
+     {
+      "number": "(304) 414-6019",
+      "label": "Office"
+     }
+    ],
+    "email": "shawn@shawntaylor.com",
+    "url": "https://www.charlestonwv.gov/government/city-council/at-large3",
+    "seat": "At large"
+   }
+  ],
+  "asOf": "2026-11-02"
+ }
+}

@@ -89,11 +89,16 @@ elementary or secondary ones, so one layer covers the state. No board member is 
 live service answers with a neighbouring state's ZIP. The coverage test reads the shipped
 outline, and the smoke test asserts both halves.
 
-**CITY WARDS WAIT ON FOUR LETTERS.** Charleston, Huntington, Parkersburg and Wheeling were asked
-for their ward maps on 2026-10-21 (recorded in `docs/ASK_DRAFTS.md`); Charleston passed its letter
-to the City Clerk. Adam's answer was to launch naming every council member and add the wards as
-the files arrive. Until then city and town officials are gap `wv-municipal-officeholders` and the
-wards gap `wv-city-wards`.
+**CHARLESTON'S WARDS ARE DRAWN; THREE CITIES' WAIT ON LETTERS.** Charleston, Huntington,
+Parkersburg and Wheeling were asked for their ward maps on 2026-10-21 (recorded in
+`docs/ASK_DRAFTS.md`). Charleston's City Clerk sent a shapefile of its 20 wards on 2026-11-02 and
+gave permission to show it, so the `city-ward` layer draws them (`scripts/build_wv_city_wards.py`,
+the files kept as sent under `data/source/raw/charleston-wards/`, credited to the City of
+Charleston on every card) and names the council from the city's own page
+(`scripts/build_wv_city_councils.py`, weekly). That page prints a street address for every member,
+most of them homes, and none is kept. Adam's answer was to launch naming every council member and
+add the wards as the files arrive. Until the other three arrive, their wards are gap
+`wv-city-wards`, and city and town officials elsewhere are gap `wv-municipal-officeholders`.
 
 **There is no build step, no framework, and no server-side code.** The app — styles, engine,
 and layer modules — lives inline in `index.html`. `sw.js` is the service worker;
@@ -110,8 +115,8 @@ every other instance via `scripts/compose_app.py`.
 - Metro: West Virginia (`westvirginia`) — https://districtry.com/wv/
 - Geocoders: address Photon (West Virginia-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, West Virginia-bounded, serial >=1s queue)
 - Ground truth: 38.33650,-81.61230 (West Virginia State Capitol, 1900 Kanawha Boulevard East, Charleston, Kanawha County) → county Kanawha County; us-house 1; wv-senate 8; wv-house 54. Negative point 39.55000,-79.25000 (Garrett County, Maryland, about 20 km east of the West Virginia line at Preston County — outside West Virginia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state and county layers name Maryland and Garrett County here (control: the State Capitol returns West Virginia and Kanawha County), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. A POINT ON A NEIGHBOUR'S LAND WILL HAVE TO MOVE THE DAY THAT NEIGHBOUR GOES LIVE: Kentucky is live already, and Maryland, Pennsylvania, Ohio and Virginia are not, so the change that makes Maryland live moves this point, the way Kentucky's go-live moved Indiana's.).
-- Layers: 11 registered (political 3, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.WestVirginiaExplorer`.
-- Scheduled workflows: `update-wv-congress-roster.yml` (Mon 19:53 UTC); `update-wv-legislature-roster.yml` (Tue 19:53 UTC); `update-wv-county-officials.yml` (Wed 19:53 UTC); `wv-validate-sources.yml` (1st of month 21:43 UTC).
+- Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.WestVirginiaExplorer`.
+- Scheduled workflows: `update-wv-congress-roster.yml` (Mon 19:53 UTC); `update-wv-legislature-roster.yml` (Tue 19:53 UTC); `update-wv-county-officials.yml` (Wed 19:53 UTC); `update-wv-city-councils.yml` (Thu 19:53 UTC); `wv-validate-sources.yml` (1st of month 21:43 UTC).
 - Source registry: `wv/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 
