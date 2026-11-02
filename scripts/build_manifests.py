@@ -582,6 +582,44 @@ def check_pages():
     return linking
 
 
+
+def check_repo_links():
+    """Every page linking this project's code on GitHub carries the Play-app
+    block, so the link is hidden inside the Google Play app (Adam, 2026-11-01:
+    the repository's page shows a Sponsor button, which Google Play's payments
+    policy does not let the app lead to). The block's own CSS names the address
+    it hides; a page linking that address with an empty fence, or with none,
+    would show the link there and nothing else would fail. The copy must be
+    the block's current text, whether a composed fence or a generator's inline
+    copy, so a page left holding an older block fails too."""
+    play = read(os.path.join(REPO, PLAY_APP_BLOCK), "the Play-app block")
+    # Written as an ends-with match and without the scheme, so the launcher,
+    # which carries this block and must name no other host, still names none.
+    hidden = sorted(set("https://" + u for u in re.findall(
+        r'a\[href\$=\\"(github\.com/[^"\\]+?)/?\\"\]', play)))
+    pm = re.search(r'classList\.add\("([^"]+)"\)', play)
+    if not hidden or not pm:
+        fail("%s no longer hides a link to the repository by its exact address, "
+             "or no longer sets a class, so which pages need it cannot be read"
+             % PLAY_APP_BLOCK)
+    body = play.strip("\n")
+    bare, linking = [], 0
+    for path in pages():
+        text = read(path, "a page")
+        if not any(re.search(r'href="%s/?"' % re.escape(u), text) for u in hidden):
+            continue
+        linking += 1
+        if body not in text:
+            bare.append(rel(path))
+    if bare:
+        fail("%d page(s) link %s and carry no current copy of the Play-app block: %s. Inside "
+             "the Google Play app the link would show, and the repository's page "
+             "shows a Sponsor button. Add an ENGINE play-app fence after the "
+             "theme script and run scripts/compose_app.py."
+             % (len(bare), " or ".join(hidden), ", ".join(bare)))
+    return linking
+
+
 def check_launcher():
     """The launcher is hand-written; these are the claims it must keep."""
     engine = read(os.path.join(REPO, ENGINE_BLOCK), "the install-app engine block")
@@ -733,15 +771,17 @@ def main():
 
     icons(args.check)
     linking = check_pages()
+    repo_links = check_repo_links()
     key, share_key, shortcut_key = check_launcher()
     print("build-manifests: OK — one manifest for %d instances, linked by %d "
           "page(s), sending a share to %s; the launcher reads %r, the key the "
           "apps write, and marks a shared place under %r, the key they count "
           "it by; %d long-press shortcut(s) (%s), marked under %r; the asset "
-          "links name %s with %d Play signing keys"
+          "links name %s with %d Play signing keys; %d page(s) linking the "
+          "code on GitHub carry the Play-app block"
           % (len(INSTANCES), linking, site_origin() + START_URL, key, share_key,
              len(SHORTCUTS), ", ".join(s["action"] for s in SHORTCUTS),
-             shortcut_key, PLAY_PACKAGE, len(PLAY_SIGNING_KEYS)))
+             shortcut_key, PLAY_PACKAGE, len(PLAY_SIGNING_KEYS), repo_links))
 
 
 if __name__ == "__main__":

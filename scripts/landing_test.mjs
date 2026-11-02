@@ -2052,6 +2052,42 @@ try {
       await ctx.close();
     }
   }
+  // 10b. The link to this project's code on GitHub is hidden in the Play app
+  // too (Adam, 2026-11-01), since the repository's page shows a Sponsor
+  // button. Asserted on the front page, a root page whose sentence loses its
+  // clause with the link, an instance FAQ and a generated question page, in
+  // the Play window and on the website, because a rule hiding the link
+  // everywhere would pass the first half alone.
+  {
+    const REPO = "https://github.com/ThursdaysFamous/districtry";
+    const repoShown = (p) => p.evaluate((repo) => {
+      const visible = (el) => !!el && el.getClientRects().length > 0;
+      const all = (sel) => Array.prototype.slice.call(document.querySelectorAll(sel));
+      return {
+        marked: document.documentElement.classList.contains("dst-play-app"),
+        repo: all('a[href="' + repo + '"],a[href="' + repo + '/"]').map(visible),
+        clause: all(".dst-play-hide").map(visible),
+      };
+    }, REPO);
+    const pages = ["/", "/about.html", `/${TAGS.includes("il") ? "il" : TAGS[0]}/faq.html`,
+                   `/${TAGS.includes("il") ? "il" : TAGS[0]}/congress.html`];
+    for (const inApp of [true, false]) {
+      const ctx = await browser.newContext({ serviceWorkers: "block" });
+      const p = await ctx.newPage();
+      await p.route("**/gc.zgo.at/**", (r) => r.abort());
+      if (inApp) await p.goto(BASE + "/?ref=play", { waitUntil: "domcontentloaded" });
+      for (const path of pages) {
+        await p.goto(BASE + path, { waitUntil: "domcontentloaded" });
+        const s = await repoShown(p);
+        const ok = s.repo.length > 0 && s.marked === inApp &&
+          s.repo.every((v) => v === !inApp) && s.clause.every((v) => v === !inApp) &&
+          (path !== "/about.html" || s.clause.length > 0);
+        check(`${path} ${inApp ? "hides" : "shows"} the link to the code on GitHub ` +
+          `${inApp ? "inside the Play app" : "on the website"}`, ok, JSON.stringify(s));
+      }
+      await ctx.close();
+    }
+  }
   // --- 11. the front page's first-visit tip and tour (2026-10-28) ------------
   // Adam: "The guide should also function on the landing page with a link to
   // the how to". Shown once: a reload shows nothing, with its own key so the

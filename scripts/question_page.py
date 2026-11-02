@@ -51,6 +51,7 @@ AUTHOR = ('{ "@type": "Person", "@id": "https://districtry.com/#author", '
 PRESERVED = [
     ("ENGINE", "tokens-brand", "css"),
     ("ENGINE", "styles-subpage", "css"),
+    ("ENGINE", "play-app", "css"),
     ("ENGINE", "footer-byline", "html"),
     ("GENERATED", "question-lookup", "html"),
     ("GENERATED", "officeholder-table", "html"),
@@ -255,6 +256,13 @@ def shell(app_name, title, subtitle, lede, sections, related,
         parts.append(marker(kind, name, True, style) + "\n")
     parts.append("</style>\n")
     parts.append(themeboot)
+    # The Play app block, its own element after the theme script: it hides the
+    # link to this project's code on GitHub inside the Google Play app, and
+    # build_manifests.py --check fails on a page that links it without one.
+    parts.append("\n<script>\n" + marker("ENGINE", "play-app", False, "css") + "\n")
+    if preserved["play-app"]:
+        parts.append(preserved["play-app"] + "\n")
+    parts.append(marker("ENGINE", "play-app", True, "css") + "\n</script>")
     parts.append("""
 </head>
 <body>

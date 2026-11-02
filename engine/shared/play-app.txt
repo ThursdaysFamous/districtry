@@ -1,6 +1,6 @@
 /* THE GOOGLE PLAY APP'S MARK, in ONE copy, for the pages that show a
-   support link: every app, every sources page, the front page and the
-   sponsorship page. The installed app's launcher (/app/) carries it too,
+   support link or a link to this project's code on GitHub: every app,
+   every sub-page and the root pages. The installed app's launcher (/app/) carries it too,
    though it shows no support link, because a place shared into the app
    arrives there (see below).
 
@@ -17,16 +17,23 @@
    hidden. The website keeps them, and so does a copy installed from the
    browser's own menu, which no store reviews.
 
-   THE LINKS TO THIS PROJECT'S CODE ON GITHUB STAY, and that is a judgement
-   rather than a measurement. They sit in no sentence about money, which the
-   StreetComplete link did, but the repository's page shows a Sponsor
-   button. If a review objects to them, they join the rule below and the app
-   itself needs no rebuild, because it loads these pages.
+   THE LINK TO THIS PROJECT'S CODE ON GITHUB IS HIDDEN TOO (Adam,
+   2026-11-01, after the Play testing service's report pointed at it): the
+   repository's page shows a Sponsor button, which is the link StreetComplete
+   was refused for. Only a link to the repository itself is hidden, written
+   with or without its closing slash. A link to one file or to the issue form
+   in the repository stays, because it is how a reader reaches a named
+   document or reports a mistake, and the app's report form also sends by
+   e-mail. A sentence that reads wrong without its link wraps the words in
+   .dst-play-hide, which is hidden with them. scripts/build_manifests.py
+   --check fails on a served page that links the repository and carries no
+   copy of this block.
 
-   THIS BLOCK IS ITS OWN <script> ELEMENT on every page, never a second
+   THIS BLOCK IS ITS OWN SCRIPT ELEMENT on every page, never a second
    block inside the theme script, because scripts/question_page.py copies a
-   sources page's theme script into the question pages it generates, and
-   those pages carry no support link.
+   sources page's theme script into the question pages it generates and
+   adds this block beside it by itself, so a page that carries both never
+   carries this one twice.
 
    HOW A WINDOW IS KNOWN TO BE THE PLAY APP. The app is built to open
    /app/?ref=play, and the launcher passes ref=play on, and nothing else, to
@@ -75,9 +82,13 @@
   css.textContent =
     ".dst-play-app a[href*=\"github.com/sponsors\"]," +
     ".dst-play-app a[href*=\"sponsorship.html\"]," +
-    ".dst-play-app .dpf-support{display:none!important}" +
+    ".dst-play-app a[href$=\"github.com/ThursdaysFamous/districtry\"]," +
+    ".dst-play-app a[href$=\"github.com/ThursdaysFamous/districtry/\"]," +
+    ".dst-play-app .dpf-support,.dst-play-app .dst-play-hide{display:none!important}" +
     ".dst-play-app p:has(a[href*=\"github.com/sponsors\"])," +
     ".dst-play-app li:has(a[href*=\"github.com/sponsors\"])," +
-    ".dst-play-app li:has(a[href*=\"sponsorship.html\"]){display:none!important}";
+    ".dst-play-app li:has(a[href*=\"sponsorship.html\"])," +
+    ".dst-play-app li:has(> a[href$=\"github.com/ThursdaysFamous/districtry\"])," +
+    ".dst-play-app li:has(> a[href$=\"github.com/ThursdaysFamous/districtry/\"]){display:none!important}";
   document.head.appendChild(css);
 })();
