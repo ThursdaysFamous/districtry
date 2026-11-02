@@ -1720,6 +1720,26 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 wv/scripts/build_wv_magisterial_districts.py --check
 
+      # Charleston's 20 council wards, from the shapefile the City Clerk's
+      # office sent with permission on 2026-11-02, kept as sent. This holds
+      # the kept files to their SHA-256, every drawn ward to the same ward of
+      # the city's own map (its representative point inside it and at least
+      # 97% of its area), the drawn wards to overlapping only where recorded,
+      # and the app's empty-state sentence and WV_WARD_CITIES to the cities
+      # drawn. Needs shapely and pyproj, installed by the tribal step above.
+      - name: WV city wards are the city's own map
+        if: ${{ !cancelled() }}
+        run: python3 wv/scripts/build_wv_city_wards.py --check
+
+      # Charleston's council members, from the city's own council page, which
+      # prints a street address for every member, most of them homes. This
+      # holds the shipped file to every seat once (20 by ward, 6 at large), no
+      # street address outside City Hall's, one number per telephone with the
+      # page's own label, and no number or e-mail address on two members.
+      - name: WV city councils keep their seats and carry no street address
+        if: ${{ !cancelled() }}
+        run: python3 wv/scripts/build_wv_city_councils.py --check
+
       # Mississippi draws county supervisor districts only in the counties whose
       # Census lines are confirmed current: changed after the 2020 census, and
       # balanced on that census's own blocks. The blocks are not shipped, so the

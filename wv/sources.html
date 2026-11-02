@@ -1186,7 +1186,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">11 layers — 3 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">12 layers — 4 political and legislative, 2 public safety, 1 schools, 5 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1195,7 +1195,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">3 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">4 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1235,6 +1235,18 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">wv-house-members.json, rebuilt weekly by CI from the House of Delegates' own roster page: each delegate's name, party, Capitol office (room, telephone) and e-mail address.</td>
                 <td data-label="Where it applies">West Virginia — statewide, all 100 districts.</td>
+              </tr>
+              <tr id="layer-city-ward">
+                <th scope="row"><span class="layer-name">City Council Ward</span><code>city-ward</code></th>
+                <td data-label="What it answers">The council ward containing the point, in the West Virginia cities whose ward map this app has (today Charleston), the council member elected from it and the members the city elects at large.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://www.charlestonwv.gov/government/city-council" target="_blank" rel="noopener">City of Charleston — its map of the City Council's 20 wards, sent by the City Clerk's office on November 2, 2026, which the City says is current since the 2021 redistricting, shown with the City's permission and credited to it; on the 2020 census the wards hold 2,314 to 2,558 people each</a></li>
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" target="_blank" rel="noopener">U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places): the city's outer edge, where its wards are cut so the City Council Ward and City, Town or Village cards agree about whether a point is in the city</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">wv-city-councils.json, rebuilt weekly from the City of Charleston's own council page: the member elected from each ward and the six elected at large, with each telephone number and e-mail address the page prints in that member's own row and the label it gives (home, cell or office). The page also prints a street address for every member, most of them homes, and no street address is kept.</td>
+                <td data-label="Where it applies">Charleston. Huntington, Parkersburg and Wheeling also elect council members by ward and were asked for their ward maps on October 21, 2026; until a city sends one, its wards are not drawn and the City, Town or Village card names the place but not its council.</td>
               </tr>
             </tbody>
           </table>
@@ -1559,6 +1571,33 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "West Virginia — statewide. A point outside every city, town and village is unincorporated, which the card states"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wv/sources.html#dataset-city-ward",
+      "identifier": "city-ward",
+      "name": "City Council Ward",
+      "description": "The council ward containing the point, in the West Virginia cities whose ward map this app has (today Charleston), the council member elected from it and the members the city elects at large. wv-city-councils.json, rebuilt weekly from the City of Charleston's own council page: the member elected from each ward and the six elected at large, with each telephone number and e-mail address the page prints in that member's own row and the label it gives (home, cell or office). The page also prints a street address for every member, most of them homes, and no street address is kept.",
+      "url": "https://districtry.com/wv/sources.html#layer-city-ward",
+      "isPartOf": {
+        "@id": "https://districtry.com/wv/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City of Charleston — its map of the City Council's 20 wards, sent by the City Clerk's office on November 2, 2026, which the City says is current since the 2021 redistricting, shown with the City's permission and credited to it; on the 2020 census the wards hold 2,314 to 2,558 people each",
+          "url": "https://www.charlestonwv.gov/government/city-council"
+        },
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places): the city's outer edge, where its wards are cut so the City Council Ward and City, Town or Village cards agree about whether a point is in the city",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Charleston. Huntington, Parkersburg and Wheeling also elect council members by ward and were asked for their ward maps on October 21, 2026; until a city sends one, its wards are not drawn and the City, Town or Village card names the place but not its council"
       }
     },
     {
