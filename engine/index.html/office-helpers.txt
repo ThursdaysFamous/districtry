@@ -57,6 +57,14 @@
   // the same 693 offices, exactly three, Illinois House 13 ("By appointment
   // only") and Wisconsin Senate 6 and 22 (the bare state, "WI").
   function officeAddressForGeocode(lines) {
+    var picked = officeAddressLines(lines);
+    return picked ? picked.join(", ").trim() : null;
+  }
+  // The same pick as the lines themselves, exactly as given, so a card can
+  // make those lines (and only those) the link that opens a map app. With
+  // streetOnly, a block whose only address is a post office box gives none,
+  // because a map asked for a box finds the post office, not the office.
+  function officeAddressLines(lines, streetOnly) {
     if (!lines || !lines.length) return null;
     var CONTACT = /^\s*(?:phone|telephone|tel|fax|cell|mobile|e-?mail)\s*[:.]/i;
     var NUMBER = /(?:\(\d{3}\)|\b\d{3})[\s.\-]*\d{3}[\s.\-]\d{4}\b/;
@@ -81,7 +89,6 @@
       return head.every(function (l) { return BOX.test(l); });
     }
     var picked = addresses.filter(function (a) { return !boxOnly(a); })[0] || addresses[0];
-    if (!picked) return null;
-    var addr = picked.join(", ").trim();
-    return /\d/.test(addr) ? addr : null;
+    if (!picked || (streetOnly && boxOnly(picked))) return null;
+    return /\d/.test(picked.join(", ")) ? picked : null;
   }

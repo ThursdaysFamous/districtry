@@ -148,6 +148,9 @@
           return {
             name: item.name,
             note: item.note,
+            // the place's address, when its note prints it: opens a map app
+            mapAddress: item.mapAddress,
+            mapText: item.mapText,
             distanceLabel: s.distanceMi.toFixed(1) + " mi"
           };
         })));
