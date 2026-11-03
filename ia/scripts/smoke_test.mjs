@@ -1030,6 +1030,49 @@ try {
           JSON.stringify(off.text.slice(0, 120)));
     await context.close();
   }
+  // THE PRECINCT CARD NAMES THE 2022 LIST'S POLLING PLACE, AND SAYS IT IS FROM
+  // 2022. The shipped file (ia/scripts/build_ia_polling_places.py) is read
+  // as-is at POINT, whose precinct the Legislature's list names; the card
+  // must give the place, the list's date, the may-have-changed row, the
+  // Secretary of State's lookup and a pin. A stubbed file naming nothing
+  // must say the list names no polling place, with no pin.
+  {
+    const read = async (stub) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=precinct`, stub ? async (p) => {
+        await p.route("**/data/app/ia-polling-places.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({
+            listDate: "2022-10-17", lookupUrl: "https://sos.iowa.gov/voters/find-my-precinctpolling-place",
+            sourceUrl: "https://services2.arcgis.com/test/FeatureServer/0", sites: [], precincts: {}, unlisted: 1 }) }));
+      } : null);
+      const card = await cardText(page, "precinct");
+      await page.waitForTimeout(800);
+      const out = await page.evaluate(() => {
+        const c = document.getElementById("card-precinct");
+        const block = c ? c.closest(".layer-block") : null;
+        const link = block ? block.querySelector(".card-footer-link") : null;
+        return { link: link ? link.textContent.trim() : null, href: link ? link.href : null,
+          pins: document.querySelectorAll(".poi-pin-label-kind").length };
+      });
+      await context.close();
+      return Object.assign({ text: card.text }, out);
+    };
+    const named = await read(false);
+    check("the precinct card names the 2022 list's polling place, its date and the lookup",
+          named.text.indexOf("1-1 Marshalltown City") !== -1 &&
+          named.text.indexOf("MARSHALLTOWN LIBRARY") !== -1 &&
+          named.text.indexOf("October 17, 2022") !== -1 &&
+          named.text.indexOf("may not be where this precinct votes now") !== -1 &&
+          named.link === "Find your polling place now" &&
+          /^https:\/\/sos\.iowa\.gov\//.test(named.href || "") && named.pins >= 1,
+          JSON.stringify(named).slice(0, 300));
+    const none = await read(true);
+    check("a precinct the list does not name is told so, with no polling-place pin",
+          none.text.indexOf("names no polling place for this precinct") !== -1 &&
+          none.text.indexOf("MARSHALLTOWN LIBRARY") === -1 && none.pins === 0 &&
+          none.link === "Find your polling place now",
+          JSON.stringify(none).slice(0, 300));
+  }
 } finally {
   await browser.close();
 }
