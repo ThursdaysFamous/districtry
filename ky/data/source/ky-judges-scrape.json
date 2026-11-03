@@ -5,11 +5,11 @@
  "pages": {
   "court-of-appeals-page": 14,
   "jefferson-circuit-court-site": 13,
-  "jefferson-district-court-site": 16,
+  "jefferson-district-court-site": 15,
   "jefferson-family-court-site": 10,
   "supreme-court-page": 7
  },
- "readOn": "2026-10-27",
+ "readOn": "2026-11-03",
  "rows": [
   {
    "court": "Supreme Court",
@@ -5218,17 +5218,6 @@
    "court": "District Court",
    "division": null,
    "name": "Amber Wolf",
-   "profileUrl": null,
-   "readFrom": "jefferson-district-court-site",
-   "role": "Judge",
-   "sourceUrl": "https://jeffersondistrictcourt.com/districtcourtjudges",
-   "tier": "district",
-   "unit": 30
-  },
-  {
-   "court": "District Court",
-   "division": null,
-   "name": "Mary Jude Wolford",
    "profileUrl": null,
    "readFrom": "jefferson-district-court-site",
    "role": "Judge",
