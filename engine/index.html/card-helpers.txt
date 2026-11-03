@@ -29,6 +29,63 @@
     a.textContent = String(label || safe);
     return a;
   }
+  /* ---------- an address on a card opens a map app ----------
+   * Adam, 2026-11-03: "Can addresses presented in info cards be hyperlinks
+   * that open a mapping app?" The link is built HERE from the address text,
+   * like a tel: href from a number, so no call site writes a map URL.
+   *   Android: a geo: link, which the phone hands to whatever map app the
+   *     reader uses (Google Maps, Waze, Organic Maps...) and asks which one
+   *     when several are installed. A website cannot offer that choice on any
+   *     other platform.
+   *   iPhone and iPad: Apple Maps, the phone's own, which opens Apple's map
+   *     website where the app is not there. iPadOS 13 and later report a Mac
+   *     in the user agent, so a "Mac" with a touch screen is read as an iPad.
+   *   Anything else: Google Maps' search URL, in a new tab so the map stays.
+   * Only the address goes in the link, never the place's name or the reader's
+   * point, and nothing is sent anywhere until the reader taps it. An address
+   * with no digit in it (no street number and no ZIP code) names nowhere a
+   * map could find and gets no link, the rule the office pin already keeps. */
+  function cardMapHref(address) {
+    var q = String(address == null ? "" : address).replace(/\s+/g, " ").trim();
+    if (!q || !/\d/.test(q)) return null;
+    // An address printed without its town ("121 N LaSalle St") names a
+    // street in every state; with no ZIP code and no state at its end, the
+    // app's own place goes after it, so a map looks in the right state.
+    if (!/\b\d{5}(?:-\d{4})?\b/.test(q) && !/,\s*[A-Za-z]{2}\.?$/.test(q) &&
+        typeof appPlaceName === "function" && appPlaceName() &&
+        q.toLowerCase().indexOf(appPlaceName().toLowerCase()) === -1) {
+      q += ", " + appPlaceName();
+    }
+    var enc = encodeURIComponent(q);
+    var ua = (window.navigator && navigator.userAgent) || "";
+    if (/Android/i.test(ua)) return "geo:0,0?q=" + enc;
+    if (/iPhone|iPad|iPod/.test(ua) ||
+        (/Macintosh/.test(ua) && (navigator.maxTouchPoints || 0) > 1)) {
+      return "https://maps.apple.com/?q=" + enc;
+    }
+    return "https://www.google.com/maps/search/?api=1&query=" + enc;
+  }
+  function cardMapLink(address, text) {
+    // address: what the map app is asked to find; text: what the card prints
+    // (the address itself when omitted). Null when the address names nowhere.
+    var href = cardMapHref(address);
+    if (!href) return null;
+    var a = cardEl("a", "card-map-link", text == null ? address : text);
+    a.href = href;
+    if (/^https:/.test(href)) { a.target = "_blank"; a.rel = "noopener"; }
+    a.title = "Open in a map app";
+    return a;
+  }
+  // A tap is counted by the layer whose card it was on, never by address,
+  // the rule every other count keeps. Cards outside a layer's own block (the
+  // comparison report's rows) carry their layer on the row; anything else
+  // counts as "card".
+  document.addEventListener("click", function (e) {
+    var a = e.target && e.target.closest ? e.target.closest("a.card-map-link") : null;
+    if (!a) return;
+    var holder = a.closest("[data-layer]");
+    trackEvent("address-map/" + ((holder && holder.getAttribute("data-layer")) || "card"));
+  });
   function cardPhoneDial(phone) {
     // What a tel: link dials for one printed number: its digits (and a
     // leading +), stopping where an extension begins ("ext. 12", "EXT 105",
@@ -183,8 +240,28 @@
     (spec.offices || []).forEach(function (office) {
       var block = cardEl("div", "card-office");
       if (office.label) block.appendChild(cardEl("div", "card-office-kicker", office.label));
+      // The lines of the office's street address open a map app as one link;
+      // a heading, a phone line or a second (mailing) address stays text.
+      // officeAddressLines picks the same lines the office's map pin uses,
+      // less a post office box, which a map would find as the post office.
+      var picked = officeAddressLines(office.lines, true) || [];
+      var href = picked.length ? cardMapLink(picked.join(", "), "") : null;
+      var run = null;
+      var k = 0;
       (office.lines || []).forEach(function (line) {
-        block.appendChild(cardEl("div", "card-office-line", line));
+        var el = cardEl("div", "card-office-line", line);
+        if (href && k < picked.length && String(line) === picked[k]) {
+          k++;
+          if (!run) {
+            run = href.cloneNode(false);
+            run.classList.add("card-office-address");
+            block.appendChild(run);
+          }
+          run.appendChild(el);
+          return;
+        }
+        run = null;
+        block.appendChild(el);
       });
       if (office.phone) {
         var phoneLink = cardPhoneLink(office.phone);
@@ -200,7 +277,7 @@
     return det;
   }
   function renderNearestRows(items) {
-    // [{ name, note?, tag?: {text, color}, accentColor?, dotColor?,
+    // [{ name, note?, mapAddress?, mapText?, tag?: {text, color}, accentColor?, dotColor?,
     //    distanceLabel? }] — nearest-N rows with distance pills (Handoff 2
     // §4d + Handoff 3 §8a). tag renders as a colored 600-weight lead on the
     // note line ("High · 9–12"); accentColor tints the distance pill with
@@ -227,7 +304,18 @@
         }
         if (item.note) {
           if (item.tag && item.tag.text) noteEl.appendChild(cardEl("span", "card-sep", " · "));
-          noteEl.appendChild(document.createTextNode(item.note));
+          // mapAddress: this place's address, which opens a map app. The
+          // link is the note, or only mapText where the note opens with the
+          // address and goes on to something else (a phone number).
+          var note = String(item.note);
+          var linked = item.mapText && note.indexOf(String(item.mapText)) === 0 ? String(item.mapText) : note;
+          var noteLink = item.mapAddress ? cardMapLink(item.mapAddress, linked) : null;
+          if (noteLink) {
+            noteEl.appendChild(noteLink);
+            if (linked.length < note.length) noteEl.appendChild(document.createTextNode(note.slice(linked.length)));
+          } else {
+            noteEl.appendChild(document.createTextNode(note));
+          }
         }
         main.appendChild(noteEl);
       }
@@ -245,28 +333,58 @@
     return frag;
   }
   function renderLinkRow(spec) {
-    // { title?, note?, phone?, email?, links?: [{label, url}] } — a name +
+    // { title?, note?, mapAddress?, mapText?, phone?, email?, links?: [{label, url}] } — a name +
     // contact line (Handoff 2 §4c; note is a muted context line under the
     // title, and phone/email serve office-like rows such as a CAPS desk,
     // rendered under the same rules as a person's contact line).
     var el = cardEl("div", "card-linkrow card-row-b");
     if (spec.title) el.appendChild(cardEl("div", "card-linkrow-title", spec.title));
-    if (spec.note) el.appendChild(cardEl("div", "card-linkrow-note", spec.note));
+    if (spec.note) {
+      // mapAddress: the row's address, which opens a map app. The link is
+      // the note, or only mapText where the note opens with the address and
+      // goes on to something else (a school's district).
+      var noteEl = cardEl("div", "card-linkrow-note");
+      var note = String(spec.note);
+      var linked = spec.mapText && note.indexOf(String(spec.mapText)) === 0 ? String(spec.mapText) : note;
+      var noteLink = spec.mapAddress ? cardMapLink(spec.mapAddress, linked) : null;
+      if (noteLink) {
+        noteEl.appendChild(noteLink);
+        if (linked.length < note.length) noteEl.appendChild(document.createTextNode(note.slice(linked.length)));
+      } else {
+        noteEl.textContent = note;
+      }
+      el.appendChild(noteEl);
+    }
     var contact = cardContactLine({ phone: spec.phone, email: spec.email, links: spec.links });
     if (contact) el.appendChild(contact);
     return el;
   }
   function renderFieldStack(rows) {
-    // [{ label?, value, primary? }] — the generic left-aligned label-over-
+    // [{ label?, value, primary?, mapAddress?, mapText? }] — the generic left-aligned label-over-
     // value stack for identity layers with no officeholder (the wave-3
     // replacement for the right-aligned dt/dd rows). Data only: a link
-    // belongs in the module's primaryLink footer, never in a value.
+    // belongs in the module's primaryLink footer, never in a value — the
+    // one exception being an address, which opens a map app (mapAddress).
     var wrap = cardEl("div", "card-flush");
     var stack = cardEl("div", "card-field-stack");
     rows.forEach(function (row) {
       var field = cardEl("div", "card-field");
       if (row.label) field.appendChild(cardEl("div", "card-field-label", row.label));
-      field.appendChild(cardEl("div", "card-field-value" + (row.primary ? " card-field-primary" : ""), row.value));
+      // mapAddress: the address in this value, which then opens a map app
+      // (a polling place's value is often its name and address together)
+      // The link is the value, or only mapText where the value opens with
+      // the address and goes on to something else.
+      var valueEl = cardEl("div", "card-field-value" + (row.primary ? " card-field-primary" : ""));
+      var value = row.value === undefined || row.value === null ? "" : String(row.value);
+      var linked = row.mapText && value.indexOf(String(row.mapText)) === 0 ? String(row.mapText) : value;
+      var valueLink = row.mapAddress && linked ? cardMapLink(row.mapAddress, linked) : null;
+      if (valueLink) {
+        valueEl.appendChild(valueLink);
+        if (linked.length < value.length) valueEl.appendChild(document.createTextNode(value.slice(linked.length)));
+      } else if (value !== "") {
+        valueEl.textContent = value;
+      }
+      field.appendChild(valueEl);
       stack.appendChild(field);
     });
     wrap.appendChild(stack);

@@ -295,14 +295,14 @@
       "area_rank": 10,
       "rank_note": "2,531 precincts tiling the state, pre-built from the Department of Elections' layer — 43.2 km2 mean area on the drawn file, land and water (median 7.8), measured 2026-10-30: smaller on average than a supervisor or council district, larger than a city or town (about 25 km2 of land)",
       "source": {
-        "answers": "The voting precinct containing the point, and the county or city it is in.",
+        "answers": "The voting precinct containing the point, the county or city it is in, and, up to Election Day, the polling place its voters go to.",
         "boundary": [
           {
             "label": "Virginia Department of Elections — its statewide layer of election districts and precincts (Districts_Union_Simplified, layer 0), last changed 2026-09-22 and read 2026-10-30: 7,271 pieces joined into the 2,531 precincts they name, where two precincts claimed the same ground each part given to the precinct of the county it lies in, and checked to cover each county and city; pre-built by va/scripts/build_va_precincts.py and shipped with the app, drawn to within 12 metres. Available to anyone under § 24.2-103.1 of the Code of Virginia, as the Department told this project on 2026-10-30.",
             "url": "https://services5.arcgis.com/M3dium4ePYpmdT4B/arcgis/rest/services/Districts_Union_Simplified/FeatureServer/0"
           }
         ],
-        "people": "NO OFFICEHOLDER, and none is missing. A precinct elects nobody; it is where a voter's ballot is cast and counted. The card links the Department of Elections' lookup for the polling place.",
+        "people": "NO OFFICEHOLDER, and none is missing. A precinct elects nobody; it is where a voter's ballot is cast and counted. The polling place comes from the Department of Elections' own polling-location map service (one point per building, naming the precinct it serves, with the Department's own position), joined to the map's precincts by the Department's precinct number and read daily until Election Day; a precinct the service names no point for is told so, and every card links the Department's lookup.",
         "applies": "Virginia — statewide, all 133 counties and cities."
       }
     },
@@ -552,6 +552,11 @@
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
+      },
+      {
+        "file": "va-polling-places.json",
+        "min_keys": 8,
+        "note": "Each precinct's Election Day polling place (sites[] plus precincts{map key: site index}) from the Department of Elections' own polling-location map service for the 2026-11-03 election, joined to va-precincts.json by the Department's precinct number, by va/scripts/build_va_polling_places.py, refreshed daily; the service carries one point per building naming one precinct, so the precincts it names no point for are counted (unlisted) and the card says so for them. The build fails on a point that lands on no map precinct or on fewer than 90% of the map's precincts named. The card hides the row after electionDate. Network-first: a moved polling place must reach a returning visitor at once"
       }
     ]
   },
@@ -588,6 +593,11 @@
       "file": "va-validate-sources.yml",
       "purpose": "Virginia's own source-freshness registry",
       "schedule": "1st of month 21:43 UTC"
+    },
+    {
+      "file": "update-va-polling-places.yml",
+      "purpose": "Re-read the Department of Elections' polling-location map service for the 2026-11-03 election daily and rebuild va/data/app/va-polling-places.json; fails if a point lands on no map precinct or too few precincts are named, or if the service cannot be read on or before the election date; opens a PR on any change",
+      "schedule": "daily 11:50 UTC"
     }
   ],
   "geocoder": {

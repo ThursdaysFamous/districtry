@@ -465,6 +465,84 @@ try {
     await context.close();
   }
 
+  // 2a2. THE PRECINCT CARD NAMES ITS POLLING PLACE, AND ONLY UP TO ELECTION
+  //      DAY. The polling file is stubbed (the precinct the shipped map draws
+  //      at the Louisville point, to one test building) so the check does not
+  //      expire with the real list: with a far-future election date the card
+  //      must name the building, link the Board's lookup and drop a pin; with
+  //      a past one it must name nothing; a precinct assigned nothing in a
+  //      county that opens voting centers must list the centers and pin the
+  //      nearest; and one with neither must say so.
+  {
+    const inRing = (x, y, ring) => {
+      let inside = false;
+      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const [xi, yi] = ring[i], [xj, yj] = ring[j];
+        if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+      }
+      return inside;
+    };
+    const [plat, plng] = POINT.split(",").map(Number);
+    const precincts = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/ky-precincts.json"), "utf8"));
+    const here = precincts.features.filter((f) => {
+      const g = f.geometry;
+      const polys = g.type === "Polygon" ? [g.coordinates] : g.coordinates;
+      return polys.some((rings) => rings.reduce((acc, ring) => acc !== inRing(plng, plat, ring), false));
+    }).map((f) => f.properties);
+    const fixture = (date, mode) => JSON.stringify({ election: "Test Election", electionDate: date,
+      listDate: "2026-11-02", sourceUrl: "https://elect.ky.gov/test.xlsx",
+      lookupUrl: "https://elect.ky.gov/Voters/Pages/Polling-Locations.aspx",
+      sites: [
+        { place: "TEST POLLING SCHOOL", address: "1 TEST ST, LOUISVILLE, KY 40202", hours: "6:00AM - 6:00PM", lat: plat + 0.001, lng: plng + 0.001 },
+        { place: "FAR VOTING CENTER", address: "2 FAR RD, LOUISVILLE, KY 40202", hours: "6:00AM - 6:00PM", lat: plat + 0.05, lng: plng + 0.05 },
+        { place: "NEAR VOTING CENTER", address: "3 NEAR RD, LOUISVILLE, KY 40202", hours: "6:00AM - 6:00PM", lat: plat - 0.002, lng: plng - 0.002 }],
+      precincts: mode === "assigned" && here.length === 1 ? { [here[0].key]: 0 } : {},
+      centers: mode === "centers" && here.length === 1 ? { [here[0].countyFips]: [1, 2] } : {},
+      unlisted: mode === "none" && here.length === 1 ? [here[0].key] : [] });
+    const read = async (date, mode) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=voting-precinct`, async (p) => {
+        await p.route("**/data/app/ky-polling-places.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: fixture(date, mode) }));
+      });
+      const card = await cardText(page, "voting-precinct");
+      await page.waitForTimeout(800);
+      const out = await page.evaluate(() => {
+        const c = document.getElementById("card-voting-precinct");
+        const block = c ? c.closest(".layer-block") : null;
+        const link = block ? block.querySelector(".card-footer-link") : null;
+        const pins = Array.from(document.querySelectorAll(".leaflet-marker-pane .leaflet-marker-icon"));
+        return { link: link ? link.textContent.trim() : null, pins: pins.length,
+          titles: pins.map((m) => m.getAttribute("title") || m.getAttribute("alt") || "") };
+      });
+      out.text = card.text;
+      await context.close();
+      return out;
+    };
+    const live = await read("2999-01-01", "assigned");
+    check("the precinct card names its polling place, links the Board's lookup and pins the building",
+      here.length === 1 && /TEST POLLING SCHOOL — 1 TEST ST/.test(live.text || "") && /Test Election/.test(live.text || "") &&
+      /Confirm where you vote/.test(live.link || ""),
+      JSON.stringify(live));
+    const past = await read("2001-01-01", "assigned");
+    check("after its election date the precinct card names no polling place",
+      !/Polling place|Voting center/.test(past.text || "") && /Find your polling place/.test(past.link || ""),
+      JSON.stringify(past));
+    check("the polling place drops a pin while it is shown, and none after the election",
+      live.pins === past.pins + 1, JSON.stringify({ live: live.pins, past: past.pins }));
+    const centers = await read("2999-01-01", "centers");
+    check("a precinct assigned nothing in a county with voting centers lists them and pins the nearest",
+      /uses voting centers/.test(centers.text || "") && /NEAR VOTING CENTER — 3 NEAR RD/.test(centers.text || "") &&
+      /FAR VOTING CENTER — 2 FAR RD/.test(centers.text || "") && centers.pins === past.pins + 1 &&
+      /Confirm where you vote/.test(centers.link || ""),
+      JSON.stringify(centers));
+    const none = await read("2999-01-01", "none");
+    check("a precinct with neither a polling place nor a county center says so, with no pin",
+      /assigns this precinct no polling place/.test(none.text || "") && none.pins === past.pins &&
+      /Find your polling place/.test(none.link || ""),
+      JSON.stringify(none));
+  }
+
   // 2b. The negative ground-truth point (from the worksheet: a point outside
   //     every anchor layer). Anchors that declare a location-relevance test
   //     (mod.coverage — see NEGATIVE_HIDDEN above) HIDE there: the toggle
