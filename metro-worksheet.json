@@ -994,19 +994,18 @@
       "id": "early-voting",
       "label": "Early Voting Site",
       "group": "political",
-      "frame": "chicago",
       "area_rank": 41,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
-        "answers": "The early voting sites nearest the point — which double as the secured ballot drop boxes.",
+        "answers": "The three early voting sites nearest the point, with each site's kind, dates and hours as the State Board lists them for the election named on the card.",
         "boundary": [
           {
-            "label": "Chicago Board of Elections — hand-transcribed per election into early-voting-sites.json, because no open dataset is published",
-            "url": "https://chicagoelections.gov"
+            "label": "Illinois State Board of Elections — the statewide early voting locations list, downloaded by a person before each election (its robots.txt refuses automated readers) and built into early-voting-sites.json by scripts/build_early_voting_sites.py; each site placed by the Census Bureau's geocoder",
+            "url": "https://www.elections.il.gov/VotingAndRegistrationSystems/EarlyVotingLocationsSearch.aspx"
           }
         ],
-        "people": "No officeholder; each row names the site.",
-        "applies": "City of Chicago, and only while early voting is running for an election."
+        "people": "No officeholder; each row names the site and the election authority it belongs to.",
+        "applies": "Illinois, and only until the election the Board's list is for has passed."
       }
     }
   ],
@@ -3112,7 +3111,7 @@
       {
         "file": "early-voting-sites.json",
         "min_keys": 3,
-        "note": "GeoJSON FeatureCollection (type/metadata/features — key floor is shape-only); hand-curated per election from chicagoelections.gov, network-first so a new election's list is never served stale"
+        "note": "GeoJSON FeatureCollection (type/metadata/features — key floor is shape-only); the State Board of Elections' statewide early voting list, downloaded by a person before each election and built by scripts/build_early_voting_sites.py (the card hides once metadata.electionDate has passed), network-first so a new election's list is never served stale"
       },
       {
         "file": "chicago-polling-places.json",
@@ -4069,7 +4068,7 @@
       {
         "label": "Illinois State Board of Elections",
         "url": "https://www.elections.il.gov",
-        "note": "The county clerk and election authority directory."
+        "note": "The county clerk and election authority directory, and the statewide early voting locations list."
       },
       {
         "label": "School board district map (ilsenateredistricting.com)",
@@ -4099,7 +4098,7 @@
       {
         "label": "Chicago Board of Elections",
         "url": "https://chicagoelections.gov",
-        "note": "Early voting sites and secured drop boxes, transcribed per election."
+        "note": "Each Chicago precinct's Election Day polling place."
       },
       {
         "label": "County and municipal governments across Illinois",

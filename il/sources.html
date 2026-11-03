@@ -1184,7 +1184,7 @@ table.matrix code {
         </li>
         <li>
           <a href="https://www.elections.il.gov" target="_blank" rel="noopener">Illinois State Board of Elections</a>
-          <span class="credit-note">The county clerk and election authority directory.</span>
+          <span class="credit-note">The county clerk and election authority directory, and the statewide early voting locations list.</span>
         </li>
         <li>
           <a href="https://www.ilsenateredistricting.com" target="_blank" rel="noopener">School board district map (ilsenateredistricting.com)</a>
@@ -1208,7 +1208,7 @@ table.matrix code {
         </li>
         <li>
           <a href="https://chicagoelections.gov" target="_blank" rel="noopener">Chicago Board of Elections</a>
-          <span class="credit-note">Early voting sites and secured drop boxes, transcribed per election.</span>
+          <span class="credit-note">Each Chicago precinct's Election Day polling place.</span>
         </li>
         <li>
           <a href="https://github.com/ThursdaysFamous/districtry/blob/main/docs/COUNTY_STATUS.md" target="_blank" rel="noopener">County and municipal governments across Illinois</a>
@@ -1379,14 +1379,14 @@ table.matrix code {
               </tr>
               <tr id="layer-early-voting">
                 <th scope="row"><span class="layer-name">Early Voting Site</span><code>early-voting</code></th>
-                <td data-label="What it answers">The early voting sites nearest the point — which double as the secured ballot drop boxes.</td>
+                <td data-label="What it answers">The three early voting sites nearest the point, with each site's kind, dates and hours as the State Board lists them for the election named on the card.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://chicagoelections.gov" target="_blank" rel="noopener">Chicago Board of Elections — hand-transcribed per election into early-voting-sites.json, because no open dataset is published</a></li>
+                    <li><a href="https://www.elections.il.gov/VotingAndRegistrationSystems/EarlyVotingLocationsSearch.aspx" target="_blank" rel="noopener">Illinois State Board of Elections — the statewide early voting locations list, downloaded by a person before each election (its robots.txt refuses automated readers) and built into early-voting-sites.json by scripts/build_early_voting_sites.py; each site placed by the Census Bureau's geocoder</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">No officeholder; each row names the site.</td>
-                <td data-label="Where it applies">City of Chicago, and only while early voting is running for an election.</td>
+                <td data-label="Who it names">No officeholder; each row names the site and the election authority it belongs to.</td>
+                <td data-label="Where it applies">Illinois, and only until the election the Board's list is for has passed.</td>
               </tr>
             </tbody>
           </table>
@@ -2769,7 +2769,7 @@ table.matrix code {
       "@id": "https://districtry.com/il/sources.html#dataset-early-voting",
       "identifier": "early-voting",
       "name": "Early Voting Site",
-      "description": "The early voting sites nearest the point — which double as the secured ballot drop boxes. No officeholder; each row names the site.",
+      "description": "The three early voting sites nearest the point, with each site's kind, dates and hours as the State Board lists them for the election named on the card. No officeholder; each row names the site and the election authority it belongs to.",
       "url": "https://districtry.com/il/sources.html#layer-early-voting",
       "isPartOf": {
         "@id": "https://districtry.com/il/sources.html#catalog"
@@ -2777,13 +2777,13 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "Chicago Board of Elections — hand-transcribed per election into early-voting-sites.json, because no open dataset is published",
-          "url": "https://chicagoelections.gov"
+          "name": "Illinois State Board of Elections — the statewide early voting locations list, downloaded by a person before each election (its robots.txt refuses automated readers) and built into early-voting-sites.json by scripts/build_early_voting_sites.py; each site placed by the Census Bureau's geocoder",
+          "url": "https://www.elections.il.gov/VotingAndRegistrationSystems/EarlyVotingLocationsSearch.aspx"
         }
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "City of Chicago, and only while early voting is running for an election"
+        "name": "Illinois, and only until the election the Board's list is for has passed"
       }
     }
   ]

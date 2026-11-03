@@ -990,14 +990,25 @@ PROVENANCE = [
              "guessing Clark's parameters returns the vendor's LOGIN PAGE "
              "rendered as a PDF, which is a 200 with a plausible size and no "
              "canvass in it."},
-    {"layer": "Early-voting sites (Chicago Board of Elections)",
+    {"layer": "Early-voting sites (Illinois State Board of Elections, statewide)",
      "app_file": "early-voting-sites.json",
-     "source_url": "https://chicagoelections.gov/voting/early-voting",
-     "blocked": "RE-MEASURED 2026-09-03: the site answers the stdlib stack 200 (62 KB) and this validator 403 — so the reachability half has lifted, and the second opinion in http_get now sees it. The flag STAYS because the reason the file is hand-made was never only reachability: the transcription carries the election name onto the card, and nothing parses the page yet. Retire it when a scraper ships (WATCH.md puts the next refresh at ~October, for the 3 Nov general)",
-     "note": "Hand-transcribed per election (see WATCH.md row). The site 403s "
-             "non-browser clients, so a reachability WARN here is expected, "
-             "not drift — refresh the file when the Board posts the next "
-             "election's list."},
+     "source_url": "https://www.elections.il.gov/VotingAndRegistrationSystems/EarlyVotingLocationsSearch.aspx",
+     "robots_declined": "ROBOTS-REFUSED, the same 29-byte `User-agent: *` / `Disallow: /` "
+                "policy the county-clerks row records (measured 2026-09-25, re-read "
+                "2026-11-03). The list is downloaded by a PERSON from this search page "
+                "before each election, kept under il/data/source/ as "
+                "early-voting-locations-<date>.csv, and built by "
+                "scripts/build_early_voting_sites.py, which fetches nothing from the "
+                "Board. Until 2026-11-03 this row was Chicago's hand-transcribed list "
+                "(chicagoelections.gov/voting/early-voting, 52 sites); the statewide "
+                "file replaced it, 471 sites across 107 election authorities. "
+                "Inverted like the others: not fetching is the expected state, and "
+                "the rule lifting is the WARN. The card hides once the election "
+                "date in the file has passed, so a stale file is a hidden layer "
+                "rather than a wrong one — refresh it before each election "
+                "(WATCH.md row)",
+     "note": "Downloaded by hand per election (see WATCH.md row); nothing here "
+             "fetches the Board."},
 ]
 
 # Live named services the app queries at runtime. These aren't year-versioned

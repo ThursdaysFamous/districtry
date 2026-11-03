@@ -4924,8 +4924,7 @@ function initChiExplorer() {
       "ward-precinct": "chicago", "police-district": "chicago", "police-beat": "chicago",
       "ccpsa-district-council": "chicago", "community-area": "chicago", "cps-high": "chicago",
       "cps-middle": "chicago", "ssa": "chicago", "tif-district": "cook",
-      "cps-elementary": "chicago", "school-site": "chicago", "library": "chicago",
-      "early-voting": "chicago" }
+      "cps-elementary": "chicago", "school-site": "chicago", "library": "chicago" }
   };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
@@ -14515,7 +14514,7 @@ function initChiExplorer() {
     return det;
   }
   function renderNearestRows(items) {
-    // [{ name, note?, mapAddress?, mapText?, tag?: {text, color}, accentColor?, dotColor?,
+    // [{ name, note?, lines?, mapAddress?, mapText?, tag?: {text, color}, accentColor?, dotColor?,
     //    distanceLabel? }] — nearest-N rows with distance pills (Handoff 2
     // §4d + Handoff 3 §8a). tag renders as a colored 600-weight lead on the
     // note line ("High · 9–12"); accentColor tints the distance pill with
@@ -14556,6 +14555,13 @@ function initChiExplorer() {
           }
         }
         main.appendChild(noteEl);
+      }
+      // lines: further note lines under the first, one element each (a site's
+      // kinds of use with their dates and hours), plain text.
+      if (item.lines && item.lines.length) {
+        item.lines.forEach(function (line) {
+          if (line) main.appendChild(cardEl("div", "card-nearest-note", String(line)));
+        });
       }
       row.appendChild(main);
       if (item.distanceLabel) {
@@ -23237,12 +23243,15 @@ function initChiExplorer() {
         // fork still on the single-string opts.line(props) contract gets a
         // one-line row — the opts surface stays backward compatible.
         var wrap = cardEl("div", "card-flush");
-        if (opts.intro) wrap.appendChild(renderBodyIntro({ note: opts.intro }));
+        // opts.intro may be a function of the result, for a layer whose intro
+        // names what its data file says (the election a list of sites is for).
+        if (opts.intro) wrap.appendChild(renderBodyIntro({ note: typeof opts.intro === "function" ? opts.intro(result) : opts.intro }));
         wrap.appendChild(renderNearestRows(result.items.map(function (s) {
           var item = (opts.item && opts.item(s.props)) || { name: opts.line(s.props) };
           return {
             name: item.name,
             note: item.note,
+            lines: item.lines, // further note lines under the first (a site's dates and hours)
             // the place's address, when its note prints it: opens a map app
             mapAddress: item.mapAddress,
             mapText: item.mapText,
@@ -23404,7 +23413,7 @@ function initChiExplorer() {
    * Same nearest-N pattern as Police/Fire Stations above (haversine,
    * straight-line, N=3). post-office pulls the national USGS structures
    * layer clipped to METRO_BBOX; library is CPL's Socrata dataset;
-   * early-voting reads the hand-curated per-election data/app file.
+   * early-voting reads the State Board's statewide per-election data/app file.
    * ======================================================================= */
 
   /* ---------- Post Offices (nearest 3) ----------
@@ -23417,7 +23426,7 @@ function initChiExplorer() {
     group: "geography",
     // no coverage test: the USGS pull spans the whole metro bbox (suburbs
     // included), so the layer stays honest outside the city line — unlike
-    // the city-scoped library/early-voting layers below.
+    // the city-scoped library layer below.
     label: "Post Office",
     color: "#4B2E83",
     fill: "#B39DDB",
@@ -23482,23 +23491,66 @@ function initChiExplorer() {
   });
 
   /* ---------- Early Voting Sites (nearest 3) ----------
-   * No open point dataset exists — chicagoelections.gov publishes sites as
-   * per-election web pages only, so the layer reads the hand-curated
-   * data/app/early-voting-sites.json (network-first roster). Refresh the
-   * file AND the election name in the intro below together each election. */
+   * STATEWIDE SINCE 2026-11-03, from the Illinois State Board of Elections'
+   * own list of every election authority's early voting, grace-period
+   * registration and Election Day vote-center sites. The Board's host refuses
+   * automated readers in its robots.txt, so a person downloads the list from
+   * the Board's search page before each election and
+   * scripts/build_early_voting_sites.py turns it into
+   * data/app/early-voting-sites.json (network-first roster): one site per
+   * authority and address, every row's kind, dates, hours and notes as the
+   * Board prints them, placed by the Census Bureau's geocoder (a site it
+   * cannot place is listed in the file's metadata, not drawn). Until that day
+   * the layer was Chicago's sites alone, hand-transcribed from the city
+   * Board's page, and the intro carried the election's name as a literal that
+   * had to be edited beside the file. THE FILE NAMES THE ELECTION NOW, and the
+   * layer HIDES ITSELF once that election's date has passed, in Chicago's own
+   * time zone like the precinct card's polling place (chicagoPollingFor): a
+   * list of sites for one election says nothing true about the next, and the
+   * next election's file replaces this one whole. */
   var loadEarlyVotingSites = makeCached(function () {
     return fetchJSONWithRetry("data/app/early-voting-sites.json", {}, 2);
   });
+  function earlyVotingList() {
+    var g = loadEarlyVotingSites.cached();
+    return (g && g.metadata) || {};
+  }
+  function earlyVotingCurrent(geojson) {
+    var date = geojson && geojson.metadata && geojson.metadata.electionDate;
+    return !!date && chicagoToday() <= String(date);
+  }
+  // Inside Illinois, because the Board lists Illinois authorities alone, and
+  // only until the election the list is for has passed. Reading the file for
+  // its date costs what chicagoCoverage pays for the city's outline.
+  function earlyVotingCoverage(point) {
+    return insideIllinois(point).then(function (inside) {
+      if (!inside) return false;
+      return loadEarlyVotingSites().then(earlyVotingCurrent);
+    });
+  }
+  function earlyVotingDate(iso) {
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    return m ? months[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1] : String(iso || "");
+  }
 
   registerNearestPointLayer({
     id: "early-voting",
     group: "political",
     label: "Early Voting Site",
-    coverage: chicagoCoverage, // Chicago BOE serves city voters; suburban Cook is the County Clerk
+    coverage: earlyVotingCoverage,
     color: "#7A1E5C",
     fill: "#E060A8",
     loader: loadEarlyVotingSites,
-    intro: "Official early-voting sites published by the Chicago Board of Elections for the 2026 cycle (downtown sites open from Sept 24, ward sites from Oct 19, 2026). Any Chicago voter may use any site, and each site also hosts a secured ballot drop box while open — confirm current sites and hours at chicagoelections.gov:",
+    intro: function () {
+      var m = earlyVotingList();
+      return "Early voting, grace-period registration and Election Day vote-center sites nearest the point, " +
+        "from the Illinois State Board of Elections' list for the " + (m.election ? String(m.election) : "election") +
+        (m.electionDate ? " of " + earlyVotingDate(m.electionDate) : "") +
+        (m.retrieved ? ", read " + earlyVotingDate(m.retrieved) : "") +
+        ". Each site belongs to the election authority named on its row, and a voter uses the sites of the " +
+        "authority they are registered with; the dates and hours are as the Board lists them. Confirm before you go:";
+    },
     line: function (props) {
       var name = findPropCI(props, ["name", "site", "location"]);
       var ward = findPropCI(props, ["ward"]);
@@ -23507,16 +23559,29 @@ function initChiExplorer() {
         (ward ? " (Ward " + String(ward) + ")" : "") +
         (address ? " — " + String(address) : "");
     },
-    item: function (props) { // 4d two-line row: site (+ ward) over address
+    item: function (props) { // site (+ ward) over address · authority, then a line per kind of use
       var name = findPropCI(props, ["name", "site", "location"]);
       var ward = findPropCI(props, ["ward"]);
       var address = findPropCI(props, ["address"]);
+      var authority = findPropCI(props, ["authority"]);
+      var schedule = Array.isArray(props.schedule) ? props.schedule : [];
+      var lines = schedule.map(function (s) {
+        s = s || {};
+        var head = [s.kind, s.dates, s.hours].filter(function (v) { return v; }).map(String).join(" · ");
+        return head + (s.notes ? " — " + String(s.notes) : "");
+      }).filter(function (l) { return l; });
       return {
         name: (name ? String(name) : "Early-voting site") + (ward ? " (Ward " + String(ward) + ")" : ""),
-        note: address ? String(address) : undefined,
-        // Chicago's early-voting sites, whose addresses name no town
-        mapAddress: address ? String(address) + ", Chicago, IL" : undefined
+        note: address ? String(address) + (authority ? " · " + String(authority) : "") : (authority ? String(authority) : undefined),
+        // the Board's addresses name their town and ZIP code, so the address is the map link as written
+        mapAddress: address ? String(address) : undefined,
+        mapText: address ? String(address) : undefined,
+        lines: lines
       };
+    },
+    primaryLink: function () {
+      var url = safeHttpUrl(earlyVotingList().sourceUrl);
+      return url ? { label: "The State Board of Elections' early voting search (official)", url: url } : null;
     }
   });
 

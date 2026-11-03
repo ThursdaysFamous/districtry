@@ -239,6 +239,17 @@ ACCEPTED_DROPS = {
         "vanishing. build_wi_county_officer_roster.py no longer writes it; "
         "the county-level contactChecked and contactCheckedWeekly, which the "
         "card and the history tiles do read, are unchanged.",
+    # MOVED TO THE FILE'S METADATA, 2026-11-03, when the early voting layer
+    # went statewide. Chicago's hand-transcribed file wrote the election's
+    # name on all 52 of its features; the State Board's statewide list names
+    # one election for the whole file, so build_early_voting_sites.py writes
+    # it ONCE, as metadata.election beside metadata.electionDate, which the
+    # card reads for its intro and for hiding itself after the date. The
+    # builder never writes the field per feature, so this entry cannot go
+    # stale; a feature carrying it again would mean a different builder.
+    "il/data/app/early-voting-sites.json:election":
+        "Moved to metadata.election on 2026-11-03 -- one election for the "
+        "whole file, read there by the card; no feature carries it",
 
     # Adams County, Wisconsin. All three land in one change, 2026-09-17, and
     # all three have ONE cause: the county was re-sourced off the Clerk's

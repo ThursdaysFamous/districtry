@@ -68,12 +68,13 @@ won't. Record the run in the runbook's drill-evidence habit and stamp the date a
 
 | When | What | Last done |
 |---|---|---|
-| ~1 month before each election, when chicagoelections.gov posts the voting-locations list | Refresh `data/app/early-voting-sites.json` (hand-transcribe the official list, geocode, verify pins), update the election name in the `early-voting` layer's `intro` in `index.html`, update the `source_url` in `scripts/validate_sources.py` PROVENANCE if the page moved, and bump `sw.cache_name` in `metro-worksheet.json` + regenerate | 2026-07 (initial) |
+| ~1 month before each election, once the State Board of Elections' early voting search page lists the next election's sites (statewide since 2026-11-03; the next is the 2027 consolidated election in April) | Download the Board's CSV by hand from its search page (its robots.txt refuses automated readers, so nothing fetches it), save it as `il/data/source/early-voting-locations-<date>.csv`, run `python3 scripts/build_early_voting_sites.py --election "<name>" --election-date <YYYY-MM-DD>`, read the unplaced list it prints, and open a PR. The file is network-first, so no cache bump; the card names the election and date from the file and hides itself once the date has passed, so a missed refresh is a hidden layer rather than a wrong one | 2026-11-03 (General Election, 471 sites, 434 placed) |
 
-The layer's honesty depends on this row: the card names the election the sites belong to, so
-a stale file is visibly stale rather than silently wrong — but refresh it anyway. The site
-403s non-browser clients, so the monthly source scan can only WARN on reachability; the
-transcription itself is manual (Playwright or by hand).
+The layer's honesty depends on this row: the card names the election the sites belong to and
+hides after its date, so a stale file is a hidden layer rather than a wrong one — but refresh
+it anyway, or there is no early voting on the map for the next election. The Board's host is
+`robots_declined` in the monthly source scan, which checks only that the refusal still stands;
+the download itself is a person's.
 
 ---
 
