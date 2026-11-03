@@ -218,24 +218,24 @@
       "board": [
         {
           "name": "Tim Ruestman",
-          "phone": "(309) 527-4000",
           "role": "President"
         }
       ],
       "comptrollerCode": "102/030/06",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "heads": [
         {
-          "email": "jhinshaw@hinshawcpa.com",
-          "name": "Judy Hinshaw",
-          "phone": "(309) 527-2300",
-          "role": "Accountant"
+          "email": "JMEKLEY@ELPASOEMS.ORG",
+          "name": "Jeannie Mekley",
+          "phone": "(815) 955-5340",
+          "role": "Director"
         }
       ],
       "kind": "fire",
       "office": {
-        "address": "PO Box 56",
-        "city": "El Paso IL 61738"
+        "address": "PO BOX 56",
+        "city": "EL PASO IL 61738",
+        "phone": "(309) 527-2300"
       }
     },
     "Eureka Library District": {
@@ -558,20 +558,20 @@
     "Washburn Fire District": {
       "board": [
         {
-          "email": "harmsl1800@gmail.com",
-          "name": "Ladd Harms",
-          "phone": "(309) 645-2249",
+          "email": "rhtchoup@gmail.com",
+          "name": "Robert Newman",
+          "phone": "(704) 582-9732",
           "role": "President"
         },
         {
           "email": "stormsmike@gmail.com",
           "name": "Mike Storms",
-          "phone": "(309) 645-3052",
+          "phone": "(309) 370-9505",
           "role": "Secretary"
         }
       ],
       "comptrollerCode": "102/090/06",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "heads": [
         {
           "email": "lisa@kullscape.com",
@@ -584,7 +584,7 @@
       "office": {}
     }
   },
-  "generated": "2026-10-27T01:00:32Z",
+  "generated": "2026-11-03T03:10:04Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
