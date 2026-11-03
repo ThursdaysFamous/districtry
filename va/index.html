@@ -16690,6 +16690,57 @@ function initVirginiaExplorer() {
     return fetchJSONWithRetry("data/app/va-precincts.json", {}, 2);
   });
 
+  /* Each precinct's Election Day polling place, from the Department of
+   * Elections' list for the election (va/scripts/build_va_polling_places.py,
+   * refreshed daily until Election Day), joined to this map's precincts by
+   * the Department's own precinct number. The card shows it only up to and
+   * including the election date, in Virginia's own time zone: an assignment
+   * belongs to one election, and the day after it the list says nothing true
+   * about the next one. Two precincts the list has no row for (notListed)
+   * show no polling place and keep the Department's lookup link. */
+  var loadVaPolling = makeCached(function () {
+    return fetchJSONWithRetry("data/app/va-polling-places.json", {}, 2);
+  });
+  function vaToday() {
+    try {
+      return new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" });
+    } catch (e) {
+      var d = new Date();
+      return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
+    }
+  }
+  function vaPollingFor(list, key) {
+    if (!list || !list.precincts || !list.sites || !list.electionDate || !key) return null;
+    if (vaToday() > list.electionDate) return null;
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var fmt = function (iso) {
+      var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+      return m ? months[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1] : String(iso || "");
+    };
+    var i = list.precincts[String(key)];
+    var site = (i === undefined || i === null) ? null : list.sites[i];
+    // The Department's service carries one point per building naming one
+    // precinct, so a precinct it does not name has a polling place the
+    // service does not say; the card says that, and nothing more.
+    if (!site) {
+      return {
+        unlisted: true,
+        election: String(list.election || "Election") + ", " + fmt(list.electionDate),
+        listDate: fmt(list.listDate),
+        lookupUrl: safeHttpUrl(list.lookupUrl)
+      };
+    }
+    return {
+      place: site.place,
+      address: site.address,
+      lat: site.lat === undefined ? null : site.lat,
+      lng: site.lng === undefined ? null : site.lng,
+      election: String(list.election || "Election") + ", " + fmt(list.electionDate),
+      listDate: fmt(list.listDate),
+      lookupUrl: safeHttpUrl(list.lookupUrl)
+    };
+  }
+
   // A precinct elects no one to public office, so the card says so rather
   // than leaving a reader to wonder which name is missing.
   var PRECINCT_ELECTS = "No one to public office. A precinct is where you vote " +
@@ -16729,12 +16780,19 @@ function initVirginiaExplorer() {
       return queryFeatureAt(loadVaPrecincts, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var base = {
           seq: seq,
           title: precinctTitle(props),
           number: precinctNumber(props),
-          county: props.county != null ? String(props.county) : null
+          county: props.county != null ? String(props.county) : null,
+          polling: null
         };
+        if (props.key == null) return base;
+        // A polling failure costs the polling row, never the precinct.
+        return loadVaPolling().then(function (list) {
+          base.polling = vaPollingFor(list, props.key);
+          return base;
+        }, function () { return base; });
       });
     },
     render: function (result) {
@@ -16746,7 +16804,29 @@ function initVirginiaExplorer() {
         title: result.title || "Unknown precinct",
         note: note.length ? note.join(" · ") : null
       }));
-      var rows = [
+      var rows = [];
+      var p = result.polling;
+      if (p && p.unlisted) {
+        rows.push({
+          label: "Polling place (" + p.election + ")",
+          value: "The Department of Elections' polling-location map of " + p.listDate +
+            " names no polling place for this precinct. It names one precinct for each building, " +
+            "so this precinct may share a building with the precinct it does name. The Department's " +
+            "lookup answers by your address."
+        });
+      } else if (p) {
+        rows.push({
+          label: "Polling place (" + p.election + ")",
+          value: String(p.place) + " — " + String(p.address),
+          mapAddress: String(p.address)
+        });
+        rows.push({
+          label: "As listed",
+          value: "On the Department of Elections' polling-location map of " + p.listDate +
+            ". Polling places can change, so confirm with the Department's lookup before you go."
+        });
+      }
+      rows = rows.concat([
         { label: "Who it elects", value: PRECINCT_ELECTS },
         {
           label: "How exact this line is",
@@ -16755,15 +16835,21 @@ function initVirginiaExplorer() {
             "drawn here to within 12 metres; for a definitive answer, ask your county or " +
             "city's general registrar."
         }
-      ];
+      ]);
       wrap.appendChild(renderFieldStack(rows));
       return wrap;
     },
-    primaryLink: function () {
+    primaryLink: function (result) {
+      var p = result && result.polling;
       return {
-        label: "Find your polling place",
-        url: "https://vote.elections.virginia.gov/VoterInformation"
+        label: p && !p.unlisted ? "Confirm where you vote" : "Find your polling place",
+        url: (p && p.lookupUrl) || "https://vote.elections.virginia.gov/VoterInformation"
       };
+    },
+    pointOfInterest: function (result) {
+      var p = result && result.polling;
+      if (!p || p.unlisted) return null;
+      return { label: String(p.place), address: String(p.address), lat: p.lat, lng: p.lng, kind: "Polling place" };
     }
   });
 
