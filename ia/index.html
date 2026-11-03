@@ -17888,29 +17888,123 @@ function initIowaExplorer() {
   /* ---------- 14. Precinct — Iowa Legislature, phase 2 PR 4 ----------
    * Pre-built (ia/scripts/build_ia_precincts.py) from the Iowa
    * Legislature's own ArcGIS org — 1,660 election precincts across all 99
-   * counties, vintage 2024-01-30. Identity-only card, DELIBERATELY: the
-   * live layer also carries a polling place name/address in-band, but no
-   * dated, per-election display contract exists yet for that (phase 4 —
-   * see Wisconsin's own five-condition contract for what that needs), so
-   * this builder never fetches those columns at all — a field that was
-   * never fetched cannot leak onto a card. No roster: a precinct has no
-   * elected representative of its own. ---------- */
+   * counties, vintage 2024-01-30. The boundary builder still never fetches
+   * the precinct layer's own polling-place columns. No roster: a precinct
+   * has no elected representative of its own.
+   *
+   * THE POLLING PLACE (2026-11-03, Election Day, on Adam's ask) comes from a
+   * separate file, ia/data/app/ia-polling-places.json, built by
+   * ia/scripts/build_ia_polling_places.py from the Legislative Services
+   * Agency's public IowaPollingPlaces layer and joined to this map by
+   * precinct name within the county. EVERY ROW OF THAT LIST IS DATED
+   * 2022-10-17, so the card never presents it as today's assignment: the
+   * label names the list's date, the next row says the polling place may
+   * have changed since, and the footer links the Secretary of State's own
+   * lookup, which answers by address. The date is read from the file, so a
+   * newer list carries its own date onto the card. A precinct the list does
+   * not name (35 on 2026-11-03, mostly renamed since 2022) is told so. A
+   * polling-file failure costs the polling rows, never the precinct. */
   var loadIaPrecincts = makeCached(function () {
     return fetchJSONWithRetry("data/app/ia-precincts.json", {}, 2);
   });
+  var loadIaPolling = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ia-polling-places.json", {}, 2);
+  });
+  function iaListDate(iso) {
+    var months = ["January", "February", "March", "April", "May", "June", "July",
+      "August", "September", "October", "November", "December"];
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    return m ? months[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1] : String(iso || "");
+  }
+  function iaPollingFor(list, county, name) {
+    if (!list || !list.precincts || !list.sites || !county || !name) return null;
+    var lookupUrl = safeHttpUrl(list.lookupUrl);
+    var i = list.precincts[String(county) + "|" + String(name)];
+    var site = (i === undefined || i === null) ? null : list.sites[i];
+    if (!site) return { unlisted: true, listDate: iaListDate(list.listDate), lookupUrl: lookupUrl };
+    return {
+      place: site.place,
+      address: site.address,
+      lat: site.lat === undefined ? null : site.lat,
+      lng: site.lng === undefined ? null : site.lng,
+      listDate: iaListDate(list.listDate),
+      lookupUrl: lookupUrl
+    };
+  }
 
-  registerPolygonLayer({
+  registerLayer({
     id: "precinct",
     tiles: "data/app/tiles/precinct.pmtiles", // vector tiles (engine tile-overlay block)
     group: "political",
     label: "Precinct",
-    loader: loadIaPrecincts,
-    style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.04 },
-    fields: [
-      { name: "name", label: "Precinct", keys: ["name"], primary: true },
-      { name: "county", label: "County", keys: ["county"] }
-    ],
-    compact: true, compactMetaField: "county" // 4b name-only card
+    overlay: {
+      load: loadIaPrecincts,
+      style: { color: "#06375E", weight: 1, fillColor: "#2B8CC4", fillOpacity: 0.04 }
+    },
+    hoverName: function (feature) {
+      var v = findPropCI(feature.properties || {}, ["name"]);
+      return (v == null || v === "") ? null : String(v);
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadIaPrecincts, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var name = findPropCI(props, ["name"]);
+        var county = findPropCI(props, ["county"]);
+        var base = {
+          seq: seq,
+          name: name != null ? String(name) : null,
+          county: county != null ? String(county) : null,
+          polling: null
+        };
+        if (!base.name || !base.county) return base;
+        return loadIaPolling().then(function (list) {
+          base.polling = iaPollingFor(list, base.county, base.name);
+          return base;
+        }, function () { return base; });
+      });
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderBodyIntro({
+        title: result.name || "Unknown precinct",
+        note: result.county ? result.county + " County" : null
+      }));
+      var rows = [];
+      var p = result.polling;
+      if (p && p.unlisted) {
+        rows.push({
+          label: "Polling place",
+          value: "The Iowa Legislature's polling-place list, last updated " + p.listDate +
+            ", names no polling place for this precinct under this name. The Secretary of " +
+            "State's lookup answers by your address."
+        });
+      } else if (p) {
+        rows.push({
+          label: "Polling place in the list of " + p.listDate,
+          value: String(p.place) + " — " + String(p.address),
+          mapAddress: String(p.address)
+        });
+        rows.push({
+          label: "This may have changed",
+          value: "This is from the Iowa Legislature's polling-place list, last updated " + p.listDate +
+            ". Polling places change between elections, so this may not be where this precinct " +
+            "votes now. Check the Secretary of State's lookup before you go."
+        });
+      }
+      if (rows.length) wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      var p = result && result.polling;
+      if (!p || !p.lookupUrl) return null;
+      return { label: "Find your polling place now", url: p.lookupUrl };
+    },
+    pointOfInterest: function (result) {
+      var p = result && result.polling;
+      if (!p || p.unlisted) return null;
+      return { label: String(p.place), address: String(p.address), lat: p.lat, lng: p.lng, kind: "Polling place (" + p.listDate + " list)" };
+    }
   });
 
   /* ---------- 15. Judicial District — Legislature geometry + iowacourts.gov bench, phase 2 PR 5 ----------
