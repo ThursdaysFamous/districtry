@@ -449,15 +449,15 @@
       "area_rank": 17,
       "rank_note": "1,660 election precincts, pre-built (mapshaper-simplified from the Legislature's own ArcGIS layer) — identity-only, no roster; ranked with the other fine-grained political boundaries",
       "source": {
-        "answers": "The election precinct covering the point, its county, and the polling place the Iowa Legislature's 2022 list names for it.",
+        "answers": "The election precinct covering the point and its county, with a link to the Secretary of State's polling-place lookup.",
         "boundary": [
           {
             "label": "Iowa Legislature's own ArcGIS organization — Iowa_Precincts layer, pre-built by ia/scripts/build_ia_precincts.py (Visvalingam-simplified, 2,000-point agreement gate)",
             "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/Iowa_Precincts/FeatureServer/0"
           }
         ],
-        "people": "NO OFFICEHOLDER, and none is missing. A precinct elects nobody. The polling place comes from the Legislative Services Agency's public IowaPollingPlaces layer (names and addresses from the Secretary of State), every row of which was last updated 2022-10-17; it is joined to the map by precinct name within the county and re-read weekly, the card gives the list's date and says the polling place may have changed since, a precinct the list does not name is told so, and every card links the Secretary of State's lookup.",
-        "applies": "Iowa — statewide, all 1,660 precincts across 99 counties. The precinct layer's own polling-place fields (PollingPlace/PollingPlaceAddr/PPID) are still never fetched; the polling place is read from the separate list named under who it names."
+        "people": "NO OFFICEHOLDER, and none is missing. A precinct elects nobody. The card names no polling place: the only statewide list, the Legislative Services Agency's IowaPollingPlaces layer, was last updated 2022-10-17 and will not be updated, so it was pulled from the card on 2026-11-03 and every card links the Secretary of State's lookup instead.",
+        "applies": "Iowa — statewide, all 1,660 precincts across 99 counties. The precinct layer's own polling-place fields (PollingPlace/PollingPlaceAddr/PPID) are still never fetched; the card names no polling place."
       }
     },
     {
@@ -852,7 +852,7 @@
       {
         "file": "ia-polling-places.json",
         "min_keys": 6,
-        "note": "The polling place the Legislative Services Agency's IowaPollingPlaces list names for each precinct (sites[] plus precincts{county|name: site index}), joined to ia-precincts.json by precinct name within the county by ia/scripts/build_ia_polling_places.py and re-read weekly by update-ia-polling-places.yml. Every row of the list was last updated 2022-10-17 (listDate), so the card names that date and says the place may have changed. The build fails if fewer than 90% of the map's precincts are named. Network-first: a newer list must reach a returning visitor at once"
+        "note": "The polling place the Legislative Services Agency's IowaPollingPlaces list names for each precinct (sites[] plus precincts{county|name: site index}), joined to ia-precincts.json by precinct name within the county by ia/scripts/build_ia_polling_places.py and re-read weekly by update-ia-polling-places.yml. Every row of the list was last updated 2022-10-17 (listDate) and the agency will not update it, so since 2026-11-03 the card does not read this file (IA_POLLING_SHOWN false in index.html) and names no polling place. The build fails if fewer than 90% of the map's precincts are named. Network-first: a newer list must reach a returning visitor at once"
       },
       {
         "file": "coverage-gaps.json",
