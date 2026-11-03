@@ -17917,14 +17917,18 @@ function initIowaExplorer() {
    *
    * PULLED THE SAME DAY (2026-11-03, Adam: "pull it for now"): the
    * Legislative Services Agency answered that the layer is a point-in-time
-   * list made after the 2022 reprecincting and will not be updated, so on
-   * Election Day the card stopped naming a building. IA_POLLING_SHOWN is
-   * false: the polling file is not fetched, the card says why it names no
-   * place and keeps the Secretary of State's lookup, and nothing is pinned.
-   * The code that reads the file stays for the day the Secretary of State
-   * sends a current list (asked by letter 2026-11-03); setting the flag to
-   * true is the whole switch back. */
-  var IA_POLLING_SHOWN = false;
+   * list made after the 2022 reprecincting and will not be updated, so the
+   * card stopped naming a building.
+   *
+   * BACK THE SAME AFTERNOON FROM THE SECRETARY OF STATE'S OWN LIST: the
+   * office answered Adam's letter with its 2026 general election polling
+   * place assignments (dated October 27, 2026), and the builder now reads
+   * that list. The file names its source, its date and its election, so the
+   * card says whose list it is, and from the day after electionDate the card
+   * treats the list as out of date and names no polling place, so a reader
+   * in a later year is never sent to a 2026 building. IA_POLLING_SHOWN false
+   * still switches the whole thing off. */
+  var IA_POLLING_SHOWN = true;
   var IA_POLLING_LOOKUP = "https://sos.iowa.gov/voters/find-my-precinctpolling-place";
   var loadIaPrecincts = makeCached(function () {
     return fetchJSONWithRetry("data/app/ia-precincts.json", {}, 2);
@@ -17938,18 +17942,33 @@ function initIowaExplorer() {
     var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
     return m ? months[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1] : String(iso || "");
   }
+  function iaListPassed(electionIso, now) {
+    // The list is for one election: from the day after it (the reader's own
+    // calendar day), it names nobody's polling place.
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(electionIso || ""));
+    if (!m) return false;
+    var d = now || new Date();
+    var today = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+    return today > Number(m[1]) * 10000 + Number(m[2]) * 100 + Number(m[3]);
+  }
   function iaPollingFor(list, county, name) {
     if (!list || !list.precincts || !list.sites || !county || !name) return null;
     var lookupUrl = safeHttpUrl(list.lookupUrl);
+    if (iaListPassed(list.electionDate)) {
+      return { pulled: true, passed: iaListDate(list.electionDate), lookupUrl: lookupUrl || IA_POLLING_LOOKUP };
+    }
+    var source = list.source ? String(list.source) : "the polling-place list";
     var i = list.precincts[String(county) + "|" + String(name)];
     var site = (i === undefined || i === null) ? null : list.sites[i];
-    if (!site) return { unlisted: true, listDate: iaListDate(list.listDate), lookupUrl: lookupUrl };
+    if (!site) return { unlisted: true, source: source, listDate: iaListDate(list.listDate), lookupUrl: lookupUrl };
     return {
       place: site.place,
       address: site.address,
       lat: site.lat === undefined ? null : site.lat,
       lng: site.lng === undefined ? null : site.lng,
+      source: source,
       listDate: iaListDate(list.listDate),
+      electionDate: iaListDate(list.electionDate),
       lookupUrl: lookupUrl
     };
   }
@@ -17998,31 +18017,37 @@ function initIowaExplorer() {
       }));
       var rows = [];
       var p = result.polling;
-      if (p && p.pulled) {
+      var sentence = function (t) { return t.charAt(0).toUpperCase() + t.slice(1); };
+      if (p && p.pulled && p.passed) {
         rows.push({
           label: "Polling place",
-          value: "This map doesn't name polling places in Iowa right now, because the only " +
-            "statewide list it could read is from 2022 and is out of date. The Secretary of " +
+          value: "This map's Iowa polling-place list was for the election of " + p.passed +
+            ", which has passed. The Secretary of State's lookup gives your polling place by your address."
+        });
+      } else if (p && p.pulled) {
+        rows.push({
+          label: "Polling place",
+          value: "This map doesn't name polling places in Iowa right now. The Secretary of " +
             "State's lookup gives your polling place by your address."
         });
       } else if (p && p.unlisted) {
         rows.push({
           label: "Polling place",
-          value: "The Iowa Legislature's polling-place list, last updated " + p.listDate +
+          value: sentence(p.source) + ", dated " + p.listDate +
             ", names no polling place for this precinct under this name. The Secretary of " +
             "State's lookup answers by your address."
         });
       } else if (p) {
         rows.push({
-          label: "Polling place in the list of " + p.listDate,
+          label: "Polling place on " + p.electionDate,
           value: String(p.place) + " — " + String(p.address),
           mapAddress: String(p.address)
         });
         rows.push({
-          label: "This may have changed",
-          value: "This is from the Iowa Legislature's polling-place list, last updated " + p.listDate +
-            ". Polling places change between elections, so this may not be where this precinct " +
-            "votes now. Check the Secretary of State's lookup before you go."
+          label: "Check before you go",
+          value: "This is from " + p.source + ", dated " + p.listDate +
+            ". A polling place can still change, even on Election Day, so check the " +
+            "Secretary of State's lookup before you go."
         });
       }
       if (rows.length) wrap.appendChild(renderFieldStack(rows));
@@ -18036,7 +18061,7 @@ function initIowaExplorer() {
     pointOfInterest: function (result) {
       var p = result && result.polling;
       if (!p || p.unlisted || p.pulled) return null;
-      return { label: String(p.place), address: String(p.address), lat: p.lat, lng: p.lng, kind: "Polling place (" + p.listDate + " list)" };
+      return { label: String(p.place), address: String(p.address), lat: p.lat, lng: p.lng, kind: "Polling place on " + p.electionDate };
     }
   });
 
