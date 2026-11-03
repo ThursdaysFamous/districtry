@@ -37,6 +37,19 @@ color (§5a, CSS-only), `cardTitleCase`/`cardGradeRange` joined the helpers
 pill (§6a). Chicago's `school-site` bespoke card was rebuilt on chips +
 `renderNearestRows` (§8a/8b).
 
+**Addresses open a map app (2026-11-03, Adam's ask).** `cardMapLink(address,
+text)` builds the link from an address the way `cardPhoneLink` builds a
+`tel:` href from a number: a `geo:` link on Android (the phone offers the
+reader's own map apps), Apple Maps on an iPhone or iPad, Google Maps in a new
+tab anywhere else; an address with no digit gets no link, and one with no ZIP
+code and no state gets the app's place after it. `renderOfficeGroup` links
+the lines `officeAddressLines` picks (the office pin's lines, less a post
+office box) with no change at any call site; `renderFieldStack` rows,
+`renderNearestRows` items and `renderLinkRow` take `mapAddress` (what the map
+is asked for) and optional `mapText` (the part of the printed value or note
+that is the link, where the address is followed by something else). A tap is
+counted as `address-map/<layer>` from the `data-layer` on the card's block.
+
 **Handoff 4** (`docs/design_handoff_hover_popup/`, ids 9a/10a + 10c's
 standalone block) carried the system onto the map's hover snapshot, so hover
 and click now speak the same visual language — a hovered stack reads as a
