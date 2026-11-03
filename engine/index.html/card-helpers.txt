@@ -277,7 +277,7 @@
     return det;
   }
   function renderNearestRows(items) {
-    // [{ name, note?, mapAddress?, mapText?, tag?: {text, color}, accentColor?, dotColor?,
+    // [{ name, note?, lines?, mapAddress?, mapText?, tag?: {text, color}, accentColor?, dotColor?,
     //    distanceLabel? }] — nearest-N rows with distance pills (Handoff 2
     // §4d + Handoff 3 §8a). tag renders as a colored 600-weight lead on the
     // note line ("High · 9–12"); accentColor tints the distance pill with
@@ -318,6 +318,13 @@
           }
         }
         main.appendChild(noteEl);
+      }
+      // lines: further note lines under the first, one element each (a site's
+      // kinds of use with their dates and hours), plain text.
+      if (item.lines && item.lines.length) {
+        item.lines.forEach(function (line) {
+          if (line) main.appendChild(cardEl("div", "card-nearest-note", String(line)));
+        });
       }
       row.appendChild(main);
       if (item.distanceLabel) {

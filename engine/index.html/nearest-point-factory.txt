@@ -142,12 +142,15 @@
         // fork still on the single-string opts.line(props) contract gets a
         // one-line row — the opts surface stays backward compatible.
         var wrap = cardEl("div", "card-flush");
-        if (opts.intro) wrap.appendChild(renderBodyIntro({ note: opts.intro }));
+        // opts.intro may be a function of the result, for a layer whose intro
+        // names what its data file says (the election a list of sites is for).
+        if (opts.intro) wrap.appendChild(renderBodyIntro({ note: typeof opts.intro === "function" ? opts.intro(result) : opts.intro }));
         wrap.appendChild(renderNearestRows(result.items.map(function (s) {
           var item = (opts.item && opts.item(s.props)) || { name: opts.line(s.props) };
           return {
             name: item.name,
             note: item.note,
+            lines: item.lines, // further note lines under the first (a site's dates and hours)
             // the place's address, when its note prints it: opens a map app
             mapAddress: item.mapAddress,
             mapText: item.mapText,

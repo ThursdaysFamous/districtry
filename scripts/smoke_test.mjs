@@ -2288,6 +2288,71 @@ try {
       JSON.stringify(unassigned));
   }
 
+  // 1k1d. THE EARLY VOTING CARD IS STATEWIDE, NAMES THE ELECTION ITS LIST IS
+  //      FOR, AND HIDES ONCE THAT ELECTION HAS PASSED. Since 2026-11-03 the
+  //      layer reads the State Board of Elections' list of every authority's
+  //      sites, which a person downloads before each election; the file names
+  //      the election and its date, and the card must say both and when the
+  //      list was read, show each site's kind, dates and hours as the Board
+  //      lists them under the site's address and authority, and link the
+  //      Board's search page. The file is stubbed to one site near Springfield,
+  //      well outside Chicago, so the check also proves the layer answers
+  //      outside the city it used to be bounded to. Hidden two ways: a file
+  //      whose election date has passed, and a point outside Illinois.
+  {
+    const slat = 39.8014, slng = -89.6436; // Springfield, Sangamon County
+    const SOURCE = "https://www.elections.il.gov/VotingAndRegistrationSystems/EarlyVotingLocationsSearch.aspx";
+    const fixture = (electionDate) => JSON.stringify({
+      type: "FeatureCollection",
+      metadata: { election: "Test Election", electionDate, retrieved: "2026-11-03",
+        source: "Illinois State Board of Elections", sourceUrl: SOURCE },
+      features: [{ type: "Feature", geometry: { type: "Point", coordinates: [slng + 0.002, slat + 0.002] },
+        properties: { name: "Test Site", address: "1 N Test St, Springfield, IL 62701", authority: "Sangamon County",
+          schedule: [{ kind: "Permanent Early Voting with Grace Period Registration", dates: "Oct 19-Nov 2",
+            hours: "8:30 AM - 4:30 PM", notes: "Closed Sundays" }] } }] });
+    const read = async (point, electionDate) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${point}&layers=early-voting`, async (p) => {
+        await p.route("**/data/app/early-voting-sites.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: fixture(electionDate) }));
+      });
+      const shown = await page.waitForFunction(() => {
+        const c = document.getElementById("card-early-voting");
+        return c && /Test Site/.test(c.textContent);
+      }, null, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
+      if (!shown) await page.waitForTimeout(1500);
+      const out = await page.evaluate(() => {
+        const box = document.getElementById("toggle-early-voting");
+        const block = box ? box.closest(".layer-block") : null;
+        const c = document.getElementById("card-early-voting");
+        const link = block ? block.querySelector(".card-footer-link") : null;
+        return { hidden: block ? block.hidden : null,
+          text: c ? c.textContent.replace(/\s+/g, " ") : null,
+          link: link ? link.href : null,
+          lines: c ? Array.from(c.querySelectorAll(".card-nearest-note")).map((el) => el.textContent.replace(/\s+/g, " ").trim()) : [] };
+      });
+      await context.close();
+      return out;
+    };
+    const live = await read(`${slat},${slng}`, "2099-01-01");
+    check("the early voting card names the election its list is for, when it was read, and links the State Board's search page",
+      live.hidden === false &&
+      /for the Test Election of Jan 1, 2099, read Nov 3, 2026\./.test(live.text || "") &&
+      live.link === SOURCE,
+      JSON.stringify(live));
+    check("a site outside Chicago is listed with its address and authority and each kind of use with its dates and hours",
+      /Test Site/.test(live.text || "") &&
+      live.lines.includes("1 N Test St, Springfield, IL 62701 · Sangamon County") &&
+      live.lines.includes("Permanent Early Voting with Grace Period Registration · Oct 19-Nov 2 · 8:30 AM - 4:30 PM — Closed Sundays"),
+      JSON.stringify(live.lines));
+    const past = await read(`${slat},${slng}`, "2000-01-01");
+    check("the early voting layer hides once the election its list is for has passed",
+      past.hidden === true, JSON.stringify(past));
+    const outside = await read(NEGATIVE_POINT, "2099-01-01");
+    check("the early voting layer hides outside Illinois",
+      outside.hidden === true, JSON.stringify(outside));
+  }
+
   // 1k2. THE CHICAGO WARD CARD LINKS THAT WARD'S CHIPOLI PAGE. The address is
   //     built from the ward number at runtime, so the monthly link check
   //     cannot probe it, and every path on chipoli.org answers 200 whatever
