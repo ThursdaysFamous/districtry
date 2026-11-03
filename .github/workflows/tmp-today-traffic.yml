@@ -1,0 +1,58 @@
+name: Temporary read of today's traffic (delete after use)
+
+# ONE-OFF, READ ONLY. Answers "what does today's traffic look like so far?",
+# which the daily fetch cannot, because it always stops at yesterday. It prints
+# aggregate counts to the log and writes nothing, and the branch carrying it is
+# deleted once the log has been read. It never runs on main.
+
+on:
+  push:
+    branches: [claude/project-thread-siaoax]
+    paths: [".github/workflows/tmp-today-traffic.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: pip install -c scripts/requirements.txt requests
+      - name: Read the last eight days, today included
+        env:
+          GOAT_COUNTER: ${{ secrets.GOAT_COUNTER }}
+        run: |
+          python3 - <<'PY'
+          import datetime, html, json, re, sys
+          from zoneinfo import ZoneInfo
+          sys.path.insert(0, "scripts")
+          import goatcounter_fetch as g
+          import build_traffic_page as b
+          now = datetime.datetime.now(ZoneInfo("America/Chicago"))
+          today = now.date()
+          start = (today - datetime.timedelta(days=7)).isoformat()
+          end = today.isoformat()
+          g.WINDOW_DAYS = 8
+          g.REF_DAYS = 8
+          s, total = g.session(g.token(), start, end)
+          print("NOW", now.strftime("%Y-%m-%d %H:%M %Z"))
+          def hourly(**extra):
+              w = g.widget(s, 1, total, start, end, **extra)
+              m = re.search(r'data-stats="([^"]*)"', w)
+              stats = json.loads(html.unescape(m.group(1)))
+              return {r["day"]: [r.get("daily", 0), r.get("hourly") or []]
+                      for r in stats}
+          hits = hourly()
+          views = hourly(filter="is:pageview")
+          for day in sorted(hits):
+              print("HOURLY", json.dumps({"day": day, "hits": hits[day],
+                                          "views": views.get(day)}))
+          data = g.collect(s, total, start, end)
+          print("ROWS", json.dumps(b.daily_rows(data)))
+          print("REFS", json.dumps(b.day_refs(data)))
+          PY
