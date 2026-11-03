@@ -537,7 +537,12 @@ def measure_address_list(src, name):
 # the app it was pressed in and nothing else, so the traffic page can say
 # whether the button is used. The Google Play app hides the button, so it
 # never sends this.
-EXPECTED_EVENTS = ["address-search", "app-install/", "app-launch/", "app-shortcut/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
+# `address-map/` joined on 2026-11-03 (engine `card-helpers` cardMapLink; Adam:
+# "Can addresses presented in info cards be hyperlinks that open a mapping
+# app?"): tapping an address on a card opens it in a map app and records
+# `address-map/<layer id>`, the layer whose card it was on, and never the
+# address, the place or the point.
+EXPECTED_EVENTS = ["address-map/", "address-search", "app-install/", "app-launch/", "app-shortcut/", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
                    "feedback-open/button", "feedback-open/link", "feedback-send/email",
@@ -1879,6 +1884,8 @@ def render_analytics_section(apps):
         "two the link came from, whether it was a short link, whether it was pasted or "
         "arrived in the page\u2019s address (as a place shared into the installed app does), "
         "and what the search showed; it never carries the link, the place or its position. "
+        "Tapping an address on a card to open it in a map app sends address-map/ followed by "
+        "the layer the card belongs to, such as address-map/post-office, and never the address. "
         "The front page sends that event too, as map-link-read/front/, when its address box "
         "reads such a link, and one more, example-place/ followed by the place\u2019s name, "
         "when you pick one of the places in the example beside that box; it names the "
@@ -2305,6 +2312,13 @@ PRIVACY_BODY = """
         someone can send you a form that already says what to check. That text, and a copied link
         to the form with what you typed, travel after the <span class="k">#</span> in the address,
         which your browser never sends to a server or to analytics.</p>
+      <p><strong>Addresses on cards open a map app.</strong> An address on a card, such as an
+        office, a polling place, a station or a school, is a link. Nothing is sent until you tap
+        it. Then the address goes to the map you open, together with the state or city the app
+        covers when the address names no town: on an Android phone, the map app you choose; on
+        an iPhone or iPad, Apple Maps; anywhere else, Google Maps in a new tab. That company then
+        has the address and your request for it, under its own privacy policy. The point you
+        selected is not in the link.</p>
       <p><strong>Places you share into the app.</strong> Once districtry is installed on an
         Android phone it is in the Share menu, so a place open in Google Maps can be shared
         straight to it. What you share arrives in the address of a request for the installed

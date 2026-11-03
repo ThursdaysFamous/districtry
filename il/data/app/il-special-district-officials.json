@@ -1139,24 +1139,25 @@
         },
         "TRI-STATE FIRE PROTECTION DISTRICT": {
           "comptrollerCode": "022/200/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "DuPage",
           "heads": [
             {
               "name": "Patrick Brenn",
+              "phone": "(630) 623-6445",
               "role": "Fire Chief"
             },
             {
               "email": "cjansen@tristatefd.com",
               "name": "Craig Jansen",
-              "role": "Asst. Fire Chief"
+              "phone": "(630) 323-6445",
+              "role": "Asst. Chief"
             }
           ],
           "office": {
             "address": "236 Sunrise Ave",
             "city": "Willowbrook IL 60527",
-            "email": "pbrenn@tristatefd.com",
-            "phone": "(630) 323-6445"
+            "email": "pbrenn@tristatefd.com"
           }
         },
         "YORKFIELD FIRE PROTECTION DISTRICT": {
@@ -4149,23 +4150,24 @@
         },
         "Tri-State": {
           "comptrollerCode": "022/200/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Patrick Brenn",
+              "phone": "(630) 623-6445",
               "role": "Fire Chief"
             },
             {
               "email": "cjansen@tristatefd.com",
               "name": "Craig Jansen",
-              "role": "Asst. Fire Chief"
+              "phone": "(630) 323-6445",
+              "role": "Asst. Chief"
             }
           ],
           "office": {
             "address": "236 Sunrise Ave",
             "city": "Willowbrook IL 60527",
-            "email": "pbrenn@tristatefd.com",
-            "phone": "(630) 323-6445"
+            "email": "pbrenn@tristatefd.com"
           }
         },
         "Warrenville": {
@@ -5419,14 +5421,14 @@
         "Mason": {
           "board": [
             {
-              "email": "bgillmore48@gmail.com",
+              "email": "gillmorejohn47@gmail.com",
               "name": "Bette Gillmore",
               "phone": "(217) 536-2054",
               "role": "Secretary"
             }
           ],
           "comptrollerCode": "025/025/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "email": "trjansen731@gmail.com",
@@ -7952,19 +7954,19 @@
         },
         "Illini": {
           "comptrollerCode": "055/020/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
+            {
+              "email": "FrommKamisha@gmail.com",
+              "name": "Kamisha FRomm",
+              "phone": "(217) 855-0582",
+              "role": "C.F.O."
+            },
             {
               "email": "Nancybro88@yahoo.com",
               "name": "Nancy Brohar",
               "phone": "(217) 412-8461",
-              "role": "Accountant"
-            },
-            {
-              "email": "FrommKamisha@gmail.com",
-              "name": "kamisha fromm",
-              "phone": "(217) 855-0582",
-              "role": "C.F.O."
+              "role": "C.E.O."
             }
           ],
           "office": {}
@@ -9858,7 +9860,7 @@
             }
           ],
           "comptrollerCode": "088/130/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "email": "CRAHLFS@MARISSAFIRE.ORG"
           }
@@ -10591,7 +10593,7 @@
             }
           ],
           "comptrollerCode": "043/085/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Jo Daviess",
           "heads": [
             {
@@ -10994,7 +10996,7 @@
       }
     }
   },
-  "generated": "2026-10-30T14:53:18Z",
+  "generated": "2026-11-02T22:04:46Z",
   "mailGivenForTwo": {
     "18532bdb20a6f776": [
       "4f2cbfb3f059084a",

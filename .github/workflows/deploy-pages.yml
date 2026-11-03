@@ -33,7 +33,13 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      indexnow_all:
+        # A one-time catch-up, not a routine: see notify-indexnow below.
+        description: "Also send every page in the sitemap to IndexNow"
+        type: boolean
+        default: false
 
 # Least-privilege token set the Pages deploy needs.
 permissions:
@@ -343,11 +349,60 @@ jobs:
     # completes so it can never hold the `pages` concurrency slot. The script
     # is stdlib-only (validate_workflow_deps.py holds it to that, since this
     # workflow installs nothing).
+    #
+    # IT SENT THE HOMEPAGE AND NOTHING ELSE UNTIL 2026-11-03, when Bing
+    # Webmaster Tools reported "Some important pages weren't submitted via
+    # IndexNow" (severity High). It now sends the pages that changed since the
+    # commit the last NOTIFIED deploy published. That is read from this
+    # workflow's own run history rather than from the push event's `before`,
+    # because a deploy waiting in the `pages` queue is replaced by a newer one,
+    # so `before` can skip a commit nobody notified; and a run whose
+    # notify-indexnow job failed is passed over for the same reason. With no
+    # such run found it falls back to `before`, and with neither it sends the
+    # homepage as it always did. A manual run with indexnow_all set sends the
+    # whole sitemap once, for a catch-up; nothing sends that by default.
     if: github.ref == 'refs/heads/main'
     needs: deploy
     runs-on: ubuntu-latest
     continue-on-error: true
     timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
     steps:
       - uses: actions/checkout@v4
-      - run: python3 scripts/indexnow_submit.py
+      - name: Find the commit the last notified deploy published
+        id: base
+        if: inputs.indexnow_all != true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          base=""
+          runs=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/deploy-pages.yml/runs?branch=main&status=completed&per_page=20" \
+            --jq ".workflow_runs[] | select(.id != $GITHUB_RUN_ID) | \"\(.id) \(.head_sha)\"") || runs=""
+          while read -r id sha; do
+            [ -n "$id" ] || continue
+            done_ok=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$id/jobs" \
+              --jq '.jobs[] | select(.name == "notify-indexnow") | .conclusion') || continue
+            if [ "$done_ok" = "success" ]; then base=$sha; echo "Last notified deploy: run $id at $sha"; break; fi
+          done <<< "$runs"
+          if [ -z "$base" ] && [ -n "$BEFORE" ] && [ "$BEFORE" != "0000000000000000000000000000000000000000" ]; then
+            base=$BEFORE; echo "No notified deploy found; using the push's previous commit $base"
+          fi
+          if [ -n "$base" ] && ! git fetch --no-tags --depth=1 origin "$base"; then
+            echo "Could not fetch $base; sending the homepage only"; base=""
+          fi
+          echo "sha=$base" >> "$GITHUB_OUTPUT"
+      - name: Submit to IndexNow
+        env:
+          ALL: ${{ inputs.indexnow_all }}
+          BASE: ${{ steps.base.outputs.sha }}
+        run: |
+          if [ "$ALL" = "true" ]; then
+            python3 scripts/indexnow_submit.py --all
+          elif [ -n "$BASE" ]; then
+            python3 scripts/indexnow_submit.py --since "$BASE"
+          else
+            python3 scripts/indexnow_submit.py
+          fi

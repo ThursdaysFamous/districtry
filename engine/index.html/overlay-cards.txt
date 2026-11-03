@@ -140,6 +140,8 @@
   function buildLayerBlock(mod, baseIndex) {
     var block = document.createElement("div");
     block.className = "layer-block";
+    // read by the map-link count (card-helpers), which counts by layer
+    block.setAttribute("data-layer", mod.id);
     // ties this card's accent border + dot to the same color used for the
     // layer's map overlay/pins, so the sidebar reads as "this is the box
     // for the blue layer" at a glance

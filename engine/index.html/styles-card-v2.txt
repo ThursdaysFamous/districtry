@@ -171,6 +171,18 @@
   .card-office-kicker { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--card-muted); }
   .card-office-line { font-size: 12.5px; line-height: 1.5; color: var(--card-body-ink); }
   .card-office-line .card-phone { color: var(--card-body-ink); text-decoration: none; }
+  /* an address that opens a map app: the address keeps its own ink and is
+     underlined in the link colour, so it reads as an address first */
+  a.card-map-link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--card-link) 55%, transparent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  a.card-map-link:hover { color: var(--card-link-hover); text-decoration-color: currentColor; }
+  a.card-office-address { display: block; }
+  a.card-office-address .card-office-line { color: inherit; }
 
   .card-nearest { display: flex; align-items: baseline; gap: 10px; padding: 10px 18px; }
   .card-nearest-main { min-width: 0; flex: 1; }
