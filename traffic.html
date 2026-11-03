@@ -1247,13 +1247,34 @@ table.q tr.total td { color: var(--ink); font-weight: 600; }
 #tutorialTable { min-width: 34em; }
 main details.tableview table.q td:first-child { color: var(--ink); }
 
-/* ---- the notes ---- */
+/* ---- the notes ----
+   Two newspaper columns, not a grid: a grid row is as tall as its taller
+   note, so a short note beside a long one left a gap under it the height of
+   the difference (note 3 beside note 4 left most of a column empty). In
+   columns each note follows the one before it, 1 to 6 down the left and the
+   rest down the right, and none is split across the two. */
 .notes ol {
   margin: 0; padding: 0 0 0 22px;
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 36px;
+  columns: 2; column-gap: 36px;
   font-size: 14px; line-height: 1.55; color: var(--slate);
 }
-.notes li { padding-left: 4px; }
+.notes li { padding-left: 4px; margin-bottom: 12px; break-inside: avoid; }
+.notes li:last-child { margin-bottom: 0; }
+/* The Notes fold, closed when the page opens (Adam, 2026-11-03). Its heading
+   is the summary, so the section keeps its rule and title and only the list
+   folds; a link to a note opens it (the script below). The shared accordion
+   style draws a rule above and below every details and pads its summary,
+   which here would put a second rule under the section's own. */
+main details.notes-fold { border: 0; }
+main details.notes-fold > summary {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 18px; align-items: center; padding: 0; font-weight: inherit;
+}
+main details.notes-fold > summary h2 { margin: 0 0 6px; }
+main details.notes-fold > summary .take { margin: 0; }
+main details.notes-fold > summary::after { grid-column: 2; grid-row: 1 / span 2; }
+main details.notes-fold > summary:hover h2 { color: var(--accent-deep); }
+main details.notes-fold[open] > summary { margin-bottom: 16px; }
 .notes li strong { color: var(--ink); font-weight: 600; }
 .notes li:target { outline: var(--focus-ring); outline-offset: 6px; border-radius: 4px; }
 sup.ref { font-size: .62em; line-height: 0; vertical-align: baseline; position: relative; top: -.55em; }
@@ -1276,7 +1297,7 @@ code {
   .tile .value { font-size: 30px; }
   .three { grid-template-columns: minmax(0, 1fr); gap: 22px; }
   .ledgers { grid-template-columns: minmax(0, 1fr); gap: 22px; }
-  .notes ol { grid-template-columns: minmax(0, 1fr); }
+  .notes ol { columns: 1; }
   /* The chart is drawn on a 900-unit viewBox and used to shrink to whatever
      the column allowed, which at 390px put its 11px labels at about 4px. It
      keeps a legible width and scrolls sideways inside its card instead; the
@@ -1629,8 +1650,8 @@ code {
 
 
   <section class="ruled notes" id="notes">
-    <h2>Notes</h2>
-    <p class="take">What the figures above can&rsquo;t tell you.</p>
+    <details class="notes-fold" id="notesFold">
+    <summary><h2>Notes</h2><span class="take">What the figures above can&rsquo;t tell you. A small number beside a figure opens its note.</span></summary>
     <ol>
       <li id="note-1"><strong>What is counted.</strong> The counter counts each page, and each thing a reader does, once per browser in a visit of up to about eight hours, so reloading a page or choosing a second point adds nothing. Its own total for <span data-stat="periodThese">these two months</span> is <span data-stat="total">29,388</span>: pages viewed and the four kinds of event in note 10 together. The daily columns add up to <span data-stat="dailySum">31,256</span>, <span data-stat="dailyGap">1,868</span> apart. The gap changes from day to day and its cause is unknown, so both figures are shown. <span data-stat="barSumNote">The screen chart adds up to 9,106, the browser chart to 9,107 and the system chart to 9,107, against 9,529 pages viewed, and the country chart shows only the eight with the most.</span> The counter uses no cookies and does not identify anyone.</li>
       <li id="note-2"><strong>The dates.</strong> This page covers <span data-stat="periodLast">the last two months</span>, <span data-stat="range">September 2 – November 2, 2026</span> (<span data-stat="days">62</span> days), ending with the last full day. <span data-day="Aug 25"><strong>August 25 is low</strong> because Google wrongly flagged the new districtry.com address that morning, and Chrome turned visitors away before the page loaded. Those visits can&rsquo;t be recovered.</span> The Illinois school board page <span data-stat="seoSchoolNote">was viewed 464 times, the fifth most of any page</span>.</li>
@@ -1644,6 +1665,7 @@ code {
       <li id="note-10"><strong>What counts as use.</strong> Besides pages viewed, the apps send the counter events, and an event is one of four things: a reader doing something, such as choosing a point, turning on a layer or searching; the result of something a reader did, counted a second time, such as a location found or a hand-off to another state&rsquo;s map; a count an app sends by itself with nobody doing anything, such as the visit counter every map has sent on opening since October 22 and the front page since October 29, or an install invitation shown; or, since October 28, a press on the short tip each map shows on a first visit or on its tour. Only the first kind is a reader action on this page. The tip&rsquo;s presses are counted apart because they are what a reader did with the help rather than with the map, and each now names the state&rsquo;s map it was on, while the presses counted before that are listed as &ldquo;Map not recorded&rdquo;. A press made inside the Google Play app is marked as well, from the same day, and the table counts those again in a row of their own. The tip being shown is not counted. The How to use page is an ordinary page and is in the pages viewed. Each is counted once a visit for each thing, so choosing five points counts one and turning on three different layers counts three. A shared link that opens on a point with layers on counts as choosing that point and turning on those layers. Until October 26 this page drew all three kinds together as &ldquo;features used&rdquo;, so after October 22 that chart rose while reader actions did not.</li>
       <li id="note-11"><strong>The Google Play app.</strong> The Android app on Google Play opens the site with a tag of its own, so its visits are counted apart: <span data-stat="androidVisits">431</span> in <span data-stat="periodThese">these two months</span>. <span data-stat="playNote">The installed app was opened 403 times in these two months, 336 of them outside the United States. Before the last seven days the site barely reached readers abroad: pages viewed from outside the United States averaged 9 a day, against 52 a day in the last seven days. So these launches are more likely people trying the app than readers looking up their own districts.</span></li>
     </ol>
+    </details>
   </section>
   </div>
 
@@ -2157,6 +2179,35 @@ code {
      render, and the listeners are on the document so a rebuilt tab row needs
      none of its own. The address carries both choices, #insights-last-7-days
      and so on; Milestones takes no timeframe, so it is #milestones alone. */
+  /* ---- the Notes fold ----
+     The notes start folded. A link to one of them (the small numbers beside
+     the figures, or an address ending #note-5) opens the fold before the
+     browser scrolls, and render() opens it again after a timeframe choice
+     rebuilds the page if the reader had it open. The toggle event does not
+     bubble, so it is heard on the way down. */
+  var notesOpen = false;
+  /* The fold a note sits in, or the fold itself for a link to #notes. */
+  var foldFor = function (el) {
+    if (!el || !el.closest) return null;
+    return el.closest("details.notes-fold") ||
+      (el.id === "notes" ? el.querySelector("details.notes-fold") : null);
+  };
+  var openFoldAround = function (el) {
+    var d = foldFor(el);
+    if (d && !d.open) d.open = true;
+  };
+  var revealHashTarget = function () {
+    var h = location.hash.slice(1);
+    var el = h ? document.getElementById(h) : null;
+    var d = foldFor(el);
+    if (!d) return;
+    if (!d.open) d.open = true;
+    if (el.scrollIntoView) el.scrollIntoView();
+  };
+  document.addEventListener("toggle", function (e) {
+    if (e.target && e.target.id === "notesFold") notesOpen = e.target.open;
+  }, true);
+
   var TABS = ["numbers", "insights", "milestones"];
   var tab = "numbers", currentKey = "full";
   var tabFromHash = function () {
@@ -2214,6 +2265,7 @@ code {
     var el = a ? document.getElementById(a.getAttribute("href").slice(1)) : null;
     var panel = el ? el.closest(".tab-panel") : null;
     if (panel && panel.hidden) { tab = panel.getAttribute("data-tab"); setupTabs(); }
+    openFoldAround(el);
   });
   document.addEventListener("keydown", function (e) {
     var b = e.target.closest ? e.target.closest('.tabs [role="tab"]') : null;
@@ -2230,6 +2282,7 @@ code {
   window.addEventListener("hashchange", function () {
     var t = tabFromHash();
     if (t !== tab) { tab = t; setupTabs(); }
+    revealHashTarget();
   });
 
   var render = function (key) {
@@ -3580,10 +3633,13 @@ code {
   }
   currentKey = key;
   setupTabs();
+  var fold = document.getElementById("notesFold");
+  if (fold && notesOpen) fold.open = true;
   };
 
   tab = tabFromHash();
   render(keyFromHash());
+  revealHashTarget();
   /* The chart's canvas depends on the screen width, so crossing the phone
      breakpoint (a rotated phone, a resized window) draws it again. */
   var mq = window.matchMedia && window.matchMedia("(max-width: 760px)");
