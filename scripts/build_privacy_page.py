@@ -201,11 +201,11 @@ FRONT_DOOR = {"file": "index.html", "name": "The front door", "url": "/", "tag":
 COMMON_RECIPIENTS = [
     ("GitHub Pages", "hosting",
      "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement",
-     "The ordinary web-server request for each file — your IP address, browser, and the "
+     "The ordinary web-server request for each file: your IP address, browser, and the "
      "page you asked for. GitHub, not this project, keeps those logs.",
      "Every visit.", None),
     ("CARTO", "basemap tiles", "https://carto.com/privacy/",
-     "The map tiles you request — which, taken together, describe the area you are "
+     "The map tiles you request. Taken together, they describe the area you are "
      "looking at and how far you zoomed in.",
      "Whenever the map draws or moves.", "tiles"),
     ("Cloudflare (cdnjs)", "mapping library", "https://www.cloudflare.com/privacypolicy/",
@@ -329,14 +329,14 @@ GEOCODERS = {
     "photon.komoot.io": (
         "Photon / Komoot", "address search", "https://www.komoot.com/privacy",
         "<strong>The text you type into the search box</strong>, or the place&#39;s name "
-        "and address from a map link you paste or share — sent as you type on the apps' "
+        "and address from a map link you paste or share. It is sent as you type in the apps' "
         "type-ahead boxes, and only when you press the button on the front door.",
         "Only while you are searching for an address."),
     "nominatim.openstreetmap.org": (
         "Nominatim / OpenStreetMap", "office pins",
         "https://osmfoundation.org/wiki/Privacy_Policy",
-        "<em>Public office addresses from the datasets</em> — a clerk's office, a school "
-        "— to place their map pins. The addresses are public, but which office a card "
+        "<em>Public office addresses from the datasets</em>, such as a clerk's office or a "
+        "school, to place their map pins. The addresses are public, but which office a card "
         "shows says which district you selected. "
         "Nothing you type into the search box is sent here.",
         "Only when a card places an office pin."),
@@ -1363,7 +1363,7 @@ def counter_who():
     """
     bits = ["%s (%s)" % (rel, why) for rel, why in sorted(COUNTER_EXCEPTIONS.items())]
     n = len(bits)
-    return ("Every page on this site — the apps, the front door, and every page "
+    return ("Every page on this site: the apps, the front door, and every page "
             "they link. %s carr%s none: %s."
             % (COUNT_WORDS.get(n, str(n)), "ies" if n == 1 else "y", joined(bits)))
 
@@ -1519,7 +1519,7 @@ def render_recipient_rows(apps):
         listers = [a["name"] for a in apps if host in a["address_list_hosts"]]
         if listers:
             what += (" <strong>%s</strong> also offer%s a batch check for people working "
-                     "from a list — a petition sheet, a canvass list. That sends "
+                     "from a list, such as a petition sheet or a canvass list. That sends "
                      "<strong>every address in the list you paste</strong>, one lookup a "
                      "second until it is done. Those are usually other people&#39;s "
                      "addresses rather than your own, and the list itself is never "
@@ -1538,7 +1538,7 @@ def render_recipient_rows(apps):
     zip_where = (" (in every app but %s)" % esc(joined(zip_others))) if zip_others else ""
     rows.append(recipient_row(
         "Public GIS services", "the district data itself", None,
-        "Requests for boundary and roster data from government servers — the U.S. Census "
+        "Requests for boundary and roster data from government servers: the U.S. Census "
         "TIGERweb, ArcGIS services run by cities, counties and states, municipal open-data "
         "portals, and the USGS. Mostly these download a whole layer and the "
         "&#34;which district contains this point&#34; test then runs "
@@ -1840,7 +1840,8 @@ def render_apps_lede(apps):
                        "run" if len(none) > 1 else "runs"))
     else:
         bits.append("every one of them carries the same counter")
-    return "; ".join(bits) + "."
+    lede = "; ".join(bits) + "."
+    return lede[:1].upper() + lede[1:]
 
 
 def render_analytics_section(apps):
@@ -1850,7 +1851,7 @@ def render_analytics_section(apps):
     parts = []
     if none:
         parts.append(
-            "<p>%s %s no analytics of any kind — no counter, no page view, no event.</p>"
+            "<p>%s %s no analytics of any kind: no counter, no page view, no event.</p>"
             % (esc(joined(a["name"] for a in none)),
                "carry" if len(none) > 1 else "carries"))
     parts.append("<h3>GoatCounter</h3>")
@@ -1862,7 +1863,7 @@ def render_analytics_section(apps):
     gc_sites = {a["goatcounter"]["site"] for a in gc}
     if len(gc_sites) == 1 and len(gc) > 1:
         where = ("Every page on this site reports to a single GoatCounter site "
-                 "(%s) — the apps, the front door, and the text pages that answer "
+                 "(%s): the apps, the front door, and the text pages that answer "
                  "one question or list one county\u2019s board; the page path is what "
                  "distinguishes them" % code(sorted(gc_sites)[0]))
     else:
@@ -1873,7 +1874,7 @@ def render_analytics_section(apps):
         '<p><a href="https://www.goatcounter.com/help/privacy" target="_blank" '
         'rel="noopener">GoatCounter</a> is cookieless and does not build a profile across '
         "sites. %s. Besides the "
-        "page view, each app sends named events for: %s. Exactly two of those — %s — carry "
+        "page view, each app sends named events for: %s. Exactly two of those, %s, carry "
         "coordinates, <strong>rounded to %d decimal places</strong>. The select/ event ends in the "
         "two-letter tag of the app the point was chosen in, such as select/il, which says "
         "which state\u2019s map was used and nothing more about where; first-use/, sent when "
@@ -1895,8 +1896,8 @@ def render_analytics_section(apps):
         "counts a visit once per window as visit/first/front or visit/return/front, and a visit "
         "counted there is not counted again on a map you go on to. A press of its Sponsor "
         "button sends sponsor/front, as a press of a map\u2019s sends sponsor/ followed by that "
-        "map\u2019s tag, and nothing about you. Any other page that is not an app — a county list, a question "
-        "page, this one — sends the page view and nothing else. <strong>Nothing you type is "
+        "map\u2019s tag, and nothing about you. Any other page that is not an app, such as a county list, a question "
+        "page or this one, sends the page view and nothing else. <strong>Nothing you type is "
         "ever sent to it.</strong></p>"
         % (where,
            esc(", ".join(event_phrase(e, apps) for e in EXPECTED_EVENTS)),
@@ -1904,10 +1905,10 @@ def render_analytics_section(apps):
     parts.append("<h3>Google Analytics</h3>")
     if ga:
         parts.append(
-            "<p>GA4 (%s) runs on %s — and <strong>only there</strong>: never on a local copy, "
+            "<p>GA4 (%s) runs on %s, and <strong>only there</strong>: never on a local copy, "
             "never inside an iframe embed, and not at all on %s. It sets its own cookies and "
-            "records the standard GA4 page view, which <strong>includes the page URL</strong> "
-            "— so if you arrived on a shared permalink, the point encoded in that link is part "
+            "records the standard GA4 page view, which <strong>includes the page URL</strong>, "
+            "so if you arrived on a shared permalink, the point encoded in that link is part "
             "of what Google sees. Google's handling is governed by "
             '<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">its '
             "own privacy policy</a>.</p>"
@@ -1917,7 +1918,7 @@ def render_analytics_section(apps):
         parts.append("<p>No app here loads Google Analytics.</p>")
     parts.append(
         '<p class="cta-note">Blocking either one is fine. The analytics calls are written so '
-        "that a blocked or failed counter is a no-op — nothing about the map changes.</p>")
+        "that a blocked or failed counter is a no-op. Nothing about the map changes.</p>")
     return "\n\n    ".join(parts)
 
 
@@ -2190,15 +2191,15 @@ PRIVACY_BODY = """
       <p><strong>The short version.</strong> There is no account to make, no server of ours to
         store anything in, and nothing here is sold or used for advertising.</p>
       <ul>
-        <li>Every app here is a <strong>static website</strong> — a set of files your browser
+        <li>Every app here is a <strong>static website</strong>, a set of files your browser
           downloads and then runs on its own. We operate no database and no back end.</li>
         <li><strong>The point you pick is not saved anywhere by us.</strong> It lives in your
           browser and in the address bar, so a refresh or a shared link can restore it.</li>
         <li>Where a counter runs, the only location it ever receives is
-          <strong>rounded to about a kilometre</strong> — deliberately too coarse to identify
+          <strong>rounded to about a kilometre</strong>, which is too coarse to identify
           an address.</li>
-        <li>Looking things up means asking other people's servers — map tiles, address search,
-          and the government GIS services each layer reads. Those servers see your IP address,
+        <li>Looking things up means asking other people's servers: the map tiles, the address
+          search, and the government GIS services each layer reads. Those servers see your IP address,
           as they would for any website.</li>
       </ul>
     </div>
@@ -2207,7 +2208,7 @@ PRIVACY_BODY = """
   <section>
     <h2>Which app you are on</h2>
     <p>districtry is one project serving several apps from one address, and they do not all
-      behave identically — %(appslede)s Rather than flatten that into a vague sentence, here is
+      behave identically. %(appslede)s Rather than flatten that into a vague sentence, here is
       each app's own row. <strong>Every cell is read out of the page that app actually
       serves</strong>, by the script that builds this one.</p>
     <div class="table-wrap">
@@ -2238,7 +2239,7 @@ PRIVACY_BODY = """
         when you first visit, and each layer's boundary file and officeholder roster the first
         time you switch that layer on (for a layer drawn from vector tiles, the pieces of its
         map you have looked at), so the map loads fast and those layers work offline.
-        It holds published public data — district shapes and rosters — not anything about you.</p>
+        It holds published public data, district shapes and rosters, and nothing about you.</p>
       <p><strong>If you install districtry,</strong> its launcher at %(launcher)s keeps one more
         cache, holding only the launcher page itself, so the installed app opens with no
         connection.</p>
@@ -2278,8 +2279,8 @@ PRIVACY_BODY = """
         else on the page.</p>
       <p>If you allow it, the coordinates your browser reports are used <strong>in the
         page</strong> to drop a point and answer the layer cards. The one thing that goes
-        anywhere is a <strong>rounded pair</strong> sent to that app's GoatCounter — %(dp)d
-        decimal places, roughly a kilometre — which is coarse enough that it cannot pin an
+        anywhere is a <strong>rounded pair</strong> sent to that app's GoatCounter, rounded to %(dp)d
+        decimal places or roughly a kilometre. That is coarse enough that it cannot pin an
         address and fine enough to show which part of a region the feature gets used from.</p>
       <p>Clicking the map is the same story with no permission needed: the point is yours, and
         only the rounded version is counted.</p>
@@ -2298,12 +2299,12 @@ PRIVACY_BODY = """
     <div class="card">
       <p><strong>Permalinks carry your point.</strong> Selecting a place writes it into the
         address bar as %(permalink)s, at full precision, along with the layers you have on. That
-        is what makes a link shareable — and it means anyone you send the link to, and anything
+        is what makes a link shareable, and it means anyone you send the link to, and anything
         that logs it, gets that location. Delete the part of the URL after %(hash)s to share the
         map without it.</p>
       <p><strong>Bug reports are yours to send.</strong> The &#34;Feedback&#34; button on every map
-        prepares a draft containing what you wrote, the current page URL — which may include your
-        point — and your browser's user-agent string. It is only ever a draft: nothing is
+        prepares a draft containing what you wrote, the current page URL (which may include your
+        point) and your browser's user-agent string. It is only ever a draft: nothing is
         transmitted until you submit the GitHub issue or send the email yourself, and you can
         edit it first. The same form sits at <a href="/feedback.html">/feedback.html</a> for every
         page that is not a map, and it fills in the address of the page you came from.</p>
@@ -2345,7 +2346,7 @@ PRIVACY_BODY = """
       <li>No advertising, ad networks, retargeting pixels, or social trackers.</li>
       <li>No sale or sharing of data. There is no data of yours to sell.</li>
       <li>No cross-site tracking or profile built by this project.</li>
-      <li>No collection of names, email addresses, or payment details — no app here has a field
+      <li>No collection of names, email addresses, or payment details. No app here has a field
         that asks for one.</li>
       <li>No unrounded location in any analytics event this project sends.</li>
     </ul>
@@ -2366,16 +2367,16 @@ PRIVACY_BODY = """
   <section>
     <h2>Changes, and how to ask</h2>
     <div class="card">
-      <p>This page is versioned with the apps it describes, and it is <em>generated from them</em>
-        — the build reads each app's own shipped page for the facts in the tables above, and
+      <p>This page is versioned with the apps it describes, and it is <em>generated from them</em>:
+        the build reads each app's own shipped page for the facts in the tables above, and
         refuses to publish a claim that has stopped being true. When the data flows change, this
         page changes in the same commit:
         <a href="%(repo)s/commits/main/privacy.html" target="_blank" rel="noopener">the file's
         history</a> is the changelog.</p>
       <p>Questions, corrections, or a request about your data:
-        <a href="mailto:%(contact)s?subject=districtry%%20%%E2%%80%%94%%20privacy">%(contact)s</a>.
+        <a href="mailto:%(contact)s?subject=districtry%%20privacy">%(contact)s</a>.
         Because the project stores nothing about you, there is generally nothing to look up,
-        correct, or delete on our side — but if you think that is wrong in your case, say so and
+        correct, or delete on our side. But if you think that is wrong in your case, say so and
         it will be checked properly rather than waved away.</p>
     </div>
   </section>
@@ -2462,7 +2463,7 @@ def build():
 
     title = "Privacy — districtry"
     desc = ("What districtry stores, what leaves your browser and to whom, and "
-            "what it never collects — every app on the site. No accounts, no "
+            "what it never collects in every app on the site. No accounts, no "
             "profiles, nothing sold.")
 
     generator = ("<!-- GENERATED by scripts/build_privacy_page.py, which MEASURES each app's own\n"
