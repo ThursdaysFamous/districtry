@@ -16626,6 +16626,82 @@ function initKentuckyExplorer() {
     return fetchJSONWithRetry("data/app/ky-precincts.json", {}, 2);
   });
 
+  /* Each precinct's Election Day polling place, or the voting centers its
+   * county opens to every voter, from the State Board of Elections' list for
+   * the election (ky/scripts/build_ky_polling_places.py, refreshed daily
+   * until Election Day), joined to this map's precincts by the state's own
+   * precinct code. A polling location serves the precincts assigned to it; a
+   * voting center serves "ALL", any voter in its county (KRS 117.065), so it
+   * is filed by county, and a precinct in a county that opens centers is
+   * offered them beside or instead of an assigned building. The card shows
+   * it only up to and including the election date, in Frankfort's time zone:
+   * an assignment belongs to one election, and the day after it the list
+   * says nothing true about the next one. */
+  var loadKyPolling = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ky-polling-places.json", {}, 2);
+  });
+  function kyToday() {
+    try {
+      return new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" });
+    } catch (e) {
+      var d = new Date();
+      return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
+    }
+  }
+  function kyPollingFor(list, key, countyFips, point) {
+    if (!list || !list.precincts || !list.sites || !list.electionDate || !key) return null;
+    if (kyToday() > list.electionDate) return null;
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var fmt = function (iso) {
+      var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+      return m ? months[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1] : String(iso || "");
+    };
+    var site = function (i) {
+      var s = (i === undefined || i === null) ? null : list.sites[i];
+      if (!s) return null;
+      return {
+        place: String(s.place), address: String(s.address), hours: s.hours ? String(s.hours) : null,
+        lat: s.lat === undefined ? null : s.lat, lng: s.lng === undefined ? null : s.lng
+      };
+    };
+    var assigned = site(list.precincts[String(key)]);
+    var centers = [];
+    (((list.centers || {})[String(countyFips || "")]) || []).forEach(function (i) {
+      var s = site(i);
+      if (s) centers.push(s);
+    });
+    if (!assigned && !centers.length) {
+      return {
+        unlisted: true,
+        election: String(list.election || "Election") + ", " + fmt(list.electionDate),
+        listDate: fmt(list.listDate),
+        lookupUrl: safeHttpUrl(list.lookupUrl)
+      };
+    }
+    // The pin: the assigned building, else the nearest voting center to the
+    // selected point, since any of them will do and the nearest is the one
+    // a reader is likeliest to want.
+    var pin = assigned;
+    if (!pin && point) {
+      var best = null;
+      centers.forEach(function (c) {
+        if (c.lat == null || c.lng == null) return;
+        var dLat = c.lat - point.lat, dLng = (c.lng - point.lng) * Math.cos(point.lat * Math.PI / 180);
+        var d2 = dLat * dLat + dLng * dLng;
+        if (!best || d2 < best.d2) best = { d2: d2, site: c };
+      });
+      pin = best ? best.site : null;
+    }
+    return {
+      assigned: assigned,
+      centers: centers,
+      pin: pin,
+      election: String(list.election || "Election") + ", " + fmt(list.electionDate),
+      listDate: fmt(list.listDate),
+      lookupUrl: safeHttpUrl(list.lookupUrl)
+    };
+  }
+
   // A precinct elects no one to public office, so the card says so rather
   // than leaving a reader to wonder which name is missing.
   var PRECINCT_ELECTS = "No one to public office. A precinct is where you vote " +
@@ -16657,12 +16733,19 @@ function initKentuckyExplorer() {
       return queryFeatureAt(loadKyPrecincts, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        return {
+        var base = {
           seq: seq,
           title: precinctTitle(props),
           code: props.code != null && String(props.code) !== "" ? String(props.code) : null,
-          county: props.county != null ? String(props.county) : null
+          county: props.county != null ? String(props.county) : null,
+          polling: null
         };
+        if (props.key == null) return base;
+        // A polling failure costs the polling rows, never the precinct.
+        return loadKyPolling().then(function (list) {
+          base.polling = kyPollingFor(list, props.key, props.countyFips, point);
+          return base;
+        }, function () { return base; });
       });
     },
     render: function (result) {
@@ -16671,7 +16754,52 @@ function initKentuckyExplorer() {
         title: result.title || "Unknown precinct",
         note: result.county
       }));
-      var rows = [
+      var rows = [];
+      var p = result.polling;
+      var county = result.county || "its county";
+      if (p && p.unlisted) {
+        rows.push({
+          label: "Polling place (" + p.election + ")",
+          value: "The State Board of Elections' list of " + p.listDate + " assigns this precinct no polling " +
+            "place and opens no voting center in " + county + ". Ask the county clerk, or use the Board's lookup."
+        });
+      } else if (p) {
+        if (p.assigned) {
+          rows.push({
+            label: "Polling place (" + p.election + ")",
+            value: p.assigned.place + " — " + p.assigned.address + (p.assigned.hours ? ", " + p.assigned.hours : ""),
+            mapAddress: p.assigned.address
+          });
+          if (p.centers.length) {
+            rows.push({
+              label: "Or any voting center in " + county,
+              value: "Any voter in the county may vote at a voting center instead of their precinct's polling place. " +
+                county + " opens " + p.centers.length + (p.centers.length === 1 ? " voting center" : " voting centers") +
+                " this election, listed below."
+            });
+          }
+        } else {
+          rows.push({
+            label: "Voting centers (" + p.election + ")",
+            value: county + " uses voting centers: any voter in the county may vote at any of its " +
+              p.centers.length + (p.centers.length === 1 ? " voting center" : " voting centers") + ", listed below. " +
+              "The State Board of Elections' list assigns this precinct to none in particular."
+          });
+        }
+        p.centers.forEach(function (c) {
+          rows.push({
+            label: "Voting center",
+            value: c.place + " — " + c.address + (c.hours ? ", " + c.hours : ""),
+            mapAddress: c.address
+          });
+        });
+        rows.push({
+          label: "As listed",
+          value: "On the State Board of Elections' list of " + p.listDate +
+            ". Polling places can change, so confirm with the Board's lookup before you go."
+        });
+      }
+      rows = rows.concat([
         { label: "Who it elects", value: PRECINCT_ELECTS },
         {
           label: "How current",
@@ -16684,7 +16812,7 @@ function initKentuckyExplorer() {
             "map and a county's own records disagree, the county's records control, so for " +
             "a definitive answer ask the county board of elections."
         }
-      ];
+      ]);
       wrap.appendChild(renderFieldStack(rows));
       return wrap;
     },
@@ -16694,11 +16822,18 @@ function initKentuckyExplorer() {
       if (!result.code) return null;
       return result.title === "Precinct " + result.code ? null : result.code;
     },
-    primaryLink: function () {
+    primaryLink: function (result) {
+      var p = result && result.polling;
       return {
-        label: "Find your polling place",
-        url: "https://elect.ky.gov/Voters/Pages/Polling-Locations.aspx"
+        label: p && !p.unlisted ? "Confirm where you vote" : "Find your polling place",
+        url: (p && p.lookupUrl) || "https://elect.ky.gov/Voters/Pages/Polling-Locations.aspx"
       };
+    },
+    pointOfInterest: function (result) {
+      var p = result && result.polling;
+      if (!p || p.unlisted || !p.pin) return null;
+      return { label: p.pin.place, address: p.pin.address, lat: p.pin.lat, lng: p.pin.lng,
+        kind: p.assigned ? "Polling place" : "Voting center" };
     }
   });
 

@@ -685,6 +685,59 @@ try {
         text.slice(0, 120));
       await context.close();
     }
+    // THE PRECINCT CARD NAMES ITS POLLING PLACE, AND ONLY UP TO ELECTION DAY.
+    // The polling file is stubbed (the precinct the shipped map draws at the
+    // county point, to one test building) so the check does not expire with
+    // the real service: with a far-future election date the card must name
+    // the building, link the Department's lookup and drop a pin; with a past
+    // one it must name nothing; and a precinct the file does not name must
+    // say the Department's map names none for it, with no pin.
+    {
+      const here = propsAt(precincts, COUNTY_POINT);
+      const [plat, plng] = COUNTY_POINT.split(",").map(Number);
+      const fixture = (date, named) => JSON.stringify({ election: "Test Election", electionDate: date,
+        listDate: "2026-11-02", sourceUrl: "https://services5.arcgis.com/test/FeatureServer/0",
+        lookupUrl: "https://vote.elections.virginia.gov/VoterInformation",
+        sites: [{ place: "TEST POLLING SCHOOL (Gym)", address: "1 Test St, Chesterfield, VA 23832",
+          lat: plat + 0.001, lng: plng + 0.001 }],
+        precincts: named && here.length === 1 ? { [here[0].key]: 0 } : {}, unlisted: named ? 0 : 1 });
+      const read = async (date, named) => {
+        const context = await browser.newContext({ serviceWorkers: "block" });
+        const page = await booted(context, `${BASE}#point=${COUNTY_POINT}&layers=voting-precinct`, async (p) => {
+          await p.route("**/data/app/va-polling-places.json", (r) =>
+            r.fulfill({ status: 200, contentType: "application/json", body: fixture(date, named) }));
+        });
+        const card = await cardText(page, "voting-precinct");
+        await page.waitForTimeout(800);
+        const out = await page.evaluate(() => {
+          const c = document.getElementById("card-voting-precinct");
+          const block = c ? c.closest(".layer-block") : null;
+          const link = block ? block.querySelector(".card-footer-link") : null;
+          return { link: link ? link.textContent.trim() : null,
+            pins: document.querySelectorAll(".leaflet-marker-pane .leaflet-marker-icon").length };
+        });
+        out.text = card.text;
+        await context.close();
+        return out;
+      };
+      const live = await read("2999-01-01", true);
+      check("the precinct card names its polling place, links the Department's lookup and pins the building",
+        /TEST POLLING SCHOOL \(Gym\) — 1 Test St/.test(live.text || "") && /Test Election/.test(live.text || "") &&
+        /Confirm where you vote/.test(live.link || ""),
+        JSON.stringify(live));
+      const past = await read("2001-01-01", true);
+      check("after its election date the precinct card names no polling place",
+        here.length === 1 && (past.text || "").includes(String(here[0].name)) && !/Polling place/.test(past.text || "") &&
+        /Find your polling place/.test(past.link || ""),
+        JSON.stringify(past));
+      check("the polling place drops a pin while it is shown, and none after the election",
+        live.pins === past.pins + 1, JSON.stringify({ live: live.pins, past: past.pins }));
+      const unnamed = await read("2999-01-01", false);
+      check("a precinct the Department's map names no point for says so, with the lookup link and no pin",
+        /names no polling place for this precinct/.test(unnamed.text || "") && /Find your polling place/.test(unnamed.link || "") &&
+        unnamed.pins === past.pins,
+        JSON.stringify(unnamed));
+    }
     {
       const NORFOLK_POINT = "36.84680,-76.28520"; // Norfolk City Hall, 810 Union Street
       const here = drawnAt(NORFOLK_POINT, "board");

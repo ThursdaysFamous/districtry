@@ -66,6 +66,7 @@ const ROSTER_URLS = [
   "./data/app/ky-judge-roster.json",
   "./data/app/ky-city-officials.json",
   "./data/app/ky-county-officials.json",
+  "./data/app/ky-polling-places.json",
   "./data/app/ky-conservation-boards.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
