@@ -17913,7 +17913,19 @@ function initIowaExplorer() {
    * lookup, which answers by address. The date is read from the file, so a
    * newer list carries its own date onto the card. A precinct the list does
    * not name (35 on 2026-11-03, mostly renamed since 2022) is told so. A
-   * polling-file failure costs the polling rows, never the precinct. */
+   * polling-file failure costs the polling rows, never the precinct.
+   *
+   * PULLED THE SAME DAY (2026-11-03, Adam: "pull it for now"): the
+   * Legislative Services Agency answered that the layer is a point-in-time
+   * list made after the 2022 reprecincting and will not be updated, so on
+   * Election Day the card stopped naming a building. IA_POLLING_SHOWN is
+   * false: the polling file is not fetched, the card says why it names no
+   * place and keeps the Secretary of State's lookup, and nothing is pinned.
+   * The code that reads the file stays for the day the Secretary of State
+   * sends a current list (asked by letter 2026-11-03); setting the flag to
+   * true is the whole switch back. */
+  var IA_POLLING_SHOWN = false;
+  var IA_POLLING_LOOKUP = "https://sos.iowa.gov/voters/find-my-precinctpolling-place";
   var loadIaPrecincts = makeCached(function () {
     return fetchJSONWithRetry("data/app/ia-precincts.json", {}, 2);
   });
@@ -17967,6 +17979,10 @@ function initIowaExplorer() {
           county: county != null ? String(county) : null,
           polling: null
         };
+        if (!IA_POLLING_SHOWN) {
+          base.polling = { pulled: true, lookupUrl: IA_POLLING_LOOKUP };
+          return base;
+        }
         if (!base.name || !base.county) return base;
         return loadIaPolling().then(function (list) {
           base.polling = iaPollingFor(list, base.county, base.name);
@@ -17982,7 +17998,14 @@ function initIowaExplorer() {
       }));
       var rows = [];
       var p = result.polling;
-      if (p && p.unlisted) {
+      if (p && p.pulled) {
+        rows.push({
+          label: "Polling place",
+          value: "This map doesn't name polling places in Iowa right now, because the only " +
+            "statewide list it could read is from 2022 and is out of date. The Secretary of " +
+            "State's lookup gives your polling place by your address."
+        });
+      } else if (p && p.unlisted) {
         rows.push({
           label: "Polling place",
           value: "The Iowa Legislature's polling-place list, last updated " + p.listDate +
@@ -18012,7 +18035,7 @@ function initIowaExplorer() {
     },
     pointOfInterest: function (result) {
       var p = result && result.polling;
-      if (!p || p.unlisted) return null;
+      if (!p || p.unlisted || p.pulled) return null;
       return { label: String(p.place), address: String(p.address), lat: p.lat, lng: p.lng, kind: "Polling place (" + p.listDate + " list)" };
     }
   });
