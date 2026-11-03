@@ -21815,6 +21815,19 @@ function initChiExplorer() {
   var loadRockIslandBoardMembers = makeCached(function () {
     return fetchJSONWithRetry("data/app/rock-island-county-board-members.json", {}, 2);
   });
+  /* Rock Island votes at 36 VOTE CENTERS rather than one polling place per
+   * precinct (added 2026-11-03, scripts/build_rock_island_vote_centers.py):
+   * the Clerk's own Vote Centers list names each center with the precincts
+   * assigned to it, and the county's pages tell a voter to go to their
+   * "home Vote Center", so the card names the one assigned to the precinct
+   * and nothing here claims a voter may use any of the 36. The builder reads
+   * the list's precinct abbreviations into the names the county's precinct
+   * layer carries and refuses to write unless every precinct in the layer is
+   * assigned exactly once. Each center is placed by the Census Bureau's
+   * geocoder at build time, so the pin costs the reader no request. */
+  var loadRockIslandVoteCenters = makeCached(function () {
+    return fetchJSONWithRetry("data/app/rock-island-vote-centers.json", {}, 2);
+  });
   /* The county's TaxDistricts service is a Cook-style tax-agency tiling: one
    * layer per levying body — fire (17), library (10 rows) and a single park
    * district are fleet concepts; the rest are school, township or
@@ -35199,7 +35212,13 @@ function initChiExplorer() {
         }
       },
       // Rock Island — 120 precincts, identity + the board district from the
-      // usual spatial join. The layer publishes no polling-place reference.
+      // usual spatial join. The layer publishes no polling-place reference;
+      // the vote center comes from the Clerk's own list (see
+      // loadRockIslandVoteCenters), joined on the precinct's NAME. A precinct
+      // the list does not assign gets no center row and the Clerk's Elections
+      // page as its link; one it does gets the center, its pin and the State
+      // Board's lookup for this county, which answers for the voter's own
+      // address and is where a reader confirms the assignment.
       {
         key: "rock-island",
         coverage: rockIslandCountyCoverage,
@@ -35211,7 +35230,8 @@ function initChiExplorer() {
         query: function (point, seq) {
           return Promise.all([
             featureSetAt(loadRockIslandPrecincts, point),
-            loadRockIslandCountyBoard().catch(function () { return null; })
+            loadRockIslandCountyBoard().catch(function () { return null; }),
+            loadRockIslandVoteCenters().catch(function () { return null; })
           ]).then(function (results) {
             var feature = findFeatureContaining(results[0], point);
             if (!feature) return null;
@@ -35221,23 +35241,60 @@ function initChiExplorer() {
               if (bf) boardDistrict = rockIslandDistrictNumber(bf);
             }
             var name = findPropCI(feature.properties || {}, ["name"]);
+            name = name != null && String(name).trim() ? String(name).trim() : null;
+            var center = null, list = results[2];
+            if (list && list.precincts && list.centers && name != null) {
+              var idx = list.precincts[name];
+              if (idx != null && list.centers[idx]) center = list.centers[idx];
+            }
             return {
               seq: seq,
-              name: name != null && String(name).trim() ? String(name).trim() : null,
-              boardDistrict: boardDistrict
+              name: name,
+              boardDistrict: boardDistrict,
+              voteCenter: center ? String(center.place) : null,
+              voteCenterAddress: center && center.address ? String(center.address) : null,
+              voteCenterLat: center && center.lat != null ? center.lat : null,
+              voteCenterLng: center && center.lng != null ? center.lng : null,
+              voteCenterListed: center && list.fetched ? String(list.fetched) : null,
+              lookupUrl: center && list.lookupUrl ? String(list.lookupUrl) : null
             };
           });
         },
         render: function (result) {
           var fields = [];
           if (result.boardDistrict) fields.push({ label: "County Board District", value: result.boardDistrict });
+          if (result.voteCenter) {
+            fields.push({ label: "Vote center", value: result.voteCenter +
+              (result.voteCenterAddress ? " — " + result.voteCenterAddress : ""),
+            mapAddress: result.voteCenterAddress || null });
+            if (result.voteCenterListed) {
+              fields.push({ label: "As listed", value: "County Clerk's Vote Centers list, read " + result.voteCenterListed });
+            }
+          }
           fields.push({ label: "County", value: "Rock Island County" });
           return renderFieldStack(fields);
         },
         cardIdentifier: function (result) {
           return result.name ? "Precinct " + String(result.name) : "Unknown";
         },
-        primaryLink: function () {
+        // the county's own word for the building, on the pin as on the card
+        pointOfInterest: function (result) {
+          if (!result || !result.voteCenter || !result.voteCenterAddress) return null;
+          var poi = { kind: "Vote center", label: result.voteCenter, address: result.voteCenterAddress };
+          if (result.voteCenterLat != null && result.voteCenterLng != null &&
+              isFinite(result.voteCenterLat) && isFinite(result.voteCenterLng)) {
+            poi.lat = Number(result.voteCenterLat);
+            poi.lng = Number(result.voteCenterLng);
+          }
+          return poi;
+        },
+        primaryLink: function (result) {
+          if (result && result.voteCenter && result.lookupUrl) {
+            return {
+              label: "Confirm your vote center — State Board of Elections lookup (official)",
+              url: result.lookupUrl
+            };
+          }
           return {
             label: "Rock Island County Clerk — Elections (official)",
             url: "https://www.rockislandcountyil.gov/247/Elections"

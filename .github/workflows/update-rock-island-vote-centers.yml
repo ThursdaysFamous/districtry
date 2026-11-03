@@ -1,0 +1,118 @@
+name: Update Rock Island County vote centers
+
+# Weekly refresh of the Rock Island County precinct card's vote-center row
+# (il/data/app/rock-island-vote-centers.json, fetched by index.html).
+#
+# Rock Island votes at 36 VOTE CENTERS rather than one polling place per
+# precinct. The County Clerk publishes one list, a PDF on the county's own site,
+# naming each center with its address and the precincts assigned to it, and the
+# county's pages tell a voter to go to their home Vote Center. The card names
+# the center assigned to the precinct and claims nothing about voting at any
+# other. A vote center is the one row on the card where being a cycle out of
+# date sends a resident to the wrong building, so it is read weekly and a
+# change lands as a PR a person reads before it ships.
+#
+# WHAT TO WATCH IN THE LOG RATHER THAN THE DIFF. The builder refuses rather
+# than shipping short, so a red run is a real signal in one of three shapes:
+#   * "the list names N centers, expected 36" — the county changed how many
+#     centers it runs, or the PDF's row layout moved and the parser read fewer
+#     rows than there are. Either way a person reads the PDF before anything
+#     ships.
+#   * "precincts in the layer and not in the list" or "in the list and not in
+#     the layer" — the county renamed or re-precincted, or added an
+#     abbreviation the builder's table does not know. The join needs
+#     re-reading, not loosening.
+#   * "assigned to two centers" — a precinct appears under two centers in the
+#     list, which the county would have to settle.
+# A center the Census Bureau's geocoder cannot place ships without a point and
+# the map pins it through the app's own geocoder; the run says how many were
+# placed and fails only below 75%.
+
+on:
+  schedule:
+    - cron: "0 19 * * 5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-vote-centers:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI (a PR opened with the default GITHUB_TOKEN fires no workflows).
+      # Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install builder dependencies
+        run: pip install -c scripts/requirements.txt requests pdfplumber
+
+      - name: Rebuild vote-center table
+        run: python3 scripts/build_rock_island_vote_centers.py
+
+      # Gate the regenerated data before it can reach a PR.
+      - name: Validate app + data files
+        run: python3 scripts/validate_index.py il/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          # The file carries a fetch date, so it differs every week whether or
+          # not a center moved. Compare the centers and the assignments only —
+          # otherwise this opens a no-op PR every Friday and the real ones stop
+          # being read.
+          if git diff --quiet -- il/data/app/rock-island-vote-centers.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          elif python3 - <<'PY'
+          import json, subprocess, sys
+          path = "il/data/app/rock-island-vote-centers.json"
+          old = json.loads(subprocess.run(["git", "show", "HEAD:" + path],
+                                          capture_output=True, text=True, check=True).stdout)
+          with open(path, encoding="utf-8") as handle:
+              new = json.load(handle)
+          same = all(old.get(k) == new.get(k) for k in ("centers", "precincts", "lookupUrl", "source"))
+          sys.exit(0 if same else 1)
+          PY
+          then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Only the fetch date moved; no vote center or assignment changed."
+            git checkout -- il/data/app/rock-island-vote-centers.json
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch (not per-run): an unmerged PR is refreshed in place by
+          # the force-push below instead of spawning a duplicate PR.
+          branch="bot/rock-island-vote-centers-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip, not from the checkout this
+          # run started with, so the branch differs from main in its data file
+          # alone (see update-henry-precinct-polling.yml for the measurement).
+          git fetch --depth=1 origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add il/data/app/rock-island-vote-centers.json
+          git commit -m "Update Rock Island County vote centers from the County Clerk's list"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Rock Island County vote centers from the County Clerk's list" \
+              --body "Automated weekly refresh of the Rock Island County precinct card's vote-center row — the 36 vote centers with their addresses and the center each of the 120 precincts is assigned to, read from the County Clerk's own Vote Centers list by \`scripts/build_rock_island_vote_centers.py\`. Opened only when a center or an assignment actually changed; a run where nothing moved but the fetch date opens nothing. Please review the diff before merging — this changes where the site tells residents to vote." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

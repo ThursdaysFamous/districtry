@@ -1,0 +1,382 @@
+{
+  "centers": [
+    {
+      "address": "214 S Main St., Port Byron IL 61275",
+      "lat": 41.602728,
+      "lng": -90.336308,
+      "number": "01",
+      "place": "River Valley District Library"
+    },
+    {
+      "address": "124 Butzer St., Hillsdale IL 61257",
+      "lat": 41.614597,
+      "lng": -90.173508,
+      "number": "02",
+      "place": "Hillsdale United Methodist Church"
+    },
+    {
+      "address": "251 S. State Ave., Hampton IL 61256",
+      "lat": 41.551408,
+      "lng": -90.412228,
+      "number": "03",
+      "place": "Hampton Heritage Center"
+    },
+    {
+      "address": "630 19 St., East Moline IL 61244",
+      "lat": 41.524892,
+      "lng": -90.425416,
+      "number": "04",
+      "place": "UAW Hall"
+    },
+    {
+      "address": "1200 - Ave of the Cities, East Moline IL 61244",
+      "lat": 41.489475,
+      "lng": -90.4382,
+      "number": "05",
+      "place": "Crash Champions"
+    },
+    {
+      "address": "121 11 St., Silvis IL 61282",
+      "lat": 41.510946,
+      "lng": -90.413248,
+      "number": "06",
+      "place": "Silvis City Council Chambers"
+    },
+    {
+      "address": "800 - 17 St., Silvis IL 61282",
+      "lat": 41.501543,
+      "lng": -90.406033,
+      "number": "07",
+      "place": "Our Lady of Guadalupe Church"
+    },
+    {
+      "address": "637 - 17 Ave., East Moline IL 61244",
+      "lat": 41.513996,
+      "lng": -90.446351,
+      "number": "08",
+      "place": "So. Mol. Twp. Sr. Center"
+    },
+    {
+      "address": "3209 - 60 St., Moline IL 61265",
+      "lat": 41.479698,
+      "lng": -90.457,
+      "number": "09",
+      "place": "Christ the King Catholic Church"
+    },
+    {
+      "address": "4330 - 12 Ave., Moline IL 61265",
+      "lat": 41.500366,
+      "lng": -90.477115,
+      "number": "10",
+      "place": "Pathway Church"
+    },
+    {
+      "address": "1901 - 29 St., Moline IL 61265",
+      "lat": 41.494422,
+      "lng": -90.496661,
+      "number": "11",
+      "place": "1st Baptist Church"
+    },
+    {
+      "address": "700 - 35 Ave. Pl., Moline IL 61265",
+      "lat": 41.47288,
+      "lng": -90.528253,
+      "number": "12",
+      "place": "Bethany Baptist Church"
+    },
+    {
+      "address": "3303 - 41 St., Moline IL 61265",
+      "lat": 41.478811,
+      "lng": -90.477724,
+      "number": "13",
+      "place": "1st Covenant Church"
+    },
+    {
+      "address": "3801 - 7 St., East Moline IL 61244",
+      "lat": 41.494489,
+      "lng": -90.444472,
+      "number": "14",
+      "place": "Christ United Methodist Church"
+    },
+    {
+      "address": "777 - 25 Ave., East Moline IL 61244",
+      "lat": 41.506726,
+      "lng": -90.442977,
+      "number": "15",
+      "place": "1st Presbyterian Church"
+    },
+    {
+      "address": "4700 - 53 St., Moline IL 61265",
+      "lat": 41.467158,
+      "lng": -90.463497,
+      "number": "16",
+      "place": "Calvary Church of the QC"
+    },
+    {
+      "address": "1230 5 Ave., Moline IL 61265",
+      "lat": 41.504852,
+      "lng": -90.519762,
+      "number": "17",
+      "place": "1st Lutheran Church"
+    },
+    {
+      "address": "1826 - 16 St., Moline IL 61265",
+      "lat": 41.494319,
+      "lng": -90.513378,
+      "number": "18",
+      "place": "Sacred City Church"
+    },
+    {
+      "address": "1584 34 Ave., Moline IL 61265",
+      "lat": 41.479081,
+      "lng": -90.509263,
+      "number": "19",
+      "place": "QC Music Guild"
+    },
+    {
+      "address": "1717 - 8 Ave., Moline IL 61265",
+      "lat": 41.504933,
+      "lng": -90.511691,
+      "number": "20",
+      "place": "Christ Anglican Church"
+    },
+    {
+      "address": "3300 River Drive, Moline IL 61265",
+      "lat": 41.514501,
+      "lng": -90.490908,
+      "number": "21",
+      "place": "Western Illinois University"
+    },
+    {
+      "address": "630 - 9 St., Rock Island IL 61201",
+      "lat": 41.503792,
+      "lng": -90.586166,
+      "number": "22",
+      "place": "Martin Luther King Center"
+    },
+    {
+      "address": "1820 - 5 Ave., Rock Island IL 61201",
+      "lat": 41.507682,
+      "lng": -90.574332,
+      "number": "23",
+      "place": "Two Rivers United Methodist Church"
+    },
+    {
+      "address": "2827 - 7 Ave., Rock Island IL 61201",
+      "lat": 41.505178,
+      "lng": -90.560203,
+      "number": "24",
+      "place": "Rock Island Township Hall"
+    },
+    {
+      "address": "1501 - 30 St., Rock Island IL 61201",
+      "lat": 41.496222,
+      "lng": -90.557129,
+      "number": "25",
+      "place": "Karen Baptist Church"
+    },
+    {
+      "address": "101 31 Ave., Rock Island IL 61201",
+      "lat": 41.47983,
+      "lng": -90.597654,
+      "number": "26",
+      "place": "Teamsters Local 371"
+    },
+    {
+      "address": "3300 24 St., Rock Island IL 61201",
+      "lat": 41.477323,
+      "lng": -90.56737,
+      "number": "27",
+      "place": "Immanuel Lutheran Church"
+    },
+    {
+      "address": "2921 38 St., Rock Island IL 61201",
+      "lat": 41.480618,
+      "lng": -90.547576,
+      "number": "28",
+      "place": "First Church of the Nazarene"
+    },
+    {
+      "address": "2704 38 St., Rock Island IL 61201",
+      "lat": 41.483056,
+      "lng": -90.547728,
+      "number": "29",
+      "place": "Edgewood Baptist Church"
+    },
+    {
+      "address": "320 1 St. W, Milan IL 61264",
+      "lat": 41.450965,
+      "lng": -90.567284,
+      "number": "30",
+      "place": "St. Ambrose Parish Center"
+    },
+    {
+      "address": "2701 1 St. E, Milan IL 61264",
+      "lat": 41.425925,
+      "lng": -90.567526,
+      "number": "31",
+      "place": "The Camden Centre"
+    },
+    {
+      "address": "115 - W - 12 Ave., Milan IL 61264",
+      "lat": 41.440369,
+      "lng": -90.568244,
+      "number": "32",
+      "place": "St. Matthew Lutheran Church"
+    },
+    {
+      "address": "706 1 St., Coal Valley IL 61240",
+      "lat": 41.445728,
+      "lng": -90.460995,
+      "number": "33",
+      "place": "New Hope Baptist Church"
+    },
+    {
+      "address": "16816 W 28 St., Milan IL 61264",
+      "lat": 41.350864,
+      "lng": -90.607509,
+      "number": "34",
+      "place": "Bowling Township Hall"
+    },
+    {
+      "address": "302 2 St. W, Andalusia IL 61232",
+      "lat": 41.441864,
+      "lng": -90.721289,
+      "number": "35",
+      "place": "Andalusia Community Center"
+    },
+    {
+      "address": "18121 134 Ave. W, Taylor Ridge IL 61284",
+      "lat": 41.388243,
+      "lng": -90.820565,
+      "number": "36",
+      "place": "Zion Lutheran Church"
+    }
+  ],
+  "fetched": "2026-11-03",
+  "lookupUrl": "https://ova.elections.il.gov/PollingPlaceLookup.aspx?Name=mmDgPiKx8aN9qemsCi1TOBk6iTw%2fA%2fJFYRiTSnf%2bltwWOcPGp74he9KC",
+  "precincts": {
+    "ANDALUSIA": 34,
+    "BLACKHAWK 1": 29,
+    "BLACKHAWK 2": 29,
+    "BLACKHAWK 3": 30,
+    "BLACKHAWK 4": 30,
+    "BLACKHAWK 5": 29,
+    "BLACKHAWK 6": 31,
+    "BLACKHAWK 7": 31,
+    "BOWLING 1": 33,
+    "BOWLING 2": 33,
+    "BUFFALO PRAIRIE": 35,
+    "CANOE CREEK": 1,
+    "COAL VALLEY 1": 32,
+    "COAL VALLEY 2": 32,
+    "COAL VALLEY 3": 32,
+    "COE": 0,
+    "CORDOVA": 0,
+    "DRURY": 35,
+    "EDGINGTON 1": 35,
+    "EDGINGTON 2": 35,
+    "HAMPTON 1": 2,
+    "HAMPTON 10": 6,
+    "HAMPTON 11": 5,
+    "HAMPTON 12": 5,
+    "HAMPTON 13": 3,
+    "HAMPTON 14": 5,
+    "HAMPTON 15": 6,
+    "HAMPTON 16": 6,
+    "HAMPTON 17": 2,
+    "HAMPTON 2": 2,
+    "HAMPTON 3": 3,
+    "HAMPTON 4": 3,
+    "HAMPTON 5": 4,
+    "HAMPTON 6": 5,
+    "HAMPTON 7": 3,
+    "HAMPTON 8": 6,
+    "HAMPTON 9": 1,
+    "MOLINE 1": 16,
+    "MOLINE 10": 19,
+    "MOLINE 11": 17,
+    "MOLINE 12": 18,
+    "MOLINE 13": 18,
+    "MOLINE 14": 19,
+    "MOLINE 15": 19,
+    "MOLINE 16": 19,
+    "MOLINE 17": 20,
+    "MOLINE 18": 20,
+    "MOLINE 19": 20,
+    "MOLINE 2": 16,
+    "MOLINE 20": 9,
+    "MOLINE 3": 17,
+    "MOLINE 4": 18,
+    "MOLINE 5": 11,
+    "MOLINE 6": 16,
+    "MOLINE 7": 17,
+    "MOLINE 8": 17,
+    "MOLINE 9": 18,
+    "PORT BYRON": 0,
+    "ROCK ISLAND 1": 21,
+    "ROCK ISLAND 10": 24,
+    "ROCK ISLAND 11": 23,
+    "ROCK ISLAND 12": 24,
+    "ROCK ISLAND 13": 24,
+    "ROCK ISLAND 14": 23,
+    "ROCK ISLAND 15": 24,
+    "ROCK ISLAND 2": 21,
+    "ROCK ISLAND 3": 21,
+    "ROCK ISLAND 4": 22,
+    "ROCK ISLAND 5": 21,
+    "ROCK ISLAND 6": 22,
+    "ROCK ISLAND 7": 22,
+    "ROCK ISLAND 8": 22,
+    "ROCK ISLAND 9": 23,
+    "RURAL": 33,
+    "SOUTH MOLINE 1": 7,
+    "SOUTH MOLINE 10": 7,
+    "SOUTH MOLINE 11": 12,
+    "SOUTH MOLINE 12": 13,
+    "SOUTH MOLINE 13": 12,
+    "SOUTH MOLINE 14": 4,
+    "SOUTH MOLINE 15": 14,
+    "SOUTH MOLINE 16": 14,
+    "SOUTH MOLINE 17": 13,
+    "SOUTH MOLINE 18": 14,
+    "SOUTH MOLINE 19": 15,
+    "SOUTH MOLINE 2": 7,
+    "SOUTH MOLINE 20": 8,
+    "SOUTH MOLINE 21": 12,
+    "SOUTH MOLINE 22": 9,
+    "SOUTH MOLINE 23": 15,
+    "SOUTH MOLINE 24": 11,
+    "SOUTH MOLINE 25": 10,
+    "SOUTH MOLINE 26": 12,
+    "SOUTH MOLINE 27": 13,
+    "SOUTH MOLINE 28": 4,
+    "SOUTH MOLINE 29": 8,
+    "SOUTH MOLINE 3": 8,
+    "SOUTH MOLINE 4": 9,
+    "SOUTH MOLINE 5": 9,
+    "SOUTH MOLINE 6": 10,
+    "SOUTH MOLINE 7": 10,
+    "SOUTH MOLINE 8": 11,
+    "SOUTH MOLINE 9": 10,
+    "SOUTH ROCK ISLAND 1": 25,
+    "SOUTH ROCK ISLAND 10": 28,
+    "SOUTH ROCK ISLAND 11": 27,
+    "SOUTH ROCK ISLAND 12": 27,
+    "SOUTH ROCK ISLAND 13": 27,
+    "SOUTH ROCK ISLAND 14": 26,
+    "SOUTH ROCK ISLAND 15": 25,
+    "SOUTH ROCK ISLAND 16": 25,
+    "SOUTH ROCK ISLAND 2": 25,
+    "SOUTH ROCK ISLAND 3": 26,
+    "SOUTH ROCK ISLAND 4": 26,
+    "SOUTH ROCK ISLAND 5": 26,
+    "SOUTH ROCK ISLAND 6": 27,
+    "SOUTH ROCK ISLAND 7": 28,
+    "SOUTH ROCK ISLAND 8": 28,
+    "SOUTH ROCK ISLAND 9": 28,
+    "ZUMA": 1
+  },
+  "source": "https://rockislandcountyil.gov/DocumentCenter/View/520/Voting-Centers-PDF",
+  "sourcePage": "https://rockislandcountyil.gov/247/Elections"
+}
