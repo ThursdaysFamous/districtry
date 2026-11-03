@@ -2216,6 +2216,78 @@ try {
     }
   }
 
+  // 1k1c. THE ROCK ISLAND PRECINCT CARD NAMES ITS VOTE CENTER. The county
+  //      votes at 36 vote centers and the Clerk's list assigns each precinct to
+  //      one; the card must name the center assigned to the precinct, say when
+  //      the list was read, pin the building under the county's own word for
+  //      it, and link the State Board's lookup; a precinct the list does not
+  //      assign must name no center and link the Clerk's Elections page. The
+  //      county's precinct and board layers are read live from its ArcGIS
+  //      organisation, so both are stubbed (one square precinct, no board
+  //      district) and the vote-center file is stubbed to one test building.
+  {
+    const rlat = 41.5067, rlng = -90.5151; // Moline, inside the county outline the app ships
+    const d = 0.01;
+    const precincts = JSON.stringify({ features: [{ attributes: { NAME: "MOLINE 1" },
+      geometry: { rings: [[[rlng - d, rlat - d], [rlng - d, rlat + d], [rlng + d, rlat + d],
+        [rlng + d, rlat - d], [rlng - d, rlat - d]]] } }] });
+    const fixture = (assigned) => JSON.stringify({
+      source: "https://rockislandcountyil.gov/DocumentCenter/View/520/Voting-Centers-PDF",
+      sourcePage: "https://rockislandcountyil.gov/247/Elections",
+      lookupUrl: "https://ova.elections.il.gov/PollingPlaceLookup.aspx?Name=TEST",
+      fetched: "2026-11-03",
+      centers: [{ number: "01", place: "TEST VOTE CENTER", address: "1 N TEST ST, Moline IL 61265",
+        lat: rlat + 0.001, lng: rlng + 0.001 }],
+      precincts: assigned ? { "MOLINE 1": 0 } : {} });
+    const read = async (assigned) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${rlat},${rlng}&layers=county-precinct`, async (p) => {
+        await p.route(/6FnscPPlUa9DXXOk\/arcgis\/rest\/services\/Other_Layers\/FeatureServer\/3\/query/, (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: precincts }));
+        await p.route(/6FnscPPlUa9DXXOk\/arcgis\/rest\/services\/Other_Layers\/FeatureServer\/4\/query/, (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ features: [] }) }));
+        await p.route("**/data/app/rock-island-vote-centers.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: fixture(assigned) }));
+      });
+      await page.waitForFunction(() => {
+        const c = document.getElementById("card-county-precinct");
+        return c && /Rock Island County/.test(c.textContent);
+      }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      if (assigned) {
+        await page.waitForFunction(() => Array.from(document.querySelectorAll(".leaflet-tooltip-pane .poi-pin-label"))
+          .some((el) => /TEST VOTE CENTER/.test(el.textContent)), null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      } else {
+        await page.waitForTimeout(1500);
+      }
+      const out = await page.evaluate(() => {
+        const c = document.getElementById("card-county-precinct");
+        const block = c ? c.parentNode : null;
+        const link = block ? block.querySelector(".card-footer-link") : null;
+        return { text: c ? c.textContent.replace(/\s+/g, " ") : null,
+          link: link ? link.href : null,
+          pinLabels: Array.from(document.querySelectorAll(".leaflet-tooltip-pane .poi-pin-label"))
+            .map((el) => el.textContent.replace(/\s+/g, " ").trim()) };
+      });
+      await context.close();
+      return out;
+    };
+    const live = await read(true);
+    check("the Rock Island precinct card names its vote center, says when the list was read and links the State Board's lookup",
+      /Vote center\s*TEST VOTE CENTER — 1 N TEST ST, Moline IL 61265/.test(live.text || "") &&
+      /Vote Centers list, read 2026-11-03/.test(live.text || "") &&
+      live.link === "https://ova.elections.il.gov/PollingPlaceLookup.aspx?Name=TEST",
+      JSON.stringify(live));
+    check("the vote center drops one pin labelled with the county's own word and the building",
+      live.pinLabels.filter((t) => t === "Vote centerTEST VOTE CENTER").length === 1,
+      JSON.stringify(live.pinLabels));
+    const unassigned = await read(false);
+    check("a precinct the Clerk's list does not assign names no vote center and links the Clerk's Elections page",
+      unassigned.text !== null && /Rock Island County/.test(unassigned.text) && !/Vote center/.test(unassigned.text) &&
+      unassigned.link === "https://www.rockislandcountyil.gov/247/Elections" &&
+      !unassigned.pinLabels.some((t) => /TEST VOTE CENTER/.test(t)),
+      JSON.stringify(unassigned));
+  }
+
   // 1k2. THE CHICAGO WARD CARD LINKS THAT WARD'S CHIPOLI PAGE. The address is
   //     built from the ward number at runtime, so the monthly link check
   //     cannot probe it, and every path on chipoli.org answers 200 whatever
