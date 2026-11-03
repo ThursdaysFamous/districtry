@@ -1,95 +1,86 @@
 #!/usr/bin/env python3
 """
 Build ia/data/app/ia-polling-places.json: the polling place the Iowa
-Legislature's statewide list names for each precinct on this app's precinct
-map (ia/data/app/ia-precincts.json), with the list's own map position for
-each building.
+Secretary of State's statewide list names for each precinct on this app's
+precinct map (ia/data/app/ia-precincts.json).
 
-    python3 ia/scripts/build_ia_polling_places.py          # fetch, join, write
-    python3 ia/scripts/build_ia_polling_places.py --check  # offline: the shipped file holds together
+    python3 ia/scripts/build_ia_polling_places.py --from-xlsx FILE   # convert the office's spreadsheet to the source CSV (needs openpyxl)
+    python3 ia/scripts/build_ia_polling_places.py                    # offline: join the source CSV to the map, write
+    python3 ia/scripts/build_ia_polling_places.py --check            # offline: the shipped file holds together
 
-THE SOURCE is the Legislative Services Agency's public layer IowaPollingPlaces
-(ArcGIS Online item b1e65daed17e46aca67dc19ed4248204, owner jodiflory), whose
-description says its names, addresses and precincts come from the Secretary
-of State and its positions from the state's address locator and hand
-placement. Read 2026-11-03: 1,661 points, and EVERY row's LastUpdate and
-EffectiveDate is 2022-10-17. So this is the list for the November 2022
-general election, and the card says that in so many words: it gives the date
-the list was last updated, says the polling place may have changed since, and
-links the Secretary of State's own lookup, which answers by address. Adam
-asked for it on 2026-11-03 knowing the date, and an e-mail asking the
-Legislature whether a current list exists went to its GIS contact the same
-day. The Secretary of State's site answers this project's robots.txt read
-with HTTP 403 and publishes no statewide file, which is why this list is the
-one read.
+THE SOURCE is the spreadsheet the Secretary of State's Elections Division
+e-mailed in answer to Adam's letter on 2026-11-03 ("2026 General Polling
+Place Assignments 10_27_2026.xlsx", from Dylan Lynch, Election Security
+Manager). The office's site answers this project's robots.txt read with
+HTTP 403 and publishes no statewide file, so the list cannot be fetched: a
+person receives it and runs --from-xlsx, which writes SOURCE_CSV in
+ia/data/source/ with the columns this builder reads. There is no weekly job
+for that reason. The office's note: the "temporary" columns hold the actual
+locations for this election, the list is pulled about 20 days before an
+election, and a polling place can still change, even on Election Day. So
+the card reads the temporary columns, names the list's date, says a place
+can change, and links the office's own lookup.
 
-robots.txt: services2.arcgis.com answers /robots.txt with HTTP 403, which RFC
-9309 section 2.3.1.3 reads as no policy (allow); require_robots_once makes
-that reading with this builder's own client before the first fetch.
+THE CARD HIDES THE LIST AFTER ITS ELECTION: the file carries electionDate,
+and from the day after it the app treats the list as out of date and names
+no polling place, so a reader in a later year is never sent to a 2026
+building.
 
-THE JOIN IS ON THE PRECINCT'S NAME within its county, because the list's
-PrecinctCode is a county's own short code that the map does not carry. The
-map is a later vintage than the list (2024-01-30 against 2022-10-17), so a
-name is matched after folding case, runs of spaces, leading zeros on numbers
-("01" and "1") and "TWSP"/"TWP", and nothing looser. Measured 2026-11-03:
-1,624 of the map's 1,660 precincts are named this way. The other 36 are
-precincts the 2022 list spells differently or does not have (Webster County
-renamed every precinct, Winneshiek writes its combined townships with
-commas), and their cards say the list names no polling place for that
-precinct rather than guess which row it was. A list row naming no precinct on
-the map is printed, never forced onto one. The build fails if fewer than
-MIN_LISTED_FRACTION of the map's precincts are named.
+THE JOIN IS ON THE PRECINCT'S NAME within its county (the list's Precinct
+Code is a county's own short code, which the map does not carry). A name is
+matched after folding case, runs of spaces, leading zeros on numbers, "TWSP"
+to "TWP", apostrophes and slashes, and nothing looser. Measured 2026-11-03:
+1,638 of the map's 1,659 named precincts match. Of the rest, Tama County
+has re-precincted since the map was drawn (2024-01-30), Johnson County
+lists CV.2 and CV.9 together, and Mills and Warren spell some names in
+ways no fold here reads as the same, and Lee County's West Point row
+gives no address; those cards say the list names no
+polling place for the precinct rather than guess. A list row naming no
+precinct on the map is printed, never forced onto one. The build fails if
+fewer than MIN_LISTED_FRACTION of the map's precincts are named.
 
-THE PIN is the list's own point, kept only inside the precinct's county or
-within COUNTY_SLACK_M of it, tested against this app's own county file; a
-point outside ships without a position, and the app then looks the address up
-itself when a reader opens that card.
-
-THE DATE THE CARD GIVES is the latest LastUpdate on the list (a date-only
-field, read as the day it names). The weekly job re-reads the list, so a newer list reaches the card
-with its own date; an unchanged list writes the same bytes and opens nothing.
+THE PIN: the list carries no positions. Where a building's address equals
+(after folding commas and spaces) one in the Legislature's 2022 list, which
+did carry positions, that position is reused from POSITIONS_PATH, kept only
+inside the precinct's county or within COUNTY_SLACK_M of it. Any other
+building ships without a position, and the app looks the address up itself
+when a reader opens that card.
 """
 
+import csv
 import json
 import math
 import os
 import re
 import sys
-from datetime import datetime, timezone
+from datetime import date
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts"))
 
-from scraper_common import (UA_HEADERS_ROSTER_BOT, UA_ROSTER_BOT, make_fail,  # noqa: E402
-                            require_robots_once)
+from scraper_common import make_fail  # noqa: E402
 
 fail = make_fail("ia-polling-places")
 
 APP_DIR = os.path.join(REPO_ROOT, "ia", "data", "app")
+SRC_DIR = os.path.join(REPO_ROOT, "ia", "data", "source")
 OUT_PATH = os.path.join(APP_DIR, "ia-polling-places.json")
 PRECINCTS_PATH = os.path.join(APP_DIR, "ia-precincts.json")
 COUNTIES_PATH = os.path.join(APP_DIR, "state-counties.json")
+SOURCE_CSV = os.path.join(SRC_DIR, "ia-sos-polling-places.csv")
+POSITIONS_PATH = os.path.join(SRC_DIR, "ia-lsa-polling-positions-2022.json")
 
-SERVICE_URL = ("https://services2.arcgis.com/KhKjlwEBlPJd6v51/arcgis/rest/services/"
-               "IowaPollingPlaces/FeatureServer/0")
 LOOKUP_URL = "https://sos.iowa.gov/voters/find-my-precinctpolling-place"
+# The list's own date is the one in the spreadsheet's file name as the office
+# sent it ("... 10_27_2026.xlsx"); --from-xlsx writes it on every CSV row, so a
+# new list carries its own date onto the card.
+SOURCE_NAME = "the Iowa Secretary of State's polling-place list"
 
 COUNTY_SLACK_M = 3000       # a polling place can sit just across a county line
-MIN_LISTED_FRACTION = 0.90  # 1,624 of 1,660 (97.8%) on 2026-11-03
+MIN_LISTED_FRACTION = 0.95  # 1,638 of 1,659 (98.7%) on 2026-11-03
 MIN_ROWS = 1500
-
-
-def get_json(url, params):
-    import requests  # function-local, as scraper_common.fetch does
-    require_robots_once(url, UA_ROSTER_BOT, headers=UA_HEADERS_ROSTER_BOT)
-    r = requests.get(url, params=params, headers=UA_HEADERS_ROSTER_BOT, timeout=180)
-    if r.status_code != 200:
-        fail("HTTP %s from %s" % (r.status_code, url))
-    d = r.json()
-    if "error" in d:
-        fail("%s answered an error: %s" % (url, d["error"]))
-    return d
+CSV_FIELDS = ["electionDate", "listDate", "county", "precinctCode", "precinct", "place", "address"]
 
 
 def clean(v):
@@ -97,36 +88,74 @@ def clean(v):
 
 
 def fold(name):
-    """The precinct-name comparison: case, spaces, leading zeros, TWSP."""
-    s = clean(name).upper()
+    """The precinct-name comparison: case, spaces, leading zeros, TWSP,
+    apostrophes and slashes."""
+    s = clean(name).upper().replace("'", "").replace("\u2019", "").replace("/", " ")
+    s = " ".join(s.split())
     s = re.sub(r"\b0+(\d)", r"\1", s)
     return s.replace("TWSP", "TWP")
 
 
-def list_day(ms):
-    """The day an ArcGIS date field names. These are date-only values stored
-    as midnight UTC (every row reads 1665964800000, 2022-10-17T00:00Z), so
-    the day is read in UTC; read in Iowa's time zone it would be the 16th."""
-    return datetime.fromtimestamp(ms / 1000.0, tz=timezone.utc).date().isoformat()
+def fold_address(a):
+    return " ".join(clean(a).upper().replace(",", " ").split())
 
 
-def read_service():
-    feats, offset = [], 0
-    while True:
-        d = get_json(SERVICE_URL + "/query", {
-            "where": "1=1", "outFields": "*", "orderByFields": "OBJECTID", "outSR": 4326,
-            "resultOffset": offset, "resultRecordCount": 1000, "f": "json"})
-        page = d.get("features", [])
-        feats.extend(page)
-        if not page or not d.get("exceededTransferLimit"):
-            break
-        offset += len(page)
-    if len(feats) < MIN_ROWS:
-        fail("the Legislature's layer has %d points, fewer than %d" % (len(feats), MIN_ROWS))
-    stamps = [f["attributes"].get("LastUpdate") for f in feats if f["attributes"].get("LastUpdate")]
-    if not stamps:
-        fail("no row of the layer carries a LastUpdate")
-    return feats, list_day(max(stamps))
+def excel_day(v):
+    """An Excel serial date (the office's Election Date column) as ISO."""
+    if hasattr(v, "date"):
+        return v.date().isoformat()
+    return date.fromordinal(date(1899, 12, 30).toordinal() + int(v)).isoformat()
+
+
+def from_xlsx(path):
+    import openpyxl
+    m = re.search(r"(\d{1,2})_(\d{1,2})_(\d{4})", os.path.basename(path))
+    if not m:
+        fail("the file name %r carries no list date (MM_DD_YYYY)" % os.path.basename(path))
+    list_date = "%s-%02d-%02d" % (m.group(3), int(m.group(1)), int(m.group(2)))
+    wb = openpyxl.load_workbook(path, read_only=True)
+    rows = list(wb.active.iter_rows(values_only=True))
+    hdr = [clean(h) for h in rows[0]]
+    need = ["Election Date", "County Name", "Precinct Code", "Precinct Name",
+            "Temporary Polling Place Name", "Temporary Polling Place Address"]
+    for n in need:
+        if n not in hdr:
+            fail("the spreadsheet has no %r column (it has %s)" % (n, hdr))
+    ix = {n: hdr.index(n) for n in need}
+    out = []
+    for r in rows[1:]:
+        if not any(r):
+            continue
+        out.append({
+            "electionDate": excel_day(r[ix["Election Date"]]),
+            "listDate": list_date,
+            "county": clean(r[ix["County Name"]]),
+            "precinctCode": clean(r[ix["Precinct Code"]]),
+            "precinct": clean(r[ix["Precinct Name"]]),
+            # The office: the "temporary" columns are this election's actual locations.
+            "place": clean(r[ix["Temporary Polling Place Name"]]),
+            "address": clean(r[ix["Temporary Polling Place Address"]]),
+        })
+    if len(out) < MIN_ROWS:
+        fail("the spreadsheet has %d rows, fewer than %d" % (len(out), MIN_ROWS))
+    with open(SOURCE_CSV, "w", encoding="utf-8", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=CSV_FIELDS, lineterminator="\n")
+        w.writeheader()
+        for row in sorted(out, key=lambda x: (x["county"], x["precinct"])):
+            w.writerow(row)
+    print("wrote %s: %d rows, list dated %s" % (os.path.relpath(SOURCE_CSV, REPO_ROOT), len(out), list_date))
+
+
+def read_source():
+    with open(SOURCE_CSV, encoding="utf-8", newline="") as fh:
+        rows = list(csv.DictReader(fh))
+    if len(rows) < MIN_ROWS:
+        fail("%s has %d rows, fewer than %d" % (SOURCE_CSV, len(rows), MIN_ROWS))
+    for key in ("electionDate", "listDate"):
+        vals = {r[key] for r in rows}
+        if len(vals) != 1:
+            fail("the source list carries %d different %s values: %s" % (len(vals), key, sorted(vals)))
+    return rows, rows[0]["electionDate"], rows[0]["listDate"]
 
 
 def map_precincts():
@@ -178,49 +207,42 @@ def distance_m(lat, lng, polygons):
     return best
 
 
-def address_line(a):
-    city = clean(a.get("City"))
-    zipc = clean(a.get("Zipcode"))[:5]
-    return ("%s, %s, IA %s" % (clean(a.get("PhysicalAddress")), city, zipc)).strip()
-
-
 def build():
-    feats, list_date = read_service()
+    rows, election_date, list_date = read_source()
+    positions = json.load(open(POSITIONS_PATH, encoding="utf-8"))["positions"]
+    pos_by = {fold_address(a): p for a, p in positions.items()}
     mp = map_precincts()
     all_keys = {k for keys in mp.values() for k, _ in keys}
-    fips_of = {k: g for keys in mp.values() for k, g in keys}
+    county_of = {k: g for keys in mp.values() for k, g in keys}
     counties = county_polygons()
 
     joined, stray = {}, []
-    for f in feats:
-        a = f["attributes"]
-        if not clean(a.get("PollingPlaceName")) or not clean(a.get("PhysicalAddress")):
-            stray.append((a.get("County"), a.get("Precinct"), "no polling place or address"))
+    for r in rows:
+        if not r["place"] or not r["address"]:
+            stray.append((r["county"], r["precinct"], "no polling place or address"))
             continue
-        hits = mp.get((clean(a.get("County")).upper(), fold(a.get("Precinct"))))
+        hits = mp.get((r["county"].upper(), fold(r["precinct"])))
         if not hits:
-            stray.append((a.get("County"), a.get("Precinct"), "no precinct of that name on the map"))
+            stray.append((r["county"], r["precinct"], "no precinct of that name on the map"))
             continue
         for key, _ in hits:
-            if key in joined:
-                fail("the list names map precinct %s twice" % key)
-            joined[key] = f
+            if key in joined and (joined[key]["place"], joined[key]["address"]) != (r["place"], r["address"]):
+                fail("the list names two polling places for map precinct %s" % key)
+            joined[key] = r
     if len(joined) < MIN_LISTED_FRACTION * len(all_keys):
         fail("the list names a polling place for only %d of the map's %d precincts" % (len(joined), len(all_keys)))
 
     site_index, sites, rejected = {}, [], []
     precincts = {}
     for key in sorted(joined):
-        a = joined[key]["attributes"]
-        sk = (clean(a.get("PollingPlaceName")), address_line(a))
+        r = joined[key]
+        sk = (r["place"], r["address"])
         if sk not in site_index:
-            pos = None
-            g = joined[key].get("geometry") or {}
-            if g.get("x") is not None and g.get("y") is not None:
-                pos = (round(float(g["y"]), 6), round(float(g["x"]), 6))
-                polys = counties[fips_of[key]]
+            pos = pos_by.get(fold_address(r["address"]))
+            if pos:
+                polys = counties[county_of[key]]
                 if not inside(pos[0], pos[1], polys) and distance_m(pos[0], pos[1], polys) > COUNTY_SLACK_M:
-                    rejected.append((key, sk[1], pos))
+                    rejected.append((key, r["address"], pos))
                     pos = None
             site_index[sk] = len(sites)
             sites.append({"place": sk[0], "address": sk[1],
@@ -230,12 +252,13 @@ def build():
     for c, p, why in stray:
         print("NOT JOINED: %s %r: %s" % (c, p, why))
     for k, a, pos in rejected:
-        print("NO PIN: %s %s: the list's point %s is more than %d m outside the county"
+        print("NO PIN: %s %s: the 2022 position %s is more than %d m outside the county"
               % (k, a, pos, COUNTY_SLACK_M))
 
     out = {
+        "source": SOURCE_NAME,
         "listDate": list_date,
-        "sourceUrl": SERVICE_URL,
+        "electionDate": election_date,
         "lookupUrl": LOOKUP_URL,
         "sites": sites,
         "precincts": precincts,
@@ -245,9 +268,9 @@ def build():
         json.dump(out, fh, indent=1, ensure_ascii=False, sort_keys=True)
         fh.write("\n")
     print("wrote %s: %d of %d precincts named (%d not), %d buildings (%d placed), "
-          "%d list rows not joined; list last updated %s"
+          "%d list rows not joined; list dated %s for the election of %s"
           % (os.path.relpath(OUT_PATH, REPO_ROOT), len(precincts), len(all_keys), out["unlisted"],
-             len(sites), sum(1 for s in sites if s["lat"] is not None), len(stray), list_date))
+             len(sites), sum(1 for s in sites if s["lat"] is not None), len(stray), list_date, election_date))
 
 
 def check():
@@ -268,14 +291,21 @@ def check():
     for s in d["sites"]:
         if not s["place"] or not s["address"]:
             fail("a site with no name or address: %r" % s)
-    if not re.match(r"^\d{4}-\d{2}-\d{2}$", str(d.get("listDate"))):
-        fail("listDate %r is not a date" % d.get("listDate"))
-    print("OK ia-polling-places.json: %d of %d precincts named, %d buildings (%d placed), list last updated %s"
-          % (len(listed), len(keys), n, sum(1 for s in d["sites"] if s["lat"] is not None), d["listDate"]))
+    for k in ("listDate", "electionDate"):
+        if not re.match(r"^\d{4}-\d{2}-\d{2}$", str(d.get(k))):
+            fail("%s %r is not a date" % (k, d.get(k)))
+    print("OK ia-polling-places.json: %d of %d precincts named, %d buildings (%d placed), list dated %s for the election of %s"
+          % (len(listed), len(keys), n, sum(1 for s in d["sites"] if s["lat"] is not None), d["listDate"], d["electionDate"]))
 
 
 if __name__ == "__main__":
-    if "--check" in sys.argv[1:]:
+    args = sys.argv[1:]
+    if "--check" in args:
         check()
+    elif "--from-xlsx" in args:
+        i = args.index("--from-xlsx")
+        if i + 1 >= len(args):
+            fail("--from-xlsx needs the spreadsheet's path")
+        from_xlsx(args[i + 1])
     else:
         build()

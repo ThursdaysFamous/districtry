@@ -1294,14 +1294,14 @@ table.matrix code {
               </tr>
               <tr id="layer-precinct">
                 <th scope="row"><span class="layer-name">Precinct</span><code>precinct</code></th>
-                <td data-label="What it answers">The election precinct covering the point and its county, with a link to the Secretary of State's polling-place lookup.</td>
+                <td data-label="What it answers">The election precinct covering the point and its county, its polling place for the current election from the Secretary of State's list, and a link to the Secretary of State's polling-place lookup.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
                     <li><a href="https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/Iowa_Precincts/FeatureServer/0" target="_blank" rel="noopener">Iowa Legislature's own ArcGIS organization — Iowa_Precincts layer, pre-built by ia/scripts/build_ia_precincts.py (Visvalingam-simplified, 2,000-point agreement gate)</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">NO OFFICEHOLDER, and none is missing. A precinct elects nobody. The card names no polling place: the only statewide list, the Legislative Services Agency's IowaPollingPlaces layer, was last updated 2022-10-17 and will not be updated, so it was pulled from the card on 2026-11-03 and every card links the Secretary of State's lookup instead.</td>
-                <td data-label="Where it applies">Iowa — statewide, all 1,660 precincts across 99 counties. The precinct layer's own polling-place fields (PollingPlace/PollingPlaceAddr/PPID) are still never fetched; the card names no polling place.</td>
+                <td data-label="Who it names">NO OFFICEHOLDER, and none is missing. A precinct elects nobody. The polling place comes from the Iowa Secretary of State's 2026 general election polling place assignments (dated 2026-10-27), which the office e-mailed in answer to a letter on 2026-11-03; the card names the list's date, says a polling place can still change, and links the office's lookup. From the day after that election the card names no polling place.</td>
+                <td data-label="Where it applies">Iowa — statewide, all 1,660 precincts across 99 counties. The precinct layer's own polling-place fields (PollingPlace/PollingPlaceAddr/PPID) are still never fetched; the polling place comes from the Secretary of State's list, which names one for 1,638 of the map's 1,659 named precincts (measured 2026-11-03).</td>
               </tr>
             </tbody>
           </table>
@@ -1976,7 +1976,7 @@ table.matrix code {
       "@id": "https://districtry.com/ia/sources.html#dataset-precinct",
       "identifier": "precinct",
       "name": "Precinct",
-      "description": "The election precinct covering the point and its county, with a link to the Secretary of State's polling-place lookup. NO OFFICEHOLDER, and none is missing. A precinct elects nobody. The card names no polling place: the only statewide list, the Legislative Services Agency's IowaPollingPlaces layer, was last updated 2022-10-17 and will not be updated, so it was pulled from the card on 2026-11-03 and every card links the Secretary of State's lookup instead.",
+      "description": "The election precinct covering the point and its county, its polling place for the current election from the Secretary of State's list, and a link to the Secretary of State's polling-place lookup. NO OFFICEHOLDER, and none is missing. A precinct elects nobody. The polling place comes from the Iowa Secretary of State's 2026 general election polling place assignments (dated 2026-10-27), which the office e-mailed in answer to a letter on 2026-11-03; the card names the list's date, says a polling place can still change, and links the office's lookup. From the day after that election the card names no polling place.",
       "url": "https://districtry.com/ia/sources.html#layer-precinct",
       "isPartOf": {
         "@id": "https://districtry.com/ia/sources.html#catalog"
@@ -1990,7 +1990,7 @@ table.matrix code {
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "Iowa — statewide, all 1,660 precincts across 99 counties. The precinct layer's own polling-place fields (PollingPlace/PollingPlaceAddr/PPID) are still never fetched; the card names no polling place"
+        "name": "Iowa — statewide, all 1,660 precincts across 99 counties. The precinct layer's own polling-place fields (PollingPlace/PollingPlaceAddr/PPID) are still never fetched; the polling place comes from the Secretary of State's list, which names one for 1,638 of the map's 1,659 named precincts (measured 2026-11-03)"
       }
     },
     {
