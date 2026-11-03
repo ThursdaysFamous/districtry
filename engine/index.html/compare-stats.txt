@@ -292,6 +292,7 @@
     // the pinned district's own card, from the same query its sidebar card ran
     // at the selected point — so the report names who represents it too
     var parentCard = cardEl("div", "stats-card stats-parent-card");
+    parentCard.setAttribute("data-layer", parentMod.id);
     head.appendChild(parentCard);
     var parentRun = statsShowCard(parentMod, state.selectedPoint, parentCard, live);
     var actions = cardEl("div", "stats-actions");
@@ -324,6 +325,7 @@
         sumArea += ov.overlap;
         var det = document.createElement("details");
         det.className = "stats-row";
+        det.setAttribute("data-layer", r.mod.id); // the map-link count reads it
         var sum = document.createElement("summary");
         var top = cardEl("span", "stats-row-top");
         top.appendChild(cardEl("span", "stats-row-name", r.name));

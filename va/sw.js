@@ -67,6 +67,7 @@ const ROSTER_URLS = [
   "./data/app/va-conservation-boards.json",
   "./data/app/tribal-councils.json",
   "./data/app/coverage-gaps.json",
+  "./data/app/va-polling-places.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */
