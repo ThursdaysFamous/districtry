@@ -70,9 +70,14 @@
         if (result.address) noteBits.push(fmt(String(result.address)));
         if (result.district) noteBits.push("District " + String(result.district));
         var wrap = cardEl("div", "card-flush");
+        // The school's address opens a map app; opts.mapPlace is the town a
+        // fork's feed leaves off its addresses ("Chicago, IL").
+        var printed = result.address ? fmt(String(result.address)) : null;
         wrap.appendChild(renderLinkRow({
           title: result.name ? fmt(String(result.name)) : "Unknown",
-          note: noteBits.length ? noteBits.join(" · ") : null
+          note: noteBits.length ? noteBits.join(" · ") : null,
+          mapAddress: printed ? printed + (opts.mapPlace ? ", " + opts.mapPlace : "") : null,
+          mapText: printed
         }));
         return wrap;
       },

@@ -48,7 +48,7 @@ different thing from one it failed.
 | ia | **EAM·** | 99 | 99/99 | 154 | 154 | all | 55 | all | 13 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 660 | 1,158 | all | 428 | all | 12 of 14 levels |
 | in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 21 | all | 11 of 14 levels |
-| ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 17 | all | 12 of 14 levels |
+| ky | **EAM·** | 120 | 120/120 | 0 | 0 | by record | 18 | all | 12 of 14 levels |
 | la | **EAM·** | 64 | 64/64 | 560 | 559 | all | 24 | all | 9 of 14 levels |
 | mi | **EAM·** | 83 | 83/83 | 619 | 617 | all | 70 | all | 13 of 14 levels |
 | mn | **EAM·** | 87 | 87/87 | 447 | 445 | all | 23 | all | 13 of 14 levels |
@@ -59,7 +59,7 @@ different thing from one it failed.
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 19 | all | 10 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 20 | all | 13 of 14 levels |
 | tn | **EAM·** | 95 | 95/95 § | 605 | 1,062 | all | 21 | all | 10 of 14 levels |
-| va | **EAM·** | 95 | 95/95 | 510 | 517 | all | 17 | all | 13 of 14 levels |
+| va | **EAM·** | 95 | 95/95 | 510 | 517 | all | 18 | all | 13 of 14 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,577 | all | 267 | all | 13 of 14 levels |
 
 § Examined in part by a record covering the whole state rather

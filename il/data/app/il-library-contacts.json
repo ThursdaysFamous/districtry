@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-05T19:58:36Z",
+  "generated": "2026-11-02T20:51:49Z",
   "libraries": {
     "A. Herr Smith & E.E. Smith Loda Township Library": {
       "address": "105 East Adams Street",
@@ -96,7 +96,7 @@
       "address": "205 North Oak Street",
       "admin": {
         "name": "Anna Adermann",
-        "role": "Library Staff"
+        "role": "Library Director"
       },
       "city": "Assumption",
       "phone": "(217) 226-3915",
@@ -124,6 +124,10 @@
     },
     "Atkinson Public Library District": {
       "address": "109 South State Street",
+      "admin": {
+        "name": "Anna VerCautren",
+        "role": "Library Director"
+      },
       "city": "Atkinson",
       "phone": "(309) 936-7606",
       "url": "http://www.atkinson-library.com"
@@ -373,10 +377,6 @@
     },
     "Camp Point Public Library District": {
       "address": "206 East State Street Post Office Box 377",
-      "admin": {
-        "name": "Bobbi Mock",
-        "role": "President of the Board of Trustees"
-      },
       "city": "Camp Point",
       "phone": "(217) 593-7021",
       "url": "http://camppointpubliclibrary.com"
@@ -1217,6 +1217,10 @@
     },
     "Greenfield Public Library": {
       "address": "515 Chestnut Street",
+      "admin": {
+        "name": "Danyle Houseman",
+        "role": "Director"
+      },
       "city": "Greenfield",
       "phone": "(217) 368-2613",
       "url": "http://www.greenfieldpl.org/"
@@ -1605,8 +1609,8 @@
     "Lewistown Carnegie Public Library District": {
       "address": "1126 North Main Street",
       "admin": {
-        "name": "Jaime Grove",
-        "role": "Library Director"
+        "name": "Kathy Hedrick",
+        "role": "Co-Director"
       },
       "city": "Lewistown",
       "phone": "(309) 547-2860",
@@ -1788,12 +1792,10 @@
       "url": "http://marseilleslibrary.com"
     },
     "Marshall Area Public Library District": {
-      "address": "612 Archer Avenue",
       "admin": {
         "name": "Alyson Thompson",
         "role": "Library Director"
       },
-      "city": "Marshall",
       "phone": "(217) 826-2535",
       "url": "http://www.marshallillibrary.com"
     },
@@ -1810,7 +1812,7 @@
     "Martin Township Public Library": {
       "address": "132 West Main Street Post Office Box 376",
       "admin": {
-        "name": "Jilla Young",
+        "name": "Hayley Harris",
         "role": "Library Director"
       },
       "city": "Colfax",
@@ -2565,10 +2567,6 @@
     },
     "Rock Falls Public Library District": {
       "address": "1007 Seventh Avenue",
-      "admin": {
-        "name": "Amy Lego",
-        "role": "Library Staff"
-      },
       "city": "Rock Falls",
       "phone": "(815) 626-3958",
       "url": "http://www.rockfallslibrary.com"
@@ -2640,10 +2638,6 @@
     },
     "Salem Township Public Library District": {
       "address": "102 North Burson Street Post Office Box 19",
-      "admin": {
-        "name": "Monica Lampe",
-        "role": "Library Director"
-      },
       "city": "Yates City",
       "phone": "(309) 358-1678",
       "url": "http://www.salemtownshiplibrary.com"
@@ -3105,6 +3099,8 @@
       "url": "http://www.warsawlib.org/"
     },
     "Washington District Library": {
+      "address": "380 North Wilmor Road",
+      "city": "Washington",
       "phone": "(309) 444-2241",
       "url": "https://washingtondl.org/"
     },
