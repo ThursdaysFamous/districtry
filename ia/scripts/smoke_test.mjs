@@ -1030,33 +1030,54 @@ try {
           JSON.stringify(off.text.slice(0, 120)));
     await context.close();
   }
-  // THE PRECINCT CARD NAMES NO POLLING PLACE WHILE IOWA'S IS PULLED
-  // (2026-11-03): the Legislature's 2022 list is out of date, so the card
-  // says it names none, links the Secretary of State's lookup, pins nothing
-  // and does not fetch the polling file at all.
+  // THE PRECINCT CARD NAMES THE SECRETARY OF STATE'S POLLING PLACE, AND ONLY
+  // UNTIL ITS ELECTION HAS PASSED (2026-11-03). The shipped file's sites and
+  // precincts are read as-is at POINT, with its electionDate moved (a check
+  // run on any day must see both branches): in the future the card names the
+  // place, the list's source and date, the check-before-you-go row, the
+  // lookup and a pin; in the past it names no place and pins nothing; and a
+  // file naming no precinct says so.
   {
-    const context = await browser.newContext({ serviceWorkers: "block" });
-    let polled = 0;
-    const page = await booted(context, `${BASE}#point=${POINT}&layers=precinct`, async (p) => {
-      await p.route("**/data/app/ia-polling-places.json", (r) => { polled += 1; return r.continue(); });
-    });
-    const card = await cardText(page, "precinct");
-    await page.waitForTimeout(800);
-    const out = await page.evaluate(() => {
-      const c = document.getElementById("card-precinct");
-      const block = c ? c.closest(".layer-block") : null;
-      const link = block ? block.querySelector(".card-footer-link") : null;
-      return { link: link ? link.textContent.trim() : null, href: link ? link.href : null,
-        pins: document.querySelectorAll(".poi-pin-label-kind").length };
-    });
-    await context.close();
-    check("the precinct card names no polling place, says why and links the lookup",
-          card.text.indexOf("1-1 Marshalltown City") !== -1 &&
-          card.text.indexOf("doesn't name polling places in Iowa right now") !== -1 &&
-          card.text.indexOf("MARSHALLTOWN LIBRARY") === -1 &&
-          out.link === "Find your polling place now" &&
-          /^https:\/\/sos\.iowa\.gov\//.test(out.href || "") && out.pins === 0 && polled === 0,
-          JSON.stringify(Object.assign({ text: card.text, polled }, out)).slice(0, 300));
+    const shipped = JSON.parse(readFileSync(new URL("../data/app/ia-polling-places.json", import.meta.url), "utf8"));
+    const read = async (body) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}&layers=precinct`, async (p) => {
+        await p.route("**/data/app/ia-polling-places.json", (r) =>
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(body) }));
+      });
+      const card = await cardText(page, "precinct");
+      await page.waitForTimeout(800);
+      const out = await page.evaluate(() => {
+        const c = document.getElementById("card-precinct");
+        const block = c ? c.closest(".layer-block") : null;
+        const link = block ? block.querySelector(".card-footer-link") : null;
+        return { link: link ? link.textContent.trim() : null, href: link ? link.href : null,
+          pins: document.querySelectorAll(".poi-pin-label-kind").length };
+      });
+      await context.close();
+      return Object.assign({ text: card.text }, out);
+    };
+    const named = await read(Object.assign({}, shipped, { electionDate: "2099-11-03" }));
+    check("the precinct card names the Secretary of State's polling place, its date and the lookup",
+          named.text.indexOf("1-1 Marshalltown City") !== -1 &&
+          named.text.indexOf("MARSHALLTOWN LIBRARY") !== -1 &&
+          named.text.indexOf("Iowa Secretary of State's polling-place list, dated October 27, 2026") !== -1 &&
+          named.text.indexOf("can still change, even on Election Day") !== -1 &&
+          named.link === "Find your polling place now" &&
+          /^https:\/\/sos\.iowa\.gov\//.test(named.href || "") && named.pins >= 1,
+          JSON.stringify(named).slice(0, 300));
+    const passed = await read(Object.assign({}, shipped, { electionDate: "2020-11-03" }));
+    check("once the list's election has passed the card names no polling place and pins nothing",
+          passed.text.indexOf("which has passed") !== -1 &&
+          passed.text.indexOf("MARSHALLTOWN LIBRARY") === -1 && passed.pins === 0 &&
+          passed.link === "Find your polling place now",
+          JSON.stringify(passed).slice(0, 300));
+    const none = await read(Object.assign({}, shipped, { electionDate: "2099-11-03", precincts: {} }));
+    check("a precinct the list does not name is told so, with no polling-place pin",
+          none.text.indexOf("names no polling place for this precinct") !== -1 &&
+          none.text.indexOf("MARSHALLTOWN LIBRARY") === -1 && none.pins === 0 &&
+          none.link === "Find your polling place now",
+          JSON.stringify(none).slice(0, 300));
   }
 } finally {
   await browser.close();

@@ -29,9 +29,20 @@ still looks right:
   * every `Person` carries a non-empty `name`. A Person node with no name is
     the shape a roster gap takes if it is ever rendered rather than skipped.
 
+  * every `Dataset` carries a `name` and a `description` of 50 to 5,000
+    characters, and names its catalog with `includedInDataCatalog` rather than
+    `isPartOf`. These are Google's own Dataset rule, stated in its structured
+    data documentation, and they are here because Search Console reported both
+    on il/sources.html on 2026-11-04 (64 upstream sources typed as Datasets
+    with no description, and 41 layers whose `isPartOf` pointed at the
+    DataCatalog) while every check above passed. Google reads a NESTED Dataset
+    node as a dataset the page describes, so the rule is applied to every
+    Dataset node, wherever it sits.
+
 WHAT IT DOES NOT CHECK is whether schema.org would approve of a type choice —
 that is a reading, not a measurement, and the generators record their reasoning
-where they make one.
+where they make one. The Dataset rule above is the exception, because Google
+publishes it as a requirement and reports it per page.
 
     python3 scripts/validate_structured_data.py
     python3 scripts/validate_structured_data.py --report   # per-page counts
@@ -135,6 +146,19 @@ def check_page(rel, problems, counts):
             counts["people"] += 1
         if node.get("@type") == "Dataset":
             counts["datasets"] += 1
+            label = (node.get("@id") or node.get("name") or "(no @id)")[:90]
+            if not (node.get("name") or "").strip():
+                problems.append("%s: Dataset %s carries no name" % (rel, label))
+            desc = (node.get("description") or "").strip()
+            if not 50 <= len(desc) <= 5000:
+                problems.append("%s: Dataset %s has a description of %d "
+                                "characters; Google requires 50 to 5,000"
+                                % (rel, label, len(desc)))
+            if "isPartOf" in node:
+                problems.append("%s: Dataset %s carries isPartOf; Google reads "
+                                "that as a larger Dataset, and the catalog a "
+                                "dataset belongs to is includedInDataCatalog"
+                                % (rel, label))
 
     for block in blocks:
         try:
@@ -184,7 +208,8 @@ def main():
 
     print("validate-structured-data: OK — %d block(s) on %d page(s) parse; "
           "%d organisation(s), %d person node(s), %d list(s) whose counts and "
-          "positions hold, %d dataset(s); every @id absolute, unique on its "
+          "positions hold, %d dataset(s) each with a name and a 50-5,000 "
+          "character description; every @id absolute, unique on its "
           "page, and resolving" % (counts["blocks"], seen, counts["orgs"],
                                    counts["people"], counts["lists"],
                                    counts["datasets"]))

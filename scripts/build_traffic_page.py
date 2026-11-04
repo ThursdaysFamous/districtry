@@ -191,8 +191,10 @@ ACTION_GROUPS = [
     # sponsor button needs to be more visible"); sponsor/<tag>, and
     # sponsor/front on the front page
     ("Sponsor", {"sponsor"}),
+    # address-map/<layer>: an office address on a card opened in a map app
+    # (engine card-helpers, 2026-11-03)
     ("Other", {"more-open", "more-item", "osm-note", "example-place",
-               "app-shortcut"}),
+               "app-shortcut", "address-map"}),
 ]
 # The daily chart's four bands of reader actions, by ACTION_GROUPS label.
 DAY_ACTION_BANDS = [("points", {"Points chosen"}),
@@ -1117,9 +1119,10 @@ MILESTONE_FILE = os.path.join(ROOT, "data", "traffic-milestones.json")
 # passed on that day may have been passed before it, so its date reads "by".
 MILESTONES_FROM = "2026-08-26"
 # SET AHEAD AND NEVER LOWERED, on 2026-10-27. A mark moved down to be reached
-# says nothing; when the last one is passed, add a higher one.
+# says nothing; when the last one is passed, add a higher one (2,500 points in
+# a day added on 2026-11-04, after 1,000 was passed on 2026-11-03).
 POINT_MONTH_MARKS = (1000, 2500, 5000, 10000)
-POINT_DAY_MARKS = (100, 250, 500, 1000)
+POINT_DAY_MARKS = (100, 250, 500, 1000, 2500)
 VISIT_MONTH_MARKS = (2500, 5000, 10000, 25000)
 MAP_MONTH_MARKS = (100, 500, 1000, 5000)
 # Every live map at once: a state that has just gone live holds this back,

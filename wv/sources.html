@@ -1404,12 +1404,12 @@ table.matrix code {
       "name": "U.S. House",
       "description": "The U.S. House district covering the point, and the representative holding it. congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
       "url": "https://districtry.com/wv/sources.html#layer-us-house",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/wv/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Legislative, layer 4 (119th Congressional Districts), pre-built for the state and shipped with the app; 2 features for West Virginia, measured 2026-10-29. Layer 0, the 120th Congress's map, draws the same two districts (each district's GEOID and land area equal, every shape the same ground), because West Virginia has not redrawn since its 2021 plan, so nothing changes on 3 January 2027 and the builder refuses to write if the two ever differ. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/4"
         }
@@ -1426,12 +1426,12 @@ table.matrix code {
       "name": "West Virginia Senate District",
       "description": "The West Virginia Senate district covering the point, and the two senators who represent it. wv-senate-members.json, rebuilt weekly by CI from the West Virginia Senate's own roster page: each senator's name, party, Capitol office (room, telephone) and e-mail address. The page also prints each senator's home county, which is not read. Each district elects two senators, and the card names both.",
       "url": "https://districtry.com/wv/sources.html#layer-wv-senate",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/wv/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "West Virginia Legislature — the Senate districts of the 2021 plan as the Legislature publishes them (SENfinal_json.zip on its redistricting page), pre-built for the state and shipped with the app; 17 features, measured 2026-10-29. THE LEGISLATURE'S OWN FILE AND NOT THE CENSUS BUREAU'S: the builder checks it against the state GIS centre's map of the 2021 Senate districts on 2,000 points across the state, and refuses to write under 99.5% agreement. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
           "url": "https://www.wvlegislature.gov/redistricting.cfm"
         }
@@ -1448,12 +1448,12 @@ table.matrix code {
       "name": "County",
       "description": "Which county contains the point, who sits on its county commission, and who holds its other elected county offices. wv-county-officials.json, rebuilt weekly from the West Virginia Secretary of State's directory of county officials (the newest year that lists all 55 counties; 2025 when this was written): the county commissioners (three in most counties, five in Berkeley and Jefferson), the county clerk, circuit clerk, assessor, sheriff, prosecuting attorney and surveyor, with the telephone and e-mail address the directory prints for that official alone. The board of education is not named yet (gap wv-school-board-members). The card says which year's directory it read.",
       "url": "https://districtry.com/wv/sources.html#layer-county",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/wv/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 55 features, measured 2026-10-29. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
         }
@@ -1470,12 +1470,12 @@ table.matrix code {
       "name": "School District",
       "description": "The public school district covering the point. NO OFFICEHOLDER YET. Each county's board of education is elected, by the whole county in May of even years, and no list of its members dated after the boards' 1 July 2026 changeover was read in this pass — recorded as gap wv-school-board-members.",
       "url": "https://districtry.com/wv/sources.html#layer-school-district-unified",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/wv/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime; 55 features for West Virginia, one for each county, measured 2026-10-29. The elementary and secondary layers carry nothing for West Virginia.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
         }
@@ -1492,12 +1492,12 @@ table.matrix code {
       "name": "House of Delegates District",
       "description": "The West Virginia House of Delegates district covering the point, and the delegate holding it. wv-house-members.json, rebuilt weekly by CI from the House of Delegates' own roster page: each delegate's name, party, Capitol office (room, telephone) and e-mail address.",
       "url": "https://districtry.com/wv/sources.html#layer-wv-house",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/wv/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "West Virginia Legislature — the House of Delegates districts of the 2021 plan as the Legislature publishes them (HODfinal_json.zip on its redistricting page), pre-built for the state and shipped with the app; 100 features, measured 2026-10-29. THE LEGISLATURE'S OWN FILE AND NOT THE CENSUS BUREAU'S: the Census Bureau's copy puts about 1.4 km2 of Clarksburg in a different district than the plan does, while the state GIS centre's map agrees with the plan; the builder checks the plan against that map on 2,000 points and refuses to write under 99.5% agreement. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
           "url": "https://www.wvlegislature.gov/redistricting.cfm"
         }
@@ -1514,12 +1514,12 @@ table.matrix code {
       "name": "Magisterial District",
       "description": "The magisterial district containing the point and its county. The county commission and board of education draw their members from these districts, so the card says what that means. NO OFFICEHOLDER, AND NONE IS MISSING: a magisterial district elects nobody of its own. No two county commissioners may live in the same one (W. Va. Const. art. IX, sec. 10), and no more than two board of education members (W. Va. Code 18-5-1), which is what the card says.",
       "url": "https://districtry.com/wv/sources.html#layer-county-subdivision",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/wv/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "WV GIS Technical Center (West Virginia University) — WV_Election_Layers, layer 9 (Magisterial 2026), the statewide map of each county's magisterial districts as the counties sent them to the Secretary of State under W. Va. Code 3-1-5, pre-built and shipped with the app; 195 features in all 55 counties, measured 2026-10-29. THE STATE'S MAP AND NOT THE CENSUS BUREAU'S: the Census files West Virginia's magisterial districts as its county subdivisions, and in many counties its copy predates the counties' current maps. The builder removes 44 drawing slivers under 10 m2 and 70 zero-width spikes from the state's layer before simplifying, and prints what they held on every run. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
           "url": "https://services.wvgis.wvu.edu/arcgis/rest/services/Boundaries/WV_Election_Layers/MapServer/9"
         }
@@ -1536,12 +1536,12 @@ table.matrix code {
       "name": "ZIP Code",
       "description": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary. NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more.",
       "url": "https://districtry.com/wv/sources.html#layer-zip-code",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/wv/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='54'. 2,017 features in West Virginia's box, which reaches into five neighbouring states, measured 2026-10-29.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
         }
@@ -1558,12 +1558,12 @@ table.matrix code {
       "name": "City, Town or Village",
       "description": "The city, town or village containing the point, if any. NO OFFICEHOLDER YET. West Virginia's cities, towns and villages elect their own officials, and no statewide roster of them was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap wv-municipal-officeholders.",
       "url": "https://districtry.com/wv/sources.html#layer-municipality",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/wv/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), queried live at runtime; 229 features for West Virginia (78 cities, 144 towns, 6 villages and the Corporation of Ranson), measured 2026-10-29, every one recorded by the Census as an active government.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
@@ -1580,17 +1580,17 @@ table.matrix code {
       "name": "City Council Ward",
       "description": "The council ward containing the point, in the West Virginia cities whose ward map this app has (today Charleston), the council member elected from it and the members the city elects at large. wv-city-councils.json, rebuilt weekly from the City of Charleston's own council page: the member elected from each ward and the six elected at large, with each telephone number and e-mail address the page prints in that member's own row and the label it gives (home, cell or office). The page also prints a street address for every member, most of them homes, and no street address is kept.",
       "url": "https://districtry.com/wv/sources.html#layer-city-ward",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/wv/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Charleston — its map of the City Council's 20 wards, sent by the City Clerk's office on November 2, 2026, which the City says is current since the 2021 redistricting, shown with the City's permission and credited to it; on the 2020 census the wards hold 2,314 to 2,558 people each",
           "url": "https://www.charlestonwv.gov/government/city-council"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places): the city's outer edge, where its wards are cut so the City Council Ward and City, Town or Village cards agree about whether a point is in the city",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
@@ -1607,12 +1607,12 @@ table.matrix code {
       "name": "Police Station",
       "description": "The three nearest police stations to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a police station is a facility, not an elected district. Nobody is elected from one.",
       "url": "https://districtry.com/wv/sources.html#layer-police-station",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/wv/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 53 (Police Stations), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-10-29: 862 points in West Virginia's envelope, under the service's 2,000-record cap today, and paged anyway so that stops being a fact anyone has to re-check.",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53"
         }
@@ -1629,12 +1629,12 @@ table.matrix code {
       "name": "Fire & EMS Station",
       "description": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a fire and EMS station is a facility, not an elected district. Nobody is elected from one.",
       "url": "https://districtry.com/wv/sources.html#layer-fire-station",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/wv/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 51 (Fire Stations/EMS Stations), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-10-29: 1,928 points in West Virginia's envelope, under the service's 2,000-record cap today, and paged anyway so that stops being a fact anyone has to re-check.",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51"
         }
@@ -1651,12 +1651,12 @@ table.matrix code {
       "name": "Post Office",
       "description": "The three nearest post offices to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a post office is a facility, not an elected district. Nobody is elected from one.",
       "url": "https://districtry.com/wv/sources.html#layer-post-office",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/wv/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 38 (Post Offices), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-10-29: 1,776 points in West Virginia's envelope, under the service's 2,000-record cap today, and paged anyway so that stops being a fact anyone has to re-check.",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38"
         }
