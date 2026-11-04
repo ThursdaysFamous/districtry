@@ -36,6 +36,13 @@ jobs:
           # A day still being counted can disagree with itself by a few
           # counts; warn rather than stop, since this read is not published.
           b.fail = lambda m: print("WARN", m)
+          # The fetch stops itself with sys.exit when its totals move while
+          # it reads them; a live day does that, so warn here too.
+          class _Sys:
+              def __getattr__(self, n): return getattr(sys, n)
+              @staticmethod
+              def exit(m=None): print("WARN", m)
+          g.sys = _Sys()
           now = datetime.datetime.now(ZoneInfo("America/Chicago"))
           today = now.date()
           start = (today - datetime.timedelta(days=7)).isoformat()
