@@ -1472,12 +1472,12 @@ table.matrix code {
       "name": "U.S. House",
       "description": "The U.S. House district covering the point, and the representative holding it. congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
       "url": "https://districtry.com/nc/sources.html#layer-us-house",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Legislative, layer 4 (119th Congressional Districts), pre-built for the state and shipped with the app; 14 features for North Carolina, measured 2026-10-09. These are the districts the current members were elected from; the 120th Congress's map, redrawn in 2025, takes over when they leave office on 3 January 2027.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/4"
         }
@@ -1494,22 +1494,22 @@ table.matrix code {
       "name": "District Court District",
       "description": "The district court district covering the point: its counties and the parts of the two counties the law divides, how many district judges the law gives it, and whether any seat is tied to a county. NO JUDGE IS NAMED. The court system lists who serves in its judicial directory, and www.nccourts.gov's robots.txt disallows that page for every client (measured 2026-10-20), so the card links it instead; election results cannot stand in for it, because the Governor fills a seat that comes open between elections. Recorded as gap nc-judges. The card gives the number of judges the law sets for the district and, for Districts 12 and 32, where G.S. 7A-133(a) and its residence paragraphs give different numbers, gives both and states neither.",
       "url": "https://districtry.com/nc/sources.html#layer-nc-district-court",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "North Carolina General Statutes — G.S. 7A-133 as the General Assembly publishes it, read 2026-10-20 and kept in nc/data/source/statutes/: subsection (a) lists each district's counties and judges, and subsection (b) the 2010 Census voting districts of the districts inside Wake and Vance Counties. Drawn on the shipped county file by nc/scripts/build_nc_court_districts.py and shipped with the app.",
           "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-133.html"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Census 2010, voting districts (layer 72): the 2010 lines G.S. 7A-133(b) says govern, read 2026-10-20 for Wake and Vance Counties.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2010/MapServer"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "G.S. 7A-140 — each district judge is elected by the voters of the district, lives in it and serves four years",
           "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-140.html"
         }
@@ -1526,12 +1526,12 @@ table.matrix code {
       "name": "NC Senate District",
       "description": "The North Carolina Senate district covering the point, and the senator holding it. nc-senate-members.json, rebuilt weekly by CI from the Open States current-people export for North Carolina (name, party, e-mail, links). What the General Assembly publishes beyond that is recorded in nc/WATCH.md rather than assumed.",
       "url": "https://districtry.com/nc/sources.html#layer-nc-senate",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app; 50 features, measured 2026-09-29. Simplified in ONE mapshaper run with both other chambers, because a shared edge only survives identically off one topology.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
         }
@@ -1548,22 +1548,22 @@ table.matrix code {
       "name": "Superior Court District",
       "description": "The superior court district covering the point: its division, its counties and the parts of the counties the law divides, how many resident superior court judges the law gives it and whether any seat is tied to a county, the districts that share a senior resident judge, and, for the two districts the law ends on 1 January 2029, that date. NO JUDGE IS NAMED. The court system lists who serves in its judicial directory, and www.nccourts.gov's robots.txt disallows that page for every client (measured 2026-10-20), so the card links it instead; election results cannot stand in for it, because the Governor fills a seat that comes open between elections. Recorded as gap nc-judges. The card gives the number of judges the law sets for the district and, for District 31A, where G.S. 7A-41(a) and (b) give different numbers, gives both and states neither.",
       "url": "https://districtry.com/nc/sources.html#layer-nc-superior-court",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "North Carolina General Statutes — G.S. 7A-41 as the General Assembly publishes it, read 2026-10-20 and kept in nc/data/source/statutes/: subsection (a) lists each district's counties and judges, and subsection (b) the 2010 Census voting districts and blocks of each part of the nine counties it divides. Drawn on the shipped county file by nc/scripts/build_nc_court_districts.py and shipped with the app.",
           "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-41.html"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Census 2010, voting districts (layer 72) and blocks (layer 18): the 2010 lines G.S. 7A-41(c) and (c1) say govern, read 2026-10-20 for the nine divided counties.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2010/MapServer"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "G.S. 7A-41.1 — districts that together make up the same counties share one senior resident superior court judge",
           "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-41.1.html"
         }
@@ -1580,12 +1580,12 @@ table.matrix code {
       "name": "County",
       "description": "Which county contains the point, who won each seat on its board of commissioners, and who sits on the board of the soil and water conservation district that covers it. Every county's board of commissioners, each seat named for the winner of its most recent election in the North Carolina State Board of Elections' results (the 2022 and 2024 generals), read with the State Board's candidate filing lists for each seat's term and dated to that election; rebuilt weekly by nc/scripts/build_nc_county_commissioners.py. A winner is not a sitting member: a board fills a vacancy by appointment, which no result records, and the card says so. A seat the 2026 filing list shows has changed hands names nobody and says why. Three limited-voting counties' seat counts were read from the counties' own board pages; Tyrrell's could not be, so its board names nobody. Every seat in the county is listed because no publisher draws commissioner districts (G.S. 153A-22(f) keeps them as written descriptions in each clerk's office). The card also names the supervisors of the county's soil and water conservation district, from the Division of Soil and Water Conservation's District Directory, one PDF printed from the division's database, read by nc/scripts/build_nc_conservation_boards.py: each supervisor's office on the board, whether the seat is elected or appointed, and the term; re-read quarterly and after each November election (nc/WATCH.md). A seat the directory lists with no name is shown that way and never as a vacancy, and the Albemarle district's supervisors are listed county by county, as the directory lists them.",
       "url": "https://districtry.com/nc/sources.html#layer-county",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 100 features, measured 2026-09-29.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
         }
@@ -1602,12 +1602,12 @@ table.matrix code {
       "name": "NC House District",
       "description": "The North Carolina House district covering the point, and the representative holding it. nc-house-members.json, rebuilt weekly by CI from the Open States current-people export for North Carolina.",
       "url": "https://districtry.com/nc/sources.html#layer-nc-house",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app; 120 features, measured 2026-09-29.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
         }
@@ -1624,12 +1624,12 @@ table.matrix code {
       "name": "School District",
       "description": "The public school district covering the point. NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. North Carolina's boards of education are elected, and no statewide roster of their members was found in this pass — recorded as a gap rather than left unstated.",
       "url": "https://districtry.com/nc/sources.html#layer-school-district-unified",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 118 features for North Carolina, measured 2026-09-29.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
         }
@@ -1646,12 +1646,12 @@ table.matrix code {
       "name": "Township",
       "description": "The township containing the point. NO OFFICEHOLDER. A North Carolina township is a census and historical unit with no governing board of its own, unlike Illinois's, so the card is identity-only and says so. MEASURED CAVEAT: at least two counties (Gaston, Hyde) name their COMMISSIONER districts after townships in their certified returns, so a township can carry an electoral function even where it has no government — recorded in nc/WATCH.md rather than generalised from two counties.",
       "url": "https://districtry.com/nc/sources.html#layer-county-subdivision",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 1,041 features for North Carolina, measured 2026-09-29.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
         }
@@ -1668,22 +1668,22 @@ table.matrix code {
       "name": "School Board District",
       "description": "The election district of a North Carolina school board that elects members by district, and the school district whose board it is. Where one election's ballots in a precinct carried two of a board's districts, both are named; where different elections put different districts on the ballot, each election's are named and none is chosen; where the results place no current district seat, the card says so. NO MEMBER IS NAMED YET. The results name each contest's winner, but a board fills a vacancy by appointment, which no results file records, and the seats on the November 3, 2026 ballot stay with the members serving now until that election's winners take office. Matching the winners to the members serving now has not been done, so the card names no one rather than guessing — recorded as gap nc-school-board-members. The card links each board's school district website instead: the address that the National Center for Education Statistics' Common Core of Data district directory for the 2025-26 school year gives, kept where it answered with a page when the file was built, which all 38 did on 2026-10-17.",
       "url": "https://districtry.com/nc/sources.html#layer-school-board-district",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "North Carolina State Board of Elections — precinct-level election results (results_pct_<date>.zip), one file for each election from May 17, 2022 to the November 3, 2026 ballot the State Board posted on October 5, 2026: each district is the precincts whose ballots carried its seat's latest contest, cut to the school district. Read 2026-10-17 and pre-built by nc/scripts/build_nc_school_board_districts.py, shipped with the app. The State Board's ShapeFiles folder carries its precinct maps and no map of these districts.",
           "url": "https://dl.ncsbe.gov/ENRS/2024_11_05/results_pct_20241105.zip"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "North Carolina State Board of Elections — its statewide precinct maps (SBE_PRECINCTS_<date>.zip), nine dated January 18, 2022 to August 24, 2026: each election's precincts are read in the map holding the most of that election's precinct codes, read 2026-10-17.",
           "url": "https://dl.ncsbe.gov/ShapeFiles/Precinct/SBE_PRECINCTS_20260824.zip"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts): the boundary each board's districts are cut to, read 2026-10-17.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
         }
@@ -1700,12 +1700,12 @@ table.matrix code {
       "name": "ZIP Code",
       "description": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary. NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more.",
       "url": "https://districtry.com/nc/sources.html#layer-zip-code",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='37', and the envelope must be Esri's own {xmin,ymin,xmax,ymax} shape. 1,500 features in North Carolina's box, measured 2026-09-29 — and that round number was checked rather than trusted: the layer's maxRecordCount is 100,000 and splitting the box at longitude -80 returns 911 + 618, which is 1,500 plus the 29 ZCTAs the seam counts twice.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
         }
@@ -1722,12 +1722,12 @@ table.matrix code {
       "name": "Tribal Government",
       "description": "Whether this address is on tribal land, and which nation's government answers for it — North Carolina has 2 such areas, both the Eastern Band of Cherokee Indians'. Nobody yet: the Eastern Band's site could not be read from where this project is built, and the card says so. The communities the Census draws on the land are named on the card. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
       "url": "https://districtry.com/nc/sources.html#layer-tribal-government",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
         }
@@ -1744,12 +1744,12 @@ table.matrix code {
       "name": "Voting Precinct",
       "description": "The voting precinct containing the point — where a reader votes and how their ballots are reported — and, up to Election Day, the polling place its voters go to. NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent. The polling place comes from the State Board of Elections' polling place list for the election, joined to the map's precincts through the Board's Voting Information Project feed, read daily until Election Day, with each building placed on the map by the U.S. Census Bureau's geocoder.",
       "url": "https://districtry.com/nc/sources.html#layer-voting-precinct",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "North Carolina State Board of Elections — the statewide precinct file (SBE_PRECINCTS_20260824), public information under G.S. 132-1, read from the queryable copy NC OneMap serves for the Center for Geographic Information and Analysis; 2,625 features, pre-built for the state by nc/scripts/build_nc_precincts.py and shipped with the app. The copy carries no date of its own; on 2026-10-15 it matched the Board's August 24, 2026 file in every county, which the card says.",
           "url": "https://services.nconemap.gov/secure/rest/services/NC1Map_Boundaries/MapServer/0"
         }
@@ -1766,12 +1766,12 @@ table.matrix code {
       "name": "City or Town",
       "description": "The city or town containing the point, if any. In the 42 cities and towns above 25,000 people, the mayor and every council member, alderman or commissioner, written down from each city's own pages and proved against those pages by nc/scripts/build_nc_city_councils.py, which fails when a name is no longer on the page it cites (nc/data/app/nc-city-councils.json). Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Raleigh's and Matthews's names are the candidates with the most votes in the State Board of Elections' results, because both websites answer this app with a managed challenge, and the card says so. Each seat says whether its district's own voters or the whole city elect it, read from each city's own pages, because nothing the state publishes records it. North Carolina's other 510 cities, towns and villages name nobody yet, recorded as gap nc-municipal-officeholders.",
       "url": "https://districtry.com/nc/sources.html#layer-municipality",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 552 features for North Carolina, measured 2026-09-29.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
@@ -1788,92 +1788,92 @@ table.matrix code {
       "name": "City Council District",
       "description": "The city council district or ward containing the point, in the 17 North Carolina cities above 25,000 people that elect council members by district or ward, and the member for it. The member for each district, from the same city council roster the City or Town card reads (nc/data/app/nc-city-councils.json), written down from each city's own pages (Raleigh's from the State Board of Elections' results) and proved against them by nc/scripts/build_nc_city_councils.py. Which seats a district elects was read from each city's own pages. Its check holds every drawn district to a seat its voters elect and every such seat to a drawn district. Gastonia's members for Wards 3, 4 and 6 were elected by the whole city, and the card says so.",
       "url": "https://districtry.com/nc/sources.html#layer-city-ward",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Charlotte — Council Districts, layer 0 of its CouncilDistricts service, which says it \"shows the current city council district boundaries\": 7 districts, read 2026-10-16, the district number alone requested. Its credit line names the city's Planning Department and states no licence.",
           "url": "https://gis.charlottenc.gov/arcgis/rest/services/PLN/CouncilDistricts/MapServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Raleigh — Council Districts Scenario 2, in the city's ArcGIS Online organization, published in November 2021 and described as \"Proposed Council Districts, Scenario 2\": 5 districts, read 2026-10-16. The city's live layer is closed to this project by its robots.txt, and the precincts that carried each district's contest on 5 November 2024 lie 99.9% to 100% inside the same district on this copy. It states no licence.",
           "url": "https://services.arcgis.com/v400IkDOw1ad7Yad/ArcGIS/rest/services/Council_Districts_Scenario_2/FeatureServer/1"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Guilford County — Greensboro Council Districts, layer 4 of its Elected_Representation service: 5 districts, read 2026-10-16. It states no licence.",
           "url": "https://gcgis.guilfordcountync.gov/arcgis/rest/services/GISDV/Elected_Representation/MapServer/4"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Winston-Salem — Wards, layer 0 of its Boundaries2 service: 8 wards, read 2026-10-16. It states no licence.",
           "url": "https://arcgis2.cityofws.org/arcgissmwa02/rest/services/OICv2/Boundaries2/MapServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Fayetteville — City Council Districts, layer 0 of its CityCouncilDistricts service: 9 districts, read 2026-10-16. It states no licence.",
           "url": "https://gismaps.fayettevillenc.gov/cofpublicgis/rest/services/CityCouncilDistricts/CityCouncilDistricts/MapServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Town of Cary — Town of Cary Council, layer 2 of its Elections service: 4 districts, read 2026-10-16, the district letter alone requested and the records with no district left out. Its service's credit line names the City of Naperville, Illinois, and Esri, and it states no licence.",
           "url": "https://maps-apis.carync.gov/server/rest/services/Elections/Elections/FeatureServer/2"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Guilford County — High Point Council, layer 10 of its Elected_Representation service: 6 wards, read 2026-10-16, the ward number alone requested. Its credit line names Guilford County, and it states no licence.",
           "url": "https://gcgis.guilfordcountync.gov/arcgis/rest/services/GISDV/Elected_Representation/MapServer/10"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Greenville — City Council Districts, layer 1 of its Published service: 5 districts, read 2026-10-16, the district number alone requested and a record whose district reads \"Non Voting\" left out. It states no licence.",
           "url": "https://gisonline.greenvillenc.gov/arcgis/rest/services/Published/MapServer/1"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Gastonia — Ward Number, layer 0 of its GastoniaCouncilWards service: 6 wards, read 2026-10-16. It states no licence.",
           "url": "https://cogserver.gastonianc.gov/serverweb/rest/services/AdminBnds/GastoniaCouncilWards/MapServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Onslow County — City of Jacksonville Wards, layer 60 of its TemplateSite OperationalLayers service: 4 wards, read 2026-10-16. The county also publishes a different map of the city's wards with its Census 2020 layers, which is not used. It states no licence.",
           "url": "https://gismaps.onslowcountync.gov/arcgis/rest/services/TemplateSite/OperationalLayers/MapServer/60"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Rocky Mount — City Council Districts, in the city's ArcGIS Online organization, which says its boundaries \"were voted on and finalized in 2022\": 7 wards in 11 records, read 2026-10-16, the ward number alone requested. It states no licence.",
           "url": "https://services.arcgis.com/4MdqIsNzxG7xyTvf/arcgis/rest/services/City_Council_Districts/FeatureServer/6"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Iredell County — Election Wards - Mooresville, layer 3 of its Elections service: 4 wards, read 2026-10-16. It states no licence.",
           "url": "https://maps.iredellcountync.gov/server/rest/services/Data/Elections/MapServer/3"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Wilson — Voting Districts, layer 34 of its communitymaps service: 7 districts, read 2026-10-16, the district number alone requested. Its credit line names City of Wilson GIS Services, and it states no licence.",
           "url": "https://gisservices.wilsonnc.org/services/rest/services/communitymaps/communitymaps/MapServer/34"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Goldsboro — Elected Council Districts, layer 0 of its Election_Districts service: 6 districts, read 2026-10-16, a record numbered 0 that draws the whole city left out. It states no licence.",
           "url": "https://gis.goldsboronc.gov/arcgis/rest/services/Election_Districts/FeatureServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of New Bern — New Bern Wards, layer 0 of its NewBern_Wards service: 6 wards in 11 records, read 2026-10-16, the ward number alone requested. Its credit line names the City of New Bern's GIS, and it states no licence.",
           "url": "https://gis.newbernnc.gov/arcgis/rest/services/Boundary/NewBern_Wards/FeatureServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Lee County — CouncilWards, layer 1 of its POLITICAL service: 5 wards in 58 records, read 2026-10-16. It states no licence.",
           "url": "https://lee-arcgis.leecountync.gov/arcgis/rest/services/Political/POLITICAL/MapServer/1"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Statesville — Statesville Election Wards, in the city's ArcGIS Online organization, last edited 8 September 2026: 6 wards, read 2026-10-16. It states no licence.",
           "url": "https://services2.arcgis.com/WbGEgSzGTEPg4fr6/arcgis/rest/services/Stvl_Election_Wards/FeatureServer/0"
         }
@@ -1890,12 +1890,12 @@ table.matrix code {
       "name": "Police Station",
       "description": "The three nearest police stations to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a police station is a facility, not an elected district. Nobody is elected from one.",
       "url": "https://districtry.com/nc/sources.html#layer-police-station",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 53 (Police Stations), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-09-29: 818 points in North Carolina's envelope, under the service's 2,000-record cap today, and paged anyway so that stops being a fact anyone has to re-check.",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53"
         }
@@ -1912,12 +1912,12 @@ table.matrix code {
       "name": "Fire & EMS Station",
       "description": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a fire and EMS station is a facility, not an elected district. Nobody is elected from one.",
       "url": "https://districtry.com/nc/sources.html#layer-fire-station",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 51 (Fire Stations/EMS Stations), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-09-29: THIS LAYER IS OVER THE CAP: 3316 points against the service's 2,000-record limit, which is not an error — one request returns HTTP 200 with exactly 2,000 rows and exceededTransferLimit set, silently dropping the rest. Paged, it is two requests and 3316.",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51"
         }
@@ -1934,12 +1934,12 @@ table.matrix code {
       "name": "Post Office",
       "description": "The three nearest post offices to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a post office is a facility, not an elected district. Nobody is elected from one.",
       "url": "https://districtry.com/nc/sources.html#layer-post-office",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/nc/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 38 (Post Offices), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-09-29: 1367 points in North Carolina's envelope, under the service's 2,000-record cap today, and paged anyway so that stops being a fact anyone has to re-check.",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38"
         }
