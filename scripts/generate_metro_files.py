@@ -1056,6 +1056,32 @@ def render_layer_catalog(w):
     create these boundaries, it re-publishes a derived layer from somebody
     else's. Saying otherwise in machine-readable form would be a provenance
     claim this project spends most of its gates avoiding in prose.
+
+    EACH UPSTREAM SOURCE IS A `CreativeWork`, NOT A `Dataset` (2026-11-04).
+    They were typed Dataset until Google Search Console reported 64 of them on
+    il/sources.html as invalid for a missing `description`: Google reads every
+    Dataset node on a page, nested ones included, as a dataset this page
+    describes, and holds each to the Dataset rich result's own fields. These
+    are other publishers' datasets, which this page cites and does not describe,
+    so a node per source would list them in dataset search under this page and
+    ask for a description, licence and creator this project cannot state for
+    somebody else's data. CreativeWork is the type schema.org's `isBasedOn`
+    takes and the parent of Dataset, so the citation stays true and stops
+    claiming to be a description.
+
+    THE CATALOG IS `includedInDataCatalog`, NOT `isPartOf` (2026-11-04): Google
+    takes `isPartOf` on a Dataset to name a LARGER DATASET, and Search Console
+    reported all 41 Illinois layers as an invalid object type there, because
+    the node it pointed at is the DataCatalog. `includedInDataCatalog` is the
+    property schema.org and Google give for the catalog a dataset belongs to.
+
+    NO `license` AND NO `creator`, which Google lists as recommended and Search
+    Console reports as missing. `creator` is the provenance claim the paragraph
+    above declines. `license` is a statement on the owner's behalf: the ODbL
+    grant in LICENSE-DATA.md covers only the files shipped under data/app, and
+    many layers are read live from their publisher or, like Jo Daviess County's
+    board districts, are excluded from it, so one licence link per layer would
+    be wrong for some of them.
     """
     base = w["domains"]["canonical"].rstrip("/") + "/sources.html"
     datasets = []
@@ -1066,6 +1092,15 @@ def render_layer_catalog(w):
         description = src["answers"]
         if src.get("people"):
             description += " " + src["people"]
+        # Google's Dataset rule wants a description of 50 to 5,000 characters,
+        # and measured 2026-11-04 one Iowa layer fell short (47) and one ran
+        # long (5,792). A short one takes the matrix's next sentence, where the
+        # layer answers; a long one stops at the last full sentence inside the
+        # limit, and the node's url still leads to the whole text in the matrix.
+        if len(description) < 50 and src.get("applies"):
+            description += " " + src["applies"]
+        if len(description) > 5000:
+            description = description[:description.rfind(". ", 0, 5000) + 1]
         node = {
             "@type": "Dataset",
             "@id": "%s#dataset-%s" % (base, l["id"]),
@@ -1073,9 +1108,9 @@ def render_layer_catalog(w):
             "name": l["label"],
             "description": description,
             "url": "%s#layer-%s" % (base, l["id"]),
-            "isPartOf": {"@id": base + "#catalog"},
+            "includedInDataCatalog": {"@id": base + "#catalog"},
             "isBasedOn": [
-                dict([("@type", "Dataset"), ("name", b["label"])]
+                dict([("@type", "CreativeWork"), ("name", b["label"])]
                      + ([("url", b["url"])] if b.get("url") else []))
                 for b in src["boundary"]
             ],

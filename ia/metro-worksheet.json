@@ -449,15 +449,15 @@
       "area_rank": 17,
       "rank_note": "1,660 election precincts, pre-built (mapshaper-simplified from the Legislature's own ArcGIS layer) — identity-only, no roster; ranked with the other fine-grained political boundaries",
       "source": {
-        "answers": "The election precinct covering the point and its county, with a link to the Secretary of State's polling-place lookup.",
+        "answers": "The election precinct covering the point and its county, its polling place for the current election from the Secretary of State's list, and a link to the Secretary of State's polling-place lookup.",
         "boundary": [
           {
             "label": "Iowa Legislature's own ArcGIS organization — Iowa_Precincts layer, pre-built by ia/scripts/build_ia_precincts.py (Visvalingam-simplified, 2,000-point agreement gate)",
             "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/Iowa_Precincts/FeatureServer/0"
           }
         ],
-        "people": "NO OFFICEHOLDER, and none is missing. A precinct elects nobody. The card names no polling place: the only statewide list, the Legislative Services Agency's IowaPollingPlaces layer, was last updated 2022-10-17 and will not be updated, so it was pulled from the card on 2026-11-03 and every card links the Secretary of State's lookup instead.",
-        "applies": "Iowa — statewide, all 1,660 precincts across 99 counties. The precinct layer's own polling-place fields (PollingPlace/PollingPlaceAddr/PPID) are still never fetched; the card names no polling place."
+        "people": "NO OFFICEHOLDER, and none is missing. A precinct elects nobody. The polling place comes from the Iowa Secretary of State's 2026 general election polling place assignments (dated 2026-10-27), which the office e-mailed in answer to a letter on 2026-11-03; the card names the list's date, says a polling place can still change, and links the office's lookup. From the day after that election the card names no polling place.",
+        "applies": "Iowa — statewide, all 1,660 precincts across 99 counties. The precinct layer's own polling-place fields (PollingPlace/PollingPlaceAddr/PPID) are still never fetched; the polling place comes from the Secretary of State's list, which names one for 1,638 of the map's 1,659 named precincts (measured 2026-11-03)."
       }
     },
     {
@@ -852,7 +852,7 @@
       {
         "file": "ia-polling-places.json",
         "min_keys": 6,
-        "note": "The polling place the Legislative Services Agency's IowaPollingPlaces list names for each precinct (sites[] plus precincts{county|name: site index}), joined to ia-precincts.json by precinct name within the county by ia/scripts/build_ia_polling_places.py and re-read weekly by update-ia-polling-places.yml. Every row of the list was last updated 2022-10-17 (listDate) and the agency will not update it, so since 2026-11-03 the card does not read this file (IA_POLLING_SHOWN false in index.html) and names no polling place. The build fails if fewer than 90% of the map's precincts are named. Network-first: a newer list must reach a returning visitor at once"
+        "note": "The polling place the Iowa Secretary of State's polling place assignments name for each precinct (sites[] plus precincts{county|name: site index}), joined to ia-precincts.json by precinct name within the county by ia/scripts/build_ia_polling_places.py from ia/data/source/ia-sos-polling-places.csv. The office e-mails the list (it publishes no file and its site refuses this project's robots.txt read), so a person converts each new list with --from-xlsx; there is no weekly job. The file names its listDate and electionDate, and the card names no polling place from the day after electionDate. Positions are reused from the Legislature's 2022 list where an address repeats; other buildings are looked up by the app. The build fails if fewer than 95% of the map's precincts are named. Network-first: a newer list must reach a returning visitor at once"
       },
       {
         "file": "coverage-gaps.json",
@@ -930,11 +930,6 @@
     "registry": "ia/scripts/validate_sources.py"
   },
   "workflows": [
-    {
-      "file": "update-ia-polling-places.yml",
-      "purpose": "Re-read the Legislative Services Agency's IowaPollingPlaces list weekly and rebuild ia/data/app/ia-polling-places.json; fails if fewer than 90% of the map's precincts are named; opens a PR on any change, so a newer list reaches the card with its own date",
-      "schedule": "Wed 12:23 UTC"
-    },
     {
       "file": "update-ia-congress-roster.yml",
       "purpose": "U.S. House (IA) roster (unitedstates/congress-legislators)",

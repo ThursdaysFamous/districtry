@@ -1459,12 +1459,12 @@ table.matrix code {
       "name": "U.S. House",
       "description": "The U.S. House district covering the point, and the representative holding it. congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
       "url": "https://districtry.com/ok/sources.html#layer-us-house",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Legislative, layer 0 (120th Congressional Districts), pre-built for the state and shipped with the app; 5 features for Oklahoma, measured 2026-10-09. The layer's own district field is CD120.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
         }
@@ -1481,12 +1481,12 @@ table.matrix code {
       "name": "Judicial District",
       "description": "The judicial district covering the point, its district judge offices and the counties whose voters elect each one. No judge is named yet; recorded as gap ok-judicial-district-judges. The roster names each judge beside their home town, which this project never copies. The card links the roster.",
       "url": "https://districtry.com/ok/sources.html#layer-ok-judicial-district",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by ok/scripts/build_ok_judicial_districts.py, following the Oklahoma State Election Board's 2024 Roster of State and County Officers (published March 2025): its district judge offices with the counties that elect each, checked against the same roster's key to districts by county. The statutes were not read: both of the state's publishers of them refuse this project in robots.txt.",
           "url": "https://oklahoma.gov/content/dam/ok/en/elections/rosters/officer-roster-2024.pdf"
         }
@@ -1503,12 +1503,12 @@ table.matrix code {
       "name": "Oklahoma Senate District",
       "description": "The Oklahoma Senate district covering the point, and the senator holding it. ok-senate-members.json, rebuilt weekly by CI from the Open States current-people export for Oklahoma (name, party, e-mail, the member's own page). The export carries no capitol office or telephone for any member; reading those from the Senate's own site is recorded in ok/WATCH.md.",
       "url": "https://districtry.com/ok/sources.html#layer-ok-senate",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app; 48 features, measured 2026-10-09. Simplified by Douglas-Peucker at a 20 m interval and refused over a 25 m fidelity ceiling.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
         }
@@ -1525,12 +1525,12 @@ table.matrix code {
       "name": "County",
       "description": "Which county contains the point. ok-county-commissioners.json, from the Oklahoma State Election Board's Roster of State and County Officers (the 2024 edition, compiled after the November 5, 2024 general election), rebuilt weekly by CI. The card lists the county's three commissioners and the county's information telephone line. The roster is a snapshot the counties do not keep current between elections, and the card says so.",
       "url": "https://districtry.com/ok/sources.html#layer-county",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 77 features, measured 2026-10-09.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
         }
@@ -1547,12 +1547,12 @@ table.matrix code {
       "name": "Conservation District",
       "description": "The conservation district covering the point — the primary local unit of government Oklahoma law makes responsible for conserving the state's renewable natural resources — and the district's office. Five districts' five directors, from each district's own website (Tulsa County, Lincoln County, Dewey, Rogers and Deer Creek; Lincoln County's card says its page may be out of date), read by ok/scripts/build_ok_conservation_directors.py and dated on the card. The Commission's directory of district offices, read by ok/scripts/build_ok_conservation_offices.py, gives each district's office, telephone and e-mail, and the card shows them, credited to the Commission, whose website terms of use allow personal, non-commercial use of its content. The directory names none of a district's five directors, so for the other 79 districts the card names no one and says how the board is chosen.",
       "url": "https://districtry.com/ok/sources.html#layer-conservation-district",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Oklahoma Conservation Commission — cons_dis, layer 0 on ArcGIS Online: 84 districts in 106 records, measured 2026-10-16, pre-built by ok/scripts/build_ok_conservation_districts.py and shipped with the app. The layer states no licence.",
           "url": "https://services5.arcgis.com/L6JGkSUcgPo1zSDi/arcgis/rest/services/cons_dis/FeatureServer/0"
         }
@@ -1569,12 +1569,12 @@ table.matrix code {
       "name": "Oklahoma House District",
       "description": "The Oklahoma House district covering the point, and the representative holding it. ok-house-members.json, rebuilt weekly by CI from the Open States current-people export for Oklahoma.",
       "url": "https://districtry.com/ok/sources.html#layer-ok-house",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app; 101 features, measured 2026-10-09.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
         }
@@ -1591,12 +1591,12 @@ table.matrix code {
       "name": "County Commissioner District",
       "description": "Which of the county's three commissioner districts covers the point, and the commissioner the State Election Board lists for it. ok-county-commissioners.json, from the Oklahoma State Election Board's Roster of State and County Officers (the 2024 edition: 229 named, 2 listed vacant), rebuilt weekly by CI, which picks up a newer edition the week it is posted. Home towns printed in the roster are not carried.",
       "url": "https://districtry.com/ok/sources.html#layer-county-commissioner",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Oklahoma Department of Transportation — County Commissioner Districts (ArcGIS FeatureServer layer 0), pre-built for the state and shipped with the app; 231 features, measured 2026-10-11. Compared on every build with a University of Oklahoma copy, which agrees on 229 of 231 and draws Beaver County's line between Districts 1 and 2 differently; the card says so there. Simplified by Douglas-Peucker at a 20 m interval and refused over a 25 m fidelity ceiling.",
           "url": "https://services6.arcgis.com/RBtoEUQ2lmN0K3GY/arcgis/rest/services/County_Commissioner_Districts/FeatureServer/0"
         }
@@ -1613,12 +1613,12 @@ table.matrix code {
       "name": "Tribal Government",
       "description": "Whether this address is in a tribal area the Census draws, and which nation's government (or nations' governments) it names — 31 areas across 33 nations, most of them Oklahoma Tribal Statistical Areas, which the card says are drawn to count people and are not legal boundaries. Nobody yet: no Oklahoma nation's council list has been read, and the card says so. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
       "url": "https://districtry.com/ok/sources.html#layer-tribal-government",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "US Census Bureau TIGERweb AIANNHA, current vintage — the Osage Reservation, off-reservation trust land, Oklahoma Tribal Statistical Areas and their joint-use areas, simplified and shipped with the app",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
         }
@@ -1635,12 +1635,12 @@ table.matrix code {
       "name": "Census County Division",
       "description": "The census county division containing the point, and its county. NO OFFICEHOLDER. A census county division is an area the Census Bureau draws to report its counts: no one is elected from it, and Oklahoma has no township governments, so the county governs everyone outside a city or town. The card names the division and its county and says it governs nobody.",
       "url": "https://districtry.com/ok/sources.html#layer-county-subdivision",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 305 features for Oklahoma, every one a census county division (LSADC 22, FUNCSTAT S), measured 2026-10-15.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
         }
@@ -1657,12 +1657,12 @@ table.matrix code {
       "name": "School District (Unified)",
       "description": "The public school district covering the point. NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. Oklahoma's school boards are elected, and no statewide roster of their members was established in this pass — recorded as gap ok-school-board-members.",
       "url": "https://districtry.com/ok/sources.html#layer-school-district-unified",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 415 features for Oklahoma, measured 2026-10-09.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
         }
@@ -1679,12 +1679,12 @@ table.matrix code {
       "name": "ZIP Code",
       "description": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary. NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more.",
       "url": "https://districtry.com/ok/sources.html#layer-zip-code",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='40'. 1,058 features in Oklahoma's box, measured 2026-10-09.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
         }
@@ -1701,12 +1701,12 @@ table.matrix code {
       "name": "School District (Elementary)",
       "description": "The elementary school district covering the point, where the point is in one. NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. Oklahoma's school boards are elected, and no statewide roster of their members was established in this pass — recorded as gap ok-school-board-members.",
       "url": "https://districtry.com/ok/sources.html#layer-school-district-elementary",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 91 features for Oklahoma, measured 2026-10-09.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
         }
@@ -1723,12 +1723,12 @@ table.matrix code {
       "name": "City or Town",
       "description": "The city or town containing the point, if any. In the 16 cities above 25,000 people, the mayor and every council member or commissioner, written down from each city's own pages and proved against those pages by ok/scripts/build_ok_city_councils.py, which fails when a name is no longer on the page it cites (ok/data/app/ok-city-councils.json). Where the page a seat cites prints an e-mail address or a telephone number beside that member alone, the card shows it, and the build proves it on that page in the same way; a line or mailbox the page gives the office or several members is not shown, and no street address is. Muskogee's website does not let this app read it, so its names come from the county election board's official results for February 10, 2026 and from news reports, and the card says so. Each seat says whether its ward's own voters or the whole city elect it, read from each city's charter, its own pages, a county election board's results or news reports, because nothing the state publishes records it. Oklahoma's other cities and towns name nobody yet, recorded as gap ok-municipal-officeholders.",
       "url": "https://districtry.com/ok/sources.html#layer-municipality",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 600 features for Oklahoma (165 cities, 435 towns), measured 2026-10-09.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
@@ -1745,57 +1745,57 @@ table.matrix code {
       "name": "City Council District",
       "description": "The city council ward or district containing the point, in the 10 Oklahoma cities above 25,000 people whose wards elect their own members and are drawn, and the member or members for it. The member or members for each ward, from the same city council roster the City or Town card reads (ok/data/app/ok-city-councils.json), written down from each city's own pages and proved against them by ok/scripts/build_ok_city_councils.py. Which seats a ward elects was read from each city's charter, its own pages, a county election board's results or news reports. Its check holds every drawn ward to a seat its voters elect and every such seat to a drawn ward. Bartlesville's and Bixby's councils choose the mayor from among their members, and the card names the mayor as the member for the ward that elected them.",
       "url": "https://districtry.com/ok/sources.html#layer-city-ward",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Oklahoma City — Council Wards, layer 2 of its Government_Boundaries service, served through ArcGIS Online: 8 wards, read 2026-10-16, the ward number alone requested. It states no licence.",
           "url": "https://utility.arcgis.com/usrsvcs/servers/666b9654ab104ba7ac49870c66190e9c/rest/services/OpenData/Government_Boundaries/FeatureServer/2"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Tulsa — Council Districts, in the city's ArcGIS Online organization, carrying the metes-and-bounds description of each election district and last edited 29 January 2026: 9 districts, read 2026-10-16, the district number alone requested. Its credit lines name INCOG and the City of Tulsa GIS Department, it says it \"should only be used as a supplement to official records\", and it states no licence.",
           "url": "https://services2.arcgis.com/XkZ90iCdbTJ9oNXl/arcgis/rest/services/Council_Districts/FeatureServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Norman — Council Wards, in the city's ArcGIS Online organization, which says it was \"Updated September 13, 2022 by O-2223-8\": 8 wards, read 2026-10-16. Its credit line names the City of Norman GIS Services Division, and it states no licence.",
           "url": "https://services.arcgis.com/rt1leD4Hj3sLGHNL/arcgis/rest/services/Council_Wards/FeatureServer/1"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Lawton — Council Ward, in the city's ArcGIS Online organization, whose service says \"Updated-05/12/2023\" and whose data was last edited 2 July 2026: 8 wards in 11 records, read 2026-10-21, the ward number alone requested. It does not divide the 2020 census population evenly; it is drawn because the City Clerk's office, asked which map is in force, answered on 2026-10-21 by pointing to the city's public ward map, which draws this layer. It states no licence.",
           "url": "https://services2.arcgis.com/baoUryRiOxhCY0yb/arcgis/rest/services/CouncilWard/FeatureServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Moore — City Wards, layer 20 of its Government_Services service: 3 wards, read 2026-10-16, the ward name alone requested. Its service's credit line names the City of Moore, and it states no licence.",
           "url": "https://gis.cityofmoore.com/arcgis/rest/services/OpenData/Government_Services/MapServer/20"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Midwest City — Council Wards, layer 0 of its CouncilWards service: 6 wards, read 2026-10-16, the ward number alone requested. It states no licence.",
           "url": "https://maps.midwestcityok.org/arcgis/rest/services/OpenData/CouncilWards/MapServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Enid — City Wards, in the city's ArcGIS Online organization, last edited 4 August 2025: 6 wards in 7 records, read 2026-10-16. It states no licence.",
           "url": "https://services6.arcgis.com/LIvKKeLD11lMmJuJ/arcgis/rest/services/Ward_Publishing_Doc/FeatureServer/8"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Bartlesville — Wards area, layer 32 of its CityMaps_BvilleGIS service: 5 wards, read 2026-10-16. It states no licence.",
           "url": "https://arcgissrv.cityofbartlesville.org/arcgisserver/rest/services/Citymaps/CityMaps_BvilleGIS/MapServer/32"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Shawnee — CityWards, layer 0 of its City_Wards service, last edited 22 September 2026: 6 wards, read 2026-10-16, the ward number alone requested (it is in a field named STATEFP10). It states no licence.",
           "url": "https://maps.shawneeok.org/server/rest/services/City_Wards/FeatureServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Bixby — Council Wards by Color, in the city's ArcGIS Online organization, last edited 26 August 2026, whose population for three of its five wards is exactly the 2020 census count of the ground each covers: 5 wards in 11 records, read 2026-10-16, the ward number alone requested. It states no licence.",
           "url": "https://services6.arcgis.com/TI4WUPORw6hUtDVO/arcgis/rest/services/City_Council_Wards/FeatureServer/0"
         }
@@ -1812,12 +1812,12 @@ table.matrix code {
       "name": "Police Station",
       "description": "The three nearest police stations to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a police station is a facility, not an elected district. Nobody is elected from one.",
       "url": "https://districtry.com/ok/sources.html#layer-police-station",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 53 (Police Stations), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-10-09: 634 points in Oklahoma's envelope, under the service's 2,000-record cap today, and paged anyway so that stops being a fact anyone has to re-check.",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53"
         }
@@ -1834,12 +1834,12 @@ table.matrix code {
       "name": "Fire & EMS Station",
       "description": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a fire and EMS station is a facility, not an elected district. Nobody is elected from one.",
       "url": "https://districtry.com/ok/sources.html#layer-fire-station",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 51 (Fire Stations/EMS Stations), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-10-09: 1563 points in Oklahoma's envelope, under the service's 2,000-record cap today, and paged anyway so that stops being a fact anyone has to re-check.",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51"
         }
@@ -1856,12 +1856,12 @@ table.matrix code {
       "name": "Post Office",
       "description": "The three nearest post offices to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a post office is a facility, not an elected district. Nobody is elected from one.",
       "url": "https://districtry.com/ok/sources.html#layer-post-office",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/ok/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 38 (Post Offices), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-10-09: 851 points in Oklahoma's envelope, under the service's 2,000-record cap today, and paged anyway so that stops being a fact anyone has to re-check.",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38"
         }
