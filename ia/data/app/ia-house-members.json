@@ -234,7 +234,10 @@
     "name": "Kenan Judge",
     "party": "Democratic",
     "email": "kenan.judge@legis.iowa.gov",
-    "url": "https://www.legis.iowa.gov/legislators/legislator?personID=27027"
+    "url": "https://www.legis.iowa.gov/legislators/legislator?personID=27027",
+    "capitolOffice": [
+      "Phone: 515.281.3221"
+    ]
   },
   "28": {
     "name": "David Young",
@@ -327,7 +330,7 @@
     ]
   },
   "38": {
-    "asOf": "2026-10-27"
+    "asOf": "2026-11-03"
   },
   "39": {
     "name": "Rick Olson",
