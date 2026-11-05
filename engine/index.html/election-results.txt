@@ -52,6 +52,15 @@
       : d.toLocaleString("en-US", { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" });
   }
 
+  // "2026 General Election": the year from the election's date and the
+  // election's own name, so a card or legend says which election it shows
+  // once a past one sits beside it. A name already carrying its year is kept.
+  function electionTitle(data) {
+    var name = String((data && data.election) || "Election");
+    var year = /^\d{4}/.test(String(data && data.electionDate)) ? String(data.electionDate).slice(0, 4) : "";
+    return year && name.indexOf(year) === -1 ? year + " " + name : name;
+  }
+
   function electionPercent(n, of) {
     if (!of) return "0%";
     var p = 100 * n / of;
@@ -186,7 +195,7 @@
       while (legendEl.firstChild) legendEl.removeChild(legendEl.firstChild);
       var summary = document.createElement("summary");
       summary.className = "dml-kicker";
-      summary.appendChild(document.createTextNode("Election results"));
+      summary.appendChild(document.createTextNode(electionTitle(idx.data)));
       var mini = document.createElement("span");
       mini.className = "dml-mini";
       mini.setAttribute("aria-hidden", "true");
@@ -398,6 +407,7 @@
       render: function (result) {
         var wrap = cardEl("div", "card-flush election-card");
         var idx = result.idx;
+        wrap.appendChild(cardEl("p", "election-title", electionTitle(idx.data)));
         var notice = noticeEl(idx, picked ? idx.byId[picked] : null);
         wrap.appendChild(notice);
         if (!result.rows.length) {

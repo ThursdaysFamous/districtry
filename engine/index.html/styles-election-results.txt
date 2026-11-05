@@ -3,6 +3,7 @@
      colours a reader sees are the choice swatches, which the script paints
      from the ballot-order palette and which carry no text. */
   .election-card { padding: 12px 18px 14px; display: flex; flex-direction: column; gap: 10px; }
+  .election-title { margin: 0; font-size: 14px; font-weight: 700; color: var(--card-ink); }
   .election-notice {
     font-size: 12.5px; line-height: 1.45; color: var(--card-ink);
     background: var(--card-section-bg); border: 1px solid var(--card-border);
