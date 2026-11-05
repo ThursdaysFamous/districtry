@@ -11406,6 +11406,9 @@ function initGeorgiaExplorer() {
   // others fade as they do on any map and no labels are drawn. Held here so it
   // is set before any style is computed. On by default, for this window only.
   var districtLinesOn = true;
+  // run after any card settles or a layer's whole file arrives (relationship-
+  // pinning's refresh), by blocks whose card reads other layers' districts
+  var afterCardHooks = [];
   function showAllDistrictLines(mod) {
     return districtLinesOn && groundFilledByOther(mod);
   }
@@ -18107,6 +18110,7 @@ function initGeorgiaExplorer() {
     districtLinesBtn.setAttribute("aria-pressed", districtLinesOn ? "true" : "false");
   }
   function refreshDistrictNumbers() {
+    afterCardHooks.forEach(function (fn) { fn(); }); // e.g. the election card's district totals
     if (districtNumberGroup) districtNumberGroup.clearLayers();
     districtNumbers = [];
     syncDistrictLinesButton();

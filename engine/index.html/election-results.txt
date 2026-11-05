@@ -319,21 +319,14 @@
       return box;
     }
 
-    function renderRace(body, result) {
-      while (body.firstChild) body.removeChild(body.firstChild);
-      var idx = result.idx, contest = idx.byId[picked];
-      var row = null;
-      for (var i = 0; i < result.rows.length; i++) if (String(result.rows[i][0]) === picked) row = result.rows[i];
-      if (!contest || !row) return;
-      var ballots = row[1], counts = row.slice(2);
-      // a count the publisher withholds (small-number privacy) is null; no
-      // leader is named where one is withheld, because it could be the leader
+    // One race's table: a row per choice with its votes and share, the
+    // leader marked unless a count is withheld (it could be the leader's)
+    function raceTable(idx, contest, ballots, counts, captionText, leadWord) {
       var withheld = counts.some(function (n) { return n === null || n === undefined; });
-      var top = withheld ? -1 : Math.max.apply(null, counts.concat([0]));
+      var top = withheld || !leadWord ? -1 : Math.max.apply(null, counts.concat([0]));
       var tied = counts.filter(function (n) { return n === top; }).length > 1;
       var table = cardEl("table", "election-table");
-      var caption = cardEl("caption", null, contest.name + " in this precinct");
-      table.appendChild(caption);
+      table.appendChild(cardEl("caption", null, captionText));
       var thead = cardEl("thead");
       var hr = cardEl("tr");
       hr.appendChild(cardEl("th", null, "Choice"));
@@ -352,8 +345,7 @@
         th.appendChild(sw);
         th.appendChild(document.createTextNode(String(name)));
         if (top > 0 && counts[n] === top) {
-          th.appendChild(cardEl("span", "election-lead", tied ? "Tied for most votes"
-            : certified(idx, contest) ? "Most votes here" : "Most votes so far"));
+          th.appendChild(cardEl("span", "election-lead", tied ? "Tied for most votes" : leadWord));
         }
         tr.appendChild(th);
         var known = counts[n] !== null && counts[n] !== undefined;
@@ -363,7 +355,21 @@
         tbody.appendChild(tr);
       });
       table.appendChild(tbody);
-      body.appendChild(table);
+      return table;
+    }
+
+    function renderRace(body, result) {
+      while (body.firstChild) body.removeChild(body.firstChild);
+      var idx = result.idx, contest = idx.byId[picked];
+      var row = null;
+      for (var i = 0; i < result.rows.length; i++) if (String(result.rows[i][0]) === picked) row = result.rows[i];
+      if (!contest || !row) return;
+      var ballots = row[1], counts = row.slice(2);
+      // a count the publisher withholds (small-number privacy) is null; no
+      // leader is named where one is withheld, because it could be the leader
+      var withheld = counts.some(function (n) { return n === null || n === undefined; });
+      body.appendChild(raceTable(idx, contest, ballots, counts, contest.name + " in this precinct",
+        certified(idx, contest) ? "Most votes here" : "Most votes so far"));
       var notes = [];
       if (withheld) notes.push("The " + opts.publisher + " withholds some of this precinct's counts to protect the privacy" +
         " of a small number of voters, so no choice is named as having the most votes here.");
@@ -384,7 +390,166 @@
           contest.outside[0].toLocaleString("en-US") + ") were counted outside any precinct, so they are in the" +
           " totals above and not in the map's colours.");
       }
+      if (result.turnout) {
+        var reg = result.turnout[0], cast = result.turnout[1];
+        notes.push("Turnout in this precinct: " + cast.toLocaleString("en-US") + " ballots from " +
+          reg.toLocaleString("en-US") + " registered voters (" + electionPercent(cast, reg) + ").");
+      }
       notes.forEach(function (t) { body.appendChild(cardEl("p", "election-note", t)); });
+      areaBox = cardEl("div", "election-areas");
+      body.appendChild(areaBox);
+      areaResult = result;
+      areaShown = "";
+      fillAreaTotals();
+    }
+
+    /* ---- the race added up over each other layer's selected district ----
+     * Adam, 2026-11-05: "add results totals for the selected boundary on the
+     * info card". Every other switched-on polygon layer's district at the
+     * selected point gets the picked race's totals, summed over the precincts
+     * whose area lies mostly inside it (measureOverlap, geometry-measure). A
+     * ward is whole precincts, so its totals are exact; a district whose edge
+     * cuts through precincts is counted precinct by precinct and says so. */
+    var areaBox = null, areaResult = null, areaShown = "", areaToken = 0, areaQueued = false;
+    var areaAssign = {}; // layer id + district -> {keys, crossing, coverage}
+    function queueAreaTotals() {
+      if (areaQueued) return;
+      areaQueued = true;
+      setTimeout(function () { areaQueued = false; fillAreaTotals(); }, 120);
+    }
+    afterCardHooks.push(queueAreaTotals);
+    function selfModule() {
+      for (var i = 0; i < layers.length; i++) if (layers[i].id === opts.id) return layers[i];
+      return null;
+    }
+    // the whole file a layer draws, fetching it when the layer is drawn from
+    // tiles; null until it is here (the fetch ends in a relationship refresh,
+    // which queues this again)
+    function wholeFile(mod) {
+      var rt = layerRuntime[mod.id];
+      if (!rt) return null;
+      if (rt.geojson) return rt.geojson;
+      if (rt.overlayLayer && rt.overlayLayer.dxTiles && !rt.tileGeojsonPromise) {
+        ensureTileGeojson(mod).then(queueAreaTotals, function (err) {
+          console.error("[" + mod.id + "] whole file for the election totals failed:", err);
+        });
+      }
+      return null;
+    }
+    function assignPrecincts(precincts, district) {
+      var db = featureBBox(district), keys = [], crossing = 0, covered = 0;
+      var feats = precincts.features || [];
+      for (var i = 0; i < feats.length; i++) {
+        var f = feats[i];
+        if (!f || !f.geometry || !bboxIntersect(featureBBox(f), db)) continue;
+        var m = measureOverlap(f.geometry, district.geometry);
+        if (!(m.share > 0)) continue;
+        covered += m.overlap;
+        if (m.share > 0.02 && m.share < 0.98) crossing++;
+        if (m.share > 0.5) {
+          var raw = (f.properties || {})[opts.keyProp];
+          if (raw !== undefined && raw !== null) keys.push(String(raw));
+        }
+      }
+      var area = measureArea(district.geometry);
+      return { keys: keys, crossing: crossing, coverage: area > 0 ? covered / area : 0 };
+    }
+    function fillAreaTotals() {
+      if (!areaBox || !areaResult || !areaBox.isConnected) return;
+      if (areaResult.seq !== state.sequence || !state.selectedPoint) return;
+      var idx = areaResult.idx, contest = idx.byId[picked];
+      var self = selfModule();
+      if (!contest || !self) return;
+      var precincts = wholeFile(self);
+      var wanted = [];
+      layers.forEach(function (mod) {
+        if (mod.id === opts.id || mod.fillsGround || !state.layersOn[mod.id]) return;
+        if (!mod.overlay || !mod.overlay.style) return; // polygon layers only
+        if (opts.tiles && mod.tiles === opts.tiles) return; // the precinct layer itself
+        var rt = layerRuntime[mod.id];
+        if (!rt || rt.relevant === false || rt.resultSeq !== state.sequence) return;
+        var pillEl = rt.idPill && !rt.idPill.hidden ? rt.idPill
+          : (rt.compactValue && !rt.compactValue.hidden ? rt.compactValue : null);
+        var name = pillEl ? String(pillEl.textContent || "").trim() : "";
+        var file = wholeFile(mod);
+        if (!file || !name) return;
+        var district = findFeatureContaining(file, state.selectedPoint);
+        if (district && district.geometry) wanted.push({ mod: mod, name: name, district: district });
+      });
+      if (!precincts) return;
+      var sig = picked + "|" + wanted.map(function (w) { return w.mod.id + ":" + w.name; }).join("|");
+      if (sig === areaShown) return;
+      var token = ++areaToken, box = areaBox;
+      var jobs = wanted.map(function (w) {
+        var k = w.mod.id + "|" + w.name;
+        var a = areaAssign[k] || (areaAssign[k] = assignPrecincts(precincts, w.district));
+        var partNames = {};
+        a.keys.forEach(function (key) {
+          var at = idx.pos[key];
+          if (at !== undefined) partNames[idx.data.parts[at]] = true;
+        });
+        return Promise.all(Object.keys(partNames).map(loadPart)).then(function (docs) {
+          var byKey = {};
+          docs.forEach(function (doc) {
+            var ps = (doc && doc.precincts) || {};
+            for (var key in ps) if (ps.hasOwnProperty(key)) byKey[key] = ps[key];
+          });
+          var ballots = 0, counts = contest.choices.map(function () { return 0; });
+          var voted = 0, withheld = false;
+          a.keys.forEach(function (key) {
+            var rows = (byKey[key] || {}).contests || [];
+            for (var i = 0; i < rows.length; i++) {
+              if (String(rows[i][0]) !== picked) continue;
+              voted++;
+              if (rows[i][1] === null || rows[i][1] === undefined) withheld = true; else ballots += rows[i][1];
+              for (var n = 0; n < counts.length; n++) {
+                var c = rows[i][n + 2];
+                if (c === null || c === undefined) withheld = true; else counts[n] += c;
+              }
+            }
+          });
+          return { w: w, a: a, ballots: ballots, counts: counts, voted: voted, withheld: withheld };
+        });
+      });
+      Promise.all(jobs).then(function (sums) {
+        if (token !== areaToken || box !== areaBox || !box.isConnected) return;
+        areaShown = sig;
+        while (box.firstChild) box.removeChild(box.firstChild);
+        // the smallest district first: a ward before the House district around it
+        sums.sort(function (x, y) { return x.a.keys.length - y.a.keys.length; });
+        sums.forEach(function (t) {
+          if (!t.voted) return; // the race is not on this district's ballots here
+          var sec = cardEl("div", "election-area");
+          sec.appendChild(raceTable(idx, contest, t.ballots, t.counts, contest.name + " in " + t.w.name +
+            " (" + t.w.mod.label + ")",
+            t.withheld ? null : certified(idx, contest) ? "Most votes in " + t.w.name : "Most votes so far"));
+          var notes = ["Added up from the " + t.voted.toLocaleString("en-US") + " precinct" + (t.voted === 1 ? "" : "s") +
+            " in " + t.w.name + " that voted in this race: " + t.ballots.toLocaleString("en-US") + " votes."];
+          if (t.voted < t.a.keys.length) {
+            notes.push((t.a.keys.length - t.voted).toLocaleString("en-US") + " more precinct" +
+              (t.a.keys.length - t.voted === 1 ? " lies" : "s lie") + " in " + t.w.name + " without this race on the ballot.");
+          }
+          if (t.a.crossing) {
+            notes.push(t.a.crossing.toLocaleString("en-US") + " precinct" + (t.a.crossing === 1 ? " crosses" : "s cross") +
+              " the edge of " + t.w.name + "; each is counted wholly in the district holding most of its area," +
+              " so these totals are close, not exact.");
+          }
+          if (t.a.coverage < 0.95) {
+            notes.push("Only part of " + t.w.name + " lies in " + opts.areaName + ", so these totals are for that part.");
+          }
+          if (t.withheld) {
+            notes.push("The " + opts.publisher + " withholds some counts to protect the privacy of a small number of" +
+              " voters, so these totals leave them out and name no leader.");
+          }
+          if (contest.outside && contest.outside[0] > 0) {
+            notes.push("Votes the " + opts.publisher + " counted outside any precinct are not in these totals.");
+          }
+          notes.forEach(function (x) { sec.appendChild(cardEl("p", "election-note", x)); });
+          box.appendChild(sec);
+        });
+      }, function (err) {
+        console.error("[" + opts.id + "] totals for the selected districts failed:", err);
+      });
     }
 
     registerLayer({
@@ -484,11 +649,6 @@
           renderRace(body, result);
         });
         renderRace(body, result);
-        if (result.turnout) {
-          var reg = result.turnout[0], cast = result.turnout[1];
-          wrap.appendChild(cardEl("p", "election-note", "Turnout in this precinct: " + cast.toLocaleString("en-US") +
-            " ballots from " + reg.toLocaleString("en-US") + " registered voters (" + electionPercent(cast, reg) + ")."));
-        }
         return wrap;
       },
       cardIdentifier: function (result) {
