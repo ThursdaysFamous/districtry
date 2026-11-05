@@ -37,6 +37,15 @@
   var ELECTION_MARGIN_LABELS = ["Under 5", "5 to 15", "15 to 30", "30 to 50", "50 or more"];
   var ELECTION_FLAT_OPACITY = 0.6;
 
+  // One precinct's character in a contest's `leaders` or `margins`. A writer
+  // may trim the run of "-" (not on this ballot) at either end and say where
+  // the string starts with `from`, which keeps a statewide file with
+  // thousands of local contests small; outside the string is "-".
+  function electionCodeAt(str, from, i) {
+    var j = i - (from || 0);
+    return str && j >= 0 && j < str.length ? str.charAt(j) : "-";
+  }
+
   function electionChoiceColor(i) {
     return ELECTION_COLORS[i % ELECTION_COLORS.length];
   }
@@ -116,7 +125,7 @@
     function leaderColor(idx, contest, key) {
       var i = idx.pos[key];
       if (i === undefined || !contest) return null;
-      var code = contest.leaders.charAt(i);
+      var code = electionCodeAt(contest.leaders, contest.from, i);
       if (code === "=") return ELECTION_TIE;
       var n = ELECTION_LEADER_CODES.indexOf(code);
       return n >= 0 ? electionChoiceColor(n) : null;
@@ -125,7 +134,7 @@
     function leaderOpacity(idx, contest, key) {
       var i = idx.pos[key];
       if (i === undefined || !contest || !contest.margins) return ELECTION_FLAT_OPACITY;
-      var band = parseInt(contest.margins.charAt(i), 10);
+      var band = parseInt(electionCodeAt(contest.margins, contest.from, i), 10);
       return isNaN(band) ? ELECTION_FLAT_OPACITY : ELECTION_MARGIN_OPACITY[band];
     }
 
@@ -391,7 +400,9 @@
           contest.outside[0].toLocaleString("en-US") + ") were counted outside any precinct, so they are in the" +
           " totals above and not in the map's colours.");
       }
-      if (result.turnout) {
+      // a precinct whose counts are in but whose turnout the publisher has not
+      // reported yet carries nulls, and says nothing about turnout
+      if (result.turnout && result.turnout[0] && result.turnout[1] !== null && result.turnout[1] !== undefined) {
         var reg = result.turnout[0], cast = result.turnout[1];
         notes.push("Turnout in this precinct: " + cast.toLocaleString("en-US") + " ballots from " +
           reg.toLocaleString("en-US") + " registered voters (" + electionPercent(cast, reg) + ").");
@@ -467,7 +478,8 @@
       layers.forEach(function (mod) {
         if (mod.id === opts.id || mod.fillsGround || !state.layersOn[mod.id]) return;
         if (!mod.overlay || !mod.overlay.style) return; // polygon layers only
-        if (opts.tiles && mod.tiles === opts.tiles) return; // the precinct layer itself
+        // the precinct layer itself, by its archive or, where it has none, its loader
+        if ((opts.tiles && mod.tiles === opts.tiles) || mod.overlay.load === opts.load) return;
         var rt = layerRuntime[mod.id];
         if (!rt || rt.relevant === false || rt.resultSeq !== state.sequence) return;
         var pillEl = rt.idPill && !rt.idPill.hidden ? rt.idPill
