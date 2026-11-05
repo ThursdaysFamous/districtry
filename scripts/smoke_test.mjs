@@ -4989,6 +4989,8 @@ try {
       const note = (sec.querySelector(".election-note") || {}).textContent || "";
       const m = /from the ([\d,]+) precincts? in .* this race: ([\d,]+) votes/.exec(note);
       return {
+        closed: !sec.open,
+        summary: (sec.querySelector("summary") || {}).textContent || "",
         caption: (sec.querySelector("caption") || {}).textContent || "",
         votes: Array.from(sec.querySelectorAll("tbody tr td:nth-child(2)")).reduce((a, td) => a + num(td.textContent), 0),
         precincts: m ? num(m[1]) : 0, stated: m ? num(m[2]) : -1,
@@ -4996,8 +4998,9 @@ try {
           .reduce((a, td) => a + num(td.textContent), 0),
       };
     });
-    check("the Election Results card adds the picked race up over the selected school board district",
-          !!area && /^.+ in District \d+[ab] \(.+\)$/.test(area.caption) && area.precincts > 1 &&
+    check("the Election Results card adds the picked race up over the selected school board district, in a closed section",
+          !!area && area.closed && /^District \d+[ab] \(.+\)/.test(area.summary) &&
+          /^.+ in District \d+[ab] \(.+\)$/.test(area.caption) && area.precincts > 1 &&
           area.votes === area.stated && area.stated > area.own && area.own > 0,
           `area=${JSON.stringify(area)}`);
     // every other school board district keeps its full line and its number

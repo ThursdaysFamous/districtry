@@ -412,6 +412,7 @@
      * cuts through precincts is counted precinct by precinct and says so. */
     var areaBox = null, areaResult = null, areaShown = "", areaToken = 0, areaQueued = false;
     var areaAssign = {}; // layer id + district -> {keys, crossing, coverage}
+    var areaOpen = {};   // layer id -> the reader opened that layer's totals
     function queueAreaTotals() {
       if (areaQueued) return;
       areaQueued = true;
@@ -519,7 +520,25 @@
         sums.sort(function (x, y) { return x.a.keys.length - y.a.keys.length; });
         sums.forEach(function (t) {
           if (!t.voted) return; // the race is not on this district's ballots here
-          var sec = cardEl("div", "election-area");
+          // closed until opened (Adam, 2026-11-05: "Make them collapsible"),
+          // and kept open for that layer once a reader opens it
+          var sec = document.createElement("details");
+          sec.className = "election-area";
+          if (areaOpen[t.w.mod.id]) sec.open = true;
+          var top = Math.max.apply(null, t.counts.concat([0]));
+          var leaders = [];
+          t.counts.forEach(function (c, n) { if (c === top && top > 0) leaders.push(n); });
+          var head = t.w.name + " (" + t.w.mod.label + ")";
+          if (!t.withheld && leaders.length === 1) {
+            head += ": " + String(contest.choices[leaders[0]]) + " " + electionPercent(top, t.ballots);
+          } else if (!t.withheld && leaders.length > 1) {
+            head += ": tied for most votes";
+          }
+          var summary = cardEl("summary", "election-area-head", head);
+          sec.appendChild(summary);
+          (function (id) {
+            sec.addEventListener("toggle", function () { areaOpen[id] = sec.open; });
+          })(t.w.mod.id);
           sec.appendChild(raceTable(idx, contest, t.ballots, t.counts, contest.name + " in " + t.w.name +
             " (" + t.w.mod.label + ")",
             t.withheld ? null : certified(idx, contest) ? "Most votes in " + t.w.name : "Most votes so far"));

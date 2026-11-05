@@ -4369,7 +4369,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .election-note { margin: 0; font-size: 12px; line-height: 1.45; color: var(--card-body-ink); }
   .election-areas { display: flex; flex-direction: column; gap: 10px; }
   .election-areas:empty { display: none; }
-  .election-area { display: flex; flex-direction: column; gap: 6px; padding-top: 10px; border-top: 1px solid var(--card-border); }
+  .election-area { padding-top: 10px; border-top: 1px solid var(--card-border); }
+  .election-area[open] > * + * { margin-top: 6px; }
+  .election-area-head { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--card-ink); }
+  .election-area-head:focus-visible { outline: 2px solid var(--card-link); outline-offset: 2px; }
   .districtry-map-legend.election-legend { margin-bottom: 6px; max-width: 260px; }
   .districtry-map-legend.election-legend .dml-label { white-space: normal; }
   .districtry-map-legend.election-legend .election-legend-race { font-weight: 700; color: var(--ink); }
@@ -26068,6 +26071,7 @@ function initChiExplorer() {
      * cuts through precincts is counted precinct by precinct and says so. */
     var areaBox = null, areaResult = null, areaShown = "", areaToken = 0, areaQueued = false;
     var areaAssign = {}; // layer id + district -> {keys, crossing, coverage}
+    var areaOpen = {};   // layer id -> the reader opened that layer's totals
     function queueAreaTotals() {
       if (areaQueued) return;
       areaQueued = true;
@@ -26175,7 +26179,25 @@ function initChiExplorer() {
         sums.sort(function (x, y) { return x.a.keys.length - y.a.keys.length; });
         sums.forEach(function (t) {
           if (!t.voted) return; // the race is not on this district's ballots here
-          var sec = cardEl("div", "election-area");
+          // closed until opened (Adam, 2026-11-05: "Make them collapsible"),
+          // and kept open for that layer once a reader opens it
+          var sec = document.createElement("details");
+          sec.className = "election-area";
+          if (areaOpen[t.w.mod.id]) sec.open = true;
+          var top = Math.max.apply(null, t.counts.concat([0]));
+          var leaders = [];
+          t.counts.forEach(function (c, n) { if (c === top && top > 0) leaders.push(n); });
+          var head = t.w.name + " (" + t.w.mod.label + ")";
+          if (!t.withheld && leaders.length === 1) {
+            head += ": " + String(contest.choices[leaders[0]]) + " " + electionPercent(top, t.ballots);
+          } else if (!t.withheld && leaders.length > 1) {
+            head += ": tied for most votes";
+          }
+          var summary = cardEl("summary", "election-area-head", head);
+          sec.appendChild(summary);
+          (function (id) {
+            sec.addEventListener("toggle", function () { areaOpen[id] = sec.open; });
+          })(t.w.mod.id);
           sec.appendChild(raceTable(idx, contest, t.ballots, t.counts, contest.name + " in " + t.w.name +
             " (" + t.w.mod.label + ")",
             t.withheld ? null : certified(idx, contest) ? "Most votes in " + t.w.name : "Most votes so far"));
