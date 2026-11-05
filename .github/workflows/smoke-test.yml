@@ -2083,8 +2083,8 @@ jobs:
       # Two guards, either sufficient alone: the browser build is CACHED keyed
       # on the pinned version (a hit skips the CDN entirely), and every phase
       # runs under its own budget, sized in the install step to fail NAMED
-      # inside that step's 15-minute cap. deploy-pages.yml and release-engine.yml run this same
-      # toolchain and carry the same pair, pointing here for the story.
+      # inside that step's 15-minute cap. (deploy-pages.yml carried the same pair
+      # until 2026-11-05, when the browser test left the publish.)
       - name: Cache Playwright Chromium
         if: ${{ !cancelled() }}
         id: pw-cache
@@ -2103,8 +2103,8 @@ jobs:
       # that then ran without them passed. Caching the .deb files (#1709) did
       # not help a runner that started cold. So nothing here touches apt; the
       # step proves instead that Chromium STARTS, and fails by name if a future
-      # runner image ever drops a library it needs. deploy-pages.yml and
-      # vector-tiles.yml do the same.
+      # runner image ever drops a library it needs. vector-tiles.yml does
+      # the same.
       - name: Install Playwright + Chromium
         if: ${{ !cancelled() }}
         timeout-minutes: 15
