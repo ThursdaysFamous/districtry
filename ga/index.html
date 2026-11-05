@@ -5198,12 +5198,64 @@ function initGeorgiaExplorer() {
   // The opening view: the whole served area, centred on it. The centre is
   // DERIVED from METRO_BBOX (worksheet-generated) rather than METRO_CENTER —
   // METRO_CENTER is the metro anchor the geocoder biases toward, which for a
-  // statewide instance is a corner of the map, not its middle. zoomSnap 0.5 is
-  // what makes a half step legal; without it Leaflet rounds 7.5 to 8.
+  // statewide instance is a corner of the map, not its middle. The quarter
+  // zoomSnap in MAP_ZOOM_STEPS is what makes 7.5 legal; without it Leaflet
+  // rounds 7.5 to 8.
   var INITIAL_ZOOM = 7.5;
   var INITIAL_CENTER = [(METRO_BBOX.minLat + METRO_BBOX.maxLat) / 2,
                         (METRO_BBOX.minLng + METRO_BBOX.maxLng) / 2];
-  var map = L.map("map", { minZoom: 7, maxZoom: 19, zoomControl: false, zoomSnap: 0.5 })
+  /* ==== ENGINE:BEGIN map-zoom-steps ==== */
+  // How far each zoom input moves the map. Every instance builds its map with
+  // L.extend({ its own min and max zoom }, MAP_ZOOM_STEPS), so the step sizes
+  // are one copy for the fleet while the zoom range stays each app's own.
+  //
+  // Leaflet's defaults made one notch of an ordinary Windows mouse wheel a
+  // WHOLE zoom level, the same as a press of + or -, and a whole level doubles
+  // the scale of everything on the map; the wheel was what readers found too
+  // coarse (Adam, 2026-11-05). Measured that day in the Illinois app, booted
+  // in Chromium as Windows Chrome at 100% display scaling (the case Leaflet's
+  // wheel maths is written per platform for), from zoom 12 in the Loop:
+  //
+  //                                   before   after
+  //   one press of +                    1        1
+  //   one mouse-wheel notch             1        0.5
+  //   three notches 120 ms apart        2        1
+  //   half a second of touchpad pinch   1.5      0.75
+  //
+  // The pinch row is a synthetic ctrl+wheel stream, gentle (2 px a frame) and
+  // firm (8 px), five runs of each: before read 1.5 every time, after read 0.75
+  // in 8 of 10 and 0.5 and 1.25 once each, because Leaflet drops part of a
+  // burst that lands while the previous zoom is still animating.
+  //
+  // zoomDelta is the step for the buttons, the keyboard and a double-click,
+  // and it stays Leaflet's whole level on purpose: nobody found the buttons
+  // coarse, a whole step is what most web maps' buttons do, and half a step
+  // would take about 19 presses instead of 10 from a state's opening view
+  // down to a street. It is spelled out so the one place that sets the
+  // fleet's zoom steps names all three.
+  //
+  // wheelPxPerZoomLevel is how much scrolling makes one level; Leaflet's 60
+  // made a single notch of an ordinary Windows mouse a whole level. 120 halves
+  // it on every platform, since Leaflet divides each platform's wheel delta by
+  // its own factor before this number is applied.
+  //
+  // zoomSnap is the smallest zoom the map stops on. Leaflet rounds every wheel
+  // burst UP to at least one snap, which is why a touchpad pinch moved the same
+  // amount however hard it was pinched: the 40 ms bursts a pinch arrives in
+  // are each far smaller than a snap. A quarter halves that floor, lets a
+  // phone pinch settle within an eighth of a level of where the fingers let go
+  // (a half step could jump a quarter), and keeps every zoom an exact binary
+  // fraction, so a shared link carries z=13.25 and never a float tail. It must
+  // divide every boot zoom (7.5 statewide, 11 in San Francisco), or Leaflet
+  // rounds the opening view.
+  //
+  // zoomSnap 0, which would follow a pinch exactly, was measured too and not
+  // taken: a half-second touchpad pinch then moved 0.04 to 0.17 of a level,
+  // slow enough to read as broken, and every zoom a link carries would need
+  // rounding.
+  var MAP_ZOOM_STEPS = { zoomSnap: 0.25, zoomDelta: 1, wheelPxPerZoomLevel: 120 };
+  /* ==== ENGINE:END map-zoom-steps ==== */
+  var map = L.map("map", L.extend({ minZoom: 7, maxZoom: 19, zoomControl: false }, MAP_ZOOM_STEPS))
     .setView(INITIAL_CENTER, INITIAL_ZOOM);
   L.control.zoom({ position: "bottomright" }).addTo(map);
   /* ==== ENGINE:BEGIN map-pan-filter ==== */
@@ -6933,10 +6985,10 @@ function initGeorgiaExplorer() {
     // view, not to its nearest edge.
     var zoom = null;
     if (params.zoom !== undefined) {
-      // parseFloat, not parseInt: zoomSnap 0.5 makes half steps legal on the
-      // statewide instances, and a sibling handoff carries the zoom the reader
-      // was at. parseInt("7.5") is 7, which silently dropped half a level on
-      // every hop between two apps.
+      // parseFloat, not parseInt: the quarter zoomSnap in MAP_ZOOM_STEPS makes
+      // fractional zooms legal in every app, and a sibling handoff carries the
+      // zoom the reader was at. parseInt("7.5") is 7, which silently dropped
+      // half a level on every hop between two apps.
       var wanted = parseFloat(params.zoom);
       if (isFinite(wanted) && wanted >= map.getMinZoom() && wanted <= map.getMaxZoom()) zoom = wanted;
     }

@@ -256,26 +256,27 @@ rather than re-running the failed sibling run.
 > in the changelog. A changelog that promises a clean adoption and doesn't
 > deliver one costs every sibling a red CI run and a manual repair.
 
-## Current ENGINE block inventory (69 in index.html + 2 in sw.js)
+## Current ENGINE block inventory (75 in index.html + 2 in sw.js)
 
-index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`,
-`basemap`, `body-map-toolbar`, `brand-names`, `cached-loaders`, `card-helpers`,
-`chamber-factory`, `compare-stats`, `county-layer-dispatcher`, `coverage-gaps`,
-`cps-network-factory`, `districtry-behavior`, `districtry-theme`,
-`exports`, `extract-district-number`, `feedback`,
-`fetch-retry`, `find-prop-ci`, `footer-independence`, `gaps-html`,
-`gaps-modal-html`,
-`geocoder-search`, `geocoder-shell`, `geolocation`, `geometry-measure`, `groups`, `haversine`,
-`hover-explorer`, `install-app`, `int-field`, `layer-registry`, `map-chrome-classes`, `map-link`,
-`map-pan-filter`, `metro-links`, `metro-links-html`, `metro-portal`,
+index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`, `basemap`,
+`body-map-toolbar`, `brand-names`, `cached-loaders`, `card-helpers`,
+`chamber-factory`, `compare-stats`, `county-layer-dispatcher`,
+`coverage-gaps`, `cps-network-factory`, `districtry-behavior`,
+`districtry-theme`, `election-results`, `exports`, `extract-district-number`,
+`feedback`, `fetch-retry`, `find-prop-ci`, `first-use`, `footer-independence`,
+`gaps-html`, `gaps-modal-html`, `geocoder-search`, `geocoder-shell`,
+`geolocation`, `geometry-measure`, `groups`, `haversine`, `help-link-html`,
+`hover-explorer`, `install-app`, `int-field`, `layer-registry`,
+`map-chrome-classes`, `map-link`, `map-pan-filter`, `map-zoom-steps`,
+`masthead-buttons-html`, `metro-links`, `metro-links-html`, `metro-portal`,
 `nearest-point-factory`, `office-helpers`, `overlay-cards`, `permalink`,
 `play-app`, `poi-geocode`, `point-in-polygon`, `polygon-containment`,
 `polygon-factory`, `probe-geometry-column`, `qr-code`, `relationship-pinning`,
 `render-helper`, `sanitize`, `school-zone-factory`, `scope-mask`,
 `selection-controls`, `socrata-loader`, `socrata-point-loader`, `state`,
 `styles-app`, `styles-card-v2`, `styles-core`, `styles-districtry-skin`,
-`styles-footer`, `styles-hover-responsive`, `styles-markers`,
-`styles-sibling-result`, `tile-overlay`, `vector-tiles`.
+`styles-election-results`, `styles-footer`, `styles-hover-responsive`,
+`styles-markers`, `styles-sibling-result`, `tile-overlay`, `vector-tiles`.
 (Count and list re-synced against `check_engine_parity.py` output while
 adding the two card blocks — the previous list said 45 but had drifted,
 missing `map-chrome-classes`, `map-pan-filter`, and `styles-markers`.
@@ -293,7 +294,9 @@ by #1512, and its count line said 65 against the 66 names it listed.
 `play-app` joined on 2026-10-14, one of the `engine/shared/` blocks, listed
 here because this list names every fence `index.html` carries. The
 count line is a claim
-`check_engine_parity.py` can refute; re-run it whenever a fence is added.)
+`check_engine_parity.py` can refute; re-run it whenever a fence is added. Re-derived again 2026-11-05 from this instance's own fences while
+adding `map-zoom-steps`, the zoom step sizes every app builds its map
+with: the list was missing every block added since mid-October.)
 
 (`basemap` — promoted 2026-08-26, the day the basemap went vector: the
 CARTO-vector-with-raster-fallback boot, the WebGL2 probe and half-added-layer
