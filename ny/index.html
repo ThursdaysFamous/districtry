@@ -11619,9 +11619,12 @@ function initNycExplorer() {
       color: style.color,
       weight: style.weight,
       fillColor: style.fillColor,
-      fillOpacity: (rt && rt.outlineOnly) ? 0 : scaledFillOpacity(mod),
+      // while a fillsGround layer (election results) paints the ground, any
+      // fill here would tint its colours, so every other layer draws lines only
+      fillOpacity: ((rt && rt.outlineOnly) || groundFilledByOther(mod)) ? 0 : scaledFillOpacity(mod),
       dashArray: style.dashArray
     };
+
     // Optional per-feature override (e.g. the School Location layer color-codes
     // each footprint by school type and hides types the card's filter turned
     // off). Layered on top of the flat base so fill-opacity scaling still applies
@@ -11657,7 +11660,8 @@ function initNycExplorer() {
   // move whose signature is unchanged restyles just the two paths whose role
   // flipped instead of the whole layer.
   function highlightSignature(rt, mod) {
-    return activeLayerCount() + "|" + (rt.outlineOnly ? "1" : "0") + "|" + (mod && groundFilledByOther(mod) ? "1" : "0");
+    return activeLayerCount() + "|" + (rt.outlineOnly ? "1" : "0") + "|" + (mod && groundFilledByOther(mod) ? "1" : "0") +
+      "|" + (districtLinesOn ? "1" : "0");
   }
 
   // A layer that paints its whole ground in colours that are its answer (the
@@ -11666,6 +11670,15 @@ function initNycExplorer() {
   // its outline and drops its tint, because a translucent tint over those
   // colours changes them: measured 2026-11-05 with Chicago's wards on, the
   // selected ward's 0.32 tint made a purple precinct read blue.
+  // The "Boundaries and numbers" button over the election results (the
+  // relationship-pinning block draws it): on, every other layer keeps all its
+  // district lines when a point is picked and labels its districts; off, the
+  // others fade as they do on any map and no labels are drawn. Held here so it
+  // is set before any style is computed. On by default, for this window only.
+  var districtLinesOn = true;
+  function showAllDistrictLines(mod) {
+    return districtLinesOn && groundFilledByOther(mod);
+  }
   function groundFilledByOther(mod) {
     for (var i = 0; i < layers.length; i++) {
       var l = layers[i];
@@ -11708,6 +11721,7 @@ function initNycExplorer() {
     if (rt.outlineOnly) return; // outline-only layers carry no fill to rescale
     var fillOpacity = scaledFillOpacity(mod);
     if (fillOpacity == null) return; // point-dataset layer (no flat style object)
+    if (groundFilledByOther(mod)) fillOpacity = 0; // lines only over the election results
     rt.overlayLayer.eachLayer(function (subLayer) {
       if (!subLayer.setStyle) return;
       // A per-feature styler owns each path's fill (a filtered-out School
@@ -11723,6 +11737,7 @@ function initNycExplorer() {
       if (!state.layersOn[mod.id]) return;
       rescaleLayerFill(mod);
     });
+    queueDistrictNumbers(); // a layer came, went or loaded: the labels over the results follow
   }
 
   // Restack every active layer per LAYER_AREA_RANK (largest first, smallest
@@ -11731,8 +11746,16 @@ function initNycExplorer() {
   // bringToFront() moves a layer group above whatever else is currently on
   // the map, so calling it in largest-to-smallest order leaves the smallest
   // active layer on top after the last call.
+  // A layer that paints the ground (fillsGround: the election results) goes
+  // under every other one whatever its rank, because its colours are opaque
+  // and a district line drawn beneath them on the same tile canvas is hidden.
   function reorderActiveLayers() {
+    var ground = [], rest = [];
     LAYER_AREA_RANK.forEach(function (id) {
+      var m = getLayerById(id);
+      (m && m.fillsGround ? ground : rest).push(id);
+    });
+    ground.concat(rest).forEach(function (id) {
       var rt = layerRuntime[id];
       if (state.layersOn[id] && rt && rt.overlayLayer && map.hasLayer(rt.overlayLayer)) {
         rt.overlayLayer.bringToFront();
@@ -11801,6 +11824,11 @@ function initNycExplorer() {
   function fadedStyle(baseStyle, mod) {
     var style = mod && mod.overlay && mod.overlay.style;
     if (style && style.keepOthersVisible) return Object.assign({ opacity: 1 }, baseStyle);
+    // Over the election results the faded lines vanished into the colours
+    // (Adam, 2026-11-05: "once you pick a point, it only shows that one
+    // boundary"), so while a fillsGround layer is on every district keeps its
+    // full line and the lit one still takes the highlight.
+    if (showAllDistrictLines(mod)) return Object.assign({}, baseStyle, { opacity: 1, fillOpacity: 0 });
     return {
       color: baseStyle.color,
       weight: Math.max(1, (baseStyle.weight || 1.5) - 0.5),
@@ -15090,6 +15118,7 @@ function initNycExplorer() {
           findFeatureContaining({ type: "FeatureCollection", features: features }, state.selectedPoint)) {
         updateLayerHighlight(spec);
       }
+      queueDistrictNumbers(); // the late county's districts get their labels over the results
     }
 
     var anyHoverOfficial = entries.some(function (entry) { return !!entry.hoverOfficial; });
@@ -19563,8 +19592,9 @@ function initNycExplorer() {
   // The one size floor is a district under ~8px across, a speck that would
   // otherwise claim a chip ahead of a neighbour the reader can actually see.
   var REL_LABEL_MIN_ROOM = 4; // px from the label spot to its nearest edge
-  function layoutRelLabels() {
-    if (!relLabels.length) return;
+  function layoutRelLabels() { layoutMapLabels(relLabels); }
+  function layoutMapLabels(list) {
+    if (!list.length) return;
     // every marker on the map (the selected point, office pins) is occupied
     // ground: a label drawn over the star hides the point the reader chose
     var placed = [];
@@ -19577,7 +19607,7 @@ function initNycExplorer() {
       if (!r.width && !r.height) return;
       placed.push({ x0: r.left - box.left, y0: r.top - box.top, x1: r.right - box.left, y1: r.bottom - box.top });
     });
-    relLabels.forEach(function (l) {
+    list.forEach(function (l) {
       l.el.classList.remove("rel-map-label-hidden");
       var w = l.el.offsetWidth, h = l.el.offsetHeight;
       for (var i = 0; i < l.spots.length; i++) {
@@ -19704,11 +19734,7 @@ function initNycExplorer() {
   function refreshRelationshipOutlines() {
     if (!relationshipGroup) {
       relationshipGroup = L.featureGroup().addTo(map);
-      // labels sit above every overlay (400) and below the selected-point
-      // marker (600); pointer-events off so they never swallow a map click
-      var labelPane = map.createPane("rel-labels");
-      labelPane.style.zIndex = "450";
-      labelPane.style.pointerEvents = "none";
+      ensureMapLabelPane();
       relLabelGroup = L.layerGroup().addTo(map);
       map.on("zoomend", layoutRelLabels);
     }
@@ -19731,7 +19757,145 @@ function initNycExplorer() {
     var parentFeature = relationshipParentFeature();
     relCounts = parentFeature ? drawRelationshipOutlines(parentFeature) : null;
     updateRelLegend();
+    refreshDistrictNumbers(); // a pinned comparison takes the map's labels over, and gives them back
     statsTryRestore(); // a link's report waits for the boundaries this refresh drew
+  }
+
+  // labels sit above every overlay (400) and below the selected-point
+  // marker (600); pointer-events off so they never swallow a map click
+  function ensureMapLabelPane() {
+    if (map.getPane("rel-labels")) return;
+    var labelPane = map.createPane("rel-labels");
+    labelPane.style.zIndex = "450";
+    labelPane.style.pointerEvents = "none";
+  }
+
+  /* ---- district numbers over the election results ----
+   * While a layer that paints the ground is on (fillsGround: the election
+   * results), every other switched-on polygon layer labels each of its
+   * districts in view with its name, in the compared outlines' chips, so a
+   * reader can see which ward or district each block of colour sits in (Adam,
+   * 2026-11-05, after a map labelling every ward over the results). The text,
+   * the spot inside each district and the collision rule are the comparison's
+   * own (relLabelText, relLabelPoint, layoutMapLabels), so the two kinds of
+   * label never disagree. A pinned comparison labels its own outlines
+   * instead, so these step aside while one is drawn. A layer drawn from tiles
+   * fetches its whole file for this, as a comparison does. Only districts
+   * that reach into the view and are at least DISTRICT_NUMBER_MIN_PX across
+   * on screen get a label, and at most DISTRICT_NUMBER_MAX in all, so a
+   * precinct layer at city zoom asks for its labels as the reader zooms in. */
+  var districtNumberGroup = null;
+  var districtNumbers = [];
+  var districtNumberQueued = false;
+  var DISTRICT_NUMBER_MIN_PX = 24;
+  var DISTRICT_NUMBER_MAX = 400;
+  function groundIsFilled() {
+    return layers.some(function (l) {
+      return l.fillsGround && state.layersOn[l.id] && layerRuntime[l.id] && layerRuntime[l.id].relevant !== false;
+    });
+  }
+  function queueDistrictNumbers() {
+    if (districtNumberQueued) return;
+    districtNumberQueued = true;
+    setTimeout(function () { districtNumberQueued = false; refreshDistrictNumbers(); }, 120);
+  }
+  var districtLinesBtn = null;
+  function syncDistrictLinesButton() {
+    var show = groundIsFilled();
+    if (!districtLinesBtn) {
+      if (!show) return;
+      var corner = document.querySelector(".map-bottom-left");
+      if (!corner) return;
+      districtLinesBtn = document.createElement("button");
+      districtLinesBtn.type = "button";
+      districtLinesBtn.className = "hover-toggle-btn";
+      districtLinesBtn.id = "district-lines-toggle";
+      districtLinesBtn.title = "Show every district line and number of the other layers on, over the election results";
+      districtLinesBtn.addEventListener("click", function () {
+        districtLinesOn = !districtLinesOn;
+        syncDistrictLinesButton();
+        refreshHighlightFills(); // every other layer's lines fade or come back
+        refreshDistrictNumbers();
+      });
+      corner.appendChild(districtLinesBtn);
+    }
+    districtLinesBtn.hidden = !show;
+    districtLinesBtn.textContent = districtLinesOn ? "Boundaries and numbers: on" : "Boundaries and numbers: off";
+    districtLinesBtn.setAttribute("aria-pressed", districtLinesOn ? "true" : "false");
+  }
+  function refreshDistrictNumbers() {
+    if (districtNumberGroup) districtNumberGroup.clearLayers();
+    districtNumbers = [];
+    syncDistrictLinesButton();
+    if (!groundIsFilled() || !districtLinesOn || relCounts) return;
+    if (!districtNumberGroup) {
+      ensureMapLabelPane();
+      districtNumberGroup = L.layerGroup().addTo(map);
+      map.on("moveend", queueDistrictNumbers);
+    }
+    var view = map.getBounds();
+    var vb = [view.getWest(), view.getSouth(), view.getEast(), view.getNorth()];
+    var viewFeature = { type: "Feature", properties: {}, geometry: { type: "Polygon", coordinates: [[
+      [vb[0], vb[1]], [vb[2], vb[1]], [vb[2], vb[3]], [vb[0], vb[3]], [vb[0], vb[1]]]] } };
+    var total = 0;
+    for (var li = 0; li < layers.length && total < DISTRICT_NUMBER_MAX; li++) {
+      var mod = layers[li];
+      if (mod.fillsGround || !state.layersOn[mod.id]) continue;
+      if (!mod.overlay || !mod.overlay.style) continue; // polygon layers only
+      var rt = layerRuntime[mod.id];
+      if (!rt || rt.relevant === false || !rt.overlayLayer) continue;
+      if (!rt.geojson) {
+        if (rt.overlayLayer.dxTiles && !rt.tileGeojsonPromise) {
+          (function (m) {
+            ensureTileGeojson(m).then(queueDistrictNumbers, function (err) {
+              console.error("[" + m.id + "] whole file for the district numbers failed:", err);
+            });
+          })(mod);
+        }
+        continue;
+      }
+      var color = darkenHexColor(moduleColor(mod), 0.15);
+      var wrapper = relLabelWrapper(mod);
+      var feats = rt.geojson.features || [];
+      for (var j = 0; j < feats.length && total < DISTRICT_NUMBER_MAX; j++) {
+        var f = feats[j];
+        if (!f || !f.geometry) continue;
+        var fb = featureBBox(f);
+        if (fb[2] < vb[0] || fb[0] > vb[2] || fb[3] < vb[1] || fb[1] > vb[3]) continue;
+        var a = map.latLngToContainerPoint([fb[1], fb[0]]), b = map.latLngToContainerPoint([fb[3], fb[2]]);
+        if (Math.max(Math.abs(b.x - a.x), Math.abs(b.y - a.y)) < DISTRICT_NUMBER_MIN_PX) continue;
+        var text = relLabelText(mod, f, wrapper);
+        if (!text) continue;
+        // the Census's "ZZ" (or "ZZZ") is the water no district covers, as in
+        // Lake Michigan's "IL-ZZ", and is not a district to label
+        if (/(^|[^A-Za-z0-9])Z{2,3}$/.test(text)) continue;
+        // a district reaching past the view is labelled in the part on
+        // screen, which is the comparison's "inside the parent" search with
+        // the view as the parent
+        var whole = fb[0] >= vb[0] && fb[2] <= vb[2] && fb[1] >= vb[1] && fb[3] <= vb[3];
+        var spots = whole ? relLabelPoint(f, f, true) : relLabelPoint(f, viewFeature, false);
+        if (!spots.length) continue;
+        var el = document.createElement("span");
+        el.className = "rel-map-label district-number-label";
+        el.textContent = text; // textContent: feature text is external
+        el.style.borderColor = color;
+        el.style.setProperty("--rel-label-ink", hoverPillStyle(color).color);
+        var marker = L.marker([spots[0].lat, spots[0].lng], {
+          icon: L.divIcon({ className: "rel-map-label-anchor", html: el, iconSize: null }),
+          pane: "rel-labels",
+          interactive: false,
+          keyboard: false
+        }).addTo(districtNumberGroup);
+        var here = !!state.selectedPoint && pointInGeometry(state.selectedPoint, f.geometry);
+        districtNumbers.push({ marker: marker, el: el, spots: spots, clearance: spots[0].clearance, here: here });
+        total++;
+      }
+    }
+    districtNumbers.sort(function (x, y) {
+      if (x.here !== y.here) return x.here ? -1 : 1;
+      return y.clearance - x.clearance;
+    });
+    layoutMapLabels(districtNumbers);
   }
 
   // The legend lives above the Hover toggle and, per the toggle's role as the
@@ -20578,6 +20742,14 @@ function initNycExplorer() {
     // The name a layer prints for one feature on its map labels and hover row
     // (the same hoverValue those read), for a check that a layer names its own
     // districts and not a parent's (smoke check 1k1b).
+    // how strongly a layer draws the districts other than the selected one
+    // (smoke check 1y: full over the election results, faded elsewhere)
+    otherDistrictsOpacity: function (id) {
+      var mod = getLayerById(id), base = mod && baseStyleFor(mod);
+      if (!base) return null;
+      var f = fadedStyle(base, mod);
+      return f.opacity == null ? 1 : f.opacity;
+    },
     hoverValueFor: function (id, properties) {
       var mod = getLayerById(id);
       return mod ? hoverValue(mod, { type: "Feature", geometry: null, properties: properties || {} }) : null;

@@ -109,9 +109,12 @@
       color: style.color,
       weight: style.weight,
       fillColor: style.fillColor,
-      fillOpacity: (rt && rt.outlineOnly) ? 0 : scaledFillOpacity(mod),
+      // while a fillsGround layer (election results) paints the ground, any
+      // fill here would tint its colours, so every other layer draws lines only
+      fillOpacity: ((rt && rt.outlineOnly) || groundFilledByOther(mod)) ? 0 : scaledFillOpacity(mod),
       dashArray: style.dashArray
     };
+
     // Optional per-feature override (e.g. the School Location layer color-codes
     // each footprint by school type and hides types the card's filter turned
     // off). Layered on top of the flat base so fill-opacity scaling still applies
@@ -147,7 +150,8 @@
   // move whose signature is unchanged restyles just the two paths whose role
   // flipped instead of the whole layer.
   function highlightSignature(rt, mod) {
-    return activeLayerCount() + "|" + (rt.outlineOnly ? "1" : "0") + "|" + (mod && groundFilledByOther(mod) ? "1" : "0");
+    return activeLayerCount() + "|" + (rt.outlineOnly ? "1" : "0") + "|" + (mod && groundFilledByOther(mod) ? "1" : "0") +
+      "|" + (districtLinesOn ? "1" : "0");
   }
 
   // A layer that paints its whole ground in colours that are its answer (the
@@ -156,6 +160,15 @@
   // its outline and drops its tint, because a translucent tint over those
   // colours changes them: measured 2026-11-05 with Chicago's wards on, the
   // selected ward's 0.32 tint made a purple precinct read blue.
+  // The "Boundaries and numbers" button over the election results (the
+  // relationship-pinning block draws it): on, every other layer keeps all its
+  // district lines when a point is picked and labels its districts; off, the
+  // others fade as they do on any map and no labels are drawn. Held here so it
+  // is set before any style is computed. On by default, for this window only.
+  var districtLinesOn = true;
+  function showAllDistrictLines(mod) {
+    return districtLinesOn && groundFilledByOther(mod);
+  }
   function groundFilledByOther(mod) {
     for (var i = 0; i < layers.length; i++) {
       var l = layers[i];
@@ -198,6 +211,7 @@
     if (rt.outlineOnly) return; // outline-only layers carry no fill to rescale
     var fillOpacity = scaledFillOpacity(mod);
     if (fillOpacity == null) return; // point-dataset layer (no flat style object)
+    if (groundFilledByOther(mod)) fillOpacity = 0; // lines only over the election results
     rt.overlayLayer.eachLayer(function (subLayer) {
       if (!subLayer.setStyle) return;
       // A per-feature styler owns each path's fill (a filtered-out School
@@ -213,6 +227,7 @@
       if (!state.layersOn[mod.id]) return;
       rescaleLayerFill(mod);
     });
+    queueDistrictNumbers(); // a layer came, went or loaded: the labels over the results follow
   }
 
   // Restack every active layer per LAYER_AREA_RANK (largest first, smallest
@@ -221,8 +236,16 @@
   // bringToFront() moves a layer group above whatever else is currently on
   // the map, so calling it in largest-to-smallest order leaves the smallest
   // active layer on top after the last call.
+  // A layer that paints the ground (fillsGround: the election results) goes
+  // under every other one whatever its rank, because its colours are opaque
+  // and a district line drawn beneath them on the same tile canvas is hidden.
   function reorderActiveLayers() {
+    var ground = [], rest = [];
     LAYER_AREA_RANK.forEach(function (id) {
+      var m = getLayerById(id);
+      (m && m.fillsGround ? ground : rest).push(id);
+    });
+    ground.concat(rest).forEach(function (id) {
       var rt = layerRuntime[id];
       if (state.layersOn[id] && rt && rt.overlayLayer && map.hasLayer(rt.overlayLayer)) {
         rt.overlayLayer.bringToFront();
@@ -291,6 +314,11 @@
   function fadedStyle(baseStyle, mod) {
     var style = mod && mod.overlay && mod.overlay.style;
     if (style && style.keepOthersVisible) return Object.assign({ opacity: 1 }, baseStyle);
+    // Over the election results the faded lines vanished into the colours
+    // (Adam, 2026-11-05: "once you pick a point, it only shows that one
+    // boundary"), so while a fillsGround layer is on every district keeps its
+    // full line and the lit one still takes the highlight.
+    if (showAllDistrictLines(mod)) return Object.assign({}, baseStyle, { opacity: 1, fillOpacity: 0 });
     return {
       color: baseStyle.color,
       weight: Math.max(1, (baseStyle.weight || 1.5) - 0.5),
