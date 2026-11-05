@@ -6,7 +6,15 @@ name: Probe election results sites from a runner (temporary)
 # This asks the same question from a GitHub runner, with the same reader:
 # robots.txt first through scripts/robots_policy.py, then ONE page, and only
 # where robots.txt allows it. Our own token only, on both HTTP stacks the
-# project uses; no browser identity. Nothing is committed. Delete after use.
+# project uses. Nothing is committed. Delete after use.
+#
+# Second step (added after the first run, 2026-11-05 16:05 UTC): the six hosts
+# that refused our token from the runner too are asked once more with the
+# fleet's pinned Chrome string and client hints (scraper_common
+# UA_HINTS_CHROME_126), robots.txt read with that same client first, per
+# CLAUDE.md's browser-string rule (allowed only where the token is refused,
+# measurement recorded). The two Clarity paths are NOT asked again: their
+# robots.txt answered HTTP 202, an access control, which is never worked around.
 
 on:
   push:
@@ -65,5 +73,43 @@ jobs:
                   print("  stdlib+token: HTTP %s" % e.code)
               except Exception as e:
                   print("  stdlib+token: error", repr(e)[:120])
+              time.sleep(2)
+          PY
+      - name: Same six hosts with the pinned Chrome client
+        run: |
+          python3 - <<'PY'
+          import sys, time, urllib.request, requests
+          sys.path.insert(0, "scripts")
+          import robots_policy as rp
+          from scraper_common import UA_HINTS_CHROME_126 as H
+          URLS = [
+              "https://www.sfelections.org/results/20261103w/index.html",
+              "https://www.michigan.gov/sos/elections/election-results-and-data",
+              "https://sos.tn.gov/elections/results",
+              "https://results.okelections.us/OKER/?elecDate=20261103",
+              "https://enr.sos.mo.gov/",
+              "https://elections.wi.gov/elections/election-results",
+          ]
+          s = requests.Session(); s.headers.update(H)
+          for url in URLS:
+              gate = rp.RobotsGate(s, H["User-Agent"], timeout=20, headers=H)
+              ok, why = gate.allows(url)
+              print("\n" + url)
+              print("  robots (chrome):", "allows" if ok else "REFUSES", "-", why[:160])
+              if not ok:
+                  continue
+              try:
+                  r = s.get(url, timeout=25)
+                  print("  requests+chrome: HTTP %s, %d bytes" % (r.status_code, len(r.content)))
+              except Exception as e:
+                  print("  requests+chrome: error", repr(e)[:120])
+              time.sleep(2)
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(url, headers=H), timeout=25) as r:
+                      print("  stdlib+chrome: HTTP %s, %d bytes" % (r.status, len(r.read())))
+              except urllib.error.HTTPError as e:
+                  print("  stdlib+chrome: HTTP %s" % e.code)
+              except Exception as e:
+                  print("  stdlib+chrome: error", repr(e)[:120])
               time.sleep(2)
           PY
