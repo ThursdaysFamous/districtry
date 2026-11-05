@@ -4931,6 +4931,39 @@ try {
             after.race === multi.name && after.text.indexOf("Voters could choose more than one candidate") !== -1,
             `race=${JSON.stringify(after.race)}`);
     }
+    // a district race follows the reader: picked at one precinct, it becomes
+    // the same race for the district of the next precinct selected, and a
+    // seat keeps its place among a district's two vacancies
+    {
+      const congressHere = idx.contests.find((c) => c.group === "congress" && onBallot.includes(String(c.id)));
+      await page.selectOption("#card-election-results select.election-select", String(congressHere.id));
+      await page.waitForTimeout(300);
+      await page.evaluate(() => window.ChiExplorer.setSelectedPoint(41.8825, -87.6285));
+      await page.waitForFunction((was) => {
+        const pill = document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill");
+        return pill && pill.textContent.trim() !== was && document.querySelector("#card-election-results .election-table");
+      }, "Ward 47, Precinct 10", { timeout: QUERY_TIMEOUT }).catch(() => {});
+      const moved = await page.evaluate(() => ({
+        pill: (document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill") || {}).textContent || "",
+        value: (document.querySelector("#card-election-results select.election-select") || {}).value || "",
+      }));
+      const m = /Ward (\d+), Precinct (\d+)/.exec(moved.pill);
+      const newKey = m ? m[1].padStart(2, "0") + m[2].padStart(3, "0") : null;
+      const newPart = newKey && JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results",
+        idx.parts[idx.precincts.indexOf(newKey)] + ".json"), "utf8"));
+      const newBallot = newPart ? newPart.precincts[newKey].contests.map((r) => String(r[0])) : [];
+      const congressThere = idx.contests.find((c) => c.group === "congress" && newBallot.includes(String(c.id)));
+      check("a U.S. House race picked at one precinct becomes the next precinct's own district race",
+            !!congressThere && congressThere.id !== congressHere.id && moved.value === String(congressThere.id),
+            `from=${congressHere.name} pill=${JSON.stringify(moved.pill)} picked=${moved.value} want=${congressThere && congressThere.id}`);
+      await page.evaluate(() => window.ChiExplorer.setSelectedPoint(41.96660, -87.67850));
+      await page.waitForFunction((want) => {
+        const pill = document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill");
+        return pill && pill.textContent.trim() === want && document.querySelector("#card-election-results .election-table");
+      }, "Ward 47, Precinct 10", { timeout: QUERY_TIMEOUT }).catch(() => {});
+      await page.selectOption("#card-election-results select.election-select", String(firstOnBallot.id)).catch(() => {});
+      await page.waitForTimeout(300);
+    }
     // another layer's selected district keeps its outline and drops its tint
     // while the results are on, since a tint over the result colours changes
     // them, and gets it back once they are off
@@ -4944,9 +4977,45 @@ try {
         .map((p) => parseFloat(getComputedStyle(p).fillOpacity));
       return painted.some((v) => v > 0) ? Math.max.apply(null, painted) : asked;
     });
+    // every other school board district keeps its full line and its number
+    // while the results are on, and the "Boundaries and numbers" button takes
+    // both away and gives them back
+    const lines = async () => page.evaluate(() => {
+      // school board is drawn from tiles, so the line strength is read from
+      // the style the tile paint is built from, not from SVG paths
+      const others = window.ChiExplorer.otherDistrictsOpacity("school-board");
+      const btn = document.getElementById("district-lines-toggle");
+      return {
+        others,
+        labels: Array.from(document.querySelectorAll(".district-number-label"))
+          .filter((el) => !el.classList.contains("rel-map-label-hidden")).map((el) => el.textContent),
+        btn: btn && !btn.hidden ? btn.textContent : null,
+      };
+    });
+    await page.waitForFunction(() => document.querySelectorAll(".district-number-label").length > 0,
+      null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const linesOn = await lines();
+    await page.click("#district-lines-toggle");
+    await page.waitForTimeout(400);
+    const linesOff = await lines();
+    await page.click("#district-lines-toggle");
+    await page.waitForTimeout(400);
+    const linesBack = await lines();
+    check("over the election results every school board district keeps its line and its number, and the button takes both away and back",
+          linesOn.others === 1 && linesOn.labels.some((t) => /^District \d+[ab]$/.test(t)) &&
+          linesOn.btn === "Boundaries and numbers: on" &&
+          linesOff.others < 0.5 && linesOff.labels.length === 0 && linesOff.btn === "Boundaries and numbers: off" &&
+          linesBack.others === 1 && linesBack.labels.length > 0,
+          `on=${JSON.stringify({ o: linesOn.others, l: linesOn.labels.slice(0, 3), b: linesOn.btn })} ` +
+          `off=${JSON.stringify({ o: linesOff.others, l: linesOff.labels.length, b: linesOff.btn })} ` +
+          `back=${JSON.stringify({ o: linesBack.others, l: linesBack.labels.length })}`);
     await page.click("#toggle-election-results");
     await page.waitForTimeout(300);
     const tintOff = await page.evaluate(() => window.ChiExplorer.highlightFill("school-board"));
+    const afterOff = await lines();
+    check("with the election results off, other layers' labels and the Boundaries and numbers button go away",
+          afterOff.labels.length === 0 && afterOff.btn === null && afterOff.others < 0.5,
+          `labels=${afterOff.labels.length} btn=${JSON.stringify(afterOff.btn)} others=${afterOff.others}`);
     check("another layer's selected district is drawn untinted while Election Results is on, and tinted again after",
           tintOn === 0 && tintOff > 0, `on=${tintOn} off=${tintOff}`);
     const hidden = await page.evaluate(() => {

@@ -147,6 +147,7 @@
           findFeatureContaining({ type: "FeatureCollection", features: features }, state.selectedPoint)) {
         updateLayerHighlight(spec);
       }
+      queueDistrictNumbers(); // the late county's districts get their labels over the results
     }
 
     var anyHoverOfficial = entries.some(function (entry) { return !!entry.hoverOfficial; });

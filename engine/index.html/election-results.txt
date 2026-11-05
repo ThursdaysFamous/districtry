@@ -168,6 +168,33 @@
       drawLegend();
     }
 
+    // The race on this ballot that is the picked race's counterpart: the one
+    // in the same group of district races (the publisher's groups, each tied
+    // to a map layer: U.S. House, State Senate, Board of Review…). Where one
+    // district elects more than one seat (two subcircuit vacancies), the seat
+    // keeps its place: the second vacancy of the 1st Subcircuit becomes the
+    // second of the 3rd. A group with no layer (statewide offices, judges
+    // elected countywide, questions) has no counterpart, since every one of
+    // its races is a different office.
+    function equivalentRace(idx, pickedId, rows) {
+      var contest = pickedId === null ? null : idx.byId[pickedId];
+      if (!contest || !contest.group) return null;
+      var group = null;
+      (idx.data.groups || []).forEach(function (g) { if (g.id === contest.group) group = g; });
+      if (!group || !group.layer) return null;
+      var seatOf = function (c) { return String(c.name).replace(/\s*\([^)]*\)\s*$/, ""); };
+      var inGroup = (idx.data.contests || []).filter(function (c) { return c.group === contest.group; });
+      var place = inGroup.filter(function (c) { return seatOf(c) === seatOf(contest); })
+        .map(function (c) { return String(c.id); }).indexOf(String(contest.id));
+      var here = inGroup.filter(function (c) {
+        return rows.some(function (r) { return String(r[0]) === String(c.id); });
+      });
+      if (!here.length) return null;
+      var seat = seatOf(here[0]);
+      var same = here.filter(function (c) { return seatOf(c) === seat; });
+      return String(same[Math.min(Math.max(place, 0), same.length - 1)].id);
+    }
+
     function pick(id) {
       picked = id == null ? null : String(id);
       repaint();
@@ -390,11 +417,17 @@
             // it is on this precinct's ballot; otherwise the first race listed
             var onBallot = rows.some(function (r) { return String(r[0]) === picked; });
             if (!onBallot) {
-              var first = null;
-              (idx.data.contests || []).some(function (c) {
-                if (rows.some(function (r) { return String(r[0]) === String(c.id); })) { first = String(c.id); return true; }
-                return false;
-              });
+              // the same race for this precinct's district, when the picked
+              // one is a district race (Adam, 2026-11-05: moving from one
+              // precinct to another keeps "U.S. Representative" picked and
+              // takes this precinct's district), else the first race listed
+              var first = equivalentRace(idx, picked, rows);
+              if (first === null) {
+                (idx.data.contests || []).some(function (c) {
+                  if (rows.some(function (r) { return String(r[0]) === String(c.id); })) { first = String(c.id); return true; }
+                  return false;
+                });
+              }
               if (first !== null && first !== picked) pick(first);
             } else {
               drawLegend();
