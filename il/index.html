@@ -4372,6 +4372,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .election-area { padding-top: 10px; border-top: 1px solid var(--card-border); }
   .election-area[open] > * + * { margin-top: 6px; }
   .election-area-head { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--card-ink); }
+  .election-area-title { font-weight: 700; }
+  .election-area-lead { display: block; margin-top: 2px; padding-left: 1.1em; font-size: 12px; font-weight: 400; color: var(--card-muted); }
   .election-area-head:focus-visible { outline: 2px solid var(--card-link); outline-offset: 2px; }
   .districtry-map-legend.election-legend { margin-bottom: 6px; max-width: 260px; }
   .districtry-map-legend.election-legend .dml-label { white-space: normal; }
@@ -7536,7 +7538,8 @@ function initChiExplorer() {
       stats: pick("s", "stats"),
       zoom: pick("z", "zoom"),
       frame: pick("f", "frame"),
-      q: params.q
+      q: params.q,
+      all: params
     };
   }
 
@@ -7604,6 +7607,15 @@ function initChiExplorer() {
       // beside a pin, because the report is OF the pinned district.
       if (statsIsOpen()) parts.push("s=1");
     }
+    // A layer's own setting that is part of the view, such as the race the
+    // Election Results layer colours the map by (`r=`): the layer declares
+    // `linkParam: {short, long, get, set}` and it rides the link while the
+    // layer is on (Adam, 2026-11-05: "Include the chosen race in the sharing url").
+    layers.forEach(function (l) {
+      if (!state.layersOn[l.id] || !l.linkParam) return;
+      var v = l.linkParam.get();
+      if (v !== null && v !== undefined && v !== "") parts.push(l.linkParam.short + "=" + encodeURIComponent(String(v)));
+    });
     // The area a link named (namedArea), while no point is selected; a link
     // with a point is not framed, so the area would say nothing.
     if (linkAreaName && !state.selectedPoint) parts.push("f=" + linkAreaName);
@@ -7634,6 +7646,13 @@ function initChiExplorer() {
     params.layers.forEach(function (id) {
       var box = document.getElementById("toggle-" + id);
       if (box && !box.checked) box.click(); // a real click, so the change handler runs
+    });
+    // each switched-on layer's own setting (linkParam, syncUrlHash), short
+    // key first, given to the layer before its data has loaded
+    layers.forEach(function (l) {
+      if (!state.layersOn[l.id] || !l.linkParam) return;
+      var v = params.all[l.linkParam.short] !== undefined ? params.all[l.linkParam.short] : params.all[l.linkParam.long];
+      if (v !== undefined && v !== "") l.linkParam.set(v);
     });
     // Parsed BEFORE the point, because the point's pan has to know about it.
     // An unparseable or out-of-range zoom is ignored rather than clamped: a link
@@ -25909,6 +25928,7 @@ function initChiExplorer() {
     function pick(id) {
       picked = id == null ? null : String(id);
       repaint();
+      syncUrlHash(); // the race rides the link (linkParam below)
     }
 
     /* ---- the legend over the map: which colour is which choice ---- */
@@ -26239,19 +26259,24 @@ function initChiExplorer() {
           var top = Math.max.apply(null, t.counts.concat([0]));
           var leaders = [];
           t.counts.forEach(function (c, n) { if (c === top && top > 0) leaders.push(n); });
-          var head = t.w.name + " (" + t.w.mod.label + ")";
+          // the line says these are the race's totals, never who holds the
+          // district (Adam, 2026-11-05: "This section title is confusing")
+          var summary = cardEl("summary", "election-area-head");
+          summary.appendChild(cardEl("span", "election-area-title",
+            "Race totals for " + t.w.name + " (" + t.w.mod.label + ")"));
+          var lead = null;
           if (!t.withheld && leaders.length === 1) {
-            head += ": " + String(contest.choices[leaders[0]]) + " " + electionPercent(top, t.ballots);
+            lead = (certified(idx, contest) ? "Most votes: " : "Most votes so far: ") +
+              String(contest.choices[leaders[0]]) + ", " + electionPercent(top, t.ballots);
           } else if (!t.withheld && leaders.length > 1) {
-            head += ": tied for most votes";
+            lead = "Tied for most votes";
           }
-          var summary = cardEl("summary", "election-area-head", head);
+          if (lead) summary.appendChild(cardEl("span", "election-area-lead", lead));
           sec.appendChild(summary);
           (function (id) {
             sec.addEventListener("toggle", function () { areaOpen[id] = sec.open; });
           })(t.w.mod.id);
-          sec.appendChild(raceTable(idx, contest, t.ballots, t.counts, contest.name + " in " + t.w.name +
-            " (" + t.w.mod.label + ")",
+          sec.appendChild(raceTable(idx, contest, t.ballots, t.counts, contest.name + ", all of " + t.w.name,
             t.withheld ? null : certified(idx, contest) ? "Most votes in " + t.w.name : "Most votes so far"));
           var notes = ["Added up from the " + t.voted.toLocaleString("en-US") + " precinct" + (t.voted === 1 ? "" : "s") +
             " in " + t.w.name + " that voted in this race: " + t.ballots.toLocaleString("en-US") + " votes."];
@@ -26380,6 +26405,20 @@ function initChiExplorer() {
         });
         renderRace(body, result);
         return wrap;
+      },
+      // the picked race rides the link as `r=<contest id>` (`race=` in the
+      // long form); a link from another election names an id this file does
+      // not have, and the layer then picks its first race as it always has
+      linkParam: {
+        short: "r",
+        long: "race",
+        get: function () { return picked; },
+        set: function (v) {
+          picked = String(v);
+          if (resolvedIndex) {
+            if (resolvedIndex.byId[picked]) repaint(); else picked = null;
+          }
+        }
       },
       cardIdentifier: function (result) {
         return result && result.label ? result.label : "Unknown";

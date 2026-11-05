@@ -39,6 +39,8 @@
   .election-area { padding-top: 10px; border-top: 1px solid var(--card-border); }
   .election-area[open] > * + * { margin-top: 6px; }
   .election-area-head { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--card-ink); }
+  .election-area-title { font-weight: 700; }
+  .election-area-lead { display: block; margin-top: 2px; padding-left: 1.1em; font-size: 12px; font-weight: 400; color: var(--card-muted); }
   .election-area-head:focus-visible { outline: 2px solid var(--card-link); outline-offset: 2px; }
   .districtry-map-legend.election-legend { margin-bottom: 6px; max-width: 260px; }
   .districtry-map-legend.election-legend .dml-label { white-space: normal; }
