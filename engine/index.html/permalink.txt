@@ -188,10 +188,10 @@
     // view, not to its nearest edge.
     var zoom = null;
     if (params.zoom !== undefined) {
-      // parseFloat, not parseInt: zoomSnap 0.5 makes half steps legal on the
-      // statewide instances, and a sibling handoff carries the zoom the reader
-      // was at. parseInt("7.5") is 7, which silently dropped half a level on
-      // every hop between two apps.
+      // parseFloat, not parseInt: the quarter zoomSnap in MAP_ZOOM_STEPS makes
+      // fractional zooms legal in every app, and a sibling handoff carries the
+      // zoom the reader was at. parseInt("7.5") is 7, which silently dropped
+      // half a level on every hop between two apps.
       var wanted = parseFloat(params.zoom);
       if (isFinite(wanted) && wanted >= map.getMinZoom() && wanted <= map.getMaxZoom()) zoom = wanted;
     }
