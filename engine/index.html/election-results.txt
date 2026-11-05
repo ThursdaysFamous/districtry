@@ -1,0 +1,435 @@
+  /* ---------- election results by precinct (registerElectionResultsLayer).
+   * One layer that colours an app's own precinct outlines by the choice with
+   * the most votes in each precinct for ONE race the reader picks, and whose
+   * card shows the clicked precinct's numbers for every race on its ballot.
+   *
+   * WHAT AN APP SUPPLIES (its METRO side calls the factory): the id and label,
+   * its precinct layer's loader and archive (the outlines are that layer's,
+   * not a second copy), the property its precinct features carry that equals
+   * the results file's precinct key, a coverage test, the results file's url,
+   * the url of each part file, and the publisher's name and the sentence that
+   * says what is still being counted. Nothing here names a place.
+   *
+   * THE FILES (written by an app's builder through
+   * scripts/election_results_common.py): one index — the election, its date,
+   * when it was read, certified or not, the race groups (each tied to the map
+   * layer it is elected from, or none), the precinct keys, the part each
+   * precinct's numbers are in, and per contest its choices in ballot order,
+   * its totals and a leader string with one character per precinct — and one
+   * part file per chunk of precincts with each precinct's own counts. A click
+   * reads one part; the map reads only the index.
+   *
+   * NONPARTISAN BY CONSTRUCTION. A choice's colour is its position on the
+   * publisher's ballot list, never its party, from a palette with no red and
+   * no blue. Every choice is listed the same way, in ballot order. Until the
+   * file says the count is certified, the card and the legend say the numbers
+   * are unofficial and will change, and a precinct's leader reads "Most votes
+   * so far", not "Winner". ---------- */
+  var ELECTION_COLORS = ["#1a9e8f", "#e08a00", "#6b8e23", "#8e5a9c", "#8c5a2b", "#c9b200",
+    "#0b5d55", "#b07aa1", "#9ccc3c", "#9c9b5c", "#f2c46d", "#4f6b3a"];
+  var ELECTION_TIE = "#9e9e9e";
+  var ELECTION_LEADER_CODES = "0123456789abcdefghijklmnopqrstuvwxyz";
+
+  function electionChoiceColor(i) {
+    return ELECTION_COLORS[i % ELECTION_COLORS.length];
+  }
+
+  // A reading time ("2026-11-05T15:43:00Z") with its hour; a bare date
+  // ("2026-11-24", a certification) as the date alone.
+  function electionDateText(iso) {
+    var dateOnly = /^\d{4}-\d{2}-\d{2}$/.test(String(iso));
+    var d = new Date(dateOnly ? iso + "T12:00:00" : iso);
+    if (isNaN(d.getTime())) return String(iso);
+    return dateOnly
+      ? d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
+      : d.toLocaleString("en-US", { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" });
+  }
+
+  function electionPercent(n, of) {
+    if (!of) return "0%";
+    var p = 100 * n / of;
+    return (p >= 99.95 || p < 0.05 ? p.toFixed(0) : p.toFixed(1)) + "%";
+  }
+
+  function registerElectionResultsLayer(opts) {
+    var indexPromise = null;
+    var parts = {};
+    var picked = null; // the contest id whose results colour the map
+
+    function loadIndex() {
+      if (!indexPromise) {
+        indexPromise = fetchJSONWithRetry(opts.indexUrl, { timeoutMs: 15000 }).then(function (data) {
+          var pos = {};
+          (data.precincts || []).forEach(function (k, i) { pos[String(k)] = i; });
+          var byId = {};
+          (data.contests || []).forEach(function (c) { byId[String(c.id)] = c; });
+          var groupLabel = {};
+          (data.groups || []).forEach(function (g) { groupLabel[g.id] = g; });
+          return { data: data, pos: pos, byId: byId, groups: groupLabel };
+        }, function (err) {
+          indexPromise = null; // asked again on the next click rather than pinned
+          throw err;
+        });
+      }
+      return indexPromise;
+    }
+
+    function loadPart(part) {
+      if (!parts[part]) {
+        parts[part] = fetchJSONWithRetry(opts.partUrl(part), { timeoutMs: 15000 }).then(null, function (err) {
+          delete parts[part];
+          throw err;
+        });
+      }
+      return parts[part];
+    }
+
+    // A contest may carry its own certified flag and date (where a local
+    // office is certified before the rest of the ballot); otherwise the file's.
+    function certified(idx, contest) {
+      if (contest && contest.certified !== undefined && contest.certified !== null) return !!contest.certified;
+      return !!(idx && idx.data.certified);
+    }
+    function certifiedDate(idx, contest) {
+      return (contest && contest.certifiedDate) || (idx && idx.data.certifiedDate) || null;
+    }
+
+    // The map's fill for the picked race: a MapLibre expression for the tile
+    // canvas, and a per-feature colour for the Leaflet fallback, both from the
+    // same leader string.
+    function leaderColor(idx, contest, key) {
+      var i = idx.pos[key];
+      if (i === undefined || !contest) return null;
+      var code = contest.leaders.charAt(i);
+      if (code === "=") return ELECTION_TIE;
+      var n = ELECTION_LEADER_CODES.indexOf(code);
+      return n >= 0 ? electionChoiceColor(n) : null;
+    }
+
+    var resolvedIndex = null; // set once the index has loaded, read synchronously by the styles
+
+    function tileFill() {
+      var idx = resolvedIndex, contest = idx && picked ? idx.byId[picked] : null;
+      if (!contest) return null;
+      var byColor = {};
+      var keys = idx.data.precincts;
+      for (var i = 0; i < keys.length; i++) {
+        var color = leaderColor(idx, contest, String(keys[i]));
+        if (!color) continue;
+        (byColor[color] = byColor[color] || []).push(String(keys[i]));
+      }
+      var expr = ["match", ["to-string", ["get", opts.keyProp]]];
+      Object.keys(byColor).forEach(function (color) { expr.push(byColor[color], color); });
+      if (expr.length === 2) return { color: "rgba(0,0,0,0)", opacity: 0 };
+      expr.push("rgba(0,0,0,0)");
+      return { color: expr, opacity: 0.6 };
+    }
+
+    function styleForFeature(feature) {
+      var idx = resolvedIndex, contest = idx && picked ? idx.byId[picked] : null;
+      if (!contest) return null;
+      var raw = (feature.properties || {})[opts.keyProp];
+      var color = raw === undefined || raw === null ? null : leaderColor(idx, contest, String(raw));
+      return color ? { fillColor: color, fillOpacity: 0.6 } : { fillOpacity: 0 };
+    }
+
+    function repaint() {
+      var mod = getLayerById(opts.id);
+      if (mod) restyleOverlayFeatures(mod);
+      drawLegend();
+    }
+
+    function pick(id) {
+      picked = id == null ? null : String(id);
+      repaint();
+    }
+
+    /* ---- the legend over the map: which colour is which choice ---- */
+    var legendEl = null;
+    function drawLegend() {
+      var idx = resolvedIndex, contest = idx && picked ? idx.byId[picked] : null;
+      var on = !!state.layersOn[opts.id];
+      if (!on || !contest) {
+        if (legendEl) legendEl.hidden = true;
+        return;
+      }
+      var host = document.querySelector(".map-bottom-left");
+      if (!host) return;
+      if (!legendEl) {
+        legendEl = document.createElement("details");
+        legendEl.className = "districtry-map-legend election-legend";
+        var phone = window.matchMedia && window.matchMedia("(max-width: 767px)").matches;
+        if (!phone) legendEl.setAttribute("open", "");
+        host.insertBefore(legendEl, host.firstChild);
+      }
+      legendEl.hidden = false;
+      while (legendEl.firstChild) legendEl.removeChild(legendEl.firstChild);
+      var summary = document.createElement("summary");
+      summary.className = "dml-kicker";
+      summary.appendChild(document.createTextNode("Election results"));
+      var mini = document.createElement("span");
+      mini.className = "dml-mini";
+      mini.setAttribute("aria-hidden", "true");
+      summary.appendChild(mini);
+      legendEl.appendChild(summary);
+      var items = document.createElement("div");
+      items.className = "dml-items";
+      var race = document.createElement("span");
+      race.className = "election-legend-race";
+      race.textContent = contest.name;
+      items.appendChild(race);
+      var lead = document.createElement("span");
+      lead.className = "dml-sub";
+      lead.textContent = certified(idx, contest) ? "Most votes in each precinct" : "Most votes so far in each precinct";
+      items.appendChild(lead);
+      var shown = {};
+      for (var i = 0; i < contest.leaders.length; i++) shown[contest.leaders.charAt(i)] = true;
+      contest.choices.forEach(function (name, n) {
+        var item = document.createElement("span");
+        item.className = "dml-item";
+        var sw = document.createElement("span");
+        sw.className = "dml-sw";
+        sw.style.background = electionChoiceColor(n);
+        item.appendChild(sw);
+        var label = document.createElement("span");
+        label.className = "dml-label";
+        label.textContent = String(name);
+        item.appendChild(label);
+        // a choice that leads nowhere keeps its row, so the key never hides a name
+        items.appendChild(item);
+        var chip = document.createElement("span");
+        chip.className = "dml-sw";
+        chip.style.background = electionChoiceColor(n);
+        if (n < 4) mini.appendChild(chip);
+      });
+      if (shown["="]) {
+        var tie = document.createElement("span");
+        tie.className = "dml-item";
+        var tsw = document.createElement("span");
+        tsw.className = "dml-sw";
+        tsw.style.background = ELECTION_TIE;
+        tie.appendChild(tsw);
+        var tl = document.createElement("span");
+        tl.className = "dml-label";
+        tl.textContent = "Tied";
+        tie.appendChild(tl);
+        items.appendChild(tie);
+      }
+      var status = document.createElement("span");
+      status.className = "dml-sub election-legend-status";
+      var cd = certifiedDate(idx, contest);
+      status.textContent = certified(idx, contest)
+        ? "Certified by the " + opts.publisher + (cd ? " on " + electionDateText(cd) : "")
+        : "Unofficial, not certified. Read " + electionDateText(idx.data.read) + ".";
+      items.appendChild(status);
+      legendEl.appendChild(items);
+    }
+
+    /* ---- the card ---- */
+    function noticeEl(idx, contest) {
+      var box = cardEl("div", "election-notice" + (certified(idx, contest) ? " election-notice-certified" : ""));
+      if (certified(idx, contest)) {
+        var cd = certifiedDate(idx, contest);
+        box.textContent = "Official results, certified by the " + opts.publisher +
+          (cd ? " on " + electionDateText(cd) : "") + ".";
+      } else {
+        box.appendChild(cardEl("strong", null, "Unofficial results. "));
+        box.appendChild(document.createTextNode(opts.uncountedNote +
+          " These numbers are not certified and will change. Read from the " + opts.publisher +
+          " on " + electionDateText(idx.data.read) + "."));
+      }
+      return box;
+    }
+
+    function renderRace(body, result) {
+      while (body.firstChild) body.removeChild(body.firstChild);
+      var idx = result.idx, contest = idx.byId[picked];
+      var row = null;
+      for (var i = 0; i < result.rows.length; i++) if (String(result.rows[i][0]) === picked) row = result.rows[i];
+      if (!contest || !row) return;
+      var ballots = row[1], counts = row.slice(2);
+      // a count the publisher withholds (small-number privacy) is null; no
+      // leader is named where one is withheld, because it could be the leader
+      var withheld = counts.some(function (n) { return n === null || n === undefined; });
+      var top = withheld ? -1 : Math.max.apply(null, counts.concat([0]));
+      var tied = counts.filter(function (n) { return n === top; }).length > 1;
+      var table = cardEl("table", "election-table");
+      var caption = cardEl("caption", null, contest.name + " in this precinct");
+      table.appendChild(caption);
+      var thead = cardEl("thead");
+      var hr = cardEl("tr");
+      hr.appendChild(cardEl("th", null, "Choice"));
+      hr.appendChild(cardEl("th", "election-num", "Votes"));
+      hr.appendChild(cardEl("th", "election-num", "Share"));
+      thead.appendChild(hr);
+      table.appendChild(thead);
+      var tbody = cardEl("tbody");
+      contest.choices.forEach(function (name, n) {
+        var tr = cardEl("tr");
+        var th = cardEl("th");
+        th.setAttribute("scope", "row");
+        var sw = cardEl("span", "election-swatch");
+        sw.style.background = electionChoiceColor(n);
+        sw.setAttribute("aria-hidden", "true");
+        th.appendChild(sw);
+        th.appendChild(document.createTextNode(String(name)));
+        if (top > 0 && counts[n] === top) {
+          th.appendChild(cardEl("span", "election-lead", tied ? "Tied for most votes"
+            : certified(idx, contest) ? "Most votes here" : "Most votes so far"));
+        }
+        tr.appendChild(th);
+        var known = counts[n] !== null && counts[n] !== undefined;
+        tr.appendChild(cardEl("td", "election-num", known ? counts[n].toLocaleString("en-US") : "Withheld"));
+        tr.appendChild(cardEl("td", "election-num", known && ballots !== null && ballots !== undefined
+          ? electionPercent(counts[n], ballots) : "—"));
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      body.appendChild(table);
+      var notes = [];
+      if (withheld) notes.push("The " + opts.publisher + " withholds some of this precinct's counts to protect the privacy" +
+        " of a small number of voters, so no choice is named as having the most votes here.");
+      if (ballots !== null && ballots !== undefined) notes.push("Votes counted in this race here: " + ballots.toLocaleString("en-US") + "." +
+        (contest.multiple ? " Voters could choose more than one candidate in this race, so each share is of all the votes" +
+          " cast in it, not of the people who voted." : " Each share is of those votes."));
+      var whole = contest.total[0];
+      notes.push("Across " + opts.areaName + "'s precincts: " +
+        contest.choices.map(function (name, n) {
+          return String(name) + " " + contest.total[n + 1].toLocaleString("en-US") + " (" +
+            electionPercent(contest.total[n + 1], whole) + ")";
+        }).join(", ") + "." + (contest.beyond ? " This race reaches beyond " + opts.areaName +
+          ", so these totals are not the whole race." : ""));
+      // votes counted in no precinct (absentee, early or provisional units a
+      // publisher reports apart) are in the totals and on no shape of the map
+      if (contest.outside && contest.outside[0] > 0 && whole > 0) {
+        notes.push(electionPercent(contest.outside[0], whole) + " of these votes (" +
+          contest.outside[0].toLocaleString("en-US") + ") were counted outside any precinct, so they are in the" +
+          " totals above and not in the map's colours.");
+      }
+      notes.forEach(function (t) { body.appendChild(cardEl("p", "election-note", t)); });
+    }
+
+    registerLayer({
+      id: opts.id,
+      tiles: opts.tiles,
+      group: opts.group || "political",
+      label: opts.label,
+      coverage: opts.coverage,
+      overlay: {
+        load: opts.load,
+        style: opts.style,
+        styleForFeature: styleForFeature,
+        tileFill: tileFill
+      },
+      query: function (point, seq) {
+        return Promise.all([queryFeatureAt(opts.load, point), loadIndex()]).then(function (got) {
+          var feature = got[0], idx = got[1];
+          resolvedIndex = idx;
+          if (!feature) return null;
+          var raw = (feature.properties || {})[opts.keyProp];
+          var key = raw === undefined || raw === null ? null : String(raw);
+          var at = key === null ? undefined : idx.pos[key];
+          if (at === undefined) return { seq: seq, idx: idx, key: key, label: opts.precinctLabel(feature), rows: [], turnout: null };
+          var part = idx.data.parts[at];
+          return loadPart(part).then(function (doc) {
+            var own = (doc.precincts || {})[key] || {};
+            var rows = own.contests || [];
+            // the picked race stays picked while the reader clicks around, if
+            // it is on this precinct's ballot; otherwise the first race listed
+            var onBallot = rows.some(function (r) { return String(r[0]) === picked; });
+            if (!onBallot) {
+              var first = null;
+              (idx.data.contests || []).some(function (c) {
+                if (rows.some(function (r) { return String(r[0]) === String(c.id); })) { first = String(c.id); return true; }
+                return false;
+              });
+              if (first !== null && first !== picked) pick(first);
+            } else {
+              drawLegend();
+            }
+            return { seq: seq, idx: idx, key: key, label: opts.precinctLabel(feature), rows: rows,
+              turnout: own.turnout || null, partRead: doc.read };
+          });
+        });
+      },
+      render: function (result) {
+        var wrap = cardEl("div", "card-flush election-card");
+        var idx = result.idx;
+        var notice = noticeEl(idx, picked ? idx.byId[picked] : null);
+        wrap.appendChild(notice);
+        if (!result.rows.length) {
+          wrap.appendChild(cardEl("p", "election-note", "The " + opts.publisher + " lists no results for this precinct."));
+          return wrap;
+        }
+        if (result.partRead && result.partRead !== idx.data.read) {
+          wrap.appendChild(cardEl("p", "election-note", "This precinct's numbers were read at a different time from the map's colours; reload the page for both from one reading."));
+        }
+        var pickWrap = cardEl("div", "election-pick");
+        var selId = "election-race-" + opts.id;
+        var lab = cardEl("label", "card-field-label", "Race");
+        lab.setAttribute("for", selId);
+        pickWrap.appendChild(lab);
+        var sel = document.createElement("select");
+        sel.id = selId;
+        sel.className = "election-select";
+        var onBallot = {};
+        result.rows.forEach(function (r) { onBallot[String(r[0])] = true; });
+        (idx.data.groups || []).forEach(function (g) {
+          var og = null;
+          (idx.data.contests || []).forEach(function (c) {
+            if (c.group !== g.id || !onBallot[String(c.id)]) return;
+            if (!og) { og = document.createElement("optgroup"); og.label = g.label; sel.appendChild(og); }
+            var o = document.createElement("option");
+            o.value = String(c.id);
+            o.textContent = c.name;
+            if (String(c.id) === picked) o.selected = true;
+            og.appendChild(o);
+          });
+        });
+        pickWrap.appendChild(sel);
+        wrap.appendChild(pickWrap);
+        var body = cardEl("div", "election-race");
+        wrap.appendChild(body);
+        sel.addEventListener("change", function () {
+          pick(sel.value);
+          var fresh = noticeEl(idx, idx.byId[picked]);
+          wrap.replaceChild(fresh, notice);
+          notice = fresh;
+          renderRace(body, result);
+        });
+        renderRace(body, result);
+        if (result.turnout) {
+          var reg = result.turnout[0], cast = result.turnout[1];
+          wrap.appendChild(cardEl("p", "election-note", "Turnout in this precinct: " + cast.toLocaleString("en-US") +
+            " ballots from " + reg.toLocaleString("en-US") + " registered voters (" + electionPercent(cast, reg) + ")."));
+        }
+        return wrap;
+      },
+      cardIdentifier: function (result) {
+        return result && result.label ? result.label : "Unknown";
+      },
+      hoverName: function (feature) {
+        return opts.precinctLabel(feature);
+      },
+      primaryLink: function (result) {
+        var url = result && result.idx && result.idx.data.source;
+        return url ? { label: "Results from the " + opts.publisher, url: url } : null;
+      },
+      onToggle: function (on) {
+        if (!on) { drawLegend(); return; }
+        // the map shows a race from the moment the layer is on: the one
+        // already picked, or the first race in the publisher's list
+        loadIndex().then(function (idx) {
+          resolvedIndex = idx;
+          if (picked === null || !idx.byId[picked]) {
+            var first = (idx.data.contests || [])[0];
+            pick(first ? first.id : null);
+          } else {
+            repaint();
+          }
+        }, function (err) {
+          console.warn("[" + opts.id + "] results index failed to load:", err);
+        });
+      }
+    });
+  }

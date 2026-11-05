@@ -47,7 +47,7 @@ const OFFLINE = ["school-board", "il-supreme-court", "ccbr"];
 const EXPECT_DISTRICT = { "school-board": "District 6b", "il-supreme-court": "1", "ccbr": "3" };
 const NEGATIVE_POINT = "41.70000,-87.10000"; // Lake Michigan, Indiana waters — outside all three anchor layers. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: one of the three anchors is il-supreme-court, which answers over the whole state, so the point must be outside Illinois — and sampling permalink_gate every 0.25 degrees and naming each of the 480 points' state off TIGERweb, the ground outside Illinois's own ring is Missouri, Indiana, Iowa, Kentucky, Wisconsin and Michigan and nothing else, with no point anywhere in the gate that no state claims. All six are live instances (Indiana went live on 2026-10-07, and its outline contains this point, and Missouri at its go-live). Widening the gate to reach a seventh state would move a reader-facing "where we serve" bound to suit a test. So the point stays. Two checks put it at the map's centre, and until 2026-10-13 both had to refuse ../fleet-outlines.json, because the map then switched apps whenever its centre crossed into a sibling's state; panning no longer does that, so neither refuses anything, and a selection the app makes itself never leaves. Check 1i is where Illinois asserts fleet routing, on its own points, and that panning across a state line stays here.
 const APP_NAME = "districtry Illinois";
-const EXPECT_LAYERS = 41; // 17 base + police-beat (#43) + school-site (#45) + ccpsa-district-council + ward-precinct + 6 statewide local-gov layers (county, township, municipality, school districts x3 — TIGERweb) + 6 consolidated county-dispatched layers (county-board, judicial-subcircuit, fire-district, park-district, library-district, county-precinct — Cook/Will/DuPage/Lake/Kane/McHenry/Kendall entries; docs/COUNTY_LAYER_CONSOLIDATION.md) + 1 DuPage-only layer (dupage-county-special-police) + 2 Cook-only tax-agency layers (tif-district, mwrd — dedicated until a second county ships the concept) + 1 Chicago-only special-service layer (ssa — dedicated until a second municipality ships the concept) + 3 amenity nearest-point layers (post-office, library, early-voting) = 40 — THE SUM IS THE CLAIM, so a new layer needs its own term here and not just a bigger total: this read 39 for the day the `ssa` layer shipped because the total was the only part anyone would have changed. NOTHING GATES THIS NOTE — validate_doc_counts.py compares prose against layers[] and deliberately does not scan the worksheet it takes as canonical, so this is hand-kept. Addition re-checked against layers[] 2026-09-12; the underlying live verification of the layer list was 2026-07
+const EXPECT_LAYERS = 42; // 17 base + police-beat (#43) + school-site (#45) + ccpsa-district-council + ward-precinct + 6 statewide local-gov layers (county, township, municipality, school districts x3 — TIGERweb) + 6 consolidated county-dispatched layers (county-board, judicial-subcircuit, fire-district, park-district, library-district, county-precinct — Cook/Will/DuPage/Lake/Kane/McHenry/Kendall entries; docs/COUNTY_LAYER_CONSOLIDATION.md) + 1 DuPage-only layer (dupage-county-special-police) + 2 Cook-only tax-agency layers (tif-district, mwrd — dedicated until a second county ships the concept) + 1 Chicago-only special-service layer (ssa — dedicated until a second municipality ships the concept) + 3 amenity nearest-point layers (post-office, library, early-voting) + 1 tribal-government layer + 1 Chicago election results layer (election-results, drawn on the ward-precinct outlines) = 42 — THE SUM IS THE CLAIM, so a new layer needs its own term here and not just a bigger total: this read 39 for the day the `ssa` layer shipped because the total was the only part anyone would have changed. NOTHING GATES THIS NOTE — validate_doc_counts.py compares prose against layers[] and deliberately does not scan the worksheet it takes as canonical, so this is hand-kept. Addition re-checked against layers[] 2026-09-12; the underlying live verification of the layer list was 2026-07
 // ==== GENERATED:END smoke-config ====
 // ==== TEMPLATE:BEGIN smoke-fork-constants ====
 // Fork constants: every Chicago/Illinois literal the checks below use. Layer
@@ -4860,6 +4860,75 @@ try {
     const offOk = off.text.indexOf("not on tribal land") !== -1;
     check("a point off tribal land is told so in the layer's own words",
           offOk, JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
+  }
+
+  // ---- 1y. Election results: the card, the race menu and the legend. The
+  // numbers move daily until the Board certifies, so this asserts what the
+  // card and legend SAY against the shipped files, never a count: the
+  // unofficial notice while the file is not certified, a race menu holding
+  // exactly the races on this precinct's ballot, the legend naming the picked
+  // race and following a new pick, the vote-for-more-than-one sentence on a
+  // race the file marks multiple, and the legend gone when the layer is off.
+  {
+    const idx = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results.json"), "utf8"));
+    const key = "47010";
+    const part = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results",
+      idx.parts[idx.precincts.indexOf(key)] + ".json"), "utf8"));
+    const onBallot = part.precincts[key].contests.map((r) => String(r[0]));
+    const multi = idx.contests.find((c) => c.multiple && onBallot.includes(String(c.id)));
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=41.96660,-87.67850&layers=election-results`);
+    await page.waitForFunction(() => {
+      const c = document.getElementById("card-election-results");
+      return c && c.querySelector(".election-table");
+    }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const got = await page.evaluate(() => {
+      const c = document.getElementById("card-election-results");
+      const block = c && c.closest(".layer-block");
+      const pill = block && block.querySelector(".card-id-pill");
+      const sel = c && c.querySelector("select.election-select");
+      const legend = document.querySelector(".election-legend");
+      return {
+        notice: ((c && c.querySelector(".election-notice")) || {}).textContent || "",
+        pill: pill ? pill.textContent.trim() : "",
+        options: sel ? Array.from(sel.options).map((o) => o.value) : [],
+        legendShown: !!legend && !legend.hidden,
+        legendRace: legend ? ((legend.querySelector(".election-legend-race") || {}).textContent || "") : "",
+        legendStatus: legend ? ((legend.querySelector(".election-legend-status") || {}).textContent || "") : "",
+        rows: c ? c.querySelectorAll(".election-table tbody tr").length : 0,
+      };
+    });
+    const firstOnBallot = idx.contests.find((c) => onBallot.includes(String(c.id)));
+    const noticeOk = idx.certified ? got.notice.indexOf("certified") !== -1
+      : got.notice.indexOf("Unofficial results") !== -1 && got.legendStatus.indexOf("Unofficial") !== -1;
+    const menuOk = got.options.length === onBallot.length && got.options.every((v) => onBallot.includes(v));
+    check("the Election Results card says unofficial and lists exactly this precinct's races",
+          noticeOk && menuOk && got.pill === "Ward 47, Precinct 10" &&
+          got.rows === firstOnBallot.choices.length,
+          `notice=${JSON.stringify(got.notice.slice(0, 40))} options=${got.options.length}/${onBallot.length} ` +
+          `pill=${JSON.stringify(got.pill)} rows=${got.rows}`);
+    check("the Election Results legend names the picked race",
+          got.legendShown && got.legendRace === firstOnBallot.name,
+          `shown=${got.legendShown} race=${JSON.stringify(got.legendRace)}`);
+    if (multi) {
+      await page.selectOption("#card-election-results select.election-select", String(multi.id));
+      await page.waitForTimeout(300);
+      const after = await page.evaluate(() => ({
+        race: (document.querySelector(".election-legend .election-legend-race") || {}).textContent || "",
+        text: (document.getElementById("card-election-results") || {}).textContent || "",
+      }));
+      check("picking a race repaints the legend, and a vote-for-more-than-one race says its shares are of votes",
+            after.race === multi.name && after.text.indexOf("Voters could choose more than one candidate") !== -1,
+            `race=${JSON.stringify(after.race)}`);
+    }
+    await page.click("#toggle-election-results");
+    await page.waitForTimeout(300);
+    const hidden = await page.evaluate(() => {
+      const l = document.querySelector(".election-legend");
+      return !l || l.hidden;
+    });
+    check("switching Election Results off takes its legend away", hidden, `hidden=${hidden}`);
     await context.close();
   }
 } finally {

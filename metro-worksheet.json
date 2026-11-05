@@ -643,6 +643,29 @@
       }
     },
     {
+      "id": "election-results",
+      "label": "Election Results",
+      "group": "political",
+      "frame": "chicago",
+      "area_rank": 24,
+      "rank_note": "Election results, drawn on the Ward Precinct outlines",
+      "rank_comment": [
+        "The same precinct shapes as Ward Precinct, read from the same archive, so it ranks",
+        "beside it; each precinct is filled by the choice leading there in the picked race."
+      ],
+      "source": {
+        "answers": "For the picked race, the choice with the most votes in each Chicago precinct, and on the card the clicked precinct's votes for every race on its ballot, its turnout, and the race's total across Chicago. Unofficial until the Board certifies the count, and the card and the map key say so.",
+        "boundary": [
+          {
+            "label": "Chicago Data Portal \u2014 ward precincts (i8fv-xe4b), the same outlines Ward Precinct draws",
+            "url": "https://data.cityofchicago.org/d/i8fv-xe4b"
+          }
+        ],
+        "people": "The choices and their votes come from the Chicago Board of Election Commissioners' precinct-by-precinct results for the 3 November 2026 general election, read daily by scripts/chicago_election_results_scraper.py. Colours follow each choice's place on the Board's ballot list, never a party.",
+        "applies": "City of Chicago. A race whose district reaches past the city is counted for Chicago's precincts only, and the card says so."
+      }
+    },
+    {
       "id": "police-district",
       "guide": {
         "href": "police-district.html",
@@ -651,7 +674,7 @@
       "label": "Police District",
       "group": "safety",
       "frame": "chicago",
-      "area_rank": 24,
+      "area_rank": 25,
       "rank_note": "Police District (22)",
       "source": {
         "answers": "The Chicago police district covering the point, and its station.",
@@ -670,7 +693,7 @@
       "label": "Police Beat",
       "group": "safety",
       "frame": "chicago",
-      "area_rank": 25,
+      "area_rank": 26,
       "rank_note": "Police Beat (~277)",
       "rank_comment": [
         "Smaller than its parent district, so it renders on top (smallest-on-top);",
@@ -693,7 +716,7 @@
       "label": "CCPSA District Council",
       "group": "safety",
       "frame": "chicago",
-      "area_rank": 26,
+      "area_rank": 27,
       "rank_comment": [
         "CCPSA District Council shares the police-district geometry exactly (22,",
         "one council per district); place it just after so its outline draws on",
@@ -716,7 +739,7 @@
       "label": "Community Area",
       "group": "geography",
       "frame": "chicago",
-      "area_rank": 27,
+      "area_rank": 28,
       "rank_note": "Community Area (77)",
       "source": {
         "answers": "Which of Chicago's 77 community areas contains the point.",
@@ -734,7 +757,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 28,
+      "area_rank": 29,
       "rank_note": "ZIP Code (statewide Census ZCTA; ZCTA ≈ USPS ZIP)",
       "source": {
         "answers": "The ZIP code area containing the point.",
@@ -753,7 +776,7 @@
       "label": "CPS High School Zone",
       "group": "schools",
       "frame": "chicago",
-      "area_rank": 29,
+      "area_rank": 30,
       "rank_note": "High School attendance zone",
       "source": {
         "answers": "The CPS high school this address is zoned to.",
@@ -772,7 +795,7 @@
       "label": "CPS Middle School Zone",
       "group": "schools",
       "frame": "chicago",
-      "area_rank": 30,
+      "area_rank": 31,
       "rank_note": "Middle School attendance zone",
       "source": {
         "answers": "The CPS middle school this address is zoned to, where middle schools are zoned separately.",
@@ -794,7 +817,7 @@
       },
       "label": "Voting Precinct",
       "group": "geography",
-      "area_rank": 31,
+      "area_rank": 32,
       "rank_note": "Consolidated voting-precinct layer — suburban Cook current map (1,430, the Clerk's precinctHistorical L0; covers Cook-outside-Chicago only — city precincts are the BOE's ward-precinct layer) + Will current 2022 map (310) + DuPage current 2024 consolidated map (600) + Lake current map (431) + Kane current map (292, board district carried on the features, township named from the clerk's own prefix pairing, election-day polling place joined on the precinct code 292/292 and labelled with the election it was published for) + McHenry current map (223) + Kendall current map (78, township names derived from the county's own layers + per-precinct polling place joined by GlobalID) + LaSalle current map (119, township-compound names, per-precinct polling place joined on the precinct name — 119/119 exact) + Kankakee current map (59, name only; the county publishes no polling-place assignment to join) + Boone current 2022 map (37, township-compound names with the polling place carried ON the precinct feature — no join needed) + Grundy current map (40, polling place joined on POLLINGID, and its points carry a phone) + Macoupin current map (45, polling place joined 45/45 from the clerk's own Socrata polling dataset by deterministic label expansion) + McLean current map (141, polling place joined 141/141 by POLLINGID on the clerk's own MapServer) + Logan current map (29, township-named; the clerk's HTML polling table ships as a same-origin file and joins 29/29) + Sangamon approved fabric (166, polling place joined 165/166 by POLLID) + Carroll (22 — the county did not re-precinct, so TIGERweb's Census 2020 voting districts ARE the current fabric; the clerk's polling notice ships as a same-origin file, 22/22) + Woodford current map (37 via TCRPC's election service, polling joined 37/37 on the numeric polling reference with the precinct's own name cross-checked in the polling row's grouped label), county-dispatched; subOf township",
       "rank_comment": [
         "Smallest county-scoped layer, so it renders on top of Township and County",
@@ -827,7 +850,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 32,
+      "area_rank": 33,
       "rank_note": "Tribal land \u2014 Illinois has one area, 0.5213 km\u00b2 of land held in trust for the Prairie Band Potawatomi Nation near Shabbona, DeKalb County, MEASURED by scripts/build_tribal_areas.py through the shared reader's even-odd spherical area. Ranked between county-precinct (~2.5 km\u00b2 for a suburban Cook precinct) and ssa (0.359 km\u00b2 median, itself ranked against tif's 0.268 on a named projection). The rank governs draw order only and nothing overlaps this parcel in practice \u2014 SSA, TIF and the CPS zones are all in or around Chicago \u2014 so it is placed on the measurement rather than on a conflict. Partial coverage: almost every Illinois point is on no tribal land, so the layer carries its own emptyNote rather than letting the generic no-district line stand. The card names the nation as the Bureau of Indian Affairs names it (NOT the Census's own text, which describes a parcel), its seat, whether any district is drawn here \u2014 measured against the Census's 484 tribal subdivisions nationwide, 0 in Illinois \u2014 and its council of seven, read from the nation's own page (behind a Cloudflare challenge on 2026-10-01, served normally on three reads on 2026-10-10). Drawn although no district sits on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it \u2014 Illinois has one such area, near Shabbona in DeKalb County.",
@@ -846,7 +869,7 @@
       "label": "Special Service Area",
       "group": "geography",
       "frame": "chicago",
-      "area_rank": 33,
+      "area_rank": 34,
       "rank_note": "Chicago Special Service Areas — the city's current ACTIVE tiling (58, Data Portal cmr6-dn8c). Ranked between county-precinct and tif-district on MEASURED median polygon area, geodesic WGS84: SSA 0.359 km² against TIF's 0.268 km² (both fetched 2026-09-12). TIF was first recorded as 0.269, which no projection gives; it is 0.268 in geodesic, EPSG:3435, UTM 16N and Albers alike. The projection is NAMED because SSA's last digit depends on it — 0.359 geodesic/3435/Albers, 0.358 UTM 16N — and because EPSG:3435 is in FEET, so an area divided by 1e6 there reads 0.36 as 3.86 and looks like a different measurement. The rank moves under none of them. SSA is also far under a suburban Cook precinct (1,430 over ~3,600 km²). Card shows the corridor name + the SSA number + the wards the city's own ward_2023 column lists (labelled as the city's list, because it disagrees with the ward geometry on 2 of 58) + status, and links the city's SSA program page; the dataset's comm_area column is deliberately not shown — bare community-area numbers, up to eight per SSA, that the Community Area layer already answers by name for the point; partial coverage (most points in the city are in no SSA), Chicago-gated. The portal carries FIVE deprecated editions behind this id, so it goes into validate_sources.py's manifest on day one. Dedicated Chicago layer per the consolidation rule until a second municipality ships SSAs — Cook's clerkTaxDistricts L13 carries 286 county-wide special-service tax districts, 63 of them Chicago's, recorded as the next entry",
       "source": {
         "answers": "Whether the point sits inside a Special Service Area — a local property-tax district funding street cleaning, landscaping, security, marketing and façade programs beyond the city's baseline service — and which one.",
@@ -865,7 +888,7 @@
       "label": "TIF District",
       "group": "geography",
       "frame": "cook",
-      "area_rank": 34,
+      "area_rank": 35,
       "rank_note": "Cook TIF districts — the Clerk's current tax-increment-financing agency tiling (418, county GIS clerkTaxDistricts L18: the un-yeared layer the Clerk refreshes in place, retired year editions archived in the year-versioned service); card shows name + Clerk agency number + the Clerk's TIF-reports link; partial coverage (most points are in no TIF), Cook-gated. Dedicated Cook layer per the consolidation rule until a second county ships TIFs (Kendall's server carries a TIF_Districts service — recorded as the next entry)",
       "source": {
         "answers": "Whether the point sits inside a tax increment financing district, and which one.",
@@ -884,7 +907,7 @@
       "label": "CPS Elementary School Zone",
       "group": "schools",
       "frame": "chicago",
-      "area_rank": 35,
+      "area_rank": 36,
       "rank_note": "Elementary School attendance zone — smallest polygon layer",
       "source": {
         "answers": "The CPS elementary school this address is zoned to.",
@@ -903,7 +926,7 @@
       "label": "School Location (all, incl. private, nearest N)",
       "group": "schools",
       "frame": "chicago",
-      "area_rank": 36,
+      "area_rank": 37,
       "rank_note": "individual school-campus footprints — smallest polygons, above the zones",
       "source": {
         "answers": "The school campuses nearest the point, filterable by type — not a zone, a proximity list.",
@@ -921,7 +944,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 37,
+      "area_rank": 38,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
         "answers": "The three police stations nearest the point, by straight-line distance.",
@@ -939,7 +962,7 @@
       "id": "fire-station",
       "label": "Fire Station",
       "group": "safety",
-      "area_rank": 38,
+      "area_rank": 39,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
         "answers": "The three fire stations nearest the point, by straight-line distance.",
@@ -957,7 +980,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 39,
+      "area_rank": 40,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
         "answers": "The three post offices nearest the point, by straight-line distance.",
@@ -976,7 +999,7 @@
       "label": "Library",
       "group": "geography",
       "frame": "chicago",
-      "area_rank": 40,
+      "area_rank": 41,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
         "answers": "The three Chicago Public Library branches nearest the point.",
@@ -994,7 +1017,7 @@
       "id": "early-voting",
       "label": "Early Voting Site",
       "group": "political",
-      "area_rank": 41,
+      "area_rank": 42,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
         "answers": "The three early voting sites nearest the point, with each site's kind, dates and hours as the State Board lists them for the election named on the card.",
@@ -1010,7 +1033,7 @@
     }
   ],
   "min_register_layer": 18,
-  "layer_count_note": "17 base + police-beat (#43) + school-site (#45) + ccpsa-district-council + ward-precinct + 6 statewide local-gov layers (county, township, municipality, school districts x3 — TIGERweb) + 6 consolidated county-dispatched layers (county-board, judicial-subcircuit, fire-district, park-district, library-district, county-precinct — Cook/Will/DuPage/Lake/Kane/McHenry/Kendall entries; docs/COUNTY_LAYER_CONSOLIDATION.md) + 1 DuPage-only layer (dupage-county-special-police) + 2 Cook-only tax-agency layers (tif-district, mwrd — dedicated until a second county ships the concept) + 1 Chicago-only special-service layer (ssa — dedicated until a second municipality ships the concept) + 3 amenity nearest-point layers (post-office, library, early-voting) = 40 — THE SUM IS THE CLAIM, so a new layer needs its own term here and not just a bigger total: this read 39 for the day the `ssa` layer shipped because the total was the only part anyone would have changed. NOTHING GATES THIS NOTE — validate_doc_counts.py compares prose against layers[] and deliberately does not scan the worksheet it takes as canonical, so this is hand-kept. Addition re-checked against layers[] 2026-09-12; the underlying live verification of the layer list was 2026-07",
+  "layer_count_note": "17 base + police-beat (#43) + school-site (#45) + ccpsa-district-council + ward-precinct + 6 statewide local-gov layers (county, township, municipality, school districts x3 — TIGERweb) + 6 consolidated county-dispatched layers (county-board, judicial-subcircuit, fire-district, park-district, library-district, county-precinct — Cook/Will/DuPage/Lake/Kane/McHenry/Kendall entries; docs/COUNTY_LAYER_CONSOLIDATION.md) + 1 DuPage-only layer (dupage-county-special-police) + 2 Cook-only tax-agency layers (tif-district, mwrd — dedicated until a second county ships the concept) + 1 Chicago-only special-service layer (ssa — dedicated until a second municipality ships the concept) + 3 amenity nearest-point layers (post-office, library, early-voting) + 1 tribal-government layer + 1 Chicago election results layer (election-results, drawn on the ward-precinct outlines) = 42 — THE SUM IS THE CLAIM, so a new layer needs its own term here and not just a bigger total: this read 39 for the day the `ssa` layer shipped because the total was the only part anyone would have changed. NOTHING GATES THIS NOTE — validate_doc_counts.py compares prose against layers[] and deliberately does not scan the worksheet it takes as canonical, so this is hand-kept. Addition re-checked against layers[] 2026-09-12; the underlying live verification of the layer list was 2026-07",
   "anchor_point": {
     "lat": 41.8825,
     "lng": -87.6285,
@@ -3119,6 +3142,11 @@
         "note": "Each Chicago precinct's Election Day polling place (sites[] plus precincts{ward-precinct: site index}) from the Chicago Board of Election Commissioners' published list, by scripts/chicago_polling_places_scraper.py + build_chicago_polling_places.py, refreshed daily; the build requires the list and the i8fv-xe4b precinct map to name the same 1,291 precincts and places each building with the Census geocoder, and the card hides the row after electionDate. Network-first: a moved polling place must reach a returning visitor at once"
       },
       {
+        "file": "election-results.json",
+        "min_keys": 11,
+        "note": "Chicago's precinct-by-precinct election results: the index (groups, precinct keys, the part file each precinct is in, and per contest its choices, totals and leader string); each precinct's own counts sit in election-results/ward-NN.json, fetched on a click and never cached by the worker. From the Chicago Board of Election Commissioners by scripts/chicago_election_results_scraper.py + build_chicago_election_results.py through scripts/election_results_common.py, refreshed daily; certified stays false until the Board proclaims the official results. Network-first: the count changes daily"
+      },
+      {
         "file": "ccbr-roster.json",
         "min_keys": 3
       },
@@ -3977,6 +4005,11 @@
       "file": "update-chicago-polling-places.yml",
       "purpose": "Re-read the Chicago Board of Elections' polling place list daily (its file name changes with each revision, so the link is discovered) and rebuild il/data/app/chicago-polling-places.json; fails if the list and the precinct map disagree, or if the list cannot be read on or before the election date; opens a PR on any change",
       "schedule": "daily 11:15 UTC"
+    },
+    {
+      "file": "update-chicago-election-results.yml",
+      "purpose": "Re-read every race's precinct results from the Chicago Board of Elections daily until the results are certified, and rebuild il/data/app/election-results.json and its 50 ward files; fails if a ward's precincts stop adding up to its total or the results stop naming the map's 1,291 precincts; opens a PR when a number changed; run by hand with the certification date when the Board proclaims the official results",
+      "schedule": "daily 12:30 UTC"
     }
   ],
   "geocoder": {

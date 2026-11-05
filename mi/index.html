@@ -6057,7 +6057,7 @@ function initMichiganExplorer() {
    * inside out. Only the LAST one ("outside") is guaranteed. */
   function buildCoverageKey(bands) {
     var host = document.querySelector(".map-bottom-left");
-    if (!host || !bands.length || document.querySelector(".districtry-map-legend")) return;
+    if (!host || !bands.length || document.querySelector(".districtry-map-legend:not(.election-legend)")) return;
 
     var key = document.createElement("details");
     key.className = "districtry-map-legend";
@@ -12165,8 +12165,14 @@ function initMichiganExplorer() {
     var hl = highlightStyleFor(mod), faded = fadedStyle(base, mod);
     var isSel = ["boolean", ["feature-state", "sel"], false];
     var baseOpacity = base.opacity == null ? 1 : base.opacity;
+    // A layer that paints each district its own colour (the election results
+    // fill each precinct by its leading choice) supplies the fill as a GL
+    // expression; it keeps that fill whether or not a district is selected,
+    // because the colours are the answer and fading them would hide it. The
+    // lit district is still marked by the highlight line.
+    var own = mod.overlay && typeof mod.overlay.tileFill === "function" ? mod.overlay.tileFill() : null;
     return {
-      fill: {
+      fill: own ? { "fill-color": own.color, "fill-opacity": own.opacity } : {
         "fill-color": base.fillColor || base.color || "#000",
         "fill-opacity": selected ? ["case", isSel, hl.fillOpacity, faded.fillOpacity] : (base.fillOpacity || 0)
       },
