@@ -350,6 +350,13 @@
       var lit = rt.highlightedLayer;
       return lit && lit.options ? lit.options.color : null;
     },
+    // the fill a layer's lit district is drawn with: 0 while a layer whose
+    // colours are its answer (fillsGround) is on, so a test can see the tint
+    // drop and come back
+    highlightFill: function (id) {
+      var mod = getLayerById(id);
+      return mod ? highlightStyleFor(mod).fillOpacity : null;
+    },
     loadWholeFile: function (id) {
       var mod = getLayerById(id);
       if (!mod || !tileDrawAvailable(mod)) return Promise.resolve(false);

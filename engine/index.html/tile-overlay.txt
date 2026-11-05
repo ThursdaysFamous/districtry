@@ -491,7 +491,7 @@
     if (id == null && !live) showProvisionalHighlight(mod);
     else clearProvisionalHighlight(mod);
     rt.highlightApplied = id != null || !!live;
-    rt.highlightSignature = rt.highlightApplied ? highlightSignature(rt) : null;
+    rt.highlightSignature = rt.highlightApplied ? highlightSignature(rt, mod) : null;
     if (live) {
       // a live county's feature is whole, so its own edges name the streets
       rt.highlightedLayer = { feature: live };

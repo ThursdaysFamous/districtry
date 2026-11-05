@@ -4869,7 +4869,8 @@ try {
   // unofficial notice while the file is not certified, a race menu holding
   // exactly the races on this precinct's ballot, the legend naming the picked
   // race and following a new pick, the vote-for-more-than-one sentence on a
-  // race the file marks multiple, and the legend gone when the layer is off.
+  // race the file marks multiple, another layer's selected district drawn
+  // untinted while the results are on, and the legend gone when the layer is off.
   {
     const idx = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results.json"), "utf8"));
     const key = "47010";
@@ -4922,8 +4923,17 @@ try {
             after.race === multi.name && after.text.indexOf("Voters could choose more than one candidate") !== -1,
             `race=${JSON.stringify(after.race)}`);
     }
+    // another layer's selected district keeps its outline and drops its tint
+    // while the results are on, since a tint over the result colours changes
+    // them, and gets it back once they are off
+    await page.click("#toggle-school-board");
+    await page.waitForTimeout(300);
+    const tintOn = await page.evaluate(() => window.ChiExplorer.highlightFill("school-board"));
     await page.click("#toggle-election-results");
     await page.waitForTimeout(300);
+    const tintOff = await page.evaluate(() => window.ChiExplorer.highlightFill("school-board"));
+    check("another layer's selected district is drawn untinted while Election Results is on, and tinted again after",
+          tintOn === 0 && tintOff > 0, `on=${tintOn} off=${tintOff}`);
     const hidden = await page.evaluate(() => {
       const l = document.querySelector(".election-legend");
       return !l || l.hidden;
