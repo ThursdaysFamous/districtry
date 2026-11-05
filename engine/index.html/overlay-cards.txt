@@ -788,6 +788,9 @@
       refreshActiveLayerOpacities(); // a visible fill returned — rescale the stack
       refreshRelationshipOutlines(); // an outline-eligible layer just came back
     }
+    // a layer whose colours are its answer coming into or out of view adds or
+    // takes away every other layer's selected-district tint (layer-registry)
+    if (mod.fillsGround) refreshHighlightFills();
   }
 
   // Refresh every coverage-declaring layer's relevance for the current

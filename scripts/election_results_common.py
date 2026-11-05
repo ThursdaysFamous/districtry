@@ -15,7 +15,7 @@ THE FILES. `<data/app>/election-results.json`, the index:
                                       layer joins on (Chicago: ward_precinct)
     parts:     [part, ...]            aligned with precincts: which part file
                                       holds that precinct's own counts
-    contests:  [{id, name, group, beyond, multiple, choices, total, leaders}
+    contests:  [{id, name, group, beyond, multiple, choices, total, leaders, margins}
                 plus, only where an app's publisher gives them: outside,
                 certified, certifiedDate, seats]
 
@@ -29,6 +29,15 @@ tie for the most, "?" where the publisher withholds a count (small-number
 privacy filters; the withheld count is null in the part file), "." where the contest is on the ballot and no votes were
 counted, and "-" where it is not on the ballot. The map colours a precinct
 from this string alone, so it never downloads a part to draw.
+
+A contest's `margins` is aligned with `leaders`: how far the leader is ahead
+of second place in that precinct, as a share of the votes counted there, in
+five bands, "0" under 5 points, "1" 5 to 15, "2" 15 to 30, "3" 30 to 50 and
+"4" 50 or more (MARGIN_BANDS), "0" for a tie and "-" where `leaders` names no
+choice. The map draws a close race pale and a wide one strong (Adam,
+2026-11-05, choosing the lead over second place over the leader's share,
+which reads pale everywhere in a race with many candidates, and over the
+votes cast, which shows turnout rather than how close it was).
 
 `multiple` is true when some precinct counted more votes in the contest than
 ballots were cast there, which happens only where a voter may choose more than
@@ -70,6 +79,9 @@ INDEX_NAME = "election-results.json"
 PART_DIR = "election-results"
 
 
+MARGIN_BANDS = (5, 15, 30, 50)   # percentage points; a lead under the first is band 0
+
+
 class ResultsError(Exception):
     pass
 
@@ -87,6 +99,19 @@ def leader_code(vals):
     if counts.count(top) > 1:
         return "="
     return LEADER_CODES[counts.index(top)]
+
+
+def margin_code(vals):
+    """The band of the leader's lead over second place; see the module's note."""
+    code = leader_code(vals)
+    if code == "=":
+        return "0"
+    if code not in LEADER_CODES:
+        return "-"
+    counts = sorted(vals[1:], reverse=True)
+    second = counts[1] if len(counts) > 1 else 0
+    points = 100.0 * (counts[0] - second) / sum(counts)
+    return str(sum(1 for edge in MARGIN_BANDS if points >= edge))
 
 
 def write_results(app_data_dir, stamp, groups, turnout, contests, part_of, note):
@@ -132,6 +157,7 @@ def write_results(app_data_dir, stamp, groups, turnout, contests, part_of, note)
                 for k, vals in c["precincts"].items() if k in cast),
             "choices": c["choices"], "total": c["total"],
             "leaders": "".join(leader_code(c["precincts"].get(k)) for k in keys),
+            "margins": "".join(margin_code(c["precincts"].get(k)) for k in keys),
         }
         for opt in ("outside", "certified", "certifiedDate", "seats"):
             if c.get(opt) is not None:
@@ -208,6 +234,10 @@ def selftest():
         ([g["id"] for g in idx["groups"]], ["g"]),
         (idx["contests"][0]["leaders"], "0=?"),
         (idx["contests"][1]["leaders"], "0.-"),
+        (idx["contests"][0]["margins"], "30-"),   # 50 to 20 of 70 is 42.9 points; a tie; withheld
+        (idx["contests"][1]["margins"], "1--"),   # 50 to 40 of 100 is 10 points
+        (margin_code([10, 10, 0]), "4"), (margin_code([100, 52, 47, 1]), "1"),
+        (margin_code([100, 51, 49]), "0"),
         (idx["contests"][0]["outside"], [20, 5, 15]),
         (idx["contests"][0]["multiple"], False),
         (idx["contests"][1]["multiple"], True),   # 100 votes against 80 ballots in 01001

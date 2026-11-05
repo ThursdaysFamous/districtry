@@ -3621,6 +3621,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
     fill-opacity: var(--dst-hl-fill, 0.32);
     stroke-width: var(--dst-hl-weight, 4px);
   }
+  /* A highlight the engine draws with NO fill keeps none: an outline-only
+     layer, and every other layer's lit district while the election results
+     paint the ground (fillsGround). The rule above outranked the engine's 0
+     too, so until 2026-11-05 a selected ward tinted the result colours under
+     it even after highlightStyleFor() had dropped its fill. */
+  .leaflet-overlay-pane path.region-highlight[fill-opacity="0"] { fill-opacity: 0; }
   /* The matched region's DROP SHADOW is a depth cue — "this one is lifted off
      the faded rest of its layer" — and one highlight says that perfectly. Six
      say it twelve times over: the engine stacks TWO near-black shadows per
@@ -11410,6 +11416,8 @@ function initSouthCarolinaExplorer() {
     layers.forEach(function (l) {
       if (l.fillsGround || !state.layersOn[l.id]) return;
       var rt = layerRuntime[l.id];
+      // the district lit from a point answer before the layer's set loaded
+      if (rt.provisionalLayer) rt.provisionalLayer.setStyle(Object.assign({}, baseStyleFor(l) || {}, highlightStyleFor(l)));
       if (!rt.overlayLayer) return;
       if (rt.overlayLayer.dxTiles) { rt.overlayLayer.restyle(); return; }
       rt.highlightApplied = false; // force the full sweep: the signature moved
@@ -13512,6 +13520,9 @@ function initSouthCarolinaExplorer() {
       refreshActiveLayerOpacities(); // a visible fill returned — rescale the stack
       refreshRelationshipOutlines(); // an outline-eligible layer just came back
     }
+    // a layer whose colours are its answer coming into or out of view adds or
+    // takes away every other layer's selected-district tint (layer-registry)
+    if (mod.fillsGround) refreshHighlightFills();
   }
 
   // Refresh every coverage-declaring layer's relevance for the current

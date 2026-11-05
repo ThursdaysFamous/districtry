@@ -4897,6 +4897,7 @@ try {
         legendShown: !!legend && !legend.hidden,
         legendRace: legend ? ((legend.querySelector(".election-legend-race") || {}).textContent || "") : "",
         legendStatus: legend ? ((legend.querySelector(".election-legend-status") || {}).textContent || "") : "",
+        legendSteps: legend ? legend.querySelectorAll(".election-legend-scale .election-legend-step").length : 0,
         rows: c ? c.querySelectorAll(".election-table tbody tr").length : 0,
       };
     });
@@ -4909,9 +4910,9 @@ try {
           got.rows === firstOnBallot.choices.length,
           `notice=${JSON.stringify(got.notice.slice(0, 40))} options=${got.options.length}/${onBallot.length} ` +
           `pill=${JSON.stringify(got.pill)} rows=${got.rows}`);
-    check("the Election Results legend names the picked race",
-          got.legendShown && got.legendRace === firstOnBallot.name,
-          `shown=${got.legendShown} race=${JSON.stringify(got.legendRace)}`);
+    check("the Election Results legend names the picked race and keys the five lead bands",
+          got.legendShown && got.legendRace === firstOnBallot.name && got.legendSteps === 5,
+          `shown=${got.legendShown} race=${JSON.stringify(got.legendRace)} steps=${got.legendSteps}`);
     if (multi) {
       await page.selectOption("#card-election-results select.election-select", String(multi.id));
       await page.waitForTimeout(300);
@@ -4928,7 +4929,14 @@ try {
     // them, and gets it back once they are off
     await page.click("#toggle-school-board");
     await page.waitForTimeout(300);
-    const tintOn = await page.evaluate(() => window.ChiExplorer.highlightFill("school-board"));
+    // the fill the page PAINTS, not only the one the engine asks for: the
+    // skin's stacked-highlight rule outranked a 0 until 2026-11-05
+    const tintOn = await page.evaluate(() => {
+      const asked = window.ChiExplorer.highlightFill("school-board");
+      const painted = Array.from(document.querySelectorAll(".leaflet-overlay-pane path.region-highlight"))
+        .map((p) => parseFloat(getComputedStyle(p).fillOpacity));
+      return painted.some((v) => v > 0) ? Math.max.apply(null, painted) : asked;
+    });
     await page.click("#toggle-election-results");
     await page.waitForTimeout(300);
     const tintOff = await page.evaluate(() => window.ChiExplorer.highlightFill("school-board"));

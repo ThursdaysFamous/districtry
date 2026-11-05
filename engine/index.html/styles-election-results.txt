@@ -37,3 +37,6 @@
   .districtry-map-legend.election-legend .dml-label { white-space: normal; }
   .districtry-map-legend.election-legend .election-legend-race { font-weight: 700; color: var(--ink); }
   .districtry-map-legend.election-legend .election-legend-status { font-style: italic; }
+  .districtry-map-legend.election-legend .election-legend-scale { display: flex; gap: 2px; width: 100%; }
+  .districtry-map-legend.election-legend .election-legend-step { flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; line-height: 1.15; text-align: center; color: var(--muted); }
+  .districtry-map-legend.election-legend .election-legend-ramp { display: block; width: 100%; height: 9px; border-radius: 2px; background: var(--ink); }

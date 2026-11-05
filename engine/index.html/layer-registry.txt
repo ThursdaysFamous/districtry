@@ -171,6 +171,8 @@
     layers.forEach(function (l) {
       if (l.fillsGround || !state.layersOn[l.id]) return;
       var rt = layerRuntime[l.id];
+      // the district lit from a point answer before the layer's set loaded
+      if (rt.provisionalLayer) rt.provisionalLayer.setStyle(Object.assign({}, baseStyleFor(l) || {}, highlightStyleFor(l)));
       if (!rt.overlayLayer) return;
       if (rt.overlayLayer.dxTiles) { rt.overlayLayer.restyle(); return; }
       rt.highlightApplied = false; // force the full sweep: the signature moved
