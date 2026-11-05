@@ -5218,14 +5218,15 @@ function initKentuckyExplorer() {
   // L.extend({ its own min and max zoom }, MAP_ZOOM_STEPS), so the step sizes
   // are one copy for the fleet while the zoom range stays each app's own.
   //
-  // Leaflet's defaults move a WHOLE zoom level per + or - press, per keyboard
-  // + or -, and per double-click, and a whole level doubles the scale of
-  // everything on the map. Measured 2026-11-05 in the Illinois app, booted in
-  // Chromium as Windows Chrome at 100% display scaling (the case Leaflet's
+  // Leaflet's defaults made one notch of an ordinary Windows mouse wheel a
+  // WHOLE zoom level, the same as a press of + or -, and a whole level doubles
+  // the scale of everything on the map; the wheel was what readers found too
+  // coarse (Adam, 2026-11-05). Measured that day in the Illinois app, booted
+  // in Chromium as Windows Chrome at 100% display scaling (the case Leaflet's
   // wheel maths is written per platform for), from zoom 12 in the Loop:
   //
   //                                   before   after
-  //   one press of +                    1        0.5
+  //   one press of +                    1        1
   //   one mouse-wheel notch             1        0.5
   //   three notches 120 ms apart        2        1
   //   half a second of touchpad pinch   1.5      0.75
@@ -5235,8 +5236,12 @@ function initKentuckyExplorer() {
   // in 8 of 10 and 0.5 and 1.25 once each, because Leaflet drops part of a
   // burst that lands while the previous zoom is still animating.
   //
-  // zoomDelta is the step for the buttons, the keyboard and a double-click.
-  // Half a level is a scale change of about 1.4 times instead of 2.
+  // zoomDelta is the step for the buttons, the keyboard and a double-click,
+  // and it stays Leaflet's whole level on purpose: nobody found the buttons
+  // coarse, a whole step is what most web maps' buttons do, and half a step
+  // would take about 19 presses instead of 10 from a state's opening view
+  // down to a street. It is spelled out so the one place that sets the
+  // fleet's zoom steps names all three.
   //
   // wheelPxPerZoomLevel is how much scrolling makes one level; Leaflet's 60
   // made a single notch of an ordinary Windows mouse a whole level. 120 halves
@@ -5257,7 +5262,7 @@ function initKentuckyExplorer() {
   // taken: a half-second touchpad pinch then moved 0.04 to 0.17 of a level,
   // slow enough to read as broken, and every zoom a link carries would need
   // rounding.
-  var MAP_ZOOM_STEPS = { zoomSnap: 0.25, zoomDelta: 0.5, wheelPxPerZoomLevel: 120 };
+  var MAP_ZOOM_STEPS = { zoomSnap: 0.25, zoomDelta: 1, wheelPxPerZoomLevel: 120 };
   /* ==== ENGINE:END map-zoom-steps ==== */
   var map = L.map("map", L.extend({ minZoom: 7, maxZoom: 19, zoomControl: false }, MAP_ZOOM_STEPS))
     .setView(INITIAL_CENTER, INITIAL_ZOOM);
