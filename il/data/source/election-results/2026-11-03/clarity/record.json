@@ -1,0 +1,101 @@
+{
+ "DuPage": {
+  "eid": 127290,
+  "version": "385255",
+  "url": "https://results.enr.clarityelections.com/IL/DuPage/127290/385255/reports/detailxml.zip",
+  "bytes": 608772,
+  "sha256": "8a648c02f85f1e88d0eab84f0ffdc3d2afa0fb34760133e8638ad4cc5b895232",
+  "timestamp": "11/3/2026 11:24:17 PM CST",
+  "election": "2026 General Election",
+  "precincts": 605,
+  "fetched": "2026-11-05T17:52:22Z"
+ },
+ "Lake": {
+  "eid": 127289,
+  "version": "385238",
+  "url": "https://results.enr.clarityelections.com/IL/Lake/127289/385238/reports/detailxml.zip",
+  "bytes": 275441,
+  "sha256": "c1716ab251d873bd3e14abea3ba1500b64bcee0a887092ea348f25511c6709c3",
+  "timestamp": "11/3/2026 11:15:50 PM CST",
+  "election": "General Election 11/03/2026",
+  "precincts": 431,
+  "fetched": "2026-11-05T17:52:23Z"
+ },
+ "Macoupin": {
+  "eid": 127399,
+  "version": "384594",
+  "url": "https://results.enr.clarityelections.com/IL/Macoupin/127399/384594/reports/detailxml.zip",
+  "bytes": 29771,
+  "sha256": "16627b0507d184efe9ce4b66a217442444ea6f311485fbb1cd80dbd505c363ab",
+  "timestamp": "11/3/2026 9:08:29 PM CST",
+  "election": "2026 General Election",
+  "precincts": 45,
+  "fetched": "2026-11-05T17:52:24Z"
+ },
+ "Madison": {
+  "eid": 127555,
+  "version": "385067",
+  "url": "https://results.enr.clarityelections.com/IL/Madison/127555/385067/reports/detailxml.zip",
+  "bytes": 136298,
+  "sha256": "f1c3e35c111cd23584760c866313845ca83ecfb9fd867956640b7e008b0971fc",
+  "timestamp": "11/3/2026 10:18:06 PM CST",
+  "election": "2026 General Election",
+  "precincts": 191,
+  "fetched": "2026-11-05T17:52:25Z"
+ },
+ "McHenry": {
+  "eid": 127286,
+  "version": "385110",
+  "url": "https://results.enr.clarityelections.com/IL/McHenry/127286/385110/reports/detailxml.zip",
+  "bytes": 178292,
+  "sha256": "038ec7a286564e55e5ec1fa4d3b5b988caa890d2cda690a6f459a2be83465669",
+  "timestamp": "11/3/2026 10:29:42 PM CST",
+  "election": "2026 General Election",
+  "precincts": 223,
+  "fetched": "2026-11-05T17:52:26Z"
+ },
+ "McLean": {
+  "eid": 127349,
+  "version": "385108",
+  "url": "https://results.enr.clarityelections.com/IL/McLean/127349/385108/reports/detailxml.zip",
+  "bytes": 94734,
+  "sha256": "0de48d6cb04672a717bd42aefb49be227dd88aa51f57bb1f1d02b4d593130a0f",
+  "timestamp": "11/3/2026 10:29:32 PM CST",
+  "election": "2026 General Election - Nov 3",
+  "precincts": 81,
+  "fetched": "2026-11-05T17:52:27Z"
+ },
+ "Bloomington": {
+  "eid": 127392,
+  "version": "385593",
+  "url": "https://results.enr.clarityelections.com/IL/Bloomington/127392/385593/reports/detailxml.zip",
+  "bytes": 59391,
+  "sha256": "0bba1cbef6e9596ee247b107ed1bb8891fae0f8c5d880b7b4099b836a1706e5b",
+  "timestamp": "11/4/2026 9:38:18 AM CST",
+  "election": "2026 General Election",
+  "precincts": 60,
+  "fetched": "2026-11-05T17:52:28Z"
+ },
+ "Sangamon": {
+  "eid": 127490,
+  "version": "385076",
+  "url": "https://results.enr.clarityelections.com/IL/Sangamon/127490/385076/reports/detailxml.zip",
+  "bytes": 142594,
+  "sha256": "41f776e2b4f4a43ec979db9f0ebe67dd7b76ce51aa4a80f4da997dc84990ab1b",
+  "timestamp": "11/3/2026 10:19:34 PM CST",
+  "election": "2026 General Election",
+  "precincts": 166,
+  "fetched": "2026-11-05T17:52:30Z"
+ },
+ "Winnebago": {
+  "eid": 127560,
+  "version": "384671",
+  "url": "https://results.enr.clarityelections.com/WRC/Winnebago/127560/384671/reports/detailxml.zip",
+  "bytes": 73874,
+  "sha256": "1547a5e70bfc60ccc29bd95f371df20ca244048f90ecb5c51faa17e72d248d1e",
+  "timestamp": "11/3/2026 9:17:18 PM CST",
+  "election": "2026 General Election",
+  "precincts": 94,
+  "fetched": "2026-11-05T17:52:52Z"
+ }
+}
