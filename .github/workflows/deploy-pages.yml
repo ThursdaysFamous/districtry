@@ -33,6 +33,19 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    # A push that changes ONLY the raw traffic numbers publishes nothing a
+    # reader sees: those three files are read by build_traffic_page.py, which
+    # bakes them into traffic.html in a commit of its own, and nothing on the
+    # site fetches them (all three are excluded from the published tree below).
+    # Measured 2026-11-05: 16 of the last 50 pushes to main were exactly this,
+    # each holding the `pages` slot for about 9 minutes, so a reader-visible
+    # merge landing behind one waited twice as long. paths-ignore skips a push
+    # only when EVERY file it changes matches, so a push that also touches
+    # anything else still publishes.
+    paths-ignore:
+      - data/goatcounter-traffic.json
+      - data/bing-search-performance.json
+      - data/search-performance.json
   workflow_dispatch:
     inputs:
       indexnow_all:
@@ -53,12 +66,6 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
-# One pin, two consumers: the npm install and the browser-cache key below must
-# name the same Playwright version, or a bump re-downloads Chromium forever
-# against a stale cache key. Defined once so they cannot drift.
-env:
-  PLAYWRIGHT_VERSION: "1.56.1"
-
 # Two jobs (the standard Pages layout): `assemble` carries no environment, so
 # it runs on ANY ref — which is what lets a corruption drill (and any future
 # branch verification) actually exercise the hash gate; the github-pages
@@ -69,19 +76,13 @@ env:
 jobs:
   assemble:
     runs-on: ubuntu-latest
-    # A CEILING ON THE WHOLE JOB, added 2026-08-18 after three runs in two days
-    # sat "in_progress" long enough to look hung — 57 minutes, then 35, then 16,
-    # every one of them on the Playwright install below. THEY WERE NOT UNBOUNDED
-    # HANGS, which is the thing worth knowing: the install's first retry ladder
-    # was bounded but could stack ~30 minutes of grinding that reports nothing
-    # and, on deploy-pages, holds the Pages concurrency slot so every
-    # later deploy queues behind it. A bounded-but-half-hour step is
-    # indistinguishable from a hang to anyone watching, and the only thing that
-    # caught all three was comparing the live site against the repo by hand.
-    # This makes that state VISIBLE — a red run a human can act on — instead of
-    # silent. The install step now sizes its phase budgets to fail NAMED under
-    # its own 15-minute cap, so this ceiling guards the OTHER steps and true
-    # catastrophes, not the install's ordinary sick days.
+    # A CEILING ON THE WHOLE JOB, added 2026-08-18 after three runs sat
+    # "in_progress" for 57, 35 and 16 minutes on the Playwright install this
+    # job used to carry, holding the `pages` slot so every later deploy queued
+    # behind it. The browser test and its install left this job on 2026-11-05
+    # (see the note above the assemble step), so a normal run is now about a
+    # minute and a half; the ceiling stays as a guard against a hung checkout
+    # or upload, which would otherwise hold the slot just the same.
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -97,61 +98,19 @@ jobs:
           python3 scripts/check_engine_parity.py il/sw.js
           python3 scripts/compose_app.py --check
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      # Same pinned toolchain as smoke-test.yml. The behaviour gate re-runs
-      # here because the assembled tree (committed files + spliced engine) is
-      # what actually ships — smoke-test.yml only covered the committed tree.
-      # The cache + timeout/retry pair mirrors smoke-test.yml, which carries
-      # the full story (the 2026-08-18 CDN hangs).
-      - name: Cache Playwright Chromium
-        id: pw-cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-chromium-${{ env.PLAYWRIGHT_VERSION }}-${{ runner.os }}
-
-      # No apt step: the runner image already carries every library Chromium
-      # loads, so this proves Chromium starts instead. smoke-test.yml carries
-      # the story (Ubuntu's mirror at 40 KB/s on 2026-10-22).
-      - name: Install Playwright + Chromium
-        timeout-minutes: 15
-        run: |
-          retry() {
-            local attempts=$1 budget=$2; shift 2
-            for i in $(seq 1 "$attempts"); do
-              timeout "$budget" "$@" && return 0
-              echo "::warning::attempt $i/$attempts of '$*' hung or failed"
-              sleep 5
-            done
-            echo "::error::'$*' failed $attempts time(s) at ${budget}s each"
-            return 1
-          }
-          retry 3 60 npm install "playwright@${PLAYWRIGHT_VERSION}"
-          if [ "${{ steps.pw-cache.outputs.cache-hit }}" != "true" ]; then
-            retry 2 300 npx playwright install chromium
-          fi
-          if ! timeout 60 node -e "require('playwright').chromium.launch().then(b => b.close())"; then
-            echo "::error::Chromium does not start with the libraries on this runner image; restore 'npx playwright install-deps chromium' to this step"
-            exit 1
-          fi
-
-      - name: Behaviour gate on the assembled tree (serve + smoke test)
-        env:
-          BASE_URL: http://localhost:8000/il/
-        run: |
-          python3 -m http.server 8000 &
-          server_pid=$!
-          for i in $(seq 1 40); do
-            curl -sf http://localhost:8000/il/ >/dev/null && break
-            sleep 0.5
-          done
-          node scripts/smoke_test.mjs
-          status=$?
-          kill "$server_pid" 2>/dev/null || true
-          exit $status
+      # NO BROWSER TEST HERE SINCE 2026-11-05 (Adam's choice, to cut the wait
+      # from merge to live). This job used to boot the Illinois app in Chromium
+      # and run scripts/smoke_test.mjs before publishing. Measured over the
+      # last 100 publishes that step was about 7.5 of a run's 9 minutes, and it
+      # repeated work already being done: smoke-test.yml runs that same
+      # Illinois test, and the other instances' tests, on every pull request
+      # and again on this same push to main, in parallel with this job. It
+      # also gated only Illinois, so a change to any other state was never
+      # browser-tested here at all. THE COST, STATED: a change that breaks the
+      # Illinois app and still reaches main (a branch merged without main
+      # brought in, or a direct push) is now published, and smoke-test.yml's
+      # run on the same push turns red a few minutes later instead of blocking
+      # it. The static gates above stay: they take two seconds.
 
       # NEVER put a `#` comment between two backslash-continued lines. Bash joins
       # the continuation FIRST, so the comment swallows the rest of the logical
@@ -221,6 +180,11 @@ jobs:
             # unpublish il/data/app, wi/data/app and every other instance's
             # runtime files while every guard below still passed.
             data/search-performance.json
+            # Its two siblings, which feed the same report and which the push
+            # trigger above now ignores, so a published copy would only ever
+            # be a stale one. Full paths for the same reason as above.
+            data/goatcounter-traffic.json
+            data/bing-search-performance.json
             # Any dot-prefixed .mjs, which in this tree is only ever an
             # ad-hoc browser harness (.gitignore's reason block names the
             # convention). Those ignore patterns protect only names that follow
