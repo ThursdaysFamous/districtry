@@ -4892,6 +4892,8 @@ try {
       const legend = document.querySelector(".election-legend");
       return {
         notice: ((c && c.querySelector(".election-notice")) || {}).textContent || "",
+        title: ((c && c.querySelector(".election-title")) || {}).textContent || "",
+        legendTitle: legend ? (((legend.querySelector("summary") || {}).textContent) || "").trim() : "",
         pill: pill ? pill.textContent.trim() : "",
         options: sel ? Array.from(sel.options).map((o) => o.value) : [],
         legendShown: !!legend && !legend.hidden,
@@ -4902,6 +4904,11 @@ try {
       };
     });
     const firstOnBallot = idx.contests.find((c) => onBallot.includes(String(c.id)));
+    const year = String(idx.electionDate).slice(0, 4);
+    const wantTitle = idx.election.indexOf(year) === -1 ? `${year} ${idx.election}` : idx.election;
+    check("the Election Results card and legend are headed with the election's year and name",
+          got.title === wantTitle && got.legendTitle === wantTitle,
+          `title=${JSON.stringify(got.title)} legend=${JSON.stringify(got.legendTitle)} want=${JSON.stringify(wantTitle)}`);
     const noticeOk = idx.certified ? got.notice.indexOf("certified") !== -1
       : got.notice.indexOf("Unofficial results") !== -1 && got.legendStatus.indexOf("Unofficial") !== -1;
     const menuOk = got.options.length === onBallot.length && got.options.every((v) => onBallot.includes(v));
