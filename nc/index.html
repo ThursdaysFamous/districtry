@@ -1781,6 +1781,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     flex: none;
     border: 2px solid var(--ink);
   }
+  .group-elections .dot { background: #2E6F8E; }
   .group-political .dot { background: var(--accent); }
   .group-safety .dot { background: var(--accent-warm); }
   .group-schools .dot { background: #E8A324; }
@@ -11237,7 +11238,12 @@ function initNorthCarolinaExplorer() {
    * ======================================================================= */
 
   /* ==== ENGINE:BEGIN groups ==== */
+  // Elections leads: results are what a reader opens the map for on the days
+  // after an election, and past elections may join this section later (Adam,
+  // 2026-11-05). A group with no layer registered draws no section, so every
+  // app without election results looks exactly as before.
   var GROUPS = [
+    { id: "elections", label: "Elections" },
     { id: "political", label: "Political" },
     { id: "safety", label: "Public Safety" },
     { id: "schools", label: "Schools" },

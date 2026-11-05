@@ -354,7 +354,7 @@
     registerLayer({
       id: opts.id,
       tiles: opts.tiles,
-      group: opts.group || "political",
+      group: opts.group || "elections",
       fillsGround: true, // its colours are the answer: other layers drop their selected-district tint (layer-registry)
       label: opts.label,
       coverage: opts.coverage,

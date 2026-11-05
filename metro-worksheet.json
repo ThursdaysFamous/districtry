@@ -645,7 +645,7 @@
     {
       "id": "election-results",
       "label": "Election Results",
-      "group": "political",
+      "group": "elections",
       "frame": "chicago",
       "area_rank": 24,
       "rank_note": "Election results, drawn on the Ward Precinct outlines",
