@@ -423,6 +423,7 @@
     districtLinesBtn.setAttribute("aria-pressed", districtLinesOn ? "true" : "false");
   }
   function refreshDistrictNumbers() {
+    afterCardHooks.forEach(function (fn) { fn(); }); // e.g. the election card's district totals
     if (districtNumberGroup) districtNumberGroup.clearLayers();
     districtNumbers = [];
     syncDistrictLinesButton();

@@ -4977,6 +4977,32 @@ try {
         .map((p) => parseFloat(getComputedStyle(p).fillOpacity));
       return painted.some((v) => v > 0) ? Math.max.apply(null, painted) : asked;
     });
+    // the picked race added up over the school board district at the point:
+    // its own table under the precinct's, whose votes sum to the total its
+    // note states, and that total holds at least this precinct's own votes
+    await page.waitForFunction(() => document.querySelector("#card-election-results .election-area .election-table"),
+      null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const area = await page.evaluate(() => {
+      const sec = document.querySelector("#card-election-results .election-area");
+      const num = (t) => Number(String(t).replace(/[^0-9]/g, "")) || 0;
+      if (!sec) return null;
+      const note = (sec.querySelector(".election-note") || {}).textContent || "";
+      const m = /from the ([\d,]+) precincts? in .* this race: ([\d,]+) votes/.exec(note);
+      return {
+        closed: !sec.open,
+        summary: (sec.querySelector("summary") || {}).textContent || "",
+        caption: (sec.querySelector("caption") || {}).textContent || "",
+        votes: Array.from(sec.querySelectorAll("tbody tr td:nth-child(2)")).reduce((a, td) => a + num(td.textContent), 0),
+        precincts: m ? num(m[1]) : 0, stated: m ? num(m[2]) : -1,
+        own: Array.from(document.querySelectorAll("#card-election-results .election-race > .election-table tbody tr td:nth-child(2)"))
+          .reduce((a, td) => a + num(td.textContent), 0),
+      };
+    });
+    check("the Election Results card adds the picked race up over the selected school board district, in a closed section",
+          !!area && area.closed && /^District \d+[ab] \(.+\)/.test(area.summary) &&
+          /^.+ in District \d+[ab] \(.+\)$/.test(area.caption) && area.precincts > 1 &&
+          area.votes === area.stated && area.stated > area.own && area.own > 0,
+          `area=${JSON.stringify(area)}`);
     // every other school board district keeps its full line and its number
     // while the results are on, and the "Boundaries and numbers" button takes
     // both away and gives them back

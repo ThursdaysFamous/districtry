@@ -34,6 +34,12 @@
     display: block; font-size: 11.5px; font-weight: 600; color: var(--card-muted); margin: 2px 0 0 16px;
   }
   .election-note { margin: 0; font-size: 12px; line-height: 1.45; color: var(--card-body-ink); }
+  .election-areas { display: flex; flex-direction: column; gap: 10px; }
+  .election-areas:empty { display: none; }
+  .election-area { padding-top: 10px; border-top: 1px solid var(--card-border); }
+  .election-area[open] > * + * { margin-top: 6px; }
+  .election-area-head { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--card-ink); }
+  .election-area-head:focus-visible { outline: 2px solid var(--card-link); outline-offset: 2px; }
   .districtry-map-legend.election-legend { margin-bottom: 6px; max-width: 260px; }
   .districtry-map-legend.election-legend .dml-label { white-space: normal; }
   .districtry-map-legend.election-legend .election-legend-race { font-weight: 700; color: var(--ink); }
