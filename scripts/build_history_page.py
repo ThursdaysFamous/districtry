@@ -134,8 +134,8 @@ def fail(msg):
     """
     print("build-history-page: FAIL — %s" % msg, file=sys.stderr)
     sys.exit(1)
-GROUP_ORDER = ("political", "safety", "schools", "geography")
-GROUP_LABEL = {"political": "political", "safety": "public safety",
+GROUP_ORDER = ("elections", "political", "safety", "schools", "geography")
+GROUP_LABEL = {"elections": "elections", "political": "political", "safety": "public safety",
                "schools": "schools", "geography": "geography"}
 
 

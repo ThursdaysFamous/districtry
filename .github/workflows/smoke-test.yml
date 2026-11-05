@@ -1008,6 +1008,15 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/robots_policy.py --selftest
 
+      # The election results format every app's builder writes through
+      # (scripts/election_results_common.py): a fixture with a leader, a tie, a
+      # withheld count, an empty precinct, a race off one precinct's ballot, a
+      # vote-for-more-than-one race and votes counted outside every precinct,
+      # read back, plus three inputs it must refuse.
+      - name: The election results writer reads back what it wrote
+        if: ${{ !cancelled() }}
+        run: python3 scripts/election_results_common.py --selftest
+
       # Adoption of that reader was per caller and unmeasured, so every count of
       # it came off a hand-written list and every one was an undercount: seven
       # files on 2026-09-12, four more in #1271's follow-on, and 224 of 266

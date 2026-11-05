@@ -1230,13 +1230,39 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">41 layers — 12 political and legislative, 7 public safety, 9 schools, 13 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">42 layers — 1 elections, 12 political and legislative, 7 public safety, 9 schools, 13 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
+        <a href="#elections">Elections</a>
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
         <a href="#schools">Schools</a>
         <a href="#geography">Geography &amp; amenities</a>
       </nav>
+
+      <section class="matrix-group" id="elections">
+        <h2>Elections <span class="matrix-count">1 layer</span></h2>
+        <p class="matrix-blurb">How each precinct voted.</p>
+        <div class="matrix-wrap">
+          <table class="matrix">
+            <thead>
+              <tr><th scope="col">Layer</th><th scope="col">What it answers</th><th scope="col">Boundary source</th><th scope="col">Who it names</th><th scope="col">Where it applies</th></tr>
+            </thead>
+            <tbody>
+              <tr id="layer-election-results">
+                <th scope="row"><span class="layer-name">Election Results</span><code>election-results</code></th>
+                <td data-label="What it answers">For the picked race, the choice with the most votes in each Chicago precinct, and on the card the clicked precinct's votes for every race on its ballot, its turnout, and the race's total across Chicago. Unofficial until the Board certifies the count, and the card and the map key say so.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://data.cityofchicago.org/d/i8fv-xe4b" target="_blank" rel="noopener">Chicago Data Portal — ward precincts (i8fv-xe4b), the same outlines Ward Precinct draws</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The choices and their votes come from the Chicago Board of Election Commissioners' precinct-by-precinct results for the 3 November 2026 general election, read daily by scripts/chicago_election_results_scraper.py. Colours follow each choice's place on the Board's ballot list, never a party.</td>
+                <td data-label="Where it applies">City of Chicago. A race whose district reaches past the city is counted for Chicago's precincts only, and the card says so.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
       <section class="matrix-group" id="political">
         <h2>Political &amp; legislative <span class="matrix-count">12 layers</span></h2>
@@ -2375,6 +2401,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "City of Chicago"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-election-results",
+      "identifier": "election-results",
+      "name": "Election Results",
+      "description": "For the picked race, the choice with the most votes in each Chicago precinct, and on the card the clicked precinct's votes for every race on its ballot, its turnout, and the race's total across Chicago. Unofficial until the Board certifies the count, and the card and the map key say so. The choices and their votes come from the Chicago Board of Election Commissioners' precinct-by-precinct results for the 3 November 2026 general election, read daily by scripts/chicago_election_results_scraper.py. Colours follow each choice's place on the Board's ballot list, never a party.",
+      "url": "https://districtry.com/il/sources.html#layer-election-results",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "Chicago Data Portal — ward precincts (i8fv-xe4b), the same outlines Ward Precinct draws",
+          "url": "https://data.cityofchicago.org/d/i8fv-xe4b"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Chicago. A race whose district reaches past the city is counted for Chicago's precincts only, and the card says so"
       }
     },
     {

@@ -1781,6 +1781,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     flex: none;
     border: 2px solid var(--ink);
   }
+  .group-elections .dot { background: #2E6F8E; }
   .group-political .dot { background: var(--accent); }
   .group-safety .dot { background: var(--accent-warm); }
   .group-schools .dot { background: #E8A324; }
@@ -3621,6 +3622,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
     fill-opacity: var(--dst-hl-fill, 0.32);
     stroke-width: var(--dst-hl-weight, 4px);
   }
+  /* A highlight the engine draws with NO fill keeps none: an outline-only
+     layer, and every other layer's lit district while the election results
+     paint the ground (fillsGround). The rule above outranked the engine's 0
+     too, so until 2026-11-05 a selected ward tinted the result colours under
+     it even after highlightStyleFor() had dropped its fill. */
+  .leaflet-overlay-pane path.region-highlight[fill-opacity="0"] { fill-opacity: 0; }
   /* The matched region's DROP SHADOW is a depth cue — "this one is lifted off
      the faded rest of its layer" — and one highlight says that perfectly. Six
      say it twelve times over: the engine stacks TWO near-black shadows per
@@ -6050,7 +6057,7 @@ function initGeorgiaExplorer() {
    * inside out. Only the LAST one ("outside") is guaranteed. */
   function buildCoverageKey(bands) {
     var host = document.querySelector(".map-bottom-left");
-    if (!host || !bands.length || document.querySelector(".districtry-map-legend")) return;
+    if (!host || !bands.length || document.querySelector(".districtry-map-legend:not(.election-legend)")) return;
 
     var key = document.createElement("details");
     key.className = "districtry-map-legend";
@@ -11194,7 +11201,12 @@ function initGeorgiaExplorer() {
    * ======================================================================= */
 
   /* ==== ENGINE:BEGIN groups ==== */
+  // Elections leads: results are what a reader opens the map for on the days
+  // after an election, and past elections may join this section later (Adam,
+  // 2026-11-05). A group with no layer registered draws no section, so every
+  // app without election results looks exactly as before.
   var GROUPS = [
+    { id: "elections", label: "Elections" },
     { id: "political", label: "Political" },
     { id: "safety", label: "Public Safety" },
     { id: "schools", label: "Schools" },
@@ -11374,8 +11386,38 @@ function initGeorgiaExplorer() {
   // outline mode, and the matched-region highlight depends on neither — so a point
   // move whose signature is unchanged restyles just the two paths whose role
   // flipped instead of the whole layer.
-  function highlightSignature(rt) {
-    return activeLayerCount() + "|" + (rt.outlineOnly ? "1" : "0");
+  function highlightSignature(rt, mod) {
+    return activeLayerCount() + "|" + (rt.outlineOnly ? "1" : "0") + "|" + (mod && groundFilledByOther(mod) ? "1" : "0");
+  }
+
+  // A layer that paints its whole ground in colours that are its answer (the
+  // election results fill each precinct by its leading choice) sets
+  // fillsGround. While one is on, every other layer's selected district keeps
+  // its outline and drops its tint, because a translucent tint over those
+  // colours changes them: measured 2026-11-05 with Chicago's wards on, the
+  // selected ward's 0.32 tint made a purple precinct read blue.
+  function groundFilledByOther(mod) {
+    for (var i = 0; i < layers.length; i++) {
+      var l = layers[i];
+      if (l !== mod && l.fillsGround && state.layersOn[l.id] && layerRuntime[l.id].relevant !== false) return true;
+    }
+    return false;
+  }
+
+  // Repaint every other switched-on layer's selected district after a
+  // fillsGround layer is switched on or off, so its tint follows at once
+  // rather than at the next selected point.
+  function refreshHighlightFills() {
+    layers.forEach(function (l) {
+      if (l.fillsGround || !state.layersOn[l.id]) return;
+      var rt = layerRuntime[l.id];
+      // the district lit from a point answer before the layer's set loaded
+      if (rt.provisionalLayer) rt.provisionalLayer.setStyle(Object.assign({}, baseStyleFor(l) || {}, highlightStyleFor(l)));
+      if (!rt.overlayLayer) return;
+      if (rt.overlayLayer.dxTiles) { rt.overlayLayer.restyle(); return; }
+      rt.highlightApplied = false; // force the full sweep: the signature moved
+      updateLayerHighlight(l);
+    });
   }
 
   // Rescale only an already-painted layer's fill opacity to the current active
@@ -11391,8 +11433,8 @@ function initGeorgiaExplorer() {
     var rt = layerRuntime[mod.id];
     if (!rt.overlayLayer) return;
     // a tile-drawn layer's paint reads the count itself (tilePaint)
-    if (rt.overlayLayer.dxTiles) { rt.overlayLayer.restyle(); if (rt.highlightApplied) rt.highlightSignature = highlightSignature(rt); return; }
-    if (rt.highlightApplied) { rt.highlightSignature = highlightSignature(rt); return; }
+    if (rt.overlayLayer.dxTiles) { rt.overlayLayer.restyle(); if (rt.highlightApplied) rt.highlightSignature = highlightSignature(rt, mod); return; }
+    if (rt.highlightApplied) { rt.highlightSignature = highlightSignature(rt, mod); return; }
     if (rt.outlineOnly) return; // outline-only layers carry no fill to rescale
     var fillOpacity = scaledFillOpacity(mod);
     if (fillOpacity == null) return; // point-dataset layer (no flat style object)
@@ -11475,7 +11517,7 @@ function initGeorgiaExplorer() {
       opacity: 1,
       // an outline-only layer keeps no fill even when it's the matched region,
       // so a sub-layer's fill (the beats) shows through unobscured
-      fillOpacity: (rt && rt.outlineOnly) ? 0 : 0.32,
+      fillOpacity: ((rt && rt.outlineOnly) || groundFilledByOther(mod)) ? 0 : 0.32,
       dashArray: null
     };
   }
@@ -11583,7 +11625,7 @@ function initGeorgiaExplorer() {
     // layers on, user clicked a new point" case from ~N setStyle calls (the
     // measured dominant per-click cost) into 2. Any signature change (a layer
     // toggled on/off, outline mode flipped) falls back to the full sweep below.
-    var signature = highlightSignature(rt);
+    var signature = highlightSignature(rt, mod);
     var prevMatch = rt.highlightedLayer;
     var incremental = rt.highlightApplied && rt.highlightSignature === signature && !!prevMatch;
     if (incremental && prevMatch.feature === feature) return; // same match, same styling — nothing changed
@@ -12154,8 +12196,14 @@ function initGeorgiaExplorer() {
     var hl = highlightStyleFor(mod), faded = fadedStyle(base, mod);
     var isSel = ["boolean", ["feature-state", "sel"], false];
     var baseOpacity = base.opacity == null ? 1 : base.opacity;
+    // A layer that paints each district its own colour (the election results
+    // fill each precinct by its leading choice) supplies the fill as a GL
+    // expression; it keeps that fill whether or not a district is selected,
+    // because the colours are the answer and fading them would hide it. The
+    // lit district is still marked by the highlight line.
+    var own = mod.overlay && typeof mod.overlay.tileFill === "function" ? mod.overlay.tileFill() : null;
     return {
-      fill: {
+      fill: own ? { "fill-color": own.color, "fill-opacity": own.opacity } : {
         "fill-color": base.fillColor || base.color || "#000",
         "fill-opacity": selected ? ["case", isSel, hl.fillOpacity, faded.fillOpacity] : (base.fillOpacity || 0)
       },
@@ -12441,7 +12489,7 @@ function initGeorgiaExplorer() {
     if (id == null && !live) showProvisionalHighlight(mod);
     else clearProvisionalHighlight(mod);
     rt.highlightApplied = id != null || !!live;
-    rt.highlightSignature = rt.highlightApplied ? highlightSignature(rt) : null;
+    rt.highlightSignature = rt.highlightApplied ? highlightSignature(rt, mod) : null;
     if (live) {
       // a live county's feature is whole, so its own edges name the streets
       rt.highlightedLayer = { feature: live };
@@ -13467,6 +13515,9 @@ function initGeorgiaExplorer() {
       refreshActiveLayerOpacities(); // a visible fill returned — rescale the stack
       refreshRelationshipOutlines(); // an outline-eligible layer just came back
     }
+    // a layer whose colours are its answer coming into or out of view adds or
+    // takes away every other layer's selected-district tint (layer-registry)
+    if (mod.fillsGround) refreshHighlightFills();
   }
 
   // Refresh every coverage-declaring layer's relevance for the current
@@ -19185,6 +19236,13 @@ function initGeorgiaExplorer() {
       }
       var lit = rt.highlightedLayer;
       return lit && lit.options ? lit.options.color : null;
+    },
+    // the fill a layer's lit district is drawn with: 0 while a layer whose
+    // colours are its answer (fillsGround) is on, so a test can see the tint
+    // drop and come back
+    highlightFill: function (id) {
+      var mod = getLayerById(id);
+      return mod ? highlightStyleFor(mod).fillOpacity : null;
     },
     loadWholeFile: function (id) {
       var mod = getLayerById(id);
