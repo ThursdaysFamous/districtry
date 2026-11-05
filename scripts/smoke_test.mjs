@@ -4930,6 +4930,22 @@ try {
       check("picking a race repaints the legend, and a vote-for-more-than-one race says its shares are of votes",
             after.race === multi.name && after.text.indexOf("Voters could choose more than one candidate") !== -1,
             `race=${JSON.stringify(after.race)}`);
+      // the picked race rides the link as r=<contest id>, and a link carrying
+      // it opens with that race picked and named on the legend
+      const hash = await page.evaluate(() => location.hash);
+      const page2 = await booted(context, `${BASE}${hash}`);
+      await page2.waitForFunction(() => document.querySelector("#card-election-results select.election-select"),
+        null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      await page2.waitForTimeout(500);
+      const reopened = await page2.evaluate(() => ({
+        value: (document.querySelector("#card-election-results select.election-select") || {}).value || "",
+        race: (document.querySelector(".election-legend .election-legend-race") || {}).textContent || "",
+      }));
+      await page2.close();
+      check("the picked race rides the link, and the link opens with that race picked",
+            hash.indexOf("r=" + encodeURIComponent(String(multi.id))) !== -1 &&
+            reopened.value === String(multi.id) && reopened.race === multi.name,
+            `hash=${JSON.stringify(hash)} reopened=${JSON.stringify(reopened)}`);
     }
     // a district race follows the reader: picked at one precinct, it becomes
     // the same race for the district of the next precinct selected, and a
@@ -4999,8 +5015,8 @@ try {
       };
     });
     check("the Election Results card adds the picked race up over the selected school board district, in a closed section",
-          !!area && area.closed && /^District \d+[ab] \(.+\)/.test(area.summary) &&
-          /^.+ in District \d+[ab] \(.+\)$/.test(area.caption) && area.precincts > 1 &&
+          !!area && area.closed && /^Race totals for District \d+[ab] \(.+\)/.test(area.summary) &&
+          /^.+, all of District \d+[ab]$/.test(area.caption) && area.precincts > 1 &&
           area.votes === area.stated && area.stated > area.own && area.own > 0,
           `area=${JSON.stringify(area)}`);
     // every other school board district keeps its full line and its number

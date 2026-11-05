@@ -198,6 +198,7 @@
     function pick(id) {
       picked = id == null ? null : String(id);
       repaint();
+      syncUrlHash(); // the race rides the link (linkParam below)
     }
 
     /* ---- the legend over the map: which colour is which choice ---- */
@@ -528,19 +529,24 @@
           var top = Math.max.apply(null, t.counts.concat([0]));
           var leaders = [];
           t.counts.forEach(function (c, n) { if (c === top && top > 0) leaders.push(n); });
-          var head = t.w.name + " (" + t.w.mod.label + ")";
+          // the line says these are the race's totals, never who holds the
+          // district (Adam, 2026-11-05: "This section title is confusing")
+          var summary = cardEl("summary", "election-area-head");
+          summary.appendChild(cardEl("span", "election-area-title",
+            "Race totals for " + t.w.name + " (" + t.w.mod.label + ")"));
+          var lead = null;
           if (!t.withheld && leaders.length === 1) {
-            head += ": " + String(contest.choices[leaders[0]]) + " " + electionPercent(top, t.ballots);
+            lead = (certified(idx, contest) ? "Most votes: " : "Most votes so far: ") +
+              String(contest.choices[leaders[0]]) + ", " + electionPercent(top, t.ballots);
           } else if (!t.withheld && leaders.length > 1) {
-            head += ": tied for most votes";
+            lead = "Tied for most votes";
           }
-          var summary = cardEl("summary", "election-area-head", head);
+          if (lead) summary.appendChild(cardEl("span", "election-area-lead", lead));
           sec.appendChild(summary);
           (function (id) {
             sec.addEventListener("toggle", function () { areaOpen[id] = sec.open; });
           })(t.w.mod.id);
-          sec.appendChild(raceTable(idx, contest, t.ballots, t.counts, contest.name + " in " + t.w.name +
-            " (" + t.w.mod.label + ")",
+          sec.appendChild(raceTable(idx, contest, t.ballots, t.counts, contest.name + ", all of " + t.w.name,
             t.withheld ? null : certified(idx, contest) ? "Most votes in " + t.w.name : "Most votes so far"));
           var notes = ["Added up from the " + t.voted.toLocaleString("en-US") + " precinct" + (t.voted === 1 ? "" : "s") +
             " in " + t.w.name + " that voted in this race: " + t.ballots.toLocaleString("en-US") + " votes."];
@@ -669,6 +675,20 @@
         });
         renderRace(body, result);
         return wrap;
+      },
+      // the picked race rides the link as `r=<contest id>` (`race=` in the
+      // long form); a link from another election names an id this file does
+      // not have, and the layer then picks its first race as it always has
+      linkParam: {
+        short: "r",
+        long: "race",
+        get: function () { return picked; },
+        set: function (v) {
+          picked = String(v);
+          if (resolvedIndex) {
+            if (resolvedIndex.byId[picked]) repaint(); else picked = null;
+          }
+        }
       },
       cardIdentifier: function (result) {
         return result && result.label ? result.label : "Unknown";

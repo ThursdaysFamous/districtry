@@ -83,7 +83,8 @@
       stats: pick("s", "stats"),
       zoom: pick("z", "zoom"),
       frame: pick("f", "frame"),
-      q: params.q
+      q: params.q,
+      all: params
     };
   }
 
@@ -151,6 +152,15 @@
       // beside a pin, because the report is OF the pinned district.
       if (statsIsOpen()) parts.push("s=1");
     }
+    // A layer's own setting that is part of the view, such as the race the
+    // Election Results layer colours the map by (`r=`): the layer declares
+    // `linkParam: {short, long, get, set}` and it rides the link while the
+    // layer is on (Adam, 2026-11-05: "Include the chosen race in the sharing url").
+    layers.forEach(function (l) {
+      if (!state.layersOn[l.id] || !l.linkParam) return;
+      var v = l.linkParam.get();
+      if (v !== null && v !== undefined && v !== "") parts.push(l.linkParam.short + "=" + encodeURIComponent(String(v)));
+    });
     // The area a link named (namedArea), while no point is selected; a link
     // with a point is not framed, so the area would say nothing.
     if (linkAreaName && !state.selectedPoint) parts.push("f=" + linkAreaName);
@@ -181,6 +191,13 @@
     params.layers.forEach(function (id) {
       var box = document.getElementById("toggle-" + id);
       if (box && !box.checked) box.click(); // a real click, so the change handler runs
+    });
+    // each switched-on layer's own setting (linkParam, syncUrlHash), short
+    // key first, given to the layer before its data has loaded
+    layers.forEach(function (l) {
+      if (!state.layersOn[l.id] || !l.linkParam) return;
+      var v = params.all[l.linkParam.short] !== undefined ? params.all[l.linkParam.short] : params.all[l.linkParam.long];
+      if (v !== undefined && v !== "") l.linkParam.set(v);
     });
     // Parsed BEFORE the point, because the point's pan has to know about it.
     // An unparseable or out-of-range zoom is ignored rather than clamped: a link
