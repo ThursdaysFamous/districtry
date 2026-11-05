@@ -215,7 +215,7 @@
    * inside out. Only the LAST one ("outside") is guaranteed. */
   function buildCoverageKey(bands) {
     var host = document.querySelector(".map-bottom-left");
-    if (!host || !bands.length || document.querySelector(".districtry-map-legend")) return;
+    if (!host || !bands.length || document.querySelector(".districtry-map-legend:not(.election-legend)")) return;
 
     var key = document.createElement("details");
     key.className = "districtry-map-legend";

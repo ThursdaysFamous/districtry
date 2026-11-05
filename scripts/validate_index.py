@@ -107,11 +107,11 @@ EXPECT_LAYER_IDS = [
     "judicial-subcircuit", "county-board", "ccbr", "fire-district",
     "dupage-county-special-police", "park-district", "library-district",
     "school-board", "cps-hs-network", "cps-network", "ward", "ward-precinct",
-    "police-district", "police-beat", "ccpsa-district-council",
-    "community-area", "zip-code", "cps-high", "cps-middle", "county-precinct",
-    "tribal-government", "ssa", "tif-district", "cps-elementary",
-    "school-site", "police-station", "fire-station", "post-office", "library",
-    "early-voting",
+    "election-results", "police-district", "police-beat",
+    "ccpsa-district-council", "community-area", "zip-code", "cps-high",
+    "cps-middle", "county-precinct", "tribal-government", "ssa",
+    "tif-district", "cps-elementary", "school-site", "police-station",
+    "fire-station", "post-office", "library", "early-voting",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -455,6 +455,7 @@ ROSTER_FILES = {
     "mchenry-county-board-members.json": 9,  # 9 board districts (2 members each) + the countywide-elected Chairman, scraped weekly from mchenrycountyil.gov (bot-managed; the scraper falls back to Playwright)
     "early-voting-sites.json": 3,  # GeoJSON FeatureCollection (type/metadata/features — key floor is shape-only); the State Board of Elections' statewide early voting list, downloaded by a person before each election and built by scripts/build_early_voting_sites.py (the card hides once metadata.electionDate has passed), network-first so a new election's list is never served stale
     "chicago-polling-places.json": 8,  # Each Chicago precinct's Election Day polling place (sites[] plus precincts{ward-precinct: site index}) from the Chicago Board of Election Commissioners' published list, by scripts/chicago_polling_places_scraper.py + build_chicago_polling_places.py, refreshed daily; the build requires the list and the i8fv-xe4b precinct map to name the same 1,291 precincts and places each building with the Census geocoder, and the card hides the row after electionDate. Network-first: a moved polling place must reach a returning visitor at once
+    "election-results.json": 11,  # Chicago's precinct-by-precinct election results: the index (groups, precinct keys, the part file each precinct is in, and per contest its choices, totals and leader string); each precinct's own counts sit in election-results/ward-NN.json, fetched on a click and never cached by the worker. From the Chicago Board of Election Commissioners by scripts/chicago_election_results_scraper.py + build_chicago_election_results.py through scripts/election_results_common.py, refreshed daily; certified stays false until the Board proclaims the official results. Network-first: the count changes daily
     "ccbr-roster.json": 3,
     "il-court-justices.json": 5,  # The Supreme and Appellate Court justices of each judicial district, keyed "1".."5" — the seven Supreme Court justices with the district each was elected from and the Chief Justice badged, plus each district's appellate branch (its sitting justices with a link to each one's own page, the courthouse address, the telephone and the Clerk of the court). Scraped weekly from illinoiscourts.gov, which publishes all three on its own pages; the card named nobody until 2026-09-15 on the strength of a comment saying no verifiable roster source existed, which was true of the SHAPEFILE (no officeholder column) and never of the court. ONE FILE ANSWERS FOR BOTH COURTS: Illinois Constitution art. VI, sec. 2 divides the State into five Judicial Districts "for the selection of Supreme and Appellate Court Judges", 705 ILCS 25/1(a) puts a branch of the appellate court in each of them "as such districts are determined by law" and defines none of its own, and 705 ILCS 23 (PA 102-0011, the act this layer's shapefile comes from) determines them county by county — so the appellate districts ARE the shipped geometry and no second polygon ships. THE COUNTY LISTS ARE THE BUILD GATE: each district page names the circuits and counties it hears appeals from, and the build refuses to write unless all 102 match the statute, in the district the statute names. The appellate counts (57 justices on 2026-09-15, against the 42 seats 705 ILCS 25/1(b)-(c) elects) are what the court's directory lists, because sec. 1(d) lets the Supreme Court assign additional judges; no row claims which are elected and which assigned, because the directory does not say.
     "il-county-clerks.json": 101,

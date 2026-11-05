@@ -1809,6 +1809,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     flex: none;
     border: 2px solid var(--ink);
   }
+  .group-elections .dot { background: #2E6F8E; }
   .group-political .dot { background: var(--accent); }
   .group-safety .dot { background: var(--accent-warm); }
   .group-schools .dot { background: #E8A324; }
@@ -3885,6 +3886,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
     fill-opacity: var(--dst-hl-fill, 0.32);
     stroke-width: var(--dst-hl-weight, 4px);
   }
+  /* A highlight the engine draws with NO fill keeps none: an outline-only
+     layer, and every other layer's lit district while the election results
+     paint the ground (fillsGround). The rule above outranked the engine's 0
+     too, so until 2026-11-05 a selected ward tinted the result colours under
+     it even after highlightStyleFor() had dropped its fill. */
+  .leaflet-overlay-pane path.region-highlight[fill-opacity="0"] { fill-opacity: 0; }
   /* The matched region's DROP SHADOW is a depth cue — "this one is lifted off
      the faded rest of its layer" — and one highlight says that perfectly. Six
      say it twelve times over: the engine stacks TWO near-black shadows per
@@ -4323,6 +4330,50 @@ svg.leaflet-image-layer.leaflet-interactive path {
     flex: none;
   }
   /* ==== ENGINE:END styles-districtry-skin ==== */
+  /* ==== ENGINE:BEGIN styles-election-results ==== */
+  /* Election results card and legend (registerElectionResultsLayer). Every
+     colour is a card or brand token, so both themes follow; the only literal
+     colours a reader sees are the choice swatches, which the script paints
+     from the ballot-order palette and which carry no text. */
+  .election-card { padding: 12px 18px 14px; display: flex; flex-direction: column; gap: 10px; }
+  .election-notice {
+    font-size: 12.5px; line-height: 1.45; color: var(--card-ink);
+    background: var(--card-section-bg); border: 1px solid var(--card-border);
+    border-left: 3px solid var(--card-muted); border-radius: 6px; padding: 8px 10px;
+  }
+  .election-notice-certified { border-left-color: var(--card-accent); }
+  .election-pick { display: flex; flex-direction: column; gap: 4px; }
+  .election-select {
+    font: inherit; font-size: 13px; color: var(--card-ink); background: var(--card-section-bg);
+    border: 1px solid var(--card-btn-border); border-radius: 6px; padding: 6px 8px;
+    min-height: 32px; max-width: 100%;
+  }
+  .election-table { width: 100%; border-collapse: collapse; font-size: 13px; color: var(--card-body-ink); }
+  .election-table caption {
+    text-align: left; font-weight: 700; color: var(--card-ink); font-size: 13.5px; padding-bottom: 4px;
+  }
+  .election-table th, .election-table td {
+    padding: 5px 0; border-top: 1px solid var(--card-row-border); vertical-align: top; text-align: left;
+  }
+  .election-table thead th { font-size: 12px; font-weight: 600; color: var(--card-muted); border-top: 0; }
+  .election-table tbody th { font-weight: 600; color: var(--card-ink); padding-right: 8px; }
+  .election-table .election-num { text-align: right; white-space: nowrap; padding-left: 10px; font-variant-numeric: tabular-nums; }
+  .election-swatch {
+    display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px;
+    vertical-align: baseline; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+  }
+  .election-lead {
+    display: block; font-size: 11.5px; font-weight: 600; color: var(--card-muted); margin: 2px 0 0 16px;
+  }
+  .election-note { margin: 0; font-size: 12px; line-height: 1.45; color: var(--card-body-ink); }
+  .districtry-map-legend.election-legend { margin-bottom: 6px; max-width: 260px; }
+  .districtry-map-legend.election-legend .dml-label { white-space: normal; }
+  .districtry-map-legend.election-legend .election-legend-race { font-weight: 700; color: var(--ink); }
+  .districtry-map-legend.election-legend .election-legend-status { font-style: italic; }
+  .districtry-map-legend.election-legend .election-legend-scale { display: flex; gap: 2px; width: 100%; }
+  .districtry-map-legend.election-legend .election-legend-step { flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; line-height: 1.15; text-align: center; color: var(--muted); }
+  .districtry-map-legend.election-legend .election-legend-ramp { display: block; width: 100%; height: 9px; border-radius: 2px; background: var(--ink); }
+  /* ==== ENGINE:END styles-election-results ==== */
 </style>
 <style id="election-notice-style">
   /* The Election Day notice (this app's alone) on a phone: the banner it
@@ -4886,11 +4937,12 @@ function initChiExplorer() {
     "municipality": "mu", "judicial-subcircuit": "jc", "county-board": "cb", "ccbr": "br",
     "fire-district": "fd", "dupage-county-special-police": "dp", "park-district": "pk",
     "library-district": "ld", "school-board": "sb", "cps-hs-network": "hn", "cps-network": "nw",
-    "ward": "wd", "ward-precinct": "wp", "police-district": "pd", "police-beat": "pb",
-    "ccpsa-district-council": "dc", "community-area": "ar", "zip-code": "zp", "cps-high": "hi",
-    "cps-middle": "md", "county-precinct": "cp", "tribal-government": "tg", "ssa": "sa",
-    "tif-district": "tf", "cps-elementary": "el", "school-site": "ss", "police-station": "ps",
-    "fire-station": "fs", "post-office": "po", "library": "lb", "early-voting": "ev" };
+    "ward": "wd", "ward-precinct": "wp", "election-results": "er", "police-district": "pd",
+    "police-beat": "pb", "ccpsa-district-council": "dc", "community-area": "ar",
+    "zip-code": "zp", "cps-high": "hi", "cps-middle": "md", "county-precinct": "cp",
+    "tribal-government": "tg", "ssa": "sa", "tif-district": "tf", "cps-elementary": "el",
+    "school-site": "ss", "police-station": "ps", "fire-station": "fs", "post-office": "po",
+    "library": "lb", "early-voting": "ev" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4921,10 +4973,11 @@ function initChiExplorer() {
       "cook": [-88.264, 41.469, -87.523, 42.155], "dupage": [-88.263, 41.685, -87.914, 41.994] },
     layers: { "mwrd": "cook", "ccbr": "cook", "dupage-county-special-police": "dupage",
       "school-board": "chicago", "cps-hs-network": "chicago", "cps-network": "chicago",
-      "ward-precinct": "chicago", "police-district": "chicago", "police-beat": "chicago",
-      "ccpsa-district-council": "chicago", "community-area": "chicago", "cps-high": "chicago",
-      "cps-middle": "chicago", "ssa": "chicago", "tif-district": "cook",
-      "cps-elementary": "chicago", "school-site": "chicago", "library": "chicago" }
+      "ward-precinct": "chicago", "election-results": "chicago", "police-district": "chicago",
+      "police-beat": "chicago", "ccpsa-district-council": "chicago",
+      "community-area": "chicago", "cps-high": "chicago", "cps-middle": "chicago",
+      "ssa": "chicago", "tif-district": "cook", "cps-elementary": "chicago",
+      "school-site": "chicago", "library": "chicago" }
   };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
@@ -6610,7 +6663,7 @@ function initChiExplorer() {
    * inside out. Only the LAST one ("outside") is guaranteed. */
   function buildCoverageKey(bands) {
     var host = document.querySelector(".map-bottom-left");
-    if (!host || !bands.length || document.querySelector(".districtry-map-legend")) return;
+    if (!host || !bands.length || document.querySelector(".districtry-map-legend:not(.election-legend)")) return;
 
     var key = document.createElement("details");
     key.className = "districtry-map-legend";
@@ -11798,7 +11851,12 @@ function initChiExplorer() {
    * ======================================================================= */
 
   /* ==== ENGINE:BEGIN groups ==== */
+  // Elections leads: results are what a reader opens the map for on the days
+  // after an election, and past elections may join this section later (Adam,
+  // 2026-11-05). A group with no layer registered draws no section, so every
+  // app without election results looks exactly as before.
   var GROUPS = [
+    { id: "elections", label: "Elections" },
     { id: "political", label: "Political" },
     { id: "safety", label: "Public Safety" },
     { id: "schools", label: "Schools" },
@@ -11839,6 +11897,9 @@ function initChiExplorer() {
     // Smaller than its parent ward, so it renders on top (smallest-on-top); turning it
     // on drops the ward to outline-only, framing the precinct fills from underneath.
     "ward-precinct",     // Ward Precinct (sub-selection of City Ward)
+    // The same precinct shapes as Ward Precinct, read from the same archive, so it ranks
+    // beside it; each precinct is filled by the choice leading there in the picked race.
+    "election-results",  // Election results, drawn on the Ward Precinct outlines
     "police-district",   // Police District (22)
     // Smaller than its parent district, so it renders on top (smallest-on-top);
     // turning it on drops the district to outline-only, framing the beat fills from underneath.
@@ -12018,8 +12079,38 @@ function initChiExplorer() {
   // outline mode, and the matched-region highlight depends on neither — so a point
   // move whose signature is unchanged restyles just the two paths whose role
   // flipped instead of the whole layer.
-  function highlightSignature(rt) {
-    return activeLayerCount() + "|" + (rt.outlineOnly ? "1" : "0");
+  function highlightSignature(rt, mod) {
+    return activeLayerCount() + "|" + (rt.outlineOnly ? "1" : "0") + "|" + (mod && groundFilledByOther(mod) ? "1" : "0");
+  }
+
+  // A layer that paints its whole ground in colours that are its answer (the
+  // election results fill each precinct by its leading choice) sets
+  // fillsGround. While one is on, every other layer's selected district keeps
+  // its outline and drops its tint, because a translucent tint over those
+  // colours changes them: measured 2026-11-05 with Chicago's wards on, the
+  // selected ward's 0.32 tint made a purple precinct read blue.
+  function groundFilledByOther(mod) {
+    for (var i = 0; i < layers.length; i++) {
+      var l = layers[i];
+      if (l !== mod && l.fillsGround && state.layersOn[l.id] && layerRuntime[l.id].relevant !== false) return true;
+    }
+    return false;
+  }
+
+  // Repaint every other switched-on layer's selected district after a
+  // fillsGround layer is switched on or off, so its tint follows at once
+  // rather than at the next selected point.
+  function refreshHighlightFills() {
+    layers.forEach(function (l) {
+      if (l.fillsGround || !state.layersOn[l.id]) return;
+      var rt = layerRuntime[l.id];
+      // the district lit from a point answer before the layer's set loaded
+      if (rt.provisionalLayer) rt.provisionalLayer.setStyle(Object.assign({}, baseStyleFor(l) || {}, highlightStyleFor(l)));
+      if (!rt.overlayLayer) return;
+      if (rt.overlayLayer.dxTiles) { rt.overlayLayer.restyle(); return; }
+      rt.highlightApplied = false; // force the full sweep: the signature moved
+      updateLayerHighlight(l);
+    });
   }
 
   // Rescale only an already-painted layer's fill opacity to the current active
@@ -12035,8 +12126,8 @@ function initChiExplorer() {
     var rt = layerRuntime[mod.id];
     if (!rt.overlayLayer) return;
     // a tile-drawn layer's paint reads the count itself (tilePaint)
-    if (rt.overlayLayer.dxTiles) { rt.overlayLayer.restyle(); if (rt.highlightApplied) rt.highlightSignature = highlightSignature(rt); return; }
-    if (rt.highlightApplied) { rt.highlightSignature = highlightSignature(rt); return; }
+    if (rt.overlayLayer.dxTiles) { rt.overlayLayer.restyle(); if (rt.highlightApplied) rt.highlightSignature = highlightSignature(rt, mod); return; }
+    if (rt.highlightApplied) { rt.highlightSignature = highlightSignature(rt, mod); return; }
     if (rt.outlineOnly) return; // outline-only layers carry no fill to rescale
     var fillOpacity = scaledFillOpacity(mod);
     if (fillOpacity == null) return; // point-dataset layer (no flat style object)
@@ -12119,7 +12210,7 @@ function initChiExplorer() {
       opacity: 1,
       // an outline-only layer keeps no fill even when it's the matched region,
       // so a sub-layer's fill (the beats) shows through unobscured
-      fillOpacity: (rt && rt.outlineOnly) ? 0 : 0.32,
+      fillOpacity: ((rt && rt.outlineOnly) || groundFilledByOther(mod)) ? 0 : 0.32,
       dashArray: null
     };
   }
@@ -12227,7 +12318,7 @@ function initChiExplorer() {
     // layers on, user clicked a new point" case from ~N setStyle calls (the
     // measured dominant per-click cost) into 2. Any signature change (a layer
     // toggled on/off, outline mode flipped) falls back to the full sweep below.
-    var signature = highlightSignature(rt);
+    var signature = highlightSignature(rt, mod);
     var prevMatch = rt.highlightedLayer;
     var incremental = rt.highlightApplied && rt.highlightSignature === signature && !!prevMatch;
     if (incremental && prevMatch.feature === feature) return; // same match, same styling — nothing changed
@@ -12798,8 +12889,14 @@ function initChiExplorer() {
     var hl = highlightStyleFor(mod), faded = fadedStyle(base, mod);
     var isSel = ["boolean", ["feature-state", "sel"], false];
     var baseOpacity = base.opacity == null ? 1 : base.opacity;
+    // A layer that paints each district its own colour (the election results
+    // fill each precinct by its leading choice) supplies the fill as a GL
+    // expression; it keeps that fill whether or not a district is selected,
+    // because the colours are the answer and fading them would hide it. The
+    // lit district is still marked by the highlight line.
+    var own = mod.overlay && typeof mod.overlay.tileFill === "function" ? mod.overlay.tileFill() : null;
     return {
-      fill: {
+      fill: own ? { "fill-color": own.color, "fill-opacity": own.opacity } : {
         "fill-color": base.fillColor || base.color || "#000",
         "fill-opacity": selected ? ["case", isSel, hl.fillOpacity, faded.fillOpacity] : (base.fillOpacity || 0)
       },
@@ -13085,7 +13182,7 @@ function initChiExplorer() {
     if (id == null && !live) showProvisionalHighlight(mod);
     else clearProvisionalHighlight(mod);
     rt.highlightApplied = id != null || !!live;
-    rt.highlightSignature = rt.highlightApplied ? highlightSignature(rt) : null;
+    rt.highlightSignature = rt.highlightApplied ? highlightSignature(rt, mod) : null;
     if (live) {
       // a live county's feature is whole, so its own edges name the streets
       rt.highlightedLayer = { feature: live };
@@ -14113,6 +14210,9 @@ function initChiExplorer() {
       refreshActiveLayerOpacities(); // a visible fill returned — rescale the stack
       refreshRelationshipOutlines(); // an outline-eligible layer just came back
     }
+    // a layer whose colours are its answer coming into or out of view adds or
+    // takes away every other layer's selected-district tint (layer-registry)
+    if (mod.fillsGround) refreshHighlightFills();
   }
 
   // Refresh every coverage-declaring layer's relevance for the current
@@ -25517,6 +25617,515 @@ function initChiExplorer() {
     }
   });
   declareDataSource("ward-precinct", { label: CHICAGO_PORTAL });
+
+  /* ==== ENGINE:BEGIN election-results ==== */
+  /* ---------- election results by precinct (registerElectionResultsLayer).
+   * One layer that colours an app's own precinct outlines by the choice with
+   * the most votes in each precinct for ONE race the reader picks, and whose
+   * card shows the clicked precinct's numbers for every race on its ballot.
+   *
+   * WHAT AN APP SUPPLIES (its METRO side calls the factory): the id and label,
+   * its precinct layer's loader and archive (the outlines are that layer's,
+   * not a second copy), the property its precinct features carry that equals
+   * the results file's precinct key, a coverage test, the results file's url,
+   * the url of each part file, and the publisher's name and the sentence that
+   * says what is still being counted. Nothing here names a place.
+   *
+   * THE FILES (written by an app's builder through
+   * scripts/election_results_common.py): one index — the election, its date,
+   * when it was read, certified or not, the race groups (each tied to the map
+   * layer it is elected from, or none), the precinct keys, the part each
+   * precinct's numbers are in, and per contest its choices in ballot order,
+   * its totals and a leader string with one character per precinct — and one
+   * part file per chunk of precincts with each precinct's own counts. A click
+   * reads one part; the map reads only the index.
+   *
+   * NONPARTISAN BY CONSTRUCTION. A choice's colour is its position on the
+   * publisher's ballot list, never its party, from a palette with no red and
+   * no blue. Every choice is listed the same way, in ballot order. Until the
+   * file says the count is certified, the card and the legend say the numbers
+   * are unofficial and will change, and a precinct's leader reads "Most votes
+   * so far", not "Winner". ---------- */
+  var ELECTION_COLORS = ["#1a9e8f", "#e08a00", "#6b8e23", "#8e5a9c", "#8c5a2b", "#c9b200",
+    "#0b5d55", "#b07aa1", "#9ccc3c", "#9c9b5c", "#f2c46d", "#4f6b3a"];
+  var ELECTION_TIE = "#9e9e9e";
+  var ELECTION_LEADER_CODES = "0123456789abcdefghijklmnopqrstuvwxyz";
+  // A precinct's fill strength by its margin band (the writer's `margins`:
+  // the leader's lead over second place, under 5, 5-15, 15-30, 30-50 and 50+
+  // points), so a close race draws pale and a wide one strong. A file written
+  // before margins existed draws every precinct at the old flat strength.
+  var ELECTION_MARGIN_OPACITY = [0.2, 0.36, 0.52, 0.68, 0.84];
+  var ELECTION_MARGIN_LABELS = ["Under 5", "5 to 15", "15 to 30", "30 to 50", "50 or more"];
+  var ELECTION_FLAT_OPACITY = 0.6;
+
+  function electionChoiceColor(i) {
+    return ELECTION_COLORS[i % ELECTION_COLORS.length];
+  }
+
+  // A reading time ("2026-11-05T15:43:00Z") with its hour; a bare date
+  // ("2026-11-24", a certification) as the date alone.
+  function electionDateText(iso) {
+    var dateOnly = /^\d{4}-\d{2}-\d{2}$/.test(String(iso));
+    var d = new Date(dateOnly ? iso + "T12:00:00" : iso);
+    if (isNaN(d.getTime())) return String(iso);
+    return dateOnly
+      ? d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
+      : d.toLocaleString("en-US", { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" });
+  }
+
+  function electionPercent(n, of) {
+    if (!of) return "0%";
+    var p = 100 * n / of;
+    return (p >= 99.95 || p < 0.05 ? p.toFixed(0) : p.toFixed(1)) + "%";
+  }
+
+  function registerElectionResultsLayer(opts) {
+    var indexPromise = null;
+    var parts = {};
+    var picked = null; // the contest id whose results colour the map
+
+    function loadIndex() {
+      if (!indexPromise) {
+        indexPromise = fetchJSONWithRetry(opts.indexUrl, { timeoutMs: 15000 }).then(function (data) {
+          var pos = {};
+          (data.precincts || []).forEach(function (k, i) { pos[String(k)] = i; });
+          var byId = {};
+          (data.contests || []).forEach(function (c) { byId[String(c.id)] = c; });
+          var groupLabel = {};
+          (data.groups || []).forEach(function (g) { groupLabel[g.id] = g; });
+          return { data: data, pos: pos, byId: byId, groups: groupLabel };
+        }, function (err) {
+          indexPromise = null; // asked again on the next click rather than pinned
+          throw err;
+        });
+      }
+      return indexPromise;
+    }
+
+    function loadPart(part) {
+      if (!parts[part]) {
+        parts[part] = fetchJSONWithRetry(opts.partUrl(part), { timeoutMs: 15000 }).then(null, function (err) {
+          delete parts[part];
+          throw err;
+        });
+      }
+      return parts[part];
+    }
+
+    // A contest may carry its own certified flag and date (where a local
+    // office is certified before the rest of the ballot); otherwise the file's.
+    function certified(idx, contest) {
+      if (contest && contest.certified !== undefined && contest.certified !== null) return !!contest.certified;
+      return !!(idx && idx.data.certified);
+    }
+    function certifiedDate(idx, contest) {
+      return (contest && contest.certifiedDate) || (idx && idx.data.certifiedDate) || null;
+    }
+
+    // The map's fill for the picked race: a MapLibre expression for the tile
+    // canvas, and a per-feature colour for the Leaflet fallback, both from the
+    // same leader string.
+    function leaderColor(idx, contest, key) {
+      var i = idx.pos[key];
+      if (i === undefined || !contest) return null;
+      var code = contest.leaders.charAt(i);
+      if (code === "=") return ELECTION_TIE;
+      var n = ELECTION_LEADER_CODES.indexOf(code);
+      return n >= 0 ? electionChoiceColor(n) : null;
+    }
+
+    function leaderOpacity(idx, contest, key) {
+      var i = idx.pos[key];
+      if (i === undefined || !contest || !contest.margins) return ELECTION_FLAT_OPACITY;
+      var band = parseInt(contest.margins.charAt(i), 10);
+      return isNaN(band) ? ELECTION_FLAT_OPACITY : ELECTION_MARGIN_OPACITY[band];
+    }
+
+    var resolvedIndex = null; // set once the index has loaded, read synchronously by the styles
+
+    function tileFill() {
+      var idx = resolvedIndex, contest = idx && picked ? idx.byId[picked] : null;
+      if (!contest) return null;
+      var byColor = {}, byOpacity = {};
+      var keys = idx.data.precincts;
+      for (var i = 0; i < keys.length; i++) {
+        var key = String(keys[i]);
+        var color = leaderColor(idx, contest, key);
+        if (!color) continue;
+        (byColor[color] = byColor[color] || []).push(key);
+        var op = String(leaderOpacity(idx, contest, key));
+        (byOpacity[op] = byOpacity[op] || []).push(key);
+      }
+      var expr = ["match", ["to-string", ["get", opts.keyProp]]];
+      Object.keys(byColor).forEach(function (color) { expr.push(byColor[color], color); });
+      if (expr.length === 2) return { color: "rgba(0,0,0,0)", opacity: 0 };
+      expr.push("rgba(0,0,0,0)");
+      var opExpr = ["match", ["to-string", ["get", opts.keyProp]]];
+      Object.keys(byOpacity).forEach(function (op) { opExpr.push(byOpacity[op], Number(op)); });
+      opExpr.push(0);
+      return { color: expr, opacity: opExpr };
+    }
+
+    function styleForFeature(feature) {
+      var idx = resolvedIndex, contest = idx && picked ? idx.byId[picked] : null;
+      if (!contest) return null;
+      var raw = (feature.properties || {})[opts.keyProp];
+      var color = raw === undefined || raw === null ? null : leaderColor(idx, contest, String(raw));
+      return color ? { fillColor: color, fillOpacity: leaderOpacity(idx, contest, String(raw)) } : { fillOpacity: 0 };
+    }
+
+    function repaint() {
+      var mod = getLayerById(opts.id);
+      if (mod) restyleOverlayFeatures(mod);
+      drawLegend();
+    }
+
+    function pick(id) {
+      picked = id == null ? null : String(id);
+      repaint();
+    }
+
+    /* ---- the legend over the map: which colour is which choice ---- */
+    var legendEl = null;
+    function drawLegend() {
+      var idx = resolvedIndex, contest = idx && picked ? idx.byId[picked] : null;
+      var on = !!state.layersOn[opts.id];
+      if (!on || !contest) {
+        if (legendEl) legendEl.hidden = true;
+        return;
+      }
+      var host = document.querySelector(".map-bottom-left");
+      if (!host) return;
+      if (!legendEl) {
+        legendEl = document.createElement("details");
+        legendEl.className = "districtry-map-legend election-legend";
+        var phone = window.matchMedia && window.matchMedia("(max-width: 767px)").matches;
+        if (!phone) legendEl.setAttribute("open", "");
+        host.insertBefore(legendEl, host.firstChild);
+      }
+      legendEl.hidden = false;
+      while (legendEl.firstChild) legendEl.removeChild(legendEl.firstChild);
+      var summary = document.createElement("summary");
+      summary.className = "dml-kicker";
+      summary.appendChild(document.createTextNode("Election results"));
+      var mini = document.createElement("span");
+      mini.className = "dml-mini";
+      mini.setAttribute("aria-hidden", "true");
+      summary.appendChild(mini);
+      legendEl.appendChild(summary);
+      var items = document.createElement("div");
+      items.className = "dml-items";
+      var race = document.createElement("span");
+      race.className = "election-legend-race";
+      race.textContent = contest.name;
+      items.appendChild(race);
+      var lead = document.createElement("span");
+      lead.className = "dml-sub";
+      lead.textContent = certified(idx, contest) ? "Most votes in each precinct" : "Most votes so far in each precinct";
+      items.appendChild(lead);
+      var shown = {};
+      for (var i = 0; i < contest.leaders.length; i++) shown[contest.leaders.charAt(i)] = true;
+      contest.choices.forEach(function (name, n) {
+        var item = document.createElement("span");
+        item.className = "dml-item";
+        var sw = document.createElement("span");
+        sw.className = "dml-sw";
+        sw.style.background = electionChoiceColor(n);
+        item.appendChild(sw);
+        var label = document.createElement("span");
+        label.className = "dml-label";
+        label.textContent = String(name);
+        item.appendChild(label);
+        // a choice that leads nowhere keeps its row, so the key never hides a name
+        items.appendChild(item);
+        var chip = document.createElement("span");
+        chip.className = "dml-sw";
+        chip.style.background = electionChoiceColor(n);
+        if (n < 4) mini.appendChild(chip);
+      });
+      if (shown["="]) {
+        var tie = document.createElement("span");
+        tie.className = "dml-item";
+        var tsw = document.createElement("span");
+        tsw.className = "dml-sw";
+        tsw.style.background = ELECTION_TIE;
+        tie.appendChild(tsw);
+        var tl = document.createElement("span");
+        tl.className = "dml-label";
+        tl.textContent = "Tied";
+        tie.appendChild(tl);
+        items.appendChild(tie);
+      }
+      // the strength key: how far ahead the leader is, in points
+      if (contest.margins) {
+        var scaleHead = document.createElement("span");
+        scaleHead.className = "dml-sub";
+        scaleHead.textContent = "Paler means a closer race. Lead over second place, in points:";
+        items.appendChild(scaleHead);
+        var scale = document.createElement("span");
+        scale.className = "election-legend-scale";
+        ELECTION_MARGIN_OPACITY.forEach(function (op, b) {
+          var step = document.createElement("span");
+          step.className = "election-legend-step";
+          var ssw = document.createElement("span");
+          ssw.className = "election-legend-ramp";
+          ssw.style.opacity = String(op);
+          step.appendChild(ssw);
+          var sl = document.createElement("span");
+          sl.textContent = ELECTION_MARGIN_LABELS[b];
+          step.appendChild(sl);
+          scale.appendChild(step);
+        });
+        items.appendChild(scale);
+      }
+      var status = document.createElement("span");
+      status.className = "dml-sub election-legend-status";
+      var cd = certifiedDate(idx, contest);
+      status.textContent = certified(idx, contest)
+        ? "Certified by the " + opts.publisher + (cd ? " on " + electionDateText(cd) : "")
+        : "Unofficial, not certified. Read " + electionDateText(idx.data.read) + ".";
+      items.appendChild(status);
+      legendEl.appendChild(items);
+    }
+
+    /* ---- the card ---- */
+    function noticeEl(idx, contest) {
+      var box = cardEl("div", "election-notice" + (certified(idx, contest) ? " election-notice-certified" : ""));
+      if (certified(idx, contest)) {
+        var cd = certifiedDate(idx, contest);
+        box.textContent = "Official results, certified by the " + opts.publisher +
+          (cd ? " on " + electionDateText(cd) : "") + ".";
+      } else {
+        box.appendChild(cardEl("strong", null, "Unofficial results. "));
+        box.appendChild(document.createTextNode(opts.uncountedNote +
+          " These numbers are not certified and will change. Read from the " + opts.publisher +
+          " on " + electionDateText(idx.data.read) + "."));
+      }
+      return box;
+    }
+
+    function renderRace(body, result) {
+      while (body.firstChild) body.removeChild(body.firstChild);
+      var idx = result.idx, contest = idx.byId[picked];
+      var row = null;
+      for (var i = 0; i < result.rows.length; i++) if (String(result.rows[i][0]) === picked) row = result.rows[i];
+      if (!contest || !row) return;
+      var ballots = row[1], counts = row.slice(2);
+      // a count the publisher withholds (small-number privacy) is null; no
+      // leader is named where one is withheld, because it could be the leader
+      var withheld = counts.some(function (n) { return n === null || n === undefined; });
+      var top = withheld ? -1 : Math.max.apply(null, counts.concat([0]));
+      var tied = counts.filter(function (n) { return n === top; }).length > 1;
+      var table = cardEl("table", "election-table");
+      var caption = cardEl("caption", null, contest.name + " in this precinct");
+      table.appendChild(caption);
+      var thead = cardEl("thead");
+      var hr = cardEl("tr");
+      hr.appendChild(cardEl("th", null, "Choice"));
+      hr.appendChild(cardEl("th", "election-num", "Votes"));
+      hr.appendChild(cardEl("th", "election-num", "Share"));
+      thead.appendChild(hr);
+      table.appendChild(thead);
+      var tbody = cardEl("tbody");
+      contest.choices.forEach(function (name, n) {
+        var tr = cardEl("tr");
+        var th = cardEl("th");
+        th.setAttribute("scope", "row");
+        var sw = cardEl("span", "election-swatch");
+        sw.style.background = electionChoiceColor(n);
+        sw.setAttribute("aria-hidden", "true");
+        th.appendChild(sw);
+        th.appendChild(document.createTextNode(String(name)));
+        if (top > 0 && counts[n] === top) {
+          th.appendChild(cardEl("span", "election-lead", tied ? "Tied for most votes"
+            : certified(idx, contest) ? "Most votes here" : "Most votes so far"));
+        }
+        tr.appendChild(th);
+        var known = counts[n] !== null && counts[n] !== undefined;
+        tr.appendChild(cardEl("td", "election-num", known ? counts[n].toLocaleString("en-US") : "Withheld"));
+        tr.appendChild(cardEl("td", "election-num", known && ballots !== null && ballots !== undefined
+          ? electionPercent(counts[n], ballots) : "—"));
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      body.appendChild(table);
+      var notes = [];
+      if (withheld) notes.push("The " + opts.publisher + " withholds some of this precinct's counts to protect the privacy" +
+        " of a small number of voters, so no choice is named as having the most votes here.");
+      if (ballots !== null && ballots !== undefined) notes.push("Votes counted in this race here: " + ballots.toLocaleString("en-US") + "." +
+        (contest.multiple ? " Voters could choose more than one candidate in this race, so each share is of all the votes" +
+          " cast in it, not of the people who voted." : " Each share is of those votes."));
+      var whole = contest.total[0];
+      notes.push("Across " + opts.areaName + "'s precincts: " +
+        contest.choices.map(function (name, n) {
+          return String(name) + " " + contest.total[n + 1].toLocaleString("en-US") + " (" +
+            electionPercent(contest.total[n + 1], whole) + ")";
+        }).join(", ") + "." + (contest.beyond ? " This race reaches beyond " + opts.areaName +
+          ", so these totals are not the whole race." : ""));
+      // votes counted in no precinct (absentee, early or provisional units a
+      // publisher reports apart) are in the totals and on no shape of the map
+      if (contest.outside && contest.outside[0] > 0 && whole > 0) {
+        notes.push(electionPercent(contest.outside[0], whole) + " of these votes (" +
+          contest.outside[0].toLocaleString("en-US") + ") were counted outside any precinct, so they are in the" +
+          " totals above and not in the map's colours.");
+      }
+      notes.forEach(function (t) { body.appendChild(cardEl("p", "election-note", t)); });
+    }
+
+    registerLayer({
+      id: opts.id,
+      tiles: opts.tiles,
+      group: opts.group || "elections",
+      fillsGround: true, // its colours are the answer: other layers drop their selected-district tint (layer-registry)
+      label: opts.label,
+      coverage: opts.coverage,
+      overlay: {
+        load: opts.load,
+        style: opts.style,
+        styleForFeature: styleForFeature,
+        tileFill: tileFill
+      },
+      query: function (point, seq) {
+        return Promise.all([queryFeatureAt(opts.load, point), loadIndex()]).then(function (got) {
+          var feature = got[0], idx = got[1];
+          resolvedIndex = idx;
+          if (!feature) return null;
+          var raw = (feature.properties || {})[opts.keyProp];
+          var key = raw === undefined || raw === null ? null : String(raw);
+          var at = key === null ? undefined : idx.pos[key];
+          if (at === undefined) return { seq: seq, idx: idx, key: key, label: opts.precinctLabel(feature), rows: [], turnout: null };
+          var part = idx.data.parts[at];
+          return loadPart(part).then(function (doc) {
+            var own = (doc.precincts || {})[key] || {};
+            var rows = own.contests || [];
+            // the picked race stays picked while the reader clicks around, if
+            // it is on this precinct's ballot; otherwise the first race listed
+            var onBallot = rows.some(function (r) { return String(r[0]) === picked; });
+            if (!onBallot) {
+              var first = null;
+              (idx.data.contests || []).some(function (c) {
+                if (rows.some(function (r) { return String(r[0]) === String(c.id); })) { first = String(c.id); return true; }
+                return false;
+              });
+              if (first !== null && first !== picked) pick(first);
+            } else {
+              drawLegend();
+            }
+            return { seq: seq, idx: idx, key: key, label: opts.precinctLabel(feature), rows: rows,
+              turnout: own.turnout || null, partRead: doc.read };
+          });
+        });
+      },
+      render: function (result) {
+        var wrap = cardEl("div", "card-flush election-card");
+        var idx = result.idx;
+        var notice = noticeEl(idx, picked ? idx.byId[picked] : null);
+        wrap.appendChild(notice);
+        if (!result.rows.length) {
+          wrap.appendChild(cardEl("p", "election-note", "The " + opts.publisher + " lists no results for this precinct."));
+          return wrap;
+        }
+        if (result.partRead && result.partRead !== idx.data.read) {
+          wrap.appendChild(cardEl("p", "election-note", "This precinct's numbers were read at a different time from the map's colours; reload the page for both from one reading."));
+        }
+        var pickWrap = cardEl("div", "election-pick");
+        var selId = "election-race-" + opts.id;
+        var lab = cardEl("label", "card-field-label", "Race");
+        lab.setAttribute("for", selId);
+        pickWrap.appendChild(lab);
+        var sel = document.createElement("select");
+        sel.id = selId;
+        sel.className = "election-select";
+        var onBallot = {};
+        result.rows.forEach(function (r) { onBallot[String(r[0])] = true; });
+        (idx.data.groups || []).forEach(function (g) {
+          var og = null;
+          (idx.data.contests || []).forEach(function (c) {
+            if (c.group !== g.id || !onBallot[String(c.id)]) return;
+            if (!og) { og = document.createElement("optgroup"); og.label = g.label; sel.appendChild(og); }
+            var o = document.createElement("option");
+            o.value = String(c.id);
+            o.textContent = c.name;
+            if (String(c.id) === picked) o.selected = true;
+            og.appendChild(o);
+          });
+        });
+        pickWrap.appendChild(sel);
+        wrap.appendChild(pickWrap);
+        var body = cardEl("div", "election-race");
+        wrap.appendChild(body);
+        sel.addEventListener("change", function () {
+          pick(sel.value);
+          var fresh = noticeEl(idx, idx.byId[picked]);
+          wrap.replaceChild(fresh, notice);
+          notice = fresh;
+          renderRace(body, result);
+        });
+        renderRace(body, result);
+        if (result.turnout) {
+          var reg = result.turnout[0], cast = result.turnout[1];
+          wrap.appendChild(cardEl("p", "election-note", "Turnout in this precinct: " + cast.toLocaleString("en-US") +
+            " ballots from " + reg.toLocaleString("en-US") + " registered voters (" + electionPercent(cast, reg) + ")."));
+        }
+        return wrap;
+      },
+      cardIdentifier: function (result) {
+        return result && result.label ? result.label : "Unknown";
+      },
+      hoverName: function (feature) {
+        return opts.precinctLabel(feature);
+      },
+      primaryLink: function (result) {
+        var url = result && result.idx && result.idx.data.source;
+        return url ? { label: "Results from the " + opts.publisher, url: url } : null;
+      },
+      onToggle: function (on) {
+        refreshHighlightFills(); // other layers' selected districts drop or regain their tint
+        if (!on) { drawLegend(); return; }
+        // the map shows a race from the moment the layer is on: the one
+        // already picked, or the first race in the publisher's list
+        loadIndex().then(function (idx) {
+          resolvedIndex = idx;
+          if (picked === null || !idx.byId[picked]) {
+            var first = (idx.data.contests || [])[0];
+            pick(first ? first.id : null);
+          } else {
+            repaint();
+          }
+        }, function (err) {
+          console.warn("[" + opts.id + "] results index failed to load:", err);
+        });
+      }
+    });
+  }
+  /* ==== ENGINE:END election-results ==== */
+
+  // Election results, coloured on the ward-precinct outlines: the Chicago
+  // Board of Election Commissioners' precinct-by-precinct results, read daily
+  // by scripts/chicago_election_results_scraper.py and written by
+  // scripts/build_chicago_election_results.py. The layer reads the same
+  // precinct archive and loader as Ward Precinct, and joins on the
+  // `ward_precinct` property (WWPPP) both the archive and the results carry.
+  registerElectionResultsLayer({
+    id: "election-results",
+    label: "Election Results",
+    tiles: "data/app/tiles/ward-precinct.pmtiles",
+    load: loadWardPrecincts,
+    keyProp: "ward_precinct",
+    coverage: chicagoCoverage,
+    style: { color: "#4a4a55", weight: 0.8, fillColor: "#4a4a55", fillOpacity: 0, dashArray: null },
+    indexUrl: "data/app/election-results.json",
+    partUrl: function (part) { return "data/app/election-results/" + part + ".json"; },
+    publisher: "Chicago Board of Election Commissioners",
+    areaName: "Chicago",
+    uncountedNote: "The Board is still counting mail ballots postmarked by Election Day that arrive by November 17.",
+    precinctLabel: function (feature) {
+      var props = feature.properties || {};
+      var w = findPropCI(props, ["ward"]), p = findPropCI(props, ["precinct"]);
+      return w != null && p != null ? "Ward " + String(w).replace(/^0+(?=\d)/, "") + ", Precinct " + String(p).replace(/^0+(?=\d)/, "") : null;
+    }
+  });
+  declareDataSource("election-results", { label: "Chicago Board of Election Commissioners" });
 
   /* ---------- Election notice (until Election Day) ----------
    * One dismissible line over the map, from now through the election date in
@@ -39781,7 +40390,7 @@ function initChiExplorer() {
     // Wikipedia-pageview proxy, re-rankable when real Search Console query
     // data exists — evidence + numbers in docs/EXPANSION_GUIDE.md Part 4.
     "congress", "il-house", "il-senate", "ward", "ward-precinct",
-    "early-voting", "county-board", "ccbr", "school-board",
+    "early-voting", "election-results", "county-board", "ccbr", "school-board",
     "il-supreme-court", "judicial-subcircuit",
     // Last in the political group, and placed rather than ranked: the basis
     // for this group's order is a demand proxy, and no demand figure exists
@@ -40239,6 +40848,13 @@ function initChiExplorer() {
       var lit = rt.highlightedLayer;
       return lit && lit.options ? lit.options.color : null;
     },
+    // the fill a layer's lit district is drawn with: 0 while a layer whose
+    // colours are its answer (fillsGround) is on, so a test can see the tint
+    // drop and come back
+    highlightFill: function (id) {
+      var mod = getLayerById(id);
+      return mod ? highlightStyleFor(mod).fillOpacity : null;
+    },
     loadWholeFile: function (id) {
       var mod = getLayerById(id);
       if (!mod || !tileDrawAvailable(mod)) return Promise.resolve(false);
@@ -40307,16 +40923,17 @@ function initChiExplorer() {
     "#1E7A8C": "#57C8E1", "#1F6F6B": "#5DC0BA", "#1F6FB2": "#74BBFF", "#2B8CC4": "#8FD1FE",
     "#2E7D46": "#68CE83", "#2F6B3A": "#6FBE7B", "#3949AB": "#849CFD", "#3B8FD4": "#A2D2FF",
     "#3D3D7A": "#898CE2", "#3D6B49": "#7EBC8D", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD",
-    "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92",
-    "#4DB6AC": "#70FAED", "#4FA06A": "#7FEAA1", "#585EDD": "#A7B4FD", "#5C6BC0": "#A7B7FD",
-    "#5C8F6B": "#95D9A8", "#5E3A8C": "#B283F4", "#63B57F": "#8DFAB2", "#6A3FA0": "#BA8BFE",
-    "#6A4A93": "#BB91F5", "#6B4FA0": "#B898FE", "#6B7280": "#B1BACE", "#7A0A1C": "#EA5B61",
-    "#7A1E5C": "#E266B4", "#7A2D3D": "#E17587", "#7A5C3E": "#CFA57C", "#8163AE": "#CAAAFE",
-    "#88637C": "#DAA7C9", "#8A5A00": "#E3A241", "#8A692C": "#DDB061", "#8A6FBF": "#CDB8FE",
-    "#8C2E4A": "#F47294", "#8E6BB8": "#D3B2FE", "#9C0B24": "#FF696D", "#A05F00": "#FBA23D",
-    "#A15C00": "#FD9F3D", "#A3341F": "#FE8269", "#A34A2A": "#FE916B", "#A98B6C": "#F3CAA1",
-    "#B0316E": "#FF87B8", "#B0342A": "#FE8B7C", "#C2744E": "#FFBC9E", "#C8102E": "#FE928F",
-    "#D0564C": "#FEB1A7", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3", "#E4572E": "#FEBCA9"};
+    "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4A4A55": "#9999A9", "#4B2E83": "#9E7BF1",
+    "#4C8F59": "#82DB92", "#4DB6AC": "#70FAED", "#4FA06A": "#7FEAA1", "#585EDD": "#A7B4FD",
+    "#5C6BC0": "#A7B7FD", "#5C8F6B": "#95D9A8", "#5E3A8C": "#B283F4", "#63B57F": "#8DFAB2",
+    "#6A3FA0": "#BA8BFE", "#6A4A93": "#BB91F5", "#6B4FA0": "#B898FE", "#6B7280": "#B1BACE",
+    "#7A0A1C": "#EA5B61", "#7A1E5C": "#E266B4", "#7A2D3D": "#E17587", "#7A5C3E": "#CFA57C",
+    "#8163AE": "#CAAAFE", "#88637C": "#DAA7C9", "#8A5A00": "#E3A241", "#8A692C": "#DDB061",
+    "#8A6FBF": "#CDB8FE", "#8C2E4A": "#F47294", "#8E6BB8": "#D3B2FE", "#9C0B24": "#FF696D",
+    "#A05F00": "#FBA23D", "#A15C00": "#FD9F3D", "#A3341F": "#FE8269", "#A34A2A": "#FE916B",
+    "#A98B6C": "#F3CAA1", "#B0316E": "#FF87B8", "#B0342A": "#FE8B7C", "#C2744E": "#FFBC9E",
+    "#C8102E": "#FE928F", "#D0564C": "#FEB1A7", "#D06A9C": "#FEBDDA", "#D19133": "#FFD6A3",
+    "#E4572E": "#FEBCA9"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

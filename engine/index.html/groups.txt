@@ -1,4 +1,9 @@
+  // Elections leads: results are what a reader opens the map for on the days
+  // after an election, and past elections may join this section later (Adam,
+  // 2026-11-05). A group with no layer registered draws no section, so every
+  // app without election results looks exactly as before.
   var GROUPS = [
+    { id: "elections", label: "Elections" },
     { id: "political", label: "Political" },
     { id: "safety", label: "Public Safety" },
     { id: "schools", label: "Schools" },

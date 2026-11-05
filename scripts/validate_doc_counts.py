@@ -217,6 +217,15 @@ HISTORICAL_COUNTS = [
                "The figure is the reading it is; re-measuring it is a change to "
                "the QR sizing note, not to this count",
      "recorded": "2026-10-01"},
+    # 2026-11-05, when Illinois shipped its election-results layer as its
+    # 42nd. The short-form permalink sizing (199 bytes, version 9 at L and 10
+    # at M) was measured on 2026-10-09 with the then-41 layers all on; the
+    # same reasoning as the entry above keeps it as the reading it was.
+    {"path": "CLAUDE.md", "name": "Illinois", "count": 41,
+     "reason": "Dated measurement of the longest short-form share permalink (199 "
+               "bytes, QR version 9 at L), taken 2026-10-09 with the then-41 "
+               "Illinois layers all on. The figure is the reading it is",
+     "recorded": "2026-11-05"},
     # 2026-09-21, when patterns D and E made two long-invisible claims readable.
     # The plan's Context section records the state of `ny/` BEFORE the plan ran
     # and says so in its own heading. It was TRUE when written: the worksheet

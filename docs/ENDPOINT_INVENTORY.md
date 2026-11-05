@@ -140,7 +140,7 @@ prose.
 
 | instance | layers that send the point | registered layers |
 |---|---|---|
-| il | 5 | 41 |
+| il | 5 | 42 |
 | ny | 0 | 39 |
 | ca | 0 | 16 |
 | wi | 1 | 32 |
@@ -172,7 +172,7 @@ opens a pull request when a result changes, but **nothing fails when this
 is stale**, so a layer added since that date is named below as not
 measured until the next run describes it.
 
-#### il — 29 of 41 layers fetch their shapes
+#### il — 29 of 42 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -208,6 +208,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `il-supreme-court`, `congress`, `il-senate`, `il-house`, `ccbr`, `school-board`, `tribal-government`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`, `library`, `early-voting`.
+- **Not measured** — declared since the probe ran: `election-results`.
 - Fetched by the app itself with no layer on, for its coverage tests: `data.cityofchicago.org`, `tigerweb.geo.census.gov`.
 
 #### ny — 14 of 39 layers fetch their shapes
@@ -390,7 +391,7 @@ measured until the next run describes it.
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
-| il | 131 | 416 | 6 |
+| il | 131 | 417 | 6 |
 | ny | 38 | 36 | 0 |
 | ca | 17 | 15 | 0 |
 | wi | 92 | 267 | 5 |
@@ -408,7 +409,7 @@ measured until the next run describes it.
 | la | 28 | 24 | 0 |
 | mo | 23 | 14 | 0 |
 | va | 23 | 18 | 0 |
-| **total** | **759** | **1102** | **12** |
+| **total** | **759** | **1103** | **12** |
 
 **219 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and

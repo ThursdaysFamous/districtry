@@ -523,7 +523,7 @@ def render_metro_facts(w):
         neg["lat"], neg["lng"], neg.get("note", "")))
     a("- Layers: %d registered (%s); `registerLayer(` floor %d. Debug namespace `window.%s`." % (
         len(w["layers"]),
-        ", ".join("%s %d" % (g, groups[g]) for g in ["political", "safety", "schools", "geography"] if g in groups),
+        ", ".join("%s %d" % (g, groups[g]) for g in ["elections", "political", "safety", "schools", "geography"] if g in groups),
         w["min_register_layer"], w["exports_name"]))
     a("- Scheduled workflows: %s." % "; ".join(
         "`%s` (%s)" % (wf["file"], wf["schedule"]) for wf in w["workflows"]))
@@ -787,10 +787,12 @@ def render_source_credits(w):
     return "\n".join(L)
 
 
-# Group id -> (heading, one-line orientation). The four groups are the layer
+# Group id -> (heading, one-line orientation). The groups are the layer
 # registry's own `group` values, so the page can never grow a fifth section the
 # app doesn't have.
 GROUP_HEADINGS = [
+    ("elections", "Elections",
+     "How each precinct voted."),
     ("political", "Political &amp; legislative",
      "Districts that elect somebody — from your ward to your seat in Congress."),
     ("safety", "Public safety",
