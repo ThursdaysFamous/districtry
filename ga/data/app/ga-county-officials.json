@@ -1,7 +1,7 @@
 {
  "13001": {
   "county": "Appling",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -73,11 +73,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13003": {
   "county": "Atkinson",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -149,11 +152,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13005": {
   "county": "Bacon",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -237,11 +243,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13007": {
   "county": "Baker",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Anna",
@@ -339,7 +348,7 @@
  },
  "13009": {
   "county": "Baldwin",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -417,11 +426,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13011": {
   "county": "Banks",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -499,11 +511,14 @@
     "seat": "Post 5",
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13013": {
   "county": "Barrow",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -632,11 +647,14 @@
     "since": "2024-11-05",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13015": {
   "county": "Bartow",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Sole commissioner",
@@ -684,11 +702,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13017": {
   "county": "Ben Hill",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 2, Post 1",
@@ -793,7 +814,7 @@
  },
  "13019": {
   "county": "Berrien",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 2",
@@ -889,11 +910,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13021": {
   "county": "Bibb",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [],
   "schoolBoard": [
    {
@@ -922,7 +946,7 @@
  },
  "13023": {
   "county": "Bleckley",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Sole commissioner",
@@ -987,7 +1011,7 @@
  },
  "13025": {
   "county": "Brantley",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -1048,11 +1072,14 @@
      "electionName": "June 16th, 2026 General Primary Runoff"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13027": {
   "county": "Brooks",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -1140,11 +1167,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13029": {
   "county": "Bryan",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -1246,11 +1276,14 @@
     "district": 5,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13031": {
   "county": "Bulloch",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -1356,11 +1389,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13033": {
   "county": "Burke",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -1440,11 +1476,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13035": {
   "county": "Butts",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -1534,11 +1573,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13037": {
   "county": "Calhoun",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 2",
@@ -1642,11 +1684,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13039": {
   "county": "Camden",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -1714,11 +1759,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13043": {
   "county": "Candler",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -1785,11 +1833,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13045": {
   "county": "Carroll",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -1883,11 +1934,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13047": {
   "county": "Catoosa",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -1954,11 +2008,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13049": {
   "county": "Charlton",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -2032,11 +2089,14 @@
     "district": 5,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13051": {
   "county": "Chatham",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -2188,11 +2248,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13053": {
   "county": "Chattahoochee",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Post 3",
@@ -2255,7 +2318,7 @@
  },
  "13055": {
   "county": "Chattooga",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Sole commissioner",
@@ -2303,11 +2366,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13057": {
   "county": "Cherokee",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -2400,11 +2466,14 @@
     "district": 6,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13059": {
   "county": "Clarke",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -2532,7 +2601,7 @@
  },
  "13061": {
   "county": "Clay",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -2599,11 +2668,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13063": {
   "county": "Clayton",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -2716,11 +2788,14 @@
     "district": 9,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13065": {
   "county": "Clinch",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -2801,11 +2876,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13067": {
   "county": "Cobb",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -2883,11 +2961,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13069": {
   "county": "Coffee",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -2972,11 +3053,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13071": {
   "county": "Colquitt",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -3065,11 +3149,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13073": {
   "county": "Columbia",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -3132,11 +3219,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13075": {
   "county": "Cook",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -3220,11 +3310,14 @@
     "district": 5,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13077": {
   "county": "Coweta",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -3315,11 +3408,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13079": {
   "county": "Crawford",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -3387,11 +3483,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13081": {
   "county": "Crisp",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1, Post 1",
@@ -3465,11 +3564,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13083": {
   "county": "Dade",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -3552,11 +3654,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13085": {
   "county": "Dawson",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -3638,11 +3743,14 @@
     "seat": "At large",
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13087": {
   "county": "Decatur",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -3727,11 +3835,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13089": {
   "county": "DeKalb",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -3828,11 +3939,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13091": {
   "county": "Dodge",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -3928,11 +4042,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13093": {
   "county": "Dooly",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 2",
@@ -3967,11 +4084,14 @@
     "district": 4,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13095": {
   "county": "Dougherty",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -4078,11 +4198,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13097": {
   "county": "Douglas",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -4155,11 +4278,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13099": {
   "county": "Early",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -4236,11 +4362,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13101": {
   "county": "Echols",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1, Post 1",
@@ -4311,11 +4440,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13103": {
   "county": "Effingham",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -4387,11 +4519,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13105": {
   "county": "Elbert",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -4469,11 +4604,14 @@
     "district": 5,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13107": {
   "county": "Emanuel",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -4570,11 +4708,14 @@
     },
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13109": {
   "county": "Evans",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -4670,11 +4811,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13111": {
   "county": "Fannin",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -4735,11 +4879,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13113": {
   "county": "Fayette",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -4823,11 +4970,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13115": {
   "county": "Floyd",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Post 1",
@@ -4898,11 +5048,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13117": {
   "county": "Forsyth",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -4986,11 +5139,14 @@
     "district": 5,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13119": {
   "county": "Franklin",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -5063,11 +5219,14 @@
     "seat": "Post 5",
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13121": {
   "county": "Fulton",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -5168,11 +5327,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13123": {
   "county": "Gilmer",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -5215,11 +5377,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13125": {
   "county": "Glascock",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -5286,11 +5451,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13127": {
   "county": "Glynn",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -5400,11 +5568,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13129": {
   "county": "Gordon",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -5484,11 +5655,14 @@
     "seat": "Post 7",
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13131": {
   "county": "Grady",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -5556,11 +5730,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13133": {
   "county": "Greene",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -5642,11 +5819,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13135": {
   "county": "Gwinnett",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -5713,11 +5893,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13137": {
   "county": "Habersham",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -5801,11 +5984,14 @@
     "district": 5,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13139": {
   "county": "Hall",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -5878,11 +6064,14 @@
     "seat": "At large",
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13141": {
   "county": "Hancock",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -6003,7 +6192,7 @@
  },
  "13143": {
   "county": "Haralson",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -6099,11 +6288,14 @@
     "since": "2025-11-04",
     "electionName": "November 4, 2025 - Municipal General / Special Election (PSC)"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13145": {
   "county": "Harris",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -6178,11 +6370,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13147": {
   "county": "Hart",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -6266,11 +6461,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13149": {
   "county": "Heard",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -6354,11 +6552,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13151": {
   "county": "Henry",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -6431,11 +6632,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13153": {
   "county": "Houston",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -6509,11 +6713,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13155": {
   "county": "Irwin",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -6592,11 +6799,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13157": {
   "county": "Jackson",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -6682,11 +6892,14 @@
     "seat": "Post 5",
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13159": {
   "county": "Jasper",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -6771,11 +6984,14 @@
     },
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13161": {
   "county": "Jeff Davis",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -6858,11 +7074,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13163": {
   "county": "Jefferson",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -6940,11 +7159,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13165": {
   "county": "Jenkins",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -7012,11 +7234,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13167": {
   "county": "Johnson",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -7084,11 +7309,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13169": {
   "county": "Jones",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -7180,7 +7408,7 @@
  },
  "13171": {
   "county": "Lamar",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -7252,11 +7480,14 @@
     "seat": "At large",
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13173": {
   "county": "Lanier",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -7328,11 +7559,14 @@
     "district": 4,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13175": {
   "county": "Laurens",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -7422,11 +7656,14 @@
     "since": "2025-11-04",
     "electionName": "November 4, 2025 - Municipal General / Special Election (PSC)"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13177": {
   "county": "Lee",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -7494,11 +7731,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13179": {
   "county": "Liberty",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -7603,11 +7843,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13181": {
   "county": "Lincoln",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -7685,11 +7928,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13183": {
   "county": "Long",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -7733,11 +7979,14 @@
     "electionName": "November 4, 2025 - Municipal General / Special Election (PSC)"
    }
   ],
-  "schoolBoard": []
+  "schoolBoard": [],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
+  ]
  },
  "13185": {
   "county": "Lowndes",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -7821,11 +8070,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13187": {
   "county": "Lumpkin",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -7908,11 +8160,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13189": {
   "county": "McDuffie",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -7988,11 +8243,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13191": {
   "county": "McIntosh",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -8070,11 +8328,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13193": {
   "county": "Macon",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -8148,11 +8409,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13195": {
   "county": "Madison",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -8224,11 +8488,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13197": {
   "county": "Marion",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -8294,11 +8561,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13199": {
   "county": "Meriwether",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -8372,11 +8642,14 @@
     "district": 5,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13201": {
   "county": "Miller",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -8460,11 +8733,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13205": {
   "county": "Mitchell",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -8544,11 +8820,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13207": {
   "county": "Monroe",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -8640,11 +8919,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13209": {
   "county": "Montgomery",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -8712,11 +8994,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13211": {
   "county": "Morgan",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -8800,11 +9085,14 @@
     "district": 5,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13213": {
   "county": "Murray",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Sole commissioner",
@@ -8872,11 +9160,14 @@
     "district": 7,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13215": {
   "county": "Muscogee",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -9013,7 +9304,7 @@
  },
  "13217": {
   "county": "Newton",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -9101,11 +9392,14 @@
     "district": 5,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13219": {
   "county": "Oconee",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -9179,11 +9473,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13221": {
   "county": "Oglethorpe",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -9271,11 +9568,14 @@
     "district": 5,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13223": {
   "county": "Paulding",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -9364,11 +9664,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13225": {
   "county": "Peach",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Post 1",
@@ -9435,11 +9738,14 @@
     "seat": "Post 5, at large",
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13227": {
   "county": "Pickens",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -9497,11 +9803,14 @@
     "seat": "Post 5",
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13229": {
   "county": "Pierce",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -9574,11 +9883,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13231": {
   "county": "Pike",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -9657,11 +9969,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13233": {
   "county": "Polk",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -9745,11 +10060,14 @@
     "district": 7,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13235": {
   "county": "Pulaski",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Sole commissioner",
@@ -9798,11 +10116,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13237": {
   "county": "Putnam",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -9881,11 +10202,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13239": {
   "county": "Quitman",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Post 3",
@@ -9946,11 +10270,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13241": {
   "county": "Rabun",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Post 1",
@@ -10015,11 +10342,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13243": {
   "county": "Randolph",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -10087,11 +10417,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13245": {
   "county": "Richmond",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 2",
@@ -10205,11 +10538,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13247": {
   "county": "Rockdale",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -10257,11 +10593,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13249": {
   "county": "Schley",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -10343,11 +10682,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13251": {
   "county": "Screven",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -10447,11 +10789,14 @@
     },
     "electionName": "November 4, 2025 - Municipal General / Special Election (PSC)"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13253": {
   "county": "Seminole",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -10558,11 +10903,14 @@
     },
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13255": {
   "county": "Spalding",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -10642,11 +10990,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13257": {
   "county": "Stephens",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Post 1",
@@ -10729,11 +11080,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13259": {
   "county": "Stewart",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -10832,11 +11186,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13261": {
   "county": "Sumter",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -10879,11 +11236,14 @@
     "electionName": "November General Election"
    }
   ],
-  "schoolBoard": []
+  "schoolBoard": [],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
+  ]
  },
  "13263": {
   "county": "Talbot",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -10958,11 +11318,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13265": {
   "county": "Taliaferro",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -11000,11 +11363,14 @@
     "since": "2024-11-05",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13267": {
   "county": "Tattnall",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -11112,7 +11478,7 @@
  },
  "13269": {
   "county": "Taylor",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -11220,7 +11586,7 @@
  },
  "13271": {
   "county": "Telfair",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -11319,11 +11685,14 @@
     "district": 7,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13273": {
   "county": "Terrell",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -11350,11 +11719,14 @@
     "name": null
    }
   ],
-  "schoolBoard": []
+  "schoolBoard": [],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
+  ]
  },
  "13275": {
   "county": "Thomas",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -11468,11 +11840,14 @@
     "district": 7,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13277": {
   "county": "Tift",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -11577,11 +11952,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13279": {
   "county": "Toombs",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -11676,11 +12054,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13281": {
   "county": "Towns",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Sole commissioner",
@@ -11730,7 +12111,7 @@
  },
  "13283": {
   "county": "Treutlen",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -11814,11 +12195,14 @@
     "district": 5,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13285": {
   "county": "Troup",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -11897,11 +12281,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13287": {
   "county": "Turner",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -11985,11 +12372,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13289": {
   "county": "Twiggs",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -12075,11 +12465,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13291": {
   "county": "Union",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Sole commissioner",
@@ -12127,11 +12520,14 @@
     "district": 5,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13293": {
   "county": "Upson",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -12210,11 +12606,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13295": {
   "county": "Walker",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -12298,11 +12697,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13297": {
   "county": "Walton",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -12415,11 +12817,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13299": {
   "county": "Ware",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -12498,11 +12903,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13301": {
   "county": "Warren",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -12563,7 +12971,7 @@
  },
  "13303": {
   "county": "Washington",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -12620,11 +13028,14 @@
     "district": 4,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13305": {
   "county": "Wayne",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -12692,11 +13103,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13307": {
   "county": "Webster",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -12773,11 +13187,14 @@
     "since": "2026-05-19",
     "electionName": "May 19, 2026 - General Primary"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13309": {
   "county": "Wheeler",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -12850,7 +13267,7 @@
  },
  "13311": {
   "county": "White",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -12932,11 +13349,14 @@
     "district": 4,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13313": {
   "county": "Whitfield",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -13013,11 +13433,14 @@
     "seat": "At large",
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13315": {
   "county": "Wilcox",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "District 1",
@@ -13091,11 +13514,14 @@
     "district": 5,
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13317": {
   "county": "Wilkes",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -13157,11 +13583,14 @@
      "electionName": "May 19, 2026 - General Primary"
     }
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13319": {
   "county": "Wilkinson",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -13228,11 +13657,14 @@
     "since": "2025-01-01",
     "electionName": "November General Election"
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  },
  "13321": {
   "county": "Worth",
-  "asOf": "2026-10-30",
+  "asOf": "2026-11-05",
   "commission": [
    {
     "seat": "Chair",
@@ -13304,6 +13736,9 @@
     "seat": "At large",
     "name": null
    }
+  ],
+  "pending": [
+   "11032026GeneralAndSpecialElection"
   ]
  }
 }
