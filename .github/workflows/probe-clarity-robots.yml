@@ -1,0 +1,58 @@
+name: Re-check Clarity robots.txt from a runner (temporary)
+
+# One-off measurement for the election-results survey. On 2026-11-05 a runner
+# read https://results.enr.clarityelections.com/robots.txt as HTTP 202 (an
+# access check) while the research sandbox read 404. CLAUDE.md treats a
+# challenge as sticky per host until a deliberate re-measurement shows the
+# crawling client served on three consecutive reads at least fifteen seconds
+# apart. This is that re-measurement: robots.txt only, our own token, both HTTP
+# stacks, three rounds 20 s apart. No page is fetched. Nothing is committed.
+# Delete after use.
+
+on:
+  push:
+    branches: [claude/project-thread-eo4cl3]
+    paths: [.github/workflows/probe-clarity-robots.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: pip install -c scripts/requirements.txt requests
+      - name: Read Clarity's robots.txt three times
+        run: |
+          python3 - <<'PY'
+          import sys, time, urllib.request, requests
+          sys.path.insert(0, "scripts")
+          import robots_policy as rp
+          from scraper_common import UA_ROSTER_BOT as UA
+          URL = "https://results.enr.clarityelections.com/robots.txt"
+          PAGE = "https://results.enr.clarityelections.com/IL/Lake/127289/current_ver.txt"
+          for i in range(3):
+              print("\nround", i + 1, time.strftime("%H:%M:%S", time.gmtime()))
+              s = requests.Session(); s.headers["User-Agent"] = UA
+              try:
+                  r = s.get(URL, timeout=25)
+                  print("  requests+token: HTTP %s, %d bytes, server=%s" % (r.status_code, len(r.content), r.headers.get("server")), repr(r.content[:80]))
+              except Exception as e:
+                  print("  requests+token: error", repr(e)[:160])
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(URL, headers={"User-Agent": UA}), timeout=25) as r:
+                      print("  stdlib+token: HTTP %s, %d bytes" % (r.status, len(r.read())))
+              except urllib.error.HTTPError as e:
+                  print("  stdlib+token: HTTP %s" % e.code)
+              except Exception as e:
+                  print("  stdlib+token: error", repr(e)[:160])
+              ok, why = rp.RobotsGate(requests.Session(), UA, timeout=20).allows(PAGE)
+              print("  robots_policy verdict for a Clarity page:", "allows" if ok else "REFUSES", "-", why[:160])
+              if i < 2:
+                  time.sleep(20)
+          PY
