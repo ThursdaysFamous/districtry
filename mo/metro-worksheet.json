@@ -597,6 +597,9 @@
   },
   "exports_name": "MissouriExplorer",
   "verified_date": "October 21, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
   "sources_page": {
     "file": "mo/sources.html",
     "credits": [

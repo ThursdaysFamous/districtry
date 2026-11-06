@@ -343,10 +343,32 @@
       }
     },
     {
+      "id": "election-results",
+      "label": "Election Results",
+      "group": "elections",
+      "area_rank": 13,
+      "rank_note": "Election results, drawn on the Voting Precinct outlines",
+      "rank_comment": [
+        "The same 2,625 precinct shapes as Voting Precinct, read from the same file, so it",
+        "ranks beside it; each precinct is filled by the choice leading there in the picked race."
+      ],
+      "source": {
+        "answers": "For the picked race, the choice with the most votes in each North Carolina precinct, and on the card the clicked precinct's votes for every race on its ballot, from U.S. Senate to its county board, school board and town offices, and the race's total across North Carolina. Unofficial until the State Board of Elections certifies the count, and the card and the map key say so.",
+        "boundary": [
+          {
+            "label": "North Carolina State Board of Elections — the statewide precinct file, the same 2,625 outlines Voting Precinct draws",
+            "url": "https://services.nconemap.gov/secure/rest/services/NC1Map_Boundaries/MapServer/0"
+          }
+        ],
+        "people": "The choices and their votes come from the North Carolina State Board of Elections' precinct results file for the 3 November 2026 general election (results_pct_20261103.zip), read daily by nc/scripts/nc_election_results_scraper.py. The file lists choices in no ballot order, so they are ordered by surname, with For before Against on a question; colours follow that order, never a party.",
+        "applies": "North Carolina — statewide. Many counties count early voting, absentee and provisional ballots by site rather than by precinct (27% of all votes on 6 November 2026); those votes are in each race's totals and in no precinct's colour, and the card says what share of the race they are."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City or Town",
       "group": "geography",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "552 incorporated places, from TIGERweb, drawn from a mirrored tile archive",
       "source": {
         "answers": "The city or town containing the point, if any.",
@@ -364,7 +386,7 @@
       "id": "city-ward",
       "label": "City Council District",
       "group": "political",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "100 council districts and wards in the 17 cities above 25,000 people that elect council members by district or ward, ranked just after City or Town, which each one divides, so a district draws on top of its city",
       "source": {
         "answers": "The city council district or ward containing the point, in the 17 North Carolina cities above 25,000 people that elect council members by district or ward, and the member for it.",
@@ -446,7 +468,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -464,7 +486,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 16,
+      "area_rank": 17,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -482,7 +504,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 17,
+      "area_rank": 18,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -637,6 +659,11 @@
     ],
     "rosters": [
       {
+        "file": "election-results.json",
+        "min_keys": 11,
+        "note": "North Carolina's precinct-by-precinct election results: the index (groups, precinct keys, the part file each precinct is in, and per contest its choices, totals, the votes counted outside any drawn precinct and its leader string, trimmed to the run of precincts it is on the ballot in); each precinct's own counts sit in election-results/c<county FIPS>-<n>.json, fetched on a click and never cached by the worker. From the State Board of Elections' results_pct file by nc/scripts/nc_election_results_scraper.py + build_nc_election_results.py through scripts/election_results_common.py, refreshed daily by update-nc-election-results.yml; certified stays false until the State Board certifies the results. Network-first: the count changes daily."
+      },
+      {
         "file": "congress-roster.json",
         "min_keys": 14,
         "note": "U.S. House (NC) roster, refreshed weekly by update-nc-congress-roster.yml."
@@ -693,6 +720,11 @@
   },
   "workflows": [
     {
+      "file": "update-nc-election-results.yml",
+      "purpose": "Precinct-by-precinct election results (NC), from the State Board of Elections' results file, daily until certified",
+      "schedule": "daily 13:10 UTC"
+    },
+    {
       "file": "update-nc-congress-roster.yml",
       "purpose": "U.S. House (NC) roster (unitedstates/congress-legislators)",
       "schedule": "Mon 15:30 UTC"
@@ -741,6 +773,9 @@
   },
   "exports_name": "NCExplorer",
   "verified_date": "September 29, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
   "sources_page": {
     "file": "nc/sources.html",
     "credits": [

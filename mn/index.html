@@ -4591,6 +4591,9 @@ function initMinnesotaExplorer() {
   // ZIP code index (scripts/build_zip_index.mjs): a typed ZIP code selects a
   // spot inside it, and its ZIP layer is turned on and pinned for comparison.
   var ZIP_SEARCH_URL = "data/app/zip-index.json";
+  // Census block population index (scripts/build_block_population.py): lets
+  // the comparison stats screen count people as well as area.
+  var POPULATION_INDEX_URL = "data/app/population/index.json";
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -12579,16 +12582,22 @@ function initMinnesotaExplorer() {
       }
     },
     // the live counties' paths in the layer's current state: the lit one in
-    // the highlight style, the rest faded while anything is lit, else plain
+    // the highlight style, the rest faded while anything is lit, else plain.
+    // A layer that paints each feature its own colour (the election results)
+    // keeps every fill whether or not one is lit, as its tiles do (tilePaint),
+    // and the lit one is marked by the highlight line alone.
     styleLive: function () {
       if (!this.live) return;
       var mod = this.mod, rt = layerRuntime[mod.id], sel = this.liveSelected;
       var anySelected = !!sel || rt.tileSelectedId != null;
-      var base = baseStyleFor(mod) || {};
-      var faded = fadedStyle(base, mod), lit = Object.assign({}, base, highlightStyleFor(mod));
+      var own = !!(mod.overlay && typeof mod.overlay.tileFill === "function");
+      var hl = highlightStyleFor(mod);
       this.live.eachLayer(function (sub) {
         var on = !!sel && sub.feature === sel;
-        if (sub.setStyle) sub.setStyle(on ? lit : anySelected ? faded : base);
+        var base = baseStyleFor(mod, own ? sub.feature : null) || {};
+        var style = on ? Object.assign({}, base, hl) : anySelected && !own ? fadedStyle(base, mod) : base;
+        if (on && own) style = Object.assign(style, { fillColor: base.fillColor, fillOpacity: base.fillOpacity });
+        if (sub.setStyle) sub.setStyle(style);
         if (sub._path) sub._path.classList[on ? "add" : "remove"](HIGHLIGHT_CLASS);
         if (on && sub.bringToFront) sub.bringToFront();
       });
@@ -15869,6 +15878,21 @@ function initMinnesotaExplorer() {
    * the url of each part file, and the publisher's name and the sentence that
    * says what is still being counted. Nothing here names a place.
    *
+   * MORE THAN ONE PUBLISHER ON ONE MAP. Where an app draws precincts that
+   * another office counts (Illinois: Chicago's Board and the county clerks
+   * around it), it passes `extraPrecincts`, one entry per office: its id, the
+   * loader of its precinct outlines, a coverage test, and functions giving a
+   * feature's results key and its label. Those outlines are drawn beside the
+   * app's own (TileOverlay's live part, tileLive below) in the same colours.
+   * The index then lists each office under `sources` (its publisher, area,
+   * address, reading time, certified or not, and what is still being
+   * counted), a precinct key names its office before a colon
+   * ("kane:AU01"; a key with no colon is the first source's), and a contest
+   * counted by several offices carries `bySource`: each office's own totals,
+   * which choices that office lists, and whether the race reaches past that
+   * office's ground. A card speaks for the office that counted the clicked
+   * precinct.
+   *
    * THE FILES (written by an app's builder through
    * scripts/election_results_common.py): one index — the election, its date,
    * when it was read, certified or not, the race groups (each tied to the map
@@ -15949,7 +15973,9 @@ function initMinnesotaExplorer() {
           (data.contests || []).forEach(function (c) { byId[String(c.id)] = c; });
           var groupLabel = {};
           (data.groups || []).forEach(function (g) { groupLabel[g.id] = g; });
-          return { data: data, pos: pos, byId: byId, groups: groupLabel };
+          var sources = {};
+          (data.sources || []).forEach(function (src) { sources[String(src.id)] = src; });
+          return { data: data, pos: pos, byId: byId, groups: groupLabel, sources: sources };
         }, function (err) {
           indexPromise = null; // asked again on the next click rather than pinned
           throw err;
@@ -15968,14 +15994,128 @@ function initMinnesotaExplorer() {
       return parts[part];
     }
 
+    // The office that counted a precinct: the source its key names before a
+    // colon, else the index's first source; an index with no sources is the
+    // one publisher the app named.
+    function sourceIdOf(idx, key) {
+      var k = key === undefined || key === null ? "" : String(key), at = k.indexOf(":");
+      if (at > 0) return k.slice(0, at);
+      var list = idx && idx.data.sources;
+      return list && list.length ? String(list[0].id) : null;
+    }
+    function sourceOf(idx, srcId) {
+      var s = srcId !== null && srcId !== undefined && idx && idx.sources ? idx.sources[srcId] : null;
+      return {
+        id: srcId === undefined ? null : srcId,
+        publisher: (s && s.publisher) || opts.publisher,
+        areaName: (s && s.areaName) || opts.areaName,
+        uncountedNote: s ? (s.uncountedNote || "") : (opts.uncountedNote || ""),
+        read: (s && s.read) || (idx && idx.data.read),
+        certified: s ? !!s.certified : !!(idx && idx.data.certified),
+        certifiedDate: (s && s.certifiedDate) || (!s && idx && idx.data.certifiedDate) || null,
+        url: (s && s.source) || (idx && idx.data.source) || null
+      };
+    }
+    // the offices that counted a contest, where the index says
+    function contestSourceIds(contest) {
+      return contest && contest.bySource ? Object.keys(contest.bySource) : [];
+    }
+    // a contest's totals, the choices one office lists, and whether the race
+    // reaches past that office's ground, as that office counted it
+    function contestFor(contest, srcId) {
+      var s = contest && contest.bySource && srcId !== null && srcId !== undefined ? contest.bySource[srcId] : null;
+      return {
+        total: s ? s.total : contest.total,
+        beyond: s ? !!s.beyond : !!contest.beyond,
+        which: s && s.choices ? s.choices : contest.choices.map(function (name, n) { return n; })
+      };
+    }
+
     // A contest may carry its own certified flag and date (where a local
-    // office is certified before the rest of the ballot); otherwise the file's.
-    function certified(idx, contest) {
+    // office is certified before the rest of the ballot); otherwise the
+    // office's (src), or, speaking for no one office, every office that
+    // counted it; otherwise the file's.
+    function certified(idx, contest, src) {
       if (contest && contest.certified !== undefined && contest.certified !== null) return !!contest.certified;
+      if (src) return src.certified;
+      var ids = contestSourceIds(contest);
+      if (ids.length) return ids.every(function (id) { return sourceOf(idx, id).certified; });
+      // a contest with no bySource is the first office's alone
+      var list = idx && idx.data.sources;
+      if (list && list.length) return !!list[0].certified;
       return !!(idx && idx.data.certified);
     }
-    function certifiedDate(idx, contest) {
-      return (contest && contest.certifiedDate) || (idx && idx.data.certifiedDate) || null;
+    function certifiedDate(idx, contest, src) {
+      return (contest && contest.certifiedDate) || (src && src.certifiedDate) || (idx && idx.data.certifiedDate) || null;
+    }
+
+    /* ---- precincts another office counts, drawn beside the app's own ----
+     * Each entry's outlines load once and are kept as features carrying only
+     * their results key and label, so the map, the card and the district
+     * totals read one shape per precinct whoever drew it. */
+    var extraLoads = {}, extraLoaded = {};
+    function extraFeatures(src) {
+      if (!extraLoads[src.id]) {
+        extraLoads[src.id] = src.load().then(function (geojson) {
+          var out = [];
+          ((geojson && geojson.features) || []).forEach(function (f) {
+            var key = f && f.geometry ? src.key(f) : null;
+            if (key === null || key === undefined) return;
+            var props = {};
+            props[opts.keyProp] = String(key);
+            props.dxElectionLabel = src.label(f);
+            out.push({ type: "Feature", geometry: f.geometry, properties: props });
+          });
+          extraLoaded[src.id] = out;
+          return out;
+        }, function (err) {
+          delete extraLoads[src.id]; // asked again next time rather than pinned
+          throw err;
+        });
+      }
+      return extraLoads[src.id];
+    }
+    function extraFeatureAt(point) {
+      var list = opts.extraPrecincts || [];
+      return Promise.all(list.map(function (src) {
+        return Promise.resolve(src.coverage ? src.coverage(point) : true).then(function (inside) {
+          if (!inside) return null;
+          return extraFeatures(src).then(function (feats) {
+            return findFeatureContaining({ type: "FeatureCollection", features: feats }, point);
+          });
+        }).then(null, function (err) {
+          console.warn("[" + opts.id + "] " + src.id + " precincts did not load:", err);
+          return null;
+        });
+      })).then(function (hits) {
+        for (var i = 0; i < hits.length; i++) if (hits[i]) return hits[i];
+        return null;
+      });
+    }
+    // For the map: each office's outlines as they land, fresh objects each
+    // time the layer goes on (the live part marks what it has drawn).
+    function extraTileLive(onAppend) {
+      var list = opts.extraPrecincts || [];
+      var fc = { type: "FeatureCollection", features: [] };
+      return new Promise(function (resolve) {
+        var pending = list.length, resolved = false;
+        if (!pending) { resolve(fc); return; }
+        list.forEach(function (src) {
+          extraFeatures(src).then(function (feats) {
+            var fresh = feats.map(function (f) { return { type: "Feature", geometry: f.geometry, properties: f.properties }; });
+            if (!resolved) { resolved = true; fc.features = fresh; resolve(fc); } else onAppend(fresh);
+          }, function (err) {
+            console.warn("[" + opts.id + "] " + src.id + " precincts did not load:", err);
+          }).then(function () {
+            pending--;
+            if (!pending && !resolved) { resolved = true; resolve(fc); }
+          });
+        });
+      });
+    }
+    function precinctLabelOf(feature) {
+      var p = (feature && feature.properties) || {};
+      return p.dxElectionLabel ? String(p.dxElectionLabel) : opts.precinctLabel(feature);
     }
 
     // The map's fill for the picked race: a MapLibre expression for the tile
@@ -16105,7 +16245,7 @@ function initMinnesotaExplorer() {
       items.appendChild(race);
       var lead = document.createElement("span");
       lead.className = "dml-sub";
-      lead.textContent = certified(idx, contest) ? "Most votes in each precinct" : "Most votes so far in each precinct";
+      lead.textContent = certified(idx, contest, null) ? "Most votes in each precinct" : "Most votes so far in each precinct";
       items.appendChild(lead);
       var shown = {};
       for (var i = 0; i < contest.leaders.length; i++) shown[contest.leaders.charAt(i)] = true;
@@ -16164,36 +16304,51 @@ function initMinnesotaExplorer() {
       }
       var status = document.createElement("span");
       status.className = "dml-sub election-legend-status";
-      var cd = certifiedDate(idx, contest);
-      status.textContent = certified(idx, contest)
-        ? "Certified by the " + opts.publisher + (cd ? " on " + electionDateText(cd) : "")
-        : "Unofficial, not certified. Read " + electionDateText(idx.data.read) + ".";
+      var ids = contestSourceIds(contest);
+      if (ids.length > 1) {
+        // several offices counted this race: name how many, and the latest reading
+        var reads = ids.map(function (id) { return String(sourceOf(idx, id).read || ""); }).sort();
+        status.textContent = certified(idx, contest, null)
+          ? "Certified by each of the " + ids.length + " election offices that counted it."
+          : "Unofficial, not certified. Read from " + ids.length + " election offices, most recently " +
+            electionDateText(reads[reads.length - 1]) + ".";
+      } else {
+        var one = sourceOf(idx, ids.length ? ids[0] : sourceIdOf(idx, null));
+        var cd = certifiedDate(idx, contest, one);
+        status.textContent = certified(idx, contest, one)
+          ? "Certified by the " + one.publisher + (cd ? " on " + electionDateText(cd) : "")
+          : "Unofficial, not certified. Read " + electionDateText(one.read) + ".";
+      }
       items.appendChild(status);
       legendEl.appendChild(items);
     }
 
     /* ---- the card ---- */
-    function noticeEl(idx, contest) {
-      var box = cardEl("div", "election-notice" + (certified(idx, contest) ? " election-notice-certified" : ""));
-      if (certified(idx, contest)) {
-        var cd = certifiedDate(idx, contest);
-        box.textContent = "Official results, certified by the " + opts.publisher +
+    function noticeEl(idx, contest, src) {
+      var box = cardEl("div", "election-notice" + (certified(idx, contest, src) ? " election-notice-certified" : ""));
+      if (certified(idx, contest, src)) {
+        var cd = certifiedDate(idx, contest, src);
+        box.textContent = "Official results, certified by the " + src.publisher +
           (cd ? " on " + electionDateText(cd) : "") + ".";
       } else {
         box.appendChild(cardEl("strong", null, "Unofficial results. "));
-        box.appendChild(document.createTextNode(opts.uncountedNote +
-          " These numbers are not certified and will change. Read from the " + opts.publisher +
-          " on " + electionDateText(idx.data.read) + "."));
+        box.appendChild(document.createTextNode((src.uncountedNote ? src.uncountedNote + " " : "") +
+          "These numbers are not certified and will change. Read from the " + src.publisher +
+          " on " + electionDateText(src.read) + "."));
       }
       return box;
     }
 
     // One race's table: a row per choice with its votes and share, the
     // leader marked unless a count is withheld (it could be the leader's)
-    function raceTable(idx, contest, ballots, counts, captionText, leadWord) {
-      var withheld = counts.some(function (n) { return n === null || n === undefined; });
-      var top = withheld || !leadWord ? -1 : Math.max.apply(null, counts.concat([0]));
-      var tied = counts.filter(function (n) { return n === top; }).length > 1;
+    // `which` is the choices to list (the ones the counting office lists);
+    // counts are aligned to all of the contest's choices.
+    function raceTable(idx, contest, ballots, counts, captionText, leadWord, which) {
+      which = which || contest.choices.map(function (name, n) { return n; });
+      var shownCounts = which.map(function (n) { return counts[n]; });
+      var withheld = shownCounts.some(function (n) { return n === null || n === undefined; });
+      var top = withheld || !leadWord ? -1 : Math.max.apply(null, shownCounts.concat([0]));
+      var tied = shownCounts.filter(function (n) { return n === top; }).length > 1;
       var table = cardEl("table", "election-table");
       table.appendChild(cardEl("caption", null, captionText));
       var thead = cardEl("thead");
@@ -16204,7 +16359,8 @@ function initMinnesotaExplorer() {
       thead.appendChild(hr);
       table.appendChild(thead);
       var tbody = cardEl("tbody");
-      contest.choices.forEach(function (name, n) {
+      which.forEach(function (n) {
+        var name = contest.choices[n];
         var tr = cardEl("tr");
         var th = cardEl("th");
         th.setAttribute("scope", "row");
@@ -16233,24 +16389,25 @@ function initMinnesotaExplorer() {
       var row = null;
       for (var i = 0; i < result.rows.length; i++) if (String(result.rows[i][0]) === picked) row = result.rows[i];
       if (!contest || !row) return;
+      var src = sourceOf(idx, result.src), cf = contestFor(contest, result.src);
       var ballots = row[1], counts = row.slice(2);
       // a count the publisher withholds (small-number privacy) is null; no
       // leader is named where one is withheld, because it could be the leader
-      var withheld = counts.some(function (n) { return n === null || n === undefined; });
+      var withheld = cf.which.some(function (n) { return counts[n] === null || counts[n] === undefined; });
       body.appendChild(raceTable(idx, contest, ballots, counts, contest.name + " in this precinct",
-        certified(idx, contest) ? "Most votes here" : "Most votes so far"));
+        certified(idx, contest, src) ? "Most votes here" : "Most votes so far", cf.which));
       var notes = [];
-      if (withheld) notes.push("The " + opts.publisher + " withholds some of this precinct's counts to protect the privacy" +
+      if (withheld) notes.push("The " + src.publisher + " withholds some of this precinct's counts to protect the privacy" +
         " of a small number of voters, so no choice is named as having the most votes here.");
       if (ballots !== null && ballots !== undefined) notes.push("Votes counted in this race here: " + ballots.toLocaleString("en-US") + "." +
         (contest.multiple ? " Voters could choose more than one candidate in this race, so each share is of all the votes" +
           " cast in it, not of the people who voted." : " Each share is of those votes."));
-      var whole = contest.total[0];
-      notes.push("Across " + opts.areaName + "'s precincts: " +
-        contest.choices.map(function (name, n) {
-          return String(name) + " " + contest.total[n + 1].toLocaleString("en-US") + " (" +
-            electionPercent(contest.total[n + 1], whole) + ")";
-        }).join(", ") + "." + (contest.beyond ? " This race reaches beyond " + opts.areaName +
+      var whole = cf.total[0];
+      notes.push("Across " + src.areaName + "'s precincts: " +
+        cf.which.map(function (n) {
+          return String(contest.choices[n]) + " " + cf.total[n + 1].toLocaleString("en-US") + " (" +
+            electionPercent(cf.total[n + 1], whole) + ")";
+        }).join(", ") + "." + (cf.beyond ? " This race reaches beyond " + src.areaName +
           ", so these totals are not the whole race." : ""));
       // votes counted in no precinct (absentee, early or provisional units a
       // publisher reports apart) are in the totals and on no shape of the map
@@ -16332,7 +16489,16 @@ function initMinnesotaExplorer() {
       var idx = areaResult.idx, contest = idx.byId[picked];
       var self = selfModule();
       if (!contest || !self) return;
-      var precincts = wholeFile(self);
+      // the app's own precincts (needed when the clicked one is the app's)
+      // and every other office's that have loaded
+      var ownSrc = sourceIdOf(idx, null);
+      var mine = areaResult.src === ownSrc || !opts.extraPrecincts ? wholeFile(self) : null;
+      var precincts = null;
+      if (mine || areaResult.src !== ownSrc) {
+        var feats = mine ? (mine.features || []).slice() : [];
+        Object.keys(extraLoaded).forEach(function (id) { Array.prototype.push.apply(feats, extraLoaded[id]); });
+        precincts = { type: "FeatureCollection", features: feats };
+      }
       var wanted = [];
       layers.forEach(function (mod) {
         if (mod.id === opts.id || mod.fillsGround || !state.layersOn[mod.id]) return;
@@ -16350,11 +16516,12 @@ function initMinnesotaExplorer() {
         if (district && district.geometry) wanted.push({ mod: mod, name: name, district: district });
       });
       if (!precincts) return;
-      var sig = picked + "|" + wanted.map(function (w) { return w.mod.id + ":" + w.name; }).join("|");
+      var sig = picked + "|" + Object.keys(extraLoaded).length + "|" +
+        wanted.map(function (w) { return w.mod.id + ":" + w.name; }).join("|");
       if (sig === areaShown) return;
       var token = ++areaToken, box = areaBox;
       var jobs = wanted.map(function (w) {
-        var k = w.mod.id + "|" + w.name;
+        var k = w.mod.id + "|" + w.name + "|" + precincts.features.length;
         var a = areaAssign[k] || (areaAssign[k] = assignPrecincts(precincts, w.district));
         var partNames = {};
         a.keys.forEach(function (key) {
@@ -16368,12 +16535,13 @@ function initMinnesotaExplorer() {
             for (var key in ps) if (ps.hasOwnProperty(key)) byKey[key] = ps[key];
           });
           var ballots = 0, counts = contest.choices.map(function () { return 0; });
-          var voted = 0, withheld = false;
+          var voted = 0, withheld = false, srcs = {};
           a.keys.forEach(function (key) {
             var rows = (byKey[key] || {}).contests || [];
             for (var i = 0; i < rows.length; i++) {
               if (String(rows[i][0]) !== picked) continue;
               voted++;
+              srcs[sourceIdOf(idx, key)] = true;
               if (rows[i][1] === null || rows[i][1] === undefined) withheld = true; else ballots += rows[i][1];
               for (var n = 0; n < counts.length; n++) {
                 var c = rows[i][n + 2];
@@ -16381,7 +16549,7 @@ function initMinnesotaExplorer() {
               }
             }
           });
-          return { w: w, a: a, ballots: ballots, counts: counts, voted: voted, withheld: withheld };
+          return { w: w, a: a, ballots: ballots, counts: counts, voted: voted, withheld: withheld, srcs: Object.keys(srcs) };
         });
       });
       Promise.all(jobs).then(function (sums) {
@@ -16397,9 +16565,16 @@ function initMinnesotaExplorer() {
           var sec = document.createElement("details");
           sec.className = "election-area";
           if (areaOpen[t.w.mod.id]) sec.open = true;
-          var top = Math.max.apply(null, t.counts.concat([0]));
+          // the choices any office counting these precincts lists, and the
+          // office speaking for them where there is one
+          var listed = {};
+          t.srcs.forEach(function (id) { contestFor(contest, id).which.forEach(function (n) { listed[n] = true; }); });
+          var which = contest.choices.map(function (name, n) { return n; }).filter(function (n) { return listed[n]; });
+          var tSrc = t.srcs.length === 1 ? sourceOf(idx, t.srcs[0]) : null;
+          var shown = which.map(function (n) { return t.counts[n]; });
+          var top = Math.max.apply(null, shown.concat([0]));
           var leaders = [];
-          t.counts.forEach(function (c, n) { if (c === top && top > 0) leaders.push(n); });
+          which.forEach(function (n) { if (t.counts[n] === top && top > 0) leaders.push(n); });
           // the line says these are the race's totals, never who holds the
           // district (Adam, 2026-11-05: "This section title is confusing")
           var summary = cardEl("summary", "election-area-head");
@@ -16407,7 +16582,7 @@ function initMinnesotaExplorer() {
             "Race totals for " + t.w.name + " (" + t.w.mod.label + ")"));
           var lead = null;
           if (!t.withheld && leaders.length === 1) {
-            lead = (certified(idx, contest) ? "Most votes: " : "Most votes so far: ") +
+            lead = (certified(idx, contest, tSrc) ? "Most votes: " : "Most votes so far: ") +
               String(contest.choices[leaders[0]]) + ", " + electionPercent(top, t.ballots);
           } else if (!t.withheld && leaders.length > 1) {
             lead = "Tied for most votes";
@@ -16418,7 +16593,7 @@ function initMinnesotaExplorer() {
             sec.addEventListener("toggle", function () { areaOpen[id] = sec.open; });
           })(t.w.mod.id);
           sec.appendChild(raceTable(idx, contest, t.ballots, t.counts, contest.name + ", all of " + t.w.name,
-            t.withheld ? null : certified(idx, contest) ? "Most votes in " + t.w.name : "Most votes so far"));
+            t.withheld ? null : certified(idx, contest, tSrc) ? "Most votes in " + t.w.name : "Most votes so far", which));
           var notes = ["Added up from the " + t.voted.toLocaleString("en-US") + " precinct" + (t.voted === 1 ? "" : "s") +
             " in " + t.w.name + " that voted in this race: " + t.ballots.toLocaleString("en-US") + " votes."];
           if (t.voted < t.a.keys.length) {
@@ -16430,15 +16605,22 @@ function initMinnesotaExplorer() {
               " the edge of " + t.w.name + "; each is counted wholly in the district holding most of its area," +
               " so these totals are close, not exact.");
           }
+          var pub = tSrc ? tSrc.publisher : sourceOf(idx, ownSrc).publisher;
           if (t.a.coverage < 0.95) {
-            notes.push("Only part of " + t.w.name + " lies in " + opts.areaName + ", so these totals are for that part.");
+            notes.push(opts.extraPrecincts
+              ? "Only part of " + t.w.name + " lies where this map has precinct results, so these totals are for that part."
+              : "Only part of " + t.w.name + " lies in " + opts.areaName + ", so these totals are for that part.");
+          }
+          if (t.srcs.length > 1) {
+            notes.push("These precincts were counted by " + t.srcs.length + " election offices: " +
+              t.srcs.map(function (id) { return "the " + sourceOf(idx, id).publisher; }).join(", ") + ".");
           }
           if (t.withheld) {
-            notes.push("The " + opts.publisher + " withholds some counts to protect the privacy of a small number of" +
+            notes.push("The " + pub + " withholds some counts to protect the privacy of a small number of" +
               " voters, so these totals leave them out and name no leader.");
           }
           if (contest.outside && contest.outside[0] > 0) {
-            notes.push("Votes the " + opts.publisher + " counted outside any precinct are not in these totals.");
+            notes.push("Votes the " + pub + " counted outside any precinct are not in these totals.");
           }
           notes.forEach(function (x) { sec.appendChild(cardEl("p", "election-note", x)); });
           box.appendChild(sec);
@@ -16451,6 +16633,7 @@ function initMinnesotaExplorer() {
     registerLayer({
       id: opts.id,
       tiles: opts.tiles,
+      tileLive: opts.extraPrecincts && opts.extraPrecincts.length ? extraTileLive : undefined,
       group: opts.group || "elections",
       fillsGround: true, // its colours are the answer: other layers drop their selected-district tint (layer-registry)
       label: opts.label,
@@ -16463,13 +16646,17 @@ function initMinnesotaExplorer() {
       },
       query: function (point, seq) {
         return Promise.all([queryFeatureAt(opts.load, point), loadIndex()]).then(function (got) {
+          // a point outside the app's own precincts may be in another office's
+          return got[0] || !opts.extraPrecincts ? got : extraFeatureAt(point).then(function (f) { return [f, got[1]]; });
+        }).then(function (got) {
           var feature = got[0], idx = got[1];
           resolvedIndex = idx;
           if (!feature) return null;
           var raw = (feature.properties || {})[opts.keyProp];
           var key = raw === undefined || raw === null ? null : String(raw);
           var at = key === null ? undefined : idx.pos[key];
-          if (at === undefined) return { seq: seq, idx: idx, key: key, label: opts.precinctLabel(feature), rows: [], turnout: null };
+          var srcId = sourceIdOf(idx, key);
+          if (at === undefined) return { seq: seq, idx: idx, key: key, src: srcId, label: precinctLabelOf(feature), rows: [], turnout: null };
           var part = idx.data.parts[at];
           return loadPart(part).then(function (doc) {
             var own = (doc.precincts || {})[key] || {};
@@ -16493,19 +16680,19 @@ function initMinnesotaExplorer() {
             } else {
               drawLegend();
             }
-            return { seq: seq, idx: idx, key: key, label: opts.precinctLabel(feature), rows: rows,
+            return { seq: seq, idx: idx, key: key, src: srcId, label: precinctLabelOf(feature), rows: rows,
               turnout: own.turnout || null, partRead: doc.read };
           });
         });
       },
       render: function (result) {
         var wrap = cardEl("div", "card-flush election-card");
-        var idx = result.idx;
+        var idx = result.idx, src = sourceOf(idx, result.src);
         wrap.appendChild(cardEl("p", "election-title", electionTitle(idx.data)));
-        var notice = noticeEl(idx, picked ? idx.byId[picked] : null);
+        var notice = noticeEl(idx, picked ? idx.byId[picked] : null, src);
         wrap.appendChild(notice);
         if (!result.rows.length) {
-          wrap.appendChild(cardEl("p", "election-note", "The " + opts.publisher + " lists no results for this precinct."));
+          wrap.appendChild(cardEl("p", "election-note", "The " + src.publisher + " lists no results for this precinct."));
           return wrap;
         }
         if (result.partRead && result.partRead !== idx.data.read) {
@@ -16539,7 +16726,7 @@ function initMinnesotaExplorer() {
         wrap.appendChild(body);
         sel.addEventListener("change", function () {
           pick(sel.value);
-          var fresh = noticeEl(idx, idx.byId[picked]);
+          var fresh = noticeEl(idx, idx.byId[picked], src);
           wrap.replaceChild(fresh, notice);
           notice = fresh;
           renderRace(body, result);
@@ -16565,11 +16752,12 @@ function initMinnesotaExplorer() {
         return result && result.label ? result.label : "Unknown";
       },
       hoverName: function (feature) {
-        return opts.precinctLabel(feature);
+        return precinctLabelOf(feature);
       },
       primaryLink: function (result) {
-        var url = result && result.idx && result.idx.data.source;
-        return url ? { label: "Results from the " + opts.publisher, url: url } : null;
+        if (!result || !result.idx) return null;
+        var src = sourceOf(result.idx, result.src);
+        return src.url ? { label: "Results from the " + src.publisher, url: src.url } : null;
       },
       onToggle: function (on) {
         refreshHighlightFills(); // other layers' selected districts drop or regain their tint
@@ -19818,7 +20006,11 @@ function initMinnesotaExplorer() {
    * district, so a map drawn on block lines (congress, the legislature,
    * wards) gets an exact count, and one that is not gets a close one — the
    * footnote says so. The block files are fetched per county, only for the
-   * counties the districts touch, and only when this screen opens.
+   * counties the districts touch, and only when this screen opens. They hold
+   * this app's own ground and nobody beyond it, so a district reaching past
+   * that ground (a ZIP code across a state line, a San Francisco Assembly
+   * district reaching into San Mateo County) is not given a share of its own
+   * people, and a compared district that does is compared by area alone.
    *
    * A ROW'S CARD RUNS THE LAYER'S OWN QUERY AT A POINT INSIDE THE DISTRICT
    * (the outline label's spot, which lies in the part inside the pinned
@@ -19854,11 +20046,20 @@ function initMinnesotaExplorer() {
   var statsOpenSeq = 0;
   var statsPopIndex = null;
   var statsPopFiles = {};
+  var statsPopGround = null;
 
   function statsLoadPopulationIndex() {
     if (typeof POPULATION_INDEX_URL === "undefined") return Promise.resolve(null);
     if (!statsPopIndex) {
-      statsPopIndex = fetchJSONWithRetry(POPULATION_INDEX_URL, {}, 2)["catch"](function (err) {
+      statsPopIndex = fetchJSONWithRetry(POPULATION_INDEX_URL, {}, 2).then(function (index) {
+        // an index may name the ground its blocks cover (see statsOutsideShare)
+        if (!index || !index.ground) return index;
+        var base = POPULATION_INDEX_URL.replace(/[^\/]*$/, "");
+        return fetchJSONWithRetry(base + index.ground, {}, 2).then(function (g) {
+          statsPopGround = g && g.type ? g : null;
+          return index;
+        });
+      })["catch"](function (err) {
         console.warn("population index unavailable; comparing by area only:", err);
         statsPopIndex = null;
         return null;
@@ -19902,6 +20103,29 @@ function initMinnesotaExplorer() {
     for (var i = 0; i < sets.length; i++) for (var j = 0; j < sets[i].length; j++) sum += sets[i][j][2] || 0;
     return sum;
   }
+
+  // The population files hold the people of this app's own ground and no
+  // one beyond it, so a district reaching past that ground has people the
+  // files cannot count. This is the share of a district's area outside the
+  // ground the index names (San Francisco's county with its water, because
+  // its wash is drawn on land and its districts carry the Bay), or else the
+  // outline the app drew its wash with (the state), or 0 while neither has
+  // loaded. A district with more than 1% of its area outside is treated as
+  // reaching past: measured 2026-11-06, no state's congressional or
+  // legislative district has more than 0.06% of its area outside its
+  // state's outline.
+  function statsOutsideShare(geometry) {
+    var ground = statsPopGround;
+    if (!ground && typeof coverageRegionPolys !== "undefined" && coverageRegionPolys && coverageRegionPolys.length) {
+      ground = { type: "MultiPolygon", coordinates: coverageRegionPolys };
+    } else if (!ground && typeof coverageMaskRings !== "undefined" && coverageMaskRings && coverageMaskRings.length) {
+      ground = { type: "Polygon", coordinates: coverageMaskRings };
+    }
+    if (!ground || !geometry) return 0;
+    var m = measureOverlap(geometry, ground);
+    return m.area > 0 ? 1 - m.share : 0;
+  }
+  var STATS_OUTSIDE_LIMIT = 0.01;
 
   // A share as a reader should see it: never "0%" for something that is
   // there, never "100%" for something that is not all of it.
@@ -20215,6 +20439,13 @@ function initMinnesotaExplorer() {
     peopleDone = statsLoadPopulation(box).then(function (sets) {
       if (!live()) return;
       if (!sets) { cells.forEach(function (c) { c.el.hidden = true; }); return; }
+      var place = appPlaceName();
+      if (statsOutsideShare(parentFeature.geometry) > STATS_OUTSIDE_LIMIT) {
+        cells.forEach(function (c) { c.el.hidden = true; });
+        foot.textContent = "Population figures cover " + place + " only, and " + parentName +
+          " reaches past it, so it is compared by area. Areas are measured from the map's simplified boundaries.";
+        return;
+      }
       var inParent = statsPointsIn(parentFeature.geometry, sets);
       var parentPop = statsSetsWeight(inParent);
       totals.textContent = statsNum(parentPop) + " people · " + statsSqMi(parentArea);
@@ -20223,8 +20454,16 @@ function initMinnesotaExplorer() {
         var all = statsWeight(c.row.feature.geometry, sets);
         var shared = statsWeight(c.row.feature.geometry, inParent);
         sharedByLayer[c.row.mod.id] = (sharedByLayer[c.row.mod.id] || 0) + shared;
-        c.el.textContent = "People: " + statsPct(shared, all) + " of its " + statsNum(all) + " are in " +
-          parentName + ", making up " + statsPct(shared, parentPop) + " of " + parentName;
+        if (statsOutsideShare(c.row.feature.geometry) > STATS_OUTSIDE_LIMIT) {
+          // only its people inside this app's ground are in the files, so
+          // what share of it lies in the compared district is not known
+          c.el.textContent = "People: " + statsNum(shared) + " of its people are in " + parentName +
+            ", making up " + statsPct(shared, parentPop) + " of " + parentName + ". Part of it lies outside " +
+            place + ", where this app has no population figures.";
+        } else {
+          c.el.textContent = "People: " + statsPct(shared, all) + " of its " + statsNum(all) + " are in " +
+            parentName + ", making up " + statsPct(shared, parentPop) + " of " + parentName;
+        }
         c.shared = shared;
       });
       // with people counted, the districts holding most of the compared

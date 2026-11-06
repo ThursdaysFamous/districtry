@@ -665,6 +665,9 @@
   },
   "exports_name": "OklahomaExplorer",
   "verified_date": "October 9, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
   "sources_page": {
     "file": "ok/sources.html",
     "credits": [

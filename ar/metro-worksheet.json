@@ -686,6 +686,9 @@
   },
   "exports_name": "ArkansasExplorer",
   "verified_date": "October 13, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
   "sources_page": {
     "file": "ar/sources.html",
     "credits": [

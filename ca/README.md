@@ -105,7 +105,7 @@ docs/                               architecture + metro-expansion playbooks
 Gates that run in CI:
 
 - **Static gate** (`scripts/validate_index.py`): the inline script passes `node --check`, every layer is still registered, no dataset is embedded inline, and every `data/app/` file is present and complete (six pre-built geometry files; six same-origin rosters — four CI-built officeholder rosters plus the two hand-maintained ones, the voting-site list and the BART directors). A bad data regeneration can't reach `main` unreviewed.
-- **Behaviour gate** (`scripts/smoke_test.mjs`, run on every pull request): a real Chromium boot via Playwright asserts the app comes up, registers all 16 layers, classifies San Francisco City Hall against known ground truth (Supervisor District 5, Tenderloin neighborhood, NORTHERN police district; U.S. House 11 / CA Senate 11 / CA Assembly 17, each with its officeholder roster join), and degrades to an isolated error card + Retry when a data source fails.
+- **Behaviour gate** (`scripts/smoke_test.mjs`, run on every pull request): a real Chromium boot via Playwright asserts the app comes up, registers all 17 layers, classifies San Francisco City Hall against known ground truth (Supervisor District 5, Tenderloin neighborhood, NORTHERN police district; U.S. House 11 / CA Senate 11 / CA Assembly 17, each with its officeholder roster join), and degrades to an isolated error card + Retry when a data source fails.
 - **Drift + freshness gates** (`generate_metro_files.py --check`, `check_engine_parity.py`, `validate_sources.py`): the GENERATED regions match the worksheet, the engine fences stay byte-identical across forks, and the upstream datasets haven't gone stale.
 
 ## Not for legal or official use

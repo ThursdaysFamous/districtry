@@ -11,6 +11,7 @@ checkpoint with a stale date is a checkpoint that didn't happen.
 
 | Cadence | What | Where | You do |
 |---|---|---|---|
+| **2031**, when TIGERweb publishes 2030 census blocks | The Census 2020 block populations the compare screen counts people with, the one dataset here that cannot change until then | `ia/data/app/population/` | Point `scripts/build_block_population.py` at the 2030 block and tract layers, set this app's `INSTANCES` row's `total` to its 2030 count and rebuild with `--instance ia`. `--check` forces it: the first legislative map drawn on 2030 blocks fails against 2020 people until this row is done. |
 | Weekly (Mon 14:30 UTC) | U.S. House (IA) roster refresh | `.github/workflows/update-ia-congress-roster.yml` → PR on change | Review + merge the PR; a week with a surprise diff is worth a look at the source |
 | Weekly (Tue 14:30 UTC) | Iowa Senate + House roster refresh (Open States ia.csv + legis.iowa.gov office enrichment) | `.github/workflows/update-ia-legislature-roster.yml` → PR on change | Review + merge the PR — especially after an Iowa general (November, even years) and each January seating |
 | Weekly (Wed 14:30 UTC) | County auditor roster refresh (iowaauditors.org's own association directory) | `.github/workflows/update-ia-county-auditor-roster.yml` → PR on change | Review + merge the PR — auditors are elected countywide and can turn over between the Iowa generals above |

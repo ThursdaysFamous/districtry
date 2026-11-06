@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "va-senate", "va-house"];
 const EXPECT_DISTRICT = { "county": "Richmond city", "us-house": "4", "va-senate": "14", "va-house": "78" };
 const NEGATIVE_POINT = "37.00000,-75.30000"; // Open Atlantic Ocean east of the mouth of Chesapeake Bay, 44 km from the nearest edge of Virginia's outline — outside Virginia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: none of the state's shipped boundary files contains it, none of fleet-outlines.json's outlines does either, and the State Capitol, the control, is inside every shipped file. Water on purpose, the way North Carolina's and Louisiana's are: every land neighbour of Virginia is either live already (Kentucky, Tennessee, North Carolina) or a state the fleet plans to build (West Virginia, Maryland), so a point on a neighbour's land would have to move when that neighbour goes live.
 const APP_NAME = "districtry Virginia";
-const EXPECT_LAYERS = 16;
+const EXPECT_LAYERS = 17;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "VirginiaExplorer";
@@ -567,6 +567,80 @@ try {
           !!street && got.all.includes(street) && mailOk,
         `name=${rec.name} street=${street} mailto=${JSON.stringify(got.mailto)} ${info.text.slice(0, 80)}`);
     }
+    await context.close();
+  }
+
+  // ---- Election results: the card, the race menu and the legend, held to
+  // the shipped files rather than to any count, because the numbers move daily
+  // until the State Board of Elections certifies them. The card names the
+  // precinct and its county or city, says unofficial while the file is not
+  // certified, and offers exactly the races on this precinct's ballot; the
+  // legend names the picked race and keys the five lead bands; a U.S. House
+  // race picked at the Capitol becomes Alexandria's own district race when the
+  // point moves there.
+  {
+    const idx = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results.json"), "utf8"));
+    const ballotOf = (key) => {
+      const part = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results",
+        idx.parts[idx.precincts.indexOf(key)] + ".json"), "utf8"));
+      return part.precincts[key].contests.map((r) => String(r[0]));
+    };
+    const onBallot = ballotOf("51760-000607"); // Richmond precinct 607, the anchor's precinct
+    const firstOnBallot = idx.contests.find((c) => onBallot.includes(String(c.id)));
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=election-results`);
+    await page.waitForFunction(() => {
+      const c = document.getElementById("card-election-results");
+      return c && c.querySelector(".election-table");
+    }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const got = await page.evaluate(() => {
+      const c = document.getElementById("card-election-results");
+      const block = c && c.closest(".layer-block");
+      const pill = block && block.querySelector(".card-id-pill");
+      const sel = c && c.querySelector("select.election-select");
+      const legend = document.querySelector(".election-legend");
+      return {
+        notice: ((c && c.querySelector(".election-notice")) || {}).textContent || "",
+        pill: pill ? pill.textContent.trim() : "",
+        options: sel ? Array.from(sel.options).map((o) => o.value) : [],
+        legendShown: !!legend && !legend.hidden,
+        legendRace: legend ? ((legend.querySelector(".election-legend-race") || {}).textContent || "") : "",
+        legendSteps: legend ? legend.querySelectorAll(".election-legend-scale .election-legend-step").length : 0,
+        rows: c ? c.querySelectorAll(".election-table tbody tr").length : 0,
+        text: c ? c.textContent : "",
+      };
+    });
+    const noticeOk = idx.certified ? got.notice.indexOf("certified") !== -1
+      : got.notice.indexOf("Unofficial results") !== -1 &&
+        got.notice.indexOf("Virginia Department of Elections") !== -1;
+    const menuOk = got.options.length === onBallot.length && got.options.every((v) => onBallot.includes(v));
+    check("the Election Results card says unofficial and lists exactly this precinct's races",
+          noticeOk && menuOk && got.pill === "Six Hundred Seven, Richmond city" &&
+          got.rows === firstOnBallot.choices.length && got.text.indexOf("Across Virginia's precincts") !== -1 &&
+          got.text.indexOf("counted outside any precinct") === -1,
+          `notice=${JSON.stringify(got.notice.slice(0, 60))} options=${got.options.length}/${onBallot.length} ` +
+          `pill=${JSON.stringify(got.pill)} rows=${got.rows}`);
+    check("the Election Results legend names the picked race and keys the five lead bands",
+          got.legendShown && got.legendRace === firstOnBallot.name && got.legendSteps === 5,
+          `shown=${got.legendShown} race=${JSON.stringify(got.legendRace)} steps=${got.legendSteps}`);
+    const houseHere = idx.contests.find((c) => c.group === "us-house" && onBallot.includes(String(c.id)));
+    await page.selectOption("#card-election-results select.election-select", String(houseHere.id));
+    await page.waitForTimeout(300);
+    await page.evaluate((n) => window[n].setSelectedPoint(38.80480, -77.04690), EXPORTS_NAME); // Alexandria City Hall
+    await page.waitForFunction((was) => {
+      const pill = document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill");
+      return pill && pill.textContent.trim() !== was && document.querySelector("#card-election-results .election-table");
+    }, got.pill, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const moved = await page.evaluate(() => ({
+      pill: (document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill") || {}).textContent || "",
+      value: (document.querySelector("#card-election-results select.election-select") || {}).value || "",
+      race: (document.querySelector(".election-legend .election-legend-race") || {}).textContent || "",
+    }));
+    const houseThere = idx.contests.find((c) => c.group === "us-house" && c.id !== houseHere.id &&
+      moved.value === String(c.id));
+    check("a U.S. House race picked in Richmond becomes Alexandria's own district race",
+          !!houseThere && moved.race === houseThere.name && moved.pill === "City Hall, Alexandria city",
+          `from=${houseHere.name} pill=${JSON.stringify(moved.pill)} picked=${moved.value} race=${JSON.stringify(moved.race)}`);
     await context.close();
   }
 

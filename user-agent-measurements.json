@@ -18,7 +18,7 @@
   "stack-not-token": 9,
   "tls-chain": 1,
   "token-ok": 255,
-  "token-refused": 3,
+  "token-refused": 4,
   "token-refused-and-stack": 41
  },
  "hosts": {
@@ -7390,6 +7390,37 @@
     "scripts/il_county_commissioners_scraper.py": "both"
    },
    "measured": "2026-10-15"
+  },
+  "www.sfelections.org": {
+   "host": "www.sfelections.org",
+   "url": "https://www.sfelections.org/results/20261103w/detail.html",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 84320 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 200, 84320 bytes",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "ca/scripts/sf_election_results_scraper.py": "browser"
+   },
+   "measured": "2026-11-06"
   },
   "www.sheboygancounty.com": {
    "host": "www.sheboygancounty.com",

@@ -22,9 +22,18 @@ THE CHECKS, before anything is written:
     new kind of contest is placed by a person rather than dropped);
   - at least MIN_CONTESTS contests.
 
+THE COUNTIES (--counties, one raw read per scraper): the seven county clerks'
+precinct results are folded in beside Chicago's by
+build_il_county_election_results.py, which carries its own checks and the
+rules for one race counted by several offices. Each office's count is
+certified on its own (--certified for the Board, --county-certified
+county=date for a clerk, kept from the shipped file once given); the file
+reads certified once every office's is.
+
 Usage:
     python3 scripts/build_chicago_election_results.py /tmp/results_raw.json \
-        --election-date 2026-11-03 [--certified YYYY-MM-DD] [--precincts keys.json]
+        --election-date 2026-11-03 [--certified YYYY-MM-DD] [--precincts keys.json] \
+        [--counties platinum_raw.json --counties kane_raw.json]
 """
 
 import argparse
@@ -35,6 +44,7 @@ import sys
 import urllib.request
 
 from election_results_common import ResultsError, write_results
+import build_il_county_election_results as il_counties
 from scraper_common import (UA_HEADERS_ROSTER_BOT, UA_ROSTER_BOT, make_fail,
                             require_robots_once)
 
@@ -46,6 +56,8 @@ PRECINCT_URL = ("https://data.cityofchicago.org/resource/i8fv-xe4b.json"
                 "?$select=ward_precinct&$limit=5000")
 MIN_CONTESTS = 50
 EXPECTED_PRECINCTS = 1291
+CHICAGO_UNCOUNTED = ("The Board is still counting mail ballots postmarked by Election Day that "
+                     "arrive by November 17.")
 
 # (group id, label shown in the race menu, the map layer it is elected from or
 # None, a pattern the Board's contest name matches). First match wins, so the
@@ -59,9 +71,9 @@ GROUP_RULES = [
     ("il-senate", "Illinois Senate", "il-senate", r"^State Senator, \d+(st|nd|rd|th) District$"),
     ("il-house", "Illinois House", "il-house", r"^State Representative, \d+(st|nd|rd|th) District$"),
     ("mwrd", "Water Reclamation District", "mwrd", r"^Commissioner, Water Reclamation Dist"),
-    ("county-board", "Cook County Board", "county-board",
+    ("county-board", "County board", "county-board",
      r"^Commissioner, County Board \d+(st|nd|rd|th) District$"),
-    ("county", "Cook County offices", "county",
+    ("county", "County offices", "county",
      r"^(Board President|Clerk|Sheriff|Treasurer|Assessor), Cook County$"),
     ("ccbr", "Board of Review", "ccbr", r"^Board of Review, \d+(st|nd|rd|th) District$"),
     ("judicial-subcircuit", "Judges elected by subcircuit", "judicial-subcircuit",
@@ -73,12 +85,13 @@ GROUP_RULES = [
 ]
 # The menu's order: the ballot's own, top of the ticket down.
 GROUP_ORDER = ["statewide", "congress", "il-senate", "il-house", "mwrd", "county",
-               "county-board", "ccbr", "judges", "judicial-subcircuit", "retention",
-               "school-board", "questions"]
+               "county-board", "ccbr", "regional", "judges", "judicial-subcircuit", "retention",
+               "school-board", "local", "questions"]
 GROUP_LABELS = dict((g[0], g[1]) for g in GROUP_RULES)
-GROUP_LABELS.update({"retention": "Judges up for retention", "questions": "Ballot questions"})
+GROUP_LABELS.update({"retention": "Judges up for retention", "questions": "Ballot questions",
+                     "regional": "Regional superintendents of schools", "local": "Local offices"})
 GROUP_LAYERS = dict((g[0], g[2]) for g in GROUP_RULES)
-GROUP_LAYERS.update({"retention": None, "questions": None})
+GROUP_LAYERS.update({"retention": None, "questions": None, "regional": None, "local": None})
 
 # A retention contest is a judge's name with Yes/No; the Board heads the
 # question with the judge's name alone. A name is two to five words, each
@@ -145,6 +158,12 @@ def main():
     ap.add_argument("--election-date", required=True)
     ap.add_argument("--certified", help="the date the Board proclaimed the official results")
     ap.add_argument("--precincts", help="a JSON list of the map's ward_precinct keys (offline)")
+    ap.add_argument("--counties", action="append", default=[],
+                    help="a county scraper's raw read to fold in (il_platinum_election_results_scraper.py, "
+                         "il_kane_election_results_scraper.py); give each once")
+    ap.add_argument("--county-map-names", help="a JSON {county: [map precinct names]} (offline)")
+    ap.add_argument("--county-certified", action="append", default=[],
+                    help="county=YYYY-MM-DD for a county whose canvass is complete")
     ap.add_argument("--app-data", default=APP_DATA,
                     help="the app's data/app directory (default: il/data/app)")
     args = ap.parse_args()
@@ -189,7 +208,36 @@ def main():
         fail("only %d contests; expected at least %d" % (len(contests), MIN_CONTESTS))
     for c in contests:
         c["beyond"] = reaches_beyond(c)
-    contests.sort(key=lambda c: (GROUP_ORDER.index(c["group"]), int(c["id"])))
+    sources = None
+    part_of = lambda k: "ward-" + k[:2]
+    county_lines = []
+    if args.counties:
+        chicago = {"id": "chicago", "publisher": "Chicago Board of Election Commissioners",
+                   "areaName": "Chicago", "source": raw["source"], "read": raw["read"],
+                   "certified": bool(args.certified), "certifiedDate": args.certified or None,
+                   "uncountedNote": "" if args.certified else CHICAGO_UNCOUNTED}
+        # a county's certification, once given, is kept from the shipped
+        # index, so a daily run does not turn it back into unofficial
+        certified = {}
+        shipped = os.path.join(args.app_data, "election-results.json")
+        if os.path.exists(shipped):
+            for src in json.load(open(shipped)).get("sources") or []:
+                if src.get("id") != "chicago" and src.get("certified") and src.get("certifiedDate"):
+                    certified[src["id"]] = src["certifiedDate"]
+        certified.update(dict(c.split("=", 1) for c in args.county_certified))
+        offline = json.load(open(args.county_map_names)) if args.county_map_names else None
+        try:
+            sources, county_part, county_lines = il_counties.add_counties(
+                contests, turnout, [json.load(open(p)) for p in args.counties], chicago,
+                offline_names=offline, certified=certified)
+        except il_counties.CountyError as e:
+            fail(str(e))
+        part_of = lambda k: county_part(k) if ":" in k else "ward-" + k[:2]
+        contests.sort(key=il_counties.sort_key(GROUP_ORDER))
+    else:
+        contests.sort(key=lambda c: (GROUP_ORDER.index(c["group"]), int(c["id"])))
+    for c in contests:
+        c.pop("_order", None)
 
     groups = [{"id": g, "label": GROUP_LABELS[g], "layer": GROUP_LAYERS[g]} for g in GROUP_ORDER]
     stamp = {
@@ -200,6 +248,10 @@ def main():
         "certified": bool(args.certified),
         "certifiedDate": args.certified or None,
     }
+    if sources:
+        # the file is certified once every office's count is
+        stamp["certified"] = all(s["certified"] for s in sources)
+        stamp["certifiedDate"] = max(s["certifiedDate"] for s in sources) if stamp["certified"] else None
     note = ("Unofficial results as the Chicago Board of Election Commissioners publishes "
             "them, until the Board proclaims the official results (certified then reads "
             "true). Precinct keys are WWPPP, as the city's precinct map writes its "
@@ -207,11 +259,13 @@ def main():
             "The layout is scripts/election_results_common.py's.")
     try:
         n, nparts = write_results(args.app_data, stamp, groups, turnout, contests,
-                                  lambda k: "ward-" + k[:2], note)
+                                  part_of, note, extra={"sources": sources} if sources else None)
     except ResultsError as e:
         fail(str(e))
-    if nparts != 50:
-        fail("wrote %d part files, expected one per ward (50)" % nparts)
+    if len(set(part_of(k) for k in turnout["precincts"] if ":" not in k)) != 50:
+        fail("the Chicago precincts do not fill one file per ward (50)")
+    for line in county_lines:
+        print(line, file=sys.stderr)
     by = {}
     for c in contests:
         by[c["group"]] = by.get(c["group"], 0) + 1

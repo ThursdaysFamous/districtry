@@ -727,6 +727,9 @@
   },
   "exports_name": "MississippiExplorer",
   "verified_date": "October 15, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
   "sources_page": {
     "file": "ms/sources.html",
     "credits": [

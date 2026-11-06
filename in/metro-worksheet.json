@@ -663,6 +663,9 @@
   },
   "exports_name": "IndianaExplorer",
   "verified_date": "October 11, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
   "sources_page": {
     "file": "in/sources.html",
     "credits": [
