@@ -1012,10 +1012,14 @@ jobs:
       # (scripts/election_results_common.py): a fixture with a leader, a tie, a
       # withheld count, an empty precinct, a race off one precinct's ballot, a
       # vote-for-more-than-one race and votes counted outside every precinct,
-      # read back, plus three inputs it must refuse.
+      # read back, plus three inputs it must refuse. And the Illinois county
+      # fold (scripts/build_il_county_election_results.py): the clerks' contest
+      # titles, ballot lines and precinct names read the way its docstring says.
       - name: The election results writer reads back what it wrote
         if: ${{ !cancelled() }}
-        run: python3 scripts/election_results_common.py --selftest
+        run: |
+          python3 scripts/election_results_common.py --selftest
+          python3 scripts/build_il_county_election_results.py --selftest
 
       # Adoption of that reader was per caller and unmeasured, so every count of
       # it came off a hand-written list and every one was an undercount: seven
