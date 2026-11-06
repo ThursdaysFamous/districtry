@@ -17,6 +17,7 @@ and the next state's thread reads them as a checklist rather than as history.
 
 | Cadence | What | Where | You do |
 |---|---|---|---|
+| **2031**, when TIGERweb publishes 2030 census blocks | The Census 2020 block populations the compare screen counts people with, the one dataset here that cannot change until then | `mn/data/app/population/` | Point `scripts/build_block_population.py` at the 2030 block and tract layers, set this app's `INSTANCES` row's `total` to its 2030 count and rebuild with `--instance mn`. `--check` forces it: the first legislative map drawn on 2030 blocks fails against 2020 people until this row is done. |
 | Weekly (Mon 13:40 UTC) | U.S. House (MN) roster refresh | `.github/workflows/update-mn-congress-roster.yml` → PR on change | Review + merge the PR; a week with a surprise diff is worth a look at the source |
 | Monthly (1st, 18:00 UTC) | Source-freshness check: are the 13 cited TIGERweb and USGS endpoints still answering, and is every built `data/app` file still present | `.github/workflows/mn-validate-sources.yml` → opens or refreshes one tracking issue | Read the issue. Nothing is auto-applied: swapping a dataset is schema-sensitive, so the issue is the signal and the job stays green |
 

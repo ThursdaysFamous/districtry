@@ -1216,13 +1216,39 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">39 layers — 15 political and legislative, 6 public safety, 8 schools, 10 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">40 layers — 1 elections, 15 political and legislative, 6 public safety, 8 schools, 10 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
+        <a href="#elections">Elections</a>
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
         <a href="#schools">Schools</a>
         <a href="#geography">Geography &amp; amenities</a>
       </nav>
+
+      <section class="matrix-group" id="elections">
+        <h2>Elections <span class="matrix-count">1 layer</span></h2>
+        <p class="matrix-blurb">How each precinct voted.</p>
+        <div class="matrix-wrap">
+          <table class="matrix">
+            <thead>
+              <tr><th scope="col">Layer</th><th scope="col">What it answers</th><th scope="col">Boundary source</th><th scope="col">Who it names</th><th scope="col">Where it applies</th></tr>
+            </thead>
+            <tbody>
+              <tr id="layer-election-results">
+                <th scope="row"><span class="layer-name">Election Results</span><code>election-results</code></th>
+                <td data-label="What it answers">For the picked race, the candidate with the most votes in each New York City election district, and on the card the clicked district's votes for every race on its ballot, from governor to its Assembly, Senate and Council seats, its judges and the city's ballot proposals, and the race's total across the city. Unofficial until the Board of Elections certifies the count, and the card and the map key say so.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://services5.arcgis.com/GfwWNkhOj9bNBqoJ" target="_blank" rel="noopener">Election district boundaries as the city publishes them to ArcGIS Online, the same outlines Election District draws</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The candidates and their votes come from the Board of Elections in the City of New York's unofficial election night results for the 3 November 2026 general election, its pages by election district at enr.boenyc.gov, read daily by ny/scripts/nyc_election_results_scraper.py. A candidate's votes on several party lines are added together. The pages list lines in the ballot's party order, so candidates are ordered alphabetically by name as printed, with Yes before No on a proposal; colours follow that order, never a party.</td>
+                <td data-label="Where it applies">New York City. The statewide offices and the House and Senate districts that cross the city line reach beyond it, so their totals on the card are the city's part of the race.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
       <section class="matrix-group" id="political">
         <h2>Political &amp; legislative <span class="matrix-count">15 layers</span></h2>
@@ -2229,6 +2255,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-election-results",
+      "identifier": "election-results",
+      "name": "Election Results",
+      "description": "For the picked race, the candidate with the most votes in each New York City election district, and on the card the clicked district's votes for every race on its ballot, from governor to its Assembly, Senate and Council seats, its judges and the city's ballot proposals, and the race's total across the city. Unofficial until the Board of Elections certifies the count, and the card and the map key say so. The candidates and their votes come from the Board of Elections in the City of New York's unofficial election night results for the 3 November 2026 general election, its pages by election district at enr.boenyc.gov, read daily by ny/scripts/nyc_election_results_scraper.py. A candidate's votes on several party lines are added together. The pages list lines in the ballot's party order, so candidates are ordered alphabetically by name as printed, with Yes before No on a proposal; colours follow that order, never a party.",
+      "url": "https://districtry.com/ny/sources.html#layer-election-results",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "Election district boundaries as the city publishes them to ArcGIS Online, the same outlines Election District draws",
+          "url": "https://services5.arcgis.com/GfwWNkhOj9bNBqoJ"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City. The statewide offices and the House and Senate districts that cross the city line reach beyond it, so their totals on the card are the city's part of the race"
       }
     },
     {

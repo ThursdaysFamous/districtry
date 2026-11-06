@@ -96,7 +96,7 @@ MIN_REGISTER_LAYER = 9
 EXPECT_LAYER_IDS = [
     "us-house", "va-senate", "va-house", "county", "school-district-unified",
     "school-board-district", "county-subdivision", "supervisor-district",
-    "zip-code", "voting-precinct", "municipality",
+    "zip-code", "voting-precinct", "election-results", "municipality",
     "school-district-elementary", "tribal-government", "police-station",
     "fire-station", "post-office",
 ]
@@ -117,6 +117,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "election-results.json": 11,  # Virginia's precinct-by-precinct election results: the index (groups, precinct keys, the part file each precinct is in, and per contest its choices, totals and its leader string, trimmed to the run of precincts it is on the ballot in); each precinct's own counts sit in election-results/c<locality FIPS>-<n>.json, fetched on a click and never cached by the worker. From the Department of Elections' Election Results report by va/scripts/va_election_results_scraper.py + build_va_election_results.py through scripts/election_results_common.py, refreshed daily by update-va-election-results.yml; certified stays false until the State Board of Elections certifies the results. Network-first: the count changes daily.
     "congress-roster.json": 11,  # U.S. House (VA) roster, refreshed weekly by update-va-congress-roster.yml.
     "va-senate-members.json": 40,  # Virginia Senate roster from the Senate's own member list and member pages, one record per seat, refreshed weekly by update-va-legislature-roster.yml. A vacant seat carries a record saying so, so the floor is the chamber's size.
     "va-house-members.json": 100,  # House of Delegates roster from the House's own member list and member pages, on the same terms.

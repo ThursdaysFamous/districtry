@@ -15,8 +15,7 @@ chose, so the page tells a reader to tick one and switches nothing on.
 
 ONE PAGE FOR EVERY STATE, at the root, because the map works the same way in
 all of them. Where an app differs (the Bulk Address Checker and the search by
-district name are Illinois's, and people counts in the comparison report are
-Illinois's), the page says which app has it, and CHECK 2 below holds those
+district name are Illinois's), the page says which app has it, and CHECK 2 below holds those
 sentences to the tree.
 
 NO PICTURES, DELIBERATELY. A screenshot of a card carries an officeholder's
@@ -94,7 +93,6 @@ LABELS = {
 ONLY_IN = {
     "the Bulk Address Checker": ('id="batch-btn"', ["il"]),
     "search by district name": ("DISTRICT_SEARCH_URL = \"", ["il"]),
-    "people counts in the comparison report": ("POPULATION_INDEX_URL = \"", ["il"]),
 }
 
 
@@ -242,7 +240,7 @@ def body():
     <p>Press <span class="ui">Compare to this district</span> on a card. The map then outlines
       the districts of every other kind you have checked that lie inside it or cross its edge.
       Press <span class="ui">Stats</span> on that card to list them, with how much of each lies
-      inside, by area and, in Illinois, by people.
+      inside, by people and by area.
       <span class="ui">Print or share</span> prints the list or saves it as a PDF.</p>
   </section>
 

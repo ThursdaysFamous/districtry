@@ -5067,6 +5067,53 @@ try {
     check("switching Election Results off takes its legend away", hidden, `hidden=${hidden}`);
     await context.close();
   }
+
+  // ---- 1y2. Election results beyond Chicago: a county clerk's precincts are
+  // coloured and answered beside Chicago's (the layer's extraPrecincts). At a
+  // Franklin County point, whose precinct outlines ship with the app, the card
+  // must speak for the Franklin County Clerk, list exactly the races on that
+  // precinct's ballot in the clerk's part file, and give a statewide race's
+  // totals as Franklin County's with the reaches-beyond sentence.
+  {
+    const idx = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results.json"), "utf8"));
+    const key = "franklin:Barren";
+    const at = idx.precincts.indexOf(key);
+    const part = at >= 0 ? JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results",
+      idx.parts[at] + ".json"), "utf8")) : null;
+    const onBallot = part ? part.precincts[key].contests.map((r) => String(r[0])).sort() : [];
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=38.08115,-88.98503&layers=election-results`);
+    await page.waitForFunction(() => {
+      const c = document.getElementById("card-election-results");
+      return c && c.querySelector(".election-table");
+    }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const got = await page.evaluate(() => {
+      const c = document.getElementById("card-election-results");
+      const sel = c && c.querySelector("select.election-select");
+      return {
+        text: (c || {}).textContent || "",
+        notice: ((c && c.querySelector(".election-notice")) || {}).textContent || "",
+        options: sel ? Array.from(sel.options).map((o) => o.value).sort() : [],
+        value: sel ? sel.value : ""
+      };
+    });
+    check("a Franklin County precinct's results card speaks for the Franklin County Clerk",
+          at >= 0 && got.notice.indexOf("Franklin County Clerk") !== -1, JSON.stringify(got.notice.slice(0, 160)));
+    check("its race menu holds exactly the races on that precinct's ballot",
+          onBallot.length > 10 && JSON.stringify(got.options) === JSON.stringify(onBallot),
+          `menu=${got.options.length} ballot=${onBallot.length}`);
+    const senate = idx.contests.find((c) => c.name === "Senator, U.S.");
+    if (senate) {
+      await page.selectOption("#card-election-results select.election-select", String(senate.id)).catch(() => {});
+      await page.waitForFunction(() => /Across Franklin County's precincts/.test(
+        (document.getElementById("card-election-results") || {}).textContent || ""), null, { timeout: 10000 }).catch(() => {});
+      const text = await page.evaluate(() => (document.getElementById("card-election-results") || {}).textContent || "");
+      check("a statewide race there is totalled across Franklin County's precincts and says it reaches beyond",
+            /Across Franklin County's precincts/.test(text) && /reaches beyond Franklin County/.test(text),
+            JSON.stringify(text.slice(text.indexOf("Across"), text.indexOf("Across") + 200)));
+    }
+    await context.close();
+  }
 } finally {
   await browser.close();
 }

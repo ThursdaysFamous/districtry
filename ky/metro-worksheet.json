@@ -594,6 +594,9 @@
   },
   "exports_name": "KentuckyExplorer",
   "verified_date": "October 11, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
   "metro_explorers": [
     { "id": "chicago", "label": "Illinois", "url": "https://districtry.com/il/", "emoji": "🌭", "explorer_name": "districtry Illinois",
       "bbox": { "minLng": -91.52, "minLat": 36.96, "maxLng": -87.01, "maxLat": 42.51 } },

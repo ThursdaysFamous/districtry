@@ -227,11 +227,20 @@ ALWAYS_AVAILABLE = {"setuptools", "pip", "pkg_resources"}
 # second reader would be a second answer to what a tile holds. Its module-scope
 # imports are `build_coverage_map` and `build_dark_map_palette`, both
 # stdlib-only, so the walk below finds no package for it.
+#
+# `election_results_common` (2026-11-05) is the sixteenth, added when
+# Minnesota's election results builder became the first INSTANCE file to write
+# the files the map's Election Results layer reads. The module is the one writer
+# of that layout: the index, the part files, each precinct's leader and margin
+# codes and the checks that refuse a precinct whose choices do not add up. The
+# engine block reads exactly that layout in every app, so what the files hold
+# must not be answered differently per state, which is this list's test.
+# Stdlib-only at module scope — json, os and re.
 FLEET_SHARED = {"undeliverable", "robots_policy", "arcgis_error", "scraper_common",
                 "workflow_run_evidence", "validate_officeholder_names", "aia_bundle",
                 "city_councils", "statewide_precincts", "published_district_layers",
                 "whole_county_courts", "city_ward_maps", "conservation_boards",
-                "boundary_fidelity", "build_landing_page"}
+                "boundary_fidelity", "build_landing_page", "election_results_common"}
 ROOT_SCRIPTS = os.path.join(REPO_ROOT, "scripts")
 
 PIP_RE = re.compile(r"pip3?\s+install\s+([^\n]*)")
