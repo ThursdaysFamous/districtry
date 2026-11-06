@@ -125,7 +125,7 @@ def margin_code(vals):
     return str(sum(1 for edge in MARGIN_BANDS if points >= edge))
 
 
-def write_results(app_data_dir, stamp, groups, turnout, contests, part_of, note):
+def write_results(app_data_dir, stamp, groups, turnout, contests, part_of, note, extra=None):
     """Write the index and the part files.
 
     stamp:    {election, electionDate, source, read, certified, certifiedDate}
@@ -135,6 +135,8 @@ def write_results(app_data_dir, stamp, groups, turnout, contests, part_of, note)
     contests: [{id, name, group, beyond, choices, total, precincts: {key: [votes, counts...]}}]
               in the order the menu lists them
     part_of:  key -> part id (a short string safe in a file name)
+    extra:    more index-level fields (`sources`, where several offices count
+              one map's precincts), written to the index only
     Returns (number of contests, number of parts).
     """
     keys = sorted(turnout["precincts"])
@@ -176,7 +178,7 @@ def write_results(app_data_dir, stamp, groups, turnout, contests, part_of, note)
             entry["from"] = start
         entry["leaders"] = leaders[start:end]
         entry["margins"] = margins[start:end]
-        for opt in ("outside", "certified", "certifiedDate"):
+        for opt in ("outside", "certified", "certifiedDate", "bySource"):
             if c.get(opt) is not None:
                 entry[opt] = c[opt]
         if (c.get("seats") or 1) > 1:
@@ -193,6 +195,7 @@ def write_results(app_data_dir, stamp, groups, turnout, contests, part_of, note)
     used = set(g for g in group_ids if any(c["group"] == g for c in contests))
 
     doc = dict(stamp)
+    doc.update(extra or {})
     doc.update({
         "note": note,
         "groups": [g for g in groups if g["id"] in used],

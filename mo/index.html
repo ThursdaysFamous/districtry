@@ -12512,16 +12512,22 @@ function initMissouriExplorer() {
       }
     },
     // the live counties' paths in the layer's current state: the lit one in
-    // the highlight style, the rest faded while anything is lit, else plain
+    // the highlight style, the rest faded while anything is lit, else plain.
+    // A layer that paints each feature its own colour (the election results)
+    // keeps every fill whether or not one is lit, as its tiles do (tilePaint),
+    // and the lit one is marked by the highlight line alone.
     styleLive: function () {
       if (!this.live) return;
       var mod = this.mod, rt = layerRuntime[mod.id], sel = this.liveSelected;
       var anySelected = !!sel || rt.tileSelectedId != null;
-      var base = baseStyleFor(mod) || {};
-      var faded = fadedStyle(base, mod), lit = Object.assign({}, base, highlightStyleFor(mod));
+      var own = !!(mod.overlay && typeof mod.overlay.tileFill === "function");
+      var hl = highlightStyleFor(mod);
       this.live.eachLayer(function (sub) {
         var on = !!sel && sub.feature === sel;
-        if (sub.setStyle) sub.setStyle(on ? lit : anySelected ? faded : base);
+        var base = baseStyleFor(mod, own ? sub.feature : null) || {};
+        var style = on ? Object.assign({}, base, hl) : anySelected && !own ? fadedStyle(base, mod) : base;
+        if (on && own) style = Object.assign(style, { fillColor: base.fillColor, fillOpacity: base.fillOpacity });
+        if (sub.setStyle) sub.setStyle(style);
         if (sub._path) sub._path.classList[on ? "add" : "remove"](HIGHLIGHT_CLASS);
         if (on && sub.bringToFront) sub.bringToFront();
       });
