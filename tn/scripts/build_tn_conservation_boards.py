@@ -40,7 +40,11 @@ reads tripped a rate rule is not established. Re-measured on 2026-10-23 with
 this builder's own client: robots.txt was served this time (23 bytes,
 "Allow: /"), and the PDF answered 403 on all three reads, at 15:04:48,
 15:05:06 and 15:05:23 UTC, each the same 118-byte awselb/2.0 body, so it is
-still not built. What follows describes the
+still not built. Re-measured again on 2026-11-06 the same way: robots.txt
+answered 403 this time, which RFC 9309 reads as no policy, and the PDF
+answered 403 on all three reads, at 15:02:42, 15:02:59 and 15:03:15 UTC,
+each the same 118-byte awselb/2.0 body, so it is still not built. What
+follows describes the
 copy read that morning, which the parser was written and tested against.
 
 WHAT IT GIVES. One block per county, the 95 in alphabetical order: the
