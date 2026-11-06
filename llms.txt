@@ -58,7 +58,7 @@ Counties, towns and villages, school and judicial districts across the state, pl
 
 Supervisor districts, neighborhoods, police districts, school attendance areas, and the state and federal seats above them.
 
-- [San Francisco district lookup](https://districtry.com/ca/): 16 layers, 1 city.
+- [San Francisco district lookup](https://districtry.com/ca/): 17 layers, 1 city.
 - [Who is my U.S. representative?](https://districtry.com/ca/congress.html)
 - [Sources & data layers](https://districtry.com/ca/sources.html)
 - [Who is my CA state legislator?](https://districtry.com/ca/state-legislature.html)

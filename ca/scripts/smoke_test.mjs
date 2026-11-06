@@ -61,7 +61,7 @@ const OFFLINE = ["supervisor-district", "neighborhood", "police-district"];
 const EXPECT_DISTRICT = { "supervisor-district": "5", "neighborhood": "Tenderloin", "police-district": "NORTHERN" };
 const NEGATIVE_POINT = "37.74000,-122.59000"; // Open Pacific west of Ocean Beach, beyond CA state waters - outside every layer, including the water-inclusive TIGERweb legislative chambers
 const APP_NAME = "districtry San Francisco";
-const EXPECT_LAYERS = 16; // Thread-5: legislative chambers now pre-built SF-clipped geometry (data/app); supervisor-district is a bespoke roster-joined registerLayer; 11 layers total; + 3 amenity nearest-point layers (post-office, library, early-voting) = 14; + bart-director + election-precinct (parity-debt closures, 2026-07) = 16
+const EXPECT_LAYERS = 17; // Thread-5: legislative chambers now pre-built SF-clipped geometry (data/app); supervisor-district is a bespoke roster-joined registerLayer; 11 layers total; + 3 amenity nearest-point layers (post-office, library, early-voting) = 14; + bart-director + election-precinct (parity-debt closures, 2026-07) = 16; + election-results (2026-11) = 17
 // ==== GENERATED:END smoke-config ====
 const EXPORTS_NAME = "SFExplorer"; // the fork's window debug namespace
 const BOOT_TIMEOUT = 45000; // Leaflet + first paint on a cold CI runner
@@ -378,6 +378,89 @@ try {
         !c.error && c.text.includes(district) && (!!member || c.text.includes(role)),
         `${c.text.slice(0, 60)} | member=${member}`);
     }
+    await context.close();
+  }
+
+  // 2d. Election results: the card, the contest menu and the legend, held to
+  //     the shipped files rather than to any count, because the numbers can
+  //     move until the Department of Elections certifies them. At City Hall
+  //     the card names precinct 7532, says unofficial while the file is not
+  //     certified, and offers exactly the contests on this precinct's ballot;
+  //     the legend names the picked contest and keys the five lead bands; a
+  //     Supervisor contest picked in Noe Valley (District 8) becomes the
+  //     Bayview's own District 10 contest when the point moves there.
+  {
+    const idx = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results.json"), "utf8"));
+    const ballotOf = (key) => {
+      const part = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results",
+        idx.parts[idx.precincts.indexOf(key)] + ".json"), "utf8"));
+      return part.precincts[key].contests.map((r) => String(r[0]));
+    };
+    const onBallot = ballotOf("7532");
+    const firstOnBallot = idx.contests.find((c) => onBallot.includes(String(c.id)));
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await context.newPage();
+    await routeLeaflet(page);
+    await page.goto(`${BASE}#point=${POINT}&layers=election-results`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => !!window.SFExplorer, null, { timeout: BOOT_TIMEOUT });
+    await page.waitForFunction(() => {
+      const c = document.getElementById("card-election-results");
+      return c && c.querySelector(".election-table");
+    }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const got = await page.evaluate(() => {
+      const c = document.getElementById("card-election-results");
+      const block = c && c.closest(".layer-block");
+      const pill = block && block.querySelector(".card-id-pill");
+      const sel = c && c.querySelector("select.election-select");
+      const legend = document.querySelector(".election-legend");
+      return {
+        notice: ((c && c.querySelector(".election-notice")) || {}).textContent || "",
+        pill: pill ? pill.textContent.trim() : "",
+        options: sel ? Array.from(sel.options).map((o) => o.value) : [],
+        legendShown: !!legend && !legend.hidden,
+        legendRace: legend ? ((legend.querySelector(".election-legend-race") || {}).textContent || "") : "",
+        legendSteps: legend ? legend.querySelectorAll(".election-legend-scale .election-legend-step").length : 0,
+        rows: c ? c.querySelectorAll(".election-table tbody tr").length : 0,
+        text: c ? c.textContent : "",
+      };
+    });
+    const noticeOk = idx.certified ? got.notice.indexOf("certified") !== -1
+      : got.notice.indexOf("Unofficial results") !== -1 &&
+        got.notice.indexOf("San Francisco Department of Elections") !== -1;
+    const menuOk = got.options.length === onBallot.length && got.options.every((v) => onBallot.includes(v));
+    check("the Election Results card says unofficial and lists exactly this precinct's contests",
+          noticeOk && menuOk && got.pill === "Precinct 7532" &&
+          got.rows === firstOnBallot.choices.length && got.text.indexOf("Across San Francisco's precincts") !== -1 &&
+          got.text.indexOf("counted outside any precinct") === -1,
+          `notice=${JSON.stringify(got.notice.slice(0, 60))} options=${got.options.length}/${onBallot.length} ` +
+          `pill=${JSON.stringify(got.pill)} rows=${got.rows}`);
+    check("the Election Results legend names the picked contest and keys the five lead bands",
+          got.legendShown && got.legendRace === firstOnBallot.name && got.legendSteps === 5,
+          `shown=${got.legendShown} race=${JSON.stringify(got.legendRace)} steps=${got.legendSteps}`);
+    const pillNow = async () => page.evaluate(() =>
+      (document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill") || {}).textContent || "");
+    const moveTo = async (la, ln) => {
+      const was = (await pillNow()).trim();
+      await page.evaluate(([a, b]) => window.SFExplorer.setSelectedPoint(a, b), [la, ln]);
+      await page.waitForFunction((w) => {
+        const pill = document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill");
+        return pill && pill.textContent.trim() !== w && document.querySelector("#card-election-results .election-table");
+      }, was, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    };
+    await moveTo(37.7510, -122.4330); // Noe Valley, precinct 7833, Supervisor District 8
+    const d8 = idx.contests.find((c) => c.group === "supervisor" && ballotOf("7833").includes(String(c.id)));
+    await page.selectOption("#card-election-results select.election-select", String(d8.id));
+    await page.waitForTimeout(300);
+    await moveTo(37.7330, -122.3920); // the Bayview, precinct 7023, Supervisor District 10
+    const moved = await page.evaluate(() => ({
+      pill: (document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill") || {}).textContent || "",
+      value: (document.querySelector("#card-election-results select.election-select") || {}).value || "",
+      race: (document.querySelector(".election-legend .election-legend-race") || {}).textContent || "",
+    }));
+    const d10 = idx.contests.find((c) => c.group === "supervisor" && c.id !== d8.id && moved.value === String(c.id));
+    check("a Supervisor contest picked in District 8 becomes District 10's own contest in the Bayview",
+          !!d10 && moved.race === d10.name && moved.pill.trim() === "Precinct 7023",
+          `from=${d8.name} pill=${JSON.stringify(moved.pill)} picked=${moved.value} race=${JSON.stringify(moved.race)}`);
     await context.close();
   }
 
