@@ -506,6 +506,9 @@
   },
   "exports_name": "WestVirginiaExplorer",
   "verified_date": "October 29, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
   "sources_page": {
     "file": "wv/sources.html",
     "credits": [

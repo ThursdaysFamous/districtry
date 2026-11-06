@@ -741,6 +741,9 @@
   },
   "exports_name": "NCExplorer",
   "verified_date": "September 29, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
   "sources_page": {
     "file": "nc/sources.html",
     "credits": [

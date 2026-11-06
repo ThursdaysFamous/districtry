@@ -28,6 +28,9 @@
   "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
   "feedback_subject": "districtry San Francisco feedback",
   "verified_date": "October 29, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
   "brand": {
     "app_name": "districtry San Francisco",
     "product_name": "districtry",

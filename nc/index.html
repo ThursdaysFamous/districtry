@@ -4562,6 +4562,9 @@ function initNorthCarolinaExplorer() {
   // ZIP code index (scripts/build_zip_index.mjs): a typed ZIP code selects a
   // spot inside it, and its ZIP layer is turned on and pinned for comparison.
   var ZIP_SEARCH_URL = "data/app/zip-index.json";
+  // Census block population index (scripts/build_block_population.py): lets
+  // the comparison stats screen count people as well as area.
+  var POPULATION_INDEX_URL = "data/app/population/index.json";
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -18966,7 +18969,11 @@ function initNorthCarolinaExplorer() {
    * district, so a map drawn on block lines (congress, the legislature,
    * wards) gets an exact count, and one that is not gets a close one — the
    * footnote says so. The block files are fetched per county, only for the
-   * counties the districts touch, and only when this screen opens.
+   * counties the districts touch, and only when this screen opens. They hold
+   * this app's own ground and nobody beyond it, so a district reaching past
+   * that ground (a ZIP code across a state line, a San Francisco Assembly
+   * district reaching into San Mateo County) is not given a share of its own
+   * people, and a compared district that does is compared by area alone.
    *
    * A ROW'S CARD RUNS THE LAYER'S OWN QUERY AT A POINT INSIDE THE DISTRICT
    * (the outline label's spot, which lies in the part inside the pinned
@@ -19002,11 +19009,20 @@ function initNorthCarolinaExplorer() {
   var statsOpenSeq = 0;
   var statsPopIndex = null;
   var statsPopFiles = {};
+  var statsPopGround = null;
 
   function statsLoadPopulationIndex() {
     if (typeof POPULATION_INDEX_URL === "undefined") return Promise.resolve(null);
     if (!statsPopIndex) {
-      statsPopIndex = fetchJSONWithRetry(POPULATION_INDEX_URL, {}, 2)["catch"](function (err) {
+      statsPopIndex = fetchJSONWithRetry(POPULATION_INDEX_URL, {}, 2).then(function (index) {
+        // an index may name the ground its blocks cover (see statsOutsideShare)
+        if (!index || !index.ground) return index;
+        var base = POPULATION_INDEX_URL.replace(/[^\/]*$/, "");
+        return fetchJSONWithRetry(base + index.ground, {}, 2).then(function (g) {
+          statsPopGround = g && g.type ? g : null;
+          return index;
+        });
+      })["catch"](function (err) {
         console.warn("population index unavailable; comparing by area only:", err);
         statsPopIndex = null;
         return null;
@@ -19050,6 +19066,29 @@ function initNorthCarolinaExplorer() {
     for (var i = 0; i < sets.length; i++) for (var j = 0; j < sets[i].length; j++) sum += sets[i][j][2] || 0;
     return sum;
   }
+
+  // The population files hold the people of this app's own ground and no
+  // one beyond it, so a district reaching past that ground has people the
+  // files cannot count. This is the share of a district's area outside the
+  // ground the index names (San Francisco's county with its water, because
+  // its wash is drawn on land and its districts carry the Bay), or else the
+  // outline the app drew its wash with (the state), or 0 while neither has
+  // loaded. A district with more than 1% of its area outside is treated as
+  // reaching past: measured 2026-11-06, no state's congressional or
+  // legislative district has more than 0.06% of its area outside its
+  // state's outline.
+  function statsOutsideShare(geometry) {
+    var ground = statsPopGround;
+    if (!ground && typeof coverageRegionPolys !== "undefined" && coverageRegionPolys && coverageRegionPolys.length) {
+      ground = { type: "MultiPolygon", coordinates: coverageRegionPolys };
+    } else if (!ground && typeof coverageMaskRings !== "undefined" && coverageMaskRings && coverageMaskRings.length) {
+      ground = { type: "Polygon", coordinates: coverageMaskRings };
+    }
+    if (!ground || !geometry) return 0;
+    var m = measureOverlap(geometry, ground);
+    return m.area > 0 ? 1 - m.share : 0;
+  }
+  var STATS_OUTSIDE_LIMIT = 0.01;
 
   // A share as a reader should see it: never "0%" for something that is
   // there, never "100%" for something that is not all of it.
@@ -19363,6 +19402,13 @@ function initNorthCarolinaExplorer() {
     peopleDone = statsLoadPopulation(box).then(function (sets) {
       if (!live()) return;
       if (!sets) { cells.forEach(function (c) { c.el.hidden = true; }); return; }
+      var place = appPlaceName();
+      if (statsOutsideShare(parentFeature.geometry) > STATS_OUTSIDE_LIMIT) {
+        cells.forEach(function (c) { c.el.hidden = true; });
+        foot.textContent = "Population figures cover " + place + " only, and " + parentName +
+          " reaches past it, so it is compared by area. Areas are measured from the map's simplified boundaries.";
+        return;
+      }
       var inParent = statsPointsIn(parentFeature.geometry, sets);
       var parentPop = statsSetsWeight(inParent);
       totals.textContent = statsNum(parentPop) + " people · " + statsSqMi(parentArea);
@@ -19371,8 +19417,16 @@ function initNorthCarolinaExplorer() {
         var all = statsWeight(c.row.feature.geometry, sets);
         var shared = statsWeight(c.row.feature.geometry, inParent);
         sharedByLayer[c.row.mod.id] = (sharedByLayer[c.row.mod.id] || 0) + shared;
-        c.el.textContent = "People: " + statsPct(shared, all) + " of its " + statsNum(all) + " are in " +
-          parentName + ", making up " + statsPct(shared, parentPop) + " of " + parentName;
+        if (statsOutsideShare(c.row.feature.geometry) > STATS_OUTSIDE_LIMIT) {
+          // only its people inside this app's ground are in the files, so
+          // what share of it lies in the compared district is not known
+          c.el.textContent = "People: " + statsNum(shared) + " of its people are in " + parentName +
+            ", making up " + statsPct(shared, parentPop) + " of " + parentName + ". Part of it lies outside " +
+            place + ", where this app has no population figures.";
+        } else {
+          c.el.textContent = "People: " + statsPct(shared, all) + " of its " + statsNum(all) + " are in " +
+            parentName + ", making up " + statsPct(shared, parentPop) + " of " + parentName;
+        }
         c.shared = shared;
       });
       // with people counted, the districts holding most of the compared
