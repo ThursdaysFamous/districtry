@@ -19,6 +19,9 @@
   "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
   "feedback_subject": "districtry New York feedback",
   "verified_date": "October 29, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
   "brand": {
     "app_name": "districtry New York",
     "product_name": "districtry",

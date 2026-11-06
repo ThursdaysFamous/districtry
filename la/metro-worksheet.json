@@ -696,6 +696,9 @@
   },
   "exports_name": "LouisianaExplorer",
   "verified_date": "October 20, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
   "sources_page": {
     "file": "la/sources.html",
     "credits": [
