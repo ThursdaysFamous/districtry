@@ -264,6 +264,14 @@ HISTORICAL_COUNTS = [
                "from its then-27 layers, alongside matrices of 39 and 16 rows for "
                "Illinois and San Francisco, all counted in that one change.",
      "recorded": "2026-09-18"},
+    # 2026-11-06, when the election-results layer took San Francisco 16 -> 17.
+    # R6 part 3b is a dated record of the 2026-08-24 sources-page build, when
+    # SF had 16 layers and all 16 were resolved to a dataset; a 17th layer
+    # arriving later is not part of that change.
+    {"path": "docs/DEV_PROCESS_ASSESSMENT.md", "name": "SF", "count": 16,
+     "reason": "Dated record of R6 part 3b (2026-08-24): SF's sources page was "
+               "built from its then-16 layers, every one resolved to a dataset.",
+     "recorded": "2026-11-06"},
 ]
 
 # How far to look either side of a bare "N layers" for the instance it belongs

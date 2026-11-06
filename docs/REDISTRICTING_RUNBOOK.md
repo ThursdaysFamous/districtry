@@ -161,7 +161,7 @@ was struck in Harkenrider v. Hochul and replaced by special-master (Cervas) line
 Hoffmann v. NYIRC forced a redraw and the legislature's new congressional map was signed Feb 28,
 2024. Redistricting is emphatically not only decennial.
 
-### SF (16 layers)
+### SF (17 layers)
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
@@ -169,6 +169,7 @@ Hoffmann v. NYIRC forced a redraw and the legislature's new congressional map wa
 | CA Senate / Assembly | Decennial | CA Citizens Redistricting Commission | geometry, roster join |
 | Supervisor districts (11) | Decennial-municipal | SF Redistricting Task Force (charter) | geometry, anchor, roster join |
 | Election precincts | Same cycle as supervisors | SF Dept. of Elections | new Socrata dataset id ("Defined <year>" title) |
+| Election results | Every election, and the precincts under them | SF Dept. of Elections | the join on `prec_2022`: `ca/scripts/build_sf_election_results.py` fails when a precinct on the Statement of the Vote is not on the Election Precinct layer, and when a district contest is not in its `DISTRICT_BEYOND` table |
 | BART Director districts (9) | Decennial (own cycle) | BART Board | geometry (BART ArcGIS), roster re-verify |
 | SFPD districts (10) | Administrative-rare | SFPD | geometry, anchor |
 | SFUSD attendance areas | Annual | SFUSD | dataset id every school year |

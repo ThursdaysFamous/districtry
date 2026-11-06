@@ -127,7 +127,7 @@
       "in": "voting-precinct", "nc": "voting-precinct", "sc": "voting-precinct", "tn": "voting-precinct",
       "ar": "voting-precinct", "la": "voting-precinct", "va": "voting-precinct"
     },
-    "election-results": { "il": "election-results", "mn": "election-results", "nc": "election-results", "ny": "election-results", "va": "election-results" },
+    "election-results": { "il": "election-results", "ca": "election-results", "mn": "election-results", "nc": "election-results", "ny": "election-results", "va": "election-results" },
     "early-voting": { "il": "early-voting", "ny": "early-voting", "ca": "early-voting" },
     "zip-code": {
       "il": "zip-code", "ny": ["zip-code", "nys-zip-code"], "ca": "zip-code", "wi": "zip-code", "ia": "zip-code",

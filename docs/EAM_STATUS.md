@@ -44,7 +44,7 @@ different thing from one it failed.
 | state | E.A.M.C. | counties | examined | districts | named | answered | files | maintained | covered |
 |---|---|---|---|---|---|---|---|---|---|
 | ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 21 | all | 13 of 14 levels |
-| ca | **--MC** | — | — | 0 | 0 | — | 16 | all | all 14 levels |
+| ca | **--MC** | — | — | 0 | 0 | — | 17 | all | all 14 levels |
 | ia | **EAM·** | 99 | 99/99 | 154 | 154 | all | 57 | all | 13 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 660 | 1,158 | all | 430 | all | 12 of 14 levels |
 | in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 22 | all | 11 of 14 levels |

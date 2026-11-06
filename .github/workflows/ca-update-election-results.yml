@@ -1,0 +1,146 @@
+# Daily check of San Francisco's election results by precinct, read from the
+# Department of Elections' Statement of the Vote (the Excel workbook its
+# detailed reports page links) by ca/scripts/sf_election_results_scraper.py and
+# written to ca/data/app/election-results.json plus one
+# ca/data/app/election-results/p<first two digits>.json per group of precincts
+# by ca/scripts/build_sf_election_results.py.
+#
+# DAILY UNTIL CERTIFIED, the rule Adam set for Chicago on 2026-11-05: the
+# Department adds the ballots it counts each day after the election and
+# certifies its results within 30 days, so the numbers can move until then and
+# a reader should see each day's count after it has been looked at. Once the
+# shipped file says certified, the job reads nothing and changes nothing.
+#
+# ONE PAGE A DAY UNTIL THE DEPARTMENT PUBLISHES AGAIN: the job first reads the
+# reports page's "Last Update" time and downloads the workbook (about 8 MB)
+# only when it differs from the time the shipped file records (boardAsOf).
+#
+# CERTIFYING: when the Department certifies the results, run this workflow by
+# hand with `certified` set to that date. The PR it opens says certified, and
+# the map and the card stop saying unofficial.
+#
+# A PR ONLY WHEN A NUMBER MOVED: every read stamps the time it was read, so the
+# change check compares the files with that stamp taken out.
+
+name: Update San Francisco election results
+
+on:
+  schedule:
+    - cron: "10 14 * * *"
+  workflow_dispatch:
+    inputs:
+      certified:
+        description: "The date the Department of Elections certified the results (YYYY-MM-DD); leave empty for an unofficial read"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-results:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install scraper dependencies
+        run: pip install -c scripts/requirements.txt openpyxl
+
+      - name: Skip a file that is certified or unchanged at the Department
+        id: state
+        env:
+          CERTIFIED: ${{ github.event.inputs.certified }}
+        run: |
+          shipped=$(python3 -c "import json;print('yes' if json.load(open('ca/data/app/election-results.json')).get('certified') else 'no')")
+          recorded=$(python3 -c "import json;print(json.load(open('ca/data/app/election-results.json')).get('boardAsOf') or '')")
+          current=$(python3 ca/scripts/sf_election_results_scraper.py --as-of-only)
+          echo "The Department's results were last updated '$current'; the shipped file records '$recorded'."
+          if [ "$shipped" = "yes" ] && [ -z "$CERTIFIED" ]; then
+            echo "The shipped results are certified; nothing to refresh."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          elif [ -n "$current" ] && [ "$current" = "$recorded" ] && [ -z "$CERTIFIED" ]; then
+            echo "The Department has not published since the shipped read; nothing to refresh."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Read the Department of Elections' Statement of the Vote
+        if: steps.state.outputs.run == 'true'
+        run: |
+          python3 ca/scripts/sf_election_results_scraper.py -o /tmp/sf_results_raw.json
+
+      - name: Rebuild the results files
+        if: steps.state.outputs.run == 'true'
+        env:
+          CERTIFIED: ${{ github.event.inputs.certified }}
+        run: |
+          date=$(python3 -c "import json;print(json.load(open('ca/data/app/election-results.json'))['electionDate'])")
+          if [ -n "$CERTIFIED" ]; then
+            python3 ca/scripts/build_sf_election_results.py /tmp/sf_results_raw.json --election-date "$date" --certified "$CERTIFIED"
+          else
+            python3 ca/scripts/build_sf_election_results.py /tmp/sf_results_raw.json --election-date "$date"
+          fi
+
+      - name: Validate app + data files
+        run: python3 ca/scripts/validate_index.py ca/index.html
+
+      - name: Check for changes other than the reading time
+        id: diff
+        run: |
+          changed=$(python3 - <<'PY'
+          import json, os, subprocess
+          def strip(text):
+              d = json.loads(text)
+              d.pop("read", None)
+              return d
+          def shipped(path):
+              r = subprocess.run(["git", "show", "HEAD:" + path], capture_output=True, text=True)
+              return r.stdout if r.returncode == 0 else None
+          paths = ["ca/data/app/election-results.json"]
+          parts = "ca/data/app/election-results"
+          paths += [os.path.join(parts, n) for n in sorted(os.listdir(parts))]
+          old = subprocess.run(["git", "ls-tree", "--name-only", "HEAD", parts + "/"],
+                               capture_output=True, text=True).stdout.split()
+          moved = set(old) != set(paths[1:])
+          for p in paths:
+              before = shipped(p)
+              if before is None or strip(before) != strip(open(p).read()):
+                  moved = True
+          print("true" if moved else "false")
+          PY
+          )
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+          echo "changed: $changed"
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/ca-election-results-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add -A ca/data/app/election-results.json ca/data/app/election-results
+          git commit -m "Update San Francisco election results from the Department of Elections"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update San Francisco election results from the Department of Elections" \
+              --body "Automated refresh of San Francisco's results by precinct, generated by \`ca/scripts/sf_election_results_scraper.py\` + \`ca/scripts/build_sf_election_results.py\` from the Department of Elections' Statement of the Vote. Please review the diff before merging: it changes the numbers and colours the map shows. Until the file says certified, the map and every card say these are unofficial results that will change. The build fails if a sheet's precincts stop adding to its Countywide total, a contest falls into no group, a district contest is not in DISTRICT_BEYOND, votes are counted in a precinct the map does not draw, or a precinct the map draws is in no contest." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

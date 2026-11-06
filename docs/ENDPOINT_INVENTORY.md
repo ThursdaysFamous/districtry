@@ -142,7 +142,7 @@ prose.
 |---|---|---|
 | il | 5 | 42 |
 | ny | 0 | 40 |
-| ca | 0 | 16 |
+| ca | 0 | 17 |
 | wi | 1 | 32 |
 | ia | 0 | 21 |
 | mi | 0 | 19 |
@@ -234,7 +234,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `school-site`, `police-station`, `fire-station`, `post-office`, `library`, `early-voting`, `polling-place`.
 - **Not measured** — declared since the probe ran: `election-results`, `tribal-government`.
 
-#### ca — 4 of 16 layers fetch their shapes
+#### ca — 4 of 17 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -245,6 +245,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `congress`, `ca-senate`, `ca-assembly`, `supervisor-district`, `police-district`, `neighborhood`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `school-site`, `post-office`, `library`, `early-voting`.
+- **Not measured** — declared since the probe ran: `election-results`.
 
 #### wi — 6 of 32 layers fetch their shapes
 
@@ -393,7 +394,7 @@ measured until the next run describes it.
 |---|---|---|---|
 | il | 131 | 417 | 6 |
 | ny | 38 | 37 | 0 |
-| ca | 17 | 15 | 0 |
+| ca | 17 | 16 | 0 |
 | wi | 92 | 267 | 5 |
 | ia | 72 | 56 | 0 |
 | mi | 40 | 70 | 1 |
@@ -409,7 +410,7 @@ measured until the next run describes it.
 | la | 28 | 24 | 0 |
 | mo | 23 | 14 | 0 |
 | va | 23 | 19 | 0 |
-| **total** | **759** | **1107** | **12** |
+| **total** | **759** | **1108** | **12** |
 
 **219 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
