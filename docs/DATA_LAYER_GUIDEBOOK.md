@@ -52,7 +52,7 @@ in the researched-but-unbuilt backlog.
 ```json
 {
   "chicago": ["il-supreme-court", "congress", "il-senate", "il-house", "county", "mwrd", "school-district-secondary", "school-district-unified", "school-district-elementary", "township", "municipality", "judicial-subcircuit", "county-board", "ccbr", "fire-district", "dupage-county-special-police", "park-district", "library-district", "school-board", "cps-hs-network", "cps-network", "ward-precinct", "election-results", "ward", "police-beat", "police-district", "ccpsa-district-council", "community-area", "zip-code", "cps-high", "cps-middle", "county-precinct", "tribal-government", "ssa", "tif-district", "cps-elementary", "school-site", "police-station", "fire-station", "post-office", "library", "early-voting"],
-  "nyc": ["judicial-district", "county", "nys-central-hs-district", "nys-school-district", "library-district", "municipality", "county-supervisor", "county-legislature", "fire-district", "tribal-government", "village", "borough", "borough-president", "district-attorney", "congress", "municipal-court", "state-senate", "school-district", "cec", "fire-battalion", "council", "community-district", "election-district", "state-assembly", "police-sector", "police-precinct", "zip-code", "neighborhood", "hs-zone", "ms-zone", "es-zone", "school-site", "police-station", "fire-station", "post-office", "library", "early-voting", "polling-place", "nys-zip-code"],
+  "nyc": ["judicial-district", "county", "nys-central-hs-district", "nys-school-district", "library-district", "municipality", "county-supervisor", "county-legislature", "fire-district", "tribal-government", "village", "borough", "borough-president", "district-attorney", "congress", "municipal-court", "state-senate", "school-district", "cec", "fire-battalion", "council", "community-district", "election-district", "election-results", "state-assembly", "police-sector", "police-precinct", "zip-code", "neighborhood", "hs-zone", "ms-zone", "es-zone", "school-site", "police-station", "fire-station", "post-office", "library", "early-voting", "polling-place", "nys-zip-code"],
   "sf": ["congress", "ca-senate", "ca-assembly", "bart-director", "election-precinct", "supervisor-district", "police-district", "zip-code", "neighborhood", "elementary-attendance-area", "police-station", "fire-station", "school-site", "post-office", "library", "early-voting"],
   "wisconsin": ["madison-neighborhood-assoc", "wtcs-district", "us-house", "wi-senate", "wi-assembly", "wi-circuit-court", "wi-court-of-appeals", "county", "school-district-secondary", "school-district-unified", "school-district-elementary", "county-board", "mps-school-board", "aldermanic-district", "county-subdivision", "ward", "municipality", "mpd-district", "mpd-squad-area", "milwaukee-neighborhoods", "tid-district", "fire-service", "law-service", "ems-service", "psap-area", "zip-code", "school-site", "library", "police-station", "fire-station", "post-office", "tribal-government"],
   "iowa": ["iowa-aea", "city-ward", "us-house", "ia-senate", "county", "ia-house", "county-supervisor", "school-district-unified", "school-director-district", "cc-director-district", "county-subdivision", "tribal-government", "municipality", "zip-code", "post-office", "police-station", "fire-station", "school-site", "precinct", "ia-judicial-district", "community-college"],
@@ -5730,7 +5730,7 @@ committed `data/app` file" and "a vintage roll reaches it on its own" are true o
 a new census vintage reaches the card and the tiled map through the weekly pull request
 `update-tiger-tiles.yml` opens.
 
-Fleet totals: **Chicago 42 · New York 39 · SF 16 · Wisconsin 32 · Iowa 21 · Michigan 19** layers.
+Fleet totals: **Chicago 42 · New York 40 · SF 16 · Wisconsin 32 · Iowa 21 · Michigan 19** layers.
 
 ---
 
@@ -14399,7 +14399,7 @@ matrix; when one is rejected, move the rationale into a NO HONEST ANALOG footnot
 | `early-voting` | Early Voting Site | political | NearestPt | the State Board of Elections' statewide early voting list, downloaded by a person before each election and built into `early-voting-sites.json` by `scripts/build_early_voting_sites.py` (471 sites across 107 election authorities on 2026-11-03; WATCH.md row) | — | earlyVotingCoverage (inside Illinois, until the election the list is for has passed) |
 | `election-results` | Election Results | political | Bespoke (`registerElectionResultsLayer`, drawn on the `ward-precinct` archive) | the Chicago Board of Election Commissioners' precinct results for the 3 November 2026 general election (219 races, 1,291 precincts), read daily by `scripts/chicago_election_results_scraper.py` into `election-results.json` plus one ward file each through `scripts/election_results_common.py`; UNOFFICIAL until the Board proclaims the official results, which every card and the map legend say | the Board's own counts, no officeholder | chicagoCoverage |
 
-### NYC — 39 layers
+### NYC — 40 layers
 
 | id | label | group | pattern | source | roster / join |
 |---|---|---|---|---|---|
@@ -14426,6 +14426,7 @@ matrix; when one is rejected, move the rationale into a NO HONEST ANALOG footnot
 | `council` | City Council District | political | Bespoke | Socrata `872g-cjhh` | `council-members.json` (weekly CI) |
 | `community-district` | Community District / Board | political | Bespoke | Socrata `5crt-au7u` | live Socrata `ruf7-3wgc` join (chair/manager, labeled appointed) |
 | `election-district` | Election District | political | Bespoke | DCP ArcGIS (paged, ~4,200) | — (subOf `state-assembly`) |
+| `election-results` | Election Results | elections | Bespoke (`registerElectionResultsLayer`, drawn on the `election-district` outlines) | the Board of Elections in the City of New York's unofficial election night results by election district for the 3 November 2026 general election (143 races, 4,214 election districts), read by `ny/scripts/nyc_election_results_scraper.py` + `build_nyc_election_results.py`, checked daily by `ny-update-election-results.yml` until certified | joined on `ElectDist`; a candidate's party lines are added together; no officeholder |
 | `state-assembly` | NY State Assembly District | political | Chamber | pre-built (TIGERweb L2) | `ny-assembly-members.json` (weekly CI) |
 | `police-sector` | NYPD Sector | safety | Bespoke | Socrata `5rqd-h5ci` | — (subOf `police-precinct`) |
 | `police-precinct` | NYPD Precinct | safety | Bespoke | Socrata `y76i-bdw7` | `nypd-precinct-info.json` (weekly CI) |

@@ -141,7 +141,7 @@ prose.
 | instance | layers that send the point | registered layers |
 |---|---|---|
 | il | 5 | 42 |
-| ny | 0 | 39 |
+| ny | 0 | 40 |
 | ca | 0 | 16 |
 | wi | 1 | 32 |
 | ia | 0 | 21 |
@@ -211,7 +211,7 @@ measured until the next run describes it.
 - **Not measured** — declared since the probe ran: `election-results`.
 - Fetched by the app itself with no layer on, for its coverage tests: `data.cityofchicago.org`, `tigerweb.geo.census.gov`.
 
-#### ny — 14 of 39 layers fetch their shapes
+#### ny — 14 of 40 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -232,7 +232,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `county`, `nys-central-hs-district`, `nys-school-district`, `municipality`, `village`, `borough`, `judicial-district`, `borough-president`, `district-attorney`, `congress`, `municipal-court`, `state-senate`, `state-assembly`, `county-supervisor`, `county-legislature`, `fire-district`, `library-district`.
 - Point layers (locations, not shapes): `school-site`, `police-station`, `fire-station`, `post-office`, `library`, `early-voting`, `polling-place`.
-- **Not measured** — declared since the probe ran: `tribal-government`.
+- **Not measured** — declared since the probe ran: `election-results`, `tribal-government`.
 
 #### ca — 4 of 16 layers fetch their shapes
 
@@ -392,7 +392,7 @@ measured until the next run describes it.
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
 | il | 131 | 417 | 6 |
-| ny | 38 | 36 | 0 |
+| ny | 38 | 37 | 0 |
 | ca | 17 | 15 | 0 |
 | wi | 92 | 267 | 5 |
 | ia | 72 | 56 | 0 |
@@ -409,7 +409,7 @@ measured until the next run describes it.
 | la | 28 | 24 | 0 |
 | mo | 23 | 14 | 0 |
 | va | 23 | 19 | 0 |
-| **total** | **759** | **1106** | **12** |
+| **total** | **759** | **1107** | **12** |
 
 **219 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
