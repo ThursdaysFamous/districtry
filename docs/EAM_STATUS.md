@@ -55,7 +55,7 @@ different thing from one it failed.
 | mo | **EAM·** | 114 | 114/114 | 254 | 254 | all | 15 | all | 7 of 14 levels |
 | ms | **EAM·** | 82 | 82/82 | 410 | 409 | all | 25 | all | 8 of 14 levels |
 | nc | **EAMC** | 100 | 100/100 | 373 | 584 | all | 22 | all | all 14 levels |
-| ny | **EAM·** | 62 | 62/62 § | 144 | 162 | all | 37 | all | 10 of 14 levels |
+| ny | **EAM·** | 62 | 62/62 § | 144 | 162 | all | 38 | all | 10 of 14 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 20 | all | 10 of 14 levels |
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 21 | all | 13 of 14 levels |
 | tn | **EAM·** | 95 | 95/95 § | 605 | 1,062 | all | 22 | all | 10 of 14 levels |

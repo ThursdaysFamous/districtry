@@ -87,10 +87,10 @@ EXPECT_LAYER_IDS = [
     "tribal-government", "village", "borough", "borough-president",
     "district-attorney", "congress", "municipal-court", "state-senate",
     "school-district", "cec", "fire-battalion", "council",
-    "community-district", "election-district", "state-assembly",
-    "police-sector", "police-precinct", "nys-zip-code", "zip-code",
-    "neighborhood", "hs-zone", "ms-zone", "es-zone", "school-site",
-    "police-station", "fire-station", "post-office", "library",
+    "community-district", "election-district", "election-results",
+    "state-assembly", "police-sector", "police-precinct", "nys-zip-code",
+    "zip-code", "neighborhood", "hs-zone", "ms-zone", "es-zone",
+    "school-site", "police-station", "fire-station", "post-office", "library",
     "early-voting", "polling-place",
 ]
 
@@ -125,6 +125,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "election-results.json": 11,  # New York City's election results by election district: the index (groups, election district keys, the part file each district is in, and per contest its choices, totals and its leader string, trimmed to the run of districts it is on the ballot in); each district's own counts sit in election-results/ad<Assembly District>.json, fetched on a click and never cached by the worker. From the Board of Elections' election night results pages by ny/scripts/nyc_election_results_scraper.py + build_nyc_election_results.py through scripts/election_results_common.py, checked daily by ny-update-election-results.yml; certified stays false until the Board certifies the results. Network-first: the count can change.
     "nypd-precinct-info.json": 70,  # keys every precinct (even a null CO), so the floor is the precinct count, not the commander count
     "congress-roster.json": 26,
     "coverage-gaps.json": 3,  # Known data gaps keyed by gap id, driving the Data gaps panel — emitted from the fleet guidebook's GUIDEBOOK:BEGIN gaps block by scripts/build_coverage_gaps.py, which reads this fork's this_metro key (--check is the drift gate). Network-first like the rosters: a closed gap should stop being advertised on the next visit.

@@ -134,7 +134,7 @@ of 2021, and `scripts/build_il_court_justices.py` holds a transcription of its c
 weekly roster run refuses to write unless the counties the court's own district pages name still
 match it, so a redraw surfaces as a failing refresh rather than as silence.
 
-### NYC (39 layers)
+### NYC (40 layers)
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
@@ -147,6 +147,7 @@ match it, so a redraw surfaces as a failing refresh rather than as silence.
 | County legislature (Tompkins 16) | Decennial-county | the county's own reapportionment | geometry, the block-population identity the builder gates on (it moves to the 2030 census), roster join by district number |
 | School districts/zones | Annual | DOE | dataset rotation |
 | Election districts | Frequent (BOE) | NYC BOE | geometry |
+| Election results | Every election, and the election districts under them | NYC BOE | the join on `ElectDist`: `ny/scripts/build_nyc_election_results.py` fails when an election district the Board counts votes in is not on the Election District layer |
 | Judicial districts (13) | Statute (rare) | Judiciary Law §140 | the county-to-district lookup the layer dissolves on |
 | Statewide civil boundaries (county, city/town, village) | Incorporation and annexation (occasional) | NYS GIS Program Office | geometry only; there is no roster to rejoin |
 | Statewide school districts | Annual | NYSED via NYS ITS | geometry refresh |
