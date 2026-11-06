@@ -965,12 +965,7 @@ def all_pages(s, total, start, end, mx, filt="is:pageview", label="pages",
     return out, True
 
 
-# How many times a window is halved before a cut list is accepted as cut.
-# Three halvings is an eighth of the window, about eight days of two months.
-SPLIT_DEPTH = 3
-
-
-def pages_in_parts(s, total, start, end, mx, depth=0):
+def pages_in_parts(s, total, start, end, mx):
     """Every row of the pages list, asking for halves of the window when one
     list for the whole window is longer than all_pages() follows.
 
@@ -984,13 +979,21 @@ def pages_in_parts(s, total, start, end, mx, depth=0):
     half of the window holds fewer distinct pages (the 30-day list was 504
     rows that day), and every row carries its own daily series, so the halves'
     rows are summed path by path and each day's counts are exactly what one
-    list would have given. Returns (rows, cut), cut being true only when even
-    an eighth of the window was cut short.
+    list would have given. Returns (rows, cut), cut being true only when a
+    single day's list was cut short.
+
+    A window is halved until it is one day long. Until 2026-11-05 it stopped
+    after three halvings, an eighth of the window, and the week after the
+    3 November election was longer than 600 rows on its own: the eighth from
+    29 October to 4 November was accepted as cut, 66 page visits fell on no
+    page, and the same check failed on six days. A week of that traffic split
+    in two read in full (254 and 576 rows), so the floor is a day rather than
+    another fixed depth that the next busy week passes.
     """
     rows_, cut = all_pages(s, total, start, end, mx)
     a = datetime.date.fromisoformat(start)
     b = datetime.date.fromisoformat(end)
-    if not cut or depth >= SPLIT_DEPTH or a >= b:
+    if not cut or a >= b:
         return rows_, cut
     mid = a + (b - a) // 2
     parts = [(start, mid.isoformat()),
@@ -999,7 +1002,7 @@ def pages_in_parts(s, total, start, end, mx, depth=0):
     for ps, pe in parts:
         print("pages list: reading %s..%s on its own" % (ps, pe))
         part, part_cut = pages_in_parts(s, period_total(s, ps, pe), ps, pe,
-                                        mx, depth + 1)
+                                        mx)
         cut = cut or part_cut
         for r in part:
             m = merged.setdefault(r["path"], {"path": r["path"], "id": r["id"],

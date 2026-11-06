@@ -1435,12 +1435,12 @@ table.matrix code {
       "name": "U.S. House",
       "description": "The U.S. House district covering the point, and the representative holding it. congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
       "url": "https://districtry.com/mo/sources.html#layer-us-house",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mo/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Legislative, layer 4 (119th Congressional Districts), pre-built for the state and shipped with the app; 8 features for Missouri, measured 2026-10-21. LAYER 4 AND NOT LAYER 0, AND IT STAYS LAYER 4 AFTER 3 JANUARY 2027: layer 0 already carries the map the General Assembly passed in 2025, which a referendum on the 3 November 2026 ballot has held back, and the U.S. Supreme Court's order of 25 September 2026 kept the 2022 map for the 2026 election, so the members elected in 2026 are elected from the 2022 map. Layer 4 is that map, and it matches the state's own map of the current congressional districts district for district; layer 0 would grow the 5th District from about 1,118 km2 to about 21,546 km2. If voters keep the 2025 map, it first applies to the 2028 election. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/4"
         }
@@ -1457,12 +1457,12 @@ table.matrix code {
       "name": "Missouri Senate District",
       "description": "The Missouri Senate district covering the point, and the senator holding it. mo-senate-members.json, rebuilt weekly by CI from the Missouri Senate's own pages for each senator: the name, the party, and the Capitol office's room and telephone, with each senator's e-mail address from the Secretary of State's roster of the General Assembly. A vacant seat carries a record saying so.",
       "url": "https://districtry.com/mo/sources.html#layer-mo-senate",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mo/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Missouri Office of Administration — State Senate Boundaries, the state's own map of the Senate districts of the plan filed in 2022, pre-built for the state and shipped with the app; 34 features, measured 2026-10-21. THE STATE'S OWN MAP AND NOT THE CENSUS BUREAU'S: measured against the plan's own filed map, the state's map puts 99.998% of the state's area in the same district, and every district is at least 99.95% the same ground; the Census Bureau's copy goes as low as 99.08% the same ground, in Senate District 13. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
           "url": "https://gis.mo.gov/arcgis/rest/services/LEGIS/StateSenateDistricts/MapServer/2"
         }
@@ -1479,12 +1479,12 @@ table.matrix code {
       "name": "County",
       "description": "Which county contains the point, who sits on its county commission or county council (with its county executive where the county elects one), and who holds its other elected county offices. mo-county-officials.json, rebuilt weekly from the Missouri Secretary of State's Missouri Roster, the 2025-2026 edition printed in June 2025: the presiding commissioner and district commissioners of each of the 110 counties governed by a county commission, the county executive and the council or legislature of the four charter counties, the City of St. Louis's mayor and the president of its Board of Aldermen, and each county's other elected officers (clerk, assessor, collector, treasurer, recorder, circuit clerk, prosecuting attorney, sheriff, coroner, public administrator, surveyor), with the telephone and e-mail address the roster prints beside that official alone. Jackson County's county executive, recalled after the roster was printed, is not named. The card says which edition it read, and names nobody it does not print.",
       "url": "https://districtry.com/mo/sources.html#layer-county",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mo/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 115 features (114 counties and the City of St. Louis, which belongs to no county), measured 2026-10-21. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
         }
@@ -1501,12 +1501,12 @@ table.matrix code {
       "name": "Missouri House District",
       "description": "The Missouri House district covering the point, and the representative holding it. mo-house-members.json, rebuilt weekly by CI from the Missouri House's own published list of members: the name, the party, and the Capitol office's room, telephone and e-mail address. The list also prints each member's home town, which is not read. A vacant seat carries a record saying so.",
       "url": "https://districtry.com/mo/sources.html#layer-mo-house",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mo/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Missouri Office of Administration — State House Boundaries, the state's own map of the House districts of the plan filed in 2022, pre-built for the state and shipped with the app; 163 features, measured 2026-10-21. THE STATE'S OWN MAP AND NOT THE CENSUS BUREAU'S: measured against the plan's own filed map, the state's map puts 99.995% of the state's area in the same district, and every district is at least 99.85% the same ground; the Census Bureau's copy goes as low as 97.33% the same ground, in House District 135, and puts about 1.45 km2 of Springfield in House District 135 where the plan and the state's map put it in 131. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
           "url": "https://gis.mo.gov/arcgis/rest/services/LEGIS/StateHouseDistricts/MapServer/0"
         }
@@ -1523,97 +1523,97 @@ table.matrix code {
       "name": "County Commission District",
       "description": "The county commission district covering the point, and the district commissioner elected from it, in the 38 counties where this app draws the lines. The layer is hidden in the other counties, where the County card still names both district commissioners and the presiding commissioner. mo-county-officials.json, the roster the County card reads: each county's district commissioners from the Secretary of State's Missouri Roster, joined by seat name.",
       "url": "https://districtry.com/mo/sources.html#layer-county-commissioner",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mo/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Integrity GIS county map viewers — the commission district layer each county's own public map viewer carries, for Barton, Bates, Buchanan, Camden, Chariton, Christian, Cooper, Dade, DeKalb, Lincoln, Maries, Marion, McDonald, Miller, Phelps, Polk, Pulaski, Ralls, Ray, Vernon and Warren counties, read 2026-10-23. Each answers exactly two districts, whose names match the seats the Secretary of State's Missouri Roster lists for that county. Clipped to the Census Bureau's county line, with the few slivers the viewer leaves between its two districts given to the district beside them. Whether each viewer's line is the one the county's elections use today is NOT established: no viewer gives a date for its lines, and Missouri law sets no date by which a county must redraw them.",
           "url": "https://www.integritygis.com/"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Cole County — the commission district shapefile MidMO GIS, the map site of the City of Jefferson and Cole County, publishes for download (CC_Commissioner.zip), created 11 May 2011, clipped to the Census Bureau's county line in the same way. Whether it is the line the county's elections use today is not established either.",
           "url": "https://www.midmogis.org/GIS_Hyperlinks/Downloadables/CC_Commissioner.zip"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Lawrence County — the county's posted map of its two commission districts (a 2024 scan), whose Eastern District is outlined around six whole townships: Aurora, Buck Prairie, Freistatt, Ozark, Spring River and Turnback. Drawn as the union of those townships' Census Bureau (TIGER) lines, clipped to the county line in the same way; the county clerk pointed to that map when asked on 2026-10-23. Whether it is the line the county's elections use today is not established either.",
           "url": "https://www.lawrencecountymo.org/_files/ugd/e487e4_0038fc0bb16742e8b9dc74b091ced286.pdf"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Cass County — the shapefile of its two commission districts that Cass County GIS, in the Assessor's office, e-mailed to this project on 23 October 2026 after the county clerk forwarded the request (its metadata last synced 28 April 2022), kept as sent in mo/data/source/raw/cass-commission-districts/ and clipped to the county line in the same way. District 2 is the northwest of the county (Belton, Raymore and Peculiar) and District 1 the rest, as the county's own district map sent with it draws them.",
           "url": "https://www.casscounty.com/"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Howard County — the shapefile of its two commission districts, the Western and Eastern Commissioner's Districts, that the county Assessor e-mailed to this project on 26 October 2026 after the county clerk was asked, kept as sent in mo/data/source/raw/howard-commission-districts/ and clipped to the county line in the same way. It stops at the Missouri River's bank, so the strip between the bank and the Census county line is split where the dividing line meets the river. The Secretary of State's Missouri Roster, linked here, lists its Assessor.",
           "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Wayne County — the map of its ten townships that the county clerk's office e-mailed to this project on 26 October 2026, with a red line marking the boundary between its Eastern and Western commission districts. The line runs along township lines only: Benton, Black River, Mill Spring and Williams lie west of it and the other six east. Drawn as the union of those townships' Census Bureau (TIGER) lines, clipped to the county line in the same way.",
           "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Dent County — the county clerk's office's list, e-mailed to this project on 26 October 2026, of the townships in each of its two commission districts: Current, Franklin, Gladden, Linn, Sinkin, Spring Creek East and Texas in the First District, and Meramec, Norman, Osage, Short Bend, Spring Creek West and Watkins in the Second. Drawn as the union of those townships' Census Bureau (TIGER) lines, clipped to the county line in the same way.",
           "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Ste. Genevieve County — a scanned page of the county's township and commissioner district map, e-mailed to this project by the county clerk's office on 27 October 2026, with its polling place list. The district line cuts through townships and precincts, so it was traced by hand from the scan and each district drawn as the Census Bureau's 2020 blocks on its side of the line, clipped to the county line in the same way; two short stretches hidden under printed labels were joined straight across, so near the line a block can be on the wrong side. The traced districts agree with the clerk's list of the seven precincts that lie whole in one district.",
           "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Cape Girardeau County — the county clerk's answer of 30 October 2026, that Commission District 1 is the City of Jackson and every unincorporated part of the county and Commission District 2 the City of Cape Girardeau with all its annexed land, with the precincts in each; the Second District is drawn from the City of Cape Girardeau's limits on the county's own map at SEMO GIS (CapeCo_PublicBase, Corp_Limit layer), and the First District is the rest of the county.",
           "url": "https://www.capecounty.us/cape-girardeau-county-clerk/precinct-and-district-maps"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "New Madrid County — the 'Commissioner Districts (May 2022)' map on the District Boundaries page of the county's website, a map of the Census Bureau's 2020 blocks by commissioner district, to which the county clerk pointed this project on 29 October 2026. Its district outlines were read out of the PDF and lined up with the county's blocks, and each district is drawn from the 2020 blocks the map puts in it; the blocks add up to the map's own populations, 9,429 and 7,005.",
           "url": "https://www.newmadridcountymo.gov/pollinglocations"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Audrain County — the county clerk's report of the commission district each election precinct votes in, e-mailed to this project on 28 October 2026, with her answers the same day that Jefferson Street divides Mexico precinct 3 (east side Eastern) and Route ZZ divides Community precinct (Prairie Township's side Eastern). Each district is drawn from the Census Bureau's 2020 blocks in its precincts; the one Community block east of Route ZZ was placed from where the road runs.",
           "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "St. Clair County — a screenshot of the county's map viewer, e-mailed to this project by the county clerk's office on 28 October 2026, highlighting eight whole townships: Appleton, Butler, Center, Chalk Level, Jackson, Monegaw, Osage and Taber, the county's northern half, read as the Northern District, with the other eight townships as the Southern. The districts are drawn from the Census Bureau's township lines.",
           "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Douglas County — a page of the county's township map, e-mailed to this project by the county clerk on 30 October 2026, with a red line along township lines marking Political District #1 (Benton, Buchanan, Findley, Lincoln, Spencer and Washington townships) and Political District #2 (the other seventeen). The districts are drawn from the Census Bureau's township lines.",
           "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Linn County — the county's map of its political townships with the commissioners' districts, e-mailed to this project by the county clerk on 30 October 2026, shading the 1st District (Brookfield, Grantsville, Jefferson and Yellow Creek townships) and the 2nd District (the other ten). The districts are drawn from the Census Bureau's township lines.",
           "url": "https://www.sos.mo.gov/CMSImages/Publications/MORoster/2025-2026_MO_Roster.pdf"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Saline County — the county clerk's list, sent to this project on 23 October 2026, of the townships and precincts in each of its two commission districts: Cambridge, Clay, Grand Pass and Miami townships and Marshall Wards 3 and 4 in the Northern District, and Arrow Rock, Blackwater, Elmwood, Liberty, Salt Fork and Salt Pond townships and Marshall Wards 1 and 2 in the Southern District, as the 2011 map sent with it also draws them. Drawn from the Census Bureau's (TIGER) township lines and, inside Marshall township, its 2020 voting districts Marshall 1 to 4, which tile that township; Marshall may have redrawn its wards since 2020.",
           "url": "https://www.salinecountyclerk.com/"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Perry County — the Commissioner Districts layer of the county's public map at SEMO GIS (the Southeast Missouri Regional Planning Commission's map server, service PerryCo_PublicBase), read anonymously and clipped to the county line in the same way; the county clerk pointed to that map when asked on 2026-10-23. Whether it is the line the county's elections use today is not established either.",
           "url": "https://maps.semogis.com/portal/apps/experiencebuilder/experience/?id=0284d33a4a7245f399afb97f84be4ab1"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Iron County — the Commissioner District layer of the county's public map at SEMO GIS (service IronCo_Districts), read anonymously and clipped to the county line in the same way. No county office pointed to it; it was found on 2026-10-24 by reading the map server's folders. Whether it is the line the county's elections use today is not established.",
           "url": "https://maps.semogis.com/server/rest/services/Iron_CO/IronCo_Districts/MapServer"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Scott County — the Commissioner District layer of the county's public map at SEMO GIS (service ScottCo_Districts), read anonymously and clipped to the county line in the same way. No county office pointed to it; it was found on 2026-10-24 by reading the map server's folders. Whether it is the line the county's elections use today is not established.",
           "url": "https://maps.semogis.com/server/rest/services/Scott_CO/ScottCo_Districts/MapServer"
         }
@@ -1630,12 +1630,12 @@ table.matrix code {
       "name": "School District (Unified)",
       "description": "The public school district covering the point. NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. Missouri's school boards are elected, and no statewide roster of their members was read in this pass — recorded as gap mo-school-board-members.",
       "url": "https://districtry.com/mo/sources.html#layer-school-district-unified",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mo/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 445 features for Missouri, measured 2026-10-21.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
         }
@@ -1652,12 +1652,12 @@ table.matrix code {
       "name": "School District (Elementary)",
       "description": "The elementary school district covering the point, where the point is in one. NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY — the same gap as the unified layer (mo-school-board-members).",
       "url": "https://districtry.com/mo/sources.html#layer-school-district-elementary",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mo/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 71 features for Missouri, measured 2026-10-21.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
         }
@@ -1674,12 +1674,12 @@ table.matrix code {
       "name": "ZIP Code",
       "description": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary. NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more.",
       "url": "https://districtry.com/mo/sources.html#layer-zip-code",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mo/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='29'. 1,977 features in Missouri's box, measured 2026-10-21.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
         }
@@ -1696,12 +1696,12 @@ table.matrix code {
       "name": "Township",
       "description": "The township containing the point and its county, and whether the township has a government of its own. NO OFFICEHOLDER YET. The 282 township governments elect their own officers, and no statewide roster of them was read in this pass — recorded as gap mo-township-officers. Every other township is a named area with no government of its own, so the card says the county governs it outside any city, town or village.",
       "url": "https://districtry.com/mo/sources.html#layer-county-subdivision",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mo/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 1 (county subdivisions), copied into a tile archive served from this site, re-fetched from the Census weekly; 1,394 features for Missouri, measured 2026-10-21: 282 townships the Census records as active governments, in 20 counties; one, City township in Barton County, as a government partly consolidated with another; the 16 townships of Dade County as inactive; 1,094 townships with no government of their own; and the City of St. Louis, which the Census files as its own county subdivision because it belongs to no county.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
         }
@@ -1718,12 +1718,12 @@ table.matrix code {
       "name": "City, Town or Village",
       "description": "The city, town or village containing the point, if any. NO OFFICEHOLDER YET. Missouri's cities, towns and villages elect their own officials, and no statewide roster of them was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap mo-municipal-officeholders.",
       "url": "https://districtry.com/mo/sources.html#layer-municipality",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mo/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), copied into a tile archive served from this site, re-fetched from the Census weekly; 947 features for Missouri (645 cities, 196 villages and 106 towns), measured 2026-10-21. The Census records 11 of them as inactive, and the card says so.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
@@ -1740,12 +1740,12 @@ table.matrix code {
       "name": "Police Station",
       "description": "The three nearest police stations to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a police station is a facility, not an elected district. Nobody is elected from one.",
       "url": "https://districtry.com/mo/sources.html#layer-police-station",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mo/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 53 (Police Stations), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-10-21: 979 points in Missouri's envelope, under the service's 2,000-record cap today, and paged anyway so that stops being a fact anyone has to re-check.",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53"
         }
@@ -1762,12 +1762,12 @@ table.matrix code {
       "name": "Fire & EMS Station",
       "description": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a fire and EMS station is a facility, not an elected district. Nobody is elected from one.",
       "url": "https://districtry.com/mo/sources.html#layer-fire-station",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mo/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 51 (Fire Stations/EMS Stations), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-10-21: 2,578 points in Missouri's envelope, more than the service's 2,000-record cap, which is why the paging is not optional.",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51"
         }
@@ -1784,12 +1784,12 @@ table.matrix code {
       "name": "Post Office",
       "description": "The three nearest post offices to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a post office is a facility, not an elected district. Nobody is elected from one.",
       "url": "https://districtry.com/mo/sources.html#layer-post-office",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mo/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 38 (Post Offices), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-10-21: 1,657 points in Missouri's envelope, under the service's 2,000-record cap today, and paged anyway so that stops being a fact anyone has to re-check.",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38"
         }

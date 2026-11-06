@@ -1,0 +1,51 @@
+  /* Election results card and legend (registerElectionResultsLayer). Every
+     colour is a card or brand token, so both themes follow; the only literal
+     colours a reader sees are the choice swatches, which the script paints
+     from the ballot-order palette and which carry no text. */
+  .election-card { padding: 12px 18px 14px; display: flex; flex-direction: column; gap: 10px; }
+  .election-title { margin: 0; font-size: 14px; font-weight: 700; color: var(--card-ink); }
+  .election-notice {
+    font-size: 12.5px; line-height: 1.45; color: var(--card-ink);
+    background: var(--card-section-bg); border: 1px solid var(--card-border);
+    border-left: 3px solid var(--card-muted); border-radius: 6px; padding: 8px 10px;
+  }
+  .election-notice-certified { border-left-color: var(--card-accent); }
+  .election-pick { display: flex; flex-direction: column; gap: 4px; }
+  .election-select {
+    font: inherit; font-size: 13px; color: var(--card-ink); background: var(--card-section-bg);
+    border: 1px solid var(--card-btn-border); border-radius: 6px; padding: 6px 8px;
+    min-height: 32px; max-width: 100%;
+  }
+  .election-table { width: 100%; border-collapse: collapse; font-size: 13px; color: var(--card-body-ink); }
+  .election-table caption {
+    text-align: left; font-weight: 700; color: var(--card-ink); font-size: 13.5px; padding-bottom: 4px;
+  }
+  .election-table th, .election-table td {
+    padding: 5px 0; border-top: 1px solid var(--card-row-border); vertical-align: top; text-align: left;
+  }
+  .election-table thead th { font-size: 12px; font-weight: 600; color: var(--card-muted); border-top: 0; }
+  .election-table tbody th { font-weight: 600; color: var(--card-ink); padding-right: 8px; }
+  .election-table .election-num { text-align: right; white-space: nowrap; padding-left: 10px; font-variant-numeric: tabular-nums; }
+  .election-swatch {
+    display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px;
+    vertical-align: baseline; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+  }
+  .election-lead {
+    display: block; font-size: 11.5px; font-weight: 600; color: var(--card-muted); margin: 2px 0 0 16px;
+  }
+  .election-note { margin: 0; font-size: 12px; line-height: 1.45; color: var(--card-body-ink); }
+  .election-areas { display: flex; flex-direction: column; gap: 10px; }
+  .election-areas:empty { display: none; }
+  .election-area { padding-top: 10px; border-top: 1px solid var(--card-border); }
+  .election-area[open] > * + * { margin-top: 6px; }
+  .election-area-head { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--card-ink); }
+  .election-area-title { font-weight: 700; }
+  .election-area-lead { display: block; margin-top: 2px; padding-left: 1.1em; font-size: 12px; font-weight: 400; color: var(--card-muted); }
+  .election-area-head:focus-visible { outline: 2px solid var(--card-link); outline-offset: 2px; }
+  .districtry-map-legend.election-legend { margin-bottom: 6px; max-width: 260px; }
+  .districtry-map-legend.election-legend .dml-label { white-space: normal; }
+  .districtry-map-legend.election-legend .election-legend-race { font-weight: 700; color: var(--ink); }
+  .districtry-map-legend.election-legend .election-legend-status { font-style: italic; }
+  .districtry-map-legend.election-legend .election-legend-scale { display: flex; gap: 2px; width: 100%; }
+  .districtry-map-legend.election-legend .election-legend-step { flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; line-height: 1.15; text-align: center; color: var(--muted); }
+  .districtry-map-legend.election-legend .election-legend-ramp { display: block; width: 100%; height: 9px; border-radius: 2px; background: var(--ink); }

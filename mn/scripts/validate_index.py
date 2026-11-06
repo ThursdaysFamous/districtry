@@ -99,9 +99,9 @@ EXPECT_LAYER_IDS = [
     "conservation-district", "mn-house", "watershed-district",
     "school-district-unified", "school-board-district", "county-commissioner",
     "zip-code", "school-district-elementary", "county-subdivision",
-    "voting-precinct", "tribal-government", "municipality", "city-ward",
-    "school-district-secondary", "police-station", "fire-station",
-    "post-office",
+    "voting-precinct", "election-results", "tribal-government",
+    "municipality", "city-ward", "school-district-secondary",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -124,6 +124,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "election-results.json": 11,  # Minnesota's precinct-by-precinct election results: the index (groups, precinct keys, the part file each precinct is in, and per contest its choices, totals and leader string, trimmed to the run of precincts it is on the ballot in); each precinct's own counts sit in election-results/c<county FIPS>-<n>.json, fetched on a click and never cached by the worker. From the Secretary of State's results files by mn/scripts/mn_election_results_scraper.py + build_mn_election_results.py through scripts/election_results_common.py, refreshed daily by update-mn-election-results.yml; certified stays false until the State Canvassing Board certifies the results. Network-first: the count changes daily.
     "congress-roster.json": 8,  # U.S. House roster, refreshed weekly by update-mn-congress-roster.yml.
     "mn-county-commissioners.json": 447,  # All 447 county commissioner districts, each naming the winner of its most recent election in the Secretary of State's results and the date of that election, or saying why no name is shown; built weekly by mn/scripts/build_mn_commissioner_roster.py (update-mn-commissioner-roster.yml).
     "mn-swcd-supervisors.json": 88,  # All 88 soil and water conservation districts and their 440 supervisor seats, each naming the winner of its most recent election in the Secretary of State's results and its date, or saying why no name is shown, with each district's office from BWSR's directory of 21 February 2023; built weekly by mn/scripts/build_mn_swcd_supervisors.py (update-mn-swcd-supervisors.yml).

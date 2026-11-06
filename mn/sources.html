@@ -1182,13 +1182,39 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">21 layers — 7 political and legislative, 2 public safety, 4 schools, 8 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">22 layers — 1 elections, 7 political and legislative, 2 public safety, 4 schools, 8 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
+        <a href="#elections">Elections</a>
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
         <a href="#schools">Schools</a>
         <a href="#geography">Geography &amp; amenities</a>
       </nav>
+
+      <section class="matrix-group" id="elections">
+        <h2>Elections <span class="matrix-count">1 layer</span></h2>
+        <p class="matrix-blurb">How each precinct voted.</p>
+        <div class="matrix-wrap">
+          <table class="matrix">
+            <thead>
+              <tr><th scope="col">Layer</th><th scope="col">What it answers</th><th scope="col">Boundary source</th><th scope="col">Who it names</th><th scope="col">Where it applies</th></tr>
+            </thead>
+            <tbody>
+              <tr id="layer-election-results">
+                <th scope="row"><span class="layer-name">Election Results</span><code>election-results</code></th>
+                <td data-label="What it answers">For the picked race, the choice with the most votes in each Minnesota precinct, and on the card the clicked precinct's votes for every race on its ballot, from U.S. Senate to its town board and school board, its turnout, and the race's total across Minnesota. Unofficial until the State Canvassing Board certifies the count, and the card and the map key say so.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0" target="_blank" rel="noopener">Office of the Minnesota Secretary of State, Elections Division — Voting Districts, the same 4,105 outlines Voting Precinct draws</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">The choices and their votes come from the Minnesota Secretary of State's precinct-by-precinct results files for the 3 November 2026 general election (allracesbyprecinct.txt and localPrct.txt, with each precinct's turnout from pctstats.txt), read daily by mn/scripts/mn_election_results_scraper.py. Colours follow each choice's place on the office's ballot list, never a party.</td>
+                <td data-label="Where it applies">Minnesota — statewide. Every precinct counts its own absentee and mail ballots, so no vote is reported outside a precinct.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
       <section class="matrix-group" id="political">
         <h2>Political &amp; legislative <span class="matrix-count">7 layers</span></h2>
@@ -1505,12 +1531,12 @@ table.matrix code {
       "name": "U.S. House",
       "description": "The U.S. House district covering the point, and the representative holding it. congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
       "url": "https://districtry.com/mn/sources.html#layer-us-house",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Legislative, layer 0 (congressional districts), pre-built for the state and shipped with the app",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
         }
@@ -1527,17 +1553,17 @@ table.matrix code {
       "name": "Judicial District",
       "description": "The judicial district covering the point: the district whose trial-court judges the reader votes on, the counties in it, the number of judgeships state law authorizes for it, and where it maintains permanent chambers. NO JUDGE IS NAMED, and the reason is measured rather than assumed: www.mncourts.gov refuses all four client rungs this project has with HTTP 403 (measured 2026-10-01), so the 287 authorized judgeships have no reachable publisher here. The card states the authorized count from the statute, says plainly that it names nobody, and links the court. Gap mn-judicial-roster.",
       "url": "https://districtry.com/mn/sources.html#layer-mn-judicial-district",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Minn. Stat. 2.722 subd. 1 — the statute names the counties in each of the ten districts; the lines are those counties' own, dissolved from the county fabric this app ships, and no new boundary is drawn",
           "url": "https://www.revisor.mn.gov/statutes/cite/2.722"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Minnesota Secretary of State, voting districts — the judicial district on each of the state's 4,105 precincts, read as an independent second witness that every county sits where the statute says",
           "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
         }
@@ -1554,12 +1580,12 @@ table.matrix code {
       "name": "Minnesota Senate District",
       "description": "The Minnesota Senate district covering the point. Not yet shipped. The card names the district and links the Minnesota Senate's own member directory; nobody is named rather than guessed. Recorded as the coverage gap mn-legislature-roster.",
       "url": "https://districtry.com/mn/sources.html#layer-mn-senate",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
         }
@@ -1576,12 +1602,12 @@ table.matrix code {
       "name": "County",
       "description": "Which county contains the point. The county board is on the County Commissioner District layer, which names each district's most recently elected commissioner. This card names no county officer (auditor, sheriff, attorney): Minnesota publishes no statewide list of them and no county's own has been read yet. Recorded as the coverage gap mn-county-officers.",
       "url": "https://districtry.com/mn/sources.html#layer-county",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
         }
@@ -1598,12 +1624,12 @@ table.matrix code {
       "name": "Soil and Water Conservation District",
       "description": "The soil and water conservation district covering the point, the supervisors its voters elect (the whole board, or the one supervisor of a by-district seat and the rest of the board), each dated to the election that seated them, and the district's office. mn-swcd-supervisors.json, rebuilt weekly by mn/scripts/build_mn_swcd_supervisors.py: each seat's most recent canvassed general in the Secretary of State's county races results files (electionresultsfiles.sos.mn.gov), dated to that election — 417 of 440 seats named on 2026-10-26; 20 were won by write-in votes, which the files do not name, and 3 have had no election since the 2022 general. Each district's office, and a phone or e-mail for 302 supervisors whose names it prints, are from the Board of Water and Soil Resources' Soil and Water Conservation District Directory of 21 February 2023; the directory's street addresses for board members are home addresses and are not read.",
       "url": "https://districtry.com/mn/sources.html#layer-conservation-district",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Minnesota Secretary of State — the statewide voting-district (precinct) layer, whose precincts each carry the soil and water ballot they vote (swcdist); 3,548 precincts dissolved into 116 shapes by mn/scripts/build_mn_swcd_districts.py and shipped with the app. Hennepin's and Ramsey's 557 precincts vote no supervisor and are drawn in none",
           "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
         }
@@ -1620,12 +1646,12 @@ table.matrix code {
       "name": "Minnesota House District",
       "description": "The Minnesota House district covering the point. Not yet shipped — same as the Senate above; the card links the Minnesota House's own member directory. Recorded as the coverage gap mn-legislature-roster.",
       "url": "https://districtry.com/mn/sources.html#layer-mn-house",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
         }
@@ -1642,12 +1668,12 @@ table.matrix code {
       "name": "Watershed District",
       "description": "The watershed district or watershed management organization covering the point: what kind of body it is, the state law that creates it, who appoints its board, and its own website. Where the state's map puts the point in two, both are listed. NO MANAGER IS NAMED, because no board here is elected: a watershed district's managers are appointed by the county boards of the counties it lies in (Minn. Stat. 103D.311), a metro organization's board by its member cities and towns (103B.211), and a county-run area is the county board itself. The card says who appoints the board and links the body's own website as BWSR publishes it.",
       "url": "https://districtry.com/mn/sources.html#layer-watershed-district",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Minnesota Board of Water and Soil Resources (BWSR), Watershed Management Districts and Organizations — 45 watershed districts, 16 watershed management organizations and three county-run areas, read from the state's feature service and simplified by mn/scripts/build_mn_watershed_districts.py (Douglas-Peucker at 10 m, gated on 4,000 sampled points getting the same bodies as the source). The Geospatial Commons download host refuses this client in robots.txt and is not read",
           "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_bwsr/bdry_watershed_mgmt_dist_orgs/FeatureServer/0"
         }
@@ -1664,12 +1690,12 @@ table.matrix code {
       "name": "School District (Unified)",
       "description": "The unified (every-grade) school district covering the point. The winners of each board's most recent elections, from the Office of the Minnesota Secretary of State's school district results files (electionresultsfiles.sos.mn.gov), dated to each election and joined to the Census district through the Minnesota Department of Education's own district layer: 1,882 of 2,099 seats on 326 boards, measured 2026-10-07. A winner is not a claim about who sits today, and the card says so; a seat a special election leaves unsettled names nobody and says why. Built weekly by mn/scripts/build_mn_school_boards.py. Gap mn-school-board-members.",
       "url": "https://districtry.com/mn/sources.html#layer-school-district-unified",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 322 features for Minnesota, measured 2026-09-29",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
         }
@@ -1686,22 +1712,22 @@ table.matrix code {
       "name": "School Board District",
       "description": "The election district of a school board that elects its members by district (Minn. Stat. 205A.12), and the member or members it elects. Where a precinct votes in two districts, both are named; where the results do not place a piece of a board's school district, the card says so. The winners of each district's most recent election, from the same school board roster the School District card reads (mn/data/app/mn-school-boards.json), every name dated. A winner is not a claim about who sits today, and the card says so.",
       "url": "https://districtry.com/mn/sources.html#layer-school-board-district",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Office of the Minnesota Secretary of State, local results by precinct (localPrct.txt) for the 2022 to 2025 generals: each district is the precincts that voted in its seat's most recent contest, read in that election's own precincts (the Secretary of State's per-general precinct layers for 2022 and 2024, today's precincts for odd years), cut to the Census school district boundary. Built by mn/scripts/build_mn_school_board_districts.py; Minneapolis's six agree with the City of Minneapolis's own park commissioner districts at all 1,800 sampled points, measured 2026-10-08",
           "url": "https://electionresultsfiles.sos.mn.gov/20241105/localPrct.txt"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Anoka-Hennepin School District, Current Board Election Areas, School Board District Boundaries (2022): the district's own map, linked from its school board page, read precinct by precinct against the Secretary of State's 2022 precincts by mn/scripts/trace_isd11_board_map.py, because its odd-year results are reported by shared polling place",
           "url": "https://www.ahschools.us/fs/resource-manager/view/64849109-6308-46ab-a5a4-19ab85b45278"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Office of the Minnesota Secretary of State, General Election Results By Precinct layers (the precincts each general was held in)",
           "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_electionresults_2022_2030/FeatureServer"
         }
@@ -1718,27 +1744,27 @@ table.matrix code {
       "name": "County Commissioner District",
       "description": "The county commissioner district containing the point: the seat a reader votes on for their county board, which county it belongs to, and how many commissioners that board seats. The winner of the most recent election for each seat, from the Office of the Minnesota Secretary of State's county races results files (electionresultsfiles.sos.mn.gov), dated to that election: 445 of 447 seats, the 2022 and 2024 generals plus seven special elections. A winner is not a claim about who sits today, and the card says so; five county governments' own district layers are compared each week and a disagreement (Ramsey District 3 today) is printed on the card beside the winner. Built weekly by mn/scripts/build_mn_commissioner_roster.py. Gap mn-county-commissioner-roster.",
       "url": "https://districtry.com/mn/sources.html#layer-county-commissioner",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Office of the Minnesota Secretary of State, Elections Division — Voting Districts, Minnesota: every one of the state's 4,105 precincts carries the commissioner district it sits in, and the districts are those precincts dissolved, so no new line is drawn. Pre-built by mn/scripts/build_mn_commissioner_districts.py.",
           "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Minn. Stat. 375.01 and 375.025 — the statute read on every run: five commissioners in every county and seven in four named ones, each county divided into as many consecutively numbered districts as it has board members. It is what makes the 447-district partition checkable rather than merely plausible.",
           "url": "https://www.revisor.mn.gov/statutes/cite/375.01"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Seven county governments' own commissioner-district layers (Anoka, Dakota, Isanti, Olmsted, Ramsey, St. Louis and Scott), read as an independent second witness: they agree with the Secretary of State about the district of every one of the 785 precincts they cover. Hennepin's and Sherburne's own layers are published on hosts whose robots.txt refuses this client, which is obeyed.",
           "url": "https://gis.ramseycountymn.gov/server/rest/services/Boundaries/BOUND_CommissionerDistrict2022_ViewOnly/FeatureServer/25"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "The Secretary of State's certified 2024 and 2022 general-election results, per precinct, carrying the same commissioner-district key as a dated snapshot: the 2024 table agrees with the live fabric about all 3,976 precincts they both name, and the 2022 table about 3,941 of 3,953, the twelve differences being Beltrami and Stevens redistricting after that election.",
           "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_electionresults_2022_2030/FeatureServer/0"
         }
@@ -1755,12 +1781,12 @@ table.matrix code {
       "name": "ZIP Code",
       "description": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the delivery routes sharing a ZIP code, not a postal boundary. NO OFFICEHOLDER, AND THE CARD SAYS SO IN AS MANY WORDS: a ZIP code elects nobody. It is a postal delivery grouping the Census approximates as an area, and the card states that rather than leaving a reader to wonder why no name appears.",
       "url": "https://districtry.com/mn/sources.html#layer-zip-code",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. A ZCTA has NO STATE FIELD because it can cross a state line, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='27'; 1,385 features in Minnesota's envelope, measured 2026-09-29",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
         }
@@ -1777,12 +1803,12 @@ table.matrix code {
       "name": "School District (Elementary)",
       "description": "The elementary-tiling school district covering the point, in the eight places Minnesota has one. The same school board roster as the unified layer's row, keyed by this layer's Census district id. Gap mn-school-board-members.",
       "url": "https://districtry.com/mn/sources.html#layer-school-district-elementary",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 8 features for Minnesota, measured 2026-09-29. SEVEN OF THE EIGHT record LOGRADE PK and HIGRADE 12, the same span as a unified district, so the card prints the recorded grades and the tiling and claims nothing about which grades the district operates — recorded as the coverage gap mn-elementary-district-grades",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
         }
@@ -1799,12 +1825,12 @@ table.matrix code {
       "name": "Township or City",
       "description": "The organized town covering the point, or the Census placeholder record for the city that stands in place of one — and which of the two it is. The board of each of the 704 towns that hold their town election in November — supervisors, clerk and treasurer — from the Office of the Minnesota Secretary of State's local results files (electionresultsfiles.sos.mn.gov), each name dated to the election that seated it: 2,813 of 3,115 seats, measured 2026-10-15. A winner is not a claim about who holds the seat today, and the card says so. A March-election town runs its own election, whose results are in no file the state publishes. For 416 of those towns the card names the officers on their county's own list of township officers instead — 29 counties publish one this app reads (measured 2026-10-16) — each dated to the list and the day it was read, and only where the election results name nobody; the rest name nobody (gap mn-township-officers). Built weekly by mn/scripts/build_mn_town_boards.py; the county lists by mn/scripts/mn_county_town_officers_scraper.py and build_mn_county_town_officers.py. A city's people belong on the City card and an unorganized territory's on the county's, so neither gets a town-board row at all.",
       "url": "https://districtry.com/mn/sources.html#layer-county-subdivision",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, copied into a tile archive served from this site, re-fetched from the Census weekly; 2,762 features for Minnesota, measured 2026-09-29",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
         }
@@ -1821,12 +1847,12 @@ table.matrix code {
       "name": "Voting Precinct",
       "description": "The voting precinct containing the point — where a reader votes and how their ballots are reported. NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent.",
       "url": "https://districtry.com/mn/sources.html#layer-voting-precinct",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Office of the Minnesota Secretary of State, Elections Division — Voting Districts, Minnesota, served through MnGeo's enterprise ArcGIS host; 4,105 features, pre-built for the state by mn/scripts/build_mn_precincts.py and shipped with the app. The office states it cannot assure the lines are exact and directs anyone needing a definitive one to the city, township, or county, which the card says.",
           "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
         }
@@ -1838,17 +1864,39 @@ table.matrix code {
     },
     {
       "@type": "Dataset",
+      "@id": "https://districtry.com/mn/sources.html#dataset-election-results",
+      "identifier": "election-results",
+      "name": "Election Results",
+      "description": "For the picked race, the choice with the most votes in each Minnesota precinct, and on the card the clicked precinct's votes for every race on its ballot, from U.S. Senate to its town board and school board, its turnout, and the race's total across Minnesota. Unofficial until the State Canvassing Board certifies the count, and the card and the map key say so. The choices and their votes come from the Minnesota Secretary of State's precinct-by-precinct results files for the 3 November 2026 general election (allracesbyprecinct.txt and localPrct.txt, with each precinct's turnout from pctstats.txt), read daily by mn/scripts/mn_election_results_scraper.py. Colours follow each choice's place on the office's ballot list, never a party.",
+      "url": "https://districtry.com/mn/sources.html#layer-election-results",
+      "includedInDataCatalog": {
+        "@id": "https://districtry.com/mn/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "CreativeWork",
+          "name": "Office of the Minnesota Secretary of State, Elections Division — Voting Districts, the same 4,105 outlines Voting Precinct draws",
+          "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Minnesota — statewide. Every precinct counts its own absentee and mail ballots, so no vote is reported outside a precinct"
+      }
+    },
+    {
+      "@type": "Dataset",
       "@id": "https://districtry.com/mn/sources.html#dataset-tribal-government",
       "identifier": "tribal-government",
       "name": "Tribal Government",
       "description": "Whether this address is on tribal land, and which nation's government answers for it — Minnesota has 22 such areas across 13 nations. The council, from each nation's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card. Nine of the thirteen nations publish one this project can read; for the other four the card says why it names nobody. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json, which the Census does not publish and the Bureau does not draw.",
       "url": "https://districtry.com/mn/sources.html#layer-tribal-government",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust lands, clipped to Minnesota and shipped with the app",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
         }
@@ -1865,12 +1913,12 @@ table.matrix code {
       "name": "City",
       "description": "The city covering the point, if any. Most of Minnesota's land is township or unorganized territory, where the card is correctly empty. In the 43 cities above 25,000 people, the mayor and council members, each the winner of the most recent election for that seat, from the Office of the Minnesota Secretary of State's city results files (electionresultsfiles.sos.mn.gov), dated to that election: 249 of 268 seats. A winner is not a claim about who sits today, and the card says so; a seat decided in later ranked-choice rounds, which the state's file does not carry, names nobody and says why. Built weekly by mn/scripts/build_mn_city_councils.py. The 813 smaller cities name nobody yet, recorded as the coverage gap mn-municipal-officeholders.",
       "url": "https://districtry.com/mn/sources.html#layer-municipality",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Places / incorporated places, layer 4, copied into a tile archive served from this site, re-fetched from the Census weekly; 856 features for Minnesota, measured 2026-09-29, ALL of them carrying the Census's city descriptor — there is no village among them, which is why this card has no type row where Michigan's needs one",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
@@ -1887,17 +1935,17 @@ table.matrix code {
       "name": "City Council District",
       "description": "The city council ward or district containing the point, in the 22 Minnesota cities above 25,000 people whose councils elect by ward or district, and the council member it elects. The winner of each ward's most recent council election, from the same city council roster the City card reads (mn/data/app/mn-city-councils.json), every name dated. A winner is not a claim about who sits today, and the card says so.",
       "url": "https://districtry.com/mn/sources.html#layer-city-ward",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Office of the Minnesota Secretary of State, Elections Division — Voting Districts, Minnesota, whose every precinct carries the ward it lies in: each ward is its precincts joined together, built by mn/scripts/build_mn_city_wards.py. Checked against the ballot: for all 101 wards, the precincts that voted in the ward's latest council contest since 2022 (the Secretary of State's localPrct.txt results) are exactly the precincts the same election's precinct map puts in the ward, measured 2026-10-15",
           "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Office of the Minnesota Secretary of State, local results by precinct (localPrct.txt), the ballot each ward is checked against",
           "url": "https://electionresultsfiles.sos.mn.gov/20241105/localPrct.txt"
         }
@@ -1914,12 +1962,12 @@ table.matrix code {
       "name": "School District (Secondary)",
       "description": "The secondary school district covering the point, in the one place Minnesota has one. NOBODY IS NAMED HERE, deliberately: the one secondary district (Park Rapids, grades 9-12) lies over the Pine Point district, whose voters elect Pine Point's own board, so naming Park Rapids's board on this card would name people a reader there does not vote for. The Elementary card is the one for Pine Point.",
       "url": "https://districtry.com/mn/sources.html#layer-school-district-secondary",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; exactly 1 feature for Minnesota, measured 2026-09-29 — 'Park Rapids Public School District in Pine Point (9-12)'. It ships rather than being dropped because it IS the answer where it applies: without it a reader in Pine Point would be shown an elementary district and no high-school district at all",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1"
         }
@@ -1936,12 +1984,12 @@ table.matrix code {
       "name": "Police Station",
       "description": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address. NOT AN OFFICEHOLDER LAYER, AND NOT A JURISDICTION EITHER. The card names buildings and says outright that which agency has jurisdiction at a point — a city police department, a county sheriff or the State Patrol — is a different question that is not published as a boundary this app can read.",
       "url": "https://districtry.com/mn/sources.html#layer-police-station",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 53 (Police Stations), queried live at runtime by a bounding envelope through a paged loader (no builder script, no committed data/app file). Public domain. 694 points in Minnesota's envelope, measured 2026-09-29 — 448 in Minnesota and the rest in Wisconsin (200), South Dakota (24), North Dakota (15), Michigan (4) and Iowa (3), which is deliberate because nearest is a proximity fact. Name, address, city, state and ZIP are populated on every one",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53"
         }
@@ -1958,12 +2006,12 @@ table.matrix code {
       "name": "Fire & EMS Station",
       "description": "The three nearest fire and EMS station BUILDINGS to the point, by straight-line distance, with each one's address. NOT AN OFFICEHOLDER LAYER, AND NOT A JURISDICTION EITHER. Minnesota fire protection runs on municipal departments and joint-powers contracts, so the nearest station building is not the department that would answer a call, and the card says so.",
       "url": "https://districtry.com/mn/sources.html#layer-fire-station",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 51 (Fire Stations/EMS Stations), queried live at runtime by a bounding envelope through the same paged loader. Public domain. 1,484 points in Minnesota's envelope, measured 2026-09-29 — 961 in Minnesota, 376 in Wisconsin, 77 in South Dakota, 50 in North Dakota and 10 each in Iowa and Michigan. THE PAGING IS WHY THIS IS TRUSTWORTHY: the service caps a response and answers HTTP 200 with exceededTransferLimit rather than an error, so a truncated set looks exactly like a complete one",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51"
         }
@@ -1980,12 +2028,12 @@ table.matrix code {
       "name": "Post Office",
       "description": "The three nearest post offices to the point, by straight-line distance, with each one's address. NOT AN OFFICEHOLDER LAYER. A post office elects nobody; the card names buildings and their addresses.",
       "url": "https://districtry.com/mn/sources.html#layer-post-office",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/mn/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 38 (Post Offices), queried live at runtime by a bounding envelope through the same paged loader. Public domain. 1,199 points in Minnesota's envelope, measured 2026-09-29 — 793 in Minnesota, 292 in Wisconsin, 63 in South Dakota, 34 in North Dakota, 10 in Iowa and 7 in Michigan. THE SERVICE LOWERCASES THE ATTRIBUTE KEYS IT RETURNS while naming them in capitals in its own field list, which is why every read goes through the app's case-insensitive findPropCI",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38"
         }

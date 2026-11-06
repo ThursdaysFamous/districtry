@@ -140,13 +140,13 @@ prose.
 
 | instance | layers that send the point | registered layers |
 |---|---|---|
-| il | 5 | 41 |
+| il | 5 | 42 |
 | ny | 0 | 39 |
 | ca | 0 | 16 |
 | wi | 1 | 32 |
 | ia | 0 | 21 |
 | mi | 0 | 19 |
-| mn | 0 | 21 |
+| mn | 0 | 22 |
 | ky | 0 | 16 |
 | in | 0 | 18 |
 | nc | 0 | 17 |
@@ -172,7 +172,7 @@ opens a pull request when a result changes, but **nothing fails when this
 is stale**, so a layer added since that date is named below as not
 measured until the next run describes it.
 
-#### il — 29 of 41 layers fetch their shapes
+#### il — 29 of 42 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -208,6 +208,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `il-supreme-court`, `congress`, `il-senate`, `il-house`, `ccbr`, `school-board`, `tribal-government`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`, `library`, `early-voting`.
+- **Not measured** — declared since the probe ran: `election-results`.
 - Fetched by the app itself with no layer on, for its coverage tests: `data.cityofchicago.org`, `tigerweb.geo.census.gov`.
 
 #### ny — 14 of 39 layers fetch their shapes
@@ -284,7 +285,7 @@ measured until the next run describes it.
 - Drawn from this site's own files: `us-house`, `mi-senate`, `county`, `mi-house`, `county-commissioner`, `city-ward`, `precinct`, `tribal-government`, `mi-court-of-appeals`, `mi-circuit-court`, `mi-isd`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 
-#### mn — 6 of 21 layers fetch their shapes
+#### mn — 6 of 22 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -297,7 +298,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `mn-judicial-district`, `mn-senate`, `county`, `mn-house`, `watershed-district`, `school-board-district`, `county-commissioner`, `voting-precinct`, `tribal-government`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `conservation-district`, `city-ward`.
+- **Not measured** — declared since the probe ran: `conservation-district`, `election-results`, `city-ward`.
 
 #### ky — 4 of 16 layers fetch their shapes
 
@@ -390,13 +391,13 @@ measured until the next run describes it.
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
-| il | 131 | 416 | 6 |
+| il | 131 | 417 | 6 |
 | ny | 38 | 36 | 0 |
 | ca | 17 | 15 | 0 |
 | wi | 92 | 267 | 5 |
 | ia | 72 | 56 | 0 |
 | mi | 40 | 70 | 1 |
-| mn | 31 | 23 | 0 |
+| mn | 31 | 24 | 0 |
 | ky | 31 | 18 | 0 |
 | in | 22 | 21 | 0 |
 | nc | 40 | 20 | 0 |
@@ -408,7 +409,7 @@ measured until the next run describes it.
 | la | 28 | 24 | 0 |
 | mo | 23 | 14 | 0 |
 | va | 23 | 18 | 0 |
-| **total** | **759** | **1102** | **12** |
+| **total** | **759** | **1104** | **12** |
 
 **219 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and

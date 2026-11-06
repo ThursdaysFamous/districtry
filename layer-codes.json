@@ -62,6 +62,7 @@
     "early-voting": "ev",
     "election-district": "ed",
     "election-precinct": "ep",
+    "election-results": "er",
     "elementary-attendance-area": "ea",
     "ems-service": "em",
     "es-zone": "ez",

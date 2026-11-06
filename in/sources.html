@@ -1472,17 +1472,17 @@ table.matrix code {
       "name": "Court of Appeals District",
       "description": "The Court of Appeals district covering the point, whose three judges stand for retention in that district alone. No judge is named yet; recorded as gap in-court-of-appeals-judges. The card says three of the court's fifteen judges come from the district and stand for retention only there.",
       "url": "https://districtry.com/in/sources.html#layer-in-court-of-appeals",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Dissolved from the shipped county fabric (TIGERweb State_County layer 1) by in/scripts/build_in_appeals_districts.py, following the court's own district map (read 2026-10-16), the one place it publishes which counties are in each district; the Indiana Code that sets them is published only through a site that serves this project nothing it can read.",
           "url": "https://www.in.gov/courts/appeals/images/coa-district-map.jpg"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Court of Appeals of Indiana — its districts, and which judges stand for retention where",
           "url": "https://www.in.gov/courts/appeals/districts/"
         }
@@ -1499,12 +1499,12 @@ table.matrix code {
       "name": "U.S. House",
       "description": "The U.S. House district covering the point, and the representative holding it. congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
       "url": "https://districtry.com/in/sources.html#layer-us-house",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Legislative, layer 0 (120th Congressional Districts), pre-built for the state and shipped with the app. The layer's own district field is CD120; 9 features for Indiana, measured 2026-09-29.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
         }
@@ -1521,12 +1521,12 @@ table.matrix code {
       "name": "Indiana Senate District",
       "description": "The Indiana Senate district covering the point. NO ROSTER SHIPS IN THIS CHANGE, and the card says so: it names the district and links the General Assembly's own member directory rather than naming a senator this instance has not fetched. Recorded as gap in-general-assembly-roster; the Open States export lands in its own change with its own weekly workflow, the route every other instance took.",
       "url": "https://districtry.com/in/sources.html#layer-in-senate",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber, field SLDU), pre-built for the state and shipped with the app; 50 features, measured 2026-09-29.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
         }
@@ -1543,12 +1543,12 @@ table.matrix code {
       "name": "County",
       "description": "Which county contains the point, and who won each seat on its board of commissioners and its county council. Every commissioner and county council member in 91 of the 92 counties, each the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2022 and 2024 generals), dated to that election and rebuilt weekly by in/scripts/build_in_county_officials.py. A winner is not a sitting member: Indiana fills a vacancy by party caucus, which no result records, and the card says so. Every seat in the county is listed because neither body's district lines are drawn yet. Marion County's legislative body is the Indianapolis City-County Council, so its card names the council's 25 members and the Mayor of Indianapolis from the 2023 municipal general instead (in/scripts/build_in_city_officials.py).",
       "url": "https://districtry.com/in/sources.html#layer-county",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 92 features, measured 2026-09-29.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
         }
@@ -1565,12 +1565,12 @@ table.matrix code {
       "name": "Indiana House District",
       "description": "The Indiana House district covering the point. NO ROSTER SHIPS IN THIS CHANGE — the same gap as the Senate layer (in-general-assembly-roster); the card names the district and links the chamber's own directory.",
       "url": "https://districtry.com/in/sources.html#layer-in-house",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber, field SLDL), pre-built for the state and shipped with the app; 100 features, measured 2026-09-29.",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
         }
@@ -1587,12 +1587,12 @@ table.matrix code {
       "name": "County Council District",
       "description": "Which county council district contains the point, and who won that district's seat and the county's three at-large seats; in Marion County, the Indianapolis City-County Council district and its member. The district's council member and the county's at-large members, each the winner of that seat's most recent election in the Indiana Election Division's certified results (in-county-councils.json; for Marion County, the 2023 municipal general in in-city-officials.json). A winner is not a sitting member: Indiana fills a vacancy by party caucus, and the card says so. Boone County's District 3 seat is titled \"Dist 36\" in the results, so its card does not guess which member holds it.",
       "url": "https://districtry.com/in/sources.html#layer-county-council",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Indiana Geographic Information Office — Administrative Boundaries of Indiana, layer 4 (CountyCouncilPolygon), each county's own council districts, joined into one shape per district, clipped to the county and shipped with the app by in/scripts/build_in_council_districts.py; 56 counties file, 55 are drawn (Clay files three of its four districts), measured 2026-10-15.",
           "url": "https://gisdata.in.gov/server/rest/services/Hosted/Administrative_Boundaries_of_Indiana_Current/FeatureServer/4"
         }
@@ -1609,12 +1609,12 @@ table.matrix code {
       "name": "School District",
       "description": "The school district covering the point. NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. Indiana school board members are elected — the Election Division certifies a School Board Member office category, whose own description says most members are elected and some are appointed — and the certified returns name 742 of them, but this change ships no roster and no districted geometry exists statewide, so nobody is named. Recorded as gap in-school-board-members.",
       "url": "https://districtry.com/in/sources.html#layer-school-district-unified",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), copied into a tile archive served from this site, re-fetched from the Census weekly; 291 features for Indiana, measured 2026-09-29. Layers 1 (SECONDARY) and 2 (ELEMENTARY) both return zero features for Indiana and are recorded drops — see docs/DATA_LAYER_GUIDEBOOK.md",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
         }
@@ -1631,12 +1631,12 @@ table.matrix code {
       "name": "ZIP Code",
       "description": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary. NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one.",
       "url": "https://districtry.com/in/sources.html#layer-zip-code",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, copied into a tile archive served from this site, re-fetched from the Census weekly. ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='18', in Esri's own {xmin,ymin,xmax,ymax} shape; 1,491 features fall in this instance's envelope and 882 actually intersect Indiana, measured 2026-09-29 against the state's own TIGERweb polygon",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
         }
@@ -1653,12 +1653,12 @@ table.matrix code {
       "name": "Township",
       "description": "The civil township covering the point — in Indiana a real unit of government, not a Census construct. The township trustee and the three-member township board, as elected at the November 2022 general, from the Indiana Election Division's certified results (in-township-officials.json): 973 trustees and 921 boards of the 1,004 civil townships. A township the results do not cover, including Marion County's five-member boards, says so on the card, and the names are election winners rather than a roster the township keeps. Recorded as gap in-township-officers.",
       "url": "https://districtry.com/in/sources.html#layer-county-subdivision",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, copied into a tile archive served from this site, re-fetched from the Census weekly; 1,012 features for Indiana, measured 2026-09-29",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
         }
@@ -1675,12 +1675,12 @@ table.matrix code {
       "name": "Conservancy District",
       "description": "The conservancy district or districts covering the point — special districts a circuit court sets up, when property owners ask, to deal with flooding, drainage, sewers, water supply or a lake — and who sits on each one's board. Each board as the district reported it to the Department of Natural Resources for its 2026 directory, read by in/scripts/build_in_conservancy_directors.py: 465 people named and 6 seats vacant across 93 districts, with the telephone and e-mail the directory prints beside each person and each district's own (on the copy read 2026-10-17, 145 people with a telephone and 181 with an e-mail, 86 districts with a telephone and 83 with an e-mail). A value printed for two or more people, or equal to the district's own, is the district's and is not shown on a person. Six districts sent no list, and one on the map (Geist Reservoir) is not in the directory; the card says so for each rather than naming anyone. Staff a district hires (attorneys, engineers, managers, operators) are not shown, and the home towns and addresses the directory gives are never carried.",
       "url": "https://districtry.com/in/sources.html#layer-conservancy-district",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Indiana Department of Natural Resources — Conservancy Districts of Indiana, layer 54 on gisdata.in.gov: the 100 districts the map marks active, measured 2026-10-16, pre-built by in/scripts/build_in_conservancy_districts.py and shipped with the app. One district the department's 2026 directory lists, Hidden Hills, carries no status on the map and is not drawn. The layer states no licence.",
           "url": "https://gisdata.in.gov/server/rest/services/Hosted/Conservancy_Districts_of_Indiana_20250528/FeatureServer/54"
         }
@@ -1697,12 +1697,12 @@ table.matrix code {
       "name": "School Board District",
       "description": "The district the Indianapolis Public Schools board elects a member from. Everywhere else in Indiana the card says this map draws no other board's districts yet. NO NAMES YET. No list of the Indianapolis Public Schools board's members has been read, so the card names no one rather than guessing; recorded as gap in-school-board-members.",
       "url": "https://districtry.com/in/sources.html#layer-school-board-district",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "City of Indianapolis and Marion County — School Board Districts, layer 9 of its OpenData_Political map service: the five Indianapolis Public Schools districts, measured 2026-10-16, pre-built by in/scripts/build_in_school_board_districts.py and shipped with the app. The same layer draws residence districts for the Lawrence and Washington township boards, which are not drawn because the whole township votes for every seat. The service states no licence.",
           "url": "https://gis.indy.gov/server/rest/services/OpenData/OpenData_Political/MapServer/9"
         }
@@ -1719,12 +1719,12 @@ table.matrix code {
       "name": "Voting Precinct",
       "description": "The voting precinct containing the point — where a reader votes and how their ballots are reported. NO OFFICEHOLDER, and none is missing. A precinct elects nobody — it is an election-administration unit, not a district with a representative — so the card says that rather than leaving a reader to wonder which name is absent.",
       "url": "https://districtry.com/in/sources.html#layer-voting-precinct",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Indiana Geographic Information Office (IndianaMap) — Voting District Boundaries 2026, which the item says was obtained from the Indiana General Assembly and the Indiana Election Division in June 2026; 5,121 features, pre-built for the state by in/scripts/build_in_precincts.py and shipped with the app. A precinct a county changed after June 2026 is not shown, which the card says. The item names no licence, only a limitation of warranties.",
           "url": "https://gisdata.in.gov/server/rest/services/Hosted/Voting_District_Boundaries_2026/FeatureServer/0"
         }
@@ -1741,12 +1741,12 @@ table.matrix code {
       "name": "City or Town",
       "description": "The incorporated city or town covering the point, if any — and which of the two it is, because in Indiana that changes what governs the point. The mayor and council of all 39 places over 25,000 people. For 36 of them (all 33 cities and three of six towns) each name is the winner of that seat's most recent election in the Indiana Election Division's certified results (the 2023 municipal general), dated to that election; a winner is not a sitting member, because Indiana fills a vacancy by party caucus, and the card says so. Plainfield, Brownsburg and Schererville are towns where an uncontested seat is on no ballot, so their councils are read from each town's own council page and dated to the read. Rebuilt weekly by in/scripts/build_in_city_officials.py. Smaller places are not named yet. Recorded as gap in-municipal-officeholders.",
       "url": "https://districtry.com/in/sources.html#layer-municipality",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Places / incorporated places, layer 4, copied into a tile archive served from this site, re-fetched from the Census weekly; 566 features for Indiana, measured 2026-09-29",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
@@ -1763,62 +1763,62 @@ table.matrix code {
       "name": "City Council District",
       "description": "The council district containing the point, in the eleven Indiana cities of 25,000 people or more whose current council district map this app has confirmed, and the council member elected from it. in-city-officials.json, the roster the City or Town card reads, from the Indiana Election Division's certified 2023 municipal general (and, for Plainfield, the town's own council page): the council member elected from each district, joined by district number, and the members the city elects at large.",
       "url": "https://districtry.com/in/sources.html#layer-city-ward",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "The City of Bloomington's map of its council districts",
           "url": "https://services9.arcgis.com/47GwVXZ9a8thrviM/arcgis/rest/services/City_Council_Districts/FeatureServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "The map of Elkhart's council districts published on ArcGIS Online as City Council Districts",
           "url": "https://services5.arcgis.com/RhRpaq8RpEQjlpir/arcgis/rest/services/City_Council_Districts/FeatureServer/1"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "The City of Goshen's map of its council districts (Elkhart County GIS and City of Goshen GIS)",
           "url": "https://services8.arcgis.com/trHxDV6stlqDdGWV/arcgis/rest/services/CouncilDistricts2023/FeatureServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "The City of Greenwood's map of its Common Council districts",
           "url": "https://services2.arcgis.com/6DdnNWEqLRF18ltQ/arcgis/rest/services/Greenwood_Common_Council/FeatureServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "The City of Jeffersonville's map of its council districts",
           "url": "https://services.arcgis.com/NuZplX0yD9b0Mx90/arcgis/rest/services/city_council_districts/FeatureServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "The City of Indianapolis and Marion County's open data map of Lawrence's council districts",
           "url": "https://gis.indy.gov/server/rest/services/OpenData/OpenData_Political/MapServer/5"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "The map of New Albany's council districts published on ArcGIS Online as New Albany 2020 Census Council Districts",
           "url": "https://services5.arcgis.com/fhY0REQd0M65vDjz/arcgis/rest/services/New_Albany_2020_Census_Council_Districts/FeatureServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Hamilton County GIS's map of the Noblesville and Westfield council districts",
           "url": "https://services5.arcgis.com/beYj0ONLvCt8qxHA/arcgis/rest/services/Election_Municipal_Council_2023/FeatureServer/5"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "The map of Plainfield's council districts published on ArcGIS Online as 2021 Council Districts",
           "url": "https://services6.arcgis.com/3ejT7DEfNyzKXZBD/arcgis/rest/services/2021_Council_Districts/FeatureServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "Porter County's map of Valparaiso's council districts",
           "url": "https://services6.arcgis.com/TQ2Al5QIvv4tMBL7/arcgis/rest/services/ElectionGeography_public_27e9bb8eaa1148d08269f6122529bc74/FeatureServer/0"
         },
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places): each city's outer edge, where its districts are cut so the City Council District and City or Town cards agree about which city a point is in",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
         }
@@ -1835,12 +1835,12 @@ table.matrix code {
       "name": "Tribal Government",
       "description": "Whether this address is on tribal land, and which nation's government answers for it — Indiana has one such area, the Pokagon Band of Potawatomi's. The council, from the Pokagon Band's own published council page, read weekly by scripts/tribal_council_scraper.py and dated on the card — the same read the Michigan card uses. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
       "url": "https://districtry.com/in/sources.html#layer-tribal-government",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
           "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
         }
@@ -1857,12 +1857,12 @@ table.matrix code {
       "name": "Police Station",
       "description": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a police station is a facility, not an elected district.",
       "url": "https://districtry.com/in/sources.html#layer-police-station",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 53 (Police Stations), queried live at runtime by a bounding envelope through the shared paged loader (no builder script, no committed data/app file). Public domain. 650 points in this instance's envelope, measured 2026-09-29",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53"
         }
@@ -1879,12 +1879,12 @@ table.matrix code {
       "name": "Fire & EMS Station",
       "description": "The three nearest fire or EMS station BUILDINGS to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a station is a facility. Indiana's fire and EMS RESPONSE AREAS are a different thing, filed by the state's NG911 programme, and ship as their own layers in a later change.",
       "url": "https://districtry.com/in/sources.html#layer-fire-station",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 51 (Fire and EMS Stations), queried live at runtime by a bounding envelope through the shared paged loader. Public domain. 1,758 points in this instance's envelope, measured 2026-09-29",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51"
         }
@@ -1901,12 +1901,12 @@ table.matrix code {
       "name": "Post Office",
       "description": "The three nearest post offices to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a post office is a federal facility, not an elected district.",
       "url": "https://districtry.com/in/sources.html#layer-post-office",
-      "isPartOf": {
+      "includedInDataCatalog": {
         "@id": "https://districtry.com/in/sources.html#catalog"
       },
       "isBasedOn": [
         {
-          "@type": "Dataset",
+          "@type": "CreativeWork",
           "name": "USGS The National Map — structures layer 38 (Post Offices), queried live at runtime by a bounding envelope through the shared paged loader. Public domain. 1,012 points in this instance's envelope, measured 2026-09-29",
           "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38"
         }

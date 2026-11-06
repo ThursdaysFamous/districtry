@@ -51,13 +51,13 @@ in the researched-but-unbuilt backlog.
 <!-- ==== GUIDEBOOK:BEGIN coverage-map ==== -->
 ```json
 {
-  "chicago": ["il-supreme-court", "congress", "il-senate", "il-house", "county", "mwrd", "school-district-secondary", "school-district-unified", "school-district-elementary", "township", "municipality", "judicial-subcircuit", "county-board", "ccbr", "fire-district", "dupage-county-special-police", "park-district", "library-district", "school-board", "cps-hs-network", "cps-network", "ward-precinct", "ward", "police-beat", "police-district", "ccpsa-district-council", "community-area", "zip-code", "cps-high", "cps-middle", "county-precinct", "tribal-government", "ssa", "tif-district", "cps-elementary", "school-site", "police-station", "fire-station", "post-office", "library", "early-voting"],
+  "chicago": ["il-supreme-court", "congress", "il-senate", "il-house", "county", "mwrd", "school-district-secondary", "school-district-unified", "school-district-elementary", "township", "municipality", "judicial-subcircuit", "county-board", "ccbr", "fire-district", "dupage-county-special-police", "park-district", "library-district", "school-board", "cps-hs-network", "cps-network", "ward-precinct", "election-results", "ward", "police-beat", "police-district", "ccpsa-district-council", "community-area", "zip-code", "cps-high", "cps-middle", "county-precinct", "tribal-government", "ssa", "tif-district", "cps-elementary", "school-site", "police-station", "fire-station", "post-office", "library", "early-voting"],
   "nyc": ["judicial-district", "county", "nys-central-hs-district", "nys-school-district", "library-district", "municipality", "county-supervisor", "county-legislature", "fire-district", "tribal-government", "village", "borough", "borough-president", "district-attorney", "congress", "municipal-court", "state-senate", "school-district", "cec", "fire-battalion", "council", "community-district", "election-district", "state-assembly", "police-sector", "police-precinct", "zip-code", "neighborhood", "hs-zone", "ms-zone", "es-zone", "school-site", "police-station", "fire-station", "post-office", "library", "early-voting", "polling-place", "nys-zip-code"],
   "sf": ["congress", "ca-senate", "ca-assembly", "bart-director", "election-precinct", "supervisor-district", "police-district", "zip-code", "neighborhood", "elementary-attendance-area", "police-station", "fire-station", "school-site", "post-office", "library", "early-voting"],
   "wisconsin": ["madison-neighborhood-assoc", "wtcs-district", "us-house", "wi-senate", "wi-assembly", "wi-circuit-court", "wi-court-of-appeals", "county", "school-district-secondary", "school-district-unified", "school-district-elementary", "county-board", "mps-school-board", "aldermanic-district", "county-subdivision", "ward", "municipality", "mpd-district", "mpd-squad-area", "milwaukee-neighborhoods", "tid-district", "fire-service", "law-service", "ems-service", "psap-area", "zip-code", "school-site", "library", "police-station", "fire-station", "post-office", "tribal-government"],
   "iowa": ["iowa-aea", "city-ward", "us-house", "ia-senate", "county", "ia-house", "county-supervisor", "school-district-unified", "school-director-district", "cc-director-district", "county-subdivision", "tribal-government", "municipality", "zip-code", "post-office", "police-station", "fire-station", "school-site", "precinct", "ia-judicial-district", "community-college"],
   "michigan": ["us-house", "mi-senate", "county", "mi-house", "school-district-unified", "school-district-elementary", "county-commissioner", "county-subdivision", "zip-code", "city-ward", "precinct", "municipality", "police-station", "fire-station", "post-office", "mi-court-of-appeals", "mi-circuit-court", "mi-isd", "tribal-government"],
-  "minnesota": ["us-house", "mn-judicial-district", "mn-senate", "county", "mn-house", "watershed-district", "conservation-district", "school-district-unified", "school-board-district", "county-commissioner", "zip-code", "school-district-elementary", "county-subdivision", "voting-precinct", "tribal-government", "municipality", "city-ward", "school-district-secondary", "police-station", "fire-station", "post-office"],
+  "minnesota": ["us-house", "mn-judicial-district", "mn-senate", "county", "mn-house", "watershed-district", "conservation-district", "school-district-unified", "school-board-district", "county-commissioner", "zip-code", "school-district-elementary", "county-subdivision", "voting-precinct", "election-results", "tribal-government", "municipality", "city-ward", "school-district-secondary", "police-station", "fire-station", "post-office"],
   "kentucky": ["us-house", "ky-supreme-court", "ky-court-of-appeals", "ky-senate", "ky-circuit-court", "ky-district-court", "ky-house", "county", "school-district-unified", "county-subdivision", "fiscal-court", "school-board-district", "voting-precinct", "municipality", "school-district-elementary", "school-district-secondary"],
   "indiana": ["in-court-of-appeals", "us-house", "in-senate", "county", "in-house", "county-council", "school-district-unified", "zip-code", "county-subdivision", "conservancy-district", "school-board-district", "voting-precinct", "municipality", "city-ward", "tribal-government", "police-station", "fire-station", "post-office"],
   "northcarolina": ["us-house", "nc-senate", "nc-house", "nc-superior-court", "nc-district-court", "school-district-unified", "school-board-district", "county", "county-subdivision", "voting-precinct", "municipality", "city-ward", "zip-code", "tribal-government", "police-station", "fire-station", "post-office"],
@@ -5730,7 +5730,7 @@ committed `data/app` file" and "a vintage roll reaches it on its own" are true o
 a new census vintage reaches the card and the tiled map through the weekly pull request
 `update-tiger-tiles.yml` opens.
 
-Fleet totals: **Chicago 41 · New York 39 · SF 16 · Wisconsin 32 · Iowa 21 · Michigan 19** layers.
+Fleet totals: **Chicago 42 · New York 39 · SF 16 · Wisconsin 32 · Iowa 21 · Michigan 19** layers.
 
 ---
 
@@ -14352,7 +14352,7 @@ matrix; when one is rejected, move the rationale into a NO HONEST ANALOG footnot
 
 ## Per-fork inventories
 
-### Chicago — 41 layers
+### Chicago — 42 layers
 
 | id | label | group | pattern | source | roster / join | coverage |
 |---|---|---|---|---|---|---|
@@ -14397,6 +14397,7 @@ matrix; when one is rejected, move the rationale into a NO HONEST ANALOG footnot
 | `post-office` | Post Office | geography | NearestPt | USGS National Map structures L38, metro bbox, PAGED — 1,946 points measured 2026-09-05; the service caps at 2,000 and signals it with HTTP 200 + `exceededTransferLimit` | — | — |
 | `library` | Library | geography | NearestPt | Socrata `x8fc-8rcq` | — | chicagoCoverage |
 | `early-voting` | Early Voting Site | political | NearestPt | the State Board of Elections' statewide early voting list, downloaded by a person before each election and built into `early-voting-sites.json` by `scripts/build_early_voting_sites.py` (471 sites across 107 election authorities on 2026-11-03; WATCH.md row) | — | earlyVotingCoverage (inside Illinois, until the election the list is for has passed) |
+| `election-results` | Election Results | political | Bespoke (`registerElectionResultsLayer`, drawn on the `ward-precinct` archive) | the Chicago Board of Election Commissioners' precinct results for the 3 November 2026 general election (219 races, 1,291 precincts), read daily by `scripts/chicago_election_results_scraper.py` into `election-results.json` plus one ward file each through `scripts/election_results_common.py`; UNOFFICIAL until the Board proclaims the official results, which every card and the map legend say | the Board's own counts, no officeholder | chicagoCoverage |
 
 ### NYC — 39 layers
 

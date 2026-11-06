@@ -17,7 +17,8 @@ requests and the weekly roster refreshes; before that, #1024 records a weekly
 refresh that put 112 strings that were not names on Rock Island County's
 municipal cards for fifteen days. Five commits touching app or roster files
 went straight to main without a pull request (two on 2026-09-03, three on
-2026-08-24/25), and the deploy smoke-tests the Illinois app alone. So the page
+2026-08-24/25), and the deploy browser-tested the Illinois app alone until
+2026-11-05 and none since (the pull-request and main checks do). So the page
 claims none of: a person reviews every change, every change is a pull
 request, every app is browser-tested before a deploy. It says what is true.
 
