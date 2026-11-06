@@ -12,6 +12,7 @@ checkpoint that didn't happen.
 
 | Cadence | What | Where | You do |
 |---|---|---|---|
+| **2031**, when TIGERweb publishes 2030 census blocks | The Census 2020 block populations the compare screen counts people with, the one dataset here that cannot change until then | `tn/data/app/population/` | Point `scripts/build_block_population.py` at the 2030 block and tract layers, set this app's `INSTANCES` row's `total` to its 2030 count and rebuild with `--instance tn`. `--check` forces it: the first legislative map drawn on 2030 blocks fails against 2020 people until this row is done. |
 | Weekly (Mon 17:15 UTC) | U.S. House (Tennessee) roster refresh | `.github/workflows/update-tn-congress-roster.yml` → PR on change | Review + merge the PR; a week with a surprise diff is worth a look at the source |
 | Weekly (Tue 17:15 UTC) | Tennessee Senate + House roster refresh — names and vacancies from the Legislature's map on TNMap, party/e-mail/page from Open States `tn.csv` | `.github/workflows/update-tn-legislature-roster.yml` → PR on change | Review + merge the PR — especially after a Tennessee general (November, even years) and each January session start |
 | Weekly (Wed 17:15 UTC) | County commission members, read from each named county's own page (one module per county in `tn/scripts/tn_commission_parsers/`) | `.github/workflows/update-tn-commissioner-roster.yml` → PR on change | Review + merge the PR. The run log lists any county NOT READ and carried forward; a county carried for 45 days fails the run, and that is the signal to look at its page |

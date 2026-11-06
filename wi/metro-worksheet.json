@@ -2545,6 +2545,9 @@
   },
   "exports_name": "WisconsinExplorer",
   "verified_date": "October 29, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
   "sources_page": {
     "file": "wi/sources.html",
     "credits": [

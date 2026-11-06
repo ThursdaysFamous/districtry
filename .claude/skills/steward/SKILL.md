@@ -219,7 +219,7 @@ python3 ia/scripts/ia_county_board_page_scraper.py --selftest       # the four c
 python3 scripts/build_parcel_fabric_districts.py --selftest        # the geometry repair's three refusals and its drop count
 python3 scripts/validate_geometry_measure.py                      # the engine's area/overlap/point-weight block, held to shapely
 python3 scripts/validate_qr_code.py                               # the engine's QR block, every mask held to qrcode's matrix
-python3 scripts/build_block_population.py --check               # IL block populations: every file's sums, and each legislative map partitioning the state exactly
+python3 scripts/build_block_population.py --check               # every app's block populations: every file's sums, and each legislative map partitioning its state to a recorded count
 python3 scripts/build_legislative_boundaries.py --check         # the cross-layer one: every IL Senate boundary vertex is a vertex of its own two House districts, exactly
 python3 ia/scripts/build_legislative_boundaries.py --check      # the same relation in Iowa (Code 42.3, two House per Senate); broken on all 50 pairings until 2026-09-26
 python3 wi/scripts/build_legislative_boundaries.py --check      # the same relation in Wisconsin (art. IV s. 5, three Assembly per Senate), plus each declared dropped ring's after-answer re-derived from the shipped bytes
