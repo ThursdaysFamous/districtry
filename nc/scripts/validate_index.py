@@ -101,8 +101,8 @@ EXPECT_LAYER_IDS = [
     "us-house", "nc-district-court", "nc-senate", "nc-superior-court",
     "county", "nc-house", "school-district-unified", "county-subdivision",
     "school-board-district", "zip-code", "tribal-government",
-    "voting-precinct", "municipality", "city-ward", "police-station",
-    "fire-station", "post-office",
+    "voting-precinct", "election-results", "municipality", "city-ward",
+    "police-station", "fire-station", "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -123,6 +123,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "election-results.json": 11,  # North Carolina's precinct-by-precinct election results: the index (groups, precinct keys, the part file each precinct is in, and per contest its choices, totals, the votes counted outside any drawn precinct and its leader string, trimmed to the run of precincts it is on the ballot in); each precinct's own counts sit in election-results/c<county FIPS>-<n>.json, fetched on a click and never cached by the worker. From the State Board of Elections' results_pct file by nc/scripts/nc_election_results_scraper.py + build_nc_election_results.py through scripts/election_results_common.py, refreshed daily by update-nc-election-results.yml; certified stays false until the State Board certifies the results. Network-first: the count changes daily.
     "congress-roster.json": 14,  # U.S. House (NC) roster, refreshed weekly by update-nc-congress-roster.yml.
     "nc-senate-members.json": 45,  # NC Senate roster from Open States, refreshed weekly. The floor is below 50 because a vacant seat is a real event.
     "nc-house-members.json": 110,  # NC House roster from Open States, refreshed weekly. The floor is below 120 for the same reason.
