@@ -719,6 +719,7 @@
       "layer_ids": [
         "county",
         "county-subdivision",
+        "election-results",
         "fire-station",
         "municipality",
         "police-station",

@@ -69,7 +69,7 @@ in the researched-but-unbuilt backlog.
   "louisiana": ["us-house", "la-supreme-court", "la-court-of-appeal", "la-senate", "la-district-court", "county", "school-district-unified", "la-house", "zip-code", "parish-district", "voting-precinct", "municipality", "city-ward", "tribal-government", "police-station", "fire-station", "post-office"],
   "missouri": ["us-house", "mo-senate", "county", "mo-house", "county-commissioner", "school-district-unified", "school-district-elementary", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"],
   "georgia": ["us-house", "ga-senate", "county", "ga-house", "ga-superior-court", "school-district-unified", "county-subdivision", "county-commissioner", "school-board-district", "zip-code", "voting-precinct", "municipality", "police-station", "fire-station", "post-office"],
-  "virginia": ["us-house", "va-senate", "va-house", "county", "school-district-unified", "school-board-district", "county-subdivision", "supervisor-district", "zip-code", "voting-precinct", "municipality", "school-district-elementary", "tribal-government", "police-station", "fire-station", "post-office"],
+  "virginia": ["us-house", "va-senate", "va-house", "county", "school-district-unified", "school-board-district", "county-subdivision", "supervisor-district", "zip-code", "voting-precinct", "election-results", "municipality", "school-district-elementary", "tribal-government", "police-station", "fire-station", "post-office"],
   "westvirginia": ["us-house", "wv-senate", "county", "school-district-unified", "wv-house", "county-subdivision", "zip-code", "municipality", "city-ward", "police-station", "fire-station", "post-office"]
 }
 ```
