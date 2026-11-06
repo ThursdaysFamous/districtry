@@ -59,7 +59,7 @@ const OFFLINE = ["judicial-district", "county", "nys-school-district", "municipa
 const EXPECT_DISTRICT = { "judicial-district": "3", "county": "Albany", "nys-school-district": "ALBANY", "municipality": "Albany" };
 const NEGATIVE_POINT = "41.76370,-72.68510"; // Downtown Hartford, Connecticut — outside New York State and 66 km from the nearest geometry this instance ships. NOT a water point: the county, school-district, cities-towns, villages and three legislative files are all water-inclusive off Long Island and in Lake Ontario, so a mid-Sound or mid-lake click is positive, not negative
 const APP_NAME = "districtry New York";
-const EXPECT_LAYERS = 39; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
+const EXPECT_LAYERS = 40; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
 // ==== GENERATED:END smoke-config ====
 const POINT2 = "40.69354,-73.98963"; // Brooklyn Borough Hall (Brooklyn) — the re-classify hop stays fork test code
 // THE CITY GROUND TRUTH SURVIVES THE GO-LIVE AS FORK TEST CODE. The worksheet's
@@ -733,6 +733,81 @@ try {
       city.rows.some((r) => /Centre St/.test(r)),
       `${city.calls.join(" -> ")} | ${city.rows[0] || "(no rows)"}`);
     await Promise.resolve();
+  }
+
+  // ---- Election results: the card, the race menu and the legend, held to
+  // the shipped files rather than to any count, because the numbers can move
+  // until the Board of Elections certifies them. At City Hall the card names
+  // the election district and its Assembly District, says unofficial while
+  // the file is not certified, and offers exactly the races on this district's
+  // ballot; the legend names the picked race and keys the five lead bands; an
+  // Assembly race picked at City Hall becomes Brooklyn Borough Hall's own
+  // Assembly race when the point moves there.
+  {
+    const idx = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results.json"), "utf8"));
+    const ballotOf = (key) => {
+      const part = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results",
+        idx.parts[idx.precincts.indexOf(key)] + ".json"), "utf8"));
+      return part.precincts[key].contests.map((r) => String(r[0]));
+    };
+    const onBallot = ballotOf("66072"); // AD 66 ED 72, City Hall's election district
+    const firstOnBallot = idx.contests.find((c) => onBallot.includes(String(c.id)));
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${NYC_POINT}&layers=election-results`);
+    await page.waitForFunction(() => {
+      const c = document.getElementById("card-election-results");
+      return c && c.querySelector(".election-table");
+    }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const got = await page.evaluate(() => {
+      const c = document.getElementById("card-election-results");
+      const block = c && c.closest(".layer-block");
+      const pill = block && block.querySelector(".card-id-pill");
+      const sel = c && c.querySelector("select.election-select");
+      const legend = document.querySelector(".election-legend");
+      return {
+        notice: ((c && c.querySelector(".election-notice")) || {}).textContent || "",
+        pill: pill ? pill.textContent.trim() : "",
+        options: sel ? Array.from(sel.options).map((o) => o.value) : [],
+        legendShown: !!legend && !legend.hidden,
+        legendRace: legend ? ((legend.querySelector(".election-legend-race") || {}).textContent || "") : "",
+        legendSteps: legend ? legend.querySelectorAll(".election-legend-scale .election-legend-step").length : 0,
+        rows: c ? c.querySelectorAll(".election-table tbody tr").length : 0,
+        text: c ? c.textContent : "",
+      };
+    });
+    const noticeOk = idx.certified ? got.notice.indexOf("certified") !== -1
+      : got.notice.indexOf("Unofficial results") !== -1 &&
+        got.notice.indexOf("Board of Elections in the City of New York") !== -1;
+    const menuOk = got.options.length === onBallot.length && got.options.every((v) => onBallot.includes(v));
+    check("the Election Results card says unofficial and lists exactly this election district's races",
+          noticeOk && menuOk && got.pill === "Election District 72, Assembly District 66" &&
+          got.rows === firstOnBallot.choices.length && got.text.indexOf("Across New York City's precincts") !== -1 &&
+          got.text.indexOf("counted outside any precinct") === -1,
+          `notice=${JSON.stringify(got.notice.slice(0, 60))} options=${got.options.length}/${onBallot.length} ` +
+          `pill=${JSON.stringify(got.pill)} rows=${got.rows}`);
+    check("the Election Results legend names the picked race and keys the five lead bands",
+          got.legendShown && got.legendRace === firstOnBallot.name && got.legendSteps === 5,
+          `shown=${got.legendShown} race=${JSON.stringify(got.legendRace)} steps=${got.legendSteps}`);
+    const assemblyHere = idx.contests.find((c) => c.group === "state-assembly" && onBallot.includes(String(c.id)));
+    await page.selectOption("#card-election-results select.election-select", String(assemblyHere.id));
+    await page.waitForTimeout(300);
+    const [blat, blng] = POINT2.split(",").map(Number); // Brooklyn Borough Hall
+    await page.evaluate(([la, ln]) => window.NycExplorer.setSelectedPoint(la, ln), [blat, blng]);
+    await page.waitForFunction((was) => {
+      const pill = document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill");
+      return pill && pill.textContent.trim() !== was && document.querySelector("#card-election-results .election-table");
+    }, got.pill, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const moved = await page.evaluate(() => ({
+      pill: (document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill") || {}).textContent || "",
+      value: (document.querySelector("#card-election-results select.election-select") || {}).value || "",
+      race: (document.querySelector(".election-legend .election-legend-race") || {}).textContent || "",
+    }));
+    const assemblyThere = idx.contests.find((c) => c.group === "state-assembly" && c.id !== assemblyHere.id &&
+      moved.value === String(c.id));
+    check("an Assembly race picked at City Hall becomes Brooklyn Borough Hall's own Assembly race",
+          !!assemblyThere && moved.race === assemblyThere.name && moved.pill === "Election District 10, Assembly District 52",
+          `from=${assemblyHere.name} pill=${JSON.stringify(moved.pill)} picked=${moved.value} race=${JSON.stringify(moved.race)}`);
+    await context.close();
   }
 
   // 3. The NYC water-click honesty rule, made executable: a point inside the

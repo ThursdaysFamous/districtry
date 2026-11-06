@@ -572,6 +572,9 @@
   },
   "exports_name": "GeorgiaExplorer",
   "verified_date": "October 29, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
   "sources_page": {
     "file": "ga/sources.html",
     "credits": [

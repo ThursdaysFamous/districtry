@@ -11,6 +11,7 @@ checkpoint with a stale date is a checkpoint that didn't happen.
 
 | Cadence | What | Where | You do |
 |---|---|---|---|
+| **2031**, when TIGERweb publishes 2030 census blocks | The Census 2020 block populations the compare screen counts people with, the one dataset here that cannot change until then | `mi/data/app/population/` | Point `scripts/build_block_population.py` at the 2030 block and tract layers, set this app's `INSTANCES` row's `total` to its 2030 count and rebuild with `--instance mi`. `--check` forces it: the first legislative map drawn on 2030 blocks fails against 2020 people until this row is done. |
 | Weekly (Mon 15:30 UTC) | U.S. House (MI) roster refresh | `.github/workflows/update-mi-congress-roster.yml` → PR on change | Review + merge the PR; a week with a surprise diff is worth a look at the source |
 | Weekly (Tue 15:30 UTC) | Michigan Senate + House roster refresh (Open States mi.csv + the Senate's own all-senators directory) | `.github/workflows/update-mi-legislature-roster.yml` → PR on change | Review + merge the PR — especially after a Michigan general (November, even years) and each January seating |
 | Monthly (1st, 16:00 UTC) | Source freshness for every dataset this instance depends on | `.github/workflows/mi-validate-sources.yml` → tracking issue on WARN/FAIL | Read the issue; the job stays green on purpose |

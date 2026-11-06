@@ -4107,6 +4107,59 @@ svg.leaflet-image-layer.leaflet-interactive path {
     flex: none;
   }
   /* ==== ENGINE:END styles-districtry-skin ==== */
+  /* ==== ENGINE:BEGIN styles-election-results ==== */
+  /* Election results card and legend (registerElectionResultsLayer). Every
+     colour is a card or brand token, so both themes follow; the only literal
+     colours a reader sees are the choice swatches, which the script paints
+     from the ballot-order palette and which carry no text. */
+  .election-card { padding: 12px 18px 14px; display: flex; flex-direction: column; gap: 10px; }
+  .election-title { margin: 0; font-size: 14px; font-weight: 700; color: var(--card-ink); }
+  .election-notice {
+    font-size: 12.5px; line-height: 1.45; color: var(--card-ink);
+    background: var(--card-section-bg); border: 1px solid var(--card-border);
+    border-left: 3px solid var(--card-muted); border-radius: 6px; padding: 8px 10px;
+  }
+  .election-notice-certified { border-left-color: var(--card-accent); }
+  .election-pick { display: flex; flex-direction: column; gap: 4px; }
+  .election-select {
+    font: inherit; font-size: 13px; color: var(--card-ink); background: var(--card-section-bg);
+    border: 1px solid var(--card-btn-border); border-radius: 6px; padding: 6px 8px;
+    min-height: 32px; max-width: 100%;
+  }
+  .election-table { width: 100%; border-collapse: collapse; font-size: 13px; color: var(--card-body-ink); }
+  .election-table caption {
+    text-align: left; font-weight: 700; color: var(--card-ink); font-size: 13.5px; padding-bottom: 4px;
+  }
+  .election-table th, .election-table td {
+    padding: 5px 0; border-top: 1px solid var(--card-row-border); vertical-align: top; text-align: left;
+  }
+  .election-table thead th { font-size: 12px; font-weight: 600; color: var(--card-muted); border-top: 0; }
+  .election-table tbody th { font-weight: 600; color: var(--card-ink); padding-right: 8px; }
+  .election-table .election-num { text-align: right; white-space: nowrap; padding-left: 10px; font-variant-numeric: tabular-nums; }
+  .election-swatch {
+    display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px;
+    vertical-align: baseline; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+  }
+  .election-lead {
+    display: block; font-size: 11.5px; font-weight: 600; color: var(--card-muted); margin: 2px 0 0 16px;
+  }
+  .election-note { margin: 0; font-size: 12px; line-height: 1.45; color: var(--card-body-ink); }
+  .election-areas { display: flex; flex-direction: column; gap: 10px; }
+  .election-areas:empty { display: none; }
+  .election-area { padding-top: 10px; border-top: 1px solid var(--card-border); }
+  .election-area[open] > * + * { margin-top: 6px; }
+  .election-area-head { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--card-ink); }
+  .election-area-title { font-weight: 700; }
+  .election-area-lead { display: block; margin-top: 2px; padding-left: 1.1em; font-size: 12px; font-weight: 400; color: var(--card-muted); }
+  .election-area-head:focus-visible { outline: 2px solid var(--card-link); outline-offset: 2px; }
+  .districtry-map-legend.election-legend { margin-bottom: 6px; max-width: 260px; }
+  .districtry-map-legend.election-legend .dml-label { white-space: normal; }
+  .districtry-map-legend.election-legend .election-legend-race { font-weight: 700; color: var(--ink); }
+  .districtry-map-legend.election-legend .election-legend-status { font-style: italic; }
+  .districtry-map-legend.election-legend .election-legend-scale { display: flex; gap: 2px; width: 100%; }
+  .districtry-map-legend.election-legend .election-legend-step { flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; line-height: 1.15; text-align: center; color: var(--muted); }
+  .districtry-map-legend.election-legend .election-legend-ramp { display: block; width: 100%; height: 9px; border-radius: 2px; background: var(--ink); }
+  /* ==== ENGINE:END styles-election-results ==== */
 </style>
 <script>
   /* The theme applied BEFORE FIRST PAINT, from the same key the toggle writes,
@@ -4543,10 +4596,11 @@ function initSFExplorer() {
   // from the fleet-wide layer-codes.json. A code is permanent: links already
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "congress": "cg", "ca-senate": "cas", "ca-assembly": "caa",
-    "bart-director": "bt", "election-precinct": "ep", "supervisor-district": "sd",
-    "police-district": "pd", "zip-code": "zp", "neighborhood": "nb",
-    "elementary-attendance-area": "ea", "police-station": "ps", "fire-station": "fs",
-    "school-site": "ss", "post-office": "po", "library": "lb", "early-voting": "ev" };
+    "bart-director": "bt", "election-precinct": "ep", "election-results": "er",
+    "supervisor-district": "sd", "police-district": "pd", "zip-code": "zp",
+    "neighborhood": "nb", "elementary-attendance-area": "ea", "police-station": "ps",
+    "fire-station": "fs", "school-site": "ss", "post-office": "po", "library": "lb",
+    "early-voting": "ev" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4554,14 +4608,17 @@ function initSFExplorer() {
   var LAYER_CONCEPTS = { "us-house": ["congress"], "state-senate": ["ca-senate"],
     "state-house": ["ca-assembly"], "county-board": ["supervisor-district"],
     "city-council": ["supervisor-district"], "voting-precinct": ["election-precinct"],
-    "early-voting": ["early-voting"], "zip-code": ["zip-code"],
-    "neighborhood": ["neighborhood"], "elementary-school-zone": ["elementary-attendance-area"],
-    "school-site": ["school-site"], "police-district": ["police-district"],
-    "police-station": ["police-station"], "fire-station": ["fire-station"],
-    "post-office": ["post-office"], "library": ["library"] };
+    "election-results": ["election-results"], "early-voting": ["early-voting"],
+    "zip-code": ["zip-code"], "neighborhood": ["neighborhood"],
+    "elementary-school-zone": ["elementary-attendance-area"], "school-site": ["school-site"],
+    "police-district": ["police-district"], "police-station": ["police-station"],
+    "fire-station": ["fire-station"], "post-office": ["post-office"], "library": ["library"] };
   // ZIP code index (scripts/build_zip_index.mjs): a typed ZIP code selects a
   // spot inside it, and its ZIP layer is turned on and pinned for comparison.
   var ZIP_SEARCH_URL = "data/app/zip-index.json";
+  // Census block population index (scripts/build_block_population.py): lets
+  // the comparison stats screen count people as well as area.
+  var POPULATION_INDEX_URL = "data/app/population/index.json";
   var SOCRATA_HOST = "https://data.sf.gov";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -11304,6 +11361,9 @@ function initSFExplorer() {
     "ca-assembly",       // CA State Assembly (SLDL), pre-built SF-clipped TIGERweb (8 in window; SF split AD-17/19)
     "bart-director",     // 9 elected BART Board districts, 2022 Plan E2 (districts 7/8/9 cover SF; spans 3 counties) - smaller than the assembly slices
     "election-precinct", // 514 election precincts (2022 map) - subOf supervisor-district, ranks just before its parent so the outline frames the fills
+    // The same precinct shapes as Election Precinct, from the same archive, so it ranks right
+    // after it; each precinct is filled by the choice leading there in the picked contest.
+    "election-results",  // Election results, drawn on the Election Precinct outlines
     "supervisor-district", // SF Board of Supervisors district (11; water-trimmed, tiles the city)
     "police-district",   // SFPD district (10)
     "zip-code",          // national ZCTA (Census TIGERweb), SF-bounded
@@ -12517,16 +12577,22 @@ function initSFExplorer() {
       }
     },
     // the live counties' paths in the layer's current state: the lit one in
-    // the highlight style, the rest faded while anything is lit, else plain
+    // the highlight style, the rest faded while anything is lit, else plain.
+    // A layer that paints each feature its own colour (the election results)
+    // keeps every fill whether or not one is lit, as its tiles do (tilePaint),
+    // and the lit one is marked by the highlight line alone.
     styleLive: function () {
       if (!this.live) return;
       var mod = this.mod, rt = layerRuntime[mod.id], sel = this.liveSelected;
       var anySelected = !!sel || rt.tileSelectedId != null;
-      var base = baseStyleFor(mod) || {};
-      var faded = fadedStyle(base, mod), lit = Object.assign({}, base, highlightStyleFor(mod));
+      var own = !!(mod.overlay && typeof mod.overlay.tileFill === "function");
+      var hl = highlightStyleFor(mod);
       this.live.eachLayer(function (sub) {
         var on = !!sel && sub.feature === sel;
-        if (sub.setStyle) sub.setStyle(on ? lit : anySelected ? faded : base);
+        var base = baseStyleFor(mod, own ? sub.feature : null) || {};
+        var style = on ? Object.assign({}, base, hl) : anySelected && !own ? fadedStyle(base, mod) : base;
+        if (on && own) style = Object.assign(style, { fillColor: base.fillColor, fillOpacity: base.fillOpacity });
+        if (sub.setStyle) sub.setStyle(style);
         if (sub._path) sub._path.classList[on ? "add" : "remove"](HIGHLIGHT_CLASS);
         if (on && sub.bringToFront) sub.bringToFront();
       });
@@ -15038,6 +15104,943 @@ function initSFExplorer() {
       // outlineOnly at L.geoJSON construction time, so no restyle is needed yet.
       var supeMod = getLayerById("supervisor-district");
       if (supeMod && supeRt.overlayLayer) updateLayerHighlight(supeMod);
+    }
+  });
+
+  /* ==== ENGINE:BEGIN election-results ==== */
+  /* ---------- election results by precinct (registerElectionResultsLayer).
+   * One layer that colours an app's own precinct outlines by the choice with
+   * the most votes in each precinct for ONE race the reader picks, and whose
+   * card shows the clicked precinct's numbers for every race on its ballot.
+   *
+   * WHAT AN APP SUPPLIES (its METRO side calls the factory): the id and label,
+   * its precinct layer's loader and archive (the outlines are that layer's,
+   * not a second copy), the property its precinct features carry that equals
+   * the results file's precinct key, a coverage test, the results file's url,
+   * the url of each part file, and the publisher's name and the sentence that
+   * says what is still being counted. Nothing here names a place.
+   *
+   * MORE THAN ONE PUBLISHER ON ONE MAP. Where an app draws precincts that
+   * another office counts (Illinois: Chicago's Board and the county clerks
+   * around it), it passes `extraPrecincts`, one entry per office: its id, the
+   * loader of its precinct outlines, a coverage test, and functions giving a
+   * feature's results key and its label. Those outlines are drawn beside the
+   * app's own (TileOverlay's live part, tileLive below) in the same colours.
+   * The index then lists each office under `sources` (its publisher, area,
+   * address, reading time, certified or not, and what is still being
+   * counted), a precinct key names its office before a colon
+   * ("kane:AU01"; a key with no colon is the first source's), and a contest
+   * counted by several offices carries `bySource`: each office's own totals,
+   * which choices that office lists, and whether the race reaches past that
+   * office's ground. A card speaks for the office that counted the clicked
+   * precinct.
+   *
+   * THE FILES (written by an app's builder through
+   * scripts/election_results_common.py): one index — the election, its date,
+   * when it was read, certified or not, the race groups (each tied to the map
+   * layer it is elected from, or none), the precinct keys, the part each
+   * precinct's numbers are in, and per contest its choices in ballot order,
+   * its totals and a leader string with one character per precinct — and one
+   * part file per chunk of precincts with each precinct's own counts. A click
+   * reads one part; the map reads only the index.
+   *
+   * NONPARTISAN BY CONSTRUCTION. A choice's colour is its position on the
+   * publisher's ballot list, never its party, from a palette with no red and
+   * no blue. Every choice is listed the same way, in ballot order. Until the
+   * file says the count is certified, the card and the legend say the numbers
+   * are unofficial and will change, and a precinct's leader reads "Most votes
+   * so far", not "Winner". ---------- */
+  var ELECTION_COLORS = ["#1a9e8f", "#e08a00", "#6b8e23", "#8e5a9c", "#8c5a2b", "#c9b200",
+    "#0b5d55", "#b07aa1", "#9ccc3c", "#9c9b5c", "#f2c46d", "#4f6b3a"];
+  var ELECTION_TIE = "#9e9e9e";
+  var ELECTION_LEADER_CODES = "0123456789abcdefghijklmnopqrstuvwxyz";
+  // A precinct's fill strength by its margin band (the writer's `margins`:
+  // the leader's lead over second place, under 5, 5-15, 15-30, 30-50 and 50+
+  // points), so a close race draws pale and a wide one strong. A file written
+  // before margins existed draws every precinct at the old flat strength.
+  var ELECTION_MARGIN_OPACITY = [0.2, 0.36, 0.52, 0.68, 0.84];
+  var ELECTION_MARGIN_LABELS = ["Under 5", "5 to 15", "15 to 30", "30 to 50", "50 or more"];
+  var ELECTION_FLAT_OPACITY = 0.6;
+
+  // One precinct's character in a contest's `leaders` or `margins`. A writer
+  // may trim the run of "-" (not on this ballot) at either end and say where
+  // the string starts with `from`, which keeps a statewide file with
+  // thousands of local contests small; outside the string is "-".
+  function electionCodeAt(str, from, i) {
+    var j = i - (from || 0);
+    return str && j >= 0 && j < str.length ? str.charAt(j) : "-";
+  }
+
+  function electionChoiceColor(i) {
+    return ELECTION_COLORS[i % ELECTION_COLORS.length];
+  }
+
+  // A reading time ("2026-11-05T15:43:00Z") with its hour; a bare date
+  // ("2026-11-24", a certification) as the date alone.
+  function electionDateText(iso) {
+    var dateOnly = /^\d{4}-\d{2}-\d{2}$/.test(String(iso));
+    var d = new Date(dateOnly ? iso + "T12:00:00" : iso);
+    if (isNaN(d.getTime())) return String(iso);
+    return dateOnly
+      ? d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
+      : d.toLocaleString("en-US", { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" });
+  }
+
+  // "2026 General Election": the year from the election's date and the
+  // election's own name, so a card or legend says which election it shows
+  // once a past one sits beside it. A name already carrying its year is kept.
+  function electionTitle(data) {
+    var name = String((data && data.election) || "Election");
+    var year = /^\d{4}/.test(String(data && data.electionDate)) ? String(data.electionDate).slice(0, 4) : "";
+    return year && name.indexOf(year) === -1 ? year + " " + name : name;
+  }
+
+  function electionPercent(n, of) {
+    if (!of) return "0%";
+    var p = 100 * n / of;
+    return (p >= 99.95 || p < 0.05 ? p.toFixed(0) : p.toFixed(1)) + "%";
+  }
+
+  function registerElectionResultsLayer(opts) {
+    var indexPromise = null;
+    var parts = {};
+    var picked = null; // the contest id whose results colour the map
+
+    function loadIndex() {
+      if (!indexPromise) {
+        indexPromise = fetchJSONWithRetry(opts.indexUrl, { timeoutMs: 15000 }).then(function (data) {
+          var pos = {};
+          (data.precincts || []).forEach(function (k, i) { pos[String(k)] = i; });
+          var byId = {};
+          (data.contests || []).forEach(function (c) { byId[String(c.id)] = c; });
+          var groupLabel = {};
+          (data.groups || []).forEach(function (g) { groupLabel[g.id] = g; });
+          var sources = {};
+          (data.sources || []).forEach(function (src) { sources[String(src.id)] = src; });
+          return { data: data, pos: pos, byId: byId, groups: groupLabel, sources: sources };
+        }, function (err) {
+          indexPromise = null; // asked again on the next click rather than pinned
+          throw err;
+        });
+      }
+      return indexPromise;
+    }
+
+    function loadPart(part) {
+      if (!parts[part]) {
+        parts[part] = fetchJSONWithRetry(opts.partUrl(part), { timeoutMs: 15000 }).then(null, function (err) {
+          delete parts[part];
+          throw err;
+        });
+      }
+      return parts[part];
+    }
+
+    // The office that counted a precinct: the source its key names before a
+    // colon, else the index's first source; an index with no sources is the
+    // one publisher the app named.
+    function sourceIdOf(idx, key) {
+      var k = key === undefined || key === null ? "" : String(key), at = k.indexOf(":");
+      if (at > 0) return k.slice(0, at);
+      var list = idx && idx.data.sources;
+      return list && list.length ? String(list[0].id) : null;
+    }
+    function sourceOf(idx, srcId) {
+      var s = srcId !== null && srcId !== undefined && idx && idx.sources ? idx.sources[srcId] : null;
+      return {
+        id: srcId === undefined ? null : srcId,
+        publisher: (s && s.publisher) || opts.publisher,
+        areaName: (s && s.areaName) || opts.areaName,
+        uncountedNote: s ? (s.uncountedNote || "") : (opts.uncountedNote || ""),
+        read: (s && s.read) || (idx && idx.data.read),
+        certified: s ? !!s.certified : !!(idx && idx.data.certified),
+        certifiedDate: (s && s.certifiedDate) || (!s && idx && idx.data.certifiedDate) || null,
+        url: (s && s.source) || (idx && idx.data.source) || null
+      };
+    }
+    // the offices that counted a contest, where the index says
+    function contestSourceIds(contest) {
+      return contest && contest.bySource ? Object.keys(contest.bySource) : [];
+    }
+    // a contest's totals, the choices one office lists, and whether the race
+    // reaches past that office's ground, as that office counted it
+    function contestFor(contest, srcId) {
+      var s = contest && contest.bySource && srcId !== null && srcId !== undefined ? contest.bySource[srcId] : null;
+      return {
+        total: s ? s.total : contest.total,
+        beyond: s ? !!s.beyond : !!contest.beyond,
+        which: s && s.choices ? s.choices : contest.choices.map(function (name, n) { return n; })
+      };
+    }
+
+    // A contest may carry its own certified flag and date (where a local
+    // office is certified before the rest of the ballot); otherwise the
+    // office's (src), or, speaking for no one office, every office that
+    // counted it; otherwise the file's.
+    function certified(idx, contest, src) {
+      if (contest && contest.certified !== undefined && contest.certified !== null) return !!contest.certified;
+      if (src) return src.certified;
+      var ids = contestSourceIds(contest);
+      if (ids.length) return ids.every(function (id) { return sourceOf(idx, id).certified; });
+      // a contest with no bySource is the first office's alone
+      var list = idx && idx.data.sources;
+      if (list && list.length) return !!list[0].certified;
+      return !!(idx && idx.data.certified);
+    }
+    function certifiedDate(idx, contest, src) {
+      return (contest && contest.certifiedDate) || (src && src.certifiedDate) || (idx && idx.data.certifiedDate) || null;
+    }
+
+    /* ---- precincts another office counts, drawn beside the app's own ----
+     * Each entry's outlines load once and are kept as features carrying only
+     * their results key and label, so the map, the card and the district
+     * totals read one shape per precinct whoever drew it. */
+    var extraLoads = {}, extraLoaded = {};
+    function extraFeatures(src) {
+      if (!extraLoads[src.id]) {
+        extraLoads[src.id] = src.load().then(function (geojson) {
+          var out = [];
+          ((geojson && geojson.features) || []).forEach(function (f) {
+            var key = f && f.geometry ? src.key(f) : null;
+            if (key === null || key === undefined) return;
+            var props = {};
+            props[opts.keyProp] = String(key);
+            props.dxElectionLabel = src.label(f);
+            out.push({ type: "Feature", geometry: f.geometry, properties: props });
+          });
+          extraLoaded[src.id] = out;
+          return out;
+        }, function (err) {
+          delete extraLoads[src.id]; // asked again next time rather than pinned
+          throw err;
+        });
+      }
+      return extraLoads[src.id];
+    }
+    function extraFeatureAt(point) {
+      var list = opts.extraPrecincts || [];
+      return Promise.all(list.map(function (src) {
+        return Promise.resolve(src.coverage ? src.coverage(point) : true).then(function (inside) {
+          if (!inside) return null;
+          return extraFeatures(src).then(function (feats) {
+            return findFeatureContaining({ type: "FeatureCollection", features: feats }, point);
+          });
+        }).then(null, function (err) {
+          console.warn("[" + opts.id + "] " + src.id + " precincts did not load:", err);
+          return null;
+        });
+      })).then(function (hits) {
+        for (var i = 0; i < hits.length; i++) if (hits[i]) return hits[i];
+        return null;
+      });
+    }
+    // For the map: each office's outlines as they land, fresh objects each
+    // time the layer goes on (the live part marks what it has drawn).
+    function extraTileLive(onAppend) {
+      var list = opts.extraPrecincts || [];
+      var fc = { type: "FeatureCollection", features: [] };
+      return new Promise(function (resolve) {
+        var pending = list.length, resolved = false;
+        if (!pending) { resolve(fc); return; }
+        list.forEach(function (src) {
+          extraFeatures(src).then(function (feats) {
+            var fresh = feats.map(function (f) { return { type: "Feature", geometry: f.geometry, properties: f.properties }; });
+            if (!resolved) { resolved = true; fc.features = fresh; resolve(fc); } else onAppend(fresh);
+          }, function (err) {
+            console.warn("[" + opts.id + "] " + src.id + " precincts did not load:", err);
+          }).then(function () {
+            pending--;
+            if (!pending && !resolved) { resolved = true; resolve(fc); }
+          });
+        });
+      });
+    }
+    function precinctLabelOf(feature) {
+      var p = (feature && feature.properties) || {};
+      return p.dxElectionLabel ? String(p.dxElectionLabel) : opts.precinctLabel(feature);
+    }
+
+    // The map's fill for the picked race: a MapLibre expression for the tile
+    // canvas, and a per-feature colour for the Leaflet fallback, both from the
+    // same leader string.
+    function leaderColor(idx, contest, key) {
+      var i = idx.pos[key];
+      if (i === undefined || !contest) return null;
+      var code = electionCodeAt(contest.leaders, contest.from, i);
+      if (code === "=") return ELECTION_TIE;
+      var n = ELECTION_LEADER_CODES.indexOf(code);
+      return n >= 0 ? electionChoiceColor(n) : null;
+    }
+
+    function leaderOpacity(idx, contest, key) {
+      var i = idx.pos[key];
+      if (i === undefined || !contest || !contest.margins) return ELECTION_FLAT_OPACITY;
+      var band = parseInt(electionCodeAt(contest.margins, contest.from, i), 10);
+      return isNaN(band) ? ELECTION_FLAT_OPACITY : ELECTION_MARGIN_OPACITY[band];
+    }
+
+    var resolvedIndex = null; // set once the index has loaded, read synchronously by the styles
+
+    function tileFill() {
+      var idx = resolvedIndex, contest = idx && picked ? idx.byId[picked] : null;
+      if (!contest) return null;
+      var byColor = {}, byOpacity = {};
+      var keys = idx.data.precincts;
+      for (var i = 0; i < keys.length; i++) {
+        var key = String(keys[i]);
+        var color = leaderColor(idx, contest, key);
+        if (!color) continue;
+        (byColor[color] = byColor[color] || []).push(key);
+        var op = String(leaderOpacity(idx, contest, key));
+        (byOpacity[op] = byOpacity[op] || []).push(key);
+      }
+      var expr = ["match", ["to-string", ["get", opts.keyProp]]];
+      Object.keys(byColor).forEach(function (color) { expr.push(byColor[color], color); });
+      if (expr.length === 2) return { color: "rgba(0,0,0,0)", opacity: 0 };
+      expr.push("rgba(0,0,0,0)");
+      var opExpr = ["match", ["to-string", ["get", opts.keyProp]]];
+      Object.keys(byOpacity).forEach(function (op) { opExpr.push(byOpacity[op], Number(op)); });
+      opExpr.push(0);
+      return { color: expr, opacity: opExpr };
+    }
+
+    function styleForFeature(feature) {
+      var idx = resolvedIndex, contest = idx && picked ? idx.byId[picked] : null;
+      if (!contest) return null;
+      var raw = (feature.properties || {})[opts.keyProp];
+      var color = raw === undefined || raw === null ? null : leaderColor(idx, contest, String(raw));
+      return color ? { fillColor: color, fillOpacity: leaderOpacity(idx, contest, String(raw)) } : { fillOpacity: 0 };
+    }
+
+    function repaint() {
+      var mod = getLayerById(opts.id);
+      if (mod) restyleOverlayFeatures(mod);
+      drawLegend();
+    }
+
+    // The race on this ballot that is the picked race's counterpart: the one
+    // in the same group of district races (the publisher's groups, each tied
+    // to a map layer: U.S. House, State Senate, Board of Review…). Where one
+    // district elects more than one seat (two subcircuit vacancies), the seat
+    // keeps its place: the second vacancy of the 1st Subcircuit becomes the
+    // second of the 3rd. A group with no layer (statewide offices, judges
+    // elected countywide, questions) has no counterpart, since every one of
+    // its races is a different office.
+    function equivalentRace(idx, pickedId, rows) {
+      var contest = pickedId === null ? null : idx.byId[pickedId];
+      if (!contest || !contest.group) return null;
+      var group = null;
+      (idx.data.groups || []).forEach(function (g) { if (g.id === contest.group) group = g; });
+      if (!group || !group.layer) return null;
+      var seatOf = function (c) { return String(c.name).replace(/\s*\([^)]*\)\s*$/, ""); };
+      var inGroup = (idx.data.contests || []).filter(function (c) { return c.group === contest.group; });
+      var place = inGroup.filter(function (c) { return seatOf(c) === seatOf(contest); })
+        .map(function (c) { return String(c.id); }).indexOf(String(contest.id));
+      var here = inGroup.filter(function (c) {
+        return rows.some(function (r) { return String(r[0]) === String(c.id); });
+      });
+      if (!here.length) return null;
+      var seat = seatOf(here[0]);
+      var same = here.filter(function (c) { return seatOf(c) === seat; });
+      return String(same[Math.min(Math.max(place, 0), same.length - 1)].id);
+    }
+
+    function pick(id) {
+      picked = id == null ? null : String(id);
+      repaint();
+      syncUrlHash(); // the race rides the link (linkParam below)
+    }
+
+    /* ---- the legend over the map: which colour is which choice ---- */
+    var legendEl = null;
+    function drawLegend() {
+      var idx = resolvedIndex, contest = idx && picked ? idx.byId[picked] : null;
+      var on = !!state.layersOn[opts.id];
+      if (!on || !contest) {
+        if (legendEl) legendEl.hidden = true;
+        return;
+      }
+      var host = document.querySelector(".map-bottom-left");
+      if (!host) return;
+      if (!legendEl) {
+        legendEl = document.createElement("details");
+        legendEl.className = "districtry-map-legend election-legend";
+        var phone = window.matchMedia && window.matchMedia("(max-width: 767px)").matches;
+        if (!phone) legendEl.setAttribute("open", "");
+        host.insertBefore(legendEl, host.firstChild);
+      }
+      legendEl.hidden = false;
+      while (legendEl.firstChild) legendEl.removeChild(legendEl.firstChild);
+      var summary = document.createElement("summary");
+      summary.className = "dml-kicker";
+      summary.appendChild(document.createTextNode(electionTitle(idx.data)));
+      var mini = document.createElement("span");
+      mini.className = "dml-mini";
+      mini.setAttribute("aria-hidden", "true");
+      summary.appendChild(mini);
+      legendEl.appendChild(summary);
+      var items = document.createElement("div");
+      items.className = "dml-items";
+      var race = document.createElement("span");
+      race.className = "election-legend-race";
+      race.textContent = contest.name;
+      items.appendChild(race);
+      var lead = document.createElement("span");
+      lead.className = "dml-sub";
+      lead.textContent = certified(idx, contest, null) ? "Most votes in each precinct" : "Most votes so far in each precinct";
+      items.appendChild(lead);
+      var shown = {};
+      for (var i = 0; i < contest.leaders.length; i++) shown[contest.leaders.charAt(i)] = true;
+      contest.choices.forEach(function (name, n) {
+        var item = document.createElement("span");
+        item.className = "dml-item";
+        var sw = document.createElement("span");
+        sw.className = "dml-sw";
+        sw.style.background = electionChoiceColor(n);
+        item.appendChild(sw);
+        var label = document.createElement("span");
+        label.className = "dml-label";
+        label.textContent = String(name);
+        item.appendChild(label);
+        // a choice that leads nowhere keeps its row, so the key never hides a name
+        items.appendChild(item);
+        var chip = document.createElement("span");
+        chip.className = "dml-sw";
+        chip.style.background = electionChoiceColor(n);
+        if (n < 4) mini.appendChild(chip);
+      });
+      if (shown["="]) {
+        var tie = document.createElement("span");
+        tie.className = "dml-item";
+        var tsw = document.createElement("span");
+        tsw.className = "dml-sw";
+        tsw.style.background = ELECTION_TIE;
+        tie.appendChild(tsw);
+        var tl = document.createElement("span");
+        tl.className = "dml-label";
+        tl.textContent = "Tied";
+        tie.appendChild(tl);
+        items.appendChild(tie);
+      }
+      // the strength key: how far ahead the leader is, in points
+      if (contest.margins) {
+        var scaleHead = document.createElement("span");
+        scaleHead.className = "dml-sub";
+        scaleHead.textContent = "Paler means a closer race. Lead over second place, in points:";
+        items.appendChild(scaleHead);
+        var scale = document.createElement("span");
+        scale.className = "election-legend-scale";
+        ELECTION_MARGIN_OPACITY.forEach(function (op, b) {
+          var step = document.createElement("span");
+          step.className = "election-legend-step";
+          var ssw = document.createElement("span");
+          ssw.className = "election-legend-ramp";
+          ssw.style.opacity = String(op);
+          step.appendChild(ssw);
+          var sl = document.createElement("span");
+          sl.textContent = ELECTION_MARGIN_LABELS[b];
+          step.appendChild(sl);
+          scale.appendChild(step);
+        });
+        items.appendChild(scale);
+      }
+      var status = document.createElement("span");
+      status.className = "dml-sub election-legend-status";
+      var ids = contestSourceIds(contest);
+      if (ids.length > 1) {
+        // several offices counted this race: name how many, and the latest reading
+        var reads = ids.map(function (id) { return String(sourceOf(idx, id).read || ""); }).sort();
+        status.textContent = certified(idx, contest, null)
+          ? "Certified by each of the " + ids.length + " election offices that counted it."
+          : "Unofficial, not certified. Read from " + ids.length + " election offices, most recently " +
+            electionDateText(reads[reads.length - 1]) + ".";
+      } else {
+        var one = sourceOf(idx, ids.length ? ids[0] : sourceIdOf(idx, null));
+        var cd = certifiedDate(idx, contest, one);
+        status.textContent = certified(idx, contest, one)
+          ? "Certified by the " + one.publisher + (cd ? " on " + electionDateText(cd) : "")
+          : "Unofficial, not certified. Read " + electionDateText(one.read) + ".";
+      }
+      items.appendChild(status);
+      legendEl.appendChild(items);
+    }
+
+    /* ---- the card ---- */
+    function noticeEl(idx, contest, src) {
+      var box = cardEl("div", "election-notice" + (certified(idx, contest, src) ? " election-notice-certified" : ""));
+      if (certified(idx, contest, src)) {
+        var cd = certifiedDate(idx, contest, src);
+        box.textContent = "Official results, certified by the " + src.publisher +
+          (cd ? " on " + electionDateText(cd) : "") + ".";
+      } else {
+        box.appendChild(cardEl("strong", null, "Unofficial results. "));
+        box.appendChild(document.createTextNode((src.uncountedNote ? src.uncountedNote + " " : "") +
+          "These numbers are not certified and will change. Read from the " + src.publisher +
+          " on " + electionDateText(src.read) + "."));
+      }
+      return box;
+    }
+
+    // One race's table: a row per choice with its votes and share, the
+    // leader marked unless a count is withheld (it could be the leader's)
+    // `which` is the choices to list (the ones the counting office lists);
+    // counts are aligned to all of the contest's choices.
+    function raceTable(idx, contest, ballots, counts, captionText, leadWord, which) {
+      which = which || contest.choices.map(function (name, n) { return n; });
+      var shownCounts = which.map(function (n) { return counts[n]; });
+      var withheld = shownCounts.some(function (n) { return n === null || n === undefined; });
+      var top = withheld || !leadWord ? -1 : Math.max.apply(null, shownCounts.concat([0]));
+      var tied = shownCounts.filter(function (n) { return n === top; }).length > 1;
+      var table = cardEl("table", "election-table");
+      table.appendChild(cardEl("caption", null, captionText));
+      var thead = cardEl("thead");
+      var hr = cardEl("tr");
+      hr.appendChild(cardEl("th", null, "Choice"));
+      hr.appendChild(cardEl("th", "election-num", "Votes"));
+      hr.appendChild(cardEl("th", "election-num", "Share"));
+      thead.appendChild(hr);
+      table.appendChild(thead);
+      var tbody = cardEl("tbody");
+      which.forEach(function (n) {
+        var name = contest.choices[n];
+        var tr = cardEl("tr");
+        var th = cardEl("th");
+        th.setAttribute("scope", "row");
+        var sw = cardEl("span", "election-swatch");
+        sw.style.background = electionChoiceColor(n);
+        sw.setAttribute("aria-hidden", "true");
+        th.appendChild(sw);
+        th.appendChild(document.createTextNode(String(name)));
+        if (top > 0 && counts[n] === top) {
+          th.appendChild(cardEl("span", "election-lead", tied ? "Tied for most votes" : leadWord));
+        }
+        tr.appendChild(th);
+        var known = counts[n] !== null && counts[n] !== undefined;
+        tr.appendChild(cardEl("td", "election-num", known ? counts[n].toLocaleString("en-US") : "Withheld"));
+        tr.appendChild(cardEl("td", "election-num", known && ballots !== null && ballots !== undefined
+          ? electionPercent(counts[n], ballots) : "—"));
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      return table;
+    }
+
+    function renderRace(body, result) {
+      while (body.firstChild) body.removeChild(body.firstChild);
+      var idx = result.idx, contest = idx.byId[picked];
+      var row = null;
+      for (var i = 0; i < result.rows.length; i++) if (String(result.rows[i][0]) === picked) row = result.rows[i];
+      if (!contest || !row) return;
+      var src = sourceOf(idx, result.src), cf = contestFor(contest, result.src);
+      var ballots = row[1], counts = row.slice(2);
+      // a count the publisher withholds (small-number privacy) is null; no
+      // leader is named where one is withheld, because it could be the leader
+      var withheld = cf.which.some(function (n) { return counts[n] === null || counts[n] === undefined; });
+      body.appendChild(raceTable(idx, contest, ballots, counts, contest.name + " in this precinct",
+        certified(idx, contest, src) ? "Most votes here" : "Most votes so far", cf.which));
+      var notes = [];
+      if (withheld) notes.push("The " + src.publisher + " withholds some of this precinct's counts to protect the privacy" +
+        " of a small number of voters, so no choice is named as having the most votes here.");
+      if (ballots !== null && ballots !== undefined) notes.push("Votes counted in this race here: " + ballots.toLocaleString("en-US") + "." +
+        (contest.multiple ? " Voters could choose more than one candidate in this race, so each share is of all the votes" +
+          " cast in it, not of the people who voted." : " Each share is of those votes."));
+      var whole = cf.total[0];
+      notes.push("Across " + src.areaName + "'s precincts: " +
+        cf.which.map(function (n) {
+          return String(contest.choices[n]) + " " + cf.total[n + 1].toLocaleString("en-US") + " (" +
+            electionPercent(cf.total[n + 1], whole) + ")";
+        }).join(", ") + "." + (cf.beyond ? " This race reaches beyond " + src.areaName +
+          ", so these totals are not the whole race." : ""));
+      // votes counted in no precinct (absentee, early or provisional units a
+      // publisher reports apart) are in the totals and on no shape of the map
+      if (contest.outside && contest.outside[0] > 0 && whole > 0) {
+        notes.push(electionPercent(contest.outside[0], whole) + " of these votes (" +
+          contest.outside[0].toLocaleString("en-US") + ") were counted outside any precinct, so they are in the" +
+          " totals above and not in the map's colours.");
+      }
+      // a precinct whose counts are in but whose turnout the publisher has not
+      // reported yet carries nulls, and says nothing about turnout
+      if (result.turnout && result.turnout[0] && result.turnout[1] !== null && result.turnout[1] !== undefined) {
+        var reg = result.turnout[0], cast = result.turnout[1];
+        notes.push("Turnout in this precinct: " + cast.toLocaleString("en-US") + " ballots from " +
+          reg.toLocaleString("en-US") + " registered voters (" + electionPercent(cast, reg) + ").");
+      }
+      notes.forEach(function (t) { body.appendChild(cardEl("p", "election-note", t)); });
+      areaBox = cardEl("div", "election-areas");
+      body.appendChild(areaBox);
+      areaResult = result;
+      areaShown = "";
+      fillAreaTotals();
+    }
+
+    /* ---- the race added up over each other layer's selected district ----
+     * Adam, 2026-11-05: "add results totals for the selected boundary on the
+     * info card". Every other switched-on polygon layer's district at the
+     * selected point gets the picked race's totals, summed over the precincts
+     * whose area lies mostly inside it (measureOverlap, geometry-measure). A
+     * ward is whole precincts, so its totals are exact; a district whose edge
+     * cuts through precincts is counted precinct by precinct and says so. */
+    var areaBox = null, areaResult = null, areaShown = "", areaToken = 0, areaQueued = false;
+    var areaAssign = {}; // layer id + district -> {keys, crossing, coverage}
+    var areaOpen = {};   // layer id -> the reader opened that layer's totals
+    function queueAreaTotals() {
+      if (areaQueued) return;
+      areaQueued = true;
+      setTimeout(function () { areaQueued = false; fillAreaTotals(); }, 120);
+    }
+    afterCardHooks.push(queueAreaTotals);
+    function selfModule() {
+      for (var i = 0; i < layers.length; i++) if (layers[i].id === opts.id) return layers[i];
+      return null;
+    }
+    // the whole file a layer draws, fetching it when the layer is drawn from
+    // tiles; null until it is here (the fetch ends in a relationship refresh,
+    // which queues this again)
+    function wholeFile(mod) {
+      var rt = layerRuntime[mod.id];
+      if (!rt) return null;
+      if (rt.geojson) return rt.geojson;
+      if (rt.overlayLayer && rt.overlayLayer.dxTiles && !rt.tileGeojsonPromise) {
+        ensureTileGeojson(mod).then(queueAreaTotals, function (err) {
+          console.error("[" + mod.id + "] whole file for the election totals failed:", err);
+        });
+      }
+      return null;
+    }
+    function assignPrecincts(precincts, district) {
+      var db = featureBBox(district), keys = [], crossing = 0, covered = 0;
+      var feats = precincts.features || [];
+      for (var i = 0; i < feats.length; i++) {
+        var f = feats[i];
+        if (!f || !f.geometry || !bboxIntersect(featureBBox(f), db)) continue;
+        var m = measureOverlap(f.geometry, district.geometry);
+        if (!(m.share > 0)) continue;
+        covered += m.overlap;
+        if (m.share > 0.02 && m.share < 0.98) crossing++;
+        if (m.share > 0.5) {
+          var raw = (f.properties || {})[opts.keyProp];
+          if (raw !== undefined && raw !== null) keys.push(String(raw));
+        }
+      }
+      var area = measureArea(district.geometry);
+      return { keys: keys, crossing: crossing, coverage: area > 0 ? covered / area : 0 };
+    }
+    function fillAreaTotals() {
+      if (!areaBox || !areaResult || !areaBox.isConnected) return;
+      if (areaResult.seq !== state.sequence || !state.selectedPoint) return;
+      var idx = areaResult.idx, contest = idx.byId[picked];
+      var self = selfModule();
+      if (!contest || !self) return;
+      // the app's own precincts (needed when the clicked one is the app's)
+      // and every other office's that have loaded
+      var ownSrc = sourceIdOf(idx, null);
+      var mine = areaResult.src === ownSrc || !opts.extraPrecincts ? wholeFile(self) : null;
+      var precincts = null;
+      if (mine || areaResult.src !== ownSrc) {
+        var feats = mine ? (mine.features || []).slice() : [];
+        Object.keys(extraLoaded).forEach(function (id) { Array.prototype.push.apply(feats, extraLoaded[id]); });
+        precincts = { type: "FeatureCollection", features: feats };
+      }
+      var wanted = [];
+      layers.forEach(function (mod) {
+        if (mod.id === opts.id || mod.fillsGround || !state.layersOn[mod.id]) return;
+        if (!mod.overlay || !mod.overlay.style) return; // polygon layers only
+        // the precinct layer itself, by its archive or, where it has none, its loader
+        if ((opts.tiles && mod.tiles === opts.tiles) || mod.overlay.load === opts.load) return;
+        var rt = layerRuntime[mod.id];
+        if (!rt || rt.relevant === false || rt.resultSeq !== state.sequence) return;
+        var pillEl = rt.idPill && !rt.idPill.hidden ? rt.idPill
+          : (rt.compactValue && !rt.compactValue.hidden ? rt.compactValue : null);
+        var name = pillEl ? String(pillEl.textContent || "").trim() : "";
+        var file = wholeFile(mod);
+        if (!file || !name) return;
+        var district = findFeatureContaining(file, state.selectedPoint);
+        if (district && district.geometry) wanted.push({ mod: mod, name: name, district: district });
+      });
+      if (!precincts) return;
+      var sig = picked + "|" + Object.keys(extraLoaded).length + "|" +
+        wanted.map(function (w) { return w.mod.id + ":" + w.name; }).join("|");
+      if (sig === areaShown) return;
+      var token = ++areaToken, box = areaBox;
+      var jobs = wanted.map(function (w) {
+        var k = w.mod.id + "|" + w.name + "|" + precincts.features.length;
+        var a = areaAssign[k] || (areaAssign[k] = assignPrecincts(precincts, w.district));
+        var partNames = {};
+        a.keys.forEach(function (key) {
+          var at = idx.pos[key];
+          if (at !== undefined) partNames[idx.data.parts[at]] = true;
+        });
+        return Promise.all(Object.keys(partNames).map(loadPart)).then(function (docs) {
+          var byKey = {};
+          docs.forEach(function (doc) {
+            var ps = (doc && doc.precincts) || {};
+            for (var key in ps) if (ps.hasOwnProperty(key)) byKey[key] = ps[key];
+          });
+          var ballots = 0, counts = contest.choices.map(function () { return 0; });
+          var voted = 0, withheld = false, srcs = {};
+          a.keys.forEach(function (key) {
+            var rows = (byKey[key] || {}).contests || [];
+            for (var i = 0; i < rows.length; i++) {
+              if (String(rows[i][0]) !== picked) continue;
+              voted++;
+              srcs[sourceIdOf(idx, key)] = true;
+              if (rows[i][1] === null || rows[i][1] === undefined) withheld = true; else ballots += rows[i][1];
+              for (var n = 0; n < counts.length; n++) {
+                var c = rows[i][n + 2];
+                if (c === null || c === undefined) withheld = true; else counts[n] += c;
+              }
+            }
+          });
+          return { w: w, a: a, ballots: ballots, counts: counts, voted: voted, withheld: withheld, srcs: Object.keys(srcs) };
+        });
+      });
+      Promise.all(jobs).then(function (sums) {
+        if (token !== areaToken || box !== areaBox || !box.isConnected) return;
+        areaShown = sig;
+        while (box.firstChild) box.removeChild(box.firstChild);
+        // the smallest district first: a ward before the House district around it
+        sums.sort(function (x, y) { return x.a.keys.length - y.a.keys.length; });
+        sums.forEach(function (t) {
+          if (!t.voted) return; // the race is not on this district's ballots here
+          // closed until opened (Adam, 2026-11-05: "Make them collapsible"),
+          // and kept open for that layer once a reader opens it
+          var sec = document.createElement("details");
+          sec.className = "election-area";
+          if (areaOpen[t.w.mod.id]) sec.open = true;
+          // the choices any office counting these precincts lists, and the
+          // office speaking for them where there is one
+          var listed = {};
+          t.srcs.forEach(function (id) { contestFor(contest, id).which.forEach(function (n) { listed[n] = true; }); });
+          var which = contest.choices.map(function (name, n) { return n; }).filter(function (n) { return listed[n]; });
+          var tSrc = t.srcs.length === 1 ? sourceOf(idx, t.srcs[0]) : null;
+          var shown = which.map(function (n) { return t.counts[n]; });
+          var top = Math.max.apply(null, shown.concat([0]));
+          var leaders = [];
+          which.forEach(function (n) { if (t.counts[n] === top && top > 0) leaders.push(n); });
+          // the line says these are the race's totals, never who holds the
+          // district (Adam, 2026-11-05: "This section title is confusing")
+          var summary = cardEl("summary", "election-area-head");
+          summary.appendChild(cardEl("span", "election-area-title",
+            "Race totals for " + t.w.name + " (" + t.w.mod.label + ")"));
+          var lead = null;
+          if (!t.withheld && leaders.length === 1) {
+            lead = (certified(idx, contest, tSrc) ? "Most votes: " : "Most votes so far: ") +
+              String(contest.choices[leaders[0]]) + ", " + electionPercent(top, t.ballots);
+          } else if (!t.withheld && leaders.length > 1) {
+            lead = "Tied for most votes";
+          }
+          if (lead) summary.appendChild(cardEl("span", "election-area-lead", lead));
+          sec.appendChild(summary);
+          (function (id) {
+            sec.addEventListener("toggle", function () { areaOpen[id] = sec.open; });
+          })(t.w.mod.id);
+          sec.appendChild(raceTable(idx, contest, t.ballots, t.counts, contest.name + ", all of " + t.w.name,
+            t.withheld ? null : certified(idx, contest, tSrc) ? "Most votes in " + t.w.name : "Most votes so far", which));
+          var notes = ["Added up from the " + t.voted.toLocaleString("en-US") + " precinct" + (t.voted === 1 ? "" : "s") +
+            " in " + t.w.name + " that voted in this race: " + t.ballots.toLocaleString("en-US") + " votes."];
+          if (t.voted < t.a.keys.length) {
+            notes.push((t.a.keys.length - t.voted).toLocaleString("en-US") + " more precinct" +
+              (t.a.keys.length - t.voted === 1 ? " lies" : "s lie") + " in " + t.w.name + " without this race on the ballot.");
+          }
+          if (t.a.crossing) {
+            notes.push(t.a.crossing.toLocaleString("en-US") + " precinct" + (t.a.crossing === 1 ? " crosses" : "s cross") +
+              " the edge of " + t.w.name + "; each is counted wholly in the district holding most of its area," +
+              " so these totals are close, not exact.");
+          }
+          var pub = tSrc ? tSrc.publisher : sourceOf(idx, ownSrc).publisher;
+          if (t.a.coverage < 0.95) {
+            notes.push(opts.extraPrecincts
+              ? "Only part of " + t.w.name + " lies where this map has precinct results, so these totals are for that part."
+              : "Only part of " + t.w.name + " lies in " + opts.areaName + ", so these totals are for that part.");
+          }
+          if (t.srcs.length > 1) {
+            notes.push("These precincts were counted by " + t.srcs.length + " election offices: " +
+              t.srcs.map(function (id) { return "the " + sourceOf(idx, id).publisher; }).join(", ") + ".");
+          }
+          if (t.withheld) {
+            notes.push("The " + pub + " withholds some counts to protect the privacy of a small number of" +
+              " voters, so these totals leave them out and name no leader.");
+          }
+          if (contest.outside && contest.outside[0] > 0) {
+            notes.push("Votes the " + pub + " counted outside any precinct are not in these totals.");
+          }
+          notes.forEach(function (x) { sec.appendChild(cardEl("p", "election-note", x)); });
+          box.appendChild(sec);
+        });
+      }, function (err) {
+        console.error("[" + opts.id + "] totals for the selected districts failed:", err);
+      });
+    }
+
+    registerLayer({
+      id: opts.id,
+      tiles: opts.tiles,
+      tileLive: opts.extraPrecincts && opts.extraPrecincts.length ? extraTileLive : undefined,
+      group: opts.group || "elections",
+      fillsGround: true, // its colours are the answer: other layers drop their selected-district tint (layer-registry)
+      label: opts.label,
+      coverage: opts.coverage,
+      overlay: {
+        load: opts.load,
+        style: opts.style,
+        styleForFeature: styleForFeature,
+        tileFill: tileFill
+      },
+      query: function (point, seq) {
+        return Promise.all([queryFeatureAt(opts.load, point), loadIndex()]).then(function (got) {
+          // a point outside the app's own precincts may be in another office's
+          return got[0] || !opts.extraPrecincts ? got : extraFeatureAt(point).then(function (f) { return [f, got[1]]; });
+        }).then(function (got) {
+          var feature = got[0], idx = got[1];
+          resolvedIndex = idx;
+          if (!feature) return null;
+          var raw = (feature.properties || {})[opts.keyProp];
+          var key = raw === undefined || raw === null ? null : String(raw);
+          var at = key === null ? undefined : idx.pos[key];
+          var srcId = sourceIdOf(idx, key);
+          if (at === undefined) return { seq: seq, idx: idx, key: key, src: srcId, label: precinctLabelOf(feature), rows: [], turnout: null };
+          var part = idx.data.parts[at];
+          return loadPart(part).then(function (doc) {
+            var own = (doc.precincts || {})[key] || {};
+            var rows = own.contests || [];
+            // the picked race stays picked while the reader clicks around, if
+            // it is on this precinct's ballot; otherwise the first race listed
+            var onBallot = rows.some(function (r) { return String(r[0]) === picked; });
+            if (!onBallot) {
+              // the same race for this precinct's district, when the picked
+              // one is a district race (Adam, 2026-11-05: moving from one
+              // precinct to another keeps "U.S. Representative" picked and
+              // takes this precinct's district), else the first race listed
+              var first = equivalentRace(idx, picked, rows);
+              if (first === null) {
+                (idx.data.contests || []).some(function (c) {
+                  if (rows.some(function (r) { return String(r[0]) === String(c.id); })) { first = String(c.id); return true; }
+                  return false;
+                });
+              }
+              if (first !== null && first !== picked) pick(first);
+            } else {
+              drawLegend();
+            }
+            return { seq: seq, idx: idx, key: key, src: srcId, label: precinctLabelOf(feature), rows: rows,
+              turnout: own.turnout || null, partRead: doc.read };
+          });
+        });
+      },
+      render: function (result) {
+        var wrap = cardEl("div", "card-flush election-card");
+        var idx = result.idx, src = sourceOf(idx, result.src);
+        wrap.appendChild(cardEl("p", "election-title", electionTitle(idx.data)));
+        var notice = noticeEl(idx, picked ? idx.byId[picked] : null, src);
+        wrap.appendChild(notice);
+        if (!result.rows.length) {
+          wrap.appendChild(cardEl("p", "election-note", "The " + src.publisher + " lists no results for this precinct."));
+          return wrap;
+        }
+        if (result.partRead && result.partRead !== idx.data.read) {
+          wrap.appendChild(cardEl("p", "election-note", "This precinct's numbers were read at a different time from the map's colours; reload the page for both from one reading."));
+        }
+        var pickWrap = cardEl("div", "election-pick");
+        var selId = "election-race-" + opts.id;
+        var lab = cardEl("label", "card-field-label", "Race");
+        lab.setAttribute("for", selId);
+        pickWrap.appendChild(lab);
+        var sel = document.createElement("select");
+        sel.id = selId;
+        sel.className = "election-select";
+        var onBallot = {};
+        result.rows.forEach(function (r) { onBallot[String(r[0])] = true; });
+        (idx.data.groups || []).forEach(function (g) {
+          var og = null;
+          (idx.data.contests || []).forEach(function (c) {
+            if (c.group !== g.id || !onBallot[String(c.id)]) return;
+            if (!og) { og = document.createElement("optgroup"); og.label = g.label; sel.appendChild(og); }
+            var o = document.createElement("option");
+            o.value = String(c.id);
+            o.textContent = c.name;
+            if (String(c.id) === picked) o.selected = true;
+            og.appendChild(o);
+          });
+        });
+        pickWrap.appendChild(sel);
+        wrap.appendChild(pickWrap);
+        var body = cardEl("div", "election-race");
+        wrap.appendChild(body);
+        sel.addEventListener("change", function () {
+          pick(sel.value);
+          var fresh = noticeEl(idx, idx.byId[picked], src);
+          wrap.replaceChild(fresh, notice);
+          notice = fresh;
+          renderRace(body, result);
+        });
+        renderRace(body, result);
+        return wrap;
+      },
+      // the picked race rides the link as `r=<contest id>` (`race=` in the
+      // long form); a link from another election names an id this file does
+      // not have, and the layer then picks its first race as it always has
+      linkParam: {
+        short: "r",
+        long: "race",
+        get: function () { return picked; },
+        set: function (v) {
+          picked = String(v);
+          if (resolvedIndex) {
+            if (resolvedIndex.byId[picked]) repaint(); else picked = null;
+          }
+        }
+      },
+      cardIdentifier: function (result) {
+        return result && result.label ? result.label : "Unknown";
+      },
+      hoverName: function (feature) {
+        return precinctLabelOf(feature);
+      },
+      primaryLink: function (result) {
+        if (!result || !result.idx) return null;
+        var src = sourceOf(result.idx, result.src);
+        return src.url ? { label: "Results from the " + src.publisher, url: src.url } : null;
+      },
+      onToggle: function (on) {
+        refreshHighlightFills(); // other layers' selected districts drop or regain their tint
+        if (!on) { drawLegend(); return; }
+        // the map shows a race from the moment the layer is on: the one
+        // already picked, or the first race in the publisher's list
+        loadIndex().then(function (idx) {
+          resolvedIndex = idx;
+          if (picked === null || !idx.byId[picked]) {
+            var first = (idx.data.contests || [])[0];
+            pick(first ? first.id : null);
+          } else {
+            repaint();
+          }
+        }, function (err) {
+          console.warn("[" + opts.id + "] results index failed to load:", err);
+        });
+      }
+    });
+  }
+  /* ==== ENGINE:END election-results ==== */
+
+  /* ---------- Election Results — the Department of Elections' preliminary
+   * results by precinct from its Statement of the Vote, drawn on the Election
+   * Precinct layer's shapes and joined on its prec_2022 (built by
+   * ca/scripts/build_sf_election_results.py). */
+  registerElectionResultsLayer({
+    id: "election-results",
+    label: "Election Results",
+    tiles: "data/app/tiles/election-precinct.pmtiles",
+    load: loadElectionPrecincts,
+    keyProp: "prec_2022",
+    style: { color: "#4a4a55", weight: 0.8, fillColor: "#4a4a55", fillOpacity: 0, dashArray: null },
+    indexUrl: "data/app/election-results.json",
+    partUrl: function (part) { return "data/app/election-results/" + part + ".json"; },
+    publisher: "San Francisco Department of Elections",
+    areaName: "San Francisco",
+    uncountedNote: "The Department adds the ballots it counts each day after the election and certifies its results within 30 days. In a ranked-choice contest these are first choices; the winner comes from the Department's ranked-choice count.",
+    precinctLabel: function (feature) {
+      var p = findPropCI(feature.properties || {}, ["prec_2022", "precname", "precinct"]);
+      return (p == null || p === "") ? null : "Precinct " + String(p);
     }
   });
 
@@ -17711,7 +18714,11 @@ function initSFExplorer() {
    * district, so a map drawn on block lines (congress, the legislature,
    * wards) gets an exact count, and one that is not gets a close one — the
    * footnote says so. The block files are fetched per county, only for the
-   * counties the districts touch, and only when this screen opens.
+   * counties the districts touch, and only when this screen opens. They hold
+   * this app's own ground and nobody beyond it, so a district reaching past
+   * that ground (a ZIP code across a state line, a San Francisco Assembly
+   * district reaching into San Mateo County) is not given a share of its own
+   * people, and a compared district that does is compared by area alone.
    *
    * A ROW'S CARD RUNS THE LAYER'S OWN QUERY AT A POINT INSIDE THE DISTRICT
    * (the outline label's spot, which lies in the part inside the pinned
@@ -17747,11 +18754,20 @@ function initSFExplorer() {
   var statsOpenSeq = 0;
   var statsPopIndex = null;
   var statsPopFiles = {};
+  var statsPopGround = null;
 
   function statsLoadPopulationIndex() {
     if (typeof POPULATION_INDEX_URL === "undefined") return Promise.resolve(null);
     if (!statsPopIndex) {
-      statsPopIndex = fetchJSONWithRetry(POPULATION_INDEX_URL, {}, 2)["catch"](function (err) {
+      statsPopIndex = fetchJSONWithRetry(POPULATION_INDEX_URL, {}, 2).then(function (index) {
+        // an index may name the ground its blocks cover (see statsOutsideShare)
+        if (!index || !index.ground) return index;
+        var base = POPULATION_INDEX_URL.replace(/[^\/]*$/, "");
+        return fetchJSONWithRetry(base + index.ground, {}, 2).then(function (g) {
+          statsPopGround = g && g.type ? g : null;
+          return index;
+        });
+      })["catch"](function (err) {
         console.warn("population index unavailable; comparing by area only:", err);
         statsPopIndex = null;
         return null;
@@ -17795,6 +18811,29 @@ function initSFExplorer() {
     for (var i = 0; i < sets.length; i++) for (var j = 0; j < sets[i].length; j++) sum += sets[i][j][2] || 0;
     return sum;
   }
+
+  // The population files hold the people of this app's own ground and no
+  // one beyond it, so a district reaching past that ground has people the
+  // files cannot count. This is the share of a district's area outside the
+  // ground the index names (San Francisco's county with its water, because
+  // its wash is drawn on land and its districts carry the Bay), or else the
+  // outline the app drew its wash with (the state), or 0 while neither has
+  // loaded. A district with more than 1% of its area outside is treated as
+  // reaching past: measured 2026-11-06, no state's congressional or
+  // legislative district has more than 0.06% of its area outside its
+  // state's outline.
+  function statsOutsideShare(geometry) {
+    var ground = statsPopGround;
+    if (!ground && typeof coverageRegionPolys !== "undefined" && coverageRegionPolys && coverageRegionPolys.length) {
+      ground = { type: "MultiPolygon", coordinates: coverageRegionPolys };
+    } else if (!ground && typeof coverageMaskRings !== "undefined" && coverageMaskRings && coverageMaskRings.length) {
+      ground = { type: "Polygon", coordinates: coverageMaskRings };
+    }
+    if (!ground || !geometry) return 0;
+    var m = measureOverlap(geometry, ground);
+    return m.area > 0 ? 1 - m.share : 0;
+  }
+  var STATS_OUTSIDE_LIMIT = 0.01;
 
   // A share as a reader should see it: never "0%" for something that is
   // there, never "100%" for something that is not all of it.
@@ -18108,6 +19147,13 @@ function initSFExplorer() {
     peopleDone = statsLoadPopulation(box).then(function (sets) {
       if (!live()) return;
       if (!sets) { cells.forEach(function (c) { c.el.hidden = true; }); return; }
+      var place = appPlaceName();
+      if (statsOutsideShare(parentFeature.geometry) > STATS_OUTSIDE_LIMIT) {
+        cells.forEach(function (c) { c.el.hidden = true; });
+        foot.textContent = "Population figures cover " + place + " only, and " + parentName +
+          " reaches past it, so it is compared by area. Areas are measured from the map's simplified boundaries.";
+        return;
+      }
       var inParent = statsPointsIn(parentFeature.geometry, sets);
       var parentPop = statsSetsWeight(inParent);
       totals.textContent = statsNum(parentPop) + " people · " + statsSqMi(parentArea);
@@ -18116,8 +19162,16 @@ function initSFExplorer() {
         var all = statsWeight(c.row.feature.geometry, sets);
         var shared = statsWeight(c.row.feature.geometry, inParent);
         sharedByLayer[c.row.mod.id] = (sharedByLayer[c.row.mod.id] || 0) + shared;
-        c.el.textContent = "People: " + statsPct(shared, all) + " of its " + statsNum(all) + " are in " +
-          parentName + ", making up " + statsPct(shared, parentPop) + " of " + parentName;
+        if (statsOutsideShare(c.row.feature.geometry) > STATS_OUTSIDE_LIMIT) {
+          // only its people inside this app's ground are in the files, so
+          // what share of it lies in the compared district is not known
+          c.el.textContent = "People: " + statsNum(shared) + " of its people are in " + parentName +
+            ", making up " + statsPct(shared, parentPop) + " of " + parentName + ". Part of it lies outside " +
+            place + ", where this app has no population figures.";
+        } else {
+          c.el.textContent = "People: " + statsPct(shared, all) + " of its " + statsNum(all) + " are in " +
+            parentName + ", making up " + statsPct(shared, parentPop) + " of " + parentName;
+        }
         c.shared = shared;
       });
       // with people counted, the districts holding most of the compared
@@ -18694,10 +19748,10 @@ function initSFExplorer() {
   var DST_DARK_MAP_COLORS = { "#005E7C": "#4CB0DA", "#0099D8": "#9ED9FE", "#06375E": "#528DC6",
     "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1B7A3D": "#58CD7A", "#1F6FB2": "#74BBFF",
     "#2B8CC4": "#8FD1FE", "#3B8FD4": "#A2D2FF", "#3D6B49": "#7EBC8D", "#41B6E6": "#C6EBFD",
-    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#5C8F6B": "#95D9A8", "#63B57F": "#8DFAB2",
-    "#6A3FA0": "#BA8BFE", "#6B7280": "#B1BACE", "#7A1E5C": "#E266B4", "#88637C": "#DAA7C9",
-    "#8A5A00": "#E3A241", "#8C2E4A": "#F47294", "#9C0B24": "#FF696D", "#A15C00": "#FD9F3D",
-    "#A3341F": "#FE8269", "#C8102E": "#FE928F"};
+    "#4A2E8C": "#9B7CFD", "#4A4A55": "#9999A9", "#4B2E83": "#9E7BF1", "#5C8F6B": "#95D9A8",
+    "#63B57F": "#8DFAB2", "#6A3FA0": "#BA8BFE", "#6B7280": "#B1BACE", "#7A1E5C": "#E266B4",
+    "#88637C": "#DAA7C9", "#8A5A00": "#E3A241", "#8C2E4A": "#F47294", "#9C0B24": "#FF696D",
+    "#A15C00": "#FD9F3D", "#A3341F": "#FE8269", "#C8102E": "#FE928F"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

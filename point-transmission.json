@@ -48,6 +48,7 @@
       "layers": [],
       "layers_holding_hook_but_silent": [
         "election-precinct",
+        "election-results",
         "elementary-attendance-area",
         "police-station"
       ],
@@ -63,6 +64,7 @@
         "congress",
         "early-voting",
         "election-precinct",
+        "election-results",
         "elementary-attendance-area",
         "fire-station",
         "library",
@@ -401,6 +403,7 @@
         "county",
         "county-commissioner",
         "county-subdivision",
+        "election-results",
         "fire-station",
         "mn-house",
         "mn-judicial-district",
@@ -507,6 +510,7 @@
         "city-ward",
         "county",
         "county-subdivision",
+        "election-results",
         "fire-station",
         "municipality",
         "nc-district-court",
@@ -556,6 +560,7 @@
         "district-attorney",
         "early-voting",
         "election-district",
+        "election-results",
         "es-zone",
         "fire-battalion",
         "fire-district",
@@ -717,6 +722,7 @@
       "layer_ids": [
         "county",
         "county-subdivision",
+        "election-results",
         "fire-station",
         "municipality",
         "police-station",

@@ -15,8 +15,8 @@ San Francisco District Explorer: a single-file, dependency-light web app. Click 
 - Metro: San Francisco (`sf`) — https://districtry.com/ca/
 - Geocoders: address Photon (SF-bounded type-ahead); unbounded Photon (whole-coverage, sibling-metro lookup); POI Nominatim (office-address pin lookup, serial >=1s queue)
 - Ground truth: 37.77927,-122.41924 (SF City Hall (Civic Center)) → supervisor-district 5; neighborhood Tenderloin; police-district NORTHERN. Negative point 37.74000,-122.59000 (Open Pacific west of Ocean Beach, beyond CA state waters - outside every layer, including the water-inclusive TIGERweb legislative chambers).
-- Layers: 16 registered (political 7, safety 3, schools 2, geography 4); `registerLayer(` floor 8. Debug namespace `window.SFExplorer`.
-- Scheduled workflows: `ca-update-congress-roster.yml` (Mon 13:00 UTC); `ca-update-legislature-roster.yml` (Tue 13:00 UTC); `ca-update-sf-supervisor-roster.yml` (Wed 13:00 UTC); `ca-validate-sources.yml` (1st of month 14:00 UTC).
+- Layers: 17 registered (elections 1, political 7, safety 3, schools 2, geography 4); `registerLayer(` floor 8. Debug namespace `window.SFExplorer`.
+- Scheduled workflows: `ca-update-election-results.yml` (daily 14:10 UTC); `ca-update-congress-roster.yml` (Mon 13:00 UTC); `ca-update-legislature-roster.yml` (Tue 13:00 UTC); `ca-update-sf-supervisor-roster.yml` (Wed 13:00 UTC); `ca-validate-sources.yml` (1st of month 14:00 UTC).
 - Source registry: `scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
 

@@ -28,6 +28,9 @@
   "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
   "feedback_subject": "districtry San Francisco feedback",
   "verified_date": "October 29, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
   "brand": {
     "app_name": "districtry San Francisco",
     "product_name": "districtry",
@@ -269,11 +272,33 @@
       }
     },
     {
+      "id": "election-results",
+      "label": "Election Results",
+      "group": "elections",
+      "area_rank": 6,
+      "rank_note": "Election results, drawn on the Election Precinct outlines",
+      "rank_comment": [
+        "The same precinct shapes as Election Precinct, from the same archive, so it ranks right",
+        "after it; each precinct is filled by the choice leading there in the picked contest."
+      ],
+      "source": {
+        "answers": "For the picked contest, the choice with the most votes in each San Francisco precinct, and on the card the clicked precinct's votes for every contest on its ballot, from governor to its Assembly, Senate, BART and Supervisor seats, the judges and the state and city measures, and the contest's total across the city. Preliminary until the Department of Elections certifies the count, and the card and the map key say so.",
+        "boundary": [
+          {
+            "label": "Voting precincts published by the Department of Elections on DataSF (jg6x-23ig), the same outlines Election Precinct draws",
+            "url": "https://data.sfgov.org/d/jg6x-23ig"
+          }
+        ],
+        "people": "The candidates and their votes come from the San Francisco Department of Elections' preliminary Statement of the Vote by precinct for the 3 November 2026 election, the Excel workbook its detailed reports page links, read daily by ca/scripts/sf_election_results_scraper.py. In a ranked-choice contest (the Supervisors, Assessor-Recorder and Public Defender) the counts are first choices. Write-in votes are left out, as the Department's own totals leave them out. Candidates are ordered alphabetically by name as printed, with Yes before No on a measure; colours follow that order, never a party.",
+        "applies": "San Francisco. The statewide offices, judges and propositions, and the House, Senate and Assembly districts that cross the city line, reach beyond it, so their totals on the card are the city's part of the contest."
+      }
+    },
+    {
       "id": "supervisor-district",
       "guide": { "href": "supervisor-district.html", "text": "What supervisor district am I in?" },
       "label": "Supervisor District",
       "group": "political",
-      "area_rank": 6,
+      "area_rank": 7,
       "rank_note": "SF Board of Supervisors district (11; water-trimmed, tiles the city)",
       "source": {
         "answers": "Which Board of Supervisors district covers this address, and who represents it.",
@@ -291,7 +316,7 @@
       "id": "police-district",
       "label": "Police District",
       "group": "safety",
-      "area_rank": 7,
+      "area_rank": 8,
       "rank_note": "SFPD district (10)",
       "source": {
         "answers": "Which SFPD district covers this address, and which station serves it.",
@@ -309,7 +334,7 @@
       "id": "zip-code",
       "label": "ZIP Code",
       "group": "geography",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "national ZCTA (Census TIGERweb), SF-bounded",
       "source": {
         "answers": "Which ZIP Code Tabulation Area contains this address.",
@@ -327,7 +352,7 @@
       "id": "neighborhood",
       "label": "Neighborhood",
       "group": "geography",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "SF Analysis Neighborhood (41) - smallest polygon layer",
       "source": {
         "answers": "Which of the city's analysis neighborhoods contains this address.",
@@ -345,7 +370,7 @@
       "id": "elementary-attendance-area",
       "label": "Elementary Attendance Area",
       "group": "schools",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "SFUSD elementary attendance area (58; lottery tiebreaker, not a guaranteed seat)",
       "source": {
         "answers": "Which SFUSD elementary attendance area this address falls in.",
@@ -363,7 +388,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "SFPD station house (nearest 3, straight-line; 10 stations) - point layer, topmost",
       "source": {
         "answers": "The nearest SFPD stations to this point, by straight-line distance.",
@@ -381,7 +406,7 @@
       "id": "fire-station",
       "label": "Fire Station",
       "group": "safety",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "SFFD firehouse (nearest 3, straight-line; 44 active stations) - point layer, topmost",
       "source": {
         "answers": "The nearest fire stations to this point, by straight-line distance.",
@@ -399,7 +424,7 @@
       "id": "school-site",
       "label": "School Location",
       "group": "schools",
-      "area_rank": 13,
+      "area_rank": 14,
       "rank_note": "Every active SF school (nearest 3, straight-line; 232 public/charter/private) - point layer, topmost",
       "source": {
         "answers": "The nearest school sites to this point, by straight-line distance.",
@@ -417,7 +442,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 14,
+      "area_rank": 15,
       "rank_note": "USGS National Map post offices (nearest 3, straight-line; METRO_BBOX envelope) - point layer, topmost",
       "source": {
         "answers": "The nearest post offices to this point, by straight-line distance.",
@@ -435,7 +460,7 @@
       "id": "library",
       "label": "Library",
       "group": "geography",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "SFPL locations from City Facilities (nearest 3, straight-line; Main Library + 27 branches, support facility excluded) - point layer, topmost",
       "source": {
         "answers": "The nearest public libraries to this point, by straight-line distance.",
@@ -453,7 +478,7 @@
       "id": "early-voting",
       "label": "Voting Center & Ballot Drop-off",
       "group": "political",
-      "area_rank": 16,
+      "area_rank": 17,
       "rank_note": "hand-curated SF Dept of Elections voting center + drop boxes (nearest 3) - point layer, topmost",
       "source": {
         "answers": "The nearest early-voting sites to this point for the current election.",
@@ -469,7 +494,7 @@
     }
   ],
   "min_register_layer": 8,
-  "layer_count_note": "Thread-5: legislative chambers now pre-built SF-clipped geometry (data/app); supervisor-district is a bespoke roster-joined registerLayer; 11 layers total; + 3 amenity nearest-point layers (post-office, library, early-voting) = 14; + bart-director + election-precinct (parity-debt closures, 2026-07) = 16",
+  "layer_count_note": "Thread-5: legislative chambers now pre-built SF-clipped geometry (data/app); supervisor-district is a bespoke roster-joined registerLayer; 11 layers total; + 3 amenity nearest-point layers (post-office, library, early-voting) = 14; + bart-director + election-precinct (parity-debt closures, 2026-07) = 16; + election-results (2026-11) = 17",
   "anchor_point": {
     "lat": 37.77927,
     "lng": -122.41924,
@@ -546,6 +571,11 @@
     ],
     "rosters": [
       {
+        "file": "election-results.json",
+        "min_keys": 11,
+        "note": "San Francisco's election results by precinct: the index (groups, precinct keys, the part file each precinct is in, and per contest its choices, totals and its leader string, trimmed to the run of precincts it is on the ballot in); each precinct's own counts sit in election-results/p<first two digits>.json, fetched on a click and never cached by the worker. From the Department of Elections' Statement of the Vote by ca/scripts/sf_election_results_scraper.py + build_sf_election_results.py through scripts/election_results_common.py, checked daily by ca-update-election-results.yml; certified stays false until the Department certifies the results. Network-first: the count can change."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 2,
         "note": "Known data gaps keyed by gap id, driving the Data gaps panel \u2014 emitted from the fleet guidebook's GUIDEBOOK:BEGIN gaps block by scripts/build_coverage_gaps.py, which reads this fork's this_metro key (--check is the drift gate). Network-first like the rosters: a closed gap should stop being advertised on the next visit. WENT 3 TO 2 ON 2026-09-19 when `sf-congress-district-offices` was RETIRED as false — the card renders the district office and 50 of 52 records carry one, measured in Chromium. That is the only reason this number ever moves down: a gap CLOSED on a measurement, which is what the sentence above anticipates. It is never lowered to get past a build that emptied the file, which is the collapse this floor exists to catch — if it fails and no gap was deliberately retired, fix the build. And it is edited HERE, never in the generated region: hand-editing ca/scripts/validate_index.py is what turned this change's first CI run red."
@@ -597,6 +627,11 @@
     "note": "SF source manifest: 5 live DataSF datasets (rwdu-9wb2, nc68-ngbr, e6tr-sxwg year-versioned, 7e7j-59qk, jg6x-23ig year-searched), 6 pre-built boundary files (3 DataSF anchors + 3 TIGERweb CA chambers), live endpoints (Census ZCTA, BART ArcGIS). Newer-edition search uses the portal-local catalog (data.sfgov.org is absent from the federated api.us.socrata.com)."
   },
   "workflows": [
+    {
+      "file": "ca-update-election-results.yml",
+      "purpose": "Election results by precinct (San Francisco), from the Department of Elections' Statement of the Vote, daily until certified",
+      "schedule": "daily 14:10 UTC"
+    },
     {
       "file": "ca-update-congress-roster.yml",
       "purpose": "CA U.S. House roster refresh (unitedstates/congress-legislators)",
