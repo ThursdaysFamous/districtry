@@ -54,7 +54,7 @@ const OFFLINE = ["county", "us-house", "nc-senate", "nc-house", "voting-precinct
 const EXPECT_DISTRICT = { "county": "Wake County", "us-house": "2", "nc-senate": "14", "nc-house": "38", "voting-precinct": "Precinct 01-14", "nc-superior-court": "Superior Court District 10A", "nc-district-court": "District Court District 10C" };
 const NEGATIVE_POINT = "35.60000,-75.30000"; // the open Atlantic east of Hatteras Island — outside every North Carolina county, measured 2026-09-29. IT HAS TO BE THE OCEAN: the TIGER county fabric is water-inclusive for the inland sounds, so Pamlico Sound is Hyde County and Albemarle Sound is Tyrrell, and a point picked off a map inside either would make this assertion vacuous. Inside permalink_gate's maxLng (-75.10) so the point is still selectable.
 const APP_NAME = "districtry North Carolina";
-const EXPECT_LAYERS = 17;
+const EXPECT_LAYERS = 18;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -1181,6 +1181,81 @@ try {
         `hidden=${hidden} leaked=${leaked} layersOn=${stillOn} text=${(info.text || "").slice(0, 90)}`);
       await context.close();
     }
+  }
+
+  // ---- Election results: the card, the race menu and the legend, held to
+  // the shipped files rather than to any count, because the numbers move daily
+  // until the State Board of Elections certifies them. The card names the
+  // precinct and county, says unofficial while the file is not certified,
+  // offers exactly the races on this precinct's ballot and says what share of
+  // the race was counted outside any precinct (early voting, absentee and
+  // provisional units many counties report apart); the legend names the
+  // picked race and keys the five lead bands; a U.S. House race picked here
+  // becomes Charlotte's own district race when the point moves there.
+  {
+    const idx = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results.json"), "utf8"));
+    const ballotOf = (key) => {
+      const part = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results",
+        idx.parts[idx.precincts.indexOf(key)] + ".json"), "utf8"));
+      return part.precincts[key].contests.map((r) => String(r[0]));
+    };
+    const onBallot = ballotOf("37183-01-14"); // Wake precinct 01-14, the anchor's precinct
+    const firstOnBallot = idx.contests.find((c) => onBallot.includes(String(c.id)));
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=election-results`);
+    await page.waitForFunction(() => {
+      const c = document.getElementById("card-election-results");
+      return c && c.querySelector(".election-table");
+    }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const got = await page.evaluate(() => {
+      const c = document.getElementById("card-election-results");
+      const block = c && c.closest(".layer-block");
+      const pill = block && block.querySelector(".card-id-pill");
+      const sel = c && c.querySelector("select.election-select");
+      const legend = document.querySelector(".election-legend");
+      return {
+        notice: ((c && c.querySelector(".election-notice")) || {}).textContent || "",
+        pill: pill ? pill.textContent.trim() : "",
+        options: sel ? Array.from(sel.options).map((o) => o.value) : [],
+        legendShown: !!legend && !legend.hidden,
+        legendRace: legend ? ((legend.querySelector(".election-legend-race") || {}).textContent || "") : "",
+        legendSteps: legend ? legend.querySelectorAll(".election-legend-scale .election-legend-step").length : 0,
+        rows: c ? c.querySelectorAll(".election-table tbody tr").length : 0,
+        text: c ? c.textContent : "",
+      };
+    });
+    const noticeOk = idx.certified ? got.notice.indexOf("certified") !== -1
+      : got.notice.indexOf("Unofficial results") !== -1 &&
+        got.notice.indexOf("North Carolina State Board of Elections") !== -1;
+    const menuOk = got.options.length === onBallot.length && got.options.every((v) => onBallot.includes(v));
+    const outsideOk = !firstOnBallot.outside || got.text.indexOf("counted outside any precinct") !== -1;
+    check("the Election Results card says unofficial, lists exactly this precinct's races and the votes counted outside any precinct",
+          noticeOk && menuOk && outsideOk && got.pill === "Precinct 01-14, Wake County" &&
+          got.rows === firstOnBallot.choices.length && got.text.indexOf("Across North Carolina's precincts") !== -1,
+          `notice=${JSON.stringify(got.notice.slice(0, 60))} options=${got.options.length}/${onBallot.length} ` +
+          `pill=${JSON.stringify(got.pill)} rows=${got.rows} outside=${outsideOk}`);
+    check("the Election Results legend names the picked race and keys the five lead bands",
+          got.legendShown && got.legendRace === firstOnBallot.name && got.legendSteps === 5,
+          `shown=${got.legendShown} race=${JSON.stringify(got.legendRace)} steps=${got.legendSteps}`);
+    const houseHere = idx.contests.find((c) => c.group === "us-house" && onBallot.includes(String(c.id)));
+    await page.selectOption("#card-election-results select.election-select", String(houseHere.id));
+    await page.waitForTimeout(300);
+    await page.evaluate((n) => window[n].setSelectedPoint(35.22710, -80.84310), EXPORTS_NAME); // uptown Charlotte
+    await page.waitForFunction((was) => {
+      const pill = document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill");
+      return pill && pill.textContent.trim() !== was && document.querySelector("#card-election-results .election-table");
+    }, got.pill, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const moved = await page.evaluate(() => ({
+      pill: (document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill") || {}).textContent || "",
+      value: (document.querySelector("#card-election-results select.election-select") || {}).value || "",
+      race: (document.querySelector(".election-legend .election-legend-race") || {}).textContent || "",
+    }));
+    const houseThere = idx.contests.find((c) => c.group === "us-house" && c.id !== houseHere.id &&
+      moved.value === String(c.id));
+    check("a U.S. House race picked in Raleigh becomes Charlotte's own district race",
+          !!houseThere && moved.race === houseThere.name && moved.pill === "Precinct 013, Mecklenburg County",
+          `from=${houseHere.name} pill=${JSON.stringify(moved.pill)} picked=${moved.value} race=${JSON.stringify(moved.race)}`);
+    await context.close();
   }
   // ---- Tribal Government. The Qualla Boundary was the 2020 census's Eastern Cherokee Reservation
   // under another code, so its card carries that count and says so; the Band's

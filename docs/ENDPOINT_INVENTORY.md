@@ -149,7 +149,7 @@ prose.
 | mn | 0 | 22 |
 | ky | 0 | 16 |
 | in | 0 | 18 |
-| nc | 0 | 17 |
+| nc | 0 | 18 |
 | ok | 0 | 17 |
 | sc | 0 | 17 |
 | tn | 0 | 19 |
@@ -325,7 +325,7 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
 - **Not measured** — declared since the probe ran: `county-council`, `in-court-of-appeals`, `conservancy-district`, `school-board-district`, `voting-precinct`, `city-ward`, `tribal-government`.
 
-#### nc — 4 of 17 layers fetch their shapes
+#### nc — 4 of 18 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
@@ -336,7 +336,7 @@ measured until the next run describes it.
 
 - Drawn from this site's own files: `us-house`, `nc-senate`, `county`, `nc-house`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
-- **Not measured** — declared since the probe ran: `nc-superior-court`, `nc-district-court`, `school-board-district`, `voting-precinct`, `city-ward`, `tribal-government`.
+- **Not measured** — declared since the probe ran: `nc-superior-court`, `nc-district-court`, `school-board-district`, `voting-precinct`, `election-results`, `city-ward`, `tribal-government`.
 
 #### ok — 4 of 17 layers fetch their shapes
 
@@ -400,7 +400,7 @@ measured until the next run describes it.
 | mn | 31 | 24 | 0 |
 | ky | 31 | 18 | 0 |
 | in | 22 | 21 | 0 |
-| nc | 40 | 20 | 0 |
+| nc | 40 | 21 | 0 |
 | ok | 32 | 19 | 0 |
 | sc | 36 | 20 | 0 |
 | tn | 34 | 21 | 0 |
@@ -409,7 +409,7 @@ measured until the next run describes it.
 | la | 28 | 24 | 0 |
 | mo | 23 | 14 | 0 |
 | va | 23 | 18 | 0 |
-| **total** | **759** | **1104** | **12** |
+| **total** | **759** | **1105** | **12** |
 
 **219 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
