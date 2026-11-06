@@ -16,8 +16,9 @@ THE FILES. `<data/app>/election-results.json`, the index:
     parts:     [part, ...]            aligned with precincts: which part file
                                       holds that precinct's own counts
     contests:  [{id, name, group, beyond, multiple, choices, total, leaders, margins}
-                plus, only where an app's publisher gives them: outside,
-                certified, certifiedDate, seats]
+                plus `from` where the strings are trimmed (below), and, only
+                where an app's publisher gives them: outside, certified,
+                certifiedDate, seats]
 
 and one `<data/app>/election-results/<part>.json` per part, holding each of
 its precincts' turnout [registered, ballots] and, per contest,
@@ -29,6 +30,12 @@ tie for the most, "?" where the publisher withholds a count (small-number
 privacy filters; the withheld count is null in the part file), "." where the contest is on the ballot and no votes were
 counted, and "-" where it is not on the ballot. The map colours a precinct
 from this string alone, so it never downloads a part to draw.
+
+THE STRINGS ARE TRIMMED: the run of "-" at either end of `leaders` is left out,
+and `from` says which precinct the string starts at (absent when nothing is
+trimmed at the start or end); a precinct outside the string is "-". Minnesota's
+statewide file (5,177 contests over 4,105 precincts, most of them a city's,
+town's or school district's) measured 43.7 MB untrimmed and 3.7 MB trimmed.
 
 A contest's `margins` is aligned with `leaders`: how far the leader is ahead
 of second place in that precinct, as a share of the votes counted there, in
@@ -52,8 +59,12 @@ second app's builder passes them rather than reshaping the format:
                  what share of the race the colours leave out
   certified,     one contest certified apart from the file (a locality
   certifiedDate  certifying its own offices before the state does)
-  seats          how many the contest elects, where the publisher says; more
-                 than one sets `multiple` whatever the counts show
+  seats          how many the contest elects, where the publisher says; it
+                 decides `multiple` whatever the counts show, which matters
+                 where a publisher reports turnout apart from the counts
+                 (Minnesota: 17 precincts showing a few more U.S. Senate votes
+                 than voters on 5 November 2026); written to the index only
+                 when more than one
 What a builder resolves before it calls write_results, because only it knows
 its publisher: one reporting unit covering several precinct shapes (give each
 shape the unit's counts, or split them, and say which in the note), one
@@ -152,16 +163,24 @@ def write_results(app_data_dir, stamp, groups, turnout, contests, part_of, note)
         cast = turnout["precincts"]
         entry = {
             "id": c["id"], "name": c["name"], "group": c["group"], "beyond": bool(c["beyond"]),
-            "multiple": bool((c.get("seats") or 1) > 1) or any(
+            "multiple": c["seats"] > 1 if c.get("seats") is not None else any(
                 vals[0] is not None and cast[k][1] is not None and vals[0] > cast[k][1]
                 for k, vals in c["precincts"].items() if k in cast),
             "choices": c["choices"], "total": c["total"],
-            "leaders": "".join(leader_code(c["precincts"].get(k)) for k in keys),
-            "margins": "".join(margin_code(c["precincts"].get(k)) for k in keys),
         }
-        for opt in ("outside", "certified", "certifiedDate", "seats"):
+        leaders = "".join(leader_code(c["precincts"].get(k)) for k in keys)
+        margins = "".join(margin_code(c["precincts"].get(k)) for k in keys)
+        start = len(leaders) - len(leaders.lstrip("-"))
+        end = len(leaders.rstrip("-"))
+        if start or end < len(leaders):
+            entry["from"] = start
+        entry["leaders"] = leaders[start:end]
+        entry["margins"] = margins[start:end]
+        for opt in ("outside", "certified", "certifiedDate"):
             if c.get(opt) is not None:
                 entry[opt] = c[opt]
+        if (c.get("seats") or 1) > 1:
+            entry["seats"] = c["seats"]
         if "outside" in entry and len(entry["outside"]) != len(c["choices"]) + 1:
             raise ResultsError("%s: outside has %d values for %d choices"
                                % (c["name"], len(entry["outside"]), len(c["choices"])))
@@ -222,20 +241,27 @@ def selftest():
          "precincts": {"01001": [70, 50, 20], "01002": [40, 20, 20], "02001": [20, None, 20]}},
         {"id": "2", "name": "Two", "group": "g", "beyond": True, "choices": ["A", "B", "C"],
          "total": [0, 0, 0, 0], "precincts": {"01001": [100, 50, 40, 10], "01002": [0, 0, 0, 0]}},
+        {"id": "3", "name": "Three", "group": "g", "beyond": False, "choices": ["A"], "seats": 1,
+         "total": [70, 70], "precincts": {"02001": [70, 70]}},
     ]
     with tempfile.TemporaryDirectory() as d:
         n, parts = write_results(d, stamp, groups, turnout, contests, lambda k: "w" + k[:2], "note")
         idx = json.load(open(os.path.join(d, INDEX_NAME)))
         part = json.load(open(os.path.join(d, PART_DIR, "w01.json")))
     checks = [
-        ((n, parts), (2, 2)),
+        ((n, parts), (3, 2)),
         (idx["precincts"], ["01001", "01002", "02001"]),
         (idx["parts"], ["w01", "w01", "w02"]),
         ([g["id"] for g in idx["groups"]], ["g"]),
         (idx["contests"][0]["leaders"], "0=?"),
-        (idx["contests"][1]["leaders"], "0.-"),
         (idx["contests"][0]["margins"], "30-"),   # 50 to 20 of 70 is 42.9 points; a tie; withheld
-        (idx["contests"][1]["margins"], "1--"),   # 50 to 40 of 100 is 10 points
+        (idx["contests"][1]["margins"], "1-"),    # 50 to 40 of 100 is 10 points; nothing counted; the off-ballot end trimmed
+        (idx["contests"][1]["leaders"], "0."),
+        (idx["contests"][1].get("from"), 0),
+        ("from" in idx["contests"][0], False),
+        (idx["contests"][2]["leaders"], "0"), (idx["contests"][2]["from"], 2),
+        (idx["contests"][2]["multiple"], False),  # 70 votes against 60 ballots, but one seat
+        ("seats" in idx["contests"][2], False),
         (margin_code([10, 10, 0]), "4"), (margin_code([100, 52, 47, 1]), "1"),
         (margin_code([100, 51, 49]), "0"),
         (idx["contests"][0]["outside"], [20, 5, 15]),

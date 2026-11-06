@@ -54,7 +54,7 @@ const OFFLINE = ["county", "us-house", "mn-senate", "mn-house", "mn-judicial-dis
 const EXPECT_DISTRICT = { "county": "Hennepin County", "us-house": "5", "mn-senate": "61", "mn-house": "61A", "mn-judicial-district": "Fourth Judicial District", "voting-precinct": "Minneapolis W-7 P-6", "county-commissioner": "Hennepin County Commissioner District 3", "watershed-district": "Mississippi Watershed Management Organization", "school-board-district": "District 4", "city-ward": "Ward 7" };
 const NEGATIVE_POINT = "46.87720,-97.05000"; // inside Cass County, NORTH DAKOTA, about 20 km west of Fargo — outside Minnesota and outside every other instance in the fleet, and inside permalink_gate (minLng -97.40) so the app answers the click and every shipped layer correctly returns nothing. Measured: 0 hits in every shipped geometry file, TIGERweb's county layer names Cass County STATE 38 (control: the anchor returns Hennepin County STATE 27), and no outline in fleet-outlines.json contains it. TWO POINTS WERE TRIED FIRST AND BOTH FAILED FOR REASONS WORTH RECORDING, because each looked obvious. LAKE SUPERIOR: Minnesota's TIGER county fabric is WATER-INCLUSIVE out to the international boundary, so a point in open Lake Superior at 47.6, -90.0 is named Lk Superior by TIGERweb's hydrography and is still INSIDE Cook County, and a point offshore of Duluth is inside the city of Duluth. Water is not outside the state here. WORTH COUNTY, IOWA (43.45, -93.37): correct on every static test — 0 hits in every shipped geometry file, TIGERweb naming Worth County STATE 19 — and it MADE THE BROWSER LEAVE. fleet-outlines.json puts it inside Iowa, so placeOwner hands the selection off to districtry.com/ia/ and the page navigates away; the smoke test's coverage-band probe then timed out looking for a button on a blank document. A NEGATIVE POINT MUST BE OUTSIDE EVERY LIVE INSTANCE, not only outside this one. Iowa's own negative point (43.65, -93.37) sits inside Minnesota and will start handing off the day this instance goes live — recorded in mn/WATCH.md as a go-live item on ia/, not a defect in this change.
 const APP_NAME = "districtry Minnesota";
-const EXPECT_LAYERS = 21;
+const EXPECT_LAYERS = 22;
 // ==== GENERATED:END smoke-config ====
 // Fork-specific smoke-test constants (the reference repo hoists its own set
 // here). The template's CHI-scenario checks are dropped at build time, so the
@@ -687,6 +687,79 @@ try {
           off.text.indexOf("not on tribal land") !== -1 &&
           off.text.indexOf("22 tribal areas") !== -1,
           JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
+  }
+
+  // ---- Election results: the card, the race menu and the legend, held to
+  // the shipped files rather than to any count, because the numbers move daily
+  // until the State Canvassing Board certifies them. The card names the
+  // precinct and county, says unofficial while the file is not certified, and
+  // offers exactly the races on this precinct's ballot; the legend names the
+  // picked race and keys the five lead bands; a U.S. House race picked here
+  // becomes Saint Paul's own district race when the point moves there, which
+  // also exercises a contest string trimmed to the run of precincts it is on
+  // the ballot in (election_results_common.py's `from`).
+  {
+    const idx = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results.json"), "utf8"));
+    const ballotOf = (key) => {
+      const part = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results",
+        idx.parts[idx.precincts.indexOf(key)] + ".json"), "utf8"));
+      return part.precincts[key].contests.map((r) => String(r[0]));
+    };
+    const onBallot = ballotOf("270531680"); // Minneapolis W-7 P-6, the anchor's precinct
+    const firstOnBallot = idx.contests.find((c) => onBallot.includes(String(c.id)));
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=election-results`);
+    await page.waitForFunction(() => {
+      const c = document.getElementById("card-election-results");
+      return c && c.querySelector(".election-table");
+    }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const got = await page.evaluate(() => {
+      const c = document.getElementById("card-election-results");
+      const block = c && c.closest(".layer-block");
+      const pill = block && block.querySelector(".card-id-pill");
+      const sel = c && c.querySelector("select.election-select");
+      const legend = document.querySelector(".election-legend");
+      return {
+        notice: ((c && c.querySelector(".election-notice")) || {}).textContent || "",
+        pill: pill ? pill.textContent.trim() : "",
+        options: sel ? Array.from(sel.options).map((o) => o.value) : [],
+        legendShown: !!legend && !legend.hidden,
+        legendRace: legend ? ((legend.querySelector(".election-legend-race") || {}).textContent || "") : "",
+        legendSteps: legend ? legend.querySelectorAll(".election-legend-scale .election-legend-step").length : 0,
+        rows: c ? c.querySelectorAll(".election-table tbody tr").length : 0,
+        text: c ? c.textContent : "",
+      };
+    });
+    const noticeOk = idx.certified ? got.notice.indexOf("certified") !== -1
+      : got.notice.indexOf("Unofficial results") !== -1 && got.notice.indexOf("Minnesota Secretary of State") !== -1;
+    const menuOk = got.options.length === onBallot.length && got.options.every((v) => onBallot.includes(v));
+    check("the Election Results card says unofficial and lists exactly this precinct's races",
+          noticeOk && menuOk && got.pill === "Minneapolis W-7 P-6, Hennepin County" &&
+          got.rows === firstOnBallot.choices.length && got.text.indexOf("Across Minnesota's precincts") !== -1,
+          `notice=${JSON.stringify(got.notice.slice(0, 60))} options=${got.options.length}/${onBallot.length} ` +
+          `pill=${JSON.stringify(got.pill)} rows=${got.rows}`);
+    check("the Election Results legend names the picked race and keys the five lead bands",
+          got.legendShown && got.legendRace === firstOnBallot.name && got.legendSteps === 5,
+          `shown=${got.legendShown} race=${JSON.stringify(got.legendRace)} steps=${got.legendSteps}`);
+    const houseHere = idx.contests.find((c) => c.group === "us-house" && onBallot.includes(String(c.id)));
+    await page.selectOption("#card-election-results select.election-select", String(houseHere.id));
+    await page.waitForTimeout(300);
+    await page.evaluate((n) => window[n].setSelectedPoint(44.95550, -93.10200), EXPORTS_NAME); // downtown Saint Paul
+    await page.waitForFunction((was) => {
+      const pill = document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill");
+      return pill && pill.textContent.trim() !== was && document.querySelector("#card-election-results .election-table");
+    }, got.pill, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const moved = await page.evaluate(() => ({
+      pill: (document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill") || {}).textContent || "",
+      value: (document.querySelector("#card-election-results select.election-select") || {}).value || "",
+      race: (document.querySelector(".election-legend .election-legend-race") || {}).textContent || "",
+    }));
+    const houseThere = idx.contests.find((c) => c.group === "us-house" && c.id !== houseHere.id &&
+      moved.value === String(c.id));
+    check("a U.S. House race picked in Minneapolis becomes Saint Paul's own district race",
+          !!houseThere && moved.race === houseThere.name && moved.pill.indexOf("St. Paul") !== -1,
+          `from=${houseHere.name} pill=${JSON.stringify(moved.pill)} picked=${moved.value} race=${JSON.stringify(moved.race)}`);
     await context.close();
   }
 } finally {
