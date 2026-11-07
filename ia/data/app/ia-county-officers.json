@@ -177,6 +177,7 @@
    }
   ],
   "treasurer": {
+   "email": "tmicetich@appanoosecounty.net",
    "name": "Tara Micetich",
    "party": "Republican",
    "phone": "(641) 856-3097"
@@ -1393,6 +1394,7 @@
   "recorder": {
    "email": "ann.sweeney@dubuquecountyiowa.gov",
    "name": "Ann Sweeney",
+   "party": "Democratic",
    "phone": "(563) 589-4434"
   },
   "sheriff": {
@@ -3991,7 +3993,7 @@
     "party": "Republican"
    },
    {
-    "name": "Ronald Fitzgerald",
+    "name": "Rick Cabbage",
     "party": "Republican"
    },
    {
