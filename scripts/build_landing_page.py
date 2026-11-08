@@ -664,26 +664,39 @@ def render_notice():
     )
 
 
-def notice_link(href):
-    """The notice link's address. "play-app" is the maps' own Play listing
-    address (DST_ANDROID_APP_URL in the engine's install-app block) with the
-    referrer's campaign changed from "map" to "front-page"; any other value is
-    the address itself."""
-    if href != "play-app":
-        return href
+def play_link(campaign):
+    """districtry's Google Play listing, with the Play referrer's campaign set
+    to `campaign`. The address is the maps' own (DST_ANDROID_APP_URL in the
+    engine's install-app block, whose campaign is "map"), so every page that
+    links the app names one listing, and Google Play Console can tell where an
+    install started: "front-page" for the notice, "footer" for this page's
+    footer, "about" and "how-to-use" for those pages."""
     src = read(INSTALL_APP, "the maps' install invitation")
     m = re.search(r'\bvar DST_ANDROID_APP_URL = "([^"]+)";', src)
     if not m:
-        fail("NOTICE links the Google Play app, and engine/index.html/install-app.txt "
-             "no longer offers it: DST_ANDROID_APP_URL there is not an address. "
-             "Change or retire NOTICE in the same change.")
+        fail("districtry's pages link the Google Play app, and "
+             "engine/index.html/install-app.txt no longer offers it: "
+             "DST_ANDROID_APP_URL there is not an address. Change or retire NOTICE, "
+             "the front page's footer link and the about and how-to-use pages' "
+             "links in the same change.")
     url = m.group(1)
     if not url.startswith("https://play.google.com/store/apps/details?id=com.districtry.app&") \
             or not url.endswith("utm_campaign%3Dmap"):
-        fail("DST_ANDROID_APP_URL in engine/index.html/install-app.txt is %r; the front "
-             "page expects districtry's Play listing with a referrer ending "
-             "utm_campaign%%3Dmap, which it changes to front-page." % url)
-    return url[:-len("map")] + "front-page"
+        fail("DST_ANDROID_APP_URL in engine/index.html/install-app.txt is %r; the "
+             "pages that link the app expect districtry's Play listing with a "
+             "referrer ending utm_campaign%%3Dmap, whose campaign they change." % url)
+    if not re.match(r"^[a-z][a-z-]*$", campaign):
+        fail("play_link(%r): a campaign is lowercase letters and hyphens." % campaign)
+    return url[:-len("map")] + campaign
+
+
+def notice_link(href):
+    """The notice link's address. "play-app" is the app's Play listing with
+    the referrer's campaign "front-page" (play_link); any other value is the
+    address itself."""
+    if href != "play-app":
+        return href
+    return play_link("front-page")
 
 
 def notice_memory():
@@ -3030,6 +3043,7 @@ footer .support b { color: var(--ink); }
           <li><a href="privacy.html">Privacy</a></li>
           <li><a href="sponsorship.html">Sponsorship</a></li>
           <li><a href="traffic.html">Traffic</a></li>
+          <li class="dst-play-hide"><a href="%(play_footer)s" target="_blank" rel="noopener">Android app</a></li>
           <li><a href="https://overberg.co/why/still-incomplete/" target="_blank" rel="noopener">Why this exists</a></li>
           <li><a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">Source on GitHub</a></li>
         </ul>
@@ -3708,6 +3722,10 @@ footer .support b { color: var(--ink); }
         "asks": render_asks(metros),
         "mark": load_mark(),
         "notice": render_notice(),
+        # The footer's link to the Android app (Adam, 2026-11-08: on this page,
+        # and not in the footer every other page shares). Hidden inside that
+        # app (.dst-play-hide), where it would point at itself.
+        "play_footer": html.escape(play_link("footer"), quote=True),
         "notice_memory": notice_memory(),
         "example": example,
         "answer_count": html.escape(answer_count),

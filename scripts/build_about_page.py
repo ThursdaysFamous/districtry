@@ -42,6 +42,9 @@ from build_privacy_page import (  # noqa: E402
     REPO_URL, SITE, esc, render_page,
 )
 import robots_policy  # noqa: E402
+# The Android app's Google Play listing, read from the maps' own invitation so
+# every page that links the app names one listing (build_landing_page.play_link).
+from build_landing_page import play_link  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -297,7 +300,9 @@ def body(fleet, pages, seats, tabled, tables, gaps, jobs, signal):
     <p class="lede">districtry answers one question: <strong>which civic districts contain the
       point you picked, and who represents you there.</strong> It is free, needs no account, and
       is built and maintained by one person working with AI coding agents;
-      <a href="/ai.html">how districtry uses AI</a> says what they do and what no AI does.</p>
+      <a href="/ai.html">how districtry uses AI</a> says what they do and what no AI does.
+      <span class="dst-play-hide">It works in any web browser, and on Android it is also
+      <a href="%(play)s">an app on Google Play</a>.</span></p>
     <p>It began as a Chicago-only explorer and now answers in %(n)d places. Every boundary comes
       from the government that draws it. Every name comes from a published roster: usually the
       body the person sits on, and for Congress and several state legislatures a public dataset
@@ -383,6 +388,7 @@ def body(fleet, pages, seats, tabled, tables, gaps, jobs, signal):
         "jobs": "{:,}".format(jobs),
         "repo": REPO_URL,
         "signal": esc(signal_text),
+        "play": esc(play_link("about")),
     }
 
 
