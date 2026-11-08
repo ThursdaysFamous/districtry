@@ -43,6 +43,7 @@ WHAT IT CHECKS, because each is a claim the page makes:
 import argparse
 import difflib
 import glob
+import html
 import json
 import os
 import sys
@@ -50,6 +51,9 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from build_privacy_page import SITE, render_page  # noqa: E402
+# The Android app's Google Play listing, read from the maps' own invitation so
+# every page that links the app names one listing (build_landing_page.play_link).
+from build_landing_page import play_link  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PAGE = os.path.join(REPO_ROOT, "help.html")
@@ -177,7 +181,7 @@ def jsonld():
 
 
 def body():
-    return """
+    page = """
   <section>
     <p class="lede">districtry shows the districts a place is in and who represents it in each:
       your U.S. House member, your state legislators, your county board and, where they are
@@ -253,8 +257,9 @@ def body():
   <section id="phone">
     <h2>6. On a phone</h2>
     <ul class="facts">
-      <li><strong>Install it.</strong> districtry can be added to your home screen from the
-        browser. It opens to the state you used last.</li>
+      <li><strong>Get the app.</strong> On Android, districtry is an app on
+        <a href="PLAY_LINK">Google Play</a>. On an iPhone, add it to your home screen from
+        Safari's Share menu. It opens to the state you used last.</li>
       <li><strong>Shortcuts.</strong> On Android, press and hold the installed app's icon for
         <em>Use my location</em> and <em>Report a problem</em>.</li>
       <li><strong>Share a place into it.</strong> On Android, share a place from Google Maps and
@@ -286,6 +291,7 @@ def body():
       <a href="/privacy.html">privacy page</a> says what is sent where.</p>
   </section>
 """
+    return page.replace("PLAY_LINK", html.escape(play_link("how-to-use"), quote=True))
 
 
 EXTRA_CSS = """
