@@ -182,7 +182,10 @@ ACTION_GROUPS = [
                      "compare-stats-print", "compare-stats-link"}),
     ("Install prompts", {"install-invite/closed", "install-invite/tip-closed",
                          "install-invite/test-closed",
-                         "install-invite/test-join", "app-install"}),
+                         "install-invite/test-join",
+                         # the published Google Play app, from 2026-11-08
+                         "install-invite/app-closed",
+                         "install-invite/app-open", "app-install"}),
     ("Sharing", {"share-open", "share-qr", "share-native", "share-permalink",
                  "copy-coordinates", "share-in"}),
     ("Data gaps", {"gaps-open", "gaps-why", "gaps-suggest"}),
@@ -205,7 +208,7 @@ RESULT_FAMILIES = {"geolocate-success", "locate-fail", "metro-portal-go",
                    "map-link-read", "map-link"}
 AUTOMATIC_FAMILIES = {"visit/first", "visit/return", "app-launch",
                       "install-invite/shown", "install-invite/tip-shown",
-                      "install-invite/test-shown"}
+                      "install-invite/test-shown", "install-invite/app-shown"}
 # THE FIRST-VISIT HELP IS A FOURTH KIND, counted apart from all three (engine
 # first-use, 2026-10-28). Adam, that day: "I want to make sure that the
 # tutorial is properly tracked and excluded from the main traffic stats. i do

@@ -42428,34 +42428,37 @@ function initChiExplorer() {
         embedded map is someone else's page), never once installed, and never
         a second time: showing it records DST_INSTALL_INVITE_KEY.
 
-        WHILE THE ANDROID APP IS IN GOOGLE PLAY'S CLOSED TEST (Adam,
-        2026-10-20), an Android phone is invited to the test instead of being
-        offered the website version to install: Google Play lets a new
-        personal account apply to publish its app only after 12 testers have
-        stayed in its closed test for 14 days, and the steps page at
-        DST_ANDROID_TEST_URL asks testers to remove the website copy. Chrome's
-        install event is still held, so its own mini-infobar does not offer
-        that copy either, and Chrome's menu still does. The test is offered
-        once too, recorded as DST_TEST_INVITE_SEEN under the same key, so a
-        reader who was offered the install before the test began is asked
-        once more, about the test. Closing the bar or following its link
-        records DST_TEST_INVITE_ANSWERED instead, and the front page's own
-        invitation to the test reads and writes that word under the same key
-        (scripts/build_landing_page.py takes both names from this block), so
-        a reader who closed or followed either invitation is not shown the
-        other; only seeing this bar leaves the front page's in place (Adam,
-        2026-10-20: a "no" stays closed). Not in the Play app, whose window
-        carries the mark from engine/shared/play-app.txt. When the app is
-        published, set DST_ANDROID_TEST_URL to null and the install offer
-        returns; the front page's generator then fails until its notice
-        changes too.
+        ON ANDROID, THE GOOGLE PLAY APP IS OFFERED INSTEAD (Adam, 2026-11-08,
+        when the app went live on Google Play; from 2026-10-20 until then the
+        bar invited readers to its closed test). An Android phone is shown a
+        bar linking the app's Play listing at DST_ANDROID_APP_URL rather than
+        the website version to install, because the Play app opens shared
+        places and long-press shortcuts the same way and keeps the reader in
+        one copy. Chrome's install event is still held, so its own
+        mini-infobar does not offer the website copy either, and Chrome's menu
+        still does. The bar is offered once, recorded as DST_APP_INVITE_SEEN
+        under the same key, so a reader who was offered the install or the
+        test before is asked once more, about the published app. Closing the
+        bar or following its link records DST_APP_INVITE_ANSWERED instead, and
+        the front page's own invitation to the app reads and writes that word
+        under the same key (scripts/build_landing_page.py takes both names and
+        the address from this block), so a reader who closed or followed
+        either invitation is not shown the other; only seeing this bar leaves
+        the front page's in place (Adam, 2026-10-20: a "no" stays closed). Not
+        in the Play app, whose window carries the mark from
+        engine/shared/play-app.txt. The listing's address carries a Play
+        referrer naming this site and the map, so Google Play Console can say
+        how many installs came from here. Set DST_ANDROID_APP_URL to null and
+        the website install offer returns on Android; the front page's
+        generator then fails until its notice changes too.
 
      3. THE COUNTS, by state and never by place: `app-install/<tag>` when the
         browser reports an install, `app-launch/<tag>` once per launch of the
         installed app (DST_APP_LAUNCH_KEY in session storage marks the window
         as counted), `install-invite/<what>` for the invitation: shown,
         accepted, declined or closed, tip-shown or tip-closed on an iPhone, and
-        test-shown, test-join or test-closed for the Android test,
+        app-shown, app-open or app-closed for the Google Play app
+        (test-shown, test-join and test-closed until 2026-11-08),
         `share-in/<tag>` when a place shared into the installed app opened
         this app, and `app-shortcut/<tag>/<action>` when one of the installed
         app's long-press shortcuts did (both below). A launch is counted at
@@ -42507,9 +42510,9 @@ function initChiExplorer() {
   var DST_SEEN_KEY = "districtry-seen";
   var DST_VISIT_COUNTED_KEY = "districtry-visit-counted";
   var DST_INVITE_DELAY_MS = 3000;
-  var DST_ANDROID_TEST_URL = "/android.html?ref=map";
-  var DST_TEST_INVITE_SEEN = "test-shown";
-  var DST_TEST_INVITE_ANSWERED = "test-answered";
+  var DST_ANDROID_APP_URL = "https://play.google.com/store/apps/details?id=com.districtry.app&referrer=utm_source%3Ddistrictry.com%26utm_campaign%3Dmap";
+  var DST_APP_INVITE_SEEN = "app-shown";
+  var DST_APP_INVITE_ANSWERED = "app-answered";
   var dstFramed = (function () {
     try { return window.top !== window.self; } catch (e) { return true; }
   })();
@@ -42545,15 +42548,15 @@ function initChiExplorer() {
   function dstMarkInviteSeen(value) {
     try { window.localStorage.setItem(DST_INSTALL_INVITE_KEY, value); } catch (e) { /* private mode: it may show again */ }
   }
-  function dstTestInviteSeen() {
+  function dstAppInviteSeen() {
     try {
       var seen = window.localStorage.getItem(DST_INSTALL_INVITE_KEY);
-      return seen === DST_TEST_INVITE_SEEN || seen === DST_TEST_INVITE_ANSWERED;
+      return seen === DST_APP_INVITE_SEEN || seen === DST_APP_INVITE_ANSWERED;
     } catch (e) { return true; }
   }
-  /* A browser on Android while the test runs, outside the Play app. */
-  function dstOnAndroidTest() {
-    return !!DST_ANDROID_TEST_URL &&
+  /* A browser on Android, outside the Play app, while the Play app is offered. */
+  function dstOfferPlayApp() {
+    return !!DST_ANDROID_APP_URL &&
       /\bAndroid\b/.test(window.navigator.userAgent || "") &&
       !document.documentElement.classList.contains("dst-play-app");
   }
@@ -42685,7 +42688,7 @@ function initChiExplorer() {
     if (dstFramed || !dstIsPhone()) return;
     e.preventDefault();
     dstHeldPrompt = e;
-    if (dstInviteQueued || dstInviteSeen() || dstOnAndroidTest()) return;
+    if (dstInviteQueued || dstInviteSeen() || dstOfferPlayApp()) return;
     dstInviteQueued = true;
     dstAfterFirstAnswer(function () {
       if (!dstHeldPrompt || dstInviteSeen()) return;
@@ -42722,24 +42725,24 @@ function initChiExplorer() {
     });
   }
 
-  if (!dstFramed && !dstInstalledLaunch() && dstOnAndroidTest() && !dstTestInviteSeen()) {
+  if (!dstFramed && !dstInstalledLaunch() && dstOfferPlayApp() && !dstAppInviteSeen()) {
     dstAfterFirstAnswer(function () {
-      if (dstTestInviteSeen()) return;
-      var shown = dstShowInvite("Help test districtry’s Android app",
-        "Help test districtry’s Android app. Google Play needs 12 testers.", {
-          text: "How to join",
-          href: DST_ANDROID_TEST_URL,
+      if (dstAppInviteSeen()) return;
+      var shown = dstShowInvite("districtry’s Android app",
+        "districtry is on Google Play as an Android app.", {
+          text: "Get the app",
+          href: DST_ANDROID_APP_URL,
           onClick: function () {
-            dstMarkInviteSeen(DST_TEST_INVITE_ANSWERED);
-            dstInviteEvent("test-join");
+            dstMarkInviteSeen(DST_APP_INVITE_ANSWERED);
+            dstInviteEvent("app-open");
             /* after the link is followed, so a page brought back by the
                Back button does not ask again */
             setTimeout(dstHideInvite, 0);
           }
-        }, "test-closed", function () { dstMarkInviteSeen(DST_TEST_INVITE_ANSWERED); });
+        }, "app-closed", function () { dstMarkInviteSeen(DST_APP_INVITE_ANSWERED); });
       if (shown) {
-        dstMarkInviteSeen(DST_TEST_INVITE_SEEN);
-        dstInviteEvent("test-shown");
+        dstMarkInviteSeen(DST_APP_INVITE_SEEN);
+        dstInviteEvent("app-shown");
       }
     });
   }
