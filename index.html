@@ -1186,9 +1186,9 @@ footer .support b { color: var(--ink); }
   <div class="shell">
     <div class="wrap">
     <aside id="notice" class="notice" aria-labelledby="notice-h" data-only="android" hidden>
-      <p id="notice-h" class="notice-h">Help test districtry on Android</p>
-      <p class="notice-b">districtry is coming to Google Play as an app, and Google needs at least 12 people to test it for 14 days in a row first. Joining takes a few minutes.</p>
-      <p class="notice-cta"><a href="/android.html?ref=front-page">See how to join</a></p>
+      <p id="notice-h" class="notice-h">districtry is on Google Play</p>
+      <p class="notice-b">districtry is now an Android app on Google Play. It opens to the state you used last, and you can share a place to it from Google Maps.</p>
+      <p class="notice-cta"><a href="https://play.google.com/store/apps/details?id=com.districtry.app&amp;referrer=utm_source%3Ddistrictry.com%26utm_campaign%3Dfront-page">Get the app</a></p>
       <button type="button" id="notice-dismiss" aria-label="Dismiss this notice">&#x2715;</button>
     </aside>
     <header class="mast">
@@ -1699,12 +1699,12 @@ footer .support b { color: var(--ink); }
      (engine/shared/play-app.txt, run in the head). Not once it has been
      answered, which noticeAnswered says (notice_memory). */
   /* The notice's answer, kept with the maps' own invitation to the Android
-     test (engine/index.html/install-app.txt names the key and the word):
+     app (engine/index.html/install-app.txt names the key and the word):
      closing the notice or following its link writes the word, and an
      answer on either page keeps both closed. localStorage, not a cookie,
      so the word never leaves the browser. */
   var NOTICE_KEY = "districtry-install-invite";
-  var NOTICE_ANSWERED = "test-answered";
+  var NOTICE_ANSWERED = "app-answered";
   function noticeAnswered() {
     try { return window.localStorage.getItem(NOTICE_KEY) === NOTICE_ANSWERED; } catch (e) { return false; }
   }

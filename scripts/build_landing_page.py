@@ -391,19 +391,16 @@ REPO = "https://github.com/ThursdaysFamous/districtry"
 # constant rather than editing a page — set NOTICE to None when it has served
 # its time.
 #
-# It invites Android readers into the Google Play app's closed test (Adam,
-# 2026-10-20). It replaced the "chidistricts.com is now districtry.com" notice
-# that had stood here since the R2.3 move. A personal Play developer account
-# made after November 2023 may apply to publish an app only once at least 12
-# testers have each stayed opted in to its closed test for the 14 days before
-# it applies (Play Console help, read 2026-10-17), so the link goes to the
-# steps page the printed sign-up sheet opens, with ref=front-page so the
-# traffic report shows how many readers arrive there from this page
-# (GoatCounter reads ref as the referrer). It is linked as android.html, the
-# way this page links every other page, and not as the printed /android:
-# GitHub Pages answers both, but the server the browser checks run against
-# serves a file only by its own name, and page_consistency_test.mjs fetches
-# every link on the page, hidden or not.
+# It invites Android readers to the districtry app on Google Play (Adam,
+# 2026-11-08, the day the app went live in production). From 2026-10-20 until
+# then it invited them into the app's closed test, and before that it said
+# "chidistricts.com is now districtry.com", from the R2.3 move. The link is the
+# app's Play listing, and its address is the maps' own (DST_ANDROID_APP_URL in
+# engine/index.html/install-app.txt) with the Play referrer's campaign changed
+# from "map" to "front-page", so Google Play Console can tell an install that
+# started here from one that started on a map. notice_link() reads it there,
+# so the two cannot come to name different listings. page_consistency_test.mjs
+# fetches only same-origin links, so an outside address is no burden to it.
 #
 # WHO SEES IT is "only": "android". The page ships the notice hidden, and its
 # script shows it when the user agent names Android, the window is not an
@@ -417,27 +414,29 @@ REPO = "https://github.com/ThursdaysFamous/districtry"
 # a phone it sat in the page's flow, so the fade moved the address box up under
 # a reader who had started typing.
 #
-# A CLOSE OR A TAP ON ITS LINK IS REMEMBERED, "remember": "android-test" (Adam,
+# A CLOSE OR A TAP ON ITS LINK IS REMEMBERED, "remember": "android-app" (Adam,
 # 2026-10-20: a "no" should stay closed). The page writes one word in the
-# browser's localStorage under the key the maps' own invitation to the test
+# browser's localStorage under the key the maps' own invitation to the app
 # uses, and notice_memory() reads both the key and the word from the engine's
 # install-app block, so a reader who closed or followed either invitation is
 # shown neither again, while a reader who only saw the maps' bar still sees
-# this one. localStorage and not a cookie: a cookie goes to the host with every
-# request, and this word never leaves the browser. The privacy page measures
-# the write and says so. The notice cannot outlive the maps' test: once
-# DST_ANDROID_TEST_URL there is null, this build fails until NOTICE changes.
+# this one. The word is new with the published app, so a reader who answered
+# the invitation to the test is asked once more, about the app. localStorage
+# and not a cookie: a cookie goes to the host with every request, and this
+# word never leaves the browser. The privacy page measures the write and says
+# so. The notice cannot outlive the maps' invitation: once DST_ANDROID_APP_URL
+# there is null, this build fails until NOTICE changes.
 NOTICE = {
-    "heading": "Help test districtry on Android",
-    "body": ("districtry is coming to Google Play as an app, and Google needs at "
-             "least 12 people to test it for 14 days in a row first. Joining "
-             "takes a few minutes."),
-    "link": {"href": "/android.html?ref=front-page", "text": "See how to join"},
+    "heading": "districtry is on Google Play",
+    "body": ("districtry is now an Android app on Google Play. It opens to the "
+             "state you used last, and you can share a place to it from Google "
+             "Maps."),
+    "link": {"href": "play-app", "text": "Get the app"},
     "only": "android",
-    "remember": "android-test",
+    "remember": "android-app",
 }
 NOTICE_ONLY = ("android",)
-NOTICE_REMEMBER = ("android-test",)
+NOTICE_REMEMBER = ("android-app",)
 INSTALL_APP = os.path.join(REPO_ROOT, "engine", "index.html", "install-app.txt")
 
 # There is no independence line under the address box any more (Adam,
@@ -651,7 +650,8 @@ def render_notice():
     cta = ""
     if link:
         cta = ('      <p class="notice-cta"><a href="%s">%s</a></p>\n'
-               % (html.escape(link["href"], quote=True), html.escape(link["text"])))
+               % (html.escape(notice_link(link["href"]), quote=True),
+                  html.escape(link["text"])))
     attrs = ' data-only="%s" hidden' % only if only else ""
     return (
         '    <aside id="notice" class="notice" aria-labelledby="notice-h"%s>\n'
@@ -664,11 +664,33 @@ def render_notice():
     )
 
 
+def notice_link(href):
+    """The notice link's address. "play-app" is the maps' own Play listing
+    address (DST_ANDROID_APP_URL in the engine's install-app block) with the
+    referrer's campaign changed from "map" to "front-page"; any other value is
+    the address itself."""
+    if href != "play-app":
+        return href
+    src = read(INSTALL_APP, "the maps' install invitation")
+    m = re.search(r'\bvar DST_ANDROID_APP_URL = "([^"]+)";', src)
+    if not m:
+        fail("NOTICE links the Google Play app, and engine/index.html/install-app.txt "
+             "no longer offers it: DST_ANDROID_APP_URL there is not an address. "
+             "Change or retire NOTICE in the same change.")
+    url = m.group(1)
+    if not url.startswith("https://play.google.com/store/apps/details?id=com.districtry.app&") \
+            or not url.endswith("utm_campaign%3Dmap"):
+        fail("DST_ANDROID_APP_URL in engine/index.html/install-app.txt is %r; the front "
+             "page expects districtry's Play listing with a referrer ending "
+             "utm_campaign%%3Dmap, which it changes to front-page." % url)
+    return url[:-len("map")] + "front-page"
+
+
 def notice_memory():
     """The notice's memory, as script: whether it was answered, and the answer.
 
-    "android-test" keeps the answer with the maps' invitation to the Android
-    test, so the key and the word are read from the engine's install-app
+    "android-app" keeps the answer with the maps' invitation to the Android
+    app, so the key and the word are read from the engine's install-app
     block, the one copy of both, and this page and the maps cannot come to
     write two different things. With no "remember" the answer lasts for the
     page view, and nothing is stored.
@@ -683,20 +705,20 @@ def notice_memory():
              % (remember, ", ".join(NOTICE_REMEMBER)))
     src = read(INSTALL_APP, "the maps' install invitation")
     key = re.search(r'\bvar DST_INSTALL_INVITE_KEY = "([a-z-]+)";', src)
-    word = re.search(r'\bvar DST_TEST_INVITE_ANSWERED = "([a-z-]+)";', src)
+    word = re.search(r'\bvar DST_APP_INVITE_ANSWERED = "([a-z-]+)";', src)
     if not key or not word:
         fail("NOTICE remembers its answer with the maps' invitation to the Android "
-             "test, and engine/index.html/install-app.txt no longer declares "
-             "DST_INSTALL_INVITE_KEY and DST_TEST_INVITE_ANSWERED as plain strings, "
+             "app, and engine/index.html/install-app.txt no longer declares "
+             "DST_INSTALL_INVITE_KEY and DST_APP_INVITE_ANSWERED as plain strings, "
              "so this page cannot know what to write.")
-    if not re.search(r'\bvar DST_ANDROID_TEST_URL = "', src):
+    if not re.search(r'\bvar DST_ANDROID_APP_URL = "', src):
         fail("NOTICE remembers its answer with the maps' invitation to the Android "
-             "test, and that test has ended: DST_ANDROID_TEST_URL in "
+             "app, and the maps no longer make it: DST_ANDROID_APP_URL in "
              "engine/index.html/install-app.txt is no longer an address. Change or "
              "retire NOTICE in the same change.")
     return (
         "  /* The notice's answer, kept with the maps' own invitation to the Android\n"
-        "     test (engine/index.html/install-app.txt names the key and the word):\n"
+        "     app (engine/index.html/install-app.txt names the key and the word):\n"
         "     closing the notice or following its link writes the word, and an\n"
         "     answer on either page keeps both closed. localStorage, not a cookie,\n"
         "     so the word never leaves the browser. */\n"

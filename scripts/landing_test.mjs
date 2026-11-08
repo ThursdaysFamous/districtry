@@ -253,19 +253,21 @@ try {
     await ctx.close();
   }
 
-  // --- 1b. the notice: the Android test invitation, on Android only --------
+  // --- 1b. the notice: the Google Play app, on Android only ----------------
   //
-  // The front page's notice (NOTICE in build_landing_page.py) invites Android
-  // readers into the Google Play app's closed test. It ships hidden and the
-  // page's script shows it, so the script is what is under test: shown in an
-  // Android browser and nowhere else, never inside the Play app or an
-  // installed copy, linking the steps page with its ref, and closed on
-  // request. It sits in the page's flow above the masthead and no longer
+  // The front page's notice (NOTICE in build_landing_page.py) links Android
+  // readers to districtry's app on Google Play (until 2026-11-08 it invited
+  // them into the app's closed test). It ships hidden and the page's script
+  // shows it, so the script is what is under test: shown in an Android
+  // browser and nowhere else, never inside the Play app or an installed copy,
+  // linking the Play listing with a referrer naming the front page, and
+  // closed on request. It sits in the page's flow above the masthead and no longer
   // fades, so one that would not close would hold the address box down for
   // the whole visit. A close or a followed link is remembered (Adam,
   // 2026-10-20: a "no" stays closed) under the key the maps' own invitation
-  // to the test uses, so an answer on either page keeps both closed, while a
-  // reader who has only SEEN the maps' bar is still shown this one.
+  // to the app uses, so an answer on either page keeps both closed, while a
+  // reader who has only SEEN the maps' bar, or answered the old test
+  // invitation, is still shown this one.
   {
     async function noticeOn(opts, path, init, initArg) {
       const ctx = await browser.newContext({ ...opts, serviceWorkers: "block" });
@@ -296,8 +298,8 @@ try {
           const r = a.getBoundingClientRect();
           return { href: a.getAttribute("href"), w: Math.round(r.width), h: Math.round(r.height) };
         }).catch(() => null);
-        check("the invitation links the steps page, tagged for the traffic report",
-          !!link && link.href === "/android.html?ref=front-page", JSON.stringify(link));
+        check("the invitation links the Play listing, with a referrer naming the front page",
+          !!link && link.href === "https://play.google.com/store/apps/details?id=com.districtry.app&referrer=utm_source%3Ddistrictry.com%26utm_campaign%3Dfront-page", JSON.stringify(link));
         check("the invitation's link is at least a 24px target",
           !!link && link.w >= 24 && link.h >= 24, JSON.stringify(link));
         const close = await page.$eval("#notice-dismiss", (b) => {
@@ -311,7 +313,7 @@ try {
         check("closing the invitation hides it", !after, String(after));
         const kept = await page.evaluate(() => localStorage.getItem("districtry-install-invite"));
         check("closing the invitation is remembered under the maps' invitation key",
-          kept === "test-answered", String(kept));
+          kept === "app-answered", String(kept));
         await page.reload({ waitUntil: "domcontentloaded" });
         await page.waitForTimeout(300);
         const again = await page.isVisible("#notice");
@@ -321,25 +323,31 @@ try {
     }
     {
       const { ctx, page, shown } = await noticeOn(android, "/");
+      // Google Play is stubbed: a test that needs a third party up fails on
+      // somebody else's schedule.
+      await ctx.route("**/play.google.com/**", (route) =>
+        route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>stub</title>" }));
       let kept = null;
       let again = null;
       if (shown) {
         await Promise.all([
-          page.waitForURL(/\/android\.html/, { timeout: 15000 }).catch(() => null),
+          page.waitForURL(/play\.google\.com/, { timeout: 15000 }).catch(() => null),
           page.click(".notice-cta a"),
         ]);
-        kept = await page.evaluate(() => localStorage.getItem("districtry-install-invite"));
+        // read back on this site: the stub page is Google Play's origin
         await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+        kept = await page.evaluate(() => localStorage.getItem("districtry-install-invite"));
         await page.waitForTimeout(300);
         again = await page.isVisible("#notice");
       }
       check("following the invitation's link is remembered too, and it is not shown again",
-        shown && kept === "test-answered" && again === false, JSON.stringify({ shown, kept, again }));
+        shown && kept === "app-answered" && again === false, JSON.stringify({ shown, kept, again }));
       await ctx.close();
     }
     for (const [stored, want, what] of [
-      ["test-shown", true, "an Android phone that has only seen the maps' invitation is still shown this one"],
-      ["test-answered", false, "an Android phone that closed or followed the maps' invitation is not shown this one"],
+      ["app-shown", true, "an Android phone that has only seen the maps' invitation is still shown this one"],
+      ["app-answered", false, "an Android phone that closed or followed the maps' invitation is not shown this one"],
+      ["test-answered", true, "an Android phone that answered the old test invitation is shown the published app"],
     ]) {
       const { ctx, shown } = await noticeOn(android, "/", (v) => {
         try { localStorage.setItem("districtry-install-invite", v); } catch (e) { /* reported by the check */ }

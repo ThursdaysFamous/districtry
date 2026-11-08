@@ -2527,8 +2527,8 @@ try {
   //     browser's own dialog. It is offered ONCE: after a reload, with the
   //     event fired again, nothing shows. On a computer the event is left
   //     alone. An iPhone's Safari has no such event and gets a short tip with
-  //     no button. While the Android app is in Google Play's closed test, a
-  //     phone whose browser names Android is invited to the test instead; the
+  //     no button. Since the Android app went live on Google Play, a phone
+  //     whose browser names Android is offered that app instead; the
   //     Install case below runs with this headless browser's own user agent,
   //     which does not name Android. A launch of the installed app is counted
   //     once per window and an install once, both by app and never by place.
@@ -2852,15 +2852,15 @@ try {
         gone && events.join() === "install-invite/tip-shown,install-invite/tip-closed", JSON.stringify(events));
       await context.close();
     }
-    // WHILE THE ANDROID APP IS IN GOOGLE PLAY'S CLOSED TEST, an Android phone
-    // is invited to the test instead of being offered the website version:
-    // Chrome's event is still held, no Install button is offered, and the bar
-    // links the steps page. A reader who was offered the install before the
-    // test began (the key already reads "shown") is asked once about the
-    // test, and not again; and the Play app's own window is not asked at all.
-    // A close or a followed link writes "test-answered", which the front
-    // page's own invitation to the test reads (Adam, 2026-10-20: a "no"
-    // stays closed), and an answer given there keeps this bar away too.
+    // SINCE THE ANDROID APP WENT LIVE ON GOOGLE PLAY (2026-11-08), an Android
+    // phone is offered that app instead of the website version: Chrome's
+    // event is still held, no Install button is offered, and the bar links
+    // the app's Play listing. A reader who answered the closed test's
+    // invitation (the key reads "test-answered") is asked once about the
+    // published app, and not again; and the Play app's own window is not
+    // asked at all. A close or a followed link writes "app-answered", which
+    // the front page's own notice about the app reads (Adam, 2026-10-20: a
+    // "no" stays closed), and an answer given there keeps this bar away too.
     const ANDROID_UA = "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36";
     {
       const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE, userAgent: ANDROID_UA });
@@ -2868,7 +2868,7 @@ try {
         try {
           if (!sessionStorage.getItem("__inviteSeeded")) {
             sessionStorage.setItem("__inviteSeeded", "1");
-            localStorage.setItem("districtry-install-invite", "shown");
+            localStorage.setItem("districtry-install-invite", "test-answered");
           }
         } catch (e) { /* blocked storage: the checks below report it */ }
       });
@@ -2881,9 +2881,10 @@ try {
         return el ? { text: el.textContent, href: a && a.getAttribute("href"),
           install: !!el.querySelector("button.install-invite-go") } : null;
       });
-      check("on an Android phone the app holds Chrome's install event and invites the reader to the Play test instead",
-        held === true && shown && !!bar && /Android app/.test(bar.text) && !bar.install &&
-        bar.href === "/android.html?ref=map", JSON.stringify({ held, bar }));
+      check("on an Android phone the app holds Chrome's install event and offers the Google Play app instead, even to a reader who answered the test's invitation",
+        held === true && shown && !!bar && /Google Play/.test(bar.text) && !bar.install &&
+        bar.href === "https://play.google.com/store/apps/details?id=com.districtry.app&referrer=utm_source%3Ddistrictry.com%26utm_campaign%3Dmap",
+        JSON.stringify({ held, bar }));
       if (shown) {
         await page.evaluate(() => document.addEventListener("click", (e) => {
           if (e.target.closest && e.target.closest(".install-invite-go")) e.preventDefault();
@@ -2897,16 +2898,16 @@ try {
         seen: localStorage.getItem("districtry-install-invite"),
       }));
       const events = await installEvents(page);
-      check("following the test link counts it, records the answer, hands Chrome's dialog nothing, and the bar goes",
-        after.prompted === 0 && !after.bar && after.seen === "test-answered" &&
-        events.join() === "install-invite/test-shown,install-invite/test-join",
+      check("following the app link counts it, records the answer, hands Chrome's dialog nothing, and the bar goes",
+        after.prompted === 0 && !after.bar && after.seen === "app-answered" &&
+        events.join() === "install-invite/app-shown,install-invite/app-open",
         JSON.stringify({ after, events }));
       await page.reload({ waitUntil: "domcontentloaded" });
       await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
       const heldAgain = await fireInstallEvent(page);
       await page.waitForTimeout(4500);
       const again = await page.evaluate(() => !!document.querySelector(".install-invite"));
-      check("the test is offered once: a later visit holds the event and shows nothing",
+      check("the app is offered once: a later visit holds the event and shows nothing",
         heldAgain === true && !again, `held=${heldAgain} shown=${again}`);
       await context.close();
     }
@@ -2921,16 +2922,16 @@ try {
         seen: localStorage.getItem("districtry-install-invite"),
       }));
       const events = await installEvents(page);
-      check("closing the test invitation records the answer the front page reads, and is counted once",
-        shown && !after.bar && after.seen === "test-answered" &&
-        events.join() === "install-invite/test-shown,install-invite/test-closed",
+      check("closing the app invitation records the answer the front page reads, and is counted once",
+        shown && !after.bar && after.seen === "app-answered" &&
+        events.join() === "install-invite/app-shown,install-invite/app-closed",
         JSON.stringify({ shown, after, events }));
       await context.close();
     }
     {
       const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE, userAgent: ANDROID_UA });
       await context.addInitScript(() => {
-        try { localStorage.setItem("districtry-install-invite", "test-answered"); } catch (e) { /* reported below */ }
+        try { localStorage.setItem("districtry-install-invite", "app-answered"); } catch (e) { /* reported below */ }
       });
       const page = await booted(context, VIEW, stubCounter);
       await page.waitForTimeout(4500);
@@ -2948,7 +2949,7 @@ try {
         marked: document.documentElement.classList.contains("dst-play-app"),
         bar: !!document.querySelector(".install-invite"),
       }));
-      check("inside the Play app nobody is invited to the test",
+      check("inside the Play app nobody is offered the Play app",
         inApp.marked && !inApp.bar, JSON.stringify(inApp));
       await context.close();
     }
