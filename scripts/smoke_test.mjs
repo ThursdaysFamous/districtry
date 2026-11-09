@@ -5115,6 +5115,62 @@ try {
     }
     await context.close();
   }
+
+  // ---- 1y3. A Clarity county (DuPage, read from the clerk's hand-downloaded
+  // report): its precinct outlines come from the county's live GIS server,
+  // which is stubbed here with one square named for a real precinct, so the
+  // check holds the join and the card without the server. The card must speak
+  // for the DuPage County Clerk, list exactly that precinct's races, and, on a
+  // statewide race, give DuPage's federal-only ballots as votes counted
+  // outside any precinct (the office's own `outside`, not another office's).
+  {
+    const idx = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results.json"), "utf8"));
+    const key = "dupage:Addison 1";
+    const at = idx.precincts.indexOf(key);
+    const part = at >= 0 ? JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results",
+      idx.parts[at] + ".json"), "utf8")) : null;
+    const onBallot = part ? part.precincts[key].contests.map((r) => String(r[0])).sort() : [];
+    const lat = 41.9317, lng = -87.989, d = 0.004;
+    const square = {
+      features: [{ attributes: { PrecinctName: "Addison 1", TownshipName: "Addison" },
+        geometry: { rings: [[[lng - d, lat - d], [lng - d, lat + d], [lng + d, lat + d], [lng + d, lat - d], [lng - d, lat - d]]] } }],
+      spatialReference: { wkid: 4326 }
+    };
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${lat},${lng}&layers=election-results`, async (pg) => {
+      await pg.route(/services\.arcgis\.com\/neJvtQ4PXvnQ86MJ\/arcgis\/rest\/services\/Precincts_2024\/FeatureServer\/0\/query/, (r) =>
+        r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(square) }));
+    });
+    await page.waitForFunction(() => {
+      const c = document.getElementById("card-election-results");
+      return c && c.querySelector(".election-table");
+    }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const got = await page.evaluate(() => {
+      const c = document.getElementById("card-election-results");
+      const sel = c && c.querySelector("select.election-select");
+      return {
+        notice: ((c && c.querySelector(".election-notice")) || {}).textContent || "",
+        options: sel ? Array.from(sel.options).map((o) => o.value).sort() : []
+      };
+    });
+    check("a DuPage County precinct's results card speaks for the DuPage County Clerk",
+          at >= 0 && got.notice.indexOf("DuPage County Clerk") !== -1, JSON.stringify(got.notice.slice(0, 160)));
+    check("its race menu holds exactly the races on that DuPage precinct's ballot",
+          onBallot.length > 10 && JSON.stringify(got.options) === JSON.stringify(onBallot),
+          `menu=${got.options.length} ballot=${onBallot.length}`);
+    const senate = idx.contests.find((c) => c.name === "Senator, U.S.");
+    const out = senate && senate.bySource && senate.bySource.dupage && senate.bySource.dupage.outside;
+    if (senate && out && out[0] > 0) {
+      await page.selectOption("#card-election-results select.election-select", String(senate.id)).catch(() => {});
+      await page.waitForFunction(() => /Across DuPage County's precincts/.test(
+        (document.getElementById("card-election-results") || {}).textContent || ""), null, { timeout: 10000 }).catch(() => {});
+      const text = await page.evaluate(() => (document.getElementById("card-election-results") || {}).textContent || "");
+      check("DuPage's federal-only ballots are named as votes counted outside any precinct",
+            text.indexOf("(" + out[0].toLocaleString("en-US") + ") were counted outside any precinct") !== -1,
+            JSON.stringify(text.slice(text.indexOf("Across"), text.indexOf("Across") + 400)));
+    }
+    await context.close();
+  }
 } finally {
   await browser.close();
 }

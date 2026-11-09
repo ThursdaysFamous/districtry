@@ -12,6 +12,11 @@ clerk publishes precinct-by-precinct results a script may read:
         read by il_platinum_election_results_scraper.py
     Kane
         read by il_kane_election_results_scraper.py
+    DuPage, Lake, McHenry, Winnebago (outside Rockford), McLean (outside
+    Bloomington), the City of Bloomington, Sangamon, Macoupin
+        read by il_clarity_election_results_reader.py from the Clarity reports
+        a person downloads by hand (no scheduled job fetches Clarity), so
+        these stay at the numbers of the last hand download
 
 Each is its own office on the map: a precinct key names its county before a
 colon ("kane:AU01", "dekalb:AF 01"), the index lists each county under
@@ -38,6 +43,11 @@ no results, so no precinct is drawn with another's numbers or left blank:
                    codes are il/data/app/dekalb-precinct-townships.json's
   Kane             the clerk pads the number to four digits ("AU0001"), the
                    map to two ("AU01")
+  The Clarity      the same names without case, punctuation or leading
+  counties         zeros ("Addison 001"/"ADDISON 1"); a township with one
+                   precinct matched bare; Bloomington's precincts are the ones
+                   McLean's layer names "City of Bloomington N", keyed to the
+                   Bloomington Election Commission ("bloomington:...")
 
 ONE RACE ACROSS OFFICES. A race on several offices' ballots (the statewide
 offices, a U.S. House or legislative district, a regional superintendent, an
@@ -60,12 +70,13 @@ outside the county, measured with shapely against il/data/app's district and
 county outline files on every build, so a district wholly inside Kane or
 DeKalb says so. A county's own offices and board never do; a regional
 superintendent does where the region names more than this county; a judge
-does except in the 16th Circuit (Kane alone) or a resident judgeship named for
-one county; a ballot question does where its text names more than one county.
+does except in a circuit of one county (Kane's 16th, DuPage's 18th, Lake's
+19th, McHenry's 22nd) or a resident judgeship named for one county; a ballot question does where its text names more than one county.
 
 Usage (via the Chicago builder):
     python3 scripts/build_chicago_election_results.py RAW --election-date 2026-11-03 \\
-        --counties /tmp/platinum_raw.json --counties /tmp/kane_raw.json
+        --counties /tmp/platinum_raw.json --counties /tmp/kane_raw.json \
+        --counties il/data/source/election-results-clarity-raw.json
 """
 
 import difflib
@@ -92,9 +103,36 @@ MAPS = {
     "randolph": ("arcgis", "https://services5.arcgis.com/pweYHqdOby1TE9DD/arcgis/rest/services/"
                  "VotingPrecincts/FeatureServer/1", "name"),
     "wayne": ("file", "wayne-precincts.json", "name"),
+    # the Clarity counties (il_clarity_election_results_reader.py), each read
+    # from the layer the app's own precinct loader reads
+    "dupage": ("arcgis", "https://services.arcgis.com/neJvtQ4PXvnQ86MJ/arcgis/rest/services/"
+               "Precincts_2024/FeatureServer/0", "PrecinctName"),
+    "lake": ("arcgis", "https://services3.arcgis.com/HESxeTbDliKKvec2/arcgis/rest/services/"
+             "LakeCounty_PoliticalBoundaries/FeatureServer/7", "TWP_PCT"),
+    "mchenry": ("arcgis", "https://services1.arcgis.com/6iYC5AXXYapRVNzl/arcgis/rest/services/"
+                "Voting_Precincts/FeatureServer/0", "PrecinctName"),
+    "winnebago": ("arcgis", "https://maps.wingis.org/public/rest/services/WardsAndDistricts/MapServer/7", "PCTNAME"),
+    "mclean": ("arcgis", "https://gis.mcleancountyil.gov/arcgis/rest/services/Clerks/PollingPlaces/MapServer/1",
+               "NAME"),
+    "sangamon": ("arcgis", "https://services.arcgis.com/XqG0RpqsNfIBGGb2/arcgis/rest/services/"
+                 "ApprovedPrecincts20231012/FeatureServer/0", "Name"),
+    "macoupin": ("socrata", "https://data.macoupincountyil.gov/resource/ab79-cnsh.json", "name"),
+}
+# Two offices count one county's precincts on one layer: the City of
+# Bloomington's Election Commission counts the McLean precincts the map names
+# "City of Bloomington <n>", and the McLean County Clerk the rest. office ->
+# (the map it shares, whether a map name is this office's).
+SHARED_MAPS = {
+    "bloomington": ("mclean", lambda n: n.startswith("City of Bloomington ")),
+    "mclean": ("mclean", lambda n: not n.startswith("City of Bloomington ")),
 }
 # The order the counties are listed in `sources`, after Chicago.
-COUNTY_ORDER = ["kane", "dekalb", "henry", "pike", "randolph", "franklin", "wayne"]
+COUNTY_ORDER = ["kane", "dekalb", "henry", "pike", "randolph", "franklin", "wayne",
+                "dupage", "lake", "mchenry", "winnebago", "mclean", "bloomington", "sangamon", "macoupin"]
+# Counties a part file is split for by township (the name before the number),
+# as Kane's is by its two-letter township prefix, so a click loads one
+# township's precincts rather than the county's.
+SPLIT_BY_TOWNSHIP = ("dupage", "lake", "mchenry", "sangamon")
 # Clerk spelling -> map spelling, compared after norm().
 ALIASES = {
     "wayne": {"MASSILON": "MASSILLON"},
@@ -127,11 +165,13 @@ def ordinal(n):
 
 # The circuit a county's own retention titles leave unnamed ("CIRCUIT COURT
 # JUDGE ... SEEKING RETENTION IN OFFICE"): Kane is the whole 16th Circuit.
-CIRCUIT_OF = {"Kane": 16}
-# Regions a clerk names by county alone (Kane), joined to the number another
-# clerk's file gives the same region in this build (DeKalb's ESR-16 (DEKALB)
-# and ESR-31 (KANE)), so the race is one contest across the county line.
-REGIONS = {("DEKALB",): 16, ("KANE",): 31}
+CIRCUIT_OF = {"Kane": 16, "DuPage": 18, "Lake": 19, "McHenry": 22}
+# Circuits made of one county alone, so a circuit judge's race there is the
+# whole race (705 ILCS 35/1: the 16th is Kane, the 18th DuPage,
+# the 19th Lake and the 22nd McHenry).
+ONE_COUNTY_CIRCUITS = {16: "Kane", 18: "DuPage", 19: "Lake", 22: "McHenry"}
+# The county outline a shared office's ground is measured against.
+OUTLINE_OF = {"bloomington": "mclean"}
 # A ballot question Kane heads with the body it is put to, and whether that
 # body's ground reaches past Kane County. Aurora lies in Kane, DuPage, Kendall
 # and Will; Community Unit School District 300 in Kane, McHenry, Cook and
@@ -144,7 +184,7 @@ QUESTION_BEYOND = {
     ("Kane", "YORKVILLE115"): True, ("Kane", "STCHARLES303"): True, ("Kane", "STCHARLESTWSP"): False,
 }
 COUNTY_CASE = {"DEKALB": "DeKalb", "MCHENRY": "McHenry", "LASALLE": "LaSalle", "DEWITT": "DeWitt",
-               "JODAVIESS": "Jo Daviess", "BUREUA": "Bureau", "HARDEN": "Hardin"}
+               "JODAVIESS": "Jo Daviess", "MCLEAN": "McLean", "DUPAGE": "DuPage", "BUREUA": "Bureau", "HARDEN": "Hardin"}
 
 
 def county_case(text):
@@ -155,15 +195,40 @@ def county_case(text):
 # ---------------------------------------------------------------- the map
 
 def map_names(tag, offline=None):
-    """The map's precinct names for one county, as the app's loader writes them."""
+    """The map's precinct names for one office, as the app's loader writes them."""
+    if tag in SHARED_MAPS:
+        layer, mine = SHARED_MAPS[tag]
+        return [n for n in _map_names(layer, offline) if mine(n)]
+    return _map_names(tag, offline)
+
+
+_names_cache = {}
+
+
+def _map_names(tag, offline=None):
     if offline is not None:
         return [str(n) for n in offline[tag]]
+    if tag in _names_cache:
+        return _names_cache[tag]
+    _names_cache[tag] = _fetch_names(tag)
+    return _names_cache[tag]
+
+
+def _fetch_names(tag):
     kind, where, prop = MAPS[tag]
+    if kind == "socrata":
+        from scraper_common import UA_HEADERS_ROSTER_BOT, UA_ROSTER_BOT, require_robots_once
+        url = where + "?$select=" + prop + "&$limit=5000"
+        require_robots_once(url, UA_ROSTER_BOT, headers=UA_HEADERS_ROSTER_BOT)
+        req = urllib.request.Request(url, headers=dict(UA_HEADERS_ROSTER_BOT))
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            rows = json.load(resp)
+        return [str(r[prop]) for r in rows if r.get(prop) is not None]
     if kind == "file":
         doc = json.load(open(os.path.join(APP_DATA, where)))
         return [str(f["properties"][prop]) for f in doc["features"]]
     from scraper_common import UA_HEADERS_ROSTER_BOT, UA_ROSTER_BOT, require_robots_once
-    url = where + "/query?where=1%3D1&outFields=" + prop + "&returnGeometry=false&f=json"
+    url = where + "/query?where=1%3D1&outFields=" + prop + "&returnGeometry=false&f=json&resultRecordCount=2000"
     require_robots_once(url, UA_ROSTER_BOT, headers=UA_HEADERS_ROSTER_BOT)
     req = urllib.request.Request(url, headers=dict(UA_HEADERS_ROSTER_BOT))
     with urllib.request.urlopen(req, timeout=60) as resp:
@@ -197,12 +262,39 @@ def result_to_map(tag, result_name, names):
         codes = dekalb_codes()
         if m and norm(m.group(1)) in codes:
             want = "%s%02d" % (codes[norm(m.group(1))], int(m.group(2)))
+    elif tag == "bloomington":
+        m = re.fullmatch(r"PRECINCT(\d+)", want)
+        if m:
+            want = norm("City of Bloomington %d" % int(m.group(1)))
     want = ALIASES.get(tag, {}).get(want, want)
     if want in by_norm:
         return by_norm[want]
     if tag == "henry" and want + "1" in by_norm:
         return by_norm[want + "1"]
+    if tag in NUMBERED:
+        # the same township and number, padded differently ("Addison 001" is
+        # the map's "Addison 1"); a township with one precinct the clerk
+        # writes bare (Sangamon's "LOAMI", the map's "LOAMI 001")
+        by_num = {}
+        for n in names:
+            by_num.setdefault(numbered(n), []).append(n)
+        got = by_num.get(numbered(result_name))
+        if got is None and numbered(result_name)[1] is None:
+            stem = numbered(result_name)[0]
+            alone = [n for n in names if numbered(n)[0] == stem]
+            got = alone if len(alone) == 1 else None
+        if got and len(got) == 1:
+            return got[0]
     return None
+
+
+# Counties whose clerk pads a precinct number differently from the map.
+NUMBERED = ("dupage", "lake", "mchenry", "winnebago", "mclean", "bloomington", "sangamon", "macoupin")
+
+
+def numbered(name):
+    m = re.fullmatch(r"(.*?)(\d+)", norm(name))
+    return (m.group(1), int(m.group(2))) if m else (norm(name), None)
 
 
 def join_precincts(tag, turnout, names):
@@ -241,10 +333,41 @@ def district_number(*texts):
         if m:
             return int(m.group(1))
     for t in texts:
-        up = str(t).upper()
-        for word in sorted(ORDINALS, key=len, reverse=True):
-            if re.search(r"\b" + word + r"\b", up):
-                return ORDINALS[word]
+        n = spelled_ordinal(t)
+        if n is not None:
+            return n
+    return None
+
+
+_UNITS = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "SIXTH", "SEVENTH", "EIGHTH", "NINTH"]
+_TEENS = ["TENTH", "ELEVENTH", "TWELFTH", "THIRTEENTH", "FOURTEENTH", "FIFTEENTH", "SIXTEENTH",
+          "SEVENTEENTH", "EIGHTEENTH", "NINETEENTH"]
+_TENS = ["TWENTY", "THIRTY", "FORTY", "FIFTY", "SIXTY", "SEVENTY", "EIGHTY", "NINETY"]
+_TENS_ORD = ["TWENTIETH", "THIRTIETH", "FORTIETH", "FIFTIETH", "SIXTIETH", "SEVENTIETH", "EIGHTIETH",
+             "NINETIETH"]
+_ORD_RE = re.compile(
+    r"\b(?:(ONE )?HUNDRED(?:TH\b| (?:AND )?))?(?:(%s|%s)[- ](%s)|(%s)|(%s)|(%s))?\b" % (
+        "|".join(_TENS), "|".join(_TENS_ORD), "|".join(_UNITS), "|".join(_TENS_ORD), "|".join(_TEENS),
+        "|".join(_UNITS)))
+
+
+def spelled_ordinal(text):
+    """The first ordinal spelled out in `text` ("SEVENTY-SEVENTH" 77, "ONE
+    HUNDRED EIGHTEENTH" 118, DeKalb's "SEVENTIETH-FOURTH" 74), or None."""
+    up = str(text).upper()
+    for m in _ORD_RE.finditer(up):
+        hundred, tens, unit, tens_ord, teen, alone = m.groups()
+        n = 100 if m.group(0).strip().startswith(("ONE HUNDRED", "HUNDRED")) else 0
+        if tens and unit:
+            n += 10 * (2 + (_TENS.index(tens) if tens in _TENS else _TENS_ORD.index(tens))) + 1 + _UNITS.index(unit)
+        elif tens_ord:
+            n += 10 * (2 + _TENS_ORD.index(tens_ord))
+        elif teen:
+            n += 10 + _TEENS.index(teen)
+        elif alone:
+            n += 1 + _UNITS.index(alone)
+        if n:
+            return n
     return None
 
 
@@ -321,20 +444,33 @@ def classify(title, district, cname, vote_for, choices):
         # Platinum: "FOR REGIONAL SUPERINTENDENT OF SCHOOLS (LEE, OGLE AND
         # WHITESIDE COUNTIES)" with the region in the district column;
         # Kane: "GRUNDY & KENDALL COUNTIES FOR REGIONAL SUPERINTENDENT"
-        par = re.search(r"\(([^)]*COUNT[^)]*)\)?", title) or re.search(r"^(.*?COUNT(?:Y|IES)) FOR\b", up)
+        par = re.search(r"(?i)\(([^)]*COUNT[^)]*)\)?", title) or re.search(r"^(.*?COUNT(?:Y|IES)) FOR\b", up)
         counties = []
         if par:
             text = re.sub(r"(?i)\bcount(y|ies)\b", "", par.group(1))
             counties = [county_case(c) for c in re.split(r",|&|\band\b", text, flags=re.I) if c.strip()]
-        m = re.search(r"(?:ESR|RGB|REGION)\D*(\d+)", dist)
-        region = int(m.group(1)) if m else REGIONS.get(tuple(sorted(norm(c) for c in counties)))
         if not counties:
             raise CountyError("%s: %r names no counties" % (cname, title))
         n = "Regional Superintendent of Schools (%s %s)" % (
             ", ".join(counties[:-1]) + " and " + counties[-1] if len(counties) > 1 else counties[0],
             "Counties" if len(counties) > 1 else "County")
-        key = "region %d" % region if region else "counties " + ",".join(sorted(norm(c) for c in counties))
+        # keyed by the counties, never the region number: the Clarity reports
+        # name a region's counties and no number, so a number-keyed office
+        # and a county-keyed one would split one race in two
+        key = "counties " + ",".join(sorted(norm(c) for c in counties))
         return "regional", key, n, {"counties": counties}
+    if re.search(r"\bCHAIR(MAN|PERSON|WOMAN)? OF THE COUNTY BOARD\b", up):
+        # elected countywide, so not one of the board's districts
+        n = "Chairperson of the County Board, %s County" % cname
+        return "county", n, n, {}
+    if "FOREST PRESERVE" in up or "FOREST PRESERVE" in dist:
+        # Clarity counties: "PRESIDENT OF THE FOREST PRESERVE COMMISSION",
+        # "FOREST PRESERVE COMMISSIONER DISTRICT 1"
+        body = "%s County Forest Preserve District" % cname
+        num = re.search(r"DIST(?:RICT)?\.? ?(\d+)", up) or re.search(r"DIST(?:RICT)?\.? ?(\d+)", dist)
+        office = "President" if "PRESIDENT" in up else "Commissioner"
+        n = "%s, %s%s" % (office, body, ", District %d" % int(num.group(1)) if num else "")
+        return "county", n, n, {"seats": vote_for}
     if (re.search(r"\bCOUNTY BOARD\b", up) or re.search(r"\bCOUNTY BOARD\b", dist)) and not yes_no:
         num = re.search(r"DIST(?:RICT)?\.? (\d+)", dist) or re.search(r"DISTRICT (\d+)", up)
         where = "District %d" % int(num.group(1)) if num else "at large"
@@ -377,7 +513,7 @@ def classify(title, district, cname, vote_for, choices):
     if re.search(r"\b(SANITARY|TRUSTEE|MAYOR|ALDERM[AE]N|VILLAGE|TOWNSHIP)\b", up):
         n = "%s (%s County ballot)" % (titled(re.sub(r"(?i)^FOR\s+", "", title)), cname)
         return "local", norm(n), n, {"seats": vote_for}
-    if (re.search(r"(?i)\bCOUNTY\b", dist) and cname.upper() in dist) or (
+    if (re.search(r"(?i)\bCOUNTY\b", dist) and (cname.upper() in dist or dist == "COUNTY")) or (
             not dist and re.match(r"^(FOR )?COUNTY ", up)):
         n = county_office(title, cname)
         return "county", n, n, {}
@@ -424,7 +560,32 @@ def match_choice(name, choices):
                      for i, c in enumerate(choices)), reverse=True)
     if scored and scored[0][0] >= 0.85 and (len(scored) == 1 or scored[1][0] < 0.85):
         return scored[0][1]
+    # a ballot that prints surnames only, or the first name of a ticket only
+    # (McLean's "Pritzker & Mitchell", Bloomington's "JB Pritzker" for the
+    # Pritzker & Mitchell ticket): each part's surname in order, one choice only
+    by_surname = [i for i, c in enumerate(choices) if surnames_match(name, c)]
+    if len(by_surname) == 1:
+        return by_surname[0]
     return None
+
+
+def _surname(part):
+    words = re.sub(r"\s*\(write-in\)$", "", part, flags=re.I).replace(",", " ").split()
+    words = [w for w in words if norm(w) not in ("JR", "SR", "II", "III", "IV")]
+    return norm(words[-1]) if words else ""
+
+
+def surnames_match(name, choice):
+    """True when `name` names `choice` by surnames: every &-part of `name`
+    ends in the surname of the same part of `choice` (and has no more parts),
+    and neither side is a write-in line the other is not."""
+    if bool(re.search(r"(?i)\(write-in\)", str(name))) != bool(re.search(r"(?i)\(write-in\)", str(choice))):
+        return False
+    mine = [p for p in str(name).split("&") if p.strip()]
+    theirs = [p for p in str(choice).split("&") if p.strip()]
+    if not mine or len(mine) > len(theirs):
+        return False
+    return all(_surname(a) and _surname(a) == _surname(b) for a, b in zip(mine, theirs))
 
 
 # ---------------------------------------------------------------- geometry
@@ -445,8 +606,8 @@ def _load_shapes():
         _shapes[group] = dict((int(f["properties"][prop]), shape(f["geometry"])) for f in doc["features"]
                               if str(f["properties"].get(prop, "")).isdigit())
     _shapes["county"] = {}
-    for tag in MAPS:
-        doc = json.load(open(os.path.join(APP_DATA, tag + "-county-outline.json")))
+    for tag in COUNTY_ORDER:
+        doc = json.load(open(os.path.join(APP_DATA, OUTLINE_OF.get(tag, tag) + "-county-outline.json")))
         _shapes["county"][tag] = unary_union([shape(f["geometry"]) for f in doc["features"]])
     return _shapes
 
@@ -474,7 +635,7 @@ def beyond_for(group, extra, tag, cname):
     if group in ("judges", "retention"):
         if extra.get("resident"):
             return False
-        return not (extra.get("court") == "circuit" and extra.get("num") == 16)
+        return not (extra.get("court") == "circuit" and ONE_COUNTY_CIRCUITS.get(extra.get("num")) == cname)
     if group == "questions":
         return extra["many"]
     if group == "local":
@@ -523,21 +684,26 @@ def add_counties(contests, turnout, raws, chicago_source, offline_names=None, ce
         for rname, (reg, bal) in county["turnout"].items():
             turnout["precincts"][keys[rname]] = [reg, bal]
             cast += bal
-        if cast != county["ballots"]:
+        if cast != county["ballots"]:  # rows counted outside any precinct are apart (outsideBallots)
             raise CountyError("%s: precinct ballots add to %d, the county says %d" % (tag, cast, county["ballots"]))
         turnout["total"] = [(turnout["total"][0] or 0) + sum(v[0] for v in county["turnout"].values()),
                             (turnout["total"][1] or 0) + cast]
         sources.append({
             "id": tag, "publisher": county.get("publisher") or "%s County Clerk" % cname,
-            "areaName": "%s County" % cname, "source": county["source"],
-            "read": raw["read"], "certified": tag in certified,
+            "areaName": county.get("areaName") or "%s County" % cname, "source": county["source"],
+            "read": county.get("read") or raw["read"], "certified": tag in certified,
             "certifiedDate": certified.get(tag), "uncountedNote": "" if tag in certified else UNCOUNTED,
         })
         added = 0
         for race in county["contests"]:
-            got = classify(race["name"], race.get("district", ""), cname,
-                           race.get("voteFor") or 1, race["choices"])
-            group, key, display, extra = got
+            if race.get("fixed"):
+                # the reader already knows what this contest is (Winnebago's
+                # unnamed retention questions); no title rule is asked
+                group, key, display = race["fixed"]["group"], norm(race["name"]), race["name"]
+                extra = {"many": bool(race["fixed"].get("beyond"))}
+            else:
+                group, key, display, extra = classify(race["name"], race.get("district", ""), cname,
+                                                      race.get("voteFor") or 1, race["choices"])
             # the clerk's ballot lines as choices, and which raw column each is
             lines = []
             for i, ch in enumerate(race["choices"]):
@@ -596,10 +762,21 @@ def add_counties(contests, turnout, raws, chicago_source, offline_names=None, ce
                     tot[n] += vals[n]
             if tag in target["bySource"]:
                 raise CountyError("%s: two of the clerk's contests are %s" % (cname, display))
-            target["bySource"][tag] = {"total": tot, "beyond": beyond_for(group, extra, tag, cname),
-                                       "choices": sorted(col.values())}
+            entry = {"total": tot, "beyond": beyond_for(group, extra, tag, cname),
+                     "choices": sorted(col.values())}
+            if race.get("outside"):
+                # votes the clerk counted in no precinct: in the office's
+                # totals, on no shape (DuPage's federal-only ballots)
+                out = [0] * (width + 1)
+                out[0] = sum(v for i, v in enumerate(race["outside"]) if lines[i][1] is not False)
+                for i, at in col.items():
+                    out[at + 1] = race["outside"][i]
+                entry["outside"] = out
+                for n in range(width + 1):
+                    tot[n] += out[n]
+            target["bySource"][tag] = entry
             added += 1
-        summary.append("%s: %d precincts, %d contests, %d ballots" % (cname, len(keys), added, cast))
+        summary.append("%s: %d precincts, %d contests, %d ballots" % (county.get("areaName") or cname, len(keys), added, cast))
 
     # every contest's totals and reach are its offices' together; values are
     # padded to the final width (a choice added by a later county)
@@ -609,6 +786,11 @@ def add_counties(contests, turnout, raws, chicago_source, offline_names=None, ce
             vals.extend([0] * (width + 1 - len(vals)))
         for s in c["bySource"].values():
             s["total"].extend([0] * (width + 1 - len(s["total"])))
+            if "outside" in s:
+                s["outside"].extend([0] * (width + 1 - len(s["outside"])))
+        outs = [s["outside"] for s in c["bySource"].values() if s.get("outside")]
+        if outs:
+            c["outside"] = [sum(o[n] for o in outs) for n in range(width + 1)]
         if len(c["bySource"]) > 1 or "chicago" not in c["bySource"]:
             c["total"] = [sum(s["total"][n] for s in c["bySource"].values()) for n in range(width + 1)]
         c["beyond"] = any(s["beyond"] for s in c["bySource"].values())
@@ -624,6 +806,8 @@ def add_counties(contests, turnout, raws, chicago_source, offline_names=None, ce
         tag, name = k.split(":", 1)
         if tag == "kane":
             return "kane-" + norm(name)[:2]
+        if tag in SPLIT_BY_TOWNSHIP:
+            return tag + "-" + numbered(name)[0].lower()[:30]
         return tag
     return sources, part_of, summary
 
@@ -648,6 +832,10 @@ def selftest():
                       ["Darren Bailey & Aaron B. Del Mar", "JB Pritzker & Christian Mitchell"]), 1),
         (match_choice("Chris Gant", ["Chris Gant (Write-in)", "Don Tracy"]), 0),
         (match_choice("Somebody Else", ["Don Tracy"]), None),
+        (match_choice("Pritzker & Mitchell", ["Darren Bailey & Aaron B. Del Mar", "JB Pritzker & Christian Mitchell"]), 1),
+        (match_choice("JB Pritzker", ["Darren Bailey & Aaron B. Del Mar", "JB Pritzker & Christian Mitchell"]), 1),
+        (match_choice("Bailey & Del Mar", ["Darren Bailey & Aaron B. Del Mar", "JB Pritzker & Christian Mitchell"]), 0),
+        (match_choice("Mitchell", ["Darren Bailey & Aaron B. Del Mar", "JB Pritzker & Christian Mitchell"]), None),
         (result_to_map("henry", "ALBA", ["Alba 1", "Andover 1"]), "Alba 1"),
         (result_to_map("wayne", "GOLDENGATE", ["GOLDEN GATE"]), "GOLDEN GATE"),
         (result_to_map("wayne", "MASSILON", ["Massillon"]), "Massillon"),
@@ -661,6 +849,15 @@ def selftest():
          "DeKalb County Board, District 5 (unexpired 2-year term)"),
         (classify("FOR COUNTY BOARD - AT LARGE", "COUNTY BOARD", "Pike", 5, ["A"])[2], "Pike County Board, at large"),
         (classify("FOR TREASURER", "STATE OF ILLINOIS", "DeKalb", 1, ["A"])[2], "Treasurer, State of Illinois"),
+        (classify("FOR COUNTY SHERIFF", "COUNTY", "Lake", 1, ["A"])[2], "Sheriff, Lake County"),
+        (classify("FOR CHAIRPERSON OF THE COUNTY BOARD", "COUNTY", "DuPage", 1, ["A"])[:3],
+         ("county", "Chairperson of the County Board, DuPage County", "Chairperson of the County Board, DuPage County")),
+        (classify("FOREST PRESERVE COMMISSIONER DISTRICT 2", "FOREST PRESERVE", "DuPage", 1, ["A"])[2],
+         "Commissioner, DuPage County Forest Preserve District, District 2"),
+        (classify("FOR REGIONAL SUPERINTENDENT OF SCHOOLS (DeWITT, LIVINGSTON, LOGAN and McLEAN Counties)", "",
+                  "Sangamon", 1, ["A"])[1:3],
+         ("counties DEWITT,LIVINGSTON,LOGAN,MCLEAN",
+          "Regional Superintendent of Schools (DeWitt, Livingston, Logan and McLean Counties)")),
         (classify("FOR COUNTY TREASURER", "DEKALB COUNTY", "DeKalb", 1, ["A"])[2], "Treasurer, DeKalb County"),
         (classify("FOR STATE'S ATTORNEY (TO SERVE AN UNEXPIRED 2-YEAR TERM)", "WAYNE COUNTY", "Wayne", 1,
                   ["A"])[2], "State's Attorney, Wayne County (unexpired 2-year term)"),
@@ -684,6 +881,14 @@ def selftest():
          "Joseph M. Grady (Circuit Court, 16th Circuit)"),
         (classify("DEKALB COUNTY FOR REGIONAL SUPERINTENDENT OF SCHOOLS", "", "Kane", 1, ["A"])[1],
          classify("FOR REGIONAL SUPERINTENDENT OF SCHOOLS (DEKALB COUNTY)", "ESR-16 (DEKALB)", "DeKalb", 1, ["A"])[1]),
+        (spelled_ordinal("SEVENTY-SEVENTH REPRESENTATIVE DISTRICT"), 77),
+        (spelled_ordinal("FORTY-FIRST LEGISLATIVE"), 41), (spelled_ordinal("SEVENTH REPRESENTATIVE"), 7),
+        (spelled_ordinal("ONE HUNDRED EIGHTEENTH"), 118), (spelled_ordinal("FIFTIETH"), 50),
+        (spelled_ordinal("SEVENTIETH-FOURTH"), 74), (spelled_ordinal("EIGHTEENTH JUDICIAL"), 18),
+        (result_to_map("dupage", "Addison 001", ["Addison 1", "Addison 10"]), "Addison 1"),
+        (result_to_map("sangamon", "LOAMI", ["LOAMI 001", "LOAMI 2"]), None),
+        (result_to_map("sangamon", "MAXWELL", ["MAXWELL 001"]), "MAXWELL 001"),
+        (result_to_map("bloomington", "PRECINCT 7", ["City of Bloomington 7"]), "City of Bloomington 7"),
         (clean_choice("No Candidate (REP)"), ""), (clean_choice("Rejected write-ins"), False),
         (clean_choice("(JB Pritzker (Christian Mitchell (DEM)"), "JB Pritzker & Christian Mitchell"),
     ]

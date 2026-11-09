@@ -653,18 +653,18 @@
         "beside it; each precinct is filled by the choice leading there in the picked race."
       ],
       "source": {
-        "answers": "For the picked race, the choice with the most votes in each precinct the results reach (Chicago's and seven counties'), and on the card the clicked precinct's votes for every race on its ballot, its turnout, and the race's total across the precincts that office counts. Unofficial until each office certifies its count, and the card and the map key say so.",
+        "answers": "For the picked race, the choice with the most votes in each precinct the results reach (Chicago's and fourteen counties'), and on the card the clicked precinct's votes for every race on its ballot, its turnout, and the race's total across the precincts that office counts. Unofficial until each office certifies its count, and the card and the map key say so.",
         "boundary": [
           {
             "label": "Chicago Data Portal \u2014 ward precincts (i8fv-xe4b), the same outlines Ward Precinct draws",
             "url": "https://data.cityofchicago.org/d/i8fv-xe4b"
           },
           {
-            "label": "The Kane, DeKalb, Henry, Pike, Randolph, Franklin and Wayne County precinct outlines the Voting Precinct layer draws"
+            "label": "The Kane, DeKalb, Henry, Pike, Randolph, Franklin, Wayne, DuPage, Lake, McHenry, Winnebago, McLean, Sangamon and Macoupin County precinct outlines the Voting Precinct layer draws"
           }
         ],
-        "people": "The choices and their votes come from each office's own precinct-by-precinct results for the 3 November 2026 general election, read daily: the Chicago Board of Election Commissioners' (scripts/chicago_election_results_scraper.py), the Kane County Clerk's results site (scripts/il_kane_election_results_scraper.py), and the DeKalb, Franklin, Henry, Pike, Randolph and Wayne County Clerks' pages on platinumelectionresults.com (scripts/il_platinum_election_results_scraper.py). Colours follow each choice's place on the first office's ballot list, never a party.",
-        "applies": "Chicago and Kane, DeKalb, Henry, Pike, Randolph, Franklin and Wayne Counties. A race whose district reaches past an office's ground is totalled for that office's precincts only, and the card says so."
+        "people": "The choices and their votes come from each office's own precinct-by-precinct results for the 3 November 2026 general election, read daily: the Chicago Board of Election Commissioners' (scripts/chicago_election_results_scraper.py), the Kane County Clerk's results site (scripts/il_kane_election_results_scraper.py), and the DeKalb, Franklin, Henry, Pike, Randolph and Wayne County Clerks' pages on platinumelectionresults.com (scripts/il_platinum_election_results_scraper.py). The DuPage, Lake, McHenry, Winnebago, McLean, Sangamon and Macoupin County Clerks' and the Bloomington Election Commission's Clarity Elections reports are downloaded by hand and are not refreshed daily (scripts/il_clarity_election_results_reader.py); each card gives the time of its office's report. Colours follow each choice's place on the first office's ballot list, never a party.",
+        "applies": "Chicago and Kane, DeKalb, Henry, Pike, Randolph, Franklin, Wayne, DuPage, Lake, McHenry, Winnebago (outside Rockford), McLean, Sangamon and Macoupin Counties. A race whose district reaches past an office's ground is totalled for that office's precincts only, and the card says so."
       }
     },
     {

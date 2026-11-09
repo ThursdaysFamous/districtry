@@ -17242,7 +17242,9 @@ function initVirginiaExplorer() {
       return {
         total: s ? s.total : contest.total,
         beyond: s ? !!s.beyond : !!contest.beyond,
-        which: s && s.choices ? s.choices : contest.choices.map(function (name, n) { return n; })
+        which: s && s.choices ? s.choices : contest.choices.map(function (name, n) { return n; }),
+        // votes that office counted in no precinct (in its totals, on no shape)
+        outside: s ? (s.outside || null) : (contest.outside || null)
       };
     }
 
@@ -17626,9 +17628,9 @@ function initVirginiaExplorer() {
           ", so these totals are not the whole race." : ""));
       // votes counted in no precinct (absentee, early or provisional units a
       // publisher reports apart) are in the totals and on no shape of the map
-      if (contest.outside && contest.outside[0] > 0 && whole > 0) {
-        notes.push(electionPercent(contest.outside[0], whole) + " of these votes (" +
-          contest.outside[0].toLocaleString("en-US") + ") were counted outside any precinct, so they are in the" +
+      if (cf.outside && cf.outside[0] > 0 && whole > 0) {
+        notes.push(electionPercent(cf.outside[0], whole) + " of these votes (" +
+          cf.outside[0].toLocaleString("en-US") + ") were counted outside any precinct, so they are in the" +
           " totals above and not in the map's colours.");
       }
       // a precinct whose counts are in but whose turnout the publisher has not
@@ -17834,8 +17836,13 @@ function initVirginiaExplorer() {
             notes.push("The " + pub + " withholds some counts to protect the privacy of a small number of" +
               " voters, so these totals leave them out and name no leader.");
           }
-          if (contest.outside && contest.outside[0] > 0) {
-            notes.push("Votes the " + pub + " counted outside any precinct are not in these totals.");
+          var outBy = (t.srcs.length ? t.srcs : [ownSrc]).filter(function (id) {
+            var o = contestFor(contest, contest.bySource ? id : null).outside;
+            return o && o[0] > 0;
+          });
+          if (outBy.length) {
+            notes.push("Votes the " + outBy.map(function (id) { return sourceOf(idx, id).publisher; }).join(" and the ") +
+              " counted outside any precinct are not in these totals.");
           }
           notes.forEach(function (x) { sec.appendChild(cardEl("p", "election-note", x)); });
           box.appendChild(sec);
