@@ -29,7 +29,7 @@
 // geometry anchors (borough / judicial-district / municipal-court) to
 // GEOMETRY_URLS below; the Thread 5 pipeline filled ROSTER_URLS.
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "nyc-district-explorer-shell-v23";
+const CACHE_NAME = "nyc-district-explorer-shell-v24";
 
 const SHELL_URLS = [
   "./",
@@ -75,6 +75,7 @@ const GEOMETRY_URLS = [
 // and must never be served stale — network-first, with the cached copy only
 // as an offline fallback. Same freshness rule as the shell.
 const ROSTER_URLS = [
+  "./data/app/election-results.json",
   "./data/app/nypd-precinct-info.json",
   "./data/app/congress-roster.json",
   "./data/app/coverage-gaps.json",

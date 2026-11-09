@@ -195,7 +195,14 @@
     "seat": "Ward 15"
    },
    "16": {
-    "name": null,
+    "name": "Alison Judge Bibbee",
+    "phones": [
+     {
+      "number": "(202) 322-8206",
+      "label": "Cell"
+     }
+    ],
+    "url": "https://www.charlestonwv.gov/government/city-council/ward16",
     "seat": "Ward 16"
    },
    "17": {
@@ -320,6 +327,6 @@
     "seat": "At large"
    }
   ],
-  "asOf": "2026-11-02"
+  "asOf": "2026-11-06"
  }
 }

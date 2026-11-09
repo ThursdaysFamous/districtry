@@ -1352,7 +1352,8 @@ def app_data_files(tag):
 
 # A FOLDER SERVED BY PREFIX IS ONE CLASS, NOT N FILES. `il/data/app/population/`
 # holds 103 files — one per county plus an index — that `sw.js` serves by URL
-# prefix rather than by listing, deliberately: precaching 6.6 MB for a feature
+# prefix rather than by listing (every other instance's folder is the same
+# shape, one file per county; since 2026-11-06 every app has one), deliberately: precaching 6.6 MB for a feature
 # most readers never open is the wrong trade, so the folder sits below the flat
 # surface where `validate_index.py`'s one-list rule does not reach. Reading the
 # sw.js lists alone would therefore drop all 103 without saying so, which is
@@ -1368,6 +1369,44 @@ def app_data_files(tag):
 # cadence and so belongs on WATCH.md rather than in a weekly job.
 PREFIX_CLASSES = {
     "il": [("il/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "ca": [("ca/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "ny": [("ny/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "wi": [("wi/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "ia": [("ia/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "mi": [("mi/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "mn": [("mn/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "ky": [("ky/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "in": [("in/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "nc": [("nc/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "ok": [("ok/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "sc": [("sc/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "tn": [("tn/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "ar": [("ar/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "ms": [("ms/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "la": [("la/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "mo": [("mo/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "va": [("va/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "ga": [("ga/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "wv": [("wv/data/app/population/", "census",
             "scripts/build_block_population.py")],
 }
 PREFIX_KIND = {rel: kind for rows in PREFIX_CLASSES.values()

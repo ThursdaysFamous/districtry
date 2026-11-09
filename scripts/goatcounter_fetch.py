@@ -31,6 +31,7 @@ import json
 import os
 import re
 import sys
+import time
 
 import requests
 
@@ -83,6 +84,28 @@ MIN_PAGEVIEWS = 1
 
 TIMEOUT = 60
 
+# How long to wait before asking again when GoatCounter drops a connection.
+RETRY_WAITS = (5, 20)
+
+
+def get(s, url, **kw):
+    """s.get, asked again after RETRY_WAITS when the connection fails.
+
+    GoatCounter closed a connection without answering partway through a
+    dispatched fetch on 2026-11-05 and again on 2026-11-06, and each time the
+    whole run was lost. Only a dropped or timed-out connection is asked again;
+    an HTTP error is an answer, and the callers handle it.
+    """
+    for wait in RETRY_WAITS + (None,):
+        try:
+            return s.get(url, timeout=TIMEOUT, **kw)
+        except (requests.ConnectionError, requests.Timeout) as e:
+            if wait is None:
+                raise
+            print("connection failed (%s); asking again in %d s"
+                  % (type(e).__name__, wait))
+            time.sleep(wait)
+
 # The dashboard HTML of the last session(), kept for --explore to look at,
 # and whether the last widget said its list was cut short.
 DASH = []
@@ -118,12 +141,12 @@ def session(tok, start, end):
     # same request as the token, the dashboard answered its DEFAULT period's
     # total (561 against a two-month window, measured 2026-09-14). Authenticate
     # first, then ask the authenticated session for the period.
-    r = s.get(SITE + "/", timeout=TIMEOUT, params={"access-token": tok})
+    r = get(s, SITE + "/", params={"access-token": tok})
     if r.status_code != 200:
         sys.exit("dashboard: HTTP %d — the share token may have been rotated "
                  "or revoked." % r.status_code)
-    r = s.get(SITE + "/", timeout=TIMEOUT,
-              params={"period-start": start, "period-end": end})
+    r = get(s, SITE + "/",
+            params={"period-start": start, "period-end": end})
     if r.status_code != 200:
         sys.exit("dashboard for %s..%s: HTTP %d" % (start, end, r.status_code))
     DASH.append(r.text)
@@ -140,8 +163,8 @@ def read_total(text):
 
 def period_total(s, start, end):
     """The dashboard's own total for a period, on an authenticated session."""
-    r = s.get(SITE + "/", timeout=TIMEOUT,
-              params={"period-start": start, "period-end": end})
+    r = get(s, SITE + "/",
+            params={"period-start": start, "period-end": end})
     if r.status_code != 200:
         sys.exit("dashboard for %s..%s: HTTP %d" % (start, end, r.status_code))
     return read_total(r.text)
@@ -156,7 +179,7 @@ def widget(s, n, total, start, end, **extra):
     """
     params = dict({"widget": n, "period-start": start, "period-end": end,
                    "group": "day", "total": total}, **extra)
-    r = s.get(SITE + "/load-widget", params=params, timeout=TIMEOUT)
+    r = get(s, SITE + "/load-widget", params=params)
     if r.status_code != 200:
         # GoatCounter's error page is mostly stylesheet; the message is the
         # only part worth printing, and the URL is never printed because the
@@ -965,12 +988,7 @@ def all_pages(s, total, start, end, mx, filt="is:pageview", label="pages",
     return out, True
 
 
-# How many times a window is halved before a cut list is accepted as cut.
-# Three halvings is an eighth of the window, about eight days of two months.
-SPLIT_DEPTH = 3
-
-
-def pages_in_parts(s, total, start, end, mx, depth=0):
+def pages_in_parts(s, total, start, end, mx):
     """Every row of the pages list, asking for halves of the window when one
     list for the whole window is longer than all_pages() follows.
 
@@ -984,13 +1002,21 @@ def pages_in_parts(s, total, start, end, mx, depth=0):
     half of the window holds fewer distinct pages (the 30-day list was 504
     rows that day), and every row carries its own daily series, so the halves'
     rows are summed path by path and each day's counts are exactly what one
-    list would have given. Returns (rows, cut), cut being true only when even
-    an eighth of the window was cut short.
+    list would have given. Returns (rows, cut), cut being true only when a
+    single day's list was cut short.
+
+    A window is halved until it is one day long. Until 2026-11-05 it stopped
+    after three halvings, an eighth of the window, and the week after the
+    3 November election was longer than 600 rows on its own: the eighth from
+    29 October to 4 November was accepted as cut, 66 page visits fell on no
+    page, and the same check failed on six days. A week of that traffic split
+    in two read in full (254 and 576 rows), so the floor is a day rather than
+    another fixed depth that the next busy week passes.
     """
     rows_, cut = all_pages(s, total, start, end, mx)
     a = datetime.date.fromisoformat(start)
     b = datetime.date.fromisoformat(end)
-    if not cut or depth >= SPLIT_DEPTH or a >= b:
+    if not cut or a >= b:
         return rows_, cut
     mid = a + (b - a) // 2
     parts = [(start, mid.isoformat()),
@@ -999,7 +1025,7 @@ def pages_in_parts(s, total, start, end, mx, depth=0):
     for ps, pe in parts:
         print("pages list: reading %s..%s on its own" % (ps, pe))
         part, part_cut = pages_in_parts(s, period_total(s, ps, pe), ps, pe,
-                                        mx, depth + 1)
+                                        mx)
         cut = cut or part_cut
         for r in part:
             m = merged.setdefault(r["path"], {"path": r["path"], "id": r["id"],

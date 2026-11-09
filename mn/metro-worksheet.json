@@ -359,10 +359,32 @@
       }
     },
     {
+      "id": "election-results",
+      "label": "Election Results",
+      "group": "elections",
+      "area_rank": 15,
+      "rank_note": "Election results, drawn on the Voting Precinct outlines",
+      "rank_comment": [
+        "The same 4,105 precinct shapes as Voting Precinct, read from the same file, so it",
+        "ranks beside it; each precinct is filled by the choice leading there in the picked race."
+      ],
+      "source": {
+        "answers": "For the picked race, the choice with the most votes in each Minnesota precinct, and on the card the clicked precinct's votes for every race on its ballot, from U.S. Senate to its town board and school board, its turnout, and the race's total across Minnesota. Unofficial until the State Canvassing Board certifies the count, and the card and the map key say so.",
+        "boundary": [
+          {
+            "label": "Office of the Minnesota Secretary of State, Elections Division — Voting Districts, the same 4,105 outlines Voting Precinct draws",
+            "url": "https://enterprise.gisdata.mn.gov/aghost/rest/services/us_mn_state_sos/bdry_votingdistricts/FeatureServer/0"
+          }
+        ],
+        "people": "The choices and their votes come from the Minnesota Secretary of State's precinct-by-precinct results files for the 3 November 2026 general election (allracesbyprecinct.txt and localPrct.txt, with each precinct's turnout from pctstats.txt), read daily by mn/scripts/mn_election_results_scraper.py. Colours follow each choice's place on the office's ballot list, never a party.",
+        "applies": "Minnesota — statewide. Every precinct counts its own absentee and mail ballots, so no vote is reported outside a precinct."
+      }
+    },
+    {
       "id": "municipality",
       "label": "City",
       "group": "geography",
-      "area_rank": 16,
+      "area_rank": 17,
       "rank_note": "856 incorporated places, from TIGERweb, drawn from a mirrored tile archive — every one a city, with no village among them, at a 14.7 km2 mean feature area",
       "source": {
         "answers": "The city covering the point, if any. Most of Minnesota's land is township or unorganized territory, where the card is correctly empty.",
@@ -380,7 +402,7 @@
       "id": "city-ward",
       "label": "City Council District",
       "group": "political",
-      "area_rank": 17,
+      "area_rank": 18,
       "rank_note": "101 council wards and districts in the 22 cities whose councils this app names and which elect by ward or district, a mean 17.7 km2 (median 14.8, from 2.4 in Winona to 71.8 in Duluth) — ranked just after City, which each one divides, so a ward draws on top of its city",
       "source": {
         "answers": "The city council ward or district containing the point, in the 22 Minnesota cities above 25,000 people whose councils elect by ward or district, and the council member it elects.",
@@ -402,7 +424,7 @@
       "id": "school-district-secondary",
       "label": "School District (Secondary)",
       "group": "schools",
-      "area_rank": 18,
+      "area_rank": 19,
       "rank_note": "1 district, from TIGERweb, drawn from a mirrored tile archive — Park Rapids for grades 9-12 over the Pine Point district, 13.3 km2, the only feature the Census publishes in this tiling for Minnesota",
       "source": {
         "answers": "The secondary school district covering the point, in the one place Minnesota has one.",
@@ -420,7 +442,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 19,
+      "area_rank": 20,
       "rank_note": "694 police-station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -438,7 +460,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 20,
+      "area_rank": 21,
       "rank_note": "1,484 fire and EMS station points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, ranked with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest fire and EMS station BUILDINGS to the point, by straight-line distance, with each one's address.",
@@ -456,7 +478,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 21,
+      "area_rank": 22,
       "rank_note": "1,199 post-office points in Minnesota's envelope, live from the USGS National Map (no data/app file) — a nearest-3 proximity layer, so it is ranked last with the other point layers rather than by feature area",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -474,7 +496,7 @@
       "id": "tribal-government",
       "label": "Tribal Government",
       "group": "political",
-      "area_rank": 15,
+      "area_rank": 16,
       "rank_note": "Tribal land — Minnesota has 22 pieces across 13 nations, from the Leech Lake Reservation's 3,393.820 km² down to a 0.146 km² Grand Portage parcel, MEASURED by scripts/build_tribal_areas.py. Ranked on its 6.892 km² MEDIAN, below the voting-precinct fabric's 14.72 km² median (measured 2026-10-10 on the shipped mn-precincts.json, cylindrical equal-area) — medians rather than means, because this layer's own mean of 514 km² is Leech Lake, Red Lake and White Earth and describes none of the other nineteen pieces. The municipality layer below it is live and publishes no median, so no claim is made about which of the two is smaller; the rank governs draw order only. Partial coverage: most of Minnesota is on no tribal land, so the layer carries its own emptyNote. The card names the nation as the Bureau of Indian Affairs names it, its seat (one, the Ho-Chunk Nation's, is in Wisconsin), the districts the Census draws on five of these pieces of land, the 2020 population, and the council from each nation's own published list: nine of the thirteen publish one this project reads weekly, and for the other four the card says why it names nobody. Drawn although most of this land has no district on it, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
       "source": {
         "answers": "Whether this address is on tribal land, and which nation's government answers for it — Minnesota has 22 such areas across 13 nations.",
@@ -635,6 +657,11 @@
     ],
     "rosters": [
       {
+        "file": "election-results.json",
+        "min_keys": 11,
+        "note": "Minnesota's precinct-by-precinct election results: the index (groups, precinct keys, the part file each precinct is in, and per contest its choices, totals and leader string, trimmed to the run of precincts it is on the ballot in); each precinct's own counts sit in election-results/c<county FIPS>-<n>.json, fetched on a click and never cached by the worker. From the Secretary of State's results files by mn/scripts/mn_election_results_scraper.py + build_mn_election_results.py through scripts/election_results_common.py, refreshed daily by update-mn-election-results.yml; certified stays false until the State Canvassing Board certifies the results. Network-first: the count changes daily."
+      },
+      {
         "file": "congress-roster.json",
         "min_keys": 8,
         "note": "U.S. House roster, refreshed weekly by update-mn-congress-roster.yml."
@@ -720,6 +747,12 @@
       "purpose": "Soil and water conservation district supervisors (MN), winners from the Secretary of State's county races results",
       "schedule": "Thu 13:40 UTC"
     }
+,
+    {
+      "file": "update-mn-election-results.yml",
+      "purpose": "Precinct-by-precinct election results (MN), from the Secretary of State's results files, daily until certified",
+      "schedule": "daily 12:50 UTC"
+    }
   ],
   "geocoder": {
     "address": "Photon (Minnesota-bounded type-ahead)",
@@ -738,6 +771,9 @@
   },
   "exports_name": "MinnesotaExplorer",
   "verified_date": "September 29, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
   "metro_explorers": [
     { "id": "chicago", "label": "Illinois", "url": "https://districtry.com/il/", "emoji": "🌭", "explorer_name": "districtry Illinois",
       "bbox": { "minLng": -91.52, "minLat": 36.96, "maxLng": -87.01, "maxLat": 42.51 } },

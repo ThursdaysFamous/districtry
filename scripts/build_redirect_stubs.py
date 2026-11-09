@@ -44,8 +44,9 @@ the day that address changes; printed with ours it keeps working, because the
 address stays put and SHORT_LINKS below says what it shows today. An entry
 takes one of two forms: a FORWARD to another site (`target`), or a small PAGE
 of its own (`body`). /android was a forward to the testers' Google Group for
-its first hours and became a page that afternoon, when Adam asked for the code
-to open the testing steps instead. Both forms are noindex with no canonical,
+its first hours, became a page that afternoon, when Adam asked for the code
+to open the testing steps instead, and became a forward to the app's Google
+Play listing on 2026-11-08, when the app went live. Both forms are noindex with no canonical,
 since neither is a page to find by searching. A page carries the counter every
 page here carries; a forward carries none, because validate_analytics.py skips
 every page with a meta refresh and a page that leaves at once would mostly
@@ -165,84 +166,27 @@ TEMPLATE = """<!DOCTYPE html>
 #
 # /android, 2026-10-18: the in-person sign-up sheet's QR code. For its first
 # hours it forwarded to the testers' Google Group; Adam then asked for the code
-# to open the testing steps, with the group's link and the app's Play listing,
-# so it is a page. The group is linked at its /about page and never the bare
-# group address, which gives a signed-out visitor a permission error. When the
-# app is published, turn the entry back into a forward to PLAY_LISTING and
-# regenerate; every printed code follows.
-TESTERS_GROUP = "https://groups.google.com/g/districtry-testers/about"
-# The closed test's opt-in page. Google's help (answer 9845334, read
-# 2026-10-18) says each tester opts in there after joining the group, and that
-# Play Console shows the link only once the test is published; it does not
-# print the address. This was the form third-party guides give for the
-# console's shareable link, and it was an inference until the same day, when
-# Adam, asked to compare it with the link Play Console's Testers tab shows,
-# confirmed it and pasted the same address.
-PLAY_TEST = "https://play.google.com/apps/testing/com.districtry.app"
-# The app's listing. It answered 404 to a visitor who was not signed in,
-# measured 2026-10-18 while the app was in its closed test, which is why the
-# monthly link check records it in NOT_YET_PUBLIC rather than calling it dead.
+# to open the testing steps, so it was a page from that afternoon until the app
+# went live in production on Google Play (Adam, 2026-11-08), when it became a
+# forward to the app's Play listing, as that page's own entry said it would.
+# Every printed code follows. The listing carries a Play referrer naming this
+# site and this address, so Google Play Console can tell an install that
+# started from a printed code from one that started on a map or the front page
+# (whose addresses carry "map" and "front-page" in the same place).
 PLAY_LISTING = "https://play.google.com/store/apps/details?id=com.districtry.app"
+PLAY_REFERRER = "&referrer=utm_source%3Ddistrictry.com%26utm_campaign%3Dandroid-link"
 
 SHORT_LINKS = {
     "android.html": dict(
-        title="Help test districtry on Android",
-        description="How to join the test of districtry’s Android app: join "
-                    "the testers’ group, become a tester on Google Play, then "
-                    "install the app.",
-        body=[
-            ("p", "districtry’s Android app is being tested on Google Play "
-                  "before it goes public. Google needs at least 12 people to "
-                  "use it from Google Play for 14 days in a row first. Joining "
-                  "takes about five minutes."),
-            ("h2", "Join the test"),
-            ("steps", [
-                ("**Check your Play Store account.** On your Android phone, "
-                 "open the Play Store and tap your picture in the top right "
-                 "corner. Use that Google account for every step below, in "
-                 "your browser too.", None),
-                ("**Join the testers’ group.** On the group’s page, tap **Join "
-                 "group**. If it asks how you want email, choose **Each "
-                 "email**, so news about the test reaches you.",
-                 ("Open the testers’ group", TESTERS_GROUP)),
-                ("**Become a tester.** On Google Play’s test page, tap "
-                 "**Become a tester**. It works only after you have joined "
-                 "the group.",
-                 ("Open Google Play’s test page", PLAY_TEST)),
-                ("**Install the app.** Tap **Install**. Google Play shows "
-                 "districtry only to testers, so this works after step 3.",
-                 ("Open districtry on Google Play", PLAY_LISTING)),
-                ("**Remove any copy from the website.** If you added "
-                 "districtry to your home screen from the website, press and "
-                 "hold its icon, then tap **Uninstall**. Otherwise links and "
-                 "shares can open the wrong copy.", None),
-            ]),
-            ("note", "If Google Play says it can’t find the app, wait an hour "
-                     "and open the link again. If the test page has no "
-                     "**Become a tester** button, check that your browser is "
-                     "signed in to the account you joined the group with. If "
-                     "it is, the test may not have opened yet, and the group "
-                     "sends an email when it does."),
-            ("h2", "For the next 14 days"),
-            ("list", [
-                "Stay in the group and in the test for 14 days in a row. If "
-                "you leave either one and join again, your 14 days start over.",
-                "Open the app a few times a week. Look up places you know, "
-                "like your home, your work or a relative’s house, and check "
-                "what the cards say against your voter registration card or "
-                "a sample ballot.",
-                "Share a place to districtry from Google Maps: tap **Share**, "
-                "then pick districtry.",
-            ]),
-            ("h2", "Report a problem"),
-            ("p", "Tap **Feedback** at the top of the map. It attaches the "
-                  "map view you’re looking at, so pick a spot you’re happy to "
-                  "share. You can also email "
-                  "[hello@overberg.co](mailto:hello@overberg.co)."),
-            ("note", "Only Android phones can join this test. On an iPhone or "
-                     "a computer, districtry works in the browser at "
-                     "[districtry.com](/)."),
-        ]),
+        target=PLAY_LISTING + PLAY_REFERRER,
+        title="districtry on Google Play",
+        description="districtry’s Android app on Google Play: every district "
+                    "that covers a place, and who represents it.",
+        lead="districtry is an Android app on Google Play.",
+        link="Open districtry on Google Play",
+        note="On an iPhone or a computer, districtry works in the browser at "
+             "districtry.com.",
+    ),
 }
 
 MARKER = "GENERATED by scripts/build_redirect_stubs.py"

@@ -1781,6 +1781,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     flex: none;
     border: 2px solid var(--ink);
   }
+  .group-elections .dot { background: #2E6F8E; }
   .group-political .dot { background: var(--accent); }
   .group-safety .dot { background: var(--accent-warm); }
   .group-schools .dot { background: #E8A324; }
@@ -3621,6 +3622,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
     fill-opacity: var(--dst-hl-fill, 0.32);
     stroke-width: var(--dst-hl-weight, 4px);
   }
+  /* A highlight the engine draws with NO fill keeps none: an outline-only
+     layer, and every other layer's lit district while the election results
+     paint the ground (fillsGround). The rule above outranked the engine's 0
+     too, so until 2026-11-05 a selected ward tinted the result colours under
+     it even after highlightStyleFor() had dropped its fill. */
+  .leaflet-overlay-pane path.region-highlight[fill-opacity="0"] { fill-opacity: 0; }
   /* The matched region's DROP SHADOW is a depth cue — "this one is lifted off
      the faded rest of its layer" — and one highlight says that perfectly. Six
      say it twelve times over: the engine stacks TWO near-black shadows per
@@ -4525,6 +4532,9 @@ function initMichiganExplorer() {
   // ZIP code index (scripts/build_zip_index.mjs): a typed ZIP code selects a
   // spot inside it, and its ZIP layer is turned on and pinned for comparison.
   var ZIP_SEARCH_URL = "data/app/zip-index.json";
+  // Census block population index (scripts/build_block_population.py): lets
+  // the comparison stats screen count people as well as area.
+  var POPULATION_INDEX_URL = "data/app/population/index.json";
   var SOCRATA_HOST = "https://data.invalid";
   // Socrata app token: some metros' portals throttle anonymous requests. It is
   // a throttling identifier, not a secret — public exposure is Socrata's
@@ -5198,12 +5208,64 @@ function initMichiganExplorer() {
   // The opening view: the whole served area, centred on it. The centre is
   // DERIVED from METRO_BBOX (worksheet-generated) rather than METRO_CENTER —
   // METRO_CENTER is the metro anchor the geocoder biases toward, which for a
-  // statewide instance is a corner of the map, not its middle. zoomSnap 0.5 is
-  // what makes a half step legal; without it Leaflet rounds 7.5 to 8.
+  // statewide instance is a corner of the map, not its middle. The quarter
+  // zoomSnap in MAP_ZOOM_STEPS is what makes 7.5 legal; without it Leaflet
+  // rounds 7.5 to 8.
   var INITIAL_ZOOM = 7.5;
   var INITIAL_CENTER = [(METRO_BBOX.minLat + METRO_BBOX.maxLat) / 2,
                         (METRO_BBOX.minLng + METRO_BBOX.maxLng) / 2];
-  var map = L.map("map", { minZoom: 7, maxZoom: 19, zoomControl: false, zoomSnap: 0.5 })
+  /* ==== ENGINE:BEGIN map-zoom-steps ==== */
+  // How far each zoom input moves the map. Every instance builds its map with
+  // L.extend({ its own min and max zoom }, MAP_ZOOM_STEPS), so the step sizes
+  // are one copy for the fleet while the zoom range stays each app's own.
+  //
+  // Leaflet's defaults made one notch of an ordinary Windows mouse wheel a
+  // WHOLE zoom level, the same as a press of + or -, and a whole level doubles
+  // the scale of everything on the map; the wheel was what readers found too
+  // coarse (Adam, 2026-11-05). Measured that day in the Illinois app, booted
+  // in Chromium as Windows Chrome at 100% display scaling (the case Leaflet's
+  // wheel maths is written per platform for), from zoom 12 in the Loop:
+  //
+  //                                   before   after
+  //   one press of +                    1        1
+  //   one mouse-wheel notch             1        0.5
+  //   three notches 120 ms apart        2        1
+  //   half a second of touchpad pinch   1.5      0.75
+  //
+  // The pinch row is a synthetic ctrl+wheel stream, gentle (2 px a frame) and
+  // firm (8 px), five runs of each: before read 1.5 every time, after read 0.75
+  // in 8 of 10 and 0.5 and 1.25 once each, because Leaflet drops part of a
+  // burst that lands while the previous zoom is still animating.
+  //
+  // zoomDelta is the step for the buttons, the keyboard and a double-click,
+  // and it stays Leaflet's whole level on purpose: nobody found the buttons
+  // coarse, a whole step is what most web maps' buttons do, and half a step
+  // would take about 19 presses instead of 10 from a state's opening view
+  // down to a street. It is spelled out so the one place that sets the
+  // fleet's zoom steps names all three.
+  //
+  // wheelPxPerZoomLevel is how much scrolling makes one level; Leaflet's 60
+  // made a single notch of an ordinary Windows mouse a whole level. 120 halves
+  // it on every platform, since Leaflet divides each platform's wheel delta by
+  // its own factor before this number is applied.
+  //
+  // zoomSnap is the smallest zoom the map stops on. Leaflet rounds every wheel
+  // burst UP to at least one snap, which is why a touchpad pinch moved the same
+  // amount however hard it was pinched: the 40 ms bursts a pinch arrives in
+  // are each far smaller than a snap. A quarter halves that floor, lets a
+  // phone pinch settle within an eighth of a level of where the fingers let go
+  // (a half step could jump a quarter), and keeps every zoom an exact binary
+  // fraction, so a shared link carries z=13.25 and never a float tail. It must
+  // divide every boot zoom (7.5 statewide, 11 in San Francisco), or Leaflet
+  // rounds the opening view.
+  //
+  // zoomSnap 0, which would follow a pinch exactly, was measured too and not
+  // taken: a half-second touchpad pinch then moved 0.04 to 0.17 of a level,
+  // slow enough to read as broken, and every zoom a link carries would need
+  // rounding.
+  var MAP_ZOOM_STEPS = { zoomSnap: 0.25, zoomDelta: 1, wheelPxPerZoomLevel: 120 };
+  /* ==== ENGINE:END map-zoom-steps ==== */
+  var map = L.map("map", L.extend({ minZoom: 7, maxZoom: 19, zoomControl: false }, MAP_ZOOM_STEPS))
     .setView(INITIAL_CENTER, INITIAL_ZOOM);
   L.control.zoom({ position: "bottomright" }).addTo(map);
   /* ==== ENGINE:BEGIN map-pan-filter ==== */
@@ -6057,7 +6119,7 @@ function initMichiganExplorer() {
    * inside out. Only the LAST one ("outside") is guaranteed. */
   function buildCoverageKey(bands) {
     var host = document.querySelector(".map-bottom-left");
-    if (!host || !bands.length || document.querySelector(".districtry-map-legend")) return;
+    if (!host || !bands.length || document.querySelector(".districtry-map-legend:not(.election-legend)")) return;
 
     var key = document.createElement("details");
     key.className = "districtry-map-legend";
@@ -6828,7 +6890,8 @@ function initMichiganExplorer() {
       stats: pick("s", "stats"),
       zoom: pick("z", "zoom"),
       frame: pick("f", "frame"),
-      q: params.q
+      q: params.q,
+      all: params
     };
   }
 
@@ -6896,6 +6959,15 @@ function initMichiganExplorer() {
       // beside a pin, because the report is OF the pinned district.
       if (statsIsOpen()) parts.push("s=1");
     }
+    // A layer's own setting that is part of the view, such as the race the
+    // Election Results layer colours the map by (`r=`): the layer declares
+    // `linkParam: {short, long, get, set}` and it rides the link while the
+    // layer is on (Adam, 2026-11-05: "Include the chosen race in the sharing url").
+    layers.forEach(function (l) {
+      if (!state.layersOn[l.id] || !l.linkParam) return;
+      var v = l.linkParam.get();
+      if (v !== null && v !== undefined && v !== "") parts.push(l.linkParam.short + "=" + encodeURIComponent(String(v)));
+    });
     // The area a link named (namedArea), while no point is selected; a link
     // with a point is not framed, so the area would say nothing.
     if (linkAreaName && !state.selectedPoint) parts.push("f=" + linkAreaName);
@@ -6927,16 +6999,23 @@ function initMichiganExplorer() {
       var box = document.getElementById("toggle-" + id);
       if (box && !box.checked) box.click(); // a real click, so the change handler runs
     });
+    // each switched-on layer's own setting (linkParam, syncUrlHash), short
+    // key first, given to the layer before its data has loaded
+    layers.forEach(function (l) {
+      if (!state.layersOn[l.id] || !l.linkParam) return;
+      var v = params.all[l.linkParam.short] !== undefined ? params.all[l.linkParam.short] : params.all[l.linkParam.long];
+      if (v !== undefined && v !== "") l.linkParam.set(v);
+    });
     // Parsed BEFORE the point, because the point's pan has to know about it.
     // An unparseable or out-of-range zoom is ignored rather than clamped: a link
     // from a fork with different limits should fall back to this fork's default
     // view, not to its nearest edge.
     var zoom = null;
     if (params.zoom !== undefined) {
-      // parseFloat, not parseInt: zoomSnap 0.5 makes half steps legal on the
-      // statewide instances, and a sibling handoff carries the zoom the reader
-      // was at. parseInt("7.5") is 7, which silently dropped half a level on
-      // every hop between two apps.
+      // parseFloat, not parseInt: the quarter zoomSnap in MAP_ZOOM_STEPS makes
+      // fractional zooms legal in every app, and a sibling handoff carries the
+      // zoom the reader was at. parseInt("7.5") is 7, which silently dropped
+      // half a level on every hop between two apps.
       var wanted = parseFloat(params.zoom);
       if (isFinite(wanted) && wanted >= map.getMinZoom() && wanted <= map.getMaxZoom()) zoom = wanted;
     }
@@ -11201,7 +11280,12 @@ function initMichiganExplorer() {
    * ======================================================================= */
 
   /* ==== ENGINE:BEGIN groups ==== */
+  // Elections leads: results are what a reader opens the map for on the days
+  // after an election, and past elections may join this section later (Adam,
+  // 2026-11-05). A group with no layer registered draws no section, so every
+  // app without election results looks exactly as before.
   var GROUPS = [
+    { id: "elections", label: "Elections" },
     { id: "political", label: "Political" },
     { id: "safety", label: "Public Safety" },
     { id: "schools", label: "Schools" },
@@ -11348,9 +11432,12 @@ function initMichiganExplorer() {
       color: style.color,
       weight: style.weight,
       fillColor: style.fillColor,
-      fillOpacity: (rt && rt.outlineOnly) ? 0 : scaledFillOpacity(mod),
+      // while a fillsGround layer (election results) paints the ground, any
+      // fill here would tint its colours, so every other layer draws lines only
+      fillOpacity: ((rt && rt.outlineOnly) || groundFilledByOther(mod)) ? 0 : scaledFillOpacity(mod),
       dashArray: style.dashArray
     };
+
     // Optional per-feature override (e.g. the School Location layer color-codes
     // each footprint by school type and hides types the card's filter turned
     // off). Layered on top of the flat base so fill-opacity scaling still applies
@@ -11385,8 +11472,51 @@ function initMichiganExplorer() {
   // outline mode, and the matched-region highlight depends on neither — so a point
   // move whose signature is unchanged restyles just the two paths whose role
   // flipped instead of the whole layer.
-  function highlightSignature(rt) {
-    return activeLayerCount() + "|" + (rt.outlineOnly ? "1" : "0");
+  function highlightSignature(rt, mod) {
+    return activeLayerCount() + "|" + (rt.outlineOnly ? "1" : "0") + "|" + (mod && groundFilledByOther(mod) ? "1" : "0") +
+      "|" + (districtLinesOn ? "1" : "0");
+  }
+
+  // A layer that paints its whole ground in colours that are its answer (the
+  // election results fill each precinct by its leading choice) sets
+  // fillsGround. While one is on, every other layer's selected district keeps
+  // its outline and drops its tint, because a translucent tint over those
+  // colours changes them: measured 2026-11-05 with Chicago's wards on, the
+  // selected ward's 0.32 tint made a purple precinct read blue.
+  // The "Boundaries and numbers" button over the election results (the
+  // relationship-pinning block draws it): on, every other layer keeps all its
+  // district lines when a point is picked and labels its districts; off, the
+  // others fade as they do on any map and no labels are drawn. Held here so it
+  // is set before any style is computed. On by default, for this window only.
+  var districtLinesOn = true;
+  // run after any card settles or a layer's whole file arrives (relationship-
+  // pinning's refresh), by blocks whose card reads other layers' districts
+  var afterCardHooks = [];
+  function showAllDistrictLines(mod) {
+    return districtLinesOn && groundFilledByOther(mod);
+  }
+  function groundFilledByOther(mod) {
+    for (var i = 0; i < layers.length; i++) {
+      var l = layers[i];
+      if (l !== mod && l.fillsGround && state.layersOn[l.id] && layerRuntime[l.id].relevant !== false) return true;
+    }
+    return false;
+  }
+
+  // Repaint every other switched-on layer's selected district after a
+  // fillsGround layer is switched on or off, so its tint follows at once
+  // rather than at the next selected point.
+  function refreshHighlightFills() {
+    layers.forEach(function (l) {
+      if (l.fillsGround || !state.layersOn[l.id]) return;
+      var rt = layerRuntime[l.id];
+      // the district lit from a point answer before the layer's set loaded
+      if (rt.provisionalLayer) rt.provisionalLayer.setStyle(Object.assign({}, baseStyleFor(l) || {}, highlightStyleFor(l)));
+      if (!rt.overlayLayer) return;
+      if (rt.overlayLayer.dxTiles) { rt.overlayLayer.restyle(); return; }
+      rt.highlightApplied = false; // force the full sweep: the signature moved
+      updateLayerHighlight(l);
+    });
   }
 
   // Rescale only an already-painted layer's fill opacity to the current active
@@ -11402,11 +11532,12 @@ function initMichiganExplorer() {
     var rt = layerRuntime[mod.id];
     if (!rt.overlayLayer) return;
     // a tile-drawn layer's paint reads the count itself (tilePaint)
-    if (rt.overlayLayer.dxTiles) { rt.overlayLayer.restyle(); if (rt.highlightApplied) rt.highlightSignature = highlightSignature(rt); return; }
-    if (rt.highlightApplied) { rt.highlightSignature = highlightSignature(rt); return; }
+    if (rt.overlayLayer.dxTiles) { rt.overlayLayer.restyle(); if (rt.highlightApplied) rt.highlightSignature = highlightSignature(rt, mod); return; }
+    if (rt.highlightApplied) { rt.highlightSignature = highlightSignature(rt, mod); return; }
     if (rt.outlineOnly) return; // outline-only layers carry no fill to rescale
     var fillOpacity = scaledFillOpacity(mod);
     if (fillOpacity == null) return; // point-dataset layer (no flat style object)
+    if (groundFilledByOther(mod)) fillOpacity = 0; // lines only over the election results
     rt.overlayLayer.eachLayer(function (subLayer) {
       if (!subLayer.setStyle) return;
       // A per-feature styler owns each path's fill (a filtered-out School
@@ -11422,6 +11553,7 @@ function initMichiganExplorer() {
       if (!state.layersOn[mod.id]) return;
       rescaleLayerFill(mod);
     });
+    queueDistrictNumbers(); // a layer came, went or loaded: the labels over the results follow
   }
 
   // Restack every active layer per LAYER_AREA_RANK (largest first, smallest
@@ -11430,8 +11562,16 @@ function initMichiganExplorer() {
   // bringToFront() moves a layer group above whatever else is currently on
   // the map, so calling it in largest-to-smallest order leaves the smallest
   // active layer on top after the last call.
+  // A layer that paints the ground (fillsGround: the election results) goes
+  // under every other one whatever its rank, because its colours are opaque
+  // and a district line drawn beneath them on the same tile canvas is hidden.
   function reorderActiveLayers() {
+    var ground = [], rest = [];
     LAYER_AREA_RANK.forEach(function (id) {
+      var m = getLayerById(id);
+      (m && m.fillsGround ? ground : rest).push(id);
+    });
+    ground.concat(rest).forEach(function (id) {
       var rt = layerRuntime[id];
       if (state.layersOn[id] && rt && rt.overlayLayer && map.hasLayer(rt.overlayLayer)) {
         rt.overlayLayer.bringToFront();
@@ -11486,7 +11626,7 @@ function initMichiganExplorer() {
       opacity: 1,
       // an outline-only layer keeps no fill even when it's the matched region,
       // so a sub-layer's fill (the beats) shows through unobscured
-      fillOpacity: (rt && rt.outlineOnly) ? 0 : 0.32,
+      fillOpacity: ((rt && rt.outlineOnly) || groundFilledByOther(mod)) ? 0 : 0.32,
       dashArray: null
     };
   }
@@ -11500,6 +11640,11 @@ function initMichiganExplorer() {
   function fadedStyle(baseStyle, mod) {
     var style = mod && mod.overlay && mod.overlay.style;
     if (style && style.keepOthersVisible) return Object.assign({ opacity: 1 }, baseStyle);
+    // Over the election results the faded lines vanished into the colours
+    // (Adam, 2026-11-05: "once you pick a point, it only shows that one
+    // boundary"), so while a fillsGround layer is on every district keeps its
+    // full line and the lit one still takes the highlight.
+    if (showAllDistrictLines(mod)) return Object.assign({}, baseStyle, { opacity: 1, fillOpacity: 0 });
     return {
       color: baseStyle.color,
       weight: Math.max(1, (baseStyle.weight || 1.5) - 0.5),
@@ -11594,7 +11739,7 @@ function initMichiganExplorer() {
     // layers on, user clicked a new point" case from ~N setStyle calls (the
     // measured dominant per-click cost) into 2. Any signature change (a layer
     // toggled on/off, outline mode flipped) falls back to the full sweep below.
-    var signature = highlightSignature(rt);
+    var signature = highlightSignature(rt, mod);
     var prevMatch = rt.highlightedLayer;
     var incremental = rt.highlightApplied && rt.highlightSignature === signature && !!prevMatch;
     if (incremental && prevMatch.feature === feature) return; // same match, same styling — nothing changed
@@ -12165,8 +12310,14 @@ function initMichiganExplorer() {
     var hl = highlightStyleFor(mod), faded = fadedStyle(base, mod);
     var isSel = ["boolean", ["feature-state", "sel"], false];
     var baseOpacity = base.opacity == null ? 1 : base.opacity;
+    // A layer that paints each district its own colour (the election results
+    // fill each precinct by its leading choice) supplies the fill as a GL
+    // expression; it keeps that fill whether or not a district is selected,
+    // because the colours are the answer and fading them would hide it. The
+    // lit district is still marked by the highlight line.
+    var own = mod.overlay && typeof mod.overlay.tileFill === "function" ? mod.overlay.tileFill() : null;
     return {
-      fill: {
+      fill: own ? { "fill-color": own.color, "fill-opacity": own.opacity } : {
         "fill-color": base.fillColor || base.color || "#000",
         "fill-opacity": selected ? ["case", isSel, hl.fillOpacity, faded.fillOpacity] : (base.fillOpacity || 0)
       },
@@ -12368,16 +12519,22 @@ function initMichiganExplorer() {
       }
     },
     // the live counties' paths in the layer's current state: the lit one in
-    // the highlight style, the rest faded while anything is lit, else plain
+    // the highlight style, the rest faded while anything is lit, else plain.
+    // A layer that paints each feature its own colour (the election results)
+    // keeps every fill whether or not one is lit, as its tiles do (tilePaint),
+    // and the lit one is marked by the highlight line alone.
     styleLive: function () {
       if (!this.live) return;
       var mod = this.mod, rt = layerRuntime[mod.id], sel = this.liveSelected;
       var anySelected = !!sel || rt.tileSelectedId != null;
-      var base = baseStyleFor(mod) || {};
-      var faded = fadedStyle(base, mod), lit = Object.assign({}, base, highlightStyleFor(mod));
+      var own = !!(mod.overlay && typeof mod.overlay.tileFill === "function");
+      var hl = highlightStyleFor(mod);
       this.live.eachLayer(function (sub) {
         var on = !!sel && sub.feature === sel;
-        if (sub.setStyle) sub.setStyle(on ? lit : anySelected ? faded : base);
+        var base = baseStyleFor(mod, own ? sub.feature : null) || {};
+        var style = on ? Object.assign({}, base, hl) : anySelected && !own ? fadedStyle(base, mod) : base;
+        if (on && own) style = Object.assign(style, { fillColor: base.fillColor, fillOpacity: base.fillOpacity });
+        if (sub.setStyle) sub.setStyle(style);
         if (sub._path) sub._path.classList[on ? "add" : "remove"](HIGHLIGHT_CLASS);
         if (on && sub.bringToFront) sub.bringToFront();
       });
@@ -12452,7 +12609,7 @@ function initMichiganExplorer() {
     if (id == null && !live) showProvisionalHighlight(mod);
     else clearProvisionalHighlight(mod);
     rt.highlightApplied = id != null || !!live;
-    rt.highlightSignature = rt.highlightApplied ? highlightSignature(rt) : null;
+    rt.highlightSignature = rt.highlightApplied ? highlightSignature(rt, mod) : null;
     if (live) {
       // a live county's feature is whole, so its own edges name the streets
       rt.highlightedLayer = { feature: live };
@@ -13478,6 +13635,9 @@ function initMichiganExplorer() {
       refreshActiveLayerOpacities(); // a visible fill returned — rescale the stack
       refreshRelationshipOutlines(); // an outline-eligible layer just came back
     }
+    // a layer whose colours are its answer coming into or out of view adds or
+    // takes away every other layer's selected-district tint (layer-registry)
+    if (mod.fillsGround) refreshHighlightFills();
   }
 
   // Refresh every coverage-declaring layer's relevance for the current
@@ -17201,6 +17361,7 @@ function initMichiganExplorer() {
           findFeatureContaining({ type: "FeatureCollection", features: features }, state.selectedPoint)) {
         updateLayerHighlight(spec);
       }
+      queueDistrictNumbers(); // the late county's districts get their labels over the results
     }
 
     var anyHoverOfficial = entries.some(function (entry) { return !!entry.hoverOfficial; });
@@ -18985,8 +19146,9 @@ function initMichiganExplorer() {
   // The one size floor is a district under ~8px across, a speck that would
   // otherwise claim a chip ahead of a neighbour the reader can actually see.
   var REL_LABEL_MIN_ROOM = 4; // px from the label spot to its nearest edge
-  function layoutRelLabels() {
-    if (!relLabels.length) return;
+  function layoutRelLabels() { layoutMapLabels(relLabels); }
+  function layoutMapLabels(list) {
+    if (!list.length) return;
     // every marker on the map (the selected point, office pins) is occupied
     // ground: a label drawn over the star hides the point the reader chose
     var placed = [];
@@ -18999,7 +19161,7 @@ function initMichiganExplorer() {
       if (!r.width && !r.height) return;
       placed.push({ x0: r.left - box.left, y0: r.top - box.top, x1: r.right - box.left, y1: r.bottom - box.top });
     });
-    relLabels.forEach(function (l) {
+    list.forEach(function (l) {
       l.el.classList.remove("rel-map-label-hidden");
       var w = l.el.offsetWidth, h = l.el.offsetHeight;
       for (var i = 0; i < l.spots.length; i++) {
@@ -19126,11 +19288,7 @@ function initMichiganExplorer() {
   function refreshRelationshipOutlines() {
     if (!relationshipGroup) {
       relationshipGroup = L.featureGroup().addTo(map);
-      // labels sit above every overlay (400) and below the selected-point
-      // marker (600); pointer-events off so they never swallow a map click
-      var labelPane = map.createPane("rel-labels");
-      labelPane.style.zIndex = "450";
-      labelPane.style.pointerEvents = "none";
+      ensureMapLabelPane();
       relLabelGroup = L.layerGroup().addTo(map);
       map.on("zoomend", layoutRelLabels);
     }
@@ -19153,7 +19311,146 @@ function initMichiganExplorer() {
     var parentFeature = relationshipParentFeature();
     relCounts = parentFeature ? drawRelationshipOutlines(parentFeature) : null;
     updateRelLegend();
+    refreshDistrictNumbers(); // a pinned comparison takes the map's labels over, and gives them back
     statsTryRestore(); // a link's report waits for the boundaries this refresh drew
+  }
+
+  // labels sit above every overlay (400) and below the selected-point
+  // marker (600); pointer-events off so they never swallow a map click
+  function ensureMapLabelPane() {
+    if (map.getPane("rel-labels")) return;
+    var labelPane = map.createPane("rel-labels");
+    labelPane.style.zIndex = "450";
+    labelPane.style.pointerEvents = "none";
+  }
+
+  /* ---- district numbers over the election results ----
+   * While a layer that paints the ground is on (fillsGround: the election
+   * results), every other switched-on polygon layer labels each of its
+   * districts in view with its name, in the compared outlines' chips, so a
+   * reader can see which ward or district each block of colour sits in (Adam,
+   * 2026-11-05, after a map labelling every ward over the results). The text,
+   * the spot inside each district and the collision rule are the comparison's
+   * own (relLabelText, relLabelPoint, layoutMapLabels), so the two kinds of
+   * label never disagree. A pinned comparison labels its own outlines
+   * instead, so these step aside while one is drawn. A layer drawn from tiles
+   * fetches its whole file for this, as a comparison does. Only districts
+   * that reach into the view and are at least DISTRICT_NUMBER_MIN_PX across
+   * on screen get a label, and at most DISTRICT_NUMBER_MAX in all, so a
+   * precinct layer at city zoom asks for its labels as the reader zooms in. */
+  var districtNumberGroup = null;
+  var districtNumbers = [];
+  var districtNumberQueued = false;
+  var DISTRICT_NUMBER_MIN_PX = 24;
+  var DISTRICT_NUMBER_MAX = 400;
+  function groundIsFilled() {
+    return layers.some(function (l) {
+      return l.fillsGround && state.layersOn[l.id] && layerRuntime[l.id] && layerRuntime[l.id].relevant !== false;
+    });
+  }
+  function queueDistrictNumbers() {
+    if (districtNumberQueued) return;
+    districtNumberQueued = true;
+    setTimeout(function () { districtNumberQueued = false; refreshDistrictNumbers(); }, 120);
+  }
+  var districtLinesBtn = null;
+  function syncDistrictLinesButton() {
+    var show = groundIsFilled();
+    if (!districtLinesBtn) {
+      if (!show) return;
+      var corner = document.querySelector(".map-bottom-left");
+      if (!corner) return;
+      districtLinesBtn = document.createElement("button");
+      districtLinesBtn.type = "button";
+      districtLinesBtn.className = "hover-toggle-btn";
+      districtLinesBtn.id = "district-lines-toggle";
+      districtLinesBtn.title = "Show every district line and number of the other layers on, over the election results";
+      districtLinesBtn.addEventListener("click", function () {
+        districtLinesOn = !districtLinesOn;
+        syncDistrictLinesButton();
+        refreshHighlightFills(); // every other layer's lines fade or come back
+        refreshDistrictNumbers();
+      });
+      corner.appendChild(districtLinesBtn);
+    }
+    districtLinesBtn.hidden = !show;
+    districtLinesBtn.textContent = districtLinesOn ? "Boundaries and numbers: on" : "Boundaries and numbers: off";
+    districtLinesBtn.setAttribute("aria-pressed", districtLinesOn ? "true" : "false");
+  }
+  function refreshDistrictNumbers() {
+    afterCardHooks.forEach(function (fn) { fn(); }); // e.g. the election card's district totals
+    if (districtNumberGroup) districtNumberGroup.clearLayers();
+    districtNumbers = [];
+    syncDistrictLinesButton();
+    if (!groundIsFilled() || !districtLinesOn || relCounts) return;
+    if (!districtNumberGroup) {
+      ensureMapLabelPane();
+      districtNumberGroup = L.layerGroup().addTo(map);
+      map.on("moveend", queueDistrictNumbers);
+    }
+    var view = map.getBounds();
+    var vb = [view.getWest(), view.getSouth(), view.getEast(), view.getNorth()];
+    var viewFeature = { type: "Feature", properties: {}, geometry: { type: "Polygon", coordinates: [[
+      [vb[0], vb[1]], [vb[2], vb[1]], [vb[2], vb[3]], [vb[0], vb[3]], [vb[0], vb[1]]]] } };
+    var total = 0;
+    for (var li = 0; li < layers.length && total < DISTRICT_NUMBER_MAX; li++) {
+      var mod = layers[li];
+      if (mod.fillsGround || !state.layersOn[mod.id]) continue;
+      if (!mod.overlay || !mod.overlay.style) continue; // polygon layers only
+      var rt = layerRuntime[mod.id];
+      if (!rt || rt.relevant === false || !rt.overlayLayer) continue;
+      if (!rt.geojson) {
+        if (rt.overlayLayer.dxTiles && !rt.tileGeojsonPromise) {
+          (function (m) {
+            ensureTileGeojson(m).then(queueDistrictNumbers, function (err) {
+              console.error("[" + m.id + "] whole file for the district numbers failed:", err);
+            });
+          })(mod);
+        }
+        continue;
+      }
+      var color = darkenHexColor(moduleColor(mod), 0.15);
+      var wrapper = relLabelWrapper(mod);
+      var feats = rt.geojson.features || [];
+      for (var j = 0; j < feats.length && total < DISTRICT_NUMBER_MAX; j++) {
+        var f = feats[j];
+        if (!f || !f.geometry) continue;
+        var fb = featureBBox(f);
+        if (fb[2] < vb[0] || fb[0] > vb[2] || fb[3] < vb[1] || fb[1] > vb[3]) continue;
+        var a = map.latLngToContainerPoint([fb[1], fb[0]]), b = map.latLngToContainerPoint([fb[3], fb[2]]);
+        if (Math.max(Math.abs(b.x - a.x), Math.abs(b.y - a.y)) < DISTRICT_NUMBER_MIN_PX) continue;
+        var text = relLabelText(mod, f, wrapper);
+        if (!text) continue;
+        // the Census's "ZZ" (or "ZZZ") is the water no district covers, as in
+        // Lake Michigan's "IL-ZZ", and is not a district to label
+        if (/(^|[^A-Za-z0-9])Z{2,3}$/.test(text)) continue;
+        // a district reaching past the view is labelled in the part on
+        // screen, which is the comparison's "inside the parent" search with
+        // the view as the parent
+        var whole = fb[0] >= vb[0] && fb[2] <= vb[2] && fb[1] >= vb[1] && fb[3] <= vb[3];
+        var spots = whole ? relLabelPoint(f, f, true) : relLabelPoint(f, viewFeature, false);
+        if (!spots.length) continue;
+        var el = document.createElement("span");
+        el.className = "rel-map-label district-number-label";
+        el.textContent = text; // textContent: feature text is external
+        el.style.borderColor = color;
+        el.style.setProperty("--rel-label-ink", hoverPillStyle(color).color);
+        var marker = L.marker([spots[0].lat, spots[0].lng], {
+          icon: L.divIcon({ className: "rel-map-label-anchor", html: el, iconSize: null }),
+          pane: "rel-labels",
+          interactive: false,
+          keyboard: false
+        }).addTo(districtNumberGroup);
+        var here = !!state.selectedPoint && pointInGeometry(state.selectedPoint, f.geometry);
+        districtNumbers.push({ marker: marker, el: el, spots: spots, clearance: spots[0].clearance, here: here });
+        total++;
+      }
+    }
+    districtNumbers.sort(function (x, y) {
+      if (x.here !== y.here) return x.here ? -1 : 1;
+      return y.clearance - x.clearance;
+    });
+    layoutMapLabels(districtNumbers);
   }
 
   // The legend lives above the Hover toggle and, per the toggle's role as the
@@ -19405,7 +19702,11 @@ function initMichiganExplorer() {
    * district, so a map drawn on block lines (congress, the legislature,
    * wards) gets an exact count, and one that is not gets a close one — the
    * footnote says so. The block files are fetched per county, only for the
-   * counties the districts touch, and only when this screen opens.
+   * counties the districts touch, and only when this screen opens. They hold
+   * this app's own ground and nobody beyond it, so a district reaching past
+   * that ground (a ZIP code across a state line, a San Francisco Assembly
+   * district reaching into San Mateo County) is not given a share of its own
+   * people, and a compared district that does is compared by area alone.
    *
    * A ROW'S CARD RUNS THE LAYER'S OWN QUERY AT A POINT INSIDE THE DISTRICT
    * (the outline label's spot, which lies in the part inside the pinned
@@ -19441,11 +19742,20 @@ function initMichiganExplorer() {
   var statsOpenSeq = 0;
   var statsPopIndex = null;
   var statsPopFiles = {};
+  var statsPopGround = null;
 
   function statsLoadPopulationIndex() {
     if (typeof POPULATION_INDEX_URL === "undefined") return Promise.resolve(null);
     if (!statsPopIndex) {
-      statsPopIndex = fetchJSONWithRetry(POPULATION_INDEX_URL, {}, 2)["catch"](function (err) {
+      statsPopIndex = fetchJSONWithRetry(POPULATION_INDEX_URL, {}, 2).then(function (index) {
+        // an index may name the ground its blocks cover (see statsOutsideShare)
+        if (!index || !index.ground) return index;
+        var base = POPULATION_INDEX_URL.replace(/[^\/]*$/, "");
+        return fetchJSONWithRetry(base + index.ground, {}, 2).then(function (g) {
+          statsPopGround = g && g.type ? g : null;
+          return index;
+        });
+      })["catch"](function (err) {
         console.warn("population index unavailable; comparing by area only:", err);
         statsPopIndex = null;
         return null;
@@ -19489,6 +19799,29 @@ function initMichiganExplorer() {
     for (var i = 0; i < sets.length; i++) for (var j = 0; j < sets[i].length; j++) sum += sets[i][j][2] || 0;
     return sum;
   }
+
+  // The population files hold the people of this app's own ground and no
+  // one beyond it, so a district reaching past that ground has people the
+  // files cannot count. This is the share of a district's area outside the
+  // ground the index names (San Francisco's county with its water, because
+  // its wash is drawn on land and its districts carry the Bay), or else the
+  // outline the app drew its wash with (the state), or 0 while neither has
+  // loaded. A district with more than 1% of its area outside is treated as
+  // reaching past: measured 2026-11-06, no state's congressional or
+  // legislative district has more than 0.06% of its area outside its
+  // state's outline.
+  function statsOutsideShare(geometry) {
+    var ground = statsPopGround;
+    if (!ground && typeof coverageRegionPolys !== "undefined" && coverageRegionPolys && coverageRegionPolys.length) {
+      ground = { type: "MultiPolygon", coordinates: coverageRegionPolys };
+    } else if (!ground && typeof coverageMaskRings !== "undefined" && coverageMaskRings && coverageMaskRings.length) {
+      ground = { type: "Polygon", coordinates: coverageMaskRings };
+    }
+    if (!ground || !geometry) return 0;
+    var m = measureOverlap(geometry, ground);
+    return m.area > 0 ? 1 - m.share : 0;
+  }
+  var STATS_OUTSIDE_LIMIT = 0.01;
 
   // A share as a reader should see it: never "0%" for something that is
   // there, never "100%" for something that is not all of it.
@@ -19802,6 +20135,13 @@ function initMichiganExplorer() {
     peopleDone = statsLoadPopulation(box).then(function (sets) {
       if (!live()) return;
       if (!sets) { cells.forEach(function (c) { c.el.hidden = true; }); return; }
+      var place = appPlaceName();
+      if (statsOutsideShare(parentFeature.geometry) > STATS_OUTSIDE_LIMIT) {
+        cells.forEach(function (c) { c.el.hidden = true; });
+        foot.textContent = "Population figures cover " + place + " only, and " + parentName +
+          " reaches past it, so it is compared by area. Areas are measured from the map's simplified boundaries.";
+        return;
+      }
       var inParent = statsPointsIn(parentFeature.geometry, sets);
       var parentPop = statsSetsWeight(inParent);
       totals.textContent = statsNum(parentPop) + " people · " + statsSqMi(parentArea);
@@ -19810,8 +20150,16 @@ function initMichiganExplorer() {
         var all = statsWeight(c.row.feature.geometry, sets);
         var shared = statsWeight(c.row.feature.geometry, inParent);
         sharedByLayer[c.row.mod.id] = (sharedByLayer[c.row.mod.id] || 0) + shared;
-        c.el.textContent = "People: " + statsPct(shared, all) + " of its " + statsNum(all) + " are in " +
-          parentName + ", making up " + statsPct(shared, parentPop) + " of " + parentName;
+        if (statsOutsideShare(c.row.feature.geometry) > STATS_OUTSIDE_LIMIT) {
+          // only its people inside this app's ground are in the files, so
+          // what share of it lies in the compared district is not known
+          c.el.textContent = "People: " + statsNum(shared) + " of its people are in " + parentName +
+            ", making up " + statsPct(shared, parentPop) + " of " + parentName + ". Part of it lies outside " +
+            place + ", where this app has no population figures.";
+        } else {
+          c.el.textContent = "People: " + statsPct(shared, all) + " of its " + statsNum(all) + " are in " +
+            parentName + ", making up " + statsPct(shared, parentPop) + " of " + parentName;
+        }
         c.shared = shared;
       });
       // with people counted, the districts holding most of the compared
@@ -20080,6 +20428,14 @@ function initMichiganExplorer() {
     // The name a layer prints for one feature on its map labels and hover row
     // (the same hoverValue those read), for a check that a layer names its own
     // districts and not a parent's (smoke check 1k1b).
+    // how strongly a layer draws the districts other than the selected one
+    // (smoke check 1y: full over the election results, faded elsewhere)
+    otherDistrictsOpacity: function (id) {
+      var mod = getLayerById(id), base = mod && baseStyleFor(mod);
+      if (!base) return null;
+      var f = fadedStyle(base, mod);
+      return f.opacity == null ? 1 : f.opacity;
+    },
     hoverValueFor: function (id, properties) {
       var mod = getLayerById(id);
       return mod ? hoverValue(mod, { type: "Feature", geometry: null, properties: properties || {} }) : null;
@@ -20389,6 +20745,13 @@ function initMichiganExplorer() {
       }
       var lit = rt.highlightedLayer;
       return lit && lit.options ? lit.options.color : null;
+    },
+    // the fill a layer's lit district is drawn with: 0 while a layer whose
+    // colours are its answer (fillsGround) is on, so a test can see the tint
+    // drop and come back
+    highlightFill: function (id) {
+      var mod = getLayerById(id);
+      return mod ? highlightStyleFor(mod).fillOpacity : null;
     },
     loadWholeFile: function (id) {
       var mod = getLayerById(id);
@@ -21169,34 +21532,37 @@ function initMichiganExplorer() {
         embedded map is someone else's page), never once installed, and never
         a second time: showing it records DST_INSTALL_INVITE_KEY.
 
-        WHILE THE ANDROID APP IS IN GOOGLE PLAY'S CLOSED TEST (Adam,
-        2026-10-20), an Android phone is invited to the test instead of being
-        offered the website version to install: Google Play lets a new
-        personal account apply to publish its app only after 12 testers have
-        stayed in its closed test for 14 days, and the steps page at
-        DST_ANDROID_TEST_URL asks testers to remove the website copy. Chrome's
-        install event is still held, so its own mini-infobar does not offer
-        that copy either, and Chrome's menu still does. The test is offered
-        once too, recorded as DST_TEST_INVITE_SEEN under the same key, so a
-        reader who was offered the install before the test began is asked
-        once more, about the test. Closing the bar or following its link
-        records DST_TEST_INVITE_ANSWERED instead, and the front page's own
-        invitation to the test reads and writes that word under the same key
-        (scripts/build_landing_page.py takes both names from this block), so
-        a reader who closed or followed either invitation is not shown the
-        other; only seeing this bar leaves the front page's in place (Adam,
-        2026-10-20: a "no" stays closed). Not in the Play app, whose window
-        carries the mark from engine/shared/play-app.txt. When the app is
-        published, set DST_ANDROID_TEST_URL to null and the install offer
-        returns; the front page's generator then fails until its notice
-        changes too.
+        ON ANDROID, THE GOOGLE PLAY APP IS OFFERED INSTEAD (Adam, 2026-11-08,
+        when the app went live on Google Play; from 2026-10-20 until then the
+        bar invited readers to its closed test). An Android phone is shown a
+        bar linking the app's Play listing at DST_ANDROID_APP_URL rather than
+        the website version to install, because the Play app opens shared
+        places and long-press shortcuts the same way and keeps the reader in
+        one copy. Chrome's install event is still held, so its own
+        mini-infobar does not offer the website copy either, and Chrome's menu
+        still does. The bar is offered once, recorded as DST_APP_INVITE_SEEN
+        under the same key, so a reader who was offered the install or the
+        test before is asked once more, about the published app. Closing the
+        bar or following its link records DST_APP_INVITE_ANSWERED instead, and
+        the front page's own invitation to the app reads and writes that word
+        under the same key (scripts/build_landing_page.py takes both names and
+        the address from this block), so a reader who closed or followed
+        either invitation is not shown the other; only seeing this bar leaves
+        the front page's in place (Adam, 2026-10-20: a "no" stays closed). Not
+        in the Play app, whose window carries the mark from
+        engine/shared/play-app.txt. The listing's address carries a Play
+        referrer naming this site and the map, so Google Play Console can say
+        how many installs came from here. Set DST_ANDROID_APP_URL to null and
+        the website install offer returns on Android; the front page's
+        generator then fails until its notice changes too.
 
      3. THE COUNTS, by state and never by place: `app-install/<tag>` when the
         browser reports an install, `app-launch/<tag>` once per launch of the
         installed app (DST_APP_LAUNCH_KEY in session storage marks the window
         as counted), `install-invite/<what>` for the invitation: shown,
         accepted, declined or closed, tip-shown or tip-closed on an iPhone, and
-        test-shown, test-join or test-closed for the Android test,
+        app-shown, app-open or app-closed for the Google Play app
+        (test-shown, test-join and test-closed until 2026-11-08),
         `share-in/<tag>` when a place shared into the installed app opened
         this app, and `app-shortcut/<tag>/<action>` when one of the installed
         app's long-press shortcuts did (both below). A launch is counted at
@@ -21248,9 +21614,9 @@ function initMichiganExplorer() {
   var DST_SEEN_KEY = "districtry-seen";
   var DST_VISIT_COUNTED_KEY = "districtry-visit-counted";
   var DST_INVITE_DELAY_MS = 3000;
-  var DST_ANDROID_TEST_URL = "/android.html?ref=map";
-  var DST_TEST_INVITE_SEEN = "test-shown";
-  var DST_TEST_INVITE_ANSWERED = "test-answered";
+  var DST_ANDROID_APP_URL = "https://play.google.com/store/apps/details?id=com.districtry.app&referrer=utm_source%3Ddistrictry.com%26utm_campaign%3Dmap";
+  var DST_APP_INVITE_SEEN = "app-shown";
+  var DST_APP_INVITE_ANSWERED = "app-answered";
   var dstFramed = (function () {
     try { return window.top !== window.self; } catch (e) { return true; }
   })();
@@ -21286,15 +21652,15 @@ function initMichiganExplorer() {
   function dstMarkInviteSeen(value) {
     try { window.localStorage.setItem(DST_INSTALL_INVITE_KEY, value); } catch (e) { /* private mode: it may show again */ }
   }
-  function dstTestInviteSeen() {
+  function dstAppInviteSeen() {
     try {
       var seen = window.localStorage.getItem(DST_INSTALL_INVITE_KEY);
-      return seen === DST_TEST_INVITE_SEEN || seen === DST_TEST_INVITE_ANSWERED;
+      return seen === DST_APP_INVITE_SEEN || seen === DST_APP_INVITE_ANSWERED;
     } catch (e) { return true; }
   }
-  /* A browser on Android while the test runs, outside the Play app. */
-  function dstOnAndroidTest() {
-    return !!DST_ANDROID_TEST_URL &&
+  /* A browser on Android, outside the Play app, while the Play app is offered. */
+  function dstOfferPlayApp() {
+    return !!DST_ANDROID_APP_URL &&
       /\bAndroid\b/.test(window.navigator.userAgent || "") &&
       !document.documentElement.classList.contains("dst-play-app");
   }
@@ -21426,7 +21792,7 @@ function initMichiganExplorer() {
     if (dstFramed || !dstIsPhone()) return;
     e.preventDefault();
     dstHeldPrompt = e;
-    if (dstInviteQueued || dstInviteSeen() || dstOnAndroidTest()) return;
+    if (dstInviteQueued || dstInviteSeen() || dstOfferPlayApp()) return;
     dstInviteQueued = true;
     dstAfterFirstAnswer(function () {
       if (!dstHeldPrompt || dstInviteSeen()) return;
@@ -21463,24 +21829,24 @@ function initMichiganExplorer() {
     });
   }
 
-  if (!dstFramed && !dstInstalledLaunch() && dstOnAndroidTest() && !dstTestInviteSeen()) {
+  if (!dstFramed && !dstInstalledLaunch() && dstOfferPlayApp() && !dstAppInviteSeen()) {
     dstAfterFirstAnswer(function () {
-      if (dstTestInviteSeen()) return;
-      var shown = dstShowInvite("Help test districtry’s Android app",
-        "Help test districtry’s Android app. Google Play needs 12 testers.", {
-          text: "How to join",
-          href: DST_ANDROID_TEST_URL,
+      if (dstAppInviteSeen()) return;
+      var shown = dstShowInvite("districtry’s Android app",
+        "districtry is on Google Play as an Android app.", {
+          text: "Get the app",
+          href: DST_ANDROID_APP_URL,
           onClick: function () {
-            dstMarkInviteSeen(DST_TEST_INVITE_ANSWERED);
-            dstInviteEvent("test-join");
+            dstMarkInviteSeen(DST_APP_INVITE_ANSWERED);
+            dstInviteEvent("app-open");
             /* after the link is followed, so a page brought back by the
                Back button does not ask again */
             setTimeout(dstHideInvite, 0);
           }
-        }, "test-closed", function () { dstMarkInviteSeen(DST_TEST_INVITE_ANSWERED); });
+        }, "app-closed", function () { dstMarkInviteSeen(DST_APP_INVITE_ANSWERED); });
       if (shown) {
-        dstMarkInviteSeen(DST_TEST_INVITE_SEEN);
-        dstInviteEvent("test-shown");
+        dstMarkInviteSeen(DST_APP_INVITE_SEEN);
+        dstInviteEvent("app-shown");
       }
     });
   }

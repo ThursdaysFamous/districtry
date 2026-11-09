@@ -504,6 +504,7 @@
     flex: none;
     border: 2px solid var(--ink);
   }
+  .group-elections .dot { background: #2E6F8E; }
   .group-political .dot { background: var(--accent); }
   .group-safety .dot { background: var(--accent-warm); }
   .group-schools .dot { background: #E8A324; }

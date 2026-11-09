@@ -1,0 +1,142 @@
+# Daily refresh of Virginia's precinct-by-precinct election results, read
+# from the Department of Elections' Election Results report (the file its
+# election night results page at
+# https://enr.elections.virginia.gov/results/public/virginia/elections/<name>
+# offers for download) by va/scripts/va_election_results_scraper.py and written
+# to va/data/app/election-results.json plus one
+# va/data/app/election-results/c<locality FIPS>-<n>.json per run of up to 60 of
+# a county's or city's precincts by va/scripts/build_va_election_results.py.
+#
+# DAILY UNTIL CERTIFIED, the rule Adam set for Chicago on 2026-11-05: each
+# county's and city's electoral board ascertains its results within ten days of
+# the election (Code of Virginia 24.2-671) and the State Board of Elections
+# meets by the first Monday in December (7 December 2026, 24.2-679) to
+# ascertain the November results, so the numbers can move until then and a
+# reader should see each day's count after it has been looked at. Once the
+# shipped file says certified, the job reads nothing and changes nothing.
+#
+# CERTIFYING: when the State Board certifies the results, run this workflow by
+# hand with `certified` set to that date. The PR it opens says certified, and
+# the map and the card stop saying unofficial.
+#
+# A PR ONLY WHEN A NUMBER MOVED: every read stamps the time it was read, so the
+# change check compares the files with that stamp taken out.
+
+name: Update Virginia election results
+
+on:
+  schedule:
+    - cron: "30 13 * * *"
+  workflow_dispatch:
+    inputs:
+      certified:
+        description: "The date the State Board of Elections certified the results (YYYY-MM-DD); leave empty for an unofficial read"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-results:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install scraper dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Skip a file that is already certified
+        id: state
+        env:
+          CERTIFIED: ${{ github.event.inputs.certified }}
+        run: |
+          shipped=$(python3 -c "import json;print('yes' if json.load(open('va/data/app/election-results.json')).get('certified') else 'no')")
+          if [ "$shipped" = "yes" ] && [ -z "$CERTIFIED" ]; then
+            echo "The shipped results are certified; nothing to refresh."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Read the Department of Elections' results file
+        if: steps.state.outputs.run == 'true'
+        run: |
+          election=$(python3 -c "import json,re;print(re.search(r'/elections/([A-Za-z0-9-]+)$', json.load(open('va/data/app/election-results.json'))['source']).group(1))")
+          date=$(python3 -c "import json;print(json.load(open('va/data/app/election-results.json'))['electionDate'])")
+          python3 va/scripts/va_election_results_scraper.py --election "$election" --date "$date" -o /tmp/va_results_raw.json
+
+      - name: Rebuild the results files
+        if: steps.state.outputs.run == 'true'
+        env:
+          CERTIFIED: ${{ github.event.inputs.certified }}
+        run: |
+          date=$(python3 -c "import json;print(json.load(open('va/data/app/election-results.json'))['electionDate'])")
+          if [ -n "$CERTIFIED" ]; then
+            python3 va/scripts/build_va_election_results.py /tmp/va_results_raw.json --election-date "$date" --certified "$CERTIFIED"
+          else
+            python3 va/scripts/build_va_election_results.py /tmp/va_results_raw.json --election-date "$date"
+          fi
+
+      - name: Validate app + data files
+        run: python3 va/scripts/validate_index.py va/index.html
+
+      - name: Check for changes other than the reading time
+        id: diff
+        run: |
+          changed=$(python3 - <<'PY'
+          import json, os, subprocess
+          def strip(text):
+              d = json.loads(text)
+              d.pop("read", None)
+              return d
+          def shipped(path):
+              r = subprocess.run(["git", "show", "HEAD:" + path], capture_output=True, text=True)
+              return r.stdout if r.returncode == 0 else None
+          paths = ["va/data/app/election-results.json"]
+          parts = "va/data/app/election-results"
+          paths += [os.path.join(parts, n) for n in sorted(os.listdir(parts))]
+          old = subprocess.run(["git", "ls-tree", "--name-only", "HEAD", parts + "/"],
+                               capture_output=True, text=True).stdout.split()
+          moved = set(old) != set(paths[1:])
+          for p in paths:
+              before = shipped(p)
+              if before is None or strip(before) != strip(open(p).read()):
+                  moved = True
+          print("true" if moved else "false")
+          PY
+          )
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+          echo "changed: $changed"
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/va-election-results-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add -A va/data/app/election-results.json va/data/app/election-results
+          git commit -m "Update Virginia election results from the Department of Elections"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Virginia election results from the Department of Elections" \
+              --body "Automated daily refresh of Virginia's precinct results, generated by \`va/scripts/va_election_results_scraper.py\` + \`va/scripts/build_va_election_results.py\` from the Department of Elections' Election Results report. Please review the diff before merging: it changes the numbers and colours the map shows. Until the file says certified, the map and every card say these are unofficial results that will change. The build fails if a precinct stops listing every choice in its contest, a contest falls into no group, a precinct in the file is not on the map, or more than five of the map's 2,531 precincts report nothing." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

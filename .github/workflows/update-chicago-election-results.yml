@@ -1,0 +1,176 @@
+# Daily refresh of Chicago's precinct-by-precinct election results, read from
+# the Chicago Board of Election Commissioners' results page
+# (https://chicagoelections.gov/elections/results/<id>) by
+# scripts/chicago_election_results_scraper.py and written to
+# il/data/app/election-results.json plus one il/data/app/election-results/
+# ward-NN.json per ward by scripts/build_chicago_election_results.py.
+#
+# SEVEN COUNTIES BESIDE CHICAGO (2026-11-06): the clerks of Kane
+# (scripts/il_kane_election_results_scraper.py) and of DeKalb, Franklin,
+# Henry, Pike, Randolph and Wayne (scripts/il_platinum_election_results_
+# scraper.py) publish precinct results a script may read, and the map draws
+# their precincts, so the same job reads them and the builder folds them in
+# (scripts/build_il_county_election_results.py; part files kane-XX.json per
+# township and one per other county). Each read is kept in il/data/source/ as
+# the last good one: when a county's site does not answer, the build uses
+# that copy, whose own reading time the card prints, rather than dropping
+# the county off the map.
+#
+# DAILY UNTIL CERTIFIED (Adam, 2026-11-05): the Board keeps counting mail
+# ballots that arrive by 17 November 2026 and proclaims the official results
+# after that, so the numbers move every day until then and a reader should see
+# each day's count after a person has looked at it. Once the shipped file says
+# certified, the job reads nothing and changes nothing.
+#
+# CERTIFYING: when the Board proclaims the official results, run this workflow
+# by hand with `certified` set to the date the Board proclaimed them. The PR it
+# opens says certified, and the map and the card stop saying unofficial for
+# Chicago's precincts. A county's canvass is its own: give `county_certified`
+# as county=date for each county that has certified (the builder keeps it
+# from the shipped file after that), and the card stops saying unofficial there. The
+# file reads certified, and the job stops, once every office has.
+#
+# A PR ONLY WHEN A NUMBER MOVED: every read stamps the time it was read, so the
+# change check compares the files with that stamp taken out.
+
+name: Update Chicago election results
+
+on:
+  schedule:
+    - cron: "30 12 * * *"
+  workflow_dispatch:
+    inputs:
+      certified:
+        description: "The date the Board proclaimed the official results (YYYY-MM-DD); leave empty for an unofficial read"
+        required: false
+        default: ""
+      county_certified:
+        description: "Counties whose canvass is complete, as county=YYYY-MM-DD separated by spaces (kane, dekalb, henry, pike, randolph, franklin, wayne)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-results:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install scraper dependencies
+        run: pip install -c scripts/requirements.txt requests shapely
+
+      - name: Skip a file that is already certified
+        id: state
+        env:
+          CERTIFIED: ${{ github.event.inputs.certified }}
+        run: |
+          shipped=$(python3 -c "import json;print('yes' if json.load(open('il/data/app/election-results.json')).get('certified') else 'no')")
+          if [ "$shipped" = "yes" ] && [ -z "$CERTIFIED" ]; then
+            echo "The shipped results are certified; nothing to refresh."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Read the Board of Elections' results
+        if: steps.state.outputs.run == 'true'
+        run: |
+          election=$(python3 -c "import json;print(json.load(open('il/data/app/election-results.json'))['source'].rstrip('/').rsplit('/',1)[1])")
+          python3 scripts/chicago_election_results_scraper.py --election "$election" -o /tmp/chicago_results_raw.json
+
+      - name: Read the county clerks' results
+        if: steps.state.outputs.run == 'true'
+        run: |
+          date=$(python3 -c "import json;print(json.load(open('il/data/app/election-results.json'))['electionDate'])")
+          if python3 scripts/il_platinum_election_results_scraper.py -o /tmp/platinum_raw.json; then
+            cp /tmp/platinum_raw.json il/data/source/election-results-platinum-raw.json
+          else
+            echo "::warning::The Platinum results site did not answer; using the last good read."
+          fi
+          if python3 scripts/il_kane_election_results_scraper.py --election "$date" -o /tmp/kane_raw.json; then
+            cp /tmp/kane_raw.json il/data/source/election-results-kane-raw.json
+          else
+            echo "::warning::Kane County's results site did not answer; using the last good read."
+          fi
+
+      - name: Rebuild the results files
+        if: steps.state.outputs.run == 'true'
+        env:
+          CERTIFIED: ${{ github.event.inputs.certified }}
+          COUNTY_CERTIFIED: ${{ github.event.inputs.county_certified }}
+        run: |
+          date=$(python3 -c "import json;print(json.load(open('il/data/app/election-results.json'))['electionDate'])")
+          counties="--counties il/data/source/election-results-platinum-raw.json --counties il/data/source/election-results-kane-raw.json"
+          for c in $COUNTY_CERTIFIED; do counties="$counties --county-certified $c"; done
+          if [ -n "$CERTIFIED" ]; then
+            python3 scripts/build_chicago_election_results.py /tmp/chicago_results_raw.json --election-date "$date" --certified "$CERTIFIED" $counties
+          else
+            python3 scripts/build_chicago_election_results.py /tmp/chicago_results_raw.json --election-date "$date" $counties
+          fi
+
+      - name: Validate app + data files
+        run: python3 scripts/validate_index.py il/index.html
+
+      - name: Check for changes other than the reading time
+        id: diff
+        run: |
+          changed=$(python3 - <<'PY'
+          import json, os, subprocess
+          def strip(text):
+              d = json.loads(text)
+              d.pop("read", None)
+              for s in d.get("sources") or []:
+                  s.pop("read", None)
+              return d
+          def shipped(path):
+              r = subprocess.run(["git", "show", "HEAD:" + path], capture_output=True, text=True)
+              return r.stdout if r.returncode == 0 else None
+          paths = ["il/data/app/election-results.json"]
+          parts = "il/data/app/election-results"
+          paths += [os.path.join(parts, n) for n in sorted(os.listdir(parts))]
+          old = subprocess.run(["git", "ls-tree", "--name-only", "HEAD", parts + "/"],
+                               capture_output=True, text=True).stdout.split()
+          moved = set(old) != set(paths[1:])
+          for p in paths:
+              before = shipped(p)
+              if before is None or strip(before) != strip(open(p).read()):
+                  moved = True
+          print("true" if moved else "false")
+          PY
+          )
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+          echo "changed: $changed"
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/chicago-election-results-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add -A il/data/app/election-results.json il/data/app/election-results il/data/source/election-results-*-raw.json
+          git commit -m "Update Chicago election results from the Board of Elections"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Chicago election results from the Board of Elections" \
+              --body "Automated daily refresh of Chicago's precinct results, generated by \`scripts/chicago_election_results_scraper.py\` + \`scripts/build_chicago_election_results.py\` from the Chicago Board of Election Commissioners' results page. Please review the diff before merging: it changes the numbers and colours the map shows. Until the file says certified, the map and every card say these are unofficial results that will change. The build fails if a ward's precincts stop adding up to the ward's total, or the results stop naming the city's 1,291 precincts." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

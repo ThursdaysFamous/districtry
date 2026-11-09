@@ -65,8 +65,9 @@ Severities (a PUBLISHED link's worst severity is WARN):
     a healthy link be treated as dead.
   * not public yet — a 404 from a URL in NOT_YET_PUBLIC                   [OK]
     A page that is there for its own readers before it is there for anyone:
-    districtry's Google Play listing answers 404 to everybody not signed in as
-    a tester until the app is published. The day it answers is the WARN.
+    districtry's Google Play listing answered 404 to everybody not signed in as
+    a tester until the app was published on 2026-11-08. The day it answers is
+    the WARN.
   * REACHABLE again — a listed host that now answers                     [WARN]
   * rate-limited — 429 twice, eight seconds apart                        [WARN]
     Said softly on purpose: this probe is a plausible cause of a 429, so the
@@ -480,15 +481,6 @@ ROBOTS_DECLINED = {
 # path is not probed, and the day the rule goes is the WARN, because that is the
 # state a human can act on.
 ROBOTS_DECLINED_PATHS = {
-    "play.google.com": [
-        ("/apps/testing/",
-         "the `*` group disallows /apps, allowing only /apps/publish under it, "
-         "and Google Play's closed-test opt-in pages live there. Measured "
-         "2026-10-18 with this checker's own token through scripts/robots_policy.py. "
-         "districtry.com/android links the districtry test's page for testers, who "
-         "are readers following a link rather than crawlers; what this stops is "
-         "this check fetching it"),
-    ],
     "www.nccourts.gov": [
         ("/judicial-directory",
          "the `*` group's section headed \"Custom robot rules\" disallows "
@@ -527,18 +519,11 @@ ROBOTS_DECLINED_PATHS = {
 # because scripts/probe_user_agents.py reads a URL written in a script as a
 # host that script fetches by name, and this checker reaches it only through
 # the page that cites it, like every URL it checks.
-NOT_YET_PUBLIC = {
-    "play.google.com": [
-        ("/store/apps/details?id=com.districtry.app",
-         "districtry's own Google Play listing, which districtry.com/android links "
-         "for the closed test's testers. It answered 404 (`Not Found`, 1,673 bytes) "
-         "to this checker's token and to a browser string alike, measured "
-         "2026-10-18 while the app was in closed testing; what a signed-in tester "
-         "sees was not measured. When it answers here it is public: turn the "
-         "android.html entry in scripts/build_redirect_stubs.py's SHORT_LINKS into "
-         "a forward to the listing, regenerate, and delete this entry"),
-    ],
-}
+# Empty since 2026-11-08. Its one entry was districtry's own Google Play
+# listing, which answered 404 to anyone not signed in as a tester (measured
+# 2026-10-18) until the app went live in production that day; it answers now,
+# so it is checked like any other link. Keep the table for the next such page.
+NOT_YET_PUBLIC = {}
 
 
 def page_key(url):

@@ -47,7 +47,7 @@ const OFFLINE = ["school-board", "il-supreme-court", "ccbr"];
 const EXPECT_DISTRICT = { "school-board": "District 6b", "il-supreme-court": "1", "ccbr": "3" };
 const NEGATIVE_POINT = "41.70000,-87.10000"; // Lake Michigan, Indiana waters — outside all three anchor layers. IT CANNOT BE MOVED OUT OF A SIBLING'S STATE AND THAT IS MEASURED: one of the three anchors is il-supreme-court, which answers over the whole state, so the point must be outside Illinois — and sampling permalink_gate every 0.25 degrees and naming each of the 480 points' state off TIGERweb, the ground outside Illinois's own ring is Missouri, Indiana, Iowa, Kentucky, Wisconsin and Michigan and nothing else, with no point anywhere in the gate that no state claims. All six are live instances (Indiana went live on 2026-10-07, and its outline contains this point, and Missouri at its go-live). Widening the gate to reach a seventh state would move a reader-facing "where we serve" bound to suit a test. So the point stays. Two checks put it at the map's centre, and until 2026-10-13 both had to refuse ../fleet-outlines.json, because the map then switched apps whenever its centre crossed into a sibling's state; panning no longer does that, so neither refuses anything, and a selection the app makes itself never leaves. Check 1i is where Illinois asserts fleet routing, on its own points, and that panning across a state line stays here.
 const APP_NAME = "districtry Illinois";
-const EXPECT_LAYERS = 41; // 17 base + police-beat (#43) + school-site (#45) + ccpsa-district-council + ward-precinct + 6 statewide local-gov layers (county, township, municipality, school districts x3 — TIGERweb) + 6 consolidated county-dispatched layers (county-board, judicial-subcircuit, fire-district, park-district, library-district, county-precinct — Cook/Will/DuPage/Lake/Kane/McHenry/Kendall entries; docs/COUNTY_LAYER_CONSOLIDATION.md) + 1 DuPage-only layer (dupage-county-special-police) + 2 Cook-only tax-agency layers (tif-district, mwrd — dedicated until a second county ships the concept) + 1 Chicago-only special-service layer (ssa — dedicated until a second municipality ships the concept) + 3 amenity nearest-point layers (post-office, library, early-voting) = 40 — THE SUM IS THE CLAIM, so a new layer needs its own term here and not just a bigger total: this read 39 for the day the `ssa` layer shipped because the total was the only part anyone would have changed. NOTHING GATES THIS NOTE — validate_doc_counts.py compares prose against layers[] and deliberately does not scan the worksheet it takes as canonical, so this is hand-kept. Addition re-checked against layers[] 2026-09-12; the underlying live verification of the layer list was 2026-07
+const EXPECT_LAYERS = 42; // 17 base + police-beat (#43) + school-site (#45) + ccpsa-district-council + ward-precinct + 6 statewide local-gov layers (county, township, municipality, school districts x3 — TIGERweb) + 6 consolidated county-dispatched layers (county-board, judicial-subcircuit, fire-district, park-district, library-district, county-precinct — Cook/Will/DuPage/Lake/Kane/McHenry/Kendall entries; docs/COUNTY_LAYER_CONSOLIDATION.md) + 1 DuPage-only layer (dupage-county-special-police) + 2 Cook-only tax-agency layers (tif-district, mwrd — dedicated until a second county ships the concept) + 1 Chicago-only special-service layer (ssa — dedicated until a second municipality ships the concept) + 3 amenity nearest-point layers (post-office, library, early-voting) + 1 tribal-government layer + 1 Chicago election results layer (election-results, drawn on the ward-precinct outlines) = 42 — THE SUM IS THE CLAIM, so a new layer needs its own term here and not just a bigger total: this read 39 for the day the `ssa` layer shipped because the total was the only part anyone would have changed. NOTHING GATES THIS NOTE — validate_doc_counts.py compares prose against layers[] and deliberately does not scan the worksheet it takes as canonical, so this is hand-kept. Addition re-checked against layers[] 2026-09-12; the underlying live verification of the layer list was 2026-07
 // ==== GENERATED:END smoke-config ====
 // ==== TEMPLATE:BEGIN smoke-fork-constants ====
 // Fork constants: every Chicago/Illinois literal the checks below use. Layer
@@ -2527,8 +2527,8 @@ try {
   //     browser's own dialog. It is offered ONCE: after a reload, with the
   //     event fired again, nothing shows. On a computer the event is left
   //     alone. An iPhone's Safari has no such event and gets a short tip with
-  //     no button. While the Android app is in Google Play's closed test, a
-  //     phone whose browser names Android is invited to the test instead; the
+  //     no button. Since the Android app went live on Google Play, a phone
+  //     whose browser names Android is offered that app instead; the
   //     Install case below runs with this headless browser's own user agent,
   //     which does not name Android. A launch of the installed app is counted
   //     once per window and an install once, both by app and never by place.
@@ -2852,15 +2852,15 @@ try {
         gone && events.join() === "install-invite/tip-shown,install-invite/tip-closed", JSON.stringify(events));
       await context.close();
     }
-    // WHILE THE ANDROID APP IS IN GOOGLE PLAY'S CLOSED TEST, an Android phone
-    // is invited to the test instead of being offered the website version:
-    // Chrome's event is still held, no Install button is offered, and the bar
-    // links the steps page. A reader who was offered the install before the
-    // test began (the key already reads "shown") is asked once about the
-    // test, and not again; and the Play app's own window is not asked at all.
-    // A close or a followed link writes "test-answered", which the front
-    // page's own invitation to the test reads (Adam, 2026-10-20: a "no"
-    // stays closed), and an answer given there keeps this bar away too.
+    // SINCE THE ANDROID APP WENT LIVE ON GOOGLE PLAY (2026-11-08), an Android
+    // phone is offered that app instead of the website version: Chrome's
+    // event is still held, no Install button is offered, and the bar links
+    // the app's Play listing. A reader who answered the closed test's
+    // invitation (the key reads "test-answered") is asked once about the
+    // published app, and not again; and the Play app's own window is not
+    // asked at all. A close or a followed link writes "app-answered", which
+    // the front page's own notice about the app reads (Adam, 2026-10-20: a
+    // "no" stays closed), and an answer given there keeps this bar away too.
     const ANDROID_UA = "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36";
     {
       const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE, userAgent: ANDROID_UA });
@@ -2868,7 +2868,7 @@ try {
         try {
           if (!sessionStorage.getItem("__inviteSeeded")) {
             sessionStorage.setItem("__inviteSeeded", "1");
-            localStorage.setItem("districtry-install-invite", "shown");
+            localStorage.setItem("districtry-install-invite", "test-answered");
           }
         } catch (e) { /* blocked storage: the checks below report it */ }
       });
@@ -2881,9 +2881,10 @@ try {
         return el ? { text: el.textContent, href: a && a.getAttribute("href"),
           install: !!el.querySelector("button.install-invite-go") } : null;
       });
-      check("on an Android phone the app holds Chrome's install event and invites the reader to the Play test instead",
-        held === true && shown && !!bar && /Android app/.test(bar.text) && !bar.install &&
-        bar.href === "/android.html?ref=map", JSON.stringify({ held, bar }));
+      check("on an Android phone the app holds Chrome's install event and offers the Google Play app instead, even to a reader who answered the test's invitation",
+        held === true && shown && !!bar && /Google Play/.test(bar.text) && !bar.install &&
+        bar.href === "https://play.google.com/store/apps/details?id=com.districtry.app&referrer=utm_source%3Ddistrictry.com%26utm_campaign%3Dmap",
+        JSON.stringify({ held, bar }));
       if (shown) {
         await page.evaluate(() => document.addEventListener("click", (e) => {
           if (e.target.closest && e.target.closest(".install-invite-go")) e.preventDefault();
@@ -2897,16 +2898,16 @@ try {
         seen: localStorage.getItem("districtry-install-invite"),
       }));
       const events = await installEvents(page);
-      check("following the test link counts it, records the answer, hands Chrome's dialog nothing, and the bar goes",
-        after.prompted === 0 && !after.bar && after.seen === "test-answered" &&
-        events.join() === "install-invite/test-shown,install-invite/test-join",
+      check("following the app link counts it, records the answer, hands Chrome's dialog nothing, and the bar goes",
+        after.prompted === 0 && !after.bar && after.seen === "app-answered" &&
+        events.join() === "install-invite/app-shown,install-invite/app-open",
         JSON.stringify({ after, events }));
       await page.reload({ waitUntil: "domcontentloaded" });
       await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
       const heldAgain = await fireInstallEvent(page);
       await page.waitForTimeout(4500);
       const again = await page.evaluate(() => !!document.querySelector(".install-invite"));
-      check("the test is offered once: a later visit holds the event and shows nothing",
+      check("the app is offered once: a later visit holds the event and shows nothing",
         heldAgain === true && !again, `held=${heldAgain} shown=${again}`);
       await context.close();
     }
@@ -2921,16 +2922,16 @@ try {
         seen: localStorage.getItem("districtry-install-invite"),
       }));
       const events = await installEvents(page);
-      check("closing the test invitation records the answer the front page reads, and is counted once",
-        shown && !after.bar && after.seen === "test-answered" &&
-        events.join() === "install-invite/test-shown,install-invite/test-closed",
+      check("closing the app invitation records the answer the front page reads, and is counted once",
+        shown && !after.bar && after.seen === "app-answered" &&
+        events.join() === "install-invite/app-shown,install-invite/app-closed",
         JSON.stringify({ shown, after, events }));
       await context.close();
     }
     {
       const context = await browser.newContext({ serviceWorkers: "block", viewport: PHONE, userAgent: ANDROID_UA });
       await context.addInitScript(() => {
-        try { localStorage.setItem("districtry-install-invite", "test-answered"); } catch (e) { /* reported below */ }
+        try { localStorage.setItem("districtry-install-invite", "app-answered"); } catch (e) { /* reported below */ }
       });
       const page = await booted(context, VIEW, stubCounter);
       await page.waitForTimeout(4500);
@@ -2948,7 +2949,7 @@ try {
         marked: document.documentElement.classList.contains("dst-play-app"),
         bar: !!document.querySelector(".install-invite"),
       }));
-      check("inside the Play app nobody is invited to the test",
+      check("inside the Play app nobody is offered the Play app",
         inApp.marked && !inApp.bar, JSON.stringify(inApp));
       await context.close();
     }
@@ -4860,6 +4861,258 @@ try {
     const offOk = off.text.indexOf("not on tribal land") !== -1;
     check("a point off tribal land is told so in the layer's own words",
           offOk, JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
+  }
+
+  // ---- 1y. Election results: the card, the race menu and the legend. The
+  // numbers move daily until the Board certifies, so this asserts what the
+  // card and legend SAY against the shipped files, never a count: the
+  // unofficial notice while the file is not certified, a race menu holding
+  // exactly the races on this precinct's ballot, the legend naming the picked
+  // race and following a new pick, the vote-for-more-than-one sentence on a
+  // race the file marks multiple, another layer's selected district drawn
+  // untinted while the results are on, and the legend gone when the layer is off.
+  {
+    const idx = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results.json"), "utf8"));
+    const key = "47010";
+    const part = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results",
+      idx.parts[idx.precincts.indexOf(key)] + ".json"), "utf8"));
+    const onBallot = part.precincts[key].contests.map((r) => String(r[0]));
+    const multi = idx.contests.find((c) => c.multiple && onBallot.includes(String(c.id)));
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=41.96660,-87.67850&layers=election-results`);
+    await page.waitForFunction(() => {
+      const c = document.getElementById("card-election-results");
+      return c && c.querySelector(".election-table");
+    }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const got = await page.evaluate(() => {
+      const c = document.getElementById("card-election-results");
+      const block = c && c.closest(".layer-block");
+      const pill = block && block.querySelector(".card-id-pill");
+      const sel = c && c.querySelector("select.election-select");
+      const legend = document.querySelector(".election-legend");
+      return {
+        notice: ((c && c.querySelector(".election-notice")) || {}).textContent || "",
+        title: ((c && c.querySelector(".election-title")) || {}).textContent || "",
+        legendTitle: legend ? (((legend.querySelector("summary") || {}).textContent) || "").trim() : "",
+        pill: pill ? pill.textContent.trim() : "",
+        options: sel ? Array.from(sel.options).map((o) => o.value) : [],
+        legendShown: !!legend && !legend.hidden,
+        legendRace: legend ? ((legend.querySelector(".election-legend-race") || {}).textContent || "") : "",
+        legendStatus: legend ? ((legend.querySelector(".election-legend-status") || {}).textContent || "") : "",
+        legendSteps: legend ? legend.querySelectorAll(".election-legend-scale .election-legend-step").length : 0,
+        rows: c ? c.querySelectorAll(".election-table tbody tr").length : 0,
+      };
+    });
+    const firstOnBallot = idx.contests.find((c) => onBallot.includes(String(c.id)));
+    const year = String(idx.electionDate).slice(0, 4);
+    const wantTitle = idx.election.indexOf(year) === -1 ? `${year} ${idx.election}` : idx.election;
+    check("the Election Results card and legend are headed with the election's year and name",
+          got.title === wantTitle && got.legendTitle === wantTitle,
+          `title=${JSON.stringify(got.title)} legend=${JSON.stringify(got.legendTitle)} want=${JSON.stringify(wantTitle)}`);
+    const noticeOk = idx.certified ? got.notice.indexOf("certified") !== -1
+      : got.notice.indexOf("Unofficial results") !== -1 && got.legendStatus.indexOf("Unofficial") !== -1;
+    const menuOk = got.options.length === onBallot.length && got.options.every((v) => onBallot.includes(v));
+    check("the Election Results card says unofficial and lists exactly this precinct's races",
+          noticeOk && menuOk && got.pill === "Ward 47, Precinct 10" &&
+          got.rows === firstOnBallot.choices.length,
+          `notice=${JSON.stringify(got.notice.slice(0, 40))} options=${got.options.length}/${onBallot.length} ` +
+          `pill=${JSON.stringify(got.pill)} rows=${got.rows}`);
+    check("the Election Results legend names the picked race and keys the five lead bands",
+          got.legendShown && got.legendRace === firstOnBallot.name && got.legendSteps === 5,
+          `shown=${got.legendShown} race=${JSON.stringify(got.legendRace)} steps=${got.legendSteps}`);
+    if (multi) {
+      await page.selectOption("#card-election-results select.election-select", String(multi.id));
+      await page.waitForTimeout(300);
+      const after = await page.evaluate(() => ({
+        race: (document.querySelector(".election-legend .election-legend-race") || {}).textContent || "",
+        text: (document.getElementById("card-election-results") || {}).textContent || "",
+      }));
+      check("picking a race repaints the legend, and a vote-for-more-than-one race says its shares are of votes",
+            after.race === multi.name && after.text.indexOf("Voters could choose more than one candidate") !== -1,
+            `race=${JSON.stringify(after.race)}`);
+      // the picked race rides the link as r=<contest id>, and a link carrying
+      // it opens with that race picked and named on the legend
+      const hash = await page.evaluate(() => location.hash);
+      const page2 = await booted(context, `${BASE}${hash}`);
+      await page2.waitForFunction(() => document.querySelector("#card-election-results select.election-select"),
+        null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      await page2.waitForTimeout(500);
+      const reopened = await page2.evaluate(() => ({
+        value: (document.querySelector("#card-election-results select.election-select") || {}).value || "",
+        race: (document.querySelector(".election-legend .election-legend-race") || {}).textContent || "",
+      }));
+      await page2.close();
+      check("the picked race rides the link, and the link opens with that race picked",
+            hash.indexOf("r=" + encodeURIComponent(String(multi.id))) !== -1 &&
+            reopened.value === String(multi.id) && reopened.race === multi.name,
+            `hash=${JSON.stringify(hash)} reopened=${JSON.stringify(reopened)}`);
+    }
+    // a district race follows the reader: picked at one precinct, it becomes
+    // the same race for the district of the next precinct selected, and a
+    // seat keeps its place among a district's two vacancies
+    {
+      const congressHere = idx.contests.find((c) => c.group === "congress" && onBallot.includes(String(c.id)));
+      await page.selectOption("#card-election-results select.election-select", String(congressHere.id));
+      await page.waitForTimeout(300);
+      await page.evaluate(() => window.ChiExplorer.setSelectedPoint(41.8825, -87.6285));
+      await page.waitForFunction((was) => {
+        const pill = document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill");
+        return pill && pill.textContent.trim() !== was && document.querySelector("#card-election-results .election-table");
+      }, "Ward 47, Precinct 10", { timeout: QUERY_TIMEOUT }).catch(() => {});
+      const moved = await page.evaluate(() => ({
+        pill: (document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill") || {}).textContent || "",
+        value: (document.querySelector("#card-election-results select.election-select") || {}).value || "",
+      }));
+      const m = /Ward (\d+), Precinct (\d+)/.exec(moved.pill);
+      const newKey = m ? m[1].padStart(2, "0") + m[2].padStart(3, "0") : null;
+      const newPart = newKey && JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results",
+        idx.parts[idx.precincts.indexOf(newKey)] + ".json"), "utf8"));
+      const newBallot = newPart ? newPart.precincts[newKey].contests.map((r) => String(r[0])) : [];
+      const congressThere = idx.contests.find((c) => c.group === "congress" && newBallot.includes(String(c.id)));
+      check("a U.S. House race picked at one precinct becomes the next precinct's own district race",
+            !!congressThere && congressThere.id !== congressHere.id && moved.value === String(congressThere.id),
+            `from=${congressHere.name} pill=${JSON.stringify(moved.pill)} picked=${moved.value} want=${congressThere && congressThere.id}`);
+      await page.evaluate(() => window.ChiExplorer.setSelectedPoint(41.96660, -87.67850));
+      await page.waitForFunction((want) => {
+        const pill = document.querySelector("#card-election-results")?.closest(".layer-block")?.querySelector(".card-id-pill");
+        return pill && pill.textContent.trim() === want && document.querySelector("#card-election-results .election-table");
+      }, "Ward 47, Precinct 10", { timeout: QUERY_TIMEOUT }).catch(() => {});
+      await page.selectOption("#card-election-results select.election-select", String(firstOnBallot.id)).catch(() => {});
+      await page.waitForTimeout(300);
+    }
+    // another layer's selected district keeps its outline and drops its tint
+    // while the results are on, since a tint over the result colours changes
+    // them, and gets it back once they are off
+    await page.click("#toggle-school-board");
+    await page.waitForTimeout(300);
+    // the fill the page PAINTS, not only the one the engine asks for: the
+    // skin's stacked-highlight rule outranked a 0 until 2026-11-05
+    const tintOn = await page.evaluate(() => {
+      const asked = window.ChiExplorer.highlightFill("school-board");
+      const painted = Array.from(document.querySelectorAll(".leaflet-overlay-pane path.region-highlight"))
+        .map((p) => parseFloat(getComputedStyle(p).fillOpacity));
+      return painted.some((v) => v > 0) ? Math.max.apply(null, painted) : asked;
+    });
+    // the picked race added up over the school board district at the point:
+    // its own table under the precinct's, whose votes sum to the total its
+    // note states, and that total holds at least this precinct's own votes
+    await page.waitForFunction(() => document.querySelector("#card-election-results .election-area .election-table"),
+      null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const area = await page.evaluate(() => {
+      const sec = document.querySelector("#card-election-results .election-area");
+      const num = (t) => Number(String(t).replace(/[^0-9]/g, "")) || 0;
+      if (!sec) return null;
+      const note = (sec.querySelector(".election-note") || {}).textContent || "";
+      const m = /from the ([\d,]+) precincts? in .* this race: ([\d,]+) votes/.exec(note);
+      return {
+        closed: !sec.open,
+        summary: (sec.querySelector("summary") || {}).textContent || "",
+        caption: (sec.querySelector("caption") || {}).textContent || "",
+        votes: Array.from(sec.querySelectorAll("tbody tr td:nth-child(2)")).reduce((a, td) => a + num(td.textContent), 0),
+        precincts: m ? num(m[1]) : 0, stated: m ? num(m[2]) : -1,
+        own: Array.from(document.querySelectorAll("#card-election-results .election-race > .election-table tbody tr td:nth-child(2)"))
+          .reduce((a, td) => a + num(td.textContent), 0),
+      };
+    });
+    check("the Election Results card adds the picked race up over the selected school board district, in a closed section",
+          !!area && area.closed && /^Race totals for District \d+[ab] \(.+\)/.test(area.summary) &&
+          /^.+, all of District \d+[ab]$/.test(area.caption) && area.precincts > 1 &&
+          area.votes === area.stated && area.stated > area.own && area.own > 0,
+          `area=${JSON.stringify(area)}`);
+    // every other school board district keeps its full line and its number
+    // while the results are on, and the "Boundaries and numbers" button takes
+    // both away and gives them back
+    const lines = async () => page.evaluate(() => {
+      // school board is drawn from tiles, so the line strength is read from
+      // the style the tile paint is built from, not from SVG paths
+      const others = window.ChiExplorer.otherDistrictsOpacity("school-board");
+      const btn = document.getElementById("district-lines-toggle");
+      return {
+        others,
+        labels: Array.from(document.querySelectorAll(".district-number-label"))
+          .filter((el) => !el.classList.contains("rel-map-label-hidden")).map((el) => el.textContent),
+        btn: btn && !btn.hidden ? btn.textContent : null,
+      };
+    });
+    await page.waitForFunction(() => document.querySelectorAll(".district-number-label").length > 0,
+      null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const linesOn = await lines();
+    await page.click("#district-lines-toggle");
+    await page.waitForTimeout(400);
+    const linesOff = await lines();
+    await page.click("#district-lines-toggle");
+    await page.waitForTimeout(400);
+    const linesBack = await lines();
+    check("over the election results every school board district keeps its line and its number, and the button takes both away and back",
+          linesOn.others === 1 && linesOn.labels.some((t) => /^District \d+[ab]$/.test(t)) &&
+          linesOn.btn === "Boundaries and numbers: on" &&
+          linesOff.others < 0.5 && linesOff.labels.length === 0 && linesOff.btn === "Boundaries and numbers: off" &&
+          linesBack.others === 1 && linesBack.labels.length > 0,
+          `on=${JSON.stringify({ o: linesOn.others, l: linesOn.labels.slice(0, 3), b: linesOn.btn })} ` +
+          `off=${JSON.stringify({ o: linesOff.others, l: linesOff.labels.length, b: linesOff.btn })} ` +
+          `back=${JSON.stringify({ o: linesBack.others, l: linesBack.labels.length })}`);
+    await page.click("#toggle-election-results");
+    await page.waitForTimeout(300);
+    const tintOff = await page.evaluate(() => window.ChiExplorer.highlightFill("school-board"));
+    const afterOff = await lines();
+    check("with the election results off, other layers' labels and the Boundaries and numbers button go away",
+          afterOff.labels.length === 0 && afterOff.btn === null && afterOff.others < 0.5,
+          `labels=${afterOff.labels.length} btn=${JSON.stringify(afterOff.btn)} others=${afterOff.others}`);
+    check("another layer's selected district is drawn untinted while Election Results is on, and tinted again after",
+          tintOn === 0 && tintOff > 0, `on=${tintOn} off=${tintOff}`);
+    const hidden = await page.evaluate(() => {
+      const l = document.querySelector(".election-legend");
+      return !l || l.hidden;
+    });
+    check("switching Election Results off takes its legend away", hidden, `hidden=${hidden}`);
+    await context.close();
+  }
+
+  // ---- 1y2. Election results beyond Chicago: a county clerk's precincts are
+  // coloured and answered beside Chicago's (the layer's extraPrecincts). At a
+  // Franklin County point, whose precinct outlines ship with the app, the card
+  // must speak for the Franklin County Clerk, list exactly the races on that
+  // precinct's ballot in the clerk's part file, and give a statewide race's
+  // totals as Franklin County's with the reaches-beyond sentence.
+  {
+    const idx = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results.json"), "utf8"));
+    const key = "franklin:Barren";
+    const at = idx.precincts.indexOf(key);
+    const part = at >= 0 ? JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results",
+      idx.parts[at] + ".json"), "utf8")) : null;
+    const onBallot = part ? part.precincts[key].contests.map((r) => String(r[0])).sort() : [];
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=38.08115,-88.98503&layers=election-results`);
+    await page.waitForFunction(() => {
+      const c = document.getElementById("card-election-results");
+      return c && c.querySelector(".election-table");
+    }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const got = await page.evaluate(() => {
+      const c = document.getElementById("card-election-results");
+      const sel = c && c.querySelector("select.election-select");
+      return {
+        text: (c || {}).textContent || "",
+        notice: ((c && c.querySelector(".election-notice")) || {}).textContent || "",
+        options: sel ? Array.from(sel.options).map((o) => o.value).sort() : [],
+        value: sel ? sel.value : ""
+      };
+    });
+    check("a Franklin County precinct's results card speaks for the Franklin County Clerk",
+          at >= 0 && got.notice.indexOf("Franklin County Clerk") !== -1, JSON.stringify(got.notice.slice(0, 160)));
+    check("its race menu holds exactly the races on that precinct's ballot",
+          onBallot.length > 10 && JSON.stringify(got.options) === JSON.stringify(onBallot),
+          `menu=${got.options.length} ballot=${onBallot.length}`);
+    const senate = idx.contests.find((c) => c.name === "Senator, U.S.");
+    if (senate) {
+      await page.selectOption("#card-election-results select.election-select", String(senate.id)).catch(() => {});
+      await page.waitForFunction(() => /Across Franklin County's precincts/.test(
+        (document.getElementById("card-election-results") || {}).textContent || ""), null, { timeout: 10000 }).catch(() => {});
+      const text = await page.evaluate(() => (document.getElementById("card-election-results") || {}).textContent || "");
+      check("a statewide race there is totalled across Franklin County's precincts and says it reaches beyond",
+            /Across Franklin County's precincts/.test(text) && /reaches beyond Franklin County/.test(text),
+            JSON.stringify(text.slice(text.indexOf("Across"), text.indexOf("Across") + 200)));
+    }
     await context.close();
   }
 } finally {

@@ -12,6 +12,7 @@ checkpoint that didn't happen.
 
 | Cadence | What | Where | You do |
 |---|---|---|---|
+| **2031**, when TIGERweb publishes 2030 census blocks | The Census 2020 block populations the compare screen counts people with, the one dataset here that cannot change until then | `ok/data/app/population/` | Point `scripts/build_block_population.py` at the 2030 block and tract layers, set this app's `INSTANCES` row's `total` to its 2030 count and rebuild with `--instance ok`. `--check` forces it: the first legislative map drawn on 2030 blocks fails against 2020 people until this row is done. |
 | Weekly (Mon 16:45 UTC) | U.S. House (Oklahoma) roster refresh | `.github/workflows/update-ok-congress-roster.yml` → PR on change | Review + merge the PR; a week with a surprise diff is worth a look at the source |
 | Weekly (Tue 16:45 UTC) | Oklahoma Senate + House roster refresh — Open States `ok.csv` | `.github/workflows/update-ok-legislature-roster.yml` → PR on change | Review + merge the PR — especially after an Oklahoma general (November, even years) and each February session start |
 | Monthly (1st, 19:00 UTC) | Source freshness for every dataset this instance depends on | `.github/workflows/ok-validate-sources.yml` → tracking issue on WARN/FAIL | Read the issue; the job stays green on purpose |

@@ -43,18 +43,18 @@ www.greenvillenc.gov, www.rockymountnc.gov, www.garnernc.gov,
 www.wilsonnc.org and www.brokenarrowok.gov on 2026-10-16 for Arkansas's,
 South Carolina's, Tennessee's, North Carolina's and Oklahoma's city
 councils, and perrycountyil.gov on 2026-10-20 for Perry County's
-commissioners, and www.kossuthcounty.iowa.gov on 2026-10-26 for Kossuth's supervisors, on the stdlib stack only: 255 serve UA_ROSTER_BOT a full page, 44 refuse it and answer the
+commissioners, and www.kossuthcounty.iowa.gov on 2026-10-26 for Kossuth's supervisors, on the stdlib stack only: 255 serve UA_ROSTER_BOT a full page, 45 refuse it and answer the
 browser string, and 9 refuse the `requests` STACK while serving the same token
 on the stdlib client, so on those a browser string is credited with a fix the
 stack made. (The first sweep read 203: 37 hosts had been probed at the first
 half of a URL split across two string literals, and 23 more at a directory a
 page sat under; not one re-probe moved a host INTO a refusal.) Per file
 (`probe_user_agents.py --inventory` prints this tally, re-derived from the tree
-and the artifact rather than remembered): 51 files send a browser string; 3
+and the artifact rather than remembered): 52 files send a browser string; 3
 of them reach only hosts that serve the token a full page, 21 more reach no
 host that refuses the token (one or more answered nothing or refused the
-`requests` stack), and 27 reach at least one host that refuses it -- and 264 of
-the 354 measured hosts are still reached by such a caller. The pair 101/62 that
+`requests` stack), and 28 reach at least one host that refuses it -- and 265 of
+the 355 measured hosts are still reached by such a caller. The pair 101/62 that
 stood here until 2026-10-01 was the state before SIXTY scrapers were switched
 off a Chrome string onto our own token in one change: every page each of them
 fetches was re-read with the token on that file's own HTTP stack and answered in

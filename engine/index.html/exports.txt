@@ -40,6 +40,14 @@
     // The name a layer prints for one feature on its map labels and hover row
     // (the same hoverValue those read), for a check that a layer names its own
     // districts and not a parent's (smoke check 1k1b).
+    // how strongly a layer draws the districts other than the selected one
+    // (smoke check 1y: full over the election results, faded elsewhere)
+    otherDistrictsOpacity: function (id) {
+      var mod = getLayerById(id), base = mod && baseStyleFor(mod);
+      if (!base) return null;
+      var f = fadedStyle(base, mod);
+      return f.opacity == null ? 1 : f.opacity;
+    },
     hoverValueFor: function (id, properties) {
       var mod = getLayerById(id);
       return mod ? hoverValue(mod, { type: "Feature", geometry: null, properties: properties || {} }) : null;
@@ -349,6 +357,13 @@
       }
       var lit = rt.highlightedLayer;
       return lit && lit.options ? lit.options.color : null;
+    },
+    // the fill a layer's lit district is drawn with: 0 while a layer whose
+    // colours are its answer (fillsGround) is on, so a test can see the tint
+    // drop and come back
+    highlightFill: function (id) {
+      var mod = getLayerById(id);
+      return mod ? highlightStyleFor(mod).fillOpacity : null;
     },
     loadWholeFile: function (id) {
       var mod = getLayerById(id);
