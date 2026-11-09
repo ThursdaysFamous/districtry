@@ -1,0 +1,681 @@
+{
+  "note": "Each file is the Cook County Clerk's ElectionResults.xlsx for one race, downloaded by hand in a browser from results1126.cookcountyclerkil.gov (which blocks this project's readers) and saved here; 'saved' is when the file was saved, since the file carries no report time.",
+  "files": {
+    "appellate-court-judge-vacancy-of-hoffman.xlsx": {
+      "sha256": "28928738f89b4cddba1f84aecfe8e06627fedecaed3756109e8b3e2cc9f0dd34",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "assessor-cook-county.xlsx": {
+      "sha256": "0d65841bdeddd5f13df6c213fd7a9a8d4eba4dc4f2f183e3cd43feda3b303643",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "attorney-general.xlsx": {
+      "sha256": "7ab3992bb4ff5d63a0760f73df5116eb671addd852af515820541e2f6f745e06",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "bartlett-public-library-district-issue-bonds-new-library.xlsx": {
+      "sha256": "b38c0c275c82f8568c7e268a329f06a93a67cc3712db2519a8cfe16d748e6e76",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "bartlett-public-library-district-issue-bonds-renovation.xlsx": {
+      "sha256": "8f5bf3f74fcc598d3325a13d2e45e217dffdd34f3f4304d3fc6e8491ad5ed892",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "board-of-review-1-district.xlsx": {
+      "sha256": "bf4db9359e15550b6ad6b14da1344f5a38bbb56149584707085091b30e5fcde8",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "board-of-review-2-district.xlsx": {
+      "sha256": "5ad41e67bfa7c399bd8407ab506590a63bcb1c5fa32a7518adbf9a9447df249f",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "board-president-cook-county.xlsx": {
+      "sha256": "ad05d3ee74ba370c374e8006059977e226e90dd0ae65c60b121ad228196171a3",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "circuit-court-judge-vacancy-of-burke.xlsx": {
+      "sha256": "393c3650a3894a07f34dc896db94a310272f73c5de1e78d469fdc9ed88bbfa52",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "circuit-court-judge-vacancy-of-cobbs.xlsx": {
+      "sha256": "1048d7caab02ebdc7a6c4901d45ceb7970e9ccf0222a4f9b3191956fb2f77c79",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "circuit-court-judge-vacancy-of-coghlan.xlsx": {
+      "sha256": "cc2212e91415c7f62d514843600d28e22863cd8f6845d2dd61930e1d9b6d007d",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "circuit-court-judge-vacancy-of-hooks.xlsx": {
+      "sha256": "5cb81614fd379a3363c3e8444aefd984a1851ef029fb126e569856b56a09c41c",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "circuit-court-judge-vacancy-of-karkula.xlsx": {
+      "sha256": "3d99749f9d360e0c93ddfd6fc1d8e3b14730e8f3608c58eac0b62c2228c17307",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "city-of-markham-adopt-managerial-form-of-government.xlsx": {
+      "sha256": "87f3e4c888af07e2a15714831a697dc1223425e19563ade736db2724ad14a182",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "city-of-markham-should-the-city-operate-parks-and-recreation.xlsx": {
+      "sha256": "799885e102ee1ff5e2895794718e67db41d197571ee87ac37d283aab121fee54",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "city-of-markham-term-limits.xlsx": {
+      "sha256": "1c184574ff02c8964b792643a1fb427446696b9ebc1c6c03b62e7f676efd2f68",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "clerk-cook-county.xlsx": {
+      "sha256": "33e4a4f34d593501cdc4de9de9352512c17c6cbd5124cfa0c3c4274968589275",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "college-district-524-issue-bonds.xlsx": {
+      "sha256": "b4a8ffecad7554b2ef821e5e3a7c63ff556f180278e83b3d64cb4074ed35faf5",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "combined-school-district-113a-increase-limiting-rate.xlsx": {
+      "sha256": "d4423aa43603df3ed85632b04ff8ac41c62176533129d6a0a36cb481d9168d1d",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "commissioner-county-board-1-district.xlsx": {
+      "sha256": "97d15c31aebc77deab227ddcaee9d20335782efa35199334352382618fd1c8dd",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "commissioner-county-board-10-district.xlsx": {
+      "sha256": "ac0aad33268a1474d594951d59a986a79bd569fa7dfdc5140210f13511408985",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "commissioner-county-board-11-district.xlsx": {
+      "sha256": "de9ba4a1fa44c158c45a2ba7d01c7ab6369f1efad739a193b1739633a7c1762f",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "commissioner-county-board-13-district.xlsx": {
+      "sha256": "0fcb47b7838a829157b14dcdc61bc5562d74ff21c81ac344f29cb3e11aac3113",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "commissioner-county-board-14-district.xlsx": {
+      "sha256": "2152d2d03113f25ae5ea1f843ab53c0cfca38b8dc265fbfd910edb049af16daf",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "commissioner-county-board-15-district.xlsx": {
+      "sha256": "92472d45502aeb93c3d9306e5c2ac2d0950f406aa4a0e1d7e2d09990d14f5a7a",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "commissioner-county-board-16-district.xlsx": {
+      "sha256": "47c3a5bb978e82fdb2d9a1019bfead1001dbc1559662cd5158efacdef45c82de",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "commissioner-county-board-17-district.xlsx": {
+      "sha256": "66f617413a057b6ad7a44068a04114a52908948994563be7e184d8147744210c",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "commissioner-county-board-4-district.xlsx": {
+      "sha256": "129fc786d3151800dffd964c6364d0b264bf8fb3a15816d4891aa114633d51b3",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "commissioner-county-board-5-district.xlsx": {
+      "sha256": "fc441b5bd008229830e339a05bf9fdefc5767faae3ca942048a34702b7da33a3",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "commissioner-county-board-6-district.xlsx": {
+      "sha256": "3dc27de7af649b9655fc725de886ba31e3b2f859109f1f9abc1f3e1618e8da7f",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "commissioner-county-board-9-district.xlsx": {
+      "sha256": "d1633c0243015d80fa79cd79ce5a44827a94f7abb4def2607e1de1d25ff30d61",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "commissioner-water-reclamation-dist-2-yr.xlsx": {
+      "sha256": "b12eec89b05f7f3d9190b7bcff2de057e02487f0e6b79387b3f3a31729fc1520",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "commissioner-water-reclamation-dist.xlsx": {
+      "sha256": "b8c025997a543ce51a2f5139d36140e208487bab6212e96ec608665167d0fa30",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "comptroller.xlsx": {
+      "sha256": "b832be27eedd5dcdc6d54d791a6b7cf977bf52e626d660b4ee8b0ef6cffffc98",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "cook-county-millionaire-tax-amendment.xlsx": {
+      "sha256": "82ee3b8266549e0dd670b246b54d4febef3585b3ea4d86d2cd1836e6d53dd497",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "dolton-park-district-increase-limiting-rate.xlsx": {
+      "sha256": "93dcfc4017e54a116b8cdf843cec5b9e42ae313b6061c4644044c5714360fc37",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "east-dundee-and-countryside-fire-protection-district-issue-bonds.xlsx": {
+      "sha256": "b5bde55ff9e41233d461da4c12fb6c118bbbe0c8d3dea83dc209906b5c1cd5c9",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "east-dundee-and-countryside-fire-protection-district-new-tax-rate.xlsx": {
+      "sha256": "31634a26e3ccfa2b6d7c2a0a5ad40c44fa0351514ec1fb9b2923b5d1653d05dd",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "elk-grove-township-mental-health-board.xlsx": {
+      "sha256": "db9cb5be2c8b7746cc259221f1d989d971a5241e278776f6152c5320d3fb6dba",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "governor.xlsx": {
+      "sha256": "3e1b697ea624ee963cdb4721b0219ed5bb54b84718f0a2d1cded2467a85657db",
+      "saved": "2026-11-09T20:05:00Z"
+    },
+    "high-school-district-214-issue-bonds.xlsx": {
+      "sha256": "9887fcfaf9a66c26bd4612282d0d0fad6782004749af066da0fa535fbae28a8b",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "hometown-fire-protection-district-increase-limiting-rate.xlsx": {
+      "sha256": "da341371cba9858f0f01bb9f0ca786673eacf00138839b7b742a09acbc35bd91",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "judge-11-subcircuit-vacancy-of-mclean-meyerson.xlsx": {
+      "sha256": "a1e80fa93db2bc8296c1febbcc54c1359da0b2deea35c62ce04b0165057334f8",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "judge-11-subcircuit-vacancy-of-roberts.xlsx": {
+      "sha256": "e3b55c2fa5521f09ceb072028c1a75d082355b4b5a4bd18eb2a240948da6d4fc",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "judge-13-subcircuit-vacancy-of-curry-jr.xlsx": {
+      "sha256": "06f439365de96accc5c2cafe9a8c88fa8eb13282fef21c53b41e3812a88aa935",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "judge-13-subcircuit-vacancy-of-m-kelley.xlsx": {
+      "sha256": "1b06223175739580610bf6cdf4cfe90f82429d50412383e190c5fa8ab224c864",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "judge-13-subcircuit-vacancy-of-omalley.xlsx": {
+      "sha256": "7b544c4b9386eae0eb96bf6fd68e9c132f67a66388253aa830374ec6b65fb626",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "judge-13-subcircuit-vacancy-of-t-kelley.xlsx": {
+      "sha256": "4ea6a214ecab38f9ab769e42c0e283e23869e07ac093e715872b9b2efa1897f7",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "judge-16-subcircuit-vacancy-of-baird.xlsx": {
+      "sha256": "169fd30e1a49a6b4fb460a962f8fb8699010d8b4f1a27d511a3cf1d6b7ffa070",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "judge-16-subcircuit-vacancy-of-mendoza.xlsx": {
+      "sha256": "82b377fb49ce4551e50a3168edb91b7bd88bdcc9fbc0f73c14e3423375ce833d",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "judge-17-subcircuit-vacancy-of-brooks.xlsx": {
+      "sha256": "bad7a7061698a07a9956dc3917881afd29d7cd6d2388efa76f05c83422a25e09",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "judge-17-subcircuit-vacancy-of-carroll.xlsx": {
+      "sha256": "52eacc87c5ce484e58540403ae75b9a55d5b0bd4d2ade546c29a3ea9cee1f1bb",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "judge-18-subcircuit-vacancy-of-andreou.xlsx": {
+      "sha256": "069f4080da5827bddf0c7bdecac31e32d584148ff86f10d407b789c13ad510bc",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "judge-18-subcircuit-vacancy-of-chrones.xlsx": {
+      "sha256": "bbd1d39f9ba9ccf56c64092221b19e01ca9f94755bdf2c82634ffdfdd806b94d",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "judge-19-subcircuit-vacancy-of-fairman.xlsx": {
+      "sha256": "8b0b3edc1ba7622f0a6170827734a69d9efa33ffed7a9c223316bff5f3a6b06d",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "judge-19-subcircuit-vacancy-of-kane.xlsx": {
+      "sha256": "d5130e7b64150fabb84c88b79642f5dfad552bd84c9ac5715bec7d4d2e7b380f",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "judge-3-subcircuit-vacancy-of-murphy.xlsx": {
+      "sha256": "e47ab6287b4bd079509d8fe9354a21f31f4042341eb7981a6ce65b59360de881",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "judge-3-subcircuit-vacancy-of-sherlock.xlsx": {
+      "sha256": "e6873a086c76893b3bfe121de3ceea8f6a068e1d90b1930feb04fe9abfd2288c",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "northfield-township-abolish-road-district.xlsx": {
+      "sha256": "f00469aeffeb585b04bf2bf01be7a3f5620b8a467f64f1477aa434b3feb211f0",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "northfield-township-prepackaged-meals-for-food-pantry.xlsx": {
+      "sha256": "af8d0107145bed0accfc758041fb94dc44b2518d6e584914c4119eaeefa41e48",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "northfield-township-waste-refuse-and-recycling-services.xlsx": {
+      "sha256": "1fbd355944e102f9a0eb3c7b790455e5961714c416bed385b5f55ef2df91f915",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "orland-township-citizen-initiatives.xlsx": {
+      "sha256": "dc3042af5c65419c1cd66c43efa4993a924234186451bf187fe535fa934f3116",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "palos-heights-fire-protection-district-new-tax-rate.xlsx": {
+      "sha256": "ebb0e8f786b6b2fe7ad7dd185f82689efbea2fac6fecd60ff3a1126c14b4c644",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "roselle-fire-protection-district-increase-limiting-rate.xlsx": {
+      "sha256": "08d8501b367e894c60671911a2e8d47d8d63ede2d51d3bbaf2975ff450063b76",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "schaumburg-township-abolish-road-district.xlsx": {
+      "sha256": "cf30af2a4630b32da349773d944054b0b14bb00c941081871fd5f261a914d6af",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "school-district-124-issue-bonds.xlsx": {
+      "sha256": "d347954728cbea70b4647edfa12490aeb3fb3602b83a75e5ccd6809bb20b0caa",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "school-district-128-increase-limiting-rate.xlsx": {
+      "sha256": "487134a2af66565083013d4dd65428c9cb52fb998d2c5787ce53940ae04eb9d4",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "school-district-23-increase-limiting-rate.xlsx": {
+      "sha256": "76842585c8ca788091ba87039a02f343eef75d69ce59123dcd6f1eaafdb26a81",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "school-district-63-issue-bonds.xlsx": {
+      "sha256": "1704c82d9ab189cb0ad7dc76b603472bcdd81f9dfef9ecb5fe9bcee0172d0af0",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "secretary-of-state.xlsx": {
+      "sha256": "4f035164c0fccd5bb5d63ceb638f91738c7b47e52ad60ed58fa23a2fe507b1df",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "senate-us.xlsx": {
+      "sha256": "80847372ca8eff645a322b66489a1238ee6f761886e05383e8b49b9fdcfe706b",
+      "saved": "2026-11-09T20:04:00Z"
+    },
+    "sheriff-cook-county.xlsx": {
+      "sha256": "ef77c0472c355a47e2c3106bbbe852f77f182403ee14bf3cc7bf1d7d3ec166cc",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "skokie-park-district-issue-bonds.xlsx": {
+      "sha256": "d7dc73197520940adba21c00ec3646f43acc45755dca6eb5c4e36a9db456394a",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "state-representative-01.xlsx": {
+      "sha256": "b5bb57372a2e6db2c96e21cd0f771f398cdb0c55fd57f9a4e207cf263e343464",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-02.xlsx": {
+      "sha256": "7dadd02b15ba8e9185578e73e000077df379b20438e47aa63c3936e28ca3ec34",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-07.xlsx": {
+      "sha256": "a10d39d0fd5cddec6050894340f6a4c9964b1e561297299507fcd5b26b6c7a4e",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-08.xlsx": {
+      "sha256": "75190fb92149a37b495c517b036467ebc344af5b41b4b25711a1f125cb07fe92",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-15.xlsx": {
+      "sha256": "c0c8c425817864cc12f85d0ca1e7898adff5941c3968cd0fcb8efa2ba62addda",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-16.xlsx": {
+      "sha256": "5a77c2aa39cfc8d44f3d776b7cf65819481759716673d668c860c459fb821c1e",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-17.xlsx": {
+      "sha256": "ffd19e3d662c66506adcc6c169c1301ea3cfeaed7edcd5a1d7fa1fdeb30cdcab",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-18.xlsx": {
+      "sha256": "3417d886716f337d564576b9ae24816166fcc2d6fa4f730a9c57990527db0003",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-19.xlsx": {
+      "sha256": "b8b614f5970b1c8ca55e75da7311f175a3f38decbf79955983ec77bd31b84130",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-20.xlsx": {
+      "sha256": "e1e43e2b983cb701c9618df54b2e66e2af33653a68d1d38fa720162ccd361810",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-21.xlsx": {
+      "sha256": "3ea31fe70555d8406059c0b7cbb2d5255b3ac53855b8d535c171b11f882fd606",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-22.xlsx": {
+      "sha256": "df8a942a8ac722dca0e7ebd73f28cf534b7c70463210c3631a6d915a29f5477d",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-23.xlsx": {
+      "sha256": "ea9912372361adab00588a22dd6dffb625cd949b0888d86f3cc7dfc4fa4eb154",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-27.xlsx": {
+      "sha256": "cc25b1036e53842e5356d4a8f29acc2c0e0efdeb29c30136cdc55ce74d4f8419",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-28.xlsx": {
+      "sha256": "98ac458e9cfd22076a2283cf91f84524611e8d0dc63df83aea03146d52b32df5",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-29.xlsx": {
+      "sha256": "7bf9fdf73c0e1ac0ae1c3201cec3ba96f568167e6c356f0bbf00eb182c344f2f",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-30.xlsx": {
+      "sha256": "e13dd57813113ed62a10f2dfe73b7cb3608614b0164556097aeaabda5bc65346",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-31.xlsx": {
+      "sha256": "25cf9d41e7719bfa9bce8f0892563368b052bb0864f81c61102b8095251dca60",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-32.xlsx": {
+      "sha256": "e9dfb5f1774fddeed6a413b790d6a003479ecc4c72da865f94a2f41ad91c1457",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-33.xlsx": {
+      "sha256": "d74e4eb2e8dec2d426b4dd2d40ea6fcd3a5b8239cce172aff3480c7202beb9e7",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-34.xlsx": {
+      "sha256": "a5072fe6b90da2cbbd0a1b8169df0850923fa77ab11b47acef90dd8a296627c0",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-35.xlsx": {
+      "sha256": "fa43f7bd0a2a822003662a593e83f96e3d504b5fda651c9d3eb2320c8d6c33f7",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-36.xlsx": {
+      "sha256": "55bf078980dbb8bed1a5d5628ec8f418cf7b40d36bf108ca22153a9b13a1a659",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-37.xlsx": {
+      "sha256": "92177170b7f493bd78c7f8116cebebc465269b0904a3445120669268fd047d33",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-38.xlsx": {
+      "sha256": "7aa8b28f00834db8e9ecc127cd97161eb592a77286625039f216cf5eb603e9e5",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-43.xlsx": {
+      "sha256": "7ba5fc4a599d7beb259135196a0911df9660a3d676d15ae7c27b9d9ea86fcceb",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-44.xlsx": {
+      "sha256": "877274478805d7329438b3291a3779d46235fff8159de83c6512032412862355",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-45.xlsx": {
+      "sha256": "d3c2435cef3980897c440ca5ffed759a423e1c7c5c4e7fd219347f5f5eda4d58",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-48.xlsx": {
+      "sha256": "eb93dc697936ebf23415bff1d495b22d76fbba5634bb2f0c2d15341a1ec4ee3e",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-49.xlsx": {
+      "sha256": "204e48b30de6f5129ba4e6f4a18b46ec7c905203b854700c42d8ef5d0c600815",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-51.xlsx": {
+      "sha256": "c6162d8726868add34ef66458cabd2f172b645a2ee77b1c9456910667e1bb596",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-52.xlsx": {
+      "sha256": "d53c1f61d2ca9357e1af8144ed6850dd50875cc721a0f60aadb771876bfa4729",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-53.xlsx": {
+      "sha256": "ea11f0e797e7c170750992dbcb901d397e34537cb2bf5a2c03a2916c305b03a2",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-54.xlsx": {
+      "sha256": "11c06b073d8e0d3e815ad2246942e5833837957e75ad8bfa58371f949e1c2d8b",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-55.xlsx": {
+      "sha256": "250de71f13b0d9808c6ce823ca399b497e070300ca1cc5d69586587a844f23fc",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-56.xlsx": {
+      "sha256": "b4002a35c17b9fdc9ff9981beebb2b33ead94f2c6cd8a2ffa5cb3bda8e09aeae",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-57.xlsx": {
+      "sha256": "37ce50808eccfd2317270be9a23e950b813359799223527025130287f6cf48e3",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-58.xlsx": {
+      "sha256": "c689fd9375243d269531857622153ee3b3148674a72570da3eaa9cac9d8eec37",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-59.xlsx": {
+      "sha256": "f3e80d2cebaebce55b723aac47fc9109ecea9eb5de30a2d189ebb5497e93a0ea",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-77.xlsx": {
+      "sha256": "3df4129ea60864557adfb9c61f387f5fcf28516c8c57bfe2a42684a9ceb0e626",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-78.xlsx": {
+      "sha256": "8b73eae3531ccc2ab2596fb5e96d3117a8d86a00e9d3f673a68b6cfee43fc941",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-79.xlsx": {
+      "sha256": "7fa7f6ab783c294a131070904be4ad708f67a47ec36903f2b302bd6c35f47ce8",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-80.xlsx": {
+      "sha256": "ed0bb548600b834523b063f751cbd0014cb7d3d7ced2374fcfcd0ba53b8fbd34",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-representative-82.xlsx": {
+      "sha256": "71af3315fc9902c268488cb8637db7bd5c320557c81f5a6e47af53411ee86c6c",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-senator-08.xlsx": {
+      "sha256": "d26d68cd0da700711904bb3576eccca7ae8be972efc16922fb6a2dab5a0765c1",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-senator-09.xlsx": {
+      "sha256": "cb15c33504e258cec045705edf3ba78e839ec65e8a0f44d4509a5bf9b54e8109",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-senator-11.xlsx": {
+      "sha256": "35690487998006c49f4761af9ca13d6532b62ec9794a23ad0daf17aa41b0dd27",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-senator-12.xlsx": {
+      "sha256": "973f41cd0cc7e807ad8430c3dbd2eb6b142082982af2991bd3df8db0d2f3d69e",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-senator-14.xlsx": {
+      "sha256": "bdcf75646b98dc38d81af051a8b4a1f40d5479b5d3d8ffceff9795f704535b10",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-senator-15.xlsx": {
+      "sha256": "f99ed74ae8fb2866e313497c8b9927617cf20560ea342ab222f0762a690c51e6",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-senator-17.xlsx": {
+      "sha256": "ec56c803200b479bf7e6b478e109d6cd0e062463f84f09cd78897f809f6f91ac",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-senator-18.xlsx": {
+      "sha256": "507e5852e19c854ce717a9cfc214de93d6ba518408c70ee34abb8478c59ef9cc",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-senator-23.xlsx": {
+      "sha256": "6039efda6453e6540becf4850d3474b6d5b4ccc2d570f1637e28b5a8e4d5abb0",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-senator-24.xlsx": {
+      "sha256": "62822152a6a90e08dcd33c0c739d78c4407b069feb85b48e96ed8c02c32b44c4",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-senator-26.xlsx": {
+      "sha256": "fb7899632208e75cd9a09bbd3db6e2c424d68d41fdfc1f32cd01778940d96ae7",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-senator-27.xlsx": {
+      "sha256": "76dac73eada226120fa5b65fbcdd7d58c33d4f0ab54ae74023a41276426810b9",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-senator-29.xlsx": {
+      "sha256": "d373c4f4f074a566a36e0b1eaafb5499c664812959191147e05bebaedf6826d7",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-senator-30.xlsx": {
+      "sha256": "f023109208382b28663043010bc7b9ffe5813a1a435ac584f7908847362f6da3",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-senator-39.xlsx": {
+      "sha256": "88a298fd5b2073332a1d45cf68a6668fdc9e2680e2bf18cc1d8cb4d3e0ce616a",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "state-senator-41.xlsx": {
+      "sha256": "ae10fc382ece99dc85eeabdfd600a64a1b96f28a5a5b52a2d0639aa21b76cfe1",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "superintendent-of-schools-dupage-county.xlsx": {
+      "sha256": "e6c1a59b2eea7e8bfaba37f8c4e920e5e478074ff9eefdba4e1ff5e47e2946e1",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "superintendent-of-schools-kane-county.xlsx": {
+      "sha256": "6e8dcd3c1518c1b19400dede69ef8d31573200db33c8bd25bef803ba67fa30f4",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "superintendent-of-schools-lake-county.xlsx": {
+      "sha256": "cb60df1485a5c0678532397bf3d88b6b2fc6a8f270b66d14eb9e20cf9213cc50",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "treasurer-cook-county.xlsx": {
+      "sha256": "5c733e6b2b73ec5f4ec1d832f3f95ff41a2e2b8b4d6f6b38d4e5a36ea5dadbe2",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "treasurer.xlsx": {
+      "sha256": "5edc0179d26989fb0c7f2bc84380370c3bde370a72ad0c9ebd13850ea7552ac8",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "trustee-la-grange-highlands-sanitary-district-2yr.xlsx": {
+      "sha256": "602f61aa8aabb212c4f0dab1dfec255292267eaad7b3e55dc78b2db416c958b5",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "trustee-la-grange-highlands-sanitary-district.xlsx": {
+      "sha256": "38ad383581aaba9a3cb9ed82c3b1522b2c78a7d33d52a5baeecbd91e941ba7c4",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "trustee-south-lyons-township-sanitary-district.xlsx": {
+      "sha256": "a5fb6876d7072876a4de2406f0780635de843a1118ca7100d3842e4e01aa27f8",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "trustee-south-palos-township-sanitary-district.xlsx": {
+      "sha256": "3836f5eab0495019140fab5b755cf4dcd3b1fe04cddfe1325edb00b7f8ca650a",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "unit-school-district-300-issue-bonds.xlsx": {
+      "sha256": "405b19722e01db55c7f9514ea8c34d4022c27228ce214644ce8dbd285190d937",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "us-representative-01.xlsx": {
+      "sha256": "b203b52d688891092a664eddc31e87f5ece9715cec16ab684378b571f04c83ff",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "us-representative-02.xlsx": {
+      "sha256": "c86e4234d2b05a7ff8d5f8d4fbd39fba432568f6b62dc669185c3e43799bf917",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "us-representative-03.xlsx": {
+      "sha256": "651890dec049926f75c2a54de884d48c903e4ce2666de01d8da3c3bda71a7faf",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "us-representative-04.xlsx": {
+      "sha256": "f1fa3410a8f4051177211e3537394a4f76dc6db94331d18ffc55fccb417db9ae",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "us-representative-05.xlsx": {
+      "sha256": "de1f76b54bbbb3b85472302e51e51f00354dfb9041eb99259b7bff63f96e0eb0",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "us-representative-06.xlsx": {
+      "sha256": "7f39ab4a1e43d163740dbb9a157717f2611965b62aa6249b870696066e0f8fb4",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "us-representative-07.xlsx": {
+      "sha256": "b80ab228b6fe487057361aa8afe8f25bec80cebd7866490ea4ab8586e1f5229f",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "us-representative-08.xlsx": {
+      "sha256": "db726dbd22831cd090f44ab4be72e7f7dd8d8f4dadf51fa8c7b8df0698ee3b29",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "us-representative-09.xlsx": {
+      "sha256": "8521fcc3827c913d3699fec1a2e1ca526db3a55928f3c34ce1c247dbf2359724",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "us-representative-10.xlsx": {
+      "sha256": "5312449e4cf25187300821eef2634f08397cfe9b89d6b49533d1e5e4c072d278",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "us-representative-11.xlsx": {
+      "sha256": "4a9eede0ffc18fdc8fc8dbcecd42abf8adc2a9e5a9f3e8639d1665832b2de9e9",
+      "saved": "2026-11-09T20:08:00Z"
+    },
+    "village-of-alsip-term-limits.xlsx": {
+      "sha256": "e438094df578624fd59180c817f7d3441be0872d0aea5257b3b00e70ba363434",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "village-of-berkeley-issue-bonds.xlsx": {
+      "sha256": "6ed2425f639a7107bb17d56e1fc1d61d797931f1b4d4d4a8d834583a555e4b33",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "village-of-brookfield-increase-limiting-rate.xlsx": {
+      "sha256": "fb8e91cf12045c532683a34b4bbcf849d0e4c33ba971760367b8e92a07fe8868",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "village-of-calumet-park-term-limits.xlsx": {
+      "sha256": "59fe4c35925d9c4b91514599dca5475c4df1ed6b733c15baeb82971b403d4e10",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "village-of-calumet-park-waive-building-permit-fees-for-veterans.xlsx": {
+      "sha256": "d3e8bf6bcbd612f2af2c60274135006bba6f33e4d288372e59630c90edaeb80d",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "village-of-calumet-park-waive-transfer-stamp-fees-for-veterans.xlsx": {
+      "sha256": "2e7623ef55e7d979283ede1294f1f26c9ed7f05300ba4443bc4f1290267d4d76",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "village-of-crestwood-reduced-vehicle-stickers-for-seniors.xlsx": {
+      "sha256": "7f7501566191ab61051aee157754db003603bec36720519610b2d99ab62d9104",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "village-of-crestwood-reduced-vehicle-stickers-for-veterans.xlsx": {
+      "sha256": "3e635f21d06573358b0bd7f2cfe0e70a6403be72ecb1b96074c62a4864a1afa7",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "village-of-crestwood-term-limits.xlsx": {
+      "sha256": "562ef3cae5f1f7042f9aeaf1c89117be9fa506df555e6a15e2ef03cd6e1680e7",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "village-of-franklin-park-decrease-speed-limit-on-franklin-ave.xlsx": {
+      "sha256": "80655cec4dacbcdb64ad76157a9acf5b8796df8c3824c3ba425f741cf51f8f8c",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "village-of-franklin-park-enforcement-of-parking-regulations.xlsx": {
+      "sha256": "0390ac87cd79847390e2a45c350bbb835484b415578436c5995f9bc2c9e3a702",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "village-of-franklin-park-planting-of-fruit-trees.xlsx": {
+      "sha256": "49f4fe0b90de6a080af0e2632a5c301a71496519a6340bb636a6b13b7a61e141",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "village-of-niles-discontinue-vehicle-sticker-program.xlsx": {
+      "sha256": "7f1b6e151480503ab36598df4a8b53cc38b0d317c04bfc9b25cfa3af5e53ae1d",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "village-of-niles-indoor-outdoor-theater.xlsx": {
+      "sha256": "c90ca841d34f1855588627afefce719ce296146239760064cb3ca770280b3575",
+      "saved": "2026-11-09T20:25:00Z"
+    },
+    "village-of-niles-term-limits.xlsx": {
+      "sha256": "d1dc79c385e26d6e38e88115e9cad16dd0439f0e2e2a3a38b212f51b8efe5a12",
+      "saved": "2026-11-09T20:25:00Z"
+    }
+  }
+}

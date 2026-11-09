@@ -17,6 +17,10 @@ clerk publishes precinct-by-precinct results a script may read:
         read by il_clarity_election_results_reader.py from the Clarity reports
         a person downloads by hand (no scheduled job fetches Clarity), so
         these stay at the numbers of the last hand download
+    Suburban Cook County (the Cook County Clerk; Chicago's Board counts the city)
+        read by il_cook_election_results_reader.py from the Clerk's per-race
+        spreadsheets, downloaded by hand because the Clerk's results site
+        blocks this project's readers; so far the federal and state races
 
 Each is its own office on the map: a precinct key names its county before a
 colon ("kane:AU01", "dekalb:AF 01"), the index lists each county under
@@ -119,6 +123,10 @@ MAPS = {
     "macoupin": ("socrata", "https://data.macoupincountyil.gov/resource/ab79-cnsh.json", "name"),
     "will": ("arcgis", "https://services.arcgis.com/fGsbyIOAuxHnF97m/arcgis/rest/services/"
              "Precincts_2022/FeatureServer/1", "NAME"),
+    # suburban Cook (il_cook_election_results_reader.py), the layer the app's
+    # loadCookSuburbanPrecincts reads
+    "cook": ("arcgis", "https://gis.cookcountyil.gov/traditional/rest/services/precinctHistorical/MapServer/0",
+             "name"),
 }
 # Two offices count one county's precincts on one layer: the City of
 # Bloomington's Election Commission counts the McLean precincts the map names
@@ -130,11 +138,11 @@ SHARED_MAPS = {
 }
 # The order the counties are listed in `sources`, after Chicago.
 COUNTY_ORDER = ["kane", "dekalb", "henry", "pike", "randolph", "franklin", "wayne",
-                "dupage", "lake", "mchenry", "winnebago", "mclean", "bloomington", "sangamon", "macoupin", "will"]
+                "dupage", "lake", "mchenry", "winnebago", "mclean", "bloomington", "sangamon", "macoupin", "will", "cook"]
 # Counties a part file is split for by township (the name before the number),
 # as Kane's is by its two-letter township prefix, so a click loads one
 # township's precincts rather than the county's.
-SPLIT_BY_TOWNSHIP = ("dupage", "lake", "mchenry", "sangamon", "will")
+SPLIT_BY_TOWNSHIP = ("dupage", "lake", "mchenry", "sangamon", "will", "cook")
 # Clerk spelling -> map spelling, compared after norm().
 ALIASES = {
     "wayne": {"MASSILON": "MASSILLON"},
@@ -254,6 +262,18 @@ def result_to_map(tag, result_name, names):
     by_norm = {}
     for n in names:
         by_norm.setdefault(norm(n), n)
+    if tag == "cook":
+        # the Clerk's "Barrington Precinct 1" and "Berwyn Ward 1 Precinct 1"
+        # are the map's "BARRINGTON 1" and "BERWYN 1-1", matched exactly
+        # (norm() would make "EVANSTON 1-1" and an "EVANSTON 11" one name)
+        t = re.sub(r"\s+", " ", str(result_name)).strip().upper()
+        m = re.fullmatch(r"(.+?) WARD 0*(\d+) PRECINCT 0*(\d+)", t)
+        if m:
+            want = "%s %d-%d" % (m.group(1), int(m.group(2)), int(m.group(3)))
+        else:
+            m = re.fullmatch(r"(.+?) PRECINCT 0*(\d+)", t)
+            want = "%s %d" % (m.group(1), int(m.group(2))) if m else t
+        return want if want in set(names) else None
     want = norm(result_name)
     if tag == "kane":
         m = re.fullmatch(r"([A-Z]{2})(\d+)", want)
@@ -609,6 +629,15 @@ def _load_shapes():
                               if str(f["properties"].get(prop, "")).isdigit())
     _shapes["county"] = {}
     for tag in COUNTY_ORDER:
+        if tag == "cook":
+            # suburban Cook: the Supreme Court's 1st District, which is Cook
+            # County, less Chicago, which its school board districts tile
+            sc = json.load(open(os.path.join(APP_DATA, "il-supreme-court-districts.json")))
+            city = json.load(open(os.path.join(APP_DATA, "school-board-districts.json")))
+            cook = unary_union([shape(f["geometry"]) for f in sc["features"]
+                                if str(f["properties"].get("DISTRICT")) == "1"])
+            _shapes["county"][tag] = cook.difference(unary_union([shape(f["geometry"]) for f in city["features"]]))
+            continue
         doc = json.load(open(os.path.join(APP_DATA, OUTLINE_OF.get(tag, tag) + "-county-outline.json")))
         _shapes["county"][tag] = unary_union([shape(f["geometry"]) for f in doc["features"]])
     return _shapes
@@ -698,11 +727,14 @@ def add_counties(contests, turnout, raws, chicago_source, offline_names=None, ce
         })
         added = 0
         for race in county["contests"]:
-            if race.get("fixed"):
+            fixed = race.get("fixed")
+            if fixed:
                 # the reader already knows what this contest is (Winnebago's
-                # unnamed retention questions); no title rule is asked
-                group, key, display = race["fixed"]["group"], norm(race["name"]), race["name"]
-                extra = {"many": bool(race["fixed"].get("beyond"))}
+                # unnamed retention questions, suburban Cook's races); no
+                # title rule is asked. "chicago" folds it into Chicago's
+                # contest of the same name, where there is one.
+                group, key, display = fixed["group"], norm(race["name"]), race["name"]
+                extra = {"many": bool(fixed.get("beyond")), "seats": fixed.get("seats")}
             else:
                 group, key, display, extra = classify(race["name"], race.get("district", ""), cname,
                                                       race.get("voteFor") or 1, race["choices"])
@@ -717,7 +749,11 @@ def add_counties(contests, turnout, raws, chicago_source, offline_names=None, ce
             named = [(i, ch) for i, ch in lines if ch]
             if not named:
                 continue  # nobody on the ballot (Wayne's District 6)
-            target = by_name.get(display) if group in ("statewide", "congress", "il-senate", "il-house") else None
+            shared = group in ("statewide", "congress", "il-senate", "il-house") or bool(fixed and fixed.get("chicago"))
+            target = by_name.get(display) if shared else None
+            with_chicago = target is not None and "chicago" in target["bySource"]
+            if with_chicago and target["group"] != group:
+                raise CountyError("%s: %s is %s here and %s in Chicago" % (cname, display, group, target["group"]))
             if target is None:
                 target = by_key.get((group, key))
             if target is None:
@@ -729,7 +765,7 @@ def add_counties(contests, turnout, raws, chicago_source, offline_names=None, ce
                     target["seats"] = extra["seats"]
                 contests.append(target)
                 by_key[(group, key)] = target
-            elif group not in ("statewide", "congress", "il-senate", "il-house"):
+            elif not with_chicago:
                 if target.get("seats", 1) != (extra.get("seats") or 1):
                     raise CountyError("%s: %s elects %s seats here and %s elsewhere"
                                       % (cname, display, extra.get("seats"), target.get("seats")))
@@ -764,7 +800,13 @@ def add_counties(contests, turnout, raws, chicago_source, offline_names=None, ce
                     tot[n] += vals[n]
             if tag in target["bySource"]:
                 raise CountyError("%s: two of the clerk's contests are %s" % (cname, display))
-            entry = {"total": tot, "beyond": beyond_for(group, extra, tag, cname),
+            if fixed:
+                # a race Chicago also votes in reaches beyond the county's
+                # own area; otherwise the reader says
+                beyond = with_chicago or bool(fixed.get("beyond"))
+            else:
+                beyond = beyond_for(group, extra, tag, cname)
+            entry = {"total": tot, "beyond": beyond,
                      "choices": sorted(col.values())}
             if race.get("outside"):
                 # votes the clerk counted in no precinct: in the office's
@@ -782,6 +824,13 @@ def add_counties(contests, turnout, raws, chicago_source, offline_names=None, ce
 
     # every contest's totals and reach are its offices' together; values are
     # padded to the final width (a choice added by a later county)
+    # a ballot question two offices count is on another office's ballot too,
+    # so each half reaches beyond its own area (DuPage's and suburban Cook's
+    # Bartlett library bonds)
+    for c in contests:
+        if c["group"] == "questions" and len(c["bySource"]) > 1:
+            for s in c["bySource"].values():
+                s["beyond"] = True
     for c in contests:
         width = len(c["choices"])
         for vals in c["precincts"].values():
