@@ -476,6 +476,18 @@ TWO_PART_FAMILIES = ("visit", "install-invite", "first-use")
 EVENT_PAGES = 150
 
 
+# Families whose path names the state's app it came from, kept per state and
+# per day for the report's state filter (Adam, 2026-11-09: "Add a state filter
+# to the report"). Each maps to (the part that holds the tag, counted from 0,
+# and the number of parts a tagged path has), because a family's untagged
+# shape must never be read as a state: `layer/ward` is the pooled layer path
+# from before 2026-09-29, and `select` alone the point count from before
+# 2026-10-27. Searches, location requests and the other actions name no app,
+# so no state's series can hold them.
+STATE_FAMILIES = {"select": (1, 2), "layer": (1, 3), "app-launch": (1, 2),
+                  "visit/first": (2, 3), "visit/return": (2, 3)}
+
+
 def event_family(path):
     parts = path.split("/")
     if parts[0] in TWO_PART_FAMILIES and len(parts) > 1:
@@ -517,19 +529,31 @@ def event_breakdown(s, total, start, end, mx, dates):
     The events list caps at ten rows like the pages list, and gets past the cap
     the same way (all_pages with `exclude`). Each row carries its own daily
     series, so the per-family series below are exact rather than a top ten
-    stretched to cover the rest. Returns (paths, families, by_app, cut): paths
+    stretched to cover the rest. Returns (paths, families, by_app, in_play,
+    states, cut): paths
     is every row's total, families {family: {count, daily[]}} with daily
     aligned to `dates`, by_app {family: [{tag, count, daily[]}]} for each
     family BY_APP_FAMILIES names, in_play {family: {count, daily[]}} for the
-    part of those sent inside the Google Play app (PLAY_MARK), cut true when
-    the list could not be read to its end, so every family is then a floor.
+    part of those sent inside the Google Play app (PLAY_MARK), states
+    {tag: {family: daily[]}} for each family STATE_FAMILIES names, cut true
+    when the list could not be read to its end, so every family is then a
+    floor.
     """
     rows_, cut = all_pages(s, total, start, end, mx, filt="is:event",
                            label="events", pages_max=EVENT_PAGES)
     fams, apps = {}, {f: {} for f in BY_APP_FAMILIES if not f.endswith("/")}
     in_play = {}
+    tags = set(fleet_tags())
+    states = {}
     for r in rows_:
         name = event_family(r["path"])
+        shape = STATE_FAMILIES.get(name)
+        bits = r["path"].split("/")
+        if shape and len(bits) == shape[1] and bits[shape[0]] in tags:
+            series_ = states.setdefault(bits[shape[0]], {}).setdefault(
+                name, [0] * len(dates))
+            for i, d in enumerate(dates):
+                series_[i] += r["daily"].get(d, 0)
         f = fams.setdefault(name, {"count": 0, "daily": [0] * len(dates)})
         f["count"] += r["count"]
         for i, d in enumerate(dates):
@@ -552,7 +576,7 @@ def event_breakdown(s, total, start, end, mx, dates):
                    key=lambda r: (-r["count"], r["path"]))
     by_app = {f: sorted(v.values(), key=lambda a: (-a["count"], a["tag"]))
               for f, v in apps.items()}
-    return paths, fams, by_app, in_play, bool(cut)
+    return paths, fams, by_app, in_play, states, bool(cut)
 
 
 # The How to use page (scripts/build_help_page.py, 2026-10-28), as either
@@ -569,6 +593,47 @@ def path_series(page_rows, dates, paths):
             out["count"] += r["count"]
             for i, d in enumerate(dates):
                 out["daily"][i] += r["daily"].get(d, 0)
+    return out
+
+
+def state_pages(page_rows, dates, tags):
+    """Each state's page visits per day: its map, and every other page under
+    its folder (question pages, county pages, sources), by the rule
+    page_kinds() and split_by_instance() apply. Read off the rows the pages
+    list already returned, so it asks the dashboard nothing."""
+    out = {t: {"map": [0] * len(dates), "other": [0] * len(dates)}
+           for t in tags}
+    for r in page_rows:
+        path = r["path"]
+        tag = path.lstrip("/").split("/", 1)[0]
+        if tag not in out or path in ("/", "/index.html"):
+            continue
+        kind = ("map" if path in ("/" + tag, "/" + tag + "/",
+                                  "/" + tag + "/index.html") else "other")
+        for i, d in enumerate(dates):
+            out[tag][kind][i] += r["daily"].get(d, 0)
+    return out
+
+
+def by_state(page_rows, event_states, dates, tags, instances):
+    """The per-state series the report's state filter draws, one entry per
+    live app, and a printed check that each state's pages add up to its bar.
+
+    A state with no events of a family carries that family as a row of zeros
+    rather than leaving it out, so a reader of the file can tell "none" from
+    "not read"."""
+    pg = state_pages(page_rows, dates, tags)
+    bar = {r["key"]: r["count"] for r in instances}
+    out = {}
+    for t in tags:
+        entry = dict(pg[t])
+        for fam in STATE_FAMILIES:
+            entry[fam] = event_states.get(t, {}).get(fam, [0] * len(dates))
+        got = sum(entry["map"]) + sum(entry["other"])
+        if got != bar.get(t, 0):
+            print("WARN state %s: %d page visits by day against %d in its bar"
+                  % (t, got, bar.get(t, 0)))
+        out[t] = entry
     return out
 
 
@@ -761,7 +826,7 @@ def collect_window(s, total, start, end, per_day=True):
         # The full window only: each family carries its daily series, so a
         # shorter window's families are the same series cut to length.
         (event_paths, event_families, event_by_app, event_in_play,
-         events_cut) = event_breakdown(
+         event_states, events_cut) = event_breakdown(
             s, total, start, end, mx, dates)
         print("events: %d paths in %d families, sum %d of %d%s"
               % (len(event_paths), len(event_families),
@@ -813,6 +878,11 @@ def collect_window(s, total, start, end, per_day=True):
                     "event_in_play": event_in_play,
                     "events_cut": events_cut,
                     "page_kinds": page_kinds(page_rows, dates, fleet_tags()),
+                    # Each state's pages and its app-named events, per day,
+                    # for the report's state filter, cut to a shorter window
+                    # the way the families are.
+                    "by_state": by_state(page_rows, event_states, dates,
+                                         fleet_tags(), out["instances"]),
                     # The How to use page, per day. It is an ordinary page and
                     # stays in the pages viewed (Adam, 2026-10-28: "keep"),
                     # and the pages list above holds only the top 20, which
