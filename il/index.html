@@ -25895,7 +25895,9 @@ function initChiExplorer() {
       return {
         total: s ? s.total : contest.total,
         beyond: s ? !!s.beyond : !!contest.beyond,
-        which: s && s.choices ? s.choices : contest.choices.map(function (name, n) { return n; })
+        which: s && s.choices ? s.choices : contest.choices.map(function (name, n) { return n; }),
+        // votes that office counted in no precinct (in its totals, on no shape)
+        outside: s ? (s.outside || null) : (contest.outside || null)
       };
     }
 
@@ -26279,9 +26281,9 @@ function initChiExplorer() {
           ", so these totals are not the whole race." : ""));
       // votes counted in no precinct (absentee, early or provisional units a
       // publisher reports apart) are in the totals and on no shape of the map
-      if (contest.outside && contest.outside[0] > 0 && whole > 0) {
-        notes.push(electionPercent(contest.outside[0], whole) + " of these votes (" +
-          contest.outside[0].toLocaleString("en-US") + ") were counted outside any precinct, so they are in the" +
+      if (cf.outside && cf.outside[0] > 0 && whole > 0) {
+        notes.push(electionPercent(cf.outside[0], whole) + " of these votes (" +
+          cf.outside[0].toLocaleString("en-US") + ") were counted outside any precinct, so they are in the" +
           " totals above and not in the map's colours.");
       }
       // a precinct whose counts are in but whose turnout the publisher has not
@@ -26487,8 +26489,13 @@ function initChiExplorer() {
             notes.push("The " + pub + " withholds some counts to protect the privacy of a small number of" +
               " voters, so these totals leave them out and name no leader.");
           }
-          if (contest.outside && contest.outside[0] > 0) {
-            notes.push("Votes the " + pub + " counted outside any precinct are not in these totals.");
+          var outBy = (t.srcs.length ? t.srcs : [ownSrc]).filter(function (id) {
+            var o = contestFor(contest, contest.bySource ? id : null).outside;
+            return o && o[0] > 0;
+          });
+          if (outBy.length) {
+            notes.push("Votes the " + outBy.map(function (id) { return sourceOf(idx, id).publisher; }).join(" and the ") +
+              " counted outside any precinct are not in these totals.");
           }
           notes.forEach(function (x) { sec.appendChild(cardEl("p", "election-note", x)); });
           box.appendChild(sec);
@@ -26656,7 +26663,10 @@ function initChiExplorer() {
   // `ward_precinct` property (WWPPP) both the archive and the results carry.
   //
   // Seven counties' clerks publish their precinct results where a script may
-  // read them, and the map draws those counties' precincts, so their
+  // read them, and seven more offices (DuPage, Lake, McHenry, Winnebago,
+  // McLean, Sangamon and Macoupin County Clerks and the Bloomington Election
+  // Commission) publish Clarity reports a person downloads by hand; the map
+  // draws all those counties' precincts, so their
   // outlines are coloured beside Chicago's (scripts/il_platinum_election_
   // results_scraper.py, scripts/il_kane_election_results_scraper.py, folded in
   // by scripts/build_il_county_election_results.py). Each county's results key
@@ -26668,21 +26678,42 @@ function initChiExplorer() {
     { id: "pike", name: "Pike", load: loadPikePrecincts, coverage: countyOutlineCoverage("pike"), prop: "name" },
     { id: "randolph", name: "Randolph", load: loadRandolphPrecincts, coverage: randolphCountyCoverage, prop: "name" },
     { id: "franklin", name: "Franklin", load: loadFranklinPrecincts, coverage: franklinCountyCoverage, prop: "name" },
-    { id: "wayne", name: "Wayne", load: loadWaynePrecincts, coverage: wayneCountyCoverage, prop: "name" }
+    { id: "wayne", name: "Wayne", load: loadWaynePrecincts, coverage: wayneCountyCoverage, prop: "name" },
+    // read from the counties' Clarity reports, downloaded by hand
+    // (scripts/il_clarity_election_results_reader.py)
+    { id: "dupage", name: "DuPage", load: loadDupagePrecincts, coverage: dupageCountyCoverage, prop: "PrecinctName" },
+    { id: "lake", name: "Lake", load: loadLakePrecincts, coverage: lakeCountyCoverage, prop: "TWP_PCT" },
+    { id: "mchenry", name: "McHenry", load: loadMchenryPrecincts, coverage: mchenryCountyCoverage, prop: "PrecinctName" },
+    // Rockford's own board of elections publishes no precinct results here
+    { id: "winnebago", name: "Winnebago", load: loadWinnebagoPrecincts, coverage: winnebagoOutsideRockfordCoverage, prop: "PCTNAME" },
+    // McLean's precinct layer holds the City of Bloomington's precincts too,
+    // which the Bloomington Election Commission counts, so they are keyed
+    // to that office ("bloomington:City of Bloomington 12")
+    { id: "mclean", name: "McLean", load: loadMcleanPrecincts, coverage: mcleanCountyCoverage, prop: "NAME",
+      cityPrefix: "City of Bloomington ", city: "bloomington", cityName: "City of Bloomington" },
+    { id: "sangamon", name: "Sangamon", load: loadSangamonPrecincts, coverage: sangamonCountyCoverage, prop: "Name" },
+    { id: "macoupin", name: "Macoupin", load: loadMacoupinPrecincts, coverage: macoupinCountyCoverage, prop: "name" }
   ].map(function (c) {
     // findPropCI compares against a lowercase name only
     c.prop = c.prop.toLowerCase();
+    function nameOf(feature) {
+      var v = findPropCI(feature.properties || {}, [c.prop]);
+      return v === null || v === undefined || String(v).trim() === "" ? null : String(v).trim();
+    }
+    function inCity(v) { return !!(c.cityPrefix && v.indexOf(c.cityPrefix) === 0); }
     return {
       id: c.id,
       load: c.load,
       coverage: c.coverage,
       key: function (feature) {
-        var v = findPropCI(feature.properties || {}, [c.prop]);
-        return v === null || v === undefined || String(v).trim() === "" ? null : c.id + ":" + String(v).trim();
+        var v = nameOf(feature);
+        if (v === null) return null;
+        return (inCity(v) ? c.city : c.id) + ":" + v;
       },
       label: function (feature) {
-        var v = findPropCI(feature.properties || {}, [c.prop]);
-        return c.name + " County, precinct " + String(v).trim();
+        var v = nameOf(feature) || "";
+        if (inCity(v)) return c.cityName + ", precinct " + v.slice(c.cityPrefix.length);
+        return c.name + " County, precinct " + v;
       }
     };
   });
@@ -26718,7 +26749,7 @@ function initChiExplorer() {
       return w != null && p != null ? "Ward " + String(w).replace(/^0+(?=\d)/, "") + ", Precinct " + String(p).replace(/^0+(?=\d)/, "") : null;
     }
   });
-  declareDataSource("election-results", { label: "Chicago Board of Election Commissioners and the Kane, DeKalb, Henry, Pike, Randolph, Franklin and Wayne County Clerks" });
+  declareDataSource("election-results", { label: "Chicago Board of Election Commissioners, the Bloomington Election Commission and the Kane, DeKalb, Henry, Pike, Randolph, Franklin, Wayne, DuPage, Lake, McHenry, Winnebago, McLean, Sangamon and Macoupin County Clerks" });
 
   /* ---------- Election notice (until Election Day) ----------
    * One dismissible line over the map, from now through the election date in

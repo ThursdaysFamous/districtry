@@ -3,8 +3,16 @@
 Each zip is the `detailxml.zip` report Clarity Elections publishes for one
 Illinois results site: every race, every candidate, every precinct. They are
 the counties' **unofficial** election-night numbers. Each county canvasses by
-about 24 Nov 2026, and the canvassed numbers can differ. Nothing in the apps
-reads these files yet; they are build inputs for county results readers, and
+about 24 Nov 2026, and the canvassed numbers can differ.
+
+`scripts/il_clarity_election_results_reader.py` reads every file here except
+Madison's into `il/data/source/election-results-clarity-raw.json`, which the
+Illinois Election Results layer's daily rebuild folds in beside Chicago's and
+the other counties' results. The rebuild never downloads anything from
+Clarity, so these counties stay at the numbers of the last hand download, and
+each card gives the time of its own report. Madison's file is not read: on
+9 Nov 2026 the county's precinct layer, which the map draws, answered every
+request with an ArcGIS error page, so its precincts could not be matched.
 `il/data/source` is not published by the deploy.
 
 | File | Results site | Precincts |
@@ -38,4 +46,9 @@ were downloaded once from the sandbox, robots.txt read first, with the
 project's own reader (`districtry.com roster bot`), and committed here. That
 ruling covers these one-off downloads. It does not make Clarity a source a
 workflow may read. A refresh, or the canvassed numbers, is another download
-made the same way, recorded in `record.json`.
+made the same way, recorded in `record.json`
+(`scripts/il_clarity_election_results_download.py`, run by hand only). The
+DuPage, Lake and Madison reports were downloaded again that way on 9 Nov 2026,
+their versions having moved; the others had not moved since 5 Nov. After a new
+download, run the reader again and commit its output with the files, or CI
+fails.

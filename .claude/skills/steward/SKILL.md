@@ -147,6 +147,7 @@ python3 scripts/validate_serp_lengths.py                  # every page's title a
 python3 scripts/robots_policy.py --selftest                # the one robots.txt reader against three saved files AND this site's own (its Content-Signal must parse: search=yes, ai-input=yes, ai-train=no, use=reference), plus the per-host Crawl-delay pacer: one queue per delay-stating site, `www.` folded, others parallel
 python3 scripts/election_results_common.py --selftest     # the election results writer: a fixture with a leader, a tie, a withheld count, an empty precinct, a vote-for-more-than-one race and votes counted outside every precinct, read back, plus three inputs it must refuse
 python3 scripts/build_il_county_election_results.py --selftest     # the Illinois county fold: clerks' contest titles, ballot lines and precinct names read as its docstring says
+python3 scripts/il_clarity_election_results_reader.py --check -o il/data/source/election-results-clarity-raw.json     # the committed Clarity read matches the hand-downloaded reports and record.json
 python3 scripts/validate_robots_adoption.py --selftest   # the fetch/robots-read detector against 13 cases, including a docstring that names the seam without reaching it
 python3 scripts/probe_robots_verdicts.py --check   # the runner robots record still describes the tree
 python3 scripts/validate_robots_adoption.py             # every fetching script reads robots.txt or is in UNWIRED_AT_SWEEP; entries FAIL when orphaned or now wired, so the backlog only shrinks
