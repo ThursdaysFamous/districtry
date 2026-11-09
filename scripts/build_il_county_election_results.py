@@ -727,11 +727,14 @@ def add_counties(contests, turnout, raws, chicago_source, offline_names=None, ce
         })
         added = 0
         for race in county["contests"]:
-            if race.get("fixed"):
+            fixed = race.get("fixed")
+            if fixed:
                 # the reader already knows what this contest is (Winnebago's
-                # unnamed retention questions); no title rule is asked
-                group, key, display = race["fixed"]["group"], norm(race["name"]), race["name"]
-                extra = {"many": bool(race["fixed"].get("beyond"))}
+                # unnamed retention questions, suburban Cook's races); no
+                # title rule is asked. "chicago" folds it into Chicago's
+                # contest of the same name, where there is one.
+                group, key, display = fixed["group"], norm(race["name"]), race["name"]
+                extra = {"many": bool(fixed.get("beyond")), "seats": fixed.get("seats")}
             else:
                 group, key, display, extra = classify(race["name"], race.get("district", ""), cname,
                                                       race.get("voteFor") or 1, race["choices"])
@@ -746,7 +749,11 @@ def add_counties(contests, turnout, raws, chicago_source, offline_names=None, ce
             named = [(i, ch) for i, ch in lines if ch]
             if not named:
                 continue  # nobody on the ballot (Wayne's District 6)
-            target = by_name.get(display) if group in ("statewide", "congress", "il-senate", "il-house") else None
+            shared = group in ("statewide", "congress", "il-senate", "il-house") or bool(fixed and fixed.get("chicago"))
+            target = by_name.get(display) if shared else None
+            with_chicago = target is not None and "chicago" in target["bySource"]
+            if with_chicago and target["group"] != group:
+                raise CountyError("%s: %s is %s here and %s in Chicago" % (cname, display, group, target["group"]))
             if target is None:
                 target = by_key.get((group, key))
             if target is None:
@@ -758,7 +765,7 @@ def add_counties(contests, turnout, raws, chicago_source, offline_names=None, ce
                     target["seats"] = extra["seats"]
                 contests.append(target)
                 by_key[(group, key)] = target
-            elif group not in ("statewide", "congress", "il-senate", "il-house"):
+            elif not with_chicago:
                 if target.get("seats", 1) != (extra.get("seats") or 1):
                     raise CountyError("%s: %s elects %s seats here and %s elsewhere"
                                       % (cname, display, extra.get("seats"), target.get("seats")))
@@ -793,7 +800,13 @@ def add_counties(contests, turnout, raws, chicago_source, offline_names=None, ce
                     tot[n] += vals[n]
             if tag in target["bySource"]:
                 raise CountyError("%s: two of the clerk's contests are %s" % (cname, display))
-            entry = {"total": tot, "beyond": beyond_for(group, extra, tag, cname),
+            if fixed:
+                # a race Chicago also votes in reaches beyond the county's
+                # own area; otherwise the reader says
+                beyond = with_chicago or bool(fixed.get("beyond"))
+            else:
+                beyond = beyond_for(group, extra, tag, cname)
+            entry = {"total": tot, "beyond": beyond,
                      "choices": sorted(col.values())}
             if race.get("outside"):
                 # votes the clerk counted in no precinct: in the office's
@@ -811,6 +824,13 @@ def add_counties(contests, turnout, raws, chicago_source, offline_names=None, ce
 
     # every contest's totals and reach are its offices' together; values are
     # padded to the final width (a choice added by a later county)
+    # a ballot question two offices count is on another office's ballot too,
+    # so each half reaches beyond its own area (DuPage's and suburban Cook's
+    # Bartlett library bonds)
+    for c in contests:
+        if c["group"] == "questions" and len(c["bySource"]) > 1:
+            for s in c["bySource"].values():
+                s["beyond"] = True
     for c in contests:
         width = len(c["choices"])
         for vals in c["precincts"].values():

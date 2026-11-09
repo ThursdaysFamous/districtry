@@ -27,6 +27,13 @@ ballots cast; and a district race, which lists only its own precincts, must
 give each the same registered voters and no more ballots (a precinct split
 between two districts has only its own side's ballots in each).
 
+EACH RACE IS NAMED for the builder by canonical(): the federal, statewide and
+legislative titles in the wording its classify() reads; a race Chicago also
+counts (the county's offices, the Water Reclamation District, the county
+board, Board of Review, judges and subcircuits) under the Clerk's title, which
+is Chicago's too, so the two halves fold into one contest; and a referendum
+another office also counts under that office's title (SHARED_QUESTIONS).
+
 Usage:
     python3 scripts/il_cook_election_results_reader.py -o il/data/source/election-results-cook-raw.json
     python3 scripts/il_cook_election_results_reader.py --check -o il/data/source/election-results-cook-raw.json
@@ -158,30 +165,80 @@ def read_race(fname, rec):
 
 ORDINAL = re.compile(r"^(\d+)(?:st|nd|rd|th) District$")
 
+# Races Chicago's Board of Election Commissioners also counts, under the same
+# title the Clerk uses: the county's own offices, the Water Reclamation
+# District, the county board's and Board of Review's districts and the
+# judges. Each is folded into Chicago's contest of the same name where the
+# city votes in it; a district wholly outside the city (County Board 6th,
+# 13th Subcircuit) becomes a contest of suburban Cook alone.
+WITH_CHICAGO = [
+    (re.compile(r"^(Board President|Clerk|Sheriff|Treasurer|Assessor), Cook County$"), "county"),
+    (re.compile(r"^Commissioner, Water Reclamation Dist\b"), "mwrd"),
+    (re.compile(r"^Commissioner, County Board \d+(?:st|nd|rd|th) District$"), "county-board"),
+    (re.compile(r"^Board of Review, \d+(?:st|nd|rd|th) District$"), "ccbr"),
+    (re.compile(r"^(Appellate|Circuit) Court Judge \(Vacancy of [^)]+\)$"), "judges"),
+    (re.compile(r"^Judge, \d+(?:st|nd|rd|th) Subcircuit \(Vacancy of [^)]+\)$"), "judicial-subcircuit"),
+]
 
-def canonical(title):
+# A ballot question the Clerk shares with another office: the title that
+# office gives it, so the two halves are one contest, and both halves reach
+# beyond the area each office counts. Read from the DuPage and Kane reads
+# (election-results-clarity-raw.json, election-results-kane-raw.json) and
+# Chicago's results; a question not listed here appears on no other ballot
+# this layer reads, and is taken to lie inside suburban Cook.
+SHARED_QUESTIONS = {
+    "Cook County, Millionaire Tax Amendment": ("The Cook County Millionaire Amendment for Property Tax Relief", True),
+    "Bartlett Public Library District, Issue Bonds (Renovation)": ("Bartlett Public Library - Library Bonds (Renovations)", False),
+    "Bartlett Public Library District, Issue Bonds (New Library)": ("Bartlett Public Library - Library Bonds (New)", False),
+    "Roselle Fire Protection District, Increase Limiting Rate": ("Roselle Fire District - Limiting Rate", False),
+    "Combined School District 113A, Increase Limiting Rate": ("CSD 113A - Limiting Rate", False),
+    "East Dundee & Countryside Fire Protection District, Issue Bonds":
+        ("(EAST DUNDEE & CSIDE FIRE) PROPOSITION TO ISSUE $3,500,000 BONDS", False),
+    "East Dundee & Countryside Fire Protection District, New Tax Rate":
+        ("(EAST DUNDEE & CSIDE FIRE) PROPOSITION TO CREATE A NEW TAX RATE FOR EMERGENCY AND RESCUE FUND PURPOSES", False),
+    "Unit School District 300, Issue Bonds": ("(COMMUNITY 300) PROPOSITION TO ISSUE $355,500,000 SCHOOL BUILDING BONDS", False),
+}
+
+
+def canonical(title, vote_for, choices):
     """The Clerk's race title (already in the map's own wording: "Senator,
-    U.S.", "State Representative, 15th District") in the wording
-    build_il_county_election_results.py's classify() reads, as (title,
-    district). A title no rule knows fails rather than guessing."""
+    U.S.", "State Representative, 15th District") as (name, district,
+    fixed) for build_il_county_election_results.py. With fixed None the
+    builder's classify() reads name and district; otherwise fixed says what
+    the race is. A title no rule knows fails rather than guessing."""
     from build_il_county_election_results import ordinal
     office, _, where = [x.strip() for x in title.partition(",")]
     if title == "Senator, U.S.":
-        return "FOR UNITED STATES SENATOR", "FEDERAL"
+        return "FOR UNITED STATES SENATOR", "FEDERAL", None
     if title == "Governor & Lieutenant Governor, Illinois":
-        return "FOR GOVERNOR AND LIEUTENANT GOVERNOR", "STATE OF ILLINOIS"
+        return "FOR GOVERNOR AND LIEUTENANT GOVERNOR", "STATE OF ILLINOIS", None
     if where == "State of Illinois" and office in ("Attorney General", "Secretary of State", "Comptroller", "Treasurer"):
-        return "FOR " + office.upper(), "STATE OF ILLINOIS"
+        return "FOR " + office.upper(), "STATE OF ILLINOIS", None
     m = ORDINAL.match(where)
     if m:
         n = ordinal(int(m.group(1))).upper()
         if office == "U.S. Representative":
-            return "FOR REPRESENTATIVE IN CONGRESS", n + " CONGRESSIONAL DIST"
+            return "FOR REPRESENTATIVE IN CONGRESS", n + " CONGRESSIONAL DIST", None
         if office == "State Senator":
-            return "FOR STATE SENATOR", n + " LEGISLATIVE DIST"
+            return "FOR STATE SENATOR", n + " LEGISLATIVE DIST", None
         if office == "State Representative":
-            return "FOR REPRESENTATIVE IN THE GENERAL ASSEMBLY", n + " REPRESENTATIVE DIST"
-    return None, None
+            return "FOR REPRESENTATIVE IN THE GENERAL ASSEMBLY", n + " REPRESENTATIVE DIST", None
+    m = re.fullmatch(r"Superintendent of Schools, (\w+) County", title)
+    if m:
+        # the regional superintendent of a neighbour's region, which reaches
+        # into suburban Cook; one contest with that county's own half
+        return "FOR REGIONAL SUPERINTENDENT OF SCHOOLS (%s County)" % m.group(1), "", None
+    for pat, group in WITH_CHICAGO:
+        if pat.match(title):
+            return title, "", {"group": group, "chicago": True, "seats": vote_for}
+    if re.fullmatch(r"Trustee, .+ Sanitary District(, 2Yr)?", title):
+        return title, "", {"group": "local", "beyond": False, "seats": vote_for}
+    if sorted(c.strip().upper() for c in choices) == ["NO", "YES"]:
+        if title in SHARED_QUESTIONS:
+            name, chicago = SHARED_QUESTIONS[title]
+            return name, "", {"group": "questions", "chicago": chicago, "beyond": True}
+        return title, "", {"group": "questions", "beyond": False}
+    return None, None, None
 
 
 def main():
@@ -214,11 +271,14 @@ def main():
             if reg != turnout[pname][0] or bal > turnout[pname][1]:
                 fail("%s, %s: %d registered and %d ballots, against %d and %d countywide"
                      % (f, pname, reg, bal, turnout[pname][0], turnout[pname][1]))
-        name, district = canonical(r["title"])
+        name, district, fixed = canonical(r["title"], r["voteFor"], r["choices"])
         if name is None:
             fail("%s: no title rule reads %r" % (f, r["title"]))
-        contests.append({"name": name, "district": district, "clerkTitle": r["title"], "voteFor": r["voteFor"],
-                         "choices": r["choices"], "precincts": r["precincts"]})
+        race = {"name": name, "district": district, "clerkTitle": r["title"], "voteFor": r["voteFor"],
+                "choices": r["choices"], "precincts": r["precincts"]}
+        if fixed:
+            race["fixed"] = fixed
+        contests.append(race)
     county = {
         "county": "cook", "name": "Cook", "source": SOURCE, "publisher": "Cook County Clerk",
         "areaName": "Suburban Cook County", "read": max(record["files"][f]["saved"] for f, _ in races),

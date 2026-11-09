@@ -18,10 +18,14 @@ counties'. The rebuild never downloads anything from the Clerk, so suburban
 Cook stays at the numbers saved here. `il/data/source` is not published by
 the deploy.
 
-What is here: U.S. Senator, Governor, the four other statewide offices, and
-every U.S. Representative, State Senator and State Representative race on a
-suburban Cook ballot. The county's own offices, judges, retention questions
-and referendums are not here yet.
+What is here: every race on a suburban Cook ballot except the judicial
+retention questions — the federal, statewide and legislative races, the
+county's own offices, the Water Reclamation District, the county board and
+Board of Review districts, the judges and subcircuit judges, three sanitary
+district boards, the regional superintendents of the DuPage, Kane and Lake
+regions, and the referendums. A race Chicago also votes in is folded into
+Chicago's contest of the same title; a referendum DuPage or Kane also counts
+is folded into that county's.
 
 A district race lists only its own precincts. A precinct split between two
 districts appears in both districts' files, each with the ballots cast on its
