@@ -48,7 +48,7 @@ on:
         required: false
         default: ""
       county_certified:
-        description: "Counties whose canvass is complete, as county=YYYY-MM-DD separated by spaces (kane, dekalb, henry, pike, randolph, franklin, wayne, dupage, lake, mchenry, winnebago, mclean, bloomington, sangamon, macoupin, will)"
+        description: "Counties whose canvass is complete, as county=YYYY-MM-DD separated by spaces (kane, dekalb, henry, pike, randolph, franklin, wayne, dupage, lake, mchenry, winnebago, mclean, bloomington, sangamon, macoupin, will, cook)"
         required: false
         default: ""
 
@@ -116,8 +116,10 @@ jobs:
           date=$(python3 -c "import json;print(json.load(open('il/data/app/election-results.json'))['electionDate'])")
           # the Clarity counties' read is committed, from reports a person
           # downloads by hand; this job never fetches Clarity (see
-          # scripts/il_clarity_election_results_download.py)
-          counties="--counties il/data/source/election-results-platinum-raw.json --counties il/data/source/election-results-kane-raw.json --counties il/data/source/election-results-clarity-raw.json"
+          # scripts/il_clarity_election_results_download.py), and so is
+          # suburban Cook's, from the Clerk's spreadsheets saved the same way
+          # (the Clerk's results site blocks this project's readers)
+          counties="--counties il/data/source/election-results-platinum-raw.json --counties il/data/source/election-results-kane-raw.json --counties il/data/source/election-results-clarity-raw.json --counties il/data/source/election-results-cook-raw.json"
           for c in $COUNTY_CERTIFIED; do counties="$counties --county-certified $c"; done
           if [ -n "$CERTIFIED" ]; then
             python3 scripts/build_chicago_election_results.py /tmp/chicago_results_raw.json --election-date "$date" --certified "$CERTIFIED" $counties

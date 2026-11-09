@@ -1015,14 +1015,15 @@ jobs:
       # read back, plus three inputs it must refuse. And the Illinois county
       # fold (scripts/build_il_county_election_results.py): the clerks' contest
       # titles, ballot lines and precinct names read the way its docstring says.
-      # And the committed Clarity read is exactly what the hand-downloaded
-      # reports beside it say, each report the file record.json recorded.
+      # And the committed Clarity and suburban Cook reads are exactly what the
+      # hand-downloaded files beside them say, each the file record.json recorded.
       - name: The election results writer reads back what it wrote
         if: ${{ !cancelled() }}
         run: |
           python3 scripts/election_results_common.py --selftest
           python3 scripts/build_il_county_election_results.py --selftest
           python3 scripts/il_clarity_election_results_reader.py --check -o il/data/source/election-results-clarity-raw.json
+          python3 scripts/il_cook_election_results_reader.py --check -o il/data/source/election-results-cook-raw.json
 
       # Adoption of that reader was per caller and unmeasured, so every count of
       # it came off a hand-written list and every one was an undercount: seven

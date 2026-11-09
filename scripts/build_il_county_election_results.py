@@ -17,6 +17,10 @@ clerk publishes precinct-by-precinct results a script may read:
         read by il_clarity_election_results_reader.py from the Clarity reports
         a person downloads by hand (no scheduled job fetches Clarity), so
         these stay at the numbers of the last hand download
+    Suburban Cook County (the Cook County Clerk; Chicago's Board counts the city)
+        read by il_cook_election_results_reader.py from the Clerk's per-race
+        spreadsheets, downloaded by hand because the Clerk's results site
+        blocks this project's readers; so far the federal and state races
 
 Each is its own office on the map: a precinct key names its county before a
 colon ("kane:AU01", "dekalb:AF 01"), the index lists each county under
@@ -119,6 +123,10 @@ MAPS = {
     "macoupin": ("socrata", "https://data.macoupincountyil.gov/resource/ab79-cnsh.json", "name"),
     "will": ("arcgis", "https://services.arcgis.com/fGsbyIOAuxHnF97m/arcgis/rest/services/"
              "Precincts_2022/FeatureServer/1", "NAME"),
+    # suburban Cook (il_cook_election_results_reader.py), the layer the app's
+    # loadCookSuburbanPrecincts reads
+    "cook": ("arcgis", "https://gis.cookcountyil.gov/traditional/rest/services/precinctHistorical/MapServer/0",
+             "name"),
 }
 # Two offices count one county's precincts on one layer: the City of
 # Bloomington's Election Commission counts the McLean precincts the map names
@@ -130,11 +138,11 @@ SHARED_MAPS = {
 }
 # The order the counties are listed in `sources`, after Chicago.
 COUNTY_ORDER = ["kane", "dekalb", "henry", "pike", "randolph", "franklin", "wayne",
-                "dupage", "lake", "mchenry", "winnebago", "mclean", "bloomington", "sangamon", "macoupin", "will"]
+                "dupage", "lake", "mchenry", "winnebago", "mclean", "bloomington", "sangamon", "macoupin", "will", "cook"]
 # Counties a part file is split for by township (the name before the number),
 # as Kane's is by its two-letter township prefix, so a click loads one
 # township's precincts rather than the county's.
-SPLIT_BY_TOWNSHIP = ("dupage", "lake", "mchenry", "sangamon", "will")
+SPLIT_BY_TOWNSHIP = ("dupage", "lake", "mchenry", "sangamon", "will", "cook")
 # Clerk spelling -> map spelling, compared after norm().
 ALIASES = {
     "wayne": {"MASSILON": "MASSILLON"},
@@ -254,6 +262,18 @@ def result_to_map(tag, result_name, names):
     by_norm = {}
     for n in names:
         by_norm.setdefault(norm(n), n)
+    if tag == "cook":
+        # the Clerk's "Barrington Precinct 1" and "Berwyn Ward 1 Precinct 1"
+        # are the map's "BARRINGTON 1" and "BERWYN 1-1", matched exactly
+        # (norm() would make "EVANSTON 1-1" and an "EVANSTON 11" one name)
+        t = re.sub(r"\s+", " ", str(result_name)).strip().upper()
+        m = re.fullmatch(r"(.+?) WARD 0*(\d+) PRECINCT 0*(\d+)", t)
+        if m:
+            want = "%s %d-%d" % (m.group(1), int(m.group(2)), int(m.group(3)))
+        else:
+            m = re.fullmatch(r"(.+?) PRECINCT 0*(\d+)", t)
+            want = "%s %d" % (m.group(1), int(m.group(2))) if m else t
+        return want if want in set(names) else None
     want = norm(result_name)
     if tag == "kane":
         m = re.fullmatch(r"([A-Z]{2})(\d+)", want)
@@ -609,6 +629,15 @@ def _load_shapes():
                               if str(f["properties"].get(prop, "")).isdigit())
     _shapes["county"] = {}
     for tag in COUNTY_ORDER:
+        if tag == "cook":
+            # suburban Cook: the Supreme Court's 1st District, which is Cook
+            # County, less Chicago, which its school board districts tile
+            sc = json.load(open(os.path.join(APP_DATA, "il-supreme-court-districts.json")))
+            city = json.load(open(os.path.join(APP_DATA, "school-board-districts.json")))
+            cook = unary_union([shape(f["geometry"]) for f in sc["features"]
+                                if str(f["properties"].get("DISTRICT")) == "1"])
+            _shapes["county"][tag] = cook.difference(unary_union([shape(f["geometry"]) for f in city["features"]]))
+            continue
         doc = json.load(open(os.path.join(APP_DATA, OUTLINE_OF.get(tag, tag) + "-county-outline.json")))
         _shapes["county"][tag] = unary_union([shape(f["geometry"]) for f in doc["features"]])
     return _shapes

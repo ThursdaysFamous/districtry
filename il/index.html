@@ -26665,8 +26665,9 @@ function initChiExplorer() {
   // Seven counties' clerks publish their precinct results where a script may
   // read them, and seven more offices (DuPage, Lake, McHenry, Winnebago,
   // McLean, Sangamon, Macoupin and Will County Clerks and the Bloomington Election
-  // Commission, and the Will County Clerk) publish Clarity reports a person
-  // downloads by hand; the map
+  // Commission) publish Clarity reports a person downloads by hand, and the
+  // Cook County Clerk publishes suburban Cook's as one spreadsheet per race,
+  // also downloaded by hand; the map
   // draws all those counties' precincts, so their
   // outlines are coloured beside Chicago's (scripts/il_platinum_election_
   // results_scraper.py, scripts/il_kane_election_results_scraper.py, folded in
@@ -26694,7 +26695,14 @@ function initChiExplorer() {
       cityPrefix: "City of Bloomington ", city: "bloomington", cityName: "City of Bloomington" },
     { id: "sangamon", name: "Sangamon", load: loadSangamonPrecincts, coverage: sangamonCountyCoverage, prop: "Name" },
     { id: "macoupin", name: "Macoupin", load: loadMacoupinPrecincts, coverage: macoupinCountyCoverage, prop: "name" },
-    { id: "will", name: "Will", load: loadWillPrecincts, coverage: willCountyCoverage, prop: "NAME" }
+    { id: "will", name: "Will", load: loadWillPrecincts, coverage: willCountyCoverage, prop: "NAME" },
+    // suburban Cook, which the Cook County Clerk counts (Chicago's Board
+    // counts the city), read from the Clerk's per-race spreadsheets,
+    // downloaded by hand (scripts/il_cook_election_results_reader.py). Its
+    // loader is assigned further down this file, so it is called rather than
+    // referenced here.
+    { id: "cook", name: "Cook", load: function () { return loadCookSuburbanPrecincts(); },
+      coverage: suburbanCookCoverage, prop: "name", areaName: "Suburban Cook County" }
   ].map(function (c) {
     // findPropCI compares against a lowercase name only
     c.prop = c.prop.toLowerCase();
@@ -26715,7 +26723,7 @@ function initChiExplorer() {
       label: function (feature) {
         var v = nameOf(feature) || "";
         if (inCity(v)) return c.cityName + ", precinct " + v.slice(c.cityPrefix.length);
-        return c.name + " County, precinct " + v;
+        return (c.areaName || c.name + " County") + ", precinct " + v;
       }
     };
   });
@@ -26751,7 +26759,7 @@ function initChiExplorer() {
       return w != null && p != null ? "Ward " + String(w).replace(/^0+(?=\d)/, "") + ", Precinct " + String(p).replace(/^0+(?=\d)/, "") : null;
     }
   });
-  declareDataSource("election-results", { label: "Chicago Board of Election Commissioners, the Bloomington Election Commission and the Kane, DeKalb, Henry, Pike, Randolph, Franklin, Wayne, DuPage, Lake, McHenry, Winnebago, McLean, Sangamon, Macoupin and Will County Clerks" });
+  declareDataSource("election-results", { label: "Chicago Board of Election Commissioners, the Bloomington Election Commission and the Kane, DeKalb, Henry, Pike, Randolph, Franklin, Wayne, DuPage, Lake, McHenry, Winnebago, McLean, Sangamon, Macoupin, Will and Cook County Clerks" });
 
   /* ---------- Election notice (until Election Day) ----------
    * One dismissible line over the map, from now through the election date in
