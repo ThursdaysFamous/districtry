@@ -68,6 +68,16 @@ of a ballot's name with a map's precinct is made by name and stated only for
 the county as a whole. After each election the map check is run again, and
 this file is rebuilt from its new record; --check fails until it is.
 
+TWO NEWTON PRECINCTS CARRY EACH OTHER'S NAMES ON THE MAP. The map check
+found (2026-11-09) that the file records Newton's 02TOWN and 20-STANSELLS
+each under the other's shape: the ballots, the 2023 State Senate plan and the
+county's own district map all put the voters of each where the file draws
+the other (check_ga_county_maps.py's PRECINCT_SWAPS gives the measurements).
+Its record lists each such pair under sources.precinct_map.swapped, and this
+builder gives each shape of a pair the other's code and name, keeping its
+own area. --check holds each shape to the State Senate district the record
+names for it, on the Senate districts this app draws.
+
 THE FINGERPRINT'S MEASURE IS ACRES. The file's AREA is in square miles (its
 precincts sum to 59,457, Georgia's area), which round to zero for most of
 the city precincts, so the fetch adds each one's AREA in acres, rounded to a
@@ -188,6 +198,52 @@ def county_status(record, counties):
     return out
 
 
+# What a swapped pair exchanges: the code and the name. The county, and the
+# area, which belongs to the shape, stay where they are.
+SWAPPED_FIELDS = ("DISTRICT", "PRECINCT_I", "PRECINCT_N")
+SENATE = os.path.join(INSTANCE_ROOT, "data", "app", "ga-senate-districts.json")
+
+
+def swapped_pairs():
+    return load_map_check()["sources"]["precinct_map"].get("swapped", [])
+
+
+def interior_point(geom):
+    """A point inside `geom`, found on a grid over its extent."""
+    x0, y0, x1, y1 = sp.bbox(geom)
+    for n in (8, 32, 128):
+        for i in range(1, n):
+            for j in range(1, n):
+                pt = (x0 + (x1 - x0) * i / n, y0 + (y1 - y0) * j / n)
+                if sp.point_in_geometry(pt, geom):
+                    return pt
+    return None
+
+
+def check_swaps(feats):
+    """Each shape of a swapped pair lies in the State Senate district the map
+    check's record names for its code."""
+    pairs = swapped_pairs()
+    if not pairs:
+        return
+    with open(SENATE, encoding="utf-8") as fh:
+        senate = json.load(fh)["features"]
+    by_key = {f["properties"]["key"]: f for f in feats}
+    for pair in pairs:
+        for code, want in zip(pair["codes"], pair["senate"]):
+            key = "13%s-%s" % (code[:3], code[3:])
+            f = by_key.get(key)
+            if f is None:
+                sp.fail(SPEC, "the map check swaps precinct %s, which this file does not hold" % key)
+            pt = interior_point(f["geometry"])
+            got = [s["properties"]["SLDU"] for s in senate if sp.point_in_geometry(pt, s["geometry"])] \
+                if pt else []
+            if got != [want]:
+                sp.fail(SPEC, "precinct %s (%s) lies in State Senate district %s, and the map "
+                        "check's swap puts it in %s" % (key, f["properties"]["name"],
+                                                         got or "none", want))
+
+
 _STATUS = {}
 
 
@@ -231,6 +287,14 @@ def fetch(spec, geometry=True):
         sp.fail(spec, "the %s file's bytes changed (SHA-256 %s, pinned %s): the office "
                 "replaced it in place; read it before building"
                 % (YEAR, str(meta.get("source_sha256"))[:12], SOURCE_SHA256[:12]))
+    by_code = {str(r["properties"].get("DISTRICT") or "").strip(): r for r in records}
+    for pair in swapped_pairs():
+        a, b = (by_code.get(c) for c in pair["codes"])
+        if a is None or b is None or a["properties"].get("FIPS") != b["properties"].get("FIPS"):
+            sp.fail(spec, "the map check swaps %s, which are not two precincts of one county "
+                    "in this file" % " and ".join(pair["codes"]))
+        for k in SWAPPED_FIELDS:
+            a["properties"][k], b["properties"][k] = b["properties"].get(k), a["properties"].get(k)
     nameless = {}
     for rec in records:
         p = rec["properties"]
@@ -271,7 +335,9 @@ def read(props):
 def extra_check(feats):
     """Every precinct carries what the map check's record now says about its
     county, so a map check run again after an election fails --check until
-    this file is rebuilt from it."""
+    this file is rebuilt from it; and each swapped shape lies in its Senate
+    district."""
+    check_swaps(feats)
     for f in feats:
         p = f["properties"]
         want = status_for(p["countyFips"])
