@@ -26686,12 +26686,16 @@ function initChiExplorer() {
       }
     };
   });
+  // The counties are asked first: their outlines ship with the app, while
+  // chicagoCoverage reads Chicago's community areas from the city's data
+  // portal. Asked the other way round, a point in Franklin or Kane County
+  // waited for the portal (about 30 seconds of retries when it answered 503,
+  // measured 2026-11-09) before its own county's results could show.
   function electionResultsCoverage(point) {
-    return Promise.resolve(chicagoCoverage(point)).then(function (inChicago) {
-      if (inChicago) return true;
-      return Promise.all(ELECTION_RESULTS_COUNTIES.map(function (c) {
-        return Promise.resolve(c.coverage(point)).then(null, function () { return false; });
-      })).then(function (hits) { return hits.some(Boolean); });
+    return Promise.all(ELECTION_RESULTS_COUNTIES.map(function (c) {
+      return Promise.resolve(c.coverage(point)).then(null, function () { return false; });
+    })).then(function (hits) {
+      return hits.some(Boolean) || chicagoCoverage(point);
     });
   }
   registerElectionResultsLayer({
