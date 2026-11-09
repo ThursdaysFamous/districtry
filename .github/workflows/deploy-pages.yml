@@ -297,30 +297,57 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url || steps.retry.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.retry1.outputs.page_url || steps.retry2.outputs.page_url || steps.retry3.outputs.page_url }}
     # A PUBLISH GETS TEN MINUTES AND NO MORE, SO A SLOW ONE IS TRIED AGAIN
-    # RATHER THAN WAITED FOR. actions/deploy-pages caps its `timeout` input at
-    # 600000 ms (MAX_TIMEOUT in its src/internal/deployment.js; its log says
-    # "timeout value is greater than the allowed maximum - timeout set to the
-    # maximum of 600000 milliseconds"), and GitHub's Pages limits page says
-    # "GitHub Pages deployments will timeout if they take longer than 10
-    # minutes". #1942 set `timeout: 1800000` on 2026-11-09 and changed nothing:
-    # the next slow publish (#1944's, the same evening) was cancelled at ten
-    # minutes in "syncing_files" and did not go live. On timeout the action
-    # CANCELS the deployment, so the second try starts a new one. It waits
-    # first because on 2026-11-05 a re-run started seconds after a cancel
-    # failed in 7 s with "Deployment cancelled" and one three minutes later
-    # went through. Any other failure (a missing artifact, a refused token)
-    # fails the retry the same way, so the job still turns red.
+    # LATER RATHER THAN WAITED FOR. actions/deploy-pages caps its `timeout`
+    # input at 600000 ms (MAX_TIMEOUT in its src/internal/deployment.js; its
+    # log says "timeout value is greater than the allowed maximum - timeout set
+    # to the maximum of 600000 milliseconds"), and GitHub's Pages limits page
+    # says "GitHub Pages deployments will timeout if they take longer than 10
+    # minutes". #1942 set `timeout: 1800000` on 2026-11-09 and changed nothing.
+    #
+    # WHY THREE MORE TRIES, FIFTEEN MINUTES APART, AND NOT ONE. A slow copy on
+    # GitHub's side comes in stretches, not one publish at a time: on
+    # 2026-11-09 four publishes in a row of #1935 and #1939 timed out in
+    # "syncing_files" between 17:41 and 18:56 UTC (overlapping GitHub's posted
+    # Actions/Pages incident of 18:12-18:59), and #1944's publish at 22:21 and
+    # its re-run at 22:52 both timed out with no incident posted. No timed-out
+    # publish has been seen to go live afterwards; each time, what put the site
+    # right was the next publish that ran once the copy was fast again
+    # (#1940's, live at 18:58). Most publishes copy in one to three minutes. So the
+    # tries are spread over about an hour. On timeout the action CANCELS its
+    # deployment, so each try starts a new one; on 2026-11-05 a re-run started
+    # seconds after a cancel failed in 7 s with "Deployment cancelled" and one
+    # three minutes later went through, which the wait also covers.
+    #
+    # THE COST: a publish that fails four times holds the `pages` slot for
+    # about 85 minutes, and one that fails for a reason a wait cannot fix (a
+    # missing artifact, a refused token) takes that long to turn red. A newer
+    # merge waits behind it, and the newest waiting one publishes everything
+    # once it runs.
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
         continue-on-error: true
-      - name: Wait before trying the publish again
+      - name: Wait before the second try
         if: steps.deployment.outcome == 'failure'
-        run: sleep 240
-      - id: retry
+        run: sleep 900
+      - id: retry1
         if: steps.deployment.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+      - name: Wait before the third try
+        if: steps.retry1.outcome == 'failure'
+        run: sleep 900
+      - id: retry2
+        if: steps.retry1.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+      - name: Wait before the last try
+        if: steps.retry2.outcome == 'failure'
+        run: sleep 900
+      - id: retry3
+        if: steps.retry2.outcome == 'failure'
         uses: actions/deploy-pages@v4
 
   notify-indexnow:
