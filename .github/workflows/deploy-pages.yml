@@ -297,17 +297,31 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.retry.outputs.page_url }}
+    # A PUBLISH GETS TEN MINUTES AND NO MORE, SO A SLOW ONE IS TRIED AGAIN
+    # RATHER THAN WAITED FOR. actions/deploy-pages caps its `timeout` input at
+    # 600000 ms (MAX_TIMEOUT in its src/internal/deployment.js; its log says
+    # "timeout value is greater than the allowed maximum - timeout set to the
+    # maximum of 600000 milliseconds"), and GitHub's Pages limits page says
+    # "GitHub Pages deployments will timeout if they take longer than 10
+    # minutes". #1942 set `timeout: 1800000` on 2026-11-09 and changed nothing:
+    # the next slow publish (#1944's, the same evening) was cancelled at ten
+    # minutes in "syncing_files" and did not go live. On timeout the action
+    # CANCELS the deployment, so the second try starts a new one. It waits
+    # first because on 2026-11-05 a re-run started seconds after a cancel
+    # failed in 7 s with "Deployment cancelled" and one three minutes later
+    # went through. Any other failure (a missing artifact, a refused token)
+    # fails the retry the same way, so the job still turns red.
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          # 30 minutes, not the action's default 10. On 2026-11-09 four
-          # publishes in a row sat in GitHub's "syncing_files" state past
-          # 10 minutes (a 379 MB artifact) and were marked failed, and the
-          # last of them went live about two minutes after the step gave up.
-          # A failed deploy also skips notify-indexnow below.
-          timeout: 1800000
+        continue-on-error: true
+      - name: Wait before trying the publish again
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 240
+      - id: retry
+        if: steps.deployment.outcome == 'failure'
+        uses: actions/deploy-pages@v4
 
   notify-indexnow:
     # Best-effort recrawl ping to the IndexNow engines (Bing/Yandex/Seznam/
