@@ -53,6 +53,7 @@ SITES = {
     "Bloomington": ("bloomington", "IL/Bloomington/127392"),
     "Sangamon": ("sangamon", "IL/Sangamon/127490"),
     "Winnebago": ("winnebago", "WRC/Winnebago/127560"),
+    "Will": ("will", "IL/Will/127394"),
 }
 
 

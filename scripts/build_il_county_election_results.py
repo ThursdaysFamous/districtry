@@ -13,7 +13,7 @@ clerk publishes precinct-by-precinct results a script may read:
     Kane
         read by il_kane_election_results_scraper.py
     DuPage, Lake, McHenry, Winnebago (outside Rockford), McLean (outside
-    Bloomington), the City of Bloomington, Sangamon, Macoupin
+    Bloomington), the City of Bloomington, Sangamon, Macoupin, Will
         read by il_clarity_election_results_reader.py from the Clarity reports
         a person downloads by hand (no scheduled job fetches Clarity), so
         these stay at the numbers of the last hand download
@@ -117,6 +117,8 @@ MAPS = {
     "sangamon": ("arcgis", "https://services.arcgis.com/XqG0RpqsNfIBGGb2/arcgis/rest/services/"
                  "ApprovedPrecincts20231012/FeatureServer/0", "Name"),
     "macoupin": ("socrata", "https://data.macoupincountyil.gov/resource/ab79-cnsh.json", "name"),
+    "will": ("arcgis", "https://services.arcgis.com/fGsbyIOAuxHnF97m/arcgis/rest/services/"
+             "Precincts_2022/FeatureServer/1", "NAME"),
 }
 # Two offices count one county's precincts on one layer: the City of
 # Bloomington's Election Commission counts the McLean precincts the map names
@@ -128,11 +130,11 @@ SHARED_MAPS = {
 }
 # The order the counties are listed in `sources`, after Chicago.
 COUNTY_ORDER = ["kane", "dekalb", "henry", "pike", "randolph", "franklin", "wayne",
-                "dupage", "lake", "mchenry", "winnebago", "mclean", "bloomington", "sangamon", "macoupin"]
+                "dupage", "lake", "mchenry", "winnebago", "mclean", "bloomington", "sangamon", "macoupin", "will"]
 # Counties a part file is split for by township (the name before the number),
 # as Kane's is by its two-letter township prefix, so a click loads one
 # township's precincts rather than the county's.
-SPLIT_BY_TOWNSHIP = ("dupage", "lake", "mchenry", "sangamon")
+SPLIT_BY_TOWNSHIP = ("dupage", "lake", "mchenry", "sangamon", "will")
 # Clerk spelling -> map spelling, compared after norm().
 ALIASES = {
     "wayne": {"MASSILON": "MASSILLON"},
@@ -165,11 +167,11 @@ def ordinal(n):
 
 # The circuit a county's own retention titles leave unnamed ("CIRCUIT COURT
 # JUDGE ... SEEKING RETENTION IN OFFICE"): Kane is the whole 16th Circuit.
-CIRCUIT_OF = {"Kane": 16, "DuPage": 18, "Lake": 19, "McHenry": 22}
+CIRCUIT_OF = {"Kane": 16, "DuPage": 18, "Lake": 19, "McHenry": 22, "Will": 12}
 # Circuits made of one county alone, so a circuit judge's race there is the
-# whole race (705 ILCS 35/1: the 16th is Kane, the 18th DuPage,
+# whole race (705 ILCS 35/1: the 12th is Will, the 16th Kane, the 18th DuPage,
 # the 19th Lake and the 22nd McHenry).
-ONE_COUNTY_CIRCUITS = {16: "Kane", 18: "DuPage", 19: "Lake", 22: "McHenry"}
+ONE_COUNTY_CIRCUITS = {12: "Will", 16: "Kane", 18: "DuPage", 19: "Lake", 22: "McHenry"}
 # The county outline a shared office's ground is measured against.
 OUTLINE_OF = {"bloomington": "mclean"}
 # A ballot question Kane heads with the body it is put to, and whether that

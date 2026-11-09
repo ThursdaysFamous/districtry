@@ -30,7 +30,7 @@
 # from the shipped file after that), and the card stops saying unofficial there. The
 # file reads certified, and the job stops, once every office has. The Clarity
 # counties (DuPage, Lake, McHenry, Winnebago, McLean, Bloomington, Sangamon,
-# Macoupin) are certified only after a person has downloaded their final
+# Macoupin, Will) are certified only after a person has downloaded their final
 # reports by hand, since this job never reads Clarity.
 #
 # A PR ONLY WHEN A NUMBER MOVED: every read stamps the time it was read, so the
@@ -48,7 +48,7 @@ on:
         required: false
         default: ""
       county_certified:
-        description: "Counties whose canvass is complete, as county=YYYY-MM-DD separated by spaces (kane, dekalb, henry, pike, randolph, franklin, wayne, dupage, lake, mchenry, winnebago, mclean, bloomington, sangamon, macoupin)"
+        description: "Counties whose canvass is complete, as county=YYYY-MM-DD separated by spaces (kane, dekalb, henry, pike, randolph, franklin, wayne, dupage, lake, mchenry, winnebago, mclean, bloomington, sangamon, macoupin, will)"
         required: false
         default: ""
 
