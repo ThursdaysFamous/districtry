@@ -22,10 +22,12 @@ Adam chose with the plan ("county maps from the map office after a precinct
 check", 2026-10-22): a map passes where every precinct that voted for one of
 its districts lies in that district on the map, and no district failed
 (check_ga_county_maps.py says how, and what a district no contest tested is).
-Measured 2026-10-30, 111 commission maps and 106 school board maps pass,
+Measured 2026-10-30, 111 commission maps and 106 school board maps passed,
 counting the four "super district" maps (DeKalb's commission, Lowndes's
 commission, and Harris's and Augusta-Richmond's school boards) apart from
-their counties' other maps. Every other map is drawn nowhere, and gaps
+their counties' other maps; on 2026-11-09 Newton's map, one file for both
+of its boards, passed too once the check corrected two of its precincts'
+names on the 2024 precinct map, so 112 and 107 pass. Every other map is drawn nowhere, and gaps
 ga-county-commission-district-lines and ga-school-board-district-lines say
 why. A map
 whose file has changed since the record was written is refused: its SHA-256

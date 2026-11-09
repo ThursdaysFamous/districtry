@@ -1,8 +1,8 @@
 {
- "fetched": "2026-10-30",
+ "fetched": "2026-11-09",
  "fingerprint": {
   "precincts": 2724,
-  "sha256": "00eb0111f5655e2b6264b13339f2d211eb20d6720dbab70488eebd1d33c614c6"
+  "sha256": "7c4ddd06901718daf2c845f76fddd9df99c2e90eb27c13451d28b5a88556a18c"
  },
  "identical_duplicates_dropped": 0,
  "item": null,
@@ -170,6 +170,6 @@
   "13319": 9,
   "13321": 12
  },
- "shipped_sha256": "6526c3df80320837c7f7d7fd7e24a5e69a7339383996bf3ec79ea11ac3ffe32c",
+ "shipped_sha256": "80c20680644327c9b703bb972a8db7e9912e8094c5de11849455c6bf738bde8f",
  "source_sha256": "4d48e5ba8849cad20809580c3ef56c81c516ef26878a3378be83847394271a8a"
 }
