@@ -1091,6 +1091,95 @@ def windows_block(gc, gsc, bing):
     return out
 
 
+# THE STATE FILTER (Adam, 2026-11-09: "Add a state filter to the report").
+# What the counter records with the state's app in it, and from when: a state's
+# pages always (by their address), its points chosen from POINTS_BY_MAP_FROM,
+# its layers from LAYER_SPLIT, its first and return visits from the visit
+# count's own `since`, and the installed app's launches from APP_LAUNCH_FROM,
+# the day that count began. A day before a count began is None, so the page
+# draws it as not counted and never as 0. Searches, location requests, where
+# visits came from, screens and countries name no app and are not split.
+APP_LAUNCH_FROM = "2026-10-13"
+
+
+def state_series():
+    # A function rather than a constant because POINTS_BY_MAP_FROM is set
+    # further down, with the Milestones tab that first needed it.
+    return [("points", "select", POINTS_BY_MAP_FROM),
+            ("layers", "layer", LAYER_SPLIT),
+            ("first", "visit/first", None),
+            ("ret", "visit/return", None),
+            ("launches", "app-launch", APP_LAUNCH_FROM)]
+
+
+def states_block(gc):
+    """Each live state's own series and layer bars, keyed by tag, for the
+    page's state filter, or {} for a file fetched before they were kept (the
+    page then offers no filter).
+
+    Each series is the full window's, day for day with `daily`, and the page
+    cuts it to a shorter window as it cuts `daily`. The layer bars are the
+    dashboard's own per-state lists for each window, its ten most used.
+    """
+    bs = gc.get("by_state")
+    if not bs:
+        print("NOTE no per-state series in the data file (fetched before "
+              "2026-11-09); the page offers no state filter")
+        return {}
+    dates = [d["date"] for d in gc["daily"]]
+    v = gc.get("visits") or {}
+    since = {"first": v.get("since"), "ret": v.get("since")}
+    bar = {r["key"]: r["count"] for r in gc["instances"]}
+    sel = {a["tag"]: a["count"]
+           for a in gc.get("event_by_app", {}).get("select", [])}
+    listed = {k: {r["tag"]: r["count"] for r in v.get("by_app_" + k, [])}
+              for k in ("first", "return")}
+    wins = [("full", gc)] + sorted(gc.get("windows", {}).items(),
+                                   key=lambda kv: int(kv[0]))
+    out = {}
+    for tag in fleet_tags():
+        if tag not in bs:
+            fail("by_state carries no entry for %s, which metros.json lists. "
+                 "Run the fetch workflow again." % tag)
+        e = bs[tag]
+        for key in ["map", "other"] + [fam for _, fam, _ in state_series()]:
+            if len(e.get(key, [])) != len(dates):
+                fail("by_state %s %s: %d days against %d in the daily series"
+                     % (tag, key, len(e.get(key, [])), len(dates)))
+        pages = sum(e["map"]) + sum(e["other"])
+        if pages != bar.get(tag, 0):
+            fail("%s: %d page visits by day against %d in its bar. The "
+                 "fetcher reads both off the same rows." % (tag, pages, bar.get(tag, 0)))
+        if sum(e["select"]) != sel.get(tag, 0):
+            fail("%s: %d points by day against %d in the points by app"
+                 % (tag, sum(e["select"]), sel.get(tag, 0)))
+        for k, fam in (("first", "visit/first"), ("return", "visit/return")):
+            if tag in listed[k] and listed[k][tag] != sum(e[fam]):
+                fail("%s: %d %s visits by day against %d in the visits by app"
+                     % (tag, sum(e[fam]), k, listed[k][tag]))
+        # The day it was listed on the front door, as an index into `dates`:
+        # the page starts a state's charts there, because a day before it was
+        # served is a day it had nothing to count. A state's first day with a
+        # page view is not that day; a small app can go a day with none.
+        listed_on = FLEET_LISTED[tag]
+        live = next((i for i, d in enumerate(dates) if d >= listed_on), len(dates) - 1)
+        entry = {"name": INSTANCE_NAMES[tag], "live": live,
+                 "map": e["map"], "other": e["other"]}
+        for name, fam, start in state_series():
+            start = start or since.get(name)
+            entry[name] = [n if start and d >= start else None
+                           for d, n in zip(dates, e[fam])]
+        layer_bars = {}
+        for key, w in wins:
+            rows_ = sorted(((LAYER_NAMES.get(r["id"], r["id"]), r["count"])
+                            for r in w.get("layer_instances", [])
+                            if r["tag"] == tag), key=lambda r: (-r[1], r[0]))
+            layer_bars[key] = [list(r) for r in rows_[:10]]
+        entry["layerBars"] = layer_bars
+        out[tag] = entry
+    return out
+
+
 def jsround(x):
     """Math.round, which the page's script uses: Python's round() takes a
     half to the even neighbour, so 44.5 would be 44 here and 45 on the page."""
@@ -1593,6 +1682,15 @@ def build():
      are the full window's cut to length. Empty when the data file predates
      the per-window fetch, and the page then shows no buttons. */
   var WINDOWS = %s;
+
+  /* Each live state's own counts, for the state filter, keyed by its tag:
+     its map's pages and its other pages per day, then the counts that name
+     the state's app, each null on a day before it began (points chosen,
+     layers turned on, first and return visits, the installed app opened),
+     and its ten most-used layers for each window. Day for day with `daily`.
+     Empty for a data file fetched before 2026-11-09, and the page then
+     offers no filter. */
+  var STATES = %s;
 %s''' % (
         BEGIN, start, end, daily,
         json.dumps(engine(gsc, start, end), separators=(",", ":")),
@@ -1621,7 +1719,8 @@ def build():
         "{:,}".format(abs(gc["total"] - daily_sum)),
         datetime.date.fromisoformat(gc["fetched"][:10]).strftime("%B %-d, %Y"),
         int(start[:4]), gc["total"],
-        compact(wins).replace("</", "<\\/"), END)
+        compact(wins).replace("</", "<\\/"),
+        compact(states_block(gc)).replace("</", "<\\/"), END)
 
     # The fallbacks a crawler reads, for the full window. Each is computed the
     # way the page's script computes it, so the text does not change on load;
