@@ -1,12 +1,24 @@
 {
  "about": "Each county commission and school board map the General Assembly's map office lists, tested against the precincts that voted in each district contest. Written by ga/scripts/check_ga_county_maps.py, which explains the test and every verdict.",
- "checked": "2026-10-30",
+ "checked": "2026-11-09",
  "sources": {
   "maps": "https://www.legis.ga.gov/joint-office/reapportionment",
   "precinct_map": {
    "url": "https://www.legis.ga.gov/api/document/docs/default-source/reapportionment-document-library/precincts/gaprec_2024-website-shapefile.zip?sfvrsn=7b38ca99_2",
    "sha256": "4d48e5ba8849cad20809580c3ef56c81c516ef26878a3378be83847394271a8a",
-   "precincts": 2724
+   "precincts": 2724,
+   "swapped": [
+    {
+     "codes": [
+      "21702TN",
+      "21720STN"
+     ],
+     "senate": [
+      "042",
+      "043"
+     ]
+    }
+   ]
   },
   "results": "https://results.sos.ga.gov/results/public/api/elections/",
   "elections": [
@@ -31,16 +43,14 @@
  "summary": {
   "commission": {
    "conflicts": 2,
-   "fails": 1,
-   "passes": 109,
+   "passes": 110,
    "untestable": 4,
    "untested": 2,
    "voted-countywide": 21
   },
   "school-board": {
    "at-large": 2,
-   "fails": 1,
-   "passes": 104,
+   "passes": 105,
    "untestable": 7,
    "untested": 6,
    "voted-countywide": 32
@@ -15316,12 +15326,12 @@
    "sha256": "8a626023fa2ec167446fd7f428052110830da84b2696f962e68c7a9f2739b8fb",
    "year": "2022",
    "super": false,
-   "verdict": "fails",
+   "verdict": "passes",
    "districts": {
     "001": "pass",
-    "002": "conflict",
-    "003": "fail",
-    "004": "conflict",
+    "002": "pass",
+    "003": "pass",
+    "004": "pass",
     "005": "pass"
    },
    "contests": [
@@ -15341,17 +15351,7 @@
      "district": "003",
      "precincts_voted": 7,
      "votes": 9461,
-     "verdict": "fail",
-     "forward": [
-      [
-       "02-Town",
-       "02TOWN",
-       587,
-       3714.0,
-       0.0,
-       0.0
-      ]
-     ]
+     "verdict": "pass"
     },
     {
      "election": "2024NovGen",
@@ -15369,25 +15369,7 @@
      "district": "002",
      "precincts_voted": 4,
      "votes": 3716,
-     "verdict": "fail",
-     "forward": [
-      [
-       "20-Stansells",
-       "20-STANSELLS",
-       1310,
-       1585.0,
-       0.0,
-       0.0
-      ]
-     ],
-     "reverse": [
-      [
-       "02-Town",
-       "02TOWN",
-       1.0,
-       1399.0
-      ]
-     ]
+     "verdict": "pass"
     },
     {
      "election": "GeneralPrimary51926",
@@ -15396,17 +15378,17 @@
      "district": "004",
      "precincts_voted": 6,
      "votes": 3103,
-     "verdict": "fail",
-     "forward": [
+     "slight": [
       [
-       "02-Town",
-       "02TOWN",
-       904,
-       1399.0,
+       "20-Stansells",
+       "20-STANSELLS",
+       10,
+       1585.0,
        0.0,
        0.0
       ]
-     ]
+     ],
+     "verdict": "pass"
     }
    ],
    "off_map": [],
@@ -15430,12 +15412,12 @@
    "sha256": "8a626023fa2ec167446fd7f428052110830da84b2696f962e68c7a9f2739b8fb",
    "year": "2022",
    "super": false,
-   "verdict": "fails",
+   "verdict": "passes",
    "districts": {
     "001": "pass",
-    "002": "fail",
-    "003": "conflict",
-    "004": "fail",
+    "002": "pass",
+    "003": "pass",
+    "004": "pass",
     "005": "pass"
    },
    "contests": [
@@ -15446,25 +15428,7 @@
      "district": "002",
      "precincts_voted": 4,
      "votes": 9609,
-     "verdict": "fail",
-     "forward": [
-      [
-       "20-Stansells",
-       "20-STANSELLS",
-       3211,
-       3745.0,
-       0.0,
-       0.0
-      ]
-     ],
-     "reverse": [
-      [
-       "02-Town",
-       "02TOWN",
-       1.0,
-       3714.0
-      ]
-     ]
+     "verdict": "pass"
     },
     {
      "election": "2024NovGen",
@@ -15473,17 +15437,17 @@
      "district": "004",
      "precincts_voted": 6,
      "votes": 8055,
-     "verdict": "fail",
-     "forward": [
+     "slight": [
       [
-       "02-Town",
-       "02TOWN",
-       2479,
-       3714.0,
+       "20-Stansells",
+       "20-STANSELLS",
+       30,
+       3745.0,
        0.0,
        0.0
       ]
-     ]
+     ],
+     "verdict": "pass"
     },
     {
      "election": "GeneralPrimary51926",
@@ -15501,17 +15465,7 @@
      "district": "003",
      "precincts_voted": 7,
      "votes": 3636,
-     "verdict": "fail",
-     "forward": [
-      [
-       "02-Town",
-       "02TOWN",
-       218,
-       1399.0,
-       0.0,
-       0.0
-      ]
-     ]
+     "verdict": "pass"
     },
     {
      "election": "GeneralPrimary51926",

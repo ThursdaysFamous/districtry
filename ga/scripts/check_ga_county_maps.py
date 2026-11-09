@@ -72,6 +72,17 @@ precinct is left unpaired. The June runoff's results carry no turnout by
 precinct, so the May primary's stands in for it where the two ballots list
 the same precincts.
 
+TWO PRECINCTS UNDER EACH OTHER'S NAMES. A pair in PRECINCT_SWAPS is two
+precincts of one county whose shapes the precinct map records under each
+other's codes and names, which the test would otherwise read as the county's
+map failing. A pair is entered only where two maps drawn independently of
+the precinct map, the 2023 State Senate or House plan and the county's own
+map, agree with where the ballots put each precinct's voters and not with
+the precinct map; the evidence is written beside each pair. Newton's 02TOWN
+and 20-STANSELLS are the one pair, found 2026-11-09 when the county's GIS
+department sent its map and it was the office's file, line for line. The
+record lists the pairs under sources.precinct_map.swapped.
+
 Then, for each district contest:
 
   - Countywide: counted in every precinct of the county. The district is a
@@ -189,6 +200,32 @@ PRECINCT_MAP_ELECTION = "2024NovGen"
 REG_DRIFT = 0.2
 
 BODIES = {"commission": "County Commission", "school-board": "School Board"}
+
+# Pairs of precincts the statewide precinct map draws under each other's
+# codes and names: the shape recorded under the first code is the second
+# precinct's, and the other way round (the module docstring, TWO PRECINCTS
+# UNDER EACH OTHER'S NAMES). `senate` is the control: the State Senate
+# district each code's precinct lies in once the two are swapped. The record
+# carries this table, and build_ga_precincts.py reads it there, so the
+# precinct layer names the two shapes as this test pairs them and its --check
+# holds each to its Senate district.
+PRECINCT_SWAPS = (
+    # Newton: 02TOWN and 20-STANSELLS, measured 2026-11-09. The map puts the
+    # shape it calls 02TOWN wholly in State Senate District 43 and wholly in
+    # the county's District 2, and the shape it calls 20-STANSELLS wholly in
+    # Senate District 42 and 12% and 88% (by area) in Districts 3 and 4. On
+    # the 5 November 2024 ballot 02-Town cast 3,574 votes for Senate District
+    # 42 and none for 43, 587 for commission District 3 and 2,479 for school
+    # board District 4; 20-Stansells cast 3,209 for Senate District 43 and 31
+    # for 42, and 3,211 for school board District 2. The Senate plan (the
+    # 2023 plan this app draws) and the county's district map are drawn
+    # independently of each other and of the precinct map, and both agree
+    # with the ballots and not with the map's names. The county map is the
+    # adopted one: asked for its current map, Newton County's GIS department
+    # sent on 9 November 2026 a shapefile (SHA-256 74b256e3c3cda076...) whose
+    # five districts lie within 0.1 mm of the office's file.
+    {"codes": ["21702TN", "21720STN"], "senate": ["042", "043"]},
+)
 
 _SESSION = None
 _GATE = None
@@ -379,6 +416,12 @@ def load_precincts(data, project):
                      "name": str(rec.get("PRECINCT_N", "")).strip() or pid, "geom": g}
     if len(out) < 2500:
         raise SystemExit("FAIL: the precinct map holds %d precincts; 2,724 on 2026-10-30" % len(out))
+    for pair in PRECINCT_SWAPS:
+        a, b = pair["codes"]
+        if a not in out or b not in out or out[a]["fips"] != out[b]["fips"]:
+            raise SystemExit("FAIL: PRECINCT_SWAPS names %s and %s, which are not two precincts "
+                             "of one county on this map" % (a, b))
+        out[a]["geom"], out[b]["geom"] = out[b]["geom"], out[a]["geom"]
     return out
 
 
@@ -450,13 +493,16 @@ def measure(cache, maps, precinct_zip):
     """
     project = _projector()
     psha = hashlib.sha256(precinct_zip).hexdigest()
+    # Measurements are cached under the precinct map and the swaps applied to
+    # it, so changing PRECINCT_SWAPS measures every map again.
+    pkey = hashlib.sha256((psha + json.dumps(PRECINCT_SWAPS)).encode()).hexdigest()
     precincts = load_precincts(precinct_zip, project)
     by_fips = collections.defaultdict(list)
     for code, p in precincts.items():
         by_fips[p["fips"]].append((code, p["geom"]))
     blocks = None
     located = {}
-    ppath = os.path.join(cache, "measure", "precincts-%s.json" % psha[:16])
+    ppath = os.path.join(cache, "measure", "precincts-%s.json" % pkey[:16])
     if os.path.exists(ppath):
         with open(ppath) as fh:
             pinfo = json.load(fh)
@@ -486,7 +532,7 @@ def measure(cache, maps, precinct_zip):
         if data is None:
             raise SystemExit("FAIL: %s answered 404" % m["url"])
         m["sha256"] = hashlib.sha256(data).hexdigest()
-        mpath = os.path.join(cache, "measure", "%s-%s.json" % (m["sha256"][:16], psha[:16]))
+        mpath = os.path.join(cache, "measure", "%s-%s.json" % (m["sha256"][:16], pkey[:16]))
         if os.path.exists(mpath):
             with open(mpath) as fh:
                 m["measure"] = json.load(fh)
@@ -1009,6 +1055,10 @@ def check(path):
             problems.append("%s: verdict %s does not follow from its districts" % (where, r["verdict"]))
         if not re.match(r"^[0-9a-f]{64}$", r.get("sha256") or ""):
             problems.append("%s: no SHA-256" % where)
+    swapped = rec["sources"]["precinct_map"].get("swapped", [])
+    if swapped != list(PRECINCT_SWAPS):
+        problems.append("the record was written with the precinct swaps %s and PRECINCT_SWAPS "
+                        "names %s: run the check again" % (swapped, list(PRECINCT_SWAPS)))
     if rec["summary"] != summarize(rec["maps"]):
         problems.append("the summary does not count the maps: %s against %s"
                         % (rec["summary"], summarize(rec["maps"])))
@@ -1051,7 +1101,8 @@ def main():
         "checked": datetime.date.today().isoformat(),
         "sources": {
             "maps": OFFICE_PAGE,
-            "precinct_map": {"url": purl, "sha256": psha, "precincts": len(pinfo)},
+            "precinct_map": {"url": purl, "sha256": psha, "precincts": len(pinfo),
+                             "swapped": list(PRECINCT_SWAPS)},
             "results": RESULTS_API,
             "elections": [{"id": el, "date": day, "name": label} for el, day, label in ELECTIONS],
             "people": "Census 2020 blocks, TIGERweb Tracts_Blocks/MapServer/12",

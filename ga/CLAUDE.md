@@ -23,8 +23,8 @@ from the General Assembly's own member data — the LIVE TIGERweb fabric — **C
 (`school-district-unified`, 181) and **ZIP Code** — three nearest-N layers from the USGS National
 Map (**Police Station**, **Fire & EMS Station**, **Post Office**), and the county maps the General
 Assembly's Reapportionment Office publishes, drawn only where the county's own district elections
-confirm them: **County Commission District** (`county-commissioner`, 109 counties) and **School
-Board District** (`school-board-district`, 104 counties), each naming its district's member from the
+confirm them: **County Commission District** (`county-commissioner`, 110 counties) and **School
+Board District** (`school-board-district`, 105 counties), each naming its district's member from the
 Secretary of State's election results, and the office's 2024 statewide precinct map: **Voting
 Precinct** (`voting-precinct`, 2,724). **Judicial Circuit** (`ga-superior-court`, 51) is drawn from
 whole counties and names each circuit's superior court judges and district attorney from the same
@@ -252,6 +252,21 @@ check saw elected from it, whether the whole county voted for them, and whether 
 confirmed its line. Every map not drawn is in gap `ga-county-commission-district-lines` or
 `ga-school-board-district-lines`. Both scripts are operator steps, run again after each election
 with county contests; `--check` on each runs offline in CI.
+
+**TWO NEWTON PRECINCTS ARE UNDER EACH OTHER'S NAMES ON THE OFFICE'S 2024 PRECINCT MAP, AND BOTH
+SCRIPTS CORRECT THE PAIR** (`PRECINCT_SWAPS` in `ga/scripts/check_ga_county_maps.py`, 2026-11-09).
+Newton's commission and school board map failed the check on 2026-10-30, and the county's own GIS
+department, asked for its current map, sent on 2026-11-09 a file whose districts lie within a
+tenth of a millimetre of the office's. So the map was right and the precinct map was not: it puts
+02TOWN's name on the shape of 20-STANSELLS and the other way round. The control is the State
+Senate plan, which neither county file touches: on the November 2024 ballot 02-Town cast 3,574
+votes for Senate District 42 and 20-Stansells 3,209 for District 43, while the shape named 02TOWN
+lies in District 43 and the one named 20-STANSELLS in District 42. With the pair corrected Newton
+passes on both boards and no other county's verdict moves. The table is written into the record
+(`sources.precinct_map.swapped`), `build_ga_precincts.py` reads it from there and swaps the two
+precincts' names when it fetches the map, and its `--check` holds each corrected precinct to the
+Senate district its ballots name, offline. A pair is added only with a control of this kind;
+whether other precincts on the map carry the wrong name was not swept.
 
 **The precincts are the office's 2024 statewide map, and each card says what the ballots since say
 about its county** (`ga-precincts.json`, `ga/scripts/build_ga_precincts.py` on the shared
