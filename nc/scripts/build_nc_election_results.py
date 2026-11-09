@@ -61,6 +61,7 @@ Usage:
 """
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -122,6 +123,24 @@ GROUP_ORDER = [g[0] for g in GROUP_RULES]
 SUFFIXES = {"JR", "JR.", "SR", "SR.", "II", "III", "IV"}
 FIRST = {"FOR": 0, "YES": 0, "AGAINST": 1, "NO": 1}
 
+
+
+def contest_slug(name):
+    """A county-run contest's id: its name as a slug, the same on every run.
+
+    A shared link carries the picked race as this id (`r=`), so it must name
+    the same contest every day. Names longer than 48 characters used to be cut
+    at 48, which made "Buncombe County Board of Commissioners District 01",
+    "02" and "03" one id; the -2 and -3 suffixes were then handed out in the
+    order the file listed them, which changes between reads, so a link opened
+    another district's race. A long name now keeps 40 characters and adds the
+    first 8 hex digits of the whole slug's SHA-1, so the end of the name still
+    tells contests apart. A name of 48 characters or fewer keeps its old id.
+    """
+    slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+    if len(slug) <= 48:
+        return slug
+    return slug[:40].rstrip("-") + "-" + hashlib.sha1(slug.encode("utf-8")).hexdigest()[:8]
 
 def group_of(name):
     for gid, _label, _layer, pattern in GROUP_RULES:
@@ -239,7 +258,7 @@ def main():
         if c["ident"][0] == "S":
             base = "s" + c["ident"][1]
         else:
-            base = "c" + re.sub(r"[^a-z0-9]+", "-", c["name"].lower()).strip("-")[:48]
+            base = "c" + contest_slug(c["name"])
         cid, n = base, 1
         while cid in used:
             n += 1

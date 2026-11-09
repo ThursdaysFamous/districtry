@@ -86,19 +86,19 @@
       "dataset": "5crt-au7u",
       "query": "https://data.cityofnewyork.us/resource/5crt-au7u.geojson?$limit=50000",
       "route": 0,
-      "fetched": "2026-09-29",
+      "fetched": "2026-11-08",
       "features": 71,
-      "data_sha256": "209f1b591def6e2df769f668e33d187df549a0dd000ee7dc72bd44df6f106831",
-      "archive_sha256": "89ed527caa8b5e566a6d79fbf593f6790b81d3d54bb43d991892c931d44fb4ab"
+      "data_sha256": "636a84da4504cf9cc1278d491aba215141bc16afc22babece46da9743b2c8619",
+      "archive_sha256": "696ea151285505acdee718ab69e08c1871cbd4d5c8078d4cdd44d5c0e83699d1"
     },
     "ny:council": {
       "dataset": "872g-cjhh",
       "query": "https://data.cityofnewyork.us/resource/872g-cjhh.geojson?$limit=50000",
       "route": 0,
-      "fetched": "2026-09-29",
+      "fetched": "2026-11-08",
       "features": 51,
-      "data_sha256": "3e49f5221fd1e3f0495c37ea2176aedb75eec9260c2862d9e6c88e291cb20bb4",
-      "archive_sha256": "13fb7a9c05c53937c60a299cf420ec3d76d4671e1977abfad508e1c91066cad1"
+      "data_sha256": "61ce3ebaf0fd4fd0b71d74a6c127f6ce3ca0a925b73e25671bd99585db6bb218",
+      "archive_sha256": "60cdf4eb22cddc717b7dc1296ee2d07f1d17bf1f01fe940aa0dfb6a8e0d97f18"
     },
     "ny:es-zone": {
       "dataset": "cmjf-yawu",
@@ -157,10 +157,10 @@
       "dataset": "y76i-bdw7",
       "query": "https://data.cityofnewyork.us/resource/y76i-bdw7.geojson?$limit=50000",
       "route": 0,
-      "fetched": "2026-09-29",
+      "fetched": "2026-11-08",
       "features": 78,
-      "data_sha256": "3c814ea76dcf544b2d8cca9c24eef7af6e260d2fd0e3970ee800873d4ce61c8f",
-      "archive_sha256": "52460c68504654ed1b867715eab411723f24343d32a32b26d851a01600483481"
+      "data_sha256": "ae9018f3e5a69f9d82935fc558a4b0bf9a7193a19a2b4c5b6176ab4fc42407b7",
+      "archive_sha256": "1834c06b72207ae4f11643db7ca3c5d559ea8e467b43e490ff6a7e30cce6fd2a"
     },
     "ny:police-sector": {
       "dataset": "5rqd-h5ci",
