@@ -97,5 +97,16 @@
   "election": "2026 General Election",
   "precincts": 94,
   "fetched": "2026-11-05T17:52:52Z"
+ },
+ "Will": {
+  "eid": 127394,
+  "version": "384833",
+  "url": "https://results.enr.clarityelections.com/IL/Will/127394/384833/reports/detailxml.zip",
+  "bytes": 251528,
+  "sha256": "7d5fd4290800fab763852da821e27f4fd4c036c7e2ccd69c18247e62e7444b2f",
+  "timestamp": "11/3/2026 9:37:16 PM CST",
+  "election": "2026 General Election",
+  "precincts": 310,
+  "fetched": "2026-11-09T19:06:09Z"
  }
 }

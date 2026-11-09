@@ -15,7 +15,7 @@ hand download, and each county's card prints the time of its own report.
 WHICH REPORTS. The counties whose precinct lines the Illinois map draws:
 
     DuPage, Lake, McHenry, Winnebago (outside Rockford), McLean (outside
-    Bloomington), the City of Bloomington, Sangamon, Macoupin
+    Bloomington), the City of Bloomington, Sangamon, Macoupin, Will
 
 Madison County's report is saved too and is not read: on 2026-11-09 the
 county's precinct layer, which the map and this build both read, answered
@@ -62,6 +62,7 @@ COUNTIES = [
     ("bloomington", "Bloomington", "McLean", "Bloomington Election Commission", "the City of Bloomington"),
     ("sangamon", "Sangamon", "Sangamon", "Sangamon County Clerk", "Sangamon County"),
     ("macoupin", "Macoupin", "Macoupin", "Macoupin County Clerk", "Macoupin County"),
+    ("will", "Will", "Will", "Will County Clerk", "Will County"),
 ]
 # Report rows that are no place on the map. DuPage reports the ballots of
 # voters who may vote only for federal offices (Illinois residents living
@@ -73,9 +74,9 @@ OUTSIDE = {"dupage": re.compile(r"^FEDERAL - F\d+$")}
 # Each office's circuit, for a retention title that names the judge and not
 # the court (705 ILCS 35/1: DuPage is the 18th Circuit, Lake the 19th,
 # McHenry the 22nd, Winnebago the 17th, McLean the 11th, Sangamon and
-# Macoupin the 7th).
+# Macoupin the 7th, Will the 12th).
 CIRCUIT = {"dupage": 18, "lake": 19, "mchenry": 22, "winnebago": 17, "mclean": 11, "bloomington": 11,
-           "sangamon": 7, "macoupin": 7}
+           "sangamon": 7, "macoupin": 7, "will": 12}
 # Judges a title names by surname alone (Sangamon's "CIRCUIT COURT JUDGE
 # RETENTION - REIF"), written in full as the other offices' ballots in this
 # file print them, so one judge is one race across the county line.
@@ -224,6 +225,7 @@ def retention(tag, t, up):
          re.search(r"(?i)^JUDGE FOR RETENTION - (.+)$", t) or
          re.search(r"(?i)RETENTION.* - (?!.*\bCOURT$)([A-Z'][A-Za-z' .]+)$", t) or
          re.search(r"(?i)^RETAIN (.+)$", t) or
+         re.search(r"^([A-Z][A-Z'-]+) RETENTION$", t) or
          re.search(r"(?i)^RETENTION ([^-]+?)(?: - .*)?$", t))
     if not m:
         return None
@@ -232,7 +234,8 @@ def retention(tag, t, up):
     if surname in JUDGE_NAMES and len(name.split()) == 1:
         name = JUDGE_NAMES[surname]
     if name == name.upper():
-        name = " ".join(w if re.fullmatch(r"[A-Z]\.", w) else w.capitalize() for w in name.split())
+        name = " ".join(w if re.fullmatch(r"[A-Z]\.", w) else "-".join(p.capitalize() for p in w.split("-"))
+                        for w in name.split())
     if surname in APPELLATE:
         court = "the Appellate Court, %s District" % ordinal(APPELLATE[surname])
     else:

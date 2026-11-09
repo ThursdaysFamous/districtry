@@ -26,6 +26,7 @@ request with an ArcGIS error page, so its precincts could not be matched.
 | `bloomington-detailxml.zip` | City of Bloomington (its own election authority) | 60 |
 | `sangamon-detailxml.zip` | Sangamon County | 166 |
 | `winnebago-detailxml.zip` | Winnebago County and Rockford | 94 |
+| `will-detailxml.zip` | Will County | 310 |
 
 `record.json` gives, for each file, the exact URL, Clarity's version number,
 the report's own timestamp, the byte count, the SHA-256 and when it was
@@ -52,3 +53,11 @@ DuPage, Lake and Madison reports were downloaded again that way on 9 Nov 2026,
 their versions having moved; the others had not moved since 5 Nov. After a new
 download, run the reader again and commit its output with the files, or CI
 fails.
+
+Will County's report was downloaded on 9 Nov 2026 at Adam's request, after he
+found the county's Clarity site (election 127394) and sent its address. The
+county's own site, willcountyclerk.gov, answers our robots.txt request with an
+AWS WAF challenge, and Clarity's listing for Will does not name the election,
+so it had not been found before. Its report is Clarity's version 384833, of
+3 Nov 2026 at 9:37 PM CST, and its counts equal the text download Adam made
+from the same page that day.

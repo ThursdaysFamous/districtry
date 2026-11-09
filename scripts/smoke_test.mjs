@@ -5171,6 +5171,48 @@ try {
     }
     await context.close();
   }
+
+  // ---- 1y4. Will County, read from its clerk's own report, downloaded by
+  // hand: the county's live precinct layer is stubbed with one square named
+  // for a real precinct, so the check holds the join on Will's NAME property
+  // and the card without the server.
+  {
+    const idx = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results.json"), "utf8"));
+    const key = "will:CHANNAHON PCT 001";
+    const at = idx.precincts.indexOf(key);
+    const part = at >= 0 ? JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/election-results",
+      idx.parts[at] + ".json"), "utf8")) : null;
+    const onBallot = part ? part.precincts[key].contests.map((r) => String(r[0])).sort() : [];
+    const lat = 41.4317, lng = -88.229, d = 0.004;
+    const square = {
+      features: [{ attributes: { NAME: "CHANNAHON PCT 001", TWP_NAME: "CHANNAHON", PRECINCT_NO: 1 },
+        geometry: { rings: [[[lng - d, lat - d], [lng - d, lat + d], [lng + d, lat + d], [lng + d, lat - d], [lng - d, lat - d]]] } }],
+      spatialReference: { wkid: 4326 }
+    };
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${lat},${lng}&layers=election-results`, async (pg) => {
+      await pg.route(/services\.arcgis\.com\/fGsbyIOAuxHnF97m\/arcgis\/rest\/services\/Precincts_2022\/FeatureServer\/1\/query/, (r) =>
+        r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(square) }));
+    });
+    await page.waitForFunction(() => {
+      const c = document.getElementById("card-election-results");
+      return c && c.querySelector(".election-table");
+    }, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const got = await page.evaluate(() => {
+      const c = document.getElementById("card-election-results");
+      const sel = c && c.querySelector("select.election-select");
+      return {
+        notice: ((c && c.querySelector(".election-notice")) || {}).textContent || "",
+        options: sel ? Array.from(sel.options).map((o) => o.value).sort() : []
+      };
+    });
+    check("a Will County precinct's results card speaks for the Will County Clerk",
+          at >= 0 && got.notice.indexOf("Will County Clerk") !== -1, JSON.stringify(got.notice.slice(0, 160)));
+    check("its race menu holds exactly the races on that Will precinct's ballot",
+          onBallot.length > 10 && JSON.stringify(got.options) === JSON.stringify(onBallot),
+          `menu=${got.options.length} ballot=${onBallot.length}`);
+    await context.close();
+  }
 } finally {
   await browser.close();
 }
