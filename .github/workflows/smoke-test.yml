@@ -518,6 +518,16 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/build_county_pages.py --check
 
+      # Each results page (<tag>/election-results.html) and the results section
+      # on each county page are built from the same results files the map's
+      # election results layer reads. The daily results jobs regenerate them;
+      # this fails when a page and its results disagree, when a results group is
+      # placed on no page or on both, and when a results job stops rebuilding
+      # the pages it feeds.
+      - name: Election results pages match their results
+        if: ${{ !cancelled() }}
+        run: python3 scripts/build_results_pages.py --check
+
       # The seven Illinois counties whose board MEMBERS ride the same GIS
       # feature as the boundary, so the app fetches both in one request and no
       # roster file ever existed — which meant the gate above, which enumerates
