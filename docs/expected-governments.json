@@ -1,7 +1,7 @@
 {
  "built_by": "scripts/build_expected_governments.py",
  "floor": 25000,
- "measured": "2026-10-30",
+ "measured": "2026-11-10",
  "read_by": "scripts/build_eam_status.py",
  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer",
  "source": "U.S. Census Bureau TIGERweb, tigerWMS_Census2020 \u2014 layer 26 (Incorporated Places) and layer 20 (County Subdivisions, FUNCSTAT='A'); POP100 is the 2020 decennial count.",
@@ -22,7 +22,8 @@
   "sc": null,
   "tn": null,
   "va": null,
-  "wi": null
+  "wi": null,
+  "wv": null
  },
  "units": {
   "ar": [
@@ -4439,6 +4440,43 @@
     "lsadc": "25",
     "name": "Muskego city",
     "pop": 25032
+   }
+  ],
+  "wv": [
+   {
+    "geoid": "5414600",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Charleston city",
+    "pop": 48864
+   },
+   {
+    "geoid": "5439460",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Huntington city",
+    "pop": 46842
+   },
+   {
+    "geoid": "5455756",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Morgantown city",
+    "pop": 30347
+   },
+   {
+    "geoid": "5462140",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Parkersburg city",
+    "pop": 29738
+   },
+   {
+    "geoid": "5486452",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Wheeling city",
+    "pop": 27052
    }
   ]
  },

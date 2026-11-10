@@ -506,6 +506,27 @@ INSTANCES = [
                           "Department of Elections' results, or read from the "
                           "county's or city's own website where those results "
                           "do not settle a seat"),
+    # WEST VIRGINIA'S COMMISSIONS ARE ELECTED BY THE WHOLE COUNTY. Every
+    # county has a three-member commission, five in Berkeley and Jefferson,
+    # each member elected countywide with no two living in the same
+    # magisterial district, so every page is the at-large shape and the
+    # Magisterial District layer is the map's only district line here. The
+    # names are the Secretary of State's directory of county officials, the
+    # file the app's County card reads, which is printed once a year.
+    dict(tag="wv", state="West Virginia", concept="county-commissioner",
+         index_page="county-commissioner.html",
+         heading="%(county)s County Commission",
+         page_title="%(county)s County Commission",
+         page_title_short="%(county)s commissioners",
+         phrase="county commission", index_label="County commissions",
+         all_label="All West Virginia county commissions",
+         app_name="districtry West Virginia", app_url="https://districtry.com/wv/",
+         district_word="", member_word="Commissioner",
+         cta_layers="county",
+         adapters=("wv_commissions",),
+         contacts="wv_commission_contact",
+         index_provenance="each name as the West Virginia Secretary of State's "
+                          "directory of county officials lists it"),
     # NEW YORK IS THE FIRST INSTANCE WHOSE COUNTIES DO NOT ALL HAVE A BODY
     # THESE PAGES CAN BE ABOUT, which is why its `phrase` names one form
     # rather than the county tier: a county legislature is elected from
@@ -3697,6 +3718,104 @@ def _count_named(districts, extras):
                    if (m.get("name") or "").strip())
 
 
+WV_SOURCE_LABEL = "the West Virginia Secretary of State's county directory"
+WV_LEDE = ("%%(county)s County's commission has %%(who)s, each elected by the "
+           "voters of the whole county; no two may live in the same "
+           "magisterial district. These are the members the West Virginia "
+           "Secretary of State's %(year)s directory of county officials lists.")
+WV_STANDFIRST = ("Every member of the %(heading)s, as the West Virginia "
+                 "Secretary of State's directory of county officials lists them.")
+WV_DESC = "%d members elected by the whole county"
+WV_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above is listed "
+                 "by the West Virginia Secretary of State,\n"
+                 "whose directory is printed once a year, so a commissioner who "
+                 "took office since may not appear yet and the county's own "
+                 "website is the current word.")
+WV_CTA_NOTE = ("Opens the map with the county layer on. Its card lists this "
+               "commission and the county's other elected officers; the "
+               "commission has no districts, because every member is elected "
+               "countywide.")
+
+
+def wv_commissions(inst):
+    """West Virginia: ONE file keyed by county GEOID ("54001"), each record
+    one county's commission and other elected officers as the Secretary of
+    State's directory of county officials lists them
+    (wv/scripts/build_wv_county_officials.py), the file the app's County card
+    reads.
+
+    AT LARGE, AND CLAIMED: every commissioner is elected by the whole county
+    (the builder marks each seat `countywide`, and a seat that is not fails
+    here), so the page lists the commission as one list and says so. The
+    residence rule, no two commissioners from one magisterial district, is in
+    the lede because it is why the Magisterial District layer exists.
+
+    THE OTHER ELECTED OFFICERS (clerk, sheriff, assessor and the rest) ARE NOT
+    ON THESE PAGES, the Missouri rule: they are not members of the commission.
+
+    THE DIRECTORY IS PRINTED ONCE A YEAR, so the lede names its year and the
+    disclaimer says a member who took office since may not appear yet."""
+    path = os.path.join(app_data(inst["tag"]), "wv-county-officials.json")
+    out, problems, nameless = {}, [], set()
+    records = _read(path)
+    if len(records) != 55:
+        problems.append("wv-county-officials.json carries %d counties, not West "
+                        "Virginia's 55" % len(records))
+    for geoid, rec in sorted(records.items()):
+        county = (rec.get("county") or "").strip()
+        name = re.sub(r"\s+County$", "", county)
+        body = (rec.get("body") or "").strip()
+        read = _mn_date(rec.get("read"))
+        link = (rec.get("sourceUrl") or "").strip()
+        year = rec.get("year")
+        if not name or name == county or not body or not read or not year \
+                or not link.startswith("https://") or rec.get("kind") != "commission":
+            problems.append("wv-county-officials.json %r carries no county, no "
+                            "body, no read date, no year, no https source or a "
+                            "body that is not a commission" % geoid)
+            continue
+        members = []
+        for seat in rec.get("seats") or []:
+            if seat.get("countywide") is not True:
+                problems.append("wv %s County lists a commissioner not marked as "
+                                "elected countywide" % name)
+                continue
+            if seat.get("vacant"):
+                continue
+            m = {"name": (seat.get("name") or "").strip(),
+                 "role": (seat.get("seat") or "Commissioner").strip()}
+            for key in ("email", "phone"):
+                if (seat.get(key) or "").strip():
+                    m[key] = seat[key].strip()
+            if m["name"]:
+                members.append(m)
+        if not members:
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("wv %s County names nobody" % name)
+            nameless.add(name)
+            continue
+        entry = {"members": members,
+                 "structure": None,
+                 "verified": read,
+                 "sourceUrl": link,
+                 "source_label": WV_SOURCE_LABEL,
+                 "sourceDocument": None,
+                 "seats": len(rec.get("seats") or []),
+                 "slug": county_slug(name), "at_large": True,
+                 "claims_at_large": True,
+                 "lede": WV_LEDE % {"year": int(year)},
+                 "standfirst": WV_STANDFIRST, "desc": WV_DESC,
+                 "disclaimer": WV_DISCLAIMER, "cta_note": WV_CTA_NOTE,
+                 "index_note": ", elected countywide", "source_file": path}
+        if body != "%s County Commission" % name:
+            entry["heading"] = entry["page_title"] = body
+        out[name] = entry
+    note = ("%d of West Virginia's 55 counties, every name from the Secretary of "
+            "State's directory of county officials" % len(out))
+    return out, problems, nameless, [path], note
+
+
 # Every adapter returns (counties, problems, nameless, paths_read, note):
 #   counties    {county name: record} — the pages to write.
 #   problems    anything that should fail the build, in words.
@@ -3721,6 +3840,7 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "la_parish_bodies": la_parish_bodies,
             "mo_county_bodies": mo_county_bodies,
             "va_local_bodies": va_local_bodies,
+            "wv_commissions": wv_commissions,
             "ny_supervisors": ny_supervisors,
             "ny_legislature": ny_legislature}
 
@@ -4977,15 +5097,6 @@ NOT_COUNTY_BOARDS = {
                "does not publish. Georgia's go-live writes the adapter and "
                "drops this entry.",
     ),
-    "wv/data/app/wv-county-officials.json": dict(
-        date="2026-10-29",
-        reason="West Virginia's 55 county commissions and their other elected "
-               "officers, named from the Secretary of State's directory of "
-               "county officials. They ARE these pages' subject, and are "
-               "recorded here only while the instance is dark: an adapter "
-               "would write pages for a folder the deploy does not publish. "
-               "West Virginia's go-live writes the adapter and drops this entry.",
-    ),
     "mn/data/app/mn-swcd-supervisors.json": dict(
         date="2026-10-26",
         reason="the elected supervisors of Minnesota's 88 soil and water "
@@ -5365,6 +5476,27 @@ def mo_board_contact(inst):
             continue
         word = MO_KINDS[rec["kind"]][0]
         c = _contact("The %s's office" % word, None, [rec.get("boardAddress")],
+                     rec.get("boardPhone"), rec.get("boardEmail"))
+        if c:
+            name = re.sub(r"\s+County$", "", (rec.get("county") or "").strip())
+            out[_norm_county(name)] = c
+    return out, [path]
+
+
+def wv_commission_contact(inst):
+    """West Virginia: the commission's own office, from the same directory
+    that names its members. The builder keeps an address or a telephone as the
+    commission's only where two or more commissioners print it, or the
+    directory prints it for the commission itself
+    (build_wv_county_officials.py), so it belongs to no one member."""
+    path = os.path.join(app_data("wv"), "wv-county-officials.json")
+    if not os.path.exists(path):
+        return {}, [path]
+    out = {}
+    for rec in _read(path).values():
+        if not isinstance(rec, dict) or rec.get("kind") != "commission":
+            continue
+        c = _contact("The commission's office", None, [rec.get("boardAddress")],
                      rec.get("boardPhone"), rec.get("boardEmail"))
         if c:
             name = re.sub(r"\s+County$", "", (rec.get("county") or "").strip())

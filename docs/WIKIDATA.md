@@ -74,6 +74,7 @@ the audit asked for an item about the project.
 | P1001 (applies to jurisdiction) | Q1588 (Louisiana) | the `/la/` instance |
 | P1001 (applies to jurisdiction) | Q1581 (Missouri) | the `/mo/` instance |
 | P1001 (applies to jurisdiction) | Q1370 (Virginia) | the `/va/` instance |
+| P1001 (applies to jurisdiction) | Q1371 (West Virginia) | the `/wv/` instance |
 
 ### What is deliberately absent
 
@@ -123,6 +124,7 @@ endpoint used.
 | `Q1204` | Illinois |
 | `Q1224853` | Open Database License |
 | `Q1370` | Virginia |
+| `Q1371` | West Virginia |
 | `Q13785927` | Apache Software License 2.0 |
 | `Q1384` | New York |
 | `Q1415` | Indiana |
