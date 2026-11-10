@@ -271,6 +271,25 @@ HOUSE_LOOKUP_ROW = (
     "Only when the map's search can't find the house at an address you search for.",
     "house_lookup")
 
+# THE FILES HOST (from 2026-11-10, Adam's hosting choice A). The tile archives
+# and the Census block populations are served from the Cloudflare R2 bucket
+# behind files.districtry.com rather than by GitHub Pages, so a map's requests
+# for them go to Cloudflare. MEASURED per app from the files-origin block it
+# ships (engine/shared/files-origin.txt): an app whose FILES_ORIGIN is null
+# reads both from GitHub Pages and keeps the tile sentence on that row. The
+# host is read from the block, so a change to it changes the row, and an app
+# naming any other host fails the build.
+FILES_ORIGIN_RE = re.compile(r'var FILES_ORIGIN = ("[^"]*"|null);')
+FILES_HOST = "files.districtry.com"
+FILES_HOST_ROW = (
+    "Cloudflare (R2)", "file hosting", "https://www.cloudflare.com/privacypolicy/",
+    "The large files the maps read, served from " + FILES_HOST + ", a Cloudflare storage "
+    "bucket: the ordinary web-server request for each one, with your IP address and "
+    "browser. Cloudflare, not this project, keeps those logs.",
+    "Whenever a map draws a layer from vector tiles, or the comparison report counts people.",
+    "files_host")
+
+
 # THE SAME LOOKUP FOR OFFICE PINS (from 2026-10-20, New York, Adam's "Use
 # Census"). An app's office-pin provider (its own poiGeocodeRequest) may hand an
 # office's address to the engine's lookupAddressRanges when its usual geocoder
@@ -723,6 +742,17 @@ def measure(rel, name, url, tag):
     # every other same-origin layer downloads one whole file. Measured from
     # the registration itself, `tiles: "data/app/tiles/…"`.
     app["vector_tiles"] = bool(re.search(r'\btiles:\s*"data/app/tiles/', src))
+    # Population files for the comparison report's people counts, declared by
+    # the worksheet's `population` key as POPULATION_INDEX_URL.
+    app["population"] = bool(re.search(r'\bvar POPULATION_INDEX_URL = "', src))
+    origins = FILES_ORIGIN_RE.findall(src)
+    if len(set(origins)) > 1:
+        fail("%s ships %d different FILES_ORIGIN values" % (rel, len(set(origins))))
+    origin = json.loads(origins[0]) if origins else None
+    if origin and origin != "https://" + FILES_HOST:
+        fail("%s reads its large files from %s; this page names %s" % (rel, origin, FILES_HOST))
+    app["files_origin"] = origin
+    app["files_host"] = bool(origin) and (app["vector_tiles"] or app["population"])
     app["address_list_hosts"] = measure_address_list(src, app["name"])
 
     # A layer that asks a government server about the SELECTED POINT rather than
@@ -1467,7 +1497,7 @@ def office_lookup_groups(apps):
 def render_recipient_rows(apps):
     rows = []
     office_groups = office_lookup_groups(apps)
-    for label, sub, policy, what, when, key in COMMON_RECIPIENTS + [LINK_LOOKUP_ROW, HOUSE_LOOKUP_ROW]:
+    for label, sub, policy, what, when, key in COMMON_RECIPIENTS[:1] + [FILES_HOST_ROW] + COMMON_RECIPIENTS[1:] + [LINK_LOOKUP_ROW, HOUSE_LOOKUP_ROW]:
         users = apps if key is None else [a for a in apps if a[key]]
         if not users:
             fail("no surface requests %s any more — the recipients table names it, "
@@ -1484,13 +1514,32 @@ def render_recipient_rows(apps):
                      "where the number falls (the next row)." % esc(where))
             when = ("Only when you paste or share a short map link, or, in %s, when the map's "
                     "search can't find the house at an address you search for." % where)
-        if label == "GitHub Pages" and tiled:
-            where = ("every app" if set(tiled) == set(mapped) else
+        # The tile sentence goes on the row of whichever host serves an app's
+        # tiles: Cloudflare's for an app that reads them from the files host,
+        # GitHub's for one whose FILES_ORIGIN is null.
+        if label == "GitHub Pages":
+            tiled = [a["name"] for a in users if a.get("vector_tiles") and not a.get("files_origin")]
+        elif key == "files_host":
+            tiled = [a["name"] for a in users if a.get("vector_tiles")]
+        if label == "GitHub Pages" and not tiled and any(a.get("files_host") for a in users):
+            what += (" The vector tiles and population files the maps read are served by Cloudflare instead "
+                     "(the next row).")
+        if label in ("GitHub Pages", "Cloudflare (R2)") and tiled:
+            all_maps = set(mapped) if label == "GitHub Pages" else {a["name"] for a in apps if a.get("has_map")}
+            where = ("every app" if set(tiled) == all_maps else
                      ", ".join(tiled[:-1]) + " and " + tiled[-1] if len(tiled) > 1 else tiled[0])
             what += (" In %s, a layer drawn from vector tiles requests its map a piece at a "
                      "time, so those requests also describe the area you are looking at and, "
                      "to answer its card, <strong>the square of about 7 km around the point "
                      "you select</strong>." % esc(where))
+        if key == "files_host":
+            counted = [a["name"] for a in users if a.get("population")]
+            if counted:
+                where = ("every app" if set(counted) == {a["name"] for a in apps if a.get("has_map")}
+                         else joined(counted))
+                what += (" In %s, the comparison report&#39;s people counts request one "
+                         "population file per county the compared districts touch, which "
+                         "says roughly where they are." % esc(where))
         # THE OFFICE PINS' USE OF THE LOOKUP, per app (see the note above
         # SCRIPT_BLOCK): an office's public address, and with it the district
         # the reader selected.

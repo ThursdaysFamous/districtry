@@ -12,8 +12,8 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **297 distinct hosts** those files
-name, **44 are fetched by the browser**; the other 253 are links.
+makes from a link a reader clicks. Of **298 distinct hosts** those files
+name, **45 are fetched by the browser**; the other 253 are links.
 
 ### Geocoder — 3 host(s)
 
@@ -47,6 +47,20 @@ says which district the reader selected.
 No served file names the Census host, because only the lookup asks it.
 `build_privacy_page.py` names the lookup and the Census Bureau as
 recipients.
+
+### File host — 1 host(s)
+
+| host | instances |
+|---|---|
+| `files.districtry.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va |
+
+districtry's own Cloudflare R2 bucket, holding the vector-tile
+archives and the Census block populations, which GitHub Pages no
+longer publishes. A map reads an archive a byte range at a time and
+a population file per county a comparison touches, on the live site
+only; a copy run anywhere else reads its own files.
+`deploy-pages.yml` copies the files there and reads a sample back;
+`build_privacy_page.py` names Cloudflare as their recipient.
 
 ### Basemap tiles — 3 host(s)
 

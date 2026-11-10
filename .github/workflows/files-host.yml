@@ -1,0 +1,44 @@
+name: Files host
+
+# Reads files.districtry.com the way a map on the site does, before a change to
+# how the maps reach it merges.
+#
+# Since 2026-11-10 (Adam's hosting choice A) every map on the live site reads
+# its tile archives and Census block populations from the Cloudflare R2 bucket
+# behind files.districtry.com, and GitHub Pages no longer publishes those two
+# folders. What a reader's browser gets there depends on two Cloudflare
+# settings no file in this repository holds, the bucket's custom domain and its
+# CORS rule, so a change to FILES_ORIGIN or to the script that copies the files
+# is checked against the real host here rather than against a stand-in.
+# deploy-pages.yml's check-files-host job asks the same question after every
+# publish's copy.
+#
+# It compares the host with MAIN's files, not the pull request's, because the
+# bucket holds what the last publish copied and a pull request's own files are
+# copied only once it merges. For the few minutes between a merge that changes
+# an archive and that publish's copy, main and the bucket legitimately differ;
+# a run in that window fails on that file and passes when re-run.
+
+on:
+  pull_request:
+    paths:
+      - "engine/shared/files-origin.txt"
+      - "scripts/sync_r2_files.py"
+      - ".github/workflows/files-host.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Read files.districtry.com as a map does, against main's files
+        run: |
+          git worktree add --detach "$RUNNER_TEMP/main" origin/main
+          python3 scripts/sync_r2_files.py --probe --tree "$RUNNER_TEMP/main"

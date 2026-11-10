@@ -282,32 +282,47 @@ jobs:
           done
           echo "Published tree:" && find _site -type f | sort
 
-      # THE LARGE FILES' SECOND HOME (Adam, 2026-11-10, hosting choice A). The
+      # THE LARGE FILES' OWN HOST (Adam, 2026-11-10, hosting choice A). The
       # tile archives and the Census block populations were 320 MB of a 747 MB
       # site that day, and GitHub Pages stops publishing past 1 GB, so they are
-      # also copied to the Cloudflare R2 bucket behind files.districtry.com, at
-      # the same paths. The copy is made from _site, so the dark instances and
-      # the build inputs the assemble step leaves out never reach that host
-      # either. It changes only what differs (scripts/sync_r2_files.py compares
-      # MD5s) and lists the bucket again afterwards to prove it.
+      # served from the Cloudflare R2 bucket behind files.districtry.com, at the
+      # same paths, and every map on the live site reads them there
+      # (FILES_ORIGIN in engine/shared/files-origin.txt). The copy is made from
+      # _site, so the dark instances and the build inputs the assemble step
+      # leaves out never reach that host either. It changes only what differs
+      # (scripts/sync_r2_files.py compares MD5s) and lists the bucket again
+      # afterwards to prove it.
       #
-      # FOR NOW IT IS A COPY AND NOTHING READS IT: FILES_ORIGIN in
-      # engine/shared/files-origin.txt is still null, so every map reads these
-      # files from GitHub Pages as before, and a failed copy must not stop a
-      # publish (continue-on-error). With no R2 secrets set the script says so
-      # and does nothing. The change that points the maps at files.districtry.com
-      # also makes this step required and drops the two folders from _site.
-      # main only, because the assemble job also runs on branch dispatches and
-      # a branch's files must never replace the live ones.
+      # A FAILED COPY STOPS THE PUBLISH, and that is the point of making it
+      # required: the pages this run would publish read these files from
+      # files.districtry.com, so publishing them while the bucket holds older
+      # files would serve new pages over old archives. A stopped publish leaves
+      # the last good pages reading the files the last good copy put there.
+      # --require fails the step when the R2 secrets are missing rather than
+      # skipping it. main only, because the assemble job also runs on branch
+      # dispatches and a branch's files must never replace the live ones.
       - name: Copy tile archives and population files to Cloudflare R2
         if: github.ref == 'refs/heads/main'
-        continue-on-error: true
         timeout-minutes: 15
         env:
           R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-        run: python3 scripts/sync_r2_files.py --tree _site
+        run: python3 scripts/sync_r2_files.py --tree _site --require
+
+      # ...AND THEY ARE LEFT OUT OF WHAT GITHUB PAGES PUBLISHES, which is what
+      # keeps the site under the 1 GB limit as the remaining states arrive. No
+      # page on the live host asks GitHub for them any more; a copy of the site
+      # run anywhere else (localhost, the smoke tests) reads its own checkout.
+      # On a branch dispatch this runs too, so the verified artifact is the
+      # shape main would publish. To go back, set FILES_ORIGIN to null and
+      # delete this step in one change.
+      - name: Leave the large files to files.districtry.com
+        run: |
+          rm -rf _site/*/data/app/tiles _site/*/data/app/population
+          left=$(find _site -path '*/data/app/tiles/*' -o -path '*/data/app/population/*' | wc -l)
+          test "$left" -eq 0 || { echo "::error::$left tile or population file(s) are still in the published tree"; exit 1; }
+          echo "Published tree without them: $(du -sh _site | cut -f1), $(find _site -type f | wc -l) files"
 
       - uses: actions/configure-pages@v5
 
@@ -376,6 +391,27 @@ jobs:
       - id: retry3
         if: steps.retry2.outcome == 'failure'
         uses: actions/deploy-pages@v4
+
+  check-files-host:
+    # READ files.districtry.com THE WAY A MAP DOES, after each copy. The copy
+    # proves the bucket holds every file; it cannot see the two Cloudflare
+    # settings a reader's browser goes through, the bucket's custom domain and
+    # its CORS rule, and without either one every tiled layer on every map
+    # draws nothing. scripts/sync_r2_files.py --probe sends a preflight and
+    # byte-range requests with the site's Origin, as a map does, for each live
+    # app's smallest archive and its population index, and compares the bytes
+    # with the checkout. Its own job, so a broken files host turns this run red
+    # without holding back a publish that cannot make it worse.
+    if: github.ref == 'refs/heads/main'
+    needs: assemble
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read files.districtry.com as a map does
+        run: python3 scripts/sync_r2_files.py --probe --tree .
 
   notify-indexnow:
     # Best-effort recrawl ping to the IndexNow engines (Bing/Yandex/Seznam/
