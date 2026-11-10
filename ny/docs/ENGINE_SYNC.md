@@ -277,25 +277,27 @@ rather than re-running the failed sibling run.
 > in the changelog. A changelog that promises a clean adoption and doesn't
 > deliver one costs every sibling a red CI run and a manual repair.
 
-## Current ENGINE block inventory (73 in index.html + 2 in sw.js)
+## Current ENGINE block inventory (76 in index.html + 3 in sw.js)
 
 index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`, `basemap`,
 `body-map-toolbar`, `brand-names`, `cached-loaders`, `card-helpers`,
 `chamber-factory`, `compare-stats`, `county-layer-dispatcher`,
 `coverage-gaps`, `cps-network-factory`, `districtry-behavior`,
-`districtry-theme`, `exports`, `extract-district-number`, `feedback`,
-`fetch-retry`, `find-prop-ci`, `first-use`, `footer-independence`,
-`gaps-html`, `gaps-modal-html`, `geocoder-search`, `geocoder-shell`,
-`geolocation`, `geometry-measure`, `groups`, `haversine`, `help-link-html`,
+`districtry-theme`, `election-results`, `exports`,
+`extract-district-number`, `feedback`, `fetch-retry`, `files-origin`,
+`find-prop-ci`, `first-use`, `footer-independence`, `gaps-html`,
+`gaps-modal-html`, `geocoder-search`, `geocoder-shell`, `geolocation`,
+`geometry-measure`, `groups`, `haversine`, `help-link-html`,
 `hover-explorer`, `install-app`, `int-field`, `layer-registry`,
 `map-chrome-classes`, `map-link`, `map-pan-filter`, `map-zoom-steps`,
 `masthead-buttons-html`, `metro-links`, `metro-links-html`, `metro-portal`,
 `nearest-point-factory`, `office-helpers`, `overlay-cards`, `permalink`,
 `play-app`, `poi-geocode`, `point-in-polygon`, `polygon-containment`,
-`polygon-factory`, `probe-geometry-column`, `qr-code`, `relationship-pinning`,
-`render-helper`, `sanitize`, `school-zone-factory`, `scope-mask`,
-`selection-controls`, `socrata-loader`, `socrata-point-loader`, `state`,
-`styles-app`, `styles-card-v2`, `styles-core`, `styles-districtry-skin`,
+`polygon-factory`, `probe-geometry-column`, `qr-code`,
+`relationship-pinning`, `render-helper`, `sanitize`, `school-zone-factory`,
+`scope-mask`, `selection-controls`, `socrata-loader`,
+`socrata-point-loader`, `state`, `styles-app`, `styles-card-v2`,
+`styles-core`, `styles-districtry-skin`, `styles-election-results`,
 `styles-footer`, `styles-hover-responsive`, `styles-markers`,
 `styles-sibling-result`, `tile-overlay`, `vector-tiles`.
 (Count and list re-synced against `check_engine_parity.py` output while
@@ -342,8 +344,11 @@ through fork-side wrapper functions at the call sites — Chicago's
 `registerCpsZone`, NYC's `registerNycZone` — so the fenced factories never
 carry a city key list.)
 
-sw.js: `sw-header`, `sw-handlers` — the config between them (cache name +
-URL lists) is the service worker's METRO section.
+sw.js: `sw-header`, `files-origin`, `sw-handlers` — the config between
+`sw-header` and `files-origin` (cache name + URL lists) is the service
+worker's METRO section. `files-origin` is an `engine/shared/` block, the same
+copy `index.html` carries, so the page and its worker agree on where the
+tile archives and population files are read from.
 
 (Four of the eight `styles-*` blocks — `styles-core`, `styles-app`,
 `styles-footer` and `styles-hover-responsive` — fence the shared layout CSS

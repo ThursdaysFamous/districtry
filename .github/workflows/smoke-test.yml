@@ -1028,6 +1028,17 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/robots_policy.py --selftest
 
+      # The copy each publish makes to the Cloudflare R2 bucket behind
+      # files.districtry.com (deploy-pages.yml, Adam's hosting choice of
+      # 2026-11-10). No network: the signer is held to AWS's own worked
+      # examples, a whole run goes against a loopback stand-in for the bucket,
+      # and the maps' filesUrl (engine/shared/files-origin.txt) is run in Node
+      # and must ask for every file at the very key the copy uploads it under,
+      # so the copy and the maps cannot come to disagree about where a file is.
+      - name: The copy to the files host signs, plans and keys files the way the maps ask for them
+        if: ${{ !cancelled() }}
+        run: python3 scripts/sync_r2_files.py --selftest
+
       # The election results format every app's builder writes through
       # (scripts/election_results_common.py): a fixture with a leader, a tie, a
       # withheld count, an empty precinct, a race off one precinct's ballot, a

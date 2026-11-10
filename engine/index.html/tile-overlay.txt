@@ -38,7 +38,7 @@
     return tileCardAvailable(mod) && !!baseIsVector && !!window.maplibregl && !!L.maplibreGL;
   }
   function tileArchiveFor(mod) {
-    return openTileArchive(new URL(mod.tiles, document.baseURI).href);
+    return openTileArchive(filesUrl(mod.tiles, document.baseURI)); // files-origin block
   }
 
   // The card's feature, from the tile under the point — even when the whole

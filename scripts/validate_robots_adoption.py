@@ -120,7 +120,9 @@ TWO TABLES, BECAUSE THEY ARE TWO DIFFERENT CLAIMS.
       `scripts/goatcounter_fetch.py`, `scripts/gsc_fetch.py`,
       `scripts/bing_fetch.py`, `scripts/verify_google_api_access.py`,
       `scripts/fleet_status.py`, `scripts/check_roster_workflow_health.py`,
-      `wi/scripts/wi_coa_staleness.py`. The blanket rule on each of those hosts
+      `wi/scripts/wi_coa_staleness.py`, and `scripts/sync_r2_files.py`, which
+      lists and writes this project's own storage bucket and reads nobody's
+      pages. The blanket rule on each of those hosts
       is aimed at search engines reading customer dashboards and web interfaces,
       not at an account holder reading their own account through the API the
       credential was issued for.
@@ -350,6 +352,14 @@ DECLARED_EXEMPT = {
         "SOMEBODY'S PAGES ARE BEING READ, never which host answers; argued at "
         "length in the file",
         "2026-10-01"),
+    "scripts/sync_r2_files.py": (
+        "THIS PROJECT'S OWN STORAGE WITH ITS OWN CREDENTIAL: it lists and writes "
+        "the R2 bucket that serves districtry's own tile archives and population "
+        "files, signed with the deploy's key. robots.txt says which of a site's "
+        "pages a crawler may READ, and the only bytes this moves are ours, mostly "
+        "outbound. THE TEST IS WHOSE CONTENT AND WHICH DIRECTION, never which "
+        "host; argued in the file",
+        "2026-11-10"),
     "scripts/indexnow_submit.py": (
         "OUTBOUND SUBMISSION, NOT A READ: it hands districtry's own "
         "addresses to an ingestion endpoint that exists to receive them, "

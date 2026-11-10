@@ -11787,6 +11787,40 @@ function initIowaExplorer() {
   }
   /* ==== ENGINE:END layer-registry ==== */
 
+  /* ==== ENGINE:BEGIN files-origin ==== */
+  /* ---------- where the large files are served from ----------
+   * The vector-tile archives (data/app/tiles/) and the Census block
+   * populations (data/app/population/) are most of what this site publishes,
+   * measured 2026-11-10 at 320 MB of a 747 MB site, and GitHub Pages stops
+   * publishing a site past 1 GB. So on the live site they can be read from a
+   * second host that keeps the same paths (Adam's choice of 2026-11-10: the
+   * pages stay on GitHub and these files move to Cloudflare R2, which answers
+   * the byte ranges a tile archive is read by; Cloudflare's page hosting
+   * answers a range with the whole file, measured that day).
+   *
+   * filesUrl(path, base) is the address to fetch one of those files from.
+   * FILES_ORIGIN null reads every file from this site, as every page did
+   * before the move. A URL there reads the two folders from that host, at
+   * the path they have on this site, and only while the page itself is on
+   * FILES_SITE_HOST, so a copy served on localhost, in a test or on a preview
+   * reads its own files and never the live host's. Anything outside the two
+   * folders is left on this site. This block is ONE copy spliced into every
+   * app's index.html and sw.js (engine/shared/), so the page and its service
+   * worker cannot disagree about where a file lives.
+   * ------------------------------------------------------------------------ */
+  var FILES_ORIGIN = null;
+  var FILES_SITE_HOST = "districtry.com";
+  var FILES_FOLDERS = ["/data/app/tiles/", "/data/app/population/"];
+  function filesUrl(path, base) {
+    var url = new URL(path, base);
+    if (!FILES_ORIGIN || url.origin !== location.origin || location.hostname !== FILES_SITE_HOST) return url.href;
+    for (var i = 0; i < FILES_FOLDERS.length; i++) {
+      if (url.pathname.indexOf(FILES_FOLDERS[i]) !== -1) return FILES_ORIGIN + url.pathname + url.search;
+    }
+    return url.href;
+  }
+  /* ==== ENGINE:END files-origin ==== */
+
   /* ==== ENGINE:BEGIN vector-tiles ==== */
   /* ---------- vector tiles: read a PMTiles archive, decode its tiles ----------
    * A layer drawn from tiles (docs/OPTIMIZATION_PLAYBOOK.md §10, phase 4)
@@ -12153,7 +12187,7 @@ function initIowaExplorer() {
     return tileCardAvailable(mod) && !!baseIsVector && !!window.maplibregl && !!L.maplibreGL;
   }
   function tileArchiveFor(mod) {
-    return openTileArchive(new URL(mod.tiles, document.baseURI).href);
+    return openTileArchive(filesUrl(mod.tiles, document.baseURI)); // files-origin block
   }
 
   // The card's feature, from the tile under the point — even when the whole
@@ -19896,13 +19930,18 @@ function initIowaExplorer() {
   var statsPopFiles = {};
   var statsPopGround = null;
 
+  // The population index's address: on the live site it can be on the files
+  // host (the files-origin block), and the county files beside it go with it.
+  function statsPopIndexUrl() {
+    return filesUrl(POPULATION_INDEX_URL, document.baseURI);
+  }
   function statsLoadPopulationIndex() {
     if (typeof POPULATION_INDEX_URL === "undefined") return Promise.resolve(null);
     if (!statsPopIndex) {
-      statsPopIndex = fetchJSONWithRetry(POPULATION_INDEX_URL, {}, 2).then(function (index) {
+      statsPopIndex = fetchJSONWithRetry(statsPopIndexUrl(), {}, 2).then(function (index) {
         // an index may name the ground its blocks cover (see statsOutsideShare)
         if (!index || !index.ground) return index;
-        var base = POPULATION_INDEX_URL.replace(/[^\/]*$/, "");
+        var base = statsPopIndexUrl().replace(/[^\/]*$/, "");
         return fetchJSONWithRetry(base + index.ground, {}, 2).then(function (g) {
           statsPopGround = g && g.type ? g : null;
           return index;
@@ -19920,7 +19959,7 @@ function initIowaExplorer() {
   function statsLoadPopulation(box) {
     return statsLoadPopulationIndex().then(function (index) {
       if (!index || !index.counties) return null;
-      var base = POPULATION_INDEX_URL.replace(/[^\/]*$/, "");
+      var base = statsPopIndexUrl().replace(/[^\/]*$/, "");
       var wanted = [];
       Object.keys(index.counties).forEach(function (fips) {
         var c = index.counties[fips], b = c.bbox;
