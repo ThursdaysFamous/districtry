@@ -102,6 +102,12 @@ from build_privacy_page import (  # noqa: E402
 )
 from build_history_page import shared_footer_byline, shared_goatcounter  # noqa: E402
 from build_county_status import ALL_COUNTIES, scan_dispatch_tables, slug_of  # noqa: E402
+# The election results regions on a county page belong to build_results_pages.py;
+# this script writes them empty and carries their bodies over from disk.
+from build_results_pages import (  # noqa: E402
+    empty_regions as results_regions, splice_from_disk as splice_results,
+    wants_regions as wants_results,
+)
 
 # A county whose shipped roster names NOBODY. A page for it would be a page
 # about a county board with no officeholder on it, which is the opposite of
@@ -4545,7 +4551,7 @@ h1 {
   font-size: 14px; line-height: 28px; color: var(--muted);
 }
 .foot a { margin-right: 14px; }
-</style>
+%(results_css)s</style>
 <script type="application/ld+json">
 %(jsonld)s
 </script>
@@ -4559,7 +4565,7 @@ h1 {
 %(body)s
 %(source)s
 <p class="disclaimer">%(disclaimer)s</p>
-<p class="foot">
+%(results_html)s<p class="foot">
 <a href="../%(index_page)s">%(all_label)s</a>
 <a href="../">Back to the map</a>
 <a href="../sources.html">Sources &amp; data layers</a>
@@ -4738,6 +4744,14 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
         # than in shell_for_pages(), which is built once and shared by all of
         # them and so cannot know which instance it is rendering.
         instance_word=esc(inst["state"].lower()),
+        # The election results section, which scripts/build_results_pages.py
+        # owns: written here EMPTY, in the states whose results the map
+        # carries, and spliced back from disk in main() so this script never
+        # rewrites it. Every other state's pages are byte-identical.
+        results_css=(results_regions()[0]
+                     if wants_results(inst["tag"], inst["concept"]) else ""),
+        results_html=(results_regions()[1]
+                      if wants_results(inst["tag"], inst["concept"]) else ""),
         # Only where the instance ships one: Minnesota publishes no faq.html,
         # and a link to it would be a 404 on every one of its pages.
         faq_link=('<a href="../faq.html">Common questions</a>\n'
@@ -5592,6 +5606,7 @@ def main():
             if os.path.exists(out):
                 with open(out, encoding="utf-8") as f:
                     current = f.read()
+            html = splice_results(html, current)
             if check:
                 if current != html:
                     stale.append(os.path.relpath(out, REPO_ROOT))
