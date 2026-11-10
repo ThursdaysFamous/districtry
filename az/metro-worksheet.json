@@ -1,0 +1,748 @@
+{
+  "this_metro": "arizona",
+  "metro_name": "Arizona",
+  "metro_bbox": {
+    "minLng": -114.82,
+    "minLat": 31.33,
+    "maxLng": -109.04,
+    "maxLat": 37.01
+  },
+  "metro_center": [
+    34.17,
+    -111.93
+  ],
+  "permalink_gate": {
+    "minLat": 30.9,
+    "maxLat": 37.25,
+    "minLng": -115.05,
+    "maxLng": -108.8
+  },
+  "poi_geocode_bbox": {
+    "minLat": 30.9,
+    "maxLat": 37.25,
+    "minLng": -115.05,
+    "maxLng": -108.8
+  },
+  "brand": {
+    "app_name": "districtry Arizona",
+    "product_name": "districtry",
+    "instance_tag": "az",
+    "jsonld": {
+      "site_description": "Find every civic district that covers a point or address in Arizona, and who represents you there.",
+      "app_description": "Click any point in Arizona, or search an address, to see every civic district that contains it, and who represents you there — county, legislative and U.S. House districts, cities and towns, school districts and ZIP codes.",
+      "keywords": "Arizona district map, what district am I in, Arizona legislative district, Arizona State Senate district, Arizona House district, Arizona congressional district, who is my state senator Arizona, who are my state representatives Arizona, Arizona school district lookup",
+      "area_served": {
+        "state": "Arizona"
+      }
+    },
+    "tagline": "Every civic district that covers your point in Arizona, and who represents you there.",
+    "theme_color": "#6d3fd1",
+    "favicon_data_uri": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%236d3fd1%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2242%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%3EAZ%3C/text%3E%3C/svg%3E",
+    "apple_touch_icon": "icons/apple-touch-icon.png",
+    "head": {
+      "title": "Arizona district lookup — districtry Arizona",
+      "description": "Tap the map or search an Arizona address: county, legislative and U.S. House districts — and who represents you.",
+      "og_title": "Arizona district lookup — districtry Arizona",
+      "og_description": "Every civic district that covers a point in Arizona, and who holds it.",
+      "og_image_alt": "districtry Arizona — every district that covers a point, and who represents it.",
+      "twitter_title": "Arizona district lookup — districtry Arizona",
+      "twitter_description": "Click or search an Arizona address to see every district that covers it."
+    },
+    "analytics": {
+      "goatcounter_url": "https://districtry.goatcounter.com/count"
+    }
+  },
+  "socrata_host": "https://data.invalid",
+  "socrata_app_token": "",
+  "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
+  "feedback_subject": "districtry Arizona feedback",
+  "metro_explorers": [
+    {
+      "id": "chicago",
+      "label": "Illinois",
+      "url": "https://districtry.com/il/",
+      "emoji": "🌭",
+      "explorer_name": "districtry Illinois",
+      "bbox": {
+        "minLng": -91.52,
+        "minLat": 36.96,
+        "maxLng": -87.01,
+        "maxLat": 42.51
+      }
+    },
+    {
+      "id": "nyc",
+      "label": "New York",
+      "url": "https://districtry.com/ny/",
+      "emoji": "🗽",
+      "explorer_name": "districtry New York",
+      "bbox": {
+        "minLng": -79.82,
+        "minLat": 40.43,
+        "maxLng": -71.62,
+        "maxLat": 45.07
+      }
+    },
+    {
+      "id": "sf",
+      "label": "San Francisco",
+      "url": "https://districtry.com/ca/",
+      "emoji": "🌉",
+      "explorer_name": "districtry San Francisco",
+      "bbox": {
+        "minLng": -122.6,
+        "minLat": 37.6,
+        "maxLng": -122.3,
+        "maxLat": 37.95
+      }
+    },
+    {
+      "id": "wisconsin",
+      "label": "Wisconsin",
+      "url": "https://districtry.com/wi/",
+      "emoji": "🧀",
+      "explorer_name": "districtry Wisconsin",
+      "bbox": {
+        "minLng": -92.89,
+        "minLat": 42.49,
+        "maxLng": -86.25,
+        "maxLat": 47.31
+      }
+    },
+    {
+      "id": "iowa",
+      "label": "Iowa",
+      "url": "https://districtry.com/ia/",
+      "emoji": "🌽",
+      "explorer_name": "districtry Iowa",
+      "bbox": {
+        "minLng": -96.64,
+        "minLat": 40.37,
+        "maxLng": -90.14,
+        "maxLat": 43.5
+      }
+    },
+    {
+      "id": "michigan",
+      "label": "Michigan",
+      "url": "https://districtry.com/mi/",
+      "emoji": "🚗",
+      "explorer_name": "districtry Michigan",
+      "bbox": {
+        "minLng": -87.6,
+        "minLat": 41.7,
+        "maxLng": -82.11,
+        "maxLat": 48.01
+      }
+    },
+    {
+      "id": "minnesota",
+      "label": "Minnesota",
+      "url": "https://districtry.com/mn/",
+      "emoji": "🛶",
+      "explorer_name": "districtry Minnesota",
+      "bbox": {
+        "minLng": -97.3,
+        "minLat": 43.44,
+        "maxLng": -89.58,
+        "maxLat": 49.44
+      }
+    },
+    {
+      "id": "kentucky",
+      "label": "Kentucky",
+      "url": "https://districtry.com/ky/",
+      "emoji": "🐎",
+      "explorer_name": "districtry Kentucky",
+      "bbox": {
+        "minLng": -89.62,
+        "minLat": 36.45,
+        "maxLng": -81.91,
+        "maxLat": 39.2
+      }
+    },
+    {
+      "id": "indiana",
+      "label": "Indiana",
+      "url": "https://districtry.com/in/",
+      "emoji": "🏁",
+      "explorer_name": "districtry Indiana",
+      "bbox": {
+        "minLng": -88.1,
+        "minLat": 37.83,
+        "maxLng": -84.78,
+        "maxLat": 41.77
+      }
+    },
+    {
+      "id": "northcarolina",
+      "label": "North Carolina",
+      "url": "https://districtry.com/nc/",
+      "emoji": "🌳",
+      "explorer_name": "districtry North Carolina",
+      "bbox": {
+        "minLng": -84.33,
+        "minLat": 33.74,
+        "maxLng": -75.39,
+        "maxLat": 36.6
+      }
+    },
+    {
+      "id": "oklahoma",
+      "label": "Oklahoma",
+      "url": "https://districtry.com/ok/",
+      "emoji": "🌾",
+      "explorer_name": "districtry Oklahoma",
+      "bbox": {
+        "minLng": -103.01,
+        "minLat": 33.61,
+        "maxLng": -94.43,
+        "maxLat": 37.01
+      }
+    },
+    {
+      "id": "southcarolina",
+      "label": "South Carolina",
+      "url": "https://districtry.com/sc/",
+      "emoji": "🌴",
+      "explorer_name": "districtry South Carolina",
+      "bbox": {
+        "minLng": -83.36,
+        "minLat": 31.99,
+        "maxLng": -78.49,
+        "maxLat": 35.16
+      }
+    },
+    {
+      "id": "tennessee",
+      "label": "Tennessee",
+      "url": "https://districtry.com/tn/",
+      "emoji": "🎸",
+      "explorer_name": "districtry Tennessee",
+      "bbox": {
+        "minLng": -90.32,
+        "minLat": 34.98,
+        "maxLng": -81.64,
+        "maxLat": 36.68
+      }
+    },
+    {
+      "id": "arkansas",
+      "label": "Arkansas",
+      "url": "https://districtry.com/ar/",
+      "emoji": "💎",
+      "explorer_name": "districtry Arkansas",
+      "bbox": {
+        "minLng": -94.62,
+        "minLat": 33.0,
+        "maxLng": -89.64,
+        "maxLat": 36.5
+      }
+    },
+    {
+      "id": "mississippi",
+      "label": "Mississippi",
+      "url": "https://districtry.com/ms/",
+      "emoji": "🧸",
+      "explorer_name": "districtry Mississippi",
+      "bbox": {
+        "minLng": -91.66,
+        "minLat": 30.13,
+        "maxLng": -88.09,
+        "maxLat": 35.0
+      }
+    },
+    {
+      "id": "louisiana",
+      "label": "Louisiana",
+      "url": "https://districtry.com/la/",
+      "emoji": "🎷",
+      "explorer_name": "districtry Louisiana",
+      "bbox": {
+        "minLng": -94.05,
+        "minLat": 28.85,
+        "maxLng": -89.71,
+        "maxLat": 33.02
+      }
+    },
+    {
+      "id": "missouri",
+      "label": "Missouri",
+      "url": "https://districtry.com/mo/",
+      "emoji": "🏞️",
+      "explorer_name": "districtry Missouri",
+      "bbox": {
+        "minLng": -95.78,
+        "minLat": 35.99,
+        "maxLng": -89.09,
+        "maxLat": 40.62
+      }
+    },
+    {
+      "id": "virginia",
+      "label": "Virginia",
+      "url": "https://districtry.com/va/",
+      "emoji": "🌸",
+      "explorer_name": "districtry Virginia",
+      "bbox": {
+        "minLng": -83.68,
+        "minLat": 36.54,
+        "maxLng": -75.16,
+        "maxLat": 38.91
+      }
+    },
+    {
+      "id": "westvirginia",
+      "label": "West Virginia",
+      "url": "https://districtry.com/wv/",
+      "emoji": "⛰️",
+      "explorer_name": "districtry West Virginia",
+      "bbox": {
+        "minLng": -82.65,
+        "minLat": 37.2,
+        "maxLng": -79.43,
+        "maxLat": 40.64
+      }
+    },
+    {
+      "id": "georgia",
+      "label": "Georgia",
+      "url": "https://districtry.com/ga/",
+      "emoji": "🍑",
+      "explorer_name": "districtry Georgia",
+      "bbox": {
+        "minLng": -85.61,
+        "minLat": 30.35,
+        "maxLng": -80.91,
+        "maxLat": 35.01
+      }
+    },
+    {
+      "id": "arizona",
+      "label": "Arizona",
+      "url": "https://districtry.com/az/",
+      "emoji": "🌵",
+      "explorer_name": "districtry Arizona",
+      "bbox": {
+        "minLng": -114.82,
+        "minLat": 31.33,
+        "maxLng": -109.04,
+        "maxLat": 37.01
+      }
+    }
+  ],
+  "hover_number_keys": [
+    [
+      "district",
+      "basename",
+      "cd120",
+      "cd119",
+      "sldu"
+    ],
+    [
+      "geoid",
+      "number"
+    ]
+  ],
+  "hover_name_keys": [
+    [
+      "name",
+      "namelsad"
+    ]
+  ],
+  "layers": [
+    {
+      "id": "us-house",
+      "label": "U.S. House",
+      "group": "political",
+      "area_rank": 1,
+      "rank_note": "9 congressional districts — the largest districts Arizona carries below the state itself",
+      "source": {
+        "answers": "The U.S. House district covering the point, and the representative holding it.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 0 (120th Congressional Districts), pre-built for the state and shipped with the app; 9 features for Arizona, measured 2026-11-10. Layer 4, the 119th Congress's map, draws the same 9 districts (every district's IoU 1.0), because Arizona's map is still the one the Independent Redistricting Commission drew after the 2020 census, so nothing changes on 3 January 2027 and the builder refuses to write if the two differ before then. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
+          }
+        ],
+        "people": "congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
+        "applies": "Arizona — statewide, all 9 districts."
+      }
+    },
+    {
+      "id": "county",
+      "label": "County",
+      "group": "geography",
+      "area_rank": 2,
+      "rank_note": "15 counties, pre-built from TIGERweb; the instance's offline anchor layer",
+      "source": {
+        "answers": "Which county contains the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 15 features, measured 2026-11-10. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER YET. Each Arizona county elects a board of supervisors and officers such as a sheriff, a county attorney and a recorder; no list of them was read in this pass, so the card names the county only. Recorded as gap az-county-officials.",
+        "applies": "Arizona — statewide, all 15 counties."
+      }
+    },
+    {
+      "id": "az-senate",
+      "label": "Arizona Senate District",
+      "group": "political",
+      "area_rank": 3,
+      "rank_note": "30 legislative districts, each electing one senator — smaller on average than a county",
+      "source": {
+        "answers": "The legislative district covering the point, and the senator it elects.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 1 (2026 State Legislative Districts - Upper), pre-built for the state and shipped with the app; 30 features, measured 2026-11-10: the plan the Independent Redistricting Commission drew after the 2020 census. Arizona elects both chambers from the same 30 districts, and TIGERweb's layer 2 (2026 State Legislative Districts - Lower) draws exactly the same districts (every district's IoU 1.0, measured on every build), so ONE file, az-legislative-districts.json, serves the Senate and the House layers alike. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
+          }
+        ],
+        "people": "az-senate-members.json, rebuilt weekly by CI from the Senate member roster on the Legislature's own site (azleg.gov): name, party, the senator's room and telephone at the Capitol, and the senator's e-mail address, which the roster prints as a name with the suffix @azleg.gov shared by every member.",
+        "applies": "Arizona — statewide, all 30 districts."
+      }
+    },
+    {
+      "id": "az-house",
+      "label": "Arizona House District",
+      "group": "political",
+      "area_rank": 4,
+      "rank_note": "the same 30 legislative districts as the Senate, each electing two representatives",
+      "source": {
+        "answers": "The legislative district covering the point, and the two representatives it elects.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 1 (2026 State Legislative Districts - Upper), pre-built for the state and shipped with the app; 30 features, measured 2026-11-10: the plan the Independent Redistricting Commission drew after the 2020 census. Arizona elects both chambers from the same 30 districts, and TIGERweb's layer 2 (2026 State Legislative Districts - Lower) draws exactly the same districts (every district's IoU 1.0, measured on every build), so ONE file, az-legislative-districts.json, serves the Senate and the House layers alike. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
+          }
+        ],
+        "people": "az-house-members.json, rebuilt weekly by CI from the House member roster on the Legislature's own site (azleg.gov): both representatives of each district, with each one's party, room and telephone at the Capitol, and e-mail address, which the roster prints as a name with the suffix @azleg.gov shared by every member. A district the roster lists with fewer than two members is shipped with the members it lists and the date it was read, and the card says the other seat is not listed.",
+        "applies": "Arizona — statewide, all 30 districts."
+      }
+    },
+    {
+      "id": "school-district-secondary",
+      "label": "School District (Secondary)",
+      "group": "schools",
+      "area_rank": 5,
+      "rank_note": "15 union high school districts, about 2,756 km2 of land on average, running the high schools over the ground of the elementary districts, drawn from a mirrored tile archive",
+      "source": {
+        "answers": "The union high school district covering the point, where the point's elementary district does not run the high school.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), mirrored into a vector-tile archive this site serves (scripts/mirror_tiger_tiles.py); 15 features for Arizona, measured 2026-11-10. The unified layer and the elementary districts together cover the state (209,726 and 84,640 km2 of land, summing to Arizona's land area); 15,670 km2 of the unified layer is one record the Census names \"School District Not Defined\", GEOID 0499997, which is a placeholder for ground in no school district and not a district, and the card says so, and the 15 secondary districts run the high schools over 41,346 km2 of the elementary districts' ground, so a reader there is in one elementary and one secondary district at once.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER YET. No list of the districts' governing board members was read in this pass — recorded as gap az-school-board-members.",
+        "applies": "Arizona — the 15 districts' ground; the layer answers nothing where a unified district runs every grade."
+      }
+    },
+    {
+      "id": "school-district-unified",
+      "label": "School District (Unified)",
+      "group": "schools",
+      "area_rank": 6,
+      "rank_note": "97 unified districts, about 2,000 km2 of land on average, plus the Census's 15,670 km2 placeholder for land in no school district, from TIGERweb, drawn from a mirrored tile archive; with the 102 elementary districts they cover the state",
+      "source": {
+        "answers": "The unified school district covering the point, which runs every grade there.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), mirrored into a vector-tile archive this site serves (scripts/mirror_tiger_tiles.py); 98 features for Arizona (97 districts and the placeholder), measured 2026-11-10. The unified layer and the elementary districts together cover the state (209,726 and 84,640 km2 of land, summing to Arizona's land area); 15,670 km2 of the unified layer is one record the Census names \"School District Not Defined\", GEOID 0499997, which is a placeholder for ground in no school district and not a district, and the card says so, and the 15 secondary districts run the high schools over 41,346 km2 of the elementary districts' ground, so a reader there is in one elementary and one secondary district at once.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+          }
+        ],
+        "people": "NO OFFICEHOLDER YET. No list of the districts' governing board members was read in this pass — recorded as gap az-school-board-members.",
+        "applies": "Arizona — statewide, with the elementary districts."
+      }
+    },
+    {
+      "id": "school-district-elementary",
+      "label": "School District (Elementary)",
+      "group": "schools",
+      "area_rank": 7,
+      "rank_note": "102 elementary districts, about 830 km2 of land on average, from TIGERweb, drawn from a mirrored tile archive; the ground the unified districts leave",
+      "source": {
+        "answers": "The elementary school district covering the point, where no unified district does.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), mirrored into a vector-tile archive this site serves (scripts/mirror_tiger_tiles.py); 102 features for Arizona, measured 2026-11-10. The unified layer and the elementary districts together cover the state (209,726 and 84,640 km2 of land, summing to Arizona's land area); 15,670 km2 of the unified layer is one record the Census names \"School District Not Defined\", GEOID 0499997, which is a placeholder for ground in no school district and not a district, and the card says so, and the 15 secondary districts run the high schools over 41,346 km2 of the elementary districts' ground, so a reader there is in one elementary and one secondary district at once.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
+          }
+        ],
+        "people": "NO OFFICEHOLDER YET. No list of the districts' governing board members was read in this pass — recorded as gap az-school-board-members.",
+        "applies": "Arizona — statewide, with the unified districts."
+      }
+    },
+    {
+      "id": "zip-code",
+      "label": "ZIP Code",
+      "group": "geography",
+      "area_rank": 8,
+      "rank_note": "420 ZIP Code Tabulation Areas inside Arizona (467 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it",
+      "source": {
+        "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, mirrored into a vector-tile archive of the ZCTAs inside Arizona (scripts/mirror_tiger_tiles.py). ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='04'. 467 features in the app's box, which reaches into the five neighbouring states, 420 of them inside Arizona and kept in the archive, measured 2026-11-10.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more.",
+        "applies": "Arizona. The layer is hidden outside the state outline, because outside it the Census's point query answers with a neighbouring state's real ZIP code."
+      }
+    },
+    {
+      "id": "municipality",
+      "label": "City or Town",
+      "group": "geography",
+      "area_rank": 9,
+      "rank_note": "92 incorporated places, 46 cities and 46 towns, drawn from a tile archive mirrored from TIGERweb",
+      "source": {
+        "answers": "The incorporated city or town containing the point, or that the point is outside every city and town.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), mirrored into a vector-tile archive this site serves (scripts/mirror_tiger_tiles.py); 92 features for Arizona, measured 2026-11-10: 46 cities and 46 towns, every one active. MOST OF ARIZONA IS IN NO CITY OR TOWN, and there the county is the general-purpose local government, so an empty card says the point is outside every city and town rather than naming a place. The Census's census-designated places are statistical areas with no government and are not drawn, and the land of Arizona's tribal nations is not drawn by this layer.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+          }
+        ],
+        "people": "NO OFFICEHOLDER YET. No statewide roster of Arizona's mayors and council members was read in this pass; the card names the city or town and links nothing it has not verified. Recorded as gap az-municipal-officeholders.",
+        "applies": "Arizona — statewide."
+      }
+    },
+    {
+      "id": "police-station",
+      "label": "Police Station",
+      "group": "safety",
+      "area_rank": 10,
+      "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
+      "source": {
+        "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
+        "boundary": [
+          {
+            "label": "USGS The National Map — structures layer 53 (Police Stations), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-11-10: 214 points in Arizona's envelope, under the service's 2,000-record cap, and paged anyway so that stops being a fact anyone has to re-check.",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a police station is a facility, not an elected district. Nobody is elected from one.",
+        "applies": "Arizona — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances."
+      }
+    },
+    {
+      "id": "fire-station",
+      "label": "Fire & EMS Station",
+      "group": "safety",
+      "area_rank": 11,
+      "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
+      "source": {
+        "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
+        "boundary": [
+          {
+            "label": "USGS The National Map — structures layer 51 (Fire Stations/EMS Stations), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-11-10: 616 points in Arizona's envelope, under the service's 2,000-record cap, and paged anyway so that stops being a fact anyone has to re-check.",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a fire and EMS station is a facility, not an elected district. Nobody is elected from one.",
+        "applies": "Arizona — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances."
+      }
+    },
+    {
+      "id": "post-office",
+      "label": "Post Office",
+      "group": "geography",
+      "area_rank": 12,
+      "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
+      "source": {
+        "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
+        "boundary": [
+          {
+            "label": "USGS The National Map — structures layer 38 (Post Offices), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-11-10: 305 points in Arizona's envelope, under the service's 2,000-record cap, and paged anyway so that stops being a fact anyone has to re-check.",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a post office is a facility, not an elected district. Nobody is elected from one.",
+        "applies": "Arizona — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances."
+      }
+    }
+  ],
+  "min_register_layer": 10,
+  "anchor_point": {
+    "lat": 33.44812,
+    "lng": -112.09699,
+    "note": "Arizona State Capitol, 1700 West Washington Street, Phoenix"
+  },
+  "anchors": [
+    {
+      "layer": "county",
+      "expected": "Maricopa County"
+    },
+    {
+      "layer": "us-house",
+      "expected": "3"
+    },
+    {
+      "layer": "az-senate",
+      "expected": "11"
+    },
+    {
+      "layer": "az-house",
+      "expected": "11"
+    }
+  ],
+  "negative_point": {
+    "lat": 31.0,
+    "lng": -111.5,
+    "note": "Sonora, Mexico, about 37 km south of the Arizona line between Nogales and Sasabe — outside Arizona and outside every other instance in the fleet, and inside permalink_gate (minLat 30.90) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer names no state here (controls: the State Capitol and Tucson's city hall return Arizona, and a point in the open Pacific returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. MEXICO BECAUSE NO INSTANCE WILL EVER SERVE IT: every U.S. neighbour of Arizona is in a later batch of the state-level launch, and a point on any of them would have to move the day that neighbour goes live."
+  },
+  "coverage_key": {
+    "outside": "Outside Arizona",
+    "edge": "Arizona"
+  },
+  "data_files": {
+    "geometry": [
+      {
+        "file": "metro-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "The whole-Arizona outline for the coverage wash (loadMetroOutline), dissolved from the county fabric (15 counties)."
+      },
+      {
+        "file": "state-counties.json",
+        "min_features": 15,
+        "max_features": 15,
+        "note": "Arizona's 15 counties — the instance's offline anchor layer and the ground the coverage tests use."
+      },
+      {
+        "file": "congress-districts.json",
+        "min_features": 9,
+        "max_features": 9,
+        "note": "The 9 U.S. House districts, TIGERweb layer 0 (CD120), the 2022 map, the same map as layer 4."
+      },
+      {
+        "file": "az-legislative-districts.json",
+        "min_features": 30,
+        "max_features": 30,
+        "note": "The 30 Arizona legislative districts, TIGERweb layer 1 (identical to layer 2), the 2022 plan. Both the Senate and the House layers read this one file, because Arizona elects both chambers from the same districts."
+      },
+      {
+        "file": "zip-index.json",
+        "min_features": 419,
+        "max_features": 419,
+        "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      }
+    ],
+    "rosters": [
+      {
+        "file": "congress-roster.json",
+        "min_keys": 9,
+        "note": "U.S. House (AZ) roster, refreshed weekly by update-az-congress-roster.yml."
+      },
+      {
+        "file": "az-senate-members.json",
+        "min_keys": 30,
+        "note": "Arizona Senate roster from the Senate member roster on the Legislature's own site, one record per district, refreshed weekly."
+      },
+      {
+        "file": "az-house-members.json",
+        "min_keys": 30,
+        "note": "Arizona House roster from the House member roster on the Legislature's own site, one record per district holding both of its representatives, refreshed weekly."
+      },
+      {
+        "file": "coverage-gaps.json",
+        "min_keys": 0,
+        "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
+      }
+    ]
+  },
+  "sw": {
+    "cache_name": "districtry-az-shell-v1",
+    "shell_urls": [
+      "./",
+      "./icons/apple-touch-icon.png",
+      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.js",
+      "./vendor/leaflet-maplibre-gl.js"
+    ]
+  },
+  "data_sources": {
+    "registry": "az/scripts/validate_sources.py"
+  },
+  "workflows": [
+    {
+      "file": "update-az-congress-roster.yml",
+      "purpose": "U.S. House (Arizona) roster (unitedstates/congress-legislators)",
+      "schedule": "Mon 20:43 UTC"
+    },
+    {
+      "file": "update-az-legislature-roster.yml",
+      "purpose": "Arizona Senate and House rosters (the Legislature's own member rosters)",
+      "schedule": "Tue 20:43 UTC"
+    },
+    {
+      "file": "az-validate-sources.yml",
+      "purpose": "Arizona's own source-freshness registry",
+      "schedule": "1st of month 22:33 UTC"
+    }
+  ],
+  "geocoder": {
+    "address": "Photon (Arizona-bounded type-ahead)",
+    "unbounded": "Photon (whole-coverage, sibling-instance lookup)",
+    "poi": "Nominatim (office-address pin lookup, Arizona-bounded, serial >=1s queue)",
+    "search_placeholder": "Search an Arizona address"
+  },
+  "palette": {
+    "accent": "#6d3fd1",
+    "accent_deep": "#5730ab",
+    "accent_warm": "#b0316e",
+    "accent_warm_deep": "#8f2659",
+    "label": "districtry palette — brand violet is CHROME ONLY, never map data; shared with the fleet, not state-themed by convention"
+  },
+  "domains": {
+    "canonical": "https://districtry.com/az/"
+  },
+  "exports_name": "ArizonaExplorer",
+  "verified_date": "November 10, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
+  "sources_page": {
+    "file": "az/sources.html",
+    "credits": [
+      {
+        "label": "U.S. Census Bureau TIGERweb",
+        "url": "https://tigerweb.geo.census.gov/",
+        "note": "County, city and town, school-district, ZIP, congressional and legislative district boundaries."
+      },
+      {
+        "label": "Arizona State Legislature",
+        "url": "https://www.azleg.gov/",
+        "note": "The members of the Arizona Senate and House of Representatives."
+      },
+      {
+        "label": "unitedstates/congress-legislators",
+        "url": "https://github.com/unitedstates/congress-legislators",
+        "note": "U.S. House roster (CC0)."
+      },
+      {
+        "label": "USGS The National Map",
+        "url": "https://apps.nationalmap.gov/services/",
+        "note": "Police, fire and EMS stations and post offices (public domain)."
+      }
+    ]
+  },
+  "zip_search": {
+    "file": "zip-index.json",
+    "layers": [
+      {
+        "id": "zip-code",
+        "field": "ZCTA5",
+        "inside": [
+          "metro-outline.json"
+        ]
+      }
+    ]
+  }
+}

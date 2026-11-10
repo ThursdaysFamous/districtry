@@ -1414,6 +1414,12 @@ PREFIX_CLASSES = {
             "scripts/build_block_population.py")],
     "wv": [("wv/data/app/population/", "census",
             "scripts/build_block_population.py")],
+    "pa": [("pa/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "nv": [("nv/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "az": [("az/data/app/population/", "census",
+            "scripts/build_block_population.py")],
 }
 PREFIX_KIND = {rel: kind for rows in PREFIX_CLASSES.values()
                for rel, kind, _ in rows}
