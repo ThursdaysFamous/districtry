@@ -114,6 +114,11 @@ CONTACT_NOTE = {
     # contact details yet (gap va-local-official-contacts).
     "va": "with the election, or the county's or city's own page, that names "
           "each one, and no contact details yet",
+    # Georgia's name each commissioner for the winner of that seat's most
+    # recent election on the Secretary of State's results site, dated to it,
+    # and carry no contact details (the results print none).
+    "ga": "with the election on the Secretary of State's results site that "
+          "named each one, and no contact details yet",
 }
 DEFAULT_CONTACT_NOTE = "with whatever contact details that county publishes"
 # The unit each instance's per-county pages are one per, where it is not a

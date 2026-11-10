@@ -98,7 +98,9 @@
     { "id": "missouri", "label": "Missouri", "url": "https://districtry.com/mo/", "emoji": "🏞️", "explorer_name": "districtry Missouri",
       "bbox": { "minLng": -95.78, "minLat": 35.99, "maxLng": -89.09, "maxLat": 40.62 } },
     { "id": "virginia", "label": "Virginia", "url": "https://districtry.com/va/", "emoji": "🌸", "explorer_name": "districtry Virginia",
-      "bbox": { "minLng": -83.68, "minLat": 36.54, "maxLng": -75.16, "maxLat": 38.91 } }
+      "bbox": { "minLng": -83.68, "minLat": 36.54, "maxLng": -75.16, "maxLat": 38.91 } },
+    { "id": "georgia", "label": "Georgia", "url": "https://districtry.com/ga/", "emoji": "🍑", "explorer_name": "districtry Georgia",
+      "bbox": { "minLng": -85.61, "minLat": 30.35, "maxLng": -80.91, "maxLat": 35.01 } }
   ],
   "hover_number_keys": [
     [
@@ -516,9 +518,9 @@
     }
   ],
   "negative_point": {
-    "lat": 33.75,
-    "lng": -82.55,
-    "note": "Wilkes County, GEORGIA, about 25 km west of the Savannah River — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Georgia at this point (control: the State House anchor returns South Carolina). GEORGIA BECAUSE NO INSTANCE SERVES IT, and on land well clear of the river, whose channel the county fabric could place on either side."
+    "lat": 32.4,
+    "lng": -79.4,
+    "note": "In the Atlantic Ocean, about 48 km from the nearest point of South Carolina's shipped outline — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer names no state here (controls: the State House and Charleston return South Carolina, and the old point in Wilkes County returns Georgia), no shipped boundary file contains it, and the nearest outline in fleet-outlines.json is South Carolina's. THE OCEAN BECAUSE NO LAND IN THIS APP'S GATE IS UNSERVED ONCE GEORGIA IS LIVE: the gate holds South Carolina, Georgia and North Carolina, all three served, so the point moved here from Wilkes County, Georgia (33.75, -82.55), in the change that published Georgia, as Indiana's moved when Kentucky went live."
   },
   "coverage_key": {
     "outside": "Outside South Carolina",

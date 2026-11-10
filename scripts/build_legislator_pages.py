@@ -446,6 +446,35 @@ INSTANCES = {
             title="Who is my U.S. representative?",
             layer="us-house", roster="congress-roster.json",
             state="Virginia"),
+    ),
+    # Georgia joined at its go-live with both chambers named from the General
+    # Assembly's own member data, read through the token its page hands every
+    # visitor (every one of the 56 senators and 180 representatives named on
+    # 2026-10-29). The term sentence is measured rather than quoted: the
+    # Secretary of State's results (results.sos.ga.gov, read 2026-11-10) list
+    # all 56 Senate and all 180 House seats on the general election ballots of
+    # November 2022, November 2024 and November 2026.
+    "ga": dict(
+        worksheet="ga/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Georgia legislator?",
+            body="the Georgia General Assembly",
+            short="Georgia General Assembly",
+            term="Senators and representatives both serve two-year terms: the "
+                 "Secretary of State's results list every Senate and House seat "
+                 "on the general election ballots of 2022, 2024 and 2026.",
+            chambers=[
+                dict(layer="ga-senate", name="Georgia State Senate", short="Senate",
+                     holder="Senator", roster="ga-senate-members.json"),
+                dict(layer="ga-house", name="Georgia House of Representatives", short="House",
+                     holder="Representative", roster="ga-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Georgia"),
     ),}
 
 

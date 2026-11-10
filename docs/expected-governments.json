@@ -1,12 +1,13 @@
 {
  "built_by": "scripts/build_expected_governments.py",
  "floor": 25000,
- "measured": "2026-10-30",
+ "measured": "2026-11-10",
  "read_by": "scripts/build_eam_status.py",
  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer",
  "source": "U.S. Census Bureau TIGERweb, tigerWMS_Census2020 \u2014 layer 26 (Incorporated Places) and layer 20 (County Subdivisions, FUNCSTAT='A'); POP100 is the 2020 decennial count.",
  "subdivision_is_general_purpose": {
   "ar": null,
+  "ga": null,
   "ia": null,
   "il": false,
   "in": false,
@@ -158,6 +159,316 @@
     "lsadc": "25",
     "name": "Cabot city",
     "pop": 26569
+   }
+  ],
+  "ga": [
+   {
+    "geoid": "1304000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Atlanta city",
+    "pop": 498715
+   },
+   {
+    "geoid": "1319000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Columbus city",
+    "pop": 206922
+   },
+   {
+    "geoid": "1304204",
+    "kind": "place",
+    "lsadc": "00",
+    "name": "Augusta-Richmond County consolidated government (balance)",
+    "pop": 202081
+   },
+   {
+    "geoid": "1349008",
+    "kind": "place",
+    "lsadc": "00",
+    "name": "Macon-Bibb County",
+    "pop": 157346
+   },
+   {
+    "geoid": "1369000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Savannah city",
+    "pop": 147780
+   },
+   {
+    "geoid": "1303440",
+    "kind": "place",
+    "lsadc": "00",
+    "name": "Athens-Clarke County unified government (balance)",
+    "pop": 127315
+   },
+   {
+    "geoid": "1368516",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Sandy Springs city",
+    "pop": 108080
+   },
+   {
+    "geoid": "1372122",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "South Fulton city",
+    "pop": 107436
+   },
+   {
+    "geoid": "1367284",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Roswell city",
+    "pop": 92833
+   },
+   {
+    "geoid": "1342425",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Johns Creek city",
+    "pop": 82453
+   },
+   {
+    "geoid": "1380508",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Warner Robins city",
+    "pop": 80308
+   },
+   {
+    "geoid": "1301052",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Albany city",
+    "pop": 69647
+   },
+   {
+    "geoid": "1301696",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Alpharetta city",
+    "pop": 65818
+   },
+   {
+    "geoid": "1349756",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Marietta city",
+    "pop": 60972
+   },
+   {
+    "geoid": "1373784",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Stonecrest city",
+    "pop": 59194
+   },
+   {
+    "geoid": "1371492",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Smyrna city",
+    "pop": 55663
+   },
+   {
+    "geoid": "1378800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Valdosta city",
+    "pop": 55378
+   },
+   {
+    "geoid": "1310944",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Brookhaven city",
+    "pop": 55161
+   },
+   {
+    "geoid": "1324768",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Dunwoody city",
+    "pop": 51683
+   },
+   {
+    "geoid": "1355020",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Newnan city",
+    "pop": 42549
+   },
+   {
+    "geoid": "1331908",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Gainesville city",
+    "pop": 42296
+   },
+   {
+    "geoid": "1359735",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Peachtree Corners city",
+    "pop": 42243
+   },
+   {
+    "geoid": "1351670",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Milton city",
+    "pop": 41296
+   },
+   {
+    "geoid": "1325720",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "East Point city",
+    "pop": 38358
+   },
+   {
+    "geoid": "1359724",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Peachtree City city",
+    "pop": 38244
+   },
+   {
+    "geoid": "1366668",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Rome city",
+    "pop": 37713
+   },
+   {
+    "geoid": "1377652",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Tucker city",
+    "pop": 37005
+   },
+   {
+    "geoid": "1384176",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Woodstock city",
+    "pop": 35065
+   },
+   {
+    "geoid": "1338964",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hinesville city",
+    "pop": 34891
+   },
+   {
+    "geoid": "1323900",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Douglasville city",
+    "pop": 34650
+   },
+   {
+    "geoid": "1321380",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Dalton city",
+    "pop": 34417
+   },
+   {
+    "geoid": "1373256",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Statesboro city",
+    "pop": 33438
+   },
+   {
+    "geoid": "1343192",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Kennesaw city",
+    "pop": 33036
+   },
+   {
+    "geoid": "1312988",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Canton city",
+    "pop": 32973
+   },
+   {
+    "geoid": "1324600",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Duluth city",
+    "pop": 31873
+   },
+   {
+    "geoid": "1344340",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "LaGrange city",
+    "pop": 30858
+   },
+   {
+    "geoid": "1345488",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lawrenceville city",
+    "pop": 30629
+   },
+   {
+    "geoid": "1315172",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Chamblee city",
+    "pop": 30164
+   },
+   {
+    "geoid": "1348624",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "McDonough city",
+    "pop": 29051
+   },
+   {
+    "geoid": "1373704",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Stockbridge city",
+    "pop": 28973
+   },
+   {
+    "geoid": "1378324",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Union City city",
+    "pop": 26830
+   },
+   {
+    "geoid": "1313492",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Carrollton city",
+    "pop": 26738
+   },
+   {
+    "geoid": "1362104",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Pooler city",
+    "pop": 25711
+   },
+   {
+    "geoid": "1374180",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Sugar Hill city",
+    "pop": 25076
    }
   ],
   "ia": [
