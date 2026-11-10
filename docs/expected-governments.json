@@ -23,7 +23,8 @@
   "sc": null,
   "tn": null,
   "va": null,
-  "wi": null
+  "wi": null,
+  "wv": null
  },
  "units": {
   "ar": [
@@ -4750,6 +4751,43 @@
     "lsadc": "25",
     "name": "Muskego city",
     "pop": 25032
+   }
+  ],
+  "wv": [
+   {
+    "geoid": "5414600",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Charleston city",
+    "pop": 48864
+   },
+   {
+    "geoid": "5439460",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Huntington city",
+    "pop": 46842
+   },
+   {
+    "geoid": "5455756",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Morgantown city",
+    "pop": 30347
+   },
+   {
+    "geoid": "5462140",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Parkersburg city",
+    "pop": 29738
+   },
+   {
+    "geoid": "5486452",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Wheeling city",
+    "pop": 27052
    }
   ]
  },

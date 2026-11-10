@@ -447,6 +447,38 @@ INSTANCES = {
             layer="us-house", roster="congress-roster.json",
             state="Virginia"),
     ),
+    # West Virginia joined at its go-live with both chambers named from each
+    # chamber's own roster page on wvlegislature.gov. ITS SENATE SEATS TWO
+    # SENATORS PER DISTRICT, so its roster record is {"seats": 2, "members":
+    # [...]} rather than one member, and `adapter` tells the officeholder table
+    # to print a row per senator (build_officeholder_tables.multi_member_districts).
+    # The terms are W. Va. Const. art. VI, secs. 3 and 4 (four years for
+    # senators, half elected every two years, two per district; two years for
+    # delegates), not re-read for this change: the Legislature's robots.txt
+    # disallows its /WVCODE/ path, where the constitution is printed.
+    "wv": dict(
+        worksheet="wv/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my WV legislator?",
+            body="the West Virginia Legislature",
+            short="West Virginia Legislature",
+            term="Each Senate district elects two senators to staggered four-year terms, "
+                 "and delegates serve two-year terms.",
+            chambers=[
+                dict(layer="wv-senate", name="West Virginia Senate", short="Senate",
+                     holder="Senator", roster="wv-senate-members.json",
+                     adapter="multi_member_districts"),
+                dict(layer="wv-house", name="West Virginia House of Delegates",
+                     short="House of Delegates",
+                     holder="Delegate", roster="wv-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="West Virginia"),
+    ),
     # Georgia joined at its go-live with both chambers named from the General
     # Assembly's own member data, read through the token its page hands every
     # visitor (every one of the 56 senators and 180 representatives named on
@@ -575,20 +607,35 @@ def roster_rows(tag, filename):
     data = load(os.path.join(tag, "data", "app", filename))
     if not isinstance(data, dict) or not data:
         fail("%s/data/app/%s is not a non-empty object" % (tag, filename))
-    named = [k for k, v in data.items() if isinstance(v, dict) and v.get("name")]
+    named = [k for k, v in data.items() if isinstance(v, dict) and (
+        v.get("name") or any(isinstance(m, dict) and m.get("name")
+                             for m in v.get("members") or []))]
     if not named:
         fail("%s/data/app/%s names nobody" % (tag, filename))
     return data
 
 
+def member_count(data):
+    """The people a chamber's roster seats: one per district, or the district's
+    own `seats` where it elects more than one (West Virginia's Senate, two per
+    district). Counted from `seats` rather than from the members listed, so a
+    vacant seat still counts as a seat."""
+    return sum(int(v.get("seats", 1)) if isinstance(v, dict) else 1
+               for v in data.values())
+
+
 def legislature_page(tag, inst, worksheet, brand, app_name, landing, metros):
     spec = inst["legislature"]
-    counts = []
+    counts, members = [], 0
     for ch in spec["chambers"]:
         check_layer(worksheet, ch["layer"], "%s/%s" % (tag, spec["file"]))
-        counts.append(len(roster_rows(tag, ch["roster"])))
+        data = roster_rows(tag, ch["roster"])
+        counts.append(len(data))
+        members += member_count(data)
     layers = ",".join(ch["layer"] for ch in spec["chambers"])
-    total = sum(counts)
+    # The members, not the districts: equal everywhere but West Virginia, whose
+    # 17 Senate districts seat 34 senators.
+    total = members
     # "59 Senate districts and 118 House districts", not "59 Illinois Senate
     # districts, 118 Illinois House of Representatives districts" — the state is
     # already in the body's name two words earlier, and a list joined with a

@@ -159,6 +159,10 @@ AREAS = {
     # over the whole state, its 95 counties and 38 independent cities, so the
     # coverage ring IS the state and the coverage_key carries `outside` alone.
     "va": {"outline": "va/data/app/metro-outline.json", "state_outline": None},
+    # West Virginia joined at its go-live. ONE tier, like va: every layer
+    # answers over all 55 counties, so the coverage ring IS the state and the
+    # coverage_key carries `outside` and `edge` alone.
+    "wv": {"outline": "wv/data/app/metro-outline.json", "state_outline": None},
     # Georgia joined at its go-live. ONE tier, like va: every layer answers
     # over the whole state's 159 counties, so the coverage ring IS the state
     # and the coverage_key carries `outside` alone.
