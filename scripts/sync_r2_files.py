@@ -386,13 +386,22 @@ def shipped_origin():
 PROBE_UA = "districtry-files-check/1.0 (+https://districtry.com/)"
 
 
-def _http(method, url, headers, timeout=30):
+def _http(method, url, headers, timeout=30, attempts=3):
+    """(status, headers, body). An HTTP answer of any status is returned as it
+    came; a connection that fails (measured on the first runs: one reset in 55
+    requests) is tried again after 2 and 4 seconds before the failure is
+    raised, so one dropped connection does not turn a publish run red."""
     req = urllib.request.Request(url, method=method, headers=dict(headers, **{"User-Agent": PROBE_UA}))
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            return resp.status, {k.lower(): v for k, v in resp.headers.items()}, resp.read()
-    except urllib.error.HTTPError as e:
-        return e.code, {k.lower(): v for k, v in e.headers.items()}, e.read()
+    for attempt in range(attempts):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return resp.status, {k.lower(): v for k, v in resp.headers.items()}, resp.read()
+        except urllib.error.HTTPError as e:
+            return e.code, {k.lower(): v for k, v in e.headers.items()}, e.read()
+        except (urllib.error.URLError, TimeoutError, ConnectionError, OSError):
+            if attempt == attempts - 1:
+                raise
+            time.sleep(2 * (attempt + 1))
 
 
 def _why(h, body):
@@ -551,6 +560,11 @@ def run_probe_against_stand_in():
             self.end_headers()
 
         def do_GET(self):
+            if mode["fault"] == "drop-once" and not mode.get("dropped"):
+                mode["dropped"] = True
+                self.close_connection = True
+                self.connection.shutdown(2)   # no answer at all: the client sees the connection go
+                return
             path = os.path.join(self.root, urllib.parse.unquote(self.path.lstrip("/")))
             if not os.path.isfile(path):
                 self.send_response(404)
@@ -599,6 +613,9 @@ def run_probe_against_stand_in():
         try:
             problems, checked = probe(host, origin, d, {"il"})
             assert not problems and checked == 4, (problems, checked)
+            mode["fault"] = "drop-once"
+            problems, checked = probe(host, origin, d, {"il"})
+            assert mode.get("dropped") and not problems and checked == 4, (problems, checked)
             for fault, words in (("no-cors", "preflight"), ("no-expose", "expose Content-Range"),
                                  ("whole", "not 206"), ("stale", "other bytes"),
                                  ("blocked", "body: Attention Required error code: 1010")):
@@ -610,7 +627,8 @@ def run_probe_against_stand_in():
             assert any("Access-Control-Allow-Origin" in p for p in problems), problems
         finally:
             server.shutdown()
-    return "a read of the files host against a loopback stand-in, right and five ways wrong"
+    return ("a read of the files host against a loopback stand-in, right, through one dropped "
+            "connection, and five ways wrong")
 
 
 def run_against_stand_in(tree):
