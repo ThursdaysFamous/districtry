@@ -71,7 +71,8 @@ in the researched-but-unbuilt backlog.
   "georgia": ["us-house", "ga-senate", "county", "ga-house", "ga-superior-court", "school-district-unified", "county-subdivision", "county-commissioner", "school-board-district", "zip-code", "voting-precinct", "municipality", "police-station", "fire-station", "post-office"],
   "virginia": ["us-house", "va-senate", "va-house", "county", "school-district-unified", "school-board-district", "county-subdivision", "supervisor-district", "zip-code", "voting-precinct", "election-results", "municipality", "school-district-elementary", "tribal-government", "police-station", "fire-station", "post-office"],
   "westvirginia": ["us-house", "wv-senate", "county", "school-district-unified", "wv-house", "county-subdivision", "zip-code", "municipality", "city-ward", "police-station", "fire-station", "post-office"],
-  "pennsylvania": ["us-house", "pa-senate", "county", "pa-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
+  "pennsylvania": ["us-house", "pa-senate", "county", "pa-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "nevada": ["us-house", "county", "school-district-unified", "nv-senate", "nv-assembly", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -4090,6 +4091,45 @@ trusted.
             "why": "No statewide list of Pennsylvania's school board members has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-10 against TIGERweb's school districts (School MapServer) for STATE='42': 501 unified districts on layer 0 and none on the elementary or secondary layers (1 and 2), so the layer is one tiling, shipped as a tile archive. No board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's own directories, which were not checked for board members; and each district's own website. The Pennsylvania School Boards Association is a membership association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "nevada": [
+      {
+            "id": "nv-county-officials",
+            "concept": "County government",
+            "area": "Nevada — all 16 counties and Carson City",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the office looking empty.",
+            "why": "No statewide list of Nevada's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-10 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is nv/index.html's own County block: each county is governed by an elected board of county commissioners and elects officers such as a sheriff and a district attorney, and Carson City, a city and county in one government (GEOID 32510), by a mayor and a board of supervisors, which its card states. The boundary is TIGERweb State_County for STATE='32', 17 features, shipped as nv/data/app/state-counties.json. ROUTES NOT YET READ, government publishers first: each county's own website; the Secretary of State's election results, which name who won each county seat; and a statewide directory, if a state office keeps one. The Nevada Association of Counties is an association of the counties rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nv-municipal-officeholders",
+            "concept": "City government",
+            "area": "Nevada",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City card names the city you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Nevada's cities has been read for this app, and the cities' own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's mayor and council members, or a city's own published list of them.",
+            "blocker": "Measured 2026-11-10 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='32': 19 records, 18 cities (LSADC 25) and Carson City (LSADC 00), every one an active government (FUNCSTAT A), together about 1% of the state's land (3,039.5 of 284,537.1 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each city's own website, largest first (Las Vegas, Henderson, Reno, North Las Vegas, Sparks); and the Secretary of State's election results. The Nevada League of Cities and Municipalities is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nv-school-board-members",
+            "concept": "School board",
+            "area": "Nevada",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its board of trustees.",
+            "why": "No list of the trustees of Nevada's school districts has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's trustees, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-10 against TIGERweb's school districts (School MapServer) for STATE='32': 17 unified districts on layer 0, as many as the state's 16 counties and Carson City, and none on the elementary or secondary layers (1 and 2), so the layer is one tiling, shipped as a tile archive. No board roster was read for this record, and whether every trustee is elected was not checked. ROUTES NOT YET READ, government publishers first: the Department of Education's own directories; and each district's own website. NOT YET ASKED, and no ask is drafted."
       }
   ]
 }

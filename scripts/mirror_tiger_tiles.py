@@ -114,7 +114,7 @@ SERVICES = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
 STATE_FIPS = {"il": "17", "ia": "19", "mi": "26", "wi": "55", "ny": "36", "ca": "06",
               "mn": "27", "ky": "21", "in": "18", "nc": "37", "ok": "40", "sc": "45",
               "tn": "47", "ar": "05", "ms": "28", "la": "22", "mo": "29",
-              "va": "51", "pa": "42"}
+              "va": "51", "pa": "42", "nv": "32"}
 # WHO THIS FETCHES AS, and it used to be nobody: the first version shelled out to
 # curl with no -A, so the Census saw `curl/8.x` and nothing read robots.txt.
 # Nothing was breached — measured 2026-09-27 as that client, the host's
@@ -197,6 +197,8 @@ MIRRORS = [
     ("va", "school-district-elementary", "School", 2, "GEOID,NAME,STATE"),
     ("pa", "municipality", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
     ("pa", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
+    ("nv", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("nv", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
 ]
 
 # THE ZIP LAYERS (phase 6b). TIGERweb's ZCTA layer has NO STATE field — a ZCTA
@@ -235,6 +237,7 @@ ZIP_MIRRORS = [
     ("mo", "zip-code", "MO_BBOX_ENVELOPE", (-95.78, 35.99, -89.09, 40.62)),
     ("va", "zip-code", "VA_BBOX_ENVELOPE", (-83.7, 36.5, -75.15, 39.5)),
     ("pa", "zip-code", "PA_BBOX_ENVELOPE", (-80.53, 39.71, -74.68, 42.52)),
+    ("nv", "zip-code", "NV_BBOX_ENVELOPE", (-120.1, 34.95, -113.95, 42.1)),
 ]
 ZCTA_SERVICE, ZCTA_INDEX, ZCTA_FIELDS = "PUMA_TAD_TAZ_UGA_ZCTA", 11, "ZCTA5"
 PAGE_SIZE = 250

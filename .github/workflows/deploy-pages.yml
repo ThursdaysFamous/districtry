@@ -176,6 +176,8 @@ jobs:
             # arrives dark the same way; the batch goes live together on the
             # operator's word.
             'pa/**'
+            # Nevada, the second state of batch 1, arrives dark the same way.
+            'nv/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full

@@ -1,0 +1,62 @@
+{
+  "1": {
+    "name": "Dina Titus",
+    "party": "Democrat",
+    "url": "https://titus.house.gov",
+    "capitolOffice": [
+      "2370 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5965"
+    ],
+    "districtOffice": [
+      "495 South Main St., 3rd Floor",
+      "Las Vegas, NV 89101",
+      "Phone: 702-220-9823"
+    ]
+  },
+  "2": {
+    "name": "Mark E. Amodei",
+    "party": "Republican",
+    "url": "https://amodei.house.gov",
+    "capitolOffice": [
+      "104 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6155"
+    ],
+    "districtOffice": [
+      "5310 Kietzke Ln., Suite 103",
+      "Reno, NV 89511",
+      "Phone: 775-686-5760"
+    ]
+  },
+  "3": {
+    "name": "Susie Lee",
+    "party": "Democrat",
+    "url": "https://susielee.house.gov",
+    "capitolOffice": [
+      "365 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3252"
+    ],
+    "districtOffice": [
+      "7785 W Sahara Ave, Suite 203",
+      "Las Vegas, NV 89117",
+      "Phone: 702-963-9336"
+    ]
+  },
+  "4": {
+    "name": "Steven Horsford",
+    "party": "Democrat",
+    "url": "https://horsford.house.gov",
+    "capitolOffice": [
+      "406 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-9894"
+    ],
+    "districtOffice": [
+      "2250 N Las Vegas Blvd, Suite 500",
+      "North Las Vegas, NV 89030",
+      "Phone: 702-963-9360"
+    ]
+  }
+}

@@ -114,6 +114,7 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro virginia --out va/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro westvirginia --out wv/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro pennsylvania --out pa/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro nevada --out nv/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
           # the weekly fleet-status notice.
@@ -946,6 +947,7 @@ jobs:
           python3 va/scripts/build_metro_outline.py --check
           python3 wv/scripts/build_metro_outline.py --check
           python3 pa/scripts/build_metro_outline.py --check
+          python3 nv/scripts/build_metro_outline.py --check
 
       # docs/PRESS_LIST.md carries a --check in its own header calling it the
       # drift gate, and until now nothing ran it — a generated file gated in
@@ -1656,6 +1658,15 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 wi/scripts/build_legislative_boundaries.py --check
 
+      # The fourth instance with the relation, and the first built with the
+      # shared topology from its first day: every Nevada Senate district is
+      # exactly two Assembly districts, though not by number (Senate 16 is
+      # Assembly 26 and 40), so the builder carries the measured pairing as
+      # NESTING and refuses a fetch that no longer matches it.
+      - name: NV Assembly districts still tile their Senate district exactly
+        if: ${{ !cancelled() }}
+        run: python3 nv/scripts/build_legislative_boundaries.py --check
+
       - name: The dropped-ring mechanism holds to its own fixtures
         if: ${{ !cancelled() }}
         run: python3 wi/scripts/dropped_rings.py --selftest
@@ -2084,6 +2095,7 @@ jobs:
           python3 va/scripts/validate_index.py va/index.html
           python3 wv/scripts/validate_index.py wv/index.html
           python3 pa/scripts/validate_index.py pa/index.html
+          python3 nv/scripts/validate_index.py nv/index.html
 
 
   browser:
@@ -2349,6 +2361,7 @@ jobs:
           BASE_URL=http://localhost:8000/mn/  node mn/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/wv/  node wv/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/pa/  node pa/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/nv/  node nv/scripts/smoke_test.mjs
           GATES
           n=0
           shard=
