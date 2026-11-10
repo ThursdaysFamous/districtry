@@ -4515,7 +4515,14 @@ function initGeorgiaExplorer() {
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
-  var LAYER_CONCEPTS = { };
+  var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["ga-senate"],
+    "state-house": ["ga-house"], "trial-court-district": ["ga-superior-court"],
+    "county": ["county"], "county-board": ["county-commissioner"],
+    "county-subdivision": ["county-subdivision"], "municipality": ["municipality"],
+    "voting-precinct": ["voting-precinct"], "zip-code": ["zip-code"],
+    "school-district-unified": ["school-district-unified"],
+    "school-board-district": ["school-board-district"], "police-station": ["police-station"],
+    "fire-station": ["fire-station"], "post-office": ["post-office"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -4523,6 +4530,9 @@ function initGeorgiaExplorer() {
   // clean the address is. Set from the worksheet's poi_geocode_bbox — widen
   // it there whenever a layer's cards start naming farther-away offices.
   var POI_GEOCODE_BBOX = { minLng: -85.8, minLat: 30.2, maxLng: -80.6, maxLat: 35.2 };
+  // ZIP code index (scripts/build_zip_index.mjs): a typed ZIP code selects a
+  // spot inside it, and its ZIP layer is turned on and pinned for comparison.
+  var ZIP_SEARCH_URL = "data/app/zip-index.json";
   // Census block population index (scripts/build_block_population.py): lets
   // the comparison stats screen count people as well as area.
   var POPULATION_INDEX_URL = "data/app/population/index.json";
@@ -4590,8 +4600,10 @@ function initGeorgiaExplorer() {
       bbox: { minLng: -95.78, minLat: 35.99, maxLng: -89.09, maxLat: 40.62 } },
     { id: "virginia", label: "Virginia", url: "https://districtry.com/va/", emoji: "🌸", explorerName: "districtry Virginia",
       bbox: { minLng: -83.68, minLat: 36.54, maxLng: -75.16, maxLat: 38.91 } },
+    { id: "westvirginia", label: "West Virginia", url: "https://districtry.com/wv/", emoji: "⛰️", explorerName: "districtry West Virginia",
+      bbox: { minLng: -82.65, minLat: 37.2, maxLng: -79.43, maxLat: 40.64 } },
     { id: "georgia", label: "Georgia", url: "https://districtry.com/ga/", emoji: "🍑", explorerName: "districtry Georgia",
-      bbox: { minLng: -85.61, minLat: 30.35, maxLng: -80.78, maxLat: 35.01 } }
+      bbox: { minLng: -85.61, minLat: 30.35, maxLng: -80.91, maxLat: 35.01 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -16807,6 +16819,7 @@ function initGeorgiaExplorer() {
 
   registerLayer({
     id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "Census County Division",
     subOf: "county",
@@ -16908,6 +16921,7 @@ function initGeorgiaExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City or Town",
     // the honest words for "outside every incorporated place in Georgia",
@@ -17026,6 +17040,7 @@ function initGeorgiaExplorer() {
 
   registerLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District",
     emptyNote: "No county or city school district covers this point. In " +
@@ -17217,6 +17232,7 @@ function initGeorgiaExplorer() {
 
   registerPolygonLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     loader: loadZipCodes,

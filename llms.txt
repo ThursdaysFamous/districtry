@@ -1,6 +1,6 @@
 # districtry
 
-> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. 18 instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi, Louisiana, Missouri and Virginia. Every boundary and every name comes from a published source and is cited to it.
+> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. 20 instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi, Louisiana, Missouri, Virginia, West Virginia and Georgia. Every boundary and every name comes from a published source and is cited to it.
 
 Free, no account, no tracking of individuals. The map runs in the browser; what each page sends to whom is listed at https://districtry.com/privacy.html.
 
@@ -240,6 +240,28 @@ All 95 counties and 38 independent cities: each county's board and each city's c
 - [Sources & data layers](https://districtry.com/va/sources.html)
 - [Who is my Virginia legislator?](https://districtry.com/va/state-legislature.html)
 - [Virginia district questions](https://districtry.com/va/faq.html)
+
+## West Virginia
+
+All 55 counties: each county's commission and elected officers, magisterial districts, cities, towns and villages, school districts, ZIP codes, Charleston's 20 council wards and the members elected from them, and the nearest police station, fire and EMS station and post office — plus the West Virginia Senate, House of Delegates and U.S. House districts, with who holds each seat. County commissioners and officers are named from the Secretary of State's directory of county officials, and legislators from the Legislature's own rosters. School board members, judges and the other cities' councils are not named yet, and the Data gaps panel says why.
+
+- [West Virginia district lookup](https://districtry.com/wv/): 12 layers, all 55 counties.
+- [Who is my U.S. representative?](https://districtry.com/wv/congress.html)
+- [Who are my county commissioners?](https://districtry.com/wv/county-commissioner.html): links a page per county, 55 of them, each naming every member with the telephone and e-mail the Secretary of State's directory prints beside each commissioner, and the commission's office.
+- [Sources & data layers](https://districtry.com/wv/sources.html)
+- [Who is my WV legislator?](https://districtry.com/wv/state-legislature.html)
+- [West Virginia district questions](https://districtry.com/wv/faq.html)
+
+## Georgia
+
+All 159 counties: county commission and school board districts where the county's own elections confirm the map, voting precincts, judicial circuits with their judges and district attorneys, cities and towns, census county divisions, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Georgia Senate, House and U.S. House districts, with who holds each seat. County commissioners and school board members are named from the Secretary of State's election results where an election since November 2024 chose them. The Data gaps panel says which seats are not named and why.
+
+- [Georgia district lookup](https://districtry.com/ga/): 15 layers, all 159 counties.
+- [Who is my U.S. representative?](https://districtry.com/ga/congress.html)
+- [Who are my county commissioners?](https://districtry.com/ga/county-commissioner.html): links a page per county, 152 of them, each naming every member with the election on the Secretary of State's results site that named each one, and no contact details yet.
+- [Sources & data layers](https://districtry.com/ga/sources.html)
+- [Who is my Georgia legislator?](https://districtry.com/ga/state-legislature.html)
+- [Georgia district questions](https://districtry.com/ga/faq.html)
 
 ## Where the answers come from
 

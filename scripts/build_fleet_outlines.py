@@ -114,6 +114,14 @@ SOURCES = {
     # statewide, so the dissolve of its 95 counties and 38 independent cities
     # is the widest ground it answers on.
     "va": "va/data/app/metro-outline.json",
+    # West Virginia's coverage ring IS its state outline: every layer answers
+    # statewide, so the dissolve of its 55 counties is the widest ground it
+    # answers on.
+    "wv": "wv/data/app/metro-outline.json",
+    # Georgia's coverage ring IS its state outline: every layer answers
+    # statewide, so the dissolve of its 159 counties is the widest ground it
+    # answers on.
+    "ga": "ga/data/app/metro-outline.json",
 }
 
 # Degrees. 0.002 is about 220 m north-south and 165 m east-west at 42 N.

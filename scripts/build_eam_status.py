@@ -194,7 +194,13 @@ STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
                   # so they are in the coverage ring; each is scored once, as
                   # St. Louis is, under level 6 with the other places of 25,000
                   # or more (INDEPENDENT_CITIES below).
-                  "va": 95}
+                  "va": 95,
+                  # West Virginia's 55 counties, added at its go-live.
+                  "wv": 55,
+                  # Georgia's 159 counties. Its eight consolidated city-county
+                  # governments are each one of these counties, so none is
+                  # scored again as a city.
+                  "ga": 159}
 
 # County equivalents that are cities, scored under level 6 and not here. The
 # number is STATED and checked: the coverage ring must hold the state's counties
@@ -2552,6 +2558,122 @@ ANSWERS = {
         # the Chief and the Assistant Chief (gap va-tribal-government).
         "tribal-government": answers("tribal-government"),
     },
+    # West Virginia, added at its go-live on 2026-11-10 with the national
+    # tier, every county's commission and other elected officers from the
+    # Secretary of State's directory of county officials, and Charleston's
+    # wards and council.
+    "wv": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("wv-senate", "wv-house"),
+        "county-boundaries": answers("county"),
+        # Every county's commission is elected by the whole county (three
+        # members, five in Berkeley and Jefferson), so no county owes a map:
+        # a seat elected countywide that must only LIVE in a magisterial
+        # district is an at-large seat, the Indiana commissioners' shape.
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # Charleston's council is named and its 20 wards drawn from the city's
+        # own map (wv/scripts/build_wv_city_councils.py); Huntington's,
+        # Morgantown's, Parkersburg's and Wheeling's are not named yet (gap
+        # wv-municipal-officeholders).
+        "local-government": depth("city-ward"),
+        "school-district-boundaries": answers("school-district-unified"),
+        "subdivision-boundaries": answers("county-subdivision"),
+        # Circuit judges, family court judges and magistrates are elected by
+        # circuit or county, and no court's districts are drawn or its judges
+        # named yet.
+        "courts-by-district": OPEN,
+        # Measured 2026-11-10 on TIGERweb's Census 2020 county subdivisions,
+        # with Illinois as the control (1,412 active): all 228 of West
+        # Virginia's are FUNCSTAT N. They are the counties' magisterial
+        # districts, which the Magisterial District layer draws from the
+        # state's own map, and a magisterial district elects nobody of its own.
+        "sub-county-government": na(
+            "West Virginia has no general-purpose government that divides a "
+            "county. Its county subdivisions are the counties' magisterial "
+            "districts, which elect nobody of their own and which the Census "
+            "records as having no functioning government (all 228, measured "
+            "2026-11-10)."),
+        # A county board of education is elected by the whole county, no more
+        # than two members from one magisterial district (W. Va. Code 18-5-1,
+        # as wv/metro-worksheet.json records), so no board has a district a
+        # voter elects a member from. The members are not named yet (gap
+        # wv-school-board-members), which is the county tier's question.
+        "school-boards-by-district": na(
+            "West Virginia's county boards of education are elected by the "
+            "whole county, no more than two members from one magisterial "
+            "district (W. Va. Code 18-5-1), so there is no district a voter "
+            "elects a member from."),
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # NO TRIBAL LAND IN WEST VIRGINIA, measured 2026-11-10 with
+        # scripts/tribal_areas.py --report: the reservation, trust-land and
+        # state-reservation layers keep nothing inside the state, while the
+        # same run keeps the Mississippi Choctaw trust land in Tennessee as a
+        # control.
+        "tribal-government": na(
+            "West Virginia has no tribal land. The Census publishes no federal "
+            "or state reservation and no off-reservation trust land in the "
+            "state, measured 2026-11-10 with a control in Tennessee."),
+    },
+    # Georgia, added at its go-live: the national tier, every county's board of
+    # commissioners named from the Secretary of State's election results, the
+    # commission and school board districts the precinct check confirmed, the
+    # judicial circuits and the office's 2024 precinct map.
+    "ga": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("ga-senate", "ga-house"),
+        "county-boundaries": answers("county"),
+        # Every county's board of commissioners, or its sole commissioner, is
+        # named from the Secretary of State's results where the results name
+        # it. The layer draws a county's districts only where the precincts
+        # that voted in its district contests confirm the map office's map, so
+        # a county whose districts vote alone owes a map until then
+        # (_ga_county_maps_owed; gap ga-county-commission-district-lines).
+        "county-government": depth("county-commissioner"),
+        "municipal-boundaries": answers("municipality"),
+        # No city council is named yet. The four city-county governments'
+        # commissions and councils are named on the County card where the
+        # results name them, which does not answer this level for the other
+        # cities of 25,000 or more.
+        "local-government": OPEN,
+        # TIGER's unified tiling holds all 181 districts. Its one elementary
+        # district is Fort Benning's own schools, which the app does not draw
+        # and whose card says so (ga/CLAUDE.md).
+        "school-district-boundaries": answers("school-district-unified"),
+        # The Census's 586 county divisions, drawn live from TIGERweb with a
+        # card saying nobody governs them.
+        "subdivision-boundaries": answers("county-subdivision"),
+        # The 51 judicial circuits, each a list of whole counties read from the
+        # ballots, whose voters elect each circuit's superior court judges and
+        # district attorney, named from the same results
+        # (ga/scripts/build_ga_superior_courts.py).
+        "courts-by-district": answers("ga-superior-court"),
+        # GEORGIA HAS NO SUB-COUNTY GENERAL-PURPOSE GOVERNMENT. All 586 county
+        # subdivisions TIGERweb carries for the state are census county
+        # divisions (FUNCSTAT S). Recorded in ga/CLAUDE.md.
+        "sub-county-government": na(
+            "Georgia has no sub-county general-purpose government — outside a "
+            "city limit the county governs. The 586 sub-county units the "
+            "Census publishes for Georgia are census county divisions: "
+            "statistical areas, not governments."),
+        # PART DRAWN: the school board districts of 105 county systems whose
+        # maps the precinct check confirmed. The members are named on the
+        # School District card, and the other boards elected by district owe a
+        # map (gap ga-school-board-district-lines). The layer is named here so
+        # the unclaimed-layer print does not list it.
+        "school-boards-by-district": Entry("open", ("school-board-district",)),
+        # The map office's 2024 statewide precinct map, all 2,724 precincts,
+        # each card saying what the ballots since say about its county.
+        "precincts": answers("voting-precinct"),
+        "special-districts": OPEN,
+        # OPEN, NOT "NO TRIBAL LAND": measured 2026-11-10 with
+        # scripts/tribal_areas.py --report Georgia, the Census publishes no
+        # federal reservation and no trust land in Georgia and one state
+        # reservation, the Tama (state) Reservation, 0.367 km2, which the app
+        # does not draw.
+        "tribal-government": OPEN,
+    },
     "ny": {
         "us-house": answers("congress"),
         "state-legislature": answers("state-senate", "state-assembly"),
@@ -2697,6 +2819,9 @@ CITY_ROSTERS = {
     # read. It is keyed by county-equivalent GEOID and by town name rather than
     # by place id, so it is joined by name (`va_place_units` says how).
     "va": [("va/data/app/va-local-officials.json", "va-localities")],
+    # Each city's own council page, keyed by the city's Census id; today
+    # Charleston's (wv/scripts/build_wv_city_councils.py).
+    "wv": [("wv/data/app/wv-city-councils.json", "geoid7")],
 }
 
 # One file per city, so the unit is declared rather than keyed. A filename is
@@ -2970,6 +3095,60 @@ def _mo_county_maps_owed(B, records):
             if rec.get("districts") and name not in drawn}
 
 
+def _ga_county_maps_owed(B, records):
+    """Georgia counties whose commission is elected by district and not drawn.
+
+    Which seats a district's voters elect, rather than the whole county's, is
+    read off the county map check's record (ga/data/source/county-map-check.json,
+    written by ga/scripts/check_ga_county_maps.py), which says for every
+    commission contest on the results site whether the precincts that voted
+    in it were one district's or the whole county's. A county owes a map when
+    it is not drawn and either a contest of its commission was voted by
+    district, or the map office lists a commission map the check could not
+    settle (untested, untestable or in conflict), because nothing then shows
+    its seats are elected countywide. A county whose contests were all voted
+    countywide owes none (Adam, 2026-10-15: a seat elected countywide that
+    must live in a district is an at-large seat), and neither does a sole
+    commissioner. Which counties the layer draws is read off the shipped
+    counties file, never listed here.
+    """
+    rel = "ga/data/source/county-map-check.json"
+    with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as fh:
+        check = json.load(fh)
+    drawn_rel = "ga/data/app/ga-board-district-counties.json"
+    with open(os.path.join(REPO_ROOT, drawn_rel), encoding="utf-8") as fh:
+        drawn_doc = json.load(fh)
+    drawn = {(rec or {}).get("county") for rec in drawn_doc.values()
+             if (rec or {}).get("commission")}
+    roster_rel = "ga/data/app/ga-county-officials.json"
+    with open(os.path.join(REPO_ROOT, roster_rel), encoding="utf-8") as fh:
+        roster = {(rec or {}).get("county") for rec in json.load(fh).values()}
+    stray = sorted(drawn - roster)
+    if stray:
+        fail("ga: `%s` draws %s, which the county roster does not carry"
+             % (drawn_rel, ", ".join(stray)))
+    unsettled = {"untested", "untestable", "conflicts"}
+    known = {"passes", "voted-countywide"} | unsettled
+    by_district = set()
+    for m in check.get("maps") or []:
+        if m.get("body") != "commission":
+            continue
+        if m.get("verdict") not in known:
+            fail("ga: `%s` gives %s's commission map the verdict %r, which the "
+                 "county-map test does not know. Say whether that county owes "
+                 "a map before it is scored." % (rel, m.get("county"),
+                                                m.get("verdict")))
+        if m.get("verdict") in unsettled or any(
+                c.get("voted") == "by district" for c in m.get("contests") or []):
+            by_district.add(m.get("county"))
+    for c in check.get("contests_without_a_map") or []:
+        if "ommission" in (c.get("contest") or "") and \
+                c.get("voted") == "by district":
+            by_district.add((c.get("county") or "").title())
+    return {B.slug_of(name) for name in records
+            if name in by_district and name not in drawn}
+
+
 def _no_layer(derive):
     """A state whose county-government level draws no county district."""
     def wrapped(B, records):
@@ -2990,6 +3169,7 @@ COUNTY_MAPS_OWED = {
     "ms": _ms_county_maps_owed,
     "la": _la_county_maps_owed,
     "mo": _mo_county_maps_owed,
+    "ga": _ga_county_maps_owed,
 }
 
 
@@ -3282,6 +3462,11 @@ WARD_MAPS = {
     "va": dict(
         drawn={"5129744", "5147672", "5156000", "5157000", "5161832",
                "5167000", "5176432", "5182000", "5186720"}),
+    # Charleston elects 20 of its 26 council members by ward, and the City
+    # Council Ward layer draws all 20 from the city's own map.
+    "wv": dict(
+        drawn={"5414600"},
+        drawn_file=("wv/data/app/wv-city-wards.json", "geoid")),
 }
 
 
@@ -4026,8 +4211,12 @@ def _names_a_body(rec):
     # way and have no districts, so read through the first two shapes alone
     # they named nobody. Only the `at-large` anchor counts: other sections
     # beside the districts hold an office, a clerk or a meeting time.
+    #
+    # A FOURTH, GEORGIA'S: seven counties are governed by one sole
+    # commissioner, whose page is that one office in a `sole-commissioner`
+    # section with no districts, so it counts the same way.
     for extra in rec.get("extras") or []:
-        if extra[0] == "at-large":
+        if extra[0] in ("at-large", "sole-commissioner"):
             for m in extra[2] or []:
                 if isinstance(m, dict) and m.get("name"):
                     return True
@@ -4439,6 +4628,18 @@ def measure(counties, paths, B):
         # districts are drawn (Adam, 2026-10-15).
         maps_owed = county_maps_owed(tag, counties, B) & named_counties
         mapped = named_counties - maps_owed
+        # A STATE WHOSE EVERY COUNTY BODY IS ELECTED AT LARGE DRAWS NO COUNTY
+        # DISTRICT BECAUSE IT HAS NONE, and naming the members is the whole
+        # answer there (the loop above says the same for Covered). West
+        # Virginia, at its go-live on 2026-11-10, is the first such state: its
+        # 55 commissions are elected countywide, every one is named, and none
+        # owes a map, so `districts` is 0 and the test above found nothing to
+        # credit. Kentucky is not this case: its records are flat too, but
+        # COUNTY_MAPS_OWED names its counties elected by district, so it keeps
+        # the record branch.
+        if (answered_by is None and scored and not maps_owed
+                and len(named_counties) >= (total or 0) > 0):
+            answered_by = "name"
         counties_named = len(mapped)
         cov_entries, cov = score_covered(
             tag, counties_named, COVERED_COUNTIES.get(tag), expected,
