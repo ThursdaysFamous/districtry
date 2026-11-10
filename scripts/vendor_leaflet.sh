@@ -61,6 +61,9 @@ INSTANCES=(
   "ga:ga/index.html:ga/scripts/vendor/leaflet"
   "va:va/index.html:va/scripts/vendor/leaflet"
   "wv:wv/index.html:wv/scripts/vendor/leaflet"
+  "pa:pa/index.html:pa/scripts/vendor/leaflet"
+  "nv:nv/index.html:nv/scripts/vendor/leaflet"
+  "az:az/index.html:az/scripts/vendor/leaflet"
 )
 
 wanted=("$@")

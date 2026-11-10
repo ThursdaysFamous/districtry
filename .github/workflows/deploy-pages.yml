@@ -163,6 +163,19 @@ jobs:
             va/data/state va/data/source va/scripts
             wv/data/state wv/data/source wv/scripts
             ga/data/state ga/data/source ga/scripts
+            # Pennsylvania, the first of the state-level launch's batch 1,
+            # arrives dark: the whole folder is excluded until go-live, and
+            # metros.json deliberately carries no pa entry until then
+            # (validate_instance_registration.py holds the two together). THE
+            # BLANKET `<tag>/**` FORM IS LOAD-BEARING, not a style: it is what
+            # dark_instances() reads, and four generators import that to tell a
+            # dark folder from an unregistered one. The batch goes live together
+            # on the operator's word.
+            'pa/**'
+            # Nevada, the second state of batch 1, arrives dark the same way.
+            'nv/**'
+            # Arizona, the third state of batch 1, arrives dark the same way.
+            'az/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full
