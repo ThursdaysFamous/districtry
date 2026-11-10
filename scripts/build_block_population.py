@@ -198,6 +198,11 @@ INSTANCES = {
            "bbox": (-120.01, 35.0, -114.03, 42.01),
            "maps": [("congress-districts.json", 4, 0.0035), ("nv-senate-districts.json", 21, 0.045),
                     ("nv-assembly-districts.json", 42, 0.06)]},
+    # One legislative map for both chambers: az-legislative-districts.json
+    # serves the Senate and the House layers alike, so it is held once.
+    "az": {"name": "Arizona", "state": "04", "total": 7151502, "counties": 15,
+           "bbox": (-114.82, 31.33, -109.04, 37.01),
+           "maps": [("congress-districts.json", 9, 0.0005), ("az-legislative-districts.json", 30, 0.055)]},
 }
 def fetch(url, params):
     q = url + "/query?" + urllib.parse.urlencode(params)

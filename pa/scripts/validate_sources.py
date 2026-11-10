@@ -201,7 +201,8 @@ ENDPOINTS = [
     #
     # The counts below are measured 2026-11-10 and are RECORDED, not asserted:
     # this validator reports, it never edits the app. County subdivisions
-    # 2,568 · unified school districts 501.
+    # 2,568 · unified school districts 501 (500 districts and the Census's
+    # "School District Not Defined" record for Pennsylvania's part of Lake Erie).
     #
     # SCHOOL LAYERS 1 AND 2 (SECONDARY AND ELEMENTARY) ANSWER ZERO FOR
     # PENNSYLVANIA, measured the same day: every district is unified. They are

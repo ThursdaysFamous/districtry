@@ -21,7 +21,7 @@ public-domain unitedstates/congress-legislators roster), **Pennsylvania Senate**
 (50 and 203 districts, TIGERweb's 2026 state legislative districts joined to each chamber's own
 member pages), the TIGERweb fabric drawn from mirrored tile archives — **City, Borough or
 Township** (`municipality`, 2,568 county subdivisions), **School District**
-(`school-district-unified`, 501) and **ZIP Code** — and three nearest-N layers from the USGS
+(`school-district-unified`, 500) and **ZIP Code** — and three nearest-N layers from the USGS
 National Map (**Police Station**, **Fire & EMS Station**, **Post Office**).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
@@ -62,8 +62,11 @@ Pennsylvania's part of Lake Erie, filed as "County subdivisions not defined" (LS
 the card answers as the lake. One township, Cold Spring in Lebanon County, is recorded as an
 inactive government, and its card says so.
 
-**THE SCHOOL LAYER IS ONE TILING.** TIGER holds 501 unified districts for Pennsylvania and no
-elementary or secondary ones. No board member is named yet (gap `pa-school-board-members`).
+**THE SCHOOL LAYER IS ONE TILING.** TIGER holds 500 unified districts for Pennsylvania and no
+elementary or secondary ones. Its 501st record is not a district: the Census files Pennsylvania's
+part of Lake Erie as "School District Not Defined" (GEOID 4299997, no land, 1,950.9 km2 of water,
+measured 2026-11-10), and the card answers it as the lake, the way the municipality card answers
+the lake's own placeholder. No board member is named yet (gap `pa-school-board-members`).
 
 **NO COUNTY OR MUNICIPAL OFFICIAL IS NAMED YET**, and the cards say so rather than leave a reader
 to assume the office is empty. Most counties elect three commissioners by the whole county, a home

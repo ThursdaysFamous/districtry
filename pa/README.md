@@ -13,7 +13,7 @@ The national tier and both legislative chambers, named from the General Assembly
 | **Political** | U.S. House District (17) | U.S. Census TIGERweb boundary, the map the Supreme Court of Pennsylvania drew in 2022 (pre-built, shipped with the app) + the public-domain [congress-legislators](https://github.com/unitedstates/congress-legislators) roster, refreshed weekly by CI |
 | | Pennsylvania Senate District (50) | TIGERweb's 2026 state legislative districts (pre-built, 2,000-point agreement gate and an 8 m fidelity ceiling) + the General Assembly's own member pages: name, party, Capitol office and telephone, and the senator's e-mail address where the Senate prints one |
 | | Pennsylvania House District (203) | TIGERweb's 2026 state legislative districts + the General Assembly's own member pages: name, party, Capitol office and telephone |
-| **Schools** | School District (501) | TIGERweb unified school districts, from a tile archive; identity only, the board members recorded as a gap |
+| **Schools** | School District (500) | TIGERweb unified school districts, from a tile archive, plus the Census's placeholder for Lake Erie, which the card answers as the lake; identity only, the board members recorded as a gap |
 | **Geography** | County (67) | TIGERweb State_County, pre-built — the app's offline anchor and the coverage ring; no county official is named yet, and the card says so |
 | | City, Borough or Township (2,568) | TIGERweb county subdivisions, from a tile archive: every part of Pennsylvania's land is in one municipality |
 | | ZIP Code | TIGERweb ZCTA, from a tile archive of the state's ZCTAs, hidden outside Pennsylvania |

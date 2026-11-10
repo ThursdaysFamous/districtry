@@ -224,16 +224,17 @@ def check_metro_explorers(html):
         if not (b["minLat"] < b["maxLat"] and b["minLng"] < b["maxLng"]):
             fail("METRO_EXPLORERS[%s] bbox is inverted (min must be < max on both axes)" % eid.group(1))
         # A SIBLING'S BOX HOLDING THIS APP'S CENTRE IS NOT ITSELF A FAULT HERE,
-        # and this is the one copy of this check that says so (2026-11-10).
+        # and the copies in the batch 1 states say so (2026-11-10).
         # The sibling copies fail on it because the box once decided where a
         # pan went; panning has not switched apps since 2026-10-13, and a
         # selection is decided by fleet-outlines.json (ENGINE metro-portal).
         # The box is read only by the search rows' fallback when that file
-        # cannot be read. New York's box (-79.82..-71.62, 40.43..45.07) holds
-        # most of Nevada, this centre included, and no rectangle that
-        # keeps New York City can leave it out. So the test that matters is
-        # the sibling's OUTLINE: if that holds the centre, a click at home
-        # would leave home, and that fails. A box-only overlap is printed.
+        # cannot be read. It came up in Pennsylvania's copy, where New York's
+        # box holds most of that state; no live sibling's box holds this
+        # app's centre (measured 2026-11-10), so here it guards the next one.
+        # The test that matters is the sibling's OUTLINE: if that holds the
+        # centre, a click at home would leave home, and that fails. A
+        # box-only overlap is printed.
         if eid.group(1) != this_metro and (
             b["minLat"] <= center_lat <= b["maxLat"] and b["minLng"] <= center_lng <= b["maxLng"]
         ):

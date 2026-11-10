@@ -895,6 +895,14 @@ try {
         props: { GEOID: "4211580", NAME: "Harrisburg City School District", STATE: "42" },
         want: [/Harrisburg City School District/],
         reject: []
+      },
+      {
+        name: "the Census's school placeholder on Lake Erie names no district and says it is the lake",
+        layer: "school-district-unified", service: "School/MapServer/0",
+        props: { GEOID: "4299997", NAME: "School District Not Defined", STATE: "42" },
+        want: [/this point is on water/, /Lake Erie/],
+        reject: [/GEOID 4299997/],
+        empty: true
       }
     ];
 

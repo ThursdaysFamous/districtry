@@ -224,7 +224,7 @@ def check_metro_explorers(html):
         if not (b["minLat"] < b["maxLat"] and b["minLng"] < b["maxLng"]):
             fail("METRO_EXPLORERS[%s] bbox is inverted (min must be < max on both axes)" % eid.group(1))
         # A SIBLING'S BOX HOLDING THIS APP'S CENTRE IS NOT ITSELF A FAULT HERE,
-        # and this is the one copy of this check that says so (2026-11-10).
+        # and the copies in the batch 1 states say so (2026-11-10).
         # The sibling copies fail on it because the box once decided where a
         # pan went; panning has not switched apps since 2026-10-13, and a
         # selection is decided by fleet-outlines.json (ENGINE metro-portal).

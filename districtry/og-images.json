@@ -15,6 +15,14 @@
     "height": 630,
     "rendered": "2026-10-13"
   },
+  "az": {
+    "path": "az/og-image.png",
+    "label": "az",
+    "sha256": "461b65e7e3bbeae44b97253420dcafb384c3e2238ed7ae402415ab09eb85c037",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-11-10"
+  },
   "ca": {
     "path": "ca/og-image.png",
     "label": "ca",

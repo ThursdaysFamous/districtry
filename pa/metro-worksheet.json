@@ -292,6 +292,32 @@
       }
     },
     {
+      "id": "westvirginia",
+      "label": "West Virginia",
+      "url": "https://districtry.com/wv/",
+      "emoji": "⛰️",
+      "explorer_name": "districtry West Virginia",
+      "bbox": {
+        "minLng": -82.65,
+        "minLat": 37.2,
+        "maxLng": -79.43,
+        "maxLat": 40.64
+      }
+    },
+    {
+      "id": "georgia",
+      "label": "Georgia",
+      "url": "https://districtry.com/ga/",
+      "emoji": "🍑",
+      "explorer_name": "districtry Georgia",
+      "bbox": {
+        "minLng": -85.61,
+        "minLat": 30.35,
+        "maxLng": -80.91,
+        "maxLat": 35.01
+      }
+    },
+    {
       "id": "pennsylvania",
       "label": "Pennsylvania",
       "url": "https://districtry.com/pa/",
@@ -403,12 +429,12 @@
       "label": "School District",
       "group": "schools",
       "area_rank": 5,
-      "rank_note": "501 school districts, every one unified, drawn from a tile archive mirrored from TIGERweb",
+      "rank_note": "500 school districts, every one unified, plus the Census placeholder for Lake Erie, drawn from a tile archive mirrored from TIGERweb",
       "source": {
         "answers": "The public school district covering the point.",
         "boundary": [
           {
-            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), mirrored into a vector-tile archive this site serves (scripts/mirror_tiger_tiles.py); 501 features for Pennsylvania, measured 2026-11-10. The elementary and secondary layers carry nothing for Pennsylvania, whose 500 school districts each run every grade.",
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), mirrored into a vector-tile archive this site serves (scripts/mirror_tiger_tiles.py); 501 features for Pennsylvania, measured 2026-11-10: 500 districts and the record the Census names School District Not Defined, GEOID 4299997, which is Pennsylvania's part of Lake Erie (no land) and which the card answers as the lake. The elementary and secondary layers carry nothing for Pennsylvania, whose 500 school districts each run every grade.",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
           }
         ],

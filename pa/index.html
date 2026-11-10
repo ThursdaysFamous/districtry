@@ -4591,6 +4591,10 @@ function initPennsylvaniaExplorer() {
       bbox: { minLng: -95.78, minLat: 35.99, maxLng: -89.09, maxLat: 40.62 } },
     { id: "virginia", label: "Virginia", url: "https://districtry.com/va/", emoji: "🌸", explorerName: "districtry Virginia",
       bbox: { minLng: -83.68, minLat: 36.54, maxLng: -75.16, maxLat: 38.91 } },
+    { id: "westvirginia", label: "West Virginia", url: "https://districtry.com/wv/", emoji: "⛰️", explorerName: "districtry West Virginia",
+      bbox: { minLng: -82.65, minLat: 37.2, maxLng: -79.43, maxLat: 40.64 } },
+    { id: "georgia", label: "Georgia", url: "https://districtry.com/ga/", emoji: "🍑", explorerName: "districtry Georgia",
+      bbox: { minLng: -85.61, minLat: 30.35, maxLng: -80.91, maxLat: 35.01 } },
     { id: "pennsylvania", label: "Pennsylvania", url: "https://districtry.com/pa/", emoji: "🔔", explorerName: "districtry Pennsylvania",
       bbox: { minLng: -80.53, minLat: 39.71, maxLng: -74.68, maxLat: 42.52 } }
   ];
@@ -11297,7 +11301,7 @@ function initPennsylvaniaExplorer() {
     "pa-senate",         // 50 Senate districts — larger on average than a county, smaller than a congressional district
     "county",            // 67 counties, pre-built from TIGERweb; the instance's offline anchor layer
     "pa-house",          // 203 single-member House districts — smaller on average than a county, larger than a school district
-    "school-district-unified", // 501 school districts, every one unified, drawn from a tile archive mirrored from TIGERweb
+    "school-district-unified", // 500 school districts, every one unified, plus the Census placeholder for Lake Erie, drawn from a tile archive mirrored from TIGERweb
     "zip-code",          // 2,382 ZIP Code Tabulation Areas in the state's own bounding box, drawn from a tile archive of the ones inside Pennsylvania; the layer hides outside the state
     "municipality",      // 2,567 municipalities (1,544 townships, 960 borough pieces, 56 city pieces, 6 home rule municipalities and the town of Bloomsburg), about 46 km2 on average, drawn from a tile archive mirrored from TIGERweb
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -15337,10 +15341,13 @@ function initPennsylvaniaExplorer() {
     // A TIGERweb legislative chamber (Congress / State Senate / State Assembly)
     // joined to a same-origin roster keyed by district number. opts: { id, label,
     // layerIndex, districtFields, loadRoster, memberLabel, style, directoryUrl,
-    // profileLabel?, directoryLabel?, capitolLabel?, districtPrefix? }. Member
-    // rows are { name, party?, url?, phone?, phonesExtra?, email?,
-    // districtOffice?, capitolOffice? }; office fields only render when the
-    // roster supplies them (empty placeholder -> just the link).
+    // profileLabel?, directoryLabel?, capitolLabel?, districtPrefix?,
+    // seatsLabel?, seatsNote? }. Member rows are { name, party?, url?, phone?,
+    // phonesExtra?, email?, districtOffice?, capitolOffice? }; office fields
+    // only render when the roster supplies them (empty placeholder -> just the
+    // link). A chamber that elects several members from each district keys
+    // each district to { seats, members: [member rows] } instead (seatMembers
+    // below), and seatsLabel/seatsNote word the line that says so.
     // Metro-provided geometry loader wins; forks that haven't pre-built their
     // chamber geometry fall back to the live TIGERweb fetch by layer index,
     // unchanged. (opts.loadDistricts is a metro-specific value passed by the
@@ -15437,6 +15444,26 @@ function initPennsylvaniaExplorer() {
     function isMember(member) {
       return !!(member && member.name);
     }
+    // A DISTRICT THAT ELECTS SEVERAL MEMBERS. Arizona's House of
+    // Representatives and New Jersey's General Assembly elect two members from
+    // each district, so a roster record for such a chamber is
+    // { seats: N, members: [member rows] } rather than one member row.
+    // scripts/validate_chamber_rosters.py holds that shape: `seats` equals the
+    // builder's per_district, every listed member carries a name, and a
+    // district listing fewer members than it elects carries asOf, because the
+    // card then says how many the roster listed and on what day. A one-member
+    // record in such a chamber returns null here and reads exactly as before.
+    // West Virginia's Senate, two senators per district, predates this branch
+    // and keeps a layer block of its own.
+    function seatMembers(seat) {
+      if (!seat || !Array.isArray(seat.members)) return null;
+      return seat.members.filter(isMember);
+    }
+    // "A", "A and B", "A, B and C": the hover names everyone the card names.
+    function joinNames(names) {
+      if (names.length < 2) return names.join("");
+      return names.slice(0, -1).join(", ") + " and " + names[names.length - 1];
+    }
     // THE RECORD STATES THE CLAIM AND THIS ONLY PRINTS IT. Where the authority
     // does not use the word, the record carries its own one-sentence reason:
     // Iowa's chamber roster ends a member's service with a date and names
@@ -15452,6 +15479,50 @@ function initPennsylvaniaExplorer() {
         ? String(member.vacantWhy)
         : "The chamber's own members page says nobody holds this seat.";
       return "Vacant — " + why + (when ? " Read on " + when + "." : "");
+    }
+    // One member's row: name, party badge, own telephone and e-mail, and
+    // their page. Shared by the one-member card and every row of a
+    // multi-member district, so the two cannot word a member differently.
+    function personRow(member) {
+      var person = { name: String(member.name) };
+      if (member.party) person.badge = String(member.party);
+      // THE MEMBER'S OWN TELEPHONE, where the roster carries one: a number
+      // the chamber prints for the member apart from the office blocks
+      // below, such as a home or cell line. Published since Adam's ruling of
+      // 2026-10-17 that a number a government source prints beside an
+      // official is shown even where it may be the official's own; a label
+      // the source prints ("home 803-555-0100") rides inside the string.
+      if (member.phone) person.phone = String(member.phone);
+      if (member.phonesExtra && member.phonesExtra.length) {
+        person.phonesExtra = member.phonesExtra.map(String);
+      }
+      // THE MEMBER'S E-MAIL ADDRESS, where the roster carries one. Before
+      // 2026-10-17 this card showed no legislator's address at all, though
+      // eight states' rosters carried one for nearly every seat. Measured
+      // that day, every one of them is the chamber's own mailbox except
+      // fifteen Arkansas members' personal addresses, which the
+      // legislature's own member pages print and which Adam chose to show
+      // ("E-mails too"). A roster reads it from the legislature's pages or
+      // from Open States' compilation of them.
+      if (member.email) person.email = String(member.email);
+      // Label follows the actual href: only a roster-supplied member URL
+      // gets the per-member label — the directory fallback lives in the
+      // footer (primaryLink) and must not masquerade as the member's page.
+      var memberUrl = memberProfileUrl(member);
+      if (memberUrl) person.links = [{ label: opts.profileLabel || "Member profile", url: memberUrl }];
+      return person;
+    }
+    // One member's offices as office blocks, each kicker led by `prefix`
+    // (empty on a one-member card, the member's name on a multi-member one).
+    function memberOffices(member, prefix) {
+      // District office first (it's the local, on-map one this card pins),
+      // Springfield/D.C. second — same order the old key/value card used.
+      var offices = [];
+      var districtOffice = splitOfficeLines(member.districtOffice);
+      if (districtOffice) { districtOffice.label = prefix + "District Office"; offices.push(districtOffice); }
+      var capitolOffice = splitOfficeLines(member.capitolOffice || member.springfieldOffice);
+      if (capitolOffice) { capitolOffice.label = prefix + (opts.capitolLabel || "Capitol Office"); offices.push(capitolOffice); }
+      return offices;
     }
     registerLayer({
       id: opts.id,
@@ -15476,11 +15547,13 @@ function initPennsylvaniaExplorer() {
           var props = feature.properties || {};
           var district = extractDistrictNumber(props, opts.districtFields);
           var member = district != null ? roster[String(district)] : undefined;
+          var members = seatMembers(member);
           // A nameless record is NOT a member and must not reach the person
           // row, which would render the string "undefined" as somebody's name.
           // It is carried separately so the card can say which kind it is.
           return { seq: seq, district: district,
-                   member: isMember(member) ? member : null,
+                   member: !members && isMember(member) ? member : null,
+                   members: members,
                    seat: member || null };
         });
       },
@@ -15490,6 +15563,36 @@ function initPennsylvaniaExplorer() {
         // identity lives in the header pill (cardIdentifier below).
         var wrap = cardEl("div", "card-flush");
         var member = result.member;
+        if (result.members) {
+          // Every member the roster lists, each with the same row a one-member
+          // district gets, their offices in one group (each kicker naming its
+          // member), and a line saying how many the district elects, so a
+          // reader shown two names knows both represent the point clicked.
+          var listed = result.members;
+          if (listed.length) wrap.appendChild(renderPersonRows(listed.map(personRow)));
+          var groupOffices = [];
+          listed.forEach(function (m) {
+            groupOffices = groupOffices.concat(memberOffices(m, String(m.name) + " · "));
+          });
+          if (groupOffices.length) wrap.appendChild(renderOfficeGroup({ offices: groupOffices }));
+          var record = result.seat || {};
+          var seats = Number(record.seats) || listed.length;
+          var shortNote = "";
+          if (listed.length < seats) {
+            shortNote = "The roster lists " +
+              (listed.length ? String(listed.length) + " of the " : "none of the ") +
+              String(seats) + " members this district elects" +
+              (record.asOf ? " (read on " + String(record.asOf) + ")" : "") + ", so " +
+              (listed.length === 1 ? "only that one is" : listed.length ? "only those are" : "no one is") +
+              " named here. ";
+          }
+          wrap.appendChild(renderFieldStack([{
+            label: opts.seatsLabel || "Members",
+            value: shortNote + (opts.seatsNote ||
+              "This district elects " + String(seats) + " members, and each represents every point in it.")
+          }]));
+          return wrap;
+        }
         if (!member) {
           // Three states, told apart. A seat the chamber calls vacant says so;
           // a record naming nobody says that instead; and no record at all is
@@ -15507,40 +15610,8 @@ function initPennsylvaniaExplorer() {
           }));
           return wrap;
         }
-        var person = { name: String(member.name) };
-        if (member.party) person.badge = String(member.party);
-        // THE MEMBER'S OWN TELEPHONE, where the roster carries one: a number
-        // the chamber prints for the member apart from the office blocks
-        // below, such as a home or cell line. Published since Adam's ruling of
-        // 2026-10-17 that a number a government source prints beside an
-        // official is shown even where it may be the official's own; a label
-        // the source prints ("home 803-555-0100") rides inside the string.
-        if (member.phone) person.phone = String(member.phone);
-        if (member.phonesExtra && member.phonesExtra.length) {
-          person.phonesExtra = member.phonesExtra.map(String);
-        }
-        // THE MEMBER'S E-MAIL ADDRESS, where the roster carries one. Before
-        // 2026-10-17 this card showed no legislator's address at all, though
-        // eight states' rosters carried one for nearly every seat. Measured
-        // that day, every one of them is the chamber's own mailbox except
-        // fifteen Arkansas members' personal addresses, which the
-        // legislature's own member pages print and which Adam chose to show
-        // ("E-mails too"). A roster reads it from the legislature's pages or
-        // from Open States' compilation of them.
-        if (member.email) person.email = String(member.email);
-        // Label follows the actual href: only a roster-supplied member URL
-        // gets the per-member label — the directory fallback lives in the
-        // footer (primaryLink) and must not masquerade as the member's page.
-        var memberUrl = memberProfileUrl(member);
-        if (memberUrl) person.links = [{ label: opts.profileLabel || "Member profile", url: memberUrl }];
-        wrap.appendChild(renderPersonRows([person]));
-        // District office first (it's the local, on-map one this card pins),
-        // Springfield/D.C. second — same order the old key/value card used.
-        var offices = [];
-        var districtOffice = splitOfficeLines(member.districtOffice);
-        if (districtOffice) { districtOffice.label = "District Office"; offices.push(districtOffice); }
-        var capitolOffice = splitOfficeLines(member.capitolOffice || member.springfieldOffice);
-        if (capitolOffice) { capitolOffice.label = opts.capitolLabel || "Capitol Office"; offices.push(capitolOffice); }
+        wrap.appendChild(renderPersonRows([personRow(member)]));
+        var offices = memberOffices(member, "");
         if (offices.length) wrap.appendChild(renderOfficeGroup({ offices: offices }));
         return wrap;
       },
@@ -15573,6 +15644,10 @@ function initPennsylvaniaExplorer() {
           if (!roster) return null;
           var d = extractDistrictNumber(feature.properties || {}, opts.districtFields);
           var member = d != null ? roster[String(d)] : null;
+          var members = seatMembers(member);
+          if (members) {
+            return members.length ? joinNames(members.map(function (m) { return String(m.name); })) : null;
+          }
           if (isMember(member)) return member.name;
           // The hover names who holds the seat, so a seat the chamber calls
           // empty is named "Vacant" — the hover and the card cannot disagree.
@@ -15999,6 +16074,15 @@ function initPennsylvaniaExplorer() {
    * (secondary and elementary) none. Drawn from a tile archive mirrored by
    * scripts/mirror_tiger_tiles.py.
    *
+   * ONE OF THE 501 RECORDS IS NOT A DISTRICT. The Census files ground no
+   * school district covers under a placeholder, "School District Not
+   * Defined", GEOID 4299997, whose code ends in 99997 as it does in every
+   * state. In Pennsylvania it is all water: measured 2026-11-10, 0 m2 of land
+   * and 1,950.9 km2 of water, which is Pennsylvania's part of Lake Erie. So
+   * the query answers it as nothing, as the municipality layer answers the
+   * lake's "County subdivisions not defined" record, and the empty note says
+   * it is the lake, rather than a card naming a district that does not exist.
+   *
    * NO OFFICEHOLDER YET. Each district's board of school directors is
    * elected, and no statewide list of them has been read for this app; the
    * card names the district only. Recorded as gap pa-school-board-members.
@@ -16006,21 +16090,51 @@ function initPennsylvaniaExplorer() {
   var loadSchoolDistrictsUnified = tigerStatewideLoader(
     TIGERWEB_SERVICES + "School/MapServer", 0,
     "GEOID,NAME,STATE", "school districts");
+  // The Census's "School District Not Defined" record (see above).
+  function paSchoolPlaceholder(props) {
+    var geoid = findPropCI(props, ["geoid"]);
+    return geoid != null && /^\d{2}99997$/.test(String(geoid));
+  }
 
-  registerPolygonLayer({
+  registerLayer({
     id: "school-district-unified",
     tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District",
-    loader: loadSchoolDistrictsUnified,
-    emptyNote: "No school district is drawn at this point. Every part of " +
-      "Pennsylvania's land is in one, so this point is most likely on water.",
-    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 },
-    fields: [
-      { name: "name", label: "District", keys: ["name"], primary: true },
-      { name: "geoid", label: "GEOID", keys: ["geoid"] }
-    ],
-    compact: true, compactMetaField: "geoid" // 4b name-only card
+    emptyNote: "No school district here. Every part of Pennsylvania's land " +
+      "is in one, so this point is on water: the Census files Pennsylvania's " +
+      "part of Lake Erie under a placeholder named School District Not " +
+      "Defined, which is not a district.",
+    overlay: {
+      load: loadSchoolDistrictsUnified,
+      style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      var props = feature.properties || {};
+      if (paSchoolPlaceholder(props)) return null;
+      var name = findPropCI(props, ["name"]);
+      return (name == null || name === "") ? null : String(name);
+    },
+    query: function (point, seq) {
+      // point-first (queryFeatureAt): the tile under the point, or one
+      // district polygon instead of the statewide download
+      return queryFeatureAt(loadSchoolDistrictsUnified, point).then(function (feature) {
+        if (!feature) return null;
+        var props = feature.properties || {};
+        if (paSchoolPlaceholder(props)) return null; // the lake — the engine renders emptyNote
+        return { seq: seq, name: findPropCI(props, ["name"]), geoid: findPropCI(props, ["geoid"]) };
+      });
+    },
+    render: function (result) {
+      var rows = [{ label: "District", value: result.name ? String(result.name) : "Unknown", primary: true }];
+      if (result.geoid) rows.push({ label: "GEOID", value: String(result.geoid) });
+      return renderFieldStack(rows);
+    },
+    // 4b name-only card (docs/CARD_RENDER_API.md): the header carries the
+    // district's name, the same value the hover shows, and its GEOID
+    compact: true,
+    cardIdentifier: function (result) { return result.name ? String(result.name) : "Unknown"; },
+    cardMeta: function (result) { return result.geoid ? "GEOID " + String(result.geoid) : null; }
   });
 
   /* ---------- 7. ZIP Code — TIGERweb ZCTAs ----------
