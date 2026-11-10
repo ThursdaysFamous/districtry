@@ -798,6 +798,8 @@ table.results-table .lead {
 }
 .race-note { font-size: 14px; }
 .race-map { font-size: 14.5px; margin: 0 0 18px; }
+/* a box at least 24px tall (WCAG 2.5.8): the next race's summary sits close below */
+.race-map a { display: inline-block; padding: 4px 0; }
 .results-counties { columns: 2 16em; padding-left: 20px; }
 .results-counties li { margin: 0 0 6px; break-inside: avoid; line-height: 28px; }
 .results-counties span { color: var(--slate); font-size: 13.5px; margin-left: 4px; }
@@ -825,7 +827,7 @@ def related_rows(tag, landing):
 # -- the county sections
 
 COUNTY_CSS = """/* The results section (scripts/build_results_pages.py). */
-.results { margin: 30px 0 0; padding: 16px 0 0; border-top: 1px solid var(--border); }
+.results { margin: 30px 0 0; padding: 16px 0 16px; border-top: 1px solid var(--border); }
 .results h2 {
   font: var(--font-heading-weight, 700) 19px/1.2 var(--font-heading);
   margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.02em;
@@ -843,7 +845,8 @@ COUNTY_CSS = """/* The results section (scripts/build_results_pages.py). */
 .results .n { text-align: right; white-space: nowrap; }
 .results .lead { display: inline-block; margin-left: 6px; font-size: 12px; font-weight: 600; color: var(--brand-700); }
 .results .race-note { font-size: 13px; color: var(--muted); margin: 4px 0 4px; }
-.results .race-map { font-size: 13.5px; line-height: 28px; margin: 0 0 8px; }"""
+.results .race-map { font-size: 13.5px; line-height: 28px; margin: 0 0 8px; }
+.results .race-map a { display: inline-block; padding: 4px 0; line-height: 18px; }"""
 
 
 def county_race(res, c, county, lead_word):
