@@ -78,6 +78,7 @@ python3 scripts/validate_tribal_join.py --selftest         # the join gate catch
 python3 scripts/validate_tribal_join.py --check            # no entry may name a government the Bureau does not carry
 python3 scripts/build_tribal_areas.py --selftest            # the join and population logic on fixtures
 python3 scripts/build_tribal_areas.py --check               # shipped tribal boundaries vs the join table, and each councils file vs data/tribal-councils.json, offline
+python3 scripts/build_statewide_officials.py --check        # each app's statewide officials roster vs its seed: offices, names, dates, two senators; offline
 python3 scripts/tribal_council_scraper.py --selftest        # the council page reader and its name checks, on fixtures
 python3 scripts/build_brand_tokens.py --check
 python3 scripts/validate_contrast.py                     # text vs ground, both tiers

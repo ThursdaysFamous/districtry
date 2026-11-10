@@ -899,4 +899,5 @@
       if (state.layersOn[mod.id]) runLayerQuery(mod);
     });
     dstSyncNoLayerHint(); // a new point with nothing on (engine first-use)
+    syncStatewideOfficials(); // the statewide officials line (engine statewide-officials)
   }

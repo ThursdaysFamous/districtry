@@ -1,0 +1,42 @@
+{
+ "state": "Illinois",
+ "usps": "IL",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "JB Pritzker",
+   "url": "https://gov.illinois.gov/",
+   "match": [
+    "J.B. Pritzker"
+   ]
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Juliana Stratton",
+   "url": "https://ltgov.illinois.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Kwame Raoul",
+   "url": "https://illinoisattorneygeneral.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "url": "https://www.ilsos.gov/",
+   "unnamed": "The office's websites (ilsos.gov and cyberdriveillinois.com) refuse automated readers in robots.txt, so this app does not read a name from them."
+  },
+  {
+   "office": "Comptroller",
+   "name": "Susana Mendoza",
+   "url": "https://illinoiscomptroller.gov/"
+  },
+  {
+   "office": "Treasurer",
+   "name": "Michael Frerichs",
+   "url": "https://illinoistreasurer.gov/",
+   "match": [
+    "Mike Frerichs"
+   ]
+  }
+ ]
+}

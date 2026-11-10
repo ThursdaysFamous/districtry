@@ -144,6 +144,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "statewide-officials.json": 5,  # The officers Iowa elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from ia/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
     "congress-roster.json": 4,  # U.S. House roster, refreshed weekly by update-ia-congress-roster.yml.
     "ia-senate-members.json": 45,  # Senate roster from Open States ia.csv + legis.iowa.gov enrichment, refreshed weekly by update-ia-legislature-roster.yml; floor tolerates transient vacancies (50 seats).
     "ia-house-members.json": 93,  # House roster from Open States ia.csv + legis.iowa.gov enrichment, refreshed weekly by update-ia-legislature-roster.yml; floor tolerates transient vacancies (100 seats).

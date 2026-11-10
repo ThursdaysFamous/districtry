@@ -17,7 +17,7 @@
   "robots-unreadable": 4,
   "stack-not-token": 9,
   "tls-chain": 1,
-  "token-ok": 255,
+  "token-ok": 256,
   "token-refused": 4,
   "token-refused-and-stack": 41
  },
@@ -7390,6 +7390,25 @@
     "scripts/il_county_commissioners_scraper.py": "both"
    },
    "measured": "2026-10-15"
+  },
+  "www.senate.gov": {
+   "host": "www.senate.gov",
+   "url": "https://www.senate.gov/general/contact_information/senators_cfm.xml",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 52533 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "none (HTTP 200)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 52533 bytes",
+   "callers": {
+    "scripts/build_statewide_officials.py": "both"
+   },
+   "measured": "2026-11-10"
   },
   "www.sfelections.org": {
    "host": "www.sfelections.org",

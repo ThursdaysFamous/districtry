@@ -4887,6 +4887,58 @@ try {
     await context.close();
   }
 
+  // ---- 1x2. The statewide officials line. It is not a layer (Adam,
+  // 2026-11-10: a one-line summary at the top of the results that opens into
+  // the full list), so nothing in the layer checks reaches it: with no layer
+  // on, a selected point inside Illinois shows the line closed, naming the
+  // governor and a count; pressing it opens the full list in place; and a
+  // point outside Illinois shows no line.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}`);
+    await page.waitForSelector("#statewide-strip:not([hidden])", { timeout: 15000 })
+      .catch(() => null);
+    const closed = await page.evaluate(() => {
+      const el = document.getElementById("statewide-strip");
+      const btn = el && el.querySelector(".statewide-strip-toggle");
+      const panel = document.getElementById("statewide-strip-panel");
+      return el && btn && panel ? {
+        shown: !el.hidden,
+        expanded: btn.getAttribute("aria-expanded"),
+        summary: (el.querySelector(".statewide-strip-summary") || {}).textContent || "",
+        panelHidden: panel.hidden,
+        beforeGroups: el.nextElementSibling && (el.nextElementSibling.id === "groups-root"
+          || el.nextElementSibling.id === "no-layer-hint")
+      } : null;
+    });
+    const closedOk = !!closed && closed.shown && closed.expanded === "false"
+      && /^Governor \S.* and \d+ more$/.test(closed.summary) && closed.panelHidden
+      && closed.beforeGroups;
+    check("a point in Illinois shows the statewide officials line, closed, above the layers",
+          closedOk, JSON.stringify(closed));
+    if (closed) {
+      await page.click(".statewide-strip-toggle");
+      const open = await page.evaluate(() => ({
+        expanded: document.querySelector(".statewide-strip-toggle").getAttribute("aria-expanded"),
+        text: document.getElementById("statewide-strip-panel").textContent
+      }));
+      const openOk = open.expanded === "true" && open.text.indexOf("U.S. Senate") !== -1
+        && open.text.indexOf("Elected by the whole state") !== -1;
+      check("pressing the statewide officials line opens the full list in place",
+            openOk, JSON.stringify({ expanded: open.expanded, text: open.text.slice(0, 160) }));
+    }
+    // a point no app covers (Butler County, Ohio, Indiana's uncovered case)
+    // stays in this app and shows no Illinois officials
+    const page2 = await booted(context, `${BASE}#point=39.40000,-84.65000`);
+    await page2.waitForTimeout(3000);
+    const hidden = await page2.evaluate(() => {
+      const el = document.getElementById("statewide-strip");
+      return !el || el.hidden;
+    });
+    check("a point outside Illinois shows no statewide officials line", hidden, String(hidden));
+    await context.close();
+  }
+
   // ---- 1y. Election results: the card, the race menu and the legend. The
   // numbers move daily until the Board certifies, so this asserts what the
   // card and legend SAY against the shipped files, never a count: the

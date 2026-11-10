@@ -1,0 +1,60 @@
+{
+ "state": "South Carolina",
+ "usps": "SC",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Henry McMaster",
+   "url": "https://governor.sc.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Pamela S. Evette",
+   "url": "https://ltgov.sc.gov/",
+   "match": [
+    "Pamela Evette"
+   ],
+   "source": "https://governor.sc.gov/",
+   "note": "ltgov.sc.gov reset every connection, robots.txt included, on 2026-11-10; the Governor's site names her."
+  },
+  {
+   "office": "Attorney General",
+   "name": "Alan Wilson",
+   "url": "https://www.scag.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Mark Hammond",
+   "url": "https://sos.sc.gov/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Curtis M. Loftis, Jr.",
+   "url": "https://treasurer.sc.gov/",
+   "match": [
+    "Curtis Loftis"
+   ]
+  },
+  {
+   "office": "Comptroller General",
+   "name": "Brian J. Gaines",
+   "url": "https://cg.sc.gov/",
+   "match": [
+    "Brian Gaines"
+   ]
+  },
+  {
+   "office": "State Superintendent of Education",
+   "name": "Ellen Weaver",
+   "url": "https://ed.sc.gov/"
+  },
+  {
+   "office": "Commissioner of Agriculture",
+   "name": "Hugh E. Weathers",
+   "url": "https://agriculture.sc.gov/",
+   "match": [
+    "Hugh Weathers"
+   ]
+  }
+ ]
+}

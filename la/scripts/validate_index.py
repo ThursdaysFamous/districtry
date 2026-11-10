@@ -120,6 +120,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "statewide-officials.json": 5,  # The officers Louisiana elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from la/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
     "congress-roster.json": 6,  # U.S. House (LA) roster, refreshed weekly by update-la-congress-roster.yml.
     "la-senate-members.json": 39,  # Louisiana Senate roster from the Senate's own list of senators and their pages, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size; Senate District 14 read vacant on 2026-10-20.
     "la-house-members.json": 105,  # Louisiana House roster on the same terms; House Districts 77 and 92 read vacant on 2026-10-20.
