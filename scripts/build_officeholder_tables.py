@@ -590,7 +590,26 @@ def library_site_boards(data):
     return rows
 
 
+def multi_member_districts(data):
+    """A chamber whose districts each seat more than one member: West
+    Virginia's Senate, two senators per district, as {"seats": 2, "members":
+    [...]}. One row per seat in district order, and a seat the roster lists
+    nobody for is carried as unnamed, so the table never shows a smaller
+    chamber than the one elected."""
+    rows = []
+    for k in sorted(data, key=district_key):
+        rec = data[k] if isinstance(data[k], dict) else {}
+        people = [m for m in rec.get("members") or [] if isinstance(m, dict)]
+        seats = int(rec.get("seats", len(people) or 1))
+        if len(people) > seats:
+            fail("District %s lists %d members for %d seats" % (k, len(people), seats))
+        for person in people + [{}] * (seats - len(people)):
+            rows.append(("District %s" % k, person))
+    return rows
+
+
 ADAPTERS = {
+    "multi_member_districts": multi_member_districts,
     "borough_officials": borough_officials,
     "supreme_justices": supreme_justices,
     "appellate_justices": appellate_justices,
@@ -907,11 +926,12 @@ def legislator_tables():
         if spec:
             out.append(dict(
                 tag=tag, page=spec["file"], worksheet=inst["worksheet"],
-                sections=[dict(roster="data/app/" + ch["roster"],
-                               seat="District", holder=ch["holder"],
-                               office_label="District office",
-                               body="the " + ch["name"], org=ch["name"],
-                               heading="Who represents each %s district" % ch["name"])
+                sections=[dict(dict(roster="data/app/" + ch["roster"],
+                                    seat="District", holder=ch["holder"],
+                                    office_label="District office",
+                                    body="the " + ch["name"], org=ch["name"],
+                                    heading="Who represents each %s district" % ch["name"]),
+                               **({"adapter": ch["adapter"]} if ch.get("adapter") else {}))
                           for ch in spec["chambers"]]))
         cong = inst["congress"]
         out.append(dict(

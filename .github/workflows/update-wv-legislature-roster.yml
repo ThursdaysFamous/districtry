@@ -28,10 +28,10 @@ name: Update West Virginia legislature roster
 # those same files meanwhile errors at the checkout instead of pushing, which
 # is right.
 #
-# WEST VIRGINIA IS DARK, so this job does not regenerate
-# wv/state-legislature.html: build_legislator_pages.py refuses an instance
-# metros.json does not carry, so that page is not built yet. Go-live adds the
-# step in the same change that adds wv to metros.json — wv/WATCH.md has the list.
+# wv/state-legislature.html prints both chambers' members in a dated table,
+# about.html counts them and sitemap.xml dates the page, so the branch cut
+# regenerates all three and stages them with the rosters; without that the
+# smoke gate's build_officeholder_tables.py --check fails this PR.
 
 on:
   schedule:
@@ -98,7 +98,10 @@ jobs:
           # files ride across the checkout as working-tree changes.
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add wv/data/app/wv-senate-members.json wv/data/app/wv-house-members.json
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add wv/data/app/wv-senate-members.json wv/data/app/wv-house-members.json wv/state-legislature.html about.html sitemap.xml
           git commit -m "Update West Virginia Senate + House of Delegates rosters from the Legislature"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

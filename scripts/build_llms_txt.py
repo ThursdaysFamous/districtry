@@ -114,6 +114,13 @@ CONTACT_NOTE = {
     # contact details yet (gap va-local-official-contacts).
     "va": "with the election, or the county's or city's own page, that names "
           "each one, and no contact details yet",
+    # West Virginia's take their names from the Secretary of State's directory
+    # of county officials, printed once a year, and carry a commissioner's
+    # telephone and e-mail where the directory prints them in that
+    # commissioner's own entry, and the commission's office where two or more
+    # commissioners give the same one.
+    "wv": "with the telephone and e-mail the Secretary of State's directory "
+          "prints beside each commissioner, and the commission's office",
 }
 DEFAULT_CONTACT_NOTE = "with whatever contact details that county publishes"
 # The unit each instance's per-county pages are one per, where it is not a

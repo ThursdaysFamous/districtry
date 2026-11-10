@@ -64,7 +64,7 @@ STATE_FIPS = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
               "mn": "27", "ky": "21", "ny": "36", "in": "18",
               "nc": "37", "ok": "40", "sc": "45", "tn": "47",
               "ar": "05", "ms": "28", "la": "22", "mo": "29",
-              "va": "51"}
+              "va": "51", "wv": "54"}
 
 # Is a county subdivision the GENERAL-PURPOSE government for residents outside
 # incorporated places in this state? A fact of that state's law, recorded with
@@ -125,6 +125,13 @@ SUBDIVISION_IS_GENERAL_PURPOSE = {
     # at its go-live; None while no active subdivision reaches the floor,
     # which the build checks.
     "va": None,
+    # West Virginia's county subdivisions are its counties' magisterial
+    # districts: no two county commissioners may live in the same one, and a
+    # magisterial district elects nobody of its own and governs nobody (W. Va.
+    # Const. art. IX, sec. 10, as wv/metro-worksheet.json records). Added at
+    # its go-live, 2026-11-10; None while no active subdivision reaches the
+    # floor, which the build checks.
+    "wv": None,
 }
 
 

@@ -81,6 +81,7 @@ IDS = {
     "Q1588": "Louisiana",
     "Q1581": "Missouri",
     "Q1370": "Virginia",
+    "Q1371": "West Virginia",
 }
 
 # metros.json tag -> the jurisdiction item that instance answers for. STATED,
@@ -189,12 +190,18 @@ IDS = {
 # P300 = "US-VA", P131 = Q30, and its own P47 carries Q1454, Q1509 and Q1603,
 # which match this table's nc, tn and ky entries. Its English label is the
 # bare string "Virginia".
+#
+# wv was added at its go-live by the same route: Q1371 is in Q1370's own P47.
+# Read from Special:EntityData on 2026-11-10, P31 = Q35657, P300 = "US-WV",
+# P131 = Q30, and its own P47 carries Q1370 and Q1603, which match this
+# table's va and ky entries. Its English label is the bare string "West
+# Virginia".
 JURISDICTION = {
     "il": "Q1204", "wi": "Q1537", "ia": "Q1546", "mi": "Q1166",
     "ny": "Q1384", "ca": "Q62", "mn": "Q1527", "ky": "Q1603",
     "in": "Q1415", "nc": "Q1454", "ok": "Q1649", "sc": "Q1456",
     "tn": "Q1509", "ar": "Q1612", "ms": "Q1494", "la": "Q1588",
-    "mo": "Q1581", "va": "Q1370",
+    "mo": "Q1581", "va": "Q1370", "wv": "Q1371",
 }
 
 
