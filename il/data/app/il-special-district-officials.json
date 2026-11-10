@@ -1597,7 +1597,7 @@
         },
         "CLYDE PARK DISTRICT": {
           "comptrollerCode": "016/160/12",
-          "filedFor": "2024",
+          "filedFor": "2025",
           "heads": [
             {
               "name": "Anthony Martinucci",
@@ -1613,7 +1613,7 @@
           "office": {
             "address": "1909 S Laramie Ave",
             "city": "Cicero IL 60804",
-            "email": "amartinucci@clydeparkdistr.org",
+            "email": "amartinucci@clydeparkdist.org",
             "phone": "(708) 652-3545"
           }
         },
@@ -1826,7 +1826,7 @@
             }
           ],
           "comptrollerCode": "016/240/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "4621 South Wenonah Ave",
             "city": "Forest View IL 60402",
@@ -3112,7 +3112,7 @@
         },
         "WINNETKA PARK DISTRICT": {
           "comptrollerCode": "016/840/12",
-          "filedFor": "2024",
+          "filedFor": "2025",
           "heads": [
             {
               "email": "snazzal@winpark.org",
@@ -3120,13 +3120,13 @@
               "role": "Director"
             },
             {
-              "email": "jcrocker@winpark.org",
-              "name": "James Crocker",
+              "email": "mharper@winpark.org",
+              "name": "Mileak Harper",
               "role": "Superintendent"
             }
           ],
           "office": {
-            "address": "540 Hibbard Rd",
+            "address": "540 Hibbard Road",
             "city": "Winnetka IL 60093",
             "phone": "(847) 501-2040"
           }
@@ -4359,7 +4359,7 @@
         },
         "Bloomingdale": {
           "comptrollerCode": "022/030/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "email": "Joe@bloomingdaleparks.org",
@@ -4877,12 +4877,12 @@
           "board": [
             {
               "email": "INICIS@COMCAST.NET",
-              "name": "Steve Incis",
+              "name": "Steve Inicis",
               "role": "President"
             }
           ],
           "comptrollerCode": "022/200/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "email": "HRAJA1@HOTMAIL.COM",
@@ -5269,7 +5269,7 @@
             }
           ],
           "comptrollerCode": "026/030/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Fayette",
           "office": {}
         },
@@ -5693,21 +5693,21 @@
             {
               "email": "Sandy.Decker9@gmail.com",
               "name": "Larry Decker",
-              "phone": "(815) 373-2636",
-              "role": "President"
+              "role": "Treasurer"
             },
             {
               "email": "classen26@gmail.com",
               "name": "Mark Claussen",
-              "phone": "(815) 383-2636",
+              "phone": "(815) 373-2636",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "038/090/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "PO Box 1",
-            "city": "Danforth IL 60930"
+            "city": "Danforth IL 60930",
+            "phone": "(815) 383-2636"
           }
         },
         "Gilman": {
@@ -7171,7 +7171,7 @@
         },
         "Vernon Hills Park District": {
           "comptrollerCode": "049/097/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "email": "mattl@vhparkdistrict.org",
@@ -7183,7 +7183,7 @@
               "email": "jessicam@vhparkdistrict.org",
               "name": "Jessica Mitchell",
               "phone": "(847) 996-6934",
-              "role": "Superintendent"
+              "role": "Director"
             }
           ],
           "office": {
@@ -7912,6 +7912,19 @@
         }
       },
       "park": {
+        "Blue Mound": {
+          "board": [
+            {
+              "email": "reedracing@hotmail.com",
+              "name": "Alice Reed",
+              "phone": "(217) 692-2774",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "055/025/12",
+          "filedFor": "2026",
+          "office": {}
+        },
         "Decatur": {
           "comptrollerCode": "055/010/12",
           "filedFor": "2025",
@@ -8963,14 +8976,14 @@
               "role": "President"
             },
             {
-              "email": "trustees@rcfpd.com",
+              "email": "Trustees@rcfpd.com",
               "name": "Denise Caldwell",
               "phone": "(309) 721-6908",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "081/130/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         },
         "REYNOLDS FPD": {
@@ -9320,20 +9333,22 @@
         "NEW BERLIN FPD": {
           "board": [
             {
-              "email": "nbigfire6001@gmail.com",
-              "name": "Glenn Braker",
-              "phone": "(217) 306-6192",
-              "role": "President"
-            },
-            {
-              "email": "Tberry14@hotmail.com",
+              "email": "TBerry14@hotmail.com",
               "name": "Timothy Berry",
               "phone": "(217) 899-5849",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "083/120/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
+          "heads": [
+            {
+              "email": "markwitt55@gmail.com",
+              "name": "Mark Witt",
+              "phone": "(217) 299-1393",
+              "role": "C.E.O."
+            }
+          ],
           "office": {}
         },
         "NORTH SIDE FPD": {
@@ -10456,7 +10471,7 @@
             }
           ],
           "comptrollerCode": "089/050/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "600 Church Street",
             "city": "German Valley IL 61039",
@@ -10777,21 +10792,22 @@
         "Prophetstown Fire": {
           "board": [
             {
-              "email": "ptownfire@mediacombb.net",
-              "name": "James THOMPSON",
+              "email": "t.wadee22@gmail.com",
+              "name": "Tony Wade",
+              "phone": "(815) 537-2093",
               "role": "President"
             },
             {
               "email": "k.crady@mchsi.com",
-              "name": "Keith Crady",
+              "name": "keith Crady",
               "role": "Treasurer"
             }
           ],
           "comptrollerCode": "098/040/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "104 2nd St",
-            "city": "PROPHETSTOWN IL 61277",
+            "city": "Prophetstown IL 61277",
             "phone": "(815) 537-2215"
           }
         },
@@ -10938,7 +10954,7 @@
             }
           ],
           "comptrollerCode": "098/020/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "email": "ptownpark@gmail.com",
@@ -10996,7 +11012,7 @@
       }
     }
   },
-  "generated": "2026-11-02T22:04:46Z",
+  "generated": "2026-11-09T22:36:58Z",
   "mailGivenForTwo": {
     "18532bdb20a6f776": [
       "4f2cbfb3f059084a",
