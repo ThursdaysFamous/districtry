@@ -78,6 +78,7 @@ BUILDERS = (
     "ga/scripts/build_ga_legislature_roster.py",
     "va/scripts/build_va_legislature_roster.py",
     "wv/scripts/build_wv_legislature_roster.py",
+    "pa/scripts/build_pa_legislature_roster.py",
 )
 
 

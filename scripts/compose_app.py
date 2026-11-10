@@ -77,6 +77,7 @@ INSTANCES = {
     "ga": ["ga/index.html", "ga/sw.js"],
     "va": ["va/index.html", "va/sw.js"],
     "wv": ["wv/index.html", "wv/sw.js"],
+    "pa": ["pa/index.html", "pa/sw.js"],
 }
 
 # The sub-pages — every published page that is not the app. They compose the

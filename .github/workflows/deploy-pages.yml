@@ -172,6 +172,10 @@ jobs:
             # West Virginia arrives dark the same way, with no wv entry in
             # metros.json until the operator's word.
             'wv/**'
+            # Pennsylvania, the first of the state-level launch's batch 1,
+            # arrives dark the same way; the batch goes live together on the
+            # operator's word.
+            'pa/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full

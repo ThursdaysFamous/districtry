@@ -70,7 +70,8 @@ in the researched-but-unbuilt backlog.
   "missouri": ["us-house", "mo-senate", "county", "mo-house", "county-commissioner", "school-district-unified", "school-district-elementary", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"],
   "georgia": ["us-house", "ga-senate", "county", "ga-house", "ga-superior-court", "school-district-unified", "county-subdivision", "county-commissioner", "school-board-district", "zip-code", "voting-precinct", "municipality", "police-station", "fire-station", "post-office"],
   "virginia": ["us-house", "va-senate", "va-house", "county", "school-district-unified", "school-board-district", "county-subdivision", "supervisor-district", "zip-code", "voting-precinct", "election-results", "municipality", "school-district-elementary", "tribal-government", "police-station", "fire-station", "post-office"],
-  "westvirginia": ["us-house", "wv-senate", "county", "school-district-unified", "wv-house", "county-subdivision", "zip-code", "municipality", "city-ward", "police-station", "fire-station", "post-office"]
+  "westvirginia": ["us-house", "wv-senate", "county", "school-district-unified", "wv-house", "county-subdivision", "zip-code", "municipality", "city-ward", "police-station", "fire-station", "post-office"],
+  "pennsylvania": ["us-house", "pa-senate", "county", "pa-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -4050,6 +4051,45 @@ trusted.
             "why": "The state's precinct map was last changed four years ago, and it matches the counties' own spring election results in only 29 of the 55 counties, so the rest may be out of date.",
             "wanted": "Each county's current precinct map as a map file, or a statewide precinct map that the state keeps current.",
             "blocker": "From the research for this instance's plan (2026-10-21): the WV GIS Technical Center's map service (services.wvgis.wvu.edu, folder Boundaries/WV_Election_Layers, robots.txt 404, no licence stated) carries layer 3, 'Precinct 2026', 1,646 polygons across all 55 counties, every last_edited_date between 2022-09-27 and 2022-10-03. Its precinct count per county was compared with the number of precincts reporting in each county's results of the May 2026 primary: 29 counties equal, 14 differ (among them Ohio 35 against 41, Putnam 45 against 39, Mingo 28 against 24, Wood 69 against 72 and Harrison 65 against 63) and 12 list none. W. Va. Code 3-1-5, as amended in 2022, has the Secretary of State post each county's precinct and magisterial district maps, according to the plan's research; no such maps were found on the Secretary of State's election pages. The same service's Applications/WV_Election folder holds a layer of individual voter locations, which is never read by any builder, probe or agent. ADAM'S ANSWER of 2026-10-29 to the plan: draw precincts only in the 29 counties whose current map is confirmed, as its own change, hidden in the other 26. NOT YET ASKED."
+      }
+  ],
+  "pennsylvania": [
+      {
+            "id": "pa-county-officials",
+            "concept": "County government",
+            "area": "Pennsylvania — all 67 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners, council, executive or other elected officers. The card says so rather than leave the office looking empty.",
+            "why": "No statewide list of Pennsylvania's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners or council and its other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-10 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is pa/index.html's own County block: most counties elect three commissioners by the whole county, a home rule county may elect a council and an executive instead, and Philadelphia's county government is the city's, which its card states. The boundary is TIGERweb State_County for STATE='42', 67 counties, shipped as pa/data/app/state-counties.json. ROUTES NOT YET READ, government publishers first: each county's own website; and a statewide directory, if a state office keeps one. The County Commissioners Association of Pennsylvania is an association of the counties rather than a government, so it comes after any government list and its terms would be read before it is used. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "pa-municipal-officeholders",
+            "concept": "City, borough or township government",
+            "area": "Pennsylvania",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City, Borough or Township card names the place you picked and what kind of municipality it is, and not its mayor, council, commissioners or supervisors.",
+            "why": "Pennsylvania has more than two thousand municipalities, and no statewide list of their elected officials has been read for this app.",
+            "wanted": "One statewide list of each municipality's elected officials, or a city's, borough's or township's own published list of them.",
+            "blocker": "Measured 2026-11-10 against TIGERweb's county subdivisions (Places_CouSub_ConCity_SubMCD layer 1) for STATE='42': 2,568 records, 1,544 townships, 960 borough pieces, 56 city pieces, 6 home rule municipalities and the town of Bloomsburg, plus Pennsylvania's part of Lake Erie filed as 'County subdivisions not defined' (LSADC 00). A city or borough crossing a county line is one record per county. The layer carries a name, a code, a legal description and a functional status (Cold Spring township in Lebanon County reads I, inactive) and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: the Department of Community and Economic Development's municipal statistics, if they name officials; and each municipality's own website, largest first. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "pa-school-board-members",
+            "concept": "School board",
+            "area": "Pennsylvania",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No statewide list of Pennsylvania's school board members has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-10 against TIGERweb's school districts (School MapServer) for STATE='42': 501 unified districts on layer 0 and none on the elementary or secondary layers (1 and 2), so the layer is one tiling, shipped as a tile archive. No board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's own directories, which were not checked for board members; and each district's own website. The Pennsylvania School Boards Association is a membership association rather than a government. NOT YET ASKED, and no ask is drafted."
       }
   ]
 }

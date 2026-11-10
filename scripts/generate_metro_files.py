@@ -1176,6 +1176,7 @@ INSTANCES = {
     "ga":  {"app": "ga",  "scripts": "ga/scripts",  "docs": "ga",  "worksheet": "ga/metro-worksheet.json"},
     "va":  {"app": "va",  "scripts": "va/scripts",  "docs": "va",  "worksheet": "va/metro-worksheet.json"},
     "wv":  {"app": "wv",  "scripts": "wv/scripts",  "docs": "wv",  "worksheet": "wv/metro-worksheet.json"},
+    "pa":  {"app": "pa",  "scripts": "pa/scripts",  "docs": "pa",  "worksheet": "pa/metro-worksheet.json"},
 }
 
 

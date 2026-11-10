@@ -187,6 +187,10 @@ INSTANCES = {
            "bbox": (-82.65, 37.19, -77.71, 40.65),
            "maps": [("congress-districts.json", 2, 0.001, 4), ("wv-senate-districts.json", 17, 0.05, 4),
                     ("wv-house-districts.json", 100, 0.05, 4)]},
+    "pa": {"name": "Pennsylvania", "state": "42", "total": 13002700, "counties": 67,
+           "bbox": (-80.53, 39.71, -74.68, 42.52),
+           "maps": [("congress-districts.json", 17, 0.0005), ("pa-senate-districts.json", 50, 0.045),
+                    ("pa-house-districts.json", 203, 0.055)]},
 }
 def fetch(url, params):
     q = url + "/query?" + urllib.parse.urlencode(params)
