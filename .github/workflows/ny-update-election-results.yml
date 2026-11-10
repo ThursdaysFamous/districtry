@@ -134,7 +134,13 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add -A ny/data/app/election-results.json ny/data/app/election-results
+          # The results pages read this file, so they are rebuilt on main's tip
+          # with it and ride in the same pull request, with the sitemap whose
+          # dates they move (scripts/build_results_pages.py fails a results
+          # workflow that skips this).
+          python3 scripts/build_results_pages.py
+          python3 scripts/build_sitemap.py
+          git add -A ny/data/app/election-results.json ny/data/app/election-results ny/election-results.html sitemap.xml
           git commit -m "Update New York City election results from the Board of Elections"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

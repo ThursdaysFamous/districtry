@@ -238,7 +238,7 @@ def subpage_links(tag):
 
 
 def shell(app_name, title, subtitle, lede, sections, related,
-          preserved, themeboot, mark, tag):
+          preserved, themeboot, mark, tag, extra_css=""):
     esc = html.escape
     parts = []
     # EVERY MARKER ON ITS OWN LINE. compose_app.py anchors its fence pattern to
@@ -254,6 +254,10 @@ def shell(app_name, title, subtitle, lede, sections, related,
         if body:
             parts.append(body + "\n")
         parts.append(marker(kind, name, True, style) + "\n")
+    # A page's own few rules, after the shared ones so they can refine them.
+    # Empty for every page but the results pages, which stay byte-identical.
+    if extra_css:
+        parts.append(extra_css)
     parts.append("</style>\n")
     parts.append(themeboot)
     # The Play app block, its own element after the theme script: it hides the
