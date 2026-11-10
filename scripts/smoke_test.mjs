@@ -4903,6 +4903,16 @@ try {
     const onBallot = part.precincts[key].contests.map((r) => String(r[0]));
     const multi = idx.contests.find((c) => c.multiple && onBallot.includes(String(c.id)));
     const context = await browser.newContext({ serviceWorkers: "block" });
+    // The race totals over a district below need Chicago's whole precinct set,
+    // which the app reads from the city's data portal (i8fv-xe4b, about 5 MB).
+    // When the portal is down or slow the app shows no totals, which is right,
+    // and the check below says it skipped rather than failing on the portal's
+    // schedule (it failed that way on main on 2026-11-06 and 2026-11-09).
+    const precinctSet = { ok: false };
+    context.on("requestfinished", (req) => {
+      if (!/i8fv-xe4b/.test(req.url())) return;
+      req.response().then((r) => { if (r && r.ok()) precinctSet.ok = true; }, () => {});
+    });
     const page = await booted(context, `${BASE}#point=41.96660,-87.67850&layers=election-results`);
     await page.waitForFunction(() => {
       const c = document.getElementById("card-election-results");
@@ -5020,8 +5030,13 @@ try {
     // the picked race added up over the school board district at the point:
     // its own table under the precinct's, whose votes sum to the total its
     // note states, and that total holds at least this precinct's own votes
-    await page.waitForFunction(() => document.querySelector("#card-election-results .election-area .election-table"),
-      null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+    const areaShown = () => page.waitForFunction(() => document.querySelector("#card-election-results .election-area .election-table"),
+      null, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
+    if (!(await areaShown()) && !precinctSet.ok) {
+      // give a slow portal more time to finish the set before judging the card
+      for (let i = 0; i < 30 && !precinctSet.ok; i++) await page.waitForTimeout(1000);
+      if (precinctSet.ok) await areaShown();
+    }
     const area = await page.evaluate(() => {
       const sec = document.querySelector("#card-election-results .election-area");
       const num = (t) => Number(String(t).replace(/[^0-9]/g, "")) || 0;
@@ -5038,7 +5053,9 @@ try {
           .reduce((a, td) => a + num(td.textContent), 0),
       };
     });
-    check("the Election Results card adds the picked race up over the selected school board district, in a closed section",
+    if (!area && !precinctSet.ok) {
+      console.log("  SKIP  race totals over the school board district — Chicago's data portal did not send the precinct set (i8fv-xe4b)");
+    } else check("the Election Results card adds the picked race up over the selected school board district, in a closed section",
           !!area && area.closed && /^Race totals for District \d+[ab] \(.+\)/.test(area.summary) &&
           /^.+, all of District \d+[ab]$/.test(area.caption) && area.precincts > 1 &&
           area.votes === area.stated && area.stated > area.own && area.own > 0,
