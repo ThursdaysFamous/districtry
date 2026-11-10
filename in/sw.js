@@ -75,6 +75,40 @@ const ROSTER_URLS = [
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */
 
+/* ==== ENGINE:BEGIN files-origin ==== */
+  /* ---------- where the large files are served from ----------
+   * The vector-tile archives (data/app/tiles/) and the Census block
+   * populations (data/app/population/) are most of what this site publishes,
+   * measured 2026-11-10 at 320 MB of a 747 MB site, and GitHub Pages stops
+   * publishing a site past 1 GB. So on the live site they can be read from a
+   * second host that keeps the same paths (Adam's choice of 2026-11-10: the
+   * pages stay on GitHub and these files move to Cloudflare R2, which answers
+   * the byte ranges a tile archive is read by; Cloudflare's page hosting
+   * answers a range with the whole file, measured that day).
+   *
+   * filesUrl(path, base) is the address to fetch one of those files from.
+   * FILES_ORIGIN null reads every file from this site, as every page did
+   * before the move. A URL there reads the two folders from that host, at
+   * the path they have on this site, and only while the page itself is on
+   * FILES_SITE_HOST, so a copy served on localhost, in a test or on a preview
+   * reads its own files and never the live host's. Anything outside the two
+   * folders is left on this site. This block is ONE copy spliced into every
+   * app's index.html and sw.js (engine/shared/), so the page and its service
+   * worker cannot disagree about where a file lives.
+   * ------------------------------------------------------------------------ */
+  var FILES_ORIGIN = null;
+  var FILES_SITE_HOST = "districtry.com";
+  var FILES_FOLDERS = ["/data/app/tiles/", "/data/app/population/"];
+  function filesUrl(path, base) {
+    var url = new URL(path, base);
+    if (!FILES_ORIGIN || url.origin !== location.origin || location.hostname !== FILES_SITE_HOST) return url.href;
+    for (var i = 0; i < FILES_FOLDERS.length; i++) {
+      if (url.pathname.indexOf(FILES_FOLDERS[i]) !== -1) return FILES_ORIGIN + url.pathname + url.search;
+    }
+    return url.href;
+  }
+/* ==== ENGINE:END files-origin ==== */
+
 /* ==== ENGINE:BEGIN sw-handlers ==== */
 // ONLY THE SHELL IS INSTALLED. Boundary files are cached the first time a
 // layer uses them (cacheOnlyElseNetwork, below) and never before. Until 2026-09-26 the
@@ -244,11 +278,18 @@ function cachedRange(request) {
   });
 }
 
+// One of this app's folders, on this site or on the files host the page reads
+// it from (filesUrl, the files-origin block). Both are asked so the worker
+// keeps answering a page that still reads the folder from this site.
+function underFolder(href, folder) {
+  return href.startsWith(new URL(folder, self.registration.scope).href) ||
+    href.startsWith(filesUrl(folder, self.registration.scope));
+}
+
 self.addEventListener("fetch", (event) => {
   const href = new URL(event.request.url).href;
 
-  if (event.request.headers.has("range") &&
-      href.startsWith(new URL("data/app/tiles/", self.registration.scope).href)) {
+  if (event.request.headers.has("range") && underFolder(href, "data/app/tiles/")) {
     event.respondWith(cachedRange(event.request));
     return;
   }
@@ -321,7 +362,7 @@ self.addEventListener("fetch", (event) => {
   // visitor through a CACHE_NAME bump, which check_cache_version.py enforces
   // for these files as it does for fonts. An instance that ships no such
   // folder never requests anything under it.
-  if (href.startsWith(new URL("data/app/population/", self.registration.scope).href)) {
+  if (underFolder(href, "data/app/population/")) {
     event.respondWith(cacheOnlyElseNetwork(event.request));
     return;
   }

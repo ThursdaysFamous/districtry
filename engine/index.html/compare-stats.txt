@@ -64,13 +64,18 @@
   var statsPopFiles = {};
   var statsPopGround = null;
 
+  // The population index's address: on the live site it can be on the files
+  // host (the files-origin block), and the county files beside it go with it.
+  function statsPopIndexUrl() {
+    return filesUrl(POPULATION_INDEX_URL, document.baseURI);
+  }
   function statsLoadPopulationIndex() {
     if (typeof POPULATION_INDEX_URL === "undefined") return Promise.resolve(null);
     if (!statsPopIndex) {
-      statsPopIndex = fetchJSONWithRetry(POPULATION_INDEX_URL, {}, 2).then(function (index) {
+      statsPopIndex = fetchJSONWithRetry(statsPopIndexUrl(), {}, 2).then(function (index) {
         // an index may name the ground its blocks cover (see statsOutsideShare)
         if (!index || !index.ground) return index;
-        var base = POPULATION_INDEX_URL.replace(/[^\/]*$/, "");
+        var base = statsPopIndexUrl().replace(/[^\/]*$/, "");
         return fetchJSONWithRetry(base + index.ground, {}, 2).then(function (g) {
           statsPopGround = g && g.type ? g : null;
           return index;
@@ -88,7 +93,7 @@
   function statsLoadPopulation(box) {
     return statsLoadPopulationIndex().then(function (index) {
       if (!index || !index.counties) return null;
-      var base = POPULATION_INDEX_URL.replace(/[^\/]*$/, "");
+      var base = statsPopIndexUrl().replace(/[^\/]*$/, "");
       var wanted = [];
       Object.keys(index.counties).forEach(function (fips) {
         var c = index.counties[fips], b = c.bbox;

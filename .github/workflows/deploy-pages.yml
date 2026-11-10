@@ -282,6 +282,33 @@ jobs:
           done
           echo "Published tree:" && find _site -type f | sort
 
+      # THE LARGE FILES' SECOND HOME (Adam, 2026-11-10, hosting choice A). The
+      # tile archives and the Census block populations were 320 MB of a 747 MB
+      # site that day, and GitHub Pages stops publishing past 1 GB, so they are
+      # also copied to the Cloudflare R2 bucket behind files.districtry.com, at
+      # the same paths. The copy is made from _site, so the dark instances and
+      # the build inputs the assemble step leaves out never reach that host
+      # either. It changes only what differs (scripts/sync_r2_files.py compares
+      # MD5s) and lists the bucket again afterwards to prove it.
+      #
+      # FOR NOW IT IS A COPY AND NOTHING READS IT: FILES_ORIGIN in
+      # engine/shared/files-origin.txt is still null, so every map reads these
+      # files from GitHub Pages as before, and a failed copy must not stop a
+      # publish (continue-on-error). With no R2 secrets set the script says so
+      # and does nothing. The change that points the maps at files.districtry.com
+      # also makes this step required and drops the two folders from _site.
+      # main only, because the assemble job also runs on branch dispatches and
+      # a branch's files must never replace the live ones.
+      - name: Copy tile archives and population files to Cloudflare R2
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        timeout-minutes: 15
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: python3 scripts/sync_r2_files.py --tree _site
+
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3

@@ -166,11 +166,18 @@ function cachedRange(request) {
   });
 }
 
+// One of this app's folders, on this site or on the files host the page reads
+// it from (filesUrl, the files-origin block). Both are asked so the worker
+// keeps answering a page that still reads the folder from this site.
+function underFolder(href, folder) {
+  return href.startsWith(new URL(folder, self.registration.scope).href) ||
+    href.startsWith(filesUrl(folder, self.registration.scope));
+}
+
 self.addEventListener("fetch", (event) => {
   const href = new URL(event.request.url).href;
 
-  if (event.request.headers.has("range") &&
-      href.startsWith(new URL("data/app/tiles/", self.registration.scope).href)) {
+  if (event.request.headers.has("range") && underFolder(href, "data/app/tiles/")) {
     event.respondWith(cachedRange(event.request));
     return;
   }
@@ -243,7 +250,7 @@ self.addEventListener("fetch", (event) => {
   // visitor through a CACHE_NAME bump, which check_cache_version.py enforces
   // for these files as it does for fonts. An instance that ships no such
   // folder never requests anything under it.
-  if (href.startsWith(new URL("data/app/population/", self.registration.scope).href)) {
+  if (underFolder(href, "data/app/population/")) {
     event.respondWith(cacheOnlyElseNetwork(event.request));
     return;
   }
