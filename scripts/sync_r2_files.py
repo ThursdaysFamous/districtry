@@ -381,13 +381,33 @@ def shipped_origin():
 # first and last bytes) and its population index. It reads only this project's
 # own files on this project's own host.
 
+# This project's own token. Without one urllib sends "Python-urllib/3.x",
+# which Cloudflare's default Browser Integrity Check can refuse outright.
+PROBE_UA = "districtry-files-check/1.0 (+https://districtry.com/)"
+
+
 def _http(method, url, headers, timeout=30):
-    req = urllib.request.Request(url, method=method, headers=headers)
+    req = urllib.request.Request(url, method=method, headers=dict(headers, **{"User-Agent": PROBE_UA}))
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             return resp.status, {k.lower(): v for k, v in resp.headers.items()}, resp.read()
     except urllib.error.HTTPError as e:
         return e.code, {k.lower(): v for k, v in e.headers.items()}, e.read()
+
+
+def _why(h, body):
+    """What answered a refused request, so a red run says whether it was the
+    bucket (an XML error naming a code) or Cloudflare in front of it (an HTML
+    block page, a cf-mitigated header)."""
+    text = re.sub(r"<[^>]+>", " ", (body or b"")[:600].decode("utf-8", "replace"))
+    text = re.sub(r"\s+", " ", text).strip()[:160]
+    parts = ["server: %s" % h.get("server", "?")]
+    for k in ("cf-mitigated", "content-type"):
+        if h.get(k):
+            parts.append("%s: %s" % (k, h[k]))
+    if text:
+        parts.append("body: %s" % text)
+    return " [" + "; ".join(parts) + "]"
 
 
 def _listed(value, name):
@@ -430,7 +450,7 @@ def probe(files_origin, page_origin, tree, live_tags):
     if first_tile:
         url = files_origin + "/" + first_tile
         try:
-            st, h, _ = _http("OPTIONS", url, {"Origin": page_origin,
+            st, h, pbody = _http("OPTIONS", url, {"Origin": page_origin,
                                                "Access-Control-Request-Method": "GET",
                                                "Access-Control-Request-Headers": "range"})
         except (urllib.error.URLError, TimeoutError, ConnectionError, OSError) as e:
@@ -439,7 +459,8 @@ def probe(files_origin, page_origin, tree, live_tags):
         if st is not None:
             checked += 1
             if not 200 <= st < 300:
-                problems.append("the preflight for %s answered %s, not 2xx (is the CORS rule on the bucket?)" % (first_tile, st))
+                problems.append("the preflight for %s answered %s, not 2xx (is the CORS rule on the bucket?)%s"
+                                % (first_tile, st, _why(h, pbody)))
             elif h.get("access-control-allow-origin") not in allowed:
                 problems.append("the preflight for %s does not allow origin %s (Access-Control-Allow-Origin: %r)"
                                 % (first_tile, page_origin, h.get("access-control-allow-origin")))
@@ -458,7 +479,7 @@ def probe(files_origin, page_origin, tree, live_tags):
             checked += 1
             st, h, body = got
             if st != 200:
-                problems.append("%s answered %s, not 200" % (key, st))
+                problems.append("%s answered %s, not 200%s" % (key, st, _why(h, body)))
             elif h.get("access-control-allow-origin") not in allowed:
                 problems.append("%s carries no Access-Control-Allow-Origin for %s (%r)"
                                 % (key, page_origin, h.get("access-control-allow-origin")))
@@ -474,7 +495,9 @@ def probe(files_origin, page_origin, tree, live_tags):
             st, h, body = got
             where = "%s bytes %d-%d" % (key, a, b)
             if st != 206:
-                problems.append("%s answered %s, not 206 (a host that ignores Range sends the whole file)" % (where, st))
+                problems.append("%s answered %s, not 206%s%s" % (
+                    where, st, " (a host that ignores Range sends the whole file)" if st == 200 else "",
+                    "" if st == 200 else _why(h, body)))
             elif h.get("access-control-allow-origin") not in allowed:
                 problems.append("%s carries no Access-Control-Allow-Origin for %s (%r)"
                                 % (where, page_origin, h.get("access-control-allow-origin")))
@@ -518,6 +541,7 @@ def run_probe_against_stand_in():
                     self.send_header("Access-Control-Expose-Headers", "Content-Range, Content-Length, ETag")
 
         def do_OPTIONS(self):
+            assert self.headers.get("User-Agent") == PROBE_UA, self.headers.get("User-Agent")
             self.send_response(204 if mode["fault"] != "no-cors" else 403)
             if mode["fault"] != "no-cors":
                 self.send_header("Access-Control-Allow-Origin", origin)
@@ -534,6 +558,14 @@ def run_probe_against_stand_in():
                 self.end_headers()
                 return
             data = open(path, "rb").read()
+            if mode["fault"] == "blocked":
+                body = b"<html><title>Attention Required</title><body>error code: 1010</body></html>"
+                self.send_response(403)
+                self.send_header("Content-Type", "text/html")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+                return
             if mode["fault"] == "stale":
                 data = b"x" + data[1:]
             m = re.match(r"bytes=(\d+)-(\d+)$", self.headers.get("Range", ""))
@@ -568,7 +600,8 @@ def run_probe_against_stand_in():
             problems, checked = probe(host, origin, d, {"il"})
             assert not problems and checked == 4, (problems, checked)
             for fault, words in (("no-cors", "preflight"), ("no-expose", "expose Content-Range"),
-                                 ("whole", "not 206"), ("stale", "other bytes")):
+                                 ("whole", "not 206"), ("stale", "other bytes"),
+                                 ("blocked", "body: Attention Required error code: 1010")):
                 mode["fault"] = fault
                 problems, _ = probe(host, origin, d, {"il"})
                 assert any(words in p for p in problems), (fault, problems)
@@ -577,7 +610,7 @@ def run_probe_against_stand_in():
             assert any("Access-Control-Allow-Origin" in p for p in problems), problems
         finally:
             server.shutdown()
-    return "a read of the files host against a loopback stand-in, right and four ways wrong"
+    return "a read of the files host against a loopback stand-in, right and five ways wrong"
 
 
 def run_against_stand_in(tree):
