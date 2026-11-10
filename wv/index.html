@@ -16178,6 +16178,7 @@ function initWestVirginiaExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City, Town or Village",
     // the honest words for "outside every incorporated place in West
@@ -16465,6 +16466,7 @@ function initWestVirginiaExplorer() {
 
   registerPolygonLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "School District",
     loader: loadSchoolDistrictsUnified,
@@ -16553,6 +16555,7 @@ function initWestVirginiaExplorer() {
 
   registerPolygonLayer({
     id: "zip-code",
+    tiles: "data/app/tiles/zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     loader: loadZipCodes,
