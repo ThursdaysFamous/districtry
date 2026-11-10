@@ -101,6 +101,7 @@ python3 scripts/validate_analytics.py                    # which counter each pa
 python3 scripts/build_history_page.py --check
 python3 scripts/build_manifests.py --check
 python3 scripts/build_county_pages.py --check            # the 183 per-county board pages (il 83, wi 72, ia 17, mi 11) vs their rosters, the 60 workflows that rewrite one, and any county roster no adapter reads
+python3 scripts/build_results_pages.py --check            # the election results pages and the county pages' results sections vs the results files; also fails when a results job stops rebuilding them
 python3 scripts/build_il_gis_board_rosters.py --check     # the seven Illinois boards whose members ride the boundary feature; fails on a carded county with no roster and no recorded reason
 python3 scripts/build_llms_txt.py --check                 # /llms.txt vs the fleet it describes; its page set comes from sitemap.xml, so it cannot name a page that is not there
 python3 scripts/build_endpoint_inventory.py --check       # docs/ENDPOINT_INVENTORY.md vs the tree: runtime hosts, dataset counts, point transmission; also fails once the repo starts recording a term it calls unrecorded
