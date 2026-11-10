@@ -197,6 +197,15 @@ const TARGETS_FN = () => {
   const els = [...document.querySelectorAll(SEL)].filter((el) => {
     const cs = getComputedStyle(el);
     if (cs.display === "none" || cs.visibility === "hidden") return false;
+    // A link inside a CLOSED <details> is laid out but drawn nowhere and cannot
+    // be tapped (Chromium hides the content with content-visibility), yet it
+    // still answers getClientRects() with a box somewhere down the page. The
+    // results sections (build_results_pages.py, 2026-11-10) were the first
+    // pages to put links in folded sections, and a sweep of all 336 of them
+    // reported 590 targets crowding the footer that no reader can see.
+    // checkVisibility() is the browser's own answer to "is this drawn",
+    // ancestors included.
+    if (el.checkVisibility && !el.checkVisibility()) return false;
     const r = el.getBoundingClientRect();
     // A skip link parks itself at left:-9999px until focused; it is not a
     // target a pointer can reach and measuring it there is meaningless.
