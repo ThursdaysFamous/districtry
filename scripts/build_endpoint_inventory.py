@@ -94,7 +94,7 @@ RESERVED_RE = re.compile(r"\.(invalid|example|test|localhost)$|^example\.(com|or
 # A host is classified ONCE, by the strongest kind any of its URLs matches. A
 # first draft summed per-kind totals and let one host land in two buckets when it
 # appeared with both a service path and a link path, which inflated the total.
-KIND_ORDER = ["geocoder", "map-link lookup", "basemap tiles", "library CDN", "analytics",
+KIND_ORDER = ["geocoder", "map-link lookup", "file host", "basemap tiles", "library CDN", "analytics",
               "webfont host", "Census TIGERweb", "Socrata", "ArcGIS",
               "link or citation"]
 RUNTIME_KINDS = [k for k in KIND_ORDER if k != "link or citation"]
@@ -153,6 +153,10 @@ def classify(host, path):
     # from a citation; the host is the privacy page's own constant.
     if host == privacy.LINK_LOOKUP_HOST:
         return "map-link lookup"
+    # Named in the files-origin block as a bare origin the page joins paths to,
+    # so no path shape tells it from a citation either.
+    if host == privacy.FILES_HOST:
+        return "file host"
     if "cartocdn.com" in host:
         return "basemap tiles"
     if host == "cdnjs.cloudflare.com":
@@ -219,7 +223,7 @@ def check_against_privacy_page(hosts, tags):
         mine = {kind: {h for h, (k, ts) in hosts.items() if k == kind and tag in ts}
                 for kind in RUNTIME_KINDS}
         for kind, flag in (("basemap tiles", "tiles"), ("library CDN", "cdn"),
-                           ("map-link lookup", "link_lookup")):
+                           ("map-link lookup", "link_lookup"), ("file host", "files_origin")):
             theirs = bool(app.get(flag))
             if bool(mine[kind]) != theirs:
                 fail("%s: this generator finds %d %s host(s) while "
@@ -589,6 +593,15 @@ def render():
                 w("No served file names the Census host, because only the lookup asks it.")
             w("`build_privacy_page.py` names the lookup and the Census Bureau as")
             w("recipients.")
+            w("")
+        if kind == "file host":
+            w("districtry's own Cloudflare R2 bucket, holding the vector-tile")
+            w("archives and the Census block populations, which GitHub Pages no")
+            w("longer publishes. A map reads an archive a byte range at a time and")
+            w("a population file per county a comparison touches, on the live site")
+            w("only; a copy run anywhere else reads its own files.")
+            w("`deploy-pages.yml` copies the files there and reads a sample back;")
+            w("`build_privacy_page.py` names Cloudflare as their recipient.")
             w("")
         if kind == "library CDN":
             w("Pinned: " + ", ".join("**%s %s**" % (n, v) for n, v in pins) + ".")

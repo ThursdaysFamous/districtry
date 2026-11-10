@@ -84,16 +84,20 @@ const ROSTER_URLS = [
    * answers a range with the whole file, measured that day).
    *
    * filesUrl(path, base) is the address to fetch one of those files from.
-   * FILES_ORIGIN null reads every file from this site, as every page did
-   * before the move. A URL there reads the two folders from that host, at
-   * the path they have on this site, and only while the page itself is on
-   * FILES_SITE_HOST, so a copy served on localhost, in a test or on a preview
-   * reads its own files and never the live host's. Anything outside the two
-   * folders is left on this site. This block is ONE copy spliced into every
-   * app's index.html and sw.js (engine/shared/), so the page and its service
-   * worker cannot disagree about where a file lives.
+   * The live site reads the two folders from FILES_ORIGIN, at the path they
+   * have on this site, and only while the page itself is on FILES_SITE_HOST,
+   * so a copy served on localhost, in a test or on a preview reads its own
+   * files and never the live host's. Anything outside the two folders is left
+   * on this site. The deploy copies the folders there and then leaves them out
+   * of what GitHub Pages publishes (scripts/sync_r2_files.py,
+   * deploy-pages.yml). Null would read every file from this site again, as
+   * every page did until the switch, which is the way back if the files host
+   * fails: set it to null and stop the deploy dropping the folders, in one
+   * change. This block is ONE copy spliced into every app's index.html and
+   * sw.js (engine/shared/), so the page and its service worker cannot
+   * disagree about where a file lives.
    * ------------------------------------------------------------------------ */
-  var FILES_ORIGIN = null;
+  var FILES_ORIGIN = "https://files.districtry.com";
   var FILES_SITE_HOST = "districtry.com";
   var FILES_FOLDERS = ["/data/app/tiles/", "/data/app/population/"];
   function filesUrl(path, base) {

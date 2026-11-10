@@ -355,10 +355,11 @@ DECLARED_EXEMPT = {
     "scripts/sync_r2_files.py": (
         "THIS PROJECT'S OWN STORAGE WITH ITS OWN CREDENTIAL: it lists and writes "
         "the R2 bucket that serves districtry's own tile archives and population "
-        "files, signed with the deploy's key. robots.txt says which of a site's "
-        "pages a crawler may READ, and the only bytes this moves are ours, mostly "
-        "outbound. THE TEST IS WHOSE CONTENT AND WHICH DIRECTION, never which "
-        "host; argued in the file",
+        "files, signed with the deploy's key, and --probe reads a few of those "
+        "same files back from files.districtry.com. robots.txt says which of a "
+        "site's pages a crawler may READ, and the only bytes this moves are ours, "
+        "mostly outbound. THE TEST IS WHOSE CONTENT AND WHICH DIRECTION, never "
+        "which host; argued in the file",
         "2026-11-10"),
     "scripts/indexnow_submit.py": (
         "OUTBOUND SUBMISSION, NOT A READ: it hands districtry's own "
