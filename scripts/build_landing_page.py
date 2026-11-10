@@ -287,6 +287,10 @@ QUESTION_ROWS = [
                                            "library-district.html")),
     ("Which court elects my judges?", ("judicial-subcircuit.html", "circuit-court.html",
                                        "supreme-court.html")),
+    # The results pages (build_results_pages.py, 2026-11-10): one per place
+    # whose map has precinct results, each linked from its own county pages,
+    # and from here so the front door names them too.
+    ("How did my area vote?", ("election-results.html",)),
     # The tail row, for a concept only one place answers. A row of its own per
     # page would be three headings each naming a single link, which is the
     # shape the regrouping exists to retire.
@@ -314,6 +318,7 @@ QUESTION_CONCEPT = {
     "Which school board district am I in?": "school-board-district",
     "Which special district covers me?": "fire-district",
     "Which court elects my judges?": "supreme-court-district",
+    "How did my area vote?": "election-results",
     TAIL_ROW: None,
 }
 
@@ -321,6 +326,7 @@ QUESTION_CONCEPT = {
 # instance that carries that page.
 CHIP_TOPIC = {
     "congress.html": "U.S. House",
+    "election-results.html": "election results",
     "state-legislature.html": "Legislature",
     "county-board.html": "county board",
     "county-supervisor.html": "supervisors",
