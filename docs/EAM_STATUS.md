@@ -45,6 +45,7 @@ different thing from one it failed.
 |---|---|---|---|---|---|---|---|---|---|
 | ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 21 | all | 13 of 14 levels |
 | ca | **--MC** | — | — | 0 | 0 | — | 17 | all | all 14 levels |
+| ga | **EAM·** | 159 | 159/159 § | 754 | 436 | all | 18 | all | 9 of 14 levels |
 | ia | **EAM·** | 99 | 99/99 | 154 | 154 | all | 57 | all | 13 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 660 | 1,159 | all | 430 | all | 12 of 14 levels |
 | in | **EAM·** | 92 | 92/92 | 298 | 298 | all | 22 | all | 11 of 14 levels |
@@ -100,6 +101,19 @@ this instance is in maintenance.
   - **10. School boards elected by district** — Neither San Francisco school board is elected by district. The San Francisco Unified School District's seven commissioners and City College of San Francisco's seven trustees are each elected by all of the district's voters, so there is no district to draw; the standard's at-large precedent is that naming the members is the whole answer, and both bodies are the city-wide school tier the app already covers.
   - **13. Tribal governments** — No tribal land lies inside San Francisco: measured 2026-10-01, the current-vintage reservation, trust-land and state-reservation layers return no feature intersecting the city's own shipped outline's extent, with a box over North Carolina's Qualla Boundary as the positive control.
   - **14. Township or county subdivision boundaries** — San Francisco is one city, so its city tier is the whole app and the state tiers above it are another app's subject.
+
+### ga — EAM·
+
+- **Examined by a statewide record:** `ga-county-commission-members` accounts for every county in the state, which is what Examined rests on here: 152 of 159 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
+- **Under a WATCH.md plan (12):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `ga-board-district-counties.json`, `ga-commission-districts.json`, `ga-house-districts.json`, `ga-judicial-circuits.json`, `ga-precincts.json`, `ga-school-board-districts.json`, `ga-senate-districts.json`, `metro-outline.json`, `ga/data/app/population/`, `state-counties.json`
+- **Covered: no.** 5 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+  - **4. The county governing body, in every county of the state** — open. 146 of 159 counties name a governing body and draw it where it is elected by district; 6 more name a body elected by district whose districts are not drawn, or not matched to their members
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open
+  - **10. School boards elected by district** — open (required only where the state has the level)
+  - **12. Special districts the state's own law creates** — open (required only where the state has the level)
+  - **13. Tribal governments** — open (required only where the state has the level)
+- **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
+  - **9. Townships or other general-purpose sub-county governments** — Georgia has no sub-county general-purpose government — outside a city limit the county governs. The 586 sub-county units the Census publishes for Georgia are census county divisions: statistical areas, not governments.
 
 ### ia — EAM·
 

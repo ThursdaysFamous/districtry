@@ -8,19 +8,28 @@ districtry Georgia: a single-file, dependency-light web app. Click a point in Ge
 an address) and it reports every civic district containing that point and who represents you
 there. It serves at **districtry.com/ga/** as a folder of the consolidated districtry repo —
 following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. **The instance is DARK**: no `metros.json` entry, `ga/**` excluded from the
-Pages deploy, nothing served and no landing card naming it. `ga/WATCH.md` lists what go-live has to
-do in one change. The launch plan (Adam's answers of 2026-10-22, "all three as recommended") sets
-go-live on or after 1 January 2027, after the county commission and school board layers.
+root-scripts shape. **IT IS PUBLISHED**, on Adam's word of 2026-11-10 to launch now rather than on
+the 1 January 2027 the launch plan (his answers of 2026-10-22) first set; his reason was hosting, the
+tile archives and block populations having moved to Cloudflare that day. It arrived dark on
+2026-10-29 (no `metros.json` entry, `ga/**` blanket-excluded from the Pages deploy) and the go-live
+change narrowed that exclude to the build inputs the siblings exclude, registered the instance,
+generated `congress.html`, `state-legislature.html` and a county commission page per county, and
+regenerated every surface that counts the fleet. `docs/GA_EXPANSION_PLAN.md` is the record of the
+launch, and `ga/WATCH.md` keeps the go-live row. **THAT CHANGE ALSO MOVED SOUTH CAROLINA'S NEGATIVE
+POINT**, which sat in Wilkes County, Georgia, out to the Atlantic, and gave Tennessee's and North
+Carolina's routing checks a Georgia case each.
 
 **The layers** draw their shapes from the General Assembly or a national publisher, and name people
 from the General Assembly's own member data or a national roster: **County** (`county`, 159, Census
 TIGERweb, the coverage ring), **U.S. House** (14 districts), **Georgia Senate** and **Georgia House**
 (56 and 180 districts) — all three the General Assembly's own maps of its December 2023 plans, the
 House members from the public-domain unitedstates/congress-legislators roster and the legislators
-from the General Assembly's own member data — the LIVE TIGERweb fabric — **Census County Division**
+from the General Assembly's own member data — the TIGERweb fabric, drawn and answered from tile
+archives mirrored from the Census since go-live (`scripts/mirror_tiger_tiles.py`, recorded in
+`tiger-mirror.json`), so a click on them sends the point nowhere — **Census County Division**
 (`county-subdivision`, 586), **City or Town** (`municipality`, 538), **School District**
-(`school-district-unified`, 181) and **ZIP Code** — three nearest-N layers from the USGS National
+(`school-district-unified`, 181) and **ZIP Code**, whose search shows a typed ZIP code whole
+(`data/app/zip-index.json`) — three nearest-N layers from the USGS National
 Map (**Police Station**, **Fire & EMS Station**, **Post Office**), and the county maps the General
 Assembly's Reapportionment Office publishes, drawn only where the county's own district elections
 confirm them: **County Commission District** (`county-commissioner`, 110 counties) and **School
@@ -68,14 +77,20 @@ does not print them beside the member and the fleet's rule on an official's own 
 reach them; and the district address, which the page does show, was a post office box for 96 of 236
 members and plainly a home for others, so none ships as an office the card would pin on the map.
 
-**THE COUNTY CARD NAMES THE COUNTY AND NO COMMISSIONER YET.** Every Georgia county is governed by an
-elected board of commissioners or, in seven, a sole commissioner, and no state office publishes who
-they are (the Department of Community Affairs' directory of local officials sits behind a sign-in,
-which stays shut). The plan names them from the Secretary of State's election results
-(`results.sos.ga.gov`, whose robots.txt answers 404) and draws the commission and school board
-districts from the Reapportionment Office's county maps after a check against the precincts each
-contest was counted in; that is the next change, and until then the card says so (gaps
-`ga-county-commission-members` and `ga-school-board-members`).
+**THE COUNTY CARD NAMES THE COMMISSIONERS THE ELECTION RESULTS NAME.** Every Georgia county is
+governed by an elected board of commissioners or, in seven, a sole commissioner, and no state office
+publishes who they are (the Department of Community Affairs' directory of local officials sits
+behind a sign-in, which stays shut). So they are named from the Secretary of State's election
+results (`results.sos.ga.gov`, whose robots.txt answers 404), described under Data pipeline below,
+and the commission and school board districts are drawn from the Reapportionment Office's county
+maps where a check against the precincts each contest was counted in passed. Measured from the
+shipped file on 2026-11-10: 443 of 783 commission seats and 233 of 645 school board seats are
+named, because the results site carries county contests only from November 2024 on (gaps
+`ga-county-commission-members` and `ga-school-board-members`). **EACH COUNTY'S COMMISSION HAS A PAGE
+OF ITS OWN** under `ga/county-commissioner/`, generated with its index `ga/county-commissioner.html`
+by `scripts/build_county_pages.py` from the same file, which the weekly county officials job
+regenerates; seven counties whose commission the site names nobody for get no page and are
+recorded in that script's `NAMES_NOBODY` with the reason the card prints.
 
 **ONE SCHOOL LAYER, AND FORT BENNING IS THE GROUND IT DOES NOT COVER.** TIGER holds 181 unified
 districts for Georgia (the 159 county systems, 21 city systems and the Fort Stewart schools). The one

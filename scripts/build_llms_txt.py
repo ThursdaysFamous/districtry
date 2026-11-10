@@ -121,6 +121,11 @@ CONTACT_NOTE = {
     # commissioners give the same one.
     "wv": "with the telephone and e-mail the Secretary of State's directory "
           "prints beside each commissioner, and the commission's office",
+    # Georgia's name each commissioner for the winner of that seat's most
+    # recent election on the Secretary of State's results site, dated to it,
+    # and carry no contact details (the results print none).
+    "ga": "with the election on the Secretary of State's results site that "
+          "named each one, and no contact details yet",
 }
 DEFAULT_CONTACT_NOTE = "with whatever contact details that county publishes"
 # The unit each instance's per-county pages are one per, where it is not a

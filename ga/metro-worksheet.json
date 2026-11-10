@@ -96,7 +96,7 @@
     { "id": "westvirginia", "label": "West Virginia", "url": "https://districtry.com/wv/", "emoji": "⛰️", "explorer_name": "districtry West Virginia",
       "bbox": { "minLng": -82.65, "minLat": 37.2, "maxLng": -79.43, "maxLat": 40.64 } },
     { "id": "georgia", "label": "Georgia", "url": "https://districtry.com/ga/", "emoji": "🍑", "explorer_name": "districtry Georgia",
-      "bbox": { "minLng": -85.61, "minLat": 30.35, "maxLng": -80.78, "maxLat": 35.01 } }
+      "bbox": { "minLng": -85.61, "minLat": 30.35, "maxLng": -80.91, "maxLat": 35.01 } }
   ],
   "hover_number_keys": [
     [
@@ -422,6 +422,12 @@
     "lng": -84.2807,
     "note": "Tallahassee, Florida, about 26 km south of the Georgia line — outside Georgia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state layer names Florida here (controls: the State Capitol returns Georgia, and a point in the open Gulf of Mexico returns no state), and none of the state's shipped boundary files contains it. FLORIDA AND ALABAMA ARE THE TWO NEIGHBOURS NO INSTANCE SERVES, so the change that makes Florida live moves this point into Alabama, the way Kentucky's go-live moved Indiana's."
   },
+  "zip_search": {
+    "file": "zip-index.json",
+    "layers": [
+      {"id": "zip-code", "field": "ZCTA5", "inside": ["metro-outline.json"]}
+    ]
+  },
   "coverage_key": {
     "outside": "Outside Georgia",
     "edge": "Georgia"
@@ -481,6 +487,12 @@
         "min_features": 51,
         "max_features": 51,
         "note": "Georgia's 51 judicial circuits, dissolved from the county fabric by ga/scripts/build_ga_superior_courts.py --draw and held to the record of which ballot placed each county by its --check."
+      },
+      {
+        "file": "zip-index.json",
+        "min_features": 749,
+        "max_features": 749,
+        "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -522,7 +534,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ga-shell-v2",
+    "cache_name": "districtry-ga-shell-v3",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

@@ -152,6 +152,52 @@ NAMES_NOBODY = {
         "date": "2026-10-31",
         "reason": "a special election filled one council seat and the results "
                   "do not say whose term it finished"},
+    # Seven Georgia counties whose commission the Secretary of State's results
+    # site names no one for (ga/scripts/build_ga_county_officials.py), recorded
+    # 2026-11-10, when Georgia went live. The site carries county races only
+    # from November 2024 on. The County card prints the same reasons. The
+    # three with winners not yet in office (Chattahoochee, Clarke and Quitman)
+    # leave this table when those winners take office in January 2027, and
+    # this gate fails the weekly job until their entries are dropped, which is
+    # what it is for. Any of the seven can leave sooner, if the 3 November
+    # results, once official, carry a special election, whose winner takes
+    # office on election day.
+    "ga/Bibb": {
+        "date": "2026-11-10",
+        "reason": "Macon-Bibb County's commission has had no contest on the "
+                  "results site since November 2024"},
+    "ga/Chattahoochee": {
+        "date": "2026-11-10",
+        "reason": "its three seats on the site were filled in May 2026 by "
+                  "winners who take office in January 2027, and its other "
+                  "seats have not been on the site's ballots"},
+    "ga/Clarke": {
+        "date": "2026-11-10",
+        "reason": "Athens-Clarke County's five seats on the site were filled "
+                  "in May 2026 by winners who take office in January 2027, "
+                  "and its other seats have not been on the site's ballots"},
+    "ga/Dooly": {
+        "date": "2026-11-10",
+        "reason": "two of its three seats on the site have been on its ballots "
+                  "only in a primary, which names nominees, so their members "
+                  "were last elected before November 2024, and the third's "
+                  "November 2024 election went to a runoff the site does not "
+                  "carry"},
+    "ga/Quitman": {
+        "date": "2026-11-10",
+        "reason": "its three seats on the site were filled in May 2026 by "
+                  "winners who take office in January 2027, and its other "
+                  "seats have not been on the site's ballots"},
+    "ga/Taliaferro": {
+        "date": "2026-11-10",
+        "reason": "its three seats have been on the site's ballots only in "
+                  "primaries, which name nominees, so their members were last "
+                  "elected before November 2024"},
+    "ga/Wilkinson": {
+        "date": "2026-11-10",
+        "reason": "its five seats have been on the site's ballots only in a "
+                  "primary, which names nominees, so their members were last "
+                  "elected before November 2024"},
 }
 # It was EMPTY from 2026-10-15 until Virginia's six cities above. From
 # 2026-10-11 it carried North Carolina's
@@ -527,6 +573,26 @@ INSTANCES = [
          contacts="wv_commission_contact",
          index_provenance="each name as the West Virginia Secretary of State's "
                           "directory of county officials lists it"),
+    # GEORGIA NAMES ELECTION WINNERS, from the Secretary of State's official
+    # results site, which carries county races only from November 2024 on, so
+    # a seat whose member was elected before then is listed naming no one and
+    # saying why. Every county is governed by a board of commissioners, seven
+    # by a sole commissioner, and four are one government with a city, whose
+    # records name their own body ("Augusta Commission", "Columbus Council").
+    # `district_word` is empty because a seat is named as its ballot names it:
+    # "District 3", "Post 2", "Chair", or Baker's "Anna".
+    dict(tag="ga", state="Georgia", concept="county-commissioner",
+         index_page="county-commissioner.html",
+         heading="%(county)s County Board of Commissioners",
+         page_title="%(county)s County Commissioners",
+         phrase="board of commissioners", index_label="Boards of commissioners",
+         all_label="All Georgia boards of commissioners",
+         app_name="districtry Georgia", app_url="https://districtry.com/ga/",
+         district_word="", member_word="Commissioner",
+         adapters=("ga_commissioners",),
+         index_provenance="each name the winner of that seat's most recent "
+                          "election on the Georgia Secretary of State's official "
+                          "results site, dated to it"),
     # NEW YORK IS THE FIRST INSTANCE WHOSE COUNTIES DO NOT ALL HAVE A BODY
     # THESE PAGES CAN BE ABOUT, which is why its `phrase` names one form
     # rather than the county tier: a county legislature is elected from
@@ -3493,6 +3559,240 @@ def va_local_bodies(inst):
     return out, problems, nameless, [path, map_path], note
 
 
+# Georgia's results site, the page the roster builder reads
+# (RESULTS_PAGE in ga/scripts/build_ga_county_officials.py).
+GA_RESULTS_URL = "https://results.sos.ga.gov/results/public/Georgia"
+# The four counties that are one government with a city, by FIPS code: the
+# body's own name, and the city it also governs. The card's GA_COUNTY_CITY
+# (ga/index.html) names the same four.
+GA_CONSOLIDATED = {
+    "13021": ("Macon-Bibb County Commission", "Macon"),
+    "13059": ("Athens-Clarke County Commission", "Athens"),
+    "13215": ("Columbus Council", "Columbus"),
+    "13245": ("Augusta Commission", "Augusta"),
+}
+GA_LEDE = ("These are the people who won each seat on the %(heading)s at its "
+           "most recent election on the Georgia Secretary of State's official "
+           "results site, each dated to that election. They are election "
+           "winners, not a list the county keeps up to date: the results show "
+           "no one appointed to fill a vacancy, so a seat filled that way still "
+           "shows the person elected to it. The site carries county races only "
+           "from November 2024 on, so a seat whose member was elected before "
+           "then names no one here and says so.")
+GA_LEDE_SOLE = ("%(county)s County is governed by a sole commissioner: one "
+                "official, elected by the whole county, holds the powers a board "
+                "of commissioners holds elsewhere in Georgia. This is the person "
+                "who won that office at its most recent election on the Georgia "
+                "Secretary of State's official results site, dated to that "
+                "election. The results show no one appointed to fill a vacancy, "
+                "so an appointment since would not show here.")
+GA_STANDFIRST = ("Who won each seat on the %(heading)s at its most recent "
+                 "election, from the Georgia Secretary of State's official results.")
+GA_STANDFIRST_SOLE = ("Who won the office of sole commissioner at its most "
+                      "recent election, from the Georgia Secretary of State's "
+                      "official results.")
+GA_DESC = ("Who won each seat on the %(heading)s at its most recent election, "
+           "from Georgia's official election results.")
+GA_DESC_SOLE = ("Who won the office of %(county)s County's sole commissioner at "
+                "its most recent election, from Georgia's official election results.")
+GA_DISCLAIMER = ("districtry is an independent, unofficial civic reference.\n"
+                 "It never guesses at who holds a seat: every name above won an "
+                 "election on the Georgia Secretary of State's official results "
+                 "site,\nand this page dates each name to that election rather "
+                 "than claiming the seat is still held.")
+GA_UNNAMED = ("its %s was last elected before November 2024, and the "
+              "Secretary of State's results site carries county races only from "
+              "then on, so this page names no one rather than guessing")
+
+
+def ga_commissioners(inst):
+    """Georgia: ONE file keyed by county FIPS code ("13001"), each record the
+    county's name and its `commission`, a list of seats in the order the
+    county's ballots name them, each named for the winner of its newest
+    contest on the Secretary of State's results site whose winner has taken
+    office (ga/scripts/build_ga_county_officials.py). The County card reads
+    the same file (`gaBoardSeats` in ga/index.html), and this page says what
+    the card says about each seat.
+
+    EVERY SEAT IS A SECTION UNDER ITS OWN NAME ("Chair", "District 3", "Post
+    2", Baker's "Anna"), because the results name the seat and not whether
+    the whole county votes for it, so a heading claiming "elected countywide"
+    would be a claim this file does not make. A seat with no one in it says
+    why: its member was elected before the site's first county races, or its
+    last election went to a runoff the site does not carry. A winner who has
+    not taken office is a sentence under the seat, never a member.
+
+    SEVEN COUNTIES ELECT A SOLE COMMISSIONER, whose page is the one office
+    and no districts. The four counties that are one government with a city
+    take the body's own name (`GA_CONSOLIDATED`).
+
+    THE MAP LINK OPENS THE DISTRICTS ONLY WHERE THE MAP DRAWS THEM: the
+    counties in ga-board-district-counties.json with a `commission` map,
+    which ga/scripts/build_ga_board_districts.py writes from the maps that
+    passed the precinct check; every other county opens the County layer,
+    whose card names the board.
+
+    A COUNTY WHOSE COMMISSION NAMES NO ONE GETS NO PAGE, recorded in
+    NAMES_NOBODY with the reason."""
+    path = os.path.join(app_data(inst["tag"]), "ga-county-officials.json")
+    map_path = os.path.join(app_data(inst["tag"]), "ga-board-district-counties.json")
+    drawn = {fips for fips, rec in _read(map_path).items()
+             if (rec or {}).get("commission")}
+    out, problems, nameless = {}, [], set()
+    roster = _read(path)
+    if len(roster) != 159:
+        problems.append("ga-county-officials.json carries %d counties, not "
+                        "Georgia's 159" % len(roster))
+    for fips, rec in sorted(roster.items()):
+        name = (rec.get("county") or "").strip()
+        if not name:
+            problems.append("ga-county-officials.json %r carries no county" % fips)
+            continue
+        asof = _mn_date(rec.get("asOf"))
+        if not asof:
+            problems.append("ga %s County carries no read date" % name)
+            continue
+        seats = rec.get("commission") or []
+        sole = (len(seats) == 1
+                and re.match(r"(?i)^sole\b", str(seats[0].get("seat") or "")))
+        districts = []
+        for seat in seats:
+            label = str(seat.get("seat") or "").strip()
+            if not label:
+                problems.append("ga %s County has a seat with no name" % name)
+                continue
+            who = seat.get("members") or ([seat] if seat.get("name") else [])
+            people = []
+            for m in who:
+                person = (m.get("name") or "").strip()
+                when = _mn_date(seat.get("elected"))
+                if not person or not when:
+                    problems.append("ga %s County %s names %r with no election "
+                                    "date" % (name, label, person))
+                    continue
+                p = {"name": person,
+                     "elected": ("Won a special election on %s." % when
+                                 if seat.get("special") is True
+                                 else "Elected %s." % when)}
+                if m.get("party"):
+                    p["party"] = m["party"]
+                people.append(p)
+            note = None
+            if not people:
+                runoff = _mn_date(seat.get("runoff"))
+                note = (("its last election, on %s, went to a runoff the "
+                         "Secretary of State's results site does not carry, so "
+                         "this page names no one rather than guessing" % runoff)
+                        if seat.get("runoff") else
+                        GA_UNNAMED % ("council member" if fips == "13215"
+                                      else "commissioner"))
+                if seat.get("runoff") and not runoff:
+                    problems.append("ga %s County %s carries a runoff with no "
+                                    "date" % (name, label))
+            entry = district(label, people, note=note)
+            e = seat.get("elect") or {}
+            chosen = [x for x in (e.get("members") or ([e] if e.get("name") else []))
+                      if (x.get("name") or "").strip()]
+            if chosen:
+                when, starts = _mn_date(e.get("elected")), _ga_month(e.get("since"))
+                if not when or not starts:
+                    problems.append("ga %s County %s names a winner not yet in "
+                                    "office with no election date or no start"
+                                    % (name, label))
+                else:
+                    many = len(chosen) > 1
+                    entry["after"] = [
+                        "%s %s elected to %s on %s and %s office in %s."
+                        % (" and ".join(x["name"].strip() for x in chosen),
+                           "were" if many else "was", label, when,
+                           "take" if many else "takes", starts)]
+            districts.append(entry)
+        extras = []
+        if sole:
+            extras = [("sole-commissioner", "Sole commissioner",
+                       districts[0]["members"])]
+            closing = list(districts[0].get("after") or ())
+            if districts[0]["note"]:
+                closing.insert(0, "The sole commissioner is not named here: "
+                               + districts[0]["note"] + ".")
+            districts = []
+        else:
+            closing = []
+        if rec.get("pending"):
+            closing.append("The county's results of a more recent election are "
+                           "not official yet, and are read again each week; "
+                           "until they are, a seat on that ballot shows the "
+                           "winner of its earlier election.")
+        if not _count_named(districts, extras):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("ga %s County names nobody on its commission" % name)
+            nameless.add(name)
+            continue
+        own, city = GA_CONSOLIDATED.get(fips, (None, None))
+        heading = (own or ("%s County Sole Commissioner" % name if sole
+                           else "%s County Board of Commissioners" % name))
+        title = (own or ("%s County Sole Commissioner" % name if sole
+                         else "%s County Commissioners" % name))
+        body = "council" if fips == "13215" else "commission"
+        lede = (GA_LEDE_SOLE if sole else GA_LEDE)
+        if city:
+            lede += (" %s County and the city of %s are one government, so its "
+                     "%s governs both." % (name, city, body))
+        if sole:
+            cta_layers = "county"
+            cta_note = ("Opens the map with the county layer on. A sole "
+                        "commissioner is elected by the whole county, so the "
+                        "commissioner above is the answer for anywhere in it.")
+        elif fips in drawn:
+            cta_layers = None
+            cta_note = ("Opens the map with the county and County Commission "
+                        "District layers on. Each district is the map the county "
+                        "most recently adopted, as the General Assembly's "
+                        "Reapportionment Office publishes it, drawn only after "
+                        "the precincts that voted in each district's contests "
+                        "confirmed it; for a definitive answer, ask the county's "
+                        "election office.")
+        else:
+            cta_layers = "county"
+            cta_note = ("Opens the map with the county layer on, whose card "
+                        "names this %s from the same results. The map draws "
+                        "commission districts only where the precincts that voted "
+                        "in each district's contests confirmed the county's map, "
+                        "and it draws none for this county." % body)
+        source_html = ('Source: <a href="%s" rel="noopener" target="_blank">the '
+                       "Georgia Secretary of State's official election "
+                       "results</a>, read on %s and re-read every week, with "
+                       "each member's own election dated beside their name."
+                       % (esc(GA_RESULTS_URL), esc(asof)))
+        entry = {"districts": districts, "extras": extras, "skipped": [],
+                 "slug": county_slug(name), "at_large": False,
+                 "source_file": path, "heading": heading, "page_title": title,
+                 "member_word": "Council member" if fips == "13215" else "Commissioner",
+                 # Escaped here because a lede is inserted raw; its only
+                 # % signs are the page's own %(county)s and %(heading)s.
+                 "lede": esc(lede),
+                 "standfirst": GA_STANDFIRST_SOLE if sole else GA_STANDFIRST,
+                 "desc": GA_DESC_SOLE if sole else GA_DESC,
+                 "disclaimer": GA_DISCLAIMER, "cta_note": cta_note,
+                 "source_html": source_html}
+        if closing:
+            entry["closing"] = closing
+        if cta_layers:
+            entry["cta_layers"] = cta_layers
+        out[name] = entry
+    note = ("%d of Georgia's 159 counties, %d with a sole commissioner, %d with "
+            "commission districts drawn"
+            % (len(out), sum(1 for r in out.values() if r["extras"]),
+               sum(1 for r in out.values() if not r.get("cta_layers"))))
+    return out, problems, nameless, [path, map_path], note
+
+
+def _ga_month(iso):
+    """"2027-01-01" as "January 2027", the card's gaMonth."""
+    m = re.match(r"^(\d{4})-(\d{2})", str(iso or ""))
+    return "%s %s" % (_MN_MONTHS[int(m.group(2)) - 1], m.group(1)) if m else None
+
+
 def _mn_date(iso):
     m = re.match(r"^(\d{4})-(\d{2})-(\d{2})$", str(iso or ""))
     if not m:
@@ -3841,6 +4141,7 @@ ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
             "mo_county_bodies": mo_county_bodies,
             "va_local_bodies": va_local_bodies,
             "wv_commissions": wv_commissions,
+            "ga_commissioners": ga_commissioners,
             "ny_supervisors": ny_supervisors,
             "ny_legislature": ny_legislature}
 
@@ -5087,16 +5388,6 @@ def check_workflows(read_by_instance):
 # are the wrong home for it. Nobody has to remember, and nothing is generated
 # from a guess about a shape nobody has looked at.
 NOT_COUNTY_BOARDS = {
-    "ga/data/app/ga-county-officials.json": dict(
-        date="2026-10-30",
-        reason="Georgia's county commissioners and county school board "
-               "members, named from the Secretary of State's official "
-               "election results. The commissioners ARE these pages' "
-               "subject, and are recorded here only while the instance is "
-               "dark: an adapter would write pages for a folder the deploy "
-               "does not publish. Georgia's go-live writes the adapter and "
-               "drops this entry.",
-    ),
     "mn/data/app/mn-swcd-supervisors.json": dict(
         date="2026-10-26",
         reason="the elected supervisors of Minnesota's 88 soil and water "

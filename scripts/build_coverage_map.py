@@ -163,6 +163,10 @@ AREAS = {
     # answers over all 55 counties, so the coverage ring IS the state and the
     # coverage_key carries `outside` and `edge` alone.
     "wv": {"outline": "wv/data/app/metro-outline.json", "state_outline": None},
+    # Georgia joined at its go-live. ONE tier, like va: every layer answers
+    # over the whole state's 159 counties, so the coverage ring IS the state
+    # and the coverage_key carries `outside` alone.
+    "ga": {"outline": "ga/data/app/metro-outline.json", "state_outline": None},
     # New York joined at the 2026-09-19 go-live. It is a TWO-TIER area and the
     # two geometries are genuinely different: the dashed wash is the whole
     # state, where the county, municipality, village, school-district,

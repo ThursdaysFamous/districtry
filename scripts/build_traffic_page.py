@@ -88,6 +88,7 @@ INSTANCE_NAMES = {"il": "Illinois", "ny": "New York", "ca": "San Francisco",
                   "mo": "Missouri",
                   "va": "Virginia",
                   "wv": "West Virginia",
+                  "ga": "Georgia",
                   "landing": "Front page"}
 # The day each instance was first LISTED on the front door, measured once with
 #   git log --reverse --format=%cs -S'"tag": "<tag>"' -- metros.json
@@ -111,7 +112,8 @@ FLEET_LISTED = {"il": "2026-08-24", "ny": "2026-08-24", "ca": "2026-08-24",
                 "mo": "2026-10-26", "va": "2026-10-31",
                 # West Virginia's go-live change sets its own date; if it merges
                 # on a later day, that change moves this to the merge day.
-                "wv": "2026-11-10"}
+                "wv": "2026-11-10",
+                "ga": "2026-11-10"}
 # GoatCounter publishes a referrer's HOST; these are the names a reader knows.
 # A host with no entry ships exactly as GoatCounter spells it.
 REF_NAMES = {"(unknown)": "Direct / unknown", "duckduckgo.com": "DuckDuckGo",

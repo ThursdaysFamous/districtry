@@ -384,13 +384,17 @@ try {
   //     the real districtry.com, fails in the sandbox and leaves page.url() on
   //     the app, which reads exactly like correct behaviour.
   //
-  //     TENNESSEE BORDERS SIX LIVE INSTANCES, so it has both halves to
+  //     TENNESSEE BORDERS SEVEN LIVE INSTANCES, so it has both halves to
   //     prove. Kentucky, North Carolina, Arkansas (live since 2026-10-15) and
-  //     Mississippi (live since 2026-10-16) are covered, and Missouri and
-  //     Virginia since their go-lives, so a point just over any of those lines
-  //     must open that app; the other two neighbours (Georgia, Alabama) are
-  //     not, so a point over their lines must be selected HERE, where the app
-  //     says nothing answers there (1a2-ii). Abingdon, Virginia joined as a
+  //     Mississippi (live since 2026-10-16) are covered, and Missouri, Virginia
+  //     and Georgia since their go-lives, so a point just over any of those
+  //     lines must open that app; the one neighbour left (Alabama) is not, so a
+  //     point over its line must be selected HERE, where the app says nothing
+  //     answers there (1a2-ii). Dalton, Georgia joined as a case in the change
+  //     that published Georgia: it is the OUTSIDE anchor this app's own outline
+  //     builder already holds outside Tennessee, about 24 km south of the state
+  //     line, and is inside Georgia's outline in fleet-outlines.json and no
+  //     other. Abingdon, Virginia joined as a
   //     case in the change that published Virginia: it is the OUTSIDE anchor
   //     this app's own outline builder already holds outside Tennessee, about
   //     13 km north of the state line, and is inside Virginia's outline in
@@ -408,6 +412,7 @@ try {
       { name: "West Memphis, Arkansas", lat: 35.1465, lng: -90.1845, want: "https://districtry.com/ar/" },
       { name: "Southaven, Mississippi", lat: 34.9690, lng: -90.0130, want: "https://districtry.com/ms/" },
       { name: "Abingdon, Virginia", lat: 36.7098, lng: -81.9773, want: "https://districtry.com/va/" },
+      { name: "Dalton, Georgia", lat: 34.7698, lng: -84.9702, want: "https://districtry.com/ga/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });

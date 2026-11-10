@@ -64,7 +64,7 @@ STATE_FIPS = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
               "mn": "27", "ky": "21", "ny": "36", "in": "18",
               "nc": "37", "ok": "40", "sc": "45", "tn": "47",
               "ar": "05", "ms": "28", "la": "22", "mo": "29",
-              "va": "51", "wv": "54"}
+              "va": "51", "wv": "54", "ga": "13"}
 
 # Is a county subdivision the GENERAL-PURPOSE government for residents outside
 # incorporated places in this state? A fact of that state's law, recorded with
@@ -132,6 +132,12 @@ SUBDIVISION_IS_GENERAL_PURPOSE = {
     # its go-live, 2026-11-10; None while no active subdivision reaches the
     # floor, which the build checks.
     "wv": None,
+    # Georgia has no township governments: all 586 of its county subdivisions
+    # are census county divisions (FUNCSTAT S), areas the Census Bureau draws
+    # to report its counts, measured 2026-10-29 in ga/CLAUDE.md, so no active
+    # one can reach the floor. Added at its go-live; None while none does,
+    # which the build checks.
+    "ga": None,
 }
 
 

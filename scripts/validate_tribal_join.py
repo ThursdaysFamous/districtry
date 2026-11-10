@@ -78,6 +78,7 @@ STATE_OF_INSTANCE = {
     "mo": "Missouri",
     "va": "Virginia",
     "wv": "West Virginia",
+    "ga": "Georgia",
 }
 
 
