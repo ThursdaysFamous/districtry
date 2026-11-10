@@ -304,14 +304,19 @@ def build_page(data, roster, worksheet, metros):
         'election results, race by race, precinct by precinct.</span></li>',
     ])
 
-    title = "Who is running in my ward? Chicago %d candidates" % year
+    # The search result's title and the page's heading differ on purpose: the
+    # shell adds " — districtry Illinois" to the title, and
+    # validate_serp_lengths.py holds the whole to 60 characters, which the
+    # question a reader types does not fit beside the city and the year.
+    title = "Chicago %d candidates by ward" % year
+    heading = "Who is running in my Chicago ward?"
     subtitle = ("Everyone who filed for Chicago's %s election: mayor, clerk, treasurer, all "
                 "50 wards and the police district councils." % when)
     desc = ("Who filed to run in Chicago's %s election: mayor, all 50 wards and the "
             "police district councils, as the Board of Elections lists them." % when)
     page_path = os.path.join(REPO_ROOT, TAG, PAGE_FILE)
     text = head(TAG, brand, app_name, PAGE_FILE, title, desc, desc)
-    text += shell(app_name, title, subtitle, lede, sections, related,
+    text += shell(app_name, heading, subtitle, lede, sections, related,
                   preserved_from_disk(page_path),
                   shared_head_block(TAG, THEMEBOOT_RE, "theme boot script"),
                   shared_head_block(TAG, MARK_RE, "districtry mark"), TAG,
