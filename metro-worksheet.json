@@ -4012,6 +4012,11 @@
       "file": "update-chicago-election-results.yml",
       "purpose": "Re-read every race's precinct results from the Chicago Board of Elections daily until the results are certified, and rebuild il/data/app/election-results.json and its 50 ward files; fails if a ward's precincts stop adding up to its total or the results stop naming the map's 1,291 precincts; opens a PR when a number changed; run by hand with the certification date when the Board proclaims the official results",
       "schedule": "daily 12:30 UTC"
+    },
+    {
+      "file": "update-chicago-candidates.yml",
+      "purpose": "Re-read the Chicago Board of Elections' list of candidates who filed for the next municipal election daily (its file name changes with each revision, so the link is discovered), rebuild il/data/source/chicago-candidates.json without the home addresses the list prints, and regenerate il/chicago-candidates.html; fails on an office or status the page has no words for, a missing ward or police district, or a list that cannot be read on or before the election date; opens a PR on any change",
+      "schedule": "daily 11:40 UTC"
     }
   ],
   "geocoder": {

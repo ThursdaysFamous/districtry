@@ -20,6 +20,7 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 97 counties. Wards, county boards, police districts and beats, school zones, judicial subcircuits, and the people who hold those seats.
 
 - [Illinois district lookup](https://districtry.com/il/): 42 layers, 97 counties.
+- [Chicago 2027 candidates by ward](https://districtry.com/il/chicago-candidates.html)
 - [Who is my U.S. representative?](https://districtry.com/il/congress.html)
 - [Who is my county commissioner?](https://districtry.com/il/county-board.html): links a page per county, 100 of them, each naming every member with whatever contact details that county publishes.
 - [2026 precinct election results](https://districtry.com/il/election-results.html)

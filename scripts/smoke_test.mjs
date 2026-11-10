@@ -2382,6 +2382,29 @@ try {
         chipoli[0].text.indexOf("Ward 42 on Chipoli") === 0 && chipoli[0].target === "_blank" &&
         /noopener/.test(chipoli[0].rel) && /not run by the City/.test(card.text),
       JSON.stringify({ chipoli, card: card.text.slice(0, 400) }));
+    // The same card links that ward's section of this site's candidates page,
+    // ahead of the Chipoli link, until the end of the election day the
+    // Board's list is for; after that it links nothing. The date is read from
+    // the list itself, so the check gives the right answer on either side of
+    // election day, and build_candidates_page.py --check holds the card's own
+    // copy of the date to the list's.
+    const listed = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/source/chicago-candidates.json"), "utf8"));
+    const [ey, em, ed] = listed.electionDate.split("-").map(Number);
+    const showing = Date.now() < Date.UTC(ey, em - 1, ed + 1, 6);
+    const running = await page.evaluate(() => {
+      const all = Array.from(document.querySelectorAll("#card-ward a"));
+      const hits = all.filter((a) => /chicago-candidates\.html/.test(a.href));
+      const chip = all.findIndex((a) => /chipoli\.org/.test(a.href));
+      return hits.map((a) => ({ href: a.href, text: a.textContent, before: all.indexOf(a) < chip }));
+    });
+    check(showing
+      ? "the Chicago ward card links that ward's section of the candidates page, ahead of the Chipoli link"
+      : "the Chicago ward card no longer links the candidates page once the election it lists has passed",
+      showing
+        ? running.length === 1 && /\/il\/chicago-candidates\.html#ward-42$/.test(running[0].href) &&
+          running[0].text.indexOf("Ward 42 candidates") === 0 && running[0].before
+        : running.length === 0,
+      JSON.stringify({ running, electionDate: listed.electionDate }));
     await context.close();
   }
 

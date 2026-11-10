@@ -1,0 +1,1622 @@
+{
+  "electionDate": "2027-02-23",
+  "listAsOf": "2026-11-09T16:01:16",
+  "read": "2026-11-10",
+  "source": "Chicago Board of Election Commissioners",
+  "sourcePage": "https://chicagoelections.gov/getting-ballot/candidates",
+  "sourceUrl": "https://cboeprod.blob.core.usgovcloudapi.net/prod/2026-11/Candidate%20List_20261109-1.pdf",
+  "contests": [
+    {
+      "kind": "mayor",
+      "district": null,
+      "office": "Mayor",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "JOHN KELLY",
+          "status": "Challenged"
+        },
+        {
+          "name": "ALEXI GIANNOULIAS",
+          "status": "Challenged"
+        },
+        {
+          "name": "MATT BREWER",
+          "status": "Candidate"
+        },
+        {
+          "name": "WILLIE L. WILSON",
+          "status": "Candidate"
+        },
+        {
+          "name": "MIKE QUIGLEY",
+          "status": "Challenged"
+        },
+        {
+          "name": "BRANDON JOHNSON",
+          "status": "Challenged"
+        },
+        {
+          "name": "SUSANA A. MENDOZA",
+          "status": "Challenged"
+        },
+        {
+          "name": "LISA NEE",
+          "status": "Challenged"
+        },
+        {
+          "name": "WILLIAM J. QUINLAN",
+          "status": "Challenged"
+        },
+        {
+          "name": "JOHN KITOVER",
+          "status": "Challenged"
+        },
+        {
+          "name": "MARIA PAPPAS",
+          "status": "Challenged"
+        },
+        {
+          "name": "JOE HOLBERG",
+          "status": "Candidate"
+        },
+        {
+          "name": "ZOE X. MA",
+          "status": "Challenged"
+        },
+        {
+          "name": "DANIELLE CARTER-WALTERS",
+          "status": "Challenged"
+        },
+        {
+          "name": "GEORGE A. CARDENAS",
+          "status": "Candidate"
+        },
+        {
+          "name": "JESSICA \"JESSE\" MARONTO",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "clerk",
+      "district": null,
+      "office": "Clerk",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "ANNA M. VALENCIA",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "treasurer",
+      "district": null,
+      "office": "Treasurer",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "MELISSA CONYEARS-ERVIN",
+          "status": "Candidate"
+        },
+        {
+          "name": "BRUCE LEON",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 1,
+      "office": "Alderperson, 1st Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "DANIEL LA SPATA",
+          "status": "Candidate"
+        },
+        {
+          "name": "LAURA YEPEZ",
+          "status": "Candidate"
+        },
+        {
+          "name": "BILL THANOUKOS",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 2,
+      "office": "Alderperson, 2nd Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "BRIAN HOPKINS",
+          "status": "Challenged"
+        },
+        {
+          "name": "RICHARD OMONIYI-SHOYOOLA",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 3,
+      "office": "Alderperson, 3rd Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "PAT DOWELL",
+          "status": "Candidate"
+        },
+        {
+          "name": "RAHEEM UQDAH",
+          "status": "Candidate"
+        },
+        {
+          "name": "QUSHONA HARRIS",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 4,
+      "office": "Alderperson, 4th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "LAMONT J. ROBINSON",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 5,
+      "office": "Alderperson, 5th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "DESMON C. YANCY",
+          "status": "Challenged"
+        },
+        {
+          "name": "RYAN GREENLAW",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 6,
+      "office": "Alderperson, 6th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "ALLYSON RENEE SCRUTCHENS",
+          "status": "Candidate"
+        },
+        {
+          "name": "CURTISS. S. LLONG BEY",
+          "status": "Challenged"
+        },
+        {
+          "name": "WILLIAM E. HALL",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 7,
+      "office": "Alderperson, 7th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "GREGORY I. MITCHELL",
+          "status": "Challenged"
+        },
+        {
+          "name": "NATHANIEL A. PENDLETON",
+          "status": "Challenged"
+        },
+        {
+          "name": "SHEILA GUNN-WARD",
+          "status": "Challenged"
+        },
+        {
+          "name": "RADYN FRANC",
+          "status": "Challenged"
+        },
+        {
+          "name": "SAMUEL C. SPARKS",
+          "status": "Challenged"
+        },
+        {
+          "name": "CHER PHILLIPS",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 8,
+      "office": "Alderperson, 8th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "MICHELLE A. HARRIS",
+          "status": "Candidate"
+        },
+        {
+          "name": "YOLONDA MACK",
+          "status": "Challenged"
+        },
+        {
+          "name": "JIMMY DARNELL JONES AKA JAYE JONES",
+          "status": "Challenged"
+        },
+        {
+          "name": "RUTHIE MOORE",
+          "status": "Candidate"
+        },
+        {
+          "name": "BRITTNEY BEE GAULT",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 9,
+      "office": "Alderperson, 9th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "ANTHONY A. BEALE",
+          "status": "Challenged"
+        },
+        {
+          "name": "KENNY WILLIAMS",
+          "status": "Candidate"
+        },
+        {
+          "name": "CECELIA Z. HARRISON",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 10,
+      "office": "Alderperson, 10th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "PETER CHICO",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 11,
+      "office": "Alderperson, 11th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "NICOLE LEE",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 12,
+      "office": "Alderperson, 12th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "JULIA M. RAMIREZ",
+          "status": "Candidate"
+        },
+        {
+          "name": "CLAUDIA L. ZUNO",
+          "status": "Candidate"
+        },
+        {
+          "name": "CARLOS SANCHEZ",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 13,
+      "office": "Alderperson, 13th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "SKYLER CEPEK",
+          "status": "Challenged"
+        },
+        {
+          "name": "AL CACCIOTTOLO",
+          "status": "Candidate"
+        },
+        {
+          "name": "KEITH M. JUDGE",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 14,
+      "office": "Alderperson, 14th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "JEYLU B. GUTIERREZ",
+          "status": "Candidate"
+        },
+        {
+          "name": "RAUL REYES",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 15,
+      "office": "Alderperson, 15th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "RAYMOND A. LOPEZ",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 16,
+      "office": "Alderperson, 16th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "SHENINA FLETCHER",
+          "status": "Challenged"
+        },
+        {
+          "name": "STEPHANIE D. COLEMAN",
+          "status": "Candidate"
+        },
+        {
+          "name": "CHERYL BLACKMOND",
+          "status": "Challenged"
+        },
+        {
+          "name": "EDDIE JOHNSON III",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 17,
+      "office": "Alderperson, 17th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "DAVID H. MOORE",
+          "status": "Candidate"
+        },
+        {
+          "name": "TIMOTHY \"TIM\" THOMAS, JR.",
+          "status": "Challenged"
+        },
+        {
+          "name": "RAYNETTA GREENLEAF",
+          "status": "Challenged"
+        },
+        {
+          "name": "THEODORE FULTON THOMPSON",
+          "status": "Challenged"
+        },
+        {
+          "name": "JAMES 'BALDIE' STEWARD",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 18,
+      "office": "Alderperson, 18th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "DERRICK G. CURTIS",
+          "status": "Candidate"
+        },
+        {
+          "name": "JOSHUA BARKSDALE",
+          "status": "Challenged"
+        },
+        {
+          "name": "M. ARTEMIZA \"TAMMY\" CHAVEZ",
+          "status": "Challenged"
+        },
+        {
+          "name": "GLENFORD FLOWERS JR.",
+          "status": "Challenged"
+        },
+        {
+          "name": "NICOLE ALLISON",
+          "status": "Challenged"
+        },
+        {
+          "name": "TONI C. GALLOWAY",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 19,
+      "office": "Alderperson, 19th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "ERIN HEALY ROSS",
+          "status": "Candidate"
+        },
+        {
+          "name": "JILLIAN ROBINSON",
+          "status": "Challenged"
+        },
+        {
+          "name": "BOB MURPHY",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 20,
+      "office": "Alderperson, 20th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "JEANETTE B TAYLOR",
+          "status": "Candidate"
+        },
+        {
+          "name": "TSHEY GEBRE",
+          "status": "Challenged"
+        },
+        {
+          "name": "ANDRE SMITH",
+          "status": "Challenged"
+        },
+        {
+          "name": "JENNIFER O. MADDOX",
+          "status": "Challenged"
+        },
+        {
+          "name": "JARQUETTA EGESTON",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 21,
+      "office": "Alderperson, 21st Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "RONNIE L. MOSLEY",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 22,
+      "office": "Alderperson, 22nd Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "ELIANNE \"ELY\" BAHENA",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 23,
+      "office": "Alderperson, 23rd Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "LEONARDO ROJAS-BANDA",
+          "status": "Candidate"
+        },
+        {
+          "name": "SILVANA TABARES",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 24,
+      "office": "Alderperson, 24th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "MONIQUE L. SCOTT",
+          "status": "Challenged"
+        },
+        {
+          "name": "JAMESENNA ANDERSON",
+          "status": "Challenged"
+        },
+        {
+          "name": "KIISHA SMITH",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 25,
+      "office": "Alderperson, 25th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "LEONARDO \"LEO\" QUINTERO",
+          "status": "Candidate"
+        },
+        {
+          "name": "AIDA FLORES",
+          "status": "Candidate"
+        },
+        {
+          "name": "IAN WATKINS",
+          "status": "Challenged"
+        },
+        {
+          "name": "CHULA C. ORTIZ",
+          "status": "Challenged"
+        },
+        {
+          "name": "MIGUEL CHACON",
+          "status": "Candidate"
+        },
+        {
+          "name": "BYRON SIGCHO-LOPEZ",
+          "status": "Candidate"
+        },
+        {
+          "name": "NUBIA BATISTA WILLMAN",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 26,
+      "office": "Alderperson, 26th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "JESSICA \"JESSIE\" FUENTES",
+          "status": "Candidate"
+        },
+        {
+          "name": "ANGEE GONZALEZ RODRIGUEZ",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 27,
+      "office": "Alderperson, 27th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "WALTER \"RED\" BURNETT",
+          "status": "Candidate"
+        },
+        {
+          "name": "MARY EASON",
+          "status": "Challenged"
+        },
+        {
+          "name": "NATE CORNELL",
+          "status": "Challenged"
+        },
+        {
+          "name": "TYHESHA C. HAYNES",
+          "status": "Challenged"
+        },
+        {
+          "name": "DAN OLAS",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 28,
+      "office": "Alderperson, 28th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "JASON C. ERVIN",
+          "status": "Candidate"
+        },
+        {
+          "name": "PRECIOUS JOY FRASIER",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 29,
+      "office": "Alderperson, 29th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "CHRIS TALIAFERRO",
+          "status": "Candidate"
+        },
+        {
+          "name": "JAMES MORGAN",
+          "status": "Challenged"
+        },
+        {
+          "name": "YVETTE L. MCKINNIE",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 30,
+      "office": "Alderperson, 30th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "RUTH CRUZ",
+          "status": "Candidate"
+        },
+        {
+          "name": "JURITZY \"JUDY\" VELEZ",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 31,
+      "office": "Alderperson, 31st Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "FELIX CARDONA JR.",
+          "status": "Candidate"
+        },
+        {
+          "name": "ALONSO ZARAGOZA",
+          "status": "Challenged"
+        },
+        {
+          "name": "RAMONA T. BONILLA-ANAIEL",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 32,
+      "office": "Alderperson, 32nd Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "SCOTT WAGUESPACK",
+          "status": "Candidate"
+        },
+        {
+          "name": "PATRICK GILSENAN",
+          "status": "Candidate"
+        },
+        {
+          "name": "JONATHAN STEVANOVICH",
+          "status": "Challenged"
+        },
+        {
+          "name": "DON RILEY",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 33,
+      "office": "Alderperson, 33rd Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "ROSSANA RODRÍGUEZ SÁNCHEZ",
+          "status": "Candidate"
+        },
+        {
+          "name": "MARIA GORDILS",
+          "status": "Candidate"
+        },
+        {
+          "name": "MICHAEL MOGAN",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 34,
+      "office": "Alderperson, 34th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "BILL CONWAY",
+          "status": "Candidate"
+        },
+        {
+          "name": "NATHAN BEAN",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 35,
+      "office": "Alderperson, 35th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "DANIEL TOBON",
+          "status": "Candidate"
+        },
+        {
+          "name": "ANTHONY JOEL QUEZADA",
+          "status": "Candidate"
+        },
+        {
+          "name": "OMARI BEKTEMBA",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 36,
+      "office": "Alderperson, 36th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "GILBERT \"GIL\" VILLEGAS",
+          "status": "Candidate"
+        },
+        {
+          "name": "LUIS M. GOMEZ JR",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 37,
+      "office": "Alderperson, 37th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "EMMA M. MITTS",
+          "status": "Challenged"
+        },
+        {
+          "name": "CARMELITA P. EARLS",
+          "status": "Challenged"
+        },
+        {
+          "name": "MICHAEL PATRICK MURPHY",
+          "status": "Challenged"
+        },
+        {
+          "name": "KOBEY LOFTON",
+          "status": "Challenged"
+        },
+        {
+          "name": "HOWARD RAY",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 38,
+      "office": "Alderperson, 38th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "AGNIESZKA KOZIELSKA",
+          "status": "Candidate"
+        },
+        {
+          "name": "NICHOLAS SPOSATO",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 39,
+      "office": "Alderperson, 39th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "SAMANTHA \"SAM\" NUGENT",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 40,
+      "office": "Alderperson, 40th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "ANDRE VASQUEZ",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 41,
+      "office": "Alderperson, 41st Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "ANTHONY V. NAPOLITANO",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 42,
+      "office": "Alderperson, 42nd Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "BRENDAN REILLY",
+          "status": "Candidate"
+        },
+        {
+          "name": "DEBORAH LANE",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 43,
+      "office": "Alderperson, 43rd Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "TIMMY KNUDSEN",
+          "status": "Candidate"
+        },
+        {
+          "name": "MICHAEL KEATING",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 44,
+      "office": "Alderperson, 44th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "BENNETT R. LAWSON",
+          "status": "Candidate"
+        },
+        {
+          "name": "DENNIS \"DJ\" DORAN",
+          "status": "Candidate"
+        },
+        {
+          "name": "KALEN LUCIANO",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 45,
+      "office": "Alderperson, 45th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "JAMES \"JIM\" GARDINER",
+          "status": "Candidate"
+        },
+        {
+          "name": "S GRONKIEWICZ-DORAN",
+          "status": "Candidate"
+        },
+        {
+          "name": "LEAH CUNNINGHAM POUW",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 46,
+      "office": "Alderperson, 46th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "ABDALLAH J. ALKODAH",
+          "status": "Candidate"
+        },
+        {
+          "name": "ANGELA CLAY",
+          "status": "Challenged"
+        },
+        {
+          "name": "ONITA PATRICIAS ANN MACK",
+          "status": "Candidate"
+        },
+        {
+          "name": "NICOLE A. EDELMAN",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 47,
+      "office": "Alderperson, 47th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "MATT MARTIN",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 48,
+      "office": "Alderperson, 48th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "LENI MANAA-HOPPENWORTH",
+          "status": "Candidate"
+        },
+        {
+          "name": "TROY MCMILLAN",
+          "status": "Candidate"
+        },
+        {
+          "name": "JUSTIN CARMIEN",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 49,
+      "office": "Alderperson, 49th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "MARIA HADDEN",
+          "status": "Candidate"
+        },
+        {
+          "name": "WILLIAM \"BILL\" MORTON",
+          "status": "Candidate"
+        },
+        {
+          "name": "PETER NORMAND",
+          "status": "Candidate"
+        },
+        {
+          "name": "DONGBO MARK SU",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "ward",
+      "district": 50,
+      "office": "Alderperson, 50th Ward",
+      "voteFor": 1,
+      "candidates": [
+        {
+          "name": "DEBRA SILVERSTEIN",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 1,
+      "office": "Council Member, Chicago Police Department 1st District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "ADRIENNE JOHNSON",
+          "status": "Candidate"
+        },
+        {
+          "name": "SARAH KAMMERER",
+          "status": "Candidate"
+        },
+        {
+          "name": "PAUL JACOBS",
+          "status": "Candidate"
+        },
+        {
+          "name": "LESLEY SKOUSEN",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 2,
+      "office": "Council Member, Chicago Police Department 2nd District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "EPHRAIM LEE",
+          "status": "Candidate"
+        },
+        {
+          "name": "DARTAVOUS DORSEY",
+          "status": "Candidate"
+        },
+        {
+          "name": "ALEXANDER PEREZ",
+          "status": "Candidate"
+        },
+        {
+          "name": "COSTON PLUMMER",
+          "status": "Candidate"
+        },
+        {
+          "name": "SANDIE A. NORMAN",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 3,
+      "office": "Council Member, Chicago Police Department 3rd District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "KENISHA PLUMMER",
+          "status": "Challenged"
+        },
+        {
+          "name": "KENYA FRANKLIN",
+          "status": "Candidate"
+        },
+        {
+          "name": "ANTHONY MICHAEL WILLIAMS",
+          "status": "Candidate"
+        },
+        {
+          "name": "CRAIG T. CARRINGTON",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 4,
+      "office": "Council Member, Chicago Police Department 4th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "BRENDA D. WATERS",
+          "status": "Candidate"
+        },
+        {
+          "name": "GLORIA JENKINS",
+          "status": "Candidate"
+        },
+        {
+          "name": "LOVIE BERNARD",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 5,
+      "office": "Council Member, Chicago Police Department 5th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "PAULINE W. SYLVAIN",
+          "status": "Candidate"
+        },
+        {
+          "name": "PONCHITA MOORE",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 6,
+      "office": "Council Member, Chicago Police Department 6th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "BRIAN K. METCALF",
+          "status": "Candidate"
+        },
+        {
+          "name": "AISHA HUMPHRIES",
+          "status": "Challenged"
+        },
+        {
+          "name": "ROBERT E. PINCHAM JR.",
+          "status": "Candidate"
+        },
+        {
+          "name": "DAVID BOYKIN",
+          "status": "Challenged"
+        },
+        {
+          "name": "CIERA WHITAKER",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 7,
+      "office": "Council Member, Chicago Police Department 7th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "TERESA R. CHANDLER",
+          "status": "Candidate"
+        },
+        {
+          "name": "JOSEPH G. WILLIAMS",
+          "status": "Candidate"
+        },
+        {
+          "name": "DION MCGILL",
+          "status": "Candidate"
+        },
+        {
+          "name": "ROBERT WALKER",
+          "status": "Candidate"
+        },
+        {
+          "name": "PATRICIA WILLIAMS",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 8,
+      "office": "Council Member, Chicago Police Department 8th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "MARK HAMBERLIN",
+          "status": "Candidate"
+        },
+        {
+          "name": "JASON HUFF",
+          "status": "Candidate"
+        },
+        {
+          "name": "ROSAURA \"RO\" BOCANEGRA",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 9,
+      "office": "Council Member, Chicago Police Department 9th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "MAXIMILIAN ESTERHAMMER-FIC",
+          "status": "Candidate"
+        },
+        {
+          "name": "EVELYN AGUAYO",
+          "status": "Candidate"
+        },
+        {
+          "name": "JENNIFER ALVARES",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 10,
+      "office": "Council Member, Chicago Police Department 10th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "ROBBIE JOHNSON",
+          "status": "Candidate"
+        },
+        {
+          "name": "ALEXIA LUNA",
+          "status": "Candidate"
+        },
+        {
+          "name": "KEN ALVARADO",
+          "status": "Candidate"
+        },
+        {
+          "name": "CRYSTAL REDDITT",
+          "status": "Candidate"
+        },
+        {
+          "name": "MANUEL ANDRÉS BELTRÁN",
+          "status": "Candidate"
+        },
+        {
+          "name": "KIISHA SMITH",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 11,
+      "office": "Council Member, Chicago Police Department 11th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "JOCELYN A. WOODARDS",
+          "status": "Candidate"
+        },
+        {
+          "name": "BRYAN J. RAMSON, JR.",
+          "status": "Candidate"
+        },
+        {
+          "name": "ALEES EDWARDS",
+          "status": "Candidate"
+        },
+        {
+          "name": "EDWARD WARD",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 12,
+      "office": "Council Member, Chicago Police Department 12th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "GUADALUPE \"LUPE\" PUGA",
+          "status": "Candidate"
+        },
+        {
+          "name": "ROLANDO CABRERA",
+          "status": "Candidate"
+        },
+        {
+          "name": "ANDRES GUZMAN",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 14,
+      "office": "Council Member, Chicago Police Department 14th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "CHRISTOPHER M. LAURENT",
+          "status": "Candidate"
+        },
+        {
+          "name": "STEVE JENSEN",
+          "status": "Candidate"
+        },
+        {
+          "name": "HECTOR VILLAFUERTE",
+          "status": "Candidate"
+        },
+        {
+          "name": "NIA-BLESSING S. ARMSTRONG",
+          "status": "Candidate"
+        },
+        {
+          "name": "DAVID CANARIO",
+          "status": "Candidate"
+        },
+        {
+          "name": "SIOBHAN PETERSON-QUINN",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 15,
+      "office": "Council Member, Chicago Police Department 15th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "REBECCA COOK",
+          "status": "Candidate"
+        },
+        {
+          "name": "AREWA NAJM EKUA",
+          "status": "Candidate"
+        },
+        {
+          "name": "DEONDRE' RUTUES (DR. DRE')",
+          "status": "Candidate"
+        },
+        {
+          "name": "ODDIS \"OJ\" JOHNSON",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 16,
+      "office": "Council Member, Chicago Police Department 16th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "COLLEEN MURPHY",
+          "status": "Candidate"
+        },
+        {
+          "name": "GORAN DAVIDOVAC",
+          "status": "Candidate"
+        },
+        {
+          "name": "AMELIA KABAT",
+          "status": "Candidate"
+        },
+        {
+          "name": "WILLIAM \"BRIAN\" WARDMAN",
+          "status": "Challenged"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 17,
+      "office": "Council Member, Chicago Police Department 17th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "ELIZABETH \"BETH\" ROCHFORD",
+          "status": "Candidate"
+        },
+        {
+          "name": "LISA LEVY",
+          "status": "Candidate"
+        },
+        {
+          "name": "PATRICK \"PADDY\" LINDLEY",
+          "status": "Candidate"
+        },
+        {
+          "name": "LINDA ROGEL",
+          "status": "Challenged"
+        },
+        {
+          "name": "JOHN MURPHY",
+          "status": "Candidate"
+        },
+        {
+          "name": "CHRISTINA PILTO",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 18,
+      "office": "Council Member, Chicago Police Department 18th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "KAREN KANE",
+          "status": "Candidate"
+        },
+        {
+          "name": "BRAD KESSLER",
+          "status": "Candidate"
+        },
+        {
+          "name": "JOE VIETRI",
+          "status": "Candidate"
+        },
+        {
+          "name": "SANDRA BERCOVITZ",
+          "status": "Challenged"
+        },
+        {
+          "name": "SALESHEA M PETERSON",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 19,
+      "office": "Council Member, Chicago Police Department 19th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "SAM SCHOENBURG",
+          "status": "Candidate"
+        },
+        {
+          "name": "JENNIFER SCHAFFER",
+          "status": "Candidate"
+        },
+        {
+          "name": "RIDGE KNAPP",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 20,
+      "office": "Council Member, Chicago Police Department 20th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "NASSIR FAULKNER",
+          "status": "Candidate"
+        },
+        {
+          "name": "REBECCA KLING",
+          "status": "Candidate"
+        },
+        {
+          "name": "ERIC SMITH",
+          "status": "Candidate"
+        },
+        {
+          "name": "TIMOTHY KENNEDY",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 22,
+      "office": "Council Member, Chicago Police Department 22nd District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "LEE BIELECKI",
+          "status": "Candidate"
+        },
+        {
+          "name": "PAUL MULCHRONE",
+          "status": "Candidate"
+        },
+        {
+          "name": "DOUGLAS CROWLEY",
+          "status": "Candidate"
+        },
+        {
+          "name": "DONALD J MCAVOY III",
+          "status": "Candidate"
+        },
+        {
+          "name": "AMERICIA HUCKABEE",
+          "status": "Candidate"
+        },
+        {
+          "name": "ANDRE PATE",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 24,
+      "office": "Council Member, Chicago Police Department 24th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "MICHAEL J. HARRINGTON",
+          "status": "Candidate"
+        },
+        {
+          "name": "KEOLA JEAN-JOSEPH",
+          "status": "Candidate"
+        },
+        {
+          "name": "ISHMAEL RUFUS",
+          "status": "Candidate"
+        }
+      ]
+    },
+    {
+      "kind": "police-council",
+      "district": 25,
+      "office": "Council Member, Chicago Police Department 25th District",
+      "voteFor": 3,
+      "candidates": [
+        {
+          "name": "CARLOS J. VASQUEZ, JR.",
+          "status": "Candidate"
+        },
+        {
+          "name": "GUMERSINDO \"DAVID\" RIVERA",
+          "status": "Candidate"
+        },
+        {
+          "name": "ANGELICA GREEN",
+          "status": "Candidate"
+        },
+        {
+          "name": "GEARY YONKER",
+          "status": "Candidate"
+        },
+        {
+          "name": "ALLYSSA BUJDOSO",
+          "status": "Candidate"
+        },
+        {
+          "name": "PATRICK J. GIBBONS II",
+          "status": "Candidate"
+        }
+      ]
+    }
+  ]
+}
