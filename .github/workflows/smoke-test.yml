@@ -528,6 +528,16 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/build_results_pages.py --check
 
+      # The Chicago candidates page (il/chicago-candidates.html) is built from
+      # the Board of Elections' filed list. The daily candidates job rebuilds
+      # it; this fails when the page and the list disagree, when a name on the
+      # list is missing from the page, when the map's ward card names a
+      # different election from the list, and when that job stops rebuilding
+      # the page or the sitemap.
+      - name: Chicago candidates page matches its list
+        if: ${{ !cancelled() }}
+        run: python3 scripts/build_candidates_page.py --check
+
       # The seven Illinois counties whose board MEMBERS ride the same GIS
       # feature as the boundary, so the app fetches both in one request and no
       # roster file ever existed — which meant the gate above, which enumerates

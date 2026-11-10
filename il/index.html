@@ -24452,6 +24452,30 @@ function initChiExplorer() {
   var loadWards = makeCachedLoader("p293-wvbd");
   var loadAldermen = makeCached(function () { return loadSocrataJSON("htai-wnw4"); });
 
+  // Who filed for each ward's seat at the next municipal election is on
+  // chicago-candidates.html, written by scripts/build_candidates_page.py from
+  // the Board of Election Commissioners' list (Adam, 2026-11-10). The card
+  // links its ward's section until election day ends in Chicago, and offers
+  // nothing after, so it never presents one election's field as the next.
+  // build_candidates_page.py --check fails when this date and the list's
+  // election date differ.
+  var CHICAGO_CANDIDATES_ELECTION = "2027-02-23";
+  var CANDIDATE_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  function chicagoCandidatesLink(ward) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(CHICAGO_CANDIDATES_ELECTION);
+    if (!m || !/^\d+$/.test(String(ward)) || +ward < 1 || +ward > 50) return null;
+    // Election day ends at midnight in Chicago: 06:00 UTC the next day in
+    // February (Central Standard Time).
+    if (Date.now() >= Date.UTC(+m[1], +m[2] - 1, +m[3] + 1, 6)) return null;
+    return {
+      title: "Running for this seat on " + CANDIDATE_MONTHS[+m[2] - 1] + " " + (+m[3]) + ", " + m[1],
+      note: "Everyone who filed, from the Chicago Board of Election Commissioners' list.",
+      links: [{ label: "Ward " + ward + " candidates",
+                url: new URL("chicago-candidates.html#ward-" + ward, window.location.href).href }]
+    };
+  }
+
   // The aldermen roster stores names "Last, First" (e.g. "La Spata, Daniel").
   // Flip to display order "First Last", leaving names without a comma
   // untouched. A suffix is written as its own comma part ("Cardona, Jr.,
@@ -25481,6 +25505,10 @@ function initChiExplorer() {
           offices: [{ label: "Ward Office", lines: [String(result.address)] }]
         }));
       }
+      // Who filed for this seat, on this site's candidates page, before the
+      // independent site below (chicagoCandidatesLink says when it shows).
+      var running = chicagoCandidatesLink(result.ward ? String(result.ward) : "");
+      if (running) wrap.appendChild(renderLinkRow(running));
       // Chipoli (chipoli.org) keeps one page per ward on whoever holds the
       // seat, at /alderpersons/<ward>, so the link follows the seat through
       // turnover without a name match. It is the first link on an Illinois

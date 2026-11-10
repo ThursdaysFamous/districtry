@@ -294,9 +294,13 @@ QUESTION_ROWS = [
     # The tail row, for a concept only one place answers. A row of its own per
     # page would be three headings each naming a single link, which is the
     # shape the regrouping exists to retire.
+    # Chicago's candidates page (build_candidates_page.py, 2026-11-10) answers
+    # for one city's next election, so it sits here rather than under a row
+    # of its own.
     (TAIL_ROW, ("precinct.html", "precinct-maps.html", "township.html",
                 "community-board.html",
-                "county-auditor.html", "borough.html")),
+                "county-auditor.html", "borough.html",
+                "chicago-candidates.html")),
 ]
 
 # THE COLOUR EACH QUESTION'S TILE IS MARKED IN: the map colour of the concept
@@ -355,6 +359,7 @@ CHIP_TOPIC = {
     "precinct.html": "precinct",
     "precinct-maps.html": "who publishes precinct maps",
     "township.html": "township",
+    "chicago-candidates.html": "2027 candidates, by ward",
     "community-board.html": "community board",
 }
 
@@ -376,12 +381,14 @@ CHIP_TOPIC_BY_INSTANCE = {
 
 # Where the page answers for a CITY inside the instance rather than the whole
 # of it. Illinois serves 93 counties; its ward, police-district and
-# school-board pages answer for Chicago alone, and a chip reading "Illinois"
-# on those three would claim ground the page does not cover.
+# school-board pages answer for Chicago alone, as does its candidates page,
+# and a chip reading "Illinois" on those would claim ground the page does not
+# cover.
 CHIP_PLACE = {
     ("il", "ward.html"): "Chicago",
     ("il", "police-district.html"): "Chicago",
     ("il", "school-board.html"): "Chicago",
+    ("il", "chicago-candidates.html"): "Chicago",
 }
 
 

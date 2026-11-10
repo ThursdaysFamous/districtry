@@ -1,0 +1,126 @@
+# Daily refresh of who filed to run in Chicago's next municipal election, read
+# from the Chicago Board of Election Commissioners' candidate list (one PDF,
+# linked from https://chicagoelections.gov/getting-ballot/candidates, whose file
+# name changes with every revision) by scripts/chicago_candidates_scraper.py,
+# written to il/data/source/chicago-candidates.json by
+# scripts/build_chicago_candidates.py, and turned into il/chicago-candidates.html
+# by scripts/build_candidates_page.py.
+#
+# DAILY, NOT WEEKLY: the Board revises the list as it decides objections, and
+# Adam chose on 2026-11-10 to publish the filed list, marked objections
+# pending, and follow it until the ballot is certified. A run whose list did
+# not change writes nothing and opens no pull request.
+#
+# NO ADDRESS SHIPS. The Board's list prints each candidate's home address; the
+# scraper reads only the name and status columns, and the builder refuses a
+# name carrying a digit.
+#
+# AFTER ELECTION DAY the Board may stop linking a list with alderperson races
+# until the next municipal election. A failed read then is expected, so the job
+# stays green and changes nothing; on or before the shipped election date a
+# failed read fails the job.
+
+name: Update Chicago candidates
+
+on:
+  schedule:
+    - cron: "40 11 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-candidates:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI; a PR opened with the default GITHUB_TOKEN fires no workflows.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # Full history: build_sitemap.py reads each page's lastmod from its
+          # own last commit, which a depth-1 checkout reports as today's for
+          # every page.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          # Pinned below 3.15, as update-chicago-election-results.yml is: the
+          # runner's newest Python can arrive before the wheels pdfplumber's
+          # dependencies need.
+          python-version: "3.14"
+
+      - name: Install scraper dependencies
+        run: pip install -c scripts/requirements.txt requests pdfplumber
+
+      - name: Read the Board of Elections' candidate list
+        id: scrape
+        continue-on-error: true
+        run: python3 scripts/chicago_candidates_scraper.py -o /tmp/chicago_candidates_raw.json
+
+      - name: Fail a missed read on or before election day
+        if: steps.scrape.outcome == 'failure'
+        run: |
+          election=$(python3 -c "import json;print(json.load(open('il/data/source/chicago-candidates.json'))['electionDate'])")
+          today=$(TZ=America/Chicago date +%F)
+          if [[ "$today" > "$election" ]]; then
+            echo "The list could not be read, and the shipped election ($election) is past; nothing to refresh."
+          else
+            echo "The list could not be read on $today, on or before the shipped election date $election."
+            exit 1
+          fi
+
+      - name: Rebuild the candidate list
+        if: steps.scrape.outcome == 'success'
+        # Refuses to write on an office it has no words for, a missing ward or
+        # police district, a status the page does not explain, or a name that
+        # looks like an address.
+        run: python3 scripts/build_chicago_candidates.py /tmp/chicago_candidates_raw.json
+
+      - name: Rebuild the candidates page
+        run: python3 scripts/build_candidates_page.py
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- il/data/source/chicago-candidates.json il/chicago-candidates.html; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/chicago-candidates-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip rather than from the checkout
+          # this run started with, so it never differs from main in
+          # .github/workflows/ (a token without `workflow` scope is refused).
+          git fetch origin main
+          cp il/data/source/chicago-candidates.json /tmp/chicago-candidates.json
+          git checkout -- il/data/source/chicago-candidates.json il/chicago-candidates.html
+          git checkout -B "$branch" FETCH_HEAD
+          cp /tmp/chicago-candidates.json il/data/source/chicago-candidates.json
+          # The page is regenerated on main's tip, and the sitemap after it,
+          # because the page is in the sitemap and its lastmod is the file's
+          # own last commit.
+          python3 scripts/build_candidates_page.py
+          python3 scripts/build_sitemap.py
+          git add il/data/source/chicago-candidates.json il/chicago-candidates.html sitemap.xml
+          git commit -m "Update Chicago candidates from the Board of Elections' list"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Chicago candidates from the Board of Elections' list" \
+              --body "Automated daily refresh of who filed to run in Chicago's next municipal election, from the candidate list the Chicago Board of Election Commissioners links on its Candidates page (\`scripts/chicago_candidates_scraper.py\` + \`scripts/build_chicago_candidates.py\`), with \`il/chicago-candidates.html\` regenerated from it. Names and statuses only: the Board's list prints home addresses and nothing here reads them. Please review the diff before merging." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi
