@@ -4,6 +4,10 @@
   "name": "Mountain Iron-Buhl School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Lisa Kvas",
     "seat": "At Large",
@@ -53,6 +57,10 @@
   "name": "United South Central School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Brad Heggen",
     "seat": "At Large",
@@ -95,6 +103,10 @@
   "district": "ISD 2135",
   "name": "Maple River School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Joe Sohre",
@@ -144,6 +156,10 @@
   "district": "ISD 2137",
   "name": "Kingsland Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Steven Lynn Tammel",
@@ -201,16 +217,12 @@
     "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
    },
    {
-    "election": "2022-11-08",
-    "name": "Nathan Briggs",
     "seat": "District 2",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
-    "election": "2022-11-08",
-    "name": "Ron Marinaro",
     "seat": "District 3",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -219,10 +231,8 @@
     "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
    },
    {
-    "election": "2022-11-08",
-    "name": "Lynn A Hilde",
     "seat": "District 5",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -243,6 +253,10 @@
   "district": "ISD 2143",
   "name": "Waterville-Elysian-Morristown Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Jay Schneider",
@@ -293,6 +307,10 @@
   "name": "Chisago Lakes School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jeffrey M Lindeman",
     "seat": "At Large",
@@ -335,6 +353,10 @@
   "district": "ISD 2149",
   "name": "Minnewaska School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Angela Reichmann",
@@ -385,6 +407,10 @@
   "name": "Wadena-Deer Creek School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Barb Tumberg",
     "seat": "At Large",
@@ -428,6 +454,10 @@
   "name": "Buffalo Lake-Hector-Stewart Public Schools",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Carly Kubesh",
     "seat": "At Large",
@@ -470,6 +500,10 @@
   "district": "ISD 2176",
   "name": "Warren-Alvarado-Oslo School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Sally Roller",
@@ -521,6 +555,10 @@
   "name": "Lakeview School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jason Louwagie",
     "seat": "At Large",
@@ -569,6 +607,10 @@
   "district": "ISD 2168",
   "name": "NRHEG School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Terri Engel",
@@ -619,6 +661,10 @@
   "name": "Murray County Central School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Robin Gilbertson",
     "seat": "At Large",
@@ -668,10 +714,8 @@
     "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
    },
    {
-    "election": "2022-11-08",
     "seat": "District 2",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt",
-    "unnamed": "won by write-in votes, which the results do not name"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -680,16 +724,12 @@
     "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
    },
    {
-    "election": "2022-11-08",
-    "name": "Mark Kasella",
     "seat": "District 4",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
-    "election": "2022-11-08",
-    "name": "Debi Brandt",
     "seat": "District 5",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -704,6 +744,10 @@
   "district": "ISD 2190",
   "name": "Yellow Medicine East",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Amanda Lecy",
@@ -754,6 +798,10 @@
   "name": "Fillmore Central",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jason Schwarz",
     "seat": "At Large",
@@ -803,6 +851,10 @@
   "name": "Norman County East School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Kelsey Bennefeld",
     "seat": "At Large",
@@ -846,6 +898,10 @@
   "name": "Sibley East School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Gregory Homme",
     "seat": "At Large",
@@ -888,6 +944,10 @@
   "district": "ISD 2311",
   "name": "Clearbrook-Gonvick School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Ryan Solee",
@@ -938,6 +998,10 @@
   "district": "ISD 2342",
   "name": "West Central Area",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Nathan Porter",
@@ -991,6 +1055,10 @@
   "name": "Belgrade-Brooten-Elrosa Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jacob Rooney",
     "seat": "At Large",
@@ -1039,6 +1107,10 @@
   "district": "ISD 2396",
   "name": "A.C.G.C. Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Ryan Buer",
@@ -1089,6 +1161,10 @@
   "name": "Greenbush-Middle River School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Ross Waage",
     "seat": "At Large",
@@ -1138,6 +1214,10 @@
   "name": "Pipestone Area School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Tami Taubert",
     "seat": "At Large",
@@ -1186,6 +1266,10 @@
   "district": "ISD 2753",
   "name": "Long Prairie-Grey Eagle School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Jeremiah Zahnow",
@@ -1237,6 +1321,10 @@
   "name": "Cedar Mountain School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jill Haala-Helget",
     "seat": "At Large",
@@ -1285,6 +1373,10 @@
   "district": "ISD 2687",
   "name": "Howard Lake-Waverly-Winsted",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Brian Marketon",
@@ -1335,6 +1427,10 @@
   "name": "Fairmont Area School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Dan Brookens",
     "seat": "At Large",
@@ -1378,16 +1474,12 @@
   "name": "Lac Qui Parle Valley School District",
   "seats": [
    {
-    "election": "2022-11-08",
-    "name": "Scott Conn",
     "seat": "District 1",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
-    "election": "2022-11-08",
-    "name": "Matt Carmody",
     "seat": "District 2",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -1402,10 +1494,8 @@
     "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
    },
    {
-    "election": "2022-11-08",
-    "name": "Cory Thorsland",
     "seat": "District 5",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -1420,6 +1510,10 @@
   "district": "ISD 2856",
   "name": "Stephen-Argyle Central Schools",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Dustin Grabowska",
@@ -1470,6 +1564,10 @@
   "name": "Glencoe-Silver Lake School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jamie S. Alsleben",
     "seat": "At Large",
@@ -1512,6 +1610,10 @@
   "district": "ISD 2860",
   "name": "Blue Earth Area Public Schools",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Ted Armon",
@@ -1563,40 +1665,16 @@
   "partial": "the results carry one regular election for this board's at-large seats since 2022-11-08, so the seats elected two years before it are not shown",
   "seats": [
    {
-    "election": "2024-11-05",
-    "name": "Nate Erickson",
     "seat": "District 1",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
-    "election": "2022-11-08",
-    "name": "Megan Imker",
-    "seat": "District 1",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
-   },
-   {
-    "election": "2024-11-05",
-    "name": "Thomas Kuehl",
     "seat": "District 2",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
-    "election": "2022-11-08",
-    "name": "Bruce Grant",
-    "seat": "District 2",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
-   },
-   {
-    "election": "2024-11-05",
-    "name": "Brian Werner",
     "seat": "District 3",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
-   },
-   {
-    "election": "2022-11-08",
-    "name": "William Rogotzke",
-    "seat": "District 3",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -1611,6 +1689,10 @@
   "district": "ISD 2886",
   "name": "Glenville-Emmons School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Lisa Hajek",
@@ -1654,6 +1736,14 @@
   "district": "ISD 2888",
   "name": "Clinton-Graceville-Beardsley",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Kaylene Pullis",
@@ -1703,6 +1793,10 @@
   "district": "ISD 2889",
   "name": "Lake Park Audubon School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2025-11-04",
     "name": "Meagan Hernandez",
@@ -1754,6 +1848,10 @@
   "name": "Renville County West School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Cory Hebrink",
     "seat": "At Large",
@@ -1802,6 +1900,10 @@
   "district": "ISD 2897",
   "name": "Redwood Area School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Matthew Tiffany",
@@ -1852,6 +1954,10 @@
   "name": "Westbrook-Walnut Grove Schools",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Kortney Krick",
     "seat": "At Large",
@@ -1901,6 +2007,10 @@
   "name": "Jackson County Central School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Corey Hanson",
     "seat": "At Large",
@@ -1949,6 +2059,14 @@
   "district": "ISD 2899",
   "name": "Plainview-Elgin-Millville",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Jason Bade",
@@ -2000,40 +2118,16 @@
   "partial": "the results carry one regular election for this board's at-large seats since 2022-11-08, so the seats elected two years before it are not shown",
   "seats": [
    {
-    "election": "2024-11-05",
-    "name": "Bobbie Lensing",
     "seat": "Russell District",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
-    "election": "2022-11-08",
-    "name": "Matt Kerkaert",
-    "seat": "Russell District",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
-   },
-   {
-    "election": "2024-11-05",
-    "name": "Alan Matzner",
     "seat": "Ruthton District",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
-    "election": "2022-11-08",
-    "name": "Nick Johansen",
-    "seat": "Ruthton District",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
-   },
-   {
-    "election": "2024-11-05",
-    "name": "Craig Hess",
     "seat": "Tyler District",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
-   },
-   {
-    "election": "2022-11-08",
-    "name": "Peggy Dunblazier",
-    "seat": "Tyler District",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -2098,6 +2192,10 @@
   "name": "Ortonville Public Schools",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Heather Henrich",
     "seat": "At Large",
@@ -2141,6 +2239,10 @@
   "district": "ISD 2905",
   "name": "Tri-City United School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Chris Vlasak",
@@ -2191,6 +2293,10 @@
   "name": "Brandon-Evansville Public Schools",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Rachel Wagner",
     "seat": "At Large",
@@ -2239,6 +2345,10 @@
   "district": "ISD 2769",
   "name": "Morris Area Public Schools",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Trevor Seales",
@@ -2289,6 +2399,10 @@
   "name": "Red Lake County Central Public Schools",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jennifer (McMullen) Vogel",
     "seat": "At Large",
@@ -2331,6 +2445,10 @@
   "district": "ISD 2907",
   "name": "Round Lake-Brewster Public Schools",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Pam Wendland",
@@ -2400,6 +2518,10 @@
     "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
    },
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jennifer Bonner",
     "seat": "At Large",
@@ -2424,6 +2546,10 @@
   "district": "ISD 2910",
   "name": "Ada-Borup-West Public Schools",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Barb Spilde",
@@ -2474,6 +2600,10 @@
   "name": "Lester Prairie Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Rebecca Heimerl",
     "seat": "At Large",
@@ -2511,6 +2641,14 @@
   "district": "ISD 500",
   "name": "Southland Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Dana Ann Mayer Sorenson",
@@ -2554,6 +2692,10 @@
   "district": "ISD 511",
   "name": "Adrian Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "David Bullerman",
@@ -2604,6 +2746,10 @@
   "name": "Aitkin Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Brian Leitinger",
     "seat": "At Large",
@@ -2652,6 +2798,10 @@
   "district": "ISD 113",
   "name": "Walker-Hackensack-Akeley School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Linsey McMurrin",
@@ -2702,6 +2852,10 @@
   "name": "Albany Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Tim Sands",
     "seat": "At Large",
@@ -2751,6 +2905,10 @@
   "name": "Albert Lea Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Mary Jo Dorman",
     "seat": "At Large",
@@ -2799,6 +2957,10 @@
   "district": "ISD 242",
   "name": "Alden-Conger Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Jennifer Ignaszewski",
@@ -2855,34 +3017,24 @@
     "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
    },
    {
-    "election": "2022-11-08",
-    "name": "Alan Zeithamer",
     "seat": "Position 2",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
-    "election": "2022-11-08",
-    "name": "Shawn Reilly",
     "seat": "Position 3",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
-    "election": "2022-11-08",
-    "name": "Laura Knudsen",
     "seat": "Position 4",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
-    "election": "2022-11-08",
-    "name": "Maureen Eigen",
     "seat": "Position 5",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
-    "election": "2024-11-05",
-    "name": "Elizabeth Paul",
     "seat": "Position 6",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -2897,6 +3049,10 @@
   "district": "ISD 876",
   "name": "Annandale Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Dillon Dougherty",
@@ -2984,6 +3140,10 @@
   "name": "Ashby Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Ben Johnson",
     "seat": "At Large",
@@ -3032,6 +3192,10 @@
   "district": "ISD 492",
   "name": "Austin Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Dan Zielke",
@@ -3083,6 +3247,10 @@
   "name": "Badger Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jodie Davy",
     "seat": "At Large",
@@ -3125,6 +3293,10 @@
   "district": "ISD 162",
   "name": "Bagley Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "John A. Gerbracht",
@@ -3176,6 +3348,10 @@
   "partial": "the results carry one regular election for this board's at-large seats since 2022-11-08, so the seats elected two years before it are not shown",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Sara Hough",
     "seat": "At Large",
@@ -3200,6 +3376,10 @@
   "district": "ISD 91",
   "name": "Barnum Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Louis Bonneville",
@@ -3250,6 +3430,10 @@
   "name": "Battle Lake Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Bennet Stich",
     "seat": "At Large",
@@ -3292,6 +3476,10 @@
   "district": "ISD 726",
   "name": "Becker Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2025-11-04",
     "name": "Renee Regel",
@@ -3337,6 +3525,10 @@
   "name": "Belle Plaine Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Kellen A. Schmidt",
     "seat": "At Large",
@@ -3380,6 +3572,10 @@
   "name": "Bemidji Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Todd Haugen",
     "seat": "At Large",
@@ -3422,6 +3618,14 @@
   "district": "ISD 777",
   "name": "Benson Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Melissa Wrobleski",
@@ -3472,6 +3676,10 @@
   "name": "Bertha-Hewitt Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Andrew Rach",
     "seat": "At Large",
@@ -3521,6 +3729,10 @@
   "name": "Big Lake Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Derek Nelson",
     "seat": "At Large",
@@ -3563,6 +3775,10 @@
   "district": "ISD 2534",
   "name": "Bird Island-Olivia-Lake Lillian Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Brad Retterath",
@@ -3614,6 +3830,10 @@
   "name": "Blackduck Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jenna Gross",
     "seat": "At Large",
@@ -3656,6 +3876,10 @@
   "district": "ISD 756",
   "name": "Blooming Prairie Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Melissa Stoen",
@@ -3755,6 +3979,10 @@
   "name": "Braham Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "David D Shockman",
     "seat": "At Large",
@@ -3804,6 +4032,10 @@
   "name": "Brainerd Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Stephanie Etterman",
     "seat": "At Large",
@@ -3846,6 +4078,10 @@
   "district": "ISD 846",
   "name": "Breckenridge Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Ann Hiedeman",
@@ -3896,6 +4132,10 @@
   "name": "Brooklyn Center School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Amy Bailey",
     "seat": "At Large",
@@ -3938,6 +4178,10 @@
   "district": "ISD 787",
   "name": "Browerville Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Keith Noska",
@@ -3988,6 +4232,10 @@
   "name": "Browns Valley Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Andrew Miller",
     "seat": "At Large",
@@ -4030,6 +4278,10 @@
   "district": "ISD 877",
   "name": "Buffalo-Hanover-Montrose Public Schools",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Adam Bjorklund",
@@ -4080,6 +4332,10 @@
   "name": "Burnsville-Eagan-Savage School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Rachael Mikkelsen",
     "seat": "At Large",
@@ -4128,6 +4384,10 @@
   "district": "ISD 836",
   "name": "Butterfield-Odin Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Cally Mathistad",
@@ -4179,6 +4439,10 @@
   "name": "Byron Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Alisha Eiken",
     "seat": "At Large",
@@ -4227,6 +4491,14 @@
   "district": "ISD 299",
   "name": "Caledonia Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Julie Augedahl",
@@ -4277,6 +4549,10 @@
   "name": "Cambridge-Isanti Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Heidi Sprandel",
     "seat": "At Large",
@@ -4326,6 +4602,10 @@
   "name": "Campbell-Tintah Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Craig Carter",
     "seat": "At Large",
@@ -4369,6 +4649,10 @@
   "name": "Canby Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Allyson Pesek",
     "seat": "At Large",
@@ -4411,6 +4695,10 @@
   "district": "ISD 252",
   "name": "Cannon Falls Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Jodi Strain",
@@ -4499,6 +4787,10 @@
   "name": "Cass Lake-Bena Public Schools",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jennie Reyes",
     "seat": "At Large",
@@ -4548,6 +4840,10 @@
   "name": "Centennial Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Heidi Hansen",
     "seat": "At Large",
@@ -4590,6 +4886,10 @@
   "district": "ISD 112",
   "name": "Eastern Carver County Public Schools",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Angela Erickson",
@@ -4640,6 +4940,10 @@
   "name": "Chatfield Public Schools",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Tom Keefe",
     "seat": "At Large",
@@ -4682,6 +4986,10 @@
   "district": "ISD 695",
   "name": "Chisholm Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Mark Casey",
@@ -4726,6 +5034,10 @@
   "name": "Chokio-Alberta Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Chandler Erickson",
     "seat": "At Large",
@@ -4769,6 +5081,10 @@
   "name": "Cleveland Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Scott Miller",
     "seat": "At Large",
@@ -4811,6 +5127,10 @@
   "district": "ISD 592",
   "name": "Climax-Shelly Public Schools",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Debra Dale",
@@ -4861,6 +5181,10 @@
   "name": "Cloquet Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Melissa Siltanen Juntunen",
     "seat": "At Large",
@@ -4903,6 +5227,10 @@
   "district": "ISD 750",
   "name": "Rocori Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Robin Vettleson",
@@ -4947,6 +5275,10 @@
   "name": "Greenway Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "LaNea Johnson",
     "seat": "At Large",
@@ -4989,6 +5321,10 @@
   "district": "ISD 13",
   "name": "Columbia Heights Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Mary Granlund",
@@ -5033,6 +5369,10 @@
   "name": "Comfrey Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Nathan Hesse",
     "seat": "At Large",
@@ -5075,6 +5415,10 @@
   "district": "ISD 95",
   "name": "Cromwell-Wright Public Schools",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Timothy L. Homstad",
@@ -5119,6 +5463,10 @@
   "name": "Crookston Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Mike Theis",
     "seat": "At Large",
@@ -5161,6 +5509,10 @@
   "district": "ISD 182",
   "name": "Crosby-Ironton Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Mark Taylor",
@@ -5205,6 +5557,10 @@
   "name": "Dassel-Cokato Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Cindy Miller",
     "seat": "At Large",
@@ -5247,6 +5603,14 @@
   "district": "ISD 378",
   "name": "Dawson-Boyd Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Carli Bothun",
@@ -5297,6 +5661,10 @@
   "name": "Deer River Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2025-11-04",
     "name": "LuAnn Robinson",
     "seat": "At Large",
@@ -5340,6 +5708,10 @@
   "district": "ISD 879",
   "name": "Delano Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Sue Roeser",
@@ -5390,6 +5762,10 @@
   "name": "Detroit Lakes Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Sanford (Sandy) Nelson",
     "seat": "At Large",
@@ -5433,6 +5809,10 @@
   "district": "ISD 2164",
   "name": "Dilworth-Glyndon-Felton",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Brittany Kuehl",
@@ -5482,6 +5862,10 @@
   "district": "ISD 533",
   "name": "Dover-Eyota Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Jacob Robinson",
@@ -5630,6 +6014,10 @@
   "name": "East Grand Forks Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Holly Larson",
     "seat": "At Large",
@@ -5672,6 +6060,10 @@
   "district": "ISD 463",
   "name": "Eden Valley-Watkins School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Ann Lemke",
@@ -5723,6 +6115,10 @@
   "name": "Edgerton Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Greg Arp",
     "seat": "At Large",
@@ -5767,6 +6163,10 @@
   "partial": "the results carry one regular election for this board's at-large seats since 2022-11-08, so the seats elected two years before it are not shown",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2023-11-07",
     "name": "Elliot Mann",
     "seat": "At Large",
@@ -5792,16 +6192,16 @@
   "name": "Elk River School District",
   "seats": [
    {
-    "election": "2022-11-08",
-    "name": "Mindy Freiberg",
     "seat": "District 1",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
-    "election": "2022-11-08",
-    "name": "Sara Weis",
     "seat": "District 2",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -5840,6 +6240,10 @@
   "district": "ISD 514",
   "name": "Ellsworth Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Dustin Lefdal",
@@ -5883,6 +6287,10 @@
   "district": "ISD 696",
   "name": "Ely Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Thomas A. Omerza",
@@ -5976,6 +6384,10 @@
   "name": "Faribault Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Casie Steeves",
     "seat": "At Large",
@@ -6025,6 +6437,10 @@
   "name": "Farmington Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Kyle Christensen",
     "seat": "At Large",
@@ -6068,6 +6484,10 @@
   "name": "Fergus Falls Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Kelli Graff",
     "seat": "At Large",
@@ -6110,6 +6530,10 @@
   "district": "ISD 599",
   "name": "Fertile-Beltrami School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "April Grunhovd",
@@ -6160,6 +6584,10 @@
   "name": "Fisher Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Joshua Korynta",
     "seat": "At Large",
@@ -6203,6 +6631,14 @@
   "name": "Floodwood Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Tanya Johnson",
     "seat": "At Large",
@@ -6245,6 +6681,10 @@
   "district": "ISD 51",
   "name": "Foley Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Sharon Kipka",
@@ -6295,6 +6735,10 @@
   "name": "Forest Lake Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Gail Theisen",
     "seat": "At Large",
@@ -6344,6 +6788,10 @@
   "name": "Fosston Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Paul M. Nelson",
     "seat": "At Large",
@@ -6392,6 +6840,10 @@
   "district": "ISD 23",
   "name": "Frazee-Vergas Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Tyler Trieglaff",
@@ -6486,6 +6938,10 @@
   "name": "Fulda Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Brian VanderBeek",
     "seat": "At Large",
@@ -6535,40 +6991,16 @@
   "name": "G.F.W.",
   "seats": [
    {
-    "election": "2024-11-05",
-    "name": "Amy Acree",
     "seat": "Fairfax District",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
-    "election": "2022-11-08",
-    "seat": "Fairfax District",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt",
-    "unnamed": "A special election on 2023-11-07 filled a seat on this board, and the results do not say whose seat it was (Minn. Stat. 123B.09 subd. 5b). Elected on 2022-11-08 Amy Acree; on 2023-11-07 George Grosam"
-   },
-   {
-    "election": "2024-11-05",
-    "name": "Mark J. Turtle",
     "seat": "Gibbon District",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
-    "election": "2022-11-08",
-    "seat": "Gibbon District",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt",
-    "unnamed": "A special election on 2023-11-07 filled a seat on this board, and the results do not say whose seat it was (Minn. Stat. 123B.09 subd. 5b). Elected on 2022-11-08 Kenneth Briese; on 2023-11-07 Mark J. Turtle"
-   },
-   {
-    "election": "2024-11-05",
-    "name": "Russell Miller",
     "seat": "Winthrop District",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
-   },
-   {
-    "election": "2022-11-08",
-    "name": "Emilee Stehr",
-    "seat": "Winthrop District",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    }
   ],
   "website": "https://www.gfwschools.org"
@@ -6577,6 +7009,10 @@
   "district": "ISD 253",
   "name": "Goodhue Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Jerod Thomforde",
@@ -6621,6 +7057,10 @@
   "name": "Goodridge Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Tim Hruby",
     "seat": "At Large",
@@ -6663,6 +7103,10 @@
   "district": "ISD 2536",
   "name": "Granada-Huntley-East Chain",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Jessica Salic",
@@ -6707,10 +7151,8 @@
   "name": "Cook County Public Schools",
   "seats": [
    {
-    "election": "2022-11-08",
-    "name": "Erik Redix",
     "seat": "District 1",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -6719,10 +7161,8 @@
     "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
    },
    {
-    "election": "2022-11-08",
-    "name": "Rena Rogers",
     "seat": "District 3",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -6731,10 +7171,8 @@
     "unnamed": "won by write-in votes, which the results do not name"
    },
    {
-    "election": "2022-11-08",
-    "name": "Dan Shirley",
     "seat": "District 5",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    }
   ],
   "website": "https://www.cookcountyschools.org/"
@@ -6743,6 +7181,10 @@
   "district": "ISD 495",
   "name": "Grand Meadow Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Steve Meyerhofer",
@@ -6787,6 +7229,10 @@
   "name": "Grand Rapids Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Thomas Gustafson",
     "seat": "At Large",
@@ -6829,6 +7275,10 @@
   "district": "ISD 768",
   "name": "Hancock Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Kevin Koehl",
@@ -6874,6 +7324,10 @@
   "partial": "the results carry one regular election for this board's at-large seats since 2022-11-08, so the seats elected two years before it are not shown",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2025-11-04",
     "name": "Elaine K. Mikel-Mulder",
     "seat": "At Large",
@@ -6905,6 +7359,10 @@
   "district": "ISD 150",
   "name": "Hawley Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Emily Odland",
@@ -6955,6 +7413,10 @@
   "name": "Hayfield Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Justin Holtan",
     "seat": "At Large",
@@ -7004,6 +7466,10 @@
   "name": "Hendricks Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Dustin Hauschild",
     "seat": "At Large",
@@ -7046,6 +7512,10 @@
   "district": "ISD 545",
   "name": "Henning Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Rodney H. Thalmann",
@@ -7090,6 +7560,10 @@
   "name": "Herman-Norcross School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Todd Vipond",
     "seat": "At Large",
@@ -7132,6 +7606,10 @@
   "district": "ISD 700",
   "name": "Hermantown Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Jodi McShane",
@@ -7176,6 +7654,10 @@
   "name": "Heron Lake-Okabena School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Mindy Eidhammer",
     "seat": "At Large",
@@ -7218,6 +7700,10 @@
   "district": "ISD 701",
   "name": "Hibbing Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "John Berklich",
@@ -7263,6 +7749,10 @@
   "name": "Hill City Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Ronald Saxton",
     "seat": "At Large",
@@ -7305,6 +7795,10 @@
   "district": "ISD 671",
   "name": "Hills-Beaver Creek School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Chris Harnack",
@@ -7435,6 +7929,10 @@
   "name": "Eden Prairie Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Kim Ross",
     "seat": "At Large",
@@ -7533,6 +8031,10 @@
   "name": "Houston Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Lisa Schultz",
     "seat": "At Large",
@@ -7583,6 +8085,10 @@
   "name": "Hutchinson Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Michael Massmann",
     "seat": "At Large",
@@ -7625,6 +8131,10 @@
   "district": "ISD 361",
   "name": "International Falls School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Bruce Raboin",
@@ -7676,6 +8186,10 @@
   "partial": "the results carry one regular election for this board's at-large seats since 2022-11-08, so the seats elected two years before it are not shown",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2023-11-07",
     "name": "Shana Dukes",
     "seat": "At Large",
@@ -7713,6 +8227,10 @@
   "district": "ISD 473",
   "name": "Isle Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Michele Haggberg",
@@ -7757,6 +8275,10 @@
   "name": "Ivanhoe Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Rebecca (Becky) Paluch",
     "seat": "At Large",
@@ -7799,6 +8321,10 @@
   "district": "ISD 717",
   "name": "Jordan Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Molly Monyok",
@@ -7848,6 +8374,10 @@
   "district": "ISD 204",
   "name": "Kasson-Mantorville School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2025-11-04",
     "name": "Denise Heidt",
@@ -7899,6 +8429,10 @@
   "name": "Kelliher Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Kevin Waldo",
     "seat": "At Large",
@@ -7941,6 +8475,10 @@
   "district": "ISD 2172",
   "name": "Kenyon-Wanamingo School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "A.J. Lindell",
@@ -7991,6 +8529,10 @@
   "name": "Kerkhoven-Murdock-Sunburg",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Erik Finstrom",
     "seat": "At Large",
@@ -8040,6 +8582,10 @@
   "name": "Kimball Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Eric Helgeson",
     "seat": "At Large",
@@ -8082,6 +8628,10 @@
   "district": "ISD 300",
   "name": "La Crescent-Hokah School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Paige Matthews Schoepel",
@@ -8132,6 +8682,10 @@
   "name": "Lake Benton Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Steven J. Hurd",
     "seat": "At Large",
@@ -8174,6 +8728,10 @@
   "district": "ISD 813",
   "name": "Lake City Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Michelle Larson",
@@ -8224,11 +8782,8 @@
   "name": "Lake of the Woods School District",
   "seats": [
    {
-    "election": "2024-11-05",
-    "name": "Craig Severs",
     "seat": "District 1",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt",
-    "special": true
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -8243,10 +8798,8 @@
     "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
    },
    {
-    "election": "2022-11-08",
-    "name": "Robyn Sonstegard",
     "seat": "District 4",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -8255,11 +8808,8 @@
     "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
    },
    {
-    "election": "2025-11-04",
-    "name": "Jerem Haack",
     "seat": "District 6",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20251104/sdrace.txt",
-    "special": true
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    }
   ],
   "website": "https://lakeofthewoodsschool.org/"
@@ -8268,6 +8818,10 @@
   "district": "ISD 194",
   "name": "Lakeville Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2025-11-04",
     "name": "Tony Reichenberger",
@@ -8319,6 +8873,10 @@
   "name": "Lancaster Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Michael Whitlock",
     "seat": "At Large",
@@ -8362,6 +8920,10 @@
   "name": "Lanesboro Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Sarah Peterson",
     "seat": "At Large",
@@ -8404,6 +8966,14 @@
   "district": "ISD 306",
   "name": "Laporte Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Jessica Howg",
@@ -8454,6 +9024,14 @@
   "name": "LeRoy-Ostrander Public Schools",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Daniel Evans",
     "seat": "At Large",
@@ -8502,6 +9080,10 @@
   "district": "ISD 2397",
   "name": "Le Sueur-Henderson School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Brooke Wentzlaff",
@@ -8552,6 +9134,10 @@
   "name": "Lewiston-Altura Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "David D Pringle",
     "seat": "At Large",
@@ -8601,6 +9187,10 @@
   "name": "Litchfield Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Alex Carlson",
     "seat": "At Large",
@@ -8643,6 +9233,10 @@
   "district": "ISD 482",
   "name": "Little Falls Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Julie LeMieur",
@@ -8687,6 +9281,10 @@
   "name": "Littlefork-Big Falls School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2025-11-04",
     "name": "Chelsey Melander",
     "seat": "At Large",
@@ -8730,6 +9328,10 @@
   "district": "ISD 2184",
   "name": "Luverne Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Ryan DeBates",
@@ -8780,6 +9382,10 @@
   "name": "Lyle Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Chad Heard",
     "seat": "At Large",
@@ -8823,6 +9429,10 @@
   "name": "Lynd Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Dennis Guza",
     "seat": "At Large",
@@ -8865,6 +9475,10 @@
   "district": "ISD 238",
   "name": "Mabel-Canton Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Chris Miller",
@@ -8915,6 +9529,10 @@
   "name": "Madelia Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Benjamin Odegard",
     "seat": "At Large",
@@ -8964,6 +9582,10 @@
   "name": "Mahnomen Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Traci Turner",
     "seat": "At Large",
@@ -9007,6 +9629,10 @@
   "name": "Mahtomedi Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Stacey Stout",
     "seat": "At Large",
@@ -9049,6 +9675,10 @@
   "district": "ISD 77",
   "name": "Mankato Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Christopher G. Kind",
@@ -9099,6 +9729,10 @@
   "name": "Maple Lake Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jennifer Rasset",
     "seat": "At Large",
@@ -9148,6 +9782,10 @@
   "name": "Grygla Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Alisha Anderson",
     "seat": "At Large",
@@ -9191,6 +9829,10 @@
   "name": "Marshall Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Matt Coleman",
     "seat": "At Large",
@@ -9233,6 +9875,10 @@
   "district": "ISD 2448",
   "name": "Martin County West School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Mark Wohlhuter",
@@ -9283,6 +9929,10 @@
   "name": "McGregor Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Pat Scollard",
     "seat": "At Large",
@@ -9331,6 +9981,10 @@
   "district": "ISD 763",
   "name": "Medford Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "John Anhorn",
@@ -9381,6 +10035,10 @@
   "name": "Melrose Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jason Toenyan",
     "seat": "At Large",
@@ -9430,6 +10088,10 @@
   "name": "Menahga Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Julia A. Kicker",
     "seat": "At Large",
@@ -9472,6 +10134,14 @@
   "district": "ISD 912",
   "name": "Milaca Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Samantha Lange",
@@ -9565,10 +10235,8 @@
   "name": "Minneapolis Public School District",
   "seats": [
    {
-    "election": "2022-11-08",
-    "name": "Abdul Abdi",
     "seat": "District 1",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -9577,10 +10245,8 @@
     "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
    },
    {
-    "election": "2022-11-08",
-    "name": "Fathia Feerayarre",
     "seat": "District 3",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -9589,16 +10255,18 @@
     "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
    },
    {
-    "election": "2022-11-08",
-    "name": "Lori Norvell",
     "seat": "District 5",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
     "name": "Greta Callahan",
     "seat": "District 6",
     "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -9625,6 +10293,10 @@
   "district": "ISD 414",
   "name": "Minneota Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Julie Mead",
@@ -9675,6 +10347,10 @@
   "name": "Montevideo Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Travis Birhanzl",
     "seat": "At Large",
@@ -9718,6 +10394,10 @@
   "name": "Monticello Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jeff Hegle",
     "seat": "At Large",
@@ -9760,6 +10440,10 @@
   "district": "ISD 152",
   "name": "Moorhead Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Cassidy Bjorklund",
@@ -9810,6 +10494,10 @@
   "name": "Moose Lake Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Lisa Anderson-Reed",
     "seat": "At Large",
@@ -9852,6 +10540,10 @@
   "district": "ISD 332",
   "name": "Mora Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Jill Koch",
@@ -9994,6 +10686,10 @@
   "name": "Mountain Lake Public Schools",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2025-11-04",
     "name": "Khounpraseuth Chantharak",
     "seat": "At Large",
@@ -10012,6 +10708,10 @@
   "district": "ISD 319",
   "name": "Nashwauk-Keewatin School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Don Warwas",
@@ -10056,6 +10756,10 @@
   "name": "Nevis Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Karrin Lindow",
     "seat": "At Large",
@@ -10098,6 +10802,10 @@
   "district": "ISD 345",
   "name": "New London-Spicer School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Kristi Barber",
@@ -10148,6 +10856,10 @@
   "name": "New Prague Area Schools",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jean Schmidt",
     "seat": "At Large",
@@ -10196,6 +10908,10 @@
   "district": "ISD 88",
   "name": "New Ulm Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Matt Ringhofer",
@@ -10246,6 +10962,10 @@
   "name": "New York Mills Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Derek Braukmann",
     "seat": "At Large",
@@ -10294,6 +11014,14 @@
   "district": "ISD 441",
   "name": "Marshall County Central Schools",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Ashley Anderson",
@@ -10345,6 +11073,10 @@
   "name": "Nicollet Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Mathew Cabanilla",
     "seat": "At Large",
@@ -10388,6 +11120,10 @@
   "name": "North Branch Public Schools",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Tim MacMillan",
     "seat": "At Large",
@@ -10430,6 +11166,10 @@
   "district": "ISD 622",
   "name": "North St. Paul-Maplewood-Oakdale School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2025-11-04",
     "name": "Sam Rosemark",
@@ -10481,6 +11221,10 @@
   "name": "Northfield Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Corey Butler",
     "seat": "At Large",
@@ -10529,6 +11273,10 @@
   "district": "ISD 108",
   "name": "Central Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Sara Eischens",
@@ -10580,6 +11328,10 @@
   "partial": "the results carry one regular election for this board's at-large seats since 2022-11-08, so the seats elected two years before it are not shown",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2025-11-04",
     "name": "Michael (Snowy) Crnobrna",
     "seat": "At Large",
@@ -10593,6 +11345,10 @@
   "district": "ISD 480",
   "name": "Onamia Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Virgil Wind",
@@ -10637,6 +11393,10 @@
   "name": "Orono Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Laura Wallander",
     "seat": "At Large",
@@ -10679,6 +11439,10 @@
   "district": "ISD 213",
   "name": "Osakis Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Michael Collins",
@@ -10723,6 +11487,10 @@
   "name": "Osseo Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Erica Foster",
     "seat": "At Large",
@@ -10765,6 +11533,10 @@
   "district": "ISD 761",
   "name": "Owatonna Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Andrea Van Gelder",
@@ -10815,6 +11587,10 @@
   "name": "Park Rapids Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jay Pike",
     "seat": "At Large",
@@ -10857,6 +11633,10 @@
   "district": "ISD 547",
   "name": "Parkers Prairie Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Dustin Schilling",
@@ -10907,6 +11687,10 @@
   "name": "Paynesville Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Bruce Vanderpool",
     "seat": "At Large",
@@ -10956,6 +11740,10 @@
   "name": "Pelican Rapids Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Andrew Sorum",
     "seat": "At Large",
@@ -10998,6 +11786,10 @@
   "district": "ISD 186",
   "name": "Pequot Lakes Public Schools",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Curt Johnson",
@@ -11048,6 +11840,10 @@
   "name": "Perham-Dent Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Sue Von Ruden",
     "seat": "At Large",
@@ -11096,6 +11892,10 @@
   "district": "ISD 239",
   "name": "Rushford-Peterson Public Schools",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Matt Helgemoe",
@@ -11146,6 +11946,10 @@
   "name": "Pierz Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "David Stumpf",
     "seat": "At Large",
@@ -11189,6 +11993,10 @@
   "name": "Pillager Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Kassandra Nelson",
     "seat": "At Large",
@@ -11231,6 +12039,14 @@
   "district": "ISD 578",
   "name": "Pine City Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Tim J Geisler",
@@ -11281,6 +12097,10 @@
   "name": "Pine Island Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Ron Peterson-Rucker",
     "seat": "At Large",
@@ -11329,6 +12149,10 @@
   "district": "ISD 2174",
   "name": "Pine River-Backus Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Christopher Cunningham",
@@ -11380,6 +12204,14 @@
   "name": "Princeton Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Eric Strandberg",
     "seat": "At Large",
@@ -11428,6 +12260,10 @@
   "district": "ISD 719",
   "name": "Prior Lake-Savage Area Schools",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2025-11-04",
     "name": "Dustin Smith",
@@ -11479,6 +12315,10 @@
   "name": "Proctor Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jennifer McDonald",
     "seat": "At Large",
@@ -11528,6 +12368,10 @@
   "name": "Randolph Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jason Podritz",
     "seat": "At Large",
@@ -11570,6 +12414,10 @@
   "district": "ISD 630",
   "name": "Red Lake Falls Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Beth Keller",
@@ -11620,6 +12468,10 @@
   "name": "Red Wing Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Ryan Riester",
     "seat": "At Large",
@@ -11669,6 +12521,10 @@
   "name": "Red Lake Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Michael W. Barrett Sr.",
     "seat": "At Large",
@@ -11717,6 +12573,10 @@
   "district": "ISD 118",
   "name": "Northland Community Schools",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Marc Ruyak",
@@ -11810,6 +12670,10 @@
   "name": "Robbinsdale Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Greta Evans-Becker",
     "seat": "At Large",
@@ -11899,6 +12763,10 @@
     "name": "Stephanie M. Whitehorn",
     "seat": "Position 7",
     "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    }
   ],
   "website": "https://www.rochesterschools.org/"
@@ -11907,6 +12775,10 @@
   "district": "ISD 883",
   "name": "Rockford Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Jessica Johnson",
@@ -11950,6 +12822,10 @@
   "district": "ISD 682",
   "name": "Roseau Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Neal Vatnsdal",
@@ -12088,6 +12964,14 @@
   "partial": "the results carry one regular election for this board's at-large seats since 2022-11-08, so the seats elected two years before it are not shown",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2025-11-04",
     "name": "Derek Froslie",
     "seat": "At Large",
@@ -12112,6 +12996,10 @@
   "district": "ISD 485",
   "name": "Royalton Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Ellie Holm",
@@ -12157,6 +13045,14 @@
   "partial": "the results carry one regular election for this board's at-large seats since 2022-11-08, so the seats elected two years before it are not shown",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2023-11-07",
     "name": "Kristin Papke",
     "seat": "At Large",
@@ -12181,6 +13077,10 @@
   "district": "ISD 363",
   "name": "South Koochiching School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Vickie Hasbargen",
@@ -12225,6 +13125,10 @@
   "name": "Sartell-St. Stephen School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Chelsea Thielen",
     "seat": "At Large",
@@ -12267,6 +13171,10 @@
   "district": "ISD 743",
   "name": "Sauk Centre Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Patrick Jennissen",
@@ -12317,6 +13225,10 @@
   "name": "Sauk Rapids-Rice Public Schools",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Ryan L. Butkowski",
     "seat": "At Large",
@@ -12365,6 +13277,10 @@
   "district": "ISD 820",
   "name": "Sebeka Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Rodney Huttunen",
@@ -12415,6 +13331,10 @@
   "name": "Shakopee Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Tim Brophy",
     "seat": "At Large",
@@ -12463,6 +13383,10 @@
   "district": "ISD 84",
   "name": "Sleepy Eye Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Darla Remus",
@@ -12513,6 +13437,14 @@
   "name": "South St. Paul Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Monica Weber",
     "seat": "At Large",
@@ -12561,6 +13493,10 @@
   "district": "ISD 297",
   "name": "Spring Grove School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Lisa Myhre",
@@ -12653,6 +13589,10 @@
   "district": "ISD 85",
   "name": "Springfield Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Adam Seifert",
@@ -12747,6 +13687,10 @@
   "name": "St. Charles Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Peter Snyder",
     "seat": "At Large",
@@ -12796,6 +13740,10 @@
   "name": "St. Clair Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Sara Quast",
     "seat": "At Large",
@@ -12838,6 +13786,10 @@
   "district": "ISD 742",
   "name": "St. Cloud Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2025-11-04",
     "name": "Gina Acevedo",
@@ -12889,6 +13841,10 @@
   "name": "St. Francis Area Schools",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2025-11-04",
     "name": "Jessica A. Bakken-Kleven",
     "seat": "At Large",
@@ -12939,6 +13895,10 @@
   "name": "St. James Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Scott Runge",
     "seat": "At Large",
@@ -12981,6 +13941,10 @@
   "district": "ISD 707",
   "name": "Nett Lake Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Danelle Porter",
@@ -13073,6 +14037,10 @@
   "district": "ISD 885",
   "name": "St. Michael-Albertville School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Hollee Saville",
@@ -13167,6 +14135,10 @@
   "partial": "the results carry one regular election for this board's at-large seats since 2022-11-08, so the seats elected two years before it are not shown",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2023-11-07",
     "name": "Carlo Franco",
     "seat": "At Large",
@@ -13247,6 +14219,10 @@
   "name": "Staples-Motley School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Jeremy Reeck",
     "seat": "At Large",
@@ -13289,6 +14265,10 @@
   "district": "ISD 534",
   "name": "Stewartville Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Nichol Ramaker",
@@ -13339,6 +14319,10 @@
   "name": "Stillwater Area Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Katie Hockert",
     "seat": "At Large",
@@ -13388,6 +14372,10 @@
   "name": "Swanville Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Luke Peterson",
     "seat": "At Large",
@@ -13431,6 +14419,10 @@
   "name": "Thief River Falls School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Misty Hempel",
     "seat": "At Large",
@@ -13467,6 +14459,10 @@
   "district": "ISD 99",
   "name": "Esko Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Gerald (Jerry) Frederick",
@@ -13510,6 +14506,10 @@
   "district": "ISD 2125",
   "name": "Triton School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Jim Jensen",
@@ -13560,6 +14560,10 @@
   "name": "Truman Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Paula Kristine Heckman",
     "seat": "At Large",
@@ -13603,16 +14607,12 @@
   "name": "Lake Superior Public School District",
   "seats": [
    {
-    "election": "2022-11-08",
-    "name": "Steven Allen VanHouse",
     "seat": "District 1",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
-    "election": "2022-11-08",
-    "name": "Tracy Tiboni",
     "seat": "District 2",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -13627,10 +14627,8 @@
     "unnamed": "won by write-in votes, which the results do not name"
    },
    {
-    "election": "2022-11-08",
-    "name": "Jeff Radle",
     "seat": "District 5",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -13639,10 +14637,8 @@
     "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
    },
    {
-    "election": "2022-11-08",
-    "name": "Dean Korri",
     "seat": "District 7",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    }
   ],
   "website": "https://www.isd381.k12.mn.us/"
@@ -13651,6 +14647,10 @@
   "district": "ISD 914",
   "name": "Ulen-Hitterdal Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Troy Amundson",
@@ -13702,6 +14702,10 @@
   "name": "Underwood Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Rebekah Meder",
     "seat": "At Large",
@@ -13744,6 +14748,10 @@
   "district": "ISD 487",
   "name": "Upsala Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Dan Klein",
@@ -13789,6 +14797,10 @@
   "name": "Verndale Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Chris Youngbauer",
     "seat": "At Large",
@@ -13831,6 +14843,10 @@
   "district": "ISD 811",
   "name": "Wabasha-Kellogg Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Michelle Meyer",
@@ -13881,6 +14897,10 @@
   "name": "Wabasso Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Joshua Goche",
     "seat": "At Large",
@@ -13929,6 +14949,10 @@
   "district": "ISD 110",
   "name": "Waconia Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Amanda Wilson",
@@ -13979,6 +15003,10 @@
   "name": "Warroad Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Cindy Drost",
     "seat": "At Large",
@@ -14021,6 +15049,10 @@
   "district": "ISD 829",
   "name": "Waseca Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Anne Harguth",
@@ -14071,6 +15103,10 @@
   "name": "Watertown-Mayer Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Lisa Neaton",
     "seat": "At Large",
@@ -14119,6 +15155,14 @@
   "district": "ISD 435",
   "name": "Waubun-Ogema-White Earth Public Schools",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "John J. Zima",
@@ -14219,6 +15263,10 @@
   "partial": "the results carry one regular election for this board's at-large seats since 2022-11-08, so the seats elected two years before it are not shown",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2023-11-07",
     "name": "Randi Walz",
     "seat": "At Large",
@@ -14249,6 +15297,10 @@
   "district": "ISD 803",
   "name": "Wheaton Area Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Kassandra Thielen",
@@ -14294,6 +15346,10 @@
   "partial": "the results carry one regular election for this board's at-large seats since 2022-11-08, so the seats elected two years before it are not shown",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Angela Thompson",
     "seat": "At Large",
@@ -14318,6 +15374,10 @@
   "district": "ISD 347",
   "name": "Willmar Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Mike Reynolds",
@@ -14368,6 +15428,10 @@
   "name": "Willow River Public School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Susan Grill",
     "seat": "At Large",
@@ -14410,6 +15474,10 @@
   "district": "ISD 177",
   "name": "Windom Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Matt Steffen",
@@ -14461,16 +15529,12 @@
   "partial": "the results carry one regular election for this board's at-large seats since 2022-11-08, so the seats elected two years before it are not shown",
   "seats": [
    {
-    "election": "2022-11-08",
-    "name": "Pete Watkins",
     "seat": "District 1",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
-    "election": "2022-11-08",
-    "name": "Michael Hanratty",
     "seat": "District 2",
-    "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20221108/sdrace.txt"
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
    },
    {
     "election": "2024-11-05",
@@ -14491,6 +15555,10 @@
     "sourceUrl": "https://electionresultsfiles.sos.mn.gov/20241105/sdrace.txt"
    },
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2022-11-08",
     "name": "Nancy Denzer",
     "seat": "At Large",
@@ -14509,6 +15577,10 @@
   "district": "ISD 518",
   "name": "Worthington Public School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Matthew Widboom",
@@ -14602,6 +15674,10 @@
   "name": "Zumbrota-Mazeppa School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Angie Bredehoft",
     "seat": "At Large",
@@ -14644,6 +15720,10 @@
   "district": "ISD 2071",
   "name": "Lake Crystal-Wellcome Memorial",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Sara Purvis Rose",
@@ -14694,6 +15774,10 @@
   "name": "Tri-County School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Karrah Oliver",
     "seat": "At Large",
@@ -14742,6 +15826,10 @@
   "district": "ISD 2171",
   "name": "Kittson Central School District",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Michael Olsonawski",
@@ -14792,6 +15880,10 @@
   "name": "Win-E-Mac School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Nicki Carlson",
     "seat": "At Large",
@@ -14841,6 +15933,10 @@
   "name": "Mesabi East School District",
   "seats": [
    {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
+   {
     "election": "2024-11-05",
     "name": "Kathleen Rae Undeland",
     "seat": "At Large",
@@ -14883,6 +15979,10 @@
   "district": "ISD 2835",
   "name": "Janesville-Waldorf-Pemberton",
   "seats": [
+   {
+    "seat": "At Large",
+    "unnamed": "the 2026-11-03 election is not yet canvassed"
+   },
    {
     "election": "2024-11-05",
     "name": "Laura Seys",
