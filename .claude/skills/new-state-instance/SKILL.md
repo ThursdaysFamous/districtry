@@ -257,6 +257,16 @@ the instance only once its analytics and geocoder posture are real — and
 write `<tag>/CLAUDE.md`, `<tag>/WATCH.md` and the phase plan as
 `docs/<TAG>_EXPANSION_PLAN.md` (`docs/IA_EXPANSION_PLAN.md` is the precedent).
 
+The statewide officials line (the summary at the top of the results that opens
+into the full list; not a layer) comes with the engine, so a new state gives it
+data rather than code: write `<tag>/data/source/statewide-officials.source.json`
+(one entry per office the state elects statewide, each with the office's own
+government page), run `python3 scripts/build_statewide_officials.py --tag <tag>`,
+call `registerStatewideOfficials({ outline: "data/app/<widest outline>" })`
+after the `statewide-officials` fence, add the file's roster entry to the
+worksheet, and add the app's `validate_index.py` line in
+`.github/workflows/update-statewide-officials.yml` (the builder finds every seed itself).
+
 ## 12. Nevers
 
 - Never copy the Illinois root layout; never copy a gate constant, a floor, or a hover-key list from a sibling.

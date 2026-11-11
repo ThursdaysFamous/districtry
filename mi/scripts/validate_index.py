@@ -166,6 +166,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "statewide-officials.json": 5,  # The officers Michigan elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from mi/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
     "tribal-councils.json": 9,  # The council of every Michigan nation whose council is carried, keyed by the Census AIANNH code of its land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
     "congress-roster.json": 13,  # U.S. House roster, refreshed weekly by update-mi-congress-roster.yml.
     "mi-senate-members.json": 34,  # Senate roster from Open States mi.csv enriched by the Michigan Senate's own all-senators directory, refreshed weekly by update-mi-legislature-roster.yml; floor tolerates transient vacancies (38 seats).

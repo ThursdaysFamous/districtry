@@ -1,0 +1,39 @@
+{
+ "state": "Wisconsin",
+ "usps": "WI",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Tony Evers",
+   "url": "https://evers.wi.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Sara Rodriguez",
+   "url": "https://ltgov.wisconsin.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Josh Kaul",
+   "url": "https://www.doj.state.wi.us/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Sarah Godlewski",
+   "url": "https://sos.wi.gov/",
+   "match": [
+    "Secretary Godlewski"
+   ]
+  },
+  {
+   "office": "State Treasurer",
+   "name": "John Leiber",
+   "url": "https://statetreasurer.wi.gov/"
+  },
+  {
+   "office": "State Superintendent of Public Instruction",
+   "name": "Jill Underly",
+   "url": "https://dpi.wi.gov/"
+  }
+ ]
+}

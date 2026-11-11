@@ -1,0 +1,36 @@
+{
+ "state": "Missouri",
+ "usps": "MO",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Mike Kehoe",
+   "url": "https://governor.mo.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "David Wasinger",
+   "url": "https://ltgov.mo.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Catherine Hanaway",
+   "url": "https://ago.mo.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Denny Hoskins",
+   "url": "https://www.sos.mo.gov/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Vivek Malek",
+   "url": "https://treasurer.mo.gov/"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Scott Fitzpatrick",
+   "url": "https://auditor.mo.gov/"
+  }
+ ]
+}

@@ -114,6 +114,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "statewide-officials.json": 5,  # The officers Missouri elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from mo/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
     "congress-roster.json": 8,  # U.S. House (MO) roster, refreshed weekly by update-mo-congress-roster.yml.
     "mo-senate-members.json": 34,  # Missouri Senate roster from the Senate's own member pages, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size.
     "mo-house-members.json": 163,  # Missouri House roster from the House's own published member list, on the same terms.

@@ -579,6 +579,11 @@
     ],
     "rosters": [
       {
+        "file": "statewide-officials.json",
+        "min_keys": 5,
+        "note": "The officers Indiana elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from in/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
+      },
+      {
         "file": "congress-roster.json",
         "min_keys": 9,
         "note": "All 9 U.S. House members, rebuilt weekly by CI from unitedstates/congress-legislators."

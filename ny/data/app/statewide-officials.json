@@ -1,0 +1,48 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from ny/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "New York",
+ "usSenate": [
+  {
+   "name": "Kirsten E. Gillibrand",
+   "party": "Democratic",
+   "url": "https://www.gillibrand.senate.gov",
+   "office": "478 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4451"
+  },
+  {
+   "name": "Charles E. Schumer",
+   "party": "Democratic",
+   "url": "https://www.schumer.senate.gov/",
+   "office": "322 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-6542"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Kathy Hochul",
+   "url": "https://www.governor.ny.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Antonio Delgado",
+   "url": "https://www.governor.ny.gov/lt-governor-antonio-delgado",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Letitia James",
+   "url": "https://ag.ny.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Comptroller",
+   "name": "Thomas P. DiNapoli",
+   "url": "https://www.osc.ny.gov/",
+   "verified": "2026-11-10"
+  }
+ ]
+}
