@@ -6,12 +6,10 @@ name: Update U.S. House (West Virginia) roster
 # anything changed, opens a PR rather than committing directly to main —
 # officeholder data should get a human look before it ships.
 #
-# WEST VIRGINIA IS DARK, so this job is shorter than its served siblings by
-# exactly the steps a served instance owes: there is no wv/congress.html to
-# regenerate (build_legislator_pages.py refuses an instance metros.json does
-# not carry, so the page is not built yet), wv/ is not in the sitemap, and
-# about.html does not count this instance. Go-live adds those steps in the same
-# change that adds wv to metros.json — wv/WATCH.md carries the list.
+# The congress question page (wv/congress.html) prints these members in a
+# dated table, about.html counts them and sitemap.xml dates the page, so the
+# branch cut regenerates all three and stages them with the roster; without
+# that the smoke gate's build_officeholder_tables.py --check fails this PR.
 #
 # THE MAP THESE MEMBERS ARE JOINED TO IS THE 2021 PLAN, which TIGERweb's layer
 # 4 (the 119th Congress) and layer 0 (the 120th) both carry for West Virginia,
@@ -87,7 +85,10 @@ jobs:
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
           python3 wv/scripts/build_congress_roster.py
-          git add wv/data/app/congress-roster.json
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add wv/data/app/congress-roster.json wv/congress.html about.html sitemap.xml
           git commit -m "Update U.S. House (West Virginia) roster from congress-legislators"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

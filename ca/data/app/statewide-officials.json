@@ -1,0 +1,72 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from ca/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "California",
+ "usSenate": [
+  {
+   "name": "Alex Padilla",
+   "party": "Democratic",
+   "url": "https://www.padilla.senate.gov",
+   "office": "331 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-3553"
+  },
+  {
+   "name": "Adam B. Schiff",
+   "party": "Democratic",
+   "url": "https://www.schiff.senate.gov",
+   "office": "112 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-3841"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Gavin Newsom",
+   "url": "https://www.gov.ca.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Eleni Kounalakis",
+   "url": "https://ltg.ca.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Rob Bonta",
+   "url": "https://oag.ca.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Shirley N. Weber",
+   "url": "https://www.sos.ca.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Treasurer",
+   "name": "Fiona Ma",
+   "url": "https://www.treasurer.ca.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Controller",
+   "name": "Malia M. Cohen",
+   "url": "https://www.sco.ca.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Insurance Commissioner",
+   "name": "Ricardo Lara",
+   "url": "https://www.insurance.ca.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Superintendent of Public Instruction",
+   "name": "Tony Thurmond",
+   "url": "https://www.cde.ca.gov/",
+   "verified": "2026-11-10"
+  }
+ ]
+}

@@ -600,8 +600,19 @@ def check_published_counts(served):
     # an instance that is live is in it by construction.
     with open(readme, encoding="utf-8") as f:
         readme_text = f.read()
-    words = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five",
-             6: "six", 7: "seven", 8: "eight", 9: "nine", 10: "ten"}
+    # Spelled to ninety-nine, because the fleet passed ten in September and
+    # the gate read only "one" to "ten" until 2026-11-11: README said "twenty
+    # instances" with nothing checking it, and "twenty-five" then matched as
+    # "five", since a hyphen is a word boundary.
+    ones = ["", "one", "two", "three", "four", "five", "six", "seven",
+            "eight", "nine", "ten", "eleven", "twelve", "thirteen",
+            "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
+            "nineteen"]
+    tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty",
+            "seventy", "eighty", "ninety"]
+    words = {n: ones[n] for n in range(1, 20)}
+    for n in range(20, 100):
+        words[n] = tens[n // 10] + ("-" + ones[n % 10] if n % 10 else "")
     for e in entries:
         name, url = e.get("landing_name", ""), e.get("url", "")
         row = [ln for ln in readme_text.splitlines()
@@ -612,7 +623,9 @@ def check_published_counts(served):
         elif url and url not in row[0]:
             bad.append("README.md: the %s row does not link %s" % (name, url))
     want = words.get(len(entries), str(len(entries)))
-    for m in re.finditer(r"\b(one|two|three|four|five|six|seven|eight|nine|ten)\s+instances\b",
+    spelled = "|".join(sorted((re.escape(w) for w in words.values()),
+                              key=len, reverse=True))
+    for m in re.finditer(r"(?<![\w-])(%s)\s+instances\b" % spelled,
                          readme_text):
         if m.group(1) != want:
             bad.append("README.md: says '%s instances', metros.json lists %d"

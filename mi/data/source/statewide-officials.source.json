@@ -1,0 +1,38 @@
+{
+ "state": "Michigan",
+ "usps": "MI",
+ "officersNote": "Michigan's voters also elect the State Board of Education and the boards of the University of Michigan, Michigan State University and Wayne State University statewide. Those boards are not listed here yet.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Gretchen Whitmer",
+   "url": "https://www.michigan.gov/whitmer",
+   "headers": "browser",
+   "note": "www.michigan.gov answered 403 to our token and served a browser on 2026-11-10."
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Garlin Gilchrist II",
+   "url": "https://www.michigan.gov/whitmer/ltgov",
+   "match": [
+    "Garlin Gilchrist"
+   ],
+   "headers": "browser",
+   "note": "www.michigan.gov answered 403 to our token and served a browser on 2026-11-10."
+  },
+  {
+   "office": "Attorney General",
+   "name": "Dana Nessel",
+   "url": "https://www.michigan.gov/ag",
+   "headers": "browser",
+   "note": "www.michigan.gov answered 403 to our token and served a browser on 2026-11-10."
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Jocelyn Benson",
+   "url": "https://www.michigan.gov/sos",
+   "headers": "browser",
+   "note": "www.michigan.gov answered 403 to our token and served a browser on 2026-11-10."
+  }
+ ]
+}

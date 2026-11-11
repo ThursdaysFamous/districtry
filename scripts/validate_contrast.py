@@ -982,8 +982,8 @@ def check_layer_pills():
             "taught to read it.")
         return None
     share, tint = float(m.group(1)) / 100.0, float(m.group(2)) / 100.0
-    light_vars = token_block(card, ".layer-block,\n  .stats-panel", CARD_CSS)
-    dark_vars = token_block(skin, ':root[data-theme="dark"] .layer-block,\n  :root[data-theme="dark"] .stats-panel', SKIN)
+    light_vars = token_block(card, ".layer-block,\n  .stats-panel,\n  .statewide-strip", CARD_CSS)
+    dark_vars = token_block(skin, ':root[data-theme="dark"] .layer-block,\n  :root[data-theme="dark"] .stats-panel,\n  :root[data-theme="dark"] .statewide-strip', SKIN)
     grounds = {
         "light": [_rule_value(card, ".layer-block-head", "background", CARD_CSS),
                   _rule_value(card, ".layer-block", "background", CARD_CSS)],

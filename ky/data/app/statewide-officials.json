@@ -1,0 +1,66 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from ky/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Kentucky",
+ "usSenate": [
+  {
+   "name": "Mitch McConnell",
+   "party": "Republican",
+   "url": "https://www.mcconnell.senate.gov/",
+   "office": "317 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2541"
+  },
+  {
+   "name": "Rand Paul",
+   "party": "Republican",
+   "url": "https://www.paul.senate.gov",
+   "office": "295 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4343"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Andy Beshear",
+   "url": "https://governor.ky.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Jacqueline Coleman",
+   "url": "https://ltgovernor.ky.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Russell Coleman",
+   "url": "https://www.ag.ky.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Michael Adams",
+   "url": "https://www.sos.ky.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Mark Metcalf",
+   "url": "https://treasury.ky.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Auditor of Public Accounts",
+   "name": "Allison Ball",
+   "url": "https://www.auditor.ky.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Commissioner of Agriculture",
+   "name": "Jonathan Shell",
+   "url": "https://www.kyagr.com/",
+   "verified": "2026-11-10"
+  }
+ ]
+}

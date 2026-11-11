@@ -1,0 +1,72 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from ms/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Mississippi",
+ "usSenate": [
+  {
+   "name": "Cindy Hyde-Smith",
+   "party": "Republican",
+   "url": "https://www.hydesmith.senate.gov/",
+   "office": "528 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5054"
+  },
+  {
+   "name": "Roger F. Wicker",
+   "party": "Republican",
+   "url": "https://www.wicker.senate.gov",
+   "office": "425 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-6253"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Tate Reeves",
+   "url": "https://governorreeves.ms.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Delbert Hosemann",
+   "url": "https://www.ltgovhosemann.ms.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Lynn Fitch",
+   "url": "https://attorneygenerallynnfitch.com/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Michael Watson",
+   "url": "https://www.sos.ms.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "David McRae",
+   "url": "https://treasury.ms.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Shad White",
+   "url": "https://www.osa.ms.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Commissioner of Agriculture and Commerce",
+   "name": "Andy Gipson",
+   "url": "https://www.mdac.ms.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Commissioner of Insurance",
+   "name": "Mike Chaney",
+   "url": "https://www.mid.ms.gov/",
+   "verified": "2026-11-10"
+  }
+ ]
+}

@@ -397,13 +397,18 @@ try {
   //     fleet-outlines.json, so the same click now opens /sc/. It moved to the
   //     positive cases in that change, the Kentucky go-live lesson run again:
   //     a fixed point in a neighbour stops meaning "uncovered" the day that
-  //     neighbour publishes.
+  //     neighbour publishes. Clayton, Georgia joined as a case in the change
+  //     that published Georgia: about 13 km south of the state line, inside
+  //     Georgia's outline in fleet-outlines.json and no other (measured
+  //     2026-11-10; TIGERweb's state layer names Georgia there, with both
+  //     capitols as controls).
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Milwaukee", lat: 43.04, lng: -87.91, want: "https://districtry.com/wi/" },
       { name: "Columbia, South Carolina", lat: 34.0007, lng: -81.0348, want: "https://districtry.com/sc/" },
       { name: "Danville, Virginia", lat: 36.586, lng: -79.395, want: "https://districtry.com/va/" },
+      { name: "Clayton, Georgia", lat: 34.8784, lng: -83.401, want: "https://districtry.com/ga/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -431,9 +436,10 @@ try {
   //     and publishing it put Danville inside fleet-outlines.json, so the same
   //     click now opens /va/ and moved to the positive cases in that change,
   //     as Columbia did at South Carolina's. THE OCEAN RATHER THAN ANOTHER
-  //     NEIGHBOUR: Virginia, Tennessee and South Carolina are live, and
-  //     Georgia, the one land neighbour left, is being built, so a point there
-  //     would move again the day it publishes. Measured 2026-10-30: TIGERweb's
+  //     NEIGHBOUR: Virginia, Tennessee and South Carolina were live, and
+  //     Georgia, the one land neighbour left, was being built, so a point there
+  //     would have moved again the day it published (it did publish, on
+  //     2026-11-10, and every land neighbour is now served). Measured 2026-10-30: TIGERweb's
   //     state layer names no state at this point (controls: Danville returns
   //     Virginia and Raleigh North Carolina), and no outline in
   //     fleet-outlines.json comes within 0.015 degrees of it, with Virginia's

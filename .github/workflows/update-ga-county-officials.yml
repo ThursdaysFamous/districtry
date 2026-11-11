@@ -29,8 +29,9 @@ name: Update Georgia county officials
 # elections and each election's list of counties) plus any county whose
 # results are not official yet. Each new election adds to both.
 #
-# GEORGIA IS DARK, so nothing this job writes is published until Georgia goes
-# live (ga/WATCH.md).
+# The per-county pages (ga/county-commissioner/) are GENERATED from the
+# officials file this job rewrites, so the PR step regenerates them, and the
+# pages and indexes that count them, before committing.
 
 on:
   schedule:
@@ -118,7 +119,17 @@ jobs:
           # rides across the checkout as a working-tree change.
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add ga/data/app/ga-county-officials.json ga/data/app/ga-circuit-officials.json ga/data/source/ga-judicial-circuits.source.json
+          # The per-county pages (ga/county-commissioner/) are GENERATED from
+          # the officials file this job just rewrote, so regenerate them here
+          # or the smoke gate's `build_county_pages.py --check` fails on this
+          # PR with a page naming last week's members. llms.txt COUNTS those
+          # pages, and docs/EAM_STATUS.md the seats the file names.
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          python3 scripts/build_llms_txt.py
+          python3 scripts/build_eam_status.py
+          git add ga/data/app/ga-county-officials.json ga/data/app/ga-circuit-officials.json ga/data/source/ga-judicial-circuits.source.json ga/county-commissioner ga/county-commissioner.html about.html sitemap.xml llms.txt docs/EAM_STATUS.md
           git commit -m "Update Georgia county officials from the Secretary of State's election results"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

@@ -1,0 +1,66 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from ia/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Iowa",
+ "usSenate": [
+  {
+   "name": "Joni Ernst",
+   "party": "Republican",
+   "url": "https://www.ernst.senate.gov",
+   "office": "260 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-3254"
+  },
+  {
+   "name": "Chuck Grassley",
+   "party": "Republican",
+   "url": "https://www.grassley.senate.gov",
+   "office": "135 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-3744"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Kim Reynolds",
+   "url": "https://governor.iowa.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Chris Cournoyer",
+   "url": "https://governor.iowa.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Brenna Bird",
+   "url": "https://www.iowaattorneygeneral.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Paul D. Pate",
+   "url": "https://sos.iowa.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Treasurer",
+   "name": "Roby Smith",
+   "url": "https://www.iowatreasurer.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Auditor of State",
+   "name": "Rob Sand",
+   "url": "https://auditor.iowa.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Secretary of Agriculture",
+   "name": "Mike Naig",
+   "url": "https://iowaagriculture.gov/",
+   "verified": "2026-11-10"
+  }
+ ]
+}

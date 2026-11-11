@@ -384,13 +384,17 @@ try {
   //     the real districtry.com, fails in the sandbox and leaves page.url() on
   //     the app, which reads exactly like correct behaviour.
   //
-  //     TENNESSEE BORDERS SIX LIVE INSTANCES, so it has both halves to
+  //     TENNESSEE BORDERS SEVEN LIVE INSTANCES, so it has both halves to
   //     prove. Kentucky, North Carolina, Arkansas (live since 2026-10-15) and
-  //     Mississippi (live since 2026-10-16) are covered, and Missouri and
-  //     Virginia since their go-lives, so a point just over any of those lines
-  //     must open that app; the other two neighbours (Georgia, Alabama) are
-  //     not, so a point over their lines must be selected HERE, where the app
-  //     says nothing answers there (1a2-ii). Abingdon, Virginia joined as a
+  //     Mississippi (live since 2026-10-16) are covered, and Missouri, Virginia
+  //     and Georgia since their go-lives, so a point just over any of those
+  //     lines must open that app; the one neighbour left (Alabama) is not, so a
+  //     point over its line must be selected HERE, where the app says nothing
+  //     answers there (1a2-ii). Dalton, Georgia joined as a case in the change
+  //     that published Georgia: it is the OUTSIDE anchor this app's own outline
+  //     builder already holds outside Tennessee, about 24 km south of the state
+  //     line, and is inside Georgia's outline in fleet-outlines.json and no
+  //     other. Abingdon, Virginia joined as a
   //     case in the change that published Virginia: it is the OUTSIDE anchor
   //     this app's own outline builder already holds outside Tennessee, about
   //     13 km north of the state line, and is inside Virginia's outline in
@@ -408,6 +412,7 @@ try {
       { name: "West Memphis, Arkansas", lat: 35.1465, lng: -90.1845, want: "https://districtry.com/ar/" },
       { name: "Southaven, Mississippi", lat: 34.9690, lng: -90.0130, want: "https://districtry.com/ms/" },
       { name: "Abingdon, Virginia", lat: 36.7098, lng: -81.9773, want: "https://districtry.com/va/" },
+      { name: "Dalton, Georgia", lat: 34.7698, lng: -84.9702, want: "https://districtry.com/ga/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -627,6 +632,51 @@ try {
     await context.close();
   }
 
+
+  // 2s. THE CENSUS'S "SCHOOL DISTRICT NOT DEFINED" RECORD IS NOT A DISTRICT
+  //     (2026-11-10). TIGER files ground no school district covers under a
+  //     placeholder named "School District Not Defined" (GEOID state + 99997),
+  //     and until that day the unified card printed it as the reader's school
+  //     district, lit it and offered to compare it. Here that ground is
+  //     Shelby County beside the Mississippi River. The census host is refused, so the card can only answer from
+  //     the shipped archive, which still carries the placeholder. The control
+  //     point keeps the check honest: a pin button that is never drawn would
+  //     pass the first half alone.
+  {
+    const SCHOOL_PLACEHOLDER = "35.27870,-90.13945";
+    const SCHOOL_CONTROL = "36.16270,-86.78160";
+    const read = async (pt) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=school-district-unified`, (p) =>
+        p.route("**tigerweb.geo.census.gov/**", (r) => r.abort()));
+      const info = await cardText(page, "school-district-unified");
+      await page.waitForTimeout(1000);
+      const res = await page.evaluate((n) => {
+        const box = document.getElementById("toggle-school-district-unified");
+        const block = box && box.closest(".layer-block");
+        const s = window[n].layerLoadState("school-district-unified");
+        return {
+          pin: !!(block && block.querySelector(".pin-parent-btn")),
+          lit: !!(s && s.highlight),
+          vector: window[n].basemap().vector,
+          hover: window[n].hoverValueFor("school-district-unified",
+            { NAME: "School District Not Defined", GEOID: "4799997" }),
+        };
+      }, EXPORTS_NAME);
+      await context.close();
+      return Object.assign({ text: info.text, error: info.error }, res);
+    };
+    const ph = await read(SCHOOL_PLACEHOLDER);
+    const ctrl = await read(SCHOOL_CONTROL);
+    check(
+      'the Census\'s "School District Not Defined" placeholder reads as no school district: not lit, not comparable, not named on hover',
+      !ph.error && ph.text.includes("No school district defined here") && !ph.pin && !ph.lit &&
+        ph.hover === "No school district defined" &&
+        !ctrl.error && !ctrl.text.includes("No school district defined") && ctrl.pin,
+      JSON.stringify({ placeholder: { text: ph.text.slice(0, 60), pin: ph.pin, lit: ph.lit, hover: ph.hover },
+        control: { text: ctrl.text.slice(0, 60), pin: ctrl.pin } })
+    );
+  }
 
   // 2e. Share control: the point chip carries ONE "Share" button whose popover
   //     serves the live campaign-tagged permalink, the embed snippet (tagged

@@ -1,0 +1,41 @@
+{
+ "state": "Kentucky",
+ "usps": "KY",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Andy Beshear",
+   "url": "https://governor.ky.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Jacqueline Coleman",
+   "url": "https://ltgovernor.ky.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Russell Coleman",
+   "url": "https://www.ag.ky.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Michael Adams",
+   "url": "https://www.sos.ky.gov/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Mark Metcalf",
+   "url": "https://treasury.ky.gov/"
+  },
+  {
+   "office": "Auditor of Public Accounts",
+   "name": "Allison Ball",
+   "url": "https://www.auditor.ky.gov/"
+  },
+  {
+   "office": "Commissioner of Agriculture",
+   "name": "Jonathan Shell",
+   "url": "https://www.kyagr.com/"
+  }
+ ]
+}

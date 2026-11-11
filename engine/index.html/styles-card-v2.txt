@@ -6,7 +6,8 @@
   /* the palette is shared with the comparison stats screen, which renders
      cards inside its own panel (compare-stats) */
   .layer-block,
-  .stats-panel {
+  .stats-panel,
+  .statewide-strip {
     --card-accent: #1d5fd6;
     --card-link: #1a56c4;
     --card-link-hover: #123c8a;
@@ -23,6 +24,63 @@
     --card-border: #e8eaef;
     --card-row-border: #f1f3f7;
     --card-btn-border: #c7d7f2;
+  }
+  /* The statewide officials line at the top of the results (engine
+     statewide-officials): one row naming the governor and a count, which
+     opens in place into the full list. Card palette, no layer stripe, since
+     it is not a layer. */
+  .statewide-strip {
+    margin: 0 0 14px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .statewide-strip-toggle {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 14px;
+    background: none;
+    border: 0;
+    font: inherit;
+    text-align: left;
+    color: var(--card-ink);
+    cursor: pointer;
+  }
+  .statewide-strip-toggle:focus-visible { outline: 2px solid var(--card-link); outline-offset: -2px; }
+  .statewide-strip-label {
+    flex: none;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--card-muted);
+  }
+  .statewide-strip-summary {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .statewide-strip-more {
+    flex: none;
+    font-size: 14px;
+    color: var(--card-link);
+  }
+  .statewide-strip-more::after { content: " \25BE"; }
+  .statewide-strip-toggle[aria-expanded="true"] .statewide-strip-more::after { content: " \25B4"; }
+  .statewide-strip-panel { border-top: 1px solid var(--card-border); }
+  .statewide-strip-source { margin: 0; padding: 10px 14px 12px; font-size: 14px; }
+  .statewide-strip-source a { color: var(--card-link); }
+  @media (max-width: 480px) {
+    .statewide-strip-toggle { flex-wrap: wrap; row-gap: 2px; }
+    .statewide-strip-label { flex-basis: 100%; }
   }
   .layer-block {
     background: #fff;

@@ -1,0 +1,137 @@
+{
+  "1": {
+    "name": "David Schweikert",
+    "party": "Republican",
+    "url": "https://schweikert.house.gov",
+    "capitolOffice": [
+      "166 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2190"
+    ],
+    "districtOffice": [
+      "14500 N Northsight Blvd, Suite 221",
+      "Scottsdale, AZ 85260-3658",
+      "Phone: 480-946-2411"
+    ]
+  },
+  "2": {
+    "name": "Elijah Crane",
+    "party": "Republican",
+    "url": "https://crane.house.gov",
+    "capitolOffice": [
+      "307 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3361"
+    ],
+    "districtOffice": [
+      "122 N. Cortez St., Suite 211",
+      "Prescott, AZ 86301",
+      "Phone: 928-286-5338"
+    ]
+  },
+  "3": {
+    "name": "Yassamin Ansari",
+    "party": "Democrat",
+    "url": "https://ansari.house.gov",
+    "capitolOffice": [
+      "1432 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4065"
+    ],
+    "districtOffice": [
+      "3770 N 7th St, 100b",
+      "Phoenix, AZ 85014",
+      "Phone: 602-956-2285"
+    ]
+  },
+  "4": {
+    "name": "Greg Stanton",
+    "party": "Democrat",
+    "url": "https://stanton.house.gov",
+    "capitolOffice": [
+      "207 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-9888"
+    ],
+    "districtOffice": [
+      "1220 S Alma School Rd, Ste 209",
+      "Mesa, AZ 85210",
+      "Phone: 602-956-2463"
+    ]
+  },
+  "5": {
+    "name": "Andy Biggs",
+    "party": "Republican",
+    "url": "https://biggs.house.gov",
+    "capitolOffice": [
+      "464 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2635"
+    ],
+    "districtOffice": [
+      "2509 S. Power Rd., Suite 204",
+      "Mesa, AZ 85209",
+      "Phone: 480-699-8239"
+    ]
+  },
+  "6": {
+    "name": "Juan Ciscomani",
+    "party": "Republican",
+    "url": "https://ciscomani.house.gov",
+    "capitolOffice": [
+      "461 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2542"
+    ],
+    "districtOffice": [
+      "2600 E. Wilcox Dr., Room H-106",
+      "Sierra Vista, AZ 85635",
+      "Phone: 520-459-3115"
+    ]
+  },
+  "7": {
+    "name": "Adelita S. Grijalva",
+    "party": "Democrat",
+    "url": "https://grijalva.house.gov",
+    "capitolOffice": [
+      "1203 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2435"
+    ],
+    "districtOffice": [
+      "101 W. Irvington Road",
+      "Building 4",
+      "Tucson, AZ 85714",
+      "Phone: 520-622-6788"
+    ]
+  },
+  "8": {
+    "name": "Abraham J. Hamadeh",
+    "party": "Republican",
+    "url": "https://hamadeh.house.gov",
+    "capitolOffice": [
+      "1722 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4576"
+    ],
+    "districtOffice": [
+      "12515 W. Bell Rd, Suite 104",
+      "Surprise, AZ 85378"
+    ]
+  },
+  "9": {
+    "name": "Paul A. Gosar",
+    "party": "Republican",
+    "url": "https://gosar.house.gov",
+    "capitolOffice": [
+      "2057 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2315"
+    ],
+    "districtOffice": [
+      "1300 S. Litchfield Road, Suite 115-H",
+      "Goodyear, AZ 85338",
+      "Phone: 623-707-0530"
+    ]
+  }
+}

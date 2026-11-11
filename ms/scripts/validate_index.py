@@ -122,6 +122,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "statewide-officials.json": 5,  # The officers Mississippi elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from ms/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
     "congress-roster.json": 4,  # U.S. House (MS) roster, refreshed weekly by update-ms-congress-roster.yml.
     "ms-senate-members.json": 52,  # Mississippi Senate roster from the Mississippi Legislature's own member gallery and profiles, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size; Senate 34 read vacant on 2026-10-15.
     "ms-house-members.json": 122,  # Mississippi House roster on the same terms; House 70 and 77 read vacant on 2026-10-15.

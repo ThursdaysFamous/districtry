@@ -1,0 +1,65 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from la/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Louisiana",
+ "usSenate": [
+  {
+   "name": "Bill Cassidy",
+   "party": "Republican",
+   "url": "https://www.cassidy.senate.gov",
+   "office": "455 Dirksen Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5824"
+  },
+  {
+   "name": "John Kennedy",
+   "party": "Republican",
+   "url": "https://www.kennedy.senate.gov",
+   "office": "437 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4623"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Jeff Landry",
+   "url": "https://gov.louisiana.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Billy Nungesser",
+   "url": "https://www.crt.state.la.us/lt-governor/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Liz Murrill",
+   "url": "https://www.ag.state.la.us/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Secretary of State",
+   "url": "https://www.sos.la.gov/",
+   "unnamed": "The office's website (sos.la.gov) refuses automated readers in robots.txt, so this app does not read a name from it."
+  },
+  {
+   "office": "State Treasurer",
+   "name": "John M. Fleming",
+   "url": "https://www.treasury.la.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Commissioner of Agriculture and Forestry",
+   "name": "Mike Strain",
+   "url": "https://www.ldaf.la.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Commissioner of Insurance",
+   "name": "Tim Temple",
+   "url": "https://www.ldi.la.gov/",
+   "verified": "2026-11-10"
+  }
+ ]
+}
