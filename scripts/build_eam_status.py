@@ -1433,6 +1433,8 @@ PREFIX_CLASSES = {
             "scripts/build_block_population.py")],
     "tx": [("tx/data/app/population/", "census",
             "scripts/build_block_population.py")],
+    "fl": [("fl/data/app/population/", "census",
+            "scripts/build_block_population.py")],
 }
 PREFIX_KIND = {rel: kind for rows in PREFIX_CLASSES.values()
                for rel, kind, _ in rows}
@@ -2842,6 +2844,43 @@ ANSWERS = {
         # Census keeps 3 reservations and 3 trust lands in Texas (the
         # Alabama-Coushatta, the Kickapoo Traditional Tribe and Ysleta del Sur
         # Pueblo), and the app draws no tribal land yet (tx/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "fl": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("fl-senate", "fl-house"),
+        "county-boundaries": answers("county"),
+        # No board of county commissioners is named yet (the state-level
+        # launch names the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city council is named yet.
+        "local-government": depth(),
+        # Florida's constitution makes each county one school district, and
+        # TIGER carries the 67 as unified districts and nothing else.
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-11 on TIGERweb's county subdivisions, with Illinois
+        # as the control (1,411 active of 1,695): all 316 of Florida's are
+        # census county divisions (FUNCSTAT S), statistical areas that govern
+        # nobody.
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": na(
+            "Florida has no sub-county general-purpose government — outside a "
+            "city, town or village the county governs. The 316 sub-county units "
+            "the Census publishes for Florida are census county divisions: "
+            "statistical areas, not governments (measured 2026-11-11)."),
+        # Circuit and county judges are elected; no circuit is drawn or judge
+        # named yet.
+        "courts-by-district": OPEN,
+        # School board members are elected from residence districts; no
+        # school board district is drawn yet.
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-11 with scripts/tribal_areas.py --report Florida:
+        # the Census keeps 7 reservations (the Miccosukee's and six of the
+        # Seminole Tribe of Florida's) and 4 trust lands in Florida, and the
+        # app draws no tribal land yet (fl/WATCH.md).
         "tribal-government": OPEN,
     },
     # Georgia, added at its go-live: the national tier, every county's board of

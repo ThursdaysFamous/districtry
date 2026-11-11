@@ -171,6 +171,8 @@ jobs:
             # Texas, the first state of the launch's batch 2, arrives dark:
             # the whole folder stays out until its go-live change.
             'tx/**'
+            # Florida, batch 2's second state, arrives dark the same way.
+            'fl/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full

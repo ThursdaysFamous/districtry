@@ -76,7 +76,8 @@ in the researched-but-unbuilt backlog.
   "arizona": ["us-house", "county", "az-senate", "az-house", "school-district-secondary", "school-district-unified", "school-district-elementary", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
   "newjersey": ["us-house", "county", "nj-senate", "nj-assembly", "school-district-secondary", "school-district-elementary", "school-district-unified", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
   "newhampshire": ["us-house", "county", "nh-senate", "school-district-secondary", "school-district-unified", "nh-house", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
-  "texas": ["tx-senate", "us-house", "tx-house", "county", "school-district-unified", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "police-station", "fire-station", "post-office"]
+  "texas": ["tx-senate", "us-house", "tx-house", "county", "school-district-unified", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "police-station", "fire-station", "post-office"],
+  "florida": ["us-house", "fl-senate", "county", "school-district-unified", "fl-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -4290,6 +4291,45 @@ trusted.
             "why": "No list of the trustees of Texas's independent school districts has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's trustees, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-11 against TIGERweb's school districts (School MapServer) for STATE='48': 1,016 unified districts on layer 0, one elementary district on layer 2 (Vysehrad Independent School District, Lavaca County, grades PK-8) and one secondary district on layer 1 (Hallettsville Independent School District's grades 9-12 over the same ground), all three shipped as tile archives. Layer 0 answers HTTP 500 to a whole-state request, so it is mirrored in pages of 250. No board roster was read for this record, and whether every trustee is elected from a single-member district or at large was not checked. ROUTES NOT YET READ, government publishers first: the Texas Education Agency's own directory (AskTED); and each district's own website. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "florida": [
+      {
+            "id": "fl-county-officials",
+            "concept": "County government",
+            "area": "Florida — all 67 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its county commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of Florida's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-11 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is fl/index.html's own County block: each county is governed by an elected board of county commissioners unless its charter sets up another government, as Miami-Dade's and Duval's do (Duval's is consolidated with the City of Jacksonville's), and elects officers such as a sheriff, a clerk of the circuit court, a property appraiser, a tax collector and a supervisor of elections. The boundary is TIGERweb State_County for STATE='12', 67 features, shipped as fl/data/app/state-counties.json. Commission districts are not drawn: TIGER carries no such layer, so each county's own map would be the source. ROUTES NOT YET READ, government publishers first: each county's own website; each county supervisor of elections' results, which name who won each county seat; and the Division of Elections' own records, if they list county officers. The Florida Association of Counties is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "fl-municipal-officeholders",
+            "concept": "City government",
+            "area": "Florida",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City, Town or Village card names the place you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Florida's cities, towns and villages has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's, town's and village's mayor and council members, or a place's own published list of them.",
+            "blocker": "Measured 2026-11-11 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='12': 411 records, 267 cities, 123 towns and 21 villages, every one an active government. Together they hold about 10.3% of the state's land (14,353.0 of 138,974.0 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Jacksonville, Miami, Tampa, Orlando, St. Petersburg); and the county supervisors of elections' results. The Florida League of Cities is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "fl-school-board-members",
+            "concept": "School board",
+            "area": "Florida",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of Florida's 67 school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-11 against TIGERweb's school districts (School MapServer) for STATE='12': 67 unified districts on layer 0, one for each county, and nothing on the elementary or secondary layers; shipped as a tile archive. No board roster was read for this record, and how each board's members are elected (from residence districts, countywide or both) was not checked. ROUTES NOT YET READ, government publishers first: the Florida Department of Education's own directory of school districts; each district's own website; and the county supervisors of elections' results. The Florida School Boards Association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
       }
   ]
 }

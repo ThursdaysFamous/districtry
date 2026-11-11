@@ -237,6 +237,15 @@ INSTANCES = {
            "bbox": (-106.65, 25.83, -93.5, 36.51),
            "maps": [("congress-districts.json", 38, 0.0005), ("tx-senate-districts.json", 31, 0.035),
                     ("tx-house-districts.json", 150, 0.05)]},
+    # Florida's two chambers are separate plans, so both are held. Measured
+    # 2026-11-11 on the shipped outlines: the congressional map (the 119th
+    # Congress's, which the members serving until 3 January 2027 were elected
+    # from) sits within 0.003% of its ideal, the Senate plan's worst district is
+    # 0.969% over the raw-census ideal and the House plan's 2.378% under it.
+    "fl": {"name": "Florida", "state": "12", "total": 21538187, "counties": 67,
+           "bbox": (-87.64, 24.39, -79.97, 31.01),
+           "maps": [("congress-districts.json", 28, 0.0005), ("fl-senate-districts.json", 40, 0.01),
+                    ("fl-house-districts.json", 120, 0.025)]},
 }
 def fetch(url, params):
     q = url + "/query?" + urllib.parse.urlencode(params)

@@ -137,6 +137,7 @@ FACE_CARRIERS = ["engine/shared/styles-subpage.txt",
                  "wv/index.html", "pa/index.html", "nv/index.html",
                  "az/index.html", "nj/index.html", "nh/index.html",
                  "tx/index.html",
+                 "fl/index.html",
                  "index.html", "privacy.html"]
 
 WORKSHEET_PALETTE = [("accent", "brand"), ("accent_deep", "brand-700"),

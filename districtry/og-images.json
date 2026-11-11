@@ -31,6 +31,14 @@
     "height": 630,
     "rendered": "2026-09-13"
   },
+  "fl": {
+    "path": "fl/og-image.png",
+    "label": "fl",
+    "sha256": "66485e70465373df8e053c38ef5d3f73f6b39e3be26787f372ad092031767f0b",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-11-11"
+  },
   "ga": {
     "path": "ga/og-image.png",
     "label": "ga",
