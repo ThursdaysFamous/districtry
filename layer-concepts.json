@@ -96,7 +96,7 @@
     "limited-trial-court-district": { "ky": "ky-district-court", "nc": "nc-district-court" },
     "county": {
       "il": "county", "ny": "county", "wi": "county", "ia": "county", "mi": "county", "mn": "county",
-      "ky": "county", "in": "county", "nc": "county", "ok": "county", "sc": "county", "tn": "county", "ar": "county", "ms": "county", "la": "county", "mo": "county", "va": "county", "wv": "county", "ga": "county", "pa": "county", "nv": "county", "az": "county", "nj": "county", "nh": "county"
+      "ky": "county", "in": "county", "nc": "county", "ok": "county", "sc": "county", "tn": "county", "ar": "county", "ms": "county", "la": "county", "mo": "county", "va": "county", "wv": "county", "ga": "county", "pa": "county", "nv": "county", "az": "county", "nj": "county", "nh": "county", "ca": "county"
     },
     "county-board": {
       "il": "county-board", "ny": ["county-legislature", "county-supervisor"], "ca": "supervisor-district",
@@ -113,7 +113,7 @@
     "municipality": {
       "il": "municipality", "ny": ["municipality", "village"], "wi": "municipality", "ia": "municipality",
       "mi": "municipality", "mn": "municipality", "ky": "municipality", "in": "municipality",
-      "nc": "municipality", "ok": "municipality", "sc": "municipality", "tn": "municipality", "ar": "municipality", "ms": "municipality", "la": "municipality", "mo": "municipality", "va": "municipality", "wv": "municipality", "ga": "municipality", "pa": "municipality", "nv": "municipality", "az": "municipality", "nj": "municipality", "nh": "municipality"
+      "nc": "municipality", "ok": "municipality", "sc": "municipality", "tn": "municipality", "ar": "municipality", "ms": "municipality", "la": "municipality", "mo": "municipality", "va": "municipality", "wv": "municipality", "ga": "municipality", "pa": "municipality", "nv": "municipality", "az": "municipality", "nj": "municipality", "nh": "municipality", "ca": "municipality"
     },
     "city-council": {
       "il": "ward", "ny": "council", "ca": "supervisor-district", "wi": "aldermanic-district",
@@ -142,16 +142,16 @@
       "il": "school-district-unified", "ny": "nys-school-district", "wi": "school-district-unified",
       "ia": "school-district-unified", "mi": "school-district-unified", "mn": "school-district-unified",
       "ky": "school-district-unified", "in": "school-district-unified", "nc": "school-district-unified",
-      "ok": "school-district-unified", "sc": "school-district-unified", "tn": "school-district-unified", "ar": "school-district-unified", "ms": "school-district-unified", "la": "school-district-unified", "mo": "school-district-unified", "va": "school-district-unified", "wv": "school-district-unified", "ga": "school-district-unified", "pa": "school-district-unified", "nv": "school-district-unified", "az": "school-district-unified", "nj": "school-district-unified", "nh": "school-district-unified"
+      "ok": "school-district-unified", "sc": "school-district-unified", "tn": "school-district-unified", "ar": "school-district-unified", "ms": "school-district-unified", "la": "school-district-unified", "mo": "school-district-unified", "va": "school-district-unified", "wv": "school-district-unified", "ga": "school-district-unified", "pa": "school-district-unified", "nv": "school-district-unified", "az": "school-district-unified", "nj": "school-district-unified", "nh": "school-district-unified", "ca": "school-district-unified"
     },
     "school-district-elementary": {
       "il": "school-district-elementary", "wi": "school-district-elementary", "mi": "school-district-elementary",
       "mn": "school-district-elementary", "ky": "school-district-elementary", "ok": "school-district-elementary",
-      "tn": "school-district-elementary", "mo": "school-district-elementary", "va": "school-district-elementary", "az": "school-district-elementary", "nj": "school-district-elementary", "nh": "school-district-elementary"
+      "tn": "school-district-elementary", "mo": "school-district-elementary", "va": "school-district-elementary", "az": "school-district-elementary", "nj": "school-district-elementary", "nh": "school-district-elementary", "ca": "school-district-elementary"
     },
     "school-district-secondary": {
       "il": "school-district-secondary", "ny": "nys-central-hs-district", "wi": "school-district-secondary",
-      "mn": "school-district-secondary", "ky": "school-district-secondary", "tn": "school-district-secondary", "az": "school-district-secondary", "nj": "school-district-secondary", "nh": "school-district-secondary"
+      "mn": "school-district-secondary", "ky": "school-district-secondary", "tn": "school-district-secondary", "az": "school-district-secondary", "nj": "school-district-secondary", "nh": "school-district-secondary", "ca": "school-district-secondary"
     },
     "school-board-district": {
       "il": "school-board", "wi": "mps-school-board", "ia": "school-director-district", "mn": "school-board-district",

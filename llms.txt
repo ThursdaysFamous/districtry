@@ -1,6 +1,6 @@
 # districtry
 
-> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. 25 instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi, Louisiana, Missouri, Virginia, West Virginia, Georgia, Pennsylvania, Nevada, Arizona, New Jersey and New Hampshire. Every boundary and every name comes from a published source and is cited to it.
+> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. 25 instances across Illinois, New York, California, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi, Louisiana, Missouri, Virginia, West Virginia, Georgia, Pennsylvania, Nevada, Arizona, New Jersey and New Hampshire. Every boundary and every name comes from a published source and is cited to it.
 
 Free, no account, no tracking of individuals. The map runs in the browser; what each page sends to whom is listed at https://districtry.com/privacy.html.
 
@@ -57,17 +57,17 @@ Counties, towns and villages, school and judicial districts across the state, pl
 - [Who is my NY state legislator?](https://districtry.com/ny/state-legislature.html)
 - [New York district questions](https://districtry.com/ny/faq.html)
 
-## San Francisco
+## California
 
-Supervisor districts, neighborhoods, police districts, school attendance areas, and the state and federal seats above them.
+All 58 counties: cities and towns, unified, elementary and high school districts, ZIP codes and the nearest post office, plus the California Senate, Assembly and U.S. House districts, with who holds each seat. San Francisco in full: its supervisor districts and precincts, neighborhoods, police districts and stations, fire stations, school attendance areas and sites, libraries and voting centers, and the BART board, which also covers Alameda and Contra Costa counties. Tribal lands are not drawn yet, and county, city and school board officials outside San Francisco are not named yet; the Data gaps panel says why.
 
-- [San Francisco district lookup](https://districtry.com/ca/): 17 layers, 1 city.
+- [California district lookup](https://districtry.com/ca/): 22 layers, statewide, San Francisco in depth.
 - [Who is my U.S. representative?](https://districtry.com/ca/congress.html)
 - [2026 precinct election results](https://districtry.com/ca/election-results.html)
 - [Sources & data layers](https://districtry.com/ca/sources.html)
 - [Who is my CA state legislator?](https://districtry.com/ca/state-legislature.html)
 - [What supervisor district am I in?](https://districtry.com/ca/supervisor-district.html)
-- [SF district questions](https://districtry.com/ca/faq.html)
+- [California district questions](https://districtry.com/ca/faq.html)
 
 ## Wisconsin
 

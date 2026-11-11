@@ -229,6 +229,10 @@ MIRRORS = [
     ("nh", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("wa", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
     ("wa", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ca", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("ca", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ca", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ca", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
 ]
 
 # THE ZIP LAYERS (phase 6b). TIGERweb's ZCTA layer has NO STATE field — a ZCTA
@@ -254,7 +258,7 @@ ZIP_MIRRORS = [
     ("mi", "zip-code", "MI_BBOX_ENVELOPE", (-90.42, 41.69, -82.12, 48.31)),
     ("wi", "zip-code", "WI_BBOX_ENVELOPE", (-93.09, 42.29, -86.04, 47.51)),
     ("ny", "nys-zip-code", "NY_ZCTA_ENVELOPE", (-79.77, 40.47, -71.77, 45.02)),
-    ("ca", "zip-code", "SF_BBOX_ENVELOPE", (-122.62, 37.58, -122.28, 37.96)),
+    ("ca", "zip-code", "CA_BBOX_ENVELOPE", (-124.5, 32.5, -114.1, 42.05)),
     ("mn", "zip-code", "MN_BBOX_ENVELOPE", (-97.30, 43.44, -89.43, 49.44)),
     ("in", "zip-code", "IN_BBOX_ENVELOPE", (-88.10, 37.77, -84.78, 41.77)),
     ("nc", "zip-code", "NC_BBOX_ENVELOPE", (-84.50, 33.60, -75.10, 36.75)),
@@ -297,10 +301,11 @@ PAGE_SIZE = 250
 # a ZCTA that merely touches the state line shares an edge, not ground. What it
 # costs is stated rather than implied: a reader who clicks OUTSIDE the state
 # gets no ZIP card where the live layer answered one — and since 2026-09-30
-# every ZIP layer mirrored here but San Francisco's hides outside its state
-# anyway, through the app's coverage test against its own state outline, so the
-# archive and the live loader agree there (San Francisco's is ungated on
-# purpose: its box, the city and the inner Bay, reaches no other state). THE
+# every ZIP layer mirrored here hides outside its state anyway, through the
+# app's coverage test against its own state outline, so the archive and the
+# live loader agree there (California's joined on 2026-11-11, when the app grew
+# from San Francisco to the state; until then its box was the city and the
+# inner Bay, which reaches no other state, and it was ungated). THE
 # FILTER changes no answer inside the state (measured 2026-09-27: every dropped
 # ZCTA that touches the state holds 0.00 m2 of it; measured again 2026-10-17 for
 # the eight phase-6d layers, where 87, 75, 103, 116, 64, 110, 96 and 68 dropped

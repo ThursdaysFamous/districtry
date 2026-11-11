@@ -58,7 +58,7 @@ the audit asked for an item about the project.
 | P275 (copyright license) | Q1224853 (Open Database License) | The DATA licence, from `LICENSE-DATA.md`, which covers the compiled databases and explicitly not the public records underneath them. Enter both or neither — one alone states half of what this project publishes. |
 | P1001 (applies to jurisdiction) | Q1204 (Illinois) | the `/il/` instance |
 | P1001 (applies to jurisdiction) | Q1384 (New York) | the `/ny/` instance |
-| P1001 (applies to jurisdiction) | Q62 (San Francisco) | the `/ca/` instance |
+| P1001 (applies to jurisdiction) | Q99 (California) | the `/ca/` instance |
 | P1001 (applies to jurisdiction) | Q1537 (Wisconsin) | the `/wi/` instance |
 | P1001 (applies to jurisdiction) | Q1546 (Iowa) | the `/ia/` instance |
 | P1001 (applies to jurisdiction) | Q1166 (Michigan) | the `/mi/` instance |
@@ -154,6 +154,6 @@ endpoint used.
 | `Q189210` | web application |
 | `Q30` | United States |
 | `Q35127` | website |
-| `Q62` | San Francisco |
 | `Q759` | New Hampshire |
 | `Q816` | Arizona |
+| `Q99` | California |

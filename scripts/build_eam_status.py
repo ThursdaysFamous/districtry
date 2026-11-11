@@ -229,11 +229,21 @@ INDEPENDENT_CITIES = {"va": 38}
 # it statewide, having first MEASURED the tier it was asking to be held to —
 # #1328 records what 57 county front pages outside the city publish, and what
 # they do not. So E and A now use the state's own 62 and C's separate
-# COVERED_COUNTIES entry is no longer a divergence. San Francisco stays a city
-# app, because a consolidated city and county has no county above it.
+# COVERED_COUNTIES entry is no longer a divergence.
+#
+# CALIFORNIA'S ENTRY USED TO READ "San Francisco — a consolidated city and
+# county, so the county tier is the city and there is no frontier", which was
+# true while the app answered for San Francisco alone. It grew to the whole
+# state on 2026-11-11 (Adam's "Grow" of 2026-11-10), so its frontier is now
+# the state's 58 counties, and scoring E and A against them needs a coverage
+# ring this report can read (ring_size) and a county-page adapter that names
+# San Francisco's board, neither of which California has yet. Until that
+# change, E and A are recorded as not scored, with the reason, rather than
+# passed on the old reading.
 NO_COUNTY_TIER = {
-    "ca": "San Francisco — a consolidated city and county, so the county tier "
-          "is the city and there is no frontier.",
+    "ca": "California's app grew from San Francisco to the whole state on "
+          "2026-11-11 and its 58-county frontier is not scored here yet; "
+          "only San Francisco names a county governing body so far.",
 }
 
 
@@ -1555,8 +1565,17 @@ OPEN = Entry("open")
 UNSETTLED = Entry("unsettled")
 
 
-CITY_INSTANCE = ("San Francisco is one city, so its city tier is the whole app "
-                 "and the state tiers above it are another app's subject.")
+# CALIFORNIA HAS NO GENERAL-PURPOSE GOVERNMENT BETWEEN ITS COUNTIES AND ITS
+# CITIES. Its county subdivisions are the Census's county divisions, drawn for
+# statistics with no government of their own, and an unincorporated place is
+# governed by its county. (Until 2026-11-11 this table held CITY_INSTANCE,
+# "San Francisco is one city, so its city tier is the whole app and the state
+# tiers above it are another app's subject", which ended when the app grew to
+# the whole state.)
+CA_NO_SUBCOUNTY_GOVERNMENT = (
+    "California has no government between the county and the city: its county "
+    "subdivisions are census county divisions drawn for statistics, and an "
+    "unincorporated place is governed by its county.")
 
 # A STATE WITH NO TRIBAL LAND IS THE STANDARD'S "the state does not have the
 # level" CASE, and this reason is the record it asks for: the fact, and
@@ -3058,30 +3077,42 @@ ANSWERS = {
         # councils named -- the Wisconsin and Michigan shape.
         "tribal-government": answers("tribal-government"),
     },
+    # CALIFORNIA IS A WHOLE-STATE APP SINCE 2026-11-11. While it answered for
+    # San Francisco alone, the county, city and school-district boundary rows
+    # were "not this app's subject", and the courts, school boards and tribal
+    # rows were the city's own measurements (NO_TRIBAL_LAND_SF,
+    # SF_NO_COURT_DISTRICTS, SF_SCHOOL_BOARDS_AT_LARGE, kept above as the
+    # record of San Francisco). Those three are true of the city and not of
+    # the state, so each row now says what the state app does.
     "ca": {
         "us-house": answers("congress"),
         "state-legislature": answers("ca-senate", "ca-assembly"),
-        "county-boundaries": na(CITY_INSTANCE),
-        # San Francisco's Board of Supervisors is both the county governing body
-        # and the city council, drawn by district and named.
-        "county-government": answers("supervisor-district"),
-        "municipal-boundaries": na(CITY_INSTANCE),
-        # Its city tier is one city, and the same board is its council,
-        # drawn by district and named, so there is no size to measure.
-        "local-government": answers("supervisor-district"),
-        "school-district-boundaries": na(CITY_INSTANCE),
-        # Both of these were left to this app's own thread and both are
-        # settled now, measured 2026-10-01 and written up in ca/WATCH.md.
-        # Neither is an absence anybody has to ask a publisher about: the
-        # level does not exist inside this city, which is the standard's
-        # "a state genuinely lacks a level" case.
-        "subdivision-boundaries": na(CITY_INSTANCE),
-        "courts-by-district": na(SF_NO_COURT_DISTRICTS),
-        "sub-county-government": na(CITY_INSTANCE),
-        "school-boards-by-district": na(SF_SCHOOL_BOARDS_AT_LARGE),
-        "precincts": answers("election-precinct"),
-        "special-districts": answers("bart-director"),
-        "tribal-government": na(NO_TRIBAL_LAND_SF),
+        "county-boundaries": answers("county"),
+        # San Francisco's Board of Supervisors is its county's governing body,
+        # drawn by district and named; no other county's board is named yet.
+        "county-government": Entry("open", ("supervisor-district",)),
+        "municipal-boundaries": answers("municipality"),
+        # The same board is San Francisco's city council; no other city's
+        # council is named yet.
+        "local-government": Entry("open", ("supervisor-district",)),
+        "school-district-boundaries": answers("school-district-unified",
+                                              "school-district-elementary",
+                                              "school-district-secondary"),
+        "subdivision-boundaries": na(CA_NO_SUBCOUNTY_GOVERNMENT),
+        # Superior court judges are elected countywide, and Court of Appeal
+        # justices are retained by the voters of their appellate district:
+        # whether those six districts are owed as drawn lines is left to
+        # California's own thread.
+        "courts-by-district": UNSETTLED,
+        "sub-county-government": na(CA_NO_SUBCOUNTY_GOVERNMENT),
+        # Many California school districts elect trustees by area; none is
+        # drawn yet. San Francisco's two boards are elected at large.
+        "school-boards-by-district": OPEN,
+        # San Francisco's precincts only.
+        "precincts": Entry("open", ("election-precinct",)),
+        "special-districts": Entry("open", ("bart-director",)),
+        # Tribal lands are not drawn yet (owed after the batch-2 launch).
+        "tribal-government": OPEN,
     },
 }
 

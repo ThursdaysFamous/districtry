@@ -39,21 +39,21 @@
     },
     {
       "id": "sf",
-      "explorer_name": "districtry San Francisco",
-      "label": "San Francisco",
+      "explorer_name": "districtry California",
+      "label": "California",
       "url": "https://districtry.com/ca/",
       "emoji": "🌉",
       "repo": "ThursdaysFamous/districtry",
       "bbox": {
-        "minLng": -122.6,
-        "minLat": 37.6,
-        "maxLng": -122.3,
-        "maxLat": 37.95
+        "minLng": -124.49,
+        "minLat": 32.52,
+        "maxLng": -114.12,
+        "maxLat": 42.02
       },
       "tag": "ca",
-      "landing_name": "San Francisco",
-      "blurb": "Supervisor districts, neighborhoods, police districts, school attendance areas, and the state and federal seats above them.",
-      "scope": "1 city"
+      "landing_name": "California",
+      "blurb": "All 58 counties: cities and towns, unified, elementary and high school districts, ZIP codes and the nearest post office, plus the California Senate, Assembly and U.S. House districts, with who holds each seat. San Francisco in full: its supervisor districts and precincts, neighborhoods, police districts and stations, fire stations, school attendance areas and sites, libraries and voting centers, and the BART board, which also covers Alameda and Contra Costa counties. Tribal lands are not drawn yet, and county, city and school board officials outside San Francisco are not named yet; the Data gaps panel says why.",
+      "scope": "statewide, San Francisco in depth"
     },
     {
       "id": "wisconsin",

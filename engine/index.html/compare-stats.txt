@@ -24,8 +24,8 @@
    * footnote says so. The block files are fetched per county, only for the
    * counties the districts touch, and only when this screen opens. They hold
    * this app's own ground and nobody beyond it, so a district reaching past
-   * that ground (a ZIP code across a state line, a San Francisco Assembly
-   * district reaching into San Mateo County) is not given a share of its own
+   * that ground (a ZIP code across a state line, or a district of a body
+   * that reaches past the app's own outline) is not given a share of its own
    * people, and a compared district that does is compared by area alone.
    *
    * A ROW'S CARD RUNS THE LAYER'S OWN QUERY AT A POINT INSIDE THE DISTRICT
@@ -128,10 +128,10 @@
   // The population files hold the people of this app's own ground and no
   // one beyond it, so a district reaching past that ground has people the
   // files cannot count. This is the share of a district's area outside the
-  // ground the index names (San Francisco's county with its water, because
-  // its wash is drawn on land and its districts carry the Bay), or else the
-  // outline the app drew its wash with (the state), or 0 while neither has
-  // loaded. A district with more than 1% of its area outside is treated as
+  // ground the index names (none does since 2026-11-11, when San
+  // Francisco's county file went with its app's growth to all of
+  // California), or else the outline the app drew its wash with (the
+  // state), or 0 while neither has loaded. A district with more than 1% of its area outside is treated as
   // reaching past: measured 2026-11-06, no state's congressional or
   // legislative district has more than 0.06% of its area outside its
   // state's outline.

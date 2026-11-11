@@ -1467,8 +1467,10 @@ try {
   //      /wi/ with the link, rebuilt from its words, as #q=, and asks the
   //      geocoder nothing; a short link is read by the lookup first. A link
   //      to a place in a state no app covers says so. A link in California
-  //      is searched here as before, because San Francisco's app covers one
-  //      city and the address alone does not say the place is in it. And
+  //      opens /ca/ the same way since California's app grew from San
+  //      Francisco to the whole state on 2026-11-11; until then it was
+  //      searched here, because an app answering for one city does not hold
+  //      every place an address in its state names. And
   //      among several answers to a link, the one that is the place itself
   //      (its name, house number and street) is selected (markLinkPlace),
   //      while the same answers without its number select nothing. The
@@ -1478,6 +1480,7 @@ try {
     const WI_REBUILT = "https://www.google.com/maps?q=Devil's+Lake+State+Park,+S5975+Park+Rd,+Baraboo,+WI+53913";
     const OH_FULL = "https://maps.google.com/?q=Union+Terminal,+1301+Western+Ave,+Cincinnati,+OH+45203&ftid=0x0:0x2&entry=gps";
     const CA_FULL = "https://maps.google.com/?q=Grand+Central+Market,+317+S+Broadway,+Los+Angeles,+CA+90013&ftid=0x0:0x3&entry=gps";
+    const CA_REBUILT = "https://www.google.com/maps?q=Grand+Central+Market,+317+S+Broadway,+Los+Angeles,+CA+90013";
     const IL_FULL = "https://maps.google.com/?q=Starved+Rock+Lodge,+2668+E+875th+Rd,+Oglesby,+IL+61348&ftid=0x0:0x4&entry=gps";
     const IL_NAMED = "Starved Rock Lodge, 2668 E 875th Rd, Oglesby, IL 61348";
     const feature = (lng, lat, props) => ({ type: "Feature", geometry: { type: "Point", coordinates: [lng, lat] }, properties: props });
@@ -1514,8 +1517,8 @@ try {
       await context.close();
       return { went, asked, looked, got };
     };
-    const handed = (url) => {
-      const m = url && /^https:\/\/districtry\.com\/wi\/#(.*)$/.exec(url);
+    const handed = (url, tag) => {
+      const m = url && new RegExp("^https://districtry\\.com/" + (tag || "wi") + "/#(.*)$").exec(url);
       return m ? new URLSearchParams(m[1]).get("q") : null;
     };
     const short = await run("https://maps.app.goo.gl/AbCdEf123", null, null);
@@ -1530,9 +1533,9 @@ try {
       !ohio.went && !ohio.got.point && ohio.asked.length === 0 &&
         /That Google Maps link is to a place in Ohio, which districtry doesn't cover yet\./.test(ohio.got.status),
       JSON.stringify(ohio));
-    const ca = await run(CA_FULL, null, () => /match|doesn't say/.test(document.getElementById("geo-status").textContent));
-    check("a link to a place in California is searched here, not handed to San Francisco's app",
-      !ca.went && ca.asked[0] === "Grand Central Market, 317 S Broadway, Los Angeles, CA 90013", JSON.stringify(ca));
+    const ca = await run(CA_FULL, null, null);
+    check("a link to a place in California opens /ca/, whose app answers for the whole state, and asks the geocoder nothing",
+      handed(ca.went, "ca") === CA_REBUILT && ca.asked.length === 0, JSON.stringify(ca));
     const place = await run(IL_FULL, (q) => (q === IL_NAMED ? [PARK, LODGE, BRIDGE] : []),
       (ns) => !!window[ns].state.selectedPoint);
     check("among several answers to a link, the one that is the place itself is selected",

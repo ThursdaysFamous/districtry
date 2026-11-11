@@ -156,7 +156,7 @@ prose.
 |---|---|---|
 | il | 5 | 42 |
 | ny | 0 | 40 |
-| ca | 0 | 17 |
+| ca | 0 | 22 |
 | wi | 1 | 32 |
 | ia | 0 | 21 |
 | mi | 0 | 19 |
@@ -255,18 +255,18 @@ measured until the next run describes it.
 - Point layers (locations, not shapes): `school-site`, `police-station`, `fire-station`, `post-office`, `library`, `early-voting`, `polling-place`.
 - **Not measured** — declared since the probe ran: `election-results`, `tribal-government`.
 
-#### ca — 4 of 17 layers fetch their shapes
+#### ca — 4 of 22 layers fetch their shapes
 
 | layer | whole set from | at the selected point from |
 |---|---|---|
 | BART Director District (`bart-director`) | `services.arcgis.com` | — |
-| Election Precinct (`election-precinct`) | `data.sf.gov` | — |
 | ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
+| Election Precinct (`election-precinct`) | `data.sf.gov` | — |
 | Elementary Attendance Area (`elementary-attendance-area`) | `data.sf.gov` | — |
 
-- Drawn from this site's own files: `congress`, `ca-senate`, `ca-assembly`, `supervisor-district`, `police-district`, `neighborhood`.
+- Drawn from this site's own files: `ca-senate`, `congress`, `ca-assembly`, `supervisor-district`, `police-district`, `neighborhood`.
 - Point layers (locations, not shapes): `police-station`, `fire-station`, `school-site`, `post-office`, `library`, `early-voting`.
-- **Not measured** — declared since the probe ran: `election-results`.
+- **Not measured** — declared since the probe ran: `county`, `school-district-secondary`, `school-district-unified`, `school-district-elementary`, `municipality`, `election-results`.
 
 #### wi — 6 of 32 layers fetch their shapes
 
@@ -429,7 +429,7 @@ measured until the next run describes it.
 |---|---|---|---|
 | il | 131 | 418 | 6 |
 | ny | 38 | 38 | 0 |
-| ca | 17 | 17 | 0 |
+| ca | 20 | 19 | 0 |
 | wi | 92 | 268 | 5 |
 | ia | 72 | 57 | 0 |
 | mi | 40 | 71 | 1 |
@@ -452,7 +452,7 @@ measured until the next run describes it.
 | az | 17 | 10 | 0 |
 | nj | 17 | 10 | 0 |
 | nh | 19 | 11 | 0 |
-| **total** | **886** | **1210** | **12** |
+| **total** | **889** | **1212** | **12** |
 
 **232 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and

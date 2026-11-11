@@ -115,9 +115,21 @@ INSTANCES = {
            "bbox": (-92.0, 36.9, -87.0, 42.6),
            "maps": [("congress-districts.json", 17, CONGRESS), ("il-senate-districts.json", 59, LEGIS),
                     ("il-house-districts.json", 118, LEGIS)]},
-    "ca": {"name": "San Francisco", "state": "06", "total": 873965, "counties": ("075",),
-           "bbox": (-123.18, 37.63, -122.27, 37.94),
-           "maps": [], "ground": True},
+    # California was a city instance (San Francisco's one county, held to no
+    # map and read against its county's own polygon as "ground") until it grew
+    # to the state on 2026-11-11; its wash's lighter band is now the state
+    # outline, water included, which holds every block. ITS TOLERANCES ARE THE
+    # WIDEST IN THE TABLE, and that is the plan, not the outline: measured
+    # 2026-11-11 on the shipped files, congressional District 22 holds 2.880%
+    # over the raw-census ideal, Senate District 3 5.135% and Assembly District
+    # 34 6.452%. California's commission drew on counts that place an
+    # incarcerated person at their last address (Elections Code 21003), which
+    # moves people out of the districts holding the state's prisons, as New
+    # Jersey's does; that this explains each figure was not measured.
+    "ca": {"name": "California", "state": "06", "total": 39538223, "counties": 58,
+           "bbox": (-124.49, 32.52, -114.12, 42.02),
+           "maps": [("congress-districts.json", 52, 0.029), ("ca-senate-districts.json", 40, 0.055),
+                    ("ca-assembly-districts.json", 80, 0.065)]},
     "ny": {"name": "New York", "state": "36", "total": 20201249, "counties": 62,
            "bbox": (-79.77, 40.47, -71.77, 45.03),
            "maps": [("congress-districts.json", 26, 0.002, 5), ("state-senate-districts.json", 63, 0.025, 5),
@@ -371,14 +383,16 @@ def about(spec):
 # outline the app drew its wash with. A state's outline traces the state line
 # through its water, as its districts do, so measured 2026-11-06 no state
 # legislative or congressional district has more than 0.06% of its area
-# outside it. San Francisco's outline is the union of its supervisor
-# districts, which is land, while its Assembly districts carry the Bay to the
-# county line, so 67% of Assembly District 17, which lies wholly in the city,
-# read as outside. A row that sets "ground" therefore ships the counties' own
-# 2020 polygons, water included and unsimplified (18 KB for San Francisco;
-# simplified to 20 m it left 49 people's block points outside), as
-# ground.json, and the screen reads that instead; --check requires every
-# block point to lie inside it.
+# outside it. San Francisco's outline, while it was a city instance, was the
+# union of its supervisor districts, which is land, while its Assembly
+# districts carry the Bay to the county line, so 67% of Assembly District 17,
+# which lies wholly in the city, read as outside. A row that sets "ground"
+# therefore ships the counties' own 2020 polygons, water included and
+# unsimplified (18 KB for San Francisco; simplified to 20 m it left 49
+# people's block points outside), as ground.json, and the screen reads that
+# instead; --check requires every block point to lie inside it. No row sets it
+# since California grew to the state on 2026-11-11, and a city instance
+# would need it again.
 def fetch_ground(spec):
     data = fetch(COUNTIES_2020, {"where": county_where(spec), "outFields": "GEOID", "returnGeometry": "true",
                                  "outSR": "4326", "geometryPrecision": "5",

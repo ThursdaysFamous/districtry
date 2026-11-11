@@ -85,15 +85,15 @@
     },
     {
       "id": "sf",
-      "label": "San Francisco",
+      "label": "California",
       "url": "https://districtry.com/ca/",
       "emoji": "🌉",
-      "explorer_name": "districtry San Francisco",
+      "explorer_name": "districtry California",
       "bbox": {
-        "minLng": -122.6,
-        "minLat": 37.6,
-        "maxLng": -122.3,
-        "maxLat": 37.95
+        "minLng": -124.49,
+        "minLat": 32.52,
+        "maxLng": -114.12,
+        "maxLat": 42.02
       }
     },
     {

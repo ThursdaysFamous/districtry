@@ -45,7 +45,7 @@ different thing from one it failed.
 |---|---|---|---|---|---|---|---|---|---|
 | ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 22 | all | 13 of 14 levels |
 | az | **EAM·** | 15 | 15/15 § | 0 | 0 | by record | 11 | all | 6 of 14 levels |
-| ca | **--MC** | — | — | 0 | 0 | — | 18 | all | all 14 levels |
+| ca | **--M·** | — | — | 0 | 0 | — | 20 | all | 7 of 14 levels |
 | ga | **EAM·** | 159 | 159/159 § | 754 | 436 | all | 18 | all | 9 of 14 levels |
 | ia | **EAM·** | 99 | 99/99 | 154 | 154 | all | 58 | all | 13 of 14 levels |
 | il | **EAM·** | 102 | 102/102 | 660 | 1,159 | all | 431 | all | 12 of 14 levels |
@@ -73,7 +73,7 @@ different thing from one it failed.
 than county by county. That is a weaker statement than a record
 per county, so each one is named under its state below.
 
-- **ca** — no county frontier, so E and A do not apply. San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
+- **ca** — no county frontier, so E and A do not apply. California's app grew from San Francisco to the whole state on 2026-11-11 and its 58-county frontier is not scored here yet; only San Francisco names a county governing body so far.
 
 ## What each state still needs
 
@@ -106,24 +106,23 @@ per county, so each one is named under its state below.
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Arizona has no sub-county general-purpose government — outside a city or town limit the county governs. The 80 sub-county units the Census publishes for Arizona are census county divisions: statistical areas, not governments (measured 2026-11-11).
 
-### ca — **E.A.M.C.**
+### ca — --M·
 
-- **E and A do not apply.** San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
+- **E and A do not apply.** California's app grew from San Francisco to the whole state on 2026-11-11 and its 58-county frontier is not scored here yet; only San Francisco names a county governing body so far.
   The mark therefore rests on Maintained alone.
-
-Every test that applies is met. Expansion is finished;
-this instance is in maintenance.
-
-- **Covered: yes.** Every expected level of government is answered.
-- **Does not apply here (8):** each one below is counted towards Covered by a stated fact rather than by work.
-  - **3. County boundaries** — San Francisco is one city, so its city tier is the whole app and the state tiers above it are another app's subject.
-  - **5. Municipal boundaries** — San Francisco is one city, so its city tier is the whole app and the state tiers above it are another app's subject.
-  - **7. School district boundaries** — San Francisco is one city, so its city tier is the whole app and the state tiers above it are another app's subject.
-  - **8. Courts whose judges are elected by district** — No court-district line falls inside San Francisco. California elects its Supreme Court at large statewide, its Court of Appeal by appellate district, and — Cal. Const. art. VI sec. 16 — its superior court judges "in their counties". San Francisco is one consolidated city and county, and it sits whole inside the twelve-county First Appellate District, so both lines are the city's own edge.
-  - **9. Townships or other general-purpose sub-county governments** — San Francisco is one city, so its city tier is the whole app and the state tiers above it are another app's subject.
-  - **10. School boards elected by district** — Neither San Francisco school board is elected by district. The San Francisco Unified School District's seven commissioners and City College of San Francisco's seven trustees are each elected by all of the district's voters, so there is no district to draw; the standard's at-large precedent is that naming the members is the whole answer, and both bodies are the city-wide school tier the app already covers.
-  - **13. Tribal governments** — No tribal land lies inside San Francisco: measured 2026-10-01, the current-vintage reservation, trust-land and state-reservation layers return no feature intersecting the city's own shipped outline's extent, with a box over North Carolina's Qualla Boundary as the positive control.
-  - **14. Township or county subdivision boundaries** — San Francisco is one city, so its city tier is the whole app and the state tiers above it are another app's subject.
+- **Under a WATCH.md plan (13):** re-checked on a stated cadence rather than by a job — `bart-directors.json`, `ca-assembly-districts.json`, `ca-senate-districts.json`, `ca-state-outline.json`, `congress-districts.json`, `coverage-gaps.json`, `early-voting-sites.json`, `police-districts.json`, `ca/data/app/population/`, `san-francisco-county-outline.json`, `sf-neighborhoods.json`, `state-counties.json`, `supervisor-districts.json`
+- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+  - **4. The county governing body, in every county of the state** — open
+  - **6. The governing body of every general-purpose local government above 25,000 people** — open
+  - **8. Courts whose judges are elected by district** — unsettled (required only where the state has the level)
+    The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
+  - **10. School boards elected by district** — open (required only where the state has the level)
+  - **11. Election precincts** — open (required only where the state has the level)
+  - **12. Special districts the state's own law creates** — open (required only where the state has the level)
+  - **13. Tribal governments** — open (required only where the state has the level)
+- **Does not apply here (2):** each one below is counted towards Covered by a stated fact rather than by work.
+  - **9. Townships or other general-purpose sub-county governments** — California has no government between the county and the city: its county subdivisions are census county divisions drawn for statistics, and an unincorporated place is governed by its county.
+  - **14. Township or county subdivision boundaries** — California has no government between the county and the city: its county subdivisions are census county divisions drawn for statistics, and an unincorporated place is governed by its county.
 
 ### ga — EAM·
 

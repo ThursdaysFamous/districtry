@@ -176,17 +176,29 @@ try {
       linked.every((p) => (p.scope || "").length > 2),
       JSON.stringify(linked.map((p) => p.scope)));
     // A city instance sits on its STATE's row and says the city is all that
-    // answers there. California reading as a covered state, or vanishing from
-    // the list because San Francisco is not a state, are the two ways to get
-    // this wrong, and each would tell a reader in Los Angeles something false.
+    // answers there. Reading as a covered state, or vanishing from the list
+    // because a city is not a state, are the two ways to get this wrong, and
+    // each would tell a reader elsewhere in that state something false.
+    // San Francisco was that instance until California's app grew to the whole
+    // state on 2026-11-11, so no city instance is live today: the check reads
+    // nothing and says so rather than passing quietly, and it stays for the
+    // next one. California's own row is held to the whole state instead.
     const cities = FLEET.filter((m) => !states.some((s) => s.name === m.landing_name));
-    check("a city's row is its state's, and names the city",
-      cities.length > 0 && cities.every((m) => {
-        const row = linked.find((l) => l.href === m.url);
-        return row && row.part && row.name !== m.landing_name &&
-          (row.scope || "").startsWith(m.landing_name + " only");
-      }),
-      JSON.stringify(cities.map((m) => linked.find((l) => l.href === m.url))));
+    if (cities.length) {
+      check("a city's row is its state's, and names the city",
+        cities.every((m) => {
+          const row = linked.find((l) => l.href === m.url);
+          return row && row.part && row.name !== m.landing_name &&
+            (row.scope || "").startsWith(m.landing_name + " only");
+        }),
+        JSON.stringify(cities.map((m) => linked.find((l) => l.href === m.url))));
+    } else {
+      console.log("  NOTE  no city instance is live, so the city-row check has nothing to read");
+    }
+    check("California's row is the whole state, since its app answers for it",
+      linked.some((p) => p.name === "California" && /\/ca\/$/.test(p.href) && !p.part &&
+        !/ only/.test(p.scope || "")),
+      JSON.stringify(linked.find((p) => p.name === "California")));
     // An unlinked row is marked "not yet" by an empty square, which a screen
     // reader cannot see, so the words have to be there too.
     check("every state nobody covers says not yet",
@@ -703,8 +715,10 @@ try {
   // rebuilt from its words (mapLinkForText), so its own search tries the
   // address, the street and the name. On 2026-10-16 a Wisconsin place's short
   // link said "No matches" here. A state no app covers is said to be, with
-  // nothing searched, and California, where San Francisco's app covers one
-  // city, is routed by position as before.
+  // nothing searched. California's link goes to /ca/ like Wisconsin's to /wi/
+  // since its app grew to the whole state on 2026-11-11; until then San
+  // Francisco's app covered one city there and a California link was routed
+  // by its position, which put Los Angeles outside every place covered.
   {
     const NAMED = "Lambeau Field, 1265 Lombardi Ave, Green Bay, WI 54304";
     const BARE = "1265 Lombardi Ave, Green Bay, WI 54304";
@@ -728,9 +742,9 @@ try {
       { name: "a place in Ohio, which no app covers, is said to be, and nothing is searched",
         text: OHIO, answerFor: () => [], asks: [], want: "/",
         msg: /^That place is in Ohio, which districtry doesn't cover yet/ },
-      { name: "a place in Los Angeles is routed by its position, since San Francisco's app covers one city",
+      { name: "a place in Los Angeles opens /ca/, since California's app answers for the whole state",
         text: LA, answerFor: (q) => (q === LA_NAMED ? [photonFeature(34.0508, -118.2489)] : []),
-        asks: [LA_NAMED], want: "/", msg: /outside every place districtry covers/ },
+        asks: [LA_NAMED], want: "/ca/", hash: /^#point=34\.05080,-118\.24890$/ },
       { name: "the same words typed are not retried", text: NAMED, answer: at({ housenumber: "1265", street: "Lombardi Avenue" }),
         asks: [NAMED], want: "/" },
     ]) {

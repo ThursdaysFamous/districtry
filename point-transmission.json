@@ -82,11 +82,18 @@
         "election-precinct",
         "election-results",
         "elementary-attendance-area",
-        "police-station"
+        "municipality",
+        "police-station",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
+        "zip-code"
       ],
       "layers_unexercised": [],
       "atpoint_sites": [
-        "load"
+        "load",
+        "load",
+        "loadZipCodes"
       ],
       "atpoint_hooks_fired": 0,
       "layer_ids": [
@@ -94,16 +101,21 @@
         "ca-assembly",
         "ca-senate",
         "congress",
+        "county",
         "early-voting",
         "election-precinct",
         "election-results",
         "elementary-attendance-area",
         "fire-station",
         "library",
+        "municipality",
         "neighborhood",
         "police-district",
         "police-station",
         "post-office",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
         "school-site",
         "supervisor-district",
         "zip-code"

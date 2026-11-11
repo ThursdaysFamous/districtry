@@ -68,7 +68,7 @@ IDS = {
     "Q1546": "Iowa",
     "Q1166": "Michigan",
     "Q1384": "New York",
-    "Q62": "San Francisco",
+    "Q99": "California",
     "Q1527": "Minnesota",
     "Q1603": "Kentucky",
     "Q1415": "Indiana",
@@ -207,6 +207,11 @@ IDS = {
 # same day, P31 = Q35657, P300 = "US-GA", P131 = Q30, and its own P47 carries
 # Q1456, Q1454 and Q1509, which match this table's sc, nc and tn entries. Its
 # English label is the bare string "Georgia".
+# ca moved from Q62 (San Francisco) to Q99 (California) on 2026-11-11, when
+# its app grew from the city to the whole state. Read from Special:EntityData
+# that day, Q99 has P31 = Q35657, P300 = "US-CA", P131 = Q30, and its own
+# P47 carries Q816 and Q1227, which match this table's az and nv entries. Its
+# English label is the bare string "California".
 # pa, nv, az, nj and nh were added at the batch 1 go-live by the same route.
 # Read from Special:EntityData on 2026-11-11, each has P31 = Q35657, P131 =
 # Q30 and its own ISO code in P300 (US-PA, US-NV, US-AZ, US-NJ, US-NH), and
@@ -216,7 +221,7 @@ IDS = {
 # and its label settle it. Each English label is the bare state name.
 JURISDICTION = {
     "il": "Q1204", "wi": "Q1537", "ia": "Q1546", "mi": "Q1166",
-    "ny": "Q1384", "ca": "Q62", "mn": "Q1527", "ky": "Q1603",
+    "ny": "Q1384", "ca": "Q99", "mn": "Q1527", "ky": "Q1603",
     "in": "Q1415", "nc": "Q1454", "ok": "Q1649", "sc": "Q1456",
     "tn": "Q1509", "ar": "Q1612", "ms": "Q1494", "la": "Q1588",
     "mo": "Q1581", "va": "Q1370", "wv": "Q1371", "ga": "Q1428",

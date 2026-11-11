@@ -76,7 +76,7 @@ END = "  /* ==== TRAFFIC-DATA:END ==== */"
 # every gate green. Minnesota went live on 2026-09-30 with no entry, which is
 # how this was found. check_instance_names() below now FAILS on a metros.json
 # tag this table does not spell.
-INSTANCE_NAMES = {"il": "Illinois", "ny": "New York", "ca": "San Francisco",
+INSTANCE_NAMES = {"il": "Illinois", "ny": "New York", "ca": "California",
                   "wi": "Wisconsin", "ia": "Iowa", "mi": "Michigan",
                   "mn": "Minnesota", "ky": "Kentucky", "in": "Indiana",
                   "nc": "North Carolina", "ok": "Oklahoma",

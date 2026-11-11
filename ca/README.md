@@ -1,14 +1,16 @@
 <!-- ==== GENERATED:BEGIN metro-header ==== -->
-# districtry San Francisco
+# districtry California
 
-**Every civic district that covers your point in San Francisco, and who represents you there.**
+**Every civic district that covers your point in California, and who represents you there.**
 <!-- ==== GENERATED:END metro-header ==== -->
 
-A single-file, dependency-light web app: one `index.html`, Leaflet for the map, no build step, no framework, no server-side code. Deployed as a static site to [sf.chidistricts.com](https://sf.chidistricts.com/) — any static host or server works.
+A single-file, dependency-light web app: one `index.html`, Leaflet for the map, no build step, no framework, no server-side code. Deployed as a static site at [districtry.com/ca/](https://districtry.com/ca/) — any static host or server works.
+
+**It answered for San Francisco alone until 2026-11-11, when it grew to the whole state and kept every San Francisco layer.** Across all 58 counties it answers the county, the city or town, the school districts, the ZIP code and the nearest post offices, and the U.S. House, California Senate and California Assembly districts with the member who holds each seat. The San Francisco layers (supervisors, precincts and election results, BART directors, police, neighborhoods, attendance areas and the city's facilities) hide outside the city and county. No county supervisor, mayor, council member or school board member is named outside San Francisco yet; the Data gaps panel records why.
 
 ![districtry San Francisco showing a selected point at City Hall with the Supervisor District, U.S. House, California Senate and California Assembly layers on, each card naming the officeholder](docs/screenshot.png)
 
-This is one of several sibling metro forks of the same engine (Chicago is the reference implementation; New York City is another sibling). The metro-agnostic engine inside `index.html` stays byte-identical across forks; everything city-specific lives in `metro-worksheet.json` and the `METRO:BEGIN config` block.
+This is one of the state instances in the districtry repository (Illinois is the reference implementation). The engine inside `index.html` is composed from the one copy under `engine/` and stays byte-identical across instances; everything California-specific lives in `metro-worksheet.json` and the `METRO:BEGIN config` block.
 
 ## What it answers
 
@@ -22,20 +24,23 @@ Pick a point. The app runs a point-in-district lookup across every layer you hav
 | | U.S. House District | District, representative, party, D.C. office + phone, member profile |
 | | California State Senate District | District, state senator, party, district + Capitol offices, senate.ca.gov page |
 | | California State Assembly District | District, assemblymember, party, offices, assembly.ca.gov page |
+| | County | County name, statewide; outside San Francisco it says no officeholder is named yet |
+| | City or Town | The incorporated city or town, statewide, or that the point is in none (most of California's land is unincorporated) |
 | | Voting Center & Ballot Drop-off (nearest 3) | Nearest official voting center + 24/7 ballot drop-off sites, per the Department of Elections (hand-curated per election) |
 | **Public Safety** | Police District | SFPD district name + a "find your station" link |
 | | Police Station (nearest 3) | Station name, address, phone, straight-line distance |
 | | Fire Station (nearest 3) | Firehouse name, address, straight-line distance |
 | **Schools** | Elementary Attendance Area | SFUSD attendance-area school — with the honest caveat that assignment is a choice-based lottery and the attendance area is only a tiebreaker, not a guaranteed seat — plus an enrollment link |
-| | School Location (nearest 3) | Nearest active public / charter / private schools — grades, type, address, phone, distance |
+| | School District (Unified, Elementary, Secondary) | The Census Bureau's school districts, statewide; no board members named yet |
+| | School Location (nearest 3) | Nearest active public / charter / private schools in San Francisco — grades, type, address, phone, distance |
 | **Geography** | Neighborhood | SF Analysis Neighborhood name |
-| | ZIP Code | ZIP code (Census ZCTA) |
-| | Post Office (nearest 3) | Nearest post offices — name, address (USGS National Map), straight-line distance |
+| | ZIP Code | ZIP code (Census ZCTA), statewide |
+| | Post Office (nearest 3) | Nearest post offices, statewide — name, address (USGS National Map), straight-line distance |
 | | Library (nearest 3) | Nearest San Francisco Public Library locations — name, address, straight-line distance |
 
 Every result card is independent: a layer whose data source is down shows an error with a Retry button in that card and never affects the others.
 
-Because San Francisco is a consolidated city-county with an at-large Board of Education and at-large courts, the app deliberately carries **no** districted school-board, county-commissioner, board-of-review, or state-supreme-court layers — those offices exist, but not as districts to map.
+Inside San Francisco, a consolidated city-county with an at-large Board of Education and at-large courts, the app deliberately carries **no** districted school-board, county-commissioner or board-of-review layer — those offices exist, but not as districts to map. California has no government between the county and the city, so there is no township layer either.
 
 ### Shareable links
 
@@ -66,7 +71,7 @@ Stable core + pluggable layer modules, all inside `index.html`. The full contrac
 | Source | Used for |
 |---|---|
 | [DataSF](https://data.sfgov.org) (Socrata) | Supervisor districts + roster, election precincts, analysis neighborhoods, police districts, police + fire stations, SFUSD attendance areas, school + library locations |
-| [U.S. Census TIGERweb](https://tigerweb.geo.census.gov) | ZIP Code (ZCTA) at runtime, plus the pre-built U.S. House / CA State Senate / CA State Assembly boundaries (SF-clipped, `STATE='06'`) |
+| [U.S. Census TIGERweb](https://tigerweb.geo.census.gov) | The pre-built U.S. House / CA State Senate / CA State Assembly boundaries and the 58 counties (statewide, `STATE='06'`), and the tile archives for ZIP codes, cities and towns and the three school-district layers (`scripts/mirror_tiger_tiles.py`) |
 | [USGS The National Map](https://www.usgs.gov/programs/national-geospatial-program/national-map) | Post office locations (nearest 3) |
 | [SF Department of Elections](https://www.sf.gov/departments--department-elections) (hand-curated per election) | Voting center + ballot drop-off sites (`data/app/early-voting-sites.json`) |
 | [unitedstates/congress-legislators](https://github.com/unitedstates/congress-legislators) (rebuilt weekly by CI) | U.S. House roster — CA reps, `data/app/congress-roster.json` |
@@ -89,7 +94,10 @@ scripts/generate_metro_files.py     renders the GENERATED regions from metro-wor
 scripts/build_congress_roster.py    writes data/app/congress-roster.json (CA U.S. House reps)
 scripts/build_ca_legislature_roster.py  writes data/app/ca-{senate,assembly}-members.json from OpenStates
 scripts/build_sf_supervisor_roster.py    writes data/app/sf-supervisor-members.json from DataSF
-scripts/build_legislative_boundaries.py  pre-builds the SF-clipped CA chamber geometry from TIGERweb
+scripts/build_legislative_boundaries.py  pre-builds the statewide CA chamber geometry from TIGERweb
+scripts/build_state_counties.py     pre-builds the 58 counties from TIGERweb
+scripts/build_state_outline.py      dissolves the counties into the state outline
+scripts/build_sf_county_outline.py  unions the supervisor districts into San Francisco's outline
 scripts/build_embedded_boundaries.py     simplifies data/*.geojson into data/app/*.json (occasional operator step)
 scripts/validate_index.py           static merge gate: app parses, all data/app files present + well formed
 scripts/validate_sources.py         source-freshness gate (dataset ids resolve, newer editions flagged)
@@ -104,8 +112,8 @@ docs/                               architecture + metro-expansion playbooks
 
 Gates that run in CI:
 
-- **Static gate** (`scripts/validate_index.py`): the inline script passes `node --check`, every layer is still registered, no dataset is embedded inline, and every `data/app/` file is present and complete (six pre-built geometry files; six same-origin rosters — four CI-built officeholder rosters plus the two hand-maintained ones, the voting-site list and the BART directors). A bad data regeneration can't reach `main` unreviewed.
-- **Behaviour gate** (`scripts/smoke_test.mjs`, run on every pull request): a real Chromium boot via Playwright asserts the app comes up, registers all 17 layers, classifies San Francisco City Hall against known ground truth (Supervisor District 5, Tenderloin neighborhood, NORTHERN police district; U.S. House 11 / CA Senate 11 / CA Assembly 17, each with its officeholder roster join), and degrades to an isolated error card + Retry when a data source fails.
+- **Static gate** (`scripts/validate_index.py`): the inline script passes `node --check`, every layer is still registered, no dataset is embedded inline, and every `data/app/` file is present and complete, with the counts the worksheet's `data_files` sets. A bad data regeneration can't reach `main` unreviewed.
+- **Behaviour gate** (`scripts/smoke_test.mjs`, run on every pull request): a real Chromium boot via Playwright asserts the app comes up, registers all 22 layers, classifies San Francisco City Hall against known ground truth (Supervisor District 5, Tenderloin neighborhood, NORTHERN police district; U.S. House 11 / CA Senate 11 / CA Assembly 17, each with its officeholder roster join), and degrades to an isolated error card + Retry when a data source fails.
 - **Drift + freshness gates** (`generate_metro_files.py --check`, `check_engine_parity.py`, `validate_sources.py`): the GENERATED regions match the worksheet, the engine fences stay byte-identical across forks, and the upstream datasets haven't gone stale.
 
 ## Not for legal or official use

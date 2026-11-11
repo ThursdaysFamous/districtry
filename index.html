@@ -103,7 +103,7 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "San Francisco",
+          "name": "California",
           "url": "https://districtry.com/ca/"
         },
         {
@@ -1261,7 +1261,7 @@ footer .support b { color: var(--ink); }
                    placeholder="Street address or ZIP" autocomplete="off" />
             <button type="submit" id="search-button" class="search-button">Show districts</button>
           </form>
-          <p class="search-help">districtry opens the map that covers the point. 24 states and San Francisco
+          <p class="search-help">districtry opens the map that covers the point. 25 states
              answer today — an address anywhere else says so instead of guessing.</p>
           <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
         </div>
@@ -1458,7 +1458,7 @@ footer .support b { color: var(--ink); }
               title="Map of the areas districtry covers today"
               loading="lazy"></iframe>
       <div class="cov-head">
-        <p class="cov-count"><strong>24 states and San Francisco answer today.</strong>
+        <p class="cov-count"><strong>25 states answer today.</strong>
           Pick one to open its map.</p>
         <ul class="cov-key" aria-label="Key">
           <li><span class="sw sw-on" aria-hidden="true"></span>Answers here</li>
@@ -1473,7 +1473,7 @@ footer .support b { color: var(--ink); }
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Alaska</span><span class="vh">, not yet</span></span></li>
         <li><a class="st" href="https://districtry.com/az/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Arizona</span><span class="st-scope">all 15 counties &#183; <span class="st-n">12</span>&nbsp;layers</span></a></li>
         <li><a class="st" href="https://districtry.com/ar/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Arkansas</span><span class="st-scope">all 75 counties &#183; <span class="st-n">18</span>&nbsp;layers</span></a></li>
-        <li><a class="st st-part" href="https://districtry.com/ca/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">California</span><span class="st-scope">San Francisco only &#183; <span class="st-n">17</span>&nbsp;layers</span></a></li>
+        <li><a class="st" href="https://districtry.com/ca/"><span class="st-dot" aria-hidden="true"></span><span class="st-name">California</span><span class="st-scope">statewide, San Francisco in depth &#183; <span class="st-n">22</span>&nbsp;layers</span></a></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Colorado</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Connecticut</span><span class="vh">, not yet</span></span></li>
         <li><span class="st st-off"><span class="st-dot" aria-hidden="true"></span><span class="st-name">Delaware</span><span class="vh">, not yet</span></span></li>
@@ -1549,7 +1549,7 @@ footer .support b { color: var(--ink); }
         <ul class="ask-chips">
           <li><a class="chip" href="/il/congress.html">Illinois<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/ny/congress.html">New York<span class="chip-topic"> &#183; U.S. House</span></a></li>
-          <li><a class="chip" href="/ca/congress.html">San Francisco<span class="chip-topic"> &#183; U.S. House</span></a></li>
+          <li><a class="chip" href="/ca/congress.html">California<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/wi/congress.html">Wisconsin<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/ia/congress.html">Iowa<span class="chip-topic"> &#183; U.S. House</span></a></li>
           <li><a class="chip" href="/mi/congress.html">Michigan<span class="chip-topic"> &#183; U.S. House</span></a></li>
@@ -1579,7 +1579,7 @@ footer .support b { color: var(--ink); }
         <ul class="ask-chips">
           <li><a class="chip" href="/il/state-legislature.html">Illinois<span class="chip-topic"> &#183; General Assembly</span></a></li>
           <li><a class="chip" href="/ny/state-legislature.html">New York<span class="chip-topic"> &#183; NY Legislature</span></a></li>
-          <li><a class="chip" href="/ca/state-legislature.html">San Francisco<span class="chip-topic"> &#183; CA Legislature</span></a></li>
+          <li><a class="chip" href="/ca/state-legislature.html">California<span class="chip-topic"> &#183; CA Legislature</span></a></li>
           <li><a class="chip" href="/wi/state-legislature.html">Wisconsin<span class="chip-topic"> &#183; Legislature</span></a></li>
           <li><a class="chip" href="/ia/state-legislature.html">Iowa<span class="chip-topic"> &#183; Legislature</span></a></li>
           <li><a class="chip" href="/mi/state-legislature.html">Michigan<span class="chip-topic"> &#183; Legislature</span></a></li>
@@ -1827,8 +1827,8 @@ footer .support b { color: var(--ink); }
     { id: "nyc", tag: "ny", name: "New York", url: "https://districtry.com/ny/", whole: true,
       outline: "ny/data/app/metro-outline.json",
       bbox: { minLat: 40.43, maxLat: 45.07, minLng: -79.82, maxLng: -71.62 } },
-    { id: "sf", tag: "ca", name: "San Francisco", url: "https://districtry.com/ca/", whole: false,
-      bbox: { minLat: 37.6, maxLat: 37.95, minLng: -122.6, maxLng: -122.3 } },
+    { id: "sf", tag: "ca", name: "California", url: "https://districtry.com/ca/", whole: true,
+      bbox: { minLat: 32.52, maxLat: 42.02, minLng: -124.49, maxLng: -114.12 } },
     { id: "wisconsin", tag: "wi", name: "Wisconsin", url: "https://districtry.com/wi/", whole: true,
       outline: "wi/data/app/metro-outline.json",
       bbox: { minLat: 42.49, maxLat: 47.31, minLng: -92.89, maxLng: -86.25 } },
