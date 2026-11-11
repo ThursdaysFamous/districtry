@@ -994,6 +994,51 @@ try {
   }
 
 
+  // 7d. THE CENSUS'S "SCHOOL DISTRICT NOT DEFINED" RECORD IS NOT LIT, NOT
+  //     COMPARABLE AND NOT NAMED ON HOVER (2026-11-11, the fix Illinois's
+  //     smoke check 2s holds). The card already says no district is defined
+  //     there; this holds the rest of the page to it. The point is
+  //     the Atlantic off Point Pleasant, inside the state's three-mile line (the Census's GEOID 3499997, no land). The census host is refused, so the card answers from the
+  //     shipped archive, which still carries the placeholder. The control is
+  //     the State House, in the Trenton City School District, and it keeps the check honest: a pin button that is
+  //     never drawn would pass the first half alone.
+  //     Both points read off TIGERweb's School layer 0 on 2026-11-11: the sea point answers 3499997 and the State House 3416290, Trenton City School District.
+  {
+    const SCHOOL_PLACEHOLDER = "40.10000,-74.00000";
+    const SCHOOL_CONTROL = "40.22040,-74.76990";
+    const read = async (pt) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=school-district-unified`, async (p) => {
+        await p.route("**/tigerweb.geo.census.gov/**", (r) => r.abort());
+      });
+      const info = await cardText(page, "school-district-unified");
+      await page.waitForTimeout(1000);
+      const res = await page.evaluate((n) => {
+        const box = document.getElementById("toggle-school-district-unified");
+        const block = box && box.closest(".layer-block");
+        const s = window[n].layerLoadState("school-district-unified");
+        return {
+          pin: !!(block && block.querySelector(".pin-parent-btn")),
+          lit: !!(s && s.highlight),
+          hover: window[n].hoverValueFor("school-district-unified",
+            { NAME: "School District Not Defined", GEOID: "3499997" }),
+        };
+      }, EXPORTS_NAME);
+      await context.close();
+      return Object.assign({ text: info.text || "", error: info.error }, res);
+    };
+    const ph = await read(SCHOOL_PLACEHOLDER);
+    const ctrl = await read(SCHOOL_CONTROL);
+    check(
+      'the Census\'s "School District Not Defined" placeholder reads as no school district: not lit, not comparable, not named on hover',
+      !ph.error && /coastal and bay\s+waters the Census defines no school district/.test(ph.text) && !ph.pin && !ph.lit &&
+        ph.hover === "Open water, no school district" &&
+        !ctrl.error && !/coastal and bay\s+waters the Census defines no school district/.test(ctrl.text) && ctrl.pin,
+      JSON.stringify({ placeholder: { text: ph.text.slice(0, 60), pin: ph.pin, lit: ph.lit, hover: ph.hover },
+        control: { text: ctrl.text.slice(0, 60), pin: ctrl.pin } })
+    );
+  }
+
   // 8. THE ZIP LAYER IS IN-STATE ONLY, AND THIS IS THE CHECK THAT PROVES IT.
   //    A ZCTA carries no STATE field, so this is the one layer here whose
   //    point query cannot be filtered server-side — and over a land border it

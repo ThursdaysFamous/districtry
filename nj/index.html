@@ -12234,6 +12234,24 @@ function initNewJerseyExplorer() {
     (load.tileMods || []).forEach(function (m) { layerRuntime[m.id].tileAnswer = answer; });
   }
 
+  // A record a publisher files where there is no district (the Census's
+  // "School District Not Defined" in its unified school layer) is not a
+  // district, so a layer whose query meets one at the point calls this
+  // before it answers. The record is taken out of the answers the highlight
+  // lights and the "Compare to this district" control reads: the tile answer
+  // here, kept on the same point so scripts/probe_tile_cards.mjs still sees
+  // the card answered from the tile, and the live point query's answer that
+  // showProvisionalHighlight lights. The record is still drawn, because the
+  // layer's archive and file are left as published, and a layer drawn from
+  // its whole file (no WebGL, or a failed archive) still lights it.
+  function answerIsNotADistrict(load, point) {
+    (load.tileMods || []).forEach(function (m) {
+      var rt = layerRuntime[m.id];
+      if (rt && rt.tileAnswer && rt.tileAnswer.point === point) rt.tileAnswer = { point: point, feature: null };
+    });
+    if (load.pointAnswer && load.pointAnswer.point === point) load.pointAnswer = null;
+  }
+
   /* ---------- a county-dispatched layer drawn from tiles (phase 5b). One
    * archive holds every county whose boundaries the app ships, each feature
    * carrying its county key as `_c`, and the archive's metadata lists those
@@ -16080,6 +16098,9 @@ function initNewJerseyExplorer() {
    * so the query returns nothing there and the empty note says the point is
    * on water, the way the municipality card answers the same water. Its code
    * ends in 99997, the Census's code for that placeholder in every state.
+   * The query also takes the record out of the card's tile answer (engine
+   * answerIsNotADistrict), so that water is neither lit nor offered for
+   * comparison.
    *
    * Each card prints the grades the Census records, because the grade split
    * is the whole reason a reader can have two districts, and each empty note
@@ -16112,7 +16133,13 @@ function initNewJerseyExplorer() {
         if (!feature) return null;
         var props = feature.properties || {};
         var geoid = findPropCI(props, ["geoid"]);
-        if (njSchoolPlaceholder(geoid)) return null; // water — the engine renders emptyNote
+        if (njSchoolPlaceholder(geoid)) {
+          // water — the engine renders emptyNote; and the placeholder is taken
+          // out of the tile answer, so it is neither lit nor offered for
+          // comparison (engine answerIsNotADistrict)
+          answerIsNotADistrict(load, point);
+          return null;
+        }
         return {
           seq: seq,
           name: findPropCI(props, ["name"]),

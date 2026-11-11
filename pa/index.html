@@ -16100,6 +16100,10 @@ function initPennsylvaniaExplorer() {
    * the query answers it as nothing, as the municipality layer answers the
    * lake's "County subdivisions not defined" record, and the empty note says
    * it is the lake, rather than a card naming a district that does not exist.
+   * The query also takes the record out of the card's tile answer (engine
+   * answerIsNotADistrict), so the lake is neither lit nor offered for
+   * comparison, and the hover calls it the lake rather than printing the
+   * placeholder's own name.
    *
    * NO OFFICEHOLDER YET. Each district's board of school directors is
    * elected, and no statewide list of them has been read for this app; the
@@ -16129,7 +16133,9 @@ function initPennsylvaniaExplorer() {
     },
     hoverName: function (feature) {
       var props = feature.properties || {};
-      if (paSchoolPlaceholder(props)) return null;
+      // a string, never null: a null falls through to the record's own name,
+      // which reads "School District Not Defined"
+      if (paSchoolPlaceholder(props)) return "Lake Erie, no school district";
       var name = findPropCI(props, ["name"]);
       return (name == null || name === "") ? null : String(name);
     },
@@ -16139,7 +16145,13 @@ function initPennsylvaniaExplorer() {
       return queryFeatureAt(loadSchoolDistrictsUnified, point).then(function (feature) {
         if (!feature) return null;
         var props = feature.properties || {};
-        if (paSchoolPlaceholder(props)) return null; // the lake — the engine renders emptyNote
+        if (paSchoolPlaceholder(props)) {
+          // the lake — the engine renders emptyNote; and the placeholder is
+          // taken out of the tile answer, so the highlight does not light Lake
+          // Erie and the card offers no comparison (engine answerIsNotADistrict)
+          answerIsNotADistrict(loadSchoolDistrictsUnified, point);
+          return null;
+        }
         return { seq: seq, name: findPropCI(props, ["name"]), geoid: findPropCI(props, ["geoid"]) };
       });
     },
