@@ -1,0 +1,14 @@
+{
+ "state": "New Hampshire",
+ "usps": "NH",
+ "officersNote": "New Hampshire's voters elect only the governor statewide. The five executive councillors are elected by district, the Legislature chooses the secretary of state and the treasurer, and the governor appoints the attorney general.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Kelly Ayotte",
+   "url": "https://www.governor.nh.gov/",
+   "source": "https://www.usa.gov/states/new-hampshire",
+   "note": "www.governor.nh.gov answered 403 (an Akamai denial) to our token and to a browser on 2026-11-11, as did www.nh.gov and www.sos.nh.gov; USA.gov's New Hampshire page (U.S. General Services Administration) names her."
+  }
+ ]
+}

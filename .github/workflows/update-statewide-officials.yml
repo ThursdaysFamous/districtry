@@ -1,0 +1,99 @@
+name: Update statewide officials (every live app)
+
+# Weekly re-read of the statewide officials list in every live app.
+# scripts/build_statewide_officials.py reads, for each app, the list of offices
+# in <tag>/data/source/statewide-officials.source.json, fetches each office's
+# own state government page after reading its robots.txt, and refuses to write
+# when a page it read no longer prints the name the list gives: a new
+# officeholder (a January handover, a resignation) turns this job red until a
+# person updates that list. A page that cannot be read this week keeps its last
+# checked record with that date (the preserve rule, 2026-09-19). The two U.S.
+# senators come from the U.S. Senate's own list on the same run. If anything
+# changed it opens a PR rather than committing to main.
+
+on:
+  schedule:
+    - cron: "17 14 * * 4" # Thursday 14:17 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-statewide-officials:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR runs CI; see
+      # update-wi-congress-roster.yml for why, and for fetch-depth: 0.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Re-read the statewide officials
+        run: python3 scripts/build_statewide_officials.py
+
+      # Gate the regenerated data before it can reach a PR.
+      - name: Validate app + data files
+        run: |
+          python3 scripts/build_statewide_officials.py --check
+          python3 scripts/validate_index.py il/index.html
+          python3 ny/scripts/validate_index.py ny/index.html
+          python3 ca/scripts/validate_index.py ca/index.html
+          python3 wi/scripts/validate_index.py wi/index.html
+          python3 ia/scripts/validate_index.py ia/index.html
+          python3 mi/scripts/validate_index.py mi/index.html
+          python3 mn/scripts/validate_index.py mn/index.html
+          python3 ky/scripts/validate_index.py ky/index.html
+          python3 in/scripts/validate_index.py in/index.html
+          python3 nc/scripts/validate_index.py nc/index.html
+          python3 ok/scripts/validate_index.py ok/index.html
+          python3 sc/scripts/validate_index.py sc/index.html
+          python3 tn/scripts/validate_index.py tn/index.html
+          python3 ar/scripts/validate_index.py ar/index.html
+          python3 ms/scripts/validate_index.py ms/index.html
+          python3 la/scripts/validate_index.py la/index.html
+          python3 mo/scripts/validate_index.py mo/index.html
+          python3 va/scripts/validate_index.py va/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- '*/data/app/statewide-officials.json'; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch, cut from main's current tip; see
+          # update-wi-congress-roster.yml for why both.
+          branch="bot/statewide-officials-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add -A -- '*/data/app/statewide-officials.json'
+          git commit -m "Update statewide officials from each office's own page"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update statewide officials from each office's own page" \
+              --body "Automated weekly refresh of the statewide officials list in every live app, read by \`scripts/build_statewide_officials.py\` from each statewide office's own state government page and the U.S. Senate's list of senators. A page that could not be read keeps its last checked record with that date. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

@@ -122,6 +122,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "statewide-officials.json": 5,  # The officers Indiana elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from in/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
     "congress-roster.json": 9,  # All 9 U.S. House members, rebuilt weekly by CI from unitedstates/congress-legislators.
     "in-county-commissioners.json": 91,  # Every county commissioner in 91 counties (Marion's body is the Indianapolis City-County Council, in in-city-officials.json), each the winner of that seat's most recent certified general, built by in/scripts/build_in_county_officials.py from the Indiana Election Division's results archive.
     "in-county-councils.json": 91,  # Every county council member in 91 counties (Marion excluded), from the same certified results and the same builder.

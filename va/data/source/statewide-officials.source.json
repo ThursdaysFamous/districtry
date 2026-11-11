@@ -1,0 +1,21 @@
+{
+ "state": "Virginia",
+ "usps": "VA",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Abigail Spanberger",
+   "url": "https://www.governor.virginia.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Ghazala Hashmi",
+   "url": "https://www.ltgov.virginia.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Jay Jones",
+   "url": "https://www.oag.state.va.us/"
+  }
+ ]
+}

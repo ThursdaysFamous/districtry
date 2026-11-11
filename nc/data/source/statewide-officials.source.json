@@ -1,0 +1,66 @@
+{
+ "state": "North Carolina",
+ "usps": "NC",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Josh Stein",
+   "url": "https://governor.nc.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Rachel Hunt",
+   "url": "https://ltgov.nc.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Jeff Jackson",
+   "url": "https://ncdoj.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Elaine F. Marshall",
+   "url": "https://www.sosnc.gov/",
+   "match": [
+    "Elaine Marshall"
+   ]
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Bradford B. Briner",
+   "url": "https://www.nctreasurer.com/",
+   "match": [
+    "Treasurer Briner"
+   ]
+  },
+  {
+   "office": "State Auditor",
+   "name": "Dave Boliek",
+   "url": "https://www.auditor.nc.gov/"
+  },
+  {
+   "office": "Commissioner of Agriculture",
+   "name": "Steve Troxler",
+   "url": "https://www.ncagr.gov/"
+  },
+  {
+   "office": "Commissioner of Labor",
+   "name": "Luke Farley",
+   "url": "https://www.labor.nc.gov/"
+  },
+  {
+   "office": "Commissioner of Insurance",
+   "name": "Mike Causey",
+   "url": "https://www.ncdoi.gov/"
+  },
+  {
+   "office": "Superintendent of Public Instruction",
+   "name": "Maurice \u201cMo\u201d Green",
+   "url": "https://www.dpi.nc.gov/about-dpi/state-superintendent-public-instruction",
+   "match": [
+    "Mo Green"
+   ],
+   "source": "https://www.dpi.nc.gov/about-dpi/state-superintendent-public-instruction"
+  }
+ ]
+}

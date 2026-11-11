@@ -1,0 +1,72 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from sc/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "South Carolina",
+ "usSenate": [
+  {
+   "name": "Darline Graham",
+   "party": "Republican",
+   "url": "https://www.dgraham.senate.gov/",
+   "office": "211 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5972"
+  },
+  {
+   "name": "Tim Scott",
+   "party": "Republican",
+   "url": "https://www.scott.senate.gov/",
+   "office": "104 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-6121"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Henry McMaster",
+   "url": "https://governor.sc.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Pamela S. Evette",
+   "url": "https://ltgov.sc.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Alan Wilson",
+   "url": "https://www.scag.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Mark Hammond",
+   "url": "https://sos.sc.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Curtis M. Loftis, Jr.",
+   "url": "https://treasurer.sc.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Comptroller General",
+   "name": "Brian J. Gaines",
+   "url": "https://cg.sc.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "State Superintendent of Education",
+   "name": "Ellen Weaver",
+   "url": "https://ed.sc.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Commissioner of Agriculture",
+   "name": "Hugh E. Weathers",
+   "url": "https://agriculture.sc.gov/",
+   "verified": "2026-11-10"
+  }
+ ]
+}

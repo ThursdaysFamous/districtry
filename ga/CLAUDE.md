@@ -8,19 +8,28 @@ districtry Georgia: a single-file, dependency-light web app. Click a point in Ge
 an address) and it reports every civic district containing that point and who represents you
 there. It serves at **districtry.com/ga/** as a folder of the consolidated districtry repo —
 following the Wisconsin/Iowa shape (`docs/EXPANSION_GUIDE.md` Part 2), not the Illinois
-root-scripts shape. **The instance is DARK**: no `metros.json` entry, `ga/**` excluded from the
-Pages deploy, nothing served and no landing card naming it. `ga/WATCH.md` lists what go-live has to
-do in one change. The launch plan (Adam's answers of 2026-10-22, "all three as recommended") sets
-go-live on or after 1 January 2027, after the county commission and school board layers.
+root-scripts shape. **IT IS PUBLISHED**, on Adam's word of 2026-11-10 to launch now rather than on
+the 1 January 2027 the launch plan (his answers of 2026-10-22) first set; his reason was hosting, the
+tile archives and block populations having moved to Cloudflare that day. It arrived dark on
+2026-10-29 (no `metros.json` entry, `ga/**` blanket-excluded from the Pages deploy) and the go-live
+change narrowed that exclude to the build inputs the siblings exclude, registered the instance,
+generated `congress.html`, `state-legislature.html` and a county commission page per county, and
+regenerated every surface that counts the fleet. `docs/GA_EXPANSION_PLAN.md` is the record of the
+launch, and `ga/WATCH.md` keeps the go-live row. **THAT CHANGE ALSO MOVED SOUTH CAROLINA'S NEGATIVE
+POINT**, which sat in Wilkes County, Georgia, out to the Atlantic, and gave Tennessee's and North
+Carolina's routing checks a Georgia case each.
 
 **The layers** draw their shapes from the General Assembly or a national publisher, and name people
 from the General Assembly's own member data or a national roster: **County** (`county`, 159, Census
 TIGERweb, the coverage ring), **U.S. House** (14 districts), **Georgia Senate** and **Georgia House**
 (56 and 180 districts) — all three the General Assembly's own maps of its December 2023 plans, the
 House members from the public-domain unitedstates/congress-legislators roster and the legislators
-from the General Assembly's own member data — the LIVE TIGERweb fabric — **Census County Division**
+from the General Assembly's own member data — the TIGERweb fabric, drawn and answered from tile
+archives mirrored from the Census since go-live (`scripts/mirror_tiger_tiles.py`, recorded in
+`tiger-mirror.json`), so a click on them sends the point nowhere — **Census County Division**
 (`county-subdivision`, 586), **City or Town** (`municipality`, 538), **School District**
-(`school-district-unified`, 181) and **ZIP Code** — three nearest-N layers from the USGS National
+(`school-district-unified`, 181) and **ZIP Code**, whose search shows a typed ZIP code whole
+(`data/app/zip-index.json`) — three nearest-N layers from the USGS National
 Map (**Police Station**, **Fire & EMS Station**, **Post Office**), and the county maps the General
 Assembly's Reapportionment Office publishes, drawn only where the county's own district elections
 confirm them: **County Commission District** (`county-commissioner`, 110 counties) and **School
@@ -68,14 +77,20 @@ does not print them beside the member and the fleet's rule on an official's own 
 reach them; and the district address, which the page does show, was a post office box for 96 of 236
 members and plainly a home for others, so none ships as an office the card would pin on the map.
 
-**THE COUNTY CARD NAMES THE COUNTY AND NO COMMISSIONER YET.** Every Georgia county is governed by an
-elected board of commissioners or, in seven, a sole commissioner, and no state office publishes who
-they are (the Department of Community Affairs' directory of local officials sits behind a sign-in,
-which stays shut). The plan names them from the Secretary of State's election results
-(`results.sos.ga.gov`, whose robots.txt answers 404) and draws the commission and school board
-districts from the Reapportionment Office's county maps after a check against the precincts each
-contest was counted in; that is the next change, and until then the card says so (gaps
-`ga-county-commission-members` and `ga-school-board-members`).
+**THE COUNTY CARD NAMES THE COMMISSIONERS THE ELECTION RESULTS NAME.** Every Georgia county is
+governed by an elected board of commissioners or, in seven, a sole commissioner, and no state office
+publishes who they are (the Department of Community Affairs' directory of local officials sits
+behind a sign-in, which stays shut). So they are named from the Secretary of State's election
+results (`results.sos.ga.gov`, whose robots.txt answers 404), described under Data pipeline below,
+and the commission and school board districts are drawn from the Reapportionment Office's county
+maps where a check against the precincts each contest was counted in passed. Measured from the
+shipped file on 2026-11-10: 443 of 783 commission seats and 233 of 645 school board seats are
+named, because the results site carries county contests only from November 2024 on (gaps
+`ga-county-commission-members` and `ga-school-board-members`). **EACH COUNTY'S COMMISSION HAS A PAGE
+OF ITS OWN** under `ga/county-commissioner/`, generated with its index `ga/county-commissioner.html`
+by `scripts/build_county_pages.py` from the same file, which the weekly county officials job
+regenerates; seven counties whose commission the site names nobody for get no page and are
+recorded in that script's `NAMES_NOBODY` with the reason the card prints.
 
 **ONE SCHOOL LAYER, AND FORT BENNING IS THE GROUND IT DOES NOT COVER.** TIGER holds 181 unified
 districts for Georgia (the 159 county systems, 21 city systems and the Fort Stewart schools). The one
@@ -265,8 +280,32 @@ lies in District 43 and the one named 20-STANSELLS in District 42. With the pair
 passes on both boards and no other county's verdict moves. The table is written into the record
 (`sources.precinct_map.swapped`), `build_ga_precincts.py` reads it from there and swaps the two
 precincts' names when it fetches the map, and its `--check` holds each corrected precinct to the
-Senate district its ballots name, offline. A pair is added only with a control of this kind;
-whether other precincts on the map carry the wrong name was not swept.
+Senate district its ballots name, offline. A pair is added only with a control of this kind.
+
+**THE MAP WAS THEN SWEPT FOR MORE WRONG NAMES, AND IT FOUND A WRONG PAIRING IN THOMAS AND NO
+OTHER SWAP** (the sweep 2026-11-10, the fix `PRECINCT_PAIRS` in `ga/scripts/check_ga_county_maps.py`
+2026-11-11). Each of the 2,689 November 2024 ballot precincts the check pairs with the map was held
+to the 2023 State Senate, State House and U.S. House plans, and a precinct whose votes in a chamber
+fell mostly in districts its shape does not touch was flagged. Six were flagged. Newton's two are
+the swap above. Thomas's two are both named PAVO/PATTEN on the map, so the ballot's "Pavo" scored
+the same against both shapes and the check took the first, leaving "Patten" on the other with a
+weak score. Three controls put them the other way round: the shape coded 275116 lies wholly in
+State House District 173 and 275117 in District 172, and Patten cast 313 votes for District 173
+and none for 172 while Pavo cast 382 for 172 (and 80 for 173, which neither shape explains); the
+Census Bureau's outline of the City of Pavo lies half in 275117 and half in Brooks County, and
+none of it in 275116, where Boston, Coolidge and Ochlocknee, as controls, each lie wholly in the
+precinct named for them; and Patten's 430 registered voters are 71% of 275116's 603 people and
+Pavo's 706 are 66% of 275117's 1,074, where the other pairing would give Pavo more voters than
+people. The check now pairs the two by hand, writes the pairs into the record
+(`sources.precinct_map.paired`) and stops if the map stops giving both shapes one name. Thomas's
+school board District 5, whose May 2026 contest had been untestable on the weak pair, now passes,
+and no other verdict moves. The precinct layer still labels both shapes PAVO/PATTEN, as the map
+does. The other two flags are not wrong names: Dawson's West cast 1,921 votes for State House
+District 7 and 2,526 for District 9 while its shape lies wholly in District 7, and Dawson's board
+maps were voted county-wide, so no verdict depends on it; Fulton's SS11C was paired with 11C4 at a
+weak score of 0.53, and a weak pair can pass a contest and cannot fail one. The sweep cannot see a
+swap between two precincts that share all three districts, which is every precinct in some
+counties (all 12 of Pickens's, for one).
 
 **The precincts are the office's 2024 statewide map, and each card says what the ballots since say
 about its county** (`ga-precincts.json`, `ga/scripts/build_ga_precincts.py` on the shared

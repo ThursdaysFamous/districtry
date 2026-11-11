@@ -1,0 +1,41 @@
+{
+ "state": "Arkansas",
+ "usps": "AR",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Sarah Huckabee Sanders",
+   "url": "https://governor.arkansas.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Leslie Rutledge",
+   "url": "https://ltgovernor.arkansas.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Tim Griffin",
+   "url": "https://arkansasag.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Cole Jester",
+   "url": "https://www.sos.arkansas.gov/"
+  },
+  {
+   "office": "Treasurer of State",
+   "name": "John Thurston",
+   "url": "https://www.artreasury.gov/"
+  },
+  {
+   "office": "Auditor of State",
+   "name": "Dennis Milligan",
+   "url": "https://www.auditor.ar.gov/"
+  },
+  {
+   "office": "Commissioner of State Lands",
+   "name": "Tommy Land",
+   "url": "https://www.cosl.org/"
+  }
+ ]
+}

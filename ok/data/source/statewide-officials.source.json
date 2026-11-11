@@ -1,0 +1,61 @@
+{
+ "state": "Oklahoma",
+ "usps": "OK",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Kevin Stitt",
+   "url": "https://oklahoma.gov/governor.html"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Matt Pinnell",
+   "url": "https://oklahoma.gov/ltgovpinnell/about.html"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Gentner Drummond",
+   "url": "https://oklahoma.gov/oag.html"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Todd Russ",
+   "url": "https://oklahoma.gov/treasurer.html"
+  },
+  {
+   "office": "State Auditor and Inspector",
+   "url": "https://www.sai.ok.gov/",
+   "unnamed": "The office's website (sai.ok.gov) refuses automated readers in robots.txt, so this app does not read a name from it."
+  },
+  {
+   "office": "State Superintendent of Public Instruction",
+   "name": "Lindel Fields",
+   "url": "https://oklahoma.gov/education.html"
+  },
+  {
+   "office": "Commissioner of Labor",
+   "name": "Leslie Osborn",
+   "url": "https://oklahoma.gov/labor.html"
+  },
+  {
+   "office": "Insurance Commissioner",
+   "name": "Glen Mulready",
+   "url": "https://www.oid.ok.gov/"
+  },
+  {
+   "office": "Corporation Commissioner",
+   "name": "Todd Hiett",
+   "url": "https://oklahoma.gov/occ.html"
+  },
+  {
+   "office": "Corporation Commissioner",
+   "name": "Kim David",
+   "url": "https://oklahoma.gov/occ.html"
+  },
+  {
+   "office": "Corporation Commissioner",
+   "name": "Brian Bingman",
+   "url": "https://oklahoma.gov/occ.html"
+  }
+ ]
+}

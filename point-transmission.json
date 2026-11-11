@@ -43,6 +43,38 @@
         "zip-code"
       ]
     },
+    "az": {
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
+        "municipality",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 0,
+      "layer_ids": [
+        "az-house",
+        "az-senate",
+        "county",
+        "fire-station",
+        "municipality",
+        "police-station",
+        "post-office",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
+        "us-house",
+        "zip-code"
+      ]
+    },
     "ca": {
       "layers_sending_point": 0,
       "layers": [],
@@ -78,21 +110,21 @@
       ]
     },
     "ga": {
-      "layers_sending_point": 4,
-      "layers": [
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
         "county-subdivision",
         "municipality",
         "school-district-unified",
         "zip-code"
       ],
-      "layers_holding_hook_but_silent": [],
       "layers_unexercised": [],
       "atpoint_sites": [
         "load",
         "load",
         "loadZipCodes"
       ],
-      "atpoint_hooks_fired": 2,
+      "atpoint_hooks_fired": 0,
       "layer_ids": [
         "county",
         "county-commissioner",
@@ -527,6 +559,98 @@
         "zip-code"
       ]
     },
+    "nh": {
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
+        "municipality",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 0,
+      "layer_ids": [
+        "county",
+        "fire-station",
+        "municipality",
+        "nh-house",
+        "nh-senate",
+        "police-station",
+        "post-office",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
+        "us-house",
+        "zip-code"
+      ]
+    },
+    "nj": {
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
+        "municipality",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 0,
+      "layer_ids": [
+        "county",
+        "fire-station",
+        "municipality",
+        "nj-assembly",
+        "nj-senate",
+        "police-station",
+        "post-office",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
+        "us-house",
+        "zip-code"
+      ]
+    },
+    "nv": {
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
+        "municipality",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 0,
+      "layer_ids": [
+        "county",
+        "fire-station",
+        "municipality",
+        "nv-assembly",
+        "nv-senate",
+        "police-station",
+        "post-office",
+        "school-district-unified",
+        "us-house",
+        "zip-code"
+      ]
+    },
     "ny": {
       "layers_sending_point": 0,
       "layers": [],
@@ -623,6 +747,34 @@
         "school-district-elementary",
         "school-district-unified",
         "tribal-government",
+        "us-house",
+        "zip-code"
+      ]
+    },
+    "pa": {
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
+        "municipality",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 0,
+      "layer_ids": [
+        "county",
+        "fire-station",
+        "municipality",
+        "pa-house",
+        "pa-senate",
+        "police-station",
+        "post-office",
+        "school-district-unified",
         "us-house",
         "zip-code"
       ]
@@ -795,20 +947,20 @@
       ]
     },
     "wv": {
-      "layers_sending_point": 3,
-      "layers": [
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
         "municipality",
         "school-district-unified",
         "zip-code"
       ],
-      "layers_holding_hook_but_silent": [],
       "layers_unexercised": [],
       "atpoint_sites": [
         "load",
         "load",
         "loadZipCodes"
       ],
-      "atpoint_hooks_fired": 2,
+      "atpoint_hooks_fired": 0,
       "layer_ids": [
         "city-ward",
         "county",

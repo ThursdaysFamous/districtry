@@ -144,7 +144,7 @@ North Carolina shape, and its id stays `school-district-unified` because a layer
 address.
 
 **THE ZIP LAYER HIDES OUTSIDE SOUTH CAROLINA.** A ZCTA carries no state field, so over the line
-the live service answers with a neighbouring state's ZIP (the Georgia negative point gives 30817
+the live service answers with a neighbouring state's ZIP (a point in Wilkes County, Georgia, gives 30817
 and Augusta 30904, against the State House's 29201, measured 2026-10-10). The coverage test reads
 the shipped outline, and the smoke test asserts both halves.
 
@@ -212,7 +212,7 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: South Carolina (`southcarolina`) — https://districtry.com/sc/
 - Geocoders: address Photon (South Carolina-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, South Carolina-bounded, serial >=1s queue)
-- Ground truth: 34.00035,-81.03295 (the State House, Columbia, Richland County) → county Richland County; us-house 6; sc-senate 26; sc-house 72; county-council 4; voting-precinct Ward 1; sc-circuit-court 5th Judicial Circuit. Negative point 33.75000,-82.55000 (Wilkes County, GEORGIA, about 25 km west of the Savannah River — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Georgia at this point (control: the State House anchor returns South Carolina). GEORGIA BECAUSE NO INSTANCE SERVES IT, and on land well clear of the river, whose channel the county fabric could place on either side.).
+- Ground truth: 34.00035,-81.03295 (the State House, Columbia, Richland County) → county Richland County; us-house 6; sc-senate 26; sc-house 72; county-council 4; voting-precinct Ward 1; sc-circuit-court 5th Judicial Circuit. Negative point 32.40000,-79.40000 (In the Atlantic Ocean, about 48 km from the nearest point of South Carolina's shipped outline — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer names no state here (controls: the State House and Charleston return South Carolina, and the old point in Wilkes County returns Georgia), no shipped boundary file contains it, and the nearest outline in fleet-outlines.json is South Carolina's. THE OCEAN BECAUSE NO LAND IN THIS APP'S GATE IS UNSERVED ONCE GEORGIA IS LIVE: the gate holds South Carolina, Georgia and North Carolina, all three served, so the point moved here from Wilkes County, Georgia (33.75, -82.55), in the change that published Georgia, as Indiana's moved when Kentucky went live.).
 - Layers: 17 registered (political 7, safety 2, schools 2, geography 6); `registerLayer(` floor 13. Debug namespace `window.SCExplorer`.
 - Scheduled workflows: `update-sc-congress-roster.yml` (Mon 17:07 UTC); `update-sc-legislature-roster.yml` (Tue 17:07 UTC); `update-sc-county-council-roster.yml` (Wed 17:07 UTC); `sc-validate-sources.yml` (1st of month 19:37 UTC).
 - Source registry: `sc/scripts/validate_sources.py` (machine-checked monthly)

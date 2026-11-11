@@ -1,0 +1,31 @@
+{
+ "state": "Minnesota",
+ "usps": "MN",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Tim Walz",
+   "url": "https://mn.gov/governor/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Peggy Flanagan",
+   "url": "https://mn.gov/governor/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Keith Ellison",
+   "url": "https://www.ag.state.mn.us/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Steve Simon",
+   "url": "https://www.sos.state.mn.us/"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Julie Blaha",
+   "url": "https://www.osa.state.mn.us/"
+  }
+ ]
+}

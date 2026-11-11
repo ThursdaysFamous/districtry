@@ -1,0 +1,57 @@
+{
+ "state": "California",
+ "usps": "CA",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Gavin Newsom",
+   "url": "https://www.gov.ca.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Eleni Kounalakis",
+   "url": "https://ltg.ca.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Rob Bonta",
+   "url": "https://oag.ca.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Shirley N. Weber",
+   "url": "https://www.sos.ca.gov/",
+   "match": [
+    "Shirley Weber"
+   ]
+  },
+  {
+   "office": "Treasurer",
+   "name": "Fiona Ma",
+   "url": "https://www.treasurer.ca.gov/"
+  },
+  {
+   "office": "Controller",
+   "name": "Malia M. Cohen",
+   "url": "https://www.sco.ca.gov/",
+   "match": [
+    "Malia Cohen"
+   ],
+   "source": "https://www.slc.ca.gov/",
+   "note": "www.sco.ca.gov answered 403 to our token and to a browser on 2026-11-10; the State Lands Commission, which the Controller chairs, names her."
+  },
+  {
+   "office": "Insurance Commissioner",
+   "name": "Ricardo Lara",
+   "url": "https://www.insurance.ca.gov/",
+   "match": [
+    "Commissioner Lara"
+   ]
+  },
+  {
+   "office": "Superintendent of Public Instruction",
+   "name": "Tony Thurmond",
+   "url": "https://www.cde.ca.gov/"
+  }
+ ]
+}

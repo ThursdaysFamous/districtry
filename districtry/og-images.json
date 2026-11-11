@@ -15,6 +15,14 @@
     "height": 630,
     "rendered": "2026-10-13"
   },
+  "az": {
+    "path": "az/og-image.png",
+    "label": "az",
+    "sha256": "461b65e7e3bbeae44b97253420dcafb384c3e2238ed7ae402415ab09eb85c037",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-11-10"
+  },
   "ca": {
     "path": "ca/og-image.png",
     "label": "ca",
@@ -111,6 +119,30 @@
     "height": 630,
     "rendered": "2026-09-29"
   },
+  "nh": {
+    "path": "nh/og-image.png",
+    "label": "nh",
+    "sha256": "89b4e1f9776440753d171e3048763cac8f69eb73cf59959fdebcd7044f65ea7d",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-11-11"
+  },
+  "nj": {
+    "path": "nj/og-image.png",
+    "label": "nj",
+    "sha256": "709ff2ef44b4af536da97d99b1037b24b9e66246cffec94a3f54e1c06a8a6993",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-11-11"
+  },
+  "nv": {
+    "path": "nv/og-image.png",
+    "label": "nv",
+    "sha256": "5399c03567c9668f12eba9f1b2d8cd1012c8d567307936ac50ea581c09e5caac",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-11-10"
+  },
   "ny": {
     "path": "ny/og-image.png",
     "label": "ny",
@@ -126,6 +158,14 @@
     "width": 1200,
     "height": 630,
     "rendered": "2026-10-09"
+  },
+  "pa": {
+    "path": "pa/og-image.png",
+    "label": "pa",
+    "sha256": "941beace6c4178ca4099f0efd992841af695d19508ba02b3ede9e8ced61f05c8",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-11-10"
   },
   "sc": {
     "path": "sc/og-image.png",

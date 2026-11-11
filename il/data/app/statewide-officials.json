@@ -1,0 +1,58 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from il/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Illinois",
+ "usSenate": [
+  {
+   "name": "Tammy Duckworth",
+   "party": "Democratic",
+   "url": "https://www.duckworth.senate.gov",
+   "office": "524 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2854"
+  },
+  {
+   "name": "Richard J. Durbin",
+   "party": "Democratic",
+   "url": "https://www.durbin.senate.gov",
+   "office": "711 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2152"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "JB Pritzker",
+   "url": "https://gov.illinois.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Juliana Stratton",
+   "url": "https://ltgov.illinois.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Kwame Raoul",
+   "url": "https://illinoisattorneygeneral.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Secretary of State",
+   "url": "https://www.ilsos.gov/",
+   "unnamed": "The office's websites (ilsos.gov and cyberdriveillinois.com) refuse automated readers in robots.txt, so this app does not read a name from them."
+  },
+  {
+   "office": "Comptroller",
+   "url": "https://illinoiscomptroller.gov/",
+   "unnamed": "The office's own website could not be read when this list was built, so no name is shown until it can be."
+  },
+  {
+   "office": "Treasurer",
+   "name": "Michael Frerichs",
+   "url": "https://illinoistreasurer.gov/",
+   "verified": "2026-11-10"
+  }
+ ]
+}
