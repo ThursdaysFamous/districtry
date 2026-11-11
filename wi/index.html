@@ -12307,6 +12307,24 @@ function initWisconsinExplorer() {
     (load.tileMods || []).forEach(function (m) { layerRuntime[m.id].tileAnswer = answer; });
   }
 
+  // A record a publisher files where there is no district (the Census's
+  // "School District Not Defined" in its unified school layer) is not a
+  // district, so a layer whose query meets one at the point calls this
+  // before it answers. The record is taken out of the answers the highlight
+  // lights and the "Compare to this district" control reads: the tile answer
+  // here, kept on the same point so scripts/probe_tile_cards.mjs still sees
+  // the card answered from the tile, and the live point query's answer that
+  // showProvisionalHighlight lights. The record is still drawn, because the
+  // layer's archive and file are left as published, and a layer drawn from
+  // its whole file (no WebGL, or a failed archive) still lights it.
+  function answerIsNotADistrict(load, point) {
+    (load.tileMods || []).forEach(function (m) {
+      var rt = layerRuntime[m.id];
+      if (rt && rt.tileAnswer && rt.tileAnswer.point === point) rt.tileAnswer = { point: point, feature: null };
+    });
+    if (load.pointAnswer && load.pointAnswer.point === point) load.pointAnswer = null;
+  }
+
   /* ---------- a county-dispatched layer drawn from tiles (phase 5b). One
    * archive holds every county whose boundaries the app ships, each feature
    * carrying its county key as `_c`, and the archive's metadata lists those
@@ -17650,21 +17668,83 @@ function initWisconsinExplorer() {
     return fetchJSONWithRetry("data/app/school-districts-unified.json", {}, 2);
   });
 
-  registerPolygonLayer({
+  /* ---------- the Census's "School District Not Defined" record ----------
+   * The Census files the ground in a state that no school district covers
+   * under one placeholder record in its unified layer, named "School District
+   * Not Defined", whose GEOID is the state's FIPS code followed by 99997. It
+   * is not a district. Wisconsin's (5599997),
+   * measured 2026-11-10 against TIGERweb School layer 0 (the source of
+   * data/app/school-districts-unified.json), is nine polygons: Wisconsin's
+   * parts of Lake Michigan, Green Bay and Lake Superior, and Lakes Winnebago,
+   * Butte des Morts, Mendota, Monona, Geneva and Como, 23,148 km2 of water,
+   * and 143 km2 of land, almost all of it six of the Apostle Islands inside
+   * the Lake Superior polygon (Stockton, Outer, Oak, Basswood, Bear and
+   * Michigan islands by size; Madeline Island is in the Bayfield School
+   * District and not in it). Controls: TIGER's areal hydrography names the
+   * lake at each polygon's interior point, and its school layer answers
+   * Bayfield on Madeline Island and the placeholder on Stockton Island.
+   * Until that day this card named it as though it were a district.
+   *
+   * Now the card says no school district is defined here, the hover says the
+   * same, and the record is taken out of the card's tile answer, which is
+   * what the highlight lights and what offers "Compare to this district", so
+   * it is neither lit nor offered (engine answerIsNotADistrict). It is still DRAWN, because it is in the
+   * tile archive the layer draws; that and the file the comparison features
+   * read are left as the Census publishes them, so scripts/probe_tile_cards.mjs
+   * still compares like with like. The same rule, with that state's ground
+   * described, is in the Illinois, Indiana, Kentucky, Michigan, Minnesota and Tennessee apps.
+   * ---------- */
+  function wiSchoolPlaceholder(feature) {
+    var geoid = feature ? findPropCI(feature.properties || {}, ["geoid"]) : null;
+    return geoid != null && /^\d{2}99997$/.test(String(geoid));
+  }
+  var WI_NO_SCHOOL_DISTRICT = "No school district defined here";
+
+  // A bespoke block rather than registerPolygonLayer, which has no way to set
+  // the placeholder aside; it keeps that factory's 4b name-only card exactly.
+  registerLayer({
     id: "school-district-unified",
-    group: "schools",
-    label: "School District (Unified)",
-    loader: loadSchoolDistrictsUnified,
     // drawn and answered from vector tiles where the browser can (engine
     // tile-overlay block): the whole file is 2.3 MB gzipped, the tile under a
     // point about 1 KB. Built and gated by scripts/build_vector_tiles.py
     tiles: "data/app/tiles/school-district-unified.pmtiles",
-    style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 },
-    fields: [
-      { name: "name", label: "District", keys: ["name"], primary: true },
-      { name: "geoid", label: "GEOID", keys: ["geoid"] }
-    ],
-    compact: true, compactMetaField: "geoid" // 4b name-only card
+    group: "schools",
+    label: "School District (Unified)",
+    overlay: {
+      load: loadSchoolDistrictsUnified,
+      style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.05 }
+    },
+    hoverName: function (feature) {
+      if (wiSchoolPlaceholder(feature)) return "No school district defined";
+      var name = findPropCI(feature.properties || {}, ["name"]);
+      return name != null && name !== "" ? String(name) : null;
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadSchoolDistrictsUnified, point).then(function (feature) {
+        if (!feature) return null;
+        if (wiSchoolPlaceholder(feature)) {
+          answerIsNotADistrict(loadSchoolDistrictsUnified, point);
+          return { seq: seq, placeholder: true };
+        }
+        var props = feature.properties || {};
+        return { seq: seq, name: findPropCI(props, ["name"]), geoid: findPropCI(props, ["geoid"]) };
+      });
+    },
+    // compact cards skip render(); kept for the shape every layer carries
+    render: function (result) {
+      if (result.placeholder) return renderFieldStack([{ label: "District", value: WI_NO_SCHOOL_DISTRICT, primary: true }]);
+      var rows = [{ label: "District", value: result.name ? String(result.name) : "Unknown", primary: true }];
+      if (result.geoid) rows.push({ label: "GEOID", value: String(result.geoid) });
+      return renderFieldStack(rows);
+    },
+    compact: true, // 4b name-only card
+    cardIdentifier: function (result) {
+      if (result.placeholder) return WI_NO_SCHOOL_DISTRICT;
+      return result.name ? String(result.name) : "Unknown";
+    },
+    cardMeta: function (result) {
+      return result.geoid != null && result.geoid !== "" ? "GEOID " + String(result.geoid) : null;
+    }
   });
 
   /* ---------- 5. U.S. House — boundary + roster join ----------

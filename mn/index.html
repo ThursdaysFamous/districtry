@@ -12309,6 +12309,24 @@ function initMinnesotaExplorer() {
     (load.tileMods || []).forEach(function (m) { layerRuntime[m.id].tileAnswer = answer; });
   }
 
+  // A record a publisher files where there is no district (the Census's
+  // "School District Not Defined" in its unified school layer) is not a
+  // district, so a layer whose query meets one at the point calls this
+  // before it answers. The record is taken out of the answers the highlight
+  // lights and the "Compare to this district" control reads: the tile answer
+  // here, kept on the same point so scripts/probe_tile_cards.mjs still sees
+  // the card answered from the tile, and the live point query's answer that
+  // showProvisionalHighlight lights. The record is still drawn, because the
+  // layer's archive and file are left as published, and a layer drawn from
+  // its whole file (no WebGL, or a failed archive) still lights it.
+  function answerIsNotADistrict(load, point) {
+    (load.tileMods || []).forEach(function (m) {
+      var rt = layerRuntime[m.id];
+      if (rt && rt.tileAnswer && rt.tileAnswer.point === point) rt.tileAnswer = { point: point, feature: null };
+    });
+    if (load.pointAnswer && load.pointAnswer.point === point) load.pointAnswer = null;
+  }
+
   /* ---------- a county-dispatched layer drawn from tiles (phase 5b). One
    * archive holds every county whose boundaries the app ships, each feature
    * carrying its county key as `_c`, and the archive's metadata lists those
@@ -17824,6 +17842,7 @@ function initMinnesotaExplorer() {
   });
 
   function mnSchoolCard(result, tierNote) {
+    if (result.placeholder) return mnSchoolPlaceholderCard();
     var wrap = cardEl("div", "card-flush");
     wrap.appendChild(renderBodyIntro({
       title: result.name != null ? String(result.name) : "Unknown school district",
@@ -17904,12 +17923,58 @@ function initMinnesotaExplorer() {
     return wrap;
   }
 
+  /* ---------- the Census's "School District Not Defined" record ----------
+   * The Census files the ground in a state that no school district covers
+   * under one placeholder record in its unified layer, named "School District
+   * Not Defined", whose GEOID is the state's FIPS code followed by 99997. It
+   * is not a district. Minnesota's (2799997),
+   * measured 2026-11-10 against TIGERweb School layer 0, is one polygon:
+   * Fort Snelling, the unorganized territory in Hennepin County around the
+   * Minneapolis-Saint Paul airport, 19 km2 of land and 1 km2 of water
+   * (control: TIGER's county subdivision layer names its interior point
+   * "Fort Snelling UT", Hennepin County).
+   * Until that day the unified card named it as though it were a district.
+   *
+   * Now the card says no school district is defined here and what that ground
+   * is, the hover says the same, and the record is taken out of the card's
+   * tile answer, which is what the highlight lights and what offers "Compare
+   * to this district", so it is neither lit nor offered (engine
+   * answerIsNotADistrict). It is still DRAWN,
+   * because it is in the tile archive the layer draws; that and the file the
+   * comparison features read are left as the Census publishes them, so
+   * scripts/probe_tile_cards.mjs still compares like with like. Only the
+   * unified tiling carries such a record (layers 1 and 2 hold none, measured
+   * the same day), so the elementary and secondary cards, which share this
+   * query, never meet it. The same rule, with that state's ground described,
+   * is in the Illinois, Indiana, Kentucky, Michigan, Tennessee and Wisconsin apps.
+   * ---------- */
+  function mnSchoolPlaceholder(feature) {
+    var geoid = feature ? findPropCI(feature.properties || {}, ["geoid"]) : null;
+    return geoid != null && /^\d{2}99997$/.test(String(geoid));
+  }
+  function mnSchoolPlaceholderCard() {
+    var wrap = cardEl("div", "card-flush");
+    wrap.appendChild(renderBodyIntro({
+      title: "No school district defined here",
+      note: "The Census Bureau's school district map puts this point in no " +
+          "school district. It files such ground under the name \"School " +
+          "District Not Defined\", which is a placeholder and not a district. " +
+          "In Minnesota that is Fort Snelling, the unorganized territory in " +
+          "Hennepin County around the Minneapolis-Saint Paul airport."
+    }));
+    return wrap;
+  }
+
   function mnSchoolQuery(load, noBoard) {
     return function (point, seq) {
       // point-first (queryFeatureAt): one district polygon instead of the
       // statewide download gating the first click
       return queryFeatureAt(load, point).then(function (feature) {
         if (!feature) return null;
+        if (mnSchoolPlaceholder(feature)) {
+          answerIsNotADistrict(load, point);
+          return { seq: seq, placeholder: true };
+        }
         var props = feature.properties || {};
         var lo = findPropCI(props, ["lograde"]);
         var hi = findPropCI(props, ["higrade"]);
@@ -17948,6 +18013,9 @@ function initMinnesotaExplorer() {
       style: { color: "#2F6B3A", weight: 1.5, fillColor: "#4C8F59", fillOpacity: 0.06 }
     },
     hoverName: function (feature) {
+      // A string, never null: hoverValue falls back to the "name" property,
+      // which on the placeholder reads "School District Not Defined".
+      if (mnSchoolPlaceholder(feature)) return "No school district defined";
       var name = findPropCI(feature.properties || {}, ["name"]);
       return name != null ? String(name) : null;
     },
