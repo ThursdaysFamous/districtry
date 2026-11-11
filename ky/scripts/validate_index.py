@@ -119,6 +119,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "statewide-officials.json": 5,  # The officers Kentucky elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from ky/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
     "congress-roster.json": 6,  # U.S. House roster, refreshed weekly by update-ky-congress-roster.yml.
     "coverage-gaps.json": 0,  # The Data gaps panel's content, emitted from docs/DATA_LAYER_GUIDEBOOK.md's gaps block: the fiscal courts, the two legislature rosters, and the county officers.
     "ky-judge-roster.json": 3,  # Kentucky's judges, keyed by the numbered district or circuit each was elected from, from the Court of Justice's own pages; refreshed weekly by update-ky-judges-roster.yml. Jefferson's circuit 30 and district 30 are recorded as asked about rather than left silent.

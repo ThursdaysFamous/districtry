@@ -121,6 +121,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "statewide-officials.json": 5,  # The officers Arkansas elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from ar/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
     "congress-roster.json": 4,  # U.S. House (AR) roster, refreshed weekly by update-ar-congress-roster.yml.
     "ar-senate-members.json": 35,  # Arkansas Senate roster from the Arkansas State Legislature's own member list and pages, one record per seat, refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size; Senate 1 and 18 read vacant on 2026-10-13.
     "ar-house-members.json": 100,  # Arkansas House roster on the same terms; House 8 read vacant on 2026-10-13.

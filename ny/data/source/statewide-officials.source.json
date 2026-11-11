@@ -1,0 +1,30 @@
+{
+ "state": "New York",
+ "usps": "NY",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Kathy Hochul",
+   "url": "https://www.governor.ny.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Antonio Delgado",
+   "url": "https://www.governor.ny.gov/lt-governor-antonio-delgado"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Letitia James",
+   "url": "https://ag.ny.gov/"
+  },
+  {
+   "office": "Comptroller",
+   "name": "Thomas P. DiNapoli",
+   "url": "https://www.osc.ny.gov/",
+   "match": [
+    "Thomas DiNapoli",
+    "DiNapoli"
+   ]
+  }
+ ]
+}

@@ -28,7 +28,9 @@ name: Update West Virginia city councils
 # builder reads and states no delay; the builder reads it before its fetch. A
 # run is one request.
 #
-# WEST VIRGINIA IS DARK, so this job regenerates no page.
+# docs/EAM_STATUS.md counts the cities whose councils this roster names, so
+# the branch cut regenerates it and stages it with the roster; no generated
+# page reads the roster itself.
 
 on:
   schedule:
@@ -89,7 +91,8 @@ jobs:
           # carried over the checkout as an uncommitted change.
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add wv/data/app/wv-city-councils.json
+          python3 scripts/build_eam_status.py
+          git add wv/data/app/wv-city-councils.json docs/EAM_STATUS.md
           git commit -m "Update West Virginia city council members"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

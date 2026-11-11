@@ -87,6 +87,13 @@ INSTANCE_NAMES = {"il": "Illinois", "ny": "New York", "ca": "San Francisco",
                   "la": "Louisiana",
                   "mo": "Missouri",
                   "va": "Virginia",
+                  "wv": "West Virginia",
+                  "ga": "Georgia",
+                  "pa": "Pennsylvania",
+                  "nv": "Nevada",
+                  "az": "Arizona",
+                  "nj": "New Jersey",
+                  "nh": "New Hampshire",
                   "landing": "Front page"}
 # The day each instance was first LISTED on the front door, measured once with
 #   git log --reverse --format=%cs -S'"tag": "<tag>"' -- metros.json
@@ -107,7 +114,15 @@ FLEET_LISTED = {"il": "2026-08-24", "ny": "2026-08-24", "ca": "2026-08-24",
                 "ok": "2026-10-10", "sc": "2026-10-13",
                 "tn": "2026-10-13", "ar": "2026-10-15",
                 "ms": "2026-10-16", "la": "2026-10-21",
-                "mo": "2026-10-26", "va": "2026-10-31"}
+                "mo": "2026-10-26", "va": "2026-10-31",
+                # West Virginia's go-live change sets its own date; if it merges
+                # on a later day, that change moves this to the merge day.
+                "wv": "2026-11-10",
+                "ga": "2026-11-10",
+                # Batch 1 of the state-level launch went live in one change; if
+                # it merges on a later day, that change moves these five too.
+                "pa": "2026-11-11", "nv": "2026-11-11", "az": "2026-11-11",
+                "nj": "2026-11-11", "nh": "2026-11-11"}
 # GoatCounter publishes a referrer's HOST; these are the names a reader knows.
 # A host with no entry ships exactly as GoatCounter spells it.
 REF_NAMES = {"(unknown)": "Direct / unknown", "duckduckgo.com": "DuckDuckGo",
@@ -196,6 +211,10 @@ ACTION_GROUPS = [
     ("Sponsor", {"sponsor"}),
     # address-map/<layer>: an office address on a card opened in a map app
     # (engine card-helpers, 2026-11-03)
+    # statewide-officials/<tag>: the list of a state's statewide officers
+    # opened above a map's results (engine statewide-officials, 2026-11-10;
+    # Adam: "count in traffic")
+    ("State officials", {"statewide-officials"}),
     ("Other", {"more-open", "more-item", "osm-note", "example-place",
                "app-shortcut", "address-map"}),
 ]

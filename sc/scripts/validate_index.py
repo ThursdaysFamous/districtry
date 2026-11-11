@@ -119,6 +119,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "statewide-officials.json": 5,  # The officers South Carolina elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from sc/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
     "congress-roster.json": 7,  # U.S. House (SC) roster, refreshed weekly by update-sc-congress-roster.yml.
     "sc-senate-members.json": 42,  # South Carolina Senate roster from the General Assembly's own member pages, refreshed weekly. The floor is below 46 because a vacant seat is a real event; the chamber listed all 46 on 2026-10-10.
     "sc-house-members.json": 114,  # South Carolina House roster from the General Assembly's own member pages, refreshed weekly. The floor is below 124 for the same reason; the chamber listed all 124 on 2026-10-10.

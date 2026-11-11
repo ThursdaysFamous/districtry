@@ -74,7 +74,16 @@ const NYC_POINT = "40.71274,-74.00602"; // New York City Hall (Manhattan)
 // in no district, so it keeps the Hudson literal. NEGATIVE_POINT is now
 // Hartford, Connecticut — 66 km outside the state, which proves something else
 // and is asserted separately below.
-const HUDSON_POINT = "40.72000,-74.04000"; // Hudson River, New Jersey waters
+// MOVED 2026-11-11, AT NEW JERSEY'S GO-LIVE, from 40.72000,-74.04000, which is
+// in New Jersey's waters: once New Jersey's app answered there, a reader's
+// click at the old point was handed to it, so it was no longer "a point a
+// reader can actually click on this map" (a permalink still selected it here,
+// so the check below would have passed for the wrong reason). This one is in
+// the Hudson on the New York side of the state line, measured that day inside
+// ny-state-outline.json and fleet-outlines.json's New York entry, about 230 m
+// outside New Jersey's and about 250 m off Manhattan's shore in
+// borough-boundaries.json.
+const HUDSON_POINT = "40.72000,-74.01930"; // Hudson River, New York waters
 const BOOT_TIMEOUT = 45000; // Leaflet CDN + first paint on a cold CI runner
 const QUERY_TIMEOUT = 25000;
 

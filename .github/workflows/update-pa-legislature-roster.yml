@@ -1,0 +1,114 @@
+name: Update Pennsylvania legislature roster
+
+# Weekly refresh of the Pennsylvania Senate + House rosters
+# (pa/data/app/pa-senate-members.json and pa-house-members.json, fetched by
+# pa/index.html's chamber cards). Rebuilds both chambers from the General
+# Assembly's own pages and, if anything changed, opens a PR rather than
+# committing directly to main.
+#
+# The General Assembly prints one member list per chamber,
+# www.palegis.us/senate/members and www.palegis.us/house/members, and one page
+# per member with the Capitol office. 2 lists and 253 member pages, fetched one
+# second apart, so the run takes about five minutes.
+#
+# Each chamber elects one member per district, so each file carries one
+# record per district; scripts/validate_chamber_rosters.py holds every seat to
+# it. The builder refuses a Capitol office that does not name a Harrisburg
+# Capitol ZIP code, rather than ship one that could be a home, and never reads
+# a district office or a fax number.
+#
+# robots.txt: www.palegis.us's (read 2026-11-10) has one group, naming an
+# accessibility scanner, so no rule binds these fetches, and states no delay;
+# the builder reads it before its first fetch with the User-Agent its fetches
+# send.
+#
+# THE REBUILT FILES ARE CARRIED ACROSS THE BRANCH CUT RATHER THAN FETCHED A
+# SECOND TIME, the update-ilga-roster.yml pattern. A run where main changed
+# those same files meanwhile errors at the checkout instead of pushing, which
+# is right.
+#
+# THE PAGE STEPS LANDED WITH THE GO-LIVE CHANGE (batch 1 of the state-level
+# launch). `pa/state-legislature.html` carries a GENERATED table of both
+# rosters, and `about.html` and `sitemap.xml` count them, so all three are
+# regenerated here and staged in the same `git add`.
+
+on:
+  schedule:
+    - cron: "7 20 * * 2" # Tuesday 20:07 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # requests for the shared robots.txt reader; the pages themselves are
+      # fetched and parsed with the stdlib.
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Rebuild Pennsylvania Senate + House rosters
+        run: python3 pa/scripts/build_pa_legislature_roster.py
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, every data/app file must be present and
+      # well formed, and every seat must carry a record.
+      - name: Validate app + data files
+        run: |
+          python3 pa/scripts/validate_index.py pa/index.html
+          python3 scripts/validate_chamber_rosters.py
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- pa/data/app/pa-senate-members.json pa/data/app/pa-house-members.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/pa-legislature-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history — see the sibling
+          # workflows' own comments for why both halves matter. The two rebuilt
+          # files ride across the checkout as working-tree changes.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add pa/data/app/pa-senate-members.json pa/data/app/pa-house-members.json pa/state-legislature.html about.html sitemap.xml
+          git commit -m "Update Pennsylvania Senate + House rosters from the General Assembly"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Pennsylvania Senate + House rosters" \
+              --body "Automated weekly refresh of the Pennsylvania Senate and House chamber cards' rosters, from the General Assembly's member lists and member pages, generated by \`pa/scripts/build_pa_legislature_roster.py\`. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

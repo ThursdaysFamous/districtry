@@ -1,0 +1,49 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from mi/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Michigan",
+ "usSenate": [
+  {
+   "name": "Gary C. Peters",
+   "party": "Democratic",
+   "url": "https://www.peters.senate.gov",
+   "office": "724 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-6221"
+  },
+  {
+   "name": "Elissa Slotkin",
+   "party": "Democratic",
+   "url": "https://www.slotkin.senate.gov/",
+   "office": "291 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4822"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Gretchen Whitmer",
+   "url": "https://www.michigan.gov/whitmer",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Garlin Gilchrist II",
+   "url": "https://www.michigan.gov/whitmer/ltgov",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Dana Nessel",
+   "url": "https://www.michigan.gov/ag",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Jocelyn Benson",
+   "url": "https://www.michigan.gov/sos",
+   "verified": "2026-11-10"
+  }
+ ],
+ "officersNote": "Michigan's voters also elect the State Board of Education and the boards of the University of Michigan, Michigan State University and Wayne State University statewide. Those boards are not listed here yet."
+}

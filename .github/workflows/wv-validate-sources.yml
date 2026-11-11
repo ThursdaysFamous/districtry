@@ -24,9 +24,10 @@ name: Validate layer sources (West Virginia)
 # monthly runs. A scheduled run here starts hours late anyway (measured across
 # the fleet: 3 to 5.3 hours), so the slot is a request rather than an ordering.
 #
-# WEST VIRGINIA IS DARK and this job still runs, on purpose: a publisher that
-# supersedes a dataset while the instance is unserved is exactly the drift a
-# go-live would otherwise inherit silently. Its check 6 also watches the
+# This job was scheduled while West Virginia was dark, from its first PR until
+# its go-live on 2026-11-10, on purpose: a publisher that supersedes a dataset
+# while the instance is unserved is exactly the drift a go-live would
+# otherwise inherit silently. Its check 6 also watches the
 # state GIS centre's maps of the two chambers and the magisterial districts, so
 # a replaced plan or a renamed layer is read by a person within a month rather
 # than on the day somebody rebuilds.
