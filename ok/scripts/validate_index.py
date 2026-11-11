@@ -118,6 +118,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "statewide-officials.json": 5,  # The officers Oklahoma elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from ok/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
     "congress-roster.json": 5,  # U.S. House (OK) roster, refreshed weekly by update-ok-congress-roster.yml.
     "ok-senate-members.json": 44,  # Oklahoma Senate roster from Open States, refreshed weekly. The floor is below 48 because a vacant seat is a real event; the export carried 47 on 2026-10-09.
     "ok-house-members.json": 93,  # Oklahoma House roster from Open States, refreshed weekly. The floor is below 101 for the same reason; the export carried 100 on 2026-10-09.

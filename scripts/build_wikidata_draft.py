@@ -81,6 +81,13 @@ IDS = {
     "Q1588": "Louisiana",
     "Q1581": "Missouri",
     "Q1370": "Virginia",
+    "Q1371": "West Virginia",
+    "Q1428": "Georgia",
+    "Q1400": "Pennsylvania",
+    "Q1227": "Nevada",
+    "Q816": "Arizona",
+    "Q1408": "New Jersey",
+    "Q759": "New Hampshire",
 }
 
 # metros.json tag -> the jurisdiction item that instance answers for. STATED,
@@ -189,12 +196,32 @@ IDS = {
 # P300 = "US-VA", P131 = Q30, and its own P47 carries Q1454, Q1509 and Q1603,
 # which match this table's nc, tn and ky entries. Its English label is the
 # bare string "Virginia".
+#
+# wv was added at its go-live by the same route: Q1371 is in Q1370's own P47.
+# Read from Special:EntityData on 2026-11-10, P31 = Q35657, P300 = "US-WV",
+# P131 = Q30, and its own P47 carries Q1370 and Q1603, which match this
+# table's va and ky entries. Its English label is the bare string "West
+# Virginia".
+# ga was added at its go-live by the same route: Q1428 is in Q1456's, Q1509's
+# and Q1454's own P47, read on 2026-11-10. Read from Special:EntityData the
+# same day, P31 = Q35657, P300 = "US-GA", P131 = Q30, and its own P47 carries
+# Q1456, Q1454 and Q1509, which match this table's sc, nc and tn entries. Its
+# English label is the bare string "Georgia".
+# pa, nv, az, nj and nh were added at the batch 1 go-live by the same route.
+# Read from Special:EntityData on 2026-11-11, each has P31 = Q35657, P131 =
+# Q30 and its own ISO code in P300 (US-PA, US-NV, US-AZ, US-NJ, US-NH), and
+# the borders cross-check: Q1400's own P47 carries Q1384, Q1408 and Q1371
+# (this table's ny, nj and wv), Q1408's carries Q1384 and Q1400, and Q1227's
+# and Q816's carry each other. Q759's P47 names no instance here; its P300
+# and its label settle it. Each English label is the bare state name.
 JURISDICTION = {
     "il": "Q1204", "wi": "Q1537", "ia": "Q1546", "mi": "Q1166",
     "ny": "Q1384", "ca": "Q62", "mn": "Q1527", "ky": "Q1603",
     "in": "Q1415", "nc": "Q1454", "ok": "Q1649", "sc": "Q1456",
     "tn": "Q1509", "ar": "Q1612", "ms": "Q1494", "la": "Q1588",
-    "mo": "Q1581", "va": "Q1370",
+    "mo": "Q1581", "va": "Q1370", "wv": "Q1371", "ga": "Q1428",
+    "pa": "Q1400", "nv": "Q1227", "az": "Q816", "nj": "Q1408",
+    "nh": "Q759",
 }
 
 

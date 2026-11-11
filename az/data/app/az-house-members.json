@@ -1,0 +1,812 @@
+{
+  "1": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Selina Bliss",
+        "party": "Republican",
+        "email": "sbliss@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 306",
+          "(602) 926-4018"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2296"
+      },
+      {
+        "name": "Quang H Nguyen",
+        "party": "Republican",
+        "email": "qnguyen@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 226",
+          "(602) 926-3258"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2326"
+      }
+    ]
+  },
+  "2": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Stephanie Simacek",
+        "party": "Democratic",
+        "email": "ssimacek@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 120",
+          "(602) 926-3083"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2353"
+      },
+      {
+        "name": "Justin Wilmeth",
+        "party": "Republican",
+        "email": "jwilmeth@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 111",
+          "(602) 926-5044"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2342"
+      }
+    ]
+  },
+  "3": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Alexander Kolodin",
+        "party": "Republican",
+        "email": "akolodin@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 323",
+          "(602) 926-3560"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2318"
+      },
+      {
+        "name": "Cody Reim",
+        "party": "Republican",
+        "email": "creim@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 318",
+          "(602) 926-3436"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2417"
+      }
+    ]
+  },
+  "4": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Pamela Carter",
+        "party": "Republican",
+        "email": "pcarter@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 304",
+          "(602) 926-3153"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2354"
+      },
+      {
+        "name": "Matt Gress",
+        "party": "Republican",
+        "email": "mgress@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 205",
+          "(602) 926-4105"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2308"
+      }
+    ]
+  },
+  "5": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Sarah Liguori",
+        "party": "Democratic",
+        "email": "sliguori@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 115",
+          "(602) 926-3264"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2347"
+      },
+      {
+        "name": "Aaron Márquez",
+        "party": "Democratic",
+        "email": "amarquez@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 123",
+          "(602) 926-3179"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2355"
+      }
+    ]
+  },
+  "6": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mae Peshlakai",
+        "party": "Democratic",
+        "email": "mpeshlakai@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 116",
+          "(602) 926-3708"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2332"
+      },
+      {
+        "name": "Myron Tsosie",
+        "party": "Democratic",
+        "email": "mtsosie@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 339",
+          "(602) 926-3157"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2341"
+      }
+    ]
+  },
+  "7": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Sylvia Allen",
+        "party": "Republican",
+        "email": "sallen@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 302",
+          "(602) 926-3579"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2419"
+      },
+      {
+        "name": "Walt Blackman",
+        "party": "Republican",
+        "email": "wblackman@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 224",
+          "(602) 926-3244"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2356"
+      }
+    ]
+  },
+  "8": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Janeen Connolly",
+        "party": "Democratic",
+        "email": "jconnolly@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 118",
+          "(602) 926-3300"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2357"
+      },
+      {
+        "name": "Brian Garcia",
+        "party": "Democratic",
+        "email": "bgarcia@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 335",
+          "(602) 926-3329"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2358"
+      }
+    ]
+  },
+  "9": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Lorena Austin",
+        "party": "Democratic",
+        "email": "laustin@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 124",
+          "(602) 926-3968"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2343"
+      },
+      {
+        "name": "Seth Blattman",
+        "party": "Democratic",
+        "email": "sblattman@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 125",
+          "(602) 926-3996"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2295"
+      }
+    ]
+  },
+  "10": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Ralph Heap",
+        "party": "Republican",
+        "email": "rheap@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 309",
+          "(602) 926-3381"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2360"
+      },
+      {
+        "name": "Justin Olson",
+        "party": "Republican",
+        "email": "jolson@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 113",
+          "(602) 926-3376"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2359"
+      }
+    ]
+  },
+  "11": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Junelle Cavero",
+        "party": "Democratic",
+        "email": "jcavero@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 325",
+          "(602) 926-3285"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2351"
+      },
+      {
+        "name": "Oscar De Los Santos",
+        "party": "Democratic",
+        "email": "odelossantos@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 320",
+          "(602) 926-4098"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2303"
+      }
+    ]
+  },
+  "12": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Patty Contreras",
+        "party": "Democratic",
+        "email": "pcontreras@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 126",
+          "(602) 926-4057"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2302"
+      },
+      {
+        "name": "Stacey Travers",
+        "party": "Democratic",
+        "email": "stravers@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 322",
+          "(602) 926-3917"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2340"
+      }
+    ]
+  },
+  "13": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jeff Weninger",
+        "party": "Republican",
+        "email": "jweninger@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 316",
+          "(602) 926-3392"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2361"
+      },
+      {
+        "name": "Julie Willoughby",
+        "party": "Republican",
+        "email": "jwilloughby@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 207",
+          "(602) 926-4153"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2344"
+      }
+    ]
+  },
+  "14": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Laurin Hendrix",
+        "party": "Republican",
+        "email": "lhendrix@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 114",
+          "(602) 926-4209"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2316"
+      },
+      {
+        "name": "Khyl Powell",
+        "party": "Republican",
+        "email": "kpowell@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 342",
+          "(602) 926-3415"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2362"
+      }
+    ]
+  },
+  "15": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Neal Carter",
+        "party": "Republican",
+        "email": "ncarter@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 204",
+          "(602) 926-5761"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2297"
+      },
+      {
+        "name": "Michael Way",
+        "party": "Republican",
+        "email": "mway@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 308",
+          "(602) 926-3433"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2363"
+      }
+    ]
+  },
+  "16": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Chris Lopez",
+        "party": "Republican",
+        "email": "clopez@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 310",
+          "(602) 926-3445"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2364"
+      },
+      {
+        "name": "Teresa Martinez",
+        "party": "Republican",
+        "email": "tmartinez@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 129",
+          "(602) 926-3158"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2323"
+      }
+    ]
+  },
+  "17": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Rachel Keshel",
+        "party": "Republican",
+        "email": "rkeshel@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 303",
+          "(602) 926-3558"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2317"
+      },
+      {
+        "name": "Kevin Volk",
+        "party": "Democratic",
+        "email": "kvolk@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 119",
+          "(602) 926-3498"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2365"
+      }
+    ]
+  },
+  "18": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Nancy Gutierrez",
+        "party": "Democratic",
+        "email": "ngutierrez@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 330",
+          "(602) 926-4134"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2310"
+      },
+      {
+        "name": "Christopher Mathis",
+        "party": "Democratic",
+        "email": "cmathis@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 337",
+          "(602) 926-3138"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2322"
+      }
+    ]
+  },
+  "19": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Lupe Diaz",
+        "party": "Republican",
+        "email": "ldiaz@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 313",
+          "(602) 926-4852"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2304"
+      },
+      {
+        "name": "Gail Griffin",
+        "party": "Republican",
+        "email": "ggriffin@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 225",
+          "(602) 926-5895"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2309"
+      }
+    ]
+  },
+  "20": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Alma Hernandez",
+        "party": "Democratic",
+        "email": "ahernandez@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 338",
+          "(602) 926-3136"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2312"
+      },
+      {
+        "name": "Betty J Villegas",
+        "party": "Democratic",
+        "email": "bvillegas@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 324",
+          "(602) 926-3027"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2346"
+      }
+    ]
+  },
+  "21": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Consuelo Hernandez",
+        "party": "Democratic",
+        "email": "chernandez@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 117",
+          "(602) 926-3523"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2313"
+      },
+      {
+        "name": "Stephanie Stahl Hamilton",
+        "party": "Democratic",
+        "email": "sstahlhamilton@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 333",
+          "(602) 926-3279"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2338"
+      }
+    ]
+  },
+  "22": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Lupe Contreras",
+        "party": "Democratic",
+        "email": "lcontreras@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 331",
+          "(602) 926-5284"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2301"
+      },
+      {
+        "name": "Elda Luna-Nájera",
+        "party": "Democratic",
+        "email": "eluna-najera@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 332",
+          "(602) 926-3881"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2349"
+      }
+    ]
+  },
+  "23": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Michele Peña",
+        "party": "Republican",
+        "email": "mpena@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 341",
+          "(602) 926-3696"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2331"
+      },
+      {
+        "name": "Mariana Sandoval",
+        "party": "Democratic",
+        "email": "msandoval@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 326",
+          "(602) 926-3740"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2334"
+      }
+    ]
+  },
+  "24": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Anna Abeytia",
+        "party": "Democratic",
+        "email": "aabeytia@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 121",
+          "(602) 926-3501"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2366"
+      },
+      {
+        "name": "Lydia Hernandez",
+        "party": "Democratic",
+        "email": "lhernandez@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 334",
+          "(602) 926-3553"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2314"
+      }
+    ]
+  },
+  "25": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Michael Carbone",
+        "party": "Republican",
+        "email": "mcarbone@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 208",
+          "(602) 926-4038"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2298"
+      },
+      {
+        "name": "Nick Kupper",
+        "party": "Republican",
+        "email": "nkupper@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 312",
+          "(602) 926-3512"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2367"
+      }
+    ]
+  },
+  "26": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Cesar Aguilar",
+        "party": "Democratic",
+        "email": "caguilar@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 122",
+          "(602) 926-3953"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2293"
+      },
+      {
+        "name": "Quantá Crews",
+        "party": "Democratic",
+        "email": "qcrews@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 321",
+          "(602) 926-3256"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2345"
+      }
+    ]
+  },
+  "27": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Lisa Fink",
+        "party": "Republican",
+        "email": "lfink@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 345",
+          "(602) 926-3516"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2369"
+      },
+      {
+        "name": "Tony Rivero",
+        "party": "Republican",
+        "email": "trivero@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 112",
+          "(602) 926-3528"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2368"
+      }
+    ]
+  },
+  "28": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "David Livingston",
+        "party": "Republican",
+        "email": "dlivingston@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 222",
+          "(602) 926-4178"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2319"
+      },
+      {
+        "name": "Beverly Pingerelli",
+        "party": "Republican",
+        "email": "bpingerelli@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 131",
+          "(602) 926-3396"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2333"
+      }
+    ]
+  },
+  "29": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Steve Montenegro",
+        "party": "Republican",
+        "email": "smontenegro@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 223",
+          "(602) 926-3635"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2325"
+      },
+      {
+        "name": "James Taylor",
+        "party": "Republican",
+        "email": "jtaylor@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 344",
+          "(602) 926-3564"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2370"
+      }
+    ]
+  },
+  "30": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Leo Biasiucci",
+        "party": "Republican",
+        "email": "lbiasiucci@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 110",
+          "(602) 926-3018"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2294"
+      },
+      {
+        "name": "John Gillette",
+        "party": "Republican",
+        "email": "jgillette@azleg.gov",
+        "capitolOffice": [
+          "Arizona House of Representatives",
+          "Room 130",
+          "(602) 926-4100"
+        ],
+        "url": "https://www.azleg.gov/House/House-member/?legislature=57&session=130&legislator=2306"
+      }
+    ]
+  }
+}

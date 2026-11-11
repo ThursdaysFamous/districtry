@@ -2,12 +2,14 @@
 """Mirror the Census TIGERweb layers the apps fetch live into tile archives
 (docs/OPTIMIZATION_PLAYBOOK.md §10, phase 6).
 
-Fifty-seven polygon layers across sixteen apps — sixteen in four apps at phase
+Sixty-two polygon layers across eighteen apps — sixteen in four apps at phase
 6a, thirty-two in the nine newest at phase 6d (2026-10-17), Louisiana's two
 before it went live (2026-10-21), Missouri's four before it went live
-(2026-10-26) and Virginia's three while it is dark (2026-10-29; its fourth,
+(2026-10-26), Virginia's three while it is dark (2026-10-29; its fourth,
 the county subdivisions, became a shipped file drawn partly from the
-Department of Elections' lines on 2026-10-30) — download a
+Department of Elections' lines on 2026-10-30), West Virginia's two before it
+went live (2026-11-10) and Georgia's three in the change that opens it
+(2026-11-10) — download a
 whole state from tigerweb.geo.census.gov the first time they are switched on —
 Illinois's county subdivisions alone are 14.5 MB — and ask that server about
 the reader's point on every first click; the ZIP layers (ZIP_MIRRORS, phases
@@ -114,7 +116,8 @@ SERVICES = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
 STATE_FIPS = {"il": "17", "ia": "19", "mi": "26", "wi": "55", "ny": "36", "ca": "06",
               "mn": "27", "ky": "21", "in": "18", "nc": "37", "ok": "40", "sc": "45",
               "tn": "47", "ar": "05", "ms": "28", "la": "22", "mo": "29",
-              "va": "51"}
+              "va": "51", "wv": "54", "ga": "13", "pa": "42", "nv": "32", "az": "04",
+              "nj": "34", "nh": "33"}
 # WHO THIS FETCHES AS, and it used to be nobody: the first version shelled out to
 # curl with no -A, so the Census saw `curl/8.x` and nothing read robots.txt.
 # Nothing was breached — measured 2026-09-27 as that client, the host's
@@ -195,6 +198,27 @@ MIRRORS = [
     ("va", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
     ("va", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
     ("va", "school-district-elementary", "School", 2, "GEOID,NAME,STATE"),
+    ("wv", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("wv", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
+    ("ga", "county-subdivision", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("ga", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("ga", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
+    ("pa", "municipality", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("pa", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
+    ("nv", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("nv", "school-district-unified", "School", 0, "GEOID,NAME,STATE"),
+    ("az", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("az", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("az", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("az", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("nj", "municipality", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("nj", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("nj", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("nj", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("nh", "municipality", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("nh", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("nh", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("nh", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
 ]
 
 # THE ZIP LAYERS (phase 6b). TIGERweb's ZCTA layer has NO STATE field — a ZCTA
@@ -232,6 +256,13 @@ ZIP_MIRRORS = [
     ("la", "zip-code", "LA_BBOX_ENVELOPE", (-94.15, 28.75, -88.65, 33.12)),
     ("mo", "zip-code", "MO_BBOX_ENVELOPE", (-95.78, 35.99, -89.09, 40.62)),
     ("va", "zip-code", "VA_BBOX_ENVELOPE", (-83.7, 36.5, -75.15, 39.5)),
+    ("wv", "zip-code", "WV_BBOX_ENVELOPE", (-82.65, 37.2, -77.71, 40.64)),
+    ("ga", "zip-code", "GA_BBOX_ENVELOPE", (-85.61, 30.35, -80.78, 35.01)),
+    ("pa", "zip-code", "PA_BBOX_ENVELOPE", (-80.53, 39.71, -74.68, 42.52)),
+    ("nv", "zip-code", "NV_BBOX_ENVELOPE", (-120.1, 34.95, -113.95, 42.1)),
+    ("az", "zip-code", "AZ_BBOX_ENVELOPE", (-114.9, 31.25, -108.95, 37.1)),
+    ("nj", "zip-code", "NJ_BBOX_ENVELOPE", (-75.65, 38.7, -73.8, 41.45)),
+    ("nh", "zip-code", "NH_BBOX_ENVELOPE", (-72.65, 42.6, -70.45, 45.4)),
 ]
 ZCTA_SERVICE, ZCTA_INDEX, ZCTA_FIELDS = "PUMA_TAD_TAZ_UGA_ZCTA", 11, "ZCTA5"
 PAGE_SIZE = 250

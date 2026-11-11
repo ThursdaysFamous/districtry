@@ -64,7 +64,8 @@ STATE_FIPS = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
               "mn": "27", "ky": "21", "ny": "36", "in": "18",
               "nc": "37", "ok": "40", "sc": "45", "tn": "47",
               "ar": "05", "ms": "28", "la": "22", "mo": "29",
-              "va": "51"}
+              "va": "51", "wv": "54", "ga": "13",
+              "pa": "42", "nv": "32", "az": "04", "nj": "34", "nh": "33"}
 
 # Is a county subdivision the GENERAL-PURPOSE government for residents outside
 # incorporated places in this state? A fact of that state's law, recorded with
@@ -125,6 +126,36 @@ SUBDIVISION_IS_GENERAL_PURPOSE = {
     # at its go-live; None while no active subdivision reaches the floor,
     # which the build checks.
     "va": None,
+    # West Virginia's county subdivisions are its counties' magisterial
+    # districts: no two county commissioners may live in the same one, and a
+    # magisterial district elects nobody of its own and governs nobody (W. Va.
+    # Const. art. IX, sec. 10, as wv/metro-worksheet.json records). Added at
+    # its go-live, 2026-11-10; None while no active subdivision reaches the
+    # floor, which the build checks.
+    "wv": None,
+    # Georgia has no township governments: all 586 of its county subdivisions
+    # are census county divisions (FUNCSTAT S), areas the Census Bureau draws
+    # to report its counts, measured 2026-10-29 in ga/CLAUDE.md, so no active
+    # one can reach the floor. Added at its go-live; None while none does,
+    # which the build checks.
+    "ga": None,
+    # BATCH 1 OF THE STATE-LEVEL LAUNCH, added at its go-live (2026-11-11).
+    # Measured that day on TIGERweb's current county subdivisions, with
+    # Illinois as the control (1,411 active of 1,695). Pennsylvania: 1,543
+    # active townships, and every part of the state is in a city, borough,
+    # town or township, so a township governs everyone in it (its other 1,024
+    # subdivisions are FUNCSTAT F, coextensive with a borough or city, which is
+    # counted as a place). New Jersey likewise: every part of the state is in a
+    # municipality, and its 240 active subdivisions are townships, which are
+    # municipalities. New Hampshire: 221 active towns, each the general-purpose
+    # government of everyone in it. Arizona and Nevada: every subdivision is a
+    # census county division (FUNCSTAT S, 80 and 71), statistical areas that
+    # govern nobody, so no active one can reach the floor.
+    "pa": True,
+    "nj": True,
+    "nh": True,
+    "az": None,
+    "nv": None,
 }
 
 

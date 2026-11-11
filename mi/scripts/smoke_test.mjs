@@ -582,6 +582,51 @@ try {
   }
 
 
+  // 2s. THE CENSUS'S "SCHOOL DISTRICT NOT DEFINED" RECORD IS NOT A DISTRICT
+  //     (2026-11-10). TIGER files ground no school district covers under a
+  //     placeholder named "School District Not Defined" (GEOID state + 99997),
+  //     and until that day the unified card printed it as the reader's school
+  //     district, lit it and offered to compare it. Here that ground is
+  //     Michigan's part of Lake Michigan. The census host is refused, so the card can only answer from
+  //     the shipped archive, which still carries the placeholder. The control
+  //     point keeps the check honest: a pin button that is never drawn would
+  //     pass the first half alone.
+  {
+    const SCHOOL_PLACEHOLDER = "42.61748,-86.63278";
+    const SCHOOL_CONTROL = "42.73250,-84.55550";
+    const read = async (pt) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=school-district-unified`, (p) =>
+        p.route("**tigerweb.geo.census.gov/**", (r) => r.abort()));
+      const info = await cardText(page, "school-district-unified");
+      await page.waitForTimeout(1000);
+      const res = await page.evaluate((n) => {
+        const box = document.getElementById("toggle-school-district-unified");
+        const block = box && box.closest(".layer-block");
+        const s = window[n].layerLoadState("school-district-unified");
+        return {
+          pin: !!(block && block.querySelector(".pin-parent-btn")),
+          lit: !!(s && s.highlight),
+          vector: window[n].basemap().vector,
+          hover: window[n].hoverValueFor("school-district-unified",
+            { NAME: "School District Not Defined", GEOID: "2699997" }),
+        };
+      }, EXPORTS_NAME);
+      await context.close();
+      return Object.assign({ text: info.text, error: info.error }, res);
+    };
+    const ph = await read(SCHOOL_PLACEHOLDER);
+    const ctrl = await read(SCHOOL_CONTROL);
+    check(
+      'the Census\'s "School District Not Defined" placeholder reads as no school district: not lit, not comparable, not named on hover',
+      !ph.error && ph.text.includes("No school district defined here") && !ph.pin && !ph.lit &&
+        ph.hover === "No school district defined" &&
+        !ctrl.error && !ctrl.text.includes("No school district defined") && ctrl.pin,
+      JSON.stringify({ placeholder: { text: ph.text.slice(0, 60), pin: ph.pin, lit: ph.lit, hover: ph.hover },
+        control: { text: ctrl.text.slice(0, 60), pin: ctrl.pin } })
+    );
+  }
+
   // 2e. Share control: the point chip carries ONE "Share" button whose popover
   //     serves the live campaign-tagged permalink, the embed snippet (tagged
   //     with its own source and pointed at the canonical deployment), and the
