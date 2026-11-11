@@ -117,6 +117,7 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro nevada --out nv/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro arizona --out az/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro newjersey --out nj/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro newhampshire --out nh/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
           # the weekly fleet-status notice.
@@ -961,6 +962,7 @@ jobs:
           python3 nv/scripts/build_metro_outline.py --check
           python3 az/scripts/build_metro_outline.py --check
           python3 nj/scripts/build_metro_outline.py --check
+          python3 nh/scripts/build_metro_outline.py --check
 
       # docs/PRESS_LIST.md carries a --check in its own header calling it the
       # drift gate, and until now nothing ran it — a generated file gated in
@@ -2111,6 +2113,7 @@ jobs:
           python3 nv/scripts/validate_index.py nv/index.html
           python3 az/scripts/validate_index.py az/index.html
           python3 nj/scripts/validate_index.py nj/index.html
+          python3 nh/scripts/validate_index.py nh/index.html
 
 
   browser:
@@ -2379,6 +2382,7 @@ jobs:
           BASE_URL=http://localhost:8000/nv/  node nv/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/az/  node az/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/nj/  node nj/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/nh/  node nh/scripts/smoke_test.mjs
           GATES
           n=0
           shard=

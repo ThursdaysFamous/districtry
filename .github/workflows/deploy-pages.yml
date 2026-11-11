@@ -177,6 +177,8 @@ jobs:
             # Arizona, the third state of batch 1, arrives dark the same way.
             'az/**'
             'nj/**'
+            # New Hampshire, the fifth state of batch 1, arrives dark the same way.
+            'nh/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full
