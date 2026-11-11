@@ -70,7 +70,11 @@ in the researched-but-unbuilt backlog.
   "missouri": ["us-house", "mo-senate", "county", "mo-house", "county-commissioner", "school-district-unified", "school-district-elementary", "zip-code", "county-subdivision", "municipality", "police-station", "fire-station", "post-office"],
   "georgia": ["us-house", "ga-senate", "county", "ga-house", "ga-superior-court", "school-district-unified", "county-subdivision", "county-commissioner", "school-board-district", "zip-code", "voting-precinct", "municipality", "police-station", "fire-station", "post-office"],
   "virginia": ["us-house", "va-senate", "va-house", "county", "school-district-unified", "school-board-district", "county-subdivision", "supervisor-district", "zip-code", "voting-precinct", "election-results", "municipality", "school-district-elementary", "tribal-government", "police-station", "fire-station", "post-office"],
-  "westvirginia": ["us-house", "wv-senate", "county", "school-district-unified", "wv-house", "county-subdivision", "zip-code", "municipality", "city-ward", "police-station", "fire-station", "post-office"]
+  "westvirginia": ["us-house", "wv-senate", "county", "school-district-unified", "wv-house", "county-subdivision", "zip-code", "municipality", "city-ward", "police-station", "fire-station", "post-office"],
+  "pennsylvania": ["us-house", "pa-senate", "county", "pa-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "nevada": ["us-house", "county", "school-district-unified", "nv-senate", "nv-assembly", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "arizona": ["us-house", "county", "az-senate", "az-house", "school-district-secondary", "school-district-unified", "school-district-elementary", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "newjersey": ["us-house", "county", "nj-senate", "nj-assembly", "school-district-secondary", "school-district-elementary", "school-district-unified", "municipality", "zip-code", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -4050,6 +4054,162 @@ trusted.
             "why": "The state's precinct map was last changed four years ago, and it matches the counties' own spring election results in only 29 of the 55 counties, so the rest may be out of date.",
             "wanted": "Each county's current precinct map as a map file, or a statewide precinct map that the state keeps current.",
             "blocker": "From the research for this instance's plan (2026-10-21): the WV GIS Technical Center's map service (services.wvgis.wvu.edu, folder Boundaries/WV_Election_Layers, robots.txt 404, no licence stated) carries layer 3, 'Precinct 2026', 1,646 polygons across all 55 counties, every last_edited_date between 2022-09-27 and 2022-10-03. Its precinct count per county was compared with the number of precincts reporting in each county's results of the May 2026 primary: 29 counties equal, 14 differ (among them Ohio 35 against 41, Putnam 45 against 39, Mingo 28 against 24, Wood 69 against 72 and Harrison 65 against 63) and 12 list none. W. Va. Code 3-1-5, as amended in 2022, has the Secretary of State post each county's precinct and magisterial district maps, according to the plan's research; no such maps were found on the Secretary of State's election pages. The same service's Applications/WV_Election folder holds a layer of individual voter locations, which is never read by any builder, probe or agent. ADAM'S ANSWER of 2026-10-29 to the plan: draw precincts only in the 29 counties whose current map is confirmed, as its own change, hidden in the other 26. NOT YET ASKED."
+      }
+  ],
+  "pennsylvania": [
+      {
+            "id": "pa-county-officials",
+            "concept": "County government",
+            "area": "Pennsylvania — all 67 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners, council, executive or other elected officers. The card says so rather than leave the office looking empty.",
+            "why": "No statewide list of Pennsylvania's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners or council and its other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-10 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is pa/index.html's own County block: most counties elect three commissioners by the whole county, a home rule county may elect a council and an executive instead, and Philadelphia's county government is the city's, which its card states. The boundary is TIGERweb State_County for STATE='42', 67 counties, shipped as pa/data/app/state-counties.json. ROUTES NOT YET READ, government publishers first: each county's own website; and a statewide directory, if a state office keeps one. The County Commissioners Association of Pennsylvania is an association of the counties rather than a government, so it comes after any government list and its terms would be read before it is used. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "pa-municipal-officeholders",
+            "concept": "City, borough or township government",
+            "area": "Pennsylvania",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City, Borough or Township card names the place you picked and what kind of municipality it is, and not its mayor, council, commissioners or supervisors.",
+            "why": "Pennsylvania has more than two thousand municipalities, and no statewide list of their elected officials has been read for this app.",
+            "wanted": "One statewide list of each municipality's elected officials, or a city's, borough's or township's own published list of them.",
+            "blocker": "Measured 2026-11-10 against TIGERweb's county subdivisions (Places_CouSub_ConCity_SubMCD layer 1) for STATE='42': 2,568 records, 1,544 townships, 960 borough pieces, 56 city pieces, 6 home rule municipalities and the town of Bloomsburg, plus Pennsylvania's part of Lake Erie filed as 'County subdivisions not defined' (LSADC 00). A city or borough crossing a county line is one record per county. The layer carries a name, a code, a legal description and a functional status (Cold Spring township in Lebanon County reads I, inactive) and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: the Department of Community and Economic Development's municipal statistics, if they name officials; and each municipality's own website, largest first. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "pa-school-board-members",
+            "concept": "School board",
+            "area": "Pennsylvania",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No statewide list of Pennsylvania's school board members has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-10 against TIGERweb's school districts (School MapServer) for STATE='42': 501 records on layer 0 (500 unified districts and one the Census names School District Not Defined, GEOID 4299997, which is Pennsylvania's part of Lake Erie with no land, and which the card answers as the lake) and none on the elementary or secondary layers (1 and 2), so the layer is one tiling, shipped as a tile archive. No board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's own directories, which were not checked for board members; and each district's own website. The Pennsylvania School Boards Association is a membership association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "nevada": [
+      {
+            "id": "nv-county-officials",
+            "concept": "County government",
+            "area": "Nevada — all 16 counties and Carson City",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the office looking empty.",
+            "why": "No statewide list of Nevada's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-10 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is nv/index.html's own County block: each county is governed by an elected board of county commissioners and elects officers such as a sheriff and a district attorney, and Carson City, a city and county in one government (GEOID 32510), by a mayor and a board of supervisors, which its card states. The boundary is TIGERweb State_County for STATE='32', 17 features, shipped as nv/data/app/state-counties.json. ROUTES NOT YET READ, government publishers first: each county's own website; the Secretary of State's election results, which name who won each county seat; and a statewide directory, if a state office keeps one. The Nevada Association of Counties is an association of the counties rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nv-municipal-officeholders",
+            "concept": "City government",
+            "area": "Nevada",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City card names the city you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Nevada's cities has been read for this app, and the cities' own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's mayor and council members, or a city's own published list of them.",
+            "blocker": "Measured 2026-11-10 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='32': 19 records, 18 cities (LSADC 25) and Carson City (LSADC 00), every one an active government (FUNCSTAT A), together about 1% of the state's land (3,039.5 of 284,537.1 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each city's own website, largest first (Las Vegas, Henderson, Reno, North Las Vegas, Sparks); and the Secretary of State's election results. The Nevada League of Cities and Municipalities is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nv-school-board-members",
+            "concept": "School board",
+            "area": "Nevada",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its board of trustees.",
+            "why": "No list of the trustees of Nevada's school districts has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's trustees, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-10 against TIGERweb's school districts (School MapServer) for STATE='32': 17 unified districts on layer 0, as many as the state's 16 counties and Carson City, and none on the elementary or secondary layers (1 and 2), so the layer is one tiling, shipped as a tile archive. No board roster was read for this record, and whether every trustee is elected was not checked. ROUTES NOT YET READ, government publishers first: the Department of Education's own directories; and each district's own website. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "arizona": [
+      {
+            "id": "az-county-officials",
+            "concept": "County government",
+            "area": "Arizona — all 15 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its supervisors or other elected officers. The card says so rather than leave the office looking empty.",
+            "why": "No statewide list of Arizona's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's supervisors and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-10 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is az/index.html's own County block: each county is governed by an elected board of supervisors and elects officers such as a sheriff, a county attorney and a recorder. The boundary is TIGERweb State_County for STATE='04', 15 features, shipped as az/data/app/state-counties.json. ROUTES NOT YET READ, government publishers first: each county's own website; the Secretary of State's election results, which name who won each county seat; and a statewide directory, if a state office keeps one. The County Supervisors Association of Arizona is an association of the counties rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "az-municipal-officeholders",
+            "concept": "City government",
+            "area": "Arizona",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City or Town card names the city or town you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Arizona's cities and towns has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's and town's mayor and council members, or a city's or town's own published list of them.",
+            "blocker": "Measured 2026-11-10 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='04': 92 records, 46 cities and 46 towns, every one an active government. The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each city's and town's own website, largest first (Phoenix, Tucson, Mesa, Chandler, Gilbert); and the Secretary of State's and the counties' election results. The League of Arizona Cities and Towns is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "az-school-board-members",
+            "concept": "School board",
+            "area": "Arizona",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The three School District cards name the districts you picked, and not the members of their governing boards.",
+            "why": "No list of the governing board members of Arizona's school districts has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's governing board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-10 against TIGERweb's school districts (School MapServer) for STATE='04': 98 records on layer 0 (97 unified districts and one the Census names \"School District Not Defined\", GEOID 0499997, a 15,670 km2 placeholder for land in no school district, which takes in Sun City and which the card names as no district), 102 elementary districts on layer 2 and 15 union high school districts on layer 1. The unified layer and the elementary districts together cover the state, and the union high school districts run grades 9 to 12 over about half of the elementary districts' ground, so a reader there is in two districts, each with its own board. All three ship as tile archives. No board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's own directories; the counties' election results, which were not checked for school board contests; and each district's own website. The Arizona School Boards Association is a membership association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "newjersey": [
+      {
+            "id": "nj-county-officials",
+            "concept": "County government",
+            "area": "New Jersey — all 21 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its county commissioners or other elected officers. The card says so rather than leave the office looking empty.",
+            "why": "No statewide list of New Jersey's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners, clerk, sheriff and surrogate, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-10 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is nj/index.html's own County block: each county is governed by an elected board of county commissioners (called freeholders until 2021) and elects a county clerk, a sheriff and a surrogate. The boundary is TIGERweb State_County for STATE='34', 21 features, shipped as nj/data/app/state-counties.json. ROUTES NOT YET READ, government publishers first: each county's own website; the counties' and the Division of Elections' election results, which name who won each county seat; and a statewide directory, if a state office keeps one. The New Jersey Association of Counties is an association of the counties rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nj-municipal-officeholders",
+            "concept": "City government",
+            "area": "New Jersey",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The Municipality card names the municipality you picked, and not its mayor or governing body.",
+            "why": "No statewide list of the elected officials of New Jersey's municipalities has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each municipality's mayor and governing body, or a municipality's own published list of them.",
+            "blocker": "Measured 2026-11-10 against TIGERweb's county subdivisions (Places_CouSub_ConCity_SubMCD layer 1) for STATE='34': 569 records, 564 of them municipalities (252 boroughs, 240 townships, 52 cities, 15 towns, 4 villages and Princeton) and 5 that are coastal and bay water rather than a municipality. The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Community Affairs' own municipal directories; each municipality's own website, largest first (Newark, Jersey City, Paterson, Elizabeth, Lakewood); and the counties' election results. The New Jersey State League of Municipalities is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nj-school-board-members",
+            "concept": "School board",
+            "area": "New Jersey",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The three School District cards name the districts you picked, and not the members of their boards of education.",
+            "why": "No list of the board of education members of New Jersey's school districts has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board of education members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-10 against TIGERweb's school districts (School MapServer) for STATE='34': 342 records on layer 0 (341 unified districts and one the Census names \"School District Not Defined\", GEOID 3499997, which has no land and files 2,217 km2 of coastal and bay water, and which the card answers as water), 168 elementary districts on layer 2 and 45 secondary districts on layer 1 (31 running grades 9 to 12 and 14 running 7 to 12). The unified layer and the elementary districts together cover the state's land, and the secondary districts cover exactly the elementary districts' ground, so a reader there is in two districts, each with its own board. All three ship as tile archives. No board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's own directories; the counties' election results, which were not checked for school board contests; and each district's own website. The New Jersey School Boards Association is a membership association rather than a government. NOT YET ASKED, and no ask is drafted."
       }
   ]
 }

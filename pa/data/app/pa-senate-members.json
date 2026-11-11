@@ -1,0 +1,588 @@
+{
+  "1": {
+    "name": "Nikil Saval",
+    "party": "Democratic",
+    "email": "saval@pasenate.com",
+    "capitolOffice": [
+      "543 Main Capitol",
+      "Senate Box 203001",
+      "Harrisburg, PA 17120-3001",
+      "(717) 787-5662"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1921/sen-saval"
+  },
+  "2": {
+    "name": "Christine M. Tartaglione",
+    "party": "Democratic",
+    "email": "tartaglione@pasenate.com",
+    "capitolOffice": [
+      "458 Main Capitol",
+      "Senate Box 203002",
+      "Harrisburg, PA 17120-3002",
+      "(717) 787-1141"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/277/sen-tartaglione"
+  },
+  "3": {
+    "name": "Sharif Street",
+    "party": "Democratic",
+    "email": "street@pasenate.com",
+    "capitolOffice": [
+      "535 Main Capitol",
+      "Senate Box 203003",
+      "Harrisburg, PA 17120-3003",
+      "(717) 787-6735"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1767/sen-street"
+  },
+  "4": {
+    "name": "Art Haywood",
+    "party": "Democratic",
+    "email": "senatorhaywood@pasenate.com",
+    "capitolOffice": [
+      "10 East Wing",
+      "Senate Box 203004",
+      "Harrisburg, PA 17120-3004",
+      "(717) 787-1427"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1689/sen-haywood"
+  },
+  "5": {
+    "name": "Joe Picozzi",
+    "party": "Republican",
+    "capitolOffice": [
+      "187 Main Capitol",
+      "Senate Box 203005",
+      "Harrisburg, PA 17120-3005",
+      "(717) 787-9608"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/2036/sen-picozzi"
+  },
+  "6": {
+    "name": "Frank A. Farry",
+    "party": "Republican",
+    "email": "ffarry@pasen.gov",
+    "capitolOffice": [
+      "351 Main Capitol",
+      "Senate Box 203006",
+      "Harrisburg, PA 17120-3006",
+      "(717) 787-5072"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1169/sen-farry"
+  },
+  "7": {
+    "name": "Vincent J. Hughes",
+    "party": "Democratic",
+    "email": "hughes@pasenate.com",
+    "capitolOffice": [
+      "545 Main Capitol",
+      "Senate Box 203007",
+      "Harrisburg, PA 17120-3007",
+      "(717) 787-7112"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/152/sen-hughes"
+  },
+  "8": {
+    "name": "Anthony H. Williams",
+    "party": "Democratic",
+    "email": "williams@pasenate.com",
+    "capitolOffice": [
+      "11 East Wing",
+      "Senate Box 203008",
+      "Harrisburg, PA 17120-3008",
+      "(717) 787-5970"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/153/sen-a-williams"
+  },
+  "9": {
+    "name": "John I. Kane",
+    "party": "Democratic",
+    "email": "kane@pasenate.com",
+    "capitolOffice": [
+      "458 Main Capitol",
+      "Senate Box 203009",
+      "Harrisburg, PA 17120-3009",
+      "(717) 787-4712"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1925/sen-kane"
+  },
+  "10": {
+    "name": "Steven J. Santarsiero",
+    "party": "Democratic",
+    "email": "senatorsantarsiero@pasenate.com",
+    "capitolOffice": [
+      "182 Main Capitol",
+      "Senate Box 203010",
+      "Harrisburg, PA 17120-3010",
+      "(717) 787-7305"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1179/sen-santarsiero"
+  },
+  "11": {
+    "name": "Judith L. Schwank",
+    "party": "Democratic",
+    "email": "SenatorSchwank@pasenate.com",
+    "capitolOffice": [
+      "457 Main Capitol",
+      "Senate Box 203011",
+      "Harrisburg, PA 17120-3011",
+      "(717) 787-8925"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1234/sen-schwank"
+  },
+  "12": {
+    "name": "Maria Collett",
+    "party": "Democratic",
+    "email": "Senatorcollett@pasenate.com",
+    "capitolOffice": [
+      "458 Main Capitol",
+      "Senate Box 203012",
+      "Harrisburg, PA 17120-3012",
+      "(717) 787-6599"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1799/sen-collett"
+  },
+  "13": {
+    "name": "Scott Martin",
+    "party": "Republican",
+    "capitolOffice": [
+      "281 Main Capitol",
+      "Senate Box 203013",
+      "Harrisburg, PA 17120-3013",
+      "(717) 787-6535"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1763/sen-martin"
+  },
+  "14": {
+    "name": "Nick Miller",
+    "party": "Democratic",
+    "email": "miller@pasenate.com",
+    "capitolOffice": [
+      "352 Main Capitol",
+      "Senate Box 203014",
+      "Harrisburg, PA 17120-3014",
+      "(717) 787-7105"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/2009/sen-miller"
+  },
+  "15": {
+    "name": "Patty Kim",
+    "party": "Democratic",
+    "capitolOffice": [
+      "17 East Wing",
+      "Senate Box 203015",
+      "Harrisburg, PA 17120-3015",
+      "(717) 787-6801"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1636/sen-kim"
+  },
+  "16": {
+    "name": "Jarrett Coleman",
+    "party": "Republican",
+    "email": "jcoleman@pasen.gov",
+    "capitolOffice": [
+      "459 Main Capitol",
+      "Senate Box 203016",
+      "Harrisburg, PA 17120-3016",
+      "(717) 787-1349"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/2008/sen-coleman"
+  },
+  "17": {
+    "name": "Amanda M. Cappelletti",
+    "party": "Democratic",
+    "email": "cappelletti@pasenate.com",
+    "capitolOffice": [
+      "183 Main Capitol",
+      "Senate Box 203017",
+      "Harrisburg, PA 17120-3017",
+      "(717) 787-5544"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1923/sen-cappelletti"
+  },
+  "18": {
+    "name": "Lisa M. Boscola",
+    "party": "Democratic",
+    "email": "boscola@pasenate.com",
+    "capitolOffice": [
+      "458 Main Capitol",
+      "Senate Box 203018",
+      "Harrisburg, PA 17120-3018",
+      "(717) 787-4236"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/179/sen-boscola"
+  },
+  "19": {
+    "name": "Carolyn T. Comitta",
+    "party": "Democratic",
+    "capitolOffice": [
+      "457 Main Capitol",
+      "Senate Box 203019",
+      "Harrisburg, PA 17120-3019",
+      "(717) 787-5709"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1790/sen-comitta"
+  },
+  "20": {
+    "name": "Lisa Baker",
+    "party": "Republican",
+    "email": "lbaker@pasen.gov",
+    "capitolOffice": [
+      "173 Main Capitol",
+      "Senate Box 203020",
+      "Harrisburg, PA 17120-3020",
+      "(717) 787-7428"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1077/sen-baker"
+  },
+  "21": {
+    "name": "Scott E. Hutchinson",
+    "party": "Republican",
+    "capitolOffice": [
+      "337 Main Capitol",
+      "Senate Box 203021",
+      "Harrisburg, PA 17120-3021",
+      "(717) 787-9684"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1629/sen-hutchinson"
+  },
+  "22": {
+    "name": "Marty Flynn",
+    "party": "Democratic",
+    "email": "flynn@pasenate.com",
+    "capitolOffice": [
+      "543 Main Capitol",
+      "Senate Box 203022",
+      "Harrisburg, PA 17120-3022",
+      "(717) 787-6481"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1626/sen-flynn"
+  },
+  "23": {
+    "name": "Gene Yaw",
+    "party": "Republican",
+    "capitolOffice": [
+      "362 Main Capitol",
+      "Senate Box 203023",
+      "Harrisburg, PA 17120-3023",
+      "(717) 787-3280"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1186/sen-yaw"
+  },
+  "24": {
+    "name": "Tracy Pennycuick",
+    "party": "Republican",
+    "email": "tpennycuick@pasen.gov",
+    "capitolOffice": [
+      "16 East Wing",
+      "Senate Box 203024",
+      "Harrisburg, PA 17120-3024",
+      "(717) 787-3110"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1912/sen-pennycuick"
+  },
+  "25": {
+    "name": "Cris Dush",
+    "party": "Republican",
+    "email": "cdush@pasen.gov",
+    "capitolOffice": [
+      "9 East Wing",
+      "Senate Box 203025",
+      "Harrisburg, PA 17120-3025",
+      "(717) 787-7084"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1687/sen-dush"
+  },
+  "26": {
+    "name": "Timothy P. Kearney",
+    "party": "Democratic",
+    "email": "SenatorKearney@pasenate.com",
+    "capitolOffice": [
+      "463 Main Capitol",
+      "Senate Box 203026",
+      "Harrisburg, PA 17120-3026",
+      "(717) 787-1350"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1800/sen-kearney"
+  },
+  "27": {
+    "name": "Lynda Schlegel Culver",
+    "party": "Republican",
+    "email": "lculver@pasen.gov",
+    "capitolOffice": [
+      "168 Main Capitol",
+      "Senate Box 203027",
+      "Harrisburg, PA 17120-3027",
+      "(717) 787-8928"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1202/sen-culver"
+  },
+  "28": {
+    "name": "Kristin Phillips-Hill",
+    "party": "Republican",
+    "capitolOffice": [
+      "362 Main Capitol",
+      "Senate Box 203028",
+      "Harrisburg, PA 17120-3028",
+      "(717) 787-7085"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1801/sen-phillips-hill"
+  },
+  "29": {
+    "name": "David G. Argall",
+    "party": "Republican",
+    "email": "dargall@pasen.gov",
+    "capitolOffice": [
+      "177 Main Capitol",
+      "Senate Box 203029",
+      "Harrisburg, PA 17120-3029",
+      "(717) 787-2637"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/69/sen-argall"
+  },
+  "30": {
+    "name": "Judy Ward",
+    "party": "Republican",
+    "email": "jward@pasen.gov",
+    "capitolOffice": [
+      "362 Main Capitol",
+      "Senate Box 203030",
+      "Harrisburg, PA 17120-3030",
+      "(717) 787-5490"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1683/sen-j-ward"
+  },
+  "31": {
+    "name": "Dawn W. Keefer",
+    "party": "Republican",
+    "capitolOffice": [
+      "169 Main Capitol",
+      "Senate Box 203031",
+      "Harrisburg, PA 17120-3031",
+      "(717) 787-8524"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1748/sen-keefer"
+  },
+  "32": {
+    "name": "Patrick J. Stefano",
+    "party": "Republican",
+    "capitolOffice": [
+      "187 Main Capitol",
+      "Senate Box 203032",
+      "Harrisburg, PA 17120-3032",
+      "(717) 787-7175"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1697/sen-stefano"
+  },
+  "33": {
+    "name": "Doug Mastriano",
+    "party": "Republican",
+    "capitolOffice": [
+      "170 Main Capitol",
+      "Senate Box 203033",
+      "Harrisburg, PA 17120-3033",
+      "(717) 787-4651"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1869/sen-mastriano"
+  },
+  "34": {
+    "name": "Greg Rothman",
+    "party": "Republican",
+    "email": "grothman@pasen.gov",
+    "capitolOffice": [
+      "168 Main Capitol",
+      "Senate Box 203034",
+      "Harrisburg, PA 17120-3034",
+      "(717) 787-1377"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1733/sen-rothman"
+  },
+  "35": {
+    "name": "Wayne Langerholc",
+    "party": "Republican",
+    "email": "Wlangerholc@pasen.gov",
+    "capitolOffice": [
+      "281 Main Capitol",
+      "Senate Box 203035",
+      "Harrisburg, PA 17120-3035",
+      "(717) 787-5400"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1764/sen-langerholc"
+  },
+  "36": {
+    "name": "James Andrew Malone",
+    "party": "Democratic",
+    "capitolOffice": [
+      "184 Main Capitol",
+      "Senate Box 203036",
+      "Harrisburg, PA 17120-3036",
+      "(717) 787-4420"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/2061/sen-malone"
+  },
+  "37": {
+    "name": "Devlin J. Robinson",
+    "party": "Republican",
+    "email": "drobinson@pasen.gov",
+    "capitolOffice": [
+      "171 Main Capitol",
+      "Senate Box 203037",
+      "Harrisburg, PA 17120-3037",
+      "(717) 787-5839"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1924/sen-robinson"
+  },
+  "38": {
+    "name": "Lindsey M. Williams",
+    "party": "Democratic",
+    "email": "SenatorLindseyWilliams@pasenate.com",
+    "capitolOffice": [
+      "366 Main Capitol",
+      "Senate Box 203038",
+      "Harrisburg, PA 17120-3038",
+      "(717) 787-6538"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1803/sen-l-williams"
+  },
+  "39": {
+    "name": "Kim L. Ward",
+    "party": "Republican",
+    "email": "kward@pasen.gov",
+    "capitolOffice": [
+      "292 Main Capitol",
+      "Senate Box 203039",
+      "Harrisburg, PA 17120-3039",
+      "(717) 787-6063"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1188/sen-k-ward"
+  },
+  "40": {
+    "name": "Rosemary M. Brown",
+    "party": "Republican",
+    "email": "rbrown@pasen.gov",
+    "capitolOffice": [
+      "172 Main Capitol",
+      "Senate Box 203040",
+      "Harrisburg, PA 17120-3040",
+      "(717) 787-6123"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1200/sen-brown"
+  },
+  "41": {
+    "name": "Joe Pittman",
+    "party": "Republican",
+    "capitolOffice": [
+      "350 Main Capitol",
+      "Senate Box 203041",
+      "Harrisburg, PA 17120-3041",
+      "(717) 787-8724"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1870/sen-pittman"
+  },
+  "42": {
+    "name": "Wayne D. Fontana",
+    "party": "Democratic",
+    "email": "fontana@pasenate.com",
+    "capitolOffice": [
+      "543 Main Capitol",
+      "Senate Box 203042",
+      "Harrisburg, PA 17120-3042",
+      "(717) 787-5300"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1041/sen-fontana"
+  },
+  "43": {
+    "name": "Jay Costa",
+    "party": "Democratic",
+    "email": "costa@pasenate.com",
+    "capitolOffice": [
+      "535 Main Capitol",
+      "Senate Box 203043",
+      "Harrisburg, PA 17120-3043",
+      "(717) 787-7683"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/254/sen-costa"
+  },
+  "44": {
+    "name": "Katie J. Muth",
+    "party": "Democratic",
+    "email": "senatormuth@pasenate.com",
+    "capitolOffice": [
+      "185 Main Capitol",
+      "Senate Box 203044",
+      "Harrisburg, PA 17120-3044",
+      "(717) 787-1398"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1802/sen-muth"
+  },
+  "45": {
+    "name": "Nick Pisciottano",
+    "party": "Democratic",
+    "email": "PASenatorNick@pasenate.com",
+    "capitolOffice": [
+      "460 Main Capitol",
+      "Senate Box 203045",
+      "Harrisburg, PA 17120-3045",
+      "(717) 787-5580"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1900/sen-pisciottano"
+  },
+  "46": {
+    "name": "Camera Bartolotta",
+    "party": "Republican",
+    "email": "cbartolotta@pasen.gov",
+    "capitolOffice": [
+      "19 East Wing",
+      "Senate Box 203046",
+      "Harrisburg, PA 17120-3046",
+      "(717) 787-1463"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1698/sen-bartolotta"
+  },
+  "47": {
+    "name": "Elder A. Vogel",
+    "party": "Republican",
+    "capitolOffice": [
+      "286 Main Capitol",
+      "Senate Box 203047",
+      "Harrisburg, PA 17120-3047",
+      "(717) 787-3076"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1189/sen-vogel"
+  },
+  "48": {
+    "name": "Chris Gebhard",
+    "party": "Republican",
+    "email": "cgebhard@pasen.gov",
+    "capitolOffice": [
+      "15 East Wing",
+      "Senate Box 203048",
+      "Harrisburg, PA 17120-3048",
+      "(717) 787-5708"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1928/sen-gebhard"
+  },
+  "49": {
+    "name": "Daniel Laughlin",
+    "party": "Republican",
+    "email": "Dlaughlin@pasen.gov",
+    "capitolOffice": [
+      "20 East Wing",
+      "Senate Box 203049",
+      "Harrisburg, PA 17120-3049",
+      "(717) 787-8927"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1766/sen-laughlin"
+  },
+  "50": {
+    "name": "Michele Brooks",
+    "party": "Republican",
+    "capitolOffice": [
+      "168 Main Capitol",
+      "Senate Box 203050",
+      "Harrisburg, PA 17120-3050",
+      "(717) 787-1322"
+    ],
+    "url": "https://www.palegis.us/senate/members/bio/1087/sen-brooks"
+  }
+}

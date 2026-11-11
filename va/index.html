@@ -12365,6 +12365,24 @@ function initVirginiaExplorer() {
     (load.tileMods || []).forEach(function (m) { layerRuntime[m.id].tileAnswer = answer; });
   }
 
+  // A record a publisher files where there is no district (the Census's
+  // "School District Not Defined" in its unified school layer) is not a
+  // district, so a layer whose query meets one at the point calls this
+  // before it answers. The record is taken out of the answers the highlight
+  // lights and the "Compare to this district" control reads: the tile answer
+  // here, kept on the same point so scripts/probe_tile_cards.mjs still sees
+  // the card answered from the tile, and the live point query's answer that
+  // showProvisionalHighlight lights. The record is still drawn, because the
+  // layer's archive and file are left as published, and a layer drawn from
+  // its whole file (no WebGL, or a failed archive) still lights it.
+  function answerIsNotADistrict(load, point) {
+    (load.tileMods || []).forEach(function (m) {
+      var rt = layerRuntime[m.id];
+      if (rt && rt.tileAnswer && rt.tileAnswer.point === point) rt.tileAnswer = { point: point, feature: null };
+    });
+    if (load.pointAnswer && load.pointAnswer.point === point) load.pointAnswer = null;
+  }
+
   /* ---------- a county-dispatched layer drawn from tiles (phase 5b). One
    * archive holds every county whose boundaries the app ships, each feature
    * carrying its county key as `_c`, and the archive's metadata lists those
@@ -15476,10 +15494,13 @@ function initVirginiaExplorer() {
     // A TIGERweb legislative chamber (Congress / State Senate / State Assembly)
     // joined to a same-origin roster keyed by district number. opts: { id, label,
     // layerIndex, districtFields, loadRoster, memberLabel, style, directoryUrl,
-    // profileLabel?, directoryLabel?, capitolLabel?, districtPrefix? }. Member
-    // rows are { name, party?, url?, phone?, phonesExtra?, email?,
-    // districtOffice?, capitolOffice? }; office fields only render when the
-    // roster supplies them (empty placeholder -> just the link).
+    // profileLabel?, directoryLabel?, capitolLabel?, districtPrefix?,
+    // seatsLabel?, seatsNote? }. Member rows are { name, party?, url?, phone?,
+    // phonesExtra?, email?, districtOffice?, capitolOffice? }; office fields
+    // only render when the roster supplies them (empty placeholder -> just the
+    // link). A chamber that elects several members from each district keys
+    // each district to { seats, members: [member rows] } instead (seatMembers
+    // below), and seatsLabel/seatsNote word the line that says so.
     // Metro-provided geometry loader wins; forks that haven't pre-built their
     // chamber geometry fall back to the live TIGERweb fetch by layer index,
     // unchanged. (opts.loadDistricts is a metro-specific value passed by the
@@ -15576,6 +15597,26 @@ function initVirginiaExplorer() {
     function isMember(member) {
       return !!(member && member.name);
     }
+    // A DISTRICT THAT ELECTS SEVERAL MEMBERS. Arizona's House of
+    // Representatives and New Jersey's General Assembly elect two members from
+    // each district, so a roster record for such a chamber is
+    // { seats: N, members: [member rows] } rather than one member row.
+    // scripts/validate_chamber_rosters.py holds that shape: `seats` equals the
+    // builder's per_district, every listed member carries a name, and a
+    // district listing fewer members than it elects carries asOf, because the
+    // card then says how many the roster listed and on what day. A one-member
+    // record in such a chamber returns null here and reads exactly as before.
+    // West Virginia's Senate, two senators per district, predates this branch
+    // and keeps a layer block of its own.
+    function seatMembers(seat) {
+      if (!seat || !Array.isArray(seat.members)) return null;
+      return seat.members.filter(isMember);
+    }
+    // "A", "A and B", "A, B and C": the hover names everyone the card names.
+    function joinNames(names) {
+      if (names.length < 2) return names.join("");
+      return names.slice(0, -1).join(", ") + " and " + names[names.length - 1];
+    }
     // THE RECORD STATES THE CLAIM AND THIS ONLY PRINTS IT. Where the authority
     // does not use the word, the record carries its own one-sentence reason:
     // Iowa's chamber roster ends a member's service with a date and names
@@ -15591,6 +15632,50 @@ function initVirginiaExplorer() {
         ? String(member.vacantWhy)
         : "The chamber's own members page says nobody holds this seat.";
       return "Vacant — " + why + (when ? " Read on " + when + "." : "");
+    }
+    // One member's row: name, party badge, own telephone and e-mail, and
+    // their page. Shared by the one-member card and every row of a
+    // multi-member district, so the two cannot word a member differently.
+    function personRow(member) {
+      var person = { name: String(member.name) };
+      if (member.party) person.badge = String(member.party);
+      // THE MEMBER'S OWN TELEPHONE, where the roster carries one: a number
+      // the chamber prints for the member apart from the office blocks
+      // below, such as a home or cell line. Published since Adam's ruling of
+      // 2026-10-17 that a number a government source prints beside an
+      // official is shown even where it may be the official's own; a label
+      // the source prints ("home 803-555-0100") rides inside the string.
+      if (member.phone) person.phone = String(member.phone);
+      if (member.phonesExtra && member.phonesExtra.length) {
+        person.phonesExtra = member.phonesExtra.map(String);
+      }
+      // THE MEMBER'S E-MAIL ADDRESS, where the roster carries one. Before
+      // 2026-10-17 this card showed no legislator's address at all, though
+      // eight states' rosters carried one for nearly every seat. Measured
+      // that day, every one of them is the chamber's own mailbox except
+      // fifteen Arkansas members' personal addresses, which the
+      // legislature's own member pages print and which Adam chose to show
+      // ("E-mails too"). A roster reads it from the legislature's pages or
+      // from Open States' compilation of them.
+      if (member.email) person.email = String(member.email);
+      // Label follows the actual href: only a roster-supplied member URL
+      // gets the per-member label — the directory fallback lives in the
+      // footer (primaryLink) and must not masquerade as the member's page.
+      var memberUrl = memberProfileUrl(member);
+      if (memberUrl) person.links = [{ label: opts.profileLabel || "Member profile", url: memberUrl }];
+      return person;
+    }
+    // One member's offices as office blocks, each kicker led by `prefix`
+    // (empty on a one-member card, the member's name on a multi-member one).
+    function memberOffices(member, prefix) {
+      // District office first (it's the local, on-map one this card pins),
+      // Springfield/D.C. second — same order the old key/value card used.
+      var offices = [];
+      var districtOffice = splitOfficeLines(member.districtOffice);
+      if (districtOffice) { districtOffice.label = prefix + "District Office"; offices.push(districtOffice); }
+      var capitolOffice = splitOfficeLines(member.capitolOffice || member.springfieldOffice);
+      if (capitolOffice) { capitolOffice.label = prefix + (opts.capitolLabel || "Capitol Office"); offices.push(capitolOffice); }
+      return offices;
     }
     registerLayer({
       id: opts.id,
@@ -15615,11 +15700,13 @@ function initVirginiaExplorer() {
           var props = feature.properties || {};
           var district = extractDistrictNumber(props, opts.districtFields);
           var member = district != null ? roster[String(district)] : undefined;
+          var members = seatMembers(member);
           // A nameless record is NOT a member and must not reach the person
           // row, which would render the string "undefined" as somebody's name.
           // It is carried separately so the card can say which kind it is.
           return { seq: seq, district: district,
-                   member: isMember(member) ? member : null,
+                   member: !members && isMember(member) ? member : null,
+                   members: members,
                    seat: member || null };
         });
       },
@@ -15629,6 +15716,36 @@ function initVirginiaExplorer() {
         // identity lives in the header pill (cardIdentifier below).
         var wrap = cardEl("div", "card-flush");
         var member = result.member;
+        if (result.members) {
+          // Every member the roster lists, each with the same row a one-member
+          // district gets, their offices in one group (each kicker naming its
+          // member), and a line saying how many the district elects, so a
+          // reader shown two names knows both represent the point clicked.
+          var listed = result.members;
+          if (listed.length) wrap.appendChild(renderPersonRows(listed.map(personRow)));
+          var groupOffices = [];
+          listed.forEach(function (m) {
+            groupOffices = groupOffices.concat(memberOffices(m, String(m.name) + " · "));
+          });
+          if (groupOffices.length) wrap.appendChild(renderOfficeGroup({ offices: groupOffices }));
+          var record = result.seat || {};
+          var seats = Number(record.seats) || listed.length;
+          var shortNote = "";
+          if (listed.length < seats) {
+            shortNote = "The roster lists " +
+              (listed.length ? String(listed.length) + " of the " : "none of the ") +
+              String(seats) + " members this district elects" +
+              (record.asOf ? " (read on " + String(record.asOf) + ")" : "") + ", so " +
+              (listed.length === 1 ? "only that one is" : listed.length ? "only those are" : "no one is") +
+              " named here. ";
+          }
+          wrap.appendChild(renderFieldStack([{
+            label: opts.seatsLabel || "Members",
+            value: shortNote + (opts.seatsNote ||
+              "This district elects " + String(seats) + " members, and each represents every point in it.")
+          }]));
+          return wrap;
+        }
         if (!member) {
           // Three states, told apart. A seat the chamber calls vacant says so;
           // a record naming nobody says that instead; and no record at all is
@@ -15646,40 +15763,8 @@ function initVirginiaExplorer() {
           }));
           return wrap;
         }
-        var person = { name: String(member.name) };
-        if (member.party) person.badge = String(member.party);
-        // THE MEMBER'S OWN TELEPHONE, where the roster carries one: a number
-        // the chamber prints for the member apart from the office blocks
-        // below, such as a home or cell line. Published since Adam's ruling of
-        // 2026-10-17 that a number a government source prints beside an
-        // official is shown even where it may be the official's own; a label
-        // the source prints ("home 803-555-0100") rides inside the string.
-        if (member.phone) person.phone = String(member.phone);
-        if (member.phonesExtra && member.phonesExtra.length) {
-          person.phonesExtra = member.phonesExtra.map(String);
-        }
-        // THE MEMBER'S E-MAIL ADDRESS, where the roster carries one. Before
-        // 2026-10-17 this card showed no legislator's address at all, though
-        // eight states' rosters carried one for nearly every seat. Measured
-        // that day, every one of them is the chamber's own mailbox except
-        // fifteen Arkansas members' personal addresses, which the
-        // legislature's own member pages print and which Adam chose to show
-        // ("E-mails too"). A roster reads it from the legislature's pages or
-        // from Open States' compilation of them.
-        if (member.email) person.email = String(member.email);
-        // Label follows the actual href: only a roster-supplied member URL
-        // gets the per-member label — the directory fallback lives in the
-        // footer (primaryLink) and must not masquerade as the member's page.
-        var memberUrl = memberProfileUrl(member);
-        if (memberUrl) person.links = [{ label: opts.profileLabel || "Member profile", url: memberUrl }];
-        wrap.appendChild(renderPersonRows([person]));
-        // District office first (it's the local, on-map one this card pins),
-        // Springfield/D.C. second — same order the old key/value card used.
-        var offices = [];
-        var districtOffice = splitOfficeLines(member.districtOffice);
-        if (districtOffice) { districtOffice.label = "District Office"; offices.push(districtOffice); }
-        var capitolOffice = splitOfficeLines(member.capitolOffice || member.springfieldOffice);
-        if (capitolOffice) { capitolOffice.label = opts.capitolLabel || "Capitol Office"; offices.push(capitolOffice); }
+        wrap.appendChild(renderPersonRows([personRow(member)]));
+        var offices = memberOffices(member, "");
         if (offices.length) wrap.appendChild(renderOfficeGroup({ offices: offices }));
         return wrap;
       },
@@ -15712,6 +15797,10 @@ function initVirginiaExplorer() {
           if (!roster) return null;
           var d = extractDistrictNumber(feature.properties || {}, opts.districtFields);
           var member = d != null ? roster[String(d)] : null;
+          var members = seatMembers(member);
+          if (members) {
+            return members.length ? joinNames(members.map(function (m) { return String(m.name); })) : null;
+          }
           if (isMember(member)) return member.name;
           // The hover names who holds the seat, so a seat the chamber calls
           // empty is named "Vacant" — the hover and the card cannot disagree.
