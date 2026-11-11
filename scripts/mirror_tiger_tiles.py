@@ -117,7 +117,7 @@ STATE_FIPS = {"il": "17", "ia": "19", "mi": "26", "wi": "55", "ny": "36", "ca": 
               "mn": "27", "ky": "21", "in": "18", "nc": "37", "ok": "40", "sc": "45",
               "tn": "47", "ar": "05", "ms": "28", "la": "22", "mo": "29",
               "va": "51", "wv": "54", "ga": "13", "pa": "42", "nv": "32", "az": "04",
-              "nj": "34", "nh": "33"}
+              "nj": "34", "nh": "33", "tx": "48"}
 # WHO THIS FETCHES AS, and it used to be nobody: the first version shelled out to
 # curl with no -A, so the Census saw `curl/8.x` and nothing read robots.txt.
 # Nothing was breached — measured 2026-09-27 as that client, the host's
@@ -211,6 +211,10 @@ MIRRORS = [
     ("az", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("az", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("az", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("tx", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("tx", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("tx", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("tx", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("nj", "municipality", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
     ("nj", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("nj", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
@@ -262,8 +266,16 @@ ZIP_MIRRORS = [
     ("nv", "zip-code", "NV_BBOX_ENVELOPE", (-120.1, 34.95, -113.95, 42.1)),
     ("az", "zip-code", "AZ_BBOX_ENVELOPE", (-114.9, 31.25, -108.95, 37.1)),
     ("nj", "zip-code", "NJ_BBOX_ENVELOPE", (-75.65, 38.7, -73.8, 41.45)),
+    ("tx", "zip-code", "TX_BBOX_ENVELOPE", (-106.7, 25.78, -93.45, 36.56)),
     ("nh", "zip-code", "NH_BBOX_ENVELOPE", (-72.65, 42.6, -70.45, 45.4)),
 ]
+# A STATE row the server cannot answer whole is paged the same way: asked for
+# Texas's 1,016 unified school districts at full detail in one response,
+# TIGERweb returned the same `{"code": 500}` every time (measured 2026-11-11),
+# and answered 250 at a time in about 3 s and 8.5 MB a page. Such a row's query
+# carries orderByFields=OBJECTID, so a page window is stable, and its run counts
+# the state's features first, exactly as a box row's does.
+PAGED_STATE_ROWS = {("tx", "school-district-unified")}
 ZCTA_SERVICE, ZCTA_INDEX, ZCTA_FIELDS = "PUMA_TAD_TAZ_UGA_ZCTA", 11, "ZCTA5"
 PAGE_SIZE = 250
 # IN-STATE ONLY (the operator's choice, 2026-09-27). A box holding a state
@@ -311,13 +323,22 @@ def fail(msg):
     sys.exit(1)
 
 
+def paged(row):
+    """Is this row's set fetched a page at a time? Every box row is, and the
+    state rows PAGED_STATE_ROWS names."""
+    return row["env"] is not None or (row["tag"], row["layer"]) in PAGED_STATE_ROWS
+
+
 def query_url(row):
     """The query recorded for a layer. A box row's is the query WITHOUT its
     page window; fetch_pages adds resultOffset/resultRecordCount per page."""
     if row["env"] is None:
         where = urllib.parse.quote("STATE='%s'" % STATE_FIPS[row["tag"]])
-        return ("%s%s/MapServer/%d/query?where=%s&outFields=%s&outSR=4326&f=json&geometryPrecision=5"
-                % (SERVICES, row["service"], row["index"], where, row["fields"]))
+        url = ("%s%s/MapServer/%d/query?where=%s&outFields=%s&outSR=4326&f=json&geometryPrecision=5"
+               % (SERVICES, row["service"], row["index"], where, row["fields"]))
+        if paged(row):
+            url += "&orderByFields=OBJECTID"
+        return url
     xmin, ymin, xmax, ymax = row["env"]
     env = json.dumps({"xmin": xmin, "ymin": ymin, "xmax": xmax, "ymax": ymax}, separators=(",", ":"))
     return ("%s%s/MapServer/%d/query?where=%s&geometry=%s&geometryType=esriGeometryEnvelope"
@@ -404,12 +425,12 @@ def read_json(path):
 
 
 def fetch_pages(url, work):
-    """A box row's set, PAGE_SIZE at a time, held to the server's own count."""
+    """A paged row's set, PAGE_SIZE at a time, held to the server's own count."""
     count_path = os.path.join(work, "count.json")
     fetch(url.replace("&f=json", "&f=json&returnCountOnly=true"), count_path)
     want = read_json(count_path).get("count")
     if not isinstance(want, int) or want <= 0:
-        raise RuntimeError("TIGERweb gave no count for the box")
+        raise RuntimeError("TIGERweb gave no count for the set")
     feats, shell, offset = [], None, 0
     while True:
         page = os.path.join(work, "page-%d.json" % offset)
@@ -422,7 +443,7 @@ def fetch_pages(url, work):
         if not got or not payload.get("exceededTransferLimit"):
             break
     if len(feats) != want:
-        raise RuntimeError("the pages hold %d features and the server counts %d in the box" % (len(feats), want))
+        raise RuntimeError("the pages hold %d features and the server counts %d in the set" % (len(feats), want))
     shell = dict(shell)
     shell["features"] = feats
     shell.pop("exceededTransferLimit", None)
@@ -490,7 +511,7 @@ def fetch_as_geojson(row, work):
     url = query_url(row)
     fields = row["fields"]
     raw = os.path.join(work, "esri.json")
-    if row["env"] is None:
+    if not paged(row):
         fetch(url, raw)
         payload = read_json(raw)
         if payload.get("exceededTransferLimit"):
@@ -729,8 +750,9 @@ def refresh(only, force, n_points, seed):
             }
             if row.get("_splice_sha256"):
                 rec[k]["spliced"] = {"file": SPLICES[(tag, layer)][0], "sha256": row["_splice_sha256"]}
-            if row["env"] is not None:
+            if paged(row):
                 rec[k]["page_size"] = PAGE_SIZE
+            if row["env"] is not None:
                 rec[k]["in_state"] = STATE_FIPS[tag]
                 rec[k]["out_of_state_dropped"] = row["_dropped"]
                 with open(path, encoding="utf-8") as fh:

@@ -478,8 +478,13 @@ for (const tag of instances()) {
 }
 
 // ONE APP PER ZIP CODE: the larger share keeps it, the earlier app in
-// metros.json on a tie
+// metros.json on a tie. A live app keeps a ZIP code over a dark one whatever
+// the shares, so building a state dark changes no live app's index: Texas,
+// built dark on 2026-11-11, took Arkansas's 75556 on the larger share, which
+// would have left a search for it in Arkansas with no ZIP answer while Texas
+// served nobody. The go-live change regenerates and the share decides then.
 const order = (tag) => { const i = metros.indexOf(metroOf[tag]); return i < 0 ? 1e9 : i; };
+const live = (tag) => (metroOf[tag] ? 1 : 0);
 const holders = new Map();
 for (const b of built) for (const [zip, v] of b.won) {
   if (!holders.has(zip)) holders.set(zip, []);
@@ -488,7 +493,7 @@ for (const b of built) for (const [zip, v] of b.won) {
 for (const [zip, hs] of holders) {
   if (hs.length < 2) continue;
   hs.forEach((h) => { h.share = h.v.share; });
-  hs.sort((a, c) => c.share - a.share || order(a.b.tag) - order(c.b.tag));
+  hs.sort((a, c) => live(c.b.tag) - live(a.b.tag) || c.share - a.share || order(a.b.tag) - order(c.b.tag));
   for (const h of hs.slice(1)) h.b.won.delete(zip);
   console.log(`  ZIP code ${zip} is drawn by ${hs.map((h) => h.b.tag + " (" + Math.round(h.share * 100) + "% on its ground)").join(" and ")}: ${hs[0].b.tag} lists it`);
 }
