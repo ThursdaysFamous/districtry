@@ -60,6 +60,7 @@ const ROSTER_URLS = [
   "./data/app/pa-senate-members.json",
   "./data/app/pa-house-members.json",
   "./data/app/coverage-gaps.json",
+  "./data/app/statewide-officials.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

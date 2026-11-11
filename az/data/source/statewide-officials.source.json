@@ -1,0 +1,68 @@
+{
+ "state": "Arizona",
+ "usps": "AZ",
+ "officersNote": "Arizona has no lieutenant governor; the secretary of state is first in line to succeed the governor.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Katie Hobbs",
+   "url": "https://azgovernor.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Adrian Fontes",
+   "url": "https://azsos.gov/",
+   "source": "https://azsos.gov/about/about-secretary",
+   "headers": "browser",
+   "note": "azsos.gov answered 403 to our token and served a browser on 2026-11-11."
+  },
+  {
+   "office": "Attorney General",
+   "name": "Kris Mayes",
+   "url": "https://www.azag.gov/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Kimberly Yee",
+   "url": "https://www.aztreasury.gov/"
+  },
+  {
+   "office": "Superintendent of Public Instruction",
+   "name": "Tom Horne",
+   "url": "https://www.azed.gov/",
+   "headers": "browser",
+   "note": "www.azed.gov answered 403 to our token and served a browser on 2026-11-11."
+  },
+  {
+   "office": "State Mine Inspector",
+   "url": "https://asmi.az.gov/",
+   "unnamed": "The office's own website does not print the State Mine Inspector's name, so this app does not name one.",
+   "note": "asmi.az.gov answered 403 to our token and served a browser on 2026-11-11; its home, about and team pages name staff and never the Mine Inspector."
+  },
+  {
+   "office": "Corporation Commissioner",
+   "name": "Nick Myers",
+   "url": "https://azcc.gov/"
+  },
+  {
+   "office": "Corporation Commissioner",
+   "name": "Rachel Walden",
+   "url": "https://azcc.gov/"
+  },
+  {
+   "office": "Corporation Commissioner",
+   "name": "Lea Márquez Peterson",
+   "url": "https://azcc.gov/"
+  },
+  {
+   "office": "Corporation Commissioner",
+   "name": "Kevin Thompson",
+   "url": "https://azcc.gov/"
+  },
+  {
+   "office": "Corporation Commissioner",
+   "name": "René Lopez",
+   "url": "https://azcc.gov/"
+  }
+ ]
+}

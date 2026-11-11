@@ -1,0 +1,31 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from nh/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "New Hampshire",
+ "usSenate": [
+  {
+   "name": "Margaret Wood Hassan",
+   "party": "Democratic",
+   "url": "https://www.hassan.senate.gov",
+   "office": "324 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-3324"
+  },
+  {
+   "name": "Jeanne Shaheen",
+   "party": "Democratic",
+   "url": "https://www.shaheen.senate.gov",
+   "office": "506 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2841"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-11",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Kelly Ayotte",
+   "url": "https://www.governor.nh.gov/",
+   "verified": "2026-11-11"
+  }
+ ],
+ "officersNote": "New Hampshire's voters elect only the governor statewide. The five executive councillors are elected by district, the Legislature chooses the secretary of state and the treasurer, and the governor appoints the attorney general."
+}

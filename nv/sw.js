@@ -60,6 +60,7 @@ const ROSTER_URLS = [
   "./data/app/nv-senate-members.json",
   "./data/app/nv-assembly-members.json",
   "./data/app/coverage-gaps.json",
+  "./data/app/statewide-officials.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

@@ -6,13 +6,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 districtry New Jersey: a single-file, dependency-light web app. Click a point in New Jersey
 (or search an address) and it reports every civic district containing that point and who
-represents you there. It will serve at **districtry.com/nj/** as a folder of the consolidated
-districtry repo, following the Missouri shape (`docs/EXPANSION_GUIDE.md` Part 2). **The instance
-is DARK**: it has no `metros.json` entry and no `layer-concepts.json` column, and the deploy
-excludes `nj/**`, so nothing is served. It is the fourth state of batch 1 of the state-level
-launch Adam asked for on 2026-11-10 (Pennsylvania, Nevada, Arizona, New Jersey, New Hampshire),
-and it opens with the rest of its batch, in one go-live change, on Adam's own "merge". Nothing
-anywhere may call the instance live before then.
+represents you there. It serves at **districtry.com/nj/** as a folder of the consolidated
+districtry repo, following the Missouri shape (`docs/EXPANSION_GUIDE.md` Part 2). It is the
+fourth state of batch 1 of the state-level launch Adam asked for on 2026-11-10 (Pennsylvania,
+Nevada, Arizona, New Jersey, New Hampshire): built dark, with the deploy excluding `nj/**`, and
+opened with the rest of its batch in one go-live change on Adam's own "merge", which narrowed
+that exclude, added its `metros.json` entry and gave it a `layer-concepts.json` column.
+Its `metro_center`, which only biases the address search toward a point, moved at go-live from
+40.07,-74.73 to 40.28,-74.55, because the old point sits inside Pennsylvania's fleet box and
+`validate_index.py` refuses a sibling's box that holds an instance's centre.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
 or the Legislature's own roster: **County** (`county`, the 21 counties, Census TIGERweb, the

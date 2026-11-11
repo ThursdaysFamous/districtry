@@ -360,6 +360,96 @@
       "landing_name": "Georgia",
       "blurb": "All 159 counties: county commission and school board districts where the county's own elections confirm the map, voting precincts, judicial circuits with their judges and district attorneys, cities and towns, census county divisions, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Georgia Senate, House and U.S. House districts, with who holds each seat. County commissioners and school board members are named from the Secretary of State's election results where an election since November 2024 chose them. The Data gaps panel says which seats are not named and why.",
       "scope": "all 159 counties"
+    },
+    {
+      "id": "pennsylvania",
+      "explorer_name": "districtry Pennsylvania",
+      "label": "Pennsylvania",
+      "url": "https://districtry.com/pa/",
+      "emoji": "🔔",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -80.53,
+        "minLat": 39.71,
+        "maxLng": -74.68,
+        "maxLat": 42.52
+      },
+      "tag": "pa",
+      "landing_name": "Pennsylvania",
+      "blurb": "All 67 counties: cities, boroughs and townships, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Pennsylvania Senate, House and U.S. House districts, with who holds each seat. County, municipal and school board officials are not named yet, and the Data gaps panel says why.",
+      "scope": "all 67 counties"
+    },
+    {
+      "id": "nevada",
+      "explorer_name": "districtry Nevada",
+      "label": "Nevada",
+      "url": "https://districtry.com/nv/",
+      "emoji": "🏜️",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -120.01,
+        "minLat": 35.0,
+        "maxLng": -114.03,
+        "maxLat": 42.01
+      },
+      "tag": "nv",
+      "landing_name": "Nevada",
+      "blurb": "All 16 counties and Carson City: incorporated cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Nevada Senate, Assembly and U.S. House districts, with who holds each seat. County commissioners and city and school board members are not named yet, and the Data gaps panel says why.",
+      "scope": "all 16 counties and Carson City"
+    },
+    {
+      "id": "arizona",
+      "explorer_name": "districtry Arizona",
+      "label": "Arizona",
+      "url": "https://districtry.com/az/",
+      "emoji": "🌵",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -114.82,
+        "minLat": 31.33,
+        "maxLng": -109.04,
+        "maxLat": 37.01
+      },
+      "tag": "az",
+      "landing_name": "Arizona",
+      "blurb": "All 15 counties: cities and towns, unified, elementary and high school districts, ZIP codes, and the nearest police station, fire station and post office — plus Arizona's 30 legislative districts, each electing one senator and two representatives, and its U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 15 counties"
+    },
+    {
+      "id": "newjersey",
+      "explorer_name": "districtry New Jersey",
+      "label": "New Jersey",
+      "url": "https://districtry.com/nj/",
+      "emoji": "🍅",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -75.57,
+        "minLat": 38.78,
+        "maxLng": -73.88,
+        "maxLat": 41.36
+      },
+      "tag": "nj",
+      "landing_name": "New Jersey",
+      "blurb": "All 21 counties and 564 municipalities: school districts, ZIP codes, and the nearest police station, fire station and post office — plus New Jersey's 40 legislative districts, each electing one senator and two Assembly members, and its U.S. House districts, with who holds each seat. County, municipal and school board officials are not named yet, and the Data gaps panel says why.",
+      "scope": "all 21 counties"
+    },
+    {
+      "id": "newhampshire",
+      "explorer_name": "districtry New Hampshire",
+      "label": "New Hampshire",
+      "url": "https://districtry.com/nh/",
+      "emoji": "🍁",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -72.56,
+        "minLat": 42.69,
+        "maxLng": -70.57,
+        "maxLat": 45.31
+      },
+      "tag": "nh",
+      "landing_name": "New Hampshire",
+      "blurb": "All 10 counties and every city, town and unincorporated place: school districts, ZIP codes, and the nearest police station, fire station and post office — plus the New Hampshire Senate, the House's 203 districts with their floterials, and the U.S. House districts, with who holds each seat. County, town and school board officials are not named yet, and the Data gaps panel says why.",
+      "scope": "all 10 counties"
     }
   ]
 }

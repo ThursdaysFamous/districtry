@@ -29,10 +29,10 @@ name: Update Nevada legislature roster
 # those same files meanwhile errors at the checkout instead of pushing, which
 # is right.
 #
-# NEVADA IS DARK, so this job does not regenerate nv/state-legislature.html:
-# build_legislator_pages.py refuses an instance metros.json does not carry, so
-# that page is not built yet. Go-live adds the step in the same change that
-# adds nv to metros.json — nv/WATCH.md has the list.
+# THE PAGE STEPS LANDED WITH THE GO-LIVE CHANGE (batch 1 of the state-level
+# launch). `nv/state-legislature.html` carries a GENERATED table of both
+# rosters, and `about.html` and `sitemap.xml` count them, so all three are
+# regenerated here and staged in the same `git add`.
 
 on:
   schedule:
@@ -99,7 +99,10 @@ jobs:
           # files ride across the checkout as working-tree changes.
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add nv/data/app/nv-senate-members.json nv/data/app/nv-assembly-members.json
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add nv/data/app/nv-senate-members.json nv/data/app/nv-assembly-members.json nv/state-legislature.html about.html sitemap.xml
           git commit -m "Update Nevada Senate + Assembly rosters from the Legislature"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
