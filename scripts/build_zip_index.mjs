@@ -413,8 +413,14 @@ async function buildIndex(tag, w) {
       const spot = spotOf(at, zoom, g);
       if (!spot) { offGround++; continue; }
       if (spot.clear < MIN_CLEARANCE_M) { tooNear.push(zip + " (" + Math.round(spot.clear) + " m)"); continue; }
+      // The share is measured now, while the layer's tiles are in hand,
+      // though only a ZIP code two apps both list needs it: keeping each ZIP
+      // code's tile pieces until every app was read held them all at once
+      // and ran the default 2 GB heap out at 25 apps (measured 2026-11-11,
+      // when the heap grew about 100 MB per app). Measuring every one costs
+      // about 15 seconds on the whole run.
       won.set(zip, {
-        share: () => shareOf(at, zoom, g),
+        share: shareOf(at, zoom, g),
         feature: {
           type: "Feature",
           bbox: [down(at.w), down(at.s), up(at.e), up(at.n)],
@@ -481,7 +487,7 @@ for (const b of built) for (const [zip, v] of b.won) {
 }
 for (const [zip, hs] of holders) {
   if (hs.length < 2) continue;
-  hs.forEach((h) => { h.share = h.v.share(); });
+  hs.forEach((h) => { h.share = h.v.share; });
   hs.sort((a, c) => c.share - a.share || order(a.b.tag) - order(c.b.tag));
   for (const h of hs.slice(1)) h.b.won.delete(zip);
   console.log(`  ZIP code ${zip} is drawn by ${hs.map((h) => h.b.tag + " (" + Math.round(h.share * 100) + "% on its ground)").join(" and ")}: ${hs[0].b.tag} lists it`);

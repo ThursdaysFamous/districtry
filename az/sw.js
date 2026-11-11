@@ -59,6 +59,7 @@ const ROSTER_URLS = [
   "./data/app/az-senate-members.json",
   "./data/app/az-house-members.json",
   "./data/app/coverage-gaps.json",
+  "./data/app/statewide-officials.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

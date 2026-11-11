@@ -84,7 +84,17 @@
     { "id": "westvirginia", "label": "West Virginia", "url": "https://districtry.com/wv/", "emoji": "⛰️", "explorer_name": "districtry West Virginia",
       "bbox": { "minLng": -82.65, "minLat": 37.2, "maxLng": -79.43, "maxLat": 40.64 } },
     { "id": "georgia", "label": "Georgia", "url": "https://districtry.com/ga/", "emoji": "🍑", "explorer_name": "districtry Georgia",
-      "bbox": { "minLng": -85.61, "minLat": 30.35, "maxLng": -80.91, "maxLat": 35.01 } }
+      "bbox": { "minLng": -85.61, "minLat": 30.35, "maxLng": -80.91, "maxLat": 35.01 } },
+    { "id": "pennsylvania", "label": "Pennsylvania", "url": "https://districtry.com/pa/", "emoji": "🔔", "explorer_name": "districtry Pennsylvania",
+      "bbox": { "minLng": -80.53, "minLat": 39.71, "maxLng": -74.68, "maxLat": 42.52 } },
+    { "id": "nevada", "label": "Nevada", "url": "https://districtry.com/nv/", "emoji": "🏜️", "explorer_name": "districtry Nevada",
+      "bbox": { "minLng": -120.01, "minLat": 35.0, "maxLng": -114.03, "maxLat": 42.01 } },
+    { "id": "arizona", "label": "Arizona", "url": "https://districtry.com/az/", "emoji": "🌵", "explorer_name": "districtry Arizona",
+      "bbox": { "minLng": -114.82, "minLat": 31.33, "maxLng": -109.04, "maxLat": 37.01 } },
+    { "id": "newjersey", "label": "New Jersey", "url": "https://districtry.com/nj/", "emoji": "🍅", "explorer_name": "districtry New Jersey",
+      "bbox": { "minLng": -75.57, "minLat": 38.78, "maxLng": -73.88, "maxLat": 41.36 } },
+    { "id": "newhampshire", "label": "New Hampshire", "url": "https://districtry.com/nh/", "emoji": "🍁", "explorer_name": "districtry New Hampshire",
+      "bbox": { "minLng": -72.56, "minLat": 42.69, "maxLng": -70.57, "maxLat": 45.31 } }
   ],
   "hover_number_keys": [
     [
@@ -3031,6 +3041,11 @@
     ],
     "rosters": [
       {
+        "file": "statewide-officials.json",
+        "min_keys": 5,
+        "note": "The officers Illinois elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from il/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
+      },
+      {
         "file": "tribal-councils.json",
         "min_keys": 1,
         "note": "The Prairie Band Potawatomi Nation's council, keyed by the Census AIANNH code of its Illinois land (2980) \u2014 scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly from the nation's own page (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
@@ -4021,7 +4036,8 @@
       "file": "update-chicago-candidates.yml",
       "purpose": "Re-read the Chicago Board of Elections' list of candidates who filed for the next municipal election daily (its file name changes with each revision, so the link is discovered), rebuild il/data/source/chicago-candidates.json without the home addresses the list prints, and regenerate il/chicago-candidates.html; fails on an office or status the page has no words for, a missing ward or police district, or a list that cannot be read on or before the election date; opens a PR on any change",
       "schedule": "daily 11:40 UTC"
-    }
+    },
+    {"file": "update-statewide-officials.yml", "purpose": "Re-read every live app's statewide officers on each office's own state government page and the two U.S. senators on the U.S. Senate's list, weekly; refuses to write when a page it read no longer prints the listed name, keeps the last checked record when a page cannot be read; opens a PR on any change", "schedule": "Thu 14:17 UTC"}
   ],
   "geocoder": {
     "address": "Photon (Chicago-bounded type-ahead)",

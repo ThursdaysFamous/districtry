@@ -167,6 +167,14 @@ AREAS = {
     # over the whole state's 159 counties, so the coverage ring IS the state
     # and the coverage_key carries `outside` alone.
     "ga": {"outline": "ga/data/app/metro-outline.json", "state_outline": None},
+    # The state-level launch's batch 1 joined at its go-live. ONE tier each:
+    # every layer answers over the whole state, so the coverage ring IS the
+    # state and each coverage_key carries `outside` and `edge` alone.
+    "pa": {"outline": "pa/data/app/metro-outline.json", "state_outline": None},
+    "nv": {"outline": "nv/data/app/metro-outline.json", "state_outline": None},
+    "az": {"outline": "az/data/app/metro-outline.json", "state_outline": None},
+    "nj": {"outline": "nj/data/app/metro-outline.json", "state_outline": None},
+    "nh": {"outline": "nh/data/app/metro-outline.json", "state_outline": None},
     # New York joined at the 2026-09-19 go-live. It is a TWO-TIER area and the
     # two geometries are genuinely different: the dashed wash is the whole
     # state, where the county, municipality, village, school-district,

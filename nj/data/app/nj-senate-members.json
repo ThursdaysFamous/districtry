@@ -1,0 +1,442 @@
+{
+  "1": {
+    "name": "Michael L. Testa Jr.",
+    "party": "Republican",
+    "email": "SenTesta@njleg.org",
+    "districtOffice": [
+      "610 East Landis Avenue",
+      "Vineland, NJ 08360",
+      "(609) 778-2012"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/424/senator-testa"
+  },
+  "2": {
+    "name": "Vincent J. Polistina",
+    "party": "Republican",
+    "email": "SenPolistina@njleg.org",
+    "districtOffice": [
+      "3100 Hingston Avenue, Suite 101",
+      "Egg Harbor Township, NJ 08234",
+      "(609) 677-8266"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/432/senator-polistina"
+  },
+  "3": {
+    "name": "John J. Burzichelli",
+    "party": "Democrat",
+    "email": "SenBurzichelli@njleg.org",
+    "districtOffice": [
+      "711 North Main Street",
+      "Glassboro, NJ 08028",
+      "(856) 226-3530"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/458/senator-burzichelli"
+  },
+  "4": {
+    "name": "Paul D. Moriarty",
+    "party": "Democrat",
+    "email": "SenMoriarty@njleg.org",
+    "districtOffice": [
+      "129 Johnson Road, Suite 1",
+      "Turnersville, NJ 08012",
+      "(856) 232-6700"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/461/senator-moriarty"
+  },
+  "5": {
+    "name": "Nilsa I. Cruz-Perez",
+    "party": "Democrat",
+    "email": "SenCruzPerez@njleg.org",
+    "districtOffice": [
+      "231-L Market Street",
+      "Camden, NJ 08102",
+      "(856) 541-1251"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/371/senator-cruz-perez"
+  },
+  "6": {
+    "name": "James Beach",
+    "party": "Democrat",
+    "email": "SenBeach@njleg.org",
+    "districtOffice": [
+      "221 Laurel Road, Suite 105",
+      "Voorhees, NJ 08043",
+      "(856) 429-1572"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/310/senator-beach"
+  },
+  "7": {
+    "name": "Troy Singleton",
+    "party": "Democrat",
+    "email": "SenSingleton@njleg.org",
+    "districtOffice": [
+      "400 North Church Street, Suite 260",
+      "Moorestown, NJ 08057",
+      "(856) 234-2790"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/395/senator-singleton"
+  },
+  "8": {
+    "name": "Latham Tiver",
+    "party": "Republican",
+    "email": "SenTiver@njleg.org",
+    "districtOffice": [
+      "Elmwood Business Park, Suite B-101",
+      "Evesham, NJ 08053",
+      "(856) 817-2143"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/464/senator-tiver"
+  },
+  "9": {
+    "name": "Carmen F. Amato Jr.",
+    "party": "Republican",
+    "email": "SenAmato@njleg.org",
+    "districtOffice": [
+      "800 Atlantic City Boulevard, Suites 2 and 3",
+      "Bayville, NJ 08721",
+      "(732) 678-1355"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/465/senator-amato"
+  },
+  "10": {
+    "name": "James W. Holzapfel",
+    "party": "Republican",
+    "email": "SenHolzapfel@njleg.org",
+    "districtOffice": [
+      "852 Highway 70",
+      "Brick, NJ 08724",
+      "(732) 840-9028"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/334/senator-holzapfel"
+  },
+  "11": {
+    "name": "Vin Gopal",
+    "party": "Democrat",
+    "email": "SenGopal@njleg.org",
+    "districtOffice": [
+      "766 Shrewsbury Avenue, Suite 100",
+      "Tinton Falls, NJ 07724",
+      "(732) 704-3808"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/405/senator-gopal"
+  },
+  "12": {
+    "name": "Owen Henry",
+    "party": "Republican",
+    "email": "SenHenry@njleg.org",
+    "districtOffice": [
+      "2501 Highway 516",
+      "Old Bridge, NJ 08857",
+      "(732) 607-7580"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/470/senator-henry"
+  },
+  "13": {
+    "name": "Declan J. O'Scanlon Jr.",
+    "party": "Republican",
+    "email": "SenOScanlon@njleg.org",
+    "districtOffice": [
+      "101 Crawfords Corner Road, Suite 4332",
+      "Holmdel, NJ 07733",
+      "(732) 444-1838"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/394/senator-o'scanlon"
+  },
+  "14": {
+    "name": "Linda R. Greenstein",
+    "party": "Democrat",
+    "email": "SenGreenstein@njleg.org",
+    "districtOffice": [
+      "1249 South River Road, Suite 105",
+      "Cranbury, NJ 08512",
+      "(609) 395-9911"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/329/senator-greenstein"
+  },
+  "15": {
+    "name": "Shirley K. Turner",
+    "party": "Democrat",
+    "email": "SenTurner@njleg.org",
+    "districtOffice": [
+      "850 Bear Tavern Road, Suite 101",
+      "Ewing Township, NJ 08628",
+      "(609) 323-7239"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/47/senator-turner"
+  },
+  "16": {
+    "name": "Andrew Zwicker",
+    "party": "Democrat",
+    "email": "SenZwicker@njleg.org",
+    "districtOffice": [
+      "2 Clerico Lane, Building 1",
+      "Hillsborough, NJ 08844",
+      "(908) 308-8672"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/436/senator-zwicker"
+  },
+  "17": {
+    "name": "Bob Smith",
+    "party": "Democrat",
+    "email": "SenBSmith@njleg.org",
+    "districtOffice": [
+      "216 Stelton Road, Suite E-5",
+      "Piscataway, NJ 08854",
+      "(732) 752-0770"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/53/senator-smith"
+  },
+  "18": {
+    "name": "Patrick J. Diegnan Jr.",
+    "party": "Democrat",
+    "email": "SenDiegnan@njleg.org",
+    "districtOffice": [
+      "908 Oak Tree Avenue, Unit P",
+      "South Plainfield, NJ 07080",
+      "(908) 757-1677"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/387/senator-diegnan"
+  },
+  "19": {
+    "name": "Joseph F. Vitale",
+    "party": "Democrat",
+    "email": "SenVitale@njleg.org",
+    "districtOffice": [
+      "569 Rahway Avenue",
+      "Woodbridge, NJ 07095",
+      "(732) 855-7441"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/175/senator-vitale"
+  },
+  "20": {
+    "name": "Joseph P. Cryan",
+    "party": "Democrat",
+    "email": "SenCryan@njleg.org",
+    "districtOffice": [
+      "1585 Morris Avenue, First Floor",
+      "Union, NJ 07083",
+      "(908) 624-0880"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/406/senator-cryan"
+  },
+  "21": {
+    "name": "Jon M. Bramnick",
+    "party": "Republican",
+    "email": "SenBramnick@njleg.org",
+    "districtOffice": [
+      "251 North Avenue West, Second Floor",
+      "Westfield, NJ 07090",
+      "(908) 232-2073"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/433/senator-bramnick"
+  },
+  "22": {
+    "name": "Nicholas P. Scutari",
+    "party": "Democrat",
+    "email": "SenScutari@njleg.org",
+    "districtOffice": [
+      "67 Walnut Avenue, Suite 406",
+      "Clark, NJ 07066",
+      "(732) 827-7480"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/237/senator-scutari"
+  },
+  "23": {
+    "name": "Douglas J. Steinhardt",
+    "party": "Republican",
+    "email": "SenSteinhardt@njleg.org",
+    "districtOffice": [
+      "127 Belvidere Avenue, Second Floor",
+      "Washington, NJ 07882",
+      "(908) 835-0552"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/456/senator-steinhardt"
+  },
+  "24": {
+    "name": "Parker Space",
+    "party": "Republican",
+    "email": "SenSpace@njleg.org",
+    "districtOffice": [
+      "One Wilson Drive, Suite 2B",
+      "Sparta, NJ 07871",
+      "(973) 300-0200"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/473/senator-space"
+  },
+  "25": {
+    "name": "Anthony M. Bucco",
+    "party": "Republican",
+    "email": "SenBucco@njleg.org",
+    "districtOffice": [
+      "75 Bloomfield Avenue, Suite 302, Third Floor",
+      "Denville, NJ 07834",
+      "(973) 627-9700"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/419/senator-bucco"
+  },
+  "26": {
+    "name": "Joseph Pennacchio",
+    "party": "Republican",
+    "email": "SenPennacchio@njleg.org",
+    "districtOffice": [
+      "170 Changebridge Road, Unit A1",
+      "Montville, NJ 07045",
+      "(973) 227-4012"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/305/senator-pennacchio"
+  },
+  "27": {
+    "name": "John F. McKeon",
+    "party": "Democrat",
+    "email": "SenMcKeon@njleg.org",
+    "districtOffice": [
+      "555 Northfield Avenue, Suite C",
+      "West Orange, NJ 07052",
+      "(862) 930-7071"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/478/senator-mckeon"
+  },
+  "28": {
+    "name": "Renee C. Burgess",
+    "party": "Democrat",
+    "email": "SenBurgess@njleg.org",
+    "districtOffice": [
+      "660 Stuyvesant Avenue",
+      "Irvington, NJ 07111",
+      "(862) 231-6577"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/455/senator-burgess"
+  },
+  "29": {
+    "name": "M. Teresa Ruiz",
+    "party": "Democrat",
+    "email": "SenRuiz@njleg.org",
+    "districtOffice": [
+      "475 Bloomfield Avenue",
+      "Newark, NJ 07107",
+      "(973) 484-1000"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/287/senator-ruiz"
+  },
+  "30": {
+    "name": "Robert W. Singer",
+    "party": "Republican",
+    "email": "SenSinger@njleg.org",
+    "districtOffice": [
+      "1771 Madison Avenue, Suite 202",
+      "Lakewood, NJ 08701",
+      "(732) 987-5669"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/93/senator-singer"
+  },
+  "31": {
+    "name": "Angela V. McKnight",
+    "party": "Democrat",
+    "email": "SenMcKnight@njleg.org",
+    "districtOffice": [
+      "2324 John F. Kennedy Boulevard",
+      "Jersey City, NJ 07304",
+      "(201) 360-2502"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/483/senator-mcknight"
+  },
+  "32": {
+    "name": "Raj Mukherji",
+    "party": "Democrat",
+    "email": "SenMukherji@njleg.org",
+    "districtOffice": [
+      "121 Newark Avenue, First Floor",
+      "Jersey City, NJ 07302",
+      "(201) 626-4000"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/485/senator-mukherji"
+  },
+  "33": {
+    "name": "Brian P. Stack",
+    "party": "Democrat",
+    "email": "SenStack@njleg.org",
+    "districtOffice": [
+      "323 60th Street",
+      "West New York, NJ 07093",
+      "(201) 721-5263"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/306/senator-stack"
+  },
+  "34": {
+    "name": "Britnee N. Timberlake",
+    "party": "Democrat",
+    "email": "SenTimberlake@njleg.org",
+    "districtOffice": [
+      "520 Main Street, Suite 1",
+      "East Orange, NJ 07018",
+      "(973) 395-1166"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/490/senator-timberlake"
+  },
+  "35": {
+    "name": "Benjie E. Wimberly",
+    "party": "Democrat",
+    "email": "SenWimberly@njleg.org",
+    "districtOffice": [
+      "301 Main Street, Suite 360",
+      "Paterson, NJ 07505",
+      "(973) 925-7061"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/499/senator-wimberly"
+  },
+  "36": {
+    "name": "Paul A. Sarlo",
+    "party": "Democrat",
+    "email": "SenSarlo@njleg.org",
+    "districtOffice": [
+      "496 Columbia Boulevard, First Floor",
+      "Wood-Ridge, NJ 07075",
+      "(201) 804-8118"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/223/senator-sarlo"
+  },
+  "37": {
+    "name": "Gordon M. Johnson",
+    "party": "Democrat",
+    "email": "SenJohnson@njleg.org",
+    "districtOffice": [
+      "96 Engle Street",
+      "Englewood, NJ 07631",
+      "(201) 308-7060"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/434/senator-johnson"
+  },
+  "38": {
+    "name": "Joseph A. Lagana",
+    "party": "Democrat",
+    "email": "SenLagana@njleg.org",
+    "districtOffice": [
+      "205 Robin Road, Suite 122",
+      "Paramus, NJ 07652",
+      "(201) 576-9199"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/411/senator-lagana"
+  },
+  "39": {
+    "name": "Holly T. Schepisi",
+    "party": "Republican",
+    "email": "SenSchepisi@njleg.org",
+    "districtOffice": [
+      "28 West Grand Avenue, Suite 15",
+      "Montvale, NJ 07645",
+      "(201) 666-0881"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/430/senator-schepisi"
+  },
+  "40": {
+    "name": "Kristin M. Corrado",
+    "party": "Republican",
+    "email": "SenCorrado@njleg.org",
+    "districtOffice": [
+      "999 Riverview Drive, Suite 350",
+      "Totowa, NJ 07512",
+      "(973) 237-1360"
+    ],
+    "url": "https://www.njleg.state.nj.us/legislative-roster/392/senator-corrado"
+  }
+}

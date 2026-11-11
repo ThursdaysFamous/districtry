@@ -1,0 +1,37 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from nj/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "New Jersey",
+ "usSenate": [
+  {
+   "name": "Cory A. Booker",
+   "party": "Democratic",
+   "url": "https://www.booker.senate.gov",
+   "office": "306 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-3224"
+  },
+  {
+   "name": "Andy Kim",
+   "party": "Democratic",
+   "url": "https://www.kim.senate.gov/",
+   "office": "520 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4744"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-11",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Mikie Sherrill",
+   "url": "https://www.nj.gov/governor/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Shirley Emehelu",
+   "url": "https://www.nj.gov/governor/admin/ltgovernor/",
+   "verified": "2026-11-11"
+  }
+ ],
+ "officersNote": "New Jersey's voters elect only the governor and the lieutenant governor statewide, on one ticket. The governor appoints the attorney general, the secretary of state and the treasurer."
+}

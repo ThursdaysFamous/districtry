@@ -1,0 +1,90 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from az/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Arizona",
+ "usSenate": [
+  {
+   "name": "Ruben Gallego",
+   "party": "Democratic",
+   "url": "https://www.gallego.senate.gov/",
+   "office": "302 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4521"
+  },
+  {
+   "name": "Mark Kelly",
+   "party": "Democratic",
+   "url": "https://www.kelly.senate.gov",
+   "office": "516 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2235"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-11",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Katie Hobbs",
+   "url": "https://azgovernor.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Adrian Fontes",
+   "url": "https://azsos.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Kris Mayes",
+   "url": "https://www.azag.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Kimberly Yee",
+   "url": "https://www.aztreasury.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Superintendent of Public Instruction",
+   "name": "Tom Horne",
+   "url": "https://www.azed.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "State Mine Inspector",
+   "url": "https://asmi.az.gov/",
+   "unnamed": "The office's own website does not print the State Mine Inspector's name, so this app does not name one."
+  },
+  {
+   "office": "Corporation Commissioner",
+   "name": "Nick Myers",
+   "url": "https://azcc.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Corporation Commissioner",
+   "name": "Rachel Walden",
+   "url": "https://azcc.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Corporation Commissioner",
+   "name": "Lea Márquez Peterson",
+   "url": "https://azcc.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Corporation Commissioner",
+   "name": "Kevin Thompson",
+   "url": "https://azcc.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Corporation Commissioner",
+   "name": "René Lopez",
+   "url": "https://azcc.gov/",
+   "verified": "2026-11-11"
+  }
+ ],
+ "officersNote": "Arizona has no lieutenant governor; the secretary of state is first in line to succeed the governor."
+}

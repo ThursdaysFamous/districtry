@@ -1,0 +1,66 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from ar/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Arkansas",
+ "usSenate": [
+  {
+   "name": "John Boozman",
+   "party": "Republican",
+   "url": "https://www.boozman.senate.gov/",
+   "office": "555 Dirksen Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4843"
+  },
+  {
+   "name": "Tom Cotton",
+   "party": "Republican",
+   "url": "https://www.cotton.senate.gov",
+   "office": "326 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2353"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Sarah Huckabee Sanders",
+   "url": "https://governor.arkansas.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Leslie Rutledge",
+   "url": "https://ltgovernor.arkansas.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Tim Griffin",
+   "url": "https://arkansasag.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Cole Jester",
+   "url": "https://www.sos.arkansas.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Treasurer of State",
+   "name": "John Thurston",
+   "url": "https://www.artreasury.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Auditor of State",
+   "name": "Dennis Milligan",
+   "url": "https://www.auditor.ar.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Commissioner of State Lands",
+   "name": "Tommy Land",
+   "url": "https://www.cosl.org/",
+   "verified": "2026-11-10"
+  }
+ ]
+}
