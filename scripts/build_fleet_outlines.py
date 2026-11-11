@@ -136,6 +136,11 @@ SOURCES = {
     "az": "az/data/app/metro-outline.json",
     "nj": "nj/data/app/metro-outline.json",
     "nh": "nh/data/app/metro-outline.json",
+    # Batch 2 (Texas, Florida, Ohio, Washington), the same shape.
+    "tx": "tx/data/app/metro-outline.json",
+    "fl": "fl/data/app/metro-outline.json",
+    "oh": "oh/data/app/metro-outline.json",
+    "wa": "wa/data/app/metro-outline.json",
 }
 
 # Degrees. 0.002 is about 220 m north-south and 165 m east-west at 42 N.

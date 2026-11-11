@@ -85,6 +85,10 @@ STATE_OF_INSTANCE = {
     "az": "Arizona",
     "nj": "New Jersey",
     "nh": "New Hampshire",
+    "tx": "Texas",
+    "fl": "Florida",
+    "oh": "Ohio",
+    "wa": "Washington",
 }
 
 

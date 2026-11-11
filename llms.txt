@@ -1,6 +1,6 @@
 # districtry
 
-> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. 25 instances across Illinois, New York, California, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi, Louisiana, Missouri, Virginia, West Virginia, Georgia, Pennsylvania, Nevada, Arizona, New Jersey and New Hampshire. Every boundary and every name comes from a published source and is cited to it.
+> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. 29 instances across Illinois, New York, California, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi, Louisiana, Missouri, Virginia, West Virginia, Georgia, Pennsylvania, Nevada, Arizona, New Jersey, New Hampshire, Texas, Florida, Ohio and Washington. Every boundary and every name comes from a published source and is cited to it.
 
 Free, no account, no tracking of individuals. The map runs in the browser; what each page sends to whom is listed at https://districtry.com/privacy.html.
 
@@ -312,6 +312,46 @@ All 10 counties and every city, town and unincorporated place: school districts,
 - [Sources & data layers](https://districtry.com/nh/sources.html)
 - [Who is my NH legislator?](https://districtry.com/nh/state-legislature.html)
 - [New Hampshire district questions](https://districtry.com/nh/faq.html)
+
+## Texas
+
+All 254 counties: cities, towns and villages, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Texas Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
+
+- [Texas district lookup](https://districtry.com/tx/): 12 layers, all 254 counties.
+- [Who is my U.S. representative?](https://districtry.com/tx/congress.html)
+- [Sources & data layers](https://districtry.com/tx/sources.html)
+- [Who is my Texas legislator?](https://districtry.com/tx/state-legislature.html)
+- [Texas district questions](https://districtry.com/tx/faq.html)
+
+## Florida
+
+All 67 counties: cities, towns and villages, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Florida Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
+
+- [Florida district lookup](https://districtry.com/fl/): 10 layers, all 67 counties.
+- [Who is my U.S. representative?](https://districtry.com/fl/congress.html)
+- [Sources & data layers](https://districtry.com/fl/sources.html)
+- [Who is my Florida legislator?](https://districtry.com/fl/state-legislature.html)
+- [Florida district questions](https://districtry.com/fl/faq.html)
+
+## Ohio
+
+All 88 counties: cities and villages, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Ohio Senate, House and U.S. House districts, with who holds each seat. County, municipal and school board officials are not named yet, and the Data gaps panel says why.
+
+- [Ohio district lookup](https://districtry.com/oh/): 10 layers, all 88 counties.
+- [Who is my U.S. representative?](https://districtry.com/oh/congress.html)
+- [Sources & data layers](https://districtry.com/oh/sources.html)
+- [Who is my Ohio legislator?](https://districtry.com/oh/state-legislature.html)
+- [Ohio district questions](https://districtry.com/oh/faq.html)
+
+## Washington
+
+All 39 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus Washington's 49 legislative districts, each electing one senator and two representatives, and its U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
+
+- [Washington district lookup](https://districtry.com/wa/): 10 layers, all 39 counties.
+- [Who is my U.S. representative?](https://districtry.com/wa/congress.html)
+- [Sources & data layers](https://districtry.com/wa/sources.html)
+- [Who is my Washington legislator?](https://districtry.com/wa/state-legislature.html)
+- [Washington district questions](https://districtry.com/wa/faq.html)
 
 ## Where the answers come from
 

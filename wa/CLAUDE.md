@@ -6,12 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 districtry Washington: a single-file, dependency-light web app. Click a point in Washington (or
 search an address) and it reports every civic district containing that point and who represents
-you there. It will serve at **districtry.com/wa/** as a folder of the consolidated districtry
-repo, following the Missouri shape (`docs/EXPANSION_GUIDE.md` Part 2). It is the fifth state of
-batch 2 of the state-level launch Adam asked for on 2026-11-10 (Texas, Florida, Ohio, California,
+you there. It serves at **districtry.com/wa/** as a folder of the consolidated districtry repo,
+following the Missouri shape (`docs/EXPANSION_GUIDE.md` Part 2). It is the fifth state of batch
+2 of the state-level launch Adam asked for on 2026-11-10 (Texas, Florida, Ohio, California,
 Washington), in his chosen order: built dark, with the deploy excluding `wa/**`, and opened with
-the rest of its batch in one go-live change on Adam's own "merge".
-**WHETHER IT IS DARK IS READ FROM THE DEPLOY, NEVER FROM THIS SENTENCE.**
+the rest of its batch in one go-live change on Adam's own "merge", which narrowed that exclude,
+added its `metros.json` entry and gave it a `layer-concepts.json` column.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
 or the Legislature's own pages: **County** (`county`, all 39, Census TIGERweb, the state outline
@@ -29,9 +29,9 @@ measured by its `--check`) and the wash has no lighter band (`coverage_key` with
 `edge` only).
 
 **NEITHER OF WASHINGTON'S NEIGHBOURS HAS AN APP**, so no live app chose a test point inside
-Washington for want of coverage; the go-live change re-runs that audit anyway (`wa/WATCH.md`).
-Washington's own negative point is in Victoria, British Columbia, across the Strait of Juan de
-Fuca, and never moves.
+Washington for want of coverage, and the go-live change's audit found none (2026-11-11, every
+coordinate in every app's smoke test, worksheet and outline builder). Washington's own negative
+point is in Victoria, British Columbia, across the Strait of Juan de Fuca, and never moves.
 
 **THE CONGRESSIONAL MAP IS THE 2022 MAP, FROM TIGERweb LAYER 0 (THE 120TH CONGRESS).** Measured
 2026-11-11, layer 0 and layer 4 (the 119th Congress's) carry the same 10 districts, so layer 0 is

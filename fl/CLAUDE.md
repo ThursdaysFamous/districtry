@@ -6,12 +6,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 districtry Florida: a single-file, dependency-light web app. Click a point in Florida
 (or search an address) and it reports every civic district containing that point and who
-represents you there. It will serve at **districtry.com/fl/** as a folder of the consolidated
+represents you there. It serves at **districtry.com/fl/** as a folder of the consolidated
 districtry repo, following the Missouri shape (`docs/EXPANSION_GUIDE.md` Part 2). It is the
 second state of batch 2 of the state-level launch Adam asked for on 2026-11-10 (Texas, Florida,
 Ohio, California, Washington), in his chosen order: built dark, with the deploy excluding
-`fl/**`, and opened with the rest of its batch in one go-live change on Adam's own "merge".
-**WHETHER IT IS DARK IS READ FROM THE DEPLOY, NEVER FROM THIS SENTENCE.**
+`fl/**`, and opened with the rest of its batch in one go-live change on Adam's own "merge",
+which narrowed that exclude, added its `metros.json` entry and gave it a `layer-concepts.json`
+column.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
 or each chamber's own pages: **County** (`county`, all 67, Census TIGERweb, the state outline

@@ -1478,7 +1478,10 @@ try {
   {
     const WI_FULL = "https://maps.google.com/?q=Devil's+Lake+State+Park,+S5975+Park+Rd,+Baraboo,+WI+53913&ftid=0x0:0x1&entry=gps";
     const WI_REBUILT = "https://www.google.com/maps?q=Devil's+Lake+State+Park,+S5975+Park+Rd,+Baraboo,+WI+53913";
-    const OH_FULL = "https://maps.google.com/?q=Union+Terminal,+1301+Western+Ave,+Cincinnati,+OH+45203&ftid=0x0:0x2&entry=gps";
+    // A state no app covers: Ohio until the change that published it (batch 2
+    // of the state-level launch, written 2026-11-11), Wyoming since, which is
+    // in the launch's last batch.
+    const WY_FULL = "https://maps.google.com/?q=Wyoming+State+Capitol,+200+W+24th+St,+Cheyenne,+WY+82001&ftid=0x0:0x2&entry=gps";
     const CA_FULL = "https://maps.google.com/?q=Grand+Central+Market,+317+S+Broadway,+Los+Angeles,+CA+90013&ftid=0x0:0x3&entry=gps";
     const CA_REBUILT = "https://www.google.com/maps?q=Grand+Central+Market,+317+S+Broadway,+Los+Angeles,+CA+90013";
     const IL_FULL = "https://maps.google.com/?q=Starved+Rock+Lodge,+2668+E+875th+Rd,+Oglesby,+IL+61348&ftid=0x0:0x4&entry=gps";
@@ -1528,11 +1531,11 @@ try {
     const full = await run(WI_FULL, null, null);
     check("a Google Maps link to a place in Wisconsin opens /wi/ and asks the geocoder nothing",
       handed(full.went) === WI_REBUILT && full.asked.length === 0, JSON.stringify(full));
-    const ohio = await run(OH_FULL, null, () => /Ohio/.test(document.getElementById("geo-status").textContent));
+    const wyoming = await run(WY_FULL, null, () => /Wyoming/.test(document.getElementById("geo-status").textContent));
     check("a link to a place in a state no app covers says so, and nothing is searched or selected",
-      !ohio.went && !ohio.got.point && ohio.asked.length === 0 &&
-        /That Google Maps link is to a place in Ohio, which districtry doesn't cover yet\./.test(ohio.got.status),
-      JSON.stringify(ohio));
+      !wyoming.went && !wyoming.got.point && wyoming.asked.length === 0 &&
+        /That Google Maps link is to a place in Wyoming, which districtry doesn't cover yet\./.test(wyoming.got.status),
+      JSON.stringify(wyoming));
     const ca = await run(CA_FULL, null, null);
     check("a link to a place in California opens /ca/, whose app answers for the whole state, and asks the geocoder nothing",
       handed(ca.went, "ca") === CA_REBUILT && ca.asked.length === 0, JSON.stringify(ca));
@@ -4987,15 +4990,19 @@ try {
       check("opening the statewide officials list is counted once, by the app, and closing it is not",
             counted.join() === "statewide-officials/il", JSON.stringify(counted));
     }
-    // a point no app covers (Butler County, Ohio, Indiana's uncovered case)
-    // stays in this app and shows no Illinois officials
-    const page2 = await booted(context, `${BASE}#point=39.40000,-84.65000`);
+    // a point outside Illinois, the worksheet's own negative point in Lake
+    // Michigan, shows no Illinois officials. Until the change that published
+    // Ohio this booted on Butler County, Ohio, which is outside this app's
+    // permalink_gate, so the boot ignored the point and the check passed with
+    // nothing selected.
+    const page2 = await booted(context, `${BASE}#point=${NEGATIVE_POINT}`);
     await page2.waitForTimeout(3000);
-    const hidden = await page2.evaluate(() => {
+    const outside = await page2.evaluate(() => {
       const el = document.getElementById("statewide-strip");
-      return !el || el.hidden;
+      return { hidden: !el || el.hidden, selected: !!window.ChiExplorer.state.selectedPoint };
     });
-    check("a point outside Illinois shows no statewide officials line", hidden, String(hidden));
+    check("a point outside Illinois shows no statewide officials line",
+      outside.hidden && outside.selected, JSON.stringify(outside));
     await context.close();
   }
 

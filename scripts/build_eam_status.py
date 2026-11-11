@@ -207,7 +207,10 @@ STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
                   # county equivalent and whose Board of Supervisors is its
                   # county government. The Census also files it as a place of
                   # 58,639, so it is owed under level 6 as well.
-                  "pa": 67, "nv": 17, "az": 15, "nj": 21, "nh": 10}
+                  "pa": 67, "nv": 17, "az": 15, "nj": 21, "nh": 10,
+                  # Batch 2, added at its go-live (2026-11-11). California
+                  # grew in the same batch and is in NO_COUNTY_TIER below.
+                  "tx": 254, "fl": 67, "oh": 88, "wa": 39}
 
 # County equivalents that are cities, scored under level 6 and not here. The
 # number is STATED and checked: the coverage ring must hold the state's counties

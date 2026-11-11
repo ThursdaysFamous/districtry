@@ -688,6 +688,146 @@ INSTANCES = {
             layer="us-house", roster="congress-roster.json",
             state="New Hampshire"),
     ),
+    # BATCH 2 OF THE STATE-LEVEL LAUNCH (Texas, Florida, Ohio, Washington)
+    # joined in one go-live change, each chamber named from the legislature's
+    # own member pages. The default "neither follows a city, county or ZIP
+    # boundary" is not claimed for any of them: Texas House districts are built
+    # from whole counties where the population allows, Florida's constitution
+    # asks districts to follow political and geographic lines where feasible,
+    # and Ohio's to keep counties and cities whole where it can. The term
+    # sentences are each state constitution's, not re-read for this change:
+    # Tex. Const. art. III, secs. 3 and 4 (after each new map the senators draw
+    # lots, and half serve two years); Fla. Const. art. III, sec. 15 (some
+    # senators elected after a new map serve two years, to keep the terms
+    # staggered); Ohio Const. art. II, sec. 2; Wash. Const. art. II, secs. 4
+    # and 6.
+    "tx": dict(
+        worksheet="tx/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Texas legislator?",
+            body="the Texas Legislature",
+            short="Texas Legislature",
+            term="Senators serve four-year terms, except that some serve two years after "
+                 "each new map so their terms stay staggered; representatives serve "
+                 "two-year terms.",
+            wording=dict(
+                ground="Both are drawn over the same ground and a district can split a "
+                       "county, a city or a ZIP code, so the only way to know which pair "
+                       "covers an address is to put the address on the map."),
+            chambers=[
+                dict(layer="tx-senate", name="Texas Senate", short="Senate",
+                     holder="Senator", roster="tx-senate-members.json"),
+                dict(layer="tx-house", name="Texas House of Representatives",
+                     short="House", holder="Representative", roster="tx-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Texas"),
+    ),
+    "fl": dict(
+        worksheet="fl/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Florida legislator?",
+            body="the Florida Legislature",
+            short="Florida Legislature",
+            term="Senators serve four-year terms, except that some serve two years after "
+                 "each new map so their terms stay staggered; representatives serve "
+                 "two-year terms.",
+            wording=dict(
+                ground="Both are drawn over the same ground and a district can split a "
+                       "county, a city or a ZIP code, so the only way to know which pair "
+                       "covers an address is to put the address on the map."),
+            chambers=[
+                dict(layer="fl-senate", name="Florida Senate", short="Senate",
+                     holder="Senator", roster="fl-senate-members.json"),
+                dict(layer="fl-house", name="Florida House of Representatives",
+                     short="House", holder="Representative", roster="fl-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Florida"),
+    ),
+    # OHIO'S SENATE IS BUILT FROM ITS HOUSE: each Senate district is three
+    # whole House districts (Ohio Const. art. XI, sec. 4), which
+    # oh/scripts/build_legislative_boundaries.py --check holds on the shipped
+    # files, so the default "the two rarely share a boundary" would be false.
+    "oh": dict(
+        worksheet="oh/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Ohio legislator?",
+            body="the Ohio General Assembly",
+            short="Ohio General Assembly",
+            term="Senators serve four-year terms and representatives two-year terms.",
+            wording=dict(
+                ground="Each Senate district is made of three whole House districts, and a "
+                       "district can split a county, a city or a ZIP code, so the only way "
+                       "to know which pair covers an address is to put the address on the "
+                       "map.",
+                maps_heading="Three House districts to a Senate district",
+                maps="An address has one district in each chamber, and because every Senate\n"
+                     "      district is three whole House districts, the House district decides the Senate\n"
+                     "      one. The tables below list both chambers in full, so a reader who knows their\n"
+                     "      district numbers can look up the members without opening the map at all."),
+            chambers=[
+                dict(layer="oh-senate", name="Ohio Senate", short="Senate",
+                     holder="Senator", roster="oh-senate-members.json"),
+                dict(layer="oh-house", name="Ohio House of Representatives",
+                     short="House", holder="Representative", roster="oh-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Ohio"),
+    ),
+    # WASHINGTON ELECTS BOTH CHAMBERS FROM ONE MAP, like Arizona: each of its
+    # 49 districts elects one senator and two representatives (Positions 1
+    # and 2), so the House roster record is {"seats": 2, "members": [...]}.
+    "wa": dict(
+        worksheet="wa/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Washington legislator?",
+            body="the Washington State Legislature",
+            short="Washington State Legislature",
+            term="Senators serve four-year terms and representatives two-year terms.",
+            shared_map=True,
+            wording=dict(
+                strong="The {body} is elected from {districts} districts.",
+                ground="Each district elects one senator and two representatives, so one "
+                       "district number answers for both chambers. A district can cross "
+                       "county lines and split a ZIP code, so the only way to know which "
+                       "one covers an address is to put the address on the map.",
+                shows="Select any point and the two cards name its <strong>district number</strong>, the\n"
+                      "        <strong>senator</strong> and the two <strong>representatives</strong> it elects, with their\n"
+                      "        party, their offices and a link to their own page on the Legislature's site.",
+                maps_heading="One map, three members",
+                maps="An address has one legislative district, and it answers for both chambers: its\n"
+                     "      senator and its two representatives each represent every point in it. The tables below list\n"
+                     "      both chambers in full, so a reader who knows their district number can look up all three\n"
+                     "      members without opening the map at all.",
+                desc="Your Washington legislative district by address or ZIP \u2014 the district "
+                     "number and the senator and two representatives it elects."),
+            chambers=[
+                dict(layer="wa-senate", name="Washington State Senate", short="Senate",
+                     holder="Senator", roster="wa-senate-members.json"),
+                dict(layer="wa-house", name="Washington House of Representatives", short="House",
+                     holder="Representative", roster="wa-house-members.json",
+                     adapter="multi_member_districts"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Washington"),
+    ),
 }
 
 

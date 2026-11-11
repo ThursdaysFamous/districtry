@@ -65,7 +65,8 @@ STATE_FIPS = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
               "nc": "37", "ok": "40", "sc": "45", "tn": "47",
               "ar": "05", "ms": "28", "la": "22", "mo": "29",
               "va": "51", "wv": "54", "ga": "13",
-              "pa": "42", "nv": "32", "az": "04", "nj": "34", "nh": "33"}
+              "pa": "42", "nv": "32", "az": "04", "nj": "34", "nh": "33",
+              "tx": "48", "fl": "12", "oh": "39", "wa": "53"}
 
 # Is a county subdivision the GENERAL-PURPOSE government for residents outside
 # incorporated places in this state? A fact of that state's law, recorded with
@@ -156,6 +157,18 @@ SUBDIVISION_IS_GENERAL_PURPOSE = {
     "nh": True,
     "az": None,
     "nv": None,
+    # BATCH 2, added at its go-live (2026-11-11), measured the same way with
+    # the same control. Ohio: 1,308 active townships, each governed by an
+    # elected board of trustees and the general-purpose government outside a
+    # city or village (its 281 FUNCSTAT F subdivisions are coextensive with a
+    # municipality, which is counted as a place). Texas, Florida and
+    # Washington: every subdivision is a census county division (FUNCSTAT S,
+    # 862, 316 and 242), statistical areas that govern nobody, so no active one
+    # can reach the floor.
+    "oh": True,
+    "tx": None,
+    "fl": None,
+    "wa": None,
 }
 
 

@@ -4577,7 +4577,13 @@ function initTexasExplorer() {
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
-  var LAYER_CONCEPTS = { };
+  var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["tx-senate"],
+    "state-house": ["tx-house"], "county": ["county"], "municipality": ["municipality"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "school-district-elementary": ["school-district-elementary"],
+    "school-district-secondary": ["school-district-secondary"],
+    "police-station": ["police-station"], "fire-station": ["fire-station"],
+    "post-office": ["post-office"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -4670,7 +4676,13 @@ function initTexasExplorer() {
     { id: "newhampshire", label: "New Hampshire", url: "https://districtry.com/nh/", emoji: "🍁", explorerName: "districtry New Hampshire",
       bbox: { minLng: -72.56, minLat: 42.69, maxLng: -70.57, maxLat: 45.31 } },
     { id: "texas", label: "Texas", url: "https://districtry.com/tx/", emoji: "⭐", explorerName: "districtry Texas",
-      bbox: { minLng: -106.65, minLat: 25.83, maxLng: -93.5, maxLat: 35.5 } }
+      bbox: { minLng: -106.65, minLat: 25.83, maxLng: -93.5, maxLat: 35.5 } },
+    { id: "florida", label: "Florida", url: "https://districtry.com/fl/", emoji: "🍊", explorerName: "districtry Florida",
+      bbox: { minLng: -87.64, minLat: 24.39, maxLng: -79.97, maxLat: 31.01 } },
+    { id: "ohio", label: "Ohio", url: "https://districtry.com/oh/", emoji: "🌰", explorerName: "districtry Ohio",
+      bbox: { minLng: -84.83, minLat: 38.4, maxLng: -80.51, maxLat: 42.33 } },
+    { id: "washington", label: "Washington", url: "https://districtry.com/wa/", emoji: "🍎", explorerName: "districtry Washington",
+      bbox: { minLng: -124.85, minLat: 45.54, maxLng: -116.91, maxLat: 49.01 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -5271,19 +5283,19 @@ function initTexasExplorer() {
    * MAP
    * ======================================================================= */
 
-  // minZoom 7, not a metro-scale zoom: this instance's coverage is the whole state,
-  // 3.5° of latitude and 5.0° of longitude (METRO_BBOX) — at a tighter zoom
-  // the coverage ring could not be seen whole on a phone-sized viewport. Zoom 7
-  // fits the state on a phone and leaves room on a desktop pane. maxZoom 19
-  // matches what the CARTO tile layer below already declares; the map was
-  // capped a level under its own basemap.
+  // minZoom 5, not a metro-scale zoom: this app answers for the whole of Texas,
+  // 10.7 degrees of latitude by 13.2 of longitude (METRO_BBOX), larger than
+  // California's box, and a reader has to be able to see it whole. Zoom 6 draws
+  // the state about 600 pixels wide and 570 tall, which a desktop pane shows
+  // whole; a phone shows the middle of it and zooms out a step to 5, where it
+  // is about 300 pixels across (measured 2026-11-11). At the fleet's usual 7.5
+  // and minimum 7 it was 1,690 and 1,200 pixels wide, so no screen could show
+  // all of it. maxZoom 19 matches what the CARTO tile layer below declares.
   // The opening view: the whole served area, centred on it. The centre is
   // DERIVED from METRO_BBOX (worksheet-generated) rather than METRO_CENTER —
   // METRO_CENTER is the metro anchor the geocoder biases toward, which for a
-  // statewide instance is a corner of the map, not its middle. The quarter
-  // zoomSnap in MAP_ZOOM_STEPS is what makes 7.5 legal; without it Leaflet
-  // rounds 7.5 to 8.
-  var INITIAL_ZOOM = 7.5;
+  // statewide instance is a corner of the map, not its middle.
+  var INITIAL_ZOOM = 6;
   var INITIAL_CENTER = [(METRO_BBOX.minLat + METRO_BBOX.maxLat) / 2,
                         (METRO_BBOX.minLng + METRO_BBOX.maxLng) / 2];
   /* ==== ENGINE:BEGIN map-zoom-steps ==== */
@@ -5337,7 +5349,7 @@ function initTexasExplorer() {
   // rounding.
   var MAP_ZOOM_STEPS = { zoomSnap: 0.25, zoomDelta: 1, wheelPxPerZoomLevel: 120 };
   /* ==== ENGINE:END map-zoom-steps ==== */
-  var map = L.map("map", L.extend({ minZoom: 7, maxZoom: 19, zoomControl: false }, MAP_ZOOM_STEPS))
+  var map = L.map("map", L.extend({ minZoom: 5, maxZoom: 19, zoomControl: false }, MAP_ZOOM_STEPS))
     .setView(INITIAL_CENTER, INITIAL_ZOOM);
   L.control.zoom({ position: "bottomright" }).addTo(map);
   /* ==== ENGINE:BEGIN map-pan-filter ==== */

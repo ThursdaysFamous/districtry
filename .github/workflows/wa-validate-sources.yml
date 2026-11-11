@@ -24,7 +24,8 @@ name: Validate layer sources (Washington)
 # monthly runs. A scheduled run here starts hours late anyway (measured across
 # the fleet: 3 to 5.3 hours), so the slot is a request rather than an ordering.
 #
-# WASHINGTON IS DARK and this job still runs, on purpose: a publisher that
+# This job was scheduled while Washington was dark, from its arrival until the
+# batch 2 go-live of the state-level launch, on purpose: a publisher that
 # supersedes a dataset while the instance is unserved is exactly the drift a
 # go-live would otherwise inherit silently.
 

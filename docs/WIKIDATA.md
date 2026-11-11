@@ -81,6 +81,10 @@ the audit asked for an item about the project.
 | P1001 (applies to jurisdiction) | Q816 (Arizona) | the `/az/` instance |
 | P1001 (applies to jurisdiction) | Q1408 (New Jersey) | the `/nj/` instance |
 | P1001 (applies to jurisdiction) | Q759 (New Hampshire) | the `/nh/` instance |
+| P1001 (applies to jurisdiction) | Q1439 (Texas) | the `/tx/` instance |
+| P1001 (applies to jurisdiction) | Q812 (Florida) | the `/fl/` instance |
+| P1001 (applies to jurisdiction) | Q1397 (Ohio) | the `/oh/` instance |
+| P1001 (applies to jurisdiction) | Q1223 (Washington) | the `/wa/` instance |
 
 ### What is deliberately absent
 
@@ -128,16 +132,19 @@ endpoint used.
 | `P856` | official website |
 | `Q1166` | Michigan |
 | `Q1204` | Illinois |
+| `Q1223` | Washington |
 | `Q1224853` | Open Database License |
 | `Q1227` | Nevada |
 | `Q1370` | Virginia |
 | `Q1371` | West Virginia |
 | `Q13785927` | Apache Software License 2.0 |
 | `Q1384` | New York |
+| `Q1397` | Ohio |
 | `Q1400` | Pennsylvania |
 | `Q1408` | New Jersey |
 | `Q1415` | Indiana |
 | `Q1428` | Georgia |
+| `Q1439` | Texas |
 | `Q1454` | North Carolina |
 | `Q1456` | South Carolina |
 | `Q1494` | Mississippi |
@@ -155,5 +162,6 @@ endpoint used.
 | `Q30` | United States |
 | `Q35127` | website |
 | `Q759` | New Hampshire |
+| `Q812` | Florida |
 | `Q816` | Arizona |
 | `Q99` | California |

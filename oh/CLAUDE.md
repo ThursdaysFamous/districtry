@@ -6,12 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 districtry Ohio: a single-file, dependency-light web app. Click a point in Ohio (or search an
 address) and it reports every civic district containing that point and who represents you
-there. It will serve at **districtry.com/oh/** as a folder of the consolidated districtry repo,
-following the Missouri shape (`docs/EXPANSION_GUIDE.md` Part 2). It is the third state of batch 2
-of the state-level launch Adam asked for on 2026-11-10 (Texas, Florida, Ohio, California,
+there. It serves at **districtry.com/oh/** as a folder of the consolidated districtry repo,
+following the Missouri shape (`docs/EXPANSION_GUIDE.md` Part 2). It is the third state of batch
+2 of the state-level launch Adam asked for on 2026-11-10 (Texas, Florida, Ohio, California,
 Washington), in his chosen order: built dark, with the deploy excluding `oh/**`, and opened with
-the rest of its batch in one go-live change on Adam's own "merge".
-**WHETHER IT IS DARK IS READ FROM THE DEPLOY, NEVER FROM THIS SENTENCE.**
+the rest of its batch in one go-live change on Adam's own "merge", which narrowed that exclude,
+added its `metros.json` entry and gave it a `layer-concepts.json` column.
 
 **The layers** draw their shapes from the Census Bureau and name people from a national roster
 or each chamber's own pages: **County** (`county`, all 88, Census TIGERweb, the state outline
@@ -28,12 +28,17 @@ member pages), the TIGERweb fabric drawn from mirrored tile archives — **City 
 Michigan, Indiana, Kentucky, West Virginia, Pennsylvania and Ontario, measured by its `--check`)
 and the wash has no lighter band (`coverage_key` with `outside` and `edge` only).
 
-**ALL FIVE OF OHIO'S NEIGHBOURS ARE LIVE, AND FOUR OF THEIR APPS TEST AT POINTS INSIDE OHIO.**
+**ALL FIVE OF OHIO'S NEIGHBOURS ARE LIVE, AND FOUR OF THEIR APPS TESTED AT POINTS INSIDE OHIO.**
 Indiana's uncovered case (Butler County), Illinois's statewide-officials check (the same point),
 Kentucky's negative point (Adams County) and Michigan's negative point (Toledo) were each chosen
-because no app covered Ohio. Once Ohio's outline is in `fleet-outlines.json`, a selection at each
-opens `/oh/`, so the go-live change moves or re-asserts every one (`oh/WATCH.md`, measured
-2026-11-11). Ohio's own negative point is in Leamington, Ontario, and never moves.
+because no app covered Ohio, and the go-live change settled each one (audited 2026-11-11 against
+every coordinate in every app's smoke test, worksheet and outline builder). Indiana's click that
+must stay put moved to Chatham, Ontario, and Butler County became an Ohio routing case; Michigan's
+negative point moved to Chatham too, and Toledo became an Ohio routing case; Illinois's check
+moved to Illinois's own negative point. Kentucky's point stays in Adams County, because no ground
+in Kentucky's gate is more than 2 km from a live outline any more, and the checks that boot on it
+ask only that it is outside Kentucky. Ohio's own negative point is in Leamington, Ontario, and
+never moves.
 
 **THE CONGRESSIONAL MAP IS THE ONE THE SITTING MEMBERS WERE ELECTED FROM, TIGERweb LAYER 4 (THE
 119TH CONGRESS), UNTIL 3 JANUARY 2027.** Ohio has a new map for the 120th Congress, which the

@@ -175,6 +175,13 @@ AREAS = {
     "az": {"outline": "az/data/app/metro-outline.json", "state_outline": None},
     "nj": {"outline": "nj/data/app/metro-outline.json", "state_outline": None},
     "nh": {"outline": "nh/data/app/metro-outline.json", "state_outline": None},
+    # Batch 2 of the state-level launch joined at its go-live, one tier each
+    # for the same reason. California grew to the whole state in the same
+    # batch and is a two-tier row below, beside New York.
+    "tx": {"outline": "tx/data/app/metro-outline.json", "state_outline": None},
+    "fl": {"outline": "fl/data/app/metro-outline.json", "state_outline": None},
+    "oh": {"outline": "oh/data/app/metro-outline.json", "state_outline": None},
+    "wa": {"outline": "wa/data/app/metro-outline.json", "state_outline": None},
     # New York joined at the 2026-09-19 go-live. It is a TWO-TIER area and the
     # two geometries are genuinely different: the dashed wash is the whole
     # state, where the county, municipality, village, school-district,
