@@ -1,0 +1,60 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from mo/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Missouri",
+ "usSenate": [
+  {
+   "name": "Josh Hawley",
+   "party": "Republican",
+   "url": "https://www.hawley.senate.gov",
+   "office": "381 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-6154"
+  },
+  {
+   "name": "Eric Schmitt",
+   "party": "Republican",
+   "url": "https://www.schmitt.senate.gov/",
+   "office": "404 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5721"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Mike Kehoe",
+   "url": "https://governor.mo.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "David Wasinger",
+   "url": "https://ltgov.mo.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Catherine Hanaway",
+   "url": "https://ago.mo.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Denny Hoskins",
+   "url": "https://www.sos.mo.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Vivek Malek",
+   "url": "https://treasurer.mo.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Scott Fitzpatrick",
+   "url": "https://auditor.mo.gov/",
+   "verified": "2026-11-10"
+  }
+ ]
+}

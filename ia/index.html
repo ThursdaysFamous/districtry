@@ -1897,7 +1897,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
   /* the palette is shared with the comparison stats screen, which renders
      cards inside its own panel (compare-stats) */
   .layer-block,
-  .stats-panel {
+  .stats-panel,
+  .statewide-strip {
     --card-accent: #1d5fd6;
     --card-link: #1a56c4;
     --card-link-hover: #123c8a;
@@ -1914,6 +1915,63 @@ svg.leaflet-image-layer.leaflet-interactive path {
     --card-border: #e8eaef;
     --card-row-border: #f1f3f7;
     --card-btn-border: #c7d7f2;
+  }
+  /* The statewide officials line at the top of the results (engine
+     statewide-officials): one row naming the governor and a count, which
+     opens in place into the full list. Card palette, no layer stripe, since
+     it is not a layer. */
+  .statewide-strip {
+    margin: 0 0 14px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .statewide-strip-toggle {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 14px;
+    background: none;
+    border: 0;
+    font: inherit;
+    text-align: left;
+    color: var(--card-ink);
+    cursor: pointer;
+  }
+  .statewide-strip-toggle:focus-visible { outline: 2px solid var(--card-link); outline-offset: -2px; }
+  .statewide-strip-label {
+    flex: none;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--card-muted);
+  }
+  .statewide-strip-summary {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .statewide-strip-more {
+    flex: none;
+    font-size: 14px;
+    color: var(--card-link);
+  }
+  .statewide-strip-more::after { content: " \25BE"; }
+  .statewide-strip-toggle[aria-expanded="true"] .statewide-strip-more::after { content: " \25B4"; }
+  .statewide-strip-panel { border-top: 1px solid var(--card-border); }
+  .statewide-strip-source { margin: 0; padding: 10px 14px 12px; font-size: 14px; }
+  .statewide-strip-source a { color: var(--card-link); }
+  @media (max-width: 480px) {
+    .statewide-strip-toggle { flex-wrap: wrap; row-gap: 2px; }
+    .statewide-strip-label { flex-basis: 100%; }
   }
   .layer-block {
     background: #fff;
@@ -3850,7 +3908,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
      needs its own inversion; --card-accent/--card-link ARE the data tier and
      take the design package's dark data ramp rather than the chrome violet. */
   :root[data-theme="dark"] .layer-block,
-  :root[data-theme="dark"] .stats-panel {
+  :root[data-theme="dark"] .stats-panel,
+  :root[data-theme="dark"] .statewide-strip {
     --card-accent: #6ea8ff;
     --card-link: #8db9ff;
     --card-link-hover: #b6d2ff;
@@ -3867,6 +3926,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
     --card-border: rgba(236, 233, 244, 0.10);
     --card-row-border: rgba(236, 233, 244, 0.06);
     --card-btn-border: rgba(110, 168, 255, 0.34);
+  }
+  :root[data-theme="dark"] .statewide-strip {
+    background: #201d29;
+    border-color: rgba(236, 233, 244, 0.10);
   }
   :root[data-theme="dark"] .layer-block {
     background: #201d29;
@@ -4603,7 +4666,17 @@ function initIowaExplorer() {
     { id: "westvirginia", label: "West Virginia", url: "https://districtry.com/wv/", emoji: "⛰️", explorerName: "districtry West Virginia",
       bbox: { minLng: -82.65, minLat: 37.2, maxLng: -79.43, maxLat: 40.64 } },
     { id: "georgia", label: "Georgia", url: "https://districtry.com/ga/", emoji: "🍑", explorerName: "districtry Georgia",
-      bbox: { minLng: -85.61, minLat: 30.35, maxLng: -80.91, maxLat: 35.01 } }
+      bbox: { minLng: -85.61, minLat: 30.35, maxLng: -80.91, maxLat: 35.01 } },
+    { id: "pennsylvania", label: "Pennsylvania", url: "https://districtry.com/pa/", emoji: "🔔", explorerName: "districtry Pennsylvania",
+      bbox: { minLng: -80.53, minLat: 39.71, maxLng: -74.68, maxLat: 42.52 } },
+    { id: "nevada", label: "Nevada", url: "https://districtry.com/nv/", emoji: "🏜️", explorerName: "districtry Nevada",
+      bbox: { minLng: -120.01, minLat: 35.0, maxLng: -114.03, maxLat: 42.01 } },
+    { id: "arizona", label: "Arizona", url: "https://districtry.com/az/", emoji: "🌵", explorerName: "districtry Arizona",
+      bbox: { minLng: -114.82, minLat: 31.33, maxLng: -109.04, maxLat: 37.01 } },
+    { id: "newjersey", label: "New Jersey", url: "https://districtry.com/nj/", emoji: "🍅", explorerName: "districtry New Jersey",
+      bbox: { minLng: -75.57, minLat: 38.78, maxLng: -73.88, maxLat: 41.36 } },
+    { id: "newhampshire", label: "New Hampshire", url: "https://districtry.com/nh/", emoji: "🍁", explorerName: "districtry New Hampshire",
+      bbox: { minLng: -72.56, minLat: 42.69, maxLng: -70.57, maxLat: 45.31 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -12249,6 +12322,24 @@ function initIowaExplorer() {
     (load.tileMods || []).forEach(function (m) { layerRuntime[m.id].tileAnswer = answer; });
   }
 
+  // A record a publisher files where there is no district (the Census's
+  // "School District Not Defined" in its unified school layer) is not a
+  // district, so a layer whose query meets one at the point calls this
+  // before it answers. The record is taken out of the answers the highlight
+  // lights and the "Compare to this district" control reads: the tile answer
+  // here, kept on the same point so scripts/probe_tile_cards.mjs still sees
+  // the card answered from the tile, and the live point query's answer that
+  // showProvisionalHighlight lights. The record is still drawn, because the
+  // layer's archive and file are left as published, and a layer drawn from
+  // its whole file (no WebGL, or a failed archive) still lights it.
+  function answerIsNotADistrict(load, point) {
+    (load.tileMods || []).forEach(function (m) {
+      var rt = layerRuntime[m.id];
+      if (rt && rt.tileAnswer && rt.tileAnswer.point === point) rt.tileAnswer = { point: point, feature: null };
+    });
+    if (load.pointAnswer && load.pointAnswer.point === point) load.pointAnswer = null;
+  }
+
   /* ---------- a county-dispatched layer drawn from tiles (phase 5b). One
    * archive holds every county whose boundaries the app ships, each feature
    * carrying its county key as `_c`, and the archive's metadata lists those
@@ -13791,6 +13882,7 @@ function initIowaExplorer() {
       if (state.layersOn[mod.id]) runLayerQuery(mod);
     });
     dstSyncNoLayerHint(); // a new point with nothing on (engine first-use)
+    syncStatewideOfficials(); // the statewide officials line (engine statewide-officials)
   }
   /* ==== ENGINE:END overlay-cards ==== */
   /* ==== ENGINE:BEGIN render-helper ==== */
@@ -15678,6 +15770,219 @@ function initIowaExplorer() {
     });
   }
   /* ==== ENGINE:END chamber-factory ==== */
+  /* ==== ENGINE:BEGIN statewide-officials ==== */
+  /* ---------- Statewide officials (Adam's choice of 2026-11-10: name the
+   * officers a state elects statewide, in every app).
+   *
+   * NOT A LAYER (Adam, 2026-11-10: "3 that can be expanded into 2"). The answer
+   * is the same anywhere in the state, so a tick box and a shaded state said
+   * nothing a reader needed. Instead, whenever a point inside the state is
+   * selected, one line sits at the top of the results naming the governor and
+   * how many more there are; pressing it opens the full list in place, and it
+   * stays open for later points until it is closed again (kept in memory only,
+   * so nothing is stored in the browser; Adam, 2026-11-10: "forget"). Opening
+   * it is counted as statewide-officials/<tag>, by the app and never by place
+   * (Adam, the same day: "count in traffic"); closing it is not counted.
+   *
+   * One call per app: registerStatewideOfficials({ outline }) where outline is
+   * the app's widest outline file (the state, or San Francisco's city, whose
+   * readers are told California's officers). The list is
+   * data/app/statewide-officials.json, built by
+   * scripts/build_statewide_officials.py, which reads each state officer's own
+   * government page every run and refuses to write when the name is gone; it
+   * keeps the date each name was last checked, which the list shows. An app
+   * that makes no call (a state not live yet) shows nothing.
+   *
+   * runAllActiveLayerQueries (engine overlay-cards) calls syncStatewideOfficials
+   * on every selection, so a new point updates the line and a point outside the
+   * state hides it.
+   * ---------- */
+  var statewideOfficials = null; // { opts, loadOutline, loadRoster, open, el } once registered
+
+  function registerStatewideOfficials(opts) {
+    statewideOfficials = {
+      opts: opts,
+      open: false,
+      el: null,
+      loadOutline: makeCached(function () {
+        return fetchJSONWithRetry(opts.outline, {}, 2);
+      }),
+      loadRoster: makeCached(function () {
+        return fetchJSONWithRetry(opts.roster || "data/app/statewide-officials.json", {}, 2);
+      })
+    };
+  }
+
+  function statewidePointInside(geojson, point) {
+    var feats = (geojson && geojson.features) || (geojson && geojson.geometry ? [geojson] : []);
+    for (var i = 0; i < feats.length; i++) {
+      if (feats[i] && feats[i].geometry && pointInGeometry(point, feats[i].geometry)) return true;
+    }
+    return false;
+  }
+
+  function statewidePersonRow(p, badge) {
+    var row = { name: String(p.name), badge: badge };
+    if (p.phone) row.phone = String(p.phone);
+    if (p.email) row.email = String(p.email);
+    if (p.url) row.links = [{ label: "Website", url: String(p.url) }];
+    return row;
+  }
+
+  // The closed line: "Governor JB Pritzker and 7 more". Names the first
+  // officer the list names, and counts everyone else on it, senators included.
+  function statewideSummary(r) {
+    var officers = r.officers || [], senators = r.usSenate || [];
+    var total = officers.length + senators.length;
+    var lead = null;
+    for (var i = 0; i < officers.length && !lead; i++) {
+      if (!officers[i].unnamed && officers[i].name) lead = officers[i];
+    }
+    if (!lead) return total + " officials elected by the whole state";
+    var rest = total - 1;
+    return String(lead.office) + " " + String(lead.name) +
+      (rest > 0 ? " and " + rest + " more" : "");
+  }
+
+  function statewideBody(r) {
+    var wrap = cardEl("div", "card-flush statewide-strip-body");
+    var officers = r.officers || [];
+    if (officers.length) {
+      wrap.appendChild(renderSectionLabel("Elected by the whole state"));
+      wrap.appendChild(renderPersonRows(officers.map(function (o) {
+        // an office whose own website this app cannot read is listed and
+        // linked, and named nowhere rather than from memory
+        if (o.unnamed) return statewidePersonRow({ name: "Not listed", url: o.url }, String(o.office));
+        return statewidePersonRow(o, String(o.office));
+      })));
+    }
+    var senators = r.usSenate || [];
+    if (senators.length) {
+      wrap.appendChild(renderSectionLabel("U.S. Senate"));
+      wrap.appendChild(renderPersonRows(senators.map(function (s) {
+        return statewidePersonRow(s, s.party ? "U.S. Senator, " + String(s.party) : "U.S. Senator");
+      })));
+    }
+    var fields = [];
+    if (r.officersNote) fields.push({ label: "Offices", value: String(r.officersNote) });
+    var why = [];
+    officers.forEach(function (o) {
+      var line = o.unnamed ? String(o.office) + ": " + String(o.unnamed) : null;
+      if (line && why.indexOf(line) < 0) why.push(line);
+    });
+    if (why.length) fields.push({ label: "Not listed", value: why.join(" ") });
+    var oldest = null;
+    officers.forEach(function (o) {
+      if (o.verified && (!oldest || String(o.verified) < oldest)) oldest = String(o.verified);
+    });
+    var read = [];
+    if (oldest) {
+      read.push("Each state officer's name was last checked against that " +
+        "officer's own government website on " + statewideDate(oldest) + " or later.");
+    }
+    if (senators.length && r.usSenateRead) {
+      read.push("The senators are from the U.S. Senate's list of senators, read " +
+        statewideDate(String(r.usSenateRead)) + ".");
+    }
+    if (read.length) fields.push({ label: "Names read", value: read.join(" ") });
+    if (fields.length) wrap.appendChild(renderFieldStack(fields));
+    var src = r.usSenateSource ? cardExternalLink("U.S. Senate — senators by state", r.usSenateSource) : null;
+    if (src) {
+      var foot = cardEl("p", "statewide-strip-source");
+      foot.appendChild(src);
+      wrap.appendChild(foot);
+    }
+    return wrap;
+  }
+
+  // "2026-11-10" -> "November 10, 2026", the way the rest of the site writes a date
+  function statewideDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso));
+    if (!m) return String(iso);
+    var months = ["January", "February", "March", "April", "May", "June", "July",
+      "August", "September", "October", "November", "December"];
+    return months[parseInt(m[2], 10) - 1] + " " + parseInt(m[3], 10) + ", " + m[1];
+  }
+
+  function statewideBuild(r) {
+    var sw = statewideOfficials;
+    var el = sw.el;
+    if (!el) {
+      el = document.createElement("section");
+      el.className = "statewide-strip";
+      el.id = "statewide-strip";
+      el.setAttribute("aria-label", "Statewide officials");
+      sw.el = el;
+    }
+    el.textContent = "";
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "statewide-strip-toggle";
+    btn.setAttribute("aria-expanded", sw.open ? "true" : "false");
+    btn.setAttribute("aria-controls", "statewide-strip-panel");
+    btn.appendChild(cardEl("span", "statewide-strip-label",
+      (r.state != null ? String(r.state) : "Statewide") + " officials"));
+    btn.appendChild(cardEl("span", "statewide-strip-summary", statewideSummary(r)));
+    btn.appendChild(cardEl("span", "statewide-strip-more", sw.open ? "Hide" : "Show all"));
+    var panel = document.createElement("div");
+    panel.id = "statewide-strip-panel";
+    panel.className = "statewide-strip-panel";
+    panel.hidden = !sw.open;
+    if (sw.open) panel.appendChild(statewideBody(r));
+    btn.addEventListener("click", function () {
+      sw.open = !sw.open;
+      if (sw.open) trackEvent("statewide-officials/" + METRO_BRAND.instanceTag);
+      btn.setAttribute("aria-expanded", sw.open ? "true" : "false");
+      btn.lastChild.textContent = sw.open ? "Hide" : "Show all";
+      if (sw.open && !panel.firstChild) panel.appendChild(statewideBody(r));
+      panel.hidden = !sw.open;
+    });
+    el.appendChild(btn);
+    el.appendChild(panel);
+    return el;
+  }
+
+  function statewidePlace(el) {
+    var root = document.getElementById("groups-root");
+    if (!root || !root.parentNode) return;
+    var hint = document.getElementById("no-layer-hint");
+    var before = hint && hint.parentNode === root.parentNode ? hint : root;
+    if (el.parentNode !== root.parentNode || el.nextSibling !== before) {
+      root.parentNode.insertBefore(el, before);
+    }
+  }
+
+  function syncStatewideOfficials() {
+    var sw = statewideOfficials;
+    if (!sw) return;
+    var point = state.selectedPoint;
+    var seq = state.sequence;
+    if (!point) {
+      if (sw.el) sw.el.hidden = true;
+      return;
+    }
+    Promise.all([sw.loadOutline(), sw.loadRoster()]).then(function (got) {
+      if (seq !== state.sequence) return;
+      if (!statewidePointInside(got[0], point) || !got[1]) {
+        if (sw.el) sw.el.hidden = true;
+        return;
+      }
+      var el = statewideBuild(got[1]);
+      statewidePlace(el);
+      el.hidden = false;
+    }, function (err) {
+      // the line is an extra: if either file will not load it stays away, and
+      // every card below answers exactly as it would without it
+      if (seq !== state.sequence) return;
+      console.error("[statewide-officials] could not load:", err);
+      if (sw.el) sw.el.hidden = true;
+    });
+  }
+  /* ==== ENGINE:END statewide-officials ==== */
+  // Statewide officials: the line at the top of the results naming the
+  // officers this state elects statewide and its two U.S. senators,
+  // anywhere inside the app's widest outline.
+  registerStatewideOfficials({ outline: "data/app/metro-outline.json" });
   /* =========================================================================
    * STARTER MODULES — Iowa's day-one layer set: four layers from national
    * publishers — Census TIGERweb boundaries plus the public-domain

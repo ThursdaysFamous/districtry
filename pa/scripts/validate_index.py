@@ -115,6 +115,7 @@ ROSTER_FILES = {
     "pa-senate-members.json": 50,  # Pennsylvania Senate roster from the General Assembly's own member list and member pages, one record per district, refreshed weekly.
     "pa-house-members.json": 203,  # Pennsylvania House roster from the General Assembly's own member list and member pages, one record per district, refreshed weekly.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
+    "statewide-officials.json": 5,  # The officers Pennsylvania elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from pa/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

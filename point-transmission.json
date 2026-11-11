@@ -559,6 +559,70 @@
         "zip-code"
       ]
     },
+    "nh": {
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
+        "municipality",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 0,
+      "layer_ids": [
+        "county",
+        "fire-station",
+        "municipality",
+        "nh-house",
+        "nh-senate",
+        "police-station",
+        "post-office",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
+        "us-house",
+        "zip-code"
+      ]
+    },
+    "nj": {
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
+        "municipality",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 0,
+      "layer_ids": [
+        "county",
+        "fire-station",
+        "municipality",
+        "nj-assembly",
+        "nj-senate",
+        "police-station",
+        "post-office",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
+        "us-house",
+        "zip-code"
+      ]
+    },
     "nv": {
       "layers_sending_point": 0,
       "layers": [],

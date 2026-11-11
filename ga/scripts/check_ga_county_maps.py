@@ -83,6 +83,27 @@ and 20-STANSELLS are the one pair, found 2026-11-09 when the county's GIS
 department sent its map and it was the office's file, line for line. The
 record lists the pairs under sources.precinct_map.swapped.
 
+TWO PRECINCTS UNDER ONE NAME. A county in PRECINCT_PAIRS has two precincts
+the precinct map gives the same name, so the name match scores a ballot's
+precinct alike against both shapes and takes the first code. The table pairs
+them by hand, on the same kind of evidence as a swap, and the record lists
+them under sources.precinct_map.paired. Thomas's PAVO/PATTEN is the one
+case, found by the sweep below.
+
+THE SWEEP, 2026-11-10. Every November 2024 ballot precinct the check pairs
+with the map (2,689) was held to the 2023 State Senate, State House and U.S.
+House plans: a precinct whose votes in a chamber fell mostly in districts its
+shape does not touch was flagged, and two flagged precincts of one county
+that fit each other's districts were a swap. Six were flagged. Newton's pair
+was the one swap. Thomas's two PAVO/PATTEN precincts were the pairing above.
+Dawson's West cast 1,921 votes for State House District 7 and 2,526 for
+District 9 while its shape lies wholly in District 7; Dawson's board maps were
+voted county-wide, so nothing this check decides depends on it. Fulton's
+SS11C paired with 11C4 at a score of 0.53, a weak pair, which can pass a
+contest and cannot fail one. In counties whose precincts all share the same
+Senate, House and congressional districts (all 12 of Pickens's, for one) a
+swap cannot show this way.
+
 Then, for each district contest:
 
   - Countywide: counted in every precinct of the county. The district is a
@@ -225,6 +246,32 @@ PRECINCT_SWAPS = (
     # sent on 9 November 2026 a shapefile (SHA-256 74b256e3c3cda076...) whose
     # five districts lie within 0.1 mm of the office's file.
     {"codes": ["21702TN", "21720STN"], "senate": ["042", "043"]},
+)
+
+# Ballot precincts paired with the map by hand, where the map gives two
+# precincts of one county the same name (the module docstring, TWO PRECINCTS
+# UNDER ONE NAME). `names` maps each ballot name to its map code. The analysis
+# stops if a ballot name is not on the county's November 2024 ballot, if a
+# code is not that county's on the map, or if the map no longer gives the
+# codes one name, because then the name match can decide again.
+PRECINCT_PAIRS = (
+    # Thomas: Pavo and Patten, measured 2026-11-11. The map draws two
+    # precincts, 275116 (43.7 km2, 603 people in Census 2020 blocks) and
+    # 275117 (78.6 km2, 1,074 people), and names both PAVO/PATTEN; the name
+    # match scored the ballot's "Pavo" 0.9 against each, took 275116 and left
+    # 275117 to "Patten". Three controls put them the other way round. The
+    # 2023 State House plan puts 275116 wholly in House District 173 and
+    # 275117 in District 172, and on the 5 November 2024 ballot Patten cast
+    # 313 votes for District 173 and none for 172, Pavo 382 for 172 and 80
+    # for 173. The City of Pavo (TIGERweb Incorporated Places, GEOID 1359556)
+    # lies 50.3% in 275117 and 49.7% in Brooks County's PAVO precinct, and not
+    # at all in 275116; as a control, Boston, Coolidge and Ochlocknee each lie
+    # wholly in the Thomas precinct named for them. And Patten's 430
+    # registered voters are 71% of 275116's people and Pavo's 706 are 66% of
+    # 275117's, where the other way round Pavo would have 706 voters among
+    # 603 people. Pavo's 80 District 173 votes fit neither shape; the map may
+    # not show a part of Pavo in that district.
+    {"county": "thomas", "names": {"Patten": "275116", "Pavo": "275117"}},
 )
 
 _SESSION = None
@@ -646,9 +693,14 @@ def score(result_name, map_id, map_name):
     return penalty * max(0.85 * tok, 0.8 * difflib.SequenceMatcher(None, a, b).ratio())
 
 
-def match(result_names, map_precincts):
-    """{results name: (precinct code, score)}, best pairs first, one to one."""
+def match(result_names, map_precincts, fixed=None):
+    """{results name: (precinct code, score)}, best pairs first, one to one.
+
+    `fixed` holds the pairs PRECINCT_PAIRS makes by hand, taken first."""
     got, taken = {}, set()
+    for r, code in (fixed or {}).items():
+        got[r] = (code, 1.0)
+        taken.add(code)
     for floor in (0.5, 0.35):
         pairs = []
         for r in result_names:
@@ -943,11 +995,28 @@ def analyze(maps, contests, pinfo, turnout):
     # its November 2024 pairing, and one that is new or has moved is left
     # unpaired, so it can neither pass nor fail a contest.
     matches, moved, unmatched_names, changed = {}, {}, {}, {}
+    fixed = {}
+    for entry in PRECINCT_PAIRS:
+        ckey, pairs = entry["county"], entry["names"]
+        ballot = turnout.get((PRECINCT_MAP_ELECTION, ckey), {})
+        codes = set(by_county.get(ckey, []))
+        for n, code in sorted(pairs.items()):
+            if n not in ballot:
+                raise SystemExit("FAIL: PRECINCT_PAIRS names %r, which is not on %s's %s ballot"
+                                 % (n, ckey, PRECINCT_MAP_ELECTION))
+            if code not in codes:
+                raise SystemExit("FAIL: PRECINCT_PAIRS names %s, which is not a %s precinct "
+                                 "on the map" % (code, ckey))
+        if len({pinfo[code]["name"] for code in pairs.values()}) != 1:
+            raise SystemExit("FAIL: PRECINCT_PAIRS pairs %s by hand, and the map no longer "
+                             "gives them one name: remove the entry and let the name match "
+                             "decide" % sorted(pairs.values()))
+        fixed[ckey] = dict(pairs)
     for (el, ckey) in sorted(turnout, key=lambda k: (k[0] != PRECINCT_MAP_ELECTION, k)):
         names = list(turnout[(el, ckey)])
         mp = {code: pinfo[code] for code in by_county[ckey]}
         if el == PRECINCT_MAP_ELECTION:
-            matches[(el, ckey)] = match(names, mp)
+            matches[(el, ckey)] = match(names, mp, fixed.get(ckey))
             moved[(el, ckey)] = set()
         else:
             base = matches[(PRECINCT_MAP_ELECTION, ckey)]
@@ -1059,6 +1128,10 @@ def check(path):
     if swapped != list(PRECINCT_SWAPS):
         problems.append("the record was written with the precinct swaps %s and PRECINCT_SWAPS "
                         "names %s: run the check again" % (swapped, list(PRECINCT_SWAPS)))
+    paired = rec["sources"]["precinct_map"].get("paired", [])
+    if paired != list(PRECINCT_PAIRS):
+        problems.append("the record was written with the precinct pairs %s and PRECINCT_PAIRS "
+                        "names %s: run the check again" % (paired, list(PRECINCT_PAIRS)))
     if rec["summary"] != summarize(rec["maps"]):
         problems.append("the summary does not count the maps: %s against %s"
                         % (rec["summary"], summarize(rec["maps"])))
@@ -1102,7 +1175,8 @@ def main():
         "sources": {
             "maps": OFFICE_PAGE,
             "precinct_map": {"url": purl, "sha256": psha, "precincts": len(pinfo),
-                             "swapped": list(PRECINCT_SWAPS)},
+                             "swapped": list(PRECINCT_SWAPS),
+                             "paired": list(PRECINCT_PAIRS)},
             "results": RESULTS_API,
             "elections": [{"id": el, "date": day, "name": label} for el, day, label in ELECTIONS],
             "people": "Census 2020 blocks, TIGERweb Tracts_Blocks/MapServer/12",

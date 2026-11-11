@@ -280,8 +280,32 @@ lies in District 43 and the one named 20-STANSELLS in District 42. With the pair
 passes on both boards and no other county's verdict moves. The table is written into the record
 (`sources.precinct_map.swapped`), `build_ga_precincts.py` reads it from there and swaps the two
 precincts' names when it fetches the map, and its `--check` holds each corrected precinct to the
-Senate district its ballots name, offline. A pair is added only with a control of this kind;
-whether other precincts on the map carry the wrong name was not swept.
+Senate district its ballots name, offline. A pair is added only with a control of this kind.
+
+**THE MAP WAS THEN SWEPT FOR MORE WRONG NAMES, AND IT FOUND A WRONG PAIRING IN THOMAS AND NO
+OTHER SWAP** (the sweep 2026-11-10, the fix `PRECINCT_PAIRS` in `ga/scripts/check_ga_county_maps.py`
+2026-11-11). Each of the 2,689 November 2024 ballot precincts the check pairs with the map was held
+to the 2023 State Senate, State House and U.S. House plans, and a precinct whose votes in a chamber
+fell mostly in districts its shape does not touch was flagged. Six were flagged. Newton's two are
+the swap above. Thomas's two are both named PAVO/PATTEN on the map, so the ballot's "Pavo" scored
+the same against both shapes and the check took the first, leaving "Patten" on the other with a
+weak score. Three controls put them the other way round: the shape coded 275116 lies wholly in
+State House District 173 and 275117 in District 172, and Patten cast 313 votes for District 173
+and none for 172 while Pavo cast 382 for 172 (and 80 for 173, which neither shape explains); the
+Census Bureau's outline of the City of Pavo lies half in 275117 and half in Brooks County, and
+none of it in 275116, where Boston, Coolidge and Ochlocknee, as controls, each lie wholly in the
+precinct named for them; and Patten's 430 registered voters are 71% of 275116's 603 people and
+Pavo's 706 are 66% of 275117's 1,074, where the other pairing would give Pavo more voters than
+people. The check now pairs the two by hand, writes the pairs into the record
+(`sources.precinct_map.paired`) and stops if the map stops giving both shapes one name. Thomas's
+school board District 5, whose May 2026 contest had been untestable on the weak pair, now passes,
+and no other verdict moves. The precinct layer still labels both shapes PAVO/PATTEN, as the map
+does. The other two flags are not wrong names: Dawson's West cast 1,921 votes for State House
+District 7 and 2,526 for District 9 while its shape lies wholly in District 7, and Dawson's board
+maps were voted county-wide, so no verdict depends on it; Fulton's SS11C was paired with 11C4 at a
+weak score of 0.53, and a weak pair can pass a contest and cannot fail one. The sweep cannot see a
+swap between two precincts that share all three districts, which is every precinct in some
+counties (all 12 of Pickens's, for one).
 
 **The precincts are the office's 2024 statewide map, and each card says what the ballots since say
 about its county** (`ga-precincts.json`, `ga/scripts/build_ga_precincts.py` on the shared

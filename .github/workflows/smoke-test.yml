@@ -116,6 +116,8 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro pennsylvania --out pa/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro nevada --out nv/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro arizona --out az/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro newjersey --out nj/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro newhampshire --out nh/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
           # the weekly fleet-status notice.
@@ -138,6 +140,15 @@ jobs:
           python3 scripts/build_tribal_areas.py --selftest
           python3 scripts/build_tribal_areas.py --check
           python3 scripts/tribal_council_scraper.py --selftest
+
+      # The Statewide officials card in every live app: each shipped roster
+      # must carry the offices its seed lists, the names the seed gives (or
+      # none, for an office whose page could not be read), a date each name
+      # was last checked and exactly two U.S. senators. Offline; the weekly
+      # update-statewide-officials.yml is what reads the offices' own pages.
+      - name: Statewide officials rosters match their seeds
+        if: ${{ !cancelled() }}
+        run: python3 scripts/build_statewide_officials.py --check
 
       # A number a gap record STATES must equal the file it describes.
       # ia-board-chair told readers "43 of Iowa's 99 counties" for eleven days
@@ -950,6 +961,8 @@ jobs:
           python3 pa/scripts/build_metro_outline.py --check
           python3 nv/scripts/build_metro_outline.py --check
           python3 az/scripts/build_metro_outline.py --check
+          python3 nj/scripts/build_metro_outline.py --check
+          python3 nh/scripts/build_metro_outline.py --check
 
       # docs/PRESS_LIST.md carries a --check in its own header calling it the
       # drift gate, and until now nothing ran it — a generated file gated in
@@ -2099,6 +2112,8 @@ jobs:
           python3 pa/scripts/validate_index.py pa/index.html
           python3 nv/scripts/validate_index.py nv/index.html
           python3 az/scripts/validate_index.py az/index.html
+          python3 nj/scripts/validate_index.py nj/index.html
+          python3 nh/scripts/validate_index.py nh/index.html
 
 
   browser:
@@ -2366,6 +2381,8 @@ jobs:
           BASE_URL=http://localhost:8000/pa/  node pa/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/nv/  node nv/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/az/  node az/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/nj/  node nj/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/nh/  node nh/scripts/smoke_test.mjs
           GATES
           n=0
           shard=

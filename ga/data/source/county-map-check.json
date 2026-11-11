@@ -1,6 +1,6 @@
 {
  "about": "Each county commission and school board map the General Assembly's map office lists, tested against the precincts that voted in each district contest. Written by ga/scripts/check_ga_county_maps.py, which explains the test and every verdict.",
- "checked": "2026-11-09",
+ "checked": "2026-11-11",
  "sources": {
   "maps": "https://www.legis.ga.gov/joint-office/reapportionment",
   "precinct_map": {
@@ -17,6 +17,15 @@
       "042",
       "043"
      ]
+    }
+   ],
+   "paired": [
+    {
+     "county": "thomas",
+     "names": {
+      "Patten": "275116",
+      "Pavo": "275117"
+     }
     }
    ]
   },
@@ -19121,7 +19130,7 @@
     "002": "pass",
     "003": "pass",
     "004": "pass",
-    "005": "untestable",
+    "005": "pass",
     "006": "pass",
     "007": "pass"
    },
@@ -19198,19 +19207,7 @@
      "district": "005",
      "precincts_voted": 3,
      "votes": 280,
-     "verdict": "untestable",
-     "why": "weak-match",
-     "weak": [
-      [
-       "Patten",
-       "PAVO/PATTEN",
-       20,
-       72.0,
-       0.0,
-       0.0,
-       0.64
-      ]
-     ]
+     "verdict": "pass"
     },
     {
      "election": "GeneralPrimary51926",

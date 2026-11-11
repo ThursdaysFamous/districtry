@@ -119,6 +119,22 @@
     "height": 630,
     "rendered": "2026-09-29"
   },
+  "nh": {
+    "path": "nh/og-image.png",
+    "label": "nh",
+    "sha256": "89b4e1f9776440753d171e3048763cac8f69eb73cf59959fdebcd7044f65ea7d",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-11-11"
+  },
+  "nj": {
+    "path": "nj/og-image.png",
+    "label": "nj",
+    "sha256": "709ff2ef44b4af536da97d99b1037b24b9e66246cffec94a3f54e1c06a8a6993",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-11-11"
+  },
   "nv": {
     "path": "nv/og-image.png",
     "label": "nv",

@@ -1,0 +1,54 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from mn/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Minnesota",
+ "usSenate": [
+  {
+   "name": "Amy Klobuchar",
+   "party": "Democratic",
+   "url": "https://www.klobuchar.senate.gov/",
+   "office": "425 Dirksen Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-3244"
+  },
+  {
+   "name": "Tina Smith",
+   "party": "Democratic",
+   "url": "https://www.smith.senate.gov",
+   "office": "720 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5641"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Tim Walz",
+   "url": "https://mn.gov/governor/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Peggy Flanagan",
+   "url": "https://mn.gov/governor/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Keith Ellison",
+   "url": "https://www.ag.state.mn.us/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Steve Simon",
+   "url": "https://www.sos.state.mn.us/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Julie Blaha",
+   "url": "https://www.osa.state.mn.us/",
+   "verified": "2026-11-10"
+  }
+ ]
+}

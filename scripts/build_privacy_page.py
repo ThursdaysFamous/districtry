@@ -570,7 +570,7 @@ EXPECTED_EVENTS = ["address-map/", "address-search", "app-install/", "app-launch
                    "gaps-suggest/", "gaps-why/", "geolocate",
                    "geolocate-success", "install-invite/", "layer/", "locate-fail/", "map-link-read/", "map-link/", "metro-portal-go/", "more-item/", "more-open", "osm-note", "select/",
                    "share-in/", "share-native", "share-open", "share-permalink", "share-qr",
-                   "sponsor/", "visit/", "zip-search/"]
+                   "sponsor/", "statewide-officials/", "visit/", "zip-search/"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select/"]
 # What the front page (the one untagged surface) sends: the map-link count
 # above, from its address box, and since 2026-10-21 `example-place/<place>`
@@ -1936,6 +1936,8 @@ def render_analytics_section(apps):
         "and what the search showed; it never carries the link, the place or its position. "
         "Tapping an address on a card to open it in a map app sends address-map/ followed by "
         "the layer the card belongs to, such as address-map/post-office, and never the address. "
+        "Opening the list of the officials a state elects statewide sends statewide-officials/ "
+        "followed by the map\u2019s tag, such as statewide-officials/il, and nothing about the point. "
         "The front page sends that event too, as map-link-read/front/, when its address box "
         "reads such a link, and one more, example-place/ followed by the place\u2019s name, "
         "when you pick one of the places in the example beside that box; it names the "
