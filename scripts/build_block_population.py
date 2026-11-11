@@ -203,6 +203,17 @@ INSTANCES = {
     "az": {"name": "Arizona", "state": "04", "total": 7151502, "counties": 15,
            "bbox": (-114.82, 31.33, -109.04, 37.01),
            "maps": [("congress-districts.json", 9, 0.0005), ("az-legislative-districts.json", 30, 0.055)]},
+    # One legislative map for both chambers, as Arizona's. The congressional
+    # tolerance is wide because the plan is far from the raw-census ideal:
+    # measured 2026-11-11 on the shipped outline, District 2 holds 0.642% over
+    # it and District 3 0.509%, the two that hold the state's southern prisons
+    # and the federal prison at Fort Dix, which fits a plan drawn on
+    # prisoner-adjusted counts (New Jersey's 2020 law counts an incarcerated
+    # person at their home address); which count the commission used was not
+    # read. The legislative plan's worst is 3.24% (District 38).
+    "nj": {"name": "New Jersey", "state": "34", "total": 9288994, "counties": 21,
+           "bbox": (-75.57, 38.78, -73.88, 41.36),
+           "maps": [("congress-districts.json", 12, 0.0065), ("nj-legislative-districts.json", 40, 0.035)]},
 }
 def fetch(url, params):
     q = url + "/query?" + urllib.parse.urlencode(params)

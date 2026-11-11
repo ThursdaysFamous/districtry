@@ -64,6 +64,7 @@ python3 scripts/build_coverage_gaps.py --check --metro westvirginia --out wv/dat
 python3 scripts/build_coverage_gaps.py --check --metro pennsylvania --out pa/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro nevada --out nv/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro arizona --out az/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro newjersey --out nj/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro nyc       --out ny/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro sf        --out ca/data/app/coverage-gaps.json
 python3 scripts/validate_gap_counts.py --selftest                 # the claim/label split, both directions, offline
@@ -148,6 +149,7 @@ python3 wv/scripts/build_metro_outline.py --check
 python3 pa/scripts/build_metro_outline.py --check
 python3 nv/scripts/build_metro_outline.py --check
 python3 az/scripts/build_metro_outline.py --check
+python3 nj/scripts/build_metro_outline.py --check
 python3 scripts/build_press_list.py --check                # PRESS_LIST.md vs press-list.json
 python3 scripts/validate_doc_counts.py                    # "N layers" in prose vs the worksheets
 python3 scripts/validate_doc_counts.py --selftest         # pattern C reads the one real "N for <instance>" count and not the four sentences sharing its shape
@@ -300,6 +302,7 @@ python3 wv/scripts/validate_index.py wv/index.html
 python3 pa/scripts/validate_index.py pa/index.html
 python3 nv/scripts/validate_index.py nv/index.html
 python3 az/scripts/validate_index.py az/index.html
+python3 nj/scripts/validate_index.py nj/index.html
 
 # --- browser gates: ONE server at the repo root, every instance
 python3 -m http.server 8000 &
@@ -326,6 +329,7 @@ BASE_URL=http://localhost:8000/wv/ node wv/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/pa/ node pa/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/nv/ node nv/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/az/ node az/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/nj/ node nj/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000      node scripts/landing_test.mjs
 BASE_URL=http://localhost:8000      node scripts/page_consistency_test.mjs
 BASE_URL=http://localhost:8000      node scripts/probe_point_transmission.mjs --check
