@@ -168,6 +168,9 @@ jobs:
             az/data/state az/data/source az/scripts
             nj/data/state nj/data/source nj/scripts
             nh/data/state nh/data/source nh/scripts
+            # Texas, the first state of the launch's batch 2, arrives dark:
+            # the whole folder stays out until its go-live change.
+            'tx/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full

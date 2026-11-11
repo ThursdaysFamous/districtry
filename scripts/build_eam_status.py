@@ -1431,6 +1431,8 @@ PREFIX_CLASSES = {
             "scripts/build_block_population.py")],
     "nh": [("nh/data/app/population/", "census",
             "scripts/build_block_population.py")],
+    "tx": [("tx/data/app/population/", "census",
+            "scripts/build_block_population.py")],
 }
 PREFIX_KIND = {rel: kind for rows in PREFIX_CLASSES.values()
                for rel, kind, _ in rows}
@@ -2805,6 +2807,42 @@ ANSWERS = {
             "reservation and no off-reservation trust land in the state, "
             "measured 2026-11-11 with scripts/tribal_areas.py --report, whose "
             "same-day runs kept 28 pieces in Arizona and 35 in Nevada."),
+    },
+    "tx": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("tx-senate", "tx-house"),
+        "county-boundaries": answers("county"),
+        # No commissioners court is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city council is named yet.
+        "local-government": depth(),
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary",
+            "school-district-secondary"),
+        # Measured 2026-11-11 on TIGERweb's county subdivisions, with Illinois
+        # as the control (1,411 active of 1,695): all 862 of Texas's are census
+        # county divisions (FUNCSTAT S), statistical areas that govern nobody.
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": na(
+            "Texas has no sub-county general-purpose government — outside a "
+            "city, town or village the county governs. The 862 sub-county units "
+            "the Census publishes for Texas are census county divisions: "
+            "statistical areas, not governments (measured 2026-11-11)."),
+        # District, county-court-at-law and justice of the peace judges are
+        # elected; no court district is drawn or judge named yet.
+        "courts-by-district": OPEN,
+        # Several large independent school districts elect trustees from
+        # single-member districts; no trustee district is drawn yet.
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-11 with scripts/tribal_areas.py --report Texas: the
+        # Census keeps 3 reservations and 3 trust lands in Texas (the
+        # Alabama-Coushatta, the Kickapoo Traditional Tribe and Ysleta del Sur
+        # Pueblo), and the app draws no tribal land yet (tx/WATCH.md).
+        "tribal-government": OPEN,
     },
     # Georgia, added at its go-live: the national tier, every county's board of
     # commissioners named from the Secretary of State's election results, the
