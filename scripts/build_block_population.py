@@ -51,8 +51,11 @@ and unless each district lands where its plan put it, within the map's
 recorded tolerance of the equal-population ideal. Illinois's maps hold the
 state EXACTLY and its tolerances are the plan's (0.01% congress, 1%
 legislative). Every other row's figures were measured on 2026-11-06 on the
-simplified district files the apps ship and are pinned: an uncounted number
-that moves, or a district further from its ideal than recorded, fails. Some
+simplified district files the apps ship and are pinned (Pennsylvania's and
+Nevada's on 2026-11-10, when they were built; Nevada's congressional map sits
+0.31% from the raw-census ideal and its Assembly map up to 5.96%): an
+uncounted number that moves, or a district further from its ideal than
+recorded, fails. Some
 plans sit far from the raw-census ideal by design (New York draws on
 prisoner-adjusted counts; several states allow 5% either way), which is why
 those tolerances are wide; they still catch a map swapped for another.
@@ -187,6 +190,43 @@ INSTANCES = {
            "bbox": (-82.65, 37.19, -77.71, 40.65),
            "maps": [("congress-districts.json", 2, 0.001, 4), ("wv-senate-districts.json", 17, 0.05, 4),
                     ("wv-house-districts.json", 100, 0.05, 4)]},
+    "pa": {"name": "Pennsylvania", "state": "42", "total": 13002700, "counties": 67,
+           "bbox": (-80.53, 39.71, -74.68, 42.52),
+           "maps": [("congress-districts.json", 17, 0.0005), ("pa-senate-districts.json", 50, 0.045),
+                    ("pa-house-districts.json", 203, 0.055)]},
+    "nv": {"name": "Nevada", "state": "32", "total": 3104614, "counties": 17,
+           "bbox": (-120.01, 35.0, -114.03, 42.01),
+           "maps": [("congress-districts.json", 4, 0.0035), ("nv-senate-districts.json", 21, 0.045),
+                    ("nv-assembly-districts.json", 42, 0.06)]},
+    # One legislative map for both chambers: az-legislative-districts.json
+    # serves the Senate and the House layers alike, so it is held once.
+    "az": {"name": "Arizona", "state": "04", "total": 7151502, "counties": 15,
+           "bbox": (-114.82, 31.33, -109.04, 37.01),
+           "maps": [("congress-districts.json", 9, 0.0005), ("az-legislative-districts.json", 30, 0.055)]},
+    # One legislative map for both chambers, as Arizona's. The congressional
+    # tolerance is wide because the plan is far from the raw-census ideal:
+    # measured 2026-11-11 on the shipped outline, District 2 holds 0.642% over
+    # it and District 3 0.509%, the two that hold the state's southern prisons
+    # and the federal prison at Fort Dix, which fits a plan drawn on
+    # prisoner-adjusted counts (New Jersey's 2020 law counts an incarcerated
+    # person at their home address); which count the commission used was not
+    # read. The legislative plan's worst is 3.24% (District 38).
+    "nj": {"name": "New Jersey", "state": "34", "total": 9288994, "counties": 21,
+           "bbox": (-75.57, 38.78, -73.88, 41.36),
+           "maps": [("congress-districts.json", 12, 0.0065), ("nj-legislative-districts.json", 40, 0.035)]},
+    # NEW HAMPSHIRE'S HOUSE MAP IS NOT HELD HERE, and that is the plan's shape
+    # rather than an omission: its 164 base districts elect between one and ten
+    # representatives each, so one ideal of the state's people over 164
+    # districts describes no district, and each is named for its county and a
+    # number ("Hillsborough 10") rather than numbered. Its partition of the
+    # state is held by nh/scripts/build_legislative_boundaries.py's own
+    # 2,000-point gate instead. Measured 2026-11-11 on the shipped outlines,
+    # the two congressional districts sit within 0.0005% of their ideal,
+    # and the Senate plan's worst district is 5.45% over the raw-census ideal,
+    # inside the 10% total deviation a state plan may carry.
+    "nh": {"name": "New Hampshire", "state": "33", "total": 1377529, "counties": 10,
+           "bbox": (-72.56, 42.69, -70.57, 45.31),
+           "maps": [("congress-districts.json", 2, 0.0005), ("nh-senate-districts.json", 24, 0.055)]},
 }
 def fetch(url, params):
     q = url + "/query?" + urllib.parse.urlencode(params)

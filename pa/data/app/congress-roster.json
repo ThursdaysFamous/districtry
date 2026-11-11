@@ -1,0 +1,259 @@
+{
+  "1": {
+    "name": "Brian K. Fitzpatrick",
+    "party": "Republican",
+    "url": "https://fitzpatrick.house.gov",
+    "capitolOffice": [
+      "271 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4276"
+    ],
+    "districtOffice": [
+      "1717 Langhorne Newtown Rd., Suite 225",
+      "Langhorne, PA 19047",
+      "Phone: 215-579-8102"
+    ]
+  },
+  "2": {
+    "name": "Brendan F. Boyle",
+    "party": "Democrat",
+    "url": "https://boyle.house.gov",
+    "capitolOffice": [
+      "1502 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6111"
+    ],
+    "districtOffice": [
+      "5675 N. Front St., Suite 180",
+      "One & Olney Shopping Center",
+      "Philadelphia, PA 19120",
+      "Phone: 267-335-5643"
+    ]
+  },
+  "3": {
+    "name": "Dwight Evans",
+    "party": "Democrat",
+    "url": "https://evans.house.gov",
+    "capitolOffice": [
+      "1105 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4001"
+    ],
+    "districtOffice": [
+      "7174 Ogontz Ave.",
+      "Philadelphia, PA 19138",
+      "Phone: 215-276-0340"
+    ]
+  },
+  "4": {
+    "name": "Madeleine Dean",
+    "party": "Democrat",
+    "url": "https://dean.house.gov",
+    "capitolOffice": [
+      "150 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4731"
+    ],
+    "districtOffice": [
+      "115 E Glenside Ave, Suite 1",
+      "Glenside, PA 19038-4618",
+      "Phone: 215-884-4300"
+    ]
+  },
+  "5": {
+    "name": "Mary Gay Scanlon",
+    "party": "Democrat",
+    "url": "https://scanlon.house.gov",
+    "capitolOffice": [
+      "1214 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2011"
+    ],
+    "districtOffice": [
+      "2501 Seaport Drive, BH230",
+      "Chester, PA 19013",
+      "Phone: 610-626-2020"
+    ]
+  },
+  "6": {
+    "name": "Chrissy Houlahan",
+    "party": "Democrat",
+    "url": "https://houlahan.house.gov",
+    "capitolOffice": [
+      "1727 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4315"
+    ],
+    "districtOffice": [
+      "709 E. Gay Street, Suite 4",
+      "West Chester, PA 19380",
+      "Phone: 610-883-5050"
+    ]
+  },
+  "7": {
+    "name": "Ryan Mackenzie",
+    "party": "Republican",
+    "url": "https://mackenzie.house.gov",
+    "capitolOffice": [
+      "121 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6411"
+    ],
+    "districtOffice": [
+      "1125 S Cedar Crest Blvd, Suite 109 (Bottom Floor)",
+      "Allentown, PA 18103",
+      "Phone: 484-781-6000"
+    ]
+  },
+  "8": {
+    "name": "Robert P. Bresnahan, Jr.",
+    "party": "Republican",
+    "url": "https://bresnahan.house.gov",
+    "capitolOffice": [
+      "1133 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5546"
+    ],
+    "districtOffice": [
+      "2398 Rt 611, Suite 101",
+      "Scotrun, PA 18355",
+      "Phone: 570-534-6220"
+    ]
+  },
+  "9": {
+    "name": "Daniel Meuser",
+    "party": "Republican",
+    "url": "https://meuser.house.gov",
+    "capitolOffice": [
+      "350 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6511"
+    ],
+    "districtOffice": [
+      "121 Progress Ave, Suite 110",
+      "Losch Plaza",
+      "Pottsville, PA 17901-2968",
+      "Phone: 570-871-6370"
+    ]
+  },
+  "10": {
+    "name": "Scott Perry",
+    "party": "Republican",
+    "url": "https://perry.house.gov",
+    "capitolOffice": [
+      "2160 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5836"
+    ],
+    "districtOffice": [
+      "800 Corporate Cir, Suite 202",
+      "Harrisburg, PA 17110-9346",
+      "Phone: 717-603-4980"
+    ]
+  },
+  "11": {
+    "name": "Lloyd Smucker",
+    "party": "Republican",
+    "url": "https://smucker.house.gov",
+    "capitolOffice": [
+      "302 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2411"
+    ],
+    "districtOffice": [
+      "100 Redco Ave",
+      "Red Lion, PA 17356-1436",
+      "Phone: 717-969-6133"
+    ]
+  },
+  "12": {
+    "name": "Summer L. Lee",
+    "party": "Democrat",
+    "url": "https://summerlee.house.gov",
+    "capitolOffice": [
+      "2437 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2135"
+    ],
+    "districtOffice": [
+      "551 Ravensburg Boulevard",
+      "Clairton, PA 15025",
+      "Phone: 412-214-5000"
+    ]
+  },
+  "13": {
+    "name": "John Joyce",
+    "party": "Republican",
+    "url": "https://johnjoyce.house.gov",
+    "capitolOffice": [
+      "2102 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2431"
+    ],
+    "districtOffice": [
+      "5414 6th Ave",
+      "Altoona, PA 16602-1203",
+      "Phone: 814-656-6081"
+    ]
+  },
+  "14": {
+    "name": "Guy Reschenthaler",
+    "party": "Republican",
+    "url": "https://reschenthaler.house.gov",
+    "capitolOffice": [
+      "2209 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2065"
+    ],
+    "districtOffice": [
+      "5856 Route 981",
+      "Latrobe, PA 15650",
+      "Phone: 724-219-4200"
+    ]
+  },
+  "15": {
+    "name": "Glenn Thompson",
+    "party": "Republican",
+    "url": "https://thompson.house.gov",
+    "capitolOffice": [
+      "400 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5121"
+    ],
+    "districtOffice": [
+      "3555 Benner Pike., Suite 101",
+      "Bellefonte, PA 16823",
+      "Phone: 814-353-0215"
+    ]
+  },
+  "16": {
+    "name": "Mike Kelly",
+    "party": "Republican",
+    "url": "https://kelly.house.gov",
+    "capitolOffice": [
+      "1707 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5406"
+    ],
+    "districtOffice": [
+      "33 Chestnut Ave.",
+      "Sharon, PA 16146",
+      "Phone: 724-342-7170"
+    ]
+  },
+  "17": {
+    "name": "Christopher R. Deluzio",
+    "party": "Democrat",
+    "url": "https://deluzio.house.gov",
+    "capitolOffice": [
+      "1222 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2301"
+    ],
+    "districtOffice": [
+      "3468 Brodhead Road, Suite 1",
+      "Monaca, PA 15061",
+      "Phone: 724-206-4860"
+    ]
+  }
+}

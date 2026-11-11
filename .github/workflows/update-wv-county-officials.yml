@@ -31,9 +31,11 @@ name: Update West Virginia county officials
 # paces every fetch at one second. A run is about 560 requests, some ten
 # minutes.
 #
-# WEST VIRGINIA IS DARK, so this job regenerates no county page:
-# scripts/build_county_pages.py records this roster in NOT_COUNTY_BOARDS until
-# go-live adds its adapter.
+# The per-county commission pages (wv/county-commissioner/) and their index
+# are GENERATED from the file this job rewrites, so the branch cut regenerates
+# them, and about.html, sitemap.xml, llms.txt and docs/EAM_STATUS.md, which
+# count or date them; without that the smoke gate's build_county_pages.py
+# --check fails this PR with a page naming last year's commissioners.
 
 on:
   schedule:
@@ -94,7 +96,12 @@ jobs:
           # carried over the checkout as an uncommitted change.
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add wv/data/app/wv-county-officials.json
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          python3 scripts/build_llms_txt.py
+          python3 scripts/build_eam_status.py
+          git add wv/data/app/wv-county-officials.json wv/county-commissioner wv/county-commissioner.html about.html sitemap.xml llms.txt docs/EAM_STATUS.md
           git commit -m "Update West Virginia county commissions and officers"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

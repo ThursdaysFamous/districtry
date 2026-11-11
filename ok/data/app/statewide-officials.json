@@ -1,0 +1,89 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from ok/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Oklahoma",
+ "usSenate": [
+  {
+   "name": "Alan Armstrong",
+   "party": "Republican",
+   "url": "https://www.armstrong.senate.gov/",
+   "office": "330 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4721"
+  },
+  {
+   "name": "James Lankford",
+   "party": "Republican",
+   "url": "https://www.lankford.senate.gov",
+   "office": "731 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5754"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Kevin Stitt",
+   "url": "https://oklahoma.gov/governor.html",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Matt Pinnell",
+   "url": "https://oklahoma.gov/ltgovpinnell/about.html",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Gentner Drummond",
+   "url": "https://oklahoma.gov/oag.html",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Todd Russ",
+   "url": "https://oklahoma.gov/treasurer.html",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "State Auditor and Inspector",
+   "url": "https://www.sai.ok.gov/",
+   "unnamed": "The office's website (sai.ok.gov) refuses automated readers in robots.txt, so this app does not read a name from it."
+  },
+  {
+   "office": "State Superintendent of Public Instruction",
+   "name": "Lindel Fields",
+   "url": "https://oklahoma.gov/education.html",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Commissioner of Labor",
+   "name": "Leslie Osborn",
+   "url": "https://oklahoma.gov/labor.html",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Insurance Commissioner",
+   "name": "Glen Mulready",
+   "url": "https://www.oid.ok.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Corporation Commissioner",
+   "name": "Todd Hiett",
+   "url": "https://oklahoma.gov/occ.html",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Corporation Commissioner",
+   "name": "Kim David",
+   "url": "https://oklahoma.gov/occ.html",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Corporation Commissioner",
+   "name": "Brian Bingman",
+   "url": "https://oklahoma.gov/occ.html",
+   "verified": "2026-11-10"
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+{
+  "1": {
+    "name": "Chris Pappas",
+    "party": "Democrat",
+    "url": "https://pappas.house.gov",
+    "capitolOffice": [
+      "452 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5456"
+    ],
+    "districtOffice": [
+      "660 Central Ave, Suite 101",
+      "Dover, NH 03820-3491",
+      "Phone: 603-285-4300"
+    ]
+  },
+  "2": {
+    "name": "Maggie Goodlander",
+    "party": "Democrat",
+    "url": "https://goodlander.house.gov",
+    "capitolOffice": [
+      "223 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5206"
+    ],
+    "districtOffice": [
+      "18 North Main St, 4th Floor",
+      "Concord, NH 03301",
+      "Phone: 603-226-1002"
+    ]
+  }
+}

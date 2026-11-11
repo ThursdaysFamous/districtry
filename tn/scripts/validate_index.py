@@ -121,6 +121,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
+    "statewide-officials.json": 5,  # The officers Tennessee elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from tn/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
     "congress-roster.json": 9,  # U.S. House (TN) roster, refreshed weekly by update-tn-congress-roster.yml.
     "tn-senate-members.json": 33,  # Tennessee Senate roster, one record per seat, names from the Legislature's own district map on the state's TNMap service; refreshed weekly. A vacant seat carries a record saying so, so the floor is the chamber's size.
     "tn-house-members.json": 99,  # Tennessee House roster, one record per seat on the same terms; House 31 and 84 read vacant on 2026-10-10.

@@ -1,0 +1,14 @@
+{
+ "state": "Tennessee",
+ "usps": "TN",
+ "officersNote": "Tennessee's voters elect only the governor statewide. The General Assembly chooses the secretary of state, treasurer and comptroller, and the Supreme Court appoints the attorney general.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Bill Lee",
+   "url": "https://www.tn.gov/governor.html",
+   "headers": "browser",
+   "note": "www.tn.gov answered 403 to our token and served a browser on 2026-11-10."
+  }
+ ]
+}

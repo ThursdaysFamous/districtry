@@ -1,6 +1,6 @@
 # districtry
 
-> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. 18 instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi, Louisiana, Missouri and Virginia. Every boundary and every name comes from a published source and is cited to it.
+> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. 25 instances across Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan, Minnesota, Kentucky, Indiana, North Carolina, Oklahoma, South Carolina, Tennessee, Arkansas, Mississippi, Louisiana, Missouri, Virginia, West Virginia, Georgia, Pennsylvania, Nevada, Arizona, New Jersey and New Hampshire. Every boundary and every name comes from a published source and is cited to it.
 
 Free, no account, no tracking of individuals. The map runs in the browser; what each page sends to whom is listed at https://districtry.com/privacy.html.
 
@@ -241,13 +241,85 @@ All 95 counties and 38 independent cities: each county's board and each city's c
 - [Who is my Virginia legislator?](https://districtry.com/va/state-legislature.html)
 - [Virginia district questions](https://districtry.com/va/faq.html)
 
+## West Virginia
+
+All 55 counties: each county's commission and elected officers, magisterial districts, cities, towns and villages, school districts, ZIP codes, Charleston's 20 council wards and the members elected from them, and the nearest police station, fire and EMS station and post office — plus the West Virginia Senate, House of Delegates and U.S. House districts, with who holds each seat. County commissioners and officers are named from the Secretary of State's directory of county officials, and legislators from the Legislature's own rosters. School board members, judges and the other cities' councils are not named yet, and the Data gaps panel says why.
+
+- [West Virginia district lookup](https://districtry.com/wv/): 12 layers, all 55 counties.
+- [Who is my U.S. representative?](https://districtry.com/wv/congress.html)
+- [Who are my county commissioners?](https://districtry.com/wv/county-commissioner.html): links a page per county, 55 of them, each naming every member with the telephone and e-mail the Secretary of State's directory prints beside each commissioner, and the commission's office.
+- [Sources & data layers](https://districtry.com/wv/sources.html)
+- [Who is my WV legislator?](https://districtry.com/wv/state-legislature.html)
+- [West Virginia district questions](https://districtry.com/wv/faq.html)
+
+## Georgia
+
+All 159 counties: county commission and school board districts where the county's own elections confirm the map, voting precincts, judicial circuits with their judges and district attorneys, cities and towns, census county divisions, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Georgia Senate, House and U.S. House districts, with who holds each seat. County commissioners and school board members are named from the Secretary of State's election results where an election since November 2024 chose them. The Data gaps panel says which seats are not named and why.
+
+- [Georgia district lookup](https://districtry.com/ga/): 15 layers, all 159 counties.
+- [Who is my U.S. representative?](https://districtry.com/ga/congress.html)
+- [Who are my county commissioners?](https://districtry.com/ga/county-commissioner.html): links a page per county, 152 of them, each naming every member with the election on the Secretary of State's results site that named each one, and no contact details yet.
+- [Sources & data layers](https://districtry.com/ga/sources.html)
+- [Who is my Georgia legislator?](https://districtry.com/ga/state-legislature.html)
+- [Georgia district questions](https://districtry.com/ga/faq.html)
+
+## Pennsylvania
+
+All 67 counties: cities, boroughs and townships, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Pennsylvania Senate, House and U.S. House districts, with who holds each seat. County, municipal and school board officials are not named yet, and the Data gaps panel says why.
+
+- [Pennsylvania district lookup](https://districtry.com/pa/): 10 layers, all 67 counties.
+- [Who is my U.S. representative?](https://districtry.com/pa/congress.html)
+- [Sources & data layers](https://districtry.com/pa/sources.html)
+- [Who is my Pennsylvania legislator?](https://districtry.com/pa/state-legislature.html)
+- [Pennsylvania district questions](https://districtry.com/pa/faq.html)
+
+## Nevada
+
+All 16 counties and Carson City: incorporated cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Nevada Senate, Assembly and U.S. House districts, with who holds each seat. County commissioners and city and school board members are not named yet, and the Data gaps panel says why.
+
+- [Nevada district lookup](https://districtry.com/nv/): 10 layers, all 16 counties and Carson City.
+- [Who is my U.S. representative?](https://districtry.com/nv/congress.html)
+- [Sources & data layers](https://districtry.com/nv/sources.html)
+- [Who is my Nevada legislator?](https://districtry.com/nv/state-legislature.html)
+- [Nevada district questions](https://districtry.com/nv/faq.html)
+
+## Arizona
+
+All 15 counties: cities and towns, unified, elementary and high school districts, ZIP codes, and the nearest police station, fire station and post office — plus Arizona's 30 legislative districts, each electing one senator and two representatives, and its U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
+
+- [Arizona district lookup](https://districtry.com/az/): 12 layers, all 15 counties.
+- [Who is my U.S. representative?](https://districtry.com/az/congress.html)
+- [Sources & data layers](https://districtry.com/az/sources.html)
+- [Who is my Arizona legislator?](https://districtry.com/az/state-legislature.html)
+- [Arizona district questions](https://districtry.com/az/faq.html)
+
+## New Jersey
+
+All 21 counties and 564 municipalities: school districts, ZIP codes, and the nearest police station, fire station and post office — plus New Jersey's 40 legislative districts, each electing one senator and two Assembly members, and its U.S. House districts, with who holds each seat. County, municipal and school board officials are not named yet, and the Data gaps panel says why.
+
+- [New Jersey district lookup](https://districtry.com/nj/): 12 layers, all 21 counties.
+- [Who is my U.S. representative?](https://districtry.com/nj/congress.html)
+- [Sources & data layers](https://districtry.com/nj/sources.html)
+- [Who is my New Jersey legislator?](https://districtry.com/nj/state-legislature.html)
+- [New Jersey district questions](https://districtry.com/nj/faq.html)
+
+## New Hampshire
+
+All 10 counties and every city, town and unincorporated place: school districts, ZIP codes, and the nearest police station, fire station and post office — plus the New Hampshire Senate, the House's 203 districts with their floterials, and the U.S. House districts, with who holds each seat. County, town and school board officials are not named yet, and the Data gaps panel says why.
+
+- [New Hampshire district lookup](https://districtry.com/nh/): 12 layers, all 10 counties.
+- [Who is my U.S. representative?](https://districtry.com/nh/congress.html)
+- [Sources & data layers](https://districtry.com/nh/sources.html)
+- [Who is my NH legislator?](https://districtry.com/nh/state-legislature.html)
+- [New Hampshire district questions](https://districtry.com/nh/faq.html)
+
 ## Where the answers come from
 
 Each instance's sources page carries one row per layer: what it answers, the publisher its boundary comes from, where the names on its card come from, and the ground it answers on. That page is generated from the same list that registers the layers, so a layer cannot ship without a row.
 
 Officeholder names are never guessed. Where no verifiable roster exists, a card links the official body instead of inventing a name, and what the project does not know is recorded rather than left blank — each instance ships a machine-readable list of its own gaps at `<instance>/data/app/coverage-gaps.json`.
 
-Sources last reverified between October 10, 2026 and September 29, 2026, per instance.
+Sources last reverified between November 10, 2026 and September 29, 2026, per instance.
 
 This is a civic reference tool and it disclaims legal precision. Confirm a district assignment with the government office that draws it before relying on it for anything official.
 

@@ -1,0 +1,17 @@
+{
+ "state": "New Jersey",
+ "usps": "NJ",
+ "officersNote": "New Jersey's voters elect only the governor and the lieutenant governor statewide, on one ticket. The governor appoints the attorney general, the secretary of state and the treasurer.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Mikie Sherrill",
+   "url": "https://www.nj.gov/governor/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Shirley Emehelu",
+   "url": "https://www.nj.gov/governor/admin/ltgovernor/"
+  }
+ ]
+}

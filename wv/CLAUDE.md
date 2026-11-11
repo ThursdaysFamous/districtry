@@ -6,13 +6,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 districtry West Virginia: a single-file, dependency-light web app. Click a point in West Virginia
 (or search an address) and it reports every civic district containing that point and who
-represents you there. It will serve at **districtry.com/wv/** as a folder of the consolidated
+represents you there. It serves at **districtry.com/wv/** as a folder of the consolidated
 districtry repo, following the Missouri shape (`docs/EXPANSION_GUIDE.md` Part 2). **The instance
-is DARK**: it has no `metros.json` entry and no `layer-concepts.json` column, and the deploy
-excludes `wv/**`, so nothing is served. Adam's answers to the plan (2026-10-29, "all as
-recommended") set when it opens: built now, published on or after 1 January 2027, after the
-November 2026 election's winners take their seats, and only on his own "merge" of the go-live
-change. Nothing anywhere may call the instance live before then.
+is LIVE** from the go-live change that added it to `metros.json`, on Adam's choice of 2026-11-10
+to launch now rather than on or after 1 January 2027, the date his answers to the plan
+(2026-10-29) had set, and on his own "merge". The deploy excludes only `wv/data/state`,
+`wv/data/source` and `wv/scripts`. **ITS FLEET BOX IN `metros.json` STOPS AT LONGITUDE -79.43**
+rather than the state's own -77.71, and that is a measurement: Virginia's `metro_center` (38.0,
+-79.42) lies inside the full box, and `validate_index.py` refuses a sibling's hand-off box that
+holds an instance's own centre. The clip cuts ten counties' drawn area (all of Berkeley,
+Hampshire, Hardy, Jefferson, Mineral and Morgan, and parts of Grant, Pendleton, Tucker and
+Randolph), and the cost is confined to the search box's sibling rows when `fleet-outlines.json`
+cannot be read, because the outlines decide every selection.
 
 **The layers** draw their shapes from a national publisher or the state, and name people from a
 national roster or the state's own publications: **County** (`county`, 55, Census TIGERweb, the
@@ -21,9 +26,11 @@ other elected county officers), **U.S. House** (2 districts, TIGERweb geometry j
 public-domain unitedstates/congress-legislators roster), **West Virginia Senate** and **House of
 Delegates** (17 and 100 districts, the Legislature's own files of the 2021 plans joined to each
 chamber's own roster), **Magisterial District** (`county-subdivision`, 195, the state's own map,
-shown under the County layer), the live TIGERweb fabric — **City, Town or Village**
+shown under the County layer), the TIGERweb fabric — **City, Town or Village**
 (`municipality`, 229), **School District** (`school-district-unified`, 55, one per county) and
-**ZIP Code** — and three nearest-N layers from the USGS National Map (**Police Station**,
+**ZIP Code**, each drawn and answered from a tile archive mirrored from TIGERweb by
+`scripts/mirror_tiger_tiles.py` (2026-11-10), so a click on them sends the reader's point to no
+server and the weekly `update-tiger-tiles.yml` keeps them current — and three nearest-N layers from the USGS National Map (**Police Station**,
 **Fire & EMS Station**, **Post Office**).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
@@ -114,7 +121,7 @@ every other instance via `scripts/compose_app.py`.
 
 - Metro: West Virginia (`westvirginia`) — https://districtry.com/wv/
 - Geocoders: address Photon (West Virginia-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, West Virginia-bounded, serial >=1s queue)
-- Ground truth: 38.33650,-81.61230 (West Virginia State Capitol, 1900 Kanawha Boulevard East, Charleston, Kanawha County) → county Kanawha County; us-house 1; wv-senate 8; wv-house 54. Negative point 39.55000,-79.25000 (Garrett County, Maryland, about 20 km east of the West Virginia line at Preston County — outside West Virginia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state and county layers name Maryland and Garrett County here (control: the State Capitol returns West Virginia and Kanawha County), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. A POINT ON A NEIGHBOUR'S LAND WILL HAVE TO MOVE THE DAY THAT NEIGHBOUR GOES LIVE: Kentucky is live already, and Maryland, Pennsylvania, Ohio and Virginia are not, so the change that makes Maryland live moves this point, the way Kentucky's go-live moved Indiana's.).
+- Ground truth: 38.33650,-81.61230 (West Virginia State Capitol, 1900 Kanawha Boulevard East, Charleston, Kanawha County) → county Kanawha County; us-house 1; wv-senate 8; wv-house 54. Negative point 39.55000,-79.25000 (Garrett County, Maryland, about 20 km east of the West Virginia line at Preston County — outside West Virginia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state and county layers name Maryland and Garrett County here (control: the State Capitol returns West Virginia and Kanawha County), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. Re-measured 2026-11-10 at West Virginia's go-live: still in no outline in fleet-outlines.json, Virginia's included. A POINT ON A NEIGHBOUR'S LAND WILL HAVE TO MOVE THE DAY THAT NEIGHBOUR GOES LIVE: Kentucky and Virginia are live already, and Maryland, Pennsylvania and Ohio are not, so the change that makes Maryland live moves this point, the way Kentucky's go-live moved Indiana's.).
 - Layers: 12 registered (political 4, safety 2, schools 1, geography 5); `registerLayer(` floor 10. Debug namespace `window.WestVirginiaExplorer`.
 - Scheduled workflows: `update-wv-congress-roster.yml` (Mon 19:53 UTC); `update-wv-legislature-roster.yml` (Tue 19:53 UTC); `update-wv-county-officials.yml` (Wed 19:53 UTC); `update-wv-city-councils.yml` (Thu 19:53 UTC); `wv-validate-sources.yml` (1st of month 21:43 UTC).
 - Source registry: `wv/scripts/validate_sources.py` (machine-checked monthly)
