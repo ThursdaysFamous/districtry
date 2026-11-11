@@ -75,7 +75,8 @@ in the researched-but-unbuilt backlog.
   "nevada": ["us-house", "county", "school-district-unified", "nv-senate", "nv-assembly", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
   "arizona": ["us-house", "county", "az-senate", "az-house", "school-district-secondary", "school-district-unified", "school-district-elementary", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
   "newjersey": ["us-house", "county", "nj-senate", "nj-assembly", "school-district-secondary", "school-district-elementary", "school-district-unified", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
-  "newhampshire": ["us-house", "county", "nh-senate", "school-district-secondary", "school-district-unified", "nh-house", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"]
+  "newhampshire": ["us-house", "county", "nh-senate", "school-district-secondary", "school-district-unified", "nh-house", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
+  "texas": ["tx-senate", "us-house", "tx-house", "county", "school-district-unified", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -4250,6 +4251,45 @@ trusted.
             "why": "No list of the school board members of New Hampshire's school districts has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-11 against TIGERweb's school districts (School MapServer) for STATE='33': 82 records on layer 0 (81 unified districts and one the Census names \"School District Not Defined\", GEOID 3399997, which files 859 km2 of land in 15 unincorporated places, 14 of them in Coos County and Livermore in Grafton County, and 115 km2 of the Atlantic off Rockingham County, and which the card answers as no school district), 90 elementary districts on layer 2 and 8 secondary districts on layer 1 (4 running grades 9 to 12, 2 running 7 to 12 and 2 running 6 to 12, 2,181 km2 in all). The unified layer and the elementary districts together cover the state's land, and a reader in a secondary district's ground is in two districts, each with its own board. All three ship as tile archives. No board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's own directories of school administrative units and districts; each district's own website; and the towns' annual meeting results, which name who was elected to each school board. The New Hampshire School Boards Association is a membership association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "texas": [
+      {
+            "id": "tx-county-officials",
+            "concept": "County government",
+            "area": "Texas — all 254 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its county judge, commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of Texas's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's judge, commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-11 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is tx/index.html's own County block: each county is governed by a commissioners court, a county judge elected by the whole county and four commissioners each elected from a commissioner precinct, and elects officers such as a sheriff, a county clerk and a tax assessor-collector. The boundary is TIGERweb State_County for STATE='48', 254 features, shipped as tx/data/app/state-counties.json. Commissioner precincts are not drawn: TIGER carries no such layer, so each county's own map would be the source. ROUTES NOT YET READ, government publishers first: each county's own website; the Secretary of State's election results, which name who won each county seat; and a statewide directory, if a state office keeps one. The Texas Association of Counties is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "tx-municipal-officeholders",
+            "concept": "City government",
+            "area": "Texas",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City, Town or Village card names the place you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Texas's cities, towns and villages has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's, town's and village's mayor and council members, or a place's own published list of them.",
+            "blocker": "Measured 2026-11-11 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='48': 1,230 records, 978 cities (LSADC 25), 230 towns (LSADC 43) and 22 villages (LSADC 47); every one an active government (FUNCSTAT A) but three towns the Census records as inactive (FUNCSTAT I), whose card says the county governs there. Together they hold about 4.5% of the state's land (30,285.5 of 676,659.0 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Houston, San Antonio, Dallas, Austin, Fort Worth); and the Secretary of State's election results. The Texas Municipal League is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "tx-school-board-members",
+            "concept": "School board",
+            "area": "Texas",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The three School District cards name the districts you picked, and not the members of their boards of trustees.",
+            "why": "No list of the trustees of Texas's independent school districts has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's trustees, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-11 against TIGERweb's school districts (School MapServer) for STATE='48': 1,016 unified districts on layer 0, one elementary district on layer 2 (Vysehrad Independent School District, Lavaca County, grades PK-8) and one secondary district on layer 1 (Hallettsville Independent School District's grades 9-12 over the same ground), all three shipped as tile archives. Layer 0 answers HTTP 500 to a whole-state request, so it is mirrored in pages of 250. No board roster was read for this record, and whether every trustee is elected from a single-member district or at large was not checked. ROUTES NOT YET READ, government publishers first: the Texas Education Agency's own directory (AskTED); and each district's own website. NOT YET ASKED, and no ask is drafted."
       }
   ]
 }
