@@ -77,7 +77,8 @@ in the researched-but-unbuilt backlog.
   "newjersey": ["us-house", "county", "nj-senate", "nj-assembly", "school-district-secondary", "school-district-elementary", "school-district-unified", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
   "newhampshire": ["us-house", "county", "nh-senate", "school-district-secondary", "school-district-unified", "nh-house", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
   "texas": ["tx-senate", "us-house", "tx-house", "county", "school-district-unified", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "police-station", "fire-station", "post-office"],
-  "florida": ["us-house", "fl-senate", "county", "school-district-unified", "fl-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
+  "florida": ["us-house", "fl-senate", "county", "school-district-unified", "fl-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "ohio": ["us-house", "oh-senate", "county", "school-district-unified", "oh-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -4330,6 +4331,57 @@ trusted.
             "why": "No list of the members of Florida's 67 school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-11 against TIGERweb's school districts (School MapServer) for STATE='12': 67 unified districts on layer 0, one for each county, and nothing on the elementary or secondary layers; shipped as a tile archive. No board roster was read for this record, and how each board's members are elected (from residence districts, countywide or both) was not checked. ROUTES NOT YET READ, government publishers first: the Florida Department of Education's own directory of school districts; each district's own website; and the county supervisors of elections' results. The Florida School Boards Association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "ohio": [
+      {
+            "id": "oh-county-officials",
+            "concept": "County government",
+            "area": "Ohio — all 88 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of Ohio's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-11 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is oh/index.html's own County block: each county is governed by an elected board of three county commissioners unless its charter sets up another government, as Cuyahoga's and Summit's do (an elected county executive and county council), and elects officers such as an auditor, a treasurer, a prosecuting attorney, a sheriff, a clerk of courts, a recorder, an engineer and a coroner. Ohio's commissioners are elected countywide, so naming them needs no district map. The boundary is TIGERweb State_County for STATE='39', 88 features, shipped as oh/data/app/state-counties.json. ROUTES NOT YET READ, government publishers first: each county's own website; and each county board of elections' results, which name who won each county seat. The County Commissioners Association of Ohio is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "oh-municipal-officeholders",
+            "concept": "City government",
+            "area": "Ohio",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City or Village card names the place you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Ohio's cities and villages has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's and village's mayor and council members, or a place's own published list of them.",
+            "blocker": "Measured 2026-11-11 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='39': 923 records, 253 cities and 670 villages; 922 are active governments and one, Rendville village in Perry County, carries the Census's inactive status, and its card says so. Together they hold about 9.6% of the state's land (10,138.4 of 105,824.6 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Columbus, Cleveland, Cincinnati, Toledo, Akron); and the county boards of elections' results. The Ohio Municipal League is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "oh-townships",
+            "concept": "Township board",
+            "area": "Ohio",
+            "counties": [],
+            "kind": "no-source",
+            "layer": null,
+            "summary": "The map does not draw Ohio's townships or name their trustees and fiscal officers. Outside a city or village, the township and the county are the local governments, and the City or Village card says so.",
+            "why": "No township layer has been built for this app, and no list of the people each township elects has been read.",
+            "wanted": "A statewide list of each township's trustees and fiscal officer, or a township's own published list, to name on a township layer drawn from the Census's township lines.",
+            "blocker": "Measured 2026-11-11 against TIGERweb's county subdivisions (Places_CouSub_ConCity_SubMCD layer 1) for STATE='39': 1,607 records, 1,326 of them townships (LSADC 44), 1,308 of those active governments (FUNCSTAT A) and 18 not; the other 281 are cities and villages the Census also counts as county subdivisions (192 and 84) and five areas it leaves undefined (LSADC 00). Each township elects three trustees and a fiscal officer (Ohio Revised Code 505.01 and 507.01). The layer carries geography and no officeholder field, and no township roster was read for this record. A township layer drawn from those lines, with the board named where a source proves it, is its own change. ROUTES NOT YET READ, government publishers first: each township's own website; and each county board of elections' results. The Auditor of State keeps records of every township, and its site's robots.txt refuses every client, so it is not read. The Ohio Township Association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "oh-school-board-members",
+            "concept": "School board",
+            "area": "Ohio",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its board of education.",
+            "why": "No list of the members of Ohio's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-11 against TIGERweb's school districts (School MapServer) for STATE='39': 612 unified districts on layer 0 (city, local and exempted village districts), and nothing on the elementary or secondary layers; shipped as a tile archive. No board roster was read for this record, and how each board's members are chosen was not checked district by district: most are elected at large, and Cleveland's is appointed by its mayor. ROUTES NOT YET READ, government publishers first: the Ohio Department of Education and Workforce's directory of school districts; each district's own website; and the county boards of elections' results. The Ohio School Boards Association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
       }
   ]
 }

@@ -246,6 +246,16 @@ INSTANCES = {
            "bbox": (-87.64, 24.39, -79.97, 31.01),
            "maps": [("congress-districts.json", 28, 0.0005), ("fl-senate-districts.json", 40, 0.01),
                     ("fl-house-districts.json", 120, 0.025)]},
+    # Ohio's House nests three to a Senate district, so the two plans share
+    # every line. Measured 2026-11-11 on the shipped outlines: the
+    # congressional map (the 119th Congress's) sits within 0.004% of its ideal,
+    # and both legislative plans run to the 5% the state constitution allows
+    # (art. XI s. 3), the Senate's worst district +4.990% and the House's
+    # +4.999%, so their tolerance is that 5% and no tighter.
+    "oh": {"name": "Ohio", "state": "39", "total": 11799448, "counties": 88,
+           "bbox": (-84.83, 38.40, -80.51, 42.33),
+           "maps": [("congress-districts.json", 15, 0.0005), ("oh-senate-districts.json", 33, 0.05),
+                    ("oh-house-districts.json", 99, 0.05)]},
 }
 def fetch(url, params):
     q = url + "/query?" + urllib.parse.urlencode(params)

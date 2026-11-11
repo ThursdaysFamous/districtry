@@ -120,6 +120,7 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro newhampshire --out nh/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro texas --out tx/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro florida --out fl/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro ohio --out oh/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
           # the weekly fleet-status notice.
@@ -967,6 +968,7 @@ jobs:
           python3 nh/scripts/build_metro_outline.py --check
           python3 tx/scripts/build_metro_outline.py --check
           python3 fl/scripts/build_metro_outline.py --check
+          python3 oh/scripts/build_metro_outline.py --check
 
       # docs/PRESS_LIST.md carries a --check in its own header calling it the
       # drift gate, and until now nothing ran it — a generated file gated in
@@ -1686,6 +1688,14 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 nv/scripts/build_legislative_boundaries.py --check
 
+      # The fifth instance with the relation. Ohio's constitution (art. XI s. 4)
+      # makes every Senate district three whole House districts, though not by
+      # number arithmetic, so the builder carries the measured triplets and
+      # builds all three maps in ONE mapshaper run, as Nevada's does.
+      - name: OH House districts still tile their Senate district exactly
+        if: ${{ !cancelled() }}
+        run: python3 oh/scripts/build_legislative_boundaries.py --check
+
       - name: The dropped-ring mechanism holds to its own fixtures
         if: ${{ !cancelled() }}
         run: python3 wi/scripts/dropped_rings.py --selftest
@@ -2120,6 +2130,7 @@ jobs:
           python3 nh/scripts/validate_index.py nh/index.html
           python3 tx/scripts/validate_index.py tx/index.html
           python3 fl/scripts/validate_index.py fl/index.html
+          python3 oh/scripts/validate_index.py oh/index.html
 
 
   browser:
@@ -2391,6 +2402,7 @@ jobs:
           BASE_URL=http://localhost:8000/nh/  node nh/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/tx/  node tx/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/fl/  node fl/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/oh/  node oh/scripts/smoke_test.mjs
           GATES
           n=0
           shard=

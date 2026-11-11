@@ -1435,6 +1435,8 @@ PREFIX_CLASSES = {
             "scripts/build_block_population.py")],
     "fl": [("fl/data/app/population/", "census",
             "scripts/build_block_population.py")],
+    "oh": [("oh/data/app/population/", "census",
+            "scripts/build_block_population.py")],
 }
 PREFIX_KIND = {rel: kind for rows in PREFIX_CLASSES.values()
                for rel, kind, _ in rows}
@@ -2882,6 +2884,38 @@ ANSWERS = {
         # Seminole Tribe of Florida's) and 4 trust lands in Florida, and the
         # app draws no tribal land yet (fl/WATCH.md).
         "tribal-government": OPEN,
+    },
+    "oh": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("oh-senate", "oh-house"),
+        "county-boundaries": answers("county"),
+        # No county commissioner is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or village council is named yet.
+        "local-government": depth(),
+        # TIGER carries Ohio's 612 school districts as unified districts and
+        # nothing on its elementary or secondary layers (measured 2026-11-11).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-11 on TIGERweb's county subdivisions: 1,308 of
+        # Ohio's are active townships (LSADC 44, FUNCSTAT A), general-purpose
+        # governments each electing three trustees and a fiscal officer, and
+        # no township layer is drawn yet (gap oh-townships).
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": OPEN,
+        # Common pleas judges are elected by county and court of appeals
+        # judges by appellate district; neither is drawn or named yet.
+        "courts-by-district": OPEN,
+        # Whether any board elects its members by district has not been
+        # measured for Ohio.
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        "tribal-government": na(
+            "Ohio has no tribal land. The Census publishes no federal or state "
+            "reservation and no off-reservation trust land in the state, "
+            "measured 2026-11-11 with scripts/tribal_areas.py --report."),
     },
     # Georgia, added at its go-live: the national tier, every county's board of
     # commissioners named from the Secretary of State's election results, the

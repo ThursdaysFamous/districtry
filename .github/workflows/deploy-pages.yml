@@ -173,6 +173,8 @@ jobs:
             'tx/**'
             # Florida, batch 2's second state, arrives dark the same way.
             'fl/**'
+            # Ohio, batch 2's third state, arrives dark the same way.
+            'oh/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full
