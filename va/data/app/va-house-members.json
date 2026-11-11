@@ -228,10 +228,16 @@
     "url": "https://house.vga.virginia.gov/members/H0365"
   },
   "20": {
-    "vacant": true,
-    "vacantWhy": "The Virginia House of Delegates' member list showed this seat as vacant and now prints no member for it.",
-    "sourceUrl": "https://house.vga.virginia.gov/members",
-    "asOf": "2026-10-29"
+    "name": "Sonia Vásquez Luna",
+    "party": "Democratic",
+    "email": "DelSVasquezLuna@house.virginia.gov",
+    "capitolOffice": [
+      "General Assembly Building, Room 921",
+      "201 North 9th Street",
+      "Richmond, Virginia 23219",
+      "(804) 698-1020"
+    ],
+    "url": "https://house.vga.virginia.gov/members/H0408"
   },
   "21": {
     "name": "Josh Thomas",
