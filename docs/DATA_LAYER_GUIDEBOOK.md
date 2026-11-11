@@ -74,7 +74,8 @@ in the researched-but-unbuilt backlog.
   "pennsylvania": ["us-house", "pa-senate", "county", "pa-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
   "nevada": ["us-house", "county", "school-district-unified", "nv-senate", "nv-assembly", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
   "arizona": ["us-house", "county", "az-senate", "az-house", "school-district-secondary", "school-district-unified", "school-district-elementary", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "newjersey": ["us-house", "county", "nj-senate", "nj-assembly", "school-district-secondary", "school-district-elementary", "school-district-unified", "municipality", "zip-code", "police-station", "fire-station", "post-office"]
+  "newjersey": ["us-house", "county", "nj-senate", "nj-assembly", "school-district-secondary", "school-district-elementary", "school-district-unified", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
+  "newhampshire": ["us-house", "county", "nh-senate", "school-district-secondary", "school-district-unified", "nh-house", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -4210,6 +4211,45 @@ trusted.
             "why": "No list of the board of education members of New Jersey's school districts has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board of education members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-10 against TIGERweb's school districts (School MapServer) for STATE='34': 342 records on layer 0 (341 unified districts and one the Census names \"School District Not Defined\", GEOID 3499997, which has no land and files 2,217 km2 of coastal and bay water, and which the card answers as water), 168 elementary districts on layer 2 and 45 secondary districts on layer 1 (31 running grades 9 to 12 and 14 running 7 to 12). The unified layer and the elementary districts together cover the state's land, and the secondary districts cover exactly the elementary districts' ground, so a reader there is in two districts, each with its own board. All three ship as tile archives. No board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's own directories; the counties' election results, which were not checked for school board contests; and each district's own website. The New Jersey School Boards Association is a membership association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "newhampshire": [
+      {
+            "id": "nh-county-officials",
+            "concept": "County government",
+            "area": "New Hampshire — all 10 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of New Hampshire's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners, sheriff, county attorney, treasurer, register of deeds and register of probate, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-11 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is nh/index.html's own County block: each county elects its commissioners, a sheriff, a county attorney, a treasurer, a register of deeds and a register of probate (RSA 653:1), and the county's own state representatives sit as its county convention, which the State House card already names. The boundary is TIGERweb State_County for STATE='33', 10 features, shipped as nh/data/app/state-counties.json. ROUTES NOT YET READ, government publishers first: each county's own website; the Secretary of State's election results, which name who won each county office; and a statewide directory, if a state office keeps one. The New Hampshire Association of Counties is an association of the counties rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nh-municipal-officeholders",
+            "concept": "City government",
+            "area": "New Hampshire",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City or Town card names the city or town you picked, and not its select board, council or mayor.",
+            "why": "No statewide list of the elected officials of New Hampshire's cities and towns has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's mayor and council and each town's select board, or a city's or town's own published list of them.",
+            "blocker": "Measured 2026-11-11 against TIGERweb's county subdivisions (Places_CouSub_ConCity_SubMCD layer 1) for STATE='33': 260 records, 13 cities and 221 towns with functioning governments, Livermore (a town whose government the Census records as inactive), 24 unincorporated places with no government of their own (8 grants, 6 purchases, 6 townships and 4 locations, all in Coos County except Hale's location in Carroll County), and one record of coastal water, which the card answers as water. The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ, government publishers first: the Secretary of State's and the Department of Revenue Administration's directories of town officers, if either keeps one; each city's and town's own website, largest first (Manchester, Nashua, Concord, Derry, Dover); and the cities' own election results. The New Hampshire Municipal Association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nh-school-board-members",
+            "concept": "School board",
+            "area": "New Hampshire",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The three School District cards name the districts you picked, and not the members of their school boards.",
+            "why": "No list of the school board members of New Hampshire's school districts has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-11 against TIGERweb's school districts (School MapServer) for STATE='33': 82 records on layer 0 (81 unified districts and one the Census names \"School District Not Defined\", GEOID 3399997, which files 859 km2 of land in 15 unincorporated places, 14 of them in Coos County and Livermore in Grafton County, and 115 km2 of the Atlantic off Rockingham County, and which the card answers as no school district), 90 elementary districts on layer 2 and 8 secondary districts on layer 1 (4 running grades 9 to 12, 2 running 7 to 12 and 2 running 6 to 12, 2,181 km2 in all). The unified layer and the elementary districts together cover the state's land, and a reader in a secondary district's ground is in two districts, each with its own board. All three ship as tile archives. No board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's own directories of school administrative units and districts; each district's own website; and the towns' annual meeting results, which name who was elected to each school board. The New Hampshire School Boards Association is a membership association rather than a government. NOT YET ASKED, and no ask is drafted."
       }
   ]
 }

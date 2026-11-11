@@ -1,0 +1,3270 @@
+{
+  "Belknap 1": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Tom Ploszaj",
+        "party": "Independent",
+        "email": "tom.ploszaj@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9860"
+      }
+    ]
+  },
+  "Belknap 2": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Matt Coker",
+        "party": "Republican",
+        "email": "matthew.coker@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10733"
+      }
+    ],
+    "asOf": "2026-11-11"
+  },
+  "Belknap 3": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Juliet Harvey-Bolia",
+        "party": "Republican",
+        "email": "juliet.harveybolia@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9865"
+      }
+    ]
+  },
+  "Belknap 4": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Travis Toner",
+        "party": "Republican",
+        "email": "travis.toner@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11309"
+      }
+    ]
+  },
+  "Belknap 5": {
+    "seats": 4,
+    "members": [
+      {
+        "name": "Steve Bogert",
+        "party": "Republican",
+        "email": "steven.bogert@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10573"
+      },
+      {
+        "name": "Mike Bordes",
+        "party": "Republican",
+        "email": "mike.bordes@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9861"
+      },
+      {
+        "name": "Sheri Minor",
+        "party": "Republican",
+        "email": "sheri.minor@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11310"
+      }
+    ],
+    "asOf": "2026-11-11"
+  },
+  "Belknap 6": {
+    "seats": 4,
+    "members": [
+      {
+        "name": "Glen Aldrich",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=806"
+      },
+      {
+        "name": "Russ Dumais",
+        "party": "Republican",
+        "email": "russell.dumais@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377221"
+      },
+      {
+        "name": "Dave Nagel",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10574"
+      }
+    ],
+    "asOf": "2026-11-11"
+  },
+  "Belknap 7": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Barbara Comtois",
+        "party": "Republican",
+        "email": "barbara.comtois@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408274"
+      },
+      {
+        "name": "Paul Terry",
+        "party": "Republican",
+        "email": "paul.terry@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9866"
+      },
+      {
+        "name": "Peter Varney",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377271"
+      }
+    ]
+  },
+  "Belknap 8": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Lisa Freeman",
+        "party": "Republican",
+        "email": "lisa.freeman@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=8324"
+      },
+      {
+        "name": "Douglas Trottier",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9867"
+      }
+    ]
+  },
+  "Carroll 1": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Tom Buco",
+        "party": "Democratic",
+        "email": "tom.buco@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376645"
+      },
+      {
+        "name": "David Paige",
+        "party": "Democratic",
+        "email": "david.paige@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10741"
+      },
+      {
+        "name": "Steve Woodcock",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9046"
+      }
+    ]
+  },
+  "Carroll 2": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Anita Burroughs",
+        "party": "Democratic",
+        "email": "anita.burroughs@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408822"
+      },
+      {
+        "name": "Chris McAleer",
+        "party": "Democratic",
+        "email": "chris.mcaleer@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9871"
+      }
+    ]
+  },
+  "Carroll 3": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Karel Crawford",
+        "party": "Republican",
+        "email": "karel.crawford@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377087"
+      },
+      {
+        "name": "Joe Hamblen",
+        "party": "Republican",
+        "email": "joseph.hamblen@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11313"
+      }
+    ]
+  },
+  "Carroll 4": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Lino Avellani",
+        "party": "Republican",
+        "email": "lino.avellani@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377205"
+      },
+      {
+        "name": "Mike Belcher",
+        "party": "Republican",
+        "email": "mike.belcher@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10578"
+      }
+    ]
+  },
+  "Carroll 5": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jonathan Smith",
+        "party": "Republican",
+        "email": "jonathan.smith@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9869"
+      }
+    ]
+  },
+  "Carroll 6": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "John MacDonald",
+        "party": "Republican",
+        "email": "john.macdonald@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9411"
+      },
+      {
+        "name": "Katy Peternel",
+        "party": "Republican",
+        "email": "katy.peternel@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10579"
+      }
+    ]
+  },
+  "Carroll 7": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Bobbi Boudman",
+        "party": "Democratic",
+        "email": "bobbi.boudman@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10746"
+      }
+    ]
+  },
+  "Carroll 8": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Richard Brown",
+        "party": "Republican",
+        "email": "richard.brown@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10577"
+      },
+      {
+        "name": "Brian Taylor",
+        "party": "Republican",
+        "email": "brian.taylor@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11314"
+      }
+    ]
+  },
+  "Cheshire 1": {
+    "seats": 1,
+    "members": [],
+    "asOf": "2026-11-11"
+  },
+  "Cheshire 2": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Dru Fox",
+        "party": "Democratic",
+        "email": "dru.fox@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9873"
+      }
+    ]
+  },
+  "Cheshire 3": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Philip Jones",
+        "party": "Democratic",
+        "email": "philip.jones@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10749"
+      }
+    ]
+  },
+  "Cheshire 4": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jodi Newell",
+        "party": "Democratic",
+        "email": "jodi.newell@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10750"
+      }
+    ]
+  },
+  "Cheshire 5": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Lucy Weber",
+        "party": "Democratic",
+        "email": "lucy.weber@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=531"
+      }
+    ]
+  },
+  "Cheshire 6": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Paul Berch",
+        "party": "Democratic",
+        "email": "paul.berch@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=676"
+      },
+      {
+        "name": "Cathryn Harvey",
+        "party": "Democratic",
+        "email": "cathryn.harvey@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408479"
+      }
+    ]
+  },
+  "Cheshire 7": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Terri O'Rorke",
+        "party": "Democratic",
+        "email": "terri.ororke@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11167"
+      }
+    ]
+  },
+  "Cheshire 8": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Lucius Parshall",
+        "party": "Democratic",
+        "email": "lucius.parshall@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9874"
+      }
+    ]
+  },
+  "Cheshire 9": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Rich Nalevanko",
+        "party": "Republican",
+        "email": "rich.nalevanko@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10030"
+      }
+    ]
+  },
+  "Cheshire 10": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Barry Faulkner",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=407628"
+      },
+      {
+        "name": "Sly Karasinski",
+        "party": "Republican",
+        "email": "sly.karasinski@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10037"
+      }
+    ]
+  },
+  "Cheshire 11": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Denis Murphy",
+        "party": "Republican",
+        "email": "denis.murphy@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11452"
+      }
+    ]
+  },
+  "Cheshire 12": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Dick Thackston",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=6938"
+      }
+    ]
+  },
+  "Cheshire 13": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Dick Ames",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377061"
+      }
+    ]
+  },
+  "Cheshire 14": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "John Hunt",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=372375"
+      }
+    ]
+  },
+  "Cheshire 15": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Nick Germana",
+        "party": "Democratic",
+        "email": "nicholas.germana@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10748"
+      },
+      {
+        "name": "Samantha Jacobs",
+        "party": "Democratic",
+        "email": "samantha.jacobs@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11170"
+      }
+    ]
+  },
+  "Cheshire 16": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jim Gruber",
+        "party": "Democratic",
+        "email": "james.gruber@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11171"
+      }
+    ]
+  },
+  "Cheshire 17": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jennifer Rhodes",
+        "party": "Republican",
+        "email": "jennifer.rhodes@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9878"
+      }
+    ]
+  },
+  "Cheshire 18": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Rita Mattson",
+        "party": "Republican",
+        "email": "rita.mattson@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10034"
+      },
+      {
+        "name": "Jim Qualey",
+        "party": "Republican",
+        "email": "jim.qualey@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9875"
+      }
+    ]
+  },
+  "Coos 1": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Sean Durkin",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11118"
+      },
+      {
+        "name": "James Tierney",
+        "party": "Republican",
+        "email": "james.tierney@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=8023"
+      }
+    ]
+  },
+  "Coos 2": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Arnie Davis",
+        "party": "Republican",
+        "email": "arnold.davis@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9882"
+      }
+    ]
+  },
+  "Coos 3": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mike Ouellet",
+        "party": "Republican",
+        "email": "mike.ouellet@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10609"
+      }
+    ]
+  },
+  "Coos 4": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Seth King",
+        "party": "Republican",
+        "email": "seth.king@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10610"
+      }
+    ]
+  },
+  "Coos 5": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Pete Morency",
+        "party": "Republican",
+        "email": "peter.morency@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=8401"
+      },
+      {
+        "name": "Marc Tremblay",
+        "party": "Republican",
+        "email": "marc.tremblay@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=6469"
+      }
+    ]
+  },
+  "Coos 6": {
+    "seats": 1,
+    "members": [],
+    "asOf": "2026-11-11"
+  },
+  "Coos 7": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Lori Korzen",
+        "party": "Republican",
+        "email": "lori.korzen@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10612"
+      }
+    ]
+  },
+  "Grafton 1": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Joseph Barton",
+        "party": "Republican",
+        "email": "joseph.barton@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11320"
+      },
+      {
+        "name": "Calvin Beaulier",
+        "party": "Republican",
+        "email": "calvin.beaulier@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9140"
+      },
+      {
+        "name": "Darrell Louis",
+        "party": "Republican",
+        "email": "darrell.louis@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11321"
+      }
+    ]
+  },
+  "Grafton 2": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jared Sullivan",
+        "party": "Democratic",
+        "email": "jared.sullivan@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10761"
+      }
+    ]
+  },
+  "Grafton 3": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jerry Stringham",
+        "party": "Democratic",
+        "email": "jerry.stringham@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9058"
+      }
+    ]
+  },
+  "Grafton 4": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Heather Baldwin",
+        "party": "Democratic",
+        "email": "heather.baldwin@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10762"
+      }
+    ]
+  },
+  "Grafton 5": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Marie Bjelobrk",
+        "party": "Republican",
+        "email": "marie.bjelobrk@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11326"
+      },
+      {
+        "name": "Rick Ladd",
+        "party": "Republican",
+        "email": "rick.ladd@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=582"
+      }
+    ]
+  },
+  "Grafton 6": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Linda Franz",
+        "party": "Republican",
+        "email": "linda.franz@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11328"
+      }
+    ]
+  },
+  "Grafton 7": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Janet Lucas",
+        "party": "Democratic",
+        "email": "janet.lucas@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11181"
+      }
+    ]
+  },
+  "Grafton 8": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Bill Bolton",
+        "party": "Democratic",
+        "email": "bill.bolton@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10765"
+      },
+      {
+        "name": "Sallie Fellows",
+        "party": "Democratic",
+        "email": "sallie.fellows@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9059"
+      },
+      {
+        "name": "Peter Lovett",
+        "party": "Democratic",
+        "email": "peter.lovett@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10766"
+      }
+    ]
+  },
+  "Grafton 9": {
+    "seats": 1,
+    "members": [],
+    "asOf": "2026-11-11"
+  },
+  "Grafton 10": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "John Sellers",
+        "party": "Republican",
+        "email": "john.sellers@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10620"
+      }
+    ]
+  },
+  "Grafton 11": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Lex Berezhny",
+        "party": "Republican",
+        "email": "lex.berezhny@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9887"
+      }
+    ]
+  },
+  "Grafton 12": {
+    "seats": 4,
+    "members": [
+      {
+        "name": "Mary Hakken-Phillips",
+        "party": "Democratic",
+        "email": "mary.hakkenphillips@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9889"
+      },
+      {
+        "name": "Russ Muirhead",
+        "party": "Democratic",
+        "email": "russell.muirhead@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9890"
+      },
+      {
+        "name": "Ellen Rockmore",
+        "party": "Democratic",
+        "email": "ellen.rockmore@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11183"
+      },
+      {
+        "name": "Terry Spahr",
+        "party": "Democratic",
+        "email": "terry.spahr@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11184"
+      }
+    ]
+  },
+  "Grafton 13": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Laurel Stavis",
+        "party": "Democratic",
+        "email": "laurel.stavis@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9063"
+      }
+    ]
+  },
+  "Grafton 14": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "George Sykes",
+        "party": "Democratic",
+        "email": "george.sykes@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377176"
+      }
+    ]
+  },
+  "Grafton 15": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Tom Cormen",
+        "party": "Democratic",
+        "email": "thomas.cormen@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10769"
+      }
+    ]
+  },
+  "Grafton 16": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "David Fracht",
+        "party": "Democratic",
+        "email": "david.fracht@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11041"
+      }
+    ]
+  },
+  "Grafton 17": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Susan Almy",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376095"
+      }
+    ]
+  },
+  "Grafton 18": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Donald McFarlane",
+        "party": "Republican",
+        "email": "donald.mcfarlane@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10913"
+      }
+    ]
+  },
+  "Hillsborough 1": {
+    "seats": 4,
+    "members": [
+      {
+        "name": "Tim Mannion",
+        "party": "Republican",
+        "email": "tim.mannion@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11332"
+      },
+      {
+        "name": "Tom Mannion",
+        "party": "Republican",
+        "email": "tom.mannion@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10622"
+      },
+      {
+        "name": "Jeff Tenczar",
+        "party": "Republican",
+        "email": "jeffrey.tenczar@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10624"
+      }
+    ],
+    "asOf": "2026-11-11"
+  },
+  "Hillsborough 2": {
+    "seats": 7,
+    "members": [
+      {
+        "name": "Loren Foxx",
+        "party": "Democratic",
+        "email": "loren.foxx@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10773"
+      },
+      {
+        "name": "Ted Gorski",
+        "party": "Republican",
+        "email": "ted.gorski@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9898"
+      },
+      {
+        "name": "Linda Gould",
+        "party": "Republican",
+        "email": "linda.gould@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377299"
+      },
+      {
+        "name": "Brian Labrie",
+        "party": "Republican",
+        "email": "brian.labrie@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11336"
+      },
+      {
+        "name": "Kristin Noble",
+        "party": "Republican",
+        "email": "kristin.noble@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10626"
+      },
+      {
+        "name": "Catherine Rombeau",
+        "party": "Democratic",
+        "email": "catherine.rombeau@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10407"
+      },
+      {
+        "name": "John Schneller",
+        "party": "Republican",
+        "email": "john.schneller@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=4027"
+      }
+    ]
+  },
+  "Hillsborough 3": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Paige Beauchemin",
+        "party": "Democratic",
+        "email": "paige.beauchemin@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11100"
+      },
+      {
+        "name": "Fred Davis",
+        "party": "Democratic",
+        "email": "fred.davis@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9109"
+      },
+      {
+        "name": "Marc Plamondon",
+        "party": "Democratic",
+        "email": "marc.plamondon@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10998"
+      }
+    ]
+  },
+  "Hillsborough 4": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Ray Newman",
+        "party": "Democratic",
+        "email": "ray.newman@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9107"
+      },
+      {
+        "name": "Sue Newman",
+        "party": "Democratic",
+        "email": "sue.newman@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408537"
+      },
+      {
+        "name": "Linda Ryan",
+        "party": "Democratic",
+        "email": "linda.ryan@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10776"
+      }
+    ]
+  },
+  "Hillsborough 5": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Susan Elberger",
+        "party": "Democratic",
+        "email": "susan.elberger@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10778"
+      },
+      {
+        "name": "Heather Raymond",
+        "party": "Democratic",
+        "email": "heather.raymond@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10779"
+      },
+      {
+        "name": "Dale Swanson",
+        "party": "Democratic",
+        "email": "dale.swanson@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11190"
+      }
+    ]
+  },
+  "Hillsborough 6": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Lee Ann Kluger",
+        "party": "Democratic",
+        "email": "leeann.kluger@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11191"
+      },
+      {
+        "name": "Carry Spier",
+        "party": "Democratic",
+        "email": "carry.spier@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10780"
+      }
+    ],
+    "asOf": "2026-11-11"
+  },
+  "Hillsborough 7": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Alicia Gregg",
+        "party": "Democratic",
+        "email": "alicia.gregg@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10781"
+      },
+      {
+        "name": "Lou Juris",
+        "party": "Democratic",
+        "email": "louis.juris@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10782"
+      },
+      {
+        "name": "Catherine Sofikitis",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408546"
+      }
+    ]
+  },
+  "Hillsborough 8": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Efstathia Booras",
+        "party": "Democratic",
+        "email": "efstathia.booras@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=679"
+      },
+      {
+        "name": "Christal Lloyd",
+        "party": "Democratic",
+        "email": "christal.lloyd@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10783"
+      },
+      {
+        "name": "Kevin Scully",
+        "party": "Republican",
+        "email": "kevin.scully@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=8351"
+      }
+    ]
+  },
+  "Hillsborough 9": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Bill Dolan",
+        "party": "Democratic",
+        "email": "william.dolan@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10784"
+      },
+      {
+        "name": "Sanjeev Manohar",
+        "party": "Democratic",
+        "email": "sanjeev.manohar@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11192"
+      },
+      {
+        "name": "Santosh Salvi",
+        "party": "Democratic",
+        "email": "santosh.salvi@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11193"
+      }
+    ]
+  },
+  "Hillsborough 10": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Linda Harriott-Gathright",
+        "party": "Democratic",
+        "email": "linda.harriottgathright@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=720"
+      },
+      {
+        "name": "Martin Jack",
+        "party": "Democratic",
+        "email": "martin.jack@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377126"
+      },
+      {
+        "name": "Bill Ohm",
+        "party": "Republican",
+        "email": "bill.ohm@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=968"
+      }
+    ]
+  },
+  "Hillsborough 11": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Manoj Chourasia",
+        "party": "Democratic",
+        "email": "manoj.chourasia@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11194"
+      },
+      {
+        "name": "Will Darby",
+        "party": "Democratic",
+        "email": "will.darby@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10785"
+      },
+      {
+        "name": "Laura Telerski",
+        "party": "Democratic",
+        "email": "laura.telerski@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9117"
+      }
+    ]
+  },
+  "Hillsborough 12": {
+    "seats": 8,
+    "members": [
+      {
+        "name": "Bill Boyd",
+        "party": "Republican",
+        "email": "bill.boyd@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10347"
+      },
+      {
+        "name": "Julie Miles",
+        "party": "Republican",
+        "email": "julie.miles@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11345"
+      },
+      {
+        "name": "Maureen Mooney",
+        "party": "Republican",
+        "email": "maureen.mooney@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=5772"
+      },
+      {
+        "name": "Nancy Murphy",
+        "party": "Democratic",
+        "email": "nancy.murphy@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9089"
+      },
+      {
+        "name": "Jeanine Notter",
+        "party": "Republican",
+        "email": "jeanine.notter@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376991"
+      },
+      {
+        "name": "Adam Presa",
+        "party": "Republican",
+        "email": "adam.presa@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11346"
+      },
+      {
+        "name": "Rosemarie Rung",
+        "party": "Democratic",
+        "email": "rosemarie.rung@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9090"
+      },
+      {
+        "name": "Wendy Thomas",
+        "party": "Democratic",
+        "email": "wendy.thomas@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9093"
+      }
+    ]
+  },
+  "Hillsborough 13": {
+    "seats": 6,
+    "members": [
+      {
+        "name": "Dillon Dumont",
+        "party": "Republican",
+        "email": "dillon.dumont@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11348"
+      },
+      {
+        "name": "Cathy Kenny",
+        "party": "Republican",
+        "email": "cathy.kenny@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10640"
+      },
+      {
+        "name": "Andrew Prout",
+        "party": "Republican",
+        "email": "andrew.prout@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408359"
+      },
+      {
+        "name": "Jeremy Slottje",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11349"
+      },
+      {
+        "name": "Jordan Ulery",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376635"
+      },
+      {
+        "name": "Robert Wherry",
+        "party": "Republican",
+        "email": "robert.wherry@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10641"
+      }
+    ]
+  },
+  "Hillsborough 14": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Rich Lascelles",
+        "party": "Republican",
+        "email": "richard.lascelles@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408331"
+      },
+      {
+        "name": "Ray Peeples",
+        "party": "Republican",
+        "email": "raymond.peeples@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11350"
+      }
+    ]
+  },
+  "Hillsborough 15": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mark McLean",
+        "party": "Republican",
+        "email": "mark.mclean@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377251"
+      },
+      {
+        "name": "Mark Proulx",
+        "party": "Republican",
+        "email": "mark.proulx@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377007"
+      }
+    ]
+  },
+  "Hillsborough 16": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Dan Bergeron",
+        "party": "Democratic",
+        "email": "dan.bergeron@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11203"
+      },
+      {
+        "name": "Larry Gagne",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=573"
+      }
+    ]
+  },
+  "Hillsborough 17": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Linda DiSilvestro",
+        "party": "Democratic",
+        "email": "linda.disilvestro@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377091"
+      },
+      {
+        "name": "David Preece",
+        "party": "Democratic",
+        "email": "david.preece@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=2458"
+      }
+    ]
+  },
+  "Hillsborough 18": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jessica Grill",
+        "party": "Democratic",
+        "email": "jessica.grill@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10797"
+      },
+      {
+        "name": "Steve Kesselring",
+        "party": "Republican",
+        "email": "steven.kesselring@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11354"
+      }
+    ]
+  },
+  "Hillsborough 19": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Suzanne Chretien",
+        "party": "Democratic",
+        "email": "suzanne.chretien@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11204"
+      },
+      {
+        "name": "Matt Drew",
+        "party": "Republican",
+        "email": "matt.drew@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11355"
+      }
+    ]
+  },
+  "Hillsborough 20": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Pierre DuPont",
+        "party": "Republican",
+        "email": "pierre.dupont@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10644"
+      },
+      {
+        "name": "Alissandra Murray",
+        "party": "Democratic",
+        "email": "alissandra.murray@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10799"
+      }
+    ]
+  },
+  "Hillsborough 21": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Christine Seibert",
+        "party": "Democratic",
+        "email": "christine.seibert@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9077"
+      },
+      {
+        "name": "Matt Wilhelm",
+        "party": "Democratic",
+        "email": "matt.wilhelm@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9134"
+      }
+    ]
+  },
+  "Hillsborough 22": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Patricia Cornell",
+        "party": "Democratic",
+        "email": "patricia.cornell@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377289"
+      },
+      {
+        "name": "Nicole Leapley",
+        "party": "Democratic",
+        "email": "nicole.leapley@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10800"
+      }
+    ]
+  },
+  "Hillsborough 23": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mary Georges",
+        "party": "Democratic",
+        "email": "mary.georges@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11206"
+      },
+      {
+        "name": "Jean Jeudy",
+        "party": "Democratic",
+        "email": "jean.jeudy@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376657"
+      }
+    ]
+  },
+  "Hillsborough 24": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Chris Herbert",
+        "party": "Democratic",
+        "email": "chris.herbert@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=856"
+      }
+    ],
+    "asOf": "2026-11-11"
+  },
+  "Hillsborough 25": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Kathi Paquette",
+        "party": "Republican",
+        "email": "kathleen.paquette@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10648"
+      },
+      {
+        "name": "Kathy Staub",
+        "party": "Democratic",
+        "email": "kathy.staub@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10801"
+      }
+    ]
+  },
+  "Hillsborough 26": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Brian Cole",
+        "party": "Republican",
+        "email": "brian.cole@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=7267"
+      },
+      {
+        "name": "Patrick Long",
+        "party": "Democratic",
+        "email": "patrickn.long@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11177"
+      }
+    ]
+  },
+  "Hillsborough 27": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mary Murphy",
+        "party": "Republican",
+        "email": "mary.murphy@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11360"
+      }
+    ]
+  },
+  "Hillsborough 28": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Travis Corcoran",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10666"
+      },
+      {
+        "name": "Keith Erf",
+        "party": "Republican",
+        "email": "keith.erf@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9416"
+      }
+    ]
+  },
+  "Hillsborough 29": {
+    "seats": 4,
+    "members": [
+      {
+        "name": "Joe Alexander",
+        "party": "Republican",
+        "email": "joe.alexander@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9165"
+      },
+      {
+        "name": "Henry Giasson",
+        "party": "Republican",
+        "email": "henry.giasson@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11363"
+      },
+      {
+        "name": "Sherri Reinfurt",
+        "party": "Republican",
+        "email": "sherri.reinfurt@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11364"
+      }
+    ],
+    "asOf": "2026-11-11"
+  },
+  "Hillsborough 30": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Riché Colcombe",
+        "party": "Republican",
+        "email": "riche.colcombe@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10099"
+      },
+      {
+        "name": "Jim Creighton",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9917"
+      },
+      {
+        "name": "Jim Fedolfi",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408299"
+      }
+    ]
+  },
+  "Hillsborough 31": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Molly Howard",
+        "party": "Democratic",
+        "email": "molly.howard@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10810"
+      }
+    ]
+  },
+  "Hillsborough 32": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Diane Kelley",
+        "party": "Republican",
+        "email": "diane.kelley@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9909"
+      },
+      {
+        "name": "Jim Kofalt",
+        "party": "Republican",
+        "email": "jim.kofalt@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9895"
+      },
+      {
+        "name": "Shane Sirois",
+        "party": "Republican",
+        "email": "shane.sirois@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10653"
+      }
+    ]
+  },
+  "Hillsborough 33": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Peter Leishman",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376139"
+      },
+      {
+        "name": "Jonah Wheeler",
+        "party": "Democratic",
+        "email": "jonah.wheeler@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10813"
+      }
+    ]
+  },
+  "Hillsborough 34": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Stephanie Grund",
+        "party": "Democratic",
+        "email": "stephanie.grund@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11212"
+      },
+      {
+        "name": "Dan LeClerc",
+        "party": "Democratic",
+        "email": "daniel.leclerc@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10814"
+      },
+      {
+        "name": "Dan Veilleux",
+        "party": "Democratic",
+        "email": "daniel.veilleux@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9905"
+      }
+    ]
+  },
+  "Hillsborough 35": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Liz Barbour",
+        "party": "Republican",
+        "email": "liz.barbour@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10659"
+      },
+      {
+        "name": "Kat McGhee",
+        "party": "Democratic",
+        "email": "kat.mcghee@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=6966"
+      }
+    ]
+  },
+  "Hillsborough 36": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Diane Pauer",
+        "party": "Republican",
+        "email": "diane.pauer@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9910"
+      },
+      {
+        "name": "John Suiter",
+        "party": "Republican",
+        "email": "john.suiter@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11369"
+      }
+    ]
+  },
+  "Hillsborough 37": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Megan Murray",
+        "party": "Democratic",
+        "email": "megan.murray@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9095"
+      }
+    ]
+  },
+  "Hillsborough 38": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Ralph Boehm",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=502"
+      },
+      {
+        "name": "Kim Rice",
+        "party": "Republican",
+        "email": "kimberly.rice@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=863"
+      }
+    ]
+  },
+  "Hillsborough 39": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mark Warden",
+        "party": "Republican",
+        "email": "mark.warden@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=662"
+      }
+    ],
+    "asOf": "2026-11-11"
+  },
+  "Hillsborough 40": {
+    "seats": 4,
+    "members": [
+      {
+        "name": "Erin Kerwin",
+        "party": "Democratic",
+        "email": "erin.kerwin@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11218"
+      },
+      {
+        "name": "Mark MacKenzie",
+        "party": "Democratic",
+        "email": "mark.mackenzie@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408516"
+      },
+      {
+        "name": "Trinidad Tellez",
+        "party": "Democratic",
+        "email": "trinidad.tellez@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10820"
+      }
+    ],
+    "asOf": "2026-11-11"
+  },
+  "Hillsborough 41": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Lily Foss",
+        "party": "Democratic",
+        "email": "lily.foss@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11219"
+      },
+      {
+        "name": "Karen Hegner",
+        "party": "Democratic",
+        "email": "karen.hegner@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11221"
+      }
+    ],
+    "asOf": "2026-11-11"
+  },
+  "Hillsborough 42": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Keith Ammon",
+        "party": "Republican",
+        "email": "keith.ammon@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=836"
+      },
+      {
+        "name": "Gerry Griffin",
+        "party": "Republican",
+        "email": "gerald.griffin@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=8314"
+      },
+      {
+        "name": "Lisa Post",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9896"
+      }
+    ]
+  },
+  "Hillsborough 43": {
+    "seats": 4,
+    "members": [
+      {
+        "name": "Gary Daniels",
+        "party": "Republican",
+        "email": "gary.daniels@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=423"
+      },
+      {
+        "name": "Paul Dargie",
+        "party": "Democratic",
+        "email": "paul.dargie@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9097"
+      },
+      {
+        "name": "Peter Petrigno",
+        "party": "Democratic",
+        "email": "peter.petrigno@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9099"
+      },
+      {
+        "name": "Vanessa Sheehan",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9907"
+      }
+    ]
+  },
+  "Hillsborough 44": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Ross Berry",
+        "party": "Republican",
+        "email": "ross.berry@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9919"
+      },
+      {
+        "name": "Lisa Mazur",
+        "party": "Republican",
+        "email": "lisa.mazur@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10667"
+      }
+    ]
+  },
+  "Hillsborough 45": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jack Flanagan",
+        "party": "Republican",
+        "email": "jack.flanagan@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=623"
+      }
+    ]
+  },
+  "Merrimack 1": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Rick Devoid",
+        "party": "Republican",
+        "email": "rick.devoid@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10669"
+      }
+    ]
+  },
+  "Merrimack 2": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Greg Hill",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=943"
+      }
+    ]
+  },
+  "Merrimack 3": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Ernesto Gonzalez",
+        "party": "Republican",
+        "email": "ernesto.gonzalez@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11377"
+      },
+      {
+        "name": "Bryan Morse",
+        "party": "Republican",
+        "email": "bryan.morse@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11378"
+      }
+    ]
+  },
+  "Merrimack 4": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jose Cambrils",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9925"
+      },
+      {
+        "name": "Mike Moffett",
+        "party": "Republican",
+        "email": "michael.moffett@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=7144"
+      }
+    ]
+  },
+  "Merrimack 5": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Louise Andrus",
+        "party": "Republican",
+        "email": "louise.andrus@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9920"
+      },
+      {
+        "name": "Deborah Aylward",
+        "party": "Republican",
+        "email": "deborah.aylward@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10670"
+      }
+    ]
+  },
+  "Merrimack 6": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Tom Schamberg",
+        "party": "Democratic",
+        "email": "tom.schamberg@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=771"
+      }
+    ]
+  },
+  "Merrimack 7": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Karen Ebel",
+        "party": "Democratic",
+        "email": "karen.ebel@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377093"
+      },
+      {
+        "name": "Greg Sargent",
+        "party": "Democratic",
+        "email": "gregory.sargent@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10832"
+      }
+    ]
+  },
+  "Merrimack 8": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Tony Caplan",
+        "party": "Democratic",
+        "email": "tony.caplan@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9923"
+      },
+      {
+        "name": "Eileen Kelly",
+        "party": "Democratic",
+        "email": "eileen.kelly@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9441"
+      },
+      {
+        "name": "Stephanie Payeur",
+        "party": "Democratic",
+        "email": "stephanie.payeur@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10834"
+      }
+    ]
+  },
+  "Merrimack 9": {
+    "seats": 4,
+    "members": [
+      {
+        "name": "Eleana Colby",
+        "party": "Democratic",
+        "email": "eleana.colby@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11230"
+      },
+      {
+        "name": "Muriel Hall",
+        "party": "Democratic",
+        "email": "muriel.hall@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10352"
+      },
+      {
+        "name": "David Luneau",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377307"
+      },
+      {
+        "name": "James Newsom",
+        "party": "Democratic",
+        "email": "james.newsom@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11232"
+      }
+    ]
+  },
+  "Merrimack 10": {
+    "seats": 4,
+    "members": [
+      {
+        "name": "Stephen Boyd",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9929"
+      },
+      {
+        "name": "John Leavitt",
+        "party": "Republican",
+        "email": "john.leavitt@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=8381"
+      },
+      {
+        "name": "Yury Polozov",
+        "party": "Republican",
+        "email": "yury.polozov@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10676"
+      },
+      {
+        "name": "Thomas Walsh",
+        "party": "Republican",
+        "email": "thomas.walsh@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377187"
+      }
+    ]
+  },
+  "Merrimack 11": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Matthew Pitaro",
+        "party": "Republican",
+        "email": "matthew.pitaro@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9928"
+      }
+    ]
+  },
+  "Merrimack 12": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Peter Mehegan",
+        "party": "Republican",
+        "email": "peter.mehegan@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11382"
+      },
+      {
+        "name": "Brian Seaworth",
+        "party": "Republican",
+        "email": "brian.seaworth@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377023"
+      }
+    ]
+  },
+  "Merrimack 13": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Cy Aures",
+        "party": "Republican",
+        "email": "cyril.aures@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10677"
+      },
+      {
+        "name": "Clayton Wood",
+        "party": "Republican",
+        "email": "clayton.wood@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10678"
+      }
+    ]
+  },
+  "Merrimack 14": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Dan McGuire",
+        "party": "Republican",
+        "email": "dan.mcguire@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376984"
+      }
+    ]
+  },
+  "Merrimack 15": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Tracy Bricchi",
+        "party": "Democratic",
+        "email": "tracy.bricchi@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11235"
+      }
+    ]
+  },
+  "Merrimack 16": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Connie Lane",
+        "party": "Democratic",
+        "email": "connie.lane@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9156"
+      }
+    ]
+  },
+  "Merrimack 17": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Beth Richards",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408564"
+      }
+    ]
+  },
+  "Merrimack 18": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jim MacKay",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376028"
+      }
+    ]
+  },
+  "Merrimack 19": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mary Jane Wallner",
+        "party": "Democratic",
+        "email": "mjwallner@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=368423"
+      }
+    ]
+  },
+  "Merrimack 20": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Eric Gallager",
+        "party": "Democratic",
+        "email": "eric.gallager@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9926"
+      }
+    ]
+  },
+  "Merrimack 21": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Timothy Soucy",
+        "party": "Democratic",
+        "email": "timothy.soucy@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376869"
+      }
+    ]
+  },
+  "Merrimack 22": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "James Roesener",
+        "party": "Democratic",
+        "email": "james.roesener@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10840"
+      }
+    ]
+  },
+  "Merrimack 23": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Merryl Gibbs",
+        "party": "Democratic",
+        "email": "merryl.gibbs@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10843"
+      }
+    ]
+  },
+  "Merrimack 24": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Matthew Hicks",
+        "party": "Democratic",
+        "email": "matthew.hicks@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10844"
+      }
+    ]
+  },
+  "Merrimack 25": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "James Thibault",
+        "party": "Republican",
+        "email": "james.thibault@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10980"
+      }
+    ]
+  },
+  "Merrimack 26": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Alvin See",
+        "party": "Republican",
+        "email": "alvin.see@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10682"
+      }
+    ]
+  },
+  "Merrimack 27": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Carol McGuire",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376841"
+      },
+      {
+        "name": "Ray Plante",
+        "party": "Republican",
+        "email": "ray.plante@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10121"
+      }
+    ]
+  },
+  "Merrimack 28": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jim Snodgrass",
+        "party": "Democratic",
+        "email": "jim.snodgrass@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11238"
+      }
+    ]
+  },
+  "Merrimack 29": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kris Schultz",
+        "party": "Democratic",
+        "email": "kris.schultz@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408808"
+      }
+    ]
+  },
+  "Merrimack 30": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Gary Woods",
+        "party": "Democratic",
+        "email": "gary.woods@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9167"
+      }
+    ]
+  },
+  "Rockingham 1": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Scott Bryer",
+        "party": "Republican",
+        "email": "scott.bryer@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11392"
+      },
+      {
+        "name": "Jim Guzofski",
+        "party": "Republican",
+        "email": "james.guzofski@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11393"
+      },
+      {
+        "name": "Paul Tudor",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9930"
+      }
+    ]
+  },
+  "Rockingham 2": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Jason Osborne",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=901"
+      },
+      {
+        "name": "Jim Spillane",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377264"
+      },
+      {
+        "name": "Kevin Verville",
+        "party": "Republican",
+        "email": "kevin.verville@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408388"
+      }
+    ]
+  },
+  "Rockingham 3": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mary Ford",
+        "party": "Republican",
+        "email": "mary.ford@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11394"
+      }
+    ]
+  },
+  "Rockingham 4": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Cindy Bennett",
+        "party": "Republican",
+        "email": "cindy.bennett@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11395"
+      },
+      {
+        "name": "Mike Drago",
+        "party": "Republican",
+        "email": "mike.drago@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10686"
+      },
+      {
+        "name": "Brian Nadeau",
+        "party": "Republican",
+        "email": "brian.nadeau@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11396"
+      }
+    ]
+  },
+  "Rockingham 5": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mark Vallone",
+        "party": "Democratic",
+        "email": "mark.vallone@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9210"
+      }
+    ],
+    "asOf": "2026-11-11"
+  },
+  "Rockingham 6": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Eric Turer",
+        "party": "Democratic",
+        "email": "eric.turer@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9999"
+      }
+    ]
+  },
+  "Rockingham 7": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Larry Miner",
+        "party": "Republican",
+        "email": "laurence.miner@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11399"
+      }
+    ]
+  },
+  "Rockingham 8": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Sayra DeVito",
+        "party": "Republican",
+        "email": "sayra.devito@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11401"
+      }
+    ]
+  },
+  "Rockingham 9": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Donald Selby",
+        "party": "Republican",
+        "email": "donald.selby@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11402"
+      },
+      {
+        "name": "Vicki Wilson",
+        "party": "Republican",
+        "email": "vicki.wilson@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11403"
+      }
+    ]
+  },
+  "Rockingham 10": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Michael Cahill",
+        "party": "Democratic",
+        "email": "michael.cahill@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377079"
+      },
+      {
+        "name": "Ellen Read",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408613"
+      },
+      {
+        "name": "Toni Weinstein",
+        "party": "Democratic",
+        "email": "toni.weinstein@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11252"
+      }
+    ]
+  },
+  "Rockingham 11": {
+    "seats": 4,
+    "members": [
+      {
+        "name": "Julie Gilman",
+        "party": "Democratic",
+        "email": "julie.gilman@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408615"
+      },
+      {
+        "name": "Gaby Grossman",
+        "party": "Democratic",
+        "email": "gaby.grossman@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9218"
+      },
+      {
+        "name": "Mark Paige",
+        "party": "Democratic",
+        "email": "mark.paige@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9942"
+      }
+    ],
+    "asOf": "2026-11-11"
+  },
+  "Rockingham 12": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Allison Knab",
+        "party": "Democratic",
+        "email": "allison.knab@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10856"
+      },
+      {
+        "name": "Zoe Manos",
+        "party": "Democratic",
+        "email": "zoe.manos@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10857"
+      }
+    ]
+  },
+  "Rockingham 13": {
+    "seats": 10,
+    "members": [
+      {
+        "name": "Charlie Foote",
+        "party": "Republican",
+        "email": "charles.foote@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10691"
+      },
+      {
+        "name": "Phyllis Katsakiores",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=332247"
+      },
+      {
+        "name": "Erica Layon",
+        "party": "Republican",
+        "email": "erica.layon@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9935"
+      },
+      {
+        "name": "David Love",
+        "party": "Republican",
+        "email": "david.love@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=8407"
+      },
+      {
+        "name": "David Milz",
+        "party": "Republican",
+        "email": "david.milz@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377147"
+      },
+      {
+        "name": "Jodi Nelson",
+        "party": "Republican",
+        "email": "jodi.nelson@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10440"
+      },
+      {
+        "name": "Steve Pearson",
+        "party": "Republican",
+        "email": "steve.pearson@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9269"
+      },
+      {
+        "name": "John Potucek",
+        "party": "Republican",
+        "email": "john.potucek@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377257"
+      },
+      {
+        "name": "Katherine Prudhomme-O'Brien",
+        "party": "Republican",
+        "email": "kpo@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377258"
+      },
+      {
+        "name": "Richard Tripp",
+        "party": "Republican",
+        "email": "richard.tripp@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=8408"
+      }
+    ]
+  },
+  "Rockingham 14": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Pam Brown",
+        "party": "Republican",
+        "email": "pam.brown@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11407"
+      },
+      {
+        "name": "Ken Weyler",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=374470"
+      }
+    ]
+  },
+  "Rockingham 15": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Joe Guthrie",
+        "party": "Republican",
+        "email": "joseph.guthrie@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376127"
+      },
+      {
+        "name": "Lilli Walsh",
+        "party": "Republican",
+        "email": "lilli.walsh@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10692"
+      }
+    ]
+  },
+  "Rockingham 16": {
+    "seats": 7,
+    "members": [
+      {
+        "name": "Tom Dolan",
+        "party": "Republican",
+        "email": "tom.dolan@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9268"
+      },
+      {
+        "name": "Ron Dunn",
+        "party": "Republican",
+        "email": "ron.dunn@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10693"
+      },
+      {
+        "name": "David Lundgren",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376972"
+      },
+      {
+        "name": "Wayne MacDonald",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9951"
+      },
+      {
+        "name": "Sherm Packard",
+        "party": "Republican",
+        "email": "sherman.packard@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=375453"
+      },
+      {
+        "name": "Kristine Perez",
+        "party": "Republican",
+        "email": "kristine.perez@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10694"
+      },
+      {
+        "name": "Doug Thomas",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377267"
+      }
+    ]
+  },
+  "Rockingham 17": {
+    "seats": 4,
+    "members": [
+      {
+        "name": "Katelyn Kuttab",
+        "party": "Republican",
+        "email": "katelyn.kuttab@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10695"
+      },
+      {
+        "name": "Bob Lynn",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9937"
+      },
+      {
+        "name": "Charles McMahon",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376498"
+      },
+      {
+        "name": "Daniel Popovici-Muller",
+        "party": "Republican",
+        "email": "daniel.popovicimuller@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10697"
+      }
+    ]
+  },
+  "Rockingham 18": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Debra DeSimone",
+        "party": "Republican",
+        "email": "debra.desimone@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376807"
+      },
+      {
+        "name": "Jay Markell",
+        "party": "Republican",
+        "email": "jay.markell@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11413"
+      }
+    ]
+  },
+  "Rockingham 19": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Susan Porcelli",
+        "party": "Republican",
+        "email": "susan.porcelli@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10700"
+      }
+    ]
+  },
+  "Rockingham 20": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Bob Harb",
+        "party": "Republican",
+        "email": "robert.harb@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9293"
+      },
+      {
+        "name": "Charlie Melvin",
+        "party": "Republican",
+        "email": "charlie.melvin@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=8419"
+      },
+      {
+        "name": "Jim Summers",
+        "party": "Republican",
+        "email": "james.summers@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9294"
+      }
+    ]
+  },
+  "Rockingham 21": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jennifer Mandelbaum",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11135"
+      }
+    ]
+  },
+  "Rockingham 22": {
+    "seats": 1,
+    "members": [],
+    "asOf": "2026-11-11"
+  },
+  "Rockingham 23": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jim Maggiore",
+        "party": "Democratic",
+        "email": "jim.maggiore@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9224"
+      }
+    ]
+  },
+  "Rockingham 24": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Dennis Malloy",
+        "party": "Democratic",
+        "email": "dennis.malloy@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377137"
+      }
+    ],
+    "asOf": "2026-11-11"
+  },
+  "Rockingham 25": {
+    "seats": 9,
+    "members": [
+      {
+        "name": "Lorie Ball",
+        "party": "Republican",
+        "email": "lorie.ball@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10702"
+      },
+      {
+        "name": "Tanya Donnelly",
+        "party": "Republican",
+        "email": "tanya.donnelly@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10704"
+      },
+      {
+        "name": "John Janigian",
+        "party": "Republican",
+        "email": "john.janigian@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408412"
+      },
+      {
+        "name": "Dennis Mannion",
+        "party": "Republican",
+        "email": "dennis.mannion@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10705"
+      },
+      {
+        "name": "Valerie McDonnell",
+        "party": "Republican",
+        "email": "valerie.mcdonnell@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10706"
+      },
+      {
+        "name": "Joe Sweeney",
+        "party": "Republican",
+        "email": "joe.sweeney@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=779"
+      },
+      {
+        "name": "John Sytek",
+        "party": "Republican",
+        "email": "john.sytek@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=375692"
+      },
+      {
+        "name": "Sue Vandecasteele",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9938"
+      }
+    ],
+    "asOf": "2026-11-11"
+  },
+  "Rockingham 26": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Buzz Scherr",
+        "party": "Democratic",
+        "email": "buzz.scherr@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11267"
+      }
+    ]
+  },
+  "Rockingham 27": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Gerry Ward",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377188"
+      }
+    ]
+  },
+  "Rockingham 28": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Carrie Sorensen",
+        "party": "Democratic",
+        "email": "carrie.sorensen@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11268"
+      }
+    ]
+  },
+  "Rockingham 29": {
+    "seats": 4,
+    "members": [
+      {
+        "name": "Nicholas Bridle",
+        "party": "Republican",
+        "email": "nicholas.bridle@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11419"
+      },
+      {
+        "name": "Michael Edgar",
+        "party": "Democratic",
+        "email": "michael.edgar@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377778"
+      },
+      {
+        "name": "Chris Muns",
+        "party": "Democratic",
+        "email": "chris.muns@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=755"
+      },
+      {
+        "name": "Erica de Vries",
+        "party": "Democratic",
+        "email": "erica.devries@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10887"
+      }
+    ]
+  },
+  "Rockingham 30": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Matt Sabourin dit Choinière",
+        "party": "Republican",
+        "email": "matt.sabourin@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11420"
+      },
+      {
+        "name": "Aboul Khan",
+        "party": "Republican",
+        "email": "aboul.khan@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=736"
+      }
+    ]
+  },
+  "Rockingham 31": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jess Edwards",
+        "party": "Republican",
+        "email": "jess.edwards@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408392"
+      },
+      {
+        "name": "Terry Roy",
+        "party": "Republican",
+        "email": "terry.roy@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408925"
+      }
+    ]
+  },
+  "Rockingham 32": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Melissa Litchfield",
+        "party": "Republican",
+        "email": "melissa.litchfield@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9940"
+      }
+    ]
+  },
+  "Rockingham 33": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Alexis Simpson",
+        "party": "Democratic",
+        "email": "alexis.simpson@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=904"
+      }
+    ]
+  },
+  "Rockingham 34": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mark Pearson",
+        "party": "Republican",
+        "email": "mark.pearson@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408749"
+      }
+    ]
+  },
+  "Rockingham 35": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Julius Soti",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9936"
+      }
+    ]
+  },
+  "Rockingham 36": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "J.D. Bernardy",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9941"
+      }
+    ]
+  },
+  "Rockingham 37": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "David Meuse",
+        "party": "Democratic",
+        "email": "david.meuse@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9226"
+      }
+    ]
+  },
+  "Rockingham 38": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Peggy Balboni",
+        "party": "Democratic",
+        "email": "peggy.balboni@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10885"
+      }
+    ]
+  },
+  "Rockingham 39": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Ned Raynolds",
+        "party": "Democratic",
+        "email": "ned.raynolds@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10886"
+      }
+    ]
+  },
+  "Rockingham 40": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Linda McGrath",
+        "party": "Republican",
+        "email": "linda.mcgrath@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11421"
+      }
+    ]
+  },
+  "Strafford 1": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Sue DeLemus",
+        "party": "Republican",
+        "email": "susan.delemus@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=947"
+      },
+      {
+        "name": "Robley Hall",
+        "party": "Republican",
+        "email": "robley.hall@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11423"
+      }
+    ]
+  },
+  "Strafford 2": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Glenn Bailey",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9946"
+      },
+      {
+        "name": "Claudine Burnham",
+        "party": "Republican",
+        "email": "claudine.burnham@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10713"
+      },
+      {
+        "name": "Michael Granger",
+        "party": "Republican",
+        "email": "michael.granger@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10714"
+      }
+    ]
+  },
+  "Strafford 3": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Susan DeRoy",
+        "party": "Republican",
+        "email": "susan.deroy@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11424"
+      }
+    ]
+  },
+  "Strafford 4": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Heath Howard",
+        "party": "Democratic",
+        "email": "heath.howard@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10004"
+      },
+      {
+        "name": "Cassandra Levesque",
+        "party": "Democratic",
+        "email": "cassandra.levesque@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9425"
+      },
+      {
+        "name": "Len Turcotte",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=920"
+      }
+    ]
+  },
+  "Strafford 5": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Thomas Kaczynski",
+        "party": "Republican",
+        "email": "thomas.kaczynski@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=915"
+      }
+    ]
+  },
+  "Strafford 6": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Denise DeDe-Poulin",
+        "party": "Republican",
+        "email": "denise.dedepoulin@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11425"
+      }
+    ]
+  },
+  "Strafford 7": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Aidan Ankarberg",
+        "party": "Independent",
+        "email": "aidan.ankarberg@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9947"
+      }
+    ]
+  },
+  "Strafford 8": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Sam Farrington",
+        "party": "Republican",
+        "email": "samuel.farrington@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11426"
+      }
+    ]
+  },
+  "Strafford 9": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Amy Malone",
+        "party": "Democratic",
+        "email": "amy.malone@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11278"
+      }
+    ]
+  },
+  "Strafford 10": {
+    "seats": 4,
+    "members": [
+      {
+        "name": "Wayne Burton",
+        "party": "Democratic",
+        "email": "wayne.burton@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=974"
+      },
+      {
+        "name": "Timothy Horrigan",
+        "party": "Democratic",
+        "email": "timothy.horrigan@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376826"
+      },
+      {
+        "name": "Loren Selig",
+        "party": "Democratic",
+        "email": "loren.selig@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10896"
+      },
+      {
+        "name": "Marjorie Smith",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376166"
+      }
+    ]
+  },
+  "Strafford 11": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Erik Johnson",
+        "party": "Democratic",
+        "email": "erik.johnson@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11134"
+      },
+      {
+        "name": "Tom Southworth",
+        "party": "Democratic",
+        "email": "thomas.southworth@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377316"
+      },
+      {
+        "name": "Janet Wall",
+        "party": "Democratic",
+        "email": "janet.wall@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=372557"
+      }
+    ]
+  },
+  "Strafford 12": {
+    "seats": 4,
+    "members": [
+      {
+        "name": "Billie Butler",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11524"
+      },
+      {
+        "name": "Myles England",
+        "party": "Democratic",
+        "email": "myles.england@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11281"
+      },
+      {
+        "name": "Wayne Pearson",
+        "party": "Democratic",
+        "email": "wayne.pearson@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11283"
+      },
+      {
+        "name": "John Stone",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11284"
+      }
+    ]
+  },
+  "Strafford 13": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Peter Bixby",
+        "party": "Democratic",
+        "email": "peter.bixby@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377070"
+      }
+    ]
+  },
+  "Strafford 14": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Peter Schmidt",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=376521"
+      }
+    ]
+  },
+  "Strafford 15": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Alice Wade",
+        "party": "Democratic",
+        "email": "alice.wade@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11286"
+      }
+    ]
+  },
+  "Strafford 16": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Gary Gilmore",
+        "party": "Democratic",
+        "email": "gary.gilmore@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=4998"
+      }
+    ]
+  },
+  "Strafford 17": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jessica LaMontagne",
+        "party": "Democratic",
+        "email": "jessica.lamontagne@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10900"
+      }
+    ]
+  },
+  "Strafford 18": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mike Harrington",
+        "party": "Republican",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=5122"
+      }
+    ]
+  },
+  "Strafford 19": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "John Larochelle",
+        "party": "Democratic",
+        "email": "john.larochelle@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11288"
+      },
+      {
+        "name": "Kelley Potenza",
+        "party": "Republican",
+        "email": "kelley.potenza@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10726"
+      },
+      {
+        "name": "David Walker",
+        "party": "Republican",
+        "email": "david.walker@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10716"
+      }
+    ]
+  },
+  "Strafford 20": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Allan Howland",
+        "party": "Democratic",
+        "email": "allan.howland@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10903"
+      }
+    ]
+  },
+  "Strafford 21": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Luz Bay",
+        "party": "Democratic",
+        "email": "luz.bay@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10904"
+      },
+      {
+        "name": "Seth Miller",
+        "party": "Democratic",
+        "email": "seth.miller@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11291"
+      },
+      {
+        "name": "Geoff Smith",
+        "party": "Democratic",
+        "email": "geoff.smith@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10905"
+      }
+    ]
+  },
+  "Sullivan 1": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Brian Sullivan",
+        "party": "Democratic",
+        "email": "brian.sullivan@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=408813"
+      }
+    ]
+  },
+  "Sullivan 2": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Bill Palmer",
+        "party": "Democratic",
+        "email": "william.palmer@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10906"
+      }
+    ]
+  },
+  "Sullivan 3": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "Skip Rollins",
+        "party": "Republican",
+        "email": "skip.rollins@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377163"
+      },
+      {
+        "name": "Steven Smith",
+        "party": "Republican",
+        "email": "steven.smith@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=377031"
+      },
+      {
+        "name": "Terry Spilsbury",
+        "party": "Republican",
+        "email": "walter.spilsbury@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9950"
+      }
+    ]
+  },
+  "Sullivan 4": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Judy Aron",
+        "party": "Republican",
+        "email": "judy.aron@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9429"
+      }
+    ]
+  },
+  "Sullivan 5": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "George Grant",
+        "party": "Republican",
+        "email": "george.grant@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10729"
+      }
+    ]
+  },
+  "Sullivan 6": {
+    "seats": 3,
+    "members": [
+      {
+        "name": "John Cloutier",
+        "party": "Democratic",
+        "url": "https://gc.nh.gov/house/members/member.aspx?member=375829"
+      },
+      {
+        "name": "Dale Girard",
+        "party": "Republican",
+        "email": "dale.girard@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11293"
+      },
+      {
+        "name": "Wayne Hemingway",
+        "party": "Republican",
+        "email": "wayne.hemingway@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11439"
+      }
+    ]
+  },
+  "Sullivan 7": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Margaret Drye",
+        "party": "Republican",
+        "email": "margaret.drye@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=9284"
+      }
+    ]
+  },
+  "Sullivan 8": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Michael Aron",
+        "party": "Republican",
+        "email": "michael.aron@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=11442"
+      },
+      {
+        "name": "Hope Damon",
+        "party": "Democratic",
+        "email": "hope.damon@gc.nh.gov",
+        "url": "https://gc.nh.gov/house/members/member.aspx?pid=10910"
+      }
+    ]
+  }
+}

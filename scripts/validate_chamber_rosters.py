@@ -82,6 +82,7 @@ BUILDERS = (
     "nv/scripts/build_nv_legislature_roster.py",
     "az/scripts/build_az_legislature_roster.py",
     "nj/scripts/build_nj_legislature_roster.py",
+    "nh/scripts/build_nh_legislature_roster.py",
 )
 
 
@@ -157,6 +158,49 @@ def check_multi_record(label, district, rec, per_district):
     return bad
 
 
+def check_named_chamber(tag, label, cfg):
+    """A chamber whose districts are NAMED and elect different numbers of
+    members, which New Hampshire's House is: 400 seats in 203 districts such
+    as "Hillsborough 41", each electing one to ten. The builder states the
+    plan as `districts` ({name: seats}) instead of a count, every record is
+    {seats, members[, asOf]} whatever the seat count, and each is held to its
+    own district's seats. Returns (problems, report line)."""
+    districts = cfg["districts"]
+    out = cfg.get("out")
+    if not out or not districts or not all(
+            isinstance(n, int) and n >= 1 for n in districts.values()):
+        return (["%s states its districts without an `out` file or with a seat "
+                 "count that is not a whole number of seats" % label], None)
+    path = os.path.join(REPO_ROOT, tag, "data", "app", out)
+    if not os.path.exists(path):
+        return (["%s: %s is gone" % (label, out)], None)
+    with open(path, encoding="utf-8") as fh:
+        roster = json.load(fh)
+    problems = []
+    missing = [d for d in districts if d not in roster]
+    if missing:
+        problems.append("%s elects from %d named districts and its roster has no "
+                        "record for %s" % (label, len(districts), ", ".join(missing)))
+    extra = [d for d in roster if d not in districts]
+    if extra:
+        problems.append("%s's roster carries %s, which is not one of the districts "
+                        "its builder states" % (label, ", ".join(sorted(extra))))
+    named = unlisted = 0
+    for district, seats in districts.items():
+        rec = roster.get(district)
+        if rec is None:
+            continue
+        problems.extend(check_multi_record(label, district, rec, seats))
+        listed = len([m for m in (rec.get("members") or []) if isinstance(m, dict) and m.get("name")]) \
+            if isinstance(rec, dict) else 0
+        named += listed
+        unlisted += max(0, seats - listed)
+    total = sum(districts.values())
+    return (problems, "  %-16s %3d seats — %3d named, 0 vacant, %d no member listed "
+                      "(%d named districts electing 1 to %d each)"
+                      % (label, total, named, unlisted, len(districts), max(districts.values())))
+
+
 def run():
     problems = []
     lines = []
@@ -168,6 +212,12 @@ def run():
         tag = rel.split("/")[0]
         for key, cfg in sorted(chambers.items()):
             label = "%s %s" % (tag, cfg.get("label") or key)
+            if isinstance(cfg.get("districts"), dict):
+                named_problems, line = check_named_chamber(tag, label, cfg)
+                problems.extend(named_problems)
+                if line:
+                    lines.append(line)
+                continue
             seats = cfg.get("seats")
             per = cfg.get("per_district") or 1
             out = cfg.get("out")
@@ -261,6 +311,26 @@ MULTI_CASES = (
 )
 
 
+# The same, for a chamber of NAMED districts electing different numbers.
+NAMED_CASES = (
+    ({"A 1": {"seats": 1, "members": [{"name": "X"}]},
+      "A 2": {"seats": 3, "members": [{"name": "Y"}], "asOf": "2026-11-11"}}, 0,
+     "every named district carries a record, a short one dated"),
+    ({"A 1": {"seats": 1, "members": [{"name": "X"}]}}, 1, "a named district absent"),
+    ({"A 1": {"seats": 1, "members": [{"name": "X"}]},
+      "A 2": {"seats": 3, "members": [{"name": "Y"}]}}, 1, "a short district undated"),
+    ({"A 1": {"seats": 1, "members": [{"name": "X"}, {"name": "Z"}]},
+      "A 2": {"seats": 3, "members": [{"name": "Y"}], "asOf": "2026-11-11"}}, 1,
+     "two members for one seat"),
+    ({"A 1": {"seats": 1, "members": [{"name": "X"}]},
+      "A 2": {"seats": 2, "members": [{"name": "Y"}], "asOf": "2026-11-11"}}, 1,
+     "a seat count that disagrees with the builder's plan"),
+    ({"A 1": {"seats": 1, "members": [{"name": "X"}]},
+      "A 2": {"seats": 3, "members": [{"name": "Y"}], "asOf": "2026-11-11"},
+      "A 9": {"seats": 1, "members": []}}, 1, "a district the plan does not have"),
+)
+
+
 def selftest():
     bad = 0
     for roster, seats, want, why in CASES:
@@ -285,11 +355,31 @@ def selftest():
     print("  MULTI %d two-member case(s), %d clean / %d refused"
           % (len(MULTI_CASES), sum(1 for _, w, _ in MULTI_CASES if not w),
              sum(1 for _, w, _ in MULTI_CASES if w)))
+    import tempfile
+    plan = {"A 1": 1, "A 2": 3}
+    for roster, want, why in NAMED_CASES:
+        with tempfile.TemporaryDirectory() as tmp:
+            os.makedirs(os.path.join(tmp, "zz", "data", "app"))
+            with open(os.path.join(tmp, "zz", "data", "app", "r.json"), "w") as fh:
+                json.dump(roster, fh)
+            global REPO_ROOT
+            saved, REPO_ROOT = REPO_ROOT, tmp
+            try:
+                problems, _ = check_named_chamber("zz", "selftest", {"districts": plan, "out": "r.json"})
+            finally:
+                REPO_ROOT = saved
+        got = 1 if problems else 0
+        if got != want:
+            bad += 1
+            print("  NAMED want=%d got=%d  (%s)" % (want, got, why))
+    print("  NAMED %d named-district case(s), %d clean / %d refused"
+          % (len(NAMED_CASES), sum(1 for _, w, _ in NAMED_CASES if not w),
+             sum(1 for _, w, _ in NAMED_CASES if w)))
     if bad:
         print("validate-chamber-rosters: SELFTEST FAILED")
         return 1
     print("validate-chamber-rosters: selftest OK — %d roster case(s)"
-          % (len(CASES) + len(MULTI_CASES)))
+          % (len(CASES) + len(MULTI_CASES) + len(NAMED_CASES)))
     return 0
 
 

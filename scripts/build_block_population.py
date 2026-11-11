@@ -214,6 +214,19 @@ INSTANCES = {
     "nj": {"name": "New Jersey", "state": "34", "total": 9288994, "counties": 21,
            "bbox": (-75.57, 38.78, -73.88, 41.36),
            "maps": [("congress-districts.json", 12, 0.0065), ("nj-legislative-districts.json", 40, 0.035)]},
+    # NEW HAMPSHIRE'S HOUSE MAP IS NOT HELD HERE, and that is the plan's shape
+    # rather than an omission: its 164 base districts elect between one and ten
+    # representatives each, so one ideal of the state's people over 164
+    # districts describes no district, and each is named for its county and a
+    # number ("Hillsborough 10") rather than numbered. Its partition of the
+    # state is held by nh/scripts/build_legislative_boundaries.py's own
+    # 2,000-point gate instead. Measured 2026-11-11 on the shipped outlines,
+    # the two congressional districts sit within 0.0005% of their ideal,
+    # and the Senate plan's worst district is 5.45% over the raw-census ideal,
+    # inside the 10% total deviation a state plan may carry.
+    "nh": {"name": "New Hampshire", "state": "33", "total": 1377529, "counties": 10,
+           "bbox": (-72.56, 42.69, -70.57, 45.31),
+           "maps": [("congress-districts.json", 2, 0.0005), ("nh-senate-districts.json", 24, 0.055)]},
 }
 def fetch(url, params):
     q = url + "/query?" + urllib.parse.urlencode(params)
