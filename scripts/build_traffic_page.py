@@ -202,6 +202,10 @@ ACTION_GROUPS = [
     ("Sponsor", {"sponsor"}),
     # address-map/<layer>: an office address on a card opened in a map app
     # (engine card-helpers, 2026-11-03)
+    # statewide-officials/<tag>: the list of a state's statewide officers
+    # opened above a map's results (engine statewide-officials, 2026-11-10;
+    # Adam: "count in traffic")
+    ("State officials", {"statewide-officials"}),
     ("Other", {"more-open", "more-item", "osm-note", "example-place",
                "app-shortcut", "address-map"}),
 ]

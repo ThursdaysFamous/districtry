@@ -4892,9 +4892,16 @@ try {
   // the full list), so nothing in the layer checks reaches it: with no layer
   // on, a selected point inside Illinois shows the line closed, naming the
   // governor and a count; pressing it opens the full list in place; and a
-  // point outside Illinois shows no line.
+  // point outside Illinois shows no line. Opening it is counted once, as
+  // statewide-officials/il (Adam, the same day: "count in traffic"), and
+  // closing it is not.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
+    await context.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+    await context.addInitScript(() => {
+      window.__gcEvents = [];
+      window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+    });
     const page = await booted(context, `${BASE}#point=${POINT}`);
     await page.waitForSelector("#statewide-strip:not([hidden])", { timeout: 15000 })
       .catch(() => null);
@@ -4926,6 +4933,11 @@ try {
         && open.text.indexOf("Elected by the whole state") !== -1;
       check("pressing the statewide officials line opens the full list in place",
             openOk, JSON.stringify({ expanded: open.expanded, text: open.text.slice(0, 160) }));
+      await page.click(".statewide-strip-toggle");
+      const counted = await page.evaluate(() => (window.__gcEvents || [])
+        .filter((v) => v && v.event && /^statewide-officials\//.test(v.path)).map((v) => v.path));
+      check("opening the statewide officials list is counted once, by the app, and closing it is not",
+            counted.join() === "statewide-officials/il", JSON.stringify(counted));
     }
     // a point no app covers (Butler County, Ohio, Indiana's uncovered case)
     // stays in this app and shows no Illinois officials

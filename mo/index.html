@@ -15671,7 +15671,9 @@ function initMissouriExplorer() {
    * selected, one line sits at the top of the results naming the governor and
    * how many more there are; pressing it opens the full list in place, and it
    * stays open for later points until it is closed again (kept in memory only,
-   * so nothing is stored in the browser).
+   * so nothing is stored in the browser; Adam, 2026-11-10: "forget"). Opening
+   * it is counted as statewide-officials/<tag>, by the app and never by place
+   * (Adam, the same day: "count in traffic"); closing it is not counted.
    *
    * One call per app: registerStatewideOfficials({ outline }) where outline is
    * the app's widest outline file (the state, or San Francisco's city, whose
@@ -15820,6 +15822,7 @@ function initMissouriExplorer() {
     if (sw.open) panel.appendChild(statewideBody(r));
     btn.addEventListener("click", function () {
       sw.open = !sw.open;
+      if (sw.open) trackEvent("statewide-officials/" + METRO_BRAND.instanceTag);
       btn.setAttribute("aria-expanded", sw.open ? "true" : "false");
       btn.lastChild.textContent = sw.open ? "Hide" : "Show all";
       if (sw.open && !panel.firstChild) panel.appendChild(statewideBody(r));
