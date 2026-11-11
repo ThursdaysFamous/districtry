@@ -1,0 +1,54 @@
+{
+ "state": "Texas",
+ "usps": "TX",
+ "officersNote": "Texas's voters also elect the Supreme Court and the Court of Criminal Appeals statewide. Those courts are not listed here yet. The Secretary of State is appointed by the governor, so is not listed.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Greg Abbott",
+   "url": "https://gov.texas.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Dan Patrick",
+   "url": "https://www.ltgov.texas.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Ken Paxton",
+   "url": "https://www.texasattorneygeneral.gov/"
+  },
+  {
+   "office": "Comptroller of Public Accounts",
+   "name": "Don Huffines",
+   "url": "https://comptroller.texas.gov/",
+   "source": "https://comptroller.texas.gov/about/bio.php",
+   "note": "An elected office whose holder was appointed: the office's own biography page says Gov. Abbott appointed Don Huffines and he was sworn in on Aug. 1, 2026 (read 2026-11-11). The front page names nobody, so the biography page is the one read."
+  },
+  {
+   "office": "Commissioner of the General Land Office",
+   "name": "Dawn Buckingham",
+   "url": "https://www.glo.texas.gov/"
+  },
+  {
+   "office": "Commissioner of Agriculture",
+   "name": "Sid Miller",
+   "url": "https://www.texasagriculture.gov/"
+  },
+  {
+   "office": "Railroad Commissioner",
+   "name": "Christi Craddick",
+   "url": "https://www.rrc.texas.gov/about-us/commissioners/"
+  },
+  {
+   "office": "Railroad Commissioner",
+   "name": "Wayne Christian",
+   "url": "https://www.rrc.texas.gov/about-us/commissioners/"
+  },
+  {
+   "office": "Railroad Commissioner",
+   "name": "Jim Wright",
+   "url": "https://www.rrc.texas.gov/about-us/commissioners/"
+  }
+ ]
+}
