@@ -6,12 +6,11 @@ name: Update U.S. House (Nevada) roster
 # if anything changed, opens a PR rather than committing directly to main —
 # officeholder data should get a human look before it ships.
 #
-# NEVADA IS DARK, so this job is shorter than its served siblings by
-# exactly the steps a served instance owes: there is no nv/congress.html to
-# regenerate (build_legislator_pages.py refuses an instance metros.json does
-# not carry, so the page is not built yet), nv/ is not in the sitemap, and
-# about.html does not count this instance. Go-live adds those steps in the same
-# change that adds nv to metros.json — nv/WATCH.md carries the list.
+# THE PAGE STEPS LANDED WITH THE GO-LIVE CHANGE (batch 1 of the state-level
+# launch). `nv/congress.html` carries a GENERATED table of this roster, and
+# `about.html` and `sitemap.xml` count it, so all three are regenerated here
+# and staged in the same `git add` — otherwise this workflow's own bot PR
+# fails those pages' `--check` on numbers the PR is not about.
 #
 # THE MAP THESE MEMBERS ARE JOINED TO IS THE 2021 MAP the Legislature enacted,
 # which TIGERweb's layer 4 (the 119th Congress) and layer 0 (the 120th) both
@@ -87,7 +86,10 @@ jobs:
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
           python3 nv/scripts/build_congress_roster.py
-          git add nv/data/app/congress-roster.json
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add nv/data/app/congress-roster.json nv/congress.html about.html sitemap.xml
           git commit -m "Update U.S. House (Nevada) roster from congress-legislators"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

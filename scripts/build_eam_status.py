@@ -200,7 +200,14 @@ STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
                   # Georgia's 159 counties. Its eight consolidated city-county
                   # governments are each one of these counties, so none is
                   # scored again as a city.
-                  "ga": 159}
+                  "ga": 159,
+                  # Batch 1 of the state-level launch, added at its go-live
+                  # (2026-11-11). Nevada's 17 are its 16 counties and Carson
+                  # City, a consolidated municipality the Census files as a
+                  # county equivalent and whose Board of Supervisors is its
+                  # county government. The Census also files it as a place of
+                  # 58,639, so it is owed under level 6 as well.
+                  "pa": 67, "nv": 17, "az": 15, "nj": 21, "nh": 10}
 
 # County equivalents that are cities, scored under level 6 and not here. The
 # number is STATED and checked: the coverage ring must hold the state's counties
@@ -2621,6 +2628,183 @@ ANSWERS = {
             "West Virginia has no tribal land. The Census publishes no federal "
             "or state reservation and no off-reservation trust land in the "
             "state, measured 2026-11-10 with a control in Tennessee."),
+    },
+    # BATCH 1 OF THE STATE-LEVEL LAUNCH, scored at its go-live (2026-11-11).
+    # Each answers the federal and legislative levels and the Census tilings;
+    # no county, city or school official is named yet.
+    "pa": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("pa-senate", "pa-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city council is named yet.
+        "local-government": depth(),
+        "school-district-boundaries": answers("school-district-unified"),
+        # Pennsylvania's municipalities ARE its county subdivisions (TIGERweb layer 1),
+        # so the municipality layer is this map.
+        "subdivision-boundaries": answers("municipality"),
+        # Common pleas judges are elected by judicial district (a county or two)
+        # and magisterial district judges by magisterial district; neither is
+        # drawn or named yet.
+        "courts-by-district": OPEN,
+        # Measured 2026-11-11 on TIGERweb: 1,543 of Pennsylvania's county
+        # subdivisions are active townships, general-purpose governments the
+        # municipality layer draws and whose supervisors or commissioners it
+        # does not name.
+        "sub-county-government": OPEN,
+        # Whether any board elects its directors by region has not been
+        # measured for Pennsylvania.
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        "tribal-government": na(
+            "Pennsylvania has no tribal land. The Census publishes no federal or state "
+            "reservation and no off-reservation trust land in the state, "
+            "measured 2026-11-11 with scripts/tribal_areas.py --report, whose "
+            "same-day runs kept 28 pieces in Arizona and 35 in Nevada."),
+    },
+    "nv": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("nv-senate", "nv-assembly"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city council is named yet.
+        "local-government": depth(),
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-11 on TIGERweb's county subdivisions, with Illinois
+        # as the control (1,411 active of 1,695): all 71 of Nevada's are census
+        # county divisions (FUNCSTAT S), statistical areas that govern nobody.
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": na(
+            "Nevada has no sub-county general-purpose government — outside a city "
+            "or town limit the county governs. The 71 sub-county units the "
+            "Census publishes for Nevada are census county divisions: statistical "
+            "areas, not governments (measured 2026-11-11)."),
+        # District court judges are elected by judicial district and justices
+        # of the peace by township; neither is drawn or named yet.
+        "courts-by-district": OPEN,
+        # The Clark County and Washoe County school boards elect trustees from
+        # districts; no district is drawn or trustee named yet.
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-11 with scripts/tribal_areas.py --report Nevada: the
+        # Census keeps 27 reservations and 8 trust lands in Nevada, and the
+        # app draws no tribal land yet (nv/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "az": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("az-senate", "az-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city council is named yet.
+        "local-government": depth(),
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary",
+            "school-district-secondary"),
+        # Measured 2026-11-11 on TIGERweb's county subdivisions, with Illinois
+        # as the control (1,411 active of 1,695): all 80 of Arizona's are census
+        # county divisions (FUNCSTAT S), statistical areas that govern nobody.
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": na(
+            "Arizona has no sub-county general-purpose government — outside a city "
+            "or town limit the county governs. The 80 sub-county units the "
+            "Census publishes for Arizona are census county divisions: statistical "
+            "areas, not governments (measured 2026-11-11)."),
+        # Justices of the peace are elected by precinct, and superior court
+        # judges by county outside the counties that use merit retention;
+        # neither is drawn or named yet.
+        "courts-by-district": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-11 with scripts/tribal_areas.py --report Arizona: the
+        # Census keeps 21 reservations and 7 trust lands in Arizona, and the
+        # app draws no tribal land yet (az/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "nj": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("nj-senate", "nj-assembly"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city council is named yet.
+        "local-government": depth(),
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary",
+            "school-district-secondary"),
+        # New Jersey's municipalities ARE its county subdivisions (TIGERweb layer 1),
+        # so the municipality layer is this map.
+        "subdivision-boundaries": answers("municipality"),
+        # New Jersey elects no judge: the Governor nominates and appoints them
+        # with the Senate's consent (N.J. Const. art. VI, sec. VI), not
+        # re-read for this change.
+        "courts-by-district": na(
+            "New Jersey elects no judge. Its judges are nominated and appointed "
+            "by the Governor with the Senate's consent (N.J. Const. art. VI, "
+            "sec. VI), so there is no district a voter elects a judge from."),
+        # Measured 2026-11-11 on TIGERweb: 240 of New Jersey's county
+        # subdivisions are active townships, municipalities the municipality
+        # layer draws and whose governing bodies it does not name.
+        "sub-county-government": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        "tribal-government": na(
+            "New Jersey has no tribal land. The Census publishes no federal or state "
+            "reservation and no off-reservation trust land in the state, "
+            "measured 2026-11-11 with scripts/tribal_areas.py --report, whose "
+            "same-day runs kept 28 pieces in Arizona and 35 in Nevada."),
+    },
+    "nh": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("nh-senate", "nh-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city council is named yet.
+        "local-government": depth(),
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary",
+            "school-district-secondary"),
+        # New Hampshire's municipalities ARE its county subdivisions (TIGERweb layer 1),
+        # so the municipality layer is this map.
+        "subdivision-boundaries": answers("municipality"),
+        # New Hampshire elects no judge: the Governor and Executive Council
+        # nominate and appoint them (N.H. Const. pt. II, art. 46), not re-read
+        # for this change.
+        "courts-by-district": na(
+            "New Hampshire elects no judge. Its judges are nominated and "
+            "appointed by the Governor and the Executive Council (N.H. Const. "
+            "pt. II, art. 46), so there is no district a voter elects a judge "
+            "from."),
+        # Measured 2026-11-11 on TIGERweb: 221 of New Hampshire's county
+        # subdivisions are active towns, general-purpose governments the City
+        # or Town layer draws and whose select boards it does not name.
+        "sub-county-government": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        "tribal-government": na(
+            "New Hampshire has no tribal land. The Census publishes no federal or state "
+            "reservation and no off-reservation trust land in the state, "
+            "measured 2026-11-11 with scripts/tribal_areas.py --report, whose "
+            "same-day runs kept 28 pieces in Arizona and 35 in Nevada."),
     },
     # Georgia, added at its go-live: the national tier, every county's board of
     # commissioners named from the Secretary of State's election results, the

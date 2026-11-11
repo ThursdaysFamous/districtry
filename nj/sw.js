@@ -59,6 +59,7 @@ const ROSTER_URLS = [
   "./data/app/nj-senate-members.json",
   "./data/app/nj-assembly-members.json",
   "./data/app/coverage-gaps.json",
+  "./data/app/statewide-officials.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
 /* ==== METRO:END sw-config ==== */

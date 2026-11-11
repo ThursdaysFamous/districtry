@@ -115,6 +115,7 @@ ROSTER_FILES = {
     "az-senate-members.json": 30,  # Arizona Senate roster from the Senate member roster on the Legislature's own site, one record per district, refreshed weekly.
     "az-house-members.json": 30,  # Arizona House roster from the House member roster on the Legislature's own site, one record per district holding both of its representatives, refreshed weekly.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
+    "statewide-officials.json": 5,  # The officers Arizona elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from az/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

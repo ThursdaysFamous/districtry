@@ -1,0 +1,59 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from nv/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Nevada",
+ "usSenate": [
+  {
+   "name": "Catherine Cortez Masto",
+   "party": "Democratic",
+   "url": "https://www.cortezmasto.senate.gov",
+   "office": "309 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-3542"
+  },
+  {
+   "name": "Jacky Rosen",
+   "party": "Democratic",
+   "url": "https://www.rosen.senate.gov",
+   "office": "713 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-6244"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-11",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Joe Lombardo",
+   "url": "https://gov.nv.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Stavros Anthony",
+   "url": "https://ltgov.nv.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Aaron Ford",
+   "url": "https://ag.nv.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Secretary of State",
+   "url": "https://www.nvsos.gov/",
+   "unnamed": "The office's website (nvsos.gov) answers automated readers with a bot challenge, so this app does not read a name from it."
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Zach Conine",
+   "url": "https://www.nevadatreasurer.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "State Controller",
+   "name": "Andy Matthews",
+   "url": "https://controller.nv.gov/",
+   "verified": "2026-11-11"
+  }
+ ]
+}

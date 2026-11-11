@@ -1,0 +1,31 @@
+{
+ "state": "Pennsylvania",
+ "usps": "PA",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Josh Shapiro",
+   "url": "https://www.pa.gov/governor"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Austin Davis",
+   "url": "https://www.pa.gov/ltgovernor"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Dave Sunday",
+   "url": "https://www.attorneygeneral.gov/"
+  },
+  {
+   "office": "Auditor General",
+   "name": "Timothy DeFoor",
+   "url": "https://www.paauditor.gov/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Stacy Garrity",
+   "url": "https://www.patreasury.gov/"
+  }
+ ]
+}

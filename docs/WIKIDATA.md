@@ -76,6 +76,11 @@ the audit asked for an item about the project.
 | P1001 (applies to jurisdiction) | Q1370 (Virginia) | the `/va/` instance |
 | P1001 (applies to jurisdiction) | Q1371 (West Virginia) | the `/wv/` instance |
 | P1001 (applies to jurisdiction) | Q1428 (Georgia) | the `/ga/` instance |
+| P1001 (applies to jurisdiction) | Q1400 (Pennsylvania) | the `/pa/` instance |
+| P1001 (applies to jurisdiction) | Q1227 (Nevada) | the `/nv/` instance |
+| P1001 (applies to jurisdiction) | Q816 (Arizona) | the `/az/` instance |
+| P1001 (applies to jurisdiction) | Q1408 (New Jersey) | the `/nj/` instance |
+| P1001 (applies to jurisdiction) | Q759 (New Hampshire) | the `/nh/` instance |
 
 ### What is deliberately absent
 
@@ -124,10 +129,13 @@ endpoint used.
 | `Q1166` | Michigan |
 | `Q1204` | Illinois |
 | `Q1224853` | Open Database License |
+| `Q1227` | Nevada |
 | `Q1370` | Virginia |
 | `Q1371` | West Virginia |
 | `Q13785927` | Apache Software License 2.0 |
 | `Q1384` | New York |
+| `Q1400` | Pennsylvania |
+| `Q1408` | New Jersey |
 | `Q1415` | Indiana |
 | `Q1428` | Georgia |
 | `Q1454` | North Carolina |
@@ -147,3 +155,5 @@ endpoint used.
 | `Q30` | United States |
 | `Q35127` | website |
 | `Q62` | San Francisco |
+| `Q759` | New Hampshire |
+| `Q816` | Arizona |

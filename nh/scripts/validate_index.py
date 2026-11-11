@@ -116,6 +116,7 @@ ROSTER_FILES = {
     "nh-senate-members.json": 24,  # New Hampshire Senate roster, one record per district: the General Court's own member file first and Open States' export when it cannot be read, refreshed weekly.
     "nh-house-members.json": 203,  # New Hampshire House roster, one record per named district (164 base and 39 floterial) holding its seat count and every member listed, refreshed weekly.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
+    "statewide-officials.json": 5,  # The officers New Hampshire elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from nh/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
 }
 
 # Files the app references DYNAMICALLY — the URL is built from a slug at

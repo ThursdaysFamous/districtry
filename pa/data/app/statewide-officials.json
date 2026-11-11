@@ -1,0 +1,54 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from pa/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Pennsylvania",
+ "usSenate": [
+  {
+   "name": "John Fetterman",
+   "party": "Democratic",
+   "url": "https://www.fetterman.senate.gov/",
+   "office": "142 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4254"
+  },
+  {
+   "name": "David McCormick",
+   "party": "Republican",
+   "url": "https://mccormick.senate.gov/",
+   "office": "702 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-6324"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-11",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Josh Shapiro",
+   "url": "https://www.pa.gov/governor",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Austin Davis",
+   "url": "https://www.pa.gov/ltgovernor",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Dave Sunday",
+   "url": "https://www.attorneygeneral.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Auditor General",
+   "name": "Timothy DeFoor",
+   "url": "https://www.paauditor.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Stacy Garrity",
+   "url": "https://www.patreasury.gov/",
+   "verified": "2026-11-11"
+  }
+ ]
+}

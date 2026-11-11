@@ -608,7 +608,58 @@ def multi_member_districts(data):
     return rows
 
 
+def _named_district_key(name):
+    """'Belknap 9' -> ('belknap', 9), so Belknap 2 sorts before Belknap 10."""
+    county, _, number = name.rpartition(" ")
+    return (county.lower(), int(number)) if number.isdigit() else (name.lower(), 0)
+
+
+def nh_house_districts(data):
+    """New Hampshire's House: districts NAMED for a county and numbered within
+    it ("Merrimack 18"), each electing one to ten representatives as
+    {"seats": n, "members": [...]}, and some of them FLOTERIAL, drawn over two
+    or more of the others. One row per seat, in county and number order, and a
+    floterial's label names the districts it is drawn over, read from the
+    shipped boundary file (each base district carries the floterial over it as
+    `floterial`), so a reader who knows their own district can find the
+    floterial that also represents them. A seat the roster names nobody for is
+    carried as unnamed, so the table never shows a smaller House than the one
+    elected. The roster and the boundary file must name the same districts."""
+    geo = load(os.path.join("nh", "data", "app", "nh-house-districts.json"))
+    under = collections.OrderedDict()
+    base = set()
+    for feat in geo["features"]:
+        props = feat["properties"]
+        base.add(props["district"])
+        if props.get("floterial"):
+            under.setdefault(props["floterial"], []).append(props["district"])
+    named = base | set(under)
+    if set(data) != named:
+        fail("nh-house-members.json and nh-house-districts.json name different "
+             "districts: %s only in the roster, %s only in the boundary file"
+             % (sorted(set(data) - named)[:5], sorted(named - set(data))[:5]))
+    rows = []
+    for k in sorted(data, key=_named_district_key):
+        rec = data[k] if isinstance(data[k], dict) else {}
+        people = [m for m in rec.get("members") or [] if isinstance(m, dict)]
+        seats = int(rec.get("seats", len(people) or 1))
+        if len(people) > seats:
+            fail("%s lists %d members for %d seats" % (k, len(people), seats))
+        label = k
+        if k in under:
+            county = k.rpartition(" ")[0]
+            nums = [d.rpartition(" ")[2] if d.rpartition(" ")[0] == county else d
+                    for d in sorted(under[k], key=_named_district_key)]
+            label = "%s (floterial over %s)" % (
+                k, nums[0] if len(nums) == 1 else
+                "%s and %s" % (", ".join(nums[:-1]), nums[-1]))
+        for person in people + [{}] * (seats - len(people)):
+            rows.append((label, person))
+    return rows
+
+
 ADAPTERS = {
+    "nh_house_districts": nh_house_districts,
     "multi_member_districts": multi_member_districts,
     "borough_officials": borough_officials,
     "supreme_justices": supreme_justices,

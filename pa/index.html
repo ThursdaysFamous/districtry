@@ -4563,7 +4563,7 @@ function initPennsylvaniaExplorer() {
   var THIS_METRO = "pennsylvania";      // key into METRO_EXPLORERS below
   var METRO_NAME = "Pennsylvania";      // used in user-facing strings
   var METRO_BBOX = { minLng: -80.53, minLat: 39.71, maxLng: -74.68, maxLat: 42.52 };
-  var METRO_CENTER = [41.12, -77.6];
+  var METRO_CENTER = [40.26, -76.88];
   // Permalink sanity gate: the *greater* metro area (wider than METRO_BBOX).
   var PERMALINK_GATE = { minLat: 39.5, maxLat: 42.75, minLng: -80.75, maxLng: -74.45 };
   // The short code each layer is written as in a map link (`l=wd,cg`, `c=cg`),
@@ -4576,7 +4576,11 @@ function initPennsylvaniaExplorer() {
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
   // each. ENGINE metro-portal writes it and ENGINE permalink reads it.
-  var LAYER_CONCEPTS = { };
+  var LAYER_CONCEPTS = { "us-house": ["us-house"], "state-senate": ["pa-senate"],
+    "state-house": ["pa-house"], "county": ["county"], "municipality": ["municipality"],
+    "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
+    "police-station": ["police-station"], "fire-station": ["fire-station"],
+    "post-office": ["post-office"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -4659,7 +4663,15 @@ function initPennsylvaniaExplorer() {
     { id: "georgia", label: "Georgia", url: "https://districtry.com/ga/", emoji: "🍑", explorerName: "districtry Georgia",
       bbox: { minLng: -85.61, minLat: 30.35, maxLng: -80.91, maxLat: 35.01 } },
     { id: "pennsylvania", label: "Pennsylvania", url: "https://districtry.com/pa/", emoji: "🔔", explorerName: "districtry Pennsylvania",
-      bbox: { minLng: -80.53, minLat: 39.71, maxLng: -74.68, maxLat: 42.52 } }
+      bbox: { minLng: -80.53, minLat: 39.71, maxLng: -74.68, maxLat: 42.52 } },
+    { id: "nevada", label: "Nevada", url: "https://districtry.com/nv/", emoji: "🏜️", explorerName: "districtry Nevada",
+      bbox: { minLng: -120.01, minLat: 35.0, maxLng: -114.03, maxLat: 42.01 } },
+    { id: "arizona", label: "Arizona", url: "https://districtry.com/az/", emoji: "🌵", explorerName: "districtry Arizona",
+      bbox: { minLng: -114.82, minLat: 31.33, maxLng: -109.04, maxLat: 37.01 } },
+    { id: "newjersey", label: "New Jersey", url: "https://districtry.com/nj/", emoji: "🍅", explorerName: "districtry New Jersey",
+      bbox: { minLng: -75.57, minLat: 38.78, maxLng: -73.88, maxLat: 41.36 } },
+    { id: "newhampshire", label: "New Hampshire", url: "https://districtry.com/nh/", emoji: "🍁", explorerName: "districtry New Hampshire",
+      bbox: { minLng: -72.56, minLat: 42.69, maxLng: -70.57, maxLat: 45.31 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -15951,6 +15963,10 @@ function initPennsylvaniaExplorer() {
     });
   }
   /* ==== ENGINE:END statewide-officials ==== */
+  // Statewide officials: the line at the top of the results naming the
+  // officers this state elects statewide and its two U.S. senators,
+  // anywhere inside the app's widest outline.
+  registerStatewideOfficials({ outline: "data/app/metro-outline.json" });
 
   /* =========================================================================
    * STARTER MODULES — Pennsylvania's day-one layer set: the national tier
