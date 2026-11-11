@@ -73,7 +73,8 @@ in the researched-but-unbuilt backlog.
   "westvirginia": ["us-house", "wv-senate", "county", "school-district-unified", "wv-house", "county-subdivision", "zip-code", "municipality", "city-ward", "police-station", "fire-station", "post-office"],
   "pennsylvania": ["us-house", "pa-senate", "county", "pa-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
   "nevada": ["us-house", "county", "school-district-unified", "nv-senate", "nv-assembly", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "arizona": ["us-house", "county", "az-senate", "az-house", "school-district-secondary", "school-district-unified", "school-district-elementary", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
+  "arizona": ["us-house", "county", "az-senate", "az-house", "school-district-secondary", "school-district-unified", "school-district-elementary", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "newjersey": ["us-house", "county", "nj-senate", "nj-assembly", "school-district-secondary", "school-district-elementary", "school-district-unified", "municipality", "zip-code", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -4170,6 +4171,45 @@ trusted.
             "why": "No list of the governing board members of Arizona's school districts has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's governing board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-10 against TIGERweb's school districts (School MapServer) for STATE='04': 98 records on layer 0 (97 unified districts and one the Census names \"School District Not Defined\", GEOID 0499997, a 15,670 km2 placeholder for land in no school district, which takes in Sun City and which the card names as no district), 102 elementary districts on layer 2 and 15 union high school districts on layer 1. The unified layer and the elementary districts together cover the state, and the union high school districts run grades 9 to 12 over about half of the elementary districts' ground, so a reader there is in two districts, each with its own board. All three ship as tile archives. No board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's own directories; the counties' election results, which were not checked for school board contests; and each district's own website. The Arizona School Boards Association is a membership association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "newjersey": [
+      {
+            "id": "nj-county-officials",
+            "concept": "County government",
+            "area": "New Jersey — all 21 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its county commissioners or other elected officers. The card says so rather than leave the office looking empty.",
+            "why": "No statewide list of New Jersey's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners, clerk, sheriff and surrogate, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-10 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is nj/index.html's own County block: each county is governed by an elected board of county commissioners (called freeholders until 2021) and elects a county clerk, a sheriff and a surrogate. The boundary is TIGERweb State_County for STATE='34', 21 features, shipped as nj/data/app/state-counties.json. ROUTES NOT YET READ, government publishers first: each county's own website; the counties' and the Division of Elections' election results, which name who won each county seat; and a statewide directory, if a state office keeps one. The New Jersey Association of Counties is an association of the counties rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nj-municipal-officeholders",
+            "concept": "City government",
+            "area": "New Jersey",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The Municipality card names the municipality you picked, and not its mayor or governing body.",
+            "why": "No statewide list of the elected officials of New Jersey's municipalities has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each municipality's mayor and governing body, or a municipality's own published list of them.",
+            "blocker": "Measured 2026-11-10 against TIGERweb's county subdivisions (Places_CouSub_ConCity_SubMCD layer 1) for STATE='34': 569 records, 564 of them municipalities (252 boroughs, 240 townships, 52 cities, 15 towns, 4 villages and Princeton) and 5 that are coastal and bay water rather than a municipality. The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Community Affairs' own municipal directories; each municipality's own website, largest first (Newark, Jersey City, Paterson, Elizabeth, Lakewood); and the counties' election results. The New Jersey State League of Municipalities is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nj-school-board-members",
+            "concept": "School board",
+            "area": "New Jersey",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The three School District cards name the districts you picked, and not the members of their boards of education.",
+            "why": "No list of the board of education members of New Jersey's school districts has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board of education members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-10 against TIGERweb's school districts (School MapServer) for STATE='34': 342 records on layer 0 (341 unified districts and one the Census names \"School District Not Defined\", GEOID 3499997, which has no land and files 2,217 km2 of coastal and bay water, and which the card answers as water), 168 elementary districts on layer 2 and 45 secondary districts on layer 1 (31 running grades 9 to 12 and 14 running 7 to 12). The unified layer and the elementary districts together cover the state's land, and the secondary districts cover exactly the elementary districts' ground, so a reader there is in two districts, each with its own board. All three ship as tile archives. No board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's own directories; the counties' election results, which were not checked for school board contests; and each district's own website. The New Jersey School Boards Association is a membership association rather than a government. NOT YET ASKED, and no ask is drafted."
       }
   ]
 }

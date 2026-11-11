@@ -1,0 +1,183 @@
+{
+  "1": {
+    "name": "Donald Norcross",
+    "party": "Democrat",
+    "url": "https://norcross.house.gov",
+    "capitolOffice": [
+      "2427 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6501"
+    ],
+    "districtOffice": [
+      "10 Melrose Ave., Suite 210",
+      "Cherry Hill, NJ 08003",
+      "Phone: 856-427-7000"
+    ]
+  },
+  "2": {
+    "name": "Jefferson Van Drew",
+    "party": "Republican",
+    "url": "https://vandrew.house.gov",
+    "capitolOffice": [
+      "2447 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6572"
+    ],
+    "districtOffice": [
+      "1001 Tilton Road, Suite 101",
+      "Northfield, NJ 08225",
+      "Phone: 609-625-5008"
+    ]
+  },
+  "3": {
+    "name": "Herbert C. Conaway, Jr.",
+    "party": "Democrat",
+    "url": "https://conaway.house.gov",
+    "capitolOffice": [
+      "1022 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4765"
+    ],
+    "districtOffice": [
+      "4573 S Broad Street",
+      "Trenton, NJ 08620",
+      "Phone: 609-438-6290"
+    ]
+  },
+  "4": {
+    "name": "Christopher H. Smith",
+    "party": "Republican",
+    "url": "https://chrissmith.house.gov",
+    "capitolOffice": [
+      "2373 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3765"
+    ],
+    "districtOffice": [
+      "1715 Highway 35 North, Suite 303",
+      "Middletown, NJ 07748",
+      "Phone: 732-780-3035"
+    ]
+  },
+  "5": {
+    "name": "Josh Gottheimer",
+    "party": "Democrat",
+    "url": "https://gottheimer.house.gov",
+    "capitolOffice": [
+      "106 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4465"
+    ],
+    "districtOffice": [
+      "93 Spring St., Suite 408",
+      "Newton, NJ 07860",
+      "Phone: 973-940-1117"
+    ]
+  },
+  "6": {
+    "name": "Frank Pallone, Jr.",
+    "party": "Democrat",
+    "url": "https://pallone.house.gov",
+    "capitolOffice": [
+      "2107 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4671"
+    ],
+    "districtOffice": [
+      "504 Broadway",
+      "Long Branch, NJ 07740",
+      "Phone: 732-571-1140"
+    ]
+  },
+  "7": {
+    "name": "Thomas H. Kean, Jr.",
+    "party": "Republican",
+    "url": "https://kean.house.gov",
+    "capitolOffice": [
+      "251 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5361"
+    ],
+    "districtOffice": [
+      "1385 US Highway 22 East",
+      "Mountainside Borough Hall",
+      "Mountainside, NJ 07092"
+    ]
+  },
+  "8": {
+    "name": "Robert Menendez",
+    "party": "Democrat",
+    "url": "https://menendez.house.gov",
+    "capitolOffice": [
+      "2453 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-7919"
+    ],
+    "districtOffice": [
+      "257 Cornelison Avenue, Suite 4408",
+      "Jersey City, NJ 07302",
+      "Phone: 201-309-0301"
+    ]
+  },
+  "9": {
+    "name": "Nellie Pou",
+    "party": "Democrat",
+    "url": "https://pou.house.gov",
+    "capitolOffice": [
+      "1007 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5751"
+    ],
+    "districtOffice": [
+      "100 Hamilton Plaza, Suite 1400",
+      "Paterson, NJ 07505",
+      "Phone: 973-523-5152"
+    ]
+  },
+  "10": {
+    "name": "LaMonica McIver",
+    "party": "Democrat",
+    "url": "https://mciver.house.gov",
+    "capitolOffice": [
+      "426 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3436"
+    ],
+    "districtOffice": [
+      "60 Nelson Pl, 14th Floor",
+      "LeRoy F. Smith, Jr. Public Safety Building",
+      "Newark, NJ 07102",
+      "Phone: 973-645-3213"
+    ]
+  },
+  "11": {
+    "name": "Analilia Mejia",
+    "party": "Democrat",
+    "url": "https://mejia.house.gov",
+    "capitolOffice": [
+      "1427 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5034"
+    ],
+    "districtOffice": [
+      "357 S. Livingston Avenue, Suite 201",
+      "Livingston, NJ 07039",
+      "Phone: 973-526-5668"
+    ]
+  },
+  "12": {
+    "name": "Bonnie Watson Coleman",
+    "party": "Democrat",
+    "url": "https://watsoncoleman.house.gov",
+    "capitolOffice": [
+      "168 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5801"
+    ],
+    "districtOffice": [
+      "850 Bear Tavern Rd., Suite 201",
+      "Ewing, NJ 08628",
+      "Phone: 609-883-0026"
+    ]
+  }
+}

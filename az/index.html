@@ -16080,13 +16080,20 @@ function initArizonaExplorer() {
         if (!feature) return null;
         var props = feature.properties || {};
         var geoid = findPropCI(props, ["geoid"]);
+        if (azSchoolPlaceholder(geoid)) {
+          // ground no district covers: the card says so, and the placeholder
+          // is taken out of the tile answer so it is neither lit nor offered
+          // for comparison (engine answerIsNotADistrict)
+          answerIsNotADistrict(load, point);
+          return { seq: seq, placeholder: true };
+        }
         return {
           seq: seq,
           name: findPropCI(props, ["name"]),
           geoid: geoid,
           lo: findPropCI(props, ["lograde"]),
           hi: findPropCI(props, ["higrade"]),
-          placeholder: azSchoolPlaceholder(geoid)
+          placeholder: false
         };
       });
     };
