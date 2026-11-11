@@ -3656,6 +3656,51 @@ try {
     await context.close();
   }
 
+  // 2s. THE CENSUS'S "SCHOOL DISTRICT NOT DEFINED" RECORD IS NOT A DISTRICT
+  //     (2026-11-10). TIGER files ground no school district covers under a
+  //     placeholder named "School District Not Defined" (GEOID state + 99997),
+  //     and until that day the unified card printed it as the reader's school
+  //     district, lit it and offered to compare it. Here that ground is
+  //     Illinois's part of Lake Michigan. The census host is refused, so the card can only answer from
+  //     the shipped archive, which still carries the placeholder. The control
+  //     point keeps the check honest: a pin button that is never drawn would
+  //     pass the first half alone.
+  {
+    const SCHOOL_PLACEHOLDER = "42.12562,-87.42853";
+    const SCHOOL_CONTROL = "41.88250,-87.62850";
+    const read = async (pt) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=school-district-unified`, (p) =>
+        p.route("**tigerweb.geo.census.gov/**", (r) => r.abort()));
+      const info = await cardText(page, "school-district-unified");
+      await page.waitForTimeout(1000);
+      const res = await page.evaluate((n) => {
+        const box = document.getElementById("toggle-school-district-unified");
+        const block = box && box.closest(".layer-block");
+        const s = window[n].layerLoadState("school-district-unified");
+        return {
+          pin: !!(block && block.querySelector(".pin-parent-btn")),
+          lit: !!(s && s.highlight),
+          vector: window[n].basemap().vector,
+          hover: window[n].hoverValueFor("school-district-unified",
+            { NAME: "School District Not Defined", GEOID: "1799997" }),
+        };
+      }, EXPORTS_NAME);
+      await context.close();
+      return Object.assign({ text: info.text, error: info.error }, res);
+    };
+    const ph = await read(SCHOOL_PLACEHOLDER);
+    const ctrl = await read(SCHOOL_CONTROL);
+    check(
+      'the Census\'s "School District Not Defined" placeholder reads as no school district: not lit, not comparable, not named on hover',
+      !ph.error && ph.text.includes("No school district defined here") && !ph.pin && !ph.lit &&
+        ph.hover === "No school district defined" &&
+        !ctrl.error && !ctrl.text.includes("No school district defined") && ctrl.pin,
+      JSON.stringify({ placeholder: { text: ph.text.slice(0, 60), pin: ph.pin, lit: ph.lit, hover: ph.hover },
+        control: { text: ctrl.text.slice(0, 60), pin: ctrl.pin } })
+    );
+  }
+
   // 2e. Share control: the point chip carries ONE "Share" button whose popover
   //     serves the live campaign-tagged permalink, the embed snippet (tagged
   //     with its own source and pointed at the canonical deployment), and the
@@ -4884,6 +4929,70 @@ try {
     const offOk = off.text.indexOf("not on tribal land") !== -1;
     check("a point off tribal land is told so in the layer's own words",
           offOk, JSON.stringify(off.text.slice(0, 120)));
+    await context.close();
+  }
+
+  // ---- 1x2. The statewide officials line. It is not a layer (Adam,
+  // 2026-11-10: a one-line summary at the top of the results that opens into
+  // the full list), so nothing in the layer checks reaches it: with no layer
+  // on, a selected point inside Illinois shows the line closed, naming the
+  // governor and a count; pressing it opens the full list in place; and a
+  // point outside Illinois shows no line. Opening it is counted once, as
+  // statewide-officials/il (Adam, the same day: "count in traffic"), and
+  // closing it is not.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    await context.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+    await context.addInitScript(() => {
+      window.__gcEvents = [];
+      window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+    });
+    const page = await booted(context, `${BASE}#point=${POINT}`);
+    await page.waitForSelector("#statewide-strip:not([hidden])", { timeout: 15000 })
+      .catch(() => null);
+    const closed = await page.evaluate(() => {
+      const el = document.getElementById("statewide-strip");
+      const btn = el && el.querySelector(".statewide-strip-toggle");
+      const panel = document.getElementById("statewide-strip-panel");
+      return el && btn && panel ? {
+        shown: !el.hidden,
+        expanded: btn.getAttribute("aria-expanded"),
+        summary: (el.querySelector(".statewide-strip-summary") || {}).textContent || "",
+        panelHidden: panel.hidden,
+        beforeGroups: el.nextElementSibling && (el.nextElementSibling.id === "groups-root"
+          || el.nextElementSibling.id === "no-layer-hint")
+      } : null;
+    });
+    const closedOk = !!closed && closed.shown && closed.expanded === "false"
+      && /^Governor \S.* and \d+ more$/.test(closed.summary) && closed.panelHidden
+      && closed.beforeGroups;
+    check("a point in Illinois shows the statewide officials line, closed, above the layers",
+          closedOk, JSON.stringify(closed));
+    if (closed) {
+      await page.click(".statewide-strip-toggle");
+      const open = await page.evaluate(() => ({
+        expanded: document.querySelector(".statewide-strip-toggle").getAttribute("aria-expanded"),
+        text: document.getElementById("statewide-strip-panel").textContent
+      }));
+      const openOk = open.expanded === "true" && open.text.indexOf("U.S. Senate") !== -1
+        && open.text.indexOf("Elected by the whole state") !== -1;
+      check("pressing the statewide officials line opens the full list in place",
+            openOk, JSON.stringify({ expanded: open.expanded, text: open.text.slice(0, 160) }));
+      await page.click(".statewide-strip-toggle");
+      const counted = await page.evaluate(() => (window.__gcEvents || [])
+        .filter((v) => v && v.event && /^statewide-officials\//.test(v.path)).map((v) => v.path));
+      check("opening the statewide officials list is counted once, by the app, and closing it is not",
+            counted.join() === "statewide-officials/il", JSON.stringify(counted));
+    }
+    // a point no app covers (Butler County, Ohio, Indiana's uncovered case)
+    // stays in this app and shows no Illinois officials
+    const page2 = await booted(context, `${BASE}#point=39.40000,-84.65000`);
+    await page2.waitForTimeout(3000);
+    const hidden = await page2.evaluate(() => {
+      const el = document.getElementById("statewide-strip");
+      return !el || el.hidden;
+    });
+    check("a point outside Illinois shows no statewide officials line", hidden, String(hidden));
     await context.close();
   }
 

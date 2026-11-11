@@ -1,0 +1,48 @@
+{
+ "state": "Mississippi",
+ "usps": "MS",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Tate Reeves",
+   "url": "https://governorreeves.ms.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Delbert Hosemann",
+   "url": "https://www.ltgovhosemann.ms.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Lynn Fitch",
+   "url": "https://attorneygenerallynnfitch.com/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Michael Watson",
+   "url": "https://www.sos.ms.gov/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "David McRae",
+   "url": "https://treasury.ms.gov/"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Shad White",
+   "url": "https://www.osa.ms.gov/"
+  },
+  {
+   "office": "Commissioner of Agriculture and Commerce",
+   "name": "Andy Gipson",
+   "url": "https://www.mdac.ms.gov/"
+  },
+  {
+   "office": "Commissioner of Insurance",
+   "name": "Mike Chaney",
+   "url": "https://www.mid.ms.gov/",
+   "headers": "browser",
+   "note": "www.mid.ms.gov closed the connection on our token and served a browser on 2026-11-10."
+  }
+ ]
+}

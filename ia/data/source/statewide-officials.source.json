@@ -1,0 +1,46 @@
+{
+ "state": "Iowa",
+ "usps": "IA",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Kim Reynolds",
+   "url": "https://governor.iowa.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Chris Cournoyer",
+   "url": "https://governor.iowa.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Brenna Bird",
+   "url": "https://www.iowaattorneygeneral.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Paul D. Pate",
+   "url": "https://sos.iowa.gov/",
+   "match": [
+    "Paul Pate"
+   ],
+   "headers": "browser",
+   "note": "sos.iowa.gov answered 403 to our token and served a browser on 2026-11-10."
+  },
+  {
+   "office": "Treasurer",
+   "name": "Roby Smith",
+   "url": "https://www.iowatreasurer.gov/"
+  },
+  {
+   "office": "Auditor of State",
+   "name": "Rob Sand",
+   "url": "https://auditor.iowa.gov/"
+  },
+  {
+   "office": "Secretary of Agriculture",
+   "name": "Mike Naig",
+   "url": "https://iowaagriculture.gov/"
+  }
+ ]
+}

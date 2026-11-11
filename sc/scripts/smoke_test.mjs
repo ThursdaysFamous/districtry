@@ -52,7 +52,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "34.00035,-81.03295"; // the State House, Columbia, Richland County
 const OFFLINE = ["county", "us-house", "sc-senate", "sc-house", "county-council", "voting-precinct", "sc-circuit-court"];
 const EXPECT_DISTRICT = { "county": "Richland County", "us-house": "6", "sc-senate": "26", "sc-house": "72", "county-council": "4", "voting-precinct": "Ward 1", "sc-circuit-court": "5th Judicial Circuit" };
-const NEGATIVE_POINT = "33.75000,-82.55000"; // Wilkes County, GEORGIA, about 25 km west of the Savannah River — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-10: TIGERweb's state layer names Georgia at this point (control: the State House anchor returns South Carolina). GEORGIA BECAUSE NO INSTANCE SERVES IT, and on land well clear of the river, whose channel the county fabric could place on either side.
+const NEGATIVE_POINT = "32.40000,-79.40000"; // In the Atlantic Ocean, about 48 km from the nearest point of South Carolina's shipped outline — outside South Carolina and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer names no state here (controls: the State House and Charleston return South Carolina, and the old point in Wilkes County returns Georgia), no shipped boundary file contains it, and the nearest outline in fleet-outlines.json is South Carolina's. THE OCEAN BECAUSE NO LAND IN THIS APP'S GATE IS UNSERVED ONCE GEORGIA IS LIVE: the gate holds South Carolina, Georgia and North Carolina, all three served, so the point moved here from Wilkes County, Georgia (33.75, -82.55), in the change that published Georgia, as Indiana's moved when Kentucky went live.
 const APP_NAME = "districtry South Carolina";
 const EXPECT_LAYERS = 17;
 // ==== GENERATED:END smoke-config ====
@@ -384,17 +384,18 @@ try {
   //     the real districtry.com, fails in the sandbox and leaves page.url() on
   //     the app, which reads exactly like correct behaviour.
   //
-  //     SOUTH CAROLINA HAS ONE NEIGHBOUR THE FLEET SERVES AND ONE IT DOES
-  //     NOT, so both halves are its own. North Carolina is live, so a click on
-  //     Charlotte must open that app; Georgia is served by nobody, so a click
-  //     over the Savannah River must stay here (1a2-ii below). This instance is
-  //     also DARK, so it has no entry in fleet-outlines.json at all and answers
-  //     its own side from the coverage rings the wash retained — no fetch.
-  //     Chicago proves the file is still read for ground far from here.
+  //     BOTH OF SOUTH CAROLINA'S NEIGHBOURS ARE SERVED since Georgia went live
+  //     (2026-11-10), so a click on Charlotte must open North Carolina's app
+  //     and a click on Augusta, across the Savannah River from North Augusta,
+  //     must open Georgia's. Until that day Georgia was served by nobody and
+  //     Augusta was this check's stay-here case; the stay-here half is now a
+  //     point in the Atlantic (1a2-ii below). Chicago proves the file is still
+  //     read for ground far from here.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Charlotte, North Carolina", lat: 35.2271, lng: -80.8431, want: "https://districtry.com/nc/" },
+      { name: "Augusta, Georgia", lat: 33.4735, lng: -82.0105, want: "https://districtry.com/ga/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -412,9 +413,9 @@ try {
     }
   }
 
-  // 1a2-ii. The half that keeps 1a2 honest: Augusta, Georgia sits on the
-  //     Savannah River across from North Augusta and no districtry instance
-  //     covers it, so the click must stay HERE. A route to a sibling would be the same lie
+  // 1a2-ii. The half that keeps 1a2 honest: the negative point, in the
+  //     Atlantic off South Carolina, is inside no instance's outline, so the
+  //     click must stay HERE. A route to a sibling would be the same lie
   //     pointing the other way, and the stub makes it visible: if the app
   //     navigated, the URL would be the stubbed sibling rather than this app.
   {
@@ -423,13 +424,13 @@ try {
       await p.route("https://districtry.com/**", (route) =>
         route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
     });
-    await page.evaluate(({ n }) => {
-      window[n].map.fire("click", { latlng: window.L.latLng(33.4735, -82.0105) });
-    }, { n: EXPORTS_NAME });
+    await page.evaluate(({ n, p }) => {
+      window[n].map.fire("click", { latlng: window.L.latLng(p[0], p[1]) });
+    }, { n: EXPORTS_NAME, p: NEGATIVE_POINT.split(",").map(Number) });
     await page.waitForTimeout(3000);
     const url = page.url();
-    check("a click on Augusta, Georgia stays in this app",
-      !/districtry\.com\/(il|wi|ia|mi|ny|ca|mn|ky|in|nc|ok)\//.test(url), url);
+    check("a click in the Atlantic off South Carolina stays in this app",
+      !/districtry\.com\/[a-z][a-z]\//.test(url), url);
     await context.close();
   }
 
@@ -1041,11 +1042,15 @@ try {
   //    load-bearing: coverage fails OPEN, so a test that only asserted hiding
   //    would also pass on a layer that had stopped working altogether.
   //
-  //    The negative point is the worksheet's own, in Wilkes County, Georgia —
+  //    The out-of-state point is in Wilkes County, Georgia, which was the
+  //    worksheet's negative point until Georgia went live (2026-11-10) — still
   //    outside the county fabric's dissolve, which is what the coverage test
-  //    reads.
+  //    reads, and a point where the live service really answers a Georgia ZIP.
+  //    The negative point itself moved into the Atlantic, where it answers
+  //    none, which would make the stub's 30817 a ZIP the service never gives.
   {
     const ZCTA = "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11";
+    const ZIP_OUTSIDE_POINT = "33.75000,-82.55000";
     function zctaBody(zip) {
       return JSON.stringify({
         geometryType: "esriGeometryPolygon",
@@ -1080,7 +1085,7 @@ try {
     // out of state: the layer HIDES, and the neighbouring ZIP never renders
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
-      const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=zip-code`, async (p) => {
+      const page = await booted(context, `${BASE}#point=${ZIP_OUTSIDE_POINT}&layers=zip-code`, async (p) => {
         // The layer is drawn and answered from a tile archive since 2026-10-17;
         // refusing it sends the card to the census loader, which this stub answers
         // (the archive-failure path il's smoke check 2d also holds).

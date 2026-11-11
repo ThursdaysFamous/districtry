@@ -53,7 +53,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "38.33650,-81.61230"; // West Virginia State Capitol, 1900 Kanawha Boulevard East, Charleston, Kanawha County
 const OFFLINE = ["county", "us-house", "wv-senate", "wv-house"];
 const EXPECT_DISTRICT = { "county": "Kanawha County", "us-house": "1", "wv-senate": "8", "wv-house": "54" };
-const NEGATIVE_POINT = "39.55000,-79.25000"; // Garrett County, Maryland, about 20 km east of the West Virginia line at Preston County — outside West Virginia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state and county layers name Maryland and Garrett County here (control: the State Capitol returns West Virginia and Kanawha County), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. A POINT ON A NEIGHBOUR'S LAND WILL HAVE TO MOVE THE DAY THAT NEIGHBOUR GOES LIVE: Kentucky is live already, and Maryland, Pennsylvania, Ohio and Virginia are not, so the change that makes Maryland live moves this point, the way Kentucky's go-live moved Indiana's.
+const NEGATIVE_POINT = "39.55000,-79.25000"; // Garrett County, Maryland, about 20 km east of the West Virginia line at Preston County — outside West Virginia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state and county layers name Maryland and Garrett County here (control: the State Capitol returns West Virginia and Kanawha County), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. Re-measured 2026-11-10 at West Virginia's go-live: still in no outline in fleet-outlines.json, Virginia's included. A POINT ON A NEIGHBOUR'S LAND WILL HAVE TO MOVE THE DAY THAT NEIGHBOUR GOES LIVE: Kentucky and Virginia are live already, and Maryland, Pennsylvania and Ohio are not, so the change that makes Maryland live moves this point, the way Kentucky's go-live moved Indiana's.
 const APP_NAME = "districtry West Virginia";
 const EXPECT_LAYERS = 12;
 // ==== GENERATED:END smoke-config ====
@@ -843,6 +843,12 @@ try {
   //    Census live: asserting a card against somebody else's server makes the
   //    test fail on their outage and on any network that intercepts TLS.
   //
+  //    SINCE 2026-11-10 THESE LAYERS ARE ANSWERED FROM SAME-ORIGIN TILE
+  //    ARCHIVES (scripts/mirror_tiger_tiles.py), and the stubs stay anyway:
+  //    several cases below exist in no archive (a village, an affix no table
+  //    carries), so each case refuses its layer's archive and the stub decides
+  //    the card, through the archive-failure path il's smoke check 2d also holds.
+  //
   //    WHAT IS WORTH TESTING IS THIS INSTANCE'S OWN CODE, and none of it is
   //    exercised by a live fetch that happens to work. Each claim below is
   //    wrong in a way a reader would see:
@@ -919,6 +925,7 @@ try {
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=${c.layer}`, async (p) => {
+        await p.route(`**/data/app/tiles/${c.layer}.pmtiles`, (r) => r.abort());
         await p.route(`**/${c.service}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: esriBody(c.props) }));
       });
@@ -971,6 +978,9 @@ try {
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${POINT}&layers=zip-code`, async (p) => {
+        // the layer is answered from a tile archive since 2026-11-10; refusing it
+        // sends the card to the census loader, which this stub answers
+        await p.route("**/data/app/tiles/zip-code.pmtiles", (r) => r.abort());
         await p.route(`**/${ZCTA}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("25301") }));
       });
@@ -985,6 +995,7 @@ try {
     {
       const context = await browser.newContext({ serviceWorkers: "block" });
       const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=zip-code`, async (p) => {
+        await p.route("**/data/app/tiles/zip-code.pmtiles", (r) => r.abort());
         await p.route(`**/${ZCTA}/query**`, (r) =>
           r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("21550") }));
       });

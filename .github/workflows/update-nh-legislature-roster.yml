@@ -1,0 +1,120 @@
+name: Update New Hampshire legislature roster
+
+# Weekly refresh of the New Hampshire Senate + House rosters
+# (nh/data/app/nh-senate-members.json and nh-house-members.json, fetched by
+# nh/index.html's chamber cards). Rebuilds both chambers and, if anything
+# changed, opens a PR rather than committing directly to main.
+#
+# TWO ROUTES, THE GENERAL COURT'S OWN FIRST (Adam's choice of 2026-11-10 for
+# every state in the state-level launch). Route 1 is the General Court's own
+# member file, gc.nh.gov/downloads/members.txt; route 2, used only when route 1
+# cannot be read or fails a check, is Open States' export of current
+# legislators, compiled from the General Court's pages. The run's log says
+# which route it used and why. The member file also prints each
+# representative's home address, which the builder never reads, prints or
+# logs. On route 2 only an e-mail address at the General Court's own domains is
+# carried, since Open States is not a government.
+#
+# gc.nh.gov ANSWERED EVERY REQUEST FROM THE BUILD SANDBOX WITH AN EMPTY REPLY
+# ON 2026-11-11, robots.txt included, so the first shipped roster came from
+# route 2. This job's first run is the measurement of whether a GitHub runner
+# reaches the General Court; nh/WATCH.md carries the row.
+#
+# THE HOUSE IS 400 SEATS IN 203 NAMED DISTRICTS, each electing one to ten
+# representatives, 39 of them floterial districts drawn over the others. The
+# House file keys each district name to {seats, members[, asOf]};
+# scripts/validate_chamber_rosters.py holds every district to its own seat
+# count. The builder stops on a district it does not know and on a district
+# carrying more members than it elects. A district listed short keeps the date
+# it was first seen short, so an unchanged roster opens no PR.
+#
+# THE REBUILT FILES ARE CARRIED ACROSS THE BRANCH CUT RATHER THAN FETCHED A
+# SECOND TIME, the update-ilga-roster.yml pattern. A run where main changed
+# those same files meanwhile errors at the checkout instead of pushing, which
+# is right.
+#
+# THE PAGE STEPS LANDED WITH THE GO-LIVE CHANGE (batch 1 of the state-level
+# launch). `nh/state-legislature.html` carries a GENERATED table of both
+# rosters, and `about.html` and `sitemap.xml` count them, so all three are
+# regenerated here and staged in the same `git add`.
+
+on:
+  schedule:
+    - cron: "55 21 * * 2" # Tuesday 21:55 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI. A PR opened with the default GITHUB_TOKEN fires no workflows
+      # (GitHub suppresses recursive triggers), which left every roster PR with
+      # zero checks. Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # requests for the shared robots.txt reader; both routes are fetched and
+      # parsed with the stdlib.
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Rebuild New Hampshire Senate + House rosters
+        run: python3 nh/scripts/build_nh_legislature_roster.py
+
+      # Gate the regenerated data before it can reach a PR: the app must still
+      # parse and carry every layer, every data/app file must be present and
+      # well formed, and every seat must carry a record.
+      - name: Validate app + data files
+        run: |
+          python3 nh/scripts/validate_index.py nh/index.html
+          python3 scripts/validate_chamber_rosters.py
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- nh/data/app/nh-senate-members.json nh/data/app/nh-house-members.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/nh-legislature-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's current tip, with full history — see the sibling
+          # workflows' own comments for why both halves matter. The two rebuilt
+          # files ride across the checkout as working-tree changes.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add nh/data/app/nh-senate-members.json nh/data/app/nh-house-members.json nh/state-legislature.html about.html sitemap.xml
+          git commit -m "Update New Hampshire Senate + House rosters from the General Court"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update New Hampshire Senate + House rosters" \
+              --body "Automated weekly refresh of the New Hampshire Senate and House chamber cards' rosters, from the General Court's member file or Open States' export of the General Court's pages (the run's log says which), generated by \`nh/scripts/build_nh_legislature_roster.py\`. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

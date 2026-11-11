@@ -1,12 +1,14 @@
 {
  "built_by": "scripts/build_expected_governments.py",
  "floor": 25000,
- "measured": "2026-10-30",
+ "measured": "2026-11-11",
  "read_by": "scripts/build_eam_status.py",
  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer",
  "source": "U.S. Census Bureau TIGERweb, tigerWMS_Census2020 \u2014 layer 26 (Incorporated Places) and layer 20 (County Subdivisions, FUNCSTAT='A'); POP100 is the 2020 decennial count.",
  "subdivision_is_general_purpose": {
   "ar": null,
+  "az": null,
+  "ga": null,
   "ia": null,
   "il": false,
   "in": false,
@@ -17,12 +19,17 @@
   "mo": null,
   "ms": null,
   "nc": null,
+  "nh": true,
+  "nj": true,
+  "nv": null,
   "ny": true,
   "ok": null,
+  "pa": true,
   "sc": null,
   "tn": null,
   "va": null,
-  "wi": null
+  "wi": null,
+  "wv": null
  },
  "units": {
   "ar": [
@@ -158,6 +165,535 @@
     "lsadc": "25",
     "name": "Cabot city",
     "pop": 26569
+   }
+  ],
+  "az": [
+   {
+    "geoid": "0455000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Phoenix city",
+    "pop": 1608139
+   },
+   {
+    "geoid": "0477000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Tucson city",
+    "pop": 542629
+   },
+   {
+    "geoid": "0446000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Mesa city",
+    "pop": 504258
+   },
+   {
+    "geoid": "0412000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Chandler city",
+    "pop": 275987
+   },
+   {
+    "geoid": "0427400",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Gilbert town",
+    "pop": 267918
+   },
+   {
+    "geoid": "0427820",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Glendale city",
+    "pop": 248325
+   },
+   {
+    "geoid": "0465000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Scottsdale city",
+    "pop": 241361
+   },
+   {
+    "geoid": "0454050",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Peoria city",
+    "pop": 190985
+   },
+   {
+    "geoid": "0473000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Tempe city",
+    "pop": 180587
+   },
+   {
+    "geoid": "0471510",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Surprise city",
+    "pop": 143148
+   },
+   {
+    "geoid": "0485540",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Yuma city",
+    "pop": 95548
+   },
+   {
+    "geoid": "0428380",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Goodyear city",
+    "pop": 95294
+   },
+   {
+    "geoid": "0407940",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Buckeye city",
+    "pop": 91502
+   },
+   {
+    "geoid": "0404720",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Avondale city",
+    "pop": 89334
+   },
+   {
+    "geoid": "0423620",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Flagstaff city",
+    "pop": 76831
+   },
+   {
+    "geoid": "0458150",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Queen Creek town",
+    "pop": 59519
+   },
+   {
+    "geoid": "0444410",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Maricopa city",
+    "pop": 58125
+   },
+   {
+    "geoid": "0439370",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lake Havasu City city",
+    "pop": 57144
+   },
+   {
+    "geoid": "0410530",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Casa Grande city",
+    "pop": 53658
+   },
+   {
+    "geoid": "0444270",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Marana town",
+    "pop": 51908
+   },
+   {
+    "geoid": "0451600",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Oro Valley town",
+    "pop": 47070
+   },
+   {
+    "geoid": "0457450",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Prescott Valley town",
+    "pop": 46785
+   },
+   {
+    "geoid": "0457380",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Prescott city",
+    "pop": 45827
+   },
+   {
+    "geoid": "0466820",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Sierra Vista city",
+    "pop": 45308
+   },
+   {
+    "geoid": "0408220",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bullhead City city",
+    "pop": 41348
+   },
+   {
+    "geoid": "0402830",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Apache Junction city",
+    "pop": 38499
+   },
+   {
+    "geoid": "0422220",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "El Mirage city",
+    "pop": 35805
+   },
+   {
+    "geoid": "0463470",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "San Luis city",
+    "pop": 35257
+   },
+   {
+    "geoid": "0462140",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Sahuarita town",
+    "pop": 34134
+   },
+   {
+    "geoid": "0437620",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Kingman city",
+    "pop": 32689
+   },
+   {
+    "geoid": "0423760",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Florence town",
+    "pop": 26785
+   }
+  ],
+  "ga": [
+   {
+    "geoid": "1304000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Atlanta city",
+    "pop": 498715
+   },
+   {
+    "geoid": "1319000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Columbus city",
+    "pop": 206922
+   },
+   {
+    "geoid": "1304204",
+    "kind": "place",
+    "lsadc": "00",
+    "name": "Augusta-Richmond County consolidated government (balance)",
+    "pop": 202081
+   },
+   {
+    "geoid": "1349008",
+    "kind": "place",
+    "lsadc": "00",
+    "name": "Macon-Bibb County",
+    "pop": 157346
+   },
+   {
+    "geoid": "1369000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Savannah city",
+    "pop": 147780
+   },
+   {
+    "geoid": "1303440",
+    "kind": "place",
+    "lsadc": "00",
+    "name": "Athens-Clarke County unified government (balance)",
+    "pop": 127315
+   },
+   {
+    "geoid": "1368516",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Sandy Springs city",
+    "pop": 108080
+   },
+   {
+    "geoid": "1372122",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "South Fulton city",
+    "pop": 107436
+   },
+   {
+    "geoid": "1367284",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Roswell city",
+    "pop": 92833
+   },
+   {
+    "geoid": "1342425",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Johns Creek city",
+    "pop": 82453
+   },
+   {
+    "geoid": "1380508",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Warner Robins city",
+    "pop": 80308
+   },
+   {
+    "geoid": "1301052",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Albany city",
+    "pop": 69647
+   },
+   {
+    "geoid": "1301696",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Alpharetta city",
+    "pop": 65818
+   },
+   {
+    "geoid": "1349756",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Marietta city",
+    "pop": 60972
+   },
+   {
+    "geoid": "1373784",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Stonecrest city",
+    "pop": 59194
+   },
+   {
+    "geoid": "1371492",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Smyrna city",
+    "pop": 55663
+   },
+   {
+    "geoid": "1378800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Valdosta city",
+    "pop": 55378
+   },
+   {
+    "geoid": "1310944",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Brookhaven city",
+    "pop": 55161
+   },
+   {
+    "geoid": "1324768",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Dunwoody city",
+    "pop": 51683
+   },
+   {
+    "geoid": "1355020",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Newnan city",
+    "pop": 42549
+   },
+   {
+    "geoid": "1331908",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Gainesville city",
+    "pop": 42296
+   },
+   {
+    "geoid": "1359735",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Peachtree Corners city",
+    "pop": 42243
+   },
+   {
+    "geoid": "1351670",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Milton city",
+    "pop": 41296
+   },
+   {
+    "geoid": "1325720",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "East Point city",
+    "pop": 38358
+   },
+   {
+    "geoid": "1359724",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Peachtree City city",
+    "pop": 38244
+   },
+   {
+    "geoid": "1366668",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Rome city",
+    "pop": 37713
+   },
+   {
+    "geoid": "1377652",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Tucker city",
+    "pop": 37005
+   },
+   {
+    "geoid": "1384176",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Woodstock city",
+    "pop": 35065
+   },
+   {
+    "geoid": "1338964",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hinesville city",
+    "pop": 34891
+   },
+   {
+    "geoid": "1323900",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Douglasville city",
+    "pop": 34650
+   },
+   {
+    "geoid": "1321380",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Dalton city",
+    "pop": 34417
+   },
+   {
+    "geoid": "1373256",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Statesboro city",
+    "pop": 33438
+   },
+   {
+    "geoid": "1343192",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Kennesaw city",
+    "pop": 33036
+   },
+   {
+    "geoid": "1312988",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Canton city",
+    "pop": 32973
+   },
+   {
+    "geoid": "1324600",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Duluth city",
+    "pop": 31873
+   },
+   {
+    "geoid": "1344340",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "LaGrange city",
+    "pop": 30858
+   },
+   {
+    "geoid": "1345488",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lawrenceville city",
+    "pop": 30629
+   },
+   {
+    "geoid": "1315172",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Chamblee city",
+    "pop": 30164
+   },
+   {
+    "geoid": "1348624",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "McDonough city",
+    "pop": 29051
+   },
+   {
+    "geoid": "1373704",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Stockbridge city",
+    "pop": 28973
+   },
+   {
+    "geoid": "1378324",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Union City city",
+    "pop": 26830
+   },
+   {
+    "geoid": "1313492",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Carrollton city",
+    "pop": 26738
+   },
+   {
+    "geoid": "1362104",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Pooler city",
+    "pop": 25711
+   },
+   {
+    "geoid": "1374180",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Sugar Hill city",
+    "pop": 25076
    }
   ],
   "ia": [
@@ -2875,6 +3411,852 @@
     "pop": 26307
    }
   ],
+  "nh": [
+   {
+    "geoid": "3345140",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Manchester city",
+    "pop": 115644
+   },
+   {
+    "geoid": "3350260",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Nashua city",
+    "pop": 91322
+   },
+   {
+    "geoid": "3314200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Concord city",
+    "pop": 43976
+   },
+   {
+    "geoid": "3301517940",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Derry town",
+    "pop": 34317
+   },
+   {
+    "geoid": "3318820",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Dover city",
+    "pop": 32741
+   },
+   {
+    "geoid": "3365140",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Rochester city",
+    "pop": 32492
+   },
+   {
+    "geoid": "3301566660",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Salem town",
+    "pop": 30089
+   },
+   {
+    "geoid": "3301147540",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Merrimack town",
+    "pop": 26632
+   },
+   {
+    "geoid": "3301543220",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Londonderry town",
+    "pop": 25826
+   },
+   {
+    "geoid": "3301137940",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Hudson town",
+    "pop": 25394
+   }
+  ],
+  "nj": [
+   {
+    "geoid": "3451000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Newark city",
+    "pop": 311549
+   },
+   {
+    "geoid": "3436000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Jersey City city",
+    "pop": 292449
+   },
+   {
+    "geoid": "3457000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Paterson city",
+    "pop": 159732
+   },
+   {
+    "geoid": "3421000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Elizabeth city",
+    "pop": 137298
+   },
+   {
+    "geoid": "3402938550",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Lakewood township",
+    "pop": 135158
+   },
+   {
+    "geoid": "3402320230",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Edison township",
+    "pop": 107588
+   },
+   {
+    "geoid": "3402382000",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Woodbridge township",
+    "pop": 103639
+   },
+   {
+    "geoid": "3402973125",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Toms River township",
+    "pop": 95438
+   },
+   {
+    "geoid": "3402129310",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Hamilton township",
+    "pop": 92297
+   },
+   {
+    "geoid": "3474000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Trenton city",
+    "pop": 90871
+   },
+   {
+    "geoid": "3413690",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Clifton city",
+    "pop": 90296
+   },
+   {
+    "geoid": "3400712280",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Cherry Hill township",
+    "pop": 74553
+   },
+   {
+    "geoid": "3402907420",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Brick township",
+    "pop": 73620
+   },
+   {
+    "geoid": "3410000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Camden city",
+    "pop": 71791
+   },
+   {
+    "geoid": "3403580",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bayonne city",
+    "pop": 71686
+   },
+   {
+    "geoid": "3456550",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Passaic city",
+    "pop": 70537
+   },
+   {
+    "geoid": "3419390",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "East Orange city",
+    "pop": 69612
+   },
+   {
+    "geoid": "3474630",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Union City city",
+    "pop": 68589
+   },
+   {
+    "geoid": "3403524900",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Franklin township",
+    "pop": 68364
+   },
+   {
+    "geoid": "3402545990",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Middletown township",
+    "pop": 67106
+   },
+   {
+    "geoid": "3402354705",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Old Bridge township",
+    "pop": 66876
+   },
+   {
+    "geoid": "3400726760",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Gloucester township",
+    "pop": 66034
+   },
+   {
+    "geoid": "3401752470",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "North Bergen township",
+    "pop": 63361
+   },
+   {
+    "geoid": "3401334450",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Irvington township",
+    "pop": 61176
+   },
+   {
+    "geoid": "3402359010",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Piscataway township",
+    "pop": 60804
+   },
+   {
+    "geoid": "3476070",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Vineland city",
+    "pop": 60780
+   },
+   {
+    "geoid": "3432250",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hoboken city",
+    "pop": 60419
+   },
+   {
+    "geoid": "3403974480",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Union township",
+    "pop": 59728
+   },
+   {
+    "geoid": "3402934680",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Jackson township",
+    "pop": 58544
+   },
+   {
+    "geoid": "3402756460",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Parsippany-Troy Hills township",
+    "pop": 56162
+   },
+   {
+    "geoid": "3458200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Perth Amboy city",
+    "pop": 55436
+   },
+   {
+    "geoid": "3451210",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "New Brunswick city",
+    "pop": 55266
+   },
+   {
+    "geoid": "3403177840",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Wayne township",
+    "pop": 54838
+   },
+   {
+    "geoid": "3459190",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Plainfield city",
+    "pop": 54586
+   },
+   {
+    "geoid": "3402533300",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Howell township",
+    "pop": 53537
+   },
+   {
+    "geoid": "3401306260",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Bloomfield township",
+    "pop": 53105
+   },
+   {
+    "geoid": "3479610",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "West New York town",
+    "pop": 52912
+   },
+   {
+    "geoid": "3402319000",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "East Brunswick township",
+    "pop": 49715
+   },
+   {
+    "geoid": "3401379800",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "West Orange township",
+    "pop": 48843
+   },
+   {
+    "geoid": "3401577180",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Washington township",
+    "pop": 48677
+   },
+   {
+    "geoid": "3402347280",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Monroe township",
+    "pop": 48594
+   },
+   {
+    "geoid": "3400120290",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Egg Harbor township",
+    "pop": 47842
+   },
+   {
+    "geoid": "3402368790",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "South Brunswick township",
+    "pop": 47043
+   },
+   {
+    "geoid": "3400522110",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Evesham township",
+    "pop": 46826
+   },
+   {
+    "geoid": "3428680",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hackensack city",
+    "pop": 46030
+   },
+   {
+    "geoid": "3403507720",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Bridgewater township",
+    "pop": 45977
+   },
+   {
+    "geoid": "3465790",
+    "kind": "place",
+    "lsadc": "21",
+    "name": "Sayreville borough",
+    "pop": 45345
+   },
+   {
+    "geoid": "3402943140",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Manchester township",
+    "pop": 45115
+   },
+   {
+    "geoid": "3400549020",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Mount Laurel township",
+    "pop": 44633
+   },
+   {
+    "geoid": "3402352560",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "North Brunswick township",
+    "pop": 43905
+   },
+   {
+    "geoid": "3402905305",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Berkeley township",
+    "pop": 43754
+   },
+   {
+    "geoid": "3440350",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Linden city",
+    "pop": 43738
+   },
+   {
+    "geoid": "3403531890",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Hillsborough township",
+    "pop": 43276
+   },
+   {
+    "geoid": "3436510",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Kearny town",
+    "pop": 41999
+   },
+   {
+    "geoid": "3402544070",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Marlboro township",
+    "pop": 41502
+   },
+   {
+    "geoid": "3400372360",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Teaneck township",
+    "pop": 41246
+   },
+   {
+    "geoid": "3401347500",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Montclair township",
+    "pop": 40921
+   },
+   {
+    "geoid": "3402542990",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Manalapan township",
+    "pop": 40905
+   },
+   {
+    "geoid": "3424420",
+    "kind": "place",
+    "lsadc": "21",
+    "name": "Fort Lee borough",
+    "pop": 40191
+   },
+   {
+    "geoid": "3400781740",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Winslow township",
+    "pop": 39907
+   },
+   {
+    "geoid": "3402080",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Atlantic City city",
+    "pop": 38497
+   },
+   {
+    "geoid": "3401304695",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Belleville township",
+    "pop": 38222
+   },
+   {
+    "geoid": "3400125560",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Galloway township",
+    "pop": 37813
+   },
+   {
+    "geoid": "3402122185",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Ewing township",
+    "pop": 37264
+   },
+   {
+    "geoid": "3401547250",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Monroe township",
+    "pop": 37117
+   },
+   {
+    "geoid": "3400757660",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Pennsauken township",
+    "pop": 37074
+   },
+   {
+    "geoid": "3402525230",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Freehold township",
+    "pop": 35369
+   },
+   {
+    "geoid": "3422470",
+    "kind": "place",
+    "lsadc": "21",
+    "name": "Fair Lawn borough",
+    "pop": 34927
+   },
+   {
+    "geoid": "3401313045",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "City of Orange township",
+    "pop": 34447
+   },
+   {
+    "geoid": "3402139510",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Lawrence township",
+    "pop": 33077
+   },
+   {
+    "geoid": "3425770",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Garfield city",
+    "pop": 32655
+   },
+   {
+    "geoid": "3401517710",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Deptford township",
+    "pop": 31977
+   },
+   {
+    "geoid": "3400581440",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Willingboro township",
+    "pop": 31889
+   },
+   {
+    "geoid": "3441310",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Long Branch city",
+    "pop": 31667
+   },
+   {
+    "geoid": "3401340890",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Livingston township",
+    "pop": 31330
+   },
+   {
+    "geoid": "3400776220",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Voorhees township",
+    "pop": 31069
+   },
+   {
+    "geoid": "3479040",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Westfield town",
+    "pop": 31032
+   },
+   {
+    "geoid": "3460900",
+    "kind": "place",
+    "lsadc": "00",
+    "name": "Princeton",
+    "pop": 30681
+   },
+   {
+    "geoid": "3401353680",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Nutley township",
+    "pop": 30143
+   },
+   {
+    "geoid": "3402119780",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "East Windsor township",
+    "pop": 30045
+   },
+   {
+    "geoid": "3461530",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Rahway city",
+    "pop": 29556
+   },
+   {
+    "geoid": "3402180240",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "West Windsor township",
+    "pop": 29518
+   },
+   {
+    "geoid": "3421480",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Englewood city",
+    "pop": 29308
+   },
+   {
+    "geoid": "3402749080",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Mount Olive township",
+    "pop": 28886
+   },
+   {
+    "geoid": "3402937380",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Lacey township",
+    "pop": 28655
+   },
+   {
+    "geoid": "3402970320",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Stafford township",
+    "pop": 28617
+   },
+   {
+    "geoid": "3405170",
+    "kind": "place",
+    "lsadc": "21",
+    "name": "Bergenfield borough",
+    "pop": 28321
+   },
+   {
+    "geoid": "3402549890",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Neptune township",
+    "pop": 28061
+   },
+   {
+    "geoid": "3403505560",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Bernards township",
+    "pop": 27830
+   },
+   {
+    "geoid": "3402554270",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Ocean township",
+    "pop": 27672
+   },
+   {
+    "geoid": "3446680",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Millville city",
+    "pop": 27491
+   },
+   {
+    "geoid": "3400129280",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Hamilton township",
+    "pop": 27484
+   },
+   {
+    "geoid": "3407600",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bridgeton city",
+    "pop": 27263
+   },
+   {
+    "geoid": "3400557510",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Pemberton township",
+    "pop": 26903
+   },
+   {
+    "geoid": "3455950",
+    "kind": "place",
+    "lsadc": "21",
+    "name": "Paramus borough",
+    "pop": 26698
+   },
+   {
+    "geoid": "3402576460",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Wall township",
+    "pop": 26525
+   },
+   {
+    "geoid": "3402761890",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Randolph township",
+    "pop": 26504
+   },
+   {
+    "geoid": "3441100",
+    "kind": "place",
+    "lsadc": "21",
+    "name": "Lodi borough",
+    "pop": 26206
+   },
+   {
+    "geoid": "3463000",
+    "kind": "place",
+    "lsadc": "47",
+    "name": "Ridgewood village",
+    "pop": 25979
+   },
+   {
+    "geoid": "3413570",
+    "kind": "place",
+    "lsadc": "21",
+    "name": "Cliffside Park borough",
+    "pop": 25693
+   },
+   {
+    "geoid": "3401343800",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Maplewood township",
+    "pop": 25684
+   },
+   {
+    "geoid": "3400342750",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Mahwah township",
+    "pop": 25487
+   },
+   {
+    "geoid": "3402764080",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Rockaway township",
+    "pop": 25341
+   },
+   {
+    "geoid": "3410750",
+    "kind": "place",
+    "lsadc": "21",
+    "name": "Carteret borough",
+    "pop": 25326
+   }
+  ],
+  "nv": [
+   {
+    "geoid": "3240000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Las Vegas city",
+    "pop": 641903
+   },
+   {
+    "geoid": "3231900",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Henderson city",
+    "pop": 317610
+   },
+   {
+    "geoid": "3260600",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Reno city",
+    "pop": 264165
+   },
+   {
+    "geoid": "3251800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "North Las Vegas city",
+    "pop": 262527
+   },
+   {
+    "geoid": "3268400",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Sparks city",
+    "pop": 108445
+   },
+   {
+    "geoid": "3209700",
+    "kind": "place",
+    "lsadc": "00",
+    "name": "Carson City",
+    "pop": 58639
+   }
+  ],
   "ny": [
    {
     "geoid": "3651000",
@@ -3719,6 +5101,491 @@
     "pop": 25949
    }
   ],
+  "pa": [
+   {
+    "geoid": "4260000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Philadelphia city",
+    "pop": 1603797
+   },
+   {
+    "geoid": "4261000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Pittsburgh city",
+    "pop": 302971
+   },
+   {
+    "geoid": "4202000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Allentown city",
+    "pop": 125845
+   },
+   {
+    "geoid": "4263624",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Reading city",
+    "pop": 95112
+   },
+   {
+    "geoid": "4224000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Erie city",
+    "pop": 94831
+   },
+   {
+    "geoid": "4204579000",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Upper Darby township",
+    "pop": 85681
+   },
+   {
+    "geoid": "4269000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Scranton city",
+    "pop": 76328
+   },
+   {
+    "geoid": "4206088",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bethlehem city",
+    "pop": 75781
+   },
+   {
+    "geoid": "4209144976",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Lower Merion township",
+    "pop": 63633
+   },
+   {
+    "geoid": "4201705616",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Bensalem township",
+    "pop": 62707
+   },
+   {
+    "geoid": "4209100156",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Abington township",
+    "pop": 58502
+   },
+   {
+    "geoid": "4241216",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lancaster city",
+    "pop": 58039
+   },
+   {
+    "geoid": "4201708768",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Bristol township",
+    "pop": 54291
+   },
+   {
+    "geoid": "4204949548",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Millcreek township",
+    "pop": 54073
+   },
+   {
+    "geoid": "4204345056",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Lower Paxton township",
+    "pop": 53501
+   },
+   {
+    "geoid": "4204533144",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Haverford township",
+    "pop": 50431
+   },
+   {
+    "geoid": "4232800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Harrisburg city",
+    "pop": 50099
+   },
+   {
+    "geoid": "4201749120",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Middletown township",
+    "pop": 46040
+   },
+   {
+    "geoid": "4287048",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "York city",
+    "pop": 44800
+   },
+   {
+    "geoid": "4285152",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Wilkes-Barre city",
+    "pop": 44328
+   },
+   {
+    "geoid": "4207146896",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Manheim township",
+    "pop": 43977
+   },
+   {
+    "geoid": "4202184",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Altoona city",
+    "pop": 43963
+   },
+   {
+    "geoid": "4212933792",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Hempfield township",
+    "pop": 41466
+   },
+   {
+    "geoid": "4200359032",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Penn Hills township",
+    "pop": 41059
+   },
+   {
+    "geoid": "4273808",
+    "kind": "place",
+    "lsadc": "21",
+    "name": "State College borough",
+    "pop": 40501
+   },
+   {
+    "geoid": "4201754688",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Northampton township",
+    "pop": 39915
+   },
+   {
+    "geoid": "4209112968",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Cheltenham township",
+    "pop": 37452
+   },
+   {
+    "geoid": "4254656",
+    "kind": "place",
+    "lsadc": "21",
+    "name": "Norristown borough",
+    "pop": 35748
+   },
+   {
+    "geoid": "4201725112",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Falls township",
+    "pop": 34716
+   },
+   {
+    "geoid": "4200351696",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Mount Lebanon township",
+    "pop": 34075
+   },
+   {
+    "geoid": "4209179136",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Upper Merion township",
+    "pop": 33613
+   },
+   {
+    "geoid": "4201780952",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Warminster township",
+    "pop": 33603
+   },
+   {
+    "geoid": "4206064",
+    "kind": "place",
+    "lsadc": "37",
+    "name": "Bethel Park municipality",
+    "pop": 33577
+   },
+   {
+    "geoid": "4200366264",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Ross township",
+    "pop": 33567
+   },
+   {
+    "geoid": "4204563264",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Radnor township",
+    "pop": 33228
+   },
+   {
+    "geoid": "4201744968",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Lower Makefield township",
+    "pop": 33180
+   },
+   {
+    "geoid": "4201916920",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Cranberry township",
+    "pop": 33096
+   },
+   {
+    "geoid": "4204132296",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Hampden township",
+    "pop": 32761
+   },
+   {
+    "geoid": "4213208",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Chester city",
+    "pop": 32605
+   },
+   {
+    "geoid": "4207744952",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Lower Macungie township",
+    "pop": 32426
+   },
+   {
+    "geoid": "4202977344",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Tredyffrin township",
+    "pop": 31927
+   },
+   {
+    "geoid": "4212955128",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "North Huntingdon township",
+    "pop": 31880
+   },
+   {
+    "geoid": "4204564800",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Ridley township",
+    "pop": 31053
+   },
+   {
+    "geoid": "4233408",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hazleton city",
+    "pop": 29963
+   },
+   {
+    "geoid": "4213387056",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "York township",
+    "pop": 29719
+   },
+   {
+    "geoid": "4200345900",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "McCandless township",
+    "pop": 29698
+   },
+   {
+    "geoid": "4207784528",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Whitehall township",
+    "pop": 29173
+   },
+   {
+    "geoid": "4250528",
+    "kind": "place",
+    "lsadc": "37",
+    "name": "Monroeville municipality",
+    "pop": 28640
+   },
+   {
+    "geoid": "4201172824",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Spring township",
+    "pop": 28407
+   },
+   {
+    "geoid": "4200369584",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Shaler township",
+    "pop": 28132
+   },
+   {
+    "geoid": "4221648",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Easton city",
+    "pop": 28127
+   },
+   {
+    "geoid": "4204375672",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Swatara township",
+    "pop": 27824
+   },
+   {
+    "geoid": "4285312",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Williamsport city",
+    "pop": 27754
+   },
+   {
+    "geoid": "4200350784",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Moon township",
+    "pop": 27240
+   },
+   {
+    "geoid": "4261536",
+    "kind": "place",
+    "lsadc": "21",
+    "name": "Plum borough",
+    "pop": 27144
+   },
+   {
+    "geoid": "4213372992",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Springettsbury township",
+    "pop": 27058
+   },
+   {
+    "geoid": "4242168",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lebanon city",
+    "pop": 26814
+   },
+   {
+    "geoid": "4204375528",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Susquehanna township",
+    "pop": 26736
+   },
+   {
+    "geoid": "4209179008",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Upper Dublin township",
+    "pop": 26665
+   },
+   {
+    "geoid": "4209135808",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Horsham township",
+    "pop": 26564
+   },
+   {
+    "geoid": "4207779104",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Upper Macungie township",
+    "pop": 26377
+   },
+   {
+    "geoid": "4207121232",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "East Hempfield township",
+    "pop": 26304
+   },
+   {
+    "geoid": "4209179176",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Upper Moreland township",
+    "pop": 26116
+   },
+   {
+    "geoid": "4209506096",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Bethlehem township",
+    "pop": 25868
+   },
+   {
+    "geoid": "4209150640",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Montgomery township",
+    "pop": 25862
+   },
+   {
+    "geoid": "4201781048",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Warrington township",
+    "pop": 25639
+   },
+   {
+    "geoid": "4209145080",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Lower Providence township",
+    "pop": 25625
+   },
+   {
+    "geoid": "4201124384",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Exeter township",
+    "pop": 25466
+   },
+   {
+    "geoid": "4204573032",
+    "kind": "subdivision",
+    "lsadc": "44",
+    "name": "Springfield township",
+    "pop": 25070
+   }
+  ],
   "sc": [
    {
     "geoid": "4513330",
@@ -4439,6 +6306,43 @@
     "lsadc": "25",
     "name": "Muskego city",
     "pop": 25032
+   }
+  ],
+  "wv": [
+   {
+    "geoid": "5414600",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Charleston city",
+    "pop": 48864
+   },
+   {
+    "geoid": "5439460",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Huntington city",
+    "pop": 46842
+   },
+   {
+    "geoid": "5455756",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Morgantown city",
+    "pop": 30347
+   },
+   {
+    "geoid": "5462140",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Parkersburg city",
+    "pop": 29738
+   },
+   {
+    "geoid": "5486452",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Wheeling city",
+    "pop": 27052
    }
   ]
  },
