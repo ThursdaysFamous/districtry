@@ -1,0 +1,568 @@
+{
+  "1": {
+    "name": "Nathaniel Moran",
+    "party": "Republican",
+    "url": "https://moran.house.gov",
+    "capitolOffice": [
+      "1605 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3035"
+    ],
+    "districtOffice": [
+      "2500 North Robison Rd., Suite 190",
+      "Texarkana, TX 75501",
+      "Phone: 903-561-6349"
+    ]
+  },
+  "2": {
+    "name": "Dan Crenshaw",
+    "party": "Republican",
+    "url": "https://crenshaw.house.gov",
+    "capitolOffice": [
+      "248 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6565"
+    ],
+    "districtOffice": [
+      "1849 Kingwood Dr., #100",
+      "Kingwood, TX 77339",
+      "Phone: 713-860-1330"
+    ]
+  },
+  "3": {
+    "name": "Keith Self",
+    "party": "Republican",
+    "url": "https://keithself.house.gov",
+    "capitolOffice": [
+      "1030 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4201"
+    ],
+    "districtOffice": [
+      "4500 W. Eldorado Pkwy, Suite 3500",
+      "Mckinney, TX 75070",
+      "Phone: 972-202-4150"
+    ]
+  },
+  "4": {
+    "name": "Pat Fallon",
+    "party": "Republican",
+    "url": "https://fallon.house.gov",
+    "capitolOffice": [
+      "2416 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6673"
+    ],
+    "districtOffice": [
+      "6531 Horizon Rd., Suite A",
+      "Rockwall, TX 75032",
+      "Phone: 972-771-0100"
+    ]
+  },
+  "5": {
+    "name": "Lance Gooden",
+    "party": "Republican",
+    "url": "https://gooden.house.gov",
+    "capitolOffice": [
+      "2431 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3484"
+    ],
+    "districtOffice": [
+      "201 W Nash St., #103",
+      "Terrell, TX 75160",
+      "Phone: 903-502-5300"
+    ]
+  },
+  "6": {
+    "name": "Jake Ellzey",
+    "party": "Republican",
+    "url": "https://ellzey.house.gov",
+    "capitolOffice": [
+      "1721 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2002"
+    ],
+    "districtOffice": [
+      "122 N. Beaton St",
+      "Corsicana, TX 75110",
+      "Phone: 903-602-7860"
+    ]
+  },
+  "7": {
+    "name": "Lizzie Fletcher",
+    "party": "Democrat",
+    "url": "https://fletcher.house.gov",
+    "capitolOffice": [
+      "2004 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2571"
+    ],
+    "districtOffice": [
+      "3700 Buffalo Speedway, Suite 610",
+      "Houston, TX 77098",
+      "Phone: 713-353-8680"
+    ]
+  },
+  "8": {
+    "name": "Morgan Luttrell",
+    "party": "Republican",
+    "url": "https://luttrell.house.gov",
+    "capitolOffice": [
+      "444 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4901"
+    ],
+    "districtOffice": [
+      "18230 FM 1488, Suite 308",
+      "Magnolia, TX 77354",
+      "Phone: 281-305-7890"
+    ]
+  },
+  "9": {
+    "name": "Al Green",
+    "party": "Democrat",
+    "url": "https://algreen.house.gov",
+    "capitolOffice": [
+      "2347 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-7508"
+    ],
+    "districtOffice": [
+      "3003 South Loop West, Suite 460",
+      "Houston, TX 77054",
+      "Phone: 713-383-9234"
+    ]
+  },
+  "10": {
+    "name": "Michael T. McCaul",
+    "party": "Republican",
+    "url": "https://mccaul.house.gov",
+    "capitolOffice": [
+      "2300 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2401"
+    ],
+    "districtOffice": [
+      "175 Century Square Drive, Suite 210",
+      "College Station, TX 77840",
+      "Phone: 979-431-6480"
+    ]
+  },
+  "11": {
+    "name": "August Pfluger",
+    "party": "Republican",
+    "url": "https://pfluger.house.gov",
+    "capitolOffice": [
+      "2202 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3605"
+    ],
+    "districtOffice": [
+      "505 E Jasper Drive",
+      "Pratt Learning and Leadership",
+      "Killeen, TX 76541",
+      "Phone: 254-669-6570"
+    ]
+  },
+  "12": {
+    "name": "Craig A. Goldman",
+    "party": "Republican",
+    "url": "https://craiggoldman.house.gov",
+    "capitolOffice": [
+      "1716 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5071"
+    ],
+    "districtOffice": [
+      "306 West Seventh St, Suite 1145",
+      "Fort Worth, TX 76102",
+      "Phone: 817-806-9474"
+    ]
+  },
+  "13": {
+    "name": "Ronny Jackson",
+    "party": "Republican",
+    "url": "https://jackson.house.gov",
+    "capitolOffice": [
+      "125 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3706"
+    ],
+    "districtOffice": [
+      "110 W. Hickory Street, Suite 303",
+      "Denton, TX 76201",
+      "Phone: 940-334-2030"
+    ]
+  },
+  "14": {
+    "name": "Randy K. Weber, Sr.",
+    "party": "Republican",
+    "url": "https://weber.house.gov",
+    "capitolOffice": [
+      "107 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2831"
+    ],
+    "districtOffice": [
+      "122 West Way, Suite 301",
+      "Lake Jackson, TX 77566",
+      "Phone: 979-285-0231"
+    ]
+  },
+  "15": {
+    "name": "Monica De La Cruz",
+    "party": "Republican",
+    "url": "https://delacruz.house.gov",
+    "capitolOffice": [
+      "1415 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-9901"
+    ],
+    "districtOffice": [
+      "402 Houston St",
+      "George West Library",
+      "George West, TX 78022",
+      "Phone: 830-463-0800"
+    ]
+  },
+  "16": {
+    "name": "Veronica Escobar",
+    "party": "Democrat",
+    "url": "https://escobar.house.gov",
+    "capitolOffice": [
+      "2448 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4831"
+    ],
+    "districtOffice": [
+      "221 N Kansas St, Suite 1500",
+      "Wells Fargo Plaza",
+      "El Paso, TX 79901-1443",
+      "Phone: 915-541-1400"
+    ]
+  },
+  "17": {
+    "name": "Pete Sessions",
+    "party": "Republican",
+    "url": "https://sessions.house.gov",
+    "capitolOffice": [
+      "2204 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6105"
+    ],
+    "districtOffice": [
+      "300 E Shepherd Ave, Suite 210",
+      "Lufkin, TX 75902-3252",
+      "Phone: 936-219-6450"
+    ]
+  },
+  "18": {
+    "name": "Christian D. Menefee",
+    "party": "Democrat",
+    "url": "https://menefee.house.gov",
+    "capitolOffice": [
+      "1318 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3816"
+    ],
+    "districtOffice": [
+      "15651 North Freeway",
+      "Houston, TX 77090",
+      "Phone: 281-891-4899"
+    ]
+  },
+  "19": {
+    "name": "Jodey C. Arrington",
+    "party": "Republican",
+    "url": "https://arrington.house.gov",
+    "capitolOffice": [
+      "1111 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4005"
+    ],
+    "districtOffice": [
+      "500 Chestnut St., Suite 819",
+      "Abilene, TX 79602",
+      "Phone: 325-675-9779"
+    ]
+  },
+  "20": {
+    "name": "Joaquin Castro",
+    "party": "Democrat",
+    "url": "https://castro.house.gov",
+    "capitolOffice": [
+      "2241 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3236"
+    ],
+    "districtOffice": [
+      "727 E. Cesar E. Chavez Blvd, B-128",
+      "San Antonio, TX 78206",
+      "Phone: 210-348-8216"
+    ]
+  },
+  "21": {
+    "name": "Chip Roy",
+    "party": "Republican",
+    "url": "https://roy.house.gov",
+    "capitolOffice": [
+      "103 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4236"
+    ],
+    "districtOffice": [
+      "125 Lehmann Drive, Suite 201",
+      "Kerrville, TX 78028",
+      "Phone: 830-896-0154"
+    ]
+  },
+  "22": {
+    "name": "Troy E. Nehls",
+    "party": "Republican",
+    "url": "https://nehls.house.gov",
+    "capitolOffice": [
+      "1104 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5951"
+    ],
+    "districtOffice": [
+      "6510 FM 359 S, Suite 200",
+      "Fulshear, TX 77441",
+      "Phone: 346-762-6600"
+    ]
+  },
+  "23": {
+    "vacant": true,
+    "vacantWhy": "The Clerk of the House lists this seat as vacant: its member resigned on April 14, 2026.",
+    "sourceUrl": "https://clerk.house.gov/Members/ViewVacancies",
+    "asOf": "2026-11-11"
+  },
+  "24": {
+    "name": "Beth Van Duyne",
+    "party": "Republican",
+    "url": "https://vanduyne.house.gov",
+    "capitolOffice": [
+      "1725 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6605"
+    ],
+    "districtOffice": [
+      "14951 Dallas Pkwy, Unit 830",
+      "Dallas, TX 75254",
+      "Phone: 972-966-5500"
+    ]
+  },
+  "25": {
+    "name": "Roger Williams",
+    "party": "Republican",
+    "url": "https://williams.house.gov",
+    "capitolOffice": [
+      "2336 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-9896"
+    ],
+    "districtOffice": [
+      "115 S. Main St., Suite 206",
+      "Cleburne, TX 76033",
+      "Phone: 682-218-5965"
+    ]
+  },
+  "26": {
+    "name": "Brandon Gill",
+    "party": "Republican",
+    "url": "https://gill.house.gov",
+    "capitolOffice": [
+      "1305 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-7772"
+    ],
+    "districtOffice": [
+      "600 Parker Square, Suite 205",
+      "Flower Mound, TX 75028",
+      "Phone: 972-966-5454"
+    ]
+  },
+  "27": {
+    "name": "Michael Cloud",
+    "party": "Republican",
+    "url": "https://cloud.house.gov",
+    "capitolOffice": [
+      "304 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-7742"
+    ],
+    "districtOffice": [
+      "120 S. Main St., Suite 310",
+      "Victoria, TX 77901",
+      "Phone: 361-894-6446"
+    ]
+  },
+  "28": {
+    "name": "Henry Cuellar",
+    "party": "Democrat",
+    "url": "https://cuellar.house.gov",
+    "capitolOffice": [
+      "2308 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-1640"
+    ],
+    "districtOffice": [
+      "602 E. Calton Rd., Suite 2",
+      "Laredo, TX 78041",
+      "Phone: 956-725-0639"
+    ]
+  },
+  "29": {
+    "name": "Sylvia R. Garcia",
+    "party": "Democrat",
+    "url": "https://sylviagarcia.house.gov",
+    "capitolOffice": [
+      "2419 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-1688"
+    ],
+    "districtOffice": [
+      "11811 East Fwy, Suite 430",
+      "Houston, TX 77029-1974",
+      "Phone: 832-325-3150"
+    ]
+  },
+  "30": {
+    "name": "Jasmine Crockett",
+    "party": "Democrat",
+    "url": "https://crockett.house.gov",
+    "capitolOffice": [
+      "1616 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-8885"
+    ],
+    "districtOffice": [
+      "1825 Market Center Blvd., Suite 440",
+      "Dallas, TX 75207",
+      "Phone: 214-922-8885"
+    ]
+  },
+  "31": {
+    "name": "John R. Carter",
+    "party": "Republican",
+    "url": "https://carter.house.gov",
+    "capitolOffice": [
+      "2208 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3864"
+    ],
+    "districtOffice": [
+      "2180 North Main Street, Suite #I-10",
+      "Bell County Office",
+      "Belton, TX 76513",
+      "Phone: 254-933-1392"
+    ]
+  },
+  "32": {
+    "name": "Julie Johnson",
+    "party": "Democrat",
+    "url": "https://juliejohnson.house.gov",
+    "capitolOffice": [
+      "221 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2231"
+    ],
+    "districtOffice": [
+      "100 N Central Expy, Suite 602",
+      "Chase Bank Building",
+      "Richardson, TX 75080",
+      "Phone: 972-972-7949"
+    ]
+  },
+  "33": {
+    "name": "Marc A. Veasey",
+    "party": "Democrat",
+    "url": "https://veasey.house.gov",
+    "capitolOffice": [
+      "2186 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-9897"
+    ],
+    "districtOffice": [
+      "1881 Sylvan Ave., Suite 108",
+      "JP Morgan Chase Building",
+      "Dallas, TX 75208",
+      "Phone: 214-741-1387"
+    ]
+  },
+  "34": {
+    "name": "Vicente Gonzalez",
+    "party": "Democrat",
+    "url": "https://gonzalez.house.gov",
+    "capitolOffice": [
+      "1201 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2531"
+    ],
+    "districtOffice": [
+      "100 W. King Ave., Suite 106",
+      "Kingsville, TX 78363",
+      "Phone: 956-682-5545"
+    ]
+  },
+  "35": {
+    "name": "Greg Casar",
+    "party": "Democrat",
+    "url": "https://casar.house.gov",
+    "capitolOffice": [
+      "446 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5645"
+    ],
+    "districtOffice": [
+      "San Antonio, TX 78205",
+      "Phone: 210-580-7000"
+    ]
+  },
+  "36": {
+    "name": "Brian Babin",
+    "party": "Republican",
+    "url": "https://babin.house.gov",
+    "capitolOffice": [
+      "2236 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-1555"
+    ],
+    "districtOffice": [
+      "203 Ivy Ave., Suite 600",
+      "Deer Park, TX 77536",
+      "Phone: 832-780-0966"
+    ]
+  },
+  "37": {
+    "name": "Lloyd Doggett",
+    "party": "Democrat",
+    "url": "https://doggett.house.gov",
+    "capitolOffice": [
+      "2307 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4865"
+    ],
+    "districtOffice": [
+      "300 East 8th St, 7th Floor",
+      "Austin, TX 78701",
+      "Phone: 512-916-5921"
+    ]
+  },
+  "38": {
+    "name": "Wesley Hunt",
+    "party": "Republican",
+    "url": "https://hunt.house.gov",
+    "capitolOffice": [
+      "1520 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5646"
+    ],
+    "districtOffice": [
+      "5599 San Felipe St., Suite 950",
+      "Houston, TX 77056",
+      "Phone: 832-357-0555"
+    ]
+  }
+}
