@@ -1,0 +1,60 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from wi/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Wisconsin",
+ "usSenate": [
+  {
+   "name": "Tammy Baldwin",
+   "party": "Democratic",
+   "url": "https://www.baldwin.senate.gov/",
+   "office": "141 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5653"
+  },
+  {
+   "name": "Ron Johnson",
+   "party": "Republican",
+   "url": "https://www.ronjohnson.senate.gov/",
+   "office": "328 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5323"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Tony Evers",
+   "url": "https://evers.wi.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Sara Rodriguez",
+   "url": "https://ltgov.wisconsin.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Josh Kaul",
+   "url": "https://www.doj.state.wi.us/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Sarah Godlewski",
+   "url": "https://sos.wi.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "John Leiber",
+   "url": "https://statetreasurer.wi.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "State Superintendent of Public Instruction",
+   "name": "Jill Underly",
+   "url": "https://dpi.wi.gov/",
+   "verified": "2026-11-10"
+  }
+ ]
+}

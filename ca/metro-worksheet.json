@@ -575,6 +575,11 @@
     ],
     "rosters": [
       {
+        "file": "statewide-officials.json",
+        "min_keys": 5,
+        "note": "The officers California elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from ca/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
+      },
+      {
         "file": "election-results.json",
         "min_keys": 11,
         "note": "San Francisco's election results by precinct: the index (groups, precinct keys, the part file each precinct is in, and per contest its choices, totals and its leader string, trimmed to the run of precincts it is on the ballot in); each precinct's own counts sit in election-results/p<first two digits>.json, fetched on a click and never cached by the worker. From the Department of Elections' Statement of the Vote by ca/scripts/sf_election_results_scraper.py + build_sf_election_results.py through scripts/election_results_common.py, checked daily by ca-update-election-results.yml; certified stays false until the Department certifies the results. Network-first: the count can change."

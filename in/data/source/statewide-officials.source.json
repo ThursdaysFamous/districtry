@@ -1,0 +1,36 @@
+{
+ "state": "Indiana",
+ "usps": "IN",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Mike Braun",
+   "url": "https://www.in.gov/gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Micah Beckwith",
+   "url": "https://www.in.gov/lg/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Todd Rokita",
+   "url": "https://www.in.gov/attorneygeneral/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Diego Morales",
+   "url": "https://www.in.gov/sos/"
+  },
+  {
+   "office": "Treasurer of State",
+   "name": "Daniel Elliott",
+   "url": "https://www.in.gov/tos/"
+  },
+  {
+   "office": "Auditor of State",
+   "name": "Elise Nieshalla",
+   "url": "https://www.in.gov/auditor/"
+  }
+ ]
+}

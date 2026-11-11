@@ -1,0 +1,42 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from va/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Virginia",
+ "usSenate": [
+  {
+   "name": "Tim Kaine",
+   "party": "Democratic",
+   "url": "https://www.kaine.senate.gov/",
+   "office": "231 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4024"
+  },
+  {
+   "name": "Mark R. Warner",
+   "party": "Democratic",
+   "url": "https://www.warner.senate.gov",
+   "office": "703 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2023"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Abigail Spanberger",
+   "url": "https://www.governor.virginia.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Ghazala Hashmi",
+   "url": "https://www.ltgov.virginia.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Jay Jones",
+   "url": "https://www.oag.state.va.us/",
+   "verified": "2026-11-10"
+  }
+ ]
+}

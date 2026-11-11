@@ -1,0 +1,84 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from nc/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "North Carolina",
+ "usSenate": [
+  {
+   "name": "Ted Budd",
+   "party": "Republican",
+   "url": "https://www.budd.senate.gov/",
+   "office": "354 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-3154"
+  },
+  {
+   "name": "Thom Tillis",
+   "party": "Republican",
+   "url": "https://www.tillis.senate.gov",
+   "office": "113 Dirksen Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-6342"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Josh Stein",
+   "url": "https://governor.nc.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Rachel Hunt",
+   "url": "https://ltgov.nc.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Jeff Jackson",
+   "url": "https://ncdoj.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Elaine F. Marshall",
+   "url": "https://www.sosnc.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Bradford B. Briner",
+   "url": "https://www.nctreasurer.com/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Dave Boliek",
+   "url": "https://www.auditor.nc.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Commissioner of Agriculture",
+   "name": "Steve Troxler",
+   "url": "https://www.ncagr.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Commissioner of Labor",
+   "name": "Luke Farley",
+   "url": "https://www.labor.nc.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Commissioner of Insurance",
+   "name": "Mike Causey",
+   "url": "https://www.ncdoi.gov/",
+   "verified": "2026-11-10"
+  },
+  {
+   "office": "Superintendent of Public Instruction",
+   "name": "Maurice “Mo” Green",
+   "url": "https://www.dpi.nc.gov/about-dpi/state-superintendent-public-instruction",
+   "verified": "2026-11-10"
+  }
+ ]
+}

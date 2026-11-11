@@ -141,6 +141,15 @@ jobs:
           python3 scripts/build_tribal_areas.py --check
           python3 scripts/tribal_council_scraper.py --selftest
 
+      # The Statewide officials card in every live app: each shipped roster
+      # must carry the offices its seed lists, the names the seed gives (or
+      # none, for an office whose page could not be read), a date each name
+      # was last checked and exactly two U.S. senators. Offline; the weekly
+      # update-statewide-officials.yml is what reads the offices' own pages.
+      - name: Statewide officials rosters match their seeds
+        if: ${{ !cancelled() }}
+        run: python3 scripts/build_statewide_officials.py --check
+
       # A number a gap record STATES must equal the file it describes.
       # ia-board-chair told readers "43 of Iowa's 99 counties" for eleven days
       # while the file held 38, and #1034 fixed the number without adding a

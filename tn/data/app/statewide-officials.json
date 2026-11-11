@@ -1,0 +1,31 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from tn/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Tennessee",
+ "usSenate": [
+  {
+   "name": "Marsha Blackburn",
+   "party": "Republican",
+   "url": "https://www.blackburn.senate.gov",
+   "office": "357 Dirksen Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-3344"
+  },
+  {
+   "name": "Bill Hagerty",
+   "party": "Republican",
+   "url": "https://www.hagerty.senate.gov",
+   "office": "251 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4944"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-10",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Bill Lee",
+   "url": "https://www.tn.gov/governor.html",
+   "verified": "2026-11-10"
+  }
+ ],
+ "officersNote": "Tennessee's voters elect only the governor statewide. The General Assembly chooses the secretary of state, treasurer and comptroller, and the Supreme Court appoints the attorney general."
+}
