@@ -979,6 +979,34 @@
         "zip-code"
       ]
     },
+    "wa": {
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
+        "municipality",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 0,
+      "layer_ids": [
+        "county",
+        "fire-station",
+        "municipality",
+        "police-station",
+        "post-office",
+        "school-district-unified",
+        "us-house",
+        "wa-house",
+        "wa-senate",
+        "zip-code"
+      ]
+    },
     "wi": {
       "layers_sending_point": 1,
       "layers": [

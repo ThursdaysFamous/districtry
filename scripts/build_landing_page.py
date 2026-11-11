@@ -160,6 +160,7 @@ INSTANCE_WORKSHEET = {
     "tx": "tx/metro-worksheet.json",
     "fl": "fl/metro-worksheet.json",
     "oh": "oh/metro-worksheet.json",
+    "wa": "wa/metro-worksheet.json",
 }
 FONTFACE = os.path.join(REPO_ROOT, "fonts", "barlow-fontface.css")
 THEME_BOOT = os.path.join(REPO_ROOT, "engine", "shared", "theme-boot.txt")

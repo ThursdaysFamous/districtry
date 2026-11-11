@@ -215,6 +215,14 @@
     "height": 630,
     "rendered": "2026-10-29"
   },
+  "wa": {
+    "path": "wa/og-image.png",
+    "label": "wa",
+    "sha256": "4b3f7b2b1c80e4d6d9a9720174b626f8984e458d2dacedff36c45cfd7ce14d03",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-11-11"
+  },
   "wi": {
     "path": "wi/og-image.png",
     "label": "wi",

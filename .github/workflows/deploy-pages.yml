@@ -175,6 +175,9 @@ jobs:
             'fl/**'
             # Ohio, batch 2's third state, arrives dark the same way.
             'oh/**'
+            # Washington, batch 2's fifth state, arrives dark: the whole folder
+            # stays off the site until the batch's go-live change.
+            'wa/**'
             fonts/barlow-fontface.css
             # Search Console counts the traffic report reads when it rebuilds
             # elsewhere; nothing on this site fetches them. Written as a full

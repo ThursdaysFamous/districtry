@@ -256,6 +256,18 @@ INSTANCES = {
            "bbox": (-84.83, 38.40, -80.51, 42.33),
            "maps": [("congress-districts.json", 15, 0.0005), ("oh-senate-districts.json", 33, 0.05),
                     ("oh-house-districts.json", 99, 0.05)]},
+    # One legislative map for both chambers, as Arizona's.
+    # Washington's plans sit off the raw-census ideal. Measured 2026-11-11 on
+    # the raw blocks, congressional District 5 is 0.564% over and legislative
+    # District 16 2.336% over; the tolerances are those rounded up. The
+    # likeliest reason, inferred and not read from the law (the Legislature's
+    # code site refuses every automated reader), is that the commission counts
+    # incarcerated people at their last home address, as New York's and
+    # Virginia's do. They catch a map swapped for another and do not certify
+    # the plan.
+    "wa": {"name": "Washington", "state": "53", "total": 7705281, "counties": 39,
+           "bbox": (-124.85, 45.54, -116.91, 49.01),
+           "maps": [("congress-districts.json", 10, 0.006), ("wa-legislative-districts.json", 49, 0.025)]},
 }
 def fetch(url, params):
     q = url + "/query?" + urllib.parse.urlencode(params)

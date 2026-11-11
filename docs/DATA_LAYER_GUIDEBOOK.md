@@ -78,7 +78,8 @@ in the researched-but-unbuilt backlog.
   "newhampshire": ["us-house", "county", "nh-senate", "school-district-secondary", "school-district-unified", "nh-house", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
   "texas": ["tx-senate", "us-house", "tx-house", "county", "school-district-unified", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "police-station", "fire-station", "post-office"],
   "florida": ["us-house", "fl-senate", "county", "school-district-unified", "fl-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "ohio": ["us-house", "oh-senate", "county", "school-district-unified", "oh-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
+  "ohio": ["us-house", "oh-senate", "county", "school-district-unified", "oh-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "washington": ["us-house", "county", "wa-senate", "wa-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -4382,6 +4383,45 @@ trusted.
             "why": "No list of the members of Ohio's school boards has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-11 against TIGERweb's school districts (School MapServer) for STATE='39': 612 unified districts on layer 0 (city, local and exempted village districts), and nothing on the elementary or secondary layers; shipped as a tile archive. No board roster was read for this record, and how each board's members are chosen was not checked district by district: most are elected at large, and Cleveland's is appointed by its mayor. ROUTES NOT YET READ, government publishers first: the Ohio Department of Education and Workforce's directory of school districts; each district's own website; and the county boards of elections' results. The Ohio School Boards Association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "washington": [
+      {
+            "id": "wa-county-officials",
+            "concept": "County government",
+            "area": "Washington — all 39 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners, council members or other elected officers. The card says so rather than leave the office looking empty.",
+            "why": "No statewide list of Washington's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners or council members and its other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-11 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is wa/index.html's own County block: most counties are governed by an elected board of county commissioners, a county with a home-rule charter is governed as its charter sets out (King County's sets up an elected executive and council), and most counties elect officers such as an assessor, an auditor, a treasurer, a prosecuting attorney and a sheriff. The boundary is TIGERweb State_County for STATE='53', 39 features, shipped as wa/data/app/state-counties.json. ROUTES NOT YET READ, government publishers first: each county's own website; the Secretary of State's and the county auditors' election results, which name who won each county seat; and a statewide directory, if a state office keeps one. The Washington State Association of Counties is an association of the counties rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "wa-municipal-officeholders",
+            "concept": "City government",
+            "area": "Washington",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City or Town card names the city or town you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Washington's cities and towns has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's and town's mayor and council members, or a city's or town's own published list of them.",
+            "blocker": "Measured 2026-11-11 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='53': 281 records, 212 cities and 69 towns, every one an active government, together 4,504 km2 of the state's 172,122 km2 of land. The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each city's and town's own website, largest first (Seattle, Spokane, Tacoma, Vancouver, Bellevue); and the Secretary of State's and the county auditors' election results. The Association of Washington Cities and the Municipal Research and Services Center are not the governments themselves, so they come after the cities' own lists. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "wa-school-board-members",
+            "concept": "School board",
+            "area": "Washington",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its board of directors.",
+            "why": "No list of the board members of Washington's school districts has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board of directors, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-11 against TIGERweb's school districts (School MapServer) for STATE='53': 295 records on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary), so every Washington district is filed as one unified district, and none is the Census's \"School District Not Defined\" placeholder. They ship as a tile archive. No board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Office of Superintendent of Public Instruction's own directories; the county auditors' election results, which were not checked for school board contests; and each district's own website. The Washington State School Directors' Association is a membership association rather than a government. NOT YET ASKED, and no ask is drafted."
       }
   ]
 }

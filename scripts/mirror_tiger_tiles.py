@@ -117,7 +117,7 @@ STATE_FIPS = {"il": "17", "ia": "19", "mi": "26", "wi": "55", "ny": "36", "ca": 
               "mn": "27", "ky": "21", "in": "18", "nc": "37", "ok": "40", "sc": "45",
               "tn": "47", "ar": "05", "ms": "28", "la": "22", "mo": "29",
               "va": "51", "wv": "54", "ga": "13", "pa": "42", "nv": "32", "az": "04",
-              "nj": "34", "nh": "33", "tx": "48", "fl": "12", "oh": "39"}
+              "nj": "34", "nh": "33", "tx": "48", "fl": "12", "oh": "39", "wa": "53"}
 # WHO THIS FETCHES AS, and it used to be nobody: the first version shelled out to
 # curl with no -A, so the Census saw `curl/8.x` and nothing read robots.txt.
 # Nothing was breached — measured 2026-09-27 as that client, the host's
@@ -227,6 +227,8 @@ MIRRORS = [
     ("nh", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("nh", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("nh", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("wa", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("wa", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
 ]
 
 # THE ZIP LAYERS (phase 6b). TIGERweb's ZCTA layer has NO STATE field — a ZCTA
@@ -274,6 +276,7 @@ ZIP_MIRRORS = [
     ("nh", "zip-code", "NH_BBOX_ENVELOPE", (-72.65, 42.6, -70.45, 45.4)),
     ("fl", "zip-code", "FL_BBOX_ENVELOPE", (-87.69, 24.34, -79.92, 31.06)),
     ("oh", "zip-code", "OH_BBOX_ENVELOPE", (-84.88, 38.35, -80.46, 42.38)),
+    ("wa", "zip-code", "WA_BBOX_ENVELOPE", (-124.9, 45.49, -116.86, 49.06)),
 ]
 # A STATE row the server cannot answer whole is paged the same way: asked for
 # Texas's 1,016 unified school districts at full detail in one response,

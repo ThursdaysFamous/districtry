@@ -1437,6 +1437,8 @@ PREFIX_CLASSES = {
             "scripts/build_block_population.py")],
     "oh": [("oh/data/app/population/", "census",
             "scripts/build_block_population.py")],
+    "wa": [("wa/data/app/population/", "census",
+            "scripts/build_block_population.py")],
 }
 PREFIX_KIND = {rel: kind for rows in PREFIX_CLASSES.values()
                for rel, kind, _ in rows}
@@ -2916,6 +2918,43 @@ ANSWERS = {
             "Ohio has no tribal land. The Census publishes no federal or state "
             "reservation and no off-reservation trust land in the state, "
             "measured 2026-11-11 with scripts/tribal_areas.py --report."),
+    },
+    "wa": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("wa-senate", "wa-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        # TIGER carries Washington's 295 school districts as unified districts
+        # and nothing on its elementary or secondary layers (measured 2026-11-11).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-11 on TIGERweb's county subdivisions, with Illinois
+        # as the control (1,411 active of 1,695): all 242 of Washington's are
+        # census county divisions (FUNCSTAT S), statistical areas that govern
+        # nobody.
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": na(
+            "Washington has no sub-county general-purpose government — outside a "
+            "city or town limit the county governs. The 242 sub-county units the "
+            "Census publishes for Washington are census county divisions: "
+            "statistical areas, not governments (measured 2026-11-11)."),
+        # Superior court judges are elected by county and Court of Appeals
+        # judges by district within each division; neither is drawn or named
+        # yet.
+        "courts-by-district": OPEN,
+        # Whether any board elects its members by district has not been
+        # measured for Washington.
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-11 with scripts/tribal_areas.py --report Washington:
+        # the Census keeps 28 reservations and 22 off-reservation trust lands
+        # in Washington, and the app draws no tribal land yet (wa/WATCH.md).
+        "tribal-government": OPEN,
     },
     # Georgia, added at its go-live: the national tier, every county's board of
     # commissioners named from the Secretary of State's election results, the
