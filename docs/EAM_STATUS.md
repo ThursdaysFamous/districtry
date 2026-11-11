@@ -43,7 +43,7 @@ different thing from one it failed.
 
 | state | E.A.M.C. | counties | examined | districts | named | answered | files | maintained | covered |
 |---|---|---|---|---|---|---|---|---|---|
-| ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 22 | all | 13 of 14 levels |
+| ar | **EAM·** | 75 | 75/75 | 775 | 736 | all | 22 | all | 13 of 14 levels |
 | az | **EAM·** | 15 | 15/15 § | 0 | 0 | by record | 11 | all | 6 of 14 levels |
 | ca | **--MC** | — | — | 0 | 0 | — | 18 | all | all 14 levels |
 | ga | **EAM·** | 159 | 159/159 § | 754 | 436 | all | 18 | all | 9 of 14 levels |
