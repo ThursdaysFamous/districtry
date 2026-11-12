@@ -61,7 +61,7 @@ const OFFLINE = ["supervisor-district", "neighborhood", "police-district"];
 const EXPECT_DISTRICT = { "supervisor-district": "5", "neighborhood": "Tenderloin", "police-district": "NORTHERN" };
 const NEGATIVE_POINT = "32.40000,-115.60000"; // The Mexicali Valley in Mexico, about 15 km south of the border at Calexico — outside California and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11 against TIGERweb's state layer (controls: San Francisco City Hall returns California, and Mexicali, Baja California, returns no state). IT IS IN ANOTHER COUNTRY, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.
 const APP_NAME = "districtry California";
-const EXPECT_LAYERS = 22; // Thread-5: legislative chambers now pre-built SF-clipped geometry (data/app); supervisor-district is a bespoke roster-joined registerLayer; 11 layers total; + 3 amenity nearest-point layers (post-office, library, early-voting) = 14; + bart-director + election-precinct (parity-debt closures, 2026-07) = 16; + election-results (2026-11) = 17; + county, municipality and the three school district tilings when the app grew to the whole state (2026-11) = 22
+const EXPECT_LAYERS = 23; // Thread-5: legislative chambers now pre-built SF-clipped geometry (data/app); supervisor-district is a bespoke roster-joined registerLayer; 11 layers total; + 3 amenity nearest-point layers (post-office, library, early-voting) = 14; + bart-director + election-precinct (parity-debt closures, 2026-07) = 16; + election-results (2026-11) = 17; + county, municipality and the three school district tilings when the app grew to the whole state (2026-11) = 22; + tribal-government (2026-11-12) = 23
 // ==== GENERATED:END smoke-config ====
 const EXPORTS_NAME = "SFExplorer"; // the fork's window debug namespace
 const BOOT_TIMEOUT = 45000; // Leaflet + first paint on a cold CI runner
@@ -637,6 +637,145 @@ try {
       !!light.stroke && !!dark.stroke && light.stroke !== dark.stroke,
       `${light.stroke} -> ${dark.stroke}`);
     await context.close();
+  }
+
+  // 10. TRIBAL GOVERNMENT. The nation, its seat and the land expected are
+  //     read from the shipped file at the point, so a rebuild moves the
+  //     expectation with the file; what is asserted is that each card agrees
+  //     with it, and with where each seat came from.
+  //       - The Round Valley Reservation's seat, Covelo, comes from the
+  //         tribes' own site, because the Bureau of Indian Affairs lists no
+  //         office town for them; the card says so on an "About the seat"
+  //         line and links the site the Bureau lists.
+  //       - The Capitan Grande Reservation is shared by two governments, the
+  //         Barona and Viejas groups of the Capitan Grande Band, so the card
+  //         names both, lists each one's seat and site, and carries no single
+  //         "(official)" link.
+  //       - The XL Ranch Rancheria's Census name does not name the Pit River
+  //         Tribe, which holds it; the card names the tribe with the Bureau's
+  //         town and site, and no "About the seat" line.
+  //       - The California part of the Colorado River Indian Reservation
+  //         names a government the Bureau seats in Parker, Arizona.
+  //       - San Francisco City Hall is on no tribal land, and the card says
+  //         so in the layer's own words.
+  //     Each point is the pole of inaccessibility of the largest part of the
+  //     piece inside this app's state outline, as the shipped files draw them
+  //     (shapely polylabel, 2026-11-12): 682 m, 1.9 km, 1.1 km and 3.4 km
+  //     from its edge.
+  {
+    const areas = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app", "tribal-areas.json"), "utf8"));
+    // The app's rule for a shipped file: even-odd within a polygon, any part
+    // of a multipolygon.
+    const inRing = (x, y, ring) => {
+      let inside = false;
+      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const [xi, yi] = ring[i], [xj, yj] = ring[j];
+        if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+      }
+      return inside;
+    };
+    const propsAt = (fc, point) => {
+      const [lat, lng] = point.split(",").map(Number);
+      return fc.features.filter((f) => {
+        const g = f.geometry;
+        const polys = g.type === "Polygon" ? [g.coordinates] : g.coordinates;
+        return polys.some((rings) => rings.reduce((acc, ring) => acc !== inRing(lng, lat, ring), false));
+      }).map((f) => f.properties);
+    };
+    const ROUND_VALLEY = "39.86652,-123.15988";
+    const CAPITAN_GRANDE = "32.89983,-116.70090";
+    const XL_RANCH = "41.52814,-120.46352";
+    const COLORADO_RIVER = "34.20904,-114.27367";
+    const at = async (pt) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await context.newPage();
+      await routeLeaflet(page);
+      await page.goto(`${BASE}#point=${pt}&layers=tribal-government`, { waitUntil: "domcontentloaded" });
+      await page.waitForFunction((n) => !!window[n], EXPORTS_NAME, { timeout: BOOT_TIMEOUT });
+      const card = await cardText(page, "tribal-government");
+      const fields = await page.$$eval("#card-tribal-government .card-field",
+        (els) => els.map((e) => ({
+          label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+          value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+        })));
+      // The "(official)" link is the card's footer, a sibling of the card body,
+      // so cardText() never sees it; read it from the footer itself.
+      const link = await page.evaluate(() => {
+        const el = document.getElementById("card-tribal-government");
+        const block = el && el.closest(".layer-block");
+        const a = block && block.querySelector(".card-footer-link");
+        return a ? { text: a.textContent.trim(), href: a.getAttribute("href") || "" } : { text: "", href: "" };
+      });
+      await context.close();
+      return { text: card.text || "", error: card.error, link, labels: fields.map((f) => f.label),
+               by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+
+    {
+      const land = propsAt(areas, ROUND_VALLEY);
+      const p = land[0] || {};
+      const c = await at(ROUND_VALLEY);
+      check("the Round Valley Reservation is seated at Covelo from the tribes' own site, says so, and links the Bureau's site for them",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Round Valley Indian Tribes, Round Valley Reservation, California" &&
+          c.by("Seat of government") === "Covelo, CA" &&
+          c.by("Land") === "Round Valley Reservation" &&
+          !!p.seatNote && c.by("About the seat") === p.seatNote && p.seatNote.indexOf("From the nation's own site") === 0 &&
+          p.url === "http://www.rvit.org" && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") === 0,
+        `land here=${land.length} link=${JSON.stringify(c.link)} seat=${JSON.stringify(c.by("Seat of government"))} note=${JSON.stringify(c.by("About the seat").slice(0, 80))}`);
+    }
+
+    {
+      const land = propsAt(areas, CAPITAN_GRANDE);
+      const p = land[0] || {};
+      const c = await at(CAPITAN_GRANDE);
+      const names = (p.nations || []).map((n) => n.name);
+      check("the Capitan Grande Reservation names both groups that share it, each with its seat and site, and no single link",
+        land.length === 1 && !c.error && names.length === 2 &&
+          names[0].indexOf("(Barona Group") !== -1 && names[1].indexOf("Viejas (Baron Long) Group") !== -1 &&
+          c.by("Tribal government") === p.nation && p.nation === names[0] + " and " + names[1] &&
+          c.by("Land") === "Capitan Grande Reservation" &&
+          c.labels.indexOf("Seat of government") === -1 && c.labels.indexOf("About the seat") === -1 &&
+          c.text.indexOf("2 governments share this land") !== -1 &&
+          c.text.indexOf("Seat: Lakeside, CA") !== -1 && c.text.indexOf("Seat: Alpine, CA") !== -1 &&
+          p.url === null && c.link.text === "",
+        `land here=${land.length} labels=${JSON.stringify(c.labels)} link=${JSON.stringify(c.link)} ${JSON.stringify(c.text.slice(0, 160))}`);
+    }
+
+    {
+      const land = propsAt(areas, XL_RANCH);
+      const p = land[0] || {};
+      const c = await at(XL_RANCH);
+      check("the XL Ranch Rancheria names the Pit River Tribe with the Bureau's town and site and no note about its seat",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === "Pit River Tribe, California" &&
+          c.by("Land") === "XL Ranch Rancheria" &&
+          c.by("Seat of government") === "Burney, CA" && !p.seatNote &&
+          c.labels.indexOf("About the seat") === -1 &&
+          p.url === "http://www.pitrivertribe.org" && c.link.href === p.url,
+        `land here=${land.length} labels=${JSON.stringify(c.labels)} link=${JSON.stringify(c.link)}`);
+    }
+
+    {
+      const land = propsAt(areas, COLORADO_RIVER);
+      const p = land[0] || {};
+      const c = await at(COLORADO_RIVER);
+      check("the California part of the Colorado River Indian Reservation names a government seated in Arizona",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === "Colorado River Indian Tribes of the Colorado River Indian Reservation, Arizona and California" &&
+          c.by("Seat of government") === "Parker, AZ" &&
+          c.by("Land") === "Colorado River Indian Reservation" && p.shareInState < 1,
+        `land here=${land.length} ${JSON.stringify(c.text.slice(0, 200))}`);
+    }
+
+    {
+      const off = await at(POINT);
+      check("a point off tribal land is told so in the layer's own words",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("150 tribal areas") !== -1,
+        JSON.stringify(off.text.slice(0, 120)));
+    }
   }
 } finally {
   await browser.close();

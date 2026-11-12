@@ -3486,8 +3486,15 @@ ANSWERS = {
         # San Francisco's precincts only.
         "precincts": Entry("open", ("election-precinct",)),
         "special-districts": Entry("open", ("bart-director",)),
-        # Tribal lands are not drawn yet (owed after the batch-2 launch).
-        "tribal-government": OPEN,
+        # Drawn 2026-11-12: all 150 pieces the Census keeps in California (103
+        # reservations and rancherias and 47 off-reservation trust lands), each
+        # named with its government -- 98 nations, the Colorado River Indian
+        # Tribes seated in Arizona and the Washoe Tribe in Nevada among them, and
+        # the two the Bureau lists with no office town seated from their own
+        # sites by Adam's choice of that day for Nevada. No council is named
+        # yet; each nation's page is read one at a time, the Oklahoma shape
+        # (gap ca-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     # BATCH 4 OF THE STATE-LEVEL LAUNCH, added at its go-live (2026-11-12),
     # the change that gave every state an app.
