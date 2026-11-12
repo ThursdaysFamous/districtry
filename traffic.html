@@ -1207,11 +1207,16 @@ main details.tableview:last-of-type { border-bottom: 0; }
 .dayrow { display: grid; grid-template-columns: 56px minmax(0, 1fr) 44px; align-items: center; gap: 10px; font-variant-numeric: tabular-nums; }
 .dayrow .d { font-size: 13.5px; color: var(--slate); }
 .dayrow .t { font-size: 13.5px; color: var(--ink); text-align: right; font-weight: 600; }
-.dayrow .stack { display: flex; gap: 2px; height: 18px; min-width: 0; }
-.dayrow .stack i { display: block; height: 100%; flex: none; }
-.dayrow .stack i:last-child { border-radius: 0 4px 4px 0; }
+/* The 2px between segments is each segment's own right border in the card's
+   colour, so it comes out of the segment and a bar ends exactly where its
+   total falls on the scale below. A flex gap added 2px per segment on top. */
+.dayrow .stack { display: flex; height: 18px; min-width: 0; }
+.dayrow .stack i { display: block; height: 100%; flex: none; box-sizing: border-box; border-right: 2px solid var(--panel); }
+.dayrow .stack i:last-child { border-right: 0; border-radius: 0 4px 4px 0; }
 .dayscale { display: grid; grid-template-columns: 56px minmax(0, 1fr) 44px; gap: 10px; margin-top: 6px; font-size: 12px; color: var(--slate); font-variant-numeric: tabular-nums; }
-.dayscale .ticks { display: flex; justify-content: space-between; padding-right: 8px; }
+/* Each number is centred on its own value; drawDayTicks picks how many fit */
+.dayscale .ticks { position: relative; height: 16px; }
+.dayscale .ticks span { position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
 #dayRefsTable th, #dayRefsTable td { white-space: nowrap; }
 
 /* ---- one search table, two engines ---- */
@@ -3336,9 +3341,10 @@ code {
                [4, "Other search engines", "--s4"], [5, "Other sites", "--slate"]];
     var shown = function (r) { return r[1] + r[2] + r[3] + r[4] + r[5]; };
     var top = dayRefs.reduce(function (m, r) { return Math.max(m, shown(r)); }, 0);
-    /* Whole steps of 50 (100 past 300), so every tick is a round number */
-    var step = top > 300 ? 100 : 50;
-    var scale = Math.max(step, Math.ceil(top / step) * step);
+    /* The bars share one scale, the busiest day's total, so the longest bar
+       fills its row whatever the screen width; the numbers under the bars
+       are chosen to fit that width by drawDayTicks, below render. */
+    var scale = Math.max(1, top);
     var chart = document.getElementById("dayRefsChart");
     var tb = document.querySelector("#dayRefsTable tbody");
     dayRefs.forEach(function (r) {
@@ -3355,8 +3361,7 @@ code {
         if (v) parts.push(sr[1] + " " + fmt(v));
         if (!v) return;
         var seg = document.createElement("i");
-        /* 2px gaps between segments come out of the width, so subtract them */
-        seg.style.width = "calc((100% - 8px) * " + (v / scale).toFixed(4) + ")";
+        seg.style.width = (v / scale * 100).toFixed(3) + "%";
         seg.style.background = "var(" + sr[2] + ")";
         stack.appendChild(seg);
       });
@@ -3378,13 +3383,11 @@ code {
       tb.appendChild(tr);
     });
     var ticks = document.getElementById("dayRefsTicks");
-    for (var k = 0; k <= scale; k += step) {
-      var tk = document.createElement("span");
-      tk.textContent = fmt(k);
-      ticks.appendChild(tk);
-    }
+    ticks.setAttribute("data-scale", scale);
     document.getElementById("dayRefsSection").hidden = false;
     document.getElementById("dayRefsRead").hidden = false;
+    drawDayTicks();
+    if (dayTicksSeen) { dayTicksSeen.disconnect(); dayTicksSeen.observe(ticks); }
   })();
 
   /* ---- search queries (Search Console, Bing Webmaster Tools) ----
@@ -4017,6 +4020,47 @@ code {
   var fold = document.getElementById("notesFold");
   if (fold && notesOpen) fold.open = true;
   };
+
+  /* ---- the numbers under "where visits came from, day by day" ----
+     How many fit depends on how wide the bars are, so they are chosen from
+     the measured width and drawn again whenever it changes: a rotated phone,
+     a resized window, or the Numbers tab shown after the page opened on
+     another, when the row measured 0. Steps of 100 up to a day of 1,611 put
+     eighteen numbers under the bars, which fitted a computer screen and ran
+     together into one string of digits on a phone (Adam, 2026-11-12). The
+     step is the smallest of 1, 2, 2.5 and 5 times a power of ten that leaves
+     at least 16px between neighbouring numbers and at most eight steps, and
+     with no width to measure it is the smallest with at most eight steps. */
+  var drawDayTicks = function () {
+    var box = document.getElementById("dayRefsTicks");
+    var scale = box ? +box.getAttribute("data-scale") : 0;
+    if (!scale) return;
+    var label = function (n) { return n.toLocaleString("en-US"); };
+    box.textContent = "";
+    var w = box.getBoundingClientRect().width;
+    var probe = document.createElement("span");
+    probe.textContent = label(scale);          /* the widest number drawn */
+    box.appendChild(probe);
+    var need = probe.getBoundingClientRect().width + 16;
+    box.textContent = "";
+    var step = 0;
+    for (var mag = 1; !step; mag *= 10) {
+      [1, 2, 2.5, 5].forEach(function (m) {
+        var s = m * mag;
+        if (step || s % 1) return;
+        if (scale / s <= 8 && (!w || w * s / scale >= need)) step = s;
+      });
+    }
+    for (var k = 0; k <= scale; k += step) {
+      var tk = document.createElement("span");
+      tk.style.left = (k / scale * 100) + "%";
+      tk.textContent = label(k);
+      box.appendChild(tk);
+    }
+  };
+  /* Absolutely placed numbers never change the row's own size, so drawing
+     them inside this callback cannot set it off again. */
+  var dayTicksSeen = window.ResizeObserver ? new ResizeObserver(function () { drawDayTicks(); }) : null;
 
   tab = tabFromHash();
   currentState = stateFromHash();
