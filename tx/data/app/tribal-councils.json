@@ -1,0 +1,119 @@
+{
+ "0050": {
+  "roster": [
+   {
+    "name": "Melanie Battise",
+    "role": "Tribal Council Secretary"
+   },
+   {
+    "name": "Crystal Stephenson",
+    "role": "Tribal Council Treasurer"
+   },
+   {
+    "name": "Rick Sylestine",
+    "role": "Tribal Council Chairman"
+   },
+   {
+    "name": "Nita Battise",
+    "role": "Tribal Vice-Chair"
+   },
+   {
+    "name": "Yolanda Poncho",
+    "role": "Tribal Councilmember"
+   },
+   {
+    "name": "Tina Battise",
+    "role": "Tribal Council Member"
+   },
+   {
+    "name": "Cecilia Flores",
+    "role": "Tribal Council Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-12.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.alabama-coushatta.com/government/",
+  "rosterRead": "2026-11-12",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "1775": {
+  "roster": [
+   {
+    "name": "Estavio Elizondo, Sr., Menikapah",
+    "role": "Chairman"
+   },
+   {
+    "name": "Freddie Hernandez, Kisakodita",
+    "role": "Secretary"
+   },
+   {
+    "name": "David Treviño, Wepikaoda",
+    "role": "Treasurer"
+   },
+   {
+    "name": "Kendall R. Scott, Metaa",
+    "role": "Member"
+   },
+   {
+    "name": "Arturo Garza, Mekaka",
+    "role": "Member"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-12.",
+  "rosterSource": "nation",
+  "rosterPage": "https://kickapootexas.org/tribal-council/",
+  "rosterRead": "2026-11-12",
+  "rosterHost": null,
+  "rosterMeasured": null
+ },
+ "4755": {
+  "roster": [
+   {
+    "name": "Fabian Gomez",
+    "role": "Councilman"
+   },
+   {
+    "name": "Rafael Gomez Jr.",
+    "role": "Councilman"
+   },
+   {
+    "name": "Omar Villanueva",
+    "role": "War Captain"
+   },
+   {
+    "name": "E. Michael Silvas",
+    "role": "Governor"
+   },
+   {
+    "name": "Johnny Hisa",
+    "role": "Cacique"
+   },
+   {
+    "name": "Adam Torres",
+    "role": "Lt. Governor"
+   },
+   {
+    "name": "Raul Almanzar",
+    "role": "Alguacil"
+   },
+   {
+    "name": "Raul Candelaria",
+    "role": "Councilman"
+   },
+   {
+    "name": "Andrew Torrez",
+    "role": "Councilman"
+   }
+  ],
+  "rosterWhy": null,
+  "rosterNote": "From the nation's own council page, read 2026-11-12.",
+  "rosterSource": "nation",
+  "rosterPage": "https://www.ysletadelsurpueblo.org/government/tribal-council",
+  "rosterRead": "2026-11-12",
+  "rosterHost": null,
+  "rosterMeasured": null
+ }
+}

@@ -292,6 +292,35 @@ ROSTER_BLOCKED = {
                "members, without naming the other four (read 2026-10-20). A "
                "partial council is not carried, so the card links the tribe.",
     },
+    # Measured 2026-11-12 with tribal_council_scraper.py's client. The Bureau
+    # lists tribe.miccosukee.com, which has no DNS record. www.miccosukee.com's
+    # robots.txt allows every path and its front page redirects to
+    # miccosukee.com, which answered a Cloudflare challenge page ("Just a
+    # moment...").
+    "2240": {
+        "host": "miccosukee.com",
+        "measured": "2026-11-12",
+        "why": "www.miccosukee.com answered this project with an automated "
+               "challenge page (2026-11-12), and a check like that is not worked "
+               "around, so no name is carried. The address the Bureau of Indian "
+               "Affairs lists for the tribe, which this card links, had no DNS "
+               "record the same day.",
+    },
+    # Measured 2026-11-12 with the same client: the address the Bureau lists,
+    # www.poarchcreekindians.org (no robots.txt), forwards with a 301 to
+    # www.pci-nsn.gov; pci-nsn.gov's robots.txt (169 bytes) allows every path,
+    # and its front page answered HTTP 403 with a Cloudflare challenge page
+    # ("Just a moment..."). The Poarch Band is seated
+    # in Alabama and holds only a 0.007 km2 sliver in Florida; its council
+    # belongs with Alabama's tribal land, where this is measured again.
+    "2865": {
+        "host": "pci-nsn.gov",
+        "measured": "2026-11-12",
+        "why": "The tribe's own site, where the address the Bureau of Indian "
+               "Affairs lists forwards, answered this project with an automated "
+               "challenge page (2026-11-12). A check like that is not worked "
+               "around, so no name is carried and the card links the tribe.",
+    },
 }
 
 # Where a nation publishes its own council, for the nations whose page answers

@@ -21,8 +21,9 @@ public-domain unitedstates/congress-legislators roster), **Texas Senate** and **
 (31 and 150 districts, TIGERweb's 2026 state legislative districts joined to each chamber's own
 member list), the TIGERweb fabric drawn from mirrored tile archives — **City, Town or Village**
 (`municipality`, 1,230 incorporated places), the three **School District** tilings and **ZIP
-Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire &
-EMS Station**, **Post Office**).
+Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire &
+EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's
+tribal land, joined to the Bureau of Indian Affairs' list and to each nation's own council page).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline and the wash has no lighter band (`coverage_key` with
@@ -94,6 +95,19 @@ The comptroller, Don Huffines, was appointed and sworn in on 1 August 2026, as t
 biography page says. The Supreme Court and the Court of Criminal Appeals, also elected statewide,
 are not listed yet.
 
+**TRIBAL GOVERNMENT DRAWS THE LAND OF TEXAS'S THREE FEDERALLY RECOGNIZED NATIONS AND NAMES ALL
+THREE COUNCILS** (`tribal-areas.json`, `tribal-councils.json`, since 2026-11-12). The Census keeps
+six pieces: the Alabama-Coushatta Reservation and trust land in Polk County (18.52 and 18.31 km²),
+the Kickapoo (TX) Reservation and trust land in Maverick County (1.56 and 0.13 km²) and Ysleta del
+Sur Pueblo and its trust land in El Paso County (0.30 and 12.76 km²). Each council is read weekly
+from the nation's own page by `scripts/tribal_council_scraper.py`: the Alabama-Coushatta's
+seven-member Tribal Council (the page also names the tribe's Principal Chief and Second Chief,
+who are not on the council and are not carried), the Kickapoo Traditional Tribe's five, written
+with the traditional name the page prints after each, and Ysleta del Sur Pueblo's nine, among them
+the Cacique, the War Captain and the Alguacil. The Bureau of Indian Affairs lists no website for
+Ysleta del Sur Pueblo, so that card has no "(official)" link. The Census draws no tribal district
+on any of this land, so no council seat belongs to a piece and every card says so.
+
 **There is no build step, no framework, and no server-side code.** The app — styles, engine,
 and layer modules — lives inline in `index.html`. `sw.js` is the service worker;
 `data/app/*.json` are runtime-fetched data files; `data/state/` carries the bootstrap state
@@ -109,7 +123,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Texas (`texas`) — https://districtry.com/tx/
 - Geocoders: address Photon (Texas-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Texas-bounded, serial >=1s queue)
 - Ground truth: 30.27467,-97.74035 (Texas State Capitol, 1100 Congress Avenue, Austin, Travis County) → county Travis County; us-house 37; tx-senate 14; tx-house 49. Negative point 28.50000,-101.50000 (The Coahuila desert in Mexico, about 60 km south of the Rio Grande opposite Del Rio — outside Texas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state (controls: the State Capitol returns Texas, and a point in Chihuahua returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. IT IS IN ANOTHER COUNTRY, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 12 registered (political 3, safety 2, schools 3, geography 4); `registerLayer(` floor 8. Debug namespace `window.TexasExplorer`.
+- Layers: 13 registered (political 4, safety 2, schools 3, geography 4); `registerLayer(` floor 8. Debug namespace `window.TexasExplorer`.
 - Scheduled workflows: `update-tx-congress-roster.yml` (Mon 20:33 UTC); `update-tx-legislature-roster.yml` (Tue 20:33 UTC); `tx-validate-sources.yml` (1st of month 22:23 UTC).
 - Source registry: `tx/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->
