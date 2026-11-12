@@ -1017,8 +1017,9 @@ try {
   //         office town for the tribe; the card says so on an "About the
   //         seat" line and links that site.
   //       - The Winnemucca Indian Colony has no town from the Bureau and no
-  //         site of its own, so the card names no seat, says why, and links
-  //         nothing.
+  //         site of its own, so its seat, Reno, is the town of the address
+  //         Nevada's Department of Native American Affairs lists for its
+  //         chair; the card says so, carries no street, and links nothing.
   //       - The Nevada part of the Goshute Reservation names a nation seated
   //         in Utah, from the nation's own site, and links that site rather
   //         than the address the Bureau lists, which serves an unrelated
@@ -1079,14 +1080,16 @@ try {
       const land = propsAt(areas, WINNEMUCCA);
       const p = land[0] || {};
       const c = await at(WINNEMUCCA);
-      check("the Winnemucca Indian Colony names no seat, says why, and links nothing",
+      check("the Winnemucca Indian Colony is seated at Reno from Nevada's list of tribal chairs, says so, and links nothing",
         land.length === 1 && !c.error &&
           c.by("Tribal government") === "Winnemucca Indian Colony of Nevada" &&
-          !p.seat && c.labels.indexOf("Seat of government") === -1 &&
-          !!p.seatNote && c.by("About the seat") === p.seatNote && p.seatNote.indexOf("lists no office town") !== -1 &&
+          p.seat === "Reno, NV" && c.by("Seat of government") === "Reno, NV" &&
+          !!p.seatNote && c.by("About the seat") === p.seatNote &&
+          p.seatNote.indexOf("From the address Nevada's Department of Native American Affairs lists") === 0 &&
+          p.seatNote.indexOf("lists no office town") !== -1 && !/\d{2,}/.test(c.by("Seat of government")) &&
           p.url === null && c.link.text === "" && !c.text.includes("(official)") &&
           c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("no site of") !== -1,
-        `land here=${land.length} labels=${JSON.stringify(c.labels)} link=${JSON.stringify(c.link)} why=${JSON.stringify(c.by("Why no names").slice(0, 120))}`);
+        `land here=${land.length} seat=${JSON.stringify(c.by("Seat of government"))} labels=${JSON.stringify(c.labels)} link=${JSON.stringify(c.link)} why=${JSON.stringify(c.by("Why no names").slice(0, 120))}`);
     }
 
     {

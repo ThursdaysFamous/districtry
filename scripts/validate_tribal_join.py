@@ -262,15 +262,18 @@ def _seat_problems(where, entry, govs):
     The Bureau carries some governments with neither a city nor a state, and
     Adam chose on 2026-11-12 to take the town from the nation's own site
     (`seatFromNation`) or, where no site of the nation's own that gives one
-    is found, to record that and draw the land anyway (`seatNotFound`). Either is a
-    claim this project makes, so it must name its page and date, and either
-    goes stale the day the Bureau lists a state, which fails here so the
-    Bureau's own seat replaces it."""
+    is found, to record that and draw the land anyway (`seatNotFound`). For a
+    nation with no site of its own, he said yes the same day to the town of
+    the address its state's own list gives (`seatFromState`, Winnemucca's from
+    Nevada's list of tribal chairs). Each is a claim this project makes, so it
+    must name its page and date, and each goes stale the day the Bureau lists
+    a state, which fails here so the Bureau's own seat replaces it."""
     import re
     out = []
     sfn = entry.get("seatFromNation")
+    sfs = entry.get("seatFromState")
     none = entry.get("seatNotFound")
-    if not (sfn or none):
+    if not (sfn or sfs or none):
         return out
     gov = entry.get("government")
     if entry.get("governments") or entry.get("stateRecognition") or gov not in govs:
@@ -280,6 +283,9 @@ def _seat_problems(where, entry, govs):
         return out
     if sfn and none:
         out.append("%s: records a seat from the nation's site and no seat at all" % where)
+    if sfs and (sfn or none):
+        out.append("%s: records a seat from a state's list and another account of "
+                   "the seat" % where)
     if govs[gov].get("state"):
         out.append("%s: the Bureau lists a state for %r now, so the seat this table "
                    "supplies is stale — use the Bureau's" % (where, gov))
@@ -304,6 +310,24 @@ def _seat_problems(where, entry, govs):
                             "bureauWebsiteWithdrawn"}
         if extra:
             out.append("%s: seatFromNation carries unknown keys %s" % (where, sorted(extra)))
+    if sfs:
+        for key in ("city", "state", "publisher", "page", "read", "why"):
+            if not sfs.get(key):
+                out.append("%s: seatFromState carries no %r" % (where, key))
+        if not re.match(r"^[A-Z]{2}$", str(sfs.get("state") or "")):
+            out.append("%s: seatFromState's state is not a two-letter code" % where)
+        if not str(sfs.get("page") or "").startswith("https://"):
+            out.append("%s: seatFromState's page is not an https link" % where)
+        if not date.match(str(sfs.get("read") or "")):
+            out.append("%s: seatFromState's read date is not YYYY-MM-DD" % where)
+        # The town only: a digit in the town is a street or a ZIP code that
+        # came along with it, and a home or street address is never carried.
+        if re.search(r"\d", str(sfs.get("city") or "")):
+            out.append("%s: seatFromState's city carries a digit, which is a "
+                       "street or a ZIP code rather than a town" % where)
+        extra = set(sfs) - {"city", "state", "publisher", "page", "read", "why"}
+        if extra:
+            out.append("%s: seatFromState carries unknown keys %s" % (where, sorted(extra)))
     if none:
         if not date.match(str(none.get("looked") or "")):
             out.append("%s: seatNotFound's looked date is not YYYY-MM-DD" % where)
@@ -474,7 +498,21 @@ def selftest():
          lambda d: d["areas"]["3010"]["seatFromNation"].update(
              bureauWebsiteWithdrawn="dead")),
         ("a recorded absence of a seat with no reason",
-         lambda d: d["areas"]["4635"]["seatNotFound"].update(why="")),
+         lambda d: (d["areas"]["4635"].pop("seatFromState"),
+                    d["areas"]["4635"].update(seatNotFound={"looked": "2026-11-12",
+                                                             "why": ""}))),
+        ("a seat from a state's list with no publisher",
+         lambda d: d["areas"]["4635"]["seatFromState"].update(publisher="")),
+        ("a seat from a state's list carrying a street",
+         lambda d: d["areas"]["4635"]["seatFromState"].update(city="100 Main St, Reno")),
+        ("a seat from a state's list with a page that is not https",
+         lambda d: d["areas"]["4635"]["seatFromState"].update(page="http://x.invalid/")),
+        ("a seat from a state's list beside a seat from the nation's site",
+         lambda d: d["areas"]["4635"].update(
+             seatFromNation=d["areas"]["3010"]["seatFromNation"])),
+        ("a seat from a state's list where the Bureau lists one",
+         lambda d: d["areas"].__setitem__("1040", dict(
+             d["areas"]["1040"], seatFromState=d["areas"]["4635"]["seatFromState"]))),
     ]
     for label, mutate in cases:
         assert broken(mutate), "the gate must catch %s" % label

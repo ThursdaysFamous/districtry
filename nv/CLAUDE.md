@@ -89,9 +89,9 @@ challenge, and where a nation has no such site to draw its land and say so. Seve
 Walker River in Schurz), each recorded with its page and date as `seatFromNation`, and all seven
 agree with Nevada's Department of Native American Affairs' list of tribal chairs, updated
 2026-01-30. Their cards give the town with a line saying it came from the nation's own site. The
-Winnemucca Indian Colony has no site, so its card gives no town and says the Bureau lists no office
-town (`seatNotFound`); the state's list puts its chair in Reno, which is a state list rather than
-the nation's site and so is not used. Two of the Bureau's site addresses no longer reach the nation
+Winnemucca Indian Colony has no site, so its card gives Reno, the town of the address the state's
+list gives for its chair, with a line saying so (`seatFromState`), on Adam's yes of the same day;
+only the town is carried, never the street. Two of the Bureau's site addresses no longer reach the nation
 (the Goshute's serves an unrelated finance site and the Duck Valley's a page-not-found page), so
 those cards link the nation's own site, recorded as `bureauWebsiteWithdrawn`. The Bureau lists no
 website for nine of the 20 nations. The Census draws no tribal district on any of this land, and the

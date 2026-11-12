@@ -35,10 +35,13 @@ nearly written from memory instead, and all three were wrong or unsourced:
                       written down, not after. Where the Bureau lists neither
                       (71 governments, eight of them Nevada's), the town the
                       nation's own site gives, read and dated in the join's
-                      `seatFromNation`, by Adam's choice of 2026-11-12; or, where
-                      no site of the nation's own that gives one was found,
-                      nothing, and
-                      the card says the Bureau lists no office town
+                      `seatFromNation`, by Adam's choice of 2026-11-12; where
+                      the nation has no such site, the town of the address a
+                      state's own list gives for it, read and dated in
+                      `seatFromState`, by his yes of the same day for the one
+                      such nation (Winnemucca, from Nevada's list of tribal
+                      chairs); or, where neither was found, nothing, and the
+                      card says the Bureau lists no office town
                       (`seatNotFound`). The card says which (`seat_note`).
   the nation's site   the Bureau's `website` column, published as http. It is
                       LINKED and never fetched. A site the Bureau writes as a
@@ -725,6 +728,15 @@ def government_of(entry, bia):
             gov["website"] = sfn["website"]
         elif sfn.get("bureauWebsiteWithdrawn"):
             gov["website"] = None
+    # A NATION WITH NO SITE OF ITS OWN, WHOSE STATE LISTS AN ADDRESS FOR IT.
+    # Adam said yes on 2026-11-12 to the Winnemucca Indian Colony's Reno
+    # address from Nevada's Department of Native American Affairs
+    # (`seatFromState`: the town, the publisher, the page and the date). Only
+    # the town is carried, never the street, and the site the card links is
+    # left as the Bureau gives it.
+    sfs = entry.get("seatFromState")
+    if gov is not None and sfs:
+        gov = dict(gov, city=sfs["city"], state=sfs["state"], seatFromState=sfs)
     return gov
 
 
@@ -736,6 +748,11 @@ def seat_note(entry):
     if sfn:
         return ("From the nation's own site, read %s; the Bureau of Indian "
                 "Affairs lists no office town for this nation." % sfn["read"])
+    sfs = entry.get("seatFromState")
+    if sfs:
+        return ("From the address %s lists for this nation, read %s; the Bureau "
+                "of Indian Affairs lists no office town for it, and this app has "
+                "found no site of the nation's own." % (sfs["publisher"], sfs["read"]))
     if entry.get("seatNotFound"):
         return ("The Bureau of Indian Affairs lists no office town for this "
                 "nation, and this app has found no site of the nation's own "
@@ -793,6 +810,14 @@ def check_join(areas, join, bia):
         if entry.get("seatFromNation") and entry.get("seatNotFound"):
             raise RuntimeError("AIANNH %s records a seat from the nation's site "
                                "and no seat at all" % code)
+        if entry.get("seatFromState") and (entry.get("seatFromNation")
+                                           or entry.get("seatNotFound")):
+            raise RuntimeError("AIANNH %s records a seat from a state's list and "
+                               "another account of the seat" % code)
+        if entry.get("seatFromState") and bia[entry["government"]].get("state"):
+            raise RuntimeError(
+                "the Bureau lists a state for %r now, so the seat taken from a "
+                "state's list for AIANNH %s is stale" % (entry["government"], code))
         if entry.get("seatNotFound"):
             if bia[entry["government"]].get("state"):
                 raise RuntimeError(
@@ -1613,14 +1638,27 @@ def selftest():
     assert _seat(government_of(e4, nv)) is None
     assert seat_note(e4).startswith("The Bureau of Indian Affairs lists no office town")
     assert seat_note({"government": "Prairie Band Potawatomi Nation"}) is None
-    for code, e in (("0001", e1), ("0002", e2), ("0003", e3), ("0004", e4)):
+    sfs = {"city": "Reno", "state": "NV", "publisher": "A State Office",
+           "page": "https://s.invalid/list.pdf", "read": "2026-11-12", "why": "x"}
+    e5 = {"government": "Winnemucca", "seatFromState": sfs}
+    g5 = government_of(e5, nv)
+    assert _seat(g5) == "Reno, NV" and _website(g5) is None
+    assert nv["Winnemucca"]["state"] is None  # the Bureau's record untouched
+    assert seat_note(e5) == ("From the address A State Office lists for this nation, "
+                             "read 2026-11-12; the Bureau of Indian Affairs lists no "
+                             "office town for it, and this app has found no site of "
+                             "the nation's own.")
+    for code, e in (("0001", e1), ("0002", e2), ("0003", e3), ("0004", e4), ("0006", e5)):
         assert check_join([("reservation", feat(code), {})], {"areas": {code: e}}, nv)
     for e, b, want in (
             ({"government": "Winnemucca"}, nv, "no state for"),
             (dict(e4, seatFromNation=sfn), nv, "and no seat at all"),
             (e4, dict(nv, Winnemucca=dict(nv["Winnemucca"], state="NV")), "seatNotFound"),
             (e1, dict(nv, **{"Pyramid Lake Paiute Tribe": dict(
-                nv["Pyramid Lake Paiute Tribe"], state="NV")}), "is stale")):
+                nv["Pyramid Lake Paiute Tribe"], state="NV")}), "is stale"),
+            (dict(e5, seatNotFound=e4["seatNotFound"]), nv, "another account"),
+            (e5, dict(nv, Winnemucca=dict(nv["Winnemucca"], state="NV")),
+             "from a state's list")):
         try:
             check_join([("reservation", feat("0005"), {})], {"areas": {"0005": e}}, b)
         except RuntimeError as err:
