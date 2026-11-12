@@ -1,0 +1,18 @@
+{
+ "state": "Alaska",
+ "usps": "AK",
+ "officersNote": "The governor and lieutenant governor are the only officers Alaska's voters elect statewide; the attorney general and the other commissioners are appointed by the governor.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Mike Dunleavy",
+   "url": "https://gov.alaska.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "url": "https://ltgov.alaska.gov/",
+   "unnamed": "The Lieutenant Governor's own website could not be read when this list was built, because its security certificate is incomplete, so no name is shown until it can be.",
+   "note": "ltgov.alaska.gov sends its own certificate twice and no intermediate certificate (measured 2026-11-12 with openssl s_client), so no client that checks certificates can read it, and the other Alaska state pages tried (www.alaska.gov, the Division of Elections) either closed the connection or have the same fault."
+  }
+ ]
+}

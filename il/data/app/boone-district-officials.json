@@ -2,7 +2,7 @@
   "source": "Boone County Clerk & Recorder, Boone County Year Book",
   "sourceUrl": "https://www.boonecountyil.gov/Departments/Clerk-Recorder/BCC%202026%20Yearbook%20Final%207.7.26.pdf?t=202608040920000",
   "officialsPage": "https://www.boonecountyil.gov/government/departments/clerk___recorder/2019_boone_county_illinois_year_book.php",
-  "generated": "2026-10-22T00:28:26Z",
+  "generated": "2026-11-12T02:44:26Z",
   "districts": {
     "BELVIDERE PARK DISTRICT": {
       "kind": "park",
@@ -48,7 +48,7 @@
         {
           "name": "Carrie Lenzen",
           "role": "Commissioner",
-          "email": "clenzen@belviderepark.org"
+          "email": "carrielenzen@belviderepark.org"
         }
       ],
       "boardSource": {
@@ -151,10 +151,6 @@
           "role": "Trustee"
         },
         {
-          "name": "Lucy Capitosti",
-          "role": "Trustee"
-        },
-        {
           "name": "Wendy Frank",
           "role": "Trustee"
         },
@@ -168,7 +164,7 @@
         "url": "https://idapubliclibrary.org/library-board/"
       },
       "seats": 9,
-      "vacancies": 1
+      "vacancies": 2
     },
     "CHERRY VALLEY DISTRICT LIBRARY": {
       "kind": "library",

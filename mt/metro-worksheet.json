@@ -1,0 +1,592 @@
+{
+  "this_metro": "montana",
+  "metro_name": "Montana",
+  "metro_bbox": {
+    "minLng": -116.06,
+    "minLat": 44.34,
+    "maxLng": -104.02,
+    "maxLat": 49.02
+  },
+  "metro_center": [
+    46.68,
+    -110.04
+  ],
+  "permalink_gate": {
+    "minLat": 44.09,
+    "maxLat": 49.27,
+    "minLng": -116.31,
+    "maxLng": -103.77
+  },
+  "poi_geocode_bbox": {
+    "minLat": 44.09,
+    "maxLat": 49.27,
+    "minLng": -116.31,
+    "maxLng": -103.77
+  },
+  "brand": {
+    "app_name": "districtry Montana",
+    "product_name": "districtry",
+    "instance_tag": "mt",
+    "jsonld": {
+      "site_description": "Find every civic district that covers a point or address in Montana, and who represents you there.",
+      "app_description": "Click any point in Montana, or search an address, to see every civic district that contains it, and who represents you there — county, legislative and U.S. House districts, cities and towns, school districts and ZIP codes.",
+      "keywords": "Montana district map, what district am I in, Montana State Senate district, Montana House district, who is my state representative Montana, Montana congressional district, who is my state senator Montana, Montana school district lookup",
+      "area_served": {
+        "state": "Montana"
+      }
+    },
+    "tagline": "Every civic district that covers your point in Montana, and who represents you there.",
+    "theme_color": "#6d3fd1",
+    "favicon_data_uri": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%236d3fd1%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2242%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22700%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%3EMT%3C/text%3E%3C/svg%3E",
+    "apple_touch_icon": "icons/apple-touch-icon.png",
+    "head": {
+      "title": "Montana district lookup — districtry Montana",
+      "description": "Tap the map or search a Montana address: county, State House, State Senate and U.S. House districts — and who represents you.",
+      "og_title": "Montana district lookup — districtry Montana",
+      "og_description": "Every civic district that covers a point in Montana, and who holds it.",
+      "og_image_alt": "districtry Montana — every district that covers a point, and who represents it.",
+      "twitter_title": "Montana district lookup — districtry Montana",
+      "twitter_description": "Click or search a Montana address to see every district that covers it."
+    },
+    "analytics": {
+      "goatcounter_url": "https://districtry.goatcounter.com/count"
+    }
+  },
+  "socrata_host": "https://data.invalid",
+  "socrata_app_token": "",
+  "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
+  "feedback_subject": "districtry Montana feedback",
+  "metro_explorers": [
+    { "id": "chicago", "label": "Illinois", "url": "https://districtry.com/il/", "emoji": "🌭", "explorer_name": "districtry Illinois",
+      "bbox": { "minLng": -91.52, "minLat": 36.96, "maxLng": -87.01, "maxLat": 42.51 } },
+    { "id": "nyc", "label": "New York", "url": "https://districtry.com/ny/", "emoji": "🗽", "explorer_name": "districtry New York",
+      "bbox": { "minLng": -79.82, "minLat": 40.43, "maxLng": -71.62, "maxLat": 45.07 } },
+    { "id": "sf", "label": "California", "url": "https://districtry.com/ca/", "emoji": "🌉", "explorer_name": "districtry California",
+      "bbox": { "minLng": -124.49, "minLat": 32.52, "maxLng": -114.12, "maxLat": 42.02 } },
+    { "id": "wisconsin", "label": "Wisconsin", "url": "https://districtry.com/wi/", "emoji": "🧀", "explorer_name": "districtry Wisconsin",
+      "bbox": { "minLng": -92.89, "minLat": 42.49, "maxLng": -86.25, "maxLat": 47.31 } },
+    { "id": "iowa", "label": "Iowa", "url": "https://districtry.com/ia/", "emoji": "🌽", "explorer_name": "districtry Iowa",
+      "bbox": { "minLng": -96.64, "minLat": 40.37, "maxLng": -90.14, "maxLat": 43.5 } },
+    { "id": "michigan", "label": "Michigan", "url": "https://districtry.com/mi/", "emoji": "🚗", "explorer_name": "districtry Michigan",
+      "bbox": { "minLng": -87.6, "minLat": 41.7, "maxLng": -82.11, "maxLat": 48.01 } },
+    { "id": "minnesota", "label": "Minnesota", "url": "https://districtry.com/mn/", "emoji": "🛶", "explorer_name": "districtry Minnesota",
+      "bbox": { "minLng": -97.3, "minLat": 43.44, "maxLng": -89.58, "maxLat": 49.44 } },
+    { "id": "kentucky", "label": "Kentucky", "url": "https://districtry.com/ky/", "emoji": "🐎", "explorer_name": "districtry Kentucky",
+      "bbox": { "minLng": -89.62, "minLat": 36.45, "maxLng": -81.91, "maxLat": 39.2 } },
+    { "id": "indiana", "label": "Indiana", "url": "https://districtry.com/in/", "emoji": "🏁", "explorer_name": "districtry Indiana",
+      "bbox": { "minLng": -88.1, "minLat": 37.83, "maxLng": -84.78, "maxLat": 41.77 } },
+    { "id": "northcarolina", "label": "North Carolina", "url": "https://districtry.com/nc/", "emoji": "🌳", "explorer_name": "districtry North Carolina",
+      "bbox": { "minLng": -84.33, "minLat": 33.74, "maxLng": -75.39, "maxLat": 36.6 } },
+    { "id": "oklahoma", "label": "Oklahoma", "url": "https://districtry.com/ok/", "emoji": "🌾", "explorer_name": "districtry Oklahoma",
+      "bbox": { "minLng": -103.01, "minLat": 33.61, "maxLng": -94.43, "maxLat": 37.01 } },
+    { "id": "southcarolina", "label": "South Carolina", "url": "https://districtry.com/sc/", "emoji": "🌴", "explorer_name": "districtry South Carolina",
+      "bbox": { "minLng": -83.36, "minLat": 31.99, "maxLng": -78.49, "maxLat": 35.16 } },
+    { "id": "tennessee", "label": "Tennessee", "url": "https://districtry.com/tn/", "emoji": "🎸", "explorer_name": "districtry Tennessee",
+      "bbox": { "minLng": -90.32, "minLat": 34.98, "maxLng": -81.64, "maxLat": 36.68 } },
+    { "id": "arkansas", "label": "Arkansas", "url": "https://districtry.com/ar/", "emoji": "💎", "explorer_name": "districtry Arkansas",
+      "bbox": { "minLng": -94.62, "minLat": 33.0, "maxLng": -89.64, "maxLat": 36.5 } },
+    { "id": "mississippi", "label": "Mississippi", "url": "https://districtry.com/ms/", "emoji": "🧸", "explorer_name": "districtry Mississippi",
+      "bbox": { "minLng": -91.66, "minLat": 30.13, "maxLng": -88.09, "maxLat": 35.0 } },
+    { "id": "louisiana", "label": "Louisiana", "url": "https://districtry.com/la/", "emoji": "🎷", "explorer_name": "districtry Louisiana",
+      "bbox": { "minLng": -94.05, "minLat": 28.85, "maxLng": -89.71, "maxLat": 33.02 } },
+    { "id": "missouri", "label": "Missouri", "url": "https://districtry.com/mo/", "emoji": "🏞️", "explorer_name": "districtry Missouri",
+      "bbox": { "minLng": -95.78, "minLat": 35.99, "maxLng": -89.09, "maxLat": 40.62 } },
+    { "id": "virginia", "label": "Virginia", "url": "https://districtry.com/va/", "emoji": "🌸", "explorer_name": "districtry Virginia",
+      "bbox": { "minLng": -83.68, "minLat": 36.54, "maxLng": -75.16, "maxLat": 38.91 } },
+    { "id": "westvirginia", "label": "West Virginia", "url": "https://districtry.com/wv/", "emoji": "⛰️", "explorer_name": "districtry West Virginia",
+      "bbox": { "minLng": -82.65, "minLat": 37.2, "maxLng": -79.43, "maxLat": 40.64 } },
+    { "id": "georgia", "label": "Georgia", "url": "https://districtry.com/ga/", "emoji": "🍑", "explorer_name": "districtry Georgia",
+      "bbox": { "minLng": -85.61, "minLat": 30.35, "maxLng": -80.91, "maxLat": 35.01 } },
+    { "id": "pennsylvania", "label": "Pennsylvania", "url": "https://districtry.com/pa/", "emoji": "🔔", "explorer_name": "districtry Pennsylvania",
+      "bbox": { "minLng": -80.53, "minLat": 39.71, "maxLng": -74.68, "maxLat": 42.52 } },
+    { "id": "nevada", "label": "Nevada", "url": "https://districtry.com/nv/", "emoji": "🏜️", "explorer_name": "districtry Nevada",
+      "bbox": { "minLng": -120.01, "minLat": 35.0, "maxLng": -114.03, "maxLat": 42.01 } },
+    { "id": "arizona", "label": "Arizona", "url": "https://districtry.com/az/", "emoji": "🌵", "explorer_name": "districtry Arizona",
+      "bbox": { "minLng": -114.82, "minLat": 31.33, "maxLng": -109.04, "maxLat": 37.01 } },
+    { "id": "newjersey", "label": "New Jersey", "url": "https://districtry.com/nj/", "emoji": "🍅", "explorer_name": "districtry New Jersey",
+      "bbox": { "minLng": -75.57, "minLat": 38.78, "maxLng": -73.88, "maxLat": 41.36 } },
+    { "id": "newhampshire", "label": "New Hampshire", "url": "https://districtry.com/nh/", "emoji": "🍁", "explorer_name": "districtry New Hampshire",
+      "bbox": { "minLng": -72.56, "minLat": 42.69, "maxLng": -70.57, "maxLat": 45.31 } },
+    { "id": "texas", "label": "Texas", "url": "https://districtry.com/tx/", "emoji": "⭐", "explorer_name": "districtry Texas",
+      "bbox": { "minLng": -106.65, "minLat": 25.83, "maxLng": -93.5, "maxLat": 35.5 } },
+    { "id": "florida", "label": "Florida", "url": "https://districtry.com/fl/", "emoji": "🍊", "explorer_name": "districtry Florida",
+      "bbox": { "minLng": -87.64, "minLat": 24.39, "maxLng": -79.97, "maxLat": 31.01 } },
+    { "id": "ohio", "label": "Ohio", "url": "https://districtry.com/oh/", "emoji": "🌰", "explorer_name": "districtry Ohio",
+      "bbox": { "minLng": -84.83, "minLat": 38.4, "maxLng": -80.51, "maxLat": 42.33 } },
+    { "id": "washington", "label": "Washington", "url": "https://districtry.com/wa/", "emoji": "🍎", "explorer_name": "districtry Washington",
+      "bbox": { "minLng": -124.85, "minLat": 45.54, "maxLng": -116.91, "maxLat": 49.01 } },
+    { "id": "massachusetts", "label": "Massachusetts", "url": "https://districtry.com/ma/", "emoji": "🦞", "explorer_name": "districtry Massachusetts",
+      "bbox": { "minLng": -73.51, "minLat": 41.18, "maxLng": -69.85, "maxLat": 42.89 } },
+    { "id": "colorado", "label": "Colorado", "url": "https://districtry.com/co/", "emoji": "🏔️", "explorer_name": "districtry Colorado",
+      "bbox": { "minLng": -109.07, "minLat": 36.99, "maxLng": -102.04, "maxLat": 41.01 } },
+    { "id": "maryland", "label": "Maryland", "url": "https://districtry.com/md/", "emoji": "🦀", "explorer_name": "districtry Maryland",
+      "bbox": { "minLng": -79.41, "minLat": 37.88, "maxLng": -74.98, "maxLat": 39.73 } },
+    { "id": "alabama", "label": "Alabama", "url": "https://districtry.com/al/", "emoji": "🚀", "explorer_name": "districtry Alabama",
+      "bbox": { "minLng": -88.48, "minLat": 30.14, "maxLng": -84.88, "maxLat": 35.01 } },
+    { "id": "oregon", "label": "Oregon", "url": "https://districtry.com/or/", "emoji": "🌲", "explorer_name": "districtry Oregon",
+      "bbox": { "minLng": -124.71, "minLat": 41.99, "maxLng": -116.46, "maxLat": 46.3 } },
+    { "id": "connecticut", "label": "Connecticut", "url": "https://districtry.com/ct/", "emoji": "⚓", "explorer_name": "districtry Connecticut",
+      "bbox": { "minLng": -73.73, "minLat": 40.95, "maxLng": -71.78, "maxLat": 42.06 } },
+    { "id": "utah", "label": "Utah", "url": "https://districtry.com/ut/", "emoji": "🐝", "explorer_name": "districtry Utah",
+      "bbox": { "minLng": -114.06, "minLat": 36.99, "maxLng": -109.04, "maxLat": 42.01 } },
+    { "id": "kansas", "label": "Kansas", "url": "https://districtry.com/ks/", "emoji": "🌻", "explorer_name": "districtry Kansas",
+      "bbox": { "minLng": -102.06, "minLat": 36.99, "maxLng": -94.58, "maxLat": 40.01 } },
+    { "id": "newmexico", "label": "New Mexico", "url": "https://districtry.com/nm/", "emoji": "🌶️", "explorer_name": "districtry New Mexico",
+      "bbox": { "minLng": -109.07, "minLat": 31.32, "maxLng": -102.99, "maxLat": 37.02 } },
+    { "id": "nebraska", "label": "Nebraska", "url": "https://districtry.com/ne/", "emoji": "🚂", "explorer_name": "districtry Nebraska",
+      "bbox": { "minLng": -104.07, "minLat": 39.98, "maxLng": -95.29, "maxLat": 43.02 } },
+    { "id": "idaho", "label": "Idaho", "url": "https://districtry.com/id/", "emoji": "🥔", "explorer_name": "districtry Idaho",
+      "bbox": { "minLng": -117.26, "minLat": 41.97, "maxLng": -111.03, "maxLat": 49.02 } },
+    { "id": "hawaii", "label": "Hawaii", "url": "https://districtry.com/hi/", "emoji": "🌺", "explorer_name": "districtry Hawaii",
+      "bbox": { "minLng": -160.61, "minLat": 18.85, "maxLng": -154.74, "maxLat": 22.3 } },
+    { "id": "maine", "label": "Maine", "url": "https://districtry.com/me/", "emoji": "🦌", "explorer_name": "districtry Maine",
+      "bbox": { "minLng": -71.1, "minLat": 42.9, "maxLng": -66.87, "maxLat": 47.47 } },
+    { "id": "montana", "label": "Montana", "url": "https://districtry.com/mt/", "emoji": "🦬", "explorer_name": "districtry Montana",
+      "bbox": { "minLng": -116.06, "minLat": 44.34, "maxLng": -104.02, "maxLat": 49.02 } },
+    { "id": "rhodeisland", "label": "Rhode Island", "url": "https://districtry.com/ri/", "emoji": "🌊", "explorer_name": "districtry Rhode Island",
+      "bbox": { "minLng": -71.92, "minLat": 41.08, "maxLng": -71.07, "maxLat": 42.03 } },
+    { "id": "delaware", "label": "Delaware", "url": "https://districtry.com/de/", "emoji": "🐔", "explorer_name": "districtry Delaware",
+      "bbox": { "minLng": -75.8, "minLat": 38.44, "maxLng": -74.97, "maxLat": 39.85 } },
+    { "id": "southdakota", "label": "South Dakota", "url": "https://districtry.com/sd/", "emoji": "🗿", "explorer_name": "districtry South Dakota",
+      "bbox": { "minLng": -104.07, "minLat": 42.46, "maxLng": -96.42, "maxLat": 45.96 } },
+    { "id": "northdakota", "label": "North Dakota", "url": "https://districtry.com/nd/", "emoji": "🚜", "explorer_name": "districtry North Dakota",
+      "bbox": { "minLng": -104.06, "minLat": 45.92, "maxLng": -96.54, "maxLat": 49.02 } },
+    { "id": "alaska", "label": "Alaska", "url": "https://districtry.com/ak/", "emoji": "🐻", "explorer_name": "districtry Alaska",
+      "bbox": { "minLng": -179.25, "minLat": 51.16, "maxLng": -129.96, "maxLat": 71.45 } },
+    { "id": "vermont", "label": "Vermont", "url": "https://districtry.com/vt/", "emoji": "🐄", "explorer_name": "districtry Vermont",
+      "bbox": { "minLng": -73.45, "minLat": 42.71, "maxLng": -71.45, "maxLat": 45.03 } },
+    { "id": "wyoming", "label": "Wyoming", "url": "https://districtry.com/wy/", "emoji": "🤠", "explorer_name": "districtry Wyoming",
+      "bbox": { "minLng": -111.07, "minLat": 40.98, "maxLng": -104.04, "maxLat": 45.02 } }
+  ],
+  "hover_number_keys": [
+    [
+      "district",
+      "basename",
+      "cd120",
+      "cd119",
+      "sldu",
+      "sldl"
+    ],
+    [
+      "geoid",
+      "number"
+    ]
+  ],
+  "hover_name_keys": [
+    [
+      "name",
+      "namelsad"
+    ]
+  ],
+  "layers": [
+    {
+      "id": "us-house",
+      "label": "U.S. House",
+      "group": "political",
+      "area_rank": 1,
+      "rank_note": "2 congressional districts — the largest districts Montana carries below the state itself",
+      "source": {
+        "answers": "The U.S. House district covering the point, and the representative holding it.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 0 (120th Congressional Districts), pre-built for the state and shipped with the app; 2 features for Montana, measured 2026-11-12. Layer 4, the 119th Congress's map, draws the same 2 districts (every intersection-over-union 1.0), so nothing changes on 3 January 2027, and the builder refuses to write if the two differ before then. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
+          }
+        ],
+        "people": "congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
+        "applies": "Montana — statewide, all 2 districts."
+      }
+    },
+    {
+      "id": "mt-senate",
+      "label": "Montana Senate District",
+      "group": "political",
+      "area_rank": 2,
+      "rank_note": "50 Senate districts, each exactly two House districts",
+      "source": {
+        "answers": "The Senate district covering the point, and the senator it elects.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 1 (2026 State Legislative Districts - Upper), pre-built for the state and shipped with the app; 50 features, measured 2026-11-12, identical to the 2024 vintage (layer 5) that day. Senate District N is exactly House Districts 2N-1 and 2N (measured that day on TIGERweb's own polygons), so both chambers are simplified in one shared topology and their lines cannot part. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
+          }
+        ],
+        "people": "mt-senate-members.json, rebuilt weekly by CI from Open States' export of current legislators, compiled from the Legislature's own pages, because the Legislature's own directory (legislators.legmt.gov) already carried the terms that begin in January beside the members they succeed on 2026-11-12, 154 records for 150 seats, so it could not say who sits today (Adam's choice of 2026-11-10: the legislature's own site first, Open States as the fallback): each senator's name, party, e-mail address at legmt.gov and page on the Legislature's site, and nothing at any other domain.",
+        "applies": "Montana — statewide, all 50 districts."
+      }
+    },
+    {
+      "id": "county",
+      "label": "County",
+      "group": "geography",
+      "area_rank": 3,
+      "rank_note": "56 counties, pre-built from TIGERweb; the instance's offline anchor layer",
+      "source": {
+        "answers": "Which county contains the point.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app; 56 features, measured 2026-11-12. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER YET. Each Montana county is governed by an elected board of county commissioners, and also elects officers such as a clerk and recorder, a treasurer, a sheriff and a county attorney. Butte-Silver Bow and Anaconda-Deer Lodge are each a city and a county in one consolidated government. No list of them was read in this pass, so the card says how the county is governed and names nobody. Recorded as gap mt-county-officials.",
+        "applies": "Montana — statewide, all 56 counties."
+      }
+    },
+    {
+      "id": "mt-house",
+      "label": "Montana House District",
+      "group": "political",
+      "area_rank": 4,
+      "rank_note": "100 House districts, two in each Senate district",
+      "source": {
+        "answers": "The House district covering the point, and the representative it elects.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 2 (2026 State Legislative Districts - Lower), pre-built for the state and shipped with the app; 100 features, measured 2026-11-12, identical to the 2024 vintage (layer 6) that day. Senate District N is exactly House Districts 2N-1 and 2N (measured that day on TIGERweb's own polygons), so both chambers are simplified in one shared topology and their lines cannot part. Simplified by Douglas-Peucker at a 5 m interval and refused over an 8 m fidelity ceiling.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
+          }
+        ],
+        "people": "mt-house-members.json, rebuilt weekly by CI from Open States' export of current legislators, compiled from the Legislature's own pages, for the reason the Senate roster gives: each representative's name, party, e-mail address at legmt.gov and page on the Legislature's site, and nothing at any other domain.",
+        "applies": "Montana — statewide, all 100 districts."
+      }
+    },
+    {
+      "id": "school-district-secondary",
+      "label": "School District (Secondary)",
+      "group": "schools",
+      "area_rank": 5,
+      "rank_note": "97 secondary districts, about 2,561 km2 of land on average, running the higher grades over the same ground as the elementary districts, drawn from a mirrored tile archive",
+      "source": {
+        "answers": "The secondary school district covering the point, where one runs the higher grades over the point's elementary district.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), mirrored into a vector-tile archive this site serves (scripts/mirror_tiger_tiles.py); 97 features for Montana, measured 2026-11-12: every one running grades 9 to 12. The unified districts and the elementary districts together cover the state's land (128,588 and 248,385 km2 of Montana's 376,974 km2), and the 97 secondary districts lie over the same ground as the elementary districts, so a reader there is in one elementary and one secondary district at once.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1"
+          }
+        ],
+        "people": "NO OFFICEHOLDER YET. No list of the districts' school board members was read in this pass — recorded as gap mt-school-board-members.",
+        "applies": "Montana — the same ground as the elementary districts; the layer answers nothing elsewhere."
+      }
+    },
+    {
+      "id": "school-district-unified",
+      "label": "School District (Unified)",
+      "group": "schools",
+      "area_rank": 6,
+      "rank_note": "65 unified districts, about 1,978 km2 of land on average, drawn from a mirrored tile archive; with the 233 elementary districts they cover the state's land",
+      "source": {
+        "answers": "The unified school district covering the point, which runs every grade for it.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), mirrored into a vector-tile archive this site serves (scripts/mirror_tiger_tiles.py); 65 features for Montana, measured 2026-11-12. The unified districts and the elementary districts together cover the state's land (128,588 and 248,385 km2 of Montana's 376,974 km2), and the 97 secondary districts lie over the same ground as the elementary districts, so a reader there is in one elementary and one secondary district at once.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+          }
+        ],
+        "people": "NO OFFICEHOLDER YET. No list of the districts' school board members was read in this pass — recorded as gap mt-school-board-members.",
+        "applies": "Montana — statewide, with the elementary districts."
+      }
+    },
+    {
+      "id": "school-district-elementary",
+      "label": "School District (Elementary)",
+      "group": "schools",
+      "area_rank": 7,
+      "rank_note": "233 elementary districts, about 1,066 km2 of land on average, drawn from a mirrored tile archive; the ground the unified districts leave",
+      "source": {
+        "answers": "The elementary school district covering the point, where no unified district does.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), mirrored into a vector-tile archive this site serves (scripts/mirror_tiger_tiles.py); 233 features for Montana, measured 2026-11-12. Every elementary district runs pre-kindergarten to grade 8, and the secondary districts cover the same ground, so a reader outside the unified districts is in one of each. The unified districts and the elementary districts together cover the state's land (128,588 and 248,385 km2 of Montana's 376,974 km2), and the 97 secondary districts lie over the same ground as the elementary districts, so a reader there is in one elementary and one secondary district at once.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
+          }
+        ],
+        "people": "NO OFFICEHOLDER YET. No list of the districts' school board members was read in this pass — recorded as gap mt-school-board-members.",
+        "applies": "Montana — statewide, with the unified districts."
+      }
+    },
+    {
+      "id": "zip-code",
+      "label": "ZIP Code",
+      "group": "geography",
+      "area_rank": 8,
+      "rank_note": "373 ZIP Code Tabulation Areas that reach into Montana (476 in the app's bounding box), about 1,011 km2 of land on average, drawn from a tile archive of the ones inside the state; the layer hides outside it",
+      "source": {
+        "answers": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, mirrored into a vector-tile archive of the ZCTAs that reach into Montana (scripts/mirror_tiger_tiles.py). ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='30'. The app's box reaches into Idaho, Wyoming, South Dakota and North Dakota, and measured 2026-11-12, 373 of the 476 ZCTAs in it reach into Montana and are kept in the archive.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more.",
+        "applies": "Montana. The layer is hidden outside the state outline, because outside it the Census's point query answers with a neighbouring state's real ZIP code."
+      }
+    },
+    {
+      "id": "municipality",
+      "label": "City or Town",
+      "group": "geography",
+      "area_rank": 9,
+      "rank_note": "127 incorporated cities and towns, drawn from a tile archive mirrored from TIGERweb",
+      "source": {
+        "answers": "The incorporated city or town containing the point, or that the point is outside every one.",
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Places_CouSub_ConCity_SubMCD, layer 4 (incorporated places), mirrored into a vector-tile archive this site serves (scripts/mirror_tiger_tiles.py); 127 records: 73 towns, 52 cities, the balance of Butte-Silver Bow and Anaconda-Deer Lodge County, the last two each a city and a county in one consolidated government, measured 2026-11-12. MOST OF MONTANA IS IN NO INCORPORATED CITY OR TOWN (about 1% of its land, 4,572.2 of 376,973.5 km2, is inside one), and there the county is the general-purpose local government, so an empty card says the point is outside every one rather than naming a place. Butte-Silver Bow and Anaconda-Deer Lodge are each a city and a county in one consolidated government, which the Census draws as a place, and their cards say so. The Census's census-designated places and county subdivisions are statistical areas with no government and are not drawn.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+          }
+        ],
+        "people": "NO OFFICEHOLDER YET. No statewide roster of Montana's local officials was read in this pass; the card names the place and links nothing it has not verified. Recorded as gap mt-municipal-officeholders.",
+        "applies": "Montana — statewide."
+      }
+    },
+    {
+      "id": "police-station",
+      "label": "Police Station",
+      "group": "safety",
+      "area_rank": 10,
+      "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
+      "source": {
+        "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
+        "boundary": [
+          {
+            "label": "USGS The National Map — structures layer 53 (Police Stations), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-11-12: 145 points in Montana's envelope, which reaches into Idaho, Wyoming, South Dakota and North Dakota; the service caps a page at 2,000 records, so the loader pages if that is ever reached.",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a police station is a facility, not an elected district. Nobody is elected from one.",
+        "applies": "Montana — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances."
+      }
+    },
+    {
+      "id": "fire-station",
+      "label": "Fire & EMS Station",
+      "group": "safety",
+      "area_rank": 11,
+      "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
+      "source": {
+        "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
+        "boundary": [
+          {
+            "label": "USGS The National Map — structures layer 51 (Fire Stations/EMS Stations), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-11-12: 531 points in Montana's envelope, which reaches into Idaho, Wyoming, South Dakota and North Dakota; the service caps a page at 2,000 records, so the loader pages if that is ever reached.",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a fire and EMS station is a facility, not an elected district. Nobody is elected from one.",
+        "applies": "Montana — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances."
+      }
+    },
+    {
+      "id": "post-office",
+      "label": "Post Office",
+      "group": "geography",
+      "area_rank": 12,
+      "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
+      "source": {
+        "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
+        "boundary": [
+          {
+            "label": "USGS The National Map — structures layer 38 (Post Offices), queried live at runtime by a bounding envelope through the paged loader. Public domain. Measured 2026-11-12: 382 points in Montana's envelope, which reaches into Idaho, Wyoming, South Dakota and North Dakota; the service caps a page at 2,000 records, so the loader pages if that is ever reached.",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38"
+          }
+        ],
+        "people": "NO OFFICEHOLDER, AND NONE IS MISSING: a post office is a facility, not an elected district. Nobody is elected from one.",
+        "applies": "Montana — plus the border strip its envelope necessarily includes. A BUILDING, NOT A JURISDICTION: which agency answers at a given point is a service-area question this instance has not been researched for, so the card says where the nearest are and never who serves you. Nearest-three is a proximity fact, so for a reader near the state line the nearest one really may be in a neighbouring state, and the card's intro says these are straight-line distances."
+      }
+    }
+  ],
+  "min_register_layer": 10,
+  "anchor_point": {
+    "lat": 46.58566,
+    "lng": -112.01822,
+    "note": "Montana State Capitol, 1301 East 6th Avenue, Helena, Lewis and Clark County"
+  },
+  "anchors": [
+    {
+      "layer": "county",
+      "expected": "Lewis and Clark County"
+    },
+    {
+      "layer": "us-house",
+      "expected": "2"
+    },
+    {
+      "layer": "mt-senate",
+      "expected": "41"
+    },
+    {
+      "layer": "mt-house",
+      "expected": "82"
+    }
+  ],
+  "negative_point": {
+    "lat": 49.15,
+    "lng": -107.0,
+    "note": "Saskatchewan, Canada, north of the Montana line — outside Montana and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names no state here, because it is in Canada (control: the Montana State Capitol returns Montana), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any outline in the change that opens the last thirteen states. IT IS IN CANADA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT."
+  },
+  "coverage_key": {
+    "outside": "Outside Montana",
+    "edge": "Montana"
+  },
+  "data_files": {
+    "geometry": [
+      {
+        "file": "metro-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "The whole-Montana outline for the coverage wash (loadMetroOutline), dissolved from the county fabric (56 counties)."
+      },
+      {
+        "file": "state-counties.json",
+        "min_features": 56,
+        "max_features": 56,
+        "note": "Montana's 56 counties — the instance's offline anchor layer and the ground the coverage tests use."
+      },
+      {
+        "file": "congress-districts.json",
+        "min_features": 2,
+        "max_features": 2,
+        "note": "The 2 U.S. House districts, TIGERweb layer 0 (CD120), the same map as layer 4 (CD119)."
+      },
+      {
+        "file": "mt-senate-districts.json",
+        "min_features": 50,
+        "max_features": 50,
+        "note": "The 50 Montana Senate districts, TIGERweb layer 1 (2026 State Legislative Districts - Upper), simplified in one topology with the House districts."
+      },
+      {
+        "file": "mt-house-districts.json",
+        "min_features": 100,
+        "max_features": 100,
+        "note": "The 100 Montana House districts, TIGERweb layer 2 (2026 State Legislative Districts - Lower), simplified in one topology with the Senate districts."
+      },
+      {
+        "file": "zip-index.json",
+        "min_features": 368,
+        "max_features": 368,
+        "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      }
+    ],
+    "rosters": [
+      {
+        "file": "congress-roster.json",
+        "min_keys": 2,
+        "note": "U.S. House (MT) roster, refreshed weekly by update-mt-congress-roster.yml."
+      },
+      {
+        "file": "mt-senate-members.json",
+        "min_keys": 50,
+        "note": "Montana Senate roster, one record per district, refreshed weekly by update-mt-legislature-roster.yml."
+      },
+      {
+        "file": "mt-house-members.json",
+        "min_keys": 100,
+        "note": "Montana House roster, one record per district, refreshed weekly by update-mt-legislature-roster.yml."
+      },
+      {
+        "file": "coverage-gaps.json",
+        "min_keys": 0,
+        "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
+      },
+      {
+        "file": "statewide-officials.json",
+        "min_keys": 5,
+        "note": "The officers Montana elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from mt/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change."
+      }
+    ]
+  },
+  "sw": {
+    "cache_name": "districtry-mt-shell-v1",
+    "shell_urls": [
+      "./",
+      "./icons/apple-touch-icon.png",
+      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.js",
+      "./vendor/leaflet-maplibre-gl.js"
+    ]
+  },
+  "data_sources": {
+    "registry": "mt/scripts/validate_sources.py"
+  },
+  "workflows": [
+    {
+      "file": "update-mt-congress-roster.yml",
+      "purpose": "U.S. House (Montana) roster (unitedstates/congress-legislators)",
+      "schedule": "Wed 22:45 UTC"
+    },
+    {
+      "file": "update-mt-legislature-roster.yml",
+      "purpose": "Montana Senate and House rosters (Open States, compiled from the Legislature's own pages)",
+      "schedule": "Thu 22:45 UTC"
+    },
+    {
+      "file": "mt-validate-sources.yml",
+      "purpose": "Montana's own source-freshness registry",
+      "schedule": "2nd of month 22:45 UTC"
+    }
+  ],
+  "geocoder": {
+    "address": "Photon (Montana-bounded type-ahead)",
+    "unbounded": "Photon (whole-coverage, sibling-instance lookup)",
+    "poi": "Nominatim (office-address pin lookup, Montana-bounded, serial >=1s queue)",
+    "search_placeholder": "Search a Montana address"
+  },
+  "palette": {
+    "accent": "#6d3fd1",
+    "accent_deep": "#5730ab",
+    "accent_warm": "#b0316e",
+    "accent_warm_deep": "#8f2659",
+    "label": "districtry palette — brand violet is CHROME ONLY, never map data; shared with the fleet, not state-themed by convention"
+  },
+  "domains": {
+    "canonical": "https://districtry.com/mt/"
+  },
+  "exports_name": "MontanaExplorer",
+  "verified_date": "November 12, 2026",
+  "population": {
+    "index": "population/index.json"
+  },
+  "sources_page": {
+    "file": "mt/sources.html",
+    "credits": [
+      {
+        "label": "U.S. Census Bureau TIGERweb",
+        "url": "https://tigerweb.geo.census.gov/",
+        "note": "County, city, school-district, ZIP, congressional and state legislative district boundaries."
+      },
+      {
+        "label": "Montana Legislature",
+        "url": "https://www.legmt.gov/",
+        "note": "The members of the Montana Senate and House are linked to their pages here."
+      },
+      {
+        "label": "Open States",
+        "url": "https://openstates.org/",
+        "note": "The members of the Montana Senate and House, compiled from the Legislature's own pages, while its directory lists the incoming members beside the sitting ones."
+      },
+      {
+        "label": "unitedstates/congress-legislators",
+        "url": "https://github.com/unitedstates/congress-legislators",
+        "note": "U.S. House roster (CC0)."
+      },
+      {
+        "label": "USGS The National Map",
+        "url": "https://apps.nationalmap.gov/services/",
+        "note": "Police, fire and EMS stations and post offices (public domain)."
+      }
+    ]
+  },
+  "zip_search": {
+    "file": "zip-index.json",
+    "layers": [
+      {
+        "id": "zip-code",
+        "field": "ZCTA5",
+        "inside": [
+          "metro-outline.json"
+        ]
+      }
+    ]
+  }
+}

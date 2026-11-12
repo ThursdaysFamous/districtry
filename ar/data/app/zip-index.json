@@ -610,6 +610,5 @@
 {"type":"Feature","bbox":[-94.4747,35.5602,-94.4037,35.6529],"geometry":{"type":"Point","coordinates":[-94.44723,35.59017]},"properties":{"zip":"72955","layer":"zip-code"}},
 {"type":"Feature","bbox":[-94.4605,35.3501,-94.227,35.6118],"geometry":{"type":"Point","coordinates":[-94.27584,35.42487]},"properties":{"zip":"72956","layer":"zip-code"}},
 {"type":"Feature","bbox":[-94.4511,34.7869,-93.812,35.0159],"geometry":{"type":"Point","coordinates":[-94.08691,34.84988]},"properties":{"zip":"72958","layer":"zip-code"}},
-{"type":"Feature","bbox":[-94.2692,35.6258,-93.8833,35.8939],"geometry":{"type":"Point","coordinates":[-94.08691,35.78217]},"properties":{"zip":"72959","layer":"zip-code"}},
-{"type":"Feature","bbox":[-94.1144,33.0552,-94.0407,33.2553],"geometry":{"type":"Point","coordinates":[-94.04194,33.09054]},"properties":{"zip":"75556","layer":"zip-code"}}
+{"type":"Feature","bbox":[-94.2692,35.6258,-93.8833,35.8939],"geometry":{"type":"Point","coordinates":[-94.08691,35.78217]},"properties":{"zip":"72959","layer":"zip-code"}}
 ]}

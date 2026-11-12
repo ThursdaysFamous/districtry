@@ -1,0 +1,641 @@
+{
+  "Berkshire-Hampden-Franklin-Hampshire": {
+    "title": "Berkshire, Hampden, Franklin and Hampshire",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Paul Mark",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 504",
+          "(617) 722-1625"
+        ],
+        "email": "Paul.Mark@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/PWM0"
+      }
+    ]
+  },
+  "Bristol and Norfolk": {
+    "title": "Bristol and Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Paul Feeney",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 112",
+          "(617) 722-1222"
+        ],
+        "email": "paul.feeney@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/PRF0"
+      }
+    ]
+  },
+  "Cape and Islands": {
+    "title": "Cape and Islands",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Julian Cyr",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 111",
+          "(617) 722-1570"
+        ],
+        "email": "julian.cyr@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JAC0"
+      }
+    ]
+  },
+  "Fifth Middlesex": {
+    "title": "Fifth Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jason Lewis",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 511-B",
+          "(617) 722-1206"
+        ],
+        "email": "Jason.Lewis@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/jml0"
+      }
+    ]
+  },
+  "First Bristol and Plymouth": {
+    "title": "First Bristol and Plymouth",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Michael Rodrigues",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 212",
+          "(617) 722-1114"
+        ],
+        "email": "Michael.Rodrigues@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MJR0"
+      }
+    ]
+  },
+  "First Essex": {
+    "title": "First Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Pavel Payano",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 413-B",
+          "(617) 722-1604"
+        ],
+        "email": "Pavel.Payano@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/PMP0"
+      }
+    ]
+  },
+  "First Essex and Middlesex": {
+    "title": "First Essex and Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Bruce Tarr",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 308",
+          "(617) 722-1600"
+        ],
+        "email": "Bruce.Tarr@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/BET0"
+      }
+    ]
+  },
+  "First Middlesex": {
+    "title": "First Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Vanna Howard",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 109-E",
+          "(617) 722-1630"
+        ],
+        "email": "Vanna.Howard@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/V_H0"
+      }
+    ]
+  },
+  "First Plymouth and Norfolk": {
+    "title": "First Plymouth and Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Patrick O'Connor",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 419",
+          "(617) 722-1646"
+        ],
+        "email": "Patrick.OConnor@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/PMO"
+      }
+    ]
+  },
+  "First Suffolk": {
+    "title": "First Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Nick Collins",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 511-A",
+          "(617) 722-1150"
+        ],
+        "email": "Nick.Collins@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/N_C0"
+      }
+    ]
+  },
+  "First Worcester": {
+    "title": "First Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Robyn Kennedy",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 312-D",
+          "(617) 722-1544"
+        ],
+        "email": "Robyn.Kennedy@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/RKK0"
+      }
+    ]
+  },
+  "Fourth Middlesex": {
+    "title": "Fourth Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Cindy Friedman",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 313",
+          "(617) 722-1432"
+        ],
+        "email": "Cindy.Friedman@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/CFF0"
+      }
+    ]
+  },
+  "Hampden": {
+    "title": "Hampden",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Adam Gómez",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 312-E",
+          "(617) 722-1660"
+        ],
+        "email": "Adam.Gomez@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/A_G0"
+      }
+    ]
+  },
+  "Hampden and Hampshire": {
+    "title": "Hampden and Hampshire",
+    "seats": 1,
+    "members": [
+      {
+        "name": "John Velis",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 513",
+          "(617) 722-1415"
+        ],
+        "email": "john.velis@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JCV0"
+      }
+    ]
+  },
+  "Hampden-Hampshire-Worcester": {
+    "title": "Hampden, Hampshire and Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jacob Oliveira",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 416-B",
+          "(617) 722-1291"
+        ],
+        "email": "Jacob.Oliveira@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JRO0"
+      }
+    ]
+  },
+  "Hampshire-Franklin-Worcester": {
+    "title": "Hampshire, Franklin and Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Joanne Comerford",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 410",
+          "(617) 722-1532"
+        ],
+        "email": "Jo.Comerford@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JMC0"
+      }
+    ]
+  },
+  "Middlesex and Norfolk": {
+    "title": "Middlesex and Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Karen Spilka",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 332",
+          "(617) 722-1500"
+        ],
+        "email": "Karen.Spilka@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/KES0"
+      }
+    ]
+  },
+  "Middlesex and Suffolk": {
+    "title": "Middlesex and Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Sal DiDomenico",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 405",
+          "(617) 722-1650"
+        ],
+        "email": "Sal.DiDomenico@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/SND0"
+      }
+    ]
+  },
+  "Middlesex and Worcester": {
+    "title": "Middlesex and Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "James Eldridge",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 511-C",
+          "(617) 722-1120"
+        ],
+        "email": "James.Eldridge@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JBE0"
+      }
+    ]
+  },
+  "Norfolk and Middlesex": {
+    "title": "Norfolk and Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Cynthia Creem",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 312-A",
+          "(617) 722-1639"
+        ],
+        "email": "Cynthia.Creem@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/CSC0"
+      }
+    ]
+  },
+  "Norfolk and Plymouth": {
+    "title": "Norfolk and Plymouth",
+    "seats": 1,
+    "members": [
+      {
+        "name": "John Keenan",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 413-F",
+          "(617) 722-1494"
+        ],
+        "email": "John.Keenan@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JFK0"
+      }
+    ]
+  },
+  "Norfolk and Suffolk": {
+    "title": "Norfolk and Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Michael Rush",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 208",
+          "(617) 722-1348"
+        ],
+        "email": "Mike.Rush@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MFR0"
+      }
+    ]
+  },
+  "Norfolk-Plymouth-Bristol": {
+    "title": "Norfolk, Plymouth and Bristol",
+    "seats": 1,
+    "members": [
+      {
+        "name": "William Driscoll",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 507",
+          "(617) 722-1643"
+        ],
+        "email": "william.driscoll@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/WJD0"
+      }
+    ]
+  },
+  "Norfolk-Worcester-Middlesex": {
+    "title": "Norfolk, Worcester and Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Rebecca Rausch",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 215",
+          "(617) 722-1555"
+        ],
+        "email": "Becca.Rausch@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/RLR0"
+      }
+    ]
+  },
+  "Plymouth and Barnstable": {
+    "title": "Plymouth and Barnstable",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Dylan Fernandes",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 519",
+          "(617) 722-1330"
+        ],
+        "email": "dylan.fernandes@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/DAF0"
+      }
+    ]
+  },
+  "Second Bristol and Plymouth": {
+    "title": "Second Bristol and Plymouth",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mark Montigny",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 312-C",
+          "(617) 722-1440"
+        ],
+        "email": "Mark.Montigny@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MCM0"
+      }
+    ]
+  },
+  "Second Essex": {
+    "title": "Second Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Joan Lovely",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 413-D",
+          "(617) 722-1410"
+        ],
+        "email": "Joan.Lovely@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JBL0"
+      }
+    ]
+  },
+  "Second Essex and Middlesex": {
+    "title": "Second Essex and Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Barry Finegold",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 109-D",
+          "(617) 722-1612"
+        ],
+        "email": "Barry.Finegold@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/BRF0"
+      }
+    ]
+  },
+  "Second Middlesex": {
+    "title": "Second Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Patricia Jehlen",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 424",
+          "(617) 722-1578"
+        ],
+        "email": "Patricia.Jehlen@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/PDJ0"
+      }
+    ]
+  },
+  "Second Plymouth and Norfolk": {
+    "title": "Second Plymouth and Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Michael Brady",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 416-A",
+          "(617) 722-1200"
+        ],
+        "email": "Michael.Brady@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MDB0"
+      }
+    ]
+  },
+  "Second Suffolk": {
+    "title": "Second Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Liz Miranda",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 413-C",
+          "(617) 722-1673"
+        ],
+        "email": "Liz.Miranda@masenate.gov"
+      }
+    ]
+  },
+  "Second Worcester": {
+    "title": "Second Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Michael Moore",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 109-B",
+          "(617) 722-1485"
+        ],
+        "email": "Michael.Moore@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MOM0"
+      }
+    ]
+  },
+  "Suffolk and Middlesex": {
+    "title": "Suffolk and Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "William Brownsberger",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 319",
+          "(617) 722-1280"
+        ],
+        "email": "William.Brownsberger@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/WNB0"
+      }
+    ]
+  },
+  "Third Bristol and Plymouth": {
+    "title": "Third Bristol and Plymouth",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kelly Dooner",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 213-B",
+          "(617) 722-1551"
+        ],
+        "email": "kelly.dooner@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/KAD0"
+      }
+    ]
+  },
+  "Third Essex": {
+    "title": "Third Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Brendan Crighton",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 109-C",
+          "(617) 722-1350"
+        ],
+        "email": "brendan.crighton@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/BPC0"
+      }
+    ]
+  },
+  "Third Middlesex": {
+    "title": "Third Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Michael Barrett",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 312-B",
+          "(617) 722-1572"
+        ],
+        "email": "Mike.Barrett@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MJB0"
+      }
+    ]
+  },
+  "Third Suffolk": {
+    "title": "Third Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Lydia Edwards",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 413-A",
+          "(617) 722-1634"
+        ],
+        "email": "Lydia.Edwards@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/LME0"
+      }
+    ]
+  },
+  "Worcester and Hampden": {
+    "title": "Worcester and Hampden",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Ryan Fattman",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 213-A",
+          "(617) 722-1420"
+        ],
+        "email": "Ryan.Fattman@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/RCF0"
+      }
+    ]
+  },
+  "Worcester and Hampshire": {
+    "title": "Worcester and Hampshire",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Peter Durant",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 520",
+          "(617) 722-1540"
+        ],
+        "email": "peter.durant@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/PJD0"
+      }
+    ]
+  },
+  "Worcester and Middlesex": {
+    "title": "Worcester and Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "John Cronin",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 218",
+          "(617) 722-1230"
+        ],
+        "email": "John.Cronin@masenate.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JJC0"
+      }
+    ]
+  }
+}

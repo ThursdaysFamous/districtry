@@ -52,7 +52,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "32.30380,-90.18220"; // the State Capitol, Jackson, Hinds County
 const OFFLINE = ["county", "us-house", "ms-senate", "ms-house"];
 const EXPECT_DISTRICT = { "county": "Hinds County", "us-house": "2", "ms-senate": "29", "ms-house": "67" };
-const NEGATIVE_POINT = "32.48000,-88.25000"; // near York, Sumter County, ALABAMA, about 12 km east of the Mississippi line — outside Mississippi and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-15: TIGERweb's county layer names Sumter County, Alabama at this point (control: the Capitol anchor returns Hinds County, Mississippi), and the Census's ZIP layer answers 36925 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. ALABAMA BECAUSE NO INSTANCE SERVES IT and it is not on the next-states list; Louisiana, Arkansas and Tennessee, which share Mississippi's other borders, were passed over so this point does not have to move when any of them is live.
+const NEGATIVE_POINT = "30.00000,-88.35000"; // open water in the Gulf of Mexico, about 30 km south of Horn Island and about 16 km beyond every outline in fleet-outlines.json — outside Mississippi and outside every other instance in the fleet, and inside permalink_gate (minLat 29.95) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state and county layers name no state and no county here (control: the State Capitol returns Mississippi and Hinds County), and no outline in fleet-outlines.json contains it, Alabama's and Louisiana's included. THIS POINT WAS NEAR YORK, SUMTER COUNTY, ALABAMA (32.48, -88.25) UNTIL ALABAMA'S GO-LIVE (batch 3 of the state-level launch), which put Alabama's outline in the fleet file with the old point inside it, so a click there now opens districtry.com/al/ and is asserted as a routing case. OPEN WATER BECAUSE EVERY NEIGHBOUR IS NOW SERVED: Tennessee, Arkansas, Louisiana and Alabama are all live, and measured the same day on a 0.05-degree grid, the only ground in this app's gate more than 2 km from every outline is the Gulf south of the state's waters. No go-live can move this point, since no app will serve the open Gulf, so the click-stays-here check keeps its half here for good.
 const APP_NAME = "districtry Mississippi";
 const EXPECT_LAYERS = 17;
 // ==== GENERATED:END smoke-config ====
@@ -362,8 +362,8 @@ try {
   //     the real districtry.com, fails in the sandbox and leaves page.url() on
   //     the app, which reads exactly like correct behaviour.
   //
-  //     MISSISSIPPI HAS TWO NEIGHBOURS THE FLEET SERVES AND TWO IT DOES NOT,
-  //     so both halves are its own. Tennessee is live, so a click on Memphis
+  //     EVERY ONE OF MISSISSIPPI'S FOUR NEIGHBOURS IS SERVED, so the
+  //     stays-here half moved into the Gulf (1a2-ii). Tennessee is live, so a click on Memphis
   //     must open that app: Overton Park sits about 16 km north of the state
   //     line, well clear of either outline's simplification. Arkansas went
   //     live on 2026-10-15, so a click on Lake Village must open THAT app: it
@@ -374,8 +374,10 @@ try {
   //     click on Franklinton must open THAT app: it is the Washington Parish
   //     seat, and measured against fleet-outlines.json it lies inside
   //     Louisiana's outline and no other, about 17 km from the nearest edge.
-  //     Alabama is served by nobody, so a click near York, Alabama must stay
-  //     here (1a2-ii below). This instance answers its own side from the
+  //     Alabama went live in batch 3 of the state-level launch, so a click
+  //     near York, Alabama, which was this app's negative point until then,
+  //     must open THAT app: measured against fleet-outlines.json on
+  //     2026-11-12 it lies inside Alabama's outline and no other. This instance answers its own side from the
   //     coverage rings the wash retained — no fetch. Chicago proves the file
   //     is still read for ground far from here.
   {
@@ -384,6 +386,7 @@ try {
       { name: "Memphis, Tennessee", lat: 35.1440, lng: -89.9930, want: "https://districtry.com/tn/" },
       { name: "Lake Village, Arkansas", lat: 33.3290, lng: -91.2818, want: "https://districtry.com/ar/" },
       { name: "Franklinton, Louisiana", lat: 30.8474, lng: -90.1553, want: "https://districtry.com/la/" },
+      { name: "York, Alabama", lat: 32.48, lng: -88.25, want: "https://districtry.com/al/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -401,9 +404,9 @@ try {
     }
   }
 
-  // 1a2-ii. The half that keeps 1a2 honest: the negative point, near York in
-  //     Sumter County, Alabama, is about 12 km east of the state line and no
-  //     districtry instance covers it, so the click must stay HERE. A route to
+  // 1a2-ii. The half that keeps 1a2 honest: the negative point, in the open
+  //     Gulf about 16 km beyond every outline in the fleet, is covered by no
+  //     districtry instance, so the click must stay HERE. A route to
   //     a sibling would be the same lie pointing the other way, and the stub
   //     makes it visible: if the app navigated, the URL would be the stubbed
   //     sibling rather than this app.
@@ -422,7 +425,7 @@ try {
     // Still under BASE means still this app. This asked for the URL NOT to
     // name one of a list of sibling tags, and a list needs a new entry each
     // time a state goes live: the one it lacked would read as staying here.
-    check("a click near York, Alabama stays in this app",
+    check("a click in the open Gulf, outside every app's outline, stays in this app",
       url.startsWith(BASE), url);
     await context.close();
   }
@@ -878,8 +881,9 @@ try {
   //    A ZCTA carries no STATE field, so this is the one layer here whose
   //    point query cannot be filtered server-side — and outside Mississippi it
   //    does not answer with nothing, it answers with a real neighbouring ZIP.
-  //    Measured against the live service 2026-10-15: the Alabama negative
-  //    point -> 36925, against the State Capitol's correct 39201. So without a
+  //    Measured against the live service 2026-10-15: the Alabama point that was
+  //    this app's negative point until Alabama's go-live -> 36925, against the
+  //    State Capitol's correct 39201. So without a
   //    coverage test this card would present another state's ZIP code as this
   //    app's answer.
   //
@@ -891,9 +895,12 @@ try {
   //    load-bearing: coverage fails OPEN, so a test that only asserted hiding
   //    would also pass on a layer that had stopped working altogether.
   //
-  //    The negative point is the worksheet's own, in Sumter County, Alabama —
-  //    outside the county fabric's dissolve, which is what the coverage test
-  //    reads.
+  //    The negative point is the worksheet's own, in the open Gulf since
+  //    Alabama's go-live moved it out of Sumter County, Alabama — outside the
+  //    county fabric's dissolve, which is what the coverage test reads. The
+  //    stub still answers 36925 there, because what it must be is a real ZIP
+  //    a regression would render, and its ring was widened south to 29.5 so it
+  //    holds both points.
   {
     const ZCTA = "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11";
     function zctaBody(zip) {
@@ -904,7 +911,7 @@ try {
         features: [{
           attributes: { ZCTA5: zip },
           // a ring around BOTH probe points, so geometry never decides this
-          geometry: { rings: [[[-91, 31.5], [-87.5, 31.5], [-87.5, 33], [-91, 33], [-91, 31.5]]] }
+          geometry: { rings: [[[-91, 29.5], [-87.5, 29.5], [-87.5, 33], [-91, 33], [-91, 29.5]]] }
         }]
       });
     }
@@ -949,7 +956,7 @@ try {
       const leaked = /36925/.test(info.text || "");
       const stillOn = await page.evaluate(
         (n) => window[n].state.layersOn["zip-code"] === true, EXPORTS_NAME);
-      check("zip-code hides outside Mississippi rather than naming an Alabama ZIP",
+      check("zip-code hides outside Mississippi rather than naming a neighbouring ZIP",
         hidden && !leaked && stillOn,
         `hidden=${hidden} leaked=${leaked} layersOn=${stillOn} text=${(info.text || "").slice(0, 90)}`);
       await context.close();

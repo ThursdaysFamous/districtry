@@ -1,0 +1,387 @@
+{
+  "1": {
+    "name": "Byron Pelton",
+    "party": "Republican",
+    "email": "byron.pelton.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-6360"
+    ],
+    "url": "https://leg.colorado.gov/legislators/byron-pelton"
+  },
+  "2": {
+    "name": "Lisa Frizell",
+    "party": "Republican",
+    "email": "lisa.frizell.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4869"
+    ],
+    "url": "https://leg.colorado.gov/legislators/lisa-frizell"
+  },
+  "3": {
+    "name": "Nick Hinrichsen",
+    "party": "Democratic",
+    "email": "nick.hinrichsen.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4878"
+    ],
+    "url": "https://leg.colorado.gov/legislators/nick-hinrichsen"
+  },
+  "4": {
+    "name": "Mark Baisley",
+    "party": "Republican",
+    "email": "mark.baisley@senate.co.com",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4877"
+    ],
+    "url": "https://leg.colorado.gov/legislators/mark-baisley"
+  },
+  "5": {
+    "name": "Marc Catlin",
+    "party": "Republican",
+    "email": "marc.catlin.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-5292"
+    ],
+    "url": "https://leg.colorado.gov/legislators/marc-catlin"
+  },
+  "6": {
+    "name": "Cleave Simpson",
+    "party": "Republican",
+    "email": "cleave.simpson.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4875"
+    ],
+    "url": "https://leg.colorado.gov/legislators/cleave-simpson"
+  },
+  "7": {
+    "name": "Janice Rich",
+    "party": "Republican",
+    "email": "Janice.Rich.Senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-3077"
+    ],
+    "url": "https://leg.colorado.gov/legislators/janice-rich"
+  },
+  "8": {
+    "name": "Dylan Roberts",
+    "party": "Democratic",
+    "email": "dylan.roberts.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4871"
+    ],
+    "url": "https://leg.colorado.gov/legislators/dylan-roberts"
+  },
+  "9": {
+    "name": "Lynda Zamora Wilson",
+    "party": "Republican",
+    "email": "lynda.zamorawilson.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4835"
+    ],
+    "url": "https://leg.colorado.gov/legislators/lynda-zamora-wilson"
+  },
+  "10": {
+    "name": "Larry Liston",
+    "party": "Republican",
+    "email": "larry.liston.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-2737"
+    ],
+    "url": "https://leg.colorado.gov/legislators/larry-liston"
+  },
+  "11": {
+    "name": "Tony Exum",
+    "party": "Democratic",
+    "email": "tony.exum.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-6364"
+    ],
+    "url": "https://leg.colorado.gov/legislators/tony-exum"
+  },
+  "12": {
+    "name": "Marc Snyder",
+    "party": "Democratic",
+    "email": "marc.snyder.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4880"
+    ],
+    "url": "https://leg.colorado.gov/legislators/marc-snyder"
+  },
+  "13": {
+    "name": "Scott Bright",
+    "party": "Republican",
+    "email": "scott.bright.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4855"
+    ],
+    "url": "https://leg.colorado.gov/legislators/scott-bright"
+  },
+  "14": {
+    "name": "Cathy Kipp",
+    "party": "Democratic",
+    "email": "cathy.kipp.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4841"
+    ],
+    "url": "https://leg.colorado.gov/legislators/cathy-kipp"
+  },
+  "15": {
+    "name": "Janice Marchman",
+    "party": "Democratic",
+    "email": "janice.marchman.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4853"
+    ],
+    "url": "https://leg.colorado.gov/legislators/janice-marchman"
+  },
+  "16": {
+    "name": "Chris Kolker",
+    "party": "Democratic",
+    "email": "chris.kolker.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4883"
+    ],
+    "url": "https://leg.colorado.gov/legislators/chris-kolker"
+  },
+  "17": {
+    "name": "Katie Wallace",
+    "party": "Democratic",
+    "email": "katie.wallace.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-5291"
+    ],
+    "url": "https://leg.colorado.gov/legislators/katie-wallace"
+  },
+  "18": {
+    "name": "Judy Amabile",
+    "party": "Democratic",
+    "email": "judy.amabile.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4872"
+    ],
+    "url": "https://leg.colorado.gov/legislators/judy-amabile"
+  },
+  "19": {
+    "name": "Lindsey Daugherty",
+    "party": "Democratic",
+    "email": "lindsey.daugherty.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4840"
+    ],
+    "url": "https://leg.colorado.gov/legislators/lindsey-daugherty"
+  },
+  "20": {
+    "name": "Lisa Cutter",
+    "party": "Democratic",
+    "email": "lisa.cutter.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4859"
+    ],
+    "url": "https://leg.colorado.gov/legislators/lisa-cutter"
+  },
+  "21": {
+    "name": "Adrienne Benavidez",
+    "party": "Democratic",
+    "email": "adrienne.benavidez.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4857"
+    ],
+    "url": "https://leg.colorado.gov/legislators/adrienne-benavidez"
+  },
+  "22": {
+    "name": "Jessie Danielson",
+    "party": "Democratic",
+    "email": "jessie.danielson.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4856"
+    ],
+    "url": "https://leg.colorado.gov/legislators/jessie-danielson"
+  },
+  "23": {
+    "name": "Barbara Kirkmeyer",
+    "party": "Republican",
+    "email": "barbara.kirkmeyer.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4876"
+    ],
+    "url": "https://leg.colorado.gov/legislators/barbara-kirkmeyer"
+  },
+  "24": {
+    "name": "Kyle Mullica",
+    "party": "Democratic",
+    "email": "kyle.mullica.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4451"
+    ],
+    "url": "https://leg.colorado.gov/legislators/kyle-mullica"
+  },
+  "25": {
+    "name": "William Lindstedt",
+    "party": "Democratic",
+    "email": "william.lindstedt.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4863"
+    ],
+    "url": "https://leg.colorado.gov/legislators/william-lindstedt"
+  },
+  "26": {
+    "name": "Jeff Bridges",
+    "party": "Democratic",
+    "email": "jeff.bridges.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4846"
+    ],
+    "url": "https://leg.colorado.gov/legislators/jeff-bridges"
+  },
+  "27": {
+    "name": "Tom Sullivan",
+    "party": "Democratic",
+    "email": "tom.sullivan.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4873"
+    ],
+    "url": "https://leg.colorado.gov/legislators/tom-sullivan"
+  },
+  "28": {
+    "name": "Mike Weissman",
+    "party": "Democratic",
+    "email": "mike.weissman.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4879"
+    ],
+    "url": "https://leg.colorado.gov/legislators/mike-weissman"
+  },
+  "29": {
+    "name": "Iman Jodeh",
+    "party": "Democratic",
+    "email": "iman.jodeh.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-3432"
+    ],
+    "url": "https://leg.colorado.gov/legislators/iman-jodeh"
+  },
+  "30": {
+    "name": "John Carson",
+    "party": "Republican",
+    "email": "john.carson.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4881"
+    ],
+    "url": "https://leg.colorado.gov/legislators/john-carson"
+  },
+  "31": {
+    "name": "Matt Ball",
+    "party": "Democratic",
+    "email": "matt.ball.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4861"
+    ],
+    "url": "https://leg.colorado.gov/legislators/matt-ball"
+  },
+  "32": {
+    "name": "Robert Rodriguez",
+    "party": "Democratic",
+    "email": "robert.rodriguez.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4852"
+    ],
+    "url": "https://leg.colorado.gov/legislators/robert-rodriguez"
+  },
+  "33": {
+    "name": "James Coleman",
+    "party": "Democratic",
+    "email": "james.coleman.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4864"
+    ],
+    "url": "https://leg.colorado.gov/legislators/james-coleman"
+  },
+  "34": {
+    "name": "Julie Gonzales",
+    "party": "Democratic",
+    "email": "julie.gonzales.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4862"
+    ],
+    "url": "https://leg.colorado.gov/legislators/julie-gonzales"
+  },
+  "35": {
+    "name": "Rod Pelton",
+    "party": "Republican",
+    "email": "rod.pelton.senate@coleg.gov",
+    "capitolOffice": [
+      "200 E Colfax Avenue",
+      "Denver, CO 80203",
+      "303-866-4884"
+    ],
+    "url": "https://leg.colorado.gov/legislators/rod-pelton"
+  }
+}

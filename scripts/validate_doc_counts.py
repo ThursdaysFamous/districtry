@@ -351,7 +351,7 @@ COUNT_NAMED_RE = re.compile(
 WORKSHEET_PATH_RE = re.compile(r"\b([a-z]{2})/metro-worksheet\.json\b")
 # Display label only — attribution is by TAG. Kept explicit because "New York
 # City" and "New York" both map to `ny` and the output should not wobble.
-CANONICAL_NAME = {"il": "Chicago", "ny": "New York", "ca": "San Francisco",
+CANONICAL_NAME = {"il": "Chicago", "ny": "New York", "ca": "California",
                   "wi": "Wisconsin", "ia": "Iowa", "mi": "Michigan",
                   "in": "Indiana"}
 LAYER_WORD_RE = re.compile(r"\blayers?\b", re.IGNORECASE)

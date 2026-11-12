@@ -1,0 +1,2538 @@
+{
+  "10th Bristol": {
+    "title": "10th Bristol",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mark Sylvia",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 134",
+          "(617) 722-2400"
+        ],
+        "email": "Mark.Sylvia@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MDS1"
+      }
+    ]
+  },
+  "10th Essex": {
+    "title": "10th Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Daniel Cahill",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 527A",
+          "(617) 722-2020"
+        ],
+        "email": "Daniel.Cahill@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/DFC1"
+      }
+    ]
+  },
+  "10th Hampden": {
+    "title": "10th Hampden",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Carlos González",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 163",
+          "(617) 722-2199"
+        ],
+        "email": "Carlos.Gonzalez@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/C_G1"
+      }
+    ]
+  },
+  "10th Middlesex": {
+    "title": "10th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "John Lawn",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 236",
+          "(617) 722-2430"
+        ],
+        "email": "John.Lawn@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JJL2"
+      }
+    ]
+  },
+  "10th Norfolk": {
+    "title": "10th Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jeffrey Roy",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 7",
+          "(617) 722-2040"
+        ],
+        "email": "Jeffrey.Roy@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JNR1"
+      }
+    ]
+  },
+  "10th Plymouth": {
+    "title": "10th Plymouth",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Michelle DuBois",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 466",
+          "(617) 722-2017"
+        ],
+        "email": "Michelle.DuBois@MAHouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MMD1"
+      }
+    ]
+  },
+  "10th Suffolk": {
+    "title": "10th Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "William MacGregor",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 527",
+          "(617) 722-2020"
+        ],
+        "email": "bill.macgregor@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/WFM1"
+      }
+    ]
+  },
+  "10th Worcester": {
+    "title": "10th Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Brian Murray",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 238",
+          "(617) 722-2380"
+        ],
+        "email": "Brian.Murray@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/BWM1"
+      }
+    ]
+  },
+  "11th Bristol": {
+    "title": "11th Bristol",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Christopher Hendricks",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 26",
+          "(617) 722-2080"
+        ],
+        "email": "Chris.Hendricks@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/C_H1"
+      }
+    ]
+  },
+  "11th Essex": {
+    "title": "11th Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Sean Reid",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 443",
+          "(617) 722-2460"
+        ],
+        "email": "Sean.Reid@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/S_R1"
+      }
+    ]
+  },
+  "11th Hampden": {
+    "title": "11th Hampden",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Bud Williams",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 236",
+          "(617) 722-2430"
+        ],
+        "email": "Bud.Williams@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/BLW1"
+      }
+    ]
+  },
+  "11th Middlesex": {
+    "title": "11th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Amy Sangiolo",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 130",
+          "(617) 722-2130"
+        ],
+        "email": "Amy.Sangiolo@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/AMS3"
+      }
+    ]
+  },
+  "11th Norfolk": {
+    "title": "11th Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Paul McMurtry",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 472",
+          "(617) 722-2013"
+        ],
+        "email": "Paul.McMurtry@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/P_M1"
+      }
+    ]
+  },
+  "11th Plymouth": {
+    "title": "11th Plymouth",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Rita Mendes",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 443",
+          "(617) 722-2460"
+        ],
+        "email": "Rita.Mendes@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/RAM1"
+      }
+    ]
+  },
+  "11th Suffolk": {
+    "title": "11th Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Judith Garcia",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 146",
+          "(617) 722-2011"
+        ],
+        "email": "Judith.Garcia@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JAG2"
+      }
+    ]
+  },
+  "11th Worcester": {
+    "title": "11th Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Hannah Kane",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 167",
+          "(617) 722-2810"
+        ],
+        "email": "Hannah.Kane@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/HEK1"
+      }
+    ]
+  },
+  "12th Bristol": {
+    "title": "12th Bristol",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Norman Orrall",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 540",
+          "(617) 722-2090"
+        ],
+        "email": "norman.orrall@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/NJO1"
+      }
+    ]
+  },
+  "12th Essex": {
+    "title": "12th Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Thomas Walsh",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 20",
+          "(617) 722-2410"
+        ],
+        "email": "Thomas.Walsh@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/TJW1"
+      }
+    ]
+  },
+  "12th Hampden": {
+    "title": "12th Hampden",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Angelo Puppolo",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 122",
+          "(617) 722-2006"
+        ],
+        "email": "Angelo.Puppolo@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/AJP1"
+      }
+    ]
+  },
+  "12th Middlesex": {
+    "title": "12th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Greg Schwartz",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 39",
+          "(617) 722-2014"
+        ],
+        "email": "Greg.Schwartz@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/G_S1"
+      }
+    ]
+  },
+  "12th Norfolk": {
+    "title": "12th Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "John Rogers",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 155",
+          "(617) 722-2450"
+        ],
+        "email": "John.Rogers@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JHR1"
+      }
+    ]
+  },
+  "12th Plymouth": {
+    "title": "12th Plymouth",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kathleen LaNatra",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 42",
+          "(617) 722-2370"
+        ],
+        "email": "kathleen.lanatra@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/KPL1"
+      }
+    ]
+  },
+  "12th Suffolk": {
+    "title": "12th Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Brandy Fluker-Reid",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 136",
+          "(617) 722-2396"
+        ],
+        "email": "Brandy.FlukerReid@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/BFR1"
+      }
+    ]
+  },
+  "12th Worcester": {
+    "title": "12th Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Meghan Kilcoyne",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 146",
+          "(617) 722-2575"
+        ],
+        "email": "meghan.kilcoyne@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/M_K1"
+      }
+    ]
+  },
+  "13th Bristol": {
+    "title": "13th Bristol",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Antonio Cabral",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 466",
+          "(617) 722-2017"
+        ],
+        "email": "Antonio.Cabral@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/AFC1"
+      }
+    ]
+  },
+  "13th Essex": {
+    "title": "13th Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Sally Kerans",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 473F",
+          "(617) 722-2210"
+        ],
+        "email": "Sally.Kerans@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/SPK1"
+      }
+    ]
+  },
+  "13th Middlesex": {
+    "title": "13th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Carmine Gentile",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 167",
+          "(617) 722-2810"
+        ],
+        "email": "carmine.gentile@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/CLG1"
+      }
+    ]
+  },
+  "13th Norfolk": {
+    "title": "13th Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Joshua Tarsky",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 448",
+          "(617) 722-2582"
+        ],
+        "email": "Joshua.Tarsky@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/J_T1"
+      }
+    ]
+  },
+  "13th Suffolk": {
+    "title": "13th Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Daniel Hunt",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 443",
+          "(617) 722-2460"
+        ],
+        "email": "Daniel.Hunt@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/djh1"
+      }
+    ]
+  },
+  "13th Worcester": {
+    "title": "13th Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "John Mahoney",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 146",
+          "(617) 722-2575"
+        ],
+        "email": "John.Mahoney@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JJM2"
+      }
+    ]
+  },
+  "14th Bristol": {
+    "title": "14th Bristol",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Adam Scanlon",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 127",
+          "(617) 722-2680"
+        ],
+        "email": "Adam.Scanlon@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/AJS1"
+      }
+    ]
+  },
+  "14th Essex": {
+    "title": "14th Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Adrianne Ramos",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 21",
+          "(617) 722-2140"
+        ],
+        "email": "Adrianne.Ramos@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/APR1"
+      }
+    ]
+  },
+  "14th Middlesex": {
+    "title": "14th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Simon Cataldo",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 136",
+          "(617) 722-2396"
+        ],
+        "email": "Simon.Cataldo@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/S_C1"
+      }
+    ]
+  },
+  "14th Norfolk": {
+    "title": "14th Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Alice Peisch",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 234",
+          "(617) 722-2783"
+        ],
+        "email": "Alice.Peisch@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/AHP1"
+      }
+    ]
+  },
+  "14th Suffolk": {
+    "title": "14th Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Rob Consalvo",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 166",
+          "(617) 722-2692"
+        ],
+        "email": "Rob.Consalvo@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/R_C1"
+      }
+    ]
+  },
+  "14th Worcester": {
+    "title": "14th Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "James O'Day",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 540",
+          "(617) 722-2090"
+        ],
+        "email": "James.O'Day@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JJO1"
+      }
+    ]
+  },
+  "15th Essex": {
+    "title": "15th Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Ryan Hamilton",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 540",
+          "(617) 722-2090"
+        ],
+        "email": "Ryan.Hamilton@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/RMH2"
+      }
+    ]
+  },
+  "15th Middlesex": {
+    "title": "15th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Michelle Ciccolo",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 473F",
+          "(617) 722-2210"
+        ],
+        "email": "michelle.ciccolo@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/M_C2"
+      }
+    ]
+  },
+  "15th Norfolk": {
+    "title": "15th Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Tommy Vitolo",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 472",
+          "(617) 722-2013"
+        ],
+        "email": "tommy.vitolo@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/T_V1"
+      }
+    ]
+  },
+  "15th Suffolk": {
+    "title": "15th Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Samantha Montaño",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 446",
+          "(617) 722-2460"
+        ],
+        "email": "Samantha.Montano@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/S_M1"
+      }
+    ]
+  },
+  "15th Worcester": {
+    "title": "15th Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mary Keefe",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 466",
+          "(617) 722-2017"
+        ],
+        "email": "Mary.Keefe@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MSK1"
+      }
+    ]
+  },
+  "16th Essex": {
+    "title": "16th Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Francisco Paulino",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 33",
+          "(617) 722-2060"
+        ],
+        "email": "Francisco.Paulino@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/FEP1"
+      }
+    ]
+  },
+  "16th Middlesex": {
+    "title": "16th Middlesex",
+    "seats": 1,
+    "members": [],
+    "vacant": true,
+    "sourceUrl": "https://malegislature.gov/Legislators/Members/House",
+    "asOf": "2026-11-12"
+  },
+  "16th Suffolk": {
+    "title": "16th Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jessica Giannino",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 527A",
+          "(617) 722-2020"
+        ],
+        "email": "Jessica.Giannino@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JAG1"
+      }
+    ]
+  },
+  "16th Worcester": {
+    "title": "16th Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Daniel Donahue",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 544",
+          "(617) 722-2637"
+        ],
+        "email": "Daniel.Donahue@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/DMD1"
+      }
+    ]
+  },
+  "17th Essex": {
+    "title": "17th Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Frank Moran",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 481",
+          "(617) 722-2180"
+        ],
+        "email": "Frank.Moran@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/FAM1"
+      }
+    ]
+  },
+  "17th Middlesex": {
+    "title": "17th Middlesex",
+    "seats": 1,
+    "members": [],
+    "vacant": true,
+    "sourceUrl": "https://malegislature.gov/Legislators/Members/House",
+    "asOf": "2026-11-12"
+  },
+  "17th Suffolk": {
+    "title": "17th Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kevin Honan",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 38",
+          "(617) 722-2470"
+        ],
+        "email": "Kevin.Honan@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/KGH1"
+      }
+    ]
+  },
+  "17th Worcester": {
+    "title": "17th Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "David LeBoeuf",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 237",
+          "(617) 722-2305"
+        ],
+        "email": "david.leboeuf@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/DAL1"
+      }
+    ]
+  },
+  "18th Essex": {
+    "title": "18th Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Tram Nguyen",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 36",
+          "(617) 722-2370"
+        ],
+        "email": "tram.nguyen@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/TTN1"
+      }
+    ]
+  },
+  "18th Middlesex": {
+    "title": "18th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Tara Hong",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 26",
+          "(617) 722-2080"
+        ],
+        "email": "Tara.Hong@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/TTH1"
+      }
+    ]
+  },
+  "18th Suffolk": {
+    "title": "18th Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Michael Moran",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 343",
+          "(617) 722-2300"
+        ],
+        "email": "Michael.Moran@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MJM1"
+      }
+    ]
+  },
+  "18th Worcester": {
+    "title": "18th Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Joseph McKenna",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 167",
+          "(617) 722-2810"
+        ],
+        "email": "joseph.mckenna@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JDM1"
+      }
+    ]
+  },
+  "19th Middlesex": {
+    "title": "19th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "David Robertson",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 473F",
+          "(617) 722-2210"
+        ],
+        "email": "david.robertson@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/D_R1"
+      }
+    ]
+  },
+  "19th Suffolk": {
+    "title": "19th Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jeffrey Turco",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 167",
+          "(617) 722-2230"
+        ],
+        "email": "Jeffrey.Turco@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JRT1"
+      }
+    ]
+  },
+  "19th Worcester": {
+    "title": "19th Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kate Donaghue",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 472",
+          "(617) 722-2013"
+        ],
+        "email": "Kate.Donaghue@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/K_D1"
+      }
+    ]
+  },
+  "1st Barnstable": {
+    "title": "1st Barnstable",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Christopher Flanagan",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 26",
+          "(617) 722-2080"
+        ],
+        "email": "Christopher.Flanagan@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/CRF1"
+      }
+    ]
+  },
+  "1st Berkshire": {
+    "title": "1st Berkshire",
+    "seats": 1,
+    "members": [
+      {
+        "name": "John Barrett",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 277",
+          "(617) 722-2012"
+        ],
+        "email": "john.barrett@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/J_B1"
+      }
+    ]
+  },
+  "1st Bristol": {
+    "title": "1st Bristol",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Michael Chaisson",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 540",
+          "(617) 722-2090"
+        ],
+        "email": "Michael.Chaisson@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MSC1"
+      }
+    ]
+  },
+  "1st Essex": {
+    "title": "1st Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Dawne Shand",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 473B",
+          "(617) 722-2263"
+        ],
+        "email": "Dawne.Shand@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/D_S1"
+      }
+    ]
+  },
+  "1st Franklin": {
+    "title": "1st Franklin",
+    "seats": 1,
+    "members": [],
+    "vacant": true,
+    "sourceUrl": "https://malegislature.gov/Legislators/Members/House",
+    "asOf": "2026-11-12"
+  },
+  "1st Hampden": {
+    "title": "1st Hampden",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Todd Smola",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 124",
+          "(617) 722-2100"
+        ],
+        "email": "Todd.Smola@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/TMS2"
+      }
+    ]
+  },
+  "1st Hampshire": {
+    "title": "1st Hampshire",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Lindsay Sabadosa",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 160",
+          "(617) 722-2304"
+        ],
+        "email": "lindsay.sabadosa@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/L_S1"
+      }
+    ]
+  },
+  "1st Middlesex": {
+    "title": "1st Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Margaret Scarsdale",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 473F",
+          "(617) 722-2210"
+        ],
+        "email": "Margaret.Scarsdale@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MRS1"
+      }
+    ]
+  },
+  "1st Norfolk": {
+    "title": "1st Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Bruce Ayers",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 473-C",
+          "(617) 722-2070"
+        ],
+        "email": "Bruce.Ayers@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/BJA1"
+      }
+    ]
+  },
+  "1st Plymouth": {
+    "title": "1st Plymouth",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Michelle Badger",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 33",
+          "(617) 722-2060"
+        ],
+        "email": "Michelle.Badger@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MLB1"
+      }
+    ]
+  },
+  "1st Suffolk": {
+    "title": "1st Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Adrian Madaro",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 34",
+          "(617) 722-2320"
+        ],
+        "email": "Adrian.Madaro@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/ACM1"
+      }
+    ]
+  },
+  "1st Worcester": {
+    "title": "1st Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kimberly Ferguson",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 124",
+          "(617) 722-2100"
+        ],
+        "email": "Kimberly.Ferguson@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/KNF1"
+      }
+    ]
+  },
+  "20th Middlesex": {
+    "title": "20th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Bradley Jones",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 124",
+          "(617) 722-2100"
+        ],
+        "email": "Bradley.Jones@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/BHJ1"
+      }
+    ]
+  },
+  "21st Middlesex": {
+    "title": "21st Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kenneth Gordon",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 473G",
+          "(617) 722-2070"
+        ],
+        "email": "Ken.Gordon@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/KIG1"
+      }
+    ]
+  },
+  "22nd Middlesex": {
+    "title": "22nd Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Marc Lombardo",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 443",
+          "(617) 722-2460"
+        ],
+        "email": "Marc.Lombardo@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MTL1"
+      }
+    ]
+  },
+  "23rd Middlesex": {
+    "title": "23rd Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Sean Garballey",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 540",
+          "(617) 722-2090"
+        ],
+        "email": "Sean.Garballey@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/S_G1"
+      }
+    ]
+  },
+  "24th Middlesex": {
+    "title": "24th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "David Rogers",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 473B",
+          "(617) 722-2263"
+        ],
+        "email": "Dave.Rogers@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/DMR1"
+      }
+    ]
+  },
+  "25th Middlesex": {
+    "title": "25th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Marjorie Decker",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 130",
+          "(617) 722-2130"
+        ],
+        "email": "Marjorie.Decker@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MCD1"
+      }
+    ]
+  },
+  "26th Middlesex": {
+    "title": "26th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mike Connolly",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 167",
+          "(617) 722-2230"
+        ],
+        "email": "Mike.Connolly@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/M_C1"
+      }
+    ]
+  },
+  "27th Middlesex": {
+    "title": "27th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Erika Uyterhoeven",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 473B",
+          "(508) 319-9510"
+        ],
+        "email": "Erika.Uyterhoeven@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/E_U1"
+      }
+    ]
+  },
+  "28th Middlesex": {
+    "title": "28th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Joseph McGonagle",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 171",
+          "(617) 722-2015"
+        ],
+        "email": "Joseph.McGonagle@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/jwm1"
+      }
+    ]
+  },
+  "29th Middlesex": {
+    "title": "29th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Steven Owens",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 167",
+          "(617) 722-2230"
+        ],
+        "email": "Steven.Owens@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/SCO1"
+      }
+    ]
+  },
+  "2nd Barnstable": {
+    "title": "2nd Barnstable",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kip Diggs",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 238",
+          "(617) 722-2380"
+        ],
+        "email": "Kip.Diggs@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/KAD1"
+      }
+    ]
+  },
+  "2nd Berkshire": {
+    "title": "2nd Berkshire",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Tricia Farley-Bouvier",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 274",
+          "(617) 722-2676"
+        ],
+        "email": "Tricia.Farley-Bouvier@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/TFB1"
+      }
+    ]
+  },
+  "2nd Bristol": {
+    "title": "2nd Bristol",
+    "seats": 1,
+    "members": [
+      {
+        "name": "James Hawkins",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 472",
+          "(617) 722-2013"
+        ],
+        "email": "james.hawkins@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JKH1"
+      }
+    ]
+  },
+  "2nd Essex": {
+    "title": "2nd Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kristin Kassner",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 254",
+          "(617) 722-2220"
+        ],
+        "email": "Kristin.Kassner@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/K_K2"
+      }
+    ]
+  },
+  "2nd Franklin": {
+    "title": "2nd Franklin",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Susannah Whipps",
+        "party": "Unenrolled",
+        "capitolOffice": [
+          "Room 540",
+          "(617) 722-2090"
+        ],
+        "email": "Susannah.Whipps@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/SLG1"
+      }
+    ]
+  },
+  "2nd Hampden": {
+    "title": "2nd Hampden",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Brian Ashe",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 160",
+          "(617) 722-2304"
+        ],
+        "email": "Brian.Ashe@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/BMA1"
+      }
+    ]
+  },
+  "2nd Hampshire": {
+    "title": "2nd Hampshire",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Homar Gómez",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 130",
+          "(413) 977-2676"
+        ],
+        "email": "Homar.Gomez@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/H_G1"
+      }
+    ]
+  },
+  "2nd Middlesex": {
+    "title": "2nd Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "James Arciero",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 134",
+          "(617) 722-2400"
+        ],
+        "email": "James.Arciero@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/J_A1"
+      }
+    ]
+  },
+  "2nd Norfolk": {
+    "title": "2nd Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Tackey Chan",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 42",
+          "(617) 722-2370"
+        ],
+        "email": "Tackey.Chan@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/T_C1"
+      }
+    ]
+  },
+  "2nd Plymouth": {
+    "title": "2nd Plymouth",
+    "seats": 1,
+    "members": [
+      {
+        "name": "John Gaskey",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 33",
+          "(617) 722-2060"
+        ],
+        "email": "John.Gaskey@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JRG2"
+      }
+    ]
+  },
+  "2nd Suffolk": {
+    "title": "2nd Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Daniel Ryan",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 156",
+          "(617) 722-2240"
+        ],
+        "email": "Dan.Ryan@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/djr1"
+      }
+    ]
+  },
+  "2nd Worcester": {
+    "title": "2nd Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jonathan Zlotnik",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 449",
+          "(617) 722-2582"
+        ],
+        "email": "Jon.Zlotnik@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JDZ1"
+      }
+    ]
+  },
+  "30th Middlesex": {
+    "title": "30th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Richard Haggerty",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 146",
+          "(617) 722-2575"
+        ],
+        "email": "richard.haggerty@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/RMH1"
+      }
+    ]
+  },
+  "31st Middlesex": {
+    "title": "31st Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Michael Day",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 136",
+          "(617) 722-2396"
+        ],
+        "email": "Michael.Day@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MSD1"
+      }
+    ]
+  },
+  "32nd Middlesex": {
+    "title": "32nd Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kate Lipper-Garabedian",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 185",
+          "(617) 722-2960"
+        ],
+        "email": "kate.lipper-garabedian@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/KLG1"
+      }
+    ]
+  },
+  "33rd Middlesex": {
+    "title": "33rd Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Steven Ultrino",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 174",
+          "(617) 722-2877"
+        ],
+        "email": "Steven.Ultrino@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/S_G2"
+      }
+    ]
+  },
+  "34th Middlesex": {
+    "title": "34th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Christine Barber",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 167",
+          "(617) 722-2230"
+        ],
+        "email": "Christine.Barber@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/CPB2"
+      }
+    ]
+  },
+  "35th Middlesex": {
+    "title": "35th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Paul Donato",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 478",
+          "(617) 722-2520"
+        ],
+        "email": "Paul.Donato@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/PJD1"
+      }
+    ]
+  },
+  "36th Middlesex": {
+    "title": "36th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Colleen Garry",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 238",
+          "(617) 722-2380"
+        ],
+        "email": "Colleen.Garry@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/CMG1"
+      }
+    ]
+  },
+  "37th Middlesex": {
+    "title": "37th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Danillo Sena",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 39",
+          "(617) 722-2014"
+        ],
+        "email": "Danillo.Sena@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/DAS1"
+      }
+    ]
+  },
+  "3rd Barnstable": {
+    "title": "3rd Barnstable",
+    "seats": 1,
+    "members": [
+      {
+        "name": "David Vieira",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 167",
+          "(617) 722-2230"
+        ],
+        "email": "David.Vieira@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/DTV1"
+      }
+    ]
+  },
+  "3rd Berkshire": {
+    "title": "3rd Berkshire",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Leigh Davis",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 134",
+          "(617) 722-2400"
+        ],
+        "email": "Leigh.Davis@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/LSD1"
+      }
+    ]
+  },
+  "3rd Bristol": {
+    "title": "3rd Bristol",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Lisa Field",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 443",
+          "(617) 722-2460"
+        ],
+        "email": "Lisa.Field@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/LMF1"
+      }
+    ]
+  },
+  "3rd Essex": {
+    "title": "3rd Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Andres Vargas",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 26",
+          "(617) 722-2080"
+        ],
+        "email": "andy.vargas@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/AXV1"
+      }
+    ]
+  },
+  "3rd Hampden": {
+    "title": "3rd Hampden",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Nicholas Boldyga",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 167",
+          "(413) 274-8084"
+        ],
+        "email": "Nicholas.Boldyga@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/NAG1"
+      }
+    ]
+  },
+  "3rd Hampshire": {
+    "title": "3rd Hampshire",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mindy Domb",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 33",
+          "(617) 722-2060"
+        ],
+        "email": "mindy.domb@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/M_D2"
+      }
+    ]
+  },
+  "3rd Middlesex": {
+    "title": "3rd Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kate Hogan",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 370",
+          "(617) 722-2600"
+        ],
+        "email": "Kate.Hogan@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/K_H1"
+      }
+    ]
+  },
+  "3rd Norfolk": {
+    "title": "3rd Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Ronald Mariano",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 356",
+          "(617) 722-2500"
+        ],
+        "email": "Ronald.Mariano@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/R_M1"
+      }
+    ]
+  },
+  "3rd Plymouth": {
+    "title": "3rd Plymouth",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Joan Meschino",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 162",
+          "(617) 722-2092"
+        ],
+        "email": "Joan.Meschino@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/J_M1"
+      }
+    ]
+  },
+  "3rd Suffolk": {
+    "title": "3rd Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Aaron Michlewitz",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 243",
+          "(617) 722-2990"
+        ],
+        "email": "Aaron.M.Michlewitz@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/AMM1"
+      }
+    ]
+  },
+  "3rd Worcester": {
+    "title": "3rd Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Michael Kushmerek",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 136",
+          "(617) 722-2396"
+        ],
+        "email": "Michael.Kushmerek@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MPK1"
+      }
+    ]
+  },
+  "4th Barnstable": {
+    "title": "4th Barnstable",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Hadley Luddy",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 448",
+          "(617) 722-2582"
+        ],
+        "email": "Hadley.Luddy@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/H_L1"
+      }
+    ]
+  },
+  "4th Bristol": {
+    "title": "4th Bristol",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Steven Howitt",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 237",
+          "(617) 722-2305"
+        ],
+        "email": "Steven.Howitt@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/SSH1"
+      }
+    ]
+  },
+  "4th Essex": {
+    "title": "4th Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Estela Reyes",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 156",
+          "(617) 722-2240"
+        ],
+        "email": "Estela.Reyes@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/EAR1"
+      }
+    ]
+  },
+  "4th Hampden": {
+    "title": "4th Hampden",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kelly Pease",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 237",
+          "(413) 875-8787"
+        ],
+        "email": "Kelly.Pease@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/KWP1"
+      }
+    ]
+  },
+  "4th Middlesex": {
+    "title": "4th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Danielle Gregoire",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 21",
+          "(617) 722-2140"
+        ],
+        "email": "Danielle.Gregoire@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/DWG1"
+      }
+    ]
+  },
+  "4th Norfolk": {
+    "title": "4th Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "James Murphy",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 254",
+          "(617) 722-2220"
+        ],
+        "email": "James.Murphy@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JMM1"
+      }
+    ]
+  },
+  "4th Plymouth": {
+    "title": "4th Plymouth",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Patrick Kearney",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 279",
+          "(617) 722-2017"
+        ],
+        "email": "patrick.kearney@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/PJK1"
+      }
+    ]
+  },
+  "4th Suffolk": {
+    "title": "4th Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "David Biele",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 254",
+          "(617) 722-2220"
+        ],
+        "email": "David.Biele@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/D_B1"
+      }
+    ]
+  },
+  "4th Worcester": {
+    "title": "4th Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Natalie Higgins",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 39",
+          "(617) 722-2014"
+        ],
+        "email": "Natalie.Higgins@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/N_H1"
+      }
+    ]
+  },
+  "5th Barnstable": {
+    "title": "5th Barnstable",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Steven Xiarhos",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 542",
+          "(617) 722-2488"
+        ],
+        "email": "Steven.Xiarhos@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/SGX1"
+      }
+    ]
+  },
+  "5th Bristol": {
+    "title": "5th Bristol",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Justin Thurber",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 443",
+          "(617) 722-2460"
+        ],
+        "email": "Justin.Thurber@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/J_T2"
+      }
+    ]
+  },
+  "5th Essex": {
+    "title": "5th Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Andrew Tarr",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 39",
+          "(617) 722-2014"
+        ],
+        "email": "Andrew.Tarr@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/AFT1"
+      }
+    ]
+  },
+  "5th Hampden": {
+    "title": "5th Hampden",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Patricia Duffy",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 544",
+          "(617) 722-2637"
+        ],
+        "email": "Patricia.Duffy@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/PAD1"
+      }
+    ]
+  },
+  "5th Middlesex": {
+    "title": "5th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "David Linsky",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 167",
+          "(617) 722-2810"
+        ],
+        "email": "David.Linsky@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/DPL1"
+      }
+    ]
+  },
+  "5th Norfolk": {
+    "title": "5th Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Mark Cusack",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 43",
+          "(617) 722-2030"
+        ],
+        "email": "Mark.Cusack@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MJC1"
+      }
+    ]
+  },
+  "5th Plymouth": {
+    "title": "5th Plymouth",
+    "seats": 1,
+    "members": [
+      {
+        "name": "David DeCoste",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 542",
+          "(617) 722-2489"
+        ],
+        "email": "David.DeCoste@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/DFD1"
+      }
+    ]
+  },
+  "5th Suffolk": {
+    "title": "5th Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Christopher Worrell",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 136",
+          "(617) 722-2396"
+        ],
+        "email": "Christopher.Worrell@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/CJW1"
+      }
+    ]
+  },
+  "5th Worcester": {
+    "title": "5th Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Donald Berthiaume",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 548",
+          "(617) 722-2488"
+        ],
+        "email": "Donald.Berthiaume@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/DRB1"
+      }
+    ]
+  },
+  "6th Bristol": {
+    "title": "6th Bristol",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Carole Fiola",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 236",
+          "(617) 722-2430"
+        ],
+        "email": "Carole.Fiola@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/CAF1"
+      }
+    ]
+  },
+  "6th Essex": {
+    "title": "6th Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Hannah Bowen",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 443",
+          "(617) 722-2460"
+        ],
+        "email": "Hannah.Bowen@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/HLB1"
+      }
+    ]
+  },
+  "6th Hampden": {
+    "title": "6th Hampden",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Michael Finn",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 39",
+          "(617) 722-2014"
+        ],
+        "email": "Michael.Finn@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MJF1"
+      }
+    ]
+  },
+  "6th Middlesex": {
+    "title": "6th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Priscila Sousa",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 136",
+          "(617) 722-2396"
+        ],
+        "email": "Priscila.Sousa@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/PSS1"
+      }
+    ]
+  },
+  "6th Norfolk": {
+    "title": "6th Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "William Galvin",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 166",
+          "(617) 722-2692"
+        ],
+        "email": "William.Galvin@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/WCG1"
+      }
+    ]
+  },
+  "6th Plymouth": {
+    "title": "6th Plymouth",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Kenneth Sweezey",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 237",
+          "(617) 722-2305"
+        ],
+        "email": "Ken.Sweezey@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/KPS1"
+      }
+    ]
+  },
+  "6th Suffolk": {
+    "title": "6th Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Russell Holmes",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 254",
+          "(617) 722-2220"
+        ],
+        "email": "Russell.Holmes@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/REH1"
+      }
+    ]
+  },
+  "6th Worcester": {
+    "title": "6th Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "John Marsi",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 156",
+          "(617) 722-2240"
+        ],
+        "email": "John.Marsi@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JJM1"
+      }
+    ]
+  },
+  "7th Bristol": {
+    "title": "7th Bristol",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Alan Silvia",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 167",
+          "(617) 722-2230"
+        ],
+        "email": "Alan.Silvia@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/A_S1"
+      }
+    ]
+  },
+  "7th Essex": {
+    "title": "7th Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Manny Cruz",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 146",
+          "(617) 722-2011"
+        ],
+        "email": "Manny.Cruz@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/M_C3"
+      }
+    ]
+  },
+  "7th Hampden": {
+    "title": "7th Hampden",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Aaron Saunders",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 34",
+          "(617) 722-2320"
+        ],
+        "email": "Aaron.Saunders@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/ALS1"
+      }
+    ]
+  },
+  "7th Middlesex": {
+    "title": "7th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jack Lewis",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 452",
+          "(617) 722-2582"
+        ],
+        "email": "Jack.Lewis@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JPL1"
+      }
+    ]
+  },
+  "7th Norfolk": {
+    "title": "7th Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Richard Wells",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 448",
+          "(617) 722-2582"
+        ],
+        "email": "Richard.Wells@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/RGW1"
+      }
+    ]
+  },
+  "7th Plymouth": {
+    "title": "7th Plymouth",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Alyson Sullivan-Almeida",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 548",
+          "(617) 722-2488"
+        ],
+        "email": "alyson.sullivan@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/AMS2"
+      }
+    ]
+  },
+  "7th Suffolk": {
+    "title": "7th Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Chynah Tyler",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 33",
+          "(617) 722-2060"
+        ],
+        "email": "Chynah.Tyler@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/C_T1"
+      }
+    ]
+  },
+  "7th Worcester": {
+    "title": "7th Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Paul Frost",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 124",
+          "(617) 722-2100"
+        ],
+        "email": "Paul.Frost@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/PKF1"
+      }
+    ]
+  },
+  "8th Bristol": {
+    "title": "8th Bristol",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Steven Ouellette",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 33",
+          "(617) 722-2060"
+        ],
+        "email": "Steve.Ouellette@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/SJO1"
+      }
+    ]
+  },
+  "8th Essex": {
+    "title": "8th Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jennifer Balinsky Armini",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 21",
+          "(617) 722-2140"
+        ],
+        "email": "Jennifer.Armini@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JBA1"
+      }
+    ]
+  },
+  "8th Hampden": {
+    "title": "8th Hampden",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Shirley Arriaga",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 237",
+          "(617) 722-2305"
+        ],
+        "email": "Shirley.Arriaga@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/SBA1"
+      }
+    ]
+  },
+  "8th Middlesex": {
+    "title": "8th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "James Arena-DeRosa",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 167",
+          "(617) 722-2810"
+        ],
+        "email": "James.Arena-DeRosa@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JCD1"
+      }
+    ]
+  },
+  "8th Norfolk": {
+    "title": "8th Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Edward Philips",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 134",
+          "(617) 722-2400"
+        ],
+        "email": "Edward.Philips@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/ERP1"
+      }
+    ]
+  },
+  "8th Plymouth": {
+    "title": "8th Plymouth",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Dennis Gallagher",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 39",
+          "(617) 722-2014"
+        ],
+        "email": "Dennis.Gallagher@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/DCG2"
+      }
+    ]
+  },
+  "8th Suffolk": {
+    "title": "8th Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jay Livingstone",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 146",
+          "(617) 722-2011"
+        ],
+        "email": "Jay.Livingstone@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/J_L1"
+      }
+    ]
+  },
+  "8th Worcester": {
+    "title": "8th Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Michael Soter",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 551",
+          "(617) 722-2488"
+        ],
+        "email": "michael.soter@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MJS3"
+      }
+    ]
+  },
+  "9th Bristol": {
+    "title": "9th Bristol",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Christopher Markey",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 276",
+          "(617) 722-2676"
+        ],
+        "email": "Christopher.Markey@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/CMM1"
+      }
+    ]
+  },
+  "9th Essex": {
+    "title": "9th Essex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Donald Wong",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 541",
+          "(617) 722-2488"
+        ],
+        "email": "Donald.Wong@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/DHW1"
+      }
+    ]
+  },
+  "9th Hampden": {
+    "title": "9th Hampden",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Orlando Ramos",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 236",
+          "(617) 722-2430"
+        ],
+        "email": "Orlando.Ramos@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/O_R1"
+      }
+    ]
+  },
+  "9th Middlesex": {
+    "title": "9th Middlesex",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Thomas Stanley",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 167",
+          "(617) 722-2810"
+        ],
+        "email": "Thomas.Stanley@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/TMS1"
+      }
+    ]
+  },
+  "9th Norfolk": {
+    "title": "9th Norfolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Marcus Vaughn",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 473B",
+          "(617) 722-2263"
+        ],
+        "email": "Marcus.Vaughn@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/MSV1"
+      }
+    ]
+  },
+  "9th Plymouth": {
+    "title": "9th Plymouth",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Bridget Plouffe",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 443",
+          "(617) 722-2460"
+        ],
+        "email": "Bridget.Plouffe@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/BMP1"
+      }
+    ]
+  },
+  "9th Suffolk": {
+    "title": "9th Suffolk",
+    "seats": 1,
+    "members": [
+      {
+        "name": "John Moran",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 443",
+          "(617) 722-2460"
+        ],
+        "email": "john.moran@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/JFM1"
+      }
+    ]
+  },
+  "9th Worcester": {
+    "title": "9th Worcester",
+    "seats": 1,
+    "members": [
+      {
+        "name": "David Muradian",
+        "party": "Republican",
+        "capitolOffice": [
+          "Room 128",
+          "(617) 722-2100"
+        ],
+        "email": "David.Muradian@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/DKM1"
+      }
+    ]
+  },
+  "Barnstable-Dukes-Nantucket": {
+    "title": "Barnstable, Dukes and Nantucket",
+    "seats": 1,
+    "members": [
+      {
+        "name": "Thomas Moakley",
+        "party": "Democratic",
+        "capitolOffice": [
+          "Room 134",
+          "(617) 722-2400"
+        ],
+        "email": "Thomas.Moakley@mahouse.gov",
+        "url": "https://malegislature.gov/Legislators/Profile/TWM1"
+      }
+    ]
+  }
+}

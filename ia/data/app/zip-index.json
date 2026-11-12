@@ -967,6 +967,5 @@
 {"type":"Feature","bbox":[-90.584,41.518,-90.5223,41.5554],"geometry":{"type":"Point","coordinates":[-90.56356,41.53854]},"properties":{"zip":"52803","layer":"zip-code"}},
 {"type":"Feature","bbox":[-90.7463,41.4618,-90.5815,41.6085],"geometry":{"type":"Point","coordinates":[-90.68658,41.52553]},"properties":{"zip":"52804","layer":"zip-code"}},
 {"type":"Feature","bbox":[-90.6874,41.5381,-90.5519,41.6469],"geometry":{"type":"Point","coordinates":[-90.64303,41.59812]},"properties":{"zip":"52806","layer":"zip-code"}},
-{"type":"Feature","bbox":[-90.5714,41.5446,-90.4518,41.6555],"geometry":{"type":"Point","coordinates":[-90.5059,41.62543]},"properties":{"zip":"52807","layer":"zip-code"}},
-{"type":"Feature","bbox":[-96.6874,43.0514,-96.4032,43.1851],"geometry":{"type":"Point","coordinates":[-96.43865,43.14741]},"properties":{"zip":"57034","layer":"zip-code"}}
+{"type":"Feature","bbox":[-90.5714,41.5446,-90.4518,41.6555],"geometry":{"type":"Point","coordinates":[-90.5059,41.62543]},"properties":{"zip":"52807","layer":"zip-code"}}
 ]}

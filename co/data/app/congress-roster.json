@@ -1,0 +1,123 @@
+{
+  "1": {
+    "name": "Diana DeGette",
+    "party": "Democrat",
+    "url": "https://degette.house.gov",
+    "capitolOffice": [
+      "2111 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4431"
+    ],
+    "districtOffice": [
+      "600 Grant Street, Suite 850",
+      "Denver, CO 80203",
+      "Phone: 303-844-4988"
+    ]
+  },
+  "2": {
+    "name": "Joe Neguse",
+    "party": "Democrat",
+    "url": "https://neguse.house.gov",
+    "capitolOffice": [
+      "2400 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2161"
+    ],
+    "districtOffice": [
+      "2503 Walnut St, Suite 300",
+      "Boulder, CO 80302-5748",
+      "Phone: 303-335-1045"
+    ]
+  },
+  "3": {
+    "name": "Jeff Hurd",
+    "party": "Republican",
+    "url": "https://hurd.house.gov",
+    "capitolOffice": [
+      "1641 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4676"
+    ],
+    "districtOffice": [
+      "743 Horizon Ct, Suite 112",
+      "Grand Junction, CO 81506",
+      "Phone: 970-208-0455"
+    ]
+  },
+  "4": {
+    "name": "Lauren Boebert",
+    "party": "Republican",
+    "url": "https://boebert.house.gov",
+    "capitolOffice": [
+      "1713 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4761"
+    ],
+    "districtOffice": [
+      "900 Castleton Rd., Suite 112",
+      "Castle Rock, CO 80109",
+      "Phone: 720-639-9165"
+    ]
+  },
+  "5": {
+    "name": "Jeff Crank",
+    "party": "Republican",
+    "url": "https://crank.house.gov",
+    "capitolOffice": [
+      "1029 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4422"
+    ],
+    "districtOffice": [
+      "455 E. Pikes Peak Ave, Suite 103",
+      "Colorado Springs, CO 80903",
+      "Phone: 719-520-0055"
+    ]
+  },
+  "6": {
+    "name": "Jason Crow",
+    "party": "Democrat",
+    "url": "https://crow.house.gov",
+    "capitolOffice": [
+      "1323 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-7882"
+    ],
+    "districtOffice": [
+      "2170 S Parker Road, #280",
+      "Aurora, CO 80231",
+      "Phone: 720-748-7514"
+    ]
+  },
+  "7": {
+    "name": "Brittany Pettersen",
+    "party": "Democrat",
+    "url": "https://pettersen.house.gov",
+    "capitolOffice": [
+      "348 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2645"
+    ],
+    "districtOffice": [
+      "550 S. Wadsworth Blvd., Suite 400",
+      "Lakewood, CO 80226",
+      "Phone: 303-274-7944"
+    ]
+  },
+  "8": {
+    "name": "Gabe Evans",
+    "party": "Republican",
+    "url": "https://gabeevans.house.gov",
+    "capitolOffice": [
+      "1229 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5625"
+    ],
+    "districtOffice": [
+      "3400 West 16th St, Suite C",
+      "Building 1S",
+      "Greeley, CO 80634",
+      "Phone: 970-324-2567"
+    ]
+  }
+}

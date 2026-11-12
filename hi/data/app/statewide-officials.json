@@ -1,0 +1,37 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from hi/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Hawaii",
+ "usSenate": [
+  {
+   "name": "Mazie K. Hirono",
+   "party": "Democratic",
+   "url": "https://www.hirono.senate.gov/",
+   "office": "109 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-6361"
+  },
+  {
+   "name": "Brian Schatz",
+   "party": "Democratic",
+   "url": "https://www.schatz.senate.gov",
+   "office": "722 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-3934"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Josh Green",
+   "url": "https://governor.hawaii.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Sylvia Luke",
+   "url": "https://ltgov.hawaii.gov/",
+   "verified": "2026-11-12"
+  }
+ ],
+ "officersNote": "Hawaii's voters also elect the nine trustees of the Office of Hawaiian Affairs statewide. They are not listed here yet. The attorney general and the other heads of departments are appointed by the governor."
+}

@@ -105,9 +105,10 @@
    * its own state whichever state the launcher chose. A state with no app is
    * named, and nothing is searched.
    *
-   * ONLY A WHOLE STATE'S APP. San Francisco's app carries California's tag
-   * and answers for one city, so an address in California does not say the
-   * place is in it: such a link is searched here as before, and the sibling
+   * ONLY A WHOLE STATE'S APP. An app that carries a state's tag and answers
+   * for one city (San Francisco's did, until California's app grew to the
+   * whole state on 2026-11-11) does not hold every place an address in that
+   * state names: such a link is searched here as before, and the sibling
    * lookup decides by the place's position. It returns false then, and true
    * when it has answered. */
   function metroForTag(tag) {

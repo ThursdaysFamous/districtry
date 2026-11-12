@@ -1,0 +1,55 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from ut/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Utah",
+ "usSenate": [
+  {
+   "name": "John R. Curtis",
+   "party": "Republican",
+   "url": "https://www.curtis.senate.gov/",
+   "office": "502 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5251"
+  },
+  {
+   "name": "Mike Lee",
+   "party": "Republican",
+   "url": "https://www.lee.senate.gov/",
+   "office": "363 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5444"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Spencer J. Cox",
+   "url": "https://governor.utah.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Deidre M. Henderson",
+   "url": "https://ltgovernor.utah.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Derek Brown",
+   "url": "https://attorneygeneral.utah.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Tina Cannon",
+   "url": "https://auditor.utah.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Marlo M. Oaks",
+   "url": "https://treasurer.utah.gov/",
+   "verified": "2026-11-12"
+  }
+ ],
+ "officersNote": "Utah has no secretary of state; the lieutenant governor oversees its elections."
+}
