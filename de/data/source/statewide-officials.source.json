@@ -1,0 +1,37 @@
+{
+ "state": "Delaware",
+ "usps": "DE",
+ "officersNote": "Delaware's Secretary of State is appointed by the governor, so the office is not listed.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Matt Meyer",
+   "url": "https://governor.delaware.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Kyle Evans Gay",
+   "url": "https://ltgov.delaware.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Kathy Jennings",
+   "url": "https://attorneygeneral.delaware.gov/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Colleen Davis",
+   "url": "https://treasury.delaware.gov/"
+  },
+  {
+   "office": "Auditor of Accounts",
+   "name": "Lydia York",
+   "url": "https://auditor.delaware.gov/"
+  },
+  {
+   "office": "Insurance Commissioner",
+   "name": "Trinidad Navarro",
+   "url": "https://insurance.delaware.gov/"
+  }
+ ]
+}

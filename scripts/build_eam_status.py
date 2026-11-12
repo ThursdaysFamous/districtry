@@ -207,13 +207,42 @@ STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
                   # county equivalent and whose Board of Supervisors is its
                   # county government. The Census also files it as a place of
                   # 58,639, so it is owed under level 6 as well.
-                  "pa": 67, "nv": 17, "az": 15, "nj": 21, "nh": 10}
+                  "pa": 67, "nv": 17, "az": 15, "nj": 21, "nh": 10,
+                  # Batch 2, added at its go-live (2026-11-11). California
+                  # grew in the same batch and is in NO_COUNTY_TIER below.
+                  "tx": 254, "fl": 67, "oh": 88, "wa": 39,
+                  # Batch 3, added at its go-live (2026-11-12). Massachusetts's
+                  # 14 include the eight whose governments it abolished between
+                  # 1997 and 2000, because their voters still elect a sheriff and
+                  # registers of deeds (gap ma-county-officials covers all 14).
+                  # Colorado's 64 include Denver and Broomfield, each a city and a
+                  # county in one government, which are also places of 25,000 or
+                  # more and owed under level 6 as well. Maryland's 23 counties
+                  # leave out Baltimore City, part of no county, which the
+                  # Census files as a county equivalent and which is scored once,
+                  # under level 6 (INDEPENDENT_CITIES). Kansas's 105 include
+                  # Wyandotte and Greeley, each one government with a city.
+                  # Connecticut has no county government and is in
+                  # NO_COUNTY_TIER below.
+                  "ma": 14, "co": 64, "md": 23, "al": 67, "or": 36, "ut": 29,
+                  "ks": 105,
+                  # Batch 4, added at its go-live (2026-11-12). Hawaii's five
+                  # include Kalawao, which the State administers and which
+                  # elects no county government. Alaska's 30 are its 19
+                  # organized boroughs and the 11 census areas of the
+                  # Unorganized Borough, which have no government of their own.
+                  # Vermont's 14 counties have no governing board; their voters
+                  # elect assistant judges, a sheriff, a state's attorney, a
+                  # probate judge and a high bailiff. Rhode Island has no county
+                  # government and is in NO_COUNTY_TIER below.
+                  "nm": 33, "ne": 93, "id": 44, "hi": 5, "me": 16, "mt": 56,
+                  "sd": 66, "nd": 53, "ak": 30, "vt": 14, "wy": 23, "de": 3}
 
 # County equivalents that are cities, scored under level 6 and not here. The
 # number is STATED and checked: the coverage ring must hold the state's counties
 # plus these, and the county pages' adapter must mark no more records as
 # independent cities than this.
-INDEPENDENT_CITIES = {"va": 38}
+INDEPENDENT_CITIES = {"va": 38, "md": 1}
 
 # Instances with no county tier at all. Recorded with a reason rather than
 # skipped, because a silently absent row reads as a passing one.
@@ -229,11 +258,37 @@ INDEPENDENT_CITIES = {"va": 38}
 # it statewide, having first MEASURED the tier it was asking to be held to —
 # #1328 records what 57 county front pages outside the city publish, and what
 # they do not. So E and A now use the state's own 62 and C's separate
-# COVERED_COUNTIES entry is no longer a divergence. San Francisco stays a city
-# app, because a consolidated city and county has no county above it.
+# COVERED_COUNTIES entry is no longer a divergence.
+#
+# CALIFORNIA'S ENTRY USED TO READ "San Francisco — a consolidated city and
+# county, so the county tier is the city and there is no frontier", which was
+# true while the app answered for San Francisco alone. It grew to the whole
+# state on 2026-11-11 (Adam's "Grow" of 2026-11-10), so its frontier is now
+# the state's 58 counties, and scoring E and A against them needs a coverage
+# ring this report can read (ring_size) and a county-page adapter that names
+# San Francisco's board, neither of which California has yet. Until that
+# change, E and A are recorded as not scored, with the reason, rather than
+# passed on the old reading.
 NO_COUNTY_TIER = {
-    "ca": "San Francisco — a consolidated city and county, so the county tier "
-          "is the city and there is no frontier.",
+    # Connecticut abolished its county governments in 1960. Its nine planning
+    # regions, which the Census Bureau has filed as county equivalents since
+    # 2022 and the County layer draws, are councils of governments whose boards
+    # are the chief elected officials of their towns: nobody is elected to one,
+    # so there is no county governing body to name in any of them. Added at its
+    # go-live (2026-11-12).
+    "ct": "Connecticut has had no county government since 1960. Its nine "
+          "planning regions are councils of governments whose boards are made "
+          "up of the chief elected officials of their towns, and nobody is "
+          "elected to one, so there is no county governing body to name.",
+    # Rhode Island abolished its county governments in 1842; its five counties
+    # survive as geography and court districts, and nobody is elected to run
+    # one. Added at its go-live (2026-11-12).
+    "ri": "Rhode Island has had no county government since 1842. Its five "
+          "counties survive as geography and as court districts, and nobody is "
+          "elected to govern one, so there is no county governing body to name.",
+    "ca": "California's app grew from San Francisco to the whole state on "
+          "2026-11-11 and its 58-county frontier is not scored here yet; "
+          "only San Francisco names a county governing body so far.",
 }
 
 
@@ -1433,6 +1488,54 @@ PREFIX_CLASSES = {
             "scripts/build_block_population.py")],
     "tx": [("tx/data/app/population/", "census",
             "scripts/build_block_population.py")],
+    "fl": [("fl/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "oh": [("oh/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "wa": [("wa/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "ma": [("ma/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "co": [("co/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "md": [("md/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "al": [("al/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "or": [("or/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "ct": [("ct/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "ut": [("ut/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "ks": [("ks/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "nm": [("nm/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "ne": [("ne/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "id": [("id/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "hi": [("hi/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "me": [("me/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "mt": [("mt/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "ri": [("ri/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "sd": [("sd/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "nd": [("nd/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "ak": [("ak/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "vt": [("vt/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "wy": [("wy/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "de": [("de/data/app/population/", "census",
+            "scripts/build_block_population.py")],
 }
 PREFIX_KIND = {rel: kind for rows in PREFIX_CLASSES.values()
                for rel, kind, _ in rows}
@@ -1549,8 +1652,17 @@ OPEN = Entry("open")
 UNSETTLED = Entry("unsettled")
 
 
-CITY_INSTANCE = ("San Francisco is one city, so its city tier is the whole app "
-                 "and the state tiers above it are another app's subject.")
+# CALIFORNIA HAS NO GENERAL-PURPOSE GOVERNMENT BETWEEN ITS COUNTIES AND ITS
+# CITIES. Its county subdivisions are the Census's county divisions, drawn for
+# statistics with no government of their own, and an unincorporated place is
+# governed by its county. (Until 2026-11-11 this table held CITY_INSTANCE,
+# "San Francisco is one city, so its city tier is the whole app and the state
+# tiers above it are another app's subject", which ended when the app grew to
+# the whole state.)
+CA_NO_SUBCOUNTY_GOVERNMENT = (
+    "California has no government between the county and the city: its county "
+    "subdivisions are census county divisions drawn for statistics, and an "
+    "unincorporated place is governed by its county.")
 
 # A STATE WITH NO TRIBAL LAND IS THE STANDARD'S "the state does not have the
 # level" CASE, and this reason is the record it asks for: the fact, and
@@ -2844,6 +2956,389 @@ ANSWERS = {
         # Pueblo), and the app draws no tribal land yet (tx/WATCH.md).
         "tribal-government": OPEN,
     },
+    "fl": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("fl-senate", "fl-house"),
+        "county-boundaries": answers("county"),
+        # No board of county commissioners is named yet (the state-level
+        # launch names the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city council is named yet.
+        "local-government": depth(),
+        # Florida's constitution makes each county one school district, and
+        # TIGER carries the 67 as unified districts and nothing else.
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-11 on TIGERweb's county subdivisions, with Illinois
+        # as the control (1,411 active of 1,695): all 316 of Florida's are
+        # census county divisions (FUNCSTAT S), statistical areas that govern
+        # nobody.
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": na(
+            "Florida has no sub-county general-purpose government — outside a "
+            "city, town or village the county governs. The 316 sub-county units "
+            "the Census publishes for Florida are census county divisions: "
+            "statistical areas, not governments (measured 2026-11-11)."),
+        # Circuit and county judges are elected; no circuit is drawn or judge
+        # named yet.
+        "courts-by-district": OPEN,
+        # School board members are elected from residence districts; no
+        # school board district is drawn yet.
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-11 with scripts/tribal_areas.py --report Florida:
+        # the Census keeps 7 reservations (the Miccosukee's and six of the
+        # Seminole Tribe of Florida's) and 4 trust lands in Florida, and the
+        # app draws no tribal land yet (fl/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "oh": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("oh-senate", "oh-house"),
+        "county-boundaries": answers("county"),
+        # No county commissioner is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or village council is named yet.
+        "local-government": depth(),
+        # TIGER carries Ohio's 612 school districts as unified districts and
+        # nothing on its elementary or secondary layers (measured 2026-11-11).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-11 on TIGERweb's county subdivisions: 1,308 of
+        # Ohio's are active townships (LSADC 44, FUNCSTAT A), general-purpose
+        # governments each electing three trustees and a fiscal officer, and
+        # no township layer is drawn yet (gap oh-townships).
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": OPEN,
+        # Common pleas judges are elected by county and court of appeals
+        # judges by appellate district; neither is drawn or named yet.
+        "courts-by-district": OPEN,
+        # Whether any board elects its members by district has not been
+        # measured for Ohio.
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        "tribal-government": na(
+            "Ohio has no tribal land. The Census publishes no federal or state "
+            "reservation and no off-reservation trust land in the state, "
+            "measured 2026-11-11 with scripts/tribal_areas.py --report."),
+    },
+    "wa": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("wa-senate", "wa-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        # TIGER carries Washington's 295 school districts as unified districts
+        # and nothing on its elementary or secondary layers (measured 2026-11-11).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-11 on TIGERweb's county subdivisions, with Illinois
+        # as the control (1,411 active of 1,695): all 242 of Washington's are
+        # census county divisions (FUNCSTAT S), statistical areas that govern
+        # nobody.
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": na(
+            "Washington has no sub-county general-purpose government — outside a "
+            "city or town limit the county governs. The 242 sub-county units the "
+            "Census publishes for Washington are census county divisions: "
+            "statistical areas, not governments (measured 2026-11-11)."),
+        # Superior court judges are elected by county and Court of Appeals
+        # judges by district within each division; neither is drawn or named
+        # yet.
+        "courts-by-district": OPEN,
+        # Whether any board elects its members by district has not been
+        # measured for Washington.
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-11 with scripts/tribal_areas.py --report Washington:
+        # the Census keeps 28 reservations and 22 off-reservation trust lands
+        # in Washington, and the app draws no tribal land yet (wa/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    # BATCH 3 OF THE STATE-LEVEL LAUNCH, added at its go-live (2026-11-12).
+    "ma": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("ma-senate", "ma-house"),
+        "county-boundaries": answers("county"),
+        # No county official is named yet. Eight of the fourteen counties have
+        # had no county government since 1997-2000; their voters still elect a
+        # sheriff and registers of deeds (gap ma-county-officials).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary",
+            "school-district-secondary"),
+        # Massachusetts's cities and towns ARE its county subdivisions (TIGERweb
+        # layer 22), so the City or Town layer is this map.
+        "subdivision-boundaries": answers("municipality"),
+        # Massachusetts elects no judge: the Governor nominates and appoints
+        # them with the consent of the Governor's Council (Mass. Const. pt. 2,
+        # c. 2, s. 1, art. 9), not re-read for this change.
+        "courts-by-district": na(
+            "Massachusetts elects no judge. Its judges are nominated and "
+            "appointed by the Governor with the consent of the Governor's "
+            "Council, so there is no district a voter elects a judge from."),
+        # Measured 2026-11-12 on TIGERweb: 293 of Massachusetts's county
+        # subdivisions are active towns, general-purpose governments the City or
+        # Town layer draws and whose select boards it does not name.
+        "sub-county-government": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report Massachusetts: the Census keeps two trust
+        # lands (the Wampanoag Tribe of Gay Head (Aquinnah)'s and the Mashpee
+        # Wampanoag's) and one state reservation (Hassanamisco),
+        # and the app draws no tribal land yet (ma/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "co": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("co-senate", "co-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        # TIGER carries Colorado's 178 school districts as unified districts and
+        # nothing on its elementary or secondary layers (measured 2026-11-12).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-12 on TIGERweb's current county subdivisions, with
+        # Illinois as the control (1,411 active of 1,695): all 209 of Colorado's are
+        # census county divisions (FUNCSTAT S), statistical areas that govern
+        # nobody.
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": na(
+            "Colorado has no sub-county general-purpose government — outside a "
+            "city or town the county governs. The 209 sub-county units the Census "
+            "publishes for Colorado are census county divisions: statistical areas, "
+            "not governments (measured 2026-11-12)."),
+        # District and county court judges stand for retention by judicial
+        # district and county; no district is drawn or judge named yet.
+        "courts-by-district": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report Colorado: the Census keeps two
+        # reservations in Colorado (Southern Ute and Ute Mountain),
+        # and the app draws no tribal land yet (co/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "md": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("md-senate", "md-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10). Baltimore City is
+        # scored under level 6 (INDEPENDENT_CITIES).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet, Baltimore's among them.
+        "local-government": depth(),
+        # TIGER carries Maryland's 24 school districts as unified districts and
+        # nothing on its elementary or secondary layers (measured 2026-11-12).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-12 on TIGERweb's current county subdivisions: 289 of
+        # Maryland's 290 are its counties' election districts, every one
+        # non-functioning (FUNCSTAT N), and the 290th is Baltimore City, which
+        # is counted as a place.
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": na(
+            "Maryland has no sub-county general-purpose government — outside a "
+            "city or town the county governs. Its county subdivisions are its "
+            "counties' election districts, which the Census marks "
+            "non-functioning (measured 2026-11-12)."),
+        # Circuit court judges stand for election by county after appointment,
+        # and the appellate judges for retention; no district is drawn or judge
+        # named yet.
+        "courts-by-district": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        "tribal-government": na(
+            "Maryland has no tribal land. The Census publishes no federal or "
+            "state reservation and no off-reservation trust land in the state, "
+            "measured 2026-11-12 with scripts/tribal_areas.py --report, whose "
+            "same-day runs kept land in the seven other states of its batch."),
+    },
+    "al": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("al-senate", "al-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        # TIGER carries Alabama's 141 school districts as unified districts and
+        # nothing on its elementary or secondary layers (measured 2026-11-12).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-12 on TIGERweb's current county subdivisions, with
+        # Illinois as the control (1,411 active of 1,695): all 390 of Alabama's are
+        # census county divisions (FUNCSTAT S), statistical areas that govern
+        # nobody.
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": na(
+            "Alabama has no sub-county general-purpose government — outside a "
+            "city or town the county governs. The 390 sub-county units the Census "
+            "publishes for Alabama are census county divisions: statistical areas, "
+            "not governments (measured 2026-11-12)."),
+        # Circuit and district judges are elected by judicial circuit and
+        # county; no circuit is drawn or judge named yet.
+        "courts-by-district": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report Alabama: the Census keeps the Poarch Band of
+        # Creek Indians' reservation and trust land and one state reservation
+        # (MOWA Choctaw),
+        # and the app draws no tribal land yet (al/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "or": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("or-senate", "or-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary",
+            "school-district-secondary"),
+        # Measured 2026-11-12 on TIGERweb's current county subdivisions, with
+        # Illinois as the control (1,411 active of 1,695): all 212 of Oregon's are
+        # census county divisions (FUNCSTAT S), statistical areas that govern
+        # nobody.
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": na(
+            "Oregon has no sub-county general-purpose government — outside a "
+            "city the county governs. The 212 sub-county units the Census "
+            "publishes for Oregon are census county divisions: statistical areas, "
+            "not governments (measured 2026-11-12)."),
+        # Circuit court judges are elected by judicial district; no district is
+        # drawn or judge named yet.
+        "courts-by-district": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report Oregon: the Census keeps 10 reservations and
+        # 8 off-reservation trust lands in Oregon,
+        # and the app draws no tribal land yet (or/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "ct": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("ct-senate", "ct-house"),
+        # The nine planning regions, the Census's county equivalents since 2022.
+        "county-boundaries": answers("county"),
+        # No county government exists (NO_COUNTY_TIER), so this level is not
+        # scored.
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No town council or board of selectmen is named yet.
+        "local-government": depth(),
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary",
+            "school-district-secondary"),
+        # Connecticut's towns ARE its county subdivisions (TIGERweb layer 22), so
+        # the Town layer is this map.
+        "subdivision-boundaries": answers("municipality"),
+        # Probate judges are elected by probate district; no district is drawn
+        # or judge named yet. Every other judge is nominated by the Governor and
+        # appointed by the General Assembly.
+        "courts-by-district": OPEN,
+        # Measured 2026-11-12 on TIGERweb: 169 of Connecticut's county
+        # subdivisions are towns (149 FUNCSTAT A and 20 consolidated with a
+        # city, FUNCSTAT C), general-purpose governments the Town layer draws
+        # and whose governing bodies it does not name.
+        "sub-county-government": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report Connecticut: the Census keeps two reservations
+        # (Mashantucket Pequot and Mohegan), one trust land and three state
+        # reservations in Connecticut,
+        # and the app draws no tribal land yet (ct/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "ut": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("ut-senate", "ut-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        # TIGER carries Utah's 41 school districts as unified districts and
+        # nothing on its elementary or secondary layers (measured 2026-11-12).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-12 on TIGERweb's current county subdivisions, with
+        # Illinois as the control (1,411 active of 1,695): all 93 of Utah's are
+        # census county divisions (FUNCSTAT S), statistical areas that govern
+        # nobody.
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": na(
+            "Utah has no sub-county general-purpose government — outside a "
+            "city or town the county governs. The 93 sub-county units the Census "
+            "publishes for Utah are census county divisions: statistical areas, "
+            "not governments (measured 2026-11-12)."),
+        # District and justice court judges stand for retention by judicial
+        # district; no district is drawn or judge named yet.
+        "courts-by-district": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report Utah: the Census keeps 7 reservations and 2
+        # off-reservation trust lands in Utah,
+        # and the app draws no tribal land yet (ut/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "ks": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("ks-senate", "ks-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city commission or council is named yet.
+        "local-government": depth(),
+        # TIGER carries Kansas's 285 school districts as unified districts and
+        # nothing on its elementary or secondary layers (measured 2026-11-12).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-12 on TIGERweb's current county subdivisions: 1,258 of
+        # Kansas's are active townships (FUNCSTAT A), governments of their own,
+        # and no township layer is drawn yet.
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": OPEN,
+        # District judges are elected by judicial district in some districts
+        # and stand for retention in the rest; no district is drawn or judge
+        # named yet.
+        "courts-by-district": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report Kansas: the Census keeps 4 reservations and 2
+        # off-reservation trust lands in Kansas,
+        # and the app draws no tribal land yet (ks/WATCH.md).
+        "tribal-government": OPEN,
+    },
     # Georgia, added at its go-live: the national tier, every county's board of
     # commissioners named from the Secretary of State's election results, the
     # commission and school board districts the precinct check confirmed, the
@@ -2946,30 +3441,493 @@ ANSWERS = {
         # councils named -- the Wisconsin and Michigan shape.
         "tribal-government": answers("tribal-government"),
     },
+    # CALIFORNIA IS A WHOLE-STATE APP SINCE 2026-11-11. While it answered for
+    # San Francisco alone, the county, city and school-district boundary rows
+    # were "not this app's subject", and the courts, school boards and tribal
+    # rows were the city's own measurements (NO_TRIBAL_LAND_SF,
+    # SF_NO_COURT_DISTRICTS, SF_SCHOOL_BOARDS_AT_LARGE, kept above as the
+    # record of San Francisco). Those three are true of the city and not of
+    # the state, so each row now says what the state app does.
     "ca": {
         "us-house": answers("congress"),
         "state-legislature": answers("ca-senate", "ca-assembly"),
-        "county-boundaries": na(CITY_INSTANCE),
-        # San Francisco's Board of Supervisors is both the county governing body
-        # and the city council, drawn by district and named.
-        "county-government": answers("supervisor-district"),
-        "municipal-boundaries": na(CITY_INSTANCE),
-        # Its city tier is one city, and the same board is its council,
-        # drawn by district and named, so there is no size to measure.
-        "local-government": answers("supervisor-district"),
-        "school-district-boundaries": na(CITY_INSTANCE),
-        # Both of these were left to this app's own thread and both are
-        # settled now, measured 2026-10-01 and written up in ca/WATCH.md.
-        # Neither is an absence anybody has to ask a publisher about: the
-        # level does not exist inside this city, which is the standard's
-        # "a state genuinely lacks a level" case.
-        "subdivision-boundaries": na(CITY_INSTANCE),
-        "courts-by-district": na(SF_NO_COURT_DISTRICTS),
-        "sub-county-government": na(CITY_INSTANCE),
-        "school-boards-by-district": na(SF_SCHOOL_BOARDS_AT_LARGE),
-        "precincts": answers("election-precinct"),
-        "special-districts": answers("bart-director"),
-        "tribal-government": na(NO_TRIBAL_LAND_SF),
+        "county-boundaries": answers("county"),
+        # San Francisco's Board of Supervisors is its county's governing body,
+        # drawn by district and named; no other county's board is named yet.
+        "county-government": Entry("open", ("supervisor-district",)),
+        "municipal-boundaries": answers("municipality"),
+        # The same board is San Francisco's city council; no other city's
+        # council is named yet.
+        "local-government": Entry("open", ("supervisor-district",)),
+        "school-district-boundaries": answers("school-district-unified",
+                                              "school-district-elementary",
+                                              "school-district-secondary"),
+        "subdivision-boundaries": na(CA_NO_SUBCOUNTY_GOVERNMENT),
+        # Superior court judges are elected countywide, and Court of Appeal
+        # justices are retained by the voters of their appellate district:
+        # whether those six districts are owed as drawn lines is left to
+        # California's own thread.
+        "courts-by-district": UNSETTLED,
+        "sub-county-government": na(CA_NO_SUBCOUNTY_GOVERNMENT),
+        # Many California school districts elect trustees by area; none is
+        # drawn yet. San Francisco's two boards are elected at large.
+        "school-boards-by-district": OPEN,
+        # San Francisco's precincts only.
+        "precincts": Entry("open", ("election-precinct",)),
+        "special-districts": Entry("open", ("bart-director",)),
+        # Tribal lands are not drawn yet (owed after the batch-2 launch).
+        "tribal-government": OPEN,
+    },
+    # BATCH 4 OF THE STATE-LEVEL LAUNCH, added at its go-live (2026-11-12),
+    # the change that gave every state an app.
+    "nm": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("nm-senate", "nm-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        # TIGER carries New Mexico's school districts as unified districts and
+        # nothing on its elementary or secondary layers (measured 2026-11-12).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-12 on TIGERweb's current county subdivisions, with
+        # Illinois as the control (1,411 active of 1,695): all 130 of New
+        # Mexico's are census county divisions (FUNCSTAT S), statistical areas
+        # that govern nobody.
+        "subdivision-boundaries": OPEN,
+        # District judges are elected by judicial district; no district is drawn
+        # or judge named yet.
+        "courts-by-district": OPEN,
+        "sub-county-government": na(
+            "New Mexico has no sub-county general-purpose government \u2014 outside "
+            "a city or town the county governs. The 130 sub-county units the "
+            "Census publishes for New Mexico are census county divisions: "
+            "statistical areas, not governments (measured 2026-11-12)."),
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report "New
+        # Mexico": the Census keeps 24 reservations and 13 off-reservation trust
+        # lands in New Mexico, and the app draws no tribal land yet
+        # (nm/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "ne": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("ne-legislature"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        # TIGER carries Nebraska's school districts as unified districts and
+        # nothing on its elementary or secondary layers (measured 2026-11-12).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-12 on TIGERweb's current county subdivisions, with
+        # Illinois as the control (1,411 active of 1,695): 319 of Nebraska's are
+        # active townships (FUNCSTAT A), governments of their own, and no
+        # township layer is drawn yet.
+        "subdivision-boundaries": OPEN,
+        # Judges are appointed and stand for retention by judicial district; no
+        # district is drawn or judge named yet.
+        "courts-by-district": OPEN,
+        "sub-county-government": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report Nebraska:
+        # the Census keeps 6 reservations and 3 off-reservation trust lands in
+        # Nebraska, and the app draws no tribal land yet (ne/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "id": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("id-senate", "id-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        # TIGER carries Idaho's school districts as unified districts and
+        # nothing on its elementary or secondary layers (measured 2026-11-12).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-12 on TIGERweb's current county subdivisions, with
+        # Illinois as the control (1,411 active of 1,695): all 170 of Idaho's
+        # are census county divisions (FUNCSTAT S), statistical areas that
+        # govern nobody.
+        "subdivision-boundaries": OPEN,
+        # District judges are elected by judicial district; no district is drawn
+        # or judge named yet.
+        "courts-by-district": OPEN,
+        "sub-county-government": na(
+            "Idaho has no sub-county general-purpose government \u2014 outside a "
+            "city or town the county governs. The 170 sub-county units the "
+            "Census publishes for Idaho are census county divisions: "
+            "statistical areas, not governments (measured 2026-11-12)."),
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report Idaho: the
+        # Census keeps 5 reservations and 2 off-reservation trust lands in
+        # Idaho, and the app draws no tribal land yet (id/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "hi": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("hi-senate", "hi-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": na(
+            "Hawaii has no incorporated city or town. Its four county "
+            "governments, Honolulu's a consolidated city and county, are its "
+            "local governments, and every place the Census names in the state "
+            "is a census-designated place, measured 2026-11-12 on TIGERweb (no "
+            "incorporated place, with Illinois as the control)."),
+        "local-government": na(
+            "Hawaii has no incorporated city or town. Its four county "
+            "governments, Honolulu's a consolidated city and county, are its "
+            "local governments, and every place the Census names in the state "
+            "is a census-designated place, measured 2026-11-12 on TIGERweb (no "
+            "incorporated place, with Illinois as the control)."),
+        # Hawaii's one statewide school district, the Department of Education,
+        # on TIGER's unified layer.
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-12 on TIGERweb's current county subdivisions, with
+        # Illinois as the control (1,411 active of 1,695): all 44 of Hawaii's
+        # are census county divisions (FUNCSTAT S), statistical areas that
+        # govern nobody.
+        "subdivision-boundaries": OPEN,
+        # Not re-read for this change: the constitution's own rule.
+        "courts-by-district": na(
+            "Hawaii elects no judge. Its judges are appointed by the Governor, "
+            "or by the Chief Justice, from lists the Judicial Selection "
+            "Commission sends (Haw. Const. art. VI, sec. 3), so there is no "
+            "district a voter elects a judge from."),
+        "sub-county-government": na(
+            "Hawaii has no government below its counties: it has no "
+            "incorporated city or town, and the 44 sub-county units the Census "
+            "publishes for Hawaii are census county divisions: statistical "
+            "areas, not governments (measured 2026-11-12)."),
+        "school-boards-by-district": na(
+            "Hawaii elects no school board. The Board of Education of its one "
+            "statewide school district has been appointed by the Governor with "
+            "the Senate's consent since 2011, so there is no district a voter "
+            "elects a member from."),
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        "tribal-government": na(
+            "Hawaii has no tribal land. The Census publishes no federal or "
+            "state reservation and no off-reservation trust land in the state, "
+            "measured 2026-11-12 with scripts/tribal_areas.py --report, with "
+            "Hawaii resolving to its own state code (15) as the control. Its "
+            "Hawaiian home lands are administered by the State's Department of "
+            "Hawaiian Home Lands, not by a tribal government."),
+    },
+    "me": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("me-senate", "me-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary", "school-district-secondary"),
+        # Maine's cities and towns ARE its county subdivisions (TIGERweb layer
+        # 22), so the City or Town layer is this map.
+        "subdivision-boundaries": answers("municipality"),
+        # Probate judges are elected by county, and none is named yet; every
+        # other judge is nominated by the Governor and confirmed by the Senate.
+        "courts-by-district": OPEN,
+        # Measured 2026-11-12 on TIGERweb: 459 of Maine's county subdivisions
+        # are active towns and plantations, general-purpose governments the City
+        # or Town layer draws and whose governing bodies it does not name.
+        "sub-county-government": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report Maine: the
+        # Census keeps 4 reservations and 4 off-reservation trust lands in
+        # Maine, and the app draws no tribal land yet (me/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "mt": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("mt-senate", "mt-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary", "school-district-secondary"),
+        # Measured 2026-11-12 on TIGERweb's current county subdivisions, with
+        # Illinois as the control (1,411 active of 1,695): all 194 of Montana's
+        # are census county divisions (FUNCSTAT S), statistical areas that
+        # govern nobody.
+        "subdivision-boundaries": OPEN,
+        # District court judges are elected by judicial district; no district is
+        # drawn or judge named yet.
+        "courts-by-district": OPEN,
+        "sub-county-government": na(
+            "Montana has no sub-county general-purpose government \u2014 outside a "
+            "city or town the county governs. The 194 sub-county units the "
+            "Census publishes for Montana are census county divisions: "
+            "statistical areas, not governments (measured 2026-11-12)."),
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report Montana: the
+        # Census keeps 7 reservations and 7 off-reservation trust lands in
+        # Montana, and the app draws no tribal land yet (mt/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "ri": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("ri-senate", "ri-house"),
+        "county-boundaries": answers("county"),
+        # Rhode Island has had no county government since 1842 (NO_COUNTY_TIER),
+        # so this level is not scored.
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary", "school-district-secondary"),
+        # Rhode Island's cities and towns ARE its county subdivisions (TIGERweb
+        # layer 22), so the City or Town layer is this map.
+        "subdivision-boundaries": answers("municipality"),
+        # Not re-read for this change: the constitution's own rule.
+        "courts-by-district": na(
+            "Rhode Island elects no judge. Its judges are appointed by the "
+            "Governor from lists a judicial nominating commission sends (R.I. "
+            "Const. art. X, sec. 4), so there is no district a voter elects a "
+            "judge from."),
+        # Measured 2026-11-12 on TIGERweb: 31 of Rhode Island's county
+        # subdivisions are active towns, general-purpose governments the City or
+        # Town layer draws and whose governing bodies it does not name.
+        "sub-county-government": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report "Rhode
+        # Island": the Census keeps 1 reservation and no off-reservation trust
+        # land in Rhode Island, and the app draws no tribal land yet
+        # (ri/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "sd": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("sd-senate", "sd-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        # TIGER carries South Dakota's school districts as unified districts and
+        # nothing on its elementary or secondary layers (measured 2026-11-12).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-12 on TIGERweb's current county subdivisions, with
+        # Illinois as the control (1,411 active of 1,695): 898 of South Dakota's
+        # are active townships (FUNCSTAT A), governments of their own, and no
+        # township layer is drawn yet.
+        "subdivision-boundaries": OPEN,
+        # Circuit judges are elected by judicial circuit; no circuit is drawn or
+        # judge named yet.
+        "courts-by-district": OPEN,
+        "sub-county-government": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report "South
+        # Dakota": the Census keeps 9 reservations and 7 off-reservation trust
+        # lands in South Dakota, and the app draws no tribal land yet
+        # (sd/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "nd": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("nd-senate", "nd-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary"),
+        # Measured 2026-11-12 on TIGERweb's current county subdivisions, with
+        # Illinois as the control (1,411 active of 1,695): 1,305 of North
+        # Dakota's are active townships (FUNCSTAT A), governments of their own,
+        # and no township layer is drawn yet.
+        "subdivision-boundaries": OPEN,
+        # District judges are elected by judicial district; no district is drawn
+        # or judge named yet.
+        "courts-by-district": OPEN,
+        "sub-county-government": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report "North
+        # Dakota": the Census keeps 5 reservations and 2 off-reservation trust
+        # lands in North Dakota, and the app draws no tribal land yet
+        # (nd/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "ak": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("ak-senate", "ak-house"),
+        "county-boundaries": answers("county"),
+        # No borough assembly is named yet (the state-level launch names the
+        # legislature first, Adam's plan of 2026-11-10). The eleven census areas
+        # of the Unorganized Borough have no government of their own.
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        # TIGER carries Alaska's school districts as unified districts and
+        # nothing on its elementary or secondary layers (measured 2026-11-12).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-12 on TIGERweb's current county subdivisions, with
+        # Illinois as the control (1,411 active of 1,695): all 37 of Alaska's
+        # are census county divisions (FUNCSTAT S), statistical areas that
+        # govern nobody.
+        "subdivision-boundaries": OPEN,
+        # Judges stand for retention by judicial district; no district is drawn
+        # or judge named yet.
+        "courts-by-district": OPEN,
+        "sub-county-government": na(
+            "Alaska has no government between the borough and the city. The 37 "
+            "sub-county units the Census publishes for Alaska are census "
+            "subareas: statistical areas, not governments (measured "
+            "2026-11-12)."),
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report Alaska: the
+        # Census keeps 1 reservation and no off-reservation trust land in
+        # Alaska, and the app draws no tribal land yet (ak/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "vt": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("vt-senate", "vt-house"),
+        "county-boundaries": answers("county"),
+        # No county official is named yet. A Vermont county has no governing
+        # board; its voters elect two assistant judges, who run the county's
+        # budget, a sheriff, a state's attorney, a probate judge and a high
+        # bailiff.
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary", "school-district-secondary"),
+        # Vermont's cities and towns ARE its county subdivisions (TIGERweb layer
+        # 22), so the City or Town layer is this map.
+        "subdivision-boundaries": answers("municipality"),
+        # Assistant judges and probate judges are elected by county, and none is
+        # named yet; every other judge is appointed by the Governor and
+        # confirmed by the Senate.
+        "courts-by-district": OPEN,
+        # Measured 2026-11-12 on TIGERweb: 237 of Vermont's county subdivisions
+        # are active towns, general-purpose governments the City or Town layer
+        # draws and whose governing bodies it does not name.
+        "sub-county-government": OPEN,
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        "tribal-government": na(
+            "Vermont has no tribal land. The Census publishes no federal or "
+            "state reservation and no off-reservation trust land in the state, "
+            "measured 2026-11-12 with scripts/tribal_areas.py --report, with "
+            "Vermont resolving to its own state code (50) as the control."),
+    },
+    "wy": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("wy-senate", "wy-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        "school-district-boundaries": answers(
+            "school-district-unified", "school-district-elementary"),
+        # Measured 2026-11-12 on TIGERweb's current county subdivisions, with
+        # Illinois as the control (1,411 active of 1,695): all 71 of Wyoming's
+        # are census county divisions (FUNCSTAT S), statistical areas that
+        # govern nobody.
+        "subdivision-boundaries": OPEN,
+        # District judges stand for retention by judicial district; no district
+        # is drawn or judge named yet.
+        "courts-by-district": OPEN,
+        "sub-county-government": na(
+            "Wyoming has no sub-county general-purpose government \u2014 outside a "
+            "city or town the county governs. The 71 sub-county units the "
+            "Census publishes for Wyoming are census county divisions: "
+            "statistical areas, not governments (measured 2026-11-12)."),
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-12 with scripts/tribal_areas.py --report Wyoming: the
+        # Census keeps 1 reservation and 1 off-reservation trust land in
+        # Wyoming, and the app draws no tribal land yet (wy/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "de": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("de-senate", "de-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        # TIGER carries Delaware's school districts as unified districts and
+        # nothing on its elementary or secondary layers (measured 2026-11-12).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-12 on TIGERweb's current county subdivisions, with
+        # Illinois as the control (1,411 active of 1,695): all 27 of Delaware's
+        # are census county divisions (FUNCSTAT S), statistical areas that
+        # govern nobody.
+        "subdivision-boundaries": OPEN,
+        # Not re-read for this change: the constitution's own rule.
+        "courts-by-district": na(
+            "Delaware elects no judge. Its judges are nominated by the Governor "
+            "and confirmed by the Senate (Del. Const. art. IV, sec. 3), so "
+            "there is no district a voter elects a judge from."),
+        "sub-county-government": na(
+            "Delaware has no sub-county general-purpose government \u2014 outside a "
+            "city or town the county governs. The 27 sub-county units the "
+            "Census publishes for Delaware are census county divisions: "
+            "statistical areas, not governments (measured 2026-11-12)."),
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        "tribal-government": na(
+            "Delaware has no tribal land. The Census publishes no federal or "
+            "state reservation and no off-reservation trust land in the state, "
+            "measured 2026-11-12 with scripts/tribal_areas.py --report, with "
+            "Delaware resolving to its own state code (10) as the control."),
     },
 }
 
@@ -3830,6 +4788,20 @@ def check_answer_map(live):
              + "\n".join(missing))
 
 
+# A state MEASURED to hold no unit above the floor, with what it rests on. An
+# empty list is otherwise refused as a failed fetch recorded as an answer, and
+# each entry is re-audited: it fails once the file lists a unit for that state,
+# or once the state leaves the file, so an entry cannot outlive its reason.
+MEASURED_EMPTY = {
+    "hi": ("Hawaii has no incorporated place and no county subdivision that "
+           "governs anyone: its four county governments, Honolulu's a "
+           "consolidated city and county, are its local governments, measured "
+           "2026-11-12 on TIGERweb (Incorporated Places: 0 in Hawaii, 1,294 in "
+           "Illinois as the control; its 44 county subdivisions are census "
+           "county divisions, FUNCSTAT S)."),
+}
+
+
 def load_expected_units():
     """The committed 25,000+ measurement, audited before it is used.
 
@@ -3850,8 +4822,16 @@ def load_expected_units():
     if not isinstance(floor, int) or floor <= 0:
         fail("docs/expected-governments.json states no floor")
     seen = {}
+    for tag in sorted(MEASURED_EMPTY):
+        if tag not in doc.get("units", {}):
+            fail("MEASURED_EMPTY names %s, which docs/expected-governments.json "
+                 "does not measure. Retire the entry." % tag)
+        if doc["units"][tag]:
+            fail("MEASURED_EMPTY says %s holds no unit above the floor, and "
+                 "docs/expected-governments.json now lists %d. Retire the entry."
+                 % (tag, len(doc["units"][tag])))
     for tag, units in sorted(doc.get("units", {}).items()):
-        if not units:
+        if not units and tag not in MEASURED_EMPTY:
             fail("docs/expected-governments.json lists no unit for %s. A state "
                  "with no unit above the floor is possible, but it has never "
                  "been measured as empty here, so this is more likely a failed "

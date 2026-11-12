@@ -1,0 +1,35 @@
+{
+ "state": "Florida",
+ "usps": "FL",
+ "officersNote": "Florida's voters also vote on whether to retain each Supreme Court justice, whom the governor appoints, so the justices are not listed here. The Secretary of State is appointed by the governor, so is not listed. The Attorney General, the Chief Financial Officer and the Commissioner of Agriculture sit with the governor as the Florida Cabinet.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Ron DeSantis",
+   "url": "https://www.flgov.com/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Jay Collins",
+   "url": "https://www.flgov.com/eog/leadership/people/jay-collins"
+  },
+  {
+   "office": "Attorney General",
+   "name": "James Uthmeier",
+   "url": "https://www.myfloridalegal.com/",
+   "headers": "browser",
+   "note": "www.myfloridalegal.com answered this project's token with HTTP 403, robots.txt and page alike, and served the browser client its robots.txt (no rule matching the page) and a page naming Attorney General James Uthmeier (read 2026-11-11)."
+  },
+  {
+   "office": "Chief Financial Officer",
+   "name": "Blaise Ingoglia",
+   "url": "https://www.myfloridacfo.com/"
+  },
+  {
+   "office": "Commissioner of Agriculture",
+   "url": "https://www.fdacs.gov/",
+   "unnamed": "The Department of Agriculture and Consumer Services' website refuses automated readers in robots.txt, so this app does not read a name from it.",
+   "note": "www.fdacs.gov's robots.txt disallows every path to any client its list of named search crawlers does not cover (read 2026-11-11). The Governor and Cabinet's own site (www.cabinet.myflorida.com) names Commissioner of Agriculture Wilton Simpson, but only inside the page's script data, which this builder does not read, so that page cannot keep the name true week to week."
+  }
+ ]
+}

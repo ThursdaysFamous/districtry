@@ -1,0 +1,55 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from co/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Colorado",
+ "usSenate": [
+  {
+   "name": "Michael F. Bennet",
+   "party": "Democratic",
+   "url": "https://www.bennet.senate.gov",
+   "office": "261 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5852"
+  },
+  {
+   "name": "John W. Hickenlooper",
+   "party": "Democratic",
+   "url": "https://www.hickenlooper.senate.gov",
+   "office": "316 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5941"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Jared Polis",
+   "url": "https://www.colorado.gov/governor",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Dianne Primavera",
+   "url": "https://ltgovernor.colorado.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Phil Weiser",
+   "url": "https://coag.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Jena Griswold",
+   "url": "https://www.coloradosos.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Dave Young",
+   "url": "https://treasury.colorado.gov/",
+   "verified": "2026-11-12"
+  }
+ ],
+ "officersNote": "Colorado's voters also elect at-large members of the University of Colorado's Board of Regents and of the State Board of Education statewide. They are not listed here yet."
+}

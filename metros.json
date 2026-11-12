@@ -39,21 +39,21 @@
     },
     {
       "id": "sf",
-      "explorer_name": "districtry San Francisco",
-      "label": "San Francisco",
+      "explorer_name": "districtry California",
+      "label": "California",
       "url": "https://districtry.com/ca/",
       "emoji": "🌉",
       "repo": "ThursdaysFamous/districtry",
       "bbox": {
-        "minLng": -122.6,
-        "minLat": 37.6,
-        "maxLng": -122.3,
-        "maxLat": 37.95
+        "minLng": -124.49,
+        "minLat": 32.52,
+        "maxLng": -114.12,
+        "maxLat": 42.02
       },
       "tag": "ca",
-      "landing_name": "San Francisco",
-      "blurb": "Supervisor districts, neighborhoods, police districts, school attendance areas, and the state and federal seats above them.",
-      "scope": "1 city"
+      "landing_name": "California",
+      "blurb": "All 58 counties: cities and towns, unified, elementary and high school districts, ZIP codes and the nearest post office, plus the California Senate, Assembly and U.S. House districts, with who holds each seat. San Francisco in full: its supervisor districts and precincts, neighborhoods, police districts and stations, fire stations, school attendance areas and sites, libraries and voting centers, and the BART board, which also covers Alameda and Contra Costa counties. Tribal lands are not drawn yet, and county, city and school board officials outside San Francisco are not named yet; the Data gaps panel says why.",
+      "scope": "statewide, San Francisco in depth"
     },
     {
       "id": "wisconsin",
@@ -450,6 +450,456 @@
       "landing_name": "New Hampshire",
       "blurb": "All 10 counties and every city, town and unincorporated place: school districts, ZIP codes, and the nearest police station, fire station and post office — plus the New Hampshire Senate, the House's 203 districts with their floterials, and the U.S. House districts, with who holds each seat. County, town and school board officials are not named yet, and the Data gaps panel says why.",
       "scope": "all 10 counties"
+    },
+    {
+      "id": "texas",
+      "explorer_name": "districtry Texas",
+      "label": "Texas",
+      "url": "https://districtry.com/tx/",
+      "emoji": "⭐",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -106.65,
+        "minLat": 25.83,
+        "maxLng": -93.5,
+        "maxLat": 35.5
+      },
+      "tag": "tx",
+      "landing_name": "Texas",
+      "blurb": "All 254 counties: cities, towns and villages, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Texas Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 254 counties"
+    },
+    {
+      "id": "florida",
+      "explorer_name": "districtry Florida",
+      "label": "Florida",
+      "url": "https://districtry.com/fl/",
+      "emoji": "🍊",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -87.64,
+        "minLat": 24.39,
+        "maxLng": -79.97,
+        "maxLat": 31.01
+      },
+      "tag": "fl",
+      "landing_name": "Florida",
+      "blurb": "All 67 counties: cities, towns and villages, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Florida Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 67 counties"
+    },
+    {
+      "id": "ohio",
+      "explorer_name": "districtry Ohio",
+      "label": "Ohio",
+      "url": "https://districtry.com/oh/",
+      "emoji": "🌰",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -84.83,
+        "minLat": 38.4,
+        "maxLng": -80.51,
+        "maxLat": 42.33
+      },
+      "tag": "oh",
+      "landing_name": "Ohio",
+      "blurb": "All 88 counties: cities and villages, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Ohio Senate, House and U.S. House districts, with who holds each seat. County, municipal and school board officials are not named yet, and the Data gaps panel says why.",
+      "scope": "all 88 counties"
+    },
+    {
+      "id": "washington",
+      "explorer_name": "districtry Washington",
+      "label": "Washington",
+      "url": "https://districtry.com/wa/",
+      "emoji": "🍎",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -124.85,
+        "minLat": 45.54,
+        "maxLng": -116.91,
+        "maxLat": 49.01
+      },
+      "tag": "wa",
+      "landing_name": "Washington",
+      "blurb": "All 39 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus Washington's 49 legislative districts, each electing one senator and two representatives, and its U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 39 counties"
+    },
+    {
+      "id": "massachusetts",
+      "explorer_name": "districtry Massachusetts",
+      "label": "Massachusetts",
+      "url": "https://districtry.com/ma/",
+      "emoji": "🦞",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -73.51,
+        "minLat": 41.18,
+        "maxLng": -69.85,
+        "maxLat": 42.89
+      },
+      "tag": "ma",
+      "landing_name": "Massachusetts",
+      "blurb": "All 14 counties and 351 cities and towns: unified, elementary and secondary school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Massachusetts Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city, town and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 14 counties"
+    },
+    {
+      "id": "colorado",
+      "explorer_name": "districtry Colorado",
+      "label": "Colorado",
+      "url": "https://districtry.com/co/",
+      "emoji": "🏔️",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -109.07,
+        "minLat": 36.99,
+        "maxLng": -102.04,
+        "maxLat": 41.01
+      },
+      "tag": "co",
+      "landing_name": "Colorado",
+      "blurb": "All 64 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Colorado Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 64 counties"
+    },
+    {
+      "id": "maryland",
+      "explorer_name": "districtry Maryland",
+      "label": "Maryland",
+      "url": "https://districtry.com/md/",
+      "emoji": "🦀",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -79.41,
+        "minLat": 37.88,
+        "maxLng": -74.98,
+        "maxLat": 39.73
+      },
+      "tag": "md",
+      "landing_name": "Maryland",
+      "blurb": "All 23 counties and Baltimore City: cities, towns and villages, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Maryland Senate, House of Delegates and U.S. House districts, with who holds each seat. County, municipal and school board officials are not named yet, and the Data gaps panel says why.",
+      "scope": "all 23 counties and Baltimore City"
+    },
+    {
+      "id": "alabama",
+      "explorer_name": "districtry Alabama",
+      "label": "Alabama",
+      "url": "https://districtry.com/al/",
+      "emoji": "🚀",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -88.48,
+        "minLat": 30.14,
+        "maxLng": -84.88,
+        "maxLat": 35.01
+      },
+      "tag": "al",
+      "landing_name": "Alabama",
+      "blurb": "All 67 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Alabama Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 67 counties"
+    },
+    {
+      "id": "oregon",
+      "explorer_name": "districtry Oregon",
+      "label": "Oregon",
+      "url": "https://districtry.com/or/",
+      "emoji": "🌲",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -124.71,
+        "minLat": 41.99,
+        "maxLng": -116.46,
+        "maxLat": 46.3
+      },
+      "tag": "or",
+      "landing_name": "Oregon",
+      "blurb": "All 36 counties: cities and towns, unified, elementary and high school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Oregon Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 36 counties"
+    },
+    {
+      "id": "connecticut",
+      "explorer_name": "districtry Connecticut",
+      "label": "Connecticut",
+      "url": "https://districtry.com/ct/",
+      "emoji": "⚓",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -73.73,
+        "minLat": 40.95,
+        "maxLng": -71.78,
+        "maxLat": 42.06
+      },
+      "tag": "ct",
+      "landing_name": "Connecticut",
+      "blurb": "All 9 planning regions and 169 towns: unified, elementary and secondary school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Connecticut Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and town and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 9 planning regions"
+    },
+    {
+      "id": "utah",
+      "explorer_name": "districtry Utah",
+      "label": "Utah",
+      "url": "https://districtry.com/ut/",
+      "emoji": "🐝",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -114.06,
+        "minLat": 36.99,
+        "maxLng": -109.04,
+        "maxLat": 42.01
+      },
+      "tag": "ut",
+      "landing_name": "Utah",
+      "blurb": "All 29 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Utah Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 29 counties"
+    },
+    {
+      "id": "kansas",
+      "explorer_name": "districtry Kansas",
+      "label": "Kansas",
+      "url": "https://districtry.com/ks/",
+      "emoji": "🌻",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -102.06,
+        "minLat": 36.99,
+        "maxLng": -94.58,
+        "maxLat": 40.01
+      },
+      "tag": "ks",
+      "landing_name": "Kansas",
+      "blurb": "All 105 counties: cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Kansas Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 105 counties"
+    },
+    {
+      "id": "newmexico",
+      "explorer_name": "districtry New Mexico",
+      "label": "New Mexico",
+      "url": "https://districtry.com/nm/",
+      "emoji": "🌶️",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -109.07,
+        "minLat": 31.32,
+        "maxLng": -102.99,
+        "maxLat": 37.02
+      },
+      "tag": "nm",
+      "landing_name": "New Mexico",
+      "blurb": "All 33 counties: cities, towns and villages, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the New Mexico Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 33 counties"
+    },
+    {
+      "id": "nebraska",
+      "explorer_name": "districtry Nebraska",
+      "label": "Nebraska",
+      "url": "https://districtry.com/ne/",
+      "emoji": "🚂",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -104.07,
+        "minLat": 39.98,
+        "maxLng": -95.29,
+        "maxLat": 43.02
+      },
+      "tag": "ne",
+      "landing_name": "Nebraska",
+      "blurb": "All 93 counties: cities and villages, school districts, ZIP codes, and the nearest police station, fire station and post office — plus Nebraska's one-house Legislature and its U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 93 counties"
+    },
+    {
+      "id": "idaho",
+      "explorer_name": "districtry Idaho",
+      "label": "Idaho",
+      "url": "https://districtry.com/id/",
+      "emoji": "🥔",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -117.26,
+        "minLat": 41.97,
+        "maxLng": -111.03,
+        "maxLat": 49.02
+      },
+      "tag": "id",
+      "landing_name": "Idaho",
+      "blurb": "All 44 counties: cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus Idaho's 35 legislative districts, each electing one senator and two representatives, and its U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 44 counties"
+    },
+    {
+      "id": "hawaii",
+      "explorer_name": "districtry Hawaii",
+      "label": "Hawaii",
+      "url": "https://districtry.com/hi/",
+      "emoji": "🌺",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -160.61,
+        "minLat": 18.85,
+        "maxLng": -154.74,
+        "maxLat": 22.3
+      },
+      "tag": "hi",
+      "landing_name": "Hawaii",
+      "blurb": "All five counties: the statewide school district, ZIP codes, and the nearest police station, fire station and post office — plus the Hawaii Senate, House and U.S. House districts, with who holds each seat. County officials are not named yet, and the Data gaps panel says why.",
+      "scope": "all 5 counties"
+    },
+    {
+      "id": "maine",
+      "explorer_name": "districtry Maine",
+      "label": "Maine",
+      "url": "https://districtry.com/me/",
+      "emoji": "🦌",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -71.1,
+        "minLat": 42.9,
+        "maxLng": -66.87,
+        "maxLat": 47.47
+      },
+      "tag": "me",
+      "landing_name": "Maine",
+      "blurb": "All 16 counties and every city, town, plantation and unorganized territory: unified, elementary and secondary school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Maine Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, town and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 16 counties"
+    },
+    {
+      "id": "montana",
+      "explorer_name": "districtry Montana",
+      "label": "Montana",
+      "url": "https://districtry.com/mt/",
+      "emoji": "🦬",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -116.06,
+        "minLat": 44.34,
+        "maxLng": -104.02,
+        "maxLat": 49.02
+      },
+      "tag": "mt",
+      "landing_name": "Montana",
+      "blurb": "All 56 counties: cities and towns, elementary, high school and unified school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Montana Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 56 counties"
+    },
+    {
+      "id": "rhodeisland",
+      "explorer_name": "districtry Rhode Island",
+      "label": "Rhode Island",
+      "url": "https://districtry.com/ri/",
+      "emoji": "🌊",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -71.92,
+        "minLat": 41.08,
+        "maxLng": -71.07,
+        "maxLat": 42.03
+      },
+      "tag": "ri",
+      "landing_name": "Rhode Island",
+      "blurb": "All 39 cities and towns: elementary, secondary and unified school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Rhode Island Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and city, town and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 39 cities and towns"
+    },
+    {
+      "id": "delaware",
+      "explorer_name": "districtry Delaware",
+      "label": "Delaware",
+      "url": "https://districtry.com/de/",
+      "emoji": "🐔",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -75.8,
+        "minLat": 38.44,
+        "maxLng": -74.97,
+        "maxLat": 39.85
+      },
+      "tag": "de",
+      "landing_name": "Delaware",
+      "blurb": "All 3 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Delaware Senate and House districts and its at-large U.S. House seat, with who holds each seat. County, municipal and school board officials are not named yet, and the Data gaps panel says why.",
+      "scope": "all 3 counties"
+    },
+    {
+      "id": "southdakota",
+      "explorer_name": "districtry South Dakota",
+      "label": "South Dakota",
+      "url": "https://districtry.com/sd/",
+      "emoji": "🗿",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -104.07,
+        "minLat": 42.46,
+        "maxLng": -96.42,
+        "maxLat": 45.96
+      },
+      "tag": "sd",
+      "landing_name": "South Dakota",
+      "blurb": "All 66 counties: cities and towns, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the South Dakota Senate and House districts and its at-large U.S. House seat, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 66 counties"
+    },
+    {
+      "id": "northdakota",
+      "explorer_name": "districtry North Dakota",
+      "label": "North Dakota",
+      "url": "https://districtry.com/nd/",
+      "emoji": "🚜",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -104.06,
+        "minLat": 45.92,
+        "maxLng": -96.54,
+        "maxLat": 49.02
+      },
+      "tag": "nd",
+      "landing_name": "North Dakota",
+      "blurb": "All 53 counties: cities, unified and elementary school districts, ZIP codes, and the nearest police station, fire station and post office — plus the North Dakota Senate and House districts and its at-large U.S. House seat, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 53 counties"
+    },
+    {
+      "id": "alaska",
+      "explorer_name": "districtry Alaska",
+      "label": "Alaska",
+      "url": "https://districtry.com/ak/",
+      "emoji": "🐻",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -179.25,
+        "minLat": 51.16,
+        "maxLng": -129.96,
+        "maxLat": 71.45
+      },
+      "tag": "ak",
+      "landing_name": "Alaska",
+      "blurb": "All 30 boroughs and census areas: cities, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Alaska Senate and House districts and its at-large U.S. House seat, with who holds each seat. Tribal lands are not drawn yet, and borough, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 30 boroughs and census areas"
+    },
+    {
+      "id": "vermont",
+      "explorer_name": "districtry Vermont",
+      "label": "Vermont",
+      "url": "https://districtry.com/vt/",
+      "emoji": "🐄",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -73.45,
+        "minLat": 42.71,
+        "maxLng": -71.45,
+        "maxLat": 45.03
+      },
+      "tag": "vt",
+      "landing_name": "Vermont",
+      "blurb": "All 14 counties and every city, town and gore: unified, elementary and secondary school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Vermont Senate and House districts and its at-large U.S. House seat, with who holds each seat. Town and school board officials are not named yet, and the Data gaps panel says why.",
+      "scope": "all 14 counties"
+    },
+    {
+      "id": "wyoming",
+      "explorer_name": "districtry Wyoming",
+      "label": "Wyoming",
+      "url": "https://districtry.com/wy/",
+      "emoji": "🤠",
+      "repo": "ThursdaysFamous/districtry",
+      "bbox": {
+        "minLng": -111.07,
+        "minLat": 40.98,
+        "maxLng": -104.04,
+        "maxLat": 45.02
+      },
+      "tag": "wy",
+      "landing_name": "Wyoming",
+      "blurb": "All 23 counties: cities and towns, unified and elementary school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Wyoming Senate and House districts and its at-large U.S. House seat, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.",
+      "scope": "all 23 counties"
     }
   ]
 }

@@ -57,7 +57,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "42.65203,-73.75731"; // Downtown Albany — measured inside the City of Albany, Albany County
 const OFFLINE = ["judicial-district", "county", "nys-school-district", "municipality"];
 const EXPECT_DISTRICT = { "judicial-district": "3", "county": "Albany", "nys-school-district": "ALBANY", "municipality": "Albany" };
-const NEGATIVE_POINT = "41.76370,-72.68510"; // Downtown Hartford, Connecticut — outside New York State and 66 km from the nearest geometry this instance ships. NOT a water point: the county, school-district, cities-towns, villages and three legislative files are all water-inclusive off Long Island and in Lake Ontario, so a mid-Sound or mid-lake click is positive, not negative
+const NEGATIVE_POINT = "41.76370,-72.68510"; // Downtown Hartford, Connecticut — outside New York State and 66 km from the nearest geometry this instance ships. NOT a water point: the county, school-district, cities-towns, villages and three legislative files are all water-inclusive off Long Island and in Lake Ontario, so a mid-Sound or mid-lake click is positive, not negative. Connecticut's app has covered this point since batch 3 of the state-level launch went live (2026-11-12), and the point stays: every check that uses it boots or selects it in this app and none clicks it, and a selection the app makes itself never leaves.
 const APP_NAME = "districtry New York";
 const EXPECT_LAYERS = 40; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
 // ==== GENERATED:END smoke-config ====

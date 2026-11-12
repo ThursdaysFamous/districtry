@@ -1,0 +1,362 @@
+{
+  "1": {
+    "name": "David Brock Smith",
+    "party": "Republican",
+    "email": "Sen.DavidBrockSmith@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-316",
+      "Salem, OR 97301",
+      "503-986-1701"
+    ],
+    "url": "https://www.oregonlegislature.gov/smithd"
+  },
+  "2": {
+    "name": "Noah Robinson",
+    "party": "Republican",
+    "email": "Sen.NoahRobinson@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-309",
+      "Salem, OR 97301",
+      "503-986-1702"
+    ],
+    "url": "https://www.oregonlegislature.gov/Robinsonn"
+  },
+  "3": {
+    "name": "Jeff Golden",
+    "party": "Democratic",
+    "email": "Sen.JeffGolden@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-415",
+      "Salem, OR 97301",
+      "503-986-1703"
+    ],
+    "url": "https://www.oregonlegislature.gov/golden"
+  },
+  "4": {
+    "name": "Floyd Prozanski",
+    "party": "Democratic",
+    "email": "Sen.FloydProzanski@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-413",
+      "Salem, OR 97301",
+      "503-986-1704"
+    ],
+    "url": "https://www.oregonlegislature.gov/prozanski"
+  },
+  "5": {
+    "name": "Dick Anderson",
+    "party": "Republican",
+    "email": "Sen.DickAnderson@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-311",
+      "Salem, OR 97301",
+      "503-986-1705"
+    ],
+    "url": "https://www.oregonlegislature.gov/anderson"
+  },
+  "6": {
+    "name": "Cedric Hayden",
+    "party": "Republican",
+    "email": "Sen.CedricHayden@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-315",
+      "Salem, OR 97301",
+      "503-986-1706"
+    ],
+    "url": "https://www.oregonlegislature.gov/hayden"
+  },
+  "7": {
+    "name": "James Manning Jr.",
+    "party": "Democratic",
+    "email": "Sen.JamesManning@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-213",
+      "Salem, OR 97301",
+      "503-986-1707"
+    ],
+    "url": "https://www.oregonlegislature.gov/Manning"
+  },
+  "8": {
+    "name": "Sara Gelser Blouin",
+    "party": "Democratic",
+    "email": "Sen.SaraGelser@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-211",
+      "Salem, OR 97301",
+      "503-986-1708"
+    ],
+    "url": "https://www.oregonlegislature.gov/gelser"
+  },
+  "9": {
+    "name": "Fred Girod",
+    "party": "Republican",
+    "email": "Sen.FredGirod@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-401",
+      "Salem, OR 97301",
+      "503-986-1709"
+    ],
+    "url": "https://www.oregonlegislature.gov/girod"
+  },
+  "10": {
+    "name": "Deb Patterson",
+    "party": "Democratic",
+    "email": "Sen.DebPatterson@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-411",
+      "Salem, OR 97301",
+      "503-986-1710"
+    ],
+    "url": "https://www.oregonlegislature.gov/patterson"
+  },
+  "11": {
+    "name": "Kim Thatcher",
+    "party": "Republican",
+    "email": "Sen.KimThatcher@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-307",
+      "Salem, OR 97301",
+      "503-986-1713"
+    ],
+    "url": "https://www.oregonlegislature.gov/thatcher"
+  },
+  "12": {
+    "name": "Bruce Starr",
+    "party": "Republican",
+    "email": "Sen.BruceStarr@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-323",
+      "Salem, OR 97301",
+      "503-986-1950"
+    ],
+    "url": "https://www.oregonlegislature.gov/starr"
+  },
+  "13": {
+    "name": "Courtney Neron Misslin",
+    "party": "Democratic",
+    "email": "Sen.CourtneyNeronMisslin@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-425",
+      "Salem, OR 97301",
+      "503-986-1713"
+    ],
+    "url": "https://www.oregonlegislature.gov/Neron"
+  },
+  "14": {
+    "name": "Kate Lieber",
+    "party": "Democratic",
+    "email": "Sen.KateLieber@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-205",
+      "Salem, OR 97301",
+      "503-986-1714"
+    ],
+    "url": "https://www.oregonlegislature.gov/lieber"
+  },
+  "15": {
+    "name": "Janeen Sollman",
+    "party": "Democratic",
+    "email": "Sen.JaneenSollman@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-207",
+      "Salem, OR 97301",
+      "503-986-1715"
+    ],
+    "url": "https://www.oregonlegislature.gov/sollman"
+  },
+  "16": {
+    "name": "Suzanne Weber",
+    "party": "Republican",
+    "email": "Sen.SuzanneWeber@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-405",
+      "Salem, OR 97301",
+      "503-986-1716"
+    ],
+    "url": "https://www.oregonlegislature.gov/weber"
+  },
+  "17": {
+    "name": "Lisa Reynolds",
+    "party": "Democratic",
+    "email": "Sen.LisaReynolds@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-409",
+      "Salem, OR 97301",
+      "503-986-1717"
+    ],
+    "url": "https://www.oregonlegislature.gov/reynolds"
+  },
+  "18": {
+    "name": "Wlnsvey Campos",
+    "party": "Democratic",
+    "email": "Sen.WlnsveyCampos@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-215",
+      "Salem, OR 97301",
+      "503-986-1718"
+    ],
+    "url": "https://www.oregonlegislature.gov/campos"
+  },
+  "19": {
+    "name": "Rob Wagner",
+    "party": "Democratic",
+    "email": "Sen.RobWagner@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-201",
+      "Salem, OR 97301",
+      "503-986-1600"
+    ],
+    "url": "https://www.oregonlegislature.gov/wagner"
+  },
+  "20": {
+    "name": "Mark Meek",
+    "party": "Democratic",
+    "email": "Sen.MarkMeek@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-417",
+      "Salem, OR 97301",
+      "503-986-1720"
+    ],
+    "url": "https://www.oregonlegislature.gov/meek"
+  },
+  "21": {
+    "name": "Kathleen Taylor",
+    "party": "Democratic",
+    "email": "Sen.KathleenTaylor@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-209",
+      "Salem, OR 97301",
+      "503-986-1721"
+    ],
+    "url": "https://www.oregonlegislature.gov/taylor"
+  },
+  "22": {
+    "name": "Lew Frederick",
+    "party": "Democratic",
+    "email": "Sen.LewFrederick@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-419",
+      "Salem, OR 97301",
+      "503-986-1722"
+    ],
+    "url": "https://www.oregonlegislature.gov/frederick"
+  },
+  "23": {
+    "name": "Khanh Pham",
+    "party": "Democratic",
+    "email": "Rep.KhanhPham@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-407",
+      "Salem, OR 97301",
+      "503-986-1723"
+    ],
+    "url": "https://www.oregonlegislature.gov/pham"
+  },
+  "24": {
+    "name": "Kayse Jama",
+    "party": "Democratic",
+    "email": "Sen.KayseJama@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-223",
+      "Salem, OR 97301",
+      "503-986-1700"
+    ],
+    "url": "https://www.oregonlegislature.gov/jama"
+  },
+  "25": {
+    "name": "Chris Gorsek",
+    "party": "Democratic",
+    "email": "Sen.ChrisGorsek@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-403",
+      "Salem, OR 97301",
+      "503-986-1725"
+    ],
+    "url": "https://www.oregonlegislature.gov/gorsek"
+  },
+  "26": {
+    "name": "Christine Drazan",
+    "party": "Republican",
+    "email": "Sen.ChristineDrazan@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-303",
+      "Salem, OR 97301",
+      "503-986-1726"
+    ],
+    "url": "https://www.oregonlegislature.gov/Drazan"
+  },
+  "27": {
+    "name": "Anthony Broadman",
+    "party": "Democratic",
+    "email": "Sen.AnthonyBroadman@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-423",
+      "Salem, OR 97301",
+      "503-986-1727"
+    ],
+    "url": "https://www.oregonlegislature.gov/Broadman"
+  },
+  "28": {
+    "name": "Diane Linthicum",
+    "party": "Republican",
+    "email": "Sen.DianeLinthicum@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-305",
+      "Salem, OR 97301",
+      "503-986-1728"
+    ],
+    "url": "https://www.oregonlegislature.gov/Linthicumd"
+  },
+  "29": {
+    "name": "Todd Nash",
+    "party": "Republican",
+    "email": "Sen.ToddNash@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-421",
+      "Salem, OR 97301",
+      "503-986-1729"
+    ],
+    "url": "https://www.oregonlegislature.gov/Nash"
+  },
+  "30": {
+    "name": "Mike McLane",
+    "party": "Republican",
+    "email": "Sen.MikeMcLane@oregonlegislature.gov",
+    "capitolOffice": [
+      "900 Court St NE",
+      "Room S-301",
+      "Salem, OR 97301",
+      "503-986-1730"
+    ],
+    "url": "https://www.oregonlegislature.gov/mclane"
+  }
+}

@@ -9,12 +9,11 @@ name: Update U.S. House (Texas) roster
 # House's vacancy page lists it too (the 23rd, since April 2026); otherwise the
 # build refuses.
 #
-# TEXAS IS DARK, so this job is shorter than its served siblings by
-# exactly the steps a served instance owes: there is no tx/congress.html to
-# regenerate (build_legislator_pages.py refuses an instance metros.json does
-# not carry, so the page is not built yet), tx/ is not in the sitemap, and
-# about.html does not count this instance. Go-live adds those steps in the same
-# change that adds tx to metros.json — tx/WATCH.md carries the list.
+# THE PAGE STEPS LANDED WITH THE GO-LIVE CHANGE (batch 2 of the state-level
+# launch). `tx/congress.html` carries a GENERATED table of this roster, and
+# `about.html` and `sitemap.xml` count it, so all three are regenerated here
+# and staged in the same `git add` — otherwise this workflow's own bot PR
+# fails those pages' `--check` on numbers the PR is not about.
 #
 # THE MAP THESE MEMBERS ARE JOINED TO IS TIGERweb'S LAYER 4, the 119th
 # Congress's districts, which the sitting members were elected from in 2024.
@@ -92,7 +91,10 @@ jobs:
           git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
           python3 tx/scripts/build_congress_roster.py
-          git add tx/data/app/congress-roster.json
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add tx/data/app/congress-roster.json tx/congress.html about.html sitemap.xml
           git commit -m "Update U.S. House (Texas) roster from congress-legislators"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

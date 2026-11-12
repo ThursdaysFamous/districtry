@@ -1,0 +1,60 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from vt/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Vermont",
+ "usSenate": [
+  {
+   "name": "Bernard Sanders",
+   "party": "Independent",
+   "url": "https://www.sanders.senate.gov/",
+   "office": "332 Dirksen Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5141"
+  },
+  {
+   "name": "Peter Welch",
+   "party": "Democratic",
+   "url": "https://www.welch.senate.gov/",
+   "office": "115 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4242"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Phil Scott",
+   "url": "https://governor.vermont.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "John Rodgers",
+   "url": "https://ltgov.vermont.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Sarah Copeland Hanzas",
+   "url": "https://sos.vermont.gov/secretarys-desk",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Charity Clark",
+   "url": "https://ago.vermont.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Mike Pieciak",
+   "url": "https://www.vermonttreasurer.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Auditor of Accounts",
+   "name": "Doug Hoffer",
+   "url": "https://auditor.vermont.gov/",
+   "verified": "2026-11-12"
+  }
+ ]
+}

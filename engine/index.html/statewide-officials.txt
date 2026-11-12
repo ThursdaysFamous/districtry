@@ -12,8 +12,7 @@
    * (Adam, the same day: "count in traffic"); closing it is not counted.
    *
    * One call per app: registerStatewideOfficials({ outline }) where outline is
-   * the app's widest outline file (the state, or San Francisco's city, whose
-   * readers are told California's officers). The list is
+   * the app's widest outline file, the state's. The list is
    * data/app/statewide-officials.json, built by
    * scripts/build_statewide_officials.py, which reads each state officer's own
    * government page every run and refuses to write when the name is gone; it

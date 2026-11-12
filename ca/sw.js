@@ -40,7 +40,7 @@
 // SF ships no on-water / county-seal marker icons (the consolidated city-county
 // has no out-of-city collar tiling), so none are precached.
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "district-explorer-shell-sf-v10";
+const CACHE_NAME = "district-explorer-shell-sf-v12";
 
 const SHELL_URLS = [
   "./",
@@ -57,6 +57,8 @@ const SHELL_URLS = [
 const GEOMETRY_URLS = [
   "./data/app/supervisor-districts.json",
   "./data/app/san-francisco-county-outline.json",
+  "./data/app/ca-state-outline.json",
+  "./data/app/state-counties.json",
   "./data/app/sf-neighborhoods.json",
   "./data/app/police-districts.json",
   "./data/app/congress-districts.json",

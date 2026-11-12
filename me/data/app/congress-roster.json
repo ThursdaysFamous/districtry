@@ -1,0 +1,32 @@
+{
+  "1": {
+    "name": "Chellie Pingree",
+    "party": "Democrat",
+    "url": "https://pingree.house.gov",
+    "capitolOffice": [
+      "2354 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6116"
+    ],
+    "districtOffice": [
+      "2 Portland Fish Pier, Suite 304",
+      "Portland, ME 04101",
+      "Phone: 207-774-5019"
+    ]
+  },
+  "2": {
+    "name": "Jared F. Golden",
+    "party": "Democrat",
+    "url": "https://golden.house.gov",
+    "capitolOffice": [
+      "1107 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6306"
+    ],
+    "districtOffice": [
+      "6 State St, Suite 101",
+      "Bangor, ME 04401-5112",
+      "Phone: 207-249-7400"
+    ]
+  }
+}
