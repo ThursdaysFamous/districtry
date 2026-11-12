@@ -63,6 +63,7 @@ CAPABILITIES = [
     "register-layer-floor",     # 2: raw registerLayer( count floor
     "expect-layer-ids",         # 2: every expected layer id registered
     "layer-area-rank-lint",     # 2b: rank array covers the id set exactly
+    "layer-sidebar-rank-lint",  # 2c: sidebar rank covers the id set exactly
     "no-inline-datasets",       # 3: no JSON.parse blobs; data files referenced
     "data-file-shapes",         # 4: every data/app file exists with sane counts
     "sw-exactly-one-list",      # 5: each data file cached in exactly one sw list
@@ -78,30 +79,34 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 8
+MIN_REGISTER_LAYER = 12
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "congress", "ca-senate", "ca-assembly", "bart-director",
+    "ca-senate", "congress", "county", "ca-assembly",
+    "school-district-secondary", "school-district-unified", "bart-director",
+    "school-district-elementary", "zip-code", "municipality",
     "election-precinct", "election-results", "supervisor-district",
-    "police-district", "zip-code", "neighborhood",
-    "elementary-attendance-area", "police-station", "fire-station",
-    "school-site", "post-office", "library", "early-voting",
+    "police-district", "neighborhood", "elementary-attendance-area",
+    "police-station", "fire-station", "school-site", "post-office", "library",
+    "early-voting",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
 GEOMETRY_FILES = {
     "supervisor-districts.json": (11, 11),
-    "san-francisco-county-outline.json": (1, 1),  # San Francisco containment outline (ca/scripts/build_sf_county_outline.py, the union of the eleven shipped supervisor districts) — lets a Data gaps record name the city so the panel leads with the gaps that apply here.
+    "san-francisco-county-outline.json": (1, 1),  # San Francisco's outline (ca/scripts/build_sf_county_outline.py, the union of the eleven shipped supervisor districts). The coverage test of every layer built from the city's own data (inSanFrancisco), so those layers hide outside the city, and the Data gaps panel's test for which gaps apply where the reader clicked.
+    "ca-state-outline.json": (1, 1),  # The state outline (ca/scripts/build_state_outline.py, the dissolve of the state's 58 counties): the lighter band of the coverage wash, the statewide officials line's ground, and the ZIP layer's coverage test.
+    "state-counties.json": (58, 58),
     "sf-neighborhoods.json": (41, 41),
     "police-districts.json": (10, 10),
-    "congress-districts.json": (6, 6),
-    "ca-senate-districts.json": (4, 4),
-    "ca-assembly-districts.json": (8, 8),
-    "zip-index.json": (28, 28),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside san-francisco-county-outline.json (the city: this ZIP layer declares no coverage test, and the city is where this app answers); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
+    "congress-districts.json": (52, 52),
+    "ca-senate-districts.json": (40, 40),
+    "ca-assembly-districts.json": (80, 80),
+    "zip-index.json": (1799, 1799),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside ca-state-outline.json, the ground the ZIP layer's coverage test (inCalifornia) answers on; --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -122,7 +127,6 @@ ROSTER_FILES = {
 # literal appears in index.html. Exempt from the reference check only;
 # existence, shape and the negative-point test still apply.
 DYNAMIC_REFERENCE = frozenset({
-    "san-francisco-county-outline.json",
 })
 # ==== GENERATED:END validator-config ====
 
@@ -303,6 +307,29 @@ def main():
         fail("LAYER_AREA_RANK is missing registered layer id(s): %s" % ", ".join(missing))
     if extra:
         fail("LAYER_AREA_RANK has id(s) not in the registered set: %s" % ", ".join(extra))
+
+    # 2c. LAYER_SIDEBAR_RANK covers every registered id exactly once, and
+    # nothing else — same contract as 2b for the sidebar display order
+    # (docs/EXPANSION_GUIDE.md Part 4 "Sidebar placement standard"): the boot
+    # sort deliberately sinks an unranked id to the end instead of throwing,
+    # so this check is the only place a rank/registry drift fails loudly.
+    # California carries one since it grew from a city to a state
+    # (2026-11-11): its statewide layers and San Francisco's own layers are
+    # no longer ranked by the order they happen to register in.
+    m = re.search(r"var LAYER_SIDEBAR_RANK = \[(.*?)\];", html, re.DOTALL)
+    if not m:
+        fail("LAYER_SIDEBAR_RANK array not found in index.html")
+    srank = re.findall(r'"([a-z0-9-]+)"', m.group(1))
+    dupes = sorted(set(x for x in srank if srank.count(x) > 1))
+    if dupes:
+        fail("LAYER_SIDEBAR_RANK lists these ids more than once: %s" % ", ".join(dupes))
+    got = set(srank)
+    missing = sorted(expected - got)
+    extra = sorted(got - expected)
+    if missing:
+        fail("LAYER_SIDEBAR_RANK is missing registered layer id(s): %s" % ", ".join(missing))
+    if extra:
+        fail("LAYER_SIDEBAR_RANK has id(s) not in the registered set: %s" % ", ".join(extra))
 
     # 3. nothing embedded inline anymore, and every data file is referenced
     blobs = re.findall(r"var (\w+) = JSON\.parse\('", html)

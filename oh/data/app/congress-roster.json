@@ -1,0 +1,226 @@
+{
+  "1": {
+    "name": "Greg Landsman",
+    "party": "Democrat",
+    "url": "https://landsman.house.gov",
+    "capitolOffice": [
+      "2244 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2216"
+    ],
+    "districtOffice": [
+      "11 S Broadway St, Ste 301",
+      "Lebanon, OH 45036",
+      "Phone: 513-409-6188"
+    ]
+  },
+  "2": {
+    "name": "David J. Taylor",
+    "party": "Republican",
+    "url": "https://taylor.house.gov",
+    "capitolOffice": [
+      "325 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3164"
+    ],
+    "districtOffice": [
+      "4350 Aicholtz Rd, Suite 110",
+      "Cincinnati, OH 45245",
+      "Phone: 513-474-7777"
+    ]
+  },
+  "3": {
+    "name": "Joyce Beatty",
+    "party": "Democrat",
+    "url": "https://beatty.house.gov",
+    "capitolOffice": [
+      "2079 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4324"
+    ],
+    "districtOffice": [
+      "471 E. Broad St., Suite 1100",
+      "Columbus, OH 43215",
+      "Phone: 614-220-0003"
+    ]
+  },
+  "4": {
+    "name": "Jim Jordan",
+    "party": "Republican",
+    "url": "https://jordan.house.gov",
+    "capitolOffice": [
+      "2056 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2676"
+    ],
+    "districtOffice": [
+      "3121 W. Elm Plz.",
+      "Lima, OH 45805",
+      "Phone: 419-999-6455"
+    ]
+  },
+  "5": {
+    "name": "Robert E. Latta",
+    "party": "Republican",
+    "url": "https://latta.house.gov",
+    "capitolOffice": [
+      "2470 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6405"
+    ],
+    "districtOffice": [
+      "1045 N. Main St., Suite 6",
+      "Bowling Green, OH 43402",
+      "Phone: 419-354-8700"
+    ]
+  },
+  "6": {
+    "name": "Michael A. Rulli",
+    "party": "Republican",
+    "url": "https://rulli.house.gov",
+    "capitolOffice": [
+      "421 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5705"
+    ],
+    "districtOffice": [
+      "4137 Boardman-Canfield Road, Suite 106",
+      "Canfield, OH 44406",
+      "Phone: 330-967-7312"
+    ]
+  },
+  "7": {
+    "name": "Max L. Miller",
+    "party": "Republican",
+    "url": "https://maxmiller.house.gov",
+    "capitolOffice": [
+      "143 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3876"
+    ],
+    "districtOffice": [
+      "Parma, OH",
+      "Phone: 440-692-6120"
+    ]
+  },
+  "8": {
+    "name": "Warren Davidson",
+    "party": "Republican",
+    "url": "https://davidson.house.gov",
+    "capitolOffice": [
+      "2113 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6205"
+    ],
+    "districtOffice": [
+      "4879 Mercedes Drive, Suite A",
+      "Liberty Township, OH 45011",
+      "Phone: 513-779-5400"
+    ]
+  },
+  "9": {
+    "name": "Marcy Kaptur",
+    "party": "Democrat",
+    "url": "https://kaptur.house.gov",
+    "capitolOffice": [
+      "2314 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4146"
+    ],
+    "districtOffice": [
+      "1 Maritime Plaza, #600",
+      "Toledo, OH 43604",
+      "Phone: 419-259-7500"
+    ]
+  },
+  "10": {
+    "name": "Michael R. Turner",
+    "party": "Republican",
+    "url": "https://turner.house.gov",
+    "capitolOffice": [
+      "2183 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6465"
+    ],
+    "districtOffice": [
+      "120 W. 3rd St., Suite 305",
+      "Dayton, OH 45402",
+      "Phone: 937-225-2843"
+    ]
+  },
+  "11": {
+    "name": "Shontel M. Brown",
+    "party": "Democrat",
+    "url": "https://shontelbrown.house.gov",
+    "capitolOffice": [
+      "2455 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-7032"
+    ],
+    "districtOffice": [
+      "17021 Lorain Avenue",
+      "Cleveland, OH 44111",
+      "Phone: 216-535-1100"
+    ]
+  },
+  "12": {
+    "name": "Troy Balderson",
+    "party": "Republican",
+    "url": "https://balderson.house.gov",
+    "capitolOffice": [
+      "2429 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5355"
+    ],
+    "districtOffice": [
+      "12931 Stonecreek Drive",
+      "Pickerington, OH 43147",
+      "Phone: 614-523-2555"
+    ]
+  },
+  "13": {
+    "name": "Emilia Strong Sykes",
+    "party": "Democrat",
+    "url": "https://sykes.house.gov",
+    "capitolOffice": [
+      "1217 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6265"
+    ],
+    "districtOffice": [
+      "121 South Main Street, Suite 107",
+      "Akron, OH 44308",
+      "Phone: 330-400-5350"
+    ]
+  },
+  "14": {
+    "name": "David P. Joyce",
+    "party": "Republican",
+    "url": "https://joyce.house.gov",
+    "capitolOffice": [
+      "2065 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5731"
+    ],
+    "districtOffice": [
+      "8500 Station St, Suite 390",
+      "Mentor, OH 44060",
+      "Phone: 440-352-3939"
+    ]
+  },
+  "15": {
+    "name": "Mike Carey",
+    "party": "Republican",
+    "url": "https://carey.house.gov",
+    "capitolOffice": [
+      "1433 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2015"
+    ],
+    "districtOffice": [
+      "140 E Town St., Suite 1200",
+      "Columbus, OH 43215",
+      "Phone: 614-927-6902"
+    ]
+  }
+}

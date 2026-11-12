@@ -1,158 +1,314 @@
 #!/usr/bin/env python3
 """
-Build the pre-simplified legislative-district boundary files in data/app/ from
-Census TIGERweb, so the app fetches them same-origin (cache-first) instead of
-downloading the full statewide geometry live from TIGERweb on every first toggle.
+Build the pre-simplified California congressional and legislative-district
+boundary files in data/app/, so the app fetches them same-origin (cache-first)
+instead of downloading full statewide geometry live on every first toggle.
 
-Why this exists: the U.S. House / CA State Senate / CA State Assembly layers used
-to call loadTigerLayer(idx), which fetches every California district for that
-chamber from tigerweb.geo.census.gov in one shot — ~8-10 MB each (California is
-large: 52/40/80 districts). Legislative districts change only on the decade
-(post-census redistricting), the exact profile the offline anchors were
-externalized under. This script does the same for the legislative geometry:
-fetch -> clip -> simplify -> validate -> write data/app/<chamber>-districts.json,
-which index.html then fetches like any other data/app boundary. A ~5-9 s live
-query becomes a ~200 ms same-origin fetch.
+STATEWIDE SINCE CALIFORNIA GREW FROM A CITY APP INTO A STATE APP (2026-11-11,
+Adam's "Grow"). Until then this builder clipped every district to a window
+round San Francisco, because the app answered nowhere else; now the app answers
+anywhere in the state and San Francisco keeps its city layers, so each map
+ships whole — fetch -> simplify -> validate -> write data/app/<file>, the
+shape Texas's builder has, which this one is copied from.
 
-SF-specific deviation from the reference (which ships Illinois statewide):
-California's districts are far larger and more numerous than Illinois's and many
-reach hundreds of miles from SF, so shipping the whole state would be multi-MB
-per chamber for a city app. Each district is instead CLIPPED to the SF window
-(the app's permalink gate, the widest area it accepts a click in) with mapshaper.
-Clipping is geometrically exact, so point-in-polygon *inside* the window is
-identical to the full district — validate() re-checks that against the unclipped
-fetch on the project's 2,000-random-point protocol before anything is written.
+Like build_state_counties.py this is an occasional OPERATOR step, not weekly
+CI — re-run it on redistricting. The officeholder ROSTERS (congress-roster,
+ca-senate-members, ca-assembly-members) are separate and already statewide;
+only the geometry is here.
 
-Like build_embedded_boundaries.py this is an occasional OPERATOR step, not weekly
-CI — re-run it on redistricting. The officeholder ROSTERS (congress-roster /
-ca-senate-members / ca-assembly-members) are separate; only the geometry is here.
+DEFAULT_TARGETS DELIBERATELY INCLUDES congress: there is no bootstrap step that
+writes congress-districts.json, so skipping it by default would ship no file.
 
-Simplification is topology-aware mapshaper (Visvalingam, keep-shapes), the same
-tool + protocol build_embedded_boundaries.py uses. If validation fails, nothing
-is written.
+THE CONGRESSIONAL MAP IS THE ONE THE SITTING MEMBERS WERE ELECTED FROM, TIGERweb
+LAYER 4 (THE 119TH CONGRESS), UNTIL 3 JANUARY 2027. California's voters
+adopted a new map in November 2025 (Proposition 50) and the November 2026
+election used it; TIGERweb carries it as layer 0 ("120th Congressional
+Districts"). Measured 2026-11-11 with shapely on a 6-decimal fetch of both
+layers: the two carry the same 52 district numbers, and 44 of the 52 districts
+differ (intersection-over-union below 0.999; the lowest, District 41, at 0.0,
+its number now on wholly different ground), so the two maps are not
+interchangeable. The members holding those seats until 3 January 2027 were
+elected in 2024 from layer 4's map, so that is the map drawn, and
+check_serving_map refuses on or after that date: the change that day is to
+switch this entry to layer 0 and CD120, which is a person's step, because the
+card then names the members elected in 2026.
 
-Property fields are trimmed to what the app reads so the file stays small:
-extractDistrictNumber() keys on the numeric field (SLDU/SLDL) or, for congress,
-the trailing number of a *NAME* field ("Congressional District 11" -> "11");
-GEOID is kept as a stable per-feature key for validation.
+THE BUILDER IT REPLACES DREW LAYER 0 FOR THOSE SAME MEMBERS, which is the
+defect this date guard exists to prevent. Inside San Francisco the two maps
+agree closely enough that nobody noticed; across the state they would put
+44 of 52 members on the wrong ground.
 
-Prerequisites: curl (fetch, works through an HTTPS proxy) and Node.js (mapshaper
-via `npx mapshaper@<pinned>`).
+THE TWO CHAMBERS ARE TIGERweb's 2026 STATE LEGISLATIVE DISTRICTS (layers 1
+and 2): 40 Senate and 80 Assembly districts. Measured 2026-11-11 against
+TIGERweb's 2024 layers (5 and 6): every Senate district agrees to an
+intersection-over-union of at least 0.9999956 and every Assembly district to
+at least 0.99996, which is the Census Bureau's own correction between
+vintages, so the newer vintage is drawn. Both chambers carry no date guard;
+check_serving_map refuses if a layer's name changes, since TIGERweb renumbers
+its layers when a vintage rolls.
+
+THE DISTRICTS STOP AT THE SHORELINE. Unlike the county fabric, TIGERweb's
+legislative layers here hold land only: all three reach -124.482 at Cape
+Mendocino and nothing offshore, so a click in the bay or the ocean gets no
+district, which is the honest answer.
+
+SIMPLIFICATION IS DOUGLAS-PEUCKER AT 5 M UNDER AN 8 M CEILING, the setting
+Adam chose for Mississippi's maps before that instance opened ("Finer first",
+2026-10-16) and the newer states' builders carry. Visvalingam thresholds
+triangle AREA, which does not bound how far the drawn line strays from the
+true one, because successive below-threshold removals compound;
+Douglas-Peucker thresholds the stray itself. Every build prints the worst
+stray against the ceiling.
+
+THE INTERVAL IS ABSOLUTE METRES, WHICH IS WHY EACH MAP IS SIMPLIFIED ON ITS OWN
+HERE. Illinois had to put all three chambers through ONE mapshaper topology,
+because two Illinois House districts make up one Senate district and a shared
+edge survives identically only if both came off one topology. California's
+80 Assembly districts are not drawn two to a Senate district, so a per-map
+run is safe in a way it would NOT be under a retain PERCENTAGE, which is
+relative to the whole dataset's vertex count.
+
+Prerequisites: requests, and Node.js (mapshaper via `npx mapshaper@<pinned>`).
 
 Usage:
-    python3 scripts/build_legislative_boundaries.py            # build all three
-    python3 scripts/build_legislative_boundaries.py congress   # one chamber
+    python3 ca/scripts/build_legislative_boundaries.py               # all three
+    python3 ca/scripts/build_legislative_boundaries.py ca-senate     # one map
 """
 
+import datetime
 import json
+import math
 import os
 import random
 import subprocess
 import sys
 import tempfile
 
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(_HERE)), "scripts"))
+from scraper_common import require_robots_once  # noqa: E402  (FLEET_SHARED)
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
-MAPSHAPER = "mapshaper@0.6.102"  # pinned for reproducible output (matches build_embedded_boundaries.py)
+MAPSHAPER = "mapshaper@0.6.102"  # pinned for reproducible output (fleet convention)
 TIGERWEB = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer"
 CA_FIPS = "06"
+HEADERS = {"User-Agent": "districtry boundary builder (+https://districtry.com/ca/)"}
+REQUEST_TIMEOUT = 300
 
-# SF clip window — the permalink gate (index.html's PERMALINK_GATE) plus a small
-# margin, the widest area the app accepts a click in. Every kept district is
-# clipped to this rectangle, and validation samples only inside it (outside, the
-# clipped file intentionally has no geometry and the app never queries there).
-CLIP = {"minLng": -122.62, "minLat": 37.58, "maxLng": -122.28, "maxLat": 37.97}
+# The state envelope the app accepts a click in (the worksheet's
+# permalink_gate) — validation samples uniformly over it.
+STATE_BBOX = {"minLng": -124.6, "minLat": 32.4, "maxLng": -114.0, "maxLat": 42.1}
 
-# chamber -> how to build data/app/<out>.
-#   layer:    TIGERweb Legislative MapServer layer index (0 US House, 1 CA Senate/Upper, 2 CA Assembly/Lower)
-#   fields:   outFields kept from TIGERweb. The app's extractDistrictNumber reads
-#             SLDU/SLDL directly; congress uses the NAME fallback since TIGERweb
-#             ships CD120, not the app's cd### names.
-#   out:      the data/app file index.html fetches for this layer
-#   simplify: mapshaper Visvalingam retain % (topology-aware, keep-shapes)
-#   min_features: count guard — districts intersecting the SF clip window
+# map -> how to build data/app/<out>.
+#   url:        the TIGERweb layer, filtered to California
+#   fields:     outFields kept — the app's extractDistrictNumber reads CD119,
+#               SLDU and SLDL directly, with a NAME fallback
+#   layer_name: the layer's name as its service states it
+#   serving_until: (congress only) the date the members elected from this
+#               map leave office, after which the build refuses
+#   out:        the data/app file index.html fetches for this layer
+#   simplify:   mapshaper Douglas-Peucker interval in METRES (keep-shapes)
+#   count:      the real district count; the build refuses any other
 LAYERS = {
     "congress": {
-        "layer": 0,
-        # CD120, not CD119: TIGERweb rolled its congressional layer to the
-        # 120th Congress ("120th Congressional Districts; January 1, 2026
-        # vintage"). The retired field is GONE, not deprecated, and the
-        # service answers a query naming it with HTTP 200 carrying a JSON
-        # error envelope -- {"error":{"code":400,...}} with no "features"
-        # key -- so a status-code check reads it as success. This builder's
-        # own no-features guard is what surfaces it, as
-        # "returned no features": read that as "the vintage rolled".
-        # Measured 2026-09-03.
-        "fields": ["CD120", "NAME", "BASENAME", "GEOID", "STATE"],
+        # LAYER 4, THE 119TH CONGRESS, until the members elected from it leave
+        # office. Layer 0 is the Proposition 50 map the 2026 election used. See the
+        # docstring.
+        "url": TIGERWEB + "/4",
+        "fields": ["CD119", "NAME", "BASENAME", "GEOID", "STATE"],
+        "layer_name": "119th Congressional Districts",
+        "serving_until": "2027-01-03",
         "out": "congress-districts.json",
-        "simplify": "20%",
-        "min_features": 4,  # observed 6 (CA-11 + San Mateo/Marin/East Bay edges)
+        "simplify": "interval=5",
+        "count": 52,  # 52 California congressional districts
     },
     "ca-senate": {
-        "layer": 1,
+        "url": TIGERWEB + "/1",
         "fields": ["SLDU", "NAME", "BASENAME", "GEOID", "STATE"],
+        "layer_name": "2026 State Legislative Districts - Upper",
         "out": "ca-senate-districts.json",
-        "simplify": "20%",
-        "min_features": 3,  # observed 4 (SD-11 + neighbors)
+        "simplify": "interval=5",
+        "count": 40,  # 40 California Senate districts
     },
     "ca-assembly": {
-        "layer": 2,
+        "url": TIGERWEB + "/2",
         "fields": ["SLDL", "NAME", "BASENAME", "GEOID", "STATE"],
+        "layer_name": "2026 State Legislative Districts - Lower",
         "out": "ca-assembly-districts.json",
-        "simplify": "20%",
-        "min_features": 5,  # observed 8 (AD-17 + AD-19 split SF, plus edges)
+        "simplify": "interval=5",
+        "count": 80,  # 80 California Assembly districts
     },
 }
+DEFAULT_TARGETS = ["congress", "ca-senate", "ca-assembly"]  # all three — see docstring
 PRECISION = "0.000001"  # 6 decimals ~= 0.11 m — the precision the app requests live
 VALIDATION_KEY = "GEOID"  # unique per district, preserved through simplification
 
+# 8 m, PINNED rather than recomputed each run: the ceiling
+# build_state_counties.py holds the county file to, and the setting Adam chose
+# for Mississippi's maps before that instance opened ("Finer first",
+# 2026-10-16). Every run prints the measured median source step beside this
+# value, because a ceiling derived from the source each run can never fail —
+# it rises whenever the source gets coarser.
+FIDELITY_CEILING_M = 8.0
 
-def _env():
-    return "%s,%s,%s,%s" % (CLIP["minLng"], CLIP["minLat"], CLIP["maxLng"], CLIP["maxLat"])
+
+def _rings_of(geom):
+    """Every ring of a Polygon or MultiPolygon, outers and holes alike."""
+    t = geom.get("type")
+    c = geom.get("coordinates") or []
+    if t == "Polygon":
+        return c
+    if t == "MultiPolygon":
+        return [ring for poly in c for ring in poly]
+    return []
 
 
-def fetch_tiger(layer, fields):
-    """Fetch the CA features for a Legislative MapServer layer that INTERSECT the
-    SF window, as GeoJSON (full district polygons — clipping happens in mapshaper).
+def _get_json(url, params):
+    import requests  # noqa: PLC0415 (only the fetching path needs it)
+    require_robots_once(url, HEADERS["User-Agent"], headers=HEADERS,
+                        label="ca-build-legislative-boundaries")
+    resp = requests.get(url, params=params, headers=HEADERS, timeout=REQUEST_TIMEOUT)
+    resp.raise_for_status()
+    data = resp.json()
+    if isinstance(data, dict) and data.get("error"):
+        # An API error is not an empty answer (CLAUDE.md): read the key, never a
+        # default that turns the error object into "no features".
+        raise RuntimeError("%s answered an error: %r" % (url, data["error"]))
+    return data
 
-    Uses curl so it works through an HTTPS proxy (as in the Claude Code sandbox).
-    The envelope query keeps the fetch to the handful of districts SF can touch,
-    not all of California."""
-    url = (
-        TIGERWEB + "/" + str(layer) + "/query"
-        "?where=" + "STATE%3D%27" + CA_FIPS + "%27"
-        "&geometry=" + _env() +
-        "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects"
-        "&outFields=" + ",".join(fields) +
-        "&outSR=4326&geometryPrecision=6&f=geojson"
-    )
-    out = subprocess.run(
-        ["curl", "-sS", "--fail", "--max-time", "120", url],
-        check=True, capture_output=True,
-    ).stdout
-    geo = json.loads(out)
+
+def fetch_layer(name, cfg, url=None, fields=None):
+    """Every California feature of the layer, as GeoJSON."""
+    params = {"where": "STATE='%s'" % CA_FIPS,
+              "outFields": ",".join(fields or cfg["fields"]),
+              "returnGeometry": "true", "outSR": "4326",
+              "geometryPrecision": "6", "f": "geojson"}
+    url = url or cfg["url"]
+    geo = _get_json(url + "/query", params)
     feats = geo.get("features") or []
     if not feats:
-        raise RuntimeError("TIGERweb layer %d returned no features for the SF window" % layer)
+        raise RuntimeError("%s: %s returned no features" % (name, url))
     if geo.get("exceededTransferLimit"):
-        raise RuntimeError("TIGERweb layer %d hit the transfer cap — needs paging" % layer)
+        raise RuntimeError("%s: %s hit the transfer cap — needs paging" % (name, url))
     return geo
+
+
+def _layer_name(url):
+    return _get_json(url, {"f": "json"}).get("name", "")
+
+
+def check_serving_map(name, cfg, today=None):
+    """Refuse a layer that no longer carries the map it was chosen for, and a
+    congressional map whose members have left office. TIGERweb renumbers its
+    layers when a vintage rolls, so the index alone proves nothing."""
+    got = _layer_name(cfg["url"])
+    if got != cfg["layer_name"]:
+        raise RuntimeError(
+            "%s: %s is now %r, not %r — find the layer that is, and refuse "
+            "rather than draw a different map" % (name, cfg["url"], got, cfg["layer_name"]))
+    today = today or datetime.date.today().isoformat()
+    if "serving_until" in cfg and today >= cfg["serving_until"]:
+        raise RuntimeError(
+            "%s: the members elected in 2024 from %r left office on %s. Switch "
+            "this entry to layer 0 and CD120, the map the 2026 election used, "
+            "and set a new serving_until" % (name, cfg["layer_name"], cfg["serving_until"]))
 
 
 def run_mapshaper(source_path, simplify, out_path):
     subprocess.run(
         [
             "npx", "-y", MAPSHAPER, source_path,
-            "-clip", "bbox=" + _env(),
-            "-simplify", "visvalingam", "keep-shapes", simplify,
+            "-simplify", "dp", "keep-shapes", simplify,
             "-o", "precision=" + PRECISION, "format=geojson", out_path,
         ],
         check=True, cwd=REPO_ROOT,
     )
 
 
+# --- fidelity: how far the TRUE line strays from the chord drawn in its
+#     place. The obvious direction gates nothing — simplification KEEPS a
+#     subset of source vertices, so every drawn vertex already lies on the
+#     source line and "no drawn vertex far from the source" is ~0 by
+#     construction. What a reader sees is the other direction, so that is
+#     what is measured: for every SOURCE vertex, its distance to the nearest
+#     segment of its own district as drawn. -------------------------------
+def _seg_index(feature, cell=0.02):
+    idx = {}
+    for ring in _rings_of(feature["geometry"]):
+        for i in range(len(ring) - 1):
+            a, b = ring[i], ring[i + 1]
+            x0, x1 = sorted((a[0], b[0]))
+            y0, y1 = sorted((a[1], b[1]))
+            for gx in range(int(math.floor(x0 / cell)), int(math.floor(x1 / cell)) + 1):
+                for gy in range(int(math.floor(y0 / cell)), int(math.floor(y1 / cell)) + 1):
+                    idx.setdefault((gx, gy), []).append((a, b))
+    return idx
+
+
+def _point_to_segment_m(p, a, b):
+    my = 111320.0
+    mx = 111320.0 * math.cos(math.radians(p[1]))
+    px, py = p[0] * mx, p[1] * my
+    ax, ay = a[0] * mx, a[1] * my
+    bx, by = b[0] * mx, b[1] * my
+    dx, dy = bx - ax, by - ay
+    length2 = dx * dx + dy * dy
+    t = 0.0 if length2 == 0 else max(0.0, min(1.0, ((px - ax) * dx + (py - ay) * dy) / length2))
+    return math.hypot(px - (ax + t * dx), py - (ay + t * dy))
+
+
+def median_source_step_m(features):
+    """The median length of a source segment — what the true line's own
+    detail is, and where FIDELITY_CEILING_M comes from. Printed on every run
+    beside the pinned ceiling rather than used to recompute it: a ceiling
+    derived from the source each run can never fail, because it rises
+    whenever the source gets coarser."""
+    steps = []
+    for f in features:
+        for ring in _rings_of(f["geometry"]):
+            for i in range(len(ring) - 1):
+                a, b = ring[i], ring[i + 1]
+                my = 111320.0
+                mx = 111320.0 * math.cos(math.radians((a[1] + b[1]) / 2))
+                steps.append(math.hypot((b[0] - a[0]) * mx, (b[1] - a[1]) * my))
+    steps.sort()
+    return steps[len(steps) // 2] if steps else 0.0
+
+
+def check_fidelity(src_features, drawn_features, key_prop):
+    """Worst stray in metres, and which districts exceed the ceiling."""
+    drawn = {f["properties"].get(key_prop): f for f in drawn_features}
+    worst = 0.0
+    over = []
+    for f in src_features:
+        d = drawn.get(f["properties"].get(key_prop))
+        if d is None:
+            continue
+        idx = _seg_index(d)
+        w = 0.0
+        for ring in _rings_of(f["geometry"]):
+            for v in ring[:-1]:
+                gx = int(math.floor(v[0] / 0.02))
+                gy = int(math.floor(v[1] / 0.02))
+                cand = []
+                for ddx in (-1, 0, 1):
+                    for ddy in (-1, 0, 1):
+                        cand += idx.get((gx + ddx, gy + ddy), ())
+                if not cand:
+                    continue
+                best = min(_point_to_segment_m(v, a, b) for a, b in cand)
+                if best > w:
+                    w = best
+        if w > worst:
+            worst = w
+        if w > FIDELITY_CEILING_M:
+            over.append(f["properties"].get(key_prop))
+    return worst, over
+
+
 # --- point-in-polygon mirroring index.html's even-odd test (so validation
-#     agrees with what the app computes at runtime) — same as build_embedded_boundaries.py ---
+#     agrees with what the app computes at runtime) — fleet-standard copy ---
 def _point_in_ring(pt, ring):
     x, y = pt
     inside = False
@@ -212,22 +368,17 @@ def _districts_at(model, pt):
 
 
 def validate(source_features, result_features, key_prop, samples=2000, seed=2024):
-    """Refuse the build unless clip+simplify preserves district coverage INSIDE the
-    SF window vs the unclipped fetch, the project's way (2,000 uniform random
-    points over the clip window). Points are sampled only inside the window —
-    outside it the clipped file intentionally has no geometry, and the app never
-    queries there. Any point landing in two result districts is a topology break.
-
-    Note the classic feature-count/property-equality checks build_embedded_
-    boundaries.py uses do NOT apply here: clipping legitimately drops per-district
-    vertices and rewrites bboxes, so this validates by classification agreement
-    against the full (unclipped) source instead."""
+    """Refuse the build unless simplification preserves district coverage over
+    the state envelope vs the full-precision fetch — the project's 2,000
+    uniform-random-point protocol. Any point landing in two result districts
+    is a topology break."""
     src = _model(source_features, key_prop)
     new = _model(result_features, key_prop)
     rng = random.Random(seed)
     agree = overlaps = 0
     for _ in range(samples):
-        pt = (rng.uniform(CLIP["minLng"], CLIP["maxLng"]), rng.uniform(CLIP["minLat"], CLIP["maxLat"]))
+        pt = (rng.uniform(STATE_BBOX["minLng"], STATE_BBOX["maxLng"]),
+              rng.uniform(STATE_BBOX["minLat"], STATE_BBOX["maxLat"]))
         s_hits = _districts_at(new, pt)
         if len(s_hits) > 1:
             overlaps += 1
@@ -241,11 +392,12 @@ def validate(source_features, result_features, key_prop, samples=2000, seed=2024
         return False, "topology broken: %d/%d points fell in >1 district" % (overlaps, samples)
     if pct < 99.5:
         return False, "point-in-district agreement only %.2f%% (need >= 99.5%%)" % pct
-    return True, "%d/%d (%.2f%%) agreement over the SF window, 0 overlaps" % (agree, samples, pct)
+    return True, "%d/%d (%.2f%%) agreement over the state envelope, 0 overlaps" % (agree, samples, pct)
 
 
-def build_chamber(name, cfg):
-    source = fetch_tiger(cfg["layer"], cfg["fields"])
+def build_map(name, cfg):
+    check_serving_map(name, cfg)
+    source = fetch_layer(name, cfg)
 
     with tempfile.TemporaryDirectory() as tmp:
         src_path = os.path.join(tmp, name + "-src.geojson")
@@ -256,15 +408,27 @@ def build_chamber(name, cfg):
         with open(out_tmp) as f:
             simplified = json.load(f)
 
-    if len(simplified["features"]) < cfg["min_features"]:
+    n = len(simplified["features"])
+    if n != cfg["count"]:
         raise RuntimeError(
-            "%s: only %d districts after clipping (need >= %d) — refusing to write"
-            % (name, len(simplified["features"]), cfg["min_features"])
+            "%s: %d features after simplify (expected exactly %d districts) "
+            "— refusing to write" % (name, n, cfg["count"])
         )
 
     ok, msg = validate(source["features"], simplified["features"], VALIDATION_KEY)
     if not ok:
         raise RuntimeError("%s validation failed: %s" % (name, msg))
+
+    step = median_source_step_m(source["features"])
+    worst, over = check_fidelity(source["features"], simplified["features"], VALIDATION_KEY)
+    if over:
+        raise RuntimeError(
+            "%s: %d district(s) stray past the %.0f m fidelity ceiling (worst %.1f m): "
+            "%s — refusing to write" % (name, len(over), FIDELITY_CEILING_M, worst,
+                                        ", ".join(sorted(over)[:5]))
+        )
+    print("%s: median source step %.2f m, worst stray %.1f m against a %.0f m ceiling, "
+          "0 of %d districts over" % (name, step, worst, FIDELITY_CEILING_M, n))
 
     compact = json.dumps(simplified, separators=(",", ":"))
     if json.loads(compact) != simplified:
@@ -276,20 +440,20 @@ def build_chamber(name, cfg):
         f.write(compact)
 
     print(
-        "%s -> data/app/%s: %d districts (clipped to SF); %s; %d bytes (%s retain, 6dp)"
-        % (name, cfg["out"], len(simplified["features"]), msg, len(compact), cfg["simplify"]),
+        "%s -> data/app/%s: %d features (statewide); %s; %d bytes (dp %s, 6dp)"
+        % (name, cfg["out"], n, msg, len(compact), cfg["simplify"]),
         file=sys.stderr,
     )
 
 
 def main():
-    targets = sys.argv[1:] or list(LAYERS)
+    targets = sys.argv[1:] or DEFAULT_TARGETS
     unknown = [t for t in targets if t not in LAYERS]
     if unknown:
-        print("unknown chamber(s): %s; known: %s" % (unknown, list(LAYERS)), file=sys.stderr)
+        print("unknown map(s): %s; known: %s" % (unknown, list(LAYERS)), file=sys.stderr)
         sys.exit(1)
     for name in targets:
-        build_chamber(name, LAYERS[name])
+        build_map(name, LAYERS[name])
 
 
 if __name__ == "__main__":

@@ -1,0 +1,462 @@
+{
+  "1": {
+    "name": "Don Gaetz",
+    "party": "Republican",
+    "email": "gaetz.don.web@flsenate.gov",
+    "capitolOffice": [
+      "405 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5001"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S1"
+  },
+  "2": {
+    "name": "Jay Trumbull",
+    "party": "Republican",
+    "email": "trumbull.jay.web@flsenate.gov",
+    "capitolOffice": [
+      "416 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5002"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S2"
+  },
+  "3": {
+    "name": "Corey Simon",
+    "party": "Republican",
+    "email": "simon.corey.web@flsenate.gov",
+    "capitolOffice": [
+      "303 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5003"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S3"
+  },
+  "4": {
+    "name": "Clay Yarborough",
+    "party": "Republican",
+    "email": "yarborough.clay.web@flsenate.gov",
+    "capitolOffice": [
+      "412 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5004"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S4"
+  },
+  "5": {
+    "name": "Tracie Davis",
+    "party": "Democratic",
+    "email": "davis.tracie.web@flsenate.gov",
+    "capitolOffice": [
+      "228 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5005"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S5"
+  },
+  "6": {
+    "name": "Jennifer Bradley",
+    "party": "Republican",
+    "email": "bradley.jennifer.web@flsenate.gov",
+    "capitolOffice": [
+      "406 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5006"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S6"
+  },
+  "7": {
+    "name": "Thomas J. \"Tom\" Leek",
+    "party": "Republican",
+    "email": "leek.tom.web@flsenate.gov",
+    "capitolOffice": [
+      "413 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5007"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S7"
+  },
+  "8": {
+    "name": "Jake Johansson",
+    "party": "Republican",
+    "capitolOffice": [
+      "315 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5008"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S8"
+  },
+  "9": {
+    "name": "Stan McClain",
+    "party": "Republican",
+    "email": "mcclain.stan.web@flsenate.gov",
+    "capitolOffice": [
+      "309 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5009"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S9"
+  },
+  "10": {
+    "name": "John Lowndes",
+    "party": "Democratic",
+    "url": "https://www.flsenate.gov/Senators/S10"
+  },
+  "11": {
+    "name": "Ralph E. Massullo, Jr.",
+    "party": "Republican",
+    "email": "massullo.ralph.web@flsenate.gov",
+    "capitolOffice": [
+      "308 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5011"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S11"
+  },
+  "12": {
+    "name": "Colleen Burton",
+    "party": "Republican",
+    "email": "burton.colleen.web@flsenate.gov",
+    "capitolOffice": [
+      "415 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5012"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S12"
+  },
+  "13": {
+    "name": "Keith L. Truenow",
+    "party": "Republican",
+    "email": "truenow.keith.web@flsenate.gov",
+    "capitolOffice": [
+      "410 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5013"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S13"
+  },
+  "14": {
+    "name": "Brian Nathan",
+    "party": "Democratic",
+    "email": "nathan.brian.web@flsenate.gov",
+    "capitolOffice": [
+      "222 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5014"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S14"
+  },
+  "15": {
+    "name": "LaVon Bracy Davis",
+    "party": "Democratic",
+    "email": "bracydavis.lavon.web@flsenate.gov",
+    "capitolOffice": [
+      "212 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5015"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S15"
+  },
+  "16": {
+    "name": "Fentrice Driskell",
+    "party": "Democratic",
+    "capitolOffice": [
+      "226 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5016"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S16"
+  },
+  "17": {
+    "name": "Carlos Guillermo Smith",
+    "party": "Democratic",
+    "email": "smith.carlos.web@flsenate.gov",
+    "capitolOffice": [
+      "214 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5017"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S17"
+  },
+  "18": {
+    "name": "Nick DiCeglie",
+    "party": "Republican",
+    "email": "diceglie.nick.web@flsenate.gov",
+    "capitolOffice": [
+      "318 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5018"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S18"
+  },
+  "19": {
+    "name": "Debbie Mayfield",
+    "party": "Republican",
+    "email": "mayfield.debbie.web@flsenate.gov",
+    "capitolOffice": [
+      "302 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5019"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S19"
+  },
+  "20": {
+    "name": "Jim Boyd",
+    "party": "Republican",
+    "email": "boyd.jim.web@flsenate.gov",
+    "capitolOffice": [
+      "318 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5020"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S20"
+  },
+  "21": {
+    "name": "Chris Nocco",
+    "party": "Republican",
+    "capitolOffice": [
+      "312 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5021"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S21"
+  },
+  "22": {
+    "name": "James Buchanan",
+    "party": "Republican",
+    "capitolOffice": [
+      "313 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5022"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S22"
+  },
+  "23": {
+    "name": "Danny Burgess",
+    "party": "Republican",
+    "email": "burgess.danny.web@flsenate.gov",
+    "capitolOffice": [
+      "400 The Capitol",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5023"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S23"
+  },
+  "24": {
+    "name": "Mack Bernard",
+    "party": "Democratic",
+    "email": "bernard.mack.web@flsenate.gov",
+    "capitolOffice": [
+      "202 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5024"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S24"
+  },
+  "25": {
+    "name": "Kristen Aston Arrington",
+    "party": "Democratic",
+    "email": "arrington.kristen.web@flsenate.gov",
+    "capitolOffice": [
+      "210 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5025"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S25"
+  },
+  "26": {
+    "name": "David Silvers",
+    "party": "Democratic",
+    "capitolOffice": [
+      "216 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5026"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S26"
+  },
+  "27": {
+    "name": "Ben Albritton",
+    "party": "Republican",
+    "email": "albritton.ben.web@flsenate.gov",
+    "capitolOffice": [
+      "409 The Capitol",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5027"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S27"
+  },
+  "28": {
+    "name": "Lauren Uhlich Melo",
+    "party": "Republican",
+    "capitolOffice": [
+      "306 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5028"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S28"
+  },
+  "29": {
+    "name": "Erin Grall",
+    "party": "Republican",
+    "email": "grall.erin.web@flsenate.gov",
+    "capitolOffice": [
+      "408 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5029"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S29"
+  },
+  "30": {
+    "name": "Lauren Book",
+    "party": "Democratic",
+    "email": "book.lauren.web@flsenate.gov",
+    "capitolOffice": [
+      "218 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5030"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S30"
+  },
+  "31": {
+    "name": "Gayle Harrell",
+    "party": "Republican",
+    "email": "harrell.gayle.web@flsenate.gov",
+    "capitolOffice": [
+      "404 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5031"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S31"
+  },
+  "32": {
+    "name": "Rosalind Osgood",
+    "party": "Democratic",
+    "email": "osgood.rosalind.web@flsenate.gov",
+    "capitolOffice": [
+      "213 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5032"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S32"
+  },
+  "33": {
+    "name": "Jonathan Martin",
+    "party": "Republican",
+    "email": "martin.jonathan.web@flsenate.gov",
+    "capitolOffice": [
+      "414 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5033"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S33"
+  },
+  "34": {
+    "name": "Ashley Viola Gantt",
+    "party": "Democratic",
+    "capitolOffice": [
+      "220 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5034"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S34"
+  },
+  "35": {
+    "name": "Barbara Sharief",
+    "party": "Democratic",
+    "email": "sharief.barbara.web@flsenate.gov",
+    "capitolOffice": [
+      "205 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5035"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S35"
+  },
+  "36": {
+    "name": "Ileana Garcia",
+    "party": "Republican",
+    "email": "garcia.ileana.web@flsenate.gov",
+    "capitolOffice": [
+      "314 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5036"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S36"
+  },
+  "37": {
+    "name": "Jason W. B. Pizzo",
+    "party": "No Party Affiliation",
+    "email": "pizzo.jason.web@flsenate.gov",
+    "capitolOffice": [
+      "305 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5037"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S37"
+  },
+  "38": {
+    "name": "Alexis Calatayud",
+    "party": "Republican",
+    "email": "calatayud.alexis.web@flsenate.gov",
+    "capitolOffice": [
+      "310 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5038"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S38"
+  },
+  "39": {
+    "vacant": true,
+    "vacantWhy": "The member list of the Florida Senate lists this seat as vacant.",
+    "sourceUrl": "https://www.flsenate.gov/Senators/",
+    "asOf": "2026-11-11"
+  },
+  "40": {
+    "name": "Ana Maria Rodriguez",
+    "party": "Republican",
+    "email": "rodriguez.anamaria.web@flsenate.gov",
+    "capitolOffice": [
+      "411 Senate Building",
+      "404 South Monroe Street",
+      "Tallahassee, FL 32399-1100",
+      "(850) 487-5040"
+    ],
+    "url": "https://www.flsenate.gov/Senators/S40"
+  }
+}

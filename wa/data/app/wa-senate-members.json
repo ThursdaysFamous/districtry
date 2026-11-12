@@ -1,0 +1,590 @@
+{
+  "1": {
+    "name": "Derek Stanford",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "237 John A. Cherberg Building",
+      "PO Box 40401",
+      "Olympia, WA 98504",
+      "(360) 786-7600"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/derek-stanford"
+  },
+  "2": {
+    "name": "Jim McCune",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "210A Irv Newhouse Building",
+      "PO Box 40402",
+      "Olympia, WA 98504",
+      "(360) 786-7602"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/jim-mccune"
+  },
+  "3": {
+    "name": "Marcus Riccelli",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "309 Legislative Building",
+      "PO Box 40403",
+      "Olympia, WA 98504",
+      "(360) 786-7604"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/marcus-riccelli"
+  },
+  "4": {
+    "name": "Leonard Christian",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "322A Irv Newhouse Building",
+      "PO Box 40404",
+      "Olympia, WA 98504",
+      "(360) 786-7606"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/leonard-christian"
+  },
+  "5": {
+    "name": "Victoria Hunt",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "405 Legislative Building",
+      "PO Box 40405",
+      "Olympia, WA 98504",
+      "(360) 786-7608"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/victoria-hunt"
+  },
+  "6": {
+    "name": "Jeff Holy",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "312A Irv Newhouse Building",
+      "PO Box 40406",
+      "Olympia, WA 98504",
+      "(360) 786-7610"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/jeff-holy"
+  },
+  "7": {
+    "name": "Shelly Short",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "240A Irv Newhouse Building",
+      "PO Box 40407",
+      "Olympia, WA 98504",
+      "(360) 786-7612"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/shelly-short"
+  },
+  "8": {
+    "name": "Matt Boehnke",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "241A Irv Newhouse Building",
+      "PO Box 40408",
+      "Olympia, WA 98504",
+      "(360) 786-7614"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/matt-boehnke"
+  },
+  "9": {
+    "name": "Mark Schoesler",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "417 Legislative Building",
+      "PO Box 40409",
+      "Olympia, WA 98504",
+      "(360) 786-7620"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/mark-schoesler"
+  },
+  "10": {
+    "name": "Ron Muzzall",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "310A Irv Newhouse Building",
+      "PO Box 40410",
+      "Olympia, WA 98504",
+      "(360) 786-7618"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/ron-muzzall"
+  },
+  "11": {
+    "name": "Bob Hasegawa",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "305 Legislative Building",
+      "PO Box 40411",
+      "Olympia, WA 98504",
+      "(360) 786-7616"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/bob-hasegawa"
+  },
+  "12": {
+    "name": "Keith Goehner",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "331A Irv Newhouse Building",
+      "PO Box 40412",
+      "Olympia, WA 98504",
+      "(360) 786-7622"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/keith-goehner"
+  },
+  "13": {
+    "name": "Judy Warnick",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "316 Legislative Building",
+      "PO Box 40413",
+      "Olympia, WA 98504",
+      "(360) 786-7624"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/judy-warnick"
+  },
+  "14": {
+    "name": "Curtis King",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "340A Irv Newhouse Building",
+      "PO Box 40414",
+      "Olympia, WA 98504",
+      "(360) 786-7626"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/curtis-king"
+  },
+  "15": {
+    "name": "Nikki Torres",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "323A Irv Newhouse Building",
+      "PO Box 40415",
+      "Olympia, WA 98504",
+      "(360) 786-7684"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/nikki-torres"
+  },
+  "16": {
+    "name": "Perry Dozier",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "342 Irv Newhouse Building",
+      "PO Box 40416",
+      "Olympia, WA 98504",
+      "(360) 786-7630"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/perry-dozier"
+  },
+  "17": {
+    "name": "Paul Harris",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "242A Irv Newhouse Building",
+      "PO Box 40417",
+      "Olympia, WA 98504",
+      "(360) 786-7632"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/paul-harris"
+  },
+  "18": {
+    "name": "Adrian Cortes",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "411 Legislative Building",
+      "PO Box 40418",
+      "Olympia, WA 98504",
+      "(360) 786-7634"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/adrian-cortes"
+  },
+  "19": {
+    "name": "Jeff Wilson",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "330A Irv Newhouse Building",
+      "PO Box 40419",
+      "Olympia, WA 98504",
+      "(360) 786-7636"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/jeff-wilson"
+  },
+  "20": {
+    "name": "John Braun",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "314 Legislative Building",
+      "PO Box 40420",
+      "Olympia, WA 98504",
+      "(360) 786-7638"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/john-braun"
+  },
+  "21": {
+    "name": "Marko Liias",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "305 John A. Cherberg Building",
+      "PO Box 40421",
+      "Olympia, WA 98504",
+      "(360) 786-7640"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/marko-liias"
+  },
+  "22": {
+    "name": "Jessica Bateman",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "409 Legislative Building",
+      "PO Box 40422",
+      "Olympia, WA 98504",
+      "(360) 786-7642"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/jessica-bateman"
+  },
+  "23": {
+    "name": "Drew Hansen",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "403 Legislative Building",
+      "PO Box 40423",
+      "Olympia, WA 98504",
+      "(360) 786-7644"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/drew-hansen"
+  },
+  "24": {
+    "name": "Mike Chapman",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "402 Legislative Building",
+      "PO Box 40424",
+      "Olympia, WA 98504",
+      "(360) 786-7646"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/mike-chapman"
+  },
+  "25": {
+    "name": "Chris Gildon",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "311A Irv Newhouse Building",
+      "PO Box 40425",
+      "Olympia, WA 98504",
+      "(360) 786-7648"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/chris-gildon"
+  },
+  "26": {
+    "name": "Deborah Krishnadasan",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "230 John A. Cherberg Building",
+      "PO Box 40426",
+      "Olympia, WA 98504",
+      "(360) 786-7650"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/deborah-krishnadasan"
+  },
+  "27": {
+    "name": "Yasmin Trudeau",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "227 John A. Cherberg Building",
+      "PO Box 40427",
+      "Olympia, WA 98504",
+      "(360) 786-7652"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/yasmin-trudeau"
+  },
+  "28": {
+    "name": "T'wina Nobles",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "416 Legislative Building",
+      "PO Box 40428",
+      "Olympia, WA 98504",
+      "(360) 786-7654"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/t'wina-nobles"
+  },
+  "29": {
+    "name": "Steve Conway",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "241 John A. Cherberg Building",
+      "PO Box 40429",
+      "Olympia, WA 98504",
+      "(360) 786-7656"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/steve-conway"
+  },
+  "30": {
+    "name": "Claire Wilson",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "407 Legislative Building",
+      "PO Box 40430",
+      "Olympia, WA 98504",
+      "(360) 786-7658"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/claire-wilson"
+  },
+  "31": {
+    "name": "Phil Fortunato",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "341A Irv Newhouse Building",
+      "PO Box 40431",
+      "Olympia, WA 98504",
+      "(360) 786-7660"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/phil-fortunato"
+  },
+  "32": {
+    "name": "Jesse Salomon",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "235 John A. Cherberg Building",
+      "PO Box 40432",
+      "Olympia, WA 98504",
+      "(360) 786-7662"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/jesse-salomon"
+  },
+  "33": {
+    "name": "Tina Orwall",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "404 Legislative Building",
+      "PO Box 40433",
+      "Olympia, WA 98504",
+      "(360) 786-7664"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/tina-orwall"
+  },
+  "34": {
+    "name": "Emily Alvarado",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "415 Legislative Building",
+      "PO Box 40434",
+      "Olympia, WA 98504",
+      "(360) 786-7667"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/emily-alvarado"
+  },
+  "35": {
+    "name": "Drew MacEwen",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "321A Irv Newhouse Building",
+      "PO Box 40435",
+      "Olympia, WA 98504",
+      "(360) 786-7668"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/drew-macewen"
+  },
+  "36": {
+    "name": "Noel Frame",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "220 John A. Cherberg Building",
+      "PO Box 40436",
+      "Olympia, WA 98504",
+      "(360) 786-7670"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/noel-frame"
+  },
+  "37": {
+    "name": "Rebecca Saldaña",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "219 John A. Cherberg Building",
+      "PO Box 40437",
+      "Olympia, WA 98504",
+      "(360) 786-7688"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/rebecca-saldaña"
+  },
+  "38": {
+    "name": "June Robinson",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "303 John A. Cherberg Building",
+      "PO Box 40438",
+      "Olympia, WA 98504",
+      "(360) 786-7674"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/june-robinson"
+  },
+  "39": {
+    "name": "Keith Wagoner",
+    "party": "Republican",
+    "capitolOffice": [
+      "Washington State Senate",
+      "332A Irv Newhouse Building",
+      "PO Box 40439",
+      "Olympia, WA 98504",
+      "(360) 786-7676"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/keith-wagoner"
+  },
+  "40": {
+    "name": "Liz Lovelett",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "233 John A. Cherberg Building",
+      "PO Box 40440",
+      "Olympia, WA 98504",
+      "(360) 786-7678"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/liz-lovelett"
+  },
+  "41": {
+    "name": "Lisa Wellman",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "224 John A. Cherberg Building",
+      "PO Box 40441",
+      "Olympia, WA 98504",
+      "(360) 786-7641"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/lisa-wellman"
+  },
+  "42": {
+    "name": "Sharon Shewmake",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "215 John A. Cherberg Building",
+      "PO Box 40442",
+      "Olympia, WA 98504",
+      "(360) 786-7682"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/sharon-shewmake"
+  },
+  "43": {
+    "name": "Jamie Pedersen",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "307 Legislative Building",
+      "PO Box 40443",
+      "Olympia, WA 98504",
+      "(360) 786-7628"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/jamie-pedersen"
+  },
+  "44": {
+    "name": "John Lovick",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "212 John A. Cherberg Building",
+      "PO Box 40444",
+      "Olympia, WA 98504",
+      "(360) 786-7686"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/john-lovick"
+  },
+  "45": {
+    "name": "Manka Dhingra",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "239 John A. Cherberg Building",
+      "PO Box 40445",
+      "Olympia, WA 98504",
+      "(360) 786-7672"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/manka-dhingra"
+  },
+  "46": {
+    "name": "Javier Valdez",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "226 John A. Cherberg Building",
+      "PO Box 40446",
+      "Olympia, WA 98504",
+      "(360) 786-7690"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/javier-valdez"
+  },
+  "47": {
+    "name": "Claudia Kauffman",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "218 John A. Cherberg Building",
+      "PO Box 40447",
+      "Olympia, WA 98504",
+      "(360) 786-7692"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/claudia-kauffman"
+  },
+  "48": {
+    "name": "Vandana Slatter",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "213 John A. Cherberg Building",
+      "PO Box 40448",
+      "Olympia, WA 98504",
+      "(360) 786-7694"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/vandana-slatter"
+  },
+  "49": {
+    "name": "Annette Cleveland",
+    "party": "Democrat",
+    "capitolOffice": [
+      "Washington State Senate",
+      "223 John A. Cherberg Building",
+      "PO Box 40449",
+      "Olympia, WA 98504",
+      "(360) 786-7696"
+    ],
+    "url": "https://leg.wa.gov/legislators/member/annette-cleveland"
+  }
+}

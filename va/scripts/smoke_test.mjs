@@ -396,18 +396,22 @@ try {
   //     retained, with no fetch, and Chicago proves the fleet file is still
   //     read for ground far from here.
   //
-  //     WEST VIRGINIA, MARYLAND AND THE DISTRICT ARE DELIBERATELY NOT CASES.
-  //     Nobody serves them today, so a click there stays here; but West
-  //     Virginia is the plan's third state, and a "stays here" case in any of
-  //     them would start failing the day it goes live, in a change that is
-  //     about another state. The negative point, in the Atlantic, carries that
-  //     half instead (1a2-ii).
+  //     SALISBURY, MARYLAND JOINED AS A CASE in the change that published
+  //     Maryland (batch 3 of the state-level launch). Measured against
+  //     fleet-outlines.json on 2026-11-12, it lies inside Maryland's outline
+  //     and no other, about 40 km from this app's. West Virginia (live since
+  //     2026-11-10) is not a case here yet, and the District of Columbia is
+  //     served by nobody, so it is deliberately not a case: a "stays here"
+  //     case there would start failing the day it goes live, in a change that
+  //     is about another place. The negative point, in the Atlantic, carries
+  //     the stays-here half (1a2-ii).
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Pikeville, Kentucky", lat: 37.4793, lng: -82.5188, want: "https://districtry.com/ky/" },
       { name: "Johnson City, Tennessee", lat: 36.3134, lng: -82.3535, want: "https://districtry.com/tn/" },
       { name: "Greensboro, North Carolina", lat: 36.0726, lng: -79.7920, want: "https://districtry.com/nc/" },
+      { name: "Salisbury, Maryland", lat: 38.3607, lng: -75.5994, want: "https://districtry.com/md/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });

@@ -1,0 +1,532 @@
+{
+  "1": {
+    "name": "Thomas W. Peterson",
+    "party": "Republican",
+    "email": "tpeterson@le.utah.gov",
+    "phone": "work, cell and home 435-720-3516",
+    "url": "https://house.utleg.gov/rep/PETERT/"
+  },
+  "2": {
+    "name": "Michael J. Petersen",
+    "party": "Republican",
+    "email": "mpetersen@le.utah.gov",
+    "phone": "cell 435-770-6925",
+    "url": "https://house.utleg.gov/rep/PETERM/"
+  },
+  "3": {
+    "name": "Jason E. Thompson",
+    "party": "Republican",
+    "email": "jthompson@le.utah.gov",
+    "phone": "cell 801-505-8787",
+    "url": "https://house.utleg.gov/rep/THOMJA/"
+  },
+  "4": {
+    "name": "Tiara Auxier",
+    "party": "Republican",
+    "email": "tauxier@le.utah.gov",
+    "phone": "cell 801-450-3701",
+    "url": "https://house.utleg.gov/rep/AUXIET/"
+  },
+  "5": {
+    "name": "Casey Snider",
+    "party": "Republican",
+    "email": "csnider@le.utah.gov",
+    "phone": "cell 435-770-4081",
+    "url": "https://house.utleg.gov/rep/SNIDEC/"
+  },
+  "6": {
+    "name": "Rob Bishop",
+    "party": "Republican",
+    "email": "rbishop@le.utah.gov",
+    "phone": "work 801-538-1029",
+    "url": "https://house.utleg.gov/rep/BISHORW/"
+  },
+  "7": {
+    "name": "Ryan D. Wilcox",
+    "party": "Republican",
+    "email": "ryanwilcox@le.utah.gov",
+    "phone": "cell 385-600-3306",
+    "url": "https://house.utleg.gov/rep/WILCORD/"
+  },
+  "8": {
+    "name": "Jason B. Kyle",
+    "party": "Republican",
+    "email": "jkyle@le.utah.gov",
+    "phone": "cell 385-394-2424",
+    "url": "https://house.utleg.gov/rep/KYLEJB/"
+  },
+  "9": {
+    "name": "Jake Sawyer",
+    "party": "Republican",
+    "email": "jsawyer@le.utah.gov",
+    "phone": "cell 801-641-5928",
+    "url": "https://house.utleg.gov/rep/SAWYEJ/"
+  },
+  "10": {
+    "name": "Jill Koford",
+    "party": "Republican",
+    "email": "jkoford@le.utah.gov",
+    "phone": "cell 801-300-2532",
+    "url": "https://house.utleg.gov/rep/KOFORJ/"
+  },
+  "11": {
+    "name": "Katy Hall",
+    "party": "Republican",
+    "email": "khall@le.utah.gov",
+    "phone": "work, cell and home 801-834-3059",
+    "url": "https://house.utleg.gov/rep/HALLK/"
+  },
+  "12": {
+    "name": "Mike Schultz",
+    "party": "Republican",
+    "email": "mikeschultz@le.utah.gov",
+    "url": "https://house.utleg.gov/rep/SCHULM/"
+  },
+  "13": {
+    "name": "Karen M. Peterson",
+    "party": "Republican",
+    "email": "kpeterson@le.utah.gov",
+    "phone": "cell and home 385-285-6790",
+    "url": "https://house.utleg.gov/rep/PETERK/"
+  },
+  "14": {
+    "name": "Karianne Lisonbee",
+    "party": "Republican",
+    "email": "karilisonbee@le.utah.gov",
+    "phone": "cell 801-589-2934",
+    "url": "https://house.utleg.gov/rep/LISONK/"
+  },
+  "15": {
+    "name": "Ariel Defay",
+    "party": "Republican",
+    "email": "adefay@le.utah.gov",
+    "phone": "work, cell and home 801-793-8944",
+    "url": "https://house.utleg.gov/rep/DEFAYA/"
+  },
+  "16": {
+    "asOf": "2026-11-12"
+  },
+  "17": {
+    "name": "Stewart E. Barlow",
+    "party": "Republican",
+    "email": "sbarlow@le.utah.gov",
+    "url": "https://house.utleg.gov/rep/BARLOSE/"
+  },
+  "18": {
+    "name": "Paul A. Cutler",
+    "party": "Republican",
+    "email": "pcutler@le.utah.gov",
+    "phone": "cell 801-923-4618",
+    "url": "https://house.utleg.gov/rep/CUTLEP/"
+  },
+  "19": {
+    "name": "Raymond P. Ward",
+    "party": "Republican",
+    "email": "rayward@le.utah.gov",
+    "url": "https://house.utleg.gov/rep/WARDR/"
+  },
+  "20": {
+    "name": "Melissa G. Ballard",
+    "party": "Republican",
+    "email": "mballard@le.utah.gov",
+    "phone": "cell 801-633-6561",
+    "url": "https://house.utleg.gov/rep/BALLAMG/"
+  },
+  "21": {
+    "name": "Sandra Hollins",
+    "party": "Democratic",
+    "email": "shollins@le.utah.gov",
+    "phone": "home 801-538-1029",
+    "url": "https://house.utleg.gov/rep/HOLLIS/"
+  },
+  "22": {
+    "name": "Jennifer Dailey-Provost",
+    "party": "Democratic",
+    "email": "jdprovost@le.utah.gov",
+    "phone": "cell 385-321-7827",
+    "url": "https://house.utleg.gov/rep/DAILEJ/"
+  },
+  "23": {
+    "name": "Hoang Nguyen",
+    "party": "Democratic",
+    "email": "hnguyen@le.utah.gov",
+    "phone": "cell 801-538-1029",
+    "url": "https://house.utleg.gov/rep/NGUYEH/"
+  },
+  "24": {
+    "name": "Grant Amjad Miller",
+    "party": "Democratic",
+    "email": "gmiller@le.utah.gov",
+    "phone": "cell 801-520-0099",
+    "url": "https://house.utleg.gov/rep/MILLGR/"
+  },
+  "25": {
+    "name": "Angela Romero",
+    "party": "Democratic",
+    "email": "angelaromero@le.utah.gov",
+    "phone": "cell 801-538-1408",
+    "url": "https://house.utleg.gov/rep/ROMERAY/"
+  },
+  "26": {
+    "name": "Matt MacPherson",
+    "party": "Republican",
+    "email": "mmacpherson@le.utah.gov",
+    "url": "https://house.utleg.gov/rep/MACPHM/"
+  },
+  "27": {
+    "name": "Anthony E. Loubet",
+    "party": "Republican",
+    "email": "aloubet@le.utah.gov",
+    "phone": "work, cell and home 801-657-0466",
+    "url": "https://house.utleg.gov/rep/LOUBEA/"
+  },
+  "28": {
+    "name": "Nicholeen P. Peck",
+    "party": "Republican",
+    "email": "npeck@le.utah.gov",
+    "phone": "cell 801-834-5495",
+    "url": "https://house.utleg.gov/rep/PECKNI/"
+  },
+  "29": {
+    "name": "Bridger Bolinder",
+    "party": "Republican",
+    "email": "bbolinder@le.utah.gov",
+    "phone": "work, cell and home 435-255-3093",
+    "url": "https://house.utleg.gov/rep/BOLINB/"
+  },
+  "30": {
+    "name": "Jake Fitisemanu",
+    "party": "Democratic",
+    "email": "jfitisemanu@le.utah.gov",
+    "phone": "cell 801-633-4546",
+    "url": "https://house.utleg.gov/rep/FITISJ/"
+  },
+  "31": {
+    "name": "Verona Mauga",
+    "party": "Democratic",
+    "email": "vmauga@le.utah.gov",
+    "phone": "cell 801-573-8279",
+    "url": "https://house.utleg.gov/rep/MAUGAV/"
+  },
+  "32": {
+    "name": "Sahara Hayes",
+    "party": "Democratic",
+    "email": "shayes@le.utah.gov",
+    "phone": "work, cell and home 801-657-0395",
+    "url": "https://house.utleg.gov/rep/HAYESS/"
+  },
+  "33": {
+    "name": "Doug Owens",
+    "party": "Democratic",
+    "email": "dougowens@le.utah.gov",
+    "phone": "cell 385-499-3761",
+    "url": "https://house.utleg.gov/rep/OWENSDO/"
+  },
+  "34": {
+    "name": "Carol S. Moss",
+    "party": "Democratic",
+    "email": "csmoss@le.utah.gov",
+    "phone": "cell 801-647-8764",
+    "phonesExtra": [
+      "home 801-272-6507"
+    ],
+    "url": "https://house.utleg.gov/rep/MOSSCS/"
+  },
+  "35": {
+    "name": "Rosalba Dominguez",
+    "party": "Democratic",
+    "email": "rdominguez@le.utah.gov",
+    "phone": "cell 801-419-3283",
+    "url": "https://house.utleg.gov/rep/DOMINR/"
+  },
+  "36": {
+    "name": "James A. Dunnigan",
+    "party": "Republican",
+    "email": "jdunnigan@le.utah.gov",
+    "phone": "cell 801-840-1800",
+    "url": "https://house.utleg.gov/rep/DUNNIJA/"
+  },
+  "37": {
+    "name": "Ashlee Matthews",
+    "party": "Democratic",
+    "email": "amatthews@le.utah.gov",
+    "phone": "cell 801-538-1029",
+    "url": "https://house.utleg.gov/rep/MATTHA/"
+  },
+  "38": {
+    "name": "Cheryl K. Acton",
+    "party": "Republican",
+    "email": "cacton@le.utah.gov",
+    "phone": "cell 801-809-3571",
+    "url": "https://house.utleg.gov/rep/ACTONCK/"
+  },
+  "39": {
+    "name": "Ken Ivory",
+    "party": "Republican",
+    "email": "kivory@le.utah.gov",
+    "phone": "cell 801-694-8380",
+    "url": "https://house.utleg.gov/rep/IVORYK/"
+  },
+  "40": {
+    "name": "Andrew Stoddard",
+    "party": "Democratic",
+    "email": "astoddard@le.utah.gov",
+    "phone": "cell 385-256-3281",
+    "url": "https://house.utleg.gov/rep/STODDA/"
+  },
+  "41": {
+    "name": "John Arthur",
+    "party": "Democratic",
+    "email": "jarthur@le.utah.gov",
+    "phone": "work 801-538-1029",
+    "phonesExtra": [
+      "cell 801-518-3407"
+    ],
+    "url": "https://house.utleg.gov/rep/ARTHUJ/"
+  },
+  "42": {
+    "name": "Clinton Okerlund",
+    "party": "Republican",
+    "email": "cokerlund@le.utah.gov",
+    "phone": "cell 801-999-8605",
+    "url": "https://house.utleg.gov/rep/OKERLC/"
+  },
+  "43": {
+    "name": "Steve Eliason",
+    "party": "Republican",
+    "email": "seliason@le.utah.gov",
+    "phone": "cell 801-673-4748",
+    "url": "https://house.utleg.gov/rep/ELIASS/"
+  },
+  "44": {
+    "name": "Jordan D. Teuscher",
+    "party": "Republican",
+    "email": "jteuscher@le.utah.gov",
+    "phone": "cell 801-810-6170",
+    "phonesExtra": [
+      "home 801-228-8283"
+    ],
+    "url": "https://house.utleg.gov/rep/TEUSCJ/"
+  },
+  "45": {
+    "name": "Tracy Miller",
+    "party": "Republican",
+    "email": "tmiller@le.utah.gov",
+    "phone": "cell 801-707-5768",
+    "url": "https://house.utleg.gov/rep/MILLET/"
+  },
+  "46": {
+    "name": "Calvin Roberts",
+    "party": "Republican",
+    "email": "croberts@le.utah.gov",
+    "url": "https://house.utleg.gov/rep/ROBERC/"
+  },
+  "47": {
+    "name": "Mark A. Strong",
+    "party": "Republican",
+    "email": "mstrong@le.utah.gov",
+    "phone": "cell 385-275-5682",
+    "url": "https://house.utleg.gov/rep/STRONMA/"
+  },
+  "48": {
+    "name": "Doug Fiefia",
+    "party": "Republican",
+    "email": "dfiefia@le.utah.gov",
+    "url": "https://house.utleg.gov/rep/FIEFID/"
+  },
+  "49": {
+    "name": "Candice B. Pierucci",
+    "party": "Republican",
+    "email": "cpierucci@le.utah.gov",
+    "phone": "cell 385-414-1488",
+    "url": "https://house.utleg.gov/rep/PIERUC/"
+  },
+  "50": {
+    "name": "Stephanie Gricius",
+    "party": "Republican",
+    "email": "sgricius@le.utah.gov",
+    "phone": "cell 801-901-8251",
+    "url": "https://house.utleg.gov/rep/GRICIS/"
+  },
+  "51": {
+    "name": "Leah Hansen",
+    "party": "Republican",
+    "email": "lhansen@le.utah.gov",
+    "phone": "cell 385-418-9942",
+    "url": "https://house.utleg.gov/rep/LHANSEN/"
+  },
+  "52": {
+    "name": "A. Cory Maloy",
+    "party": "Republican",
+    "email": "corymaloy@le.utah.gov",
+    "phone": "cell 801-477-0019",
+    "url": "https://house.utleg.gov/rep/MALOYC/"
+  },
+  "53": {
+    "name": "Kay J. Christofferson",
+    "party": "Republican",
+    "email": "kchristofferson@le.utah.gov",
+    "phone": "cell 801-592-5709",
+    "phonesExtra": [
+      "home 801-768-8914"
+    ],
+    "url": "https://house.utleg.gov/rep/CHRISKJ/"
+  },
+  "54": {
+    "name": "Kristen Chevrier",
+    "party": "Republican",
+    "email": "kchevrier@le.utah.gov",
+    "phone": "cell 801-520-6773",
+    "url": "https://house.utleg.gov/rep/CHEVRK/"
+  },
+  "55": {
+    "name": "Jon Hawkins",
+    "party": "Republican",
+    "email": "jhawkins@le.utah.gov",
+    "phone": "cell 801-368-2534",
+    "url": "https://house.utleg.gov/rep/HAWKIJ/"
+  },
+  "56": {
+    "name": "Val L. Peterson",
+    "party": "Republican",
+    "email": "vpeterson@le.utah.gov",
+    "phone": "home 801-224-4473",
+    "url": "https://house.utleg.gov/rep/PETERVL/"
+  },
+  "57": {
+    "name": "Nelson T. Abbott",
+    "party": "Republican",
+    "email": "nabbott@le.utah.gov",
+    "phone": "cell 385-358-3269",
+    "url": "https://house.utleg.gov/rep/ABBOTN/"
+  },
+  "58": {
+    "name": "David Shallenberger",
+    "party": "Republican",
+    "email": "dshallenberger@le.utah.gov",
+    "phone": "cell 801-214-5989",
+    "url": "https://house.utleg.gov/rep/SHALLD/"
+  },
+  "59": {
+    "name": "Mike L. Kohler",
+    "party": "Republican",
+    "email": "mkohler@le.utah.gov",
+    "phone": "cell 801-420-6158",
+    "url": "https://house.utleg.gov/rep/KOHLEM/"
+  },
+  "60": {
+    "name": "Grant Pace",
+    "party": "Republican",
+    "email": "gpace@le.utah.gov",
+    "phone": "work and cell 801-835-8860",
+    "url": "https://house.utleg.gov/rep/PACEG/"
+  },
+  "61": {
+    "name": "Lisa Shepherd",
+    "party": "Republican",
+    "email": "lshepherd@le.utah.gov",
+    "phone": "cell 801-903-8998",
+    "url": "https://house.utleg.gov/rep/SHEPHL/"
+  },
+  "62": {
+    "name": "Norman K Thurston",
+    "party": "Republican",
+    "email": "normthurston@le.utah.gov",
+    "phone": "cell 801-477-5348",
+    "url": "https://house.utleg.gov/rep/THURSNK/"
+  },
+  "63": {
+    "name": "Stephen L. Whyte",
+    "party": "Republican",
+    "email": "swhyte@le.utah.gov",
+    "phone": "work and cell 385-271-8435",
+    "url": "https://house.utleg.gov/rep/WHYTESL/"
+  },
+  "64": {
+    "name": "Jackie Larson",
+    "party": "Republican",
+    "email": "jlarson@le.utah.gov",
+    "phone": "work and cell 801-573-7204",
+    "url": "https://house.utleg.gov/rep/LARSOJ/"
+  },
+  "65": {
+    "name": "Doug Welton",
+    "party": "Republican",
+    "email": "dwelton@le.utah.gov",
+    "phone": "cell 385-977-3870",
+    "url": "https://house.utleg.gov/rep/WELTOD/"
+  },
+  "66": {
+    "name": "Troy Shelley",
+    "party": "Republican",
+    "email": "tshelley@le.utah.gov",
+    "phone": "cell 435-691-6000",
+    "url": "https://house.utleg.gov/rep/SHELLT/"
+  },
+  "67": {
+    "name": "Christine F. Watkins",
+    "party": "Republican",
+    "email": "christinewatkins@le.utah.gov",
+    "phone": "cell 435-650-1969",
+    "url": "https://house.utleg.gov/rep/WATKICF/"
+  },
+  "68": {
+    "name": "Scott H. Chew",
+    "party": "Republican",
+    "email": "scottchew@le.utah.gov",
+    "phone": "cell 435-630-0221",
+    "url": "https://house.utleg.gov/rep/CHEWSH/"
+  },
+  "69": {
+    "name": "Logan Monson",
+    "party": "Republican",
+    "email": "lmonson@le.utah.gov",
+    "phone": "cell 801-834-5270",
+    "url": "https://house.utleg.gov/rep/MONSOL/"
+  },
+  "70": {
+    "name": "Carl R. Albrecht",
+    "party": "Republican",
+    "email": "carlalbrecht@le.utah.gov",
+    "phone": "cell 435-979-6578",
+    "phonesExtra": [
+      "home 435-896-5505"
+    ],
+    "url": "https://house.utleg.gov/rep/ALBRECR/"
+  },
+  "71": {
+    "name": "Rex P. Shipp",
+    "party": "Republican",
+    "email": "rshipp@le.utah.gov",
+    "phone": "cell and home 435-590-1073",
+    "url": "https://house.utleg.gov/rep/SHIPPRP/"
+  },
+  "72": {
+    "name": "Joseph Elison",
+    "party": "Republican",
+    "email": "jelison@le.utah.gov",
+    "phone": "work, cell and home 801-657-1006",
+    "url": "https://house.utleg.gov/rep/ELISOJ/"
+  },
+  "73": {
+    "name": "Colin W. Jack",
+    "party": "Republican",
+    "email": "cjack@le.utah.gov",
+    "phone": "cell and home 435-301-4878",
+    "url": "https://house.utleg.gov/rep/JACKC/"
+  },
+  "74": {
+    "name": "R. Neil Walter",
+    "party": "Republican",
+    "email": "nwalter@le.utah.gov",
+    "phone": "cell and home 435-627-5720",
+    "url": "https://house.utleg.gov/rep/WALTER/"
+  },
+  "75": {
+    "name": "Walt Brooks",
+    "party": "Republican",
+    "email": "wbrooks@le.utah.gov",
+    "phone": "cell 801-520-3898",
+    "url": "https://house.utleg.gov/rep/BROOKW/"
+  }
+}

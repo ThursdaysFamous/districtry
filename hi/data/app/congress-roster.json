@@ -1,0 +1,34 @@
+{
+  "1": {
+    "name": "Ed Case",
+    "party": "Democrat",
+    "url": "https://case.house.gov",
+    "capitolOffice": [
+      "2210 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2726"
+    ],
+    "districtOffice": [
+      "1003 Bishop Street, Suite 1110",
+      "Honolulu Office",
+      "Honolulu, HI 96813",
+      "Phone: 808-650-6688"
+    ]
+  },
+  "2": {
+    "name": "Jill N. Tokuda",
+    "party": "Democrat",
+    "url": "https://tokuda.house.gov",
+    "capitolOffice": [
+      "1027 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4906"
+    ],
+    "districtOffice": [
+      "1001 Bishop St., Suite 1503",
+      "ASB Tower",
+      "Honolulu, HI 96813",
+      "Phone: 808-746-6220"
+    ]
+  }
+}
