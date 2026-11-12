@@ -359,6 +359,10 @@ def _not_read_why(entry):
 # into one of the two per-nation tables above or into tribal-councils.json.
 ROSTER_NOT_SOUGHT = {
     "Oklahoma": {"since": "2026-10-10"},
+    # The 29 nations with land in Washington (the Umatilla, seated in Oregon,
+    # among them), drawn 2026-11-12 with no council yet: each nation's page is
+    # read and moved into tribal-councils.json one nation at a time.
+    "Washington": {"since": "2026-11-12"},
 }
 
 

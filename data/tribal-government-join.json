@@ -2,7 +2,7 @@
  "measured": "2026-10-10",
  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer",
  "vintage": "current",
- "note": "Land to government. The key is the Census's own AIANNH code, which a reservation and its off-reservation trust land share. Governments are named exactly as the Bureau of Indian Affairs names them in data/bia-tribal-governments.json. Kentucky is covered with NO AREAS, which is a measurement rather than an omission: all six AIANNH layers return zero features over the state's whole extent, with North Carolina run as a control on the same six queries and answering 7, 2 and 2 on three of them, so the queries work. Re-measured 2026-09-30 at that instance's go-live. Arkansas is covered with no areas too, measured 2026-10-15 at its go-live: the three drawn classes return 499 features nationally and none is kept inside Arkansas, with Tennessee run as a control on the same queries and keeping its one known piece, the Mississippi Choctaw trust land near Henning (0.695 km2). The Cherokee and Choctaw statistical areas that reach over Arkansas's western line are statistical areas, which are drawn only in Oklahoma. OKLAHOMA IS THE ONE STATE WHERE STATISTICAL AREAS ARE ENTERED (Adam, 2026-10-10, \"Make an exception for OK\"): its Oklahoma Tribal Statistical Areas and joint-use areas carry land classes `otsa` and `joint-use`, and tribal_areas.DRAWN_STATISTICAL is what allows them. Where the Census's own name for one area names several nations, the entry lists each under `governments`, matched to the Bureau's list by that name; nations seated inside an area whose name does not name them (the United Keetoowah Band, the Delaware Tribe of Indians and the Alabama-Quassarte, Kialegee and Thlopthlocco tribal towns) are not entered here; scripts/build_tribal_areas.py places them by their seat city and the card lists them as seated in that area. The Shawnee Trust Land is matched to the Shawnee Tribe by the Census's basename. Mississippi is covered from 2026-10-15, measured while its instance was still dark: the Census keeps two pieces there, both the Mississippi Band of Choctaw Indians' (code 2300), the Mississippi Choctaw Reservation (123.468 km2, all of it in the state) and its off-reservation trust land (16.396 km2 of 17.092, 95.9%). The trust land's other 0.695 km2 is Tennessee's piece, entered with Tennessee. Louisiana is covered from 2026-10-20, measured while its instance was still dark: the Census keeps six pieces there, four reservations and two off-reservation trust lands, held by four governments, every piece wholly inside the state: the Chitimacha Tribe of Louisiana (code 0635, its reservation, 1.819 km2), the Coushatta Tribe of Louisiana (0795, its reservation, 2.761 km2, and its trust land, 8.592 km2), the Jena Band of Choctaw Indians (1690, its reservation, 1.763 km2) and the Tunica-Biloxi Indian Tribe (4315, its reservation, 1.690 km2, and its trust land, 4.412 km2). Missouri is covered with no areas, measured 2026-10-26 at its go-live (scripts/tribal_areas.py --report Missouri): the three drawn classes keep no feature inside the state, with Missouri resolving to state code 29 as the control. Virginia is covered from 2026-10-30, measured while its instance was still dark (scripts/tribal_areas.py --report Virginia): the Census keeps three pieces there, every one wholly inside the state. Two are State American Indian Reservations, the Pamunkey (state) Reservation (code 9260, 6.380 km2), held by the Pamunkey Indian Tribe, which the United States has recognized since 2016 and the Bureau lists, and the Mattaponi (state) Reservation (9230, 0.311 km2), held by the Mattaponi Tribe, which Virginia recognizes and the United States does not. The third is the Rappahannock Trust Land (3075, 0.556 km2), held by the Rappahannock Tribe. The Chickahominy and Eastern Chickahominy statistical areas are statistical areas, drawn only in Oklahoma, and the Monacan, Nansemond and Upper Mattaponi hold no land the Census draws. West Virginia is covered with no areas, measured 2026-11-10 at its go-live (scripts/tribal_areas.py --report \"West Virginia\"): the three drawn classes keep no feature inside the state, with West Virginia resolving to state code 54 as the control. Georgia is NOT YET covered, recorded 2026-11-10 at its go-live (scripts/tribal_areas.py --report Georgia): the Census keeps one piece there, the Tama (state) Reservation (0.367 km2), a State American Indian Reservation that no entry here and no layer in the Georgia app draws yet (ga/WATCH.md). The Georgia Tribe of Eastern Cherokee's area is a state designated tribal statistical area, which is drawn only in Oklahoma. Pennsylvania, New Jersey and New Hampshire are covered with no areas, measured 2026-11-11 at their go-live (scripts/tribal_areas.py --report <state>): the three drawn classes keep no feature inside any of the three, with each state resolving to its own state code (42, 34, 33) as the control. Arizona and Nevada are NOT YET covered, recorded the same day: the Census keeps 21 reservations and 7 trust lands in Arizona and 27 reservations and 8 trust lands in Nevada, and neither app draws tribal land yet (az/WATCH.md, nv/WATCH.md). Ohio is covered with no areas, measured 2026-11-11 at its go-live (scripts/tribal_areas.py --report Ohio): the three drawn classes keep no feature inside the state, with Ohio resolving to state code 39 as the control. Washington is NOT YET covered, recorded the same day: the Census keeps 28 reservations and 22 trust lands there, and its app draws no tribal land yet (wa/WATCH.md). Texas and Florida were recorded as not yet covered that day too, and are covered from 2026-11-12. Delaware, Hawaii and Vermont are covered with no areas, measured 2026-11-12 at their go-live (scripts/tribal_areas.py --report <state>): the three drawn classes keep no feature inside any of the three, with each state resolving to its own state code (10, 15, 50) as the control. New Mexico, Nebraska, Idaho, Maine, Montana, Rhode Island, South Dakota, North Dakota, Alaska and Wyoming are NOT YET covered, recorded the same day: none of those ten apps draws tribal land yet (each one's WATCH.md). Texas is covered from 2026-11-12 (scripts/tribal_areas.py --report Texas, with Texas resolving to state code 48 as the control): the Census keeps six pieces there, held by three governments, every piece wholly inside the state: the Alabama-Coushatta Tribe of Texas (code 0050, its reservation, 18.521 km2, and its trust land, 18.307 km2), the Kickapoo Traditional Tribe of Texas (1775, its reservation, 1.557 km2, and its trust land, 0.133 km2) and Ysleta del Sur Pueblo (4755, its reservation, 0.299 km2, and its trust land, 12.760 km2). Florida is covered from 2026-11-12 (scripts/tribal_areas.py --report Florida, state code 12 as the control): the Census keeps eleven pieces there. The Miccosukee Tribe of Indians holds the Miccosukee Reservation (2240, 310.165 km2) and its trust land (20.341 km2). The Seminole Tribe of Florida holds six reservations, each under its own code, which the tribe's own site lists as its reservations (www.semtribe.com, read 2026-11-12): Big Cypress (0225, 213.677 km2), Brighton (0360, 148.241 km2), Fort Pierce (1260, 0.245 km2), Hollywood (1475, 2.049 km2), Immokalee (1555, 2.492 km2) and Tampa (4130, 0.182 km2). It also holds the Seminole (FL) Trust Land (3665, 0.004 km2), which the Census names for it, and the Coconut Creek Trust Land (0690, 0.026 km2), whose Census name names no nation: the tribe's own gaming page lists its Seminole Casino Coconut Creek, and the parcel's interior point (26.2776, -80.1999) lies in the city of Coconut Creek, so it is entered as the Seminole Tribe's. The eleventh piece is a 0.007 km2 part of the Poarch Creek Off-Reservation Trust Land (2865, 1.37% of that parcel), whose government is in Alabama; it is entered with Florida only, since Alabama is not yet covered.",
+ "note": "Land to government. The key is the Census's own AIANNH code, which a reservation and its off-reservation trust land share. Governments are named exactly as the Bureau of Indian Affairs names them in data/bia-tribal-governments.json. Kentucky is covered with NO AREAS, which is a measurement rather than an omission: all six AIANNH layers return zero features over the state's whole extent, with North Carolina run as a control on the same six queries and answering 7, 2 and 2 on three of them, so the queries work. Re-measured 2026-09-30 at that instance's go-live. Arkansas is covered with no areas too, measured 2026-10-15 at its go-live: the three drawn classes return 499 features nationally and none is kept inside Arkansas, with Tennessee run as a control on the same queries and keeping its one known piece, the Mississippi Choctaw trust land near Henning (0.695 km2). The Cherokee and Choctaw statistical areas that reach over Arkansas's western line are statistical areas, which are drawn only in Oklahoma. OKLAHOMA IS THE ONE STATE WHERE STATISTICAL AREAS ARE ENTERED (Adam, 2026-10-10, \"Make an exception for OK\"): its Oklahoma Tribal Statistical Areas and joint-use areas carry land classes `otsa` and `joint-use`, and tribal_areas.DRAWN_STATISTICAL is what allows them. Where the Census's own name for one area names several nations, the entry lists each under `governments`, matched to the Bureau's list by that name; nations seated inside an area whose name does not name them (the United Keetoowah Band, the Delaware Tribe of Indians and the Alabama-Quassarte, Kialegee and Thlopthlocco tribal towns) are not entered here; scripts/build_tribal_areas.py places them by their seat city and the card lists them as seated in that area. The Shawnee Trust Land is matched to the Shawnee Tribe by the Census's basename. Mississippi is covered from 2026-10-15, measured while its instance was still dark: the Census keeps two pieces there, both the Mississippi Band of Choctaw Indians' (code 2300), the Mississippi Choctaw Reservation (123.468 km2, all of it in the state) and its off-reservation trust land (16.396 km2 of 17.092, 95.9%). The trust land's other 0.695 km2 is Tennessee's piece, entered with Tennessee. Louisiana is covered from 2026-10-20, measured while its instance was still dark: the Census keeps six pieces there, four reservations and two off-reservation trust lands, held by four governments, every piece wholly inside the state: the Chitimacha Tribe of Louisiana (code 0635, its reservation, 1.819 km2), the Coushatta Tribe of Louisiana (0795, its reservation, 2.761 km2, and its trust land, 8.592 km2), the Jena Band of Choctaw Indians (1690, its reservation, 1.763 km2) and the Tunica-Biloxi Indian Tribe (4315, its reservation, 1.690 km2, and its trust land, 4.412 km2). Missouri is covered with no areas, measured 2026-10-26 at its go-live (scripts/tribal_areas.py --report Missouri): the three drawn classes keep no feature inside the state, with Missouri resolving to state code 29 as the control. Virginia is covered from 2026-10-30, measured while its instance was still dark (scripts/tribal_areas.py --report Virginia): the Census keeps three pieces there, every one wholly inside the state. Two are State American Indian Reservations, the Pamunkey (state) Reservation (code 9260, 6.380 km2), held by the Pamunkey Indian Tribe, which the United States has recognized since 2016 and the Bureau lists, and the Mattaponi (state) Reservation (9230, 0.311 km2), held by the Mattaponi Tribe, which Virginia recognizes and the United States does not. The third is the Rappahannock Trust Land (3075, 0.556 km2), held by the Rappahannock Tribe. The Chickahominy and Eastern Chickahominy statistical areas are statistical areas, drawn only in Oklahoma, and the Monacan, Nansemond and Upper Mattaponi hold no land the Census draws. West Virginia is covered with no areas, measured 2026-11-10 at its go-live (scripts/tribal_areas.py --report \"West Virginia\"): the three drawn classes keep no feature inside the state, with West Virginia resolving to state code 54 as the control. Georgia is NOT YET covered, recorded 2026-11-10 at its go-live (scripts/tribal_areas.py --report Georgia): the Census keeps one piece there, the Tama (state) Reservation (0.367 km2), a State American Indian Reservation that no entry here and no layer in the Georgia app draws yet (ga/WATCH.md). The Georgia Tribe of Eastern Cherokee's area is a state designated tribal statistical area, which is drawn only in Oklahoma. Pennsylvania, New Jersey and New Hampshire are covered with no areas, measured 2026-11-11 at their go-live (scripts/tribal_areas.py --report <state>): the three drawn classes keep no feature inside any of the three, with each state resolving to its own state code (42, 34, 33) as the control. Arizona and Nevada are NOT YET covered, recorded the same day: the Census keeps 21 reservations and 7 trust lands in Arizona and 27 reservations and 8 trust lands in Nevada, and neither app draws tribal land yet (az/WATCH.md, nv/WATCH.md). Ohio is covered with no areas, measured 2026-11-11 at its go-live (scripts/tribal_areas.py --report Ohio): the three drawn classes keep no feature inside the state, with Ohio resolving to state code 39 as the control. Washington was recorded as not yet covered the same day, with Texas and Florida; all three are covered from 2026-11-12. Delaware, Hawaii and Vermont are covered with no areas, measured 2026-11-12 at their go-live (scripts/tribal_areas.py --report <state>): the three drawn classes keep no feature inside any of the three, with each state resolving to its own state code (10, 15, 50) as the control. New Mexico, Nebraska, Idaho, Maine, Montana, Rhode Island, South Dakota, North Dakota, Alaska and Wyoming are NOT YET covered, recorded the same day: none of those ten apps draws tribal land yet (each one's WATCH.md). Texas is covered from 2026-11-12 (scripts/tribal_areas.py --report Texas, with Texas resolving to state code 48 as the control): the Census keeps six pieces there, held by three governments, every piece wholly inside the state: the Alabama-Coushatta Tribe of Texas (code 0050, its reservation, 18.521 km2, and its trust land, 18.307 km2), the Kickapoo Traditional Tribe of Texas (1775, its reservation, 1.557 km2, and its trust land, 0.133 km2) and Ysleta del Sur Pueblo (4755, its reservation, 0.299 km2, and its trust land, 12.760 km2). Florida is covered from 2026-11-12 (scripts/tribal_areas.py --report Florida, state code 12 as the control): the Census keeps eleven pieces there. The Miccosukee Tribe of Indians holds the Miccosukee Reservation (2240, 310.165 km2) and its trust land (20.341 km2). The Seminole Tribe of Florida holds six reservations, each under its own code, which the tribe's own site lists as its reservations (www.semtribe.com, read 2026-11-12): Big Cypress (0225, 213.677 km2), Brighton (0360, 148.241 km2), Fort Pierce (1260, 0.245 km2), Hollywood (1475, 2.049 km2), Immokalee (1555, 2.492 km2) and Tampa (4130, 0.182 km2). It also holds the Seminole (FL) Trust Land (3665, 0.004 km2), which the Census names for it, and the Coconut Creek Trust Land (0690, 0.026 km2), whose Census name names no nation: the tribe's own gaming page lists its Seminole Casino Coconut Creek, and the parcel's interior point (26.2776, -80.1999) lies in the city of Coconut Creek, so it is entered as the Seminole Tribe's. The eleventh piece is a 0.007 km2 part of the Poarch Creek Off-Reservation Trust Land (2865, 1.37% of that parcel), whose government is in Alabama; it is entered with Florida only, since Alabama is not yet covered. Washington is covered from 2026-11-12 (scripts/tribal_areas.py --report Washington, with Washington resolving to state code 53 as the control): the Census keeps 50 pieces there, 28 reservations and 22 pieces of off-reservation trust land, under 29 codes, each code held by one government and every piece but one wholly inside the state. The Port Madison Reservation (2925) is entered as the Suquamish Indian Tribe's, which the Bureau names as the Suquamish Indian Tribe of the Port Madison Reservation. The exception is the Umatilla Off-Reservation Trust Land (4405), of which 43.353 km2, 71.4%, lies in Washington; its government, the Confederated Tribes of the Umatilla Indian Reservation, is seated in Pendleton, Oregon, and it is entered with Washington only, since Oregon is not yet covered. The Samish Indian Nation, which the Bureau seats in Anacortes, holds no land the Census draws in Washington and has no entry.",
  "statesCovered": [
   "Arkansas",
   "Delaware",
@@ -30,6 +30,7 @@
   "Texas",
   "Vermont",
   "Virginia",
+  "Washington",
   "West Virginia",
   "Wisconsin"
  ],
@@ -54,7 +55,6 @@
   "Rhode Island",
   "South Dakota",
   "Utah",
-  "Washington",
   "Wyoming"
  ],
  "areas": {
@@ -252,6 +252,32 @@
     }
    ]
   },
+  "0575": {
+   "government": "Confederated Tribes of the Chehalis Reservation",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "0575R",
+     "name": "Chehalis Reservation",
+     "state": "Washington",
+     "km2": 18.671,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "0575T",
+     "name": "Chehalis Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 7.15,
+     "share": 1.0
+    }
+   ]
+  },
   "0635": {
    "government": "Chitimacha Tribe of Louisiana",
    "parentGovernment": null,
@@ -288,6 +314,32 @@
     }
    ]
   },
+  "0760": {
+   "government": "Confederated Tribes of the Colville Reservation",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "0760R",
+     "name": "Colville Reservation",
+     "state": "Washington",
+     "km2": 5658.916,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "0760T",
+     "name": "Colville Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 0.604,
+     "share": 1.0
+    }
+   ]
+  },
   "0795": {
    "government": "Coushatta Tribe of Louisiana",
    "parentGovernment": null,
@@ -310,6 +362,32 @@
      "name": "Coushatta Off-Reservation Trust Land",
      "state": "Louisiana",
      "km2": 8.592,
+     "share": 1.0
+    }
+   ]
+  },
+  "0820": {
+   "government": "Cowlitz Indian Tribe",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "0820R",
+     "name": "Cowlitz Reservation",
+     "state": "Washington",
+     "km2": 0.68,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "0820T",
+     "name": "Cowlitz Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 0.246,
      "share": 1.0
     }
    ]
@@ -498,6 +576,32 @@
     }
    ]
   },
+  "1460": {
+   "government": "Hoh Indian Tribe",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "1460R",
+     "name": "Hoh Indian Reservation",
+     "state": "Washington",
+     "km2": 1.781,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "1460T",
+     "name": "Hoh Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 1.755,
+     "share": 1.0
+    }
+   ]
+  },
   "1475": {
    "government": "Seminole Tribe of Florida",
    "parentGovernment": null,
@@ -586,6 +690,32 @@
     }
    ]
   },
+  "1655": {
+   "government": "Jamestown S'Klallam Tribe",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "1655R",
+     "name": "Jamestown S'Klallam Reservation",
+     "state": "Washington",
+     "km2": 1.136,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "1655T",
+     "name": "Jamestown S'Klallam Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 3.867,
+     "share": 1.0
+    }
+   ]
+  },
   "1690": {
    "government": "Jena Band of Choctaw Indians",
    "parentGovernment": null,
@@ -600,6 +730,32 @@
      "name": "Jena Band of Choctaw Reservation",
      "state": "Louisiana",
      "km2": 1.763,
+     "share": 1.0
+    }
+   ]
+  },
+  "1735": {
+   "government": "Kalispel Indian Community of the Kalispel Reservation",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "1735R",
+     "name": "Kalispel Reservation",
+     "state": "Washington",
+     "km2": 19.177,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "1735T",
+     "name": "Kalispel Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 12.226,
      "share": 1.0
     }
    ]
@@ -796,6 +952,32 @@
     }
    ]
   },
+  "2040": {
+   "government": "Lower Elwha Tribal Community",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "2040R",
+     "name": "Lower Elwha Reservation",
+     "state": "Washington",
+     "km2": 5.805,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "2040T",
+     "name": "Lower Elwha Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 1.674,
+     "share": 1.0
+    }
+   ]
+  },
   "2055": {
    "government": "Lower Sioux Indian Community in the State of Minnesota",
    "parentGovernment": null,
@@ -818,6 +1000,42 @@
      "name": "Lower Sioux Off-Reservation Trust Land",
      "state": "Minnesota",
      "km2": 1.466,
+     "share": 1.0
+    }
+   ]
+  },
+  "2070": {
+   "government": "Lummi Tribe of the Lummi Reservation",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "2070R",
+     "name": "Lummi Reservation",
+     "state": "Washington",
+     "km2": 97.363,
+     "share": 1.0
+    }
+   ]
+  },
+  "2085": {
+   "government": "Makah Indian Tribe of the Makah Indian Reservation",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "2085R",
+     "name": "Makah Indian Reservation",
+     "state": "Washington",
+     "km2": 121.762,
      "share": 1.0
     }
    ]
@@ -976,6 +1194,76 @@
      "state": "Tennessee",
      "km2": 0.695,
      "share": 0.0407
+    }
+   ]
+  },
+  "2375": {
+   "government": "Muckleshoot Indian Tribe",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "2375R",
+     "name": "Muckleshoot Reservation",
+     "state": "Washington",
+     "km2": 15.909,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "2375T",
+     "name": "Muckleshoot Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 1.404,
+     "share": 1.0
+    }
+   ]
+  },
+  "2460": {
+   "government": "Nisqually Indian Tribe",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "2460R",
+     "name": "Nisqually Reservation",
+     "state": "Washington",
+     "km2": 21.268,
+     "share": 1.0
+    }
+   ]
+  },
+  "2475": {
+   "government": "Nooksack Indian Tribe",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "2475R",
+     "name": "Nooksack Reservation",
+     "state": "Washington",
+     "km2": 0.029,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "2475T",
+     "name": "Nooksack Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 11.613,
+     "share": 1.0
     }
    ]
   },
@@ -1166,6 +1454,50 @@
     }
    ]
   },
+  "2910": {
+   "government": "Port Gamble S'Klallam Tribe",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "2910R",
+     "name": "Port Gamble Reservation",
+     "state": "Washington",
+     "km2": 6.577,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "2910T",
+     "name": "Port Gamble Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 0.249,
+     "share": 1.0
+    }
+   ]
+  },
+  "2925": {
+   "government": "Suquamish Indian Tribe of the Port Madison Reservation",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "2925R",
+     "name": "Port Madison Reservation",
+     "state": "Washington",
+     "km2": 31.186,
+     "share": 1.0
+    }
+   ]
+  },
   "2980": {
    "government": "Prairie Band Potawatomi Nation",
    "parentGovernment": null,
@@ -1210,6 +1542,32 @@
     }
    ]
   },
+  "3000": {
+   "government": "Puyallup Tribe of the Puyallup Reservation",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "3000R",
+     "name": "Puyallup Reservation",
+     "state": "Washington",
+     "km2": 75.765,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "3000T",
+     "name": "Puyallup Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 0.344,
+     "share": 1.0
+    }
+   ]
+  },
   "3015": {
    "government": "Eastern Band of Cherokee Indians",
    "parentGovernment": null,
@@ -1232,6 +1590,42 @@
      "name": "Qualla Boundary Off-Reservation Trust Land",
      "state": "North Carolina",
      "km2": 2.64,
+     "share": 1.0
+    }
+   ]
+  },
+  "3030": {
+   "government": "Quileute Tribe of the Quileute Reservation",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "3030R",
+     "name": "Quileute Reservation",
+     "state": "Washington",
+     "km2": 8.783,
+     "share": 1.0
+    }
+   ]
+  },
+  "3040": {
+   "government": "Quinault Indian Nation",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "3040R",
+     "name": "Quinault Reservation",
+     "state": "Washington",
+     "km2": 839.323,
      "share": 1.0
     }
    ]
@@ -1376,6 +1770,24 @@
     }
    ]
   },
+  "3625": {
+   "government": "Sauk-Suiattle Indian Tribe",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "3625R",
+     "name": "Sauk-Suiattle Reservation",
+     "state": "Washington",
+     "km2": 0.188,
+     "share": 1.0
+    }
+   ]
+  },
   "3635": {
    "government": "Sault Ste. Marie Tribe of Chippewa Indians, Michigan",
    "parentGovernment": null,
@@ -1464,6 +1876,84 @@
     }
    ]
   },
+  "3780": {
+   "government": "Shoalwater Bay Indian Tribe of the Shoalwater Bay Indian Reservation",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "3780R",
+     "name": "Shoalwater Bay Indian Reservation",
+     "state": "Washington",
+     "km2": 3.307,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "3780T",
+     "name": "Shoalwater Bay Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 1.112,
+     "share": 1.0
+    }
+   ]
+  },
+  "3825": {
+   "government": "Skokomish Indian Tribe",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "3825R",
+     "name": "Skokomish Reservation",
+     "state": "Washington",
+     "km2": 24.509,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "3825T",
+     "name": "Skokomish Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 0.812,
+     "share": 1.0
+    }
+   ]
+  },
+  "3860": {
+   "government": "Snoqualmie Indian Tribe",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "3860R",
+     "name": "Snoqualmie Reservation",
+     "state": "Washington",
+     "km2": 0.512,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "3860T",
+     "name": "Snoqualmie Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 0.031,
+     "share": 1.0
+    }
+   ]
+  },
   "3885": {
    "government": "Sokaogon Chippewa  Community, Wisconsin",
    "parentGovernment": null,
@@ -1490,6 +1980,84 @@
     }
    ]
   },
+  "3940": {
+   "government": "Spokane Tribe of the Spokane Reservation",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "3940R",
+     "name": "Spokane Reservation",
+     "state": "Washington",
+     "km2": 648.469,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "3940T",
+     "name": "Spokane Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 5.493,
+     "share": 1.0
+    }
+   ]
+  },
+  "3955": {
+   "government": "Squaxin Island Tribe of the Squaxin Island Reservation",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "3955R",
+     "name": "Squaxin Island Reservation",
+     "state": "Washington",
+     "km2": 6.483,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "3955T",
+     "name": "Squaxin Island Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 2.269,
+     "share": 1.0
+    }
+   ]
+  },
+  "4000": {
+   "government": "Stillaguamish Tribe of Indians of Washington",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "4000R",
+     "name": "Stillaguamish Reservation",
+     "state": "Washington",
+     "km2": 0.114,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "4000T",
+     "name": "Stillaguamish Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 3.876,
+     "share": 1.0
+    }
+   ]
+  },
   "4015": {
    "government": "Stockbridge Munsee Community, Wisconsin",
    "parentGovernment": null,
@@ -1512,6 +2080,32 @@
      "name": "Stockbridge Munsee Off-Reservation Trust Land",
      "state": "Wisconsin",
      "km2": 7.659,
+     "share": 1.0
+    }
+   ]
+  },
+  "4075": {
+   "government": "Swinomish Indian Tribal Community",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "4075R",
+     "name": "Swinomish Reservation",
+     "state": "Washington",
+     "km2": 54.493,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "4075T",
+     "name": "Swinomish Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 0.001,
      "share": 1.0
     }
    ]
@@ -1548,6 +2142,32 @@
      "name": "Tonawanda Reservation",
      "state": "New York",
      "km2": 30.741,
+     "share": 1.0
+    }
+   ]
+  },
+  "4290": {
+   "government": "Tulalip Tribes of Washington",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "4290R",
+     "name": "Tulalip Reservation",
+     "state": "Washington",
+     "km2": 135.145,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "4290T",
+     "name": "Tulalip Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 0.107,
      "share": 1.0
     }
    ]
@@ -1596,6 +2216,24 @@
     }
    ]
   },
+  "4405": {
+   "government": "Confederated Tribes of the Umatilla Indian Reservation",
+   "parentGovernment": null,
+   "governmentState": "OR",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "trust-land",
+     "geoid": "4405T",
+     "name": "Umatilla Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 43.353,
+     "share": 0.714
+    }
+   ]
+  },
   "4445": {
    "government": "Upper Sioux Community, Minnesota",
    "parentGovernment": null,
@@ -1618,6 +2256,32 @@
      "name": "Upper Sioux Off-Reservation Trust Land",
      "state": "Minnesota",
      "km2": 0.764,
+     "share": 1.0
+    }
+   ]
+  },
+  "4455": {
+   "government": "Upper Skagit Indian Tribe",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "4455R",
+     "name": "Upper Skagit Reservation",
+     "state": "Washington",
+     "km2": 0.471,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "4455T",
+     "name": "Upper Skagit Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 3.125,
      "share": 1.0
     }
    ]
@@ -1663,6 +2327,32 @@
      "state": "Iowa",
      "km2": 2.609,
      "share": 0.0057
+    }
+   ]
+  },
+  "4690": {
+   "government": "Confederated Tribes and Bands of the Yakama Nation",
+   "parentGovernment": null,
+   "governmentState": "WA",
+   "states": [
+    "Washington"
+   ],
+   "lands": [
+    {
+     "class": "reservation",
+     "geoid": "4690R",
+     "name": "Yakama Nation Reservation",
+     "state": "Washington",
+     "km2": 5579.779,
+     "share": 1.0
+    },
+    {
+     "class": "trust-land",
+     "geoid": "4690T",
+     "name": "Yakama Nation Off-Reservation Trust Land",
+     "state": "Washington",
+     "km2": 85.301,
+     "share": 1.0
     }
    ]
   },

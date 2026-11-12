@@ -89,7 +89,7 @@ different thing from one it failed.
 | ut | **EAM·** | 29 | 29/29 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
 | va | **EAM·** | 95 | 95/95 | 510 | 517 | all | 21 | all | 13 of 14 levels |
 | vt | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
-| wa | **EAM·** | 39 | 39/39 § | 0 | 0 | by record | 11 | all | 6 of 14 levels |
+| wa | **EAM·** | 39 | 39/39 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
 | wi | **EAM·** | 72 | 72/72 | 1590 | 1,577 | all | 269 | all | 13 of 14 levels |
 | wv | **EAM·** | 55 | 55/55 | 0 | 0 | all | 15 | all | 10 of 14 levels |
 | wy | **EAM·** | 23 | 23/23 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
@@ -789,8 +789,8 @@ this instance is in maintenance.
 
 - **Examined by a statewide record:** `wa-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 39 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Under a WATCH.md plan (6):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `wa/data/app/population/`, `state-counties.json`, `wa-legislative-districts.json`
-- **Covered: no.** 8 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `wa/data/app/population/`, `state-counties.json`, `tribal-areas.json`, `wa-legislative-districts.json`
+- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 39 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 45 units at 25,000+ name a governing body; unanswered: Auburn city, Bellevue city, Bellingham city, Bothell city, Bremerton city, Burien city, Camas city, Des Moines city and 37 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
@@ -798,7 +798,6 @@ this instance is in maintenance.
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
   - **14. Township or county subdivision boundaries** — open
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Washington has no sub-county general-purpose government — outside a city or town limit the county governs. The 242 sub-county units the Census publishes for Washington are census county divisions: statistical areas, not governments (measured 2026-11-11).
