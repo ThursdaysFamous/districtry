@@ -431,11 +431,12 @@ try {
   //     asks its own entry first, so a border point both outlines draw stays
   //     here. Chicago proves the file is still read for ground far from here.
   //
-  //     ALABAMA IS DELIBERATELY NOT A CASE. Nobody serves it today, so a
-  //     click there stays here; but the fleet is meant to reach every state,
-  //     and a "stays here" case there would start failing the day it goes
-  //     live, in a change that is about another state. The negative point
-  //     carries that half instead (1a2-ii), in the Atlantic since Florida
+  //     OPELIKA, ALABAMA JOINED AS A CASE in the change that published
+  //     Alabama (batch 3 of the state-level launch): until then a click in
+  //     Alabama stayed here and was deliberately not a case. Measured against
+  //     fleet-outlines.json on 2026-11-12, Opelika lies inside Alabama's
+  //     outline and no other, about 26 km from this app's. The negative point
+  //     carries the stays-here half (1a2-ii), in the Atlantic since Florida
   //     went live, where no instance will ever answer. Florida was the same
   //     kind of exception until then, and Tallahassee was the negative
   //     point.
@@ -446,6 +447,7 @@ try {
       { name: "Murphy, North Carolina", lat: 35.0876, lng: -84.0213, want: "https://districtry.com/nc/" },
       { name: "Aiken, South Carolina", lat: 33.5604, lng: -81.7196, want: "https://districtry.com/sc/" },
       { name: "Tallahassee, Florida", lat: 30.4383, lng: -84.2807, want: "https://districtry.com/fl/" },
+      { name: "Opelika, Alabama", lat: 32.6454, lng: -85.3783, want: "https://districtry.com/al/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });

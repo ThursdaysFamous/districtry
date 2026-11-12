@@ -280,6 +280,155 @@ INSTANCES = {
     "wa": {"name": "Washington", "state": "53", "total": 7705281, "counties": 39,
            "bbox": (-124.85, 45.54, -116.91, 49.01),
            "maps": [("congress-districts.json", 10, 0.006), ("wa-legislative-districts.json", 49, 0.025)]},
+    # Batch 3 of the state-level launch. Each row's tolerances are the worst
+    # district measured on the shipped outlines on 2026-11-12, rounded up (to
+    # 0.05% for congress and 0.5% for a legislative chamber).
+    # MASSACHUSETTS'S TWO CHAMBERS ARE NOT HELD HERE: every Senate and House
+    # district is named ("Third Middlesex", "19th Suffolk") rather than
+    # numbered, which the driver's numbered-district reading cannot key, so
+    # their partition of the state is held by ma/scripts/
+    # build_legislative_boundaries.py's own 2,000-point gate. Its congressional
+    # map sits within 0.001% of its ideal.
+    "ma": {"name": "Massachusetts", "state": "25", "total": 7029917, "counties": 14,
+           "bbox": (-73.51, 41.18, -69.85, 42.89),
+           "maps": [("congress-districts.json", 9, 0.0005)]},
+    # CONNECTICUT'S FILES ARE ITS EIGHT 2020 COUNTIES, because the 2020 blocks
+    # carry those codes, not the nine planning regions the Census has filed as
+    # its county equivalents since 2022. Its congressional map sits within
+    # 0.001% of its ideal; the Senate's worst district is 5.677% under the
+    # raw-census ideal and the House's 8.809% over. The likeliest reason,
+    # inferred and not measured, is that Connecticut has counted an
+    # incarcerated person at their last address since its 2021 plan.
+    "ct": {"name": "Connecticut", "state": "09", "total": 3605944, "counties": 8, "counties_2020": True,
+           "bbox": (-73.73, 40.95, -71.78, 42.06),
+           "maps": [("congress-districts.json", 5, 0.0005), ("ct-senate-districts.json", 36, 0.06),
+                    ("ct-house-districts.json", 151, 0.09)]},
+    # MARYLAND'S HOUSE IS NOT HELD: its 71 features are whole districts
+    # electing three delegates and subdistricts electing one or two, so one
+    # ideal over 71 describes none of them. Its congressional map's worst
+    # district is 0.737% over the raw-census ideal and its Senate's 5.421%
+    # under it; the likeliest reason, inferred and not measured, is that
+    # Maryland has counted an incarcerated person at their last address since
+    # 2010, as New York does.
+    "md": {"name": "Maryland", "state": "24", "total": 6177224, "counties": 24,
+           "bbox": (-79.49, 37.88, -74.98, 39.73),
+           "maps": [("congress-districts.json", 8, 0.0075), ("md-senate-districts.json", 47, 0.055)]},
+    # Alabama's congressional map is the court-drawn plan of the 119th
+    # Congress, within 0.001% of its ideal; both legislative plans run to the
+    # 5% range the Legislature adopted (+4.986% and -4.983%).
+    "al": {"name": "Alabama", "state": "01", "total": 5024279, "counties": 67,
+           "bbox": (-88.48, 30.14, -84.88, 35.01),
+           "maps": [("congress-districts.json", 7, 0.0005), ("al-senate-districts.json", 35, 0.05),
+                    ("al-house-districts.json", 105, 0.05)]},
+    # Oregon's House nests two to a Senate district, so the two plans share
+    # every line; worst districts -0.950% (Senate) and +0.984% (House), and
+    # the congressional map within 0.001%.
+    "or": {"name": "Oregon", "state": "41", "total": 4237256, "counties": 36,
+           "bbox": (-124.71, 41.99, -116.46, 46.3),
+           "maps": [("congress-districts.json", 6, 0.0005), ("or-senate-districts.json", 30, 0.01),
+                    ("or-house-districts.json", 60, 0.01)]},
+    # Colorado's commissions' plans: congress +0.011%, Senate +4.568% and
+    # House +3.234% at their worst districts.
+    "co": {"name": "Colorado", "state": "08", "total": 5773714, "counties": 64,
+           "bbox": (-109.07, 36.99, -102.04, 41.01),
+           "maps": [("congress-districts.json", 8, 0.0005), ("co-senate-districts.json", 35, 0.05),
+                    ("co-house-districts.json", 65, 0.035)]},
+    # Utah's congressional map is the 2025 court-ordered plan of the 119th
+    # Congress layer, within 0.001% of its ideal; Senate -1.880% and House
+    # -4.637% at their worst.
+    "ut": {"name": "Utah", "state": "49", "total": 3271616, "counties": 29,
+           "bbox": (-114.06, 36.99, -109.04, 42.01),
+           "maps": [("congress-districts.json", 4, 0.0005), ("ut-senate-districts.json", 29, 0.02),
+                    ("ut-house-districts.json", 75, 0.05)]},
+    # Kansas: congress within 0.001%, Senate +3.946% and House -3.940% at
+    # their worst districts.
+    "ks": {"name": "Kansas", "state": "20", "total": 2937880, "counties": 105,
+           "bbox": (-102.06, 36.99, -94.58, 40.01),
+           "maps": [("congress-districts.json", 4, 0.0005), ("ks-senate-districts.json", 40, 0.04),
+                    ("ks-house-districts.json", 125, 0.04)]},
+    # Batch 4 of the state-level launch, measured on the shipped outlines on
+    # 2026-11-12; each tolerance is the worst district rounded up (to 0.05%
+    # for congress and 0.5% for a legislative chamber), and every map holds
+    # its state exactly. Several plans sit well away from the raw-census
+    # ideal, and where the reason is not on record it is not given:
+    # New Mexico's worst districts are its four northwestern Senate and House
+    # districts (-6.6% and -6.9%); Montana's House District 76 is +13.749% and
+    # Senate District 38 +7.293%; Rhode Island's Senate +8.005%; Delaware's
+    # Senate +7.184% and House +6.278% (Delaware has counted an incarcerated
+    # person at their last address since 2010); South Dakota's Senate
+    # Districts 26 and 27, both on reservation land, -7.813% and -5.62%; and
+    # Wyoming's +5.857% and +6.255%.
+    # AN AT-LARGE STATE'S CONGRESSIONAL MAP IS NOT HELD: Delaware, South
+    # Dakota, North Dakota, Alaska, Vermont and Wyoming each elect one member
+    # from the whole state, so the one district has no number to key and no
+    # ideal but the state.
+    # MULTI-MEMBER HOUSES ARE NOT HELD, Maryland's rule: South Dakota's and
+    # North Dakota's districts elect two representatives each except four
+    # halves electing one, Vermont's districts (named, not numbered) elect one
+    # to three, and so one ideal describes none of them. Alaska's Senate is
+    # lettered, which the numbered reading cannot key; each Senate district is
+    # two House districts, and the House is held.
+    "nm": {"name": "New Mexico", "state": "35", "total": 2117522, "counties": 33,
+           "bbox": (-109.07, 31.32, -102.99, 37.02),
+           "maps": [("congress-districts.json", 3, 0.0005), ("nm-senate-districts.json", 42, 0.07),
+                    ("nm-house-districts.json", 70, 0.07)]},
+    # Nebraska's one-house Legislature: worst -4.960%.
+    "ne": {"name": "Nebraska", "state": "31", "total": 1961504, "counties": 93,
+           "bbox": (-104.07, 39.98, -95.29, 43.02),
+           "maps": [("congress-districts.json", 3, 0.0005), ("ne-legislature-districts.json", 49, 0.05)]},
+    # Idaho's one legislative map serves both chambers: worst -3.768%.
+    "id": {"name": "Idaho", "state": "16", "total": 1839106, "counties": 44,
+           "bbox": (-117.26, 41.97, -111.03, 49.02),
+           "maps": [("congress-districts.json", 2, 0.0005), ("id-legislative-districts.json", 35, 0.04)]},
+    # HAWAII APPORTIONS ITS LEGISLATURE ON A PERMANENT-RESIDENT BASE, which
+    # leaves out non-resident military personnel, their dependants and
+    # non-resident students, so measured against the raw census its districts
+    # around the bases run far over: Senate District 15 +40.032% and House
+    # District 46 +79.027%. That base is the likeliest reason, inferred and not
+    # measured. Its congressional map's worst district is -0.170%.
+    "hi": {"name": "Hawaii", "state": "15", "total": 1455271, "counties": 5,
+           "bbox": (-160.61, 18.85, -154.74, 22.3),
+           "maps": [("congress-districts.json", 2, 0.002), ("hi-senate-districts.json", 25, 0.405),
+                    ("hi-house-districts.json", 51, 0.795)]},
+    # Maine: Senate +4.813%, House -4.924%.
+    "me": {"name": "Maine", "state": "23", "total": 1362359, "counties": 16,
+           "bbox": (-71.1, 42.9, -66.87, 47.47),
+           "maps": [("congress-districts.json", 2, 0.0005), ("me-senate-districts.json", 35, 0.05),
+                    ("me-house-districts.json", 151, 0.05)]},
+    "mt": {"name": "Montana", "state": "30", "total": 1084225, "counties": 56,
+           "bbox": (-116.06, 44.34, -104.02, 49.02),
+           "maps": [("congress-districts.json", 2, 0.0005), ("mt-senate-districts.json", 50, 0.075),
+                    ("mt-house-districts.json", 100, 0.14)]},
+    # Rhode Island's congressional map's worst district is -0.111%; its
+    # House's +4.882%.
+    "ri": {"name": "Rhode Island", "state": "44", "total": 1097379, "counties": 5,
+           "bbox": (-71.92, 41.08, -71.07, 42.03),
+           "maps": [("congress-districts.json", 2, 0.0015), ("ri-senate-districts.json", 38, 0.085),
+                    ("ri-house-districts.json", 75, 0.05)]},
+    "de": {"name": "Delaware", "state": "10", "total": 989948, "counties": 3,
+           "bbox": (-75.8, 38.44, -74.97, 39.85),
+           "maps": [("de-senate-districts.json", 21, 0.075), ("de-house-districts.json", 41, 0.065)]},
+    "sd": {"name": "South Dakota", "state": "46", "total": 886667, "counties": 66,
+           "bbox": (-104.07, 42.46, -96.42, 45.96),
+           "maps": [("sd-senate-districts.json", 35, 0.08)]},
+    # North Dakota's Senate: worst -4.992%.
+    "nd": {"name": "North Dakota", "state": "38", "total": 779094, "counties": 53,
+           "bbox": (-104.06, 45.92, -96.54, 49.02),
+           "maps": [("nd-senate-districts.json", 47, 0.05)]},
+    # ALASKA'S FILES LEAVE OUT THE 232 PEOPLE LIVING PAST THE 180TH MERIDIAN,
+    # on the Near Islands (Shemya and Attu), because the app's own outline is
+    # clipped there and the files hold an app's own ground and nobody beyond
+    # it; east_of_180 records the number and the build fails if it moves. Its
+    # House's worst district is -4.809%.
+    "ak": {"name": "Alaska", "state": "02", "total": 733391, "counties": 30, "east_of_180": 232,
+           "bbox": (-179.25, 51.16, -129.96, 71.45),
+           "maps": [("ak-house-districts.json", 40, 0.05)]},
+    "vt": {"name": "Vermont", "state": "50", "total": 643077, "counties": 14,
+           "bbox": (-73.45, 42.71, -71.45, 45.03),
+           "maps": []},
+    "wy": {"name": "Wyoming", "state": "56", "total": 576851, "counties": 23,
+           "bbox": (-111.07, 40.98, -104.04, 45.02),
+           "maps": [("wy-senate-districts.json", 31, 0.06), ("wy-house-districts.json", 62, 0.065)]},
 }
 def fetch(url, params):
     q = url + "/query?" + urllib.parse.urlencode(params)
@@ -327,7 +476,12 @@ def sum_by_county(spec, url, extra_where=""):
 
 
 def county_names(spec):
-    data = fetch(COUNTIES, {"where": county_where(spec), "outFields": "COUNTY,NAME",
+    # Connecticut's blocks carry the 2020 census's county codes, its eight
+    # historical counties, while the current county layer holds the nine
+    # planning regions the Census has filed since 2022; a row setting
+    # "counties_2020" names its files from the 2020 county layer instead.
+    layer = COUNTIES_2020 if spec.get("counties_2020") else COUNTIES
+    data = fetch(layer, {"where": county_where(spec), "outFields": "COUNTY,NAME",
                             "returnGeometry": "false", "f": "json"})
     return {f["attributes"]["COUNTY"]: f["attributes"]["NAME"] for f in data["features"]}
 
@@ -374,8 +528,10 @@ def about(spec):
     return ("GENERATED by scripts/build_block_population.py. Census 2020 populated blocks (POP100 > 0) "
             "by %s, each as [lng, lat, population] at its internal point, from TIGERweb "
             "Tracts_Blocks/MapServer/12. Every county's sum equals the same census's tract sum; %s "
-            "%s. Fixed until the 2030 census publishes blocks. Never hand-edit."
-            % (scope, sums, format(spec["total"], ",")))
+            "%s%s. Fixed until the 2030 census publishes blocks. Never hand-edit."
+            % (scope, sums, format(ground_total(spec), ","),
+               (", its %s people less the %s living past the 180th meridian, outside the app's ground"
+                % (format(spec["total"], ","), format(spec["east_of_180"], ","))) if spec.get("east_of_180") else ""))
 
 
 # GROUND. The compare screen gives no share of its own people to a district
@@ -420,6 +576,7 @@ def build(tag):
     od = out_dir(tag)
     os.makedirs(od, exist_ok=True)
     index, fails = {}, []
+    beyond = 0
     for county in sorted(names):
         blocks = county_blocks(spec, county)
         pop = sum(b[3] for b in blocks)
@@ -428,6 +585,14 @@ def build(tag):
         if len(blocks) != populated.get(county, (0, 0))[1]:
             fails.append("%s: read %d populated blocks, the layer reports %d"
                          % (names[county], len(blocks), populated.get(county, (0, 0))[1]))
+        if spec.get("east_of_180") is not None:
+            # Alaska: the blocks past the 180th meridian (positive longitude)
+            # lie outside the app's own ground, which is clipped there, so
+            # they are left out and their people counted against the row.
+            kept = [b for b in blocks if b[1] < 0]
+            beyond += sum(b[3] for b in blocks if b[1] >= 0)
+            blocks = kept
+            pop = sum(b[3] for b in blocks)
         points = [[b[1], b[2], b[3]] for b in blocks]
         fips = spec["state"] + county
         write_json(os.path.join(od, fips + ".json"), {
@@ -436,7 +601,9 @@ def build(tag):
                        "blocks": len(points), "bbox": extent(points)}
         print("build-block-population: %s %-26s %8d people in %6d blocks" % (tag, names[county], pop, len(points)))
     total = sum(c["population"] for c in index.values())
-    if total != spec["total"]:
+    if spec.get("east_of_180") is not None and beyond != spec["east_of_180"]:
+        fails.append("%d people live past the 180th meridian, the row records %d" % (beyond, spec["east_of_180"]))
+    if total != ground_total(spec):
         fails.append("%s sums to %d, the 2020 census count is %d" % (spec["name"], total, spec["total"]))
     if fails:
         raise SystemExit("build-block-population: %s: refusing to write the index:\n  - " % tag
@@ -452,6 +619,12 @@ def build(tag):
     write_json_indented(os.path.join(od, "index.json"), doc)
     print("build-block-population: %s: wrote %d county files, %d people in %d blocks"
           % (tag, len(index), total, sum(c["blocks"] for c in index.values())))
+
+
+def ground_total(spec):
+    """The people the files hold: the 2020 count less any recorded as living
+    beyond the app's ground (Alaska's past the 180th meridian)."""
+    return spec["total"] - (spec.get("east_of_180") or 0)
 
 
 def write_json_indented(path, doc):
@@ -517,10 +690,10 @@ def check_districts(tag):
             fails.append("%s: %d numbered districts, expected %d" % (name, len(rows), n))
             continue
         total = sum(p for _, p in rows)
-        if spec["total"] - total != gap:
+        if ground_total(spec) - total != gap:
             fails.append("%s: its districts hold %d people, %s %d, so %d are counted in no district "
                          "(or, if negative, twice) where %d is recorded — a block falls in no district "
-                         "or in two" % (name, total, spec["name"], spec["total"], spec["total"] - total, gap))
+                         "or in two" % (name, total, spec["name"], ground_total(spec), ground_total(spec) - total, gap))
         ideal = spec["total"] / n
         worst = max(rows, key=lambda r: abs(r[1] - ideal))
         dev = (worst[1] - ideal) / ideal
@@ -587,7 +760,7 @@ def check_one(tag):
         if pts and not bad and extent(pts) != rec["bbox"]:
             fails.append("%s: its points' extent is not the one the index records" % rec["name"])
         total += pop
-    if total != spec["total"] or idx.get("state_population") != spec["total"]:
+    if total != ground_total(spec) or idx.get("state_population") != ground_total(spec):
         fails.append("the counties sum to %d (index says %s); %s's 2020 census count is %d"
                      % (total, idx.get("state_population"), spec["name"], spec["total"]))
     if idx.get("_about") != about(spec):

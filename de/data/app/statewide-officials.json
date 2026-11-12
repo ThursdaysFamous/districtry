@@ -1,0 +1,61 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from de/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Delaware",
+ "usSenate": [
+  {
+   "name": "Christopher A. Coons",
+   "party": "Democratic",
+   "url": "https://www.coons.senate.gov/",
+   "office": "218 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5042"
+  },
+  {
+   "name": "Lisa Blunt Rochester",
+   "party": "Democratic",
+   "url": "https://www.bluntrochester.senate.gov/",
+   "office": "513 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2441"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Matt Meyer",
+   "url": "https://governor.delaware.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Kyle Evans Gay",
+   "url": "https://ltgov.delaware.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Kathy Jennings",
+   "url": "https://attorneygeneral.delaware.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Colleen Davis",
+   "url": "https://treasury.delaware.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Auditor of Accounts",
+   "name": "Lydia York",
+   "url": "https://auditor.delaware.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Insurance Commissioner",
+   "name": "Trinidad Navarro",
+   "url": "https://insurance.delaware.gov/",
+   "verified": "2026-11-12"
+  }
+ ],
+ "officersNote": "Delaware's Secretary of State is appointed by the governor, so the office is not listed."
+}

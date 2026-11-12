@@ -141,6 +141,35 @@ SOURCES = {
     "fl": "fl/data/app/metro-outline.json",
     "oh": "oh/data/app/metro-outline.json",
     "wa": "wa/data/app/metro-outline.json",
+    # Batch 3 (Massachusetts, Colorado, Maryland, Alabama, Oregon,
+    # Connecticut, Utah, Kansas), the same shape. Connecticut's is the
+    # dissolve of its nine planning regions, which the Census draws where
+    # counties were until 2022.
+    "ma": "ma/data/app/metro-outline.json",
+    "co": "co/data/app/metro-outline.json",
+    "md": "md/data/app/metro-outline.json",
+    "al": "al/data/app/metro-outline.json",
+    "or": "or/data/app/metro-outline.json",
+    "ct": "ct/data/app/metro-outline.json",
+    "ut": "ut/data/app/metro-outline.json",
+    "ks": "ks/data/app/metro-outline.json",
+    # Batch 4, the last thirteen states, the same shape. Alaska's is clipped
+    # at the 180th meridian, so the Near Islands beyond it are not in it, and
+    # Hawaii's leaves off the Northwestern Hawaiian Islands past Kauai and
+    # Niihau, as its county file does.
+    "nm": "nm/data/app/metro-outline.json",
+    "ne": "ne/data/app/metro-outline.json",
+    "id": "id/data/app/metro-outline.json",
+    "hi": "hi/data/app/metro-outline.json",
+    "me": "me/data/app/metro-outline.json",
+    "mt": "mt/data/app/metro-outline.json",
+    "ri": "ri/data/app/metro-outline.json",
+    "de": "de/data/app/metro-outline.json",
+    "sd": "sd/data/app/metro-outline.json",
+    "nd": "nd/data/app/metro-outline.json",
+    "ak": "ak/data/app/metro-outline.json",
+    "vt": "vt/data/app/metro-outline.json",
+    "wy": "wy/data/app/metro-outline.json",
 }
 
 # Degrees. 0.002 is about 220 m north-south and 165 m east-west at 42 N.

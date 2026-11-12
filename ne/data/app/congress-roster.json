@@ -1,0 +1,47 @@
+{
+  "1": {
+    "name": "Mike Flood",
+    "party": "Republican",
+    "url": "https://flood.house.gov",
+    "capitolOffice": [
+      "343 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4806"
+    ],
+    "districtOffice": [
+      "301 South 13th Street, Suite 100",
+      "Lincoln, NE 68508",
+      "Phone: 402-438-1598"
+    ]
+  },
+  "2": {
+    "name": "Don Bacon",
+    "party": "Republican",
+    "url": "https://bacon.house.gov",
+    "capitolOffice": [
+      "2104 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4155"
+    ],
+    "districtOffice": [
+      "13906 Gold Circle, Suite 101",
+      "Omaha, NE 68144",
+      "Phone: 402-938-0300"
+    ]
+  },
+  "3": {
+    "name": "Adrian Smith",
+    "party": "Republican",
+    "url": "https://adriansmith.house.gov",
+    "capitolOffice": [
+      "502 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6435"
+    ],
+    "districtOffice": [
+      "1811 W. Second St., Suite 275",
+      "Grand Island, NE 68803",
+      "Phone: 308-384-3900"
+    ]
+  }
+}

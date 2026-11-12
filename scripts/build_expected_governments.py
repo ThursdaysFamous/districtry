@@ -42,6 +42,7 @@ import datetime
 import json
 import os
 import sys
+import time
 import urllib.parse
 import urllib.request
 
@@ -66,7 +67,12 @@ STATE_FIPS = {"il": "17", "wi": "55", "ia": "19", "mi": "26",
               "ar": "05", "ms": "28", "la": "22", "mo": "29",
               "va": "51", "wv": "54", "ga": "13",
               "pa": "42", "nv": "32", "az": "04", "nj": "34", "nh": "33",
-              "tx": "48", "fl": "12", "oh": "39", "wa": "53"}
+              "tx": "48", "fl": "12", "oh": "39", "wa": "53",
+              "ma": "25", "co": "08", "md": "24", "al": "01", "or": "41",
+              "ct": "09", "ut": "49", "ks": "20",
+              "nm": "35", "ne": "31", "id": "16", "hi": "15", "me": "23",
+              "mt": "30", "ri": "44", "sd": "46", "nd": "38", "ak": "02",
+              "vt": "50", "wy": "56", "de": "10"}
 
 # Is a county subdivision the GENERAL-PURPOSE government for residents outside
 # incorporated places in this state? A fact of that state's law, recorded with
@@ -169,6 +175,54 @@ SUBDIVISION_IS_GENERAL_PURPOSE = {
     "tx": None,
     "fl": None,
     "wa": None,
+    # BATCH 3, added at its go-live (2026-11-12). Massachusetts: every part of
+    # the state is in a city or a town, and a town (FUNCSTAT A, 293 of them)
+    # governs everyone in it through its town meeting and select board; the
+    # 58 cities are FUNCSTAT F and are counted as places. Connecticut
+    # likewise: every part of the state is in one of 169 towns, each the
+    # general-purpose government of everyone in it (the 20 consolidated with a
+    # city are FUNCSTAT C and the city is counted as a place). Maryland's
+    # subdivisions are its counties' election districts, which govern nobody;
+    # Colorado, Alabama, Oregon and Utah are divided into census county
+    # divisions (FUNCSTAT S), which govern nobody. Kansas has townships; None
+    # while no active one reaches the floor, which the build checks.
+    "ma": True,
+    "ct": True,
+    "md": None,
+    "co": None,
+    "al": None,
+    "or": None,
+    "ut": None,
+    "ks": None,
+    # BATCH 4, added at its go-live (2026-11-12), measured on TIGERweb's
+    # current county subdivisions (FUNCSTAT) with Illinois as the control
+    # (1,411 active of 1,695). Maine: 459 active towns and plantations, each the
+    # general-purpose government of everyone in it; its 27 cities are FUNCSTAT
+    # F and are counted as places, and its 42 unorganized territories are
+    # FUNCSTAT S, governed by the county and the State, so they cannot reach
+    # the floor. Rhode Island: every part of the state is in one of 31 towns
+    # (FUNCSTAT A) or 9 cities (F, counted as places). Vermont: 237 active
+    # towns, each the general-purpose government of everyone in it; its 10
+    # cities are F and its unorganized towns and gores are I or N. Nebraska
+    # (319 active), South Dakota (898) and North Dakota (1,305) have townships
+    # in some counties; None while no active one reaches the floor, which the
+    # build checks. New Mexico, Idaho, Hawaii, Montana, Alaska, Wyoming and
+    # Delaware are divided into census county divisions or their Alaska
+    # equivalent (FUNCSTAT S: 130, 170, 44, 194, 37, 71 and 27), which govern
+    # nobody, so no active one can reach the floor.
+    "me": True,
+    "ri": True,
+    "vt": True,
+    "ne": None,
+    "sd": None,
+    "nd": None,
+    "nm": None,
+    "id": None,
+    "hi": None,
+    "mt": None,
+    "ak": None,
+    "wy": None,
+    "de": None,
 }
 
 
@@ -187,8 +241,21 @@ def query(layer, where):
     }
     url = "%s/%d/query?%s" % (SERVICE, layer, urllib.parse.urlencode(params))
     req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=120) as resp:
-        doc = json.load(resp)
+    # TIGERweb sometimes answers 200 with an empty body (measured 2026-11-12:
+    # three full runs each failed on a different state's query that answered
+    # at once when asked again), so an unreadable answer is asked again, up to
+    # four times with a growing pause. An error envelope is a real answer and
+    # is never retried; it fails below.
+    for attempt in range(4):
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                doc = json.load(resp)
+            break
+        except (ValueError, OSError) as exc:
+            if attempt == 3:
+                fail("TIGERweb layer %d gave no readable answer after four "
+                     "tries: %s" % (layer, exc))
+            time.sleep(5 * (attempt + 1))
     # AN API ERROR IS NOT AN EMPTY ANSWER. Reading `features` with a default
     # turns a rejected field list into "this state has no such unit", which is
     # a confident, plausible answer assembled entirely out of a failure.

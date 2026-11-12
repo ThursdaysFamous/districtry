@@ -1,0 +1,31 @@
+{
+ "state": "Rhode Island",
+ "usps": "RI",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Dan McKee",
+   "url": "https://governor.ri.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Sabina Matos",
+   "url": "https://ltgov.ri.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Gregg Amore",
+   "url": "https://www.sos.ri.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Peter Neronha",
+   "url": "https://riag.ri.gov/"
+  },
+  {
+   "office": "General Treasurer",
+   "name": "James Diossa",
+   "url": "https://treasury.ri.gov/"
+  }
+ ]
+}

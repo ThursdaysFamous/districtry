@@ -401,16 +401,19 @@ try {
   //     measures. This instance answers its own side from the state outline
   //     the wash retained, with no fetch.
   //
-  //     A CLICK IN ALABAMA IS DELIBERATELY NOT A CASE. It is not served
-  //     today, so a click there stays here; but the fleet is meant to reach
-  //     every state, and a "stays here" case there would start failing the
-  //     day Alabama goes live, in a change that is about another state. The
-  //     negative point, in the Gulf, carries that half instead (1a2-ii).
+  //     DOTHAN, ALABAMA JOINED AS A CASE in the change that published Alabama
+  //     (batch 3 of the state-level launch): until then a click in Alabama
+  //     stayed here and was deliberately not a case. Measured against
+  //     fleet-outlines.json on 2026-11-12, Dothan lies inside Alabama's
+  //     outline and no other, about 25 km from this app's. The negative
+  //     point, in the Gulf, carries the stays-here half (1a2-ii), and no
+  //     go-live can move it.
   {
     const cases = [
       { name: "the Georgia State Capitol", lat: 33.7490, lng: -84.3880, want: "https://districtry.com/ga/" },
       { name: "the Louisiana State Capitol", lat: 30.4571, lng: -91.1874, want: "https://districtry.com/la/" },
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
+      { name: "Dothan, Alabama", lat: 31.2232, lng: -85.3905, want: "https://districtry.com/al/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });

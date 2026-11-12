@@ -1,41 +1,255 @@
 {
  "built_by": "scripts/build_expected_governments.py",
  "floor": 25000,
- "measured": "2026-11-11",
+ "measured": "2026-11-12",
  "read_by": "scripts/build_eam_status.py",
  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer",
  "source": "U.S. Census Bureau TIGERweb, tigerWMS_Census2020 \u2014 layer 26 (Incorporated Places) and layer 20 (County Subdivisions, FUNCSTAT='A'); POP100 is the 2020 decennial count.",
  "subdivision_is_general_purpose": {
+  "ak": null,
+  "al": null,
   "ar": null,
   "az": null,
+  "co": null,
+  "ct": true,
+  "de": null,
   "fl": null,
   "ga": null,
+  "hi": null,
   "ia": null,
+  "id": null,
   "il": false,
   "in": false,
+  "ks": null,
   "ky": null,
   "la": null,
+  "ma": true,
+  "md": null,
+  "me": true,
   "mi": true,
   "mn": null,
   "mo": null,
   "ms": null,
+  "mt": null,
   "nc": null,
+  "nd": null,
+  "ne": null,
   "nh": true,
   "nj": true,
+  "nm": null,
   "nv": null,
   "ny": true,
   "oh": true,
   "ok": null,
+  "or": null,
   "pa": true,
+  "ri": true,
   "sc": null,
+  "sd": null,
   "tn": null,
   "tx": null,
+  "ut": null,
   "va": null,
+  "vt": true,
   "wa": null,
   "wi": null,
-  "wv": null
+  "wv": null,
+  "wy": null
  },
  "units": {
+  "ak": [
+   {
+    "geoid": "0203000",
+    "kind": "place",
+    "lsadc": "37",
+    "name": "Anchorage municipality",
+    "pop": 291247
+   },
+   {
+    "geoid": "0224230",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fairbanks city",
+    "pop": 32515
+   },
+   {
+    "geoid": "0236400",
+    "kind": "place",
+    "lsadc": "53",
+    "name": "Juneau city and borough",
+    "pop": 32255
+   }
+  ],
+  "al": [
+   {
+    "geoid": "0137000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Huntsville city",
+    "pop": 215006
+   },
+   {
+    "geoid": "0107000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Birmingham city",
+    "pop": 200733
+   },
+   {
+    "geoid": "0151000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Montgomery city",
+    "pop": 200603
+   },
+   {
+    "geoid": "0150000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Mobile city",
+    "pop": 187041
+   },
+   {
+    "geoid": "0177256",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Tuscaloosa city",
+    "pop": 99600
+   },
+   {
+    "geoid": "0135896",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hoover city",
+    "pop": 92606
+   },
+   {
+    "geoid": "0103076",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Auburn city",
+    "pop": 76143
+   },
+   {
+    "geoid": "0121184",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Dothan city",
+    "pop": 71072
+   },
+   {
+    "geoid": "0120104",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Decatur city",
+    "pop": 57938
+   },
+   {
+    "geoid": "0145784",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Madison city",
+    "pop": 56933
+   },
+   {
+    "geoid": "0126896",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Florence city",
+    "pop": 40184
+   },
+   {
+    "geoid": "0178552",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Vestavia Hills city",
+    "pop": 39102
+   },
+   {
+    "geoid": "0159472",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Phenix City city",
+    "pop": 38816
+   },
+   {
+    "geoid": "0162328",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Prattville city",
+    "pop": 37781
+   },
+   {
+    "geoid": "0128696",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Gadsden city",
+    "pop": 33945
+   },
+   {
+    "geoid": "0100820",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Alabaster city",
+    "pop": 33284
+   },
+   {
+    "geoid": "0155200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Northport city",
+    "pop": 31125
+   },
+   {
+    "geoid": "0157048",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Opelika city",
+    "pop": 30995
+   },
+   {
+    "geoid": "0124184",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Enterprise city",
+    "pop": 28711
+   },
+   {
+    "geoid": "0119648",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Daphne city",
+    "pop": 27462
+   },
+   {
+    "geoid": "0135800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Homewood city",
+    "pop": 26414
+   },
+   {
+    "geoid": "0176944",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Trussville city",
+    "pop": 26123
+   },
+   {
+    "geoid": "0105980",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bessemer city",
+    "pop": 26019
+   },
+   {
+    "geoid": "0102956",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Athens city",
+    "pop": 25406
+   }
+  ],
   "ar": [
    {
     "geoid": "0541000",
@@ -388,6 +602,544 @@
     "lsadc": "43",
     "name": "Florence town",
     "pop": 26785
+   }
+  ],
+  "co": [
+   {
+    "geoid": "0820000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Denver city",
+    "pop": 715522
+   },
+   {
+    "geoid": "0816000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Colorado Springs city",
+    "pop": 478961
+   },
+   {
+    "geoid": "0804000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Aurora city",
+    "pop": 386261
+   },
+   {
+    "geoid": "0827425",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fort Collins city",
+    "pop": 169810
+   },
+   {
+    "geoid": "0843000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lakewood city",
+    "pop": 155984
+   },
+   {
+    "geoid": "0877290",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Thornton city",
+    "pop": 141867
+   },
+   {
+    "geoid": "0803455",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Arvada city",
+    "pop": 124402
+   },
+   {
+    "geoid": "0883835",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Westminster city",
+    "pop": 116317
+   },
+   {
+    "geoid": "0862000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Pueblo city",
+    "pop": 111876
+   },
+   {
+    "geoid": "0832155",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Greeley city",
+    "pop": 108795
+   },
+   {
+    "geoid": "0812815",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Centennial city",
+    "pop": 108418
+   },
+   {
+    "geoid": "0807850",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Boulder city",
+    "pop": 108250
+   },
+   {
+    "geoid": "0845970",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Longmont city",
+    "pop": 98885
+   },
+   {
+    "geoid": "0846465",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Loveland city",
+    "pop": 76378
+   },
+   {
+    "geoid": "0809280",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Broomfield city",
+    "pop": 74112
+   },
+   {
+    "geoid": "0812415",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Castle Rock town",
+    "pop": 73158
+   },
+   {
+    "geoid": "0831660",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Grand Junction city",
+    "pop": 65560
+   },
+   {
+    "geoid": "0816495",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Commerce City city",
+    "pop": 62418
+   },
+   {
+    "geoid": "0857630",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Parker town",
+    "pop": 58512
+   },
+   {
+    "geoid": "0845255",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Littleton city",
+    "pop": 45652
+   },
+   {
+    "geoid": "0808675",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Brighton city",
+    "pop": 40083
+   },
+   {
+    "geoid": "0854330",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Northglenn city",
+    "pop": 38131
+   },
+   {
+    "geoid": "0824785",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Englewood city",
+    "pop": 33659
+   },
+   {
+    "geoid": "0885485",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Windsor town",
+    "pop": 32716
+   },
+   {
+    "geoid": "0884440",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Wheat Ridge city",
+    "pop": 32398
+   },
+   {
+    "geoid": "0841835",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lafayette city",
+    "pop": 30411
+   },
+   {
+    "geoid": "0824950",
+    "kind": "place",
+    "lsadc": "43",
+    "name": "Erie town",
+    "pop": 30038
+   },
+   {
+    "geoid": "0827865",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fountain city",
+    "pop": 29802
+   }
+  ],
+  "ct": [
+   {
+    "geoid": "0908000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bridgeport city",
+    "pop": 148654
+   },
+   {
+    "geoid": "0973000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Stamford city",
+    "pop": 135470
+   },
+   {
+    "geoid": "0952000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "New Haven city",
+    "pop": 134023
+   },
+   {
+    "geoid": "0937000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hartford city",
+    "pop": 121054
+   },
+   {
+    "geoid": "0980000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Waterbury city",
+    "pop": 114403
+   },
+   {
+    "geoid": "0955990",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Norwalk city",
+    "pop": 91184
+   },
+   {
+    "geoid": "0918430",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Danbury city",
+    "pop": 86518
+   },
+   {
+    "geoid": "0950370",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "New Britain city",
+    "pop": 74135
+   },
+   {
+    "geoid": "0900382590",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "West Hartford town",
+    "pop": 64083
+   },
+   {
+    "geoid": "0900133620",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Greenwich town",
+    "pop": 63518
+   },
+   {
+    "geoid": "0900126620",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Fairfield town",
+    "pop": 61512
+   },
+   {
+    "geoid": "0900935650",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Hamden town",
+    "pop": 61169
+   },
+   {
+    "geoid": "0946450",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Meriden city",
+    "pop": 60850
+   },
+   {
+    "geoid": "0908420",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bristol city",
+    "pop": 60833
+   },
+   {
+    "geoid": "0900344700",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Manchester town",
+    "pop": 59713
+   },
+   {
+    "geoid": "0982800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "West Haven city",
+    "pop": 55584
+   },
+   {
+    "geoid": "0900174190",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Stratford town",
+    "pop": 52355
+   },
+   {
+    "geoid": "0900322630",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "East Hartford town",
+    "pop": 51045
+   },
+   {
+    "geoid": "0947515",
+    "kind": "place",
+    "lsadc": "00",
+    "name": "Milford city (balance)",
+    "pop": 50558
+   },
+   {
+    "geoid": "0947290",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Middletown city",
+    "pop": 47717
+   },
+   {
+    "geoid": "0900978740",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Wallingford town",
+    "pop": 44396
+   },
+   {
+    "geoid": "0900370550",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Southington town",
+    "pop": 43501
+   },
+   {
+    "geoid": "0900325990",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Enfield town",
+    "pop": 42141
+   },
+   {
+    "geoid": "0968100",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Shelton city",
+    "pop": 40869
+   },
+   {
+    "geoid": "0956200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Norwich city",
+    "pop": 40125
+   },
+   {
+    "geoid": "0901134250",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Groton town",
+    "pop": 38411
+   },
+   {
+    "geoid": "0900177200",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Trumbull town",
+    "pop": 36827
+   },
+   {
+    "geoid": "0976500",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Torrington city",
+    "pop": 35515
+   },
+   {
+    "geoid": "0900331240",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Glastonbury town",
+    "pop": 35159
+   },
+   {
+    "geoid": "0949880",
+    "kind": "place",
+    "lsadc": "21",
+    "name": "Naugatuck borough",
+    "pop": 31519
+   },
+   {
+    "geoid": "0900352140",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Newington town",
+    "pop": 30536
+   },
+   {
+    "geoid": "0901378250",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Vernon town",
+    "pop": 30215
+   },
+   {
+    "geoid": "0900387000",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Windsor town",
+    "pop": 29492
+   },
+   {
+    "geoid": "0900914160",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Cheshire town",
+    "pop": 28733
+   },
+   {
+    "geoid": "0900907310",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Branford town",
+    "pop": 28273
+   },
+   {
+    "geoid": "0900552630",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "New Milford town",
+    "pop": 28115
+   },
+   {
+    "geoid": "0900922910",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "East Haven town",
+    "pop": 27923
+   },
+   {
+    "geoid": "0952280",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "New London city",
+    "pop": 27367
+   },
+   {
+    "geoid": "0900384900",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Wethersfield town",
+    "pop": 27298
+   },
+   {
+    "geoid": "0900152980",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Newtown town",
+    "pop": 27173
+   },
+   {
+    "geoid": "0900183500",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Westport town",
+    "pop": 27141
+   },
+   {
+    "geoid": "0900371390",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "South Windsor town",
+    "pop": 26918
+   },
+   {
+    "geoid": "0900327600",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Farmington town",
+    "pop": 26712
+   },
+   {
+    "geoid": "0901344910",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Mansfield town",
+    "pop": 25892
+   },
+   {
+    "geoid": "0900163970",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Ridgefield town",
+    "pop": 25033
+   }
+  ],
+  "de": [
+   {
+    "geoid": "1077580",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Wilmington city",
+    "pop": 70898
+   },
+   {
+    "geoid": "1021200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Dover city",
+    "pop": 39403
+   },
+   {
+    "geoid": "1050670",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Newark city",
+    "pop": 30601
    }
   ],
   "fl": [
@@ -1423,6 +2175,7 @@
     "pop": 25076
    }
   ],
+  "hi": [],
   "ia": [
    {
     "geoid": "1921000",
@@ -1549,6 +2302,99 @@
     "lsadc": "25",
     "name": "Ottumwa city",
     "pop": 25529
+   }
+  ],
+  "id": [
+   {
+    "geoid": "1608830",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Boise City city",
+    "pop": 235684
+   },
+   {
+    "geoid": "1652120",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Meridian city",
+    "pop": 117635
+   },
+   {
+    "geoid": "1656260",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Nampa city",
+    "pop": 100200
+   },
+   {
+    "geoid": "1639700",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Idaho Falls city",
+    "pop": 64818
+   },
+   {
+    "geoid": "1612250",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Caldwell city",
+    "pop": 59996
+   },
+   {
+    "geoid": "1664090",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Pocatello city",
+    "pop": 56320
+   },
+   {
+    "geoid": "1616750",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Coeur d'Alene city",
+    "pop": 54628
+   },
+   {
+    "geoid": "1682810",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Twin Falls city",
+    "pop": 51807
+   },
+   {
+    "geoid": "1667420",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Rexburg city",
+    "pop": 39409
+   },
+   {
+    "geoid": "1664810",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Post Falls city",
+    "pop": 38485
+   },
+   {
+    "geoid": "1646540",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lewiston city",
+    "pop": 34203
+   },
+   {
+    "geoid": "1623410",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Eagle city",
+    "pop": 30346
+   },
+   {
+    "geoid": "1654550",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Moscow city",
+    "pop": 25435
    }
   ],
   "il": [
@@ -2451,6 +3297,120 @@
     "pop": 25313
    }
   ],
+  "ks": [
+   {
+    "geoid": "2079000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Wichita city",
+    "pop": 397532
+   },
+   {
+    "geoid": "2053775",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Overland Park city",
+    "pop": 197238
+   },
+   {
+    "geoid": "2036000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Kansas City city",
+    "pop": 156607
+   },
+   {
+    "geoid": "2052575",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Olathe city",
+    "pop": 141290
+   },
+   {
+    "geoid": "2071000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Topeka city",
+    "pop": 126587
+   },
+   {
+    "geoid": "2038900",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lawrence city",
+    "pop": 94934
+   },
+   {
+    "geoid": "2064500",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Shawnee city",
+    "pop": 67311
+   },
+   {
+    "geoid": "2039350",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lenexa city",
+    "pop": 57434
+   },
+   {
+    "geoid": "2044250",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Manhattan city",
+    "pop": 54100
+   },
+   {
+    "geoid": "2062700",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Salina city",
+    "pop": 46889
+   },
+   {
+    "geoid": "2033625",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hutchinson city",
+    "pop": 40006
+   },
+   {
+    "geoid": "2039000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Leavenworth city",
+    "pop": 37351
+   },
+   {
+    "geoid": "2039075",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Leawood city",
+    "pop": 33902
+   },
+   {
+    "geoid": "2025325",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Garden City city",
+    "pop": 28151
+   },
+   {
+    "geoid": "2018250",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Dodge City city",
+    "pop": 27788
+   },
+   {
+    "geoid": "2017800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Derby city",
+    "pop": 25625
+   }
+  ],
   "ky": [
    {
     "geoid": "2148006",
@@ -2663,6 +3623,670 @@
     "lsadc": "25",
     "name": "New Iberia city",
     "pop": 28555
+   }
+  ],
+  "ma": [
+   {
+    "geoid": "2507000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Boston city",
+    "pop": 675647
+   },
+   {
+    "geoid": "2582000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Worcester city",
+    "pop": 206518
+   },
+   {
+    "geoid": "2567000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Springfield city",
+    "pop": 155929
+   },
+   {
+    "geoid": "2511000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Cambridge city",
+    "pop": 118403
+   },
+   {
+    "geoid": "2537000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lowell city",
+    "pop": 115554
+   },
+   {
+    "geoid": "2509000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Brockton city",
+    "pop": 105643
+   },
+   {
+    "geoid": "2555745",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Quincy city",
+    "pop": 101636
+   },
+   {
+    "geoid": "2537490",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lynn city",
+    "pop": 101253
+   },
+   {
+    "geoid": "2545000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "New Bedford city",
+    "pop": 101079
+   },
+   {
+    "geoid": "2523000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fall River city",
+    "pop": 94000
+   },
+   {
+    "geoid": "2534550",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lawrence city",
+    "pop": 89143
+   },
+   {
+    "geoid": "2545560",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Newton city",
+    "pop": 88923
+   },
+   {
+    "geoid": "2562535",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Somerville city",
+    "pop": 81045
+   },
+   {
+    "geoid": "2524960",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Framingham city",
+    "pop": 72362
+   },
+   {
+    "geoid": "2529405",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Haverhill city",
+    "pop": 67787
+   },
+   {
+    "geoid": "2537875",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Malden city",
+    "pop": 66263
+   },
+   {
+    "geoid": "2572600",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Waltham city",
+    "pop": 65218
+   },
+   {
+    "geoid": "2502109175",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Brookline town",
+    "pop": 63191
+   },
+   {
+    "geoid": "2556585",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Revere city",
+    "pop": 62186
+   },
+   {
+    "geoid": "2502354310",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Plymouth town",
+    "pop": 61217
+   },
+   {
+    "geoid": "2539835",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Medford city",
+    "pop": 59659
+   },
+   {
+    "geoid": "2569170",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Taunton city",
+    "pop": 59408
+   },
+   {
+    "geoid": "2578972",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Weymouth Town city",
+    "pop": 57437
+   },
+   {
+    "geoid": "2513660",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Chicopee city",
+    "pop": 55560
+   },
+   {
+    "geoid": "2552490",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Peabody city",
+    "pop": 54481
+   },
+   {
+    "geoid": "2540710",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Methuen Town city",
+    "pop": 53059
+   },
+   {
+    "geoid": "2521990",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Everett city",
+    "pop": 49075
+   },
+   {
+    "geoid": "2503690",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Barnstable Town city",
+    "pop": 48916
+   },
+   {
+    "geoid": "2502690",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Attleboro city",
+    "pop": 46461
+   },
+   {
+    "geoid": "2501701605",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Arlington town",
+    "pop": 46308
+   },
+   {
+    "geoid": "2559105",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Salem city",
+    "pop": 44480
+   },
+   {
+    "geoid": "2553960",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Pittsfield city",
+    "pop": 43927
+   },
+   {
+    "geoid": "2535075",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Leominster city",
+    "pop": 43782
+   },
+   {
+    "geoid": "2505595",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Beverly city",
+    "pop": 42670
+   },
+   {
+    "geoid": "2501705805",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Billerica town",
+    "pop": 42119
+   },
+   {
+    "geoid": "2523875",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fitchburg city",
+    "pop": 41946
+   },
+   {
+    "geoid": "2538715",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Marlborough city",
+    "pop": 41793
+   },
+   {
+    "geoid": "2581035",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Woburn city",
+    "pop": 40876
+   },
+   {
+    "geoid": "2576030",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Westfield city",
+    "pop": 40834
+   },
+   {
+    "geoid": "2513205",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Chelsea city",
+    "pop": 40787
+   },
+   {
+    "geoid": "2501370",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Amherst Town city",
+    "pop": 39263
+   },
+   {
+    "geoid": "2507740",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Braintree Town city",
+    "pop": 39143
+   },
+   {
+    "geoid": "2502761800",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Shrewsbury town",
+    "pop": 38325
+   },
+   {
+    "geoid": "2530840",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Holyoke city",
+    "pop": 38238
+   },
+   {
+    "geoid": "2501743895",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Natick town",
+    "pop": 37006
+   },
+   {
+    "geoid": "2500901465",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Andover town",
+    "pop": 36569
+   },
+   {
+    "geoid": "2501713135",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Chelmsford town",
+    "pop": 36392
+   },
+   {
+    "geoid": "2573440",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Watertown Town city",
+    "pop": 35329
+   },
+   {
+    "geoid": "2556000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Randolph Town city",
+    "pop": 34984
+   },
+   {
+    "geoid": "2501735215",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Lexington town",
+    "pop": 34454
+   },
+   {
+    "geoid": "2500516425",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Dartmouth town",
+    "pop": 33783
+   },
+   {
+    "geoid": "2525172",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Franklin Town city",
+    "pop": 33261
+   },
+   {
+    "geoid": "2501717475",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Dracut town",
+    "pop": 32617
+   },
+   {
+    "geoid": "2500123105",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Falmouth town",
+    "pop": 32517
+   },
+   {
+    "geoid": "2502144105",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Needham town",
+    "pop": 32091
+   },
+   {
+    "geoid": "2502150250",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Norwood town",
+    "pop": 31611
+   },
+   {
+    "geoid": "2501769415",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Tewksbury town",
+    "pop": 31342
+   },
+   {
+    "geoid": "2500946365",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "North Andover town",
+    "pop": 30915
+   },
+   {
+    "geoid": "2546598",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "North Attleborough Town city",
+    "pop": 30834
+   },
+   {
+    "geoid": "2502741165",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Milford town",
+    "pop": 30379
+   },
+   {
+    "geoid": "2540115",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Melrose city",
+    "pop": 29817
+   },
+   {
+    "geoid": "2526150",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Gloucester city",
+    "pop": 29729
+   },
+   {
+    "geoid": "2546330",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Northampton city",
+    "pop": 29571
+   },
+   {
+    "geoid": "2502174175",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Wellesley town",
+    "pop": 29550
+   },
+   {
+    "geoid": "2502167945",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Stoughton town",
+    "pop": 29281
+   },
+   {
+    "geoid": "2577890",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "West Springfield Town city",
+    "pop": 28835
+   },
+   {
+    "geoid": "2500840",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Agawam Town city",
+    "pop": 28692
+   },
+   {
+    "geoid": "2508130",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bridgewater Town city",
+    "pop": 28633
+   },
+   {
+    "geoid": "2502141690",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Milton town",
+    "pop": 28630
+   },
+   {
+    "geoid": "2500960015",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Saugus town",
+    "pop": 28619
+   },
+   {
+    "geoid": "2500916250",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Danvers town",
+    "pop": 28087
+   },
+   {
+    "geoid": "2501705070",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Belmont town",
+    "pop": 27295
+   },
+   {
+    "geoid": "2501772215",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Wakefield town",
+    "pop": 27090
+   },
+   {
+    "geoid": "2502172495",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Walpole town",
+    "pop": 26383
+   },
+   {
+    "geoid": "2501709840",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Burlington town",
+    "pop": 26377
+   },
+   {
+    "geoid": "2502338855",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Marshfield town",
+    "pop": 25825
+   },
+   {
+    "geoid": "2501756130",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Reading town",
+    "pop": 25518
+   },
+   {
+    "geoid": "2502116495",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Dedham town",
+    "pop": 25364
+   },
+   {
+    "geoid": "2500520100",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Easton town",
+    "pop": 25058
+   },
+   {
+    "geoid": "2500182525",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Yarmouth town",
+    "pop": 25023
+   }
+  ],
+  "md": [
+   {
+    "geoid": "2404000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Baltimore city",
+    "pop": 585708
+   },
+   {
+    "geoid": "2430325",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Frederick city",
+    "pop": 78171
+   },
+   {
+    "geoid": "2431175",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Gaithersburg city",
+    "pop": 69657
+   },
+   {
+    "geoid": "2467675",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Rockville city",
+    "pop": 67117
+   },
+   {
+    "geoid": "2408775",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bowie city",
+    "pop": 58329
+   },
+   {
+    "geoid": "2436075",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hagerstown city",
+    "pop": 43527
+   },
+   {
+    "geoid": "2401600",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Annapolis city",
+    "pop": 40812
+   },
+   {
+    "geoid": "2418750",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "College Park city",
+    "pop": 34740
+   },
+   {
+    "geoid": "2469925",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Salisbury city",
+    "pop": 33050
+   },
+   {
+    "geoid": "2445900",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Laurel city",
+    "pop": 30060
+   }
+  ],
+  "me": [
+   {
+    "geoid": "2360545",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Portland city",
+    "pop": 68408
+   },
+   {
+    "geoid": "2338740",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lewiston city",
+    "pop": 37121
+   },
+   {
+    "geoid": "2302795",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bangor city",
+    "pop": 31753
+   },
+   {
+    "geoid": "2371990",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "South Portland city",
+    "pop": 26498
    }
   ],
   "mi": [
@@ -3842,6 +5466,50 @@
     "pop": 25138
    }
   ],
+  "mt": [
+   {
+    "geoid": "3006550",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Billings city",
+    "pop": 117116
+   },
+   {
+    "geoid": "3050200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Missoula city",
+    "pop": 73489
+   },
+   {
+    "geoid": "3032800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Great Falls city",
+    "pop": 60442
+   },
+   {
+    "geoid": "3008950",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bozeman city",
+    "pop": 53293
+   },
+   {
+    "geoid": "3011397",
+    "kind": "place",
+    "lsadc": "00",
+    "name": "Butte-Silver Bow (balance)",
+    "pop": 34494
+   },
+   {
+    "geoid": "3035600",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Helena city",
+    "pop": 32091
+   }
+  ],
   "nc": [
    {
     "geoid": "3712000",
@@ -4136,6 +5804,108 @@
     "lsadc": "43",
     "name": "Clayton town",
     "pop": 26307
+   }
+  ],
+  "nd": [
+   {
+    "geoid": "3825700",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fargo city",
+    "pop": 125990
+   },
+   {
+    "geoid": "3807200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bismarck city",
+    "pop": 73622
+   },
+   {
+    "geoid": "3832060",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Grand Forks city",
+    "pop": 59166
+   },
+   {
+    "geoid": "3853380",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Minot city",
+    "pop": 48377
+   },
+   {
+    "geoid": "3884780",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "West Fargo city",
+    "pop": 38626
+   },
+   {
+    "geoid": "3886220",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Williston city",
+    "pop": 29160
+   },
+   {
+    "geoid": "3819620",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Dickinson city",
+    "pop": 25679
+   }
+  ],
+  "ne": [
+   {
+    "geoid": "3137000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Omaha city",
+    "pop": 486051
+   },
+   {
+    "geoid": "3128000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lincoln city",
+    "pop": 291082
+   },
+   {
+    "geoid": "3103950",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bellevue city",
+    "pop": 64176
+   },
+   {
+    "geoid": "3119595",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Grand Island city",
+    "pop": 53131
+   },
+   {
+    "geoid": "3125055",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Kearney city",
+    "pop": 33790
+   },
+   {
+    "geoid": "3117670",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fremont city",
+    "pop": 27141
+   },
+   {
+    "geoid": "3121415",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hastings city",
+    "pop": 25152
    }
   ],
   "nh": [
@@ -4938,6 +6708,78 @@
     "lsadc": "21",
     "name": "Carteret borough",
     "pop": 25326
+   }
+  ],
+  "nm": [
+   {
+    "geoid": "3502000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Albuquerque city",
+    "pop": 564559
+   },
+   {
+    "geoid": "3539380",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Las Cruces city",
+    "pop": 111385
+   },
+   {
+    "geoid": "3563460",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Rio Rancho city",
+    "pop": 104046
+   },
+   {
+    "geoid": "3570500",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Santa Fe city",
+    "pop": 87505
+   },
+   {
+    "geoid": "3564930",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Roswell city",
+    "pop": 48422
+   },
+   {
+    "geoid": "3525800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Farmington city",
+    "pop": 46624
+   },
+   {
+    "geoid": "3532520",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hobbs city",
+    "pop": 40508
+   },
+   {
+    "geoid": "3516420",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Clovis city",
+    "pop": 38567
+   },
+   {
+    "geoid": "3512150",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Carlsbad city",
+    "pop": 32238
+   },
+   {
+    "geoid": "3501780",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Alamogordo city",
+    "pop": 30898
    }
   ],
   "nv": [
@@ -6551,6 +8393,176 @@
     "pop": 25949
    }
   ],
+  "or": [
+   {
+    "geoid": "4159000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Portland city",
+    "pop": 652503
+   },
+   {
+    "geoid": "4123850",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Eugene city",
+    "pop": 176654
+   },
+   {
+    "geoid": "4164900",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Salem city",
+    "pop": 175535
+   },
+   {
+    "geoid": "4131250",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Gresham city",
+    "pop": 114247
+   },
+   {
+    "geoid": "4134100",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hillsboro city",
+    "pop": 106447
+   },
+   {
+    "geoid": "4105800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bend city",
+    "pop": 99178
+   },
+   {
+    "geoid": "4105350",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Beaverton city",
+    "pop": 97494
+   },
+   {
+    "geoid": "4147000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Medford city",
+    "pop": 85824
+   },
+   {
+    "geoid": "4169600",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Springfield city",
+    "pop": 61851
+   },
+   {
+    "geoid": "4115800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Corvallis city",
+    "pop": 59922
+   },
+   {
+    "geoid": "4101000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Albany city",
+    "pop": 56472
+   },
+   {
+    "geoid": "4173650",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Tigard city",
+    "pop": 54539
+   },
+   {
+    "geoid": "4140550",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lake Oswego city",
+    "pop": 40731
+   },
+   {
+    "geoid": "4138500",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Keizer city",
+    "pop": 39376
+   },
+   {
+    "geoid": "4130550",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Grants Pass city",
+    "pop": 39189
+   },
+   {
+    "geoid": "4155200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Oregon City city",
+    "pop": 37572
+   },
+   {
+    "geoid": "4145000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "McMinnville city",
+    "pop": 34319
+   },
+   {
+    "geoid": "4161200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Redmond city",
+    "pop": 33274
+   },
+   {
+    "geoid": "4174950",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Tualatin city",
+    "pop": 27942
+   },
+   {
+    "geoid": "4180150",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "West Linn city",
+    "pop": 27373
+   },
+   {
+    "geoid": "4182800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Wilsonville city",
+    "pop": 26664
+   },
+   {
+    "geoid": "4126200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Forest Grove city",
+    "pop": 26225
+   },
+   {
+    "geoid": "4183750",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Woodburn city",
+    "pop": 26013
+   },
+   {
+    "geoid": "4152100",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Newberg city",
+    "pop": 25138
+   }
+  ],
   "pa": [
    {
     "geoid": "4260000",
@@ -7036,6 +9048,106 @@
     "pop": 25070
    }
   ],
+  "ri": [
+   {
+    "geoid": "4459000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Providence city",
+    "pop": 190934
+   },
+   {
+    "geoid": "4419180",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Cranston city",
+    "pop": 82934
+   },
+   {
+    "geoid": "4474300",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Warwick city",
+    "pop": 82823
+   },
+   {
+    "geoid": "4454640",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Pawtucket city",
+    "pop": 75604
+   },
+   {
+    "geoid": "4422960",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "East Providence city",
+    "pop": 47139
+   },
+   {
+    "geoid": "4480780",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Woonsocket city",
+    "pop": 43240
+   },
+   {
+    "geoid": "4400720080",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Cumberland town",
+    "pop": 36405
+   },
+   {
+    "geoid": "4400318640",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Coventry town",
+    "pop": 35688
+   },
+   {
+    "geoid": "4400751760",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "North Providence town",
+    "pop": 34114
+   },
+   {
+    "geoid": "4400967460",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "South Kingstown town",
+    "pop": 31931
+   },
+   {
+    "geoid": "4400378440",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "West Warwick town",
+    "pop": 31012
+   },
+   {
+    "geoid": "4400737720",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Johnston town",
+    "pop": 29568
+   },
+   {
+    "geoid": "4400951580",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "North Kingstown town",
+    "pop": 27732
+   },
+   {
+    "geoid": "4449960",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Newport city",
+    "pop": 25163
+   }
+  ],
   "sc": [
    {
     "geoid": "4513330",
@@ -7155,6 +9267,29 @@
     "lsadc": "43",
     "name": "Bluffton town",
     "pop": 27716
+   }
+  ],
+  "sd": [
+   {
+    "geoid": "4659020",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Sioux Falls city",
+    "pop": 192517
+   },
+   {
+    "geoid": "4652980",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Rapid City city",
+    "pop": 74703
+   },
+   {
+    "geoid": "4600100",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Aberdeen city",
+    "pop": 28495
    }
   ],
   "tn": [
@@ -8190,6 +10325,274 @@
     "pop": 25109
    }
   ],
+  "ut": [
+   {
+    "geoid": "4967000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Salt Lake City city",
+    "pop": 199723
+   },
+   {
+    "geoid": "4983470",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "West Valley City city",
+    "pop": 140230
+   },
+   {
+    "geoid": "4982950",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "West Jordan city",
+    "pop": 116961
+   },
+   {
+    "geoid": "4962470",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Provo city",
+    "pop": 115162
+   },
+   {
+    "geoid": "4957300",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Orem city",
+    "pop": 98129
+   },
+   {
+    "geoid": "4967440",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Sandy city",
+    "pop": 96904
+   },
+   {
+    "geoid": "4965330",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "St. George city",
+    "pop": 95342
+   },
+   {
+    "geoid": "4955980",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Ogden city",
+    "pop": 87321
+   },
+   {
+    "geoid": "4943660",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Layton city",
+    "pop": 81773
+   },
+   {
+    "geoid": "4970850",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "South Jordan city",
+    "pop": 77487
+   },
+   {
+    "geoid": "4944320",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lehi city",
+    "pop": 75907
+   },
+   {
+    "geoid": "4950150",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Millcreek city",
+    "pop": 63380
+   },
+   {
+    "geoid": "4975360",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Taylorsville city",
+    "pop": 60448
+   },
+   {
+    "geoid": "4934970",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Herriman city",
+    "pop": 55144
+   },
+   {
+    "geoid": "4945860",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Logan city",
+    "pop": 52778
+   },
+   {
+    "geoid": "4920120",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Draper city",
+    "pop": 51017
+   },
+   {
+    "geoid": "4953230",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Murray city",
+    "pop": 50637
+   },
+   {
+    "geoid": "4907690",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bountiful city",
+    "pop": 45762
+   },
+   {
+    "geoid": "4964340",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Riverton city",
+    "pop": 45285
+   },
+   {
+    "geoid": "4920810",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Eagle Mountain city",
+    "pop": 43623
+   },
+   {
+    "geoid": "4971290",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Spanish Fork city",
+    "pop": 42602
+   },
+   {
+    "geoid": "4965110",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Roy city",
+    "pop": 39306
+   },
+   {
+    "geoid": "4960930",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Pleasant Grove city",
+    "pop": 37726
+   },
+   {
+    "geoid": "4967825",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Saratoga Springs city",
+    "pop": 37696
+   },
+   {
+    "geoid": "4940470",
+    "kind": "place",
+    "lsadc": "35",
+    "name": "Kearns metro township",
+    "pop": 36723
+   },
+   {
+    "geoid": "4949710",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Midvale city",
+    "pop": 36028
+   },
+   {
+    "geoid": "4976680",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Tooele city",
+    "pop": 35742
+   },
+   {
+    "geoid": "4972280",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Springville city",
+    "pop": 35268
+   },
+   {
+    "geoid": "4911320",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Cedar City city",
+    "pop": 35235
+   },
+   {
+    "geoid": "4916270",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Cottonwood Heights city",
+    "pop": 33617
+   },
+   {
+    "geoid": "4901310",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "American Fork city",
+    "pop": 33337
+   },
+   {
+    "geoid": "4940360",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Kaysville city",
+    "pop": 32945
+   },
+   {
+    "geoid": "4974810",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Syracuse city",
+    "pop": 32141
+   },
+   {
+    "geoid": "4936070",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Holladay city",
+    "pop": 31965
+   },
+   {
+    "geoid": "4913850",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Clearfield city",
+    "pop": 31909
+   },
+   {
+    "geoid": "4947290",
+    "kind": "place",
+    "lsadc": "35",
+    "name": "Magna metro township",
+    "pop": 29251
+   },
+   {
+    "geoid": "4981960",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Washington city",
+    "pop": 27993
+   },
+   {
+    "geoid": "4971070",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "South Salt Lake city",
+    "pop": 26777
+   }
+  ],
   "va": [
    {
     "geoid": "5182000",
@@ -8344,6 +10747,15 @@
     "lsadc": "25",
     "name": "Salem city",
     "pop": 25346
+   }
+  ],
+  "vt": [
+   {
+    "geoid": "5010675",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Burlington city",
+    "pop": 44743
    }
   ],
   "wa": [
@@ -8945,6 +11357,36 @@
     "lsadc": "25",
     "name": "Wheeling city",
     "pop": 27052
+   }
+  ],
+  "wy": [
+   {
+    "geoid": "5613900",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Cheyenne city",
+    "pop": 65132
+   },
+   {
+    "geoid": "5613150",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Casper city",
+    "pop": 59038
+   },
+   {
+    "geoid": "5631855",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Gillette city",
+    "pop": 33403
+   },
+   {
+    "geoid": "5645050",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Laramie city",
+    "pop": 31407
    }
   ]
  },

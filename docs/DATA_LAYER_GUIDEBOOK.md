@@ -79,7 +79,28 @@ in the researched-but-unbuilt backlog.
   "texas": ["tx-senate", "us-house", "tx-house", "county", "school-district-unified", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "police-station", "fire-station", "post-office"],
   "florida": ["us-house", "fl-senate", "county", "school-district-unified", "fl-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
   "ohio": ["us-house", "oh-senate", "county", "school-district-unified", "oh-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "washington": ["us-house", "county", "wa-senate", "wa-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"]
+  "washington": ["us-house", "county", "wa-senate", "wa-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "massachusetts": ["us-house", "county", "ma-senate", "school-district-secondary", "ma-house", "school-district-unified", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
+  "colorado": ["us-house", "co-senate", "county", "co-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "maryland": ["us-house", "county", "school-district-unified", "md-senate", "md-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "alabama": ["us-house", "al-senate", "county", "al-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "oregon": ["us-house", "school-district-secondary", "or-senate", "county", "or-house", "school-district-elementary", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "connecticut": ["us-house", "county", "ct-senate", "school-district-secondary", "ct-house", "school-district-unified", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
+  "utah": ["us-house", "ut-senate", "county", "school-district-unified", "ut-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "kansas": ["us-house", "ks-senate", "county", "ks-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "newmexico": ["us-house", "county", "nm-senate", "nm-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "nebraska": ["us-house", "ne-legislature", "county", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "idaho": ["us-house", "id-senate", "id-house", "county", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "hawaii": ["school-district-unified", "us-house", "county", "hi-senate", "hi-house", "zip-code", "police-station", "fire-station", "post-office"],
+  "maine": ["us-house", "county", "me-senate", "me-house", "school-district-unified", "school-district-secondary", "zip-code", "municipality", "school-district-elementary", "police-station", "fire-station", "post-office"],
+  "montana": ["us-house", "mt-senate", "county", "mt-house", "school-district-secondary", "school-district-unified", "school-district-elementary", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "rhodeisland": ["us-house", "county", "school-district-secondary", "school-district-elementary", "ri-senate", "municipality", "school-district-unified", "ri-house", "zip-code", "police-station", "fire-station", "post-office"],
+  "delaware": ["us-house", "county", "school-district-unified", "de-senate", "de-house", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "southdakota": ["us-house", "sd-senate", "sd-house", "county", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "northdakota": ["us-house", "nd-senate", "nd-house", "county", "school-district-unified", "school-district-elementary", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "alaska": ["us-house", "ak-senate", "county", "ak-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "vermont": ["us-house", "county", "vt-senate", "school-district-secondary", "vt-house", "school-district-unified", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
+  "wyoming": ["us-house", "county", "wy-senate", "school-district-unified", "wy-house", "zip-code", "school-district-elementary", "municipality", "police-station", "fire-station", "post-office"]
 }
 ```
 <!-- ==== GUIDEBOOK:END coverage-map ==== -->
@@ -4469,6 +4490,775 @@ trusted.
             "why": "No list of the board members of Washington's school districts has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's board of directors, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-11 against TIGERweb's school districts (School MapServer) for STATE='53': 295 records on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary), so every Washington district is filed as one unified district, and none is the Census's \"School District Not Defined\" placeholder. They ship as a tile archive. No board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Office of Superintendent of Public Instruction's own directories; the county auditors' election results, which were not checked for school board contests; and each district's own website. The Washington State School Directors' Association is a membership association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "massachusetts": [
+      {
+            "id": "ma-county-officials",
+            "concept": "County government",
+            "area": "Massachusetts — all 14 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card says which form of government the county has, and names none of its commissioners, sheriff or registers of deeds. Eight of the fourteen counties have no county government.",
+            "why": "No list of Massachusetts's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "A list of each county's commissioners or regional government, its sheriff and its registers of deeds, from the state or from the county itself.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is ma/index.html's own County block: eight of the fourteen counties (Berkshire, Essex, Franklin, Hampden, Hampshire, Middlesex, Suffolk and Worcester) lost their county governments between 1997 and 2000, when the state took over their duties, and their voters still elect a sheriff and registers of deeds; Barnstable has a regional government with an elected board of regional commissioners and an assembly of delegates; Bristol, Dukes, Norfolk and Plymouth elect county commissioners; and Nantucket's town select board serves as its county commissioners. The card says which of these the county has and names nobody. The boundary is TIGERweb State_County for STATE='25', 14 features, shipped as ma/data/app/state-counties.json. ROUTES NOT YET READ, government publishers first: the Secretary of the Commonwealth's election results, which name each county's commissioners, sheriff and registers of deeds; and each county's own website. A statewide association of counties is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ma-municipal-officeholders",
+            "concept": "City government",
+            "area": "Massachusetts",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City or Town card names the city or town you picked, and not its mayor, council or select board.",
+            "why": "No statewide list of the elected officials of Massachusetts's cities and towns has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's or town's mayor, council or select board, or a city's or town's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's county subdivisions (Places_CouSub_ConCity_SubMCD layer 1) for STATE='25': 357 records, 293 towns, 58 cities and 6 records of coastal water. Every part of the state's land is in one of the 351 cities and towns. The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Boston, Worcester, Springfield, Cambridge and Lowell); and the Secretary of the Commonwealth's election results. The Massachusetts Municipal Association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ma-school-board-members",
+            "concept": "School board",
+            "area": "Massachusetts",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school committee.",
+            "why": "No list of the members of Massachusetts's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='25': 212 records on layer 0 (unified), one of them the placeholder for water no district covers, 64 on layer 2 (elementary) and 30 on layer 1 (secondary), which lie over part of the elementary districts' ground. All three are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Elementary and Secondary Education's school directory; each district's own website; and the cities' and towns' election results, since school committee members are elected locally. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "connecticut": [
+      {
+            "id": "ct-municipal-officeholders",
+            "concept": "City government",
+            "area": "Connecticut",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The Town card names the town you picked, and not its first selectman, mayor or council.",
+            "why": "No statewide list of the elected officials of Connecticut's towns has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each town's first selectman, mayor or council, or a town's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's county subdivisions (Places_CouSub_ConCity_SubMCD layer 1) for STATE='09': 174 records, 149 towns, 20 towns the Census records as consolidated with the city or borough of the same name, and 5 records of coastal water. Every part of the state's land is in one of its 169 towns; nine boroughs and the city of Groton have governments of their own inside their towns and are not drawn. The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Bridgeport, Stamford, New Haven, Hartford and Waterbury); and the Secretary of the State's election results. The Connecticut Conference of Municipalities is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ct-school-board-members",
+            "concept": "School board",
+            "area": "Connecticut",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its board of education.",
+            "why": "No list of the members of Connecticut's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='09': 114 records on layer 0 (unified), one of them the placeholder for Long Island Sound, 44 on layer 2 (elementary) and 8 on layer 1 (secondary), which lie over part of the elementary districts' ground. All three are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the State Department of Education's directory of districts; each district's own website; and the towns' election results, since board of education members are elected by town. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "colorado": [
+      {
+            "id": "co-county-officials",
+            "concept": "County government",
+            "area": "Colorado — all 64 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of Colorado's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is co/index.html's own County block: each county is governed by an elected board of county commissioners and elects officers such as a clerk and recorder, a treasurer, an assessor, a sheriff and a coroner, while Denver and Broomfield are each a city and a county in one government, run by an elected mayor and city council. The boundary is TIGERweb State_County for STATE='08', 64 features, shipped as co/data/app/state-counties.json. Commissioner districts are not drawn: TIGER carries no such layer. ROUTES NOT YET READ, government publishers first: each county's own website; the county clerks' and the Secretary of State's election results, which name who won each county seat. A statewide association of counties is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "co-municipal-officeholders",
+            "concept": "City government",
+            "area": "Colorado",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City or Town card names the city or town you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Colorado's cities and towns has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's or town's mayor or council members, or a city's or town's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='08': 273 records, 197 towns, 75 cities and the town of Bonanza, which the Census records as an inactive government. Together they hold about 2% of the state's land (5,271.4 of 268,419.3 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Denver, Colorado Springs, Aurora, Fort Collins and Lakewood); and the county clerks' election results. The Colorado Municipal League is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "co-school-board-members",
+            "concept": "School board",
+            "area": "Colorado",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of Colorado's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='08': 178 records on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's directory of school districts; each district's own website; and the county clerks' election results. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "maryland": [
+      {
+            "id": "md-county-officials",
+            "concept": "County government",
+            "area": "Maryland — all 23 counties and Baltimore City",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county or Baltimore City, and not its council, executive, commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of Maryland's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is md/index.html's own County block: each county is governed by an elected county council, with an elected county executive in most charter counties, or by elected county commissioners, and elects officers such as a sheriff, a state's attorney, a clerk of the circuit court and a register of wills, while Baltimore City is part of no county and is governed by its own mayor and city council. The boundary is TIGERweb State_County for STATE='24', 24 features, shipped as md/data/app/state-counties.json. Council districts are not drawn: TIGER carries no such layer. ROUTES NOT YET READ, government publishers first: each county's own website; the State Board of Elections' results, which name who won each county seat. A statewide association of counties is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "md-municipal-officeholders",
+            "concept": "City government",
+            "area": "Maryland",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City, Town or Village card names the city, town or village you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Maryland's cities, towns and villages has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's, town's or village's mayor or council members, or a city's, town's or village's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='24': 157 records, 123 towns, 29 cities and 5 villages, every one an active government. Together they hold about 5% of the state's land (1,157.2 of 25,151.4 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Frederick, Rockville, Gaithersburg, Bowie and Hagerstown; Baltimore City is the County card's); and the State Board of Elections' and the municipalities' own election results. The Maryland Municipal League is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "md-school-board-members",
+            "concept": "School board",
+            "area": "Maryland",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of Maryland's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='24': 24 records, one for each county and Baltimore City on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the State Department of Education's directory of local school systems; each system's own website; and the State Board of Elections' results, since most boards are elected. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "alabama": [
+      {
+            "id": "al-county-officials",
+            "concept": "County government",
+            "area": "Alabama — all 67 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of Alabama's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is al/index.html's own County block: each county is governed by an elected county commission and elects officers such as a probate judge and a sheriff. The boundary is TIGERweb State_County for STATE='01', 67 features, shipped as al/data/app/state-counties.json. Commission districts are not drawn: TIGER carries no such layer. ROUTES NOT YET READ, government publishers first: each county's own website; the Secretary of State's and the probate judges' election results, which name who won each county seat. A statewide association of counties is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "al-municipal-officeholders",
+            "concept": "City government",
+            "area": "Alabama",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City or Town card names the city or town you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Alabama's cities and towns has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's or town's mayor or council members, or a city's or town's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='01': 465 records, 278 towns and 187 cities, every one an active government. Together they hold about 10% of the state's land (13,444.8 of 131,187.1 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Huntsville, Birmingham, Montgomery, Mobile and Tuscaloosa); and the probate judges' and the municipalities' own election results. The Alabama League of Municipalities is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "al-school-board-members",
+            "concept": "School board",
+            "area": "Alabama",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of Alabama's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='01': 141 records, county systems and city systems on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the State Department of Education's directory of school systems; each system's own website; and the probate judges' election results. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "oregon": [
+      {
+            "id": "or-county-officials",
+            "concept": "County government",
+            "area": "Oregon — all 36 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of Oregon's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is or/index.html's own County block: each county is governed by an elected board of commissioners, or by a board or council its home-rule charter sets up, and most elect officers such as a sheriff, a district attorney and a clerk. The boundary is TIGERweb State_County for STATE='41', 36 features, shipped as or/data/app/state-counties.json. ROUTES NOT YET READ, government publishers first: each county's own website; the county clerks' and the Secretary of State's election results, which name who won each county seat. A statewide association of counties is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "or-municipal-officeholders",
+            "concept": "City government",
+            "area": "Oregon",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City or Town card names the city or town you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Oregon's cities has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's or town's mayor or council members, or a city's or town's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='41': 241 records, 231 cities, 9 towns and the city of Greenhorn, which the Census records as an inactive government. Together they hold about 1% of the state's land (2,628.5 of 248,630.8 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Portland, Eugene, Salem, Gresham and Hillsboro); and the county clerks' election results. The League of Oregon Cities is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "or-school-board-members",
+            "concept": "School board",
+            "area": "Oregon",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of Oregon's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='41': 188 records on layer 0 (unified), one of them the placeholder for coastal water no district covers, 9 on layer 2 (elementary) and 1 on layer 1 (secondary), the Harney County Union High School District, which lies over most of the elementary districts' ground. All three are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's directory of school districts; each district's own website; and the county clerks' election results. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "utah": [
+      {
+            "id": "ut-county-officials",
+            "concept": "County government",
+            "area": "Utah — all 29 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of Utah's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is ut/index.html's own County block: each county is governed by an elected county commission, or by an elected council where the county has adopted another form of government, and elects officers such as a clerk, an assessor, a sheriff, an attorney and a treasurer. The boundary is TIGERweb State_County for STATE='49', 29 features, shipped as ut/data/app/state-counties.json. ROUTES NOT YET READ, government publishers first: each county's own website; the county clerks' and the Lieutenant Governor's election results, which name who won each county seat. A statewide association of counties is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ut-municipal-officeholders",
+            "concept": "City government",
+            "area": "Utah",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City or Town card names the city or town you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Utah's cities and towns has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's or town's mayor or council members, or a city's or town's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='49': 255 records, 152 cities and 103 towns, every one an active government. Together they hold about 3% of the state's land (6,191.6 of 213,921.7 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Salt Lake City, West Valley City, West Jordan and Provo); and the county clerks' election results. The Utah League of Cities and Towns is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ut-school-board-members",
+            "concept": "School board",
+            "area": "Utah",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of Utah's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='49': 41 records, county districts and city districts on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the State Board of Education's directory of school districts; each district's own website; and the county clerks' election results. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "kansas": [
+      {
+            "id": "ks-county-officials",
+            "concept": "County government",
+            "area": "Kansas — all 105 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of Kansas's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is ks/index.html's own County block: each county is governed by an elected board of county commissioners, and most elect officers such as a clerk, a treasurer, a register of deeds and a sheriff, while Wyandotte County and Kansas City are one government, the Unified Government of Wyandotte County and Kansas City, and Greeley County and the city of Tribune are another. The boundary is TIGERweb State_County for STATE='20', 105 features, shipped as ks/data/app/state-counties.json. Commission districts are not drawn: TIGER carries no such layer. ROUTES NOT YET READ, government publishers first: each county's own website; the county election officers' and the Secretary of State's results, which name who won each county seat. A statewide association of counties is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ks-municipal-officeholders",
+            "concept": "City government",
+            "area": "Kansas",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City card names the city you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Kansas's cities has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's mayor or council members, or a city's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='20': 626 records, 623 active cities, the city of Frederick, which the Census records as an inactive government, the city of Tribune, which it records as having no functioning government, and the balance of Greeley County's unified government. Together they hold about 3% of the state's land (6,203.9 of 211,754.3 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Wichita, Overland Park, Kansas City, Olathe and Topeka); and the county election officers' results. The League of Kansas Municipalities is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ks-school-board-members",
+            "concept": "School board",
+            "area": "Kansas",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of Kansas's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='20': 285 records on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the State Department of Education's directory of school districts; each district's own website; and the county election officers' results. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "newmexico": [
+      {
+            "id": "nm-county-officials",
+            "concept": "County government",
+            "area": "New Mexico — all 33 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of New Mexico's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is nm/index.html's own County block: each county is governed by an elected board of county commissioners and elects officers such as a clerk, a treasurer, an assessor, a sheriff and a probate judge, while Los Alamos is a county and a municipality in one government, run by an elected county council. The boundary is TIGERweb State_County for STATE='35', 33 features, shipped as nm/data/app/state-counties.json. Commission districts are not drawn: TIGER carries no such layer. ROUTES NOT YET READ, government publishers first: each county's own website; the county clerks' and the Secretary of State's election results, which name who won each county seat. A statewide association of counties is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nm-municipal-officeholders",
+            "concept": "City government",
+            "area": "New Mexico",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City, Town or Village card names the city, town or village you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of New Mexico's cities, towns and villages has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city, town or village's mayor or council members, or a city, town or village's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='35': 105 records, 48 villages, 37 cities and 20 towns, every one an active government. Together they hold about 1% of the state's land (3,067.3 of 314,199.6 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Albuquerque, Las Cruces and Rio Rancho); and the county clerks' election results, since the county clerks have run municipal elections since 2018. The New Mexico Municipal League is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nm-school-board-members",
+            "concept": "School board",
+            "area": "New Mexico",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of New Mexico's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='35': 89 records on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Public Education Department's directory of school districts; each district's own website; and the county clerks' election results, since the county clerks run school board elections. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "nebraska": [
+      {
+            "id": "ne-county-officials",
+            "concept": "County government",
+            "area": "Nebraska — all 93 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of Nebraska's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is ne/index.html's own County block: each county is governed by an elected board of commissioners or, in the counties that kept township government, a board of supervisors, and elects officers such as a clerk, a treasurer, an assessor, a sheriff and a county attorney. The boundary is TIGERweb State_County for STATE='31', 93 features, shipped as ne/data/app/state-counties.json. Commissioner and supervisor districts are not drawn: TIGER carries no such layer. ROUTES NOT YET READ, government publishers first: each county's own website; the county clerks' and election commissioners' and the Secretary of State's election results, which name who won each county seat. A statewide association of counties is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ne-municipal-officeholders",
+            "concept": "City government",
+            "area": "Nebraska",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City or Village card names the city or village you picked, and not its mayor, council or village board.",
+            "why": "No statewide list of the elected officials of Nebraska's cities and villages has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city or village's mayor, council or village board, or a city or village's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='31': 528 records, 381 villages and 147 cities, every one an active government. Together they hold about 1% of the state's land (2,092.9 of 198,950.7 km2 by AREALAND). The townships in the counties that kept township government, 319 of which the Census records as active governments, are not drawn, and their officers are not named either. The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Omaha, Lincoln and Bellevue); and the county clerks' and election commissioners' election results. The League of Nebraska Municipalities is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ne-school-board-members",
+            "concept": "School board",
+            "area": "Nebraska",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of Nebraska's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='31': 244 records on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's education directory; each district's own website; and the county clerks' and election commissioners' election results. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "idaho": [
+      {
+            "id": "id-county-officials",
+            "concept": "County government",
+            "area": "Idaho — all 44 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of Idaho's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is id/index.html's own County block: each county is governed by an elected board of three county commissioners and elects officers such as a clerk, a treasurer, an assessor, a sheriff, a coroner and a prosecuting attorney. The boundary is TIGERweb State_County for STATE='16', 44 features, shipped as id/data/app/state-counties.json. Commissioner districts are not drawn: TIGER carries no such layer. ROUTES NOT YET READ, government publishers first: each county's own website; the county clerks' and the Secretary of State's election results, which name who won each county seat. A statewide association of counties is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "id-municipal-officeholders",
+            "concept": "City government",
+            "area": "Idaho",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City card names the city you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Idaho's cities has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's mayor or council members, or a city's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='16': 199 records, 198 active cities and the city of Lost River, which the Census records as an inactive government. Together they hold about 1% of the state's land (1,967.8 of 214,050.8 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Boise, Meridian and Nampa); and the county clerks' election results. The Association of Idaho Cities is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "id-school-board-members",
+            "concept": "School board",
+            "area": "Idaho",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of Idaho's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='16': 116 records on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the State Department of Education's directory of school districts; each district's own website; and the county clerks' election results, which include school board trustee elections. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "hawaii": [
+      {
+            "id": "hi-county-officials",
+            "concept": "County government",
+            "area": "Hawaii — all five counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card says how the county is governed, and names none of its mayor or council members.",
+            "why": "No statewide list of Hawaii's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "A list of each county's mayor and council members, from the state or from the county itself.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is hi/index.html's own County block: Hawaii has five counties and no other local government: Honolulu is a city and a county in one government, Hawaii, Maui and Kauai counties each elect a mayor and a county council, and Kalawao, the Kalaupapa settlement on Molokai, has no elected government and is administered by the state Department of Health. The card says which of these the county has and names nobody. The boundary is TIGERweb State_County for STATE='15', 5 features, shipped as hi/data/app/state-counties.json. The Northwestern Hawaiian Islands, where nobody lives, are left off every map in this app. Council districts are not drawn: TIGER carries no such layer. ROUTES NOT YET READ, government publishers first: each county's own website; the state Office of Elections' results, which name who won each county seat. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "maine": [
+      {
+            "id": "me-county-officials",
+            "concept": "County government",
+            "area": "Maine — all 16 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of Maine's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is me/index.html's own County block: each county is governed by an elected board of county commissioners and elects officers such as a sheriff, a register of deeds and a judge of probate. The boundary is TIGERweb State_County for STATE='23', 16 features, shipped as me/data/app/state-counties.json. Commissioner districts are not drawn: TIGER carries no such layer. ROUTES NOT YET READ, government publishers first: each county's own website; the Secretary of State's election results, which name who won each county seat. A statewide association of counties is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "me-municipal-officeholders",
+            "concept": "City government",
+            "area": "Maine",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The Town or City card names the town or city you picked, and not its select board, mayor or council.",
+            "why": "No statewide list of the elected officials of Maine's towns and cities has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each town or city's select board, mayor or council, or a town or city's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's county subdivisions (Places_CouSub_ConCity_SubMCD layer 1) for STATE='23': 529 records, 430 towns, 23 cities, 29 plantations, 42 unorganized territories, one gore and four records of the Passamaquoddy Tribe's and the Penobscot Nation's reservations. Every part of the state's land is in one of them. An unorganized territory or a gore has no local government of its own and a reservation is governed by its tribe, so their cards say that instead. The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Portland, Lewiston and Bangor); and the town and city clerks' election results, since Maine's towns and cities run their own elections. The Maine Municipal Association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "me-school-board-members",
+            "concept": "School board",
+            "area": "Maine",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of Maine's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='23': 187 records on layer 0 (unified), 74 on layer 2 (elementary) and 3 on layer 1 (secondary), which lie over part of the elementary districts' ground. All three are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's directory of school administrative units; each district's own website; and the town and city clerks' election results, since school board members are elected locally. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "montana": [
+      {
+            "id": "mt-county-officials",
+            "concept": "County government",
+            "area": "Montana — all 56 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of Montana's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is mt/index.html's own County block: each county is governed by an elected board of county commissioners and elects officers such as a clerk and recorder, a treasurer, a sheriff and a county attorney, while Butte-Silver Bow and Anaconda-Deer Lodge are each a city and a county in one consolidated government. The boundary is TIGERweb State_County for STATE='30', 56 features, shipped as mt/data/app/state-counties.json. Commissioner districts are not drawn: TIGER carries no such layer. ROUTES NOT YET READ, government publishers first: each county's own website; the county election administrators' and the Secretary of State's election results, which name who won each county seat. A statewide association of counties is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "mt-municipal-officeholders",
+            "concept": "City government",
+            "area": "Montana",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City or Town card names the city or town you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Montana's cities and towns has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city or town's mayor or council members, or a city or town's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='30': 127 records, 73 towns, 52 cities, the balance of Butte-Silver Bow and Anaconda-Deer Lodge County. Together they hold about 1% of the state's land (4,572.2 of 376,973.5 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Billings, Missoula and Great Falls); and the county election administrators' election results. The Montana League of Cities and Towns is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "mt-school-board-members",
+            "concept": "School board",
+            "area": "Montana",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of Montana's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='30': 65 records on layer 0 (unified), 233 on layer 2 (elementary) and 97 on layer 1 (secondary), which lie over the same ground as the elementary districts. All three are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Office of Public Instruction's directory of school districts; each district's own website; and the county election administrators' election results, which include school trustee elections. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "rhodeisland": [
+      {
+            "id": "ri-municipal-officeholders",
+            "concept": "City government",
+            "area": "Rhode Island",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City or Town card names the city or town you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Rhode Island's cities and towns has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city or town's mayor or council members, or a city or town's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's county subdivisions (Places_CouSub_ConCity_SubMCD layer 1) for STATE='44': 40 records, 31 towns, 8 cities and one record of about 331 km2 of coastal water in Newport County. Every part of the state's land is in a city or a town, and Rhode Island has had no county government since 1842, so the cities and towns are the state's only general-purpose local governments. The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Providence, Cranston and Warwick); and the Board of Elections' results. The Rhode Island League of Cities and Towns is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ri-school-board-members",
+            "concept": "School board",
+            "area": "Rhode Island",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school committee.",
+            "why": "No list of the members of Rhode Island's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='44': 31 records on layer 0 (unified), one of them the placeholder for coastal water no district covers, 5 on layer 2 (elementary) and 1 on layer 1 (secondary), which lies over part of the elementary districts' ground. All three are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's directory of districts; each district's own website; and the Board of Elections' results, since school committee members are elected by city and town. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "delaware": [
+      {
+            "id": "de-county-officials",
+            "concept": "County government",
+            "area": "Delaware — all three counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card says which form of government the county has, and names none of its council, executive, levy court or other elected officers.",
+            "why": "No statewide list of Delaware's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "A list of each county's council, executive or levy court and its other elected officers, from the state or from the county itself.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is de/index.html's own County block: New Castle is governed by an elected county executive and county council, Kent by an elected levy court and Sussex by an elected county council, and each also elects officers such as a sheriff, a recorder of deeds and a register of wills. The card says which form the county has and names nobody. The boundary is TIGERweb State_County for STATE='10', 3 features, shipped as de/data/app/state-counties.json. Council and levy court districts are not drawn: TIGER carries no such layer. ROUTES NOT YET READ, government publishers first: each county's own website; the Department of Elections' results, which name who won each county seat. A statewide association of counties is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "de-municipal-officeholders",
+            "concept": "City government",
+            "area": "Delaware",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City, Town or Village card names the city, town or village you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Delaware's cities, towns and villages has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city, town or village's mayor or council members, or a city, town or village's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='10': 57 records, 44 towns, 10 cities and 3 villages, every one an active government. Together they hold about 8% of the state's land (393.1 of 5,046.8 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Wilmington, Dover and Newark); and the municipalities' own election results, since many Delaware towns run their own elections. The Delaware League of Local Governments is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "de-school-board-members",
+            "concept": "School board",
+            "area": "Delaware",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of Delaware's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='10': 16 records on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's directory of school districts; each district's own website; and the Department of Elections' results, since it runs Delaware's school board elections. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "southdakota": [
+      {
+            "id": "sd-county-officials",
+            "concept": "County government",
+            "area": "South Dakota — all 66 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of South Dakota's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is sd/index.html's own County block: each county is governed by an elected board of county commissioners and elects officers such as an auditor, a treasurer, a register of deeds, a sheriff and a state's attorney. The boundary is TIGERweb State_County for STATE='46', 66 features, shipped as sd/data/app/state-counties.json. Commissioner districts are not drawn: TIGER carries no such layer. ROUTES NOT YET READ, government publishers first: each county's own website; the county auditors' and the Secretary of State's election results, which name who won each county seat. A statewide association of counties is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "sd-municipal-officeholders",
+            "concept": "City government",
+            "area": "South Dakota",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City or Town card names the city or town you picked, and not its mayor, council or town board.",
+            "why": "No statewide list of the elected officials of South Dakota's cities and towns has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city or town's mayor, council or town board, or a city or town's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='46': 310 records, 157 cities and 153 towns, every one an active government. Together they hold under 1% of the state's land (1,438.5 of 196,345.1 km2 by AREALAND). The civil townships, 898 of which the Census records as active governments, are not drawn, and their officers are not named either. The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Sioux Falls, Rapid City and Aberdeen); and the municipalities' own and the county auditors' election results. The South Dakota Municipal League is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "sd-school-board-members",
+            "concept": "School board",
+            "area": "South Dakota",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of South Dakota's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='46': 147 records on layer 0, the unified districts, and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's directory of school districts; each district's own website; and the school districts' own election results, since South Dakota's school boards run their own elections. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "northdakota": [
+      {
+            "id": "nd-county-officials",
+            "concept": "County government",
+            "area": "North Dakota — all 53 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of North Dakota's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is nd/index.html's own County block: each county is governed by an elected board of county commissioners and elects officers such as an auditor, a treasurer, a recorder, a sheriff and a state's attorney. The boundary is TIGERweb State_County for STATE='38', 53 features, shipped as nd/data/app/state-counties.json. Commissioner districts are not drawn: TIGER carries no such layer. ROUTES NOT YET READ, government publishers first: each county's own website; the county auditors' and the Secretary of State's election results, which name who won each county seat. A statewide association of counties is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nd-municipal-officeholders",
+            "concept": "City government",
+            "area": "North Dakota",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City card names the city you picked, and not its mayor, commission or council.",
+            "why": "No statewide list of the elected officials of North Dakota's cities has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's mayor, commission or council, or a city's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='38': 355 records, every one an active city. Together they hold under 1% of the state's land (1,552.3 of 178,694.4 km2 by AREALAND). The civil townships, 1,305 of which the Census records as active governments, are not drawn, and their officers are not named either. The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Fargo, Bismarck and Grand Forks); and the county auditors' election results. The North Dakota League of Cities is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nd-school-board-members",
+            "concept": "School board",
+            "area": "North Dakota",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of North Dakota's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='38': 147 records on layer 0 (unified) and 20 on layer 2 (elementary), and none on layer 1 (secondary). Both are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Public Instruction's directory of school districts; each district's own website; and the school districts' own election results, since North Dakota's school boards run their own elections. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "alaska": [
+      {
+            "id": "ak-county-officials",
+            "concept": "County government",
+            "area": "Alaska — all 19 boroughs and 11 census areas",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The Borough or Census Area card says whether the place has a borough government, and names none of its mayor or assembly members.",
+            "why": "No list of Alaska's borough officials has been read for this app yet, and the boroughs' own pages have not been read one by one.",
+            "wanted": "A list of each borough's mayor and assembly members, from the state or from the borough itself.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is ak/index.html's own County block: each organized borough is governed by an elected assembly and a mayor, Anchorage, Juneau, Sitka, Wrangell, Yakutat and Skagway are each a city and a borough in one government, and the Unorganized Borough has no borough government: its census areas are drawn for statistics and the state provides the services a borough would. The card says which of these the place is and names nobody. The boundary is TIGERweb State_County for STATE='02', 30 features (the 19 organized boroughs and the 11 census areas the Census Bureau draws over the Unorganized Borough), shipped as ak/data/app/state-counties.json. Assembly districts are not drawn: TIGER carries no such layer. ROUTES NOT YET READ, government publishers first: each borough's own website and its own election results; and the Department of Commerce, Community, and Economic Development's community database. The Alaska Municipal League is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ak-municipal-officeholders",
+            "concept": "City government",
+            "area": "Alaska",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City card names the city you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Alaska's cities has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city's mayor or council members, or a city's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='02': 149 records, 145 cities, the Municipality of Anchorage and the City and Borough of Juneau, Sitka and Wrangell. Together they hold about 2% of the state's land (31,679.7 of 1,479,942.8 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Anchorage, Fairbanks and Juneau); and the cities' own election results, since Alaska's municipalities run their own elections. The Alaska Municipal League is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "ak-school-board-members",
+            "concept": "School board",
+            "area": "Alaska",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of Alaska's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='02': 52 records on layer 0, the unified districts (the borough and city districts and the regional districts of the Unorganized Borough), and none on layer 1 (secondary) or layer 2 (elementary); shipped as a tile archive mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education and Early Development's directory of school districts; each district's own website; and the boroughs' and cities' own election results, which include school board elections. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "vermont": [
+      {
+            "id": "vt-county-officials",
+            "concept": "County government",
+            "area": "Vermont — all 14 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card says the county has no county board, and names none of its sheriff, state's attorney, probate judge or assistant judges.",
+            "why": "No statewide list of Vermont's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "A list of each county's sheriff, state's attorney, probate judge and assistant judges, from the state or from the county itself.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is vt/index.html's own County block: Vermont's counties have no county board; each elects officers such as a sheriff, a state's attorney, a probate judge and two assistant judges, who also oversee the county's budget, and the towns and cities are the general-purpose local governments. The boundary is TIGERweb State_County for STATE='50', 14 features, shipped as vt/data/app/state-counties.json. ROUTES NOT YET READ, government publishers first: the Secretary of State's election results, which name who won each county office; and each county courthouse's own pages. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "vt-municipal-officeholders",
+            "concept": "City government",
+            "area": "Vermont",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The Town or City card names the town or city you picked, and not its select board, mayor or council.",
+            "why": "No statewide list of the elected officials of Vermont's towns and cities has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each town or city's select board, mayor or council, or a town or city's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's county subdivisions (Places_CouSub_ConCity_SubMCD layer 1) for STATE='50': 256 records, 237 towns with governments, 10 cities, 5 towns the Census records as having no government, three gores and one grant. Every part of the state's land is in one of them. An unorganized town, a gore or a grant is administered by a supervisor the governor appoints, and its card says so. The 29 incorporated villages inside their towns are not drawn. The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, starting with Burlington, the largest city; and the town clerks' election results. The Vermont League of Cities and Towns is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "vt-school-board-members",
+            "concept": "School board",
+            "area": "Vermont",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of Vermont's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='50': 64 records on layer 0 (unified), 56 on layer 2 (elementary) and 11 on layer 1 (secondary), which lie over part of the elementary districts' ground. All three are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Agency of Education's directory of school districts; each district's own website; and the town clerks' election results, since school board members are elected at town meeting or by ballot. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      }
+  ],
+  "wyoming": [
+      {
+            "id": "wy-county-officials",
+            "concept": "County government",
+            "area": "Wyoming — all 23 counties",
+            "counties": [],
+            "everyCounty": true,
+            "kind": "no-source",
+            "layer": "county",
+            "summary": "The County card names the county you picked, and not its commissioners or other elected officers. The card says so rather than leave the offices looking empty.",
+            "why": "No statewide list of Wyoming's county officials has been read for this app yet, and the counties' own pages have not been read one by one.",
+            "wanted": "One statewide list of each county's commissioners and other elected officers, or a county's own published list of them.",
+            "blocker": "Recorded 2026-11-12 when the instance was built dark, on Adam's state-level launch plan (claude.ai artifact 9egihee5Xeqt1kxsB5FKqD), WITHOUT a source survey: no county roster was read for this record, county by county or statewide. What the card says is wy/index.html's own County block: each county is governed by an elected board of county commissioners and elects officers such as a clerk, a treasurer, an assessor, a sheriff and a county attorney. The boundary is TIGERweb State_County for STATE='56', 23 features, shipped as wy/data/app/state-counties.json. ROUTES NOT YET READ, government publishers first: each county's own website; the county clerks' and the Secretary of State's election results, which name who won each county seat. A statewide association of counties is an association rather than a government, so it comes after any government list. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "wy-municipal-officeholders",
+            "concept": "City government",
+            "area": "Wyoming",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "municipality",
+            "summary": "The City or Town card names the city or town you picked, and not its mayor or council members.",
+            "why": "No statewide list of the elected officials of Wyoming's cities and towns has been read for this app, and their own pages have not been read one by one.",
+            "wanted": "One statewide list of each city or town's mayor or council members, or a city or town's own published list of them.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's incorporated places (Places_CouSub_ConCity_SubMCD layer 4) for STATE='56': 99 records, 80 towns and 19 cities, every one an active government. Together they hold under 1% of the state's land (921.9 of 251,458.2 km2 by AREALAND). The layer carries a name, a code, a legal description and a functional status, and no officeholder field. No municipal roster was read for this record. ROUTES NOT YET READ: each place's own website, largest first (Cheyenne, Casper and Gillette); and the county clerks' election results. The Wyoming Association of Municipalities is an association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "wy-school-board-members",
+            "concept": "School board",
+            "area": "Wyoming",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "school-district-unified",
+            "summary": "The School District card names the district you picked, and not the members of its school board.",
+            "why": "No list of the members of Wyoming's school boards has been read for this app, and the districts' own pages have not been read one by one.",
+            "wanted": "One statewide list of each school district's board members, or a district's own published list of its board.",
+            "blocker": "Measured 2026-11-12 against TIGERweb's school districts (School MapServer) for STATE='56': 48 records on layer 0 (unified), one of them the placeholder the Census files over about 4,499 km2 of Park County land no district reaches, and one on layer 2 (elementary), Fremont County School District 38, and none on layer 1 (secondary). Both are drawn from tile archives mirrored by scripts/mirror_tiger_tiles.py. No school board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's directory of school districts; each district's own website; and the county clerks' election results, which include school board trustee elections. A statewide school boards association is an association rather than a government. NOT YET ASKED, and no ask is drafted."
       }
   ]
 }

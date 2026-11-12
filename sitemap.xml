@@ -9,183 +9,345 @@
        it makes the whole sitemap unparseable. One did, from 2026-09-12. -->
   <url>
     <loc>https://districtry.com/il/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://districtry.com/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://districtry.com/ak/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/al/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/ar/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/az/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/ca/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/co/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ct/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/de/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/fl/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/ga/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/hi/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/id/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/in/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ks/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/ky/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/la/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ma/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/md/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/me/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/mn/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/ms/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/mt/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/nc/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/nd/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ne/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/nh/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/nj/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/nm/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/nv/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/ny/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/oh/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/ok/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/or/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/pa/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ri/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/sc/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/sd/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/tx/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ut/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/va/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/vt/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/wa/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/wy/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ak/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ak/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ak/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/al/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/al/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/al/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/ar/congress.html</loc>
@@ -237,7 +399,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ca/election-results.html</loc>
-    <lastmod>2026-11-12</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -256,6 +418,60 @@
   <url>
     <loc>https://districtry.com/ca/supervisor-district.html</loc>
     <lastmod>2026-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/co/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/co/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/co/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ct/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ct/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ct/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/de/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/de/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/de/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -302,6 +518,24 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://districtry.com/hi/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/hi/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/hi/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/ia/city-council.html</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -338,6 +572,24 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://districtry.com/id/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/id/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/id/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/il/chicago-candidates.html</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -357,7 +609,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/election-results.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -458,6 +710,24 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://districtry.com/ks/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ks/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ks/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/ky/congress.html</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -496,6 +766,60 @@
   <url>
     <loc>https://districtry.com/la/state-legislature.html</loc>
     <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ma/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ma/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ma/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/md/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/md/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/md/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/me/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/me/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/me/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -596,6 +920,24 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://districtry.com/mt/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/mt/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/mt/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/nc/congress.html</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -622,6 +964,42 @@
   <url>
     <loc>https://districtry.com/nc/state-legislature.html</loc>
     <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/nd/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/nd/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/nd/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ne/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ne/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ne/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -658,6 +1036,24 @@
   <url>
     <loc>https://districtry.com/nj/state-legislature.html</loc>
     <lastmod>2026-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/nm/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/nm/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/nm/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -717,7 +1113,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ny/election-results.html</loc>
-    <lastmod>2026-11-12</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -782,6 +1178,24 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://districtry.com/or/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/or/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/or/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/pa/congress.html</loc>
     <lastmod>2026-11-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -796,6 +1210,24 @@
   <url>
     <loc>https://districtry.com/pa/state-legislature.html</loc>
     <lastmod>2026-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ri/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ri/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ri/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -824,6 +1256,24 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://districtry.com/sd/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/sd/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/sd/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/tn/congress.html</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -831,7 +1281,7 @@
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner.html</loc>
-    <lastmod>2026-11-01</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -866,6 +1316,24 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://districtry.com/ut/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ut/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ut/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/va/congress.html</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -896,8 +1364,26 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://districtry.com/vt/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/vt/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/vt/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/wa/congress.html</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -909,7 +1395,7 @@
   </url>
   <url>
     <loc>https://districtry.com/wa/state-legislature.html</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -972,6 +1458,36 @@
     <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/wy/congress.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/wy/faq.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/wy/state-legislature.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ak/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/al/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ar/quorum-court/arkansas.html</loc>
@@ -1438,6 +1954,24 @@
   <url>
     <loc>https://districtry.com/ca/sources.html</loc>
     <lastmod>2026-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/co/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ct/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/de/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2366,6 +2900,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/hi/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/ia/county-supervisor/adair.html</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
@@ -2966,6 +3506,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/id/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/il/county-board/adams.html</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -3057,7 +3603,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/cook.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3075,7 +3621,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/dekalb.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3129,7 +3675,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/franklin.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3177,7 +3723,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/henry.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3225,7 +3771,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/kane.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3405,7 +3951,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/pike.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3423,7 +3969,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/randolph.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3525,7 +4071,7 @@
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/wayne.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4130,6 +4676,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/ks/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/ky/county-government/adair.html</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>
@@ -4329,7 +4881,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ky/county-government/fayette.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4461,7 +5013,7 @@
   </url>
   <url>
     <loc>https://districtry.com/ky/county-government/jefferson.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -5242,6 +5794,24 @@
   <url>
     <loc>https://districtry.com/la/sources.html</loc>
     <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ma/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/md/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/me/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -6279,685 +6849,685 @@
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/adair.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/andrew.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/atchison.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/audrain.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/barry.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/barton.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/bates.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/benton.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/bollinger.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/boone.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/buchanan.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/butler.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/caldwell.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/callaway.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/camden.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/cape-girardeau.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/carroll.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/carter.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/cass.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/cedar.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/chariton.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/christian.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/clark.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/clay.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/clinton.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/cole.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/cooper.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/crawford.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/dade.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/dallas.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/daviess.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/dekalb.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/dent.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/douglas.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/dunklin.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/franklin.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/gasconade.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/gentry.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/greene.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/grundy.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/harrison.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/henry.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/hickory.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/holt.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/howard.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/howell.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/iron.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/jackson.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/jasper.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/jefferson.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/johnson.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/knox.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/laclede.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/lafayette.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/lawrence.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/lewis.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/lincoln.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/linn.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/livingston.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/macon.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/madison.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/maries.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/marion.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/mcdonald.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/mercer.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/miller.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/mississippi.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/moniteau.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/monroe.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/montgomery.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/morgan.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/new-madrid.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/newton.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/nodaway.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/oregon.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/osage.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/ozark.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/pemiscot.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/perry.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/pettis.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/phelps.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/pike.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/platte.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/polk.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/pulaski.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/putnam.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/ralls.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/randolph.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/ray.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/reynolds.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/ripley.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/saline.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/schuyler.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/scotland.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/scott.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/shannon.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/shelby.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/st-charles.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/st-clair.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/st-francois.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/st-louis.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/ste-genevieve.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/stoddard.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/stone.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/sullivan.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/taney.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/texas.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/vernon.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/warren.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/washington.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/wayne.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/webster.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/worth.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mo/county-government/wright.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -7462,6 +8032,12 @@
   <url>
     <loc>https://districtry.com/ms/sources.html</loc>
     <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/mt/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -8072,6 +8648,18 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/nd/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ne/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/nh/sources.html</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -8080,6 +8668,12 @@
   <url>
     <loc>https://districtry.com/nj/sources.html</loc>
     <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/nm/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -8624,8 +9218,20 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/or/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/pa/sources.html</loc>
     <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ri/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -8912,20 +9518,26 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/sd/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/tn/county-commissioner/anderson.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/bedford.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/benton.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -8937,37 +9549,37 @@
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/bradley.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/cannon.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/carter.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/cheatham.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/chester.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/claiborne.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -8979,67 +9591,67 @@
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/cocke.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/coffee.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/crockett.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/davidson.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/dekalb.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/dickson.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/dyer.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/fayette.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/fentress.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/franklin.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/giles.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -9051,25 +9663,25 @@
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/hamilton.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/hardeman.html</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/hardin.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/hawkins.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -9081,151 +9693,151 @@
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/hickman.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/jefferson.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/knox.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/lawrence.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/lincoln.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/loudon.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/macon.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/madison.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/marion.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/marshall.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/maury.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/mcminn.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/monroe.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/montgomery.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/morgan.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/obion.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/polk.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/putnam.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/roane.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/rutherford.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/scott.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/sevier.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/stewart.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/sullivan.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/sumner.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -9237,13 +9849,13 @@
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/trousdale.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/unicoi.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -9255,7 +9867,7 @@
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/warren.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -9267,13 +9879,13 @@
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/williamson.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/tn/county-commissioner/wilson.html</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -9286,6 +9898,12 @@
   <url>
     <loc>https://districtry.com/tx/sources.html</loc>
     <lastmod>2026-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ut/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -10058,6 +10676,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/vt/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/wa/sources.html</loc>
     <lastmod>2026-11-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -10503,337 +11127,343 @@
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/barbour.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/berkeley.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/boone.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/braxton.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/brooke.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/cabell.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/calhoun.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/clay.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/doddridge.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/fayette.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/gilmer.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/grant.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/greenbrier.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/hampshire.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/hancock.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/hardy.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/harrison.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/jackson.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/jefferson.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/kanawha.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/lewis.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/lincoln.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/logan.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/marion.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/marshall.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/mason.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/mcdowell.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/mercer.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/mineral.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/mingo.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/monongalia.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/monroe.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/morgan.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/nicholas.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/ohio.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/pendleton.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/pleasants.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/pocahontas.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/preston.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/putnam.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/raleigh.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/randolph.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/ritchie.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/roane.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/summers.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/taylor.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/tucker.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/tyler.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/upshur.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/wayne.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/webster.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/wetzel.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/wirt.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/wood.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/county-commissioner/wyoming.html</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wv/sources.html</loc>
     <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/wy/sources.html</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -10863,7 +11493,7 @@
   </url>
   <url>
     <loc>https://districtry.com/about.html</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -10875,7 +11505,7 @@
   </url>
   <url>
     <loc>https://districtry.com/feedback.html</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -10887,7 +11517,7 @@
   </url>
   <url>
     <loc>https://districtry.com/privacy.html</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -10899,7 +11529,7 @@
   </url>
   <url>
     <loc>https://districtry.com/traffic.html</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.3</priority>
   </url>

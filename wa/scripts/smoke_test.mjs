@@ -402,16 +402,20 @@ try {
   //     This instance answers its own side from the state outline the wash
   //     retained, with no fetch.
   //
-  //     A CLICK IN OREGON OR IDAHO IS DELIBERATELY NOT A CASE. Neither is
-  //     served today, so a click there stays here; but the fleet is meant to
-  //     reach every state, and a "stays here" case in either would start
-  //     failing the day it goes live, in a change that is about another
-  //     state. The negative point carries that half instead (1a2-ii), and it
-  //     is in Canada so that no go-live ever has to move it.
+  //     SALEM, OREGON JOINED AS A CASE in the change that published Oregon
+  //     (batch 3 of the state-level launch). Measured against
+  //     fleet-outlines.json on 2026-11-12, it lies inside Oregon's outline and
+  //     no other, about 81 km from this app's. A CLICK IN IDAHO IS
+  //     DELIBERATELY NOT A CASE. It is not served today, so a click there
+  //     stays here; but a "stays here" case there would start failing the day
+  //     Idaho goes live, in a change that is about another state. The
+  //     negative point carries that half instead (1a2-ii), and it is in
+  //     Canada so that no go-live ever has to move it.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "San Francisco City Hall", lat: 37.7793, lng: -122.4193, want: "https://districtry.com/ca/" },
+      { name: "Salem, Oregon", lat: 44.9429, lng: -123.0351, want: "https://districtry.com/or/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });

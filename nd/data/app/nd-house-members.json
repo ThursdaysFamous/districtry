@@ -1,0 +1,966 @@
+{
+  "1": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Patrick R. Hatlestad",
+        "party": "Republican",
+        "email": "phatlestad@ndlegis.gov",
+        "phone": "home 701-577-6656",
+        "phonesExtra": [
+          "cell 701-770-8899"
+        ],
+        "url": "https://ndlegis.gov/biography/patrick-r-hatlestad"
+      },
+      {
+        "name": "David Richter",
+        "party": "Republican",
+        "email": "dwrichter@ndlegis.gov",
+        "phone": "cell 701-770-8160",
+        "url": "https://ndlegis.gov/biography/david-richter"
+      }
+    ]
+  },
+  "2": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Bert Anderson",
+        "party": "Republican",
+        "email": "bertanderson@ndlegis.gov",
+        "phone": "home 701-965-6973",
+        "phonesExtra": [
+          "work 701-965-6194",
+          "cell 701-641-1549"
+        ],
+        "url": "https://ndlegis.gov/biography/bert-anderson"
+      },
+      {
+        "name": "Donald W. Longmuir",
+        "party": "Republican",
+        "email": "dlongmuir@ndlegis.gov",
+        "phone": "home 701-628-2617",
+        "phonesExtra": [
+          "cell 701-629-1632"
+        ],
+        "url": "https://ndlegis.gov/biography/donald-w-longmuir"
+      }
+    ]
+  },
+  "3": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jeff Hoverson",
+        "party": "Republican",
+        "email": "jahoverson@ndlegis.gov",
+        "phone": "cell 701-340-8237",
+        "url": "https://ndlegis.gov/biography/jeff-hoverson"
+      },
+      {
+        "name": "Lori VanWinkle",
+        "party": "Republican",
+        "email": "lvanwinkle@ndlegis.gov",
+        "url": "https://ndlegis.gov/biography/lori-vanwinkle"
+      }
+    ]
+  },
+  "5": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jay Fisher",
+        "party": "Republican",
+        "email": "jayfisher@ndlegis.gov",
+        "phone": "cell 701-500-5726",
+        "url": "https://ndlegis.gov/biography/jay-fisher"
+      },
+      {
+        "name": "Scott Louser",
+        "party": "Republican",
+        "email": "slouser@ndlegis.gov",
+        "phone": "work 701-852-8151",
+        "phonesExtra": [
+          "cell 701-833-8489"
+        ],
+        "url": "https://ndlegis.gov/biography/scott-louser"
+      }
+    ]
+  },
+  "6": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Dick Anderson",
+        "party": "Republican",
+        "email": "dickanderson@ndlegis.gov",
+        "phone": "home 701-366-4625",
+        "phonesExtra": [
+          "cell 701-228-4782"
+        ],
+        "url": "https://ndlegis.gov/biography/dick-anderson"
+      },
+      {
+        "name": "Daniel R. Vollmer",
+        "party": "Republican",
+        "email": "dvollmer@ndlegis.gov",
+        "url": "https://ndlegis.gov/biography/daniel-r-vollmer"
+      }
+    ]
+  },
+  "7": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jason Dockter",
+        "party": "Republican",
+        "email": "jddockter@ndlegis.gov",
+        "phone": "work 701-258-9848",
+        "phonesExtra": [
+          "cell 701-214-0486"
+        ],
+        "url": "https://ndlegis.gov/biography/jason-dockter"
+      },
+      {
+        "name": "Matthew Heilman",
+        "party": "Republican",
+        "email": "mheilman@ndlegis.gov",
+        "phone": "cell 701-989-8268",
+        "url": "https://ndlegis.gov/biography/matthew-heilman"
+      }
+    ]
+  },
+  "8": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mike Berg",
+        "party": "Republican",
+        "email": "mberg@ndlegis.gov",
+        "phone": "cell 701-426-7458",
+        "url": "https://ndlegis.gov/biography/mike-berg"
+      },
+      {
+        "name": "SuAnn Olson",
+        "party": "Republican",
+        "email": "solson@ndlegis.gov",
+        "phone": "home 701-258-3887",
+        "phonesExtra": [
+          "cell 701-220-0907"
+        ],
+        "url": "https://ndlegis.gov/biography/suann-olson"
+      }
+    ]
+  },
+  "9": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Collette Brown",
+        "party": "Democratic",
+        "email": "cbrown@ndlegis.gov",
+        "phone": "cell 701-230-5723",
+        "url": "https://ndlegis.gov/biography/collette-brown"
+      },
+      {
+        "name": "Jayme Davis",
+        "party": "Democratic",
+        "email": "jdavis@ndlegis.gov",
+        "phone": "cell 701-202-8700",
+        "url": "https://ndlegis.gov/biography/jayme-davis"
+      }
+    ]
+  },
+  "10": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jared Hendrix",
+        "party": "Republican",
+        "email": "jhendrix@ndlegis.gov",
+        "phone": "cell 701-712-1487",
+        "url": "https://ndlegis.gov/biography/jared-hendrix"
+      },
+      {
+        "name": "Steve Swiontek",
+        "party": "Republican",
+        "email": "sswiontek@ndlegis.gov",
+        "phone": "cell 701-361-9392",
+        "url": "https://ndlegis.gov/biography/steve-swiontek"
+      }
+    ]
+  },
+  "11": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Gretchen Dobervich",
+        "party": "Democratic",
+        "email": "gdobervich@ndlegis.gov",
+        "phone": "cell 701-361-5627",
+        "url": "https://ndlegis.gov/biography/gretchen-dobervich"
+      },
+      {
+        "name": "Adam Goldwyn",
+        "party": "Democratic",
+        "email": "agoldwyn@ndlegis.gov",
+        "url": "https://ndlegis.gov/biography/adam-goldwyn"
+      }
+    ]
+  },
+  "12": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mitch Ostlie",
+        "party": "Republican",
+        "email": "mostlie@ndlegis.gov",
+        "url": "https://ndlegis.gov/biography/mitch-ostlie"
+      },
+      {
+        "name": "Bernie Satrom",
+        "party": "Republican",
+        "email": "blsatrom@ndlegis.gov",
+        "phone": "cell 701-320-7239",
+        "url": "https://ndlegis.gov/biography/bernie-satrom"
+      }
+    ]
+  },
+  "13": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jim Jonas",
+        "party": "Republican",
+        "email": "jjonas@ndlegis.gov",
+        "url": "https://ndlegis.gov/biography/jim-jonas"
+      },
+      {
+        "name": "Austen Schauer",
+        "party": "Republican",
+        "email": "aschauer@ndlegis.gov",
+        "phone": "cell 701-730-4474",
+        "url": "https://ndlegis.gov/biography/austen-schauer"
+      }
+    ]
+  },
+  "14": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jon O. Nelson",
+        "party": "Republican",
+        "email": "jonelson@ndlegis.gov",
+        "phone": "home 701-776-6738",
+        "phonesExtra": [
+          "cell 701-771-2193"
+        ],
+        "url": "https://ndlegis.gov/biography/jon-o-nelson"
+      },
+      {
+        "name": "Robin Weisz",
+        "party": "Republican",
+        "email": "rweisz@ndlegis.gov",
+        "phone": "cell 701-220-8007",
+        "url": "https://ndlegis.gov/biography/robin-weisz"
+      }
+    ]
+  },
+  "15": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Kathy Frelich",
+        "party": "Republican",
+        "email": "kfrelich@ndlegis.gov",
+        "phone": "home 701-662-6333",
+        "phonesExtra": [
+          "cell 701-351-0719"
+        ],
+        "url": "https://ndlegis.gov/biography/kathy-frelich"
+      },
+      {
+        "name": "Donna Henderson",
+        "party": "Republican",
+        "email": "dhenderson@ndlegis.gov",
+        "phone": "home 701-697-5104",
+        "phonesExtra": [
+          "cell 701-370-3250"
+        ],
+        "url": "https://ndlegis.gov/biography/donna-henderson"
+      }
+    ]
+  },
+  "16": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Ben Koppelman",
+        "party": "Republican",
+        "email": "bkoppelman@ndlegis.gov",
+        "phone": "cell 701-491-0665",
+        "url": "https://ndlegis.gov/biography/ben-koppelman"
+      },
+      {
+        "name": "Andrew Marschall",
+        "party": "Republican",
+        "email": "amarschall@ndlegis.gov",
+        "url": "https://ndlegis.gov/biography/andrew-marschall"
+      }
+    ]
+  },
+  "17": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Landon Bahl",
+        "party": "Republican",
+        "email": "lbahl@ndlegis.gov",
+        "phone": "cell 701-340-7732",
+        "url": "https://ndlegis.gov/biography/landon-bahl"
+      },
+      {
+        "name": "Mark Sanford",
+        "party": "Republican",
+        "email": "masanford@ndlegis.gov",
+        "phone": "home 701-772-4236",
+        "url": "https://ndlegis.gov/biography/mark-sanford"
+      }
+    ]
+  },
+  "18": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Nels Christianson",
+        "party": "Republican",
+        "email": "nchristianson@ndlegis.gov",
+        "phone": "cell 307-680-9623",
+        "url": "https://ndlegis.gov/biography/nels-christianson"
+      },
+      {
+        "name": "Steve Vetter",
+        "party": "Republican",
+        "email": "smvetter@ndlegis.gov",
+        "phone": "cell 612-770-8689",
+        "url": "https://ndlegis.gov/biography/steve-vetter"
+      }
+    ]
+  },
+  "19": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Karen A. Anderson",
+        "party": "Republican",
+        "email": "kanderson@ndlegis.gov",
+        "phone": "cell 701-520-0559",
+        "url": "https://ndlegis.gov/biography/karen-a-anderson"
+      },
+      {
+        "name": "David Monson",
+        "party": "Republican",
+        "email": "dmonson@ndlegis.gov",
+        "phone": "home 701-496-3394",
+        "url": "https://ndlegis.gov/biography/david-monson"
+      }
+    ]
+  },
+  "20": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mike Beltz",
+        "party": "Republican",
+        "email": "mbeltz@ndlegis.gov",
+        "phone": "cell 701-430-1209",
+        "url": "https://ndlegis.gov/biography/mike-beltz"
+      },
+      {
+        "name": "Dave Rustebakke",
+        "party": "Republican",
+        "email": "drustebakke@ndlegis.gov",
+        "url": "https://ndlegis.gov/biography/dave-rustebakke"
+      }
+    ]
+  },
+  "21": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "LaurieBeth Hager",
+        "party": "Democratic",
+        "email": "lbhager@ndlegis.gov",
+        "phone": "home and work 701-280-2535",
+        "phonesExtra": [
+          "cell 701-371-1407"
+        ],
+        "url": "https://ndlegis.gov/biography/lauriebeth-hager"
+      },
+      {
+        "name": "Mary Schneider",
+        "party": "Democratic",
+        "email": "mschneider@ndlegis.gov",
+        "phone": "home 701-235-0316",
+        "phonesExtra": [
+          "work and cell 701-306-0860"
+        ],
+        "url": "https://ndlegis.gov/biography/mary-schneider"
+      }
+    ]
+  },
+  "22": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Brandy L. Pyle",
+        "party": "Republican",
+        "email": "bpyle@ndlegis.gov",
+        "phone": "cell 701-388-2622",
+        "url": "https://ndlegis.gov/biography/brandy-l-pyle"
+      },
+      {
+        "name": "Jonathan Warrey",
+        "party": "Republican",
+        "email": "jwarrey@ndlegis.gov",
+        "phone": "cell 701-388-3417",
+        "url": "https://ndlegis.gov/biography/jonathan-warrey"
+      }
+    ]
+  },
+  "23": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Dennis Nehring",
+        "party": "Republican",
+        "email": "denehring@ndlegis.gov",
+        "phone": "home 701-875-4257",
+        "phonesExtra": [
+          "cell 701-609-0869"
+        ],
+        "url": "https://ndlegis.gov/biography/dennis-nehring"
+      },
+      {
+        "name": "Nico Rios",
+        "party": "Republican",
+        "email": "nrios@ndlegis.gov",
+        "url": "https://ndlegis.gov/biography/nico-rios"
+      }
+    ]
+  },
+  "24": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Daniel Johnston",
+        "party": "Republican",
+        "email": "djohnston@ndlegis.gov",
+        "url": "https://ndlegis.gov/biography/daniel-johnston"
+      },
+      {
+        "name": "Dwight Kiefert",
+        "party": "Republican",
+        "email": "dhkiefert@ndlegis.gov",
+        "phone": "home and work 701-845-0760",
+        "phonesExtra": [
+          "cell 701-490-0443"
+        ],
+        "url": "https://ndlegis.gov/biography/dwight-kiefert"
+      }
+    ]
+  },
+  "25": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Alisa Mitskog",
+        "party": "Democratic",
+        "email": "amitskog@ndlegis.gov",
+        "phone": "work 701-642-6444",
+        "url": "https://ndlegis.gov/biography/alisa-mitskog"
+      },
+      {
+        "name": "Kathy Skroch",
+        "party": "Republican",
+        "email": "kskroch@ndlegis.gov",
+        "url": "https://ndlegis.gov/biography/kathy-skroch"
+      }
+    ]
+  },
+  "26": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Roger A. Maki",
+        "party": "Republican",
+        "email": "rmaki@ndlegis.gov",
+        "phone": "home 701-842-6454",
+        "phonesExtra": [
+          "work 701-580-7547",
+          "cell 701-300-1654"
+        ],
+        "url": "https://ndlegis.gov/biography/roger-a-maki"
+      },
+      {
+        "name": "Kelby Timmons",
+        "party": "Republican",
+        "email": "ktimmons@ndlegis.gov",
+        "phone": "cell 701-339-5471",
+        "url": "https://ndlegis.gov/biography/kelby-timmons"
+      }
+    ]
+  },
+  "27": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "TJ Brown",
+        "party": "Republican",
+        "email": "tbrown@ndlegis.gov",
+        "url": "https://ndlegis.gov/biography/tj-brown"
+      },
+      {
+        "name": "Gregory Stemen",
+        "party": "Republican",
+        "email": "gstemen@ndlegis.gov",
+        "phone": "cell 507-828-7836",
+        "url": "https://ndlegis.gov/biography/gregory-stemen"
+      }
+    ]
+  },
+  "28": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mike Brandenburg",
+        "party": "Republican",
+        "email": "mbrandenburg@ndlegis.gov",
+        "phone": "home 701-493-2915",
+        "phonesExtra": [
+          "cell 701-709-0237"
+        ],
+        "url": "https://ndlegis.gov/biography/mike-brandenburg"
+      },
+      {
+        "name": "Jim Grueneich",
+        "party": "Republican",
+        "email": "jgrueneich@ndlegis.gov",
+        "phone": "cell 701-535-0286",
+        "url": "https://ndlegis.gov/biography/jim-grueneich"
+      }
+    ]
+  },
+  "29": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Craig Headland",
+        "party": "Republican",
+        "email": "cheadland@ndlegis.gov",
+        "phone": "home 701-489-3184",
+        "url": "https://ndlegis.gov/biography/craig-headland"
+      },
+      {
+        "name": "Don Vigesaa",
+        "party": "Republican",
+        "email": "dwvigesaa@ndlegis.gov",
+        "phone": "home 701-797-2448",
+        "url": "https://ndlegis.gov/biography/don-vigesaa"
+      }
+    ]
+  },
+  "30": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Glenn Bosch",
+        "party": "Republican",
+        "email": "gdbosch@ndlegis.gov",
+        "phone": "cell 701-226-1886",
+        "url": "https://ndlegis.gov/biography/glenn-bosch"
+      },
+      {
+        "name": "Mike Nathe",
+        "party": "Republican",
+        "email": "mrnathe@ndlegis.gov",
+        "phone": "cell 701-319-1500",
+        "url": "https://ndlegis.gov/biography/mike-nathe"
+      }
+    ]
+  },
+  "31": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Dawson Holle",
+        "party": "Republican",
+        "email": "dholle@ndlegis.gov",
+        "phone": "cell 701-214-9506",
+        "url": "https://ndlegis.gov/biography/dawson-holle"
+      },
+      {
+        "name": "Karen M. Rohr",
+        "party": "Republican",
+        "email": "kmrohr@ndlegis.gov",
+        "url": "https://ndlegis.gov/biography/karen-m-rohr"
+      }
+    ]
+  },
+  "32": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Pat D. Heinert",
+        "party": "Republican",
+        "email": "pdheinert@ndlegis.gov",
+        "phone": "home 701-222-1354",
+        "phonesExtra": [
+          "cell 701-595-2251"
+        ],
+        "url": "https://ndlegis.gov/biography/pat-d-heinert"
+      },
+      {
+        "name": "Lisa Meier",
+        "party": "Republican",
+        "email": "lmeier@ndlegis.gov",
+        "phone": "home 701-255-4166",
+        "phonesExtra": [
+          "work and cell 701-202-7126"
+        ],
+        "url": "https://ndlegis.gov/biography/lisa-meier"
+      }
+    ]
+  },
+  "33": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Anna S. Novak",
+        "party": "Republican",
+        "email": "anovak@ndlegis.gov",
+        "phone": "home 701-748-2399",
+        "phonesExtra": [
+          "cell 701-870-0288"
+        ],
+        "url": "https://ndlegis.gov/biography/anna-s-novak"
+      },
+      {
+        "name": "Bill Tveit",
+        "party": "Republican",
+        "email": "btveit@ndlegis.gov",
+        "phone": "home 701-748-2812",
+        "phonesExtra": [
+          "cell 701-870-4014"
+        ],
+        "url": "https://ndlegis.gov/biography/bill-tveit"
+      }
+    ]
+  },
+  "34": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Todd Porter",
+        "party": "Republican",
+        "email": "tkporter@ndlegis.gov",
+        "phone": "home 701-667-2922",
+        "phonesExtra": [
+          "work 701-255-0812"
+        ],
+        "url": "https://ndlegis.gov/biography/todd-porter"
+      },
+      {
+        "name": "Nathan Toman",
+        "party": "Republican",
+        "email": "nptoman@ndlegis.gov",
+        "phone": "cell 701-484-1906",
+        "url": "https://ndlegis.gov/biography/nathan-toman"
+      }
+    ]
+  },
+  "35": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Karen Karls",
+        "party": "Republican",
+        "email": "kkarls@ndlegis.gov",
+        "phone": "home 701-258-6836",
+        "url": "https://ndlegis.gov/biography/karen-karls"
+      },
+      {
+        "name": "Bob Martinson",
+        "party": "Republican",
+        "email": "bmartinson@ndlegis.gov",
+        "url": "https://ndlegis.gov/biography/bob-martinson"
+      }
+    ]
+  },
+  "36": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Ty Dressler",
+        "party": "Republican",
+        "email": "tdressler@ndlegis.gov",
+        "phone": "cell 701-260-9090",
+        "url": "https://ndlegis.gov/biography/ty-dressler"
+      },
+      {
+        "name": "Dori Hauck",
+        "party": "Republican",
+        "email": "dorihauck@ndlegis.gov",
+        "phone": "cell 218-790-1345",
+        "url": "https://ndlegis.gov/biography/dori-hauck"
+      }
+    ]
+  },
+  "37": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mike Lefor",
+        "party": "Republican",
+        "email": "mlefor@ndlegis.gov",
+        "phone": "cell 701-290-0539",
+        "url": "https://ndlegis.gov/biography/mike-lefor"
+      },
+      {
+        "name": "Vicky Steiner",
+        "party": "Republican",
+        "email": "vsteiner@ndlegis.gov",
+        "phone": "work 701-483-6789",
+        "url": "https://ndlegis.gov/biography/vicky-steiner"
+      }
+    ]
+  },
+  "38": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Dan Ruby",
+        "party": "Republican",
+        "email": "druby@ndlegis.gov",
+        "phone": "cell 701-720-7442",
+        "url": "https://ndlegis.gov/biography/dan-ruby"
+      },
+      {
+        "name": "Christina Wolff",
+        "party": "Republican",
+        "email": "cwolff@ndlegis.gov",
+        "phone": "cell 701-340-3703",
+        "url": "https://ndlegis.gov/biography/christina-wolff"
+      }
+    ]
+  },
+  "39": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Keith Kempenich",
+        "party": "Republican",
+        "email": "kkempenich@ndlegis.gov",
+        "phone": "home and work 701-523-3858",
+        "phonesExtra": [
+          "cell 701-523-2273"
+        ],
+        "url": "https://ndlegis.gov/biography/keith-kempenich"
+      },
+      {
+        "name": "Mike Schatz",
+        "party": "Republican",
+        "email": "mischatz@ndlegis.gov",
+        "phone": "cell 701-333-8610",
+        "url": "https://ndlegis.gov/biography/mike-schatz"
+      }
+    ]
+  },
+  "40": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Macy Bolinske",
+        "party": "Republican",
+        "email": "mbolinske@ndlegis.gov",
+        "phone": "cell 701-500-1391",
+        "url": "https://ndlegis.gov/biography/macy-bolinske"
+      },
+      {
+        "name": "Matthew Ruby",
+        "party": "Republican",
+        "email": "mruby@ndlegis.gov",
+        "phone": "cell 701-509-8149",
+        "url": "https://ndlegis.gov/biography/matthew-ruby"
+      }
+    ]
+  },
+  "41": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Karen Grindberg",
+        "party": "Republican",
+        "email": "kgrindberg@ndlegis.gov",
+        "phone": "cell 701-371-4958",
+        "url": "https://ndlegis.gov/biography/karen-grindberg"
+      },
+      {
+        "name": "Jorin Johnson",
+        "party": "Republican",
+        "email": "jjohnson@ndlegis.gov",
+        "phone": "work 701-356-3233",
+        "url": "https://ndlegis.gov/biography/jorin-johnson"
+      }
+    ]
+  },
+  "42": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Dustin McNally",
+        "party": "Republican",
+        "email": "dmcnally@ndlegis.gov",
+        "url": "https://ndlegis.gov/biography/dustin-mcnally"
+      },
+      {
+        "name": "Doug Osowski",
+        "party": "Republican",
+        "email": "dosowski@ndlegis.gov",
+        "phone": "cell 701-330-7569",
+        "url": "https://ndlegis.gov/biography/doug-osowski"
+      }
+    ]
+  },
+  "43": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Zachary Ista",
+        "party": "Democratic",
+        "email": "zmista@ndlegis.gov",
+        "phone": "cell 701-361-6671",
+        "url": "https://ndlegis.gov/biography/zachary-ista"
+      },
+      {
+        "name": "Eric J. Murphy",
+        "party": "Republican",
+        "email": "emurphy@ndlegis.gov",
+        "phone": "home 701-792-0458",
+        "phonesExtra": [
+          "work 701-772-3430",
+          "cell 701-213-1834"
+        ],
+        "url": "https://ndlegis.gov/biography/eric-j-murphy"
+      }
+    ]
+  },
+  "44": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Austin Foss",
+        "party": "Democratic",
+        "email": "afoss@ndlegis.gov",
+        "phone": "cell 701-430-2103",
+        "url": "https://ndlegis.gov/biography/austin-foss"
+      },
+      {
+        "name": "Karla Rose Hanson",
+        "party": "Democratic",
+        "email": "krhanson@ndlegis.gov",
+        "phone": "cell 701-793-9181",
+        "url": "https://ndlegis.gov/biography/karla-rose-hanson"
+      }
+    ]
+  },
+  "45": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Carrie McLeod",
+        "party": "Republican",
+        "email": "cmcleod@ndlegis.gov",
+        "url": "https://ndlegis.gov/biography/carrie-mcleod"
+      },
+      {
+        "name": "Scott Wagner",
+        "party": "Republican",
+        "email": "swagner@ndlegis.gov",
+        "phone": "cell 701-799-2880",
+        "url": "https://ndlegis.gov/biography/scott-wagner"
+      }
+    ]
+  },
+  "46": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jim Kasper",
+        "party": "Republican",
+        "email": "jkasper@ndlegis.gov",
+        "phone": "cell 701-799-9000",
+        "url": "https://ndlegis.gov/biography/jim-kasper"
+      },
+      {
+        "name": "Desiree Morton",
+        "party": "Republican",
+        "email": "dmorton@ndlegis.gov",
+        "phone": "home 701-234-9791",
+        "phonesExtra": [
+          "cell 701-367-8829"
+        ],
+        "url": "https://ndlegis.gov/biography/desiree-morton"
+      }
+    ]
+  },
+  "47": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Lawrence R. Klemin",
+        "party": "Republican",
+        "email": "lklemin@ndlegis.gov",
+        "phone": "home 701-222-2577",
+        "phonesExtra": [
+          "cell 701-471-5802"
+        ],
+        "url": "https://ndlegis.gov/biography/lawrence-r-klemin"
+      },
+      {
+        "name": "Mike Motschenbacher",
+        "party": "Republican",
+        "email": "mmotschenbacher@ndlegis.gov",
+        "phone": "cell 701-471-9014",
+        "url": "https://ndlegis.gov/biography/mike-motschenbacher"
+      }
+    ]
+  },
+  "4A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Lisa Finley-DeVille",
+        "party": "Democratic",
+        "email": "lfinleydeville@ndlegis.gov",
+        "url": "https://ndlegis.gov/biography/lisa-finley-deville"
+      }
+    ]
+  },
+  "4B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Clayton Fegley",
+        "party": "Republican",
+        "email": "cfegley@ndlegis.gov",
+        "phone": "home 701-453-3151",
+        "phonesExtra": [
+          "work 701-453-3621",
+          "cell 701-263-1442"
+        ],
+        "url": "https://ndlegis.gov/biography/clayton-fegley"
+      }
+    ]
+  }
+}

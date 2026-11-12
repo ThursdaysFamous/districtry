@@ -1,0 +1,49 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from md/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Maryland",
+ "usSenate": [
+  {
+   "name": "Angela D. Alsobrooks",
+   "party": "Democratic",
+   "url": "https://alsobrooks.senate.gov/",
+   "office": "374 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4524"
+  },
+  {
+   "name": "Chris Van Hollen",
+   "party": "Democratic",
+   "url": "https://www.vanhollen.senate.gov",
+   "office": "730 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4654"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Wes Moore",
+   "url": "https://governor.maryland.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Aruna Miller",
+   "url": "https://governor.maryland.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Anthony G. Brown",
+   "url": "https://www.marylandattorneygeneral.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Comptroller",
+   "name": "Brooke E. Lierman",
+   "url": "https://www.marylandcomptroller.gov/",
+   "verified": "2026-11-12"
+  }
+ ],
+ "officersNote": "Maryland's General Assembly chooses the State Treasurer and the governor appoints the Secretary of State, so neither is listed."
+}
