@@ -72,8 +72,8 @@ in the researched-but-unbuilt backlog.
   "virginia": ["us-house", "va-senate", "va-house", "county", "school-district-unified", "school-board-district", "county-subdivision", "supervisor-district", "zip-code", "voting-precinct", "election-results", "municipality", "school-district-elementary", "tribal-government", "police-station", "fire-station", "post-office"],
   "westvirginia": ["us-house", "wv-senate", "county", "school-district-unified", "wv-house", "county-subdivision", "zip-code", "municipality", "city-ward", "police-station", "fire-station", "post-office"],
   "pennsylvania": ["us-house", "pa-senate", "county", "pa-house", "school-district-unified", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "nevada": ["us-house", "county", "school-district-unified", "nv-senate", "nv-assembly", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
-  "arizona": ["us-house", "county", "az-senate", "az-house", "school-district-secondary", "school-district-unified", "school-district-elementary", "zip-code", "municipality", "police-station", "fire-station", "post-office"],
+  "nevada": ["us-house", "county", "school-district-unified", "nv-senate", "nv-assembly", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
+  "arizona": ["us-house", "county", "az-senate", "az-house", "school-district-secondary", "school-district-unified", "school-district-elementary", "zip-code", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
   "newjersey": ["us-house", "county", "nj-senate", "nj-assembly", "school-district-secondary", "school-district-elementary", "school-district-unified", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
   "newhampshire": ["us-house", "county", "nh-senate", "school-district-secondary", "school-district-unified", "nh-house", "school-district-elementary", "municipality", "zip-code", "police-station", "fire-station", "post-office"],
   "texas": ["tx-senate", "us-house", "tx-house", "county", "school-district-unified", "zip-code", "school-district-elementary", "school-district-secondary", "municipality", "tribal-government", "police-station", "fire-station", "post-office"],
@@ -4205,6 +4205,18 @@ trusted.
             "why": "No list of the trustees of Nevada's school districts has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's trustees, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-10 against TIGERweb's school districts (School MapServer) for STATE='32': 17 unified districts on layer 0, as many as the state's 16 counties and Carson City, and none on the elementary or secondary layers (1 and 2), so the layer is one tiling, shipped as a tile archive. No board roster was read for this record, and whether every trustee is elected was not checked. ROUTES NOT YET READ, government publishers first: the Department of Education's own directories; and each district's own website. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "nv-tribal-government",
+            "concept": "Tribal government",
+            "area": "Nevada",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read any Nevada nation's council list yet. Most nations publish theirs on their own site, which has to be read one nation at a time.",
+            "wanted": "Each nation's own published list of its council, read one nation at a time.",
+            "blocker": "SHIPPED 2026-11-12 as `tribal-government`: 35 pieces, 27 reservations and 8 pieces of off-reservation trust land, held by 20 nations, measured with scripts/tribal_areas.py --report Nevada (control passed: Nevada resolves to state code 32). Six pieces cross the state line and are drawn whole: the Duck Valley (49.7% in Nevada), Fort McDermitt (48.0%), Goshute (58.4%), Timbi-Sha Shoshone (78.1%) and Fort Mojave (11.5%) reservations and the Washoe Ranches Trust Land (99.7%); the Fort Mojave Indian Tribe and the Timbisha Shoshone Tribe are seated in California and the Confederated Tribes of the Goshute Reservation in Utah. The Bureau lists neither a city nor a state for eight of the 20 nations, and by Adam's choice of 2026-11-12 seven are seated at the town their own site gives, read that day and agreeing with Nevada's Department of Native American Affairs' list of tribal chairs (`seatFromNation` in data/tribal-government-join.json); the Winnemucca Indian Colony has no site, and its card gives Reno, the town of the address that state list gives for its chair, on Adam's yes of the same day (`seatFromState`). The Bureau lists no website for nine of the 20 nations. No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py, and NO NATION'S COUNCIL PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "arizona": [
@@ -4244,6 +4256,18 @@ trusted.
             "why": "No list of the governing board members of Arizona's school districts has been read for this app, and the districts' own pages have not been read one by one.",
             "wanted": "One statewide list of each school district's governing board members, or a district's own published list of its board.",
             "blocker": "Measured 2026-11-10 against TIGERweb's school districts (School MapServer) for STATE='04': 98 records on layer 0 (97 unified districts and one the Census names \"School District Not Defined\", GEOID 0499997, a 15,670 km2 placeholder for land in no school district, which takes in Sun City and which the card names as no district), 102 elementary districts on layer 2 and 15 union high school districts on layer 1. The unified layer and the elementary districts together cover the state, and the union high school districts run grades 9 to 12 over about half of the elementary districts' ground, so a reader there is in two districts, each with its own board. All three ship as tile archives. No board roster was read for this record. ROUTES NOT YET READ, government publishers first: the Department of Education's own directories; the counties' election results, which were not checked for school board contests; and each district's own website. The Arizona School Boards Association is a membership association rather than a government. NOT YET ASKED, and no ask is drafted."
+      },
+      {
+            "id": "az-tribal-government",
+            "concept": "Tribal government",
+            "area": "Arizona",
+            "counties": [],
+            "kind": "no-source",
+            "layer": "tribal-government",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read any Arizona nation's council list yet. Most nations publish theirs on their own site, which has to be read one nation at a time.",
+            "wanted": "Each nation's own published list of its council, read one nation at a time.",
+            "blocker": "SHIPPED 2026-11-12 as `tribal-government`: 28 pieces, 21 reservations and 7 pieces of off-reservation trust land, held by 21 nations, measured with scripts/tribal_areas.py --report Arizona (control passed: Arizona resolves to state code 04). Five reservations cross the state line and are drawn whole: the Navajo Nation's (71.6% in Arizona), the Colorado River Indian Reservation (83.8%), the Fort Mojave (70.0%), the Fort Yuma (4.6%) and the Zuni (3.1%); the Fort Mojave Indian Tribe and the Quechan Tribe are seated in California and the Zuni Tribe in New Mexico. The San Juan Southern Paiute Tribe of Arizona, which the Bureau lists with no state and no city, holds no land the Census draws, so no card names it. The Bureau lists no website for six of the 21 nations. No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py, and NO NATION'S PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }
   ],
   "newjersey": [
@@ -4510,8 +4534,8 @@ trusted.
             "counties": [],
             "kind": "no-source",
             "layer": "tribal-government",
-            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website. It does not name any nation's council yet.",
-            "why": "Each nation publishes its own government on its own site, and this app has not read any Washington nation's council list yet.",
+            "summary": "The Tribal Government card names the nation whose land you clicked on, with its seat and website where they are known. It does not name any nation's council yet.",
+            "why": "This app has not read any Washington nation's council list yet. Most nations publish theirs on their own site, which has to be read one nation at a time.",
             "wanted": "Each nation's own published list of its council, read one nation at a time.",
             "blocker": "SHIPPED 2026-11-12 as `tribal-government`: 50 pieces, 28 reservations and 22 pieces of off-reservation trust land, held by 29 nations, measured with scripts/tribal_areas.py --report Washington (control passed: Washington resolves to state code 53). Every piece lies wholly in the state but the Umatilla Off-Reservation Trust Land, 71.4% of which (43.353 km2) is in Washington; its nation, the Confederated Tribes of the Umatilla Indian Reservation, is seated in Pendleton, Oregon. The Samish Indian Nation, which the Bureau seats in Anacortes, holds no land the Census draws in Washington, so no card names it. No council is carried, recorded state-wide in ROSTER_NOT_SOUGHT in scripts/build_tribal_areas.py, and NO NATION'S PAGE HAS BEEN ASKED FOR: an entry leaves this record by its council being read into data/tribal-councils.json, or by its page being measured and recorded in ROSTER_BLOCKED or ROSTER_NOT_READ. NOT YET ASKED."
       }

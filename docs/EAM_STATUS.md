@@ -46,7 +46,7 @@ different thing from one it failed.
 | ak | **EAM·** | 30 | 30/30 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
 | al | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
 | ar | **EAM·** | 75 | 75/75 | 775 | 737 | all | 22 | all | 13 of 14 levels |
-| az | **EAM·** | 15 | 15/15 § | 0 | 0 | by record | 11 | all | 6 of 14 levels |
+| az | **EAM·** | 15 | 15/15 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
 | ca | **--M·** | — | — | 0 | 0 | — | 20 | all | 7 of 14 levels |
 | co | **EAM·** | 64 | 64/64 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
 | ct | **--M·** | — | — | 0 | 0 | — | 12 | all | 7 of 14 levels |
@@ -75,7 +75,7 @@ different thing from one it failed.
 | nh | **EAM·** | 10 | 10/10 § | 0 | 0 | by record | 12 | all | 8 of 14 levels |
 | nj | **EAM·** | 21 | 21/21 § | 0 | 0 | by record | 11 | all | 8 of 14 levels |
 | nm | **EAM·** | 33 | 33/33 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
-| nv | **EAM·** | 17 | 17/17 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
+| nv | **EAM·** | 17 | 17/17 § | 0 | 0 | by record | 13 | all | 7 of 14 levels |
 | ny | **EAM·** | 62 | 62/62 § | 144 | 162 | all | 39 | all | 10 of 14 levels |
 | oh | **EAM·** | 88 | 88/88 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
 | ok | **EAM·** | 77 | 77/77 | 231 | 229 | all | 21 | all | 10 of 14 levels |
@@ -155,8 +155,8 @@ per county, so each one is named under its state below.
 
 - **Examined by a statewide record:** `az-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 15 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Under a WATCH.md plan (6):** re-checked on a stated cadence rather than by a job — `az-legislative-districts.json`, `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `az/data/app/population/`, `state-counties.json`
-- **Covered: no.** 8 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `az-legislative-districts.json`, `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `az/data/app/population/`, `state-counties.json`, `tribal-areas.json`
+- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 15 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 31 units at 25,000+ name a governing body; unanswered: Apache Junction city, Avondale city, Buckeye city, Bullhead City city, Casa Grande city, Chandler city, El Mirage city, Flagstaff city and 23 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
@@ -164,7 +164,6 @@ per county, so each one is named under its state below.
     The standard leaves this one to this app's own thread: whether the level exists here at all has not been measured, so it is neither passed nor failed quietly.
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
   - **14. Township or county subdivision boundaries** — open
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Arizona has no sub-county general-purpose government — outside a city or town limit the county governs. The 80 sub-county units the Census publishes for Arizona are census county divisions: statistical areas, not governments (measured 2026-11-11).
@@ -579,15 +578,14 @@ this instance is in maintenance.
 
 - **Examined by a statewide record:** `nv-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 17 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
-- **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `nv-assembly-districts.json`, `nv-senate-districts.json`, `nv/data/app/population/`, `state-counties.json`
-- **Covered: no.** 8 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Under a WATCH.md plan (8):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `nv-assembly-districts.json`, `nv-senate-districts.json`, `nv/data/app/population/`, `state-counties.json`, `tribal-areas.json`
+- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 17 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 6 units at 25,000+ name a governing body; unanswered: Carson City, Henderson city, Las Vegas city, North Las Vegas city, Reno city, Sparks city
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
   - **14. Township or county subdivision boundaries** — open
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Nevada has no sub-county general-purpose government — outside a city or town limit the county governs. The 71 sub-county units the Census publishes for Nevada are census county divisions: statistical areas, not governments (measured 2026-11-11).

@@ -55,7 +55,7 @@ const OFFLINE = ["county", "us-house", "az-senate", "az-house"];
 const EXPECT_DISTRICT = { "county": "Maricopa County", "us-house": "3", "az-senate": "11", "az-house": "11" };
 const NEGATIVE_POINT = "31.00000,-111.50000"; // Sonora, Mexico, about 37 km south of the Arizona line between Nogales and Sasabe — outside Arizona and outside every other instance in the fleet, and inside permalink_gate (minLat 30.90) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer names no state here (controls: the State Capitol and Tucson's city hall return Arizona, and a point in the open Pacific returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. MEXICO BECAUSE NO INSTANCE WILL EVER SERVE IT: every U.S. neighbour of Arizona is in a later batch of the state-level launch, and a point on any of them would have to move the day that neighbour goes live.
 const APP_NAME = "districtry Arizona";
-const EXPECT_LAYERS = 12;
+const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
 // Instance constants this file owns (the worksheet emits the block above).
 const EXPORTS_NAME = "ArizonaExplorer";
@@ -1122,6 +1122,117 @@ try {
       check(c.name, !info.error && !!at.NAME && text.includes(at.NAME) && missing.length === 0 && present.length === 0,
         `file=${at.NAME} missing=${missing} unwanted=${present} text=${text.slice(0, 120)}`);
       await context.close();
+    }
+  }
+
+  // 10. TRIBAL GOVERNMENT. The nation, its seat and the land expected are
+  //     read from the shipped file at the point, so a rebuild moves the
+  //     expectation with the file; what is asserted is that each card agrees
+  //     with it.
+  //       - The Navajo Nation Reservation names the nation, its seat and the
+  //         land, links the nation's own site, lists the chapters the Census
+  //         draws on it, and says why nobody on its council is named: no
+  //         Arizona nation's council has been read yet.
+  //       - The Arizona part of the Zuni Reservation names a nation seated in
+  //         New Mexico and links its site, which the Bureau of Indian Affairs
+  //         writes as a bare host ("www.ashiwi.org") and the card links only
+  //         because the builder gives it the http scheme.
+  //       - The Arizona part of the Fort Yuma Indian Reservation names a
+  //         nation seated in California.
+  //       - The Hopi Reservation links no official site, because the Bureau
+  //         lists none.
+  //       - The Capitol is on no tribal land, and the card says so in the
+  //         layer's own words.
+  //     Each point is the pole of inaccessibility of the largest part of the
+  //     piece inside this app's state outline, as the shipped files draw them
+  //     (shapely polylabel, 2026-11-12): 53.9 km, 2.5 km, 676 m and 26.3 km
+  //     from its edge.
+  {
+    const areas = shipped("tribal-areas.json");
+    const NAVAJO = "36.39695,-109.64718";
+    const ZUNI = "34.63709,-109.57341";
+    const FORT_YUMA = "32.72748,-114.60215";
+    const HOPI = "35.77627,-110.64097";
+    const fieldsOf = (page) => page.$$eval("#card-tribal-government .card-field",
+      (els) => els.map((e) => ({
+        label: ((e.querySelector(".card-field-label") || {}).textContent || "").trim(),
+        value: ((e.querySelector(".card-field-value") || {}).textContent || "").trim()
+      })));
+    const at = async (pt) => {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`);
+      const card = await cardText(page, "tribal-government");
+      const fields = await fieldsOf(page);
+      // The "(official)" link is the card's footer, a sibling of the card body,
+      // so cardText() never sees it; read it from the footer itself.
+      const link = await page.evaluate(() => {
+        const el = document.getElementById("card-tribal-government");
+        const block = el && el.closest(".layer-block");
+        const a = block && block.querySelector(".card-footer-link");
+        return a ? { text: a.textContent.trim(), href: a.getAttribute("href") || "" } : { text: "", href: "" };
+      });
+      await context.close();
+      return { text: card.text || "", error: card.error, link,
+               by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
+    };
+
+    {
+      const land = propsAt(areas, NAVAJO);
+      const p = land[0] || {};
+      const c = await at(NAVAJO);
+      check("the Navajo Nation Reservation names the nation, its seat and the land, links its site, lists its chapters, and says why no council is named",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === p.nation && p.nation === "Navajo Nation, Arizona, New Mexico & Utah" &&
+          c.by("Seat of government") === "Window Rock, AZ" &&
+          c.by("Land") === "Navajo Nation Reservation" &&
+          !!p.url && c.link.text === p.nation + " (official)" && c.link.href === p.url &&
+          (p.districts || []).length > 0 && c.by("Districts drawn here") === p.districtsNote &&
+          c.by("Why no names") === p.rosterWhy && p.rosterWhy.indexOf("Not carried yet") === 0,
+        `land here=${land.length} link=${JSON.stringify(c.link)} why=${JSON.stringify(c.by("Why no names").slice(0, 80))}`);
+    }
+
+    {
+      const land = propsAt(areas, ZUNI);
+      const p = land[0] || {};
+      const c = await at(ZUNI);
+      check("the Arizona part of the Zuni Reservation names a nation seated in New Mexico and links the site the Bureau writes as a bare host",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === "Zuni Tribe of the Zuni Reservation, New Mexico" &&
+          c.by("Seat of government") === "Zuni, NM" &&
+          c.by("Land") === "Zuni Reservation" && p.shareInState < 1 &&
+          p.url === "http://www.ashiwi.org" && c.link.href === "http://www.ashiwi.org",
+        `land here=${land.length} link=${JSON.stringify(c.link)} ${JSON.stringify(c.text.slice(0, 200))}`);
+    }
+
+    {
+      const land = propsAt(areas, FORT_YUMA);
+      const p = land[0] || {};
+      const c = await at(FORT_YUMA);
+      check("the Arizona part of the Fort Yuma Indian Reservation names a nation seated in California",
+        land.length === 1 && !c.error &&
+          c.by("Tribal government") === "Quechan Tribe of the Fort Yuma Indian Reservation, California & Arizona" &&
+          c.by("Seat of government") === "Winterhaven, CA" &&
+          c.by("Land") === "Fort Yuma Indian Reservation" && p.shareInState < 1,
+        `land here=${land.length} ${JSON.stringify(c.text.slice(0, 200))}`);
+    }
+
+    {
+      const land = propsAt(areas, HOPI);
+      const p = land[0] || {};
+      const c = await at(HOPI);
+      check("the Hopi Reservation links no official site, because the Bureau lists none",
+        land.length === 1 && !c.error && p.url === null &&
+          c.by("Tribal government") === "Hopi Tribe of Arizona" &&
+          c.link.text === "" && !c.text.includes("(official)"),
+        `land here=${land.length} link=${JSON.stringify(c.link)} ${JSON.stringify(c.text.slice(0, 200))}`);
+    }
+
+    {
+      const off = await at(POINT);
+      check("a point off tribal land is told so in the layer's own words",
+        propsAt(areas, POINT).length === 0 &&
+          off.text.indexOf("not on tribal land") !== -1 && off.text.indexOf("28 tribal areas") !== -1,
+        JSON.stringify(off.text.slice(0, 120)));
     }
   }
 } finally {

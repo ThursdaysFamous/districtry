@@ -137,7 +137,11 @@ INSIDE = {
 # shipped state-counties.json: six in California, two in Arizona, three in
 # Utah, two in Idaho plus the negative point in Owyhee County, and three in
 # Oregon. Keys read "Place (XX)", the postal code, so county_of() names no
-# Nevada county.
+# Nevada county. The negative point moved 41 km east on 2026-11-12, off the
+# Duck Valley Reservation's Idaho half, which the Tribal Government layer
+# draws; its new spot was placed in Owyhee County by the Idaho app's own
+# county outlines (id/data/app/state-counties.json) rather than by asking
+# TIGERweb again, and the old spot stays below as an outside anchor.
 OUTSIDE = {
     "Truckee (CA)": (39.32800, -120.18330),
     "South Lake Tahoe (CA)": (38.93330, -119.98430),
@@ -152,7 +156,8 @@ OUTSIDE = {
     "Ibapah (UT)": (40.03600, -113.98400),
     "Rogerson (ID)": (42.21190, -114.60070),
     "Grasmere (ID)": (42.37500, -115.88000),
-    "Owyhee County (ID), the worksheet's negative point": (42.15000, -116.00000),
+    "Owyhee County (ID), the worksheet's negative point": (42.15000, -115.50000),
+    "Owyhee County (ID), north of the Duck Valley Reservation": (42.15000, -116.00000),
     "McDermitt (OR), north of the line": (42.00900, -117.72000),
     "Fields (OR)": (42.26400, -118.67500),
     "Lakeview (OR)": (42.18880, -120.34580),

@@ -2808,10 +2808,14 @@ ANSWERS = {
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
-        # Measured 2026-11-11 with scripts/tribal_areas.py --report Nevada: the
-        # Census keeps 27 reservations and 8 trust lands in Nevada, and the
-        # app draws no tribal land yet (nv/WATCH.md).
-        "tribal-government": OPEN,
+        # Drawn 2026-11-12: all 35 pieces the Census keeps in Nevada (27
+        # reservations and 8 off-reservation trust lands), each named with its
+        # government -- 20 nations, the Fort Mojave and Timbisha Shoshone seated
+        # in California and the Goshute in Utah among them, and eight the Bureau
+        # lists with no office town, seated from their own sites by Adam's
+        # choice of that day. No council is named yet; each nation's page is
+        # read one at a time, the Oklahoma shape (gap nv-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "az": {
         "us-house": answers("us-house"),
@@ -2842,10 +2846,13 @@ ANSWERS = {
         "school-boards-by-district": UNSETTLED,
         "precincts": OPEN,
         "special-districts": OPEN,
-        # Measured 2026-11-11 with scripts/tribal_areas.py --report Arizona: the
-        # Census keeps 21 reservations and 7 trust lands in Arizona, and the
-        # app draws no tribal land yet (az/WATCH.md).
-        "tribal-government": OPEN,
+        # Drawn 2026-11-12: all 28 pieces the Census keeps in Arizona (21
+        # reservations and 7 off-reservation trust lands), each named with its
+        # government -- 21 nations, the Fort Mojave and Quechan seated in
+        # California and the Zuni in New Mexico among them. No council is named
+        # yet; each nation's page is read one at a time, the Oklahoma shape
+        # (gap az-tribal-government).
+        "tribal-government": answers("tribal-government"),
     },
     "nj": {
         "us-house": answers("us-house"),
