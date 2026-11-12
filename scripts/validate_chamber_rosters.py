@@ -95,6 +95,19 @@ BUILDERS = (
     "ct/scripts/build_ct_legislature_roster.py",
     "ut/scripts/build_ut_legislature_roster.py",
     "ks/scripts/build_ks_legislature_roster.py",
+    "nm/scripts/build_nm_legislature_roster.py",
+    "ne/scripts/build_ne_legislature_roster.py",
+    "id/scripts/build_id_legislature_roster.py",
+    "hi/scripts/build_hi_legislature_roster.py",
+    "me/scripts/build_me_legislature_roster.py",
+    "mt/scripts/build_mt_legislature_roster.py",
+    "ri/scripts/build_ri_legislature_roster.py",
+    "de/scripts/build_de_legislature_roster.py",
+    "sd/scripts/build_sd_legislature_roster.py",
+    "nd/scripts/build_nd_legislature_roster.py",
+    "ak/scripts/build_ak_legislature_roster.py",
+    "vt/scripts/build_vt_legislature_roster.py",
+    "wy/scripts/build_wy_legislature_roster.py",
 )
 
 

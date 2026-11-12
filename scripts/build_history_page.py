@@ -135,7 +135,20 @@ INSTANCES = (("il", "metro-worksheet.json"),
              ("or", "or/metro-worksheet.json"),
              ("ct", "ct/metro-worksheet.json"),
              ("ut", "ut/metro-worksheet.json"),
-             ("ks", "ks/metro-worksheet.json"))
+             ("ks", "ks/metro-worksheet.json"),
+             ("nm", "nm/metro-worksheet.json"),
+             ("ne", "ne/metro-worksheet.json"),
+             ("id", "id/metro-worksheet.json"),
+             ("hi", "hi/metro-worksheet.json"),
+             ("me", "me/metro-worksheet.json"),
+             ("mt", "mt/metro-worksheet.json"),
+             ("ri", "ri/metro-worksheet.json"),
+             ("de", "de/metro-worksheet.json"),
+             ("sd", "sd/metro-worksheet.json"),
+             ("nd", "nd/metro-worksheet.json"),
+             ("ak", "ak/metro-worksheet.json"),
+             ("vt", "vt/metro-worksheet.json"),
+             ("wy", "wy/metro-worksheet.json"))
 
 # The metric grammar and its evaluator are shared with validate_gap_counts.py;
 # see scripts/measured_metric.py for why they are not a second copy here.

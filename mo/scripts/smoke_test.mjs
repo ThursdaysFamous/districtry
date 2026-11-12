@@ -53,7 +53,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "38.57910,-92.17290"; // Missouri State Capitol, 201 W. Capitol Avenue, Jefferson City, Cole County
 const OFFLINE = ["county", "us-house", "mo-senate", "mo-house"];
 const EXPECT_DISTRICT = { "county": "Cole County", "us-house": "3", "mo-senate": "6", "mo-house": "60" };
-const NEGATIVE_POINT = "40.30000,-95.95000"; // Nemaha County, NEBRASKA, about 30 km from every outline in fleet-outlines.json and west of the Missouri River — outside Missouri and outside every other instance in the fleet, and inside permalink_gate (maxLat 40.80, minLng -96.00) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state and county layers name Nebraska and Nemaha County (STATE 31) here (control: the State Capitol returns Missouri and Cole County), and no outline in fleet-outlines.json contains it, Kansas's included. THIS POINT WAS IN FRANKLIN COUNTY, KANSAS (38.6156, -95.2678) UNTIL KANSAS'S GO-LIVE (batch 3 of the state-level launch), which put Kansas's outline in the fleet file with the old point inside it, so a click there now opens districtry.com/ks/ and is asserted as a routing case. MISSOURI HAS NO COAST AND NEBRASKA IS THE LAST NEIGHBOUR NO APP SERVES: measured the same day on a 0.05-degree grid, the only ground in this app's gate more than 2 km from every outline is this corner of Nebraska. The change that makes Nebraska live leaves no such ground, so it turns this point into a Nebraska routing case and drops the click-stays-here check, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.
+const NEGATIVE_POINT = "40.30000,-95.95000"; // Nemaha County, NEBRASKA, about 25 km from Missouri's outline and west of the Missouri River — outside Missouri and inside permalink_gate (maxLat 40.80, minLng -96.00), so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state and county layers name Nebraska and Nemaha County (STATE 31) here (control: the State Capitol returns Missouri and Cole County). THIS POINT WAS IN FRANKLIN COUNTY, KANSAS (38.6156, -95.2678) UNTIL KANSAS'S GO-LIVE (batch 3 of the state-level launch), which made the old point a routing case. NEBRASKA'S OUTLINE HAS COVERED THIS ONE SINCE THE CHANGE THAT PUBLISHED NEBRASKA (batch 4, written 2026-11-12), which found it inside Nebraska's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Missouri and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Nebraska routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.
 const APP_NAME = "districtry Missouri";
 const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
@@ -473,12 +473,17 @@ try {
   //     asked first, so a point both draw stays here. Chicago proves the file
   //     is still read for ground far from here.
   //
-  //     NEBRASKA IS DELIBERATELY NOT A CASE. Nobody serves it today, so a
-  //     click there stays here; but the fleet is meant to reach every state,
-  //     and a "stays here" case there would start failing the day it goes
-  //     live, in a change that is about another state. The negative point
-  //     carries that half instead (1a2-ii), and it is the one thing in this
-  //     file that must change when Nebraska goes live (WATCH.md).
+  //     AND SINCE NEBRASKA'S GO-LIVE (batch 4 of the state-level launch) THE
+  //     FLEET SERVES ALL EIGHT. The negative point, in Nemaha County,
+  //     Nebraska, about 25 km from this app's outline, was the click that had
+  //     to stay HERE until that change made it a case; measured that day
+  //     (2026-11-12) it lies inside Nebraska's outline in fleet-outlines.json
+  //     and no other.
+  //     The stays-here check (1a2-ii) went with it, because measured the
+  //     same day on a 0.05-degree grid no ground in this app's gate lies
+  //     more than 2 km from every outline in fleet-outlines.json; the
+  //     negative point stays where it is, since every check that still
+  //     uses it boots or selects it here and none clicks it.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
@@ -489,6 +494,7 @@ try {
       { name: "Jonesboro, Arkansas", lat: 35.8423, lng: -90.7043, want: "https://districtry.com/ar/" },
       { name: "Miami, Oklahoma", lat: 36.8745, lng: -94.8775, want: "https://districtry.com/ok/" },
       { name: "Franklin County, Kansas", lat: 38.6156, lng: -95.2678, want: "https://districtry.com/ks/" },
+      { name: "Nemaha County, Nebraska", lat: 40.3, lng: -95.95, want: "https://districtry.com/ne/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -504,32 +510,6 @@ try {
       check(`a click on ${c.name} from Missouri opens ${c.want} with the point`, !!went, went || page.url());
       await context.close();
     }
-  }
-
-  // 1a2-ii. The half that keeps 1a2 honest: the negative point, in Nemaha
-  //     County, Nebraska, about 30 km from every outline in the fleet, is
-  //     outside all of them, so the click must stay HERE. A route to a sibling would be
-  //     the same lie pointing the other way, and the stub makes it visible: if
-  //     the app navigated, the URL would be the stubbed sibling rather than
-  //     this app.
-  {
-    const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, BASE, async (p) => {
-      await p.route("https://districtry.com/**", (route) =>
-        route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
-    });
-    await page.evaluate(({ n, pt }) => {
-      const [la, ln] = pt.split(",").map(Number);
-      window[n].map.fire("click", { latlng: window.L.latLng(la, ln) });
-    }, { n: EXPORTS_NAME, pt: NEGATIVE_POINT });
-    await page.waitForTimeout(3000);
-    const url = page.url();
-    // Still under BASE means still this app. Asking instead for the URL NOT to
-    // name one of a list of sibling tags needs a new entry each time a state
-    // goes live, and the one it lacked would read as staying here.
-    check("a click in Nebraska, outside every app's outline, stays in this app",
-      url.startsWith(BASE), url);
-    await context.close();
   }
 
   // 1b. The search box retries a zero-result query with the unit fragment

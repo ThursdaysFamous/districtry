@@ -1,0 +1,31 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from me/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Maine",
+ "usSenate": [
+  {
+   "name": "Susan M. Collins",
+   "party": "Republican",
+   "url": "https://www.collins.senate.gov",
+   "office": "413 Dirksen Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2523"
+  },
+  {
+   "name": "Angus S. King, Jr.",
+   "party": "Independent",
+   "url": "https://www.king.senate.gov/",
+   "office": "133 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5344"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Janet T. Mills",
+   "url": "https://www.maine.gov/governor/mills/",
+   "verified": "2026-11-12"
+  }
+ ],
+ "officersNote": "The governor is the only officer Maine's voters elect statewide. The Secretary of State, Attorney General and Treasurer are elected by the Legislature, so they are not listed."
+}

@@ -12,16 +12,16 @@ which file each figure is read from, and why none of them is restated here.
 
 Hosts are extracted from each instance's own `index.html` and `sw.js` and
 classified by **path shape**, which is what separates a request this site
-makes from a link a reader clicks. Of **323 distinct hosts** those files
-name, **45 are fetched by the browser**; the other 278 are links.
+makes from a link a reader clicks. Of **336 distinct hosts** those files
+name, **45 are fetched by the browser**; the other 291 are links.
 
 ### Geocoder — 3 host(s)
 
 | host | instances |
 |---|---|
 | `geosearch.planninglabs.nyc` | ny |
-| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks |
-| `photon.komoot.io` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks |
+| `nominatim.openstreetmap.org` | il, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks, nm, ne, id, hi, me, mt, ri, de, sd, nd, ak, vt, wy |
+| `photon.komoot.io` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks, nm, ne, id, hi, me, mt, ri, de, sd, nd, ak, vt, wy |
 
 The most sensitive flow on the site: it is **the text a reader
 types**. `build_privacy_page.py` owns what each receives and links
@@ -32,7 +32,7 @@ per-app measurement, so the two cannot disagree.
 
 | host | instances |
 |---|---|
-| `link-lookup.districtry.deno.net` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks |
+| `link-lookup.districtry.deno.net` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks, nm, ne, id, hi, me, mt, ri, de, sd, nd, ak, vt, wy |
 
 districtry's own service (`services/link-lookup/main.ts`, on Deno
 Deploy). It receives **a short Google Maps or Apple Maps link**, and
@@ -41,7 +41,7 @@ and answers with the full link it leads to.
 Every app also sends it, at `?a=`, **the street address a reader searches for
 or a map link carries** when the map's own search can't find the house,
 and it asks the U.S. Census Bureau's geocoder where that number falls.
-The il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut and ks apps send it **the public address of an office a card shows** too,
+The il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks, nm, ne, id, hi, me, mt, ri, de, sd, nd, ak, vt and wy apps send it **the public address of an office a card shows** too,
 when the app's office-pin geocoder can't place that office's pin, which
 says which district the reader selected.
 No served file names the Census host, because only the lookup asks it.
@@ -52,7 +52,7 @@ recipients.
 
 | host | instances |
 |---|---|
-| `files.districtry.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks |
+| `files.districtry.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks, nm, ne, id, hi, me, mt, ri, de, sd, nd, ak, vt, wy |
 
 districtry's own Cloudflare R2 bucket, holding the vector-tile
 archives and the Census block populations, which GitHub Pages no
@@ -66,9 +66,9 @@ only; a copy run anywhere else reads its own files.
 
 | host | instances |
 |---|---|
-| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks |
-| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks |
-| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks |
+| `basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks, nm, ne, id, hi, me, mt, ri, de, sd, nd, ak, vt, wy |
+| `tiles-a.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks, nm, ne, id, hi, me, mt, ri, de, sd, nd, ak, vt, wy |
+| `tiles.basemaps.cartocdn.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks, nm, ne, id, hi, me, mt, ri, de, sd, nd, ak, vt, wy |
 
 One service. Several host spellings appear because the tile URL is a
 `{s}.` template and some are `preconnect` hints — one recipient, not
@@ -78,7 +78,7 @@ several.
 
 | host | instances |
 |---|---|
-| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks |
+| `cdnjs.cloudflare.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks, nm, ne, id, hi, me, mt, ri, de, sd, nd, ak, vt, wy |
 
 Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
@@ -86,7 +86,7 @@ Pinned: **leaflet 1.9.4**, **maplibre-gl 5.24.0**.
 
 | host | instances |
 |---|---|
-| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks |
+| `districtry.goatcounter.com` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks, nm, ne, id, hi, me, mt, ri, de, sd, nd, ak, vt, wy |
 
 ### Webfonts — none
 
@@ -98,7 +98,7 @@ a font CDN would be a recipient the privacy page does not name.
 
 | host | instances |
 |---|---|
-| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks |
+| `tigerweb.geo.census.gov` | il, ny, ca, wi, ia, mi, mn, ky, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks, nm, ne, id, hi, me, mt, ri, de, sd, nd, ak, vt, wy |
 
 ### Socrata — 7 host(s)
 
@@ -117,7 +117,7 @@ a font CDN would be a recipient the privacy page does not name.
 | host | instances |
 |---|---|
 | `arcgispublicmap.co.st-clair.il.us` | il |
-| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks |
+| `carto.nationalmap.gov` | il, ny, ca, wi, ia, mi, mn, in, nc, ok, sc, tn, ar, ms, la, mo, va, wv, ga, pa, nv, az, nj, nh, tx, fl, oh, wa, ma, co, md, al, or, ct, ut, ks, nm, ne, id, hi, me, mt, ri, de, sd, nd, ak, vt, wy |
 | `gis.aurora.il.us` | il |
 | `gis.cityofdanville.org` | il |
 | `gis.cookcountyil.gov` | il |
@@ -191,6 +191,19 @@ prose.
 | ct | 0 | 12 |
 | ut | 0 | 10 |
 | ks | 0 | 10 |
+| nm | 0 | 10 |
+| ne | 0 | 9 |
+| id | 0 | 10 |
+| hi | 0 | 9 |
+| me | 0 | 12 |
+| mt | 0 | 12 |
+| ri | 0 | 12 |
+| de | 0 | 10 |
+| sd | 0 | 10 |
+| nd | 0 | 11 |
+| ak | 0 | 10 |
+| vt | 0 | 12 |
+| wy | 0 | 11 |
 
 ### Where each layer's shapes come from
 
@@ -459,6 +472,32 @@ measured until the next run describes it.
 
 #### ks — not measured
 
+#### nm — not measured
+
+#### ne — not measured
+
+#### id — not measured
+
+#### hi — not measured
+
+#### me — not measured
+
+#### mt — not measured
+
+#### ri — not measured
+
+#### de — not measured
+
+#### sd — not measured
+
+#### nd — not measured
+
+#### ak — not measured
+
+#### vt — not measured
+
+#### wy — not measured
+
 ## 2. Build-time datasets
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
@@ -500,9 +539,22 @@ measured until the next run describes it.
 | ct | 18 | 11 | 0 |
 | ut | 16 | 11 | 0 |
 | ks | 16 | 11 | 0 |
-| **total** | **1086** | **1343** | **12** |
+| nm | 16 | 11 | 0 |
+| ne | 13 | 9 | 0 |
+| id | 15 | 10 | 0 |
+| hi | 15 | 11 | 0 |
+| me | 18 | 11 | 0 |
+| mt | 18 | 11 | 0 |
+| ri | 18 | 11 | 0 |
+| de | 16 | 11 | 0 |
+| sd | 16 | 11 | 0 |
+| nd | 17 | 11 | 0 |
+| ak | 16 | 11 | 0 |
+| vt | 18 | 11 | 0 |
+| wy | 17 | 11 | 0 |
+| **total** | **1299** | **1483** | **12** |
 
-**247 distinct source hosts** across the six manifests. Each instance's
+**258 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
 provenance URL the build depends on, and is machine-checked monthly. Two
 entry classes mean the source refuses this client, and the check

@@ -6,14 +6,18 @@
  "service": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer",
  "source": "U.S. Census Bureau TIGERweb, tigerWMS_Census2020 \u2014 layer 26 (Incorporated Places) and layer 20 (County Subdivisions, FUNCSTAT='A'); POP100 is the 2020 decennial count.",
  "subdivision_is_general_purpose": {
+  "ak": null,
   "al": null,
   "ar": null,
   "az": null,
   "co": null,
   "ct": true,
+  "de": null,
   "fl": null,
   "ga": null,
+  "hi": null,
   "ia": null,
+  "id": null,
   "il": false,
   "in": false,
   "ks": null,
@@ -21,29 +25,61 @@
   "la": null,
   "ma": true,
   "md": null,
+  "me": true,
   "mi": true,
   "mn": null,
   "mo": null,
   "ms": null,
+  "mt": null,
   "nc": null,
+  "nd": null,
+  "ne": null,
   "nh": true,
   "nj": true,
+  "nm": null,
   "nv": null,
   "ny": true,
   "oh": true,
   "ok": null,
   "or": null,
   "pa": true,
+  "ri": true,
   "sc": null,
+  "sd": null,
   "tn": null,
   "tx": null,
   "ut": null,
   "va": null,
+  "vt": true,
   "wa": null,
   "wi": null,
-  "wv": null
+  "wv": null,
+  "wy": null
  },
  "units": {
+  "ak": [
+   {
+    "geoid": "0203000",
+    "kind": "place",
+    "lsadc": "37",
+    "name": "Anchorage municipality",
+    "pop": 291247
+   },
+   {
+    "geoid": "0224230",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fairbanks city",
+    "pop": 32515
+   },
+   {
+    "geoid": "0236400",
+    "kind": "place",
+    "lsadc": "53",
+    "name": "Juneau city and borough",
+    "pop": 32255
+   }
+  ],
   "al": [
    {
     "geoid": "0137000",
@@ -1083,6 +1119,29 @@
     "pop": 25033
    }
   ],
+  "de": [
+   {
+    "geoid": "1077580",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Wilmington city",
+    "pop": 70898
+   },
+   {
+    "geoid": "1021200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Dover city",
+    "pop": 39403
+   },
+   {
+    "geoid": "1050670",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Newark city",
+    "pop": 30601
+   }
+  ],
   "fl": [
    {
     "geoid": "1235000",
@@ -2116,6 +2175,7 @@
     "pop": 25076
    }
   ],
+  "hi": [],
   "ia": [
    {
     "geoid": "1921000",
@@ -2242,6 +2302,99 @@
     "lsadc": "25",
     "name": "Ottumwa city",
     "pop": 25529
+   }
+  ],
+  "id": [
+   {
+    "geoid": "1608830",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Boise City city",
+    "pop": 235684
+   },
+   {
+    "geoid": "1652120",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Meridian city",
+    "pop": 117635
+   },
+   {
+    "geoid": "1656260",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Nampa city",
+    "pop": 100200
+   },
+   {
+    "geoid": "1639700",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Idaho Falls city",
+    "pop": 64818
+   },
+   {
+    "geoid": "1612250",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Caldwell city",
+    "pop": 59996
+   },
+   {
+    "geoid": "1664090",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Pocatello city",
+    "pop": 56320
+   },
+   {
+    "geoid": "1616750",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Coeur d'Alene city",
+    "pop": 54628
+   },
+   {
+    "geoid": "1682810",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Twin Falls city",
+    "pop": 51807
+   },
+   {
+    "geoid": "1667420",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Rexburg city",
+    "pop": 39409
+   },
+   {
+    "geoid": "1664810",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Post Falls city",
+    "pop": 38485
+   },
+   {
+    "geoid": "1646540",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lewiston city",
+    "pop": 34203
+   },
+   {
+    "geoid": "1623410",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Eagle city",
+    "pop": 30346
+   },
+   {
+    "geoid": "1654550",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Moscow city",
+    "pop": 25435
    }
   ],
   "il": [
@@ -4106,6 +4259,36 @@
     "pop": 30060
    }
   ],
+  "me": [
+   {
+    "geoid": "2360545",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Portland city",
+    "pop": 68408
+   },
+   {
+    "geoid": "2338740",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lewiston city",
+    "pop": 37121
+   },
+   {
+    "geoid": "2302795",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bangor city",
+    "pop": 31753
+   },
+   {
+    "geoid": "2371990",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "South Portland city",
+    "pop": 26498
+   }
+  ],
   "mi": [
    {
     "geoid": "2622000",
@@ -5283,6 +5466,50 @@
     "pop": 25138
    }
   ],
+  "mt": [
+   {
+    "geoid": "3006550",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Billings city",
+    "pop": 117116
+   },
+   {
+    "geoid": "3050200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Missoula city",
+    "pop": 73489
+   },
+   {
+    "geoid": "3032800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Great Falls city",
+    "pop": 60442
+   },
+   {
+    "geoid": "3008950",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bozeman city",
+    "pop": 53293
+   },
+   {
+    "geoid": "3011397",
+    "kind": "place",
+    "lsadc": "00",
+    "name": "Butte-Silver Bow (balance)",
+    "pop": 34494
+   },
+   {
+    "geoid": "3035600",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Helena city",
+    "pop": 32091
+   }
+  ],
   "nc": [
    {
     "geoid": "3712000",
@@ -5577,6 +5804,108 @@
     "lsadc": "43",
     "name": "Clayton town",
     "pop": 26307
+   }
+  ],
+  "nd": [
+   {
+    "geoid": "3825700",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fargo city",
+    "pop": 125990
+   },
+   {
+    "geoid": "3807200",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bismarck city",
+    "pop": 73622
+   },
+   {
+    "geoid": "3832060",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Grand Forks city",
+    "pop": 59166
+   },
+   {
+    "geoid": "3853380",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Minot city",
+    "pop": 48377
+   },
+   {
+    "geoid": "3884780",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "West Fargo city",
+    "pop": 38626
+   },
+   {
+    "geoid": "3886220",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Williston city",
+    "pop": 29160
+   },
+   {
+    "geoid": "3819620",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Dickinson city",
+    "pop": 25679
+   }
+  ],
+  "ne": [
+   {
+    "geoid": "3137000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Omaha city",
+    "pop": 486051
+   },
+   {
+    "geoid": "3128000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Lincoln city",
+    "pop": 291082
+   },
+   {
+    "geoid": "3103950",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Bellevue city",
+    "pop": 64176
+   },
+   {
+    "geoid": "3119595",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Grand Island city",
+    "pop": 53131
+   },
+   {
+    "geoid": "3125055",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Kearney city",
+    "pop": 33790
+   },
+   {
+    "geoid": "3117670",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Fremont city",
+    "pop": 27141
+   },
+   {
+    "geoid": "3121415",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hastings city",
+    "pop": 25152
    }
   ],
   "nh": [
@@ -6379,6 +6708,78 @@
     "lsadc": "21",
     "name": "Carteret borough",
     "pop": 25326
+   }
+  ],
+  "nm": [
+   {
+    "geoid": "3502000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Albuquerque city",
+    "pop": 564559
+   },
+   {
+    "geoid": "3539380",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Las Cruces city",
+    "pop": 111385
+   },
+   {
+    "geoid": "3563460",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Rio Rancho city",
+    "pop": 104046
+   },
+   {
+    "geoid": "3570500",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Santa Fe city",
+    "pop": 87505
+   },
+   {
+    "geoid": "3564930",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Roswell city",
+    "pop": 48422
+   },
+   {
+    "geoid": "3525800",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Farmington city",
+    "pop": 46624
+   },
+   {
+    "geoid": "3532520",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Hobbs city",
+    "pop": 40508
+   },
+   {
+    "geoid": "3516420",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Clovis city",
+    "pop": 38567
+   },
+   {
+    "geoid": "3512150",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Carlsbad city",
+    "pop": 32238
+   },
+   {
+    "geoid": "3501780",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Alamogordo city",
+    "pop": 30898
    }
   ],
   "nv": [
@@ -8647,6 +9048,106 @@
     "pop": 25070
    }
   ],
+  "ri": [
+   {
+    "geoid": "4459000",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Providence city",
+    "pop": 190934
+   },
+   {
+    "geoid": "4419180",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Cranston city",
+    "pop": 82934
+   },
+   {
+    "geoid": "4474300",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Warwick city",
+    "pop": 82823
+   },
+   {
+    "geoid": "4454640",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Pawtucket city",
+    "pop": 75604
+   },
+   {
+    "geoid": "4422960",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "East Providence city",
+    "pop": 47139
+   },
+   {
+    "geoid": "4480780",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Woonsocket city",
+    "pop": 43240
+   },
+   {
+    "geoid": "4400720080",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Cumberland town",
+    "pop": 36405
+   },
+   {
+    "geoid": "4400318640",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Coventry town",
+    "pop": 35688
+   },
+   {
+    "geoid": "4400751760",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "North Providence town",
+    "pop": 34114
+   },
+   {
+    "geoid": "4400967460",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "South Kingstown town",
+    "pop": 31931
+   },
+   {
+    "geoid": "4400378440",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "West Warwick town",
+    "pop": 31012
+   },
+   {
+    "geoid": "4400737720",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "Johnston town",
+    "pop": 29568
+   },
+   {
+    "geoid": "4400951580",
+    "kind": "subdivision",
+    "lsadc": "43",
+    "name": "North Kingstown town",
+    "pop": 27732
+   },
+   {
+    "geoid": "4449960",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Newport city",
+    "pop": 25163
+   }
+  ],
   "sc": [
    {
     "geoid": "4513330",
@@ -8766,6 +9267,29 @@
     "lsadc": "43",
     "name": "Bluffton town",
     "pop": 27716
+   }
+  ],
+  "sd": [
+   {
+    "geoid": "4659020",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Sioux Falls city",
+    "pop": 192517
+   },
+   {
+    "geoid": "4652980",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Rapid City city",
+    "pop": 74703
+   },
+   {
+    "geoid": "4600100",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Aberdeen city",
+    "pop": 28495
    }
   ],
   "tn": [
@@ -10225,6 +10749,15 @@
     "pop": 25346
    }
   ],
+  "vt": [
+   {
+    "geoid": "5010675",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Burlington city",
+    "pop": 44743
+   }
+  ],
   "wa": [
    {
     "geoid": "5363000",
@@ -10824,6 +11357,36 @@
     "lsadc": "25",
     "name": "Wheeling city",
     "pop": 27052
+   }
+  ],
+  "wy": [
+   {
+    "geoid": "5613900",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Cheyenne city",
+    "pop": 65132
+   },
+   {
+    "geoid": "5613150",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Casper city",
+    "pop": 59038
+   },
+   {
+    "geoid": "5631855",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Gillette city",
+    "pop": 33403
+   },
+   {
+    "geoid": "5645050",
+    "kind": "place",
+    "lsadc": "25",
+    "name": "Laramie city",
+    "pop": 31407
    }
   ]
  },

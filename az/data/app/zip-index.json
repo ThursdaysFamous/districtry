@@ -406,7 +406,6 @@
 {"type":"Feature","bbox":[-109.4933,35.4536,-109.0463,35.8369],"geometry":{"type":"Point","coordinates":[-109.29199,35.71084]},"properties":{"zip":"86511","layer":"zip-code"}},
 {"type":"Feature","bbox":[-109.4842,34.9041,-109.0459,35.3085],"geometry":{"type":"Point","coordinates":[-109.2041,34.994]},"properties":{"zip":"86512","layer":"zip-code"}},
 {"type":"Feature","bbox":[-109.7644,36.6624,-108.9801,37.16],"geometry":{"type":"Point","coordinates":[-109.37988,36.77409]},"properties":{"zip":"86514","layer":"zip-code"}},
-{"type":"Feature","bbox":[-109.0966,35.5755,-108.8714,35.8478],"geometry":{"type":"Point","coordinates":[-109.05267,35.63963]},"properties":{"zip":"86515","layer":"zip-code"}},
 {"type":"Feature","bbox":[-110.1405,35.8403,-109.8055,36.3123],"geometry":{"type":"Point","coordinates":[-109.90723,35.92464]},"properties":{"zip":"86520","layer":"zip-code"}},
 {"type":"Feature","bbox":[-110.0007,36.629,-109.7104,36.9984],"geometry":{"type":"Point","coordinates":[-109.90723,36.77409]},"properties":{"zip":"86535","layer":"zip-code"}},
 {"type":"Feature","bbox":[-109.79,36.2743,-109.4508,36.5991],"geometry":{"type":"Point","coordinates":[-109.64355,36.35053]},"properties":{"zip":"86538","layer":"zip-code"}},
@@ -414,6 +413,5 @@
 {"type":"Feature","bbox":[-109.2971,36.2503,-109.0453,36.7769],"geometry":{"type":"Point","coordinates":[-109.2041,36.5626]},"properties":{"zip":"86544","layer":"zip-code"}},
 {"type":"Feature","bbox":[-109.8195,36.4951,-109.2285,36.9443],"geometry":{"type":"Point","coordinates":[-109.64355,36.63316]},"properties":{"zip":"86545","layer":"zip-code"}},
 {"type":"Feature","bbox":[-109.6056,36.3957,-109.2709,36.6587],"geometry":{"type":"Point","coordinates":[-109.46777,36.5626]},"properties":{"zip":"86547","layer":"zip-code"}},
-{"type":"Feature","bbox":[-109.4605,36.1221,-109.0458,36.3535],"geometry":{"type":"Point","coordinates":[-109.2041,36.20882]},"properties":{"zip":"86556","layer":"zip-code"}},
-{"type":"Feature","bbox":[-109.3532,35.8246,-108.8152,36.1784],"geometry":{"type":"Point","coordinates":[-109.2041,36.06686]},"properties":{"zip":"87328","layer":"zip-code"}}
+{"type":"Feature","bbox":[-109.4605,36.1221,-109.0458,36.3535],"geometry":{"type":"Point","coordinates":[-109.2041,36.20882]},"properties":{"zip":"86556","layer":"zip-code"}}
 ]}

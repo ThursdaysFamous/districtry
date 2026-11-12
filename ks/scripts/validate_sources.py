@@ -497,14 +497,14 @@ def check_congress_map(findings, offline, today=None):
     today = today or datetime.date.today().isoformat()
     if today >= CONGRESS_SERVING_UNTIL:
         findings.add(WARN, "us-house",
-                     "the members elected on Kansas's 2021 map in 2026 left office at noon "
+                     "the members elected on Kansas's current map in 2026 left office at noon "
                      "on 3 January 2029: re-read which map the 2028 election used, rebuild "
                      "congress-districts.json from the TIGERweb layer that carries it, and "
                      "change the us-house entry in ks/scripts/build_legislative_boundaries.py "
                      "— ks/WATCH.md has the steps")
     elif today >= CONGRESS_WARN_FROM:
         findings.add(WARN, "us-house",
-                     "the members elected on Kansas's 2021 map in 2026 leave office at noon "
+                     "the members elected on Kansas's current map in 2026 leave office at noon "
                      "on 3 January 2029; congress-districts.json is right until then and must "
                      "be re-read that day — ks/WATCH.md has the steps")
     if offline:
@@ -520,7 +520,7 @@ def check_congress_map(findings, offline, today=None):
                          "TIGERweb's layer %s is now %r, not %r: the shipped file is "
                          "unchanged, but ks/scripts/build_legislative_boundaries.py would "
                          "refuse to rebuild it until its layer table names the layers that "
-                         "carry the 2021 map" % (url, name, want))
+                         "carry the current map" % (url, name, want))
         else:
             findings.add(OK, "us-house", "TIGERweb's layer %s is still %r" % (url, name))
 

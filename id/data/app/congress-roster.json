@@ -1,0 +1,32 @@
+{
+  "1": {
+    "name": "Russ Fulcher",
+    "party": "Republican",
+    "url": "https://fulcher.house.gov",
+    "capitolOffice": [
+      "1514 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6611"
+    ],
+    "districtOffice": [
+      "313 D St, Suite 107",
+      "Lewiston, ID 83501-1894",
+      "Phone: 208-743-1388"
+    ]
+  },
+  "2": {
+    "name": "Michael K. Simpson",
+    "party": "Republican",
+    "url": "https://simpson.house.gov",
+    "capitolOffice": [
+      "2084 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5531"
+    ],
+    "districtOffice": [
+      "802 W. Bannock, Suite 600",
+      "Boise, ID 83702",
+      "Phone: 208-334-1953"
+    ]
+  }
+}

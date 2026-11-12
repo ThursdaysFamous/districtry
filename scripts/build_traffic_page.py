@@ -106,6 +106,19 @@ INSTANCE_NAMES = {"il": "Illinois", "ny": "New York", "ca": "California",
                   "ct": "Connecticut",
                   "ut": "Utah",
                   "ks": "Kansas",
+                  "nm": "New Mexico",
+                  "ne": "Nebraska",
+                  "id": "Idaho",
+                  "hi": "Hawaii",
+                  "me": "Maine",
+                  "mt": "Montana",
+                  "ri": "Rhode Island",
+                  "de": "Delaware",
+                  "sd": "South Dakota",
+                  "nd": "North Dakota",
+                  "ak": "Alaska",
+                  "vt": "Vermont",
+                  "wy": "Wyoming",
                   "landing": "Front page"}
 # The day each instance was first LISTED on the front door, measured once with
 #   git log --reverse --format=%cs -S'"tag": "<tag>"' -- metros.json
@@ -141,7 +154,12 @@ FLEET_LISTED = {"il": "2026-08-24", "ny": "2026-08-24", "ca": "2026-08-24",
                 # Batch 3 likewise; a later merge day moves these eight too.
                 "ma": "2026-11-12", "co": "2026-11-12", "md": "2026-11-12",
                 "al": "2026-11-12", "or": "2026-11-12", "ct": "2026-11-12",
-                "ut": "2026-11-12", "ks": "2026-11-12"}
+                "ut": "2026-11-12", "ks": "2026-11-12",
+                # Batch 4 likewise; a later merge day moves these thirteen too.
+                "nm": "2026-11-12", "ne": "2026-11-12", "id": "2026-11-12", "hi": "2026-11-12",
+                "me": "2026-11-12", "mt": "2026-11-12", "ri": "2026-11-12", "de": "2026-11-12",
+                "sd": "2026-11-12", "nd": "2026-11-12", "ak": "2026-11-12", "vt": "2026-11-12",
+                "wy": "2026-11-12"}
 # GoatCounter publishes a referrer's HOST; these are the names a reader knows.
 # A host with no entry ships exactly as GoatCounter spells it.
 REF_NAMES = {"(unknown)": "Direct / unknown", "duckduckgo.com": "DuckDuckGo",

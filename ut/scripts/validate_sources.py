@@ -501,12 +501,12 @@ def check_congress_map(findings, offline, today=None):
                      "on 3 January 2027: rebuild congress-districts.json from the TIGERweb "
                      "layer carrying the map the 2026 election used (layer 0, the 120th Congress's), and "
                      "change the us-house entry in ut/scripts/build_legislative_boundaries.py "
-                     "— al/WATCH.md has the steps")
+                     "— ut/WATCH.md has the steps")
     elif today >= CONGRESS_WARN_FROM:
         findings.add(WARN, "us-house",
                      "the members elected on the 119th Congress's map leave office at noon "
                      "on 3 January 2027; congress-districts.json is right until then and must "
-                     "be re-read that day — al/WATCH.md has the steps")
+                     "be re-read that day — ut/WATCH.md has the steps")
     if offline:
         return
     for url, want in CONGRESS_LAYERS:

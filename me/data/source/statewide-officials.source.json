@@ -1,0 +1,14 @@
+{
+ "state": "Maine",
+ "usps": "ME",
+ "officersNote": "The governor is the only officer Maine's voters elect statewide. The Secretary of State, Attorney General and Treasurer are elected by the Legislature, so they are not listed.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Janet T. Mills",
+   "url": "https://www.maine.gov/governor/mills/",
+   "headers": "browser",
+   "note": "www.maine.gov answered this project's token with HTTP 403 on its robots.txt and on the page, and served the browser client its robots.txt (no rule matching the page) and the page (read 2026-11-12)."
+  }
+ ]
+}

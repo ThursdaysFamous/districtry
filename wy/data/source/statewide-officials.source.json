@@ -1,0 +1,32 @@
+{
+ "state": "Wyoming",
+ "usps": "WY",
+ "officersNote": "Wyoming has no lieutenant governor, and its attorney general is appointed by the governor.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Mark Gordon",
+   "url": "https://governor.wyo.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Chuck Gray",
+   "url": "https://sos.wyo.gov/"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Kristi Racines",
+   "url": "https://sao.wyo.gov/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Curtis E. Meier, Jr.",
+   "url": "https://statetreasurer.wyo.gov/office/"
+  },
+  {
+   "office": "Superintendent of Public Instruction",
+   "name": "Megan Degenfelder",
+   "url": "https://edu.wyoming.gov/"
+  }
+ ]
+}

@@ -41,12 +41,12 @@
     "apple_touch_icon": "icons/apple-touch-icon.png",
     "head": {
       "title": "Alabama district lookup — districtry Alabama",
-      "description": "Tap the map or search a Alabama address: county, State House, State Senate and U.S. House districts — and who represents you.",
+      "description": "Tap the map or search an Alabama address: county, State House, State Senate and U.S. House districts — and who represents you.",
       "og_title": "Alabama district lookup — districtry Alabama",
       "og_description": "Every civic district that covers a point in Alabama, and who holds it.",
       "og_image_alt": "districtry Alabama — every district that covers a point, and who represents it.",
       "twitter_title": "Alabama district lookup — districtry Alabama",
-      "twitter_description": "Click or search a Alabama address to see every district that covers it."
+      "twitter_description": "Click or search an Alabama address to see every district that covers it."
     },
     "analytics": {
       "goatcounter_url": "https://districtry.goatcounter.com/count"
@@ -130,7 +130,33 @@
     { "id": "utah", "label": "Utah", "url": "https://districtry.com/ut/", "emoji": "🐝", "explorer_name": "districtry Utah",
       "bbox": { "minLng": -114.06, "minLat": 36.99, "maxLng": -109.04, "maxLat": 42.01 } },
     { "id": "kansas", "label": "Kansas", "url": "https://districtry.com/ks/", "emoji": "🌻", "explorer_name": "districtry Kansas",
-      "bbox": { "minLng": -102.06, "minLat": 36.99, "maxLng": -94.58, "maxLat": 40.01 } }
+      "bbox": { "minLng": -102.06, "minLat": 36.99, "maxLng": -94.58, "maxLat": 40.01 } },
+    { "id": "newmexico", "label": "New Mexico", "url": "https://districtry.com/nm/", "emoji": "🌶️", "explorer_name": "districtry New Mexico",
+      "bbox": { "minLng": -109.07, "minLat": 31.32, "maxLng": -102.99, "maxLat": 37.02 } },
+    { "id": "nebraska", "label": "Nebraska", "url": "https://districtry.com/ne/", "emoji": "🚂", "explorer_name": "districtry Nebraska",
+      "bbox": { "minLng": -104.07, "minLat": 39.98, "maxLng": -95.29, "maxLat": 43.02 } },
+    { "id": "idaho", "label": "Idaho", "url": "https://districtry.com/id/", "emoji": "🥔", "explorer_name": "districtry Idaho",
+      "bbox": { "minLng": -117.26, "minLat": 41.97, "maxLng": -111.03, "maxLat": 49.02 } },
+    { "id": "hawaii", "label": "Hawaii", "url": "https://districtry.com/hi/", "emoji": "🌺", "explorer_name": "districtry Hawaii",
+      "bbox": { "minLng": -160.61, "minLat": 18.85, "maxLng": -154.74, "maxLat": 22.3 } },
+    { "id": "maine", "label": "Maine", "url": "https://districtry.com/me/", "emoji": "🦌", "explorer_name": "districtry Maine",
+      "bbox": { "minLng": -71.1, "minLat": 42.9, "maxLng": -66.87, "maxLat": 47.47 } },
+    { "id": "montana", "label": "Montana", "url": "https://districtry.com/mt/", "emoji": "🦬", "explorer_name": "districtry Montana",
+      "bbox": { "minLng": -116.06, "minLat": 44.34, "maxLng": -104.02, "maxLat": 49.02 } },
+    { "id": "rhodeisland", "label": "Rhode Island", "url": "https://districtry.com/ri/", "emoji": "🌊", "explorer_name": "districtry Rhode Island",
+      "bbox": { "minLng": -71.92, "minLat": 41.08, "maxLng": -71.07, "maxLat": 42.03 } },
+    { "id": "delaware", "label": "Delaware", "url": "https://districtry.com/de/", "emoji": "🐔", "explorer_name": "districtry Delaware",
+      "bbox": { "minLng": -75.8, "minLat": 38.44, "maxLng": -74.97, "maxLat": 39.85 } },
+    { "id": "southdakota", "label": "South Dakota", "url": "https://districtry.com/sd/", "emoji": "🗿", "explorer_name": "districtry South Dakota",
+      "bbox": { "minLng": -104.07, "minLat": 42.46, "maxLng": -96.42, "maxLat": 45.96 } },
+    { "id": "northdakota", "label": "North Dakota", "url": "https://districtry.com/nd/", "emoji": "🚜", "explorer_name": "districtry North Dakota",
+      "bbox": { "minLng": -104.06, "minLat": 45.92, "maxLng": -96.54, "maxLat": 49.02 } },
+    { "id": "alaska", "label": "Alaska", "url": "https://districtry.com/ak/", "emoji": "🐻", "explorer_name": "districtry Alaska",
+      "bbox": { "minLng": -179.25, "minLat": 51.16, "maxLng": -129.96, "maxLat": 71.45 } },
+    { "id": "vermont", "label": "Vermont", "url": "https://districtry.com/vt/", "emoji": "🐄", "explorer_name": "districtry Vermont",
+      "bbox": { "minLng": -73.45, "minLat": 42.71, "maxLng": -71.45, "maxLat": 45.03 } },
+    { "id": "wyoming", "label": "Wyoming", "url": "https://districtry.com/wy/", "emoji": "🤠", "explorer_name": "districtry Wyoming",
+      "bbox": { "minLng": -111.07, "minLat": 40.98, "maxLng": -104.04, "maxLat": 45.02 } }
   ],
   "hover_number_keys": [
     [
@@ -468,7 +494,7 @@
     "address": "Photon (Alabama-bounded type-ahead)",
     "unbounded": "Photon (whole-coverage, sibling-instance lookup)",
     "poi": "Nominatim (office-address pin lookup, Alabama-bounded, serial >=1s queue)",
-    "search_placeholder": "Search a Alabama address"
+    "search_placeholder": "Search an Alabama address"
   },
   "palette": {
     "accent": "#6d3fd1",
