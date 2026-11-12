@@ -1065,7 +1065,10 @@ try {
   //         land, because the Census draws no tribal district on it.
   //       - The Ysleta del Sur Pueblo's trust land names every member of the
   //         Pueblo's council, the Cacique among them, and links no official
-  //         site, because the Bureau of Indian Affairs lists none.
+  //         site, because the Bureau of Indian Affairs lists none. The link
+  //         is read from the card's footer, which sits outside the card body,
+  //         so the Alabama-Coushatta check asserts the footer link is there
+  //         and this one cannot pass by reading the wrong element.
   //       - The councils file is refused: the land still answers, naming the
   //         tribe and nobody on its council.
   //       - The State Capitol is on no tribal land, and the card says so in
@@ -1088,8 +1091,13 @@ try {
       const page = await booted(context, `${BASE}#point=${pt}&layers=tribal-government`, routeFn);
       const card = await cardText(page, "tribal-government");
       const fields = await fieldsOf(page);
+      const link = await page.evaluate(() => {
+        const el = document.getElementById("card-tribal-government");
+        const a = el && el.closest(".layer-block") && el.closest(".layer-block").querySelector(".card-footer-link");
+        return a ? a.textContent.trim() : "";
+      });
       await context.close();
-      return { text: card.text || "", error: card.error,
+      return { text: card.text || "", error: card.error, link,
                by: (l) => (fields.find((f) => f.label === l) || {}).value || "" };
     };
 
@@ -1106,7 +1114,8 @@ try {
           council.every((m) => c.text.includes(m.name)) &&
           c.text.includes("Council") && c.text.includes("From the nation's own council page") &&
           c.text.includes("Where these names come from") &&
-          c.by("Districts drawn here").indexOf("no council seat") !== -1 && !c.by("Why no names"),
+          c.by("Districts drawn here").indexOf("no council seat") !== -1 && !c.by("Why no names") &&
+          !!p.url && c.link === p.nation + " (official)",
         `land here=${land.length} council=${council.length} ${JSON.stringify(c.text.slice(0, 200))}`);
     }
 
@@ -1122,7 +1131,7 @@ try {
           c.by("Seat of government") === "El Paso, TX" &&
           council.some((m) => m.role === "Cacique") &&
           council.every((m) => c.text.includes(m.name)) &&
-          !c.text.includes("(official)"),
+          c.link === "" && !c.text.includes("(official)"),
         `land here=${land.length} council=${council.length} ${JSON.stringify(c.text.slice(0, 200))}`);
     }
 
