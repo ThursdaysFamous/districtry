@@ -93,6 +93,19 @@ the audit asked for an item about the project.
 | P1001 (applies to jurisdiction) | Q779 (Connecticut) | the `/ct/` instance |
 | P1001 (applies to jurisdiction) | Q829 (Utah) | the `/ut/` instance |
 | P1001 (applies to jurisdiction) | Q1558 (Kansas) | the `/ks/` instance |
+| P1001 (applies to jurisdiction) | Q1522 (New Mexico) | the `/nm/` instance |
+| P1001 (applies to jurisdiction) | Q1553 (Nebraska) | the `/ne/` instance |
+| P1001 (applies to jurisdiction) | Q1221 (Idaho) | the `/id/` instance |
+| P1001 (applies to jurisdiction) | Q782 (Hawaii) | the `/hi/` instance |
+| P1001 (applies to jurisdiction) | Q724 (Maine) | the `/me/` instance |
+| P1001 (applies to jurisdiction) | Q1212 (Montana) | the `/mt/` instance |
+| P1001 (applies to jurisdiction) | Q1387 (Rhode Island) | the `/ri/` instance |
+| P1001 (applies to jurisdiction) | Q1393 (Delaware) | the `/de/` instance |
+| P1001 (applies to jurisdiction) | Q1211 (South Dakota) | the `/sd/` instance |
+| P1001 (applies to jurisdiction) | Q1207 (North Dakota) | the `/nd/` instance |
+| P1001 (applies to jurisdiction) | Q797 (Alaska) | the `/ak/` instance |
+| P1001 (applies to jurisdiction) | Q16551 (Vermont) | the `/vt/` instance |
+| P1001 (applies to jurisdiction) | Q1214 (Wyoming) | the `/wy/` instance |
 
 ### What is deliberately absent
 
@@ -140,6 +153,11 @@ endpoint used.
 | `P856` | official website |
 | `Q1166` | Michigan |
 | `Q1204` | Illinois |
+| `Q1207` | North Dakota |
+| `Q1211` | South Dakota |
+| `Q1212` | Montana |
+| `Q1214` | Wyoming |
+| `Q1221` | Idaho |
 | `Q1223` | Washington |
 | `Q1224853` | Open Database License |
 | `Q1227` | Nevada |
@@ -148,7 +166,9 @@ endpoint used.
 | `Q1371` | West Virginia |
 | `Q13785927` | Apache Software License 2.0 |
 | `Q1384` | New York |
+| `Q1387` | Rhode Island |
 | `Q1391` | Maryland |
+| `Q1393` | Delaware |
 | `Q1397` | Ohio |
 | `Q1400` | Pennsylvania |
 | `Q1408` | New Jersey |
@@ -159,23 +179,29 @@ endpoint used.
 | `Q1456` | South Carolina |
 | `Q1494` | Mississippi |
 | `Q1509` | Tennessee |
+| `Q1522` | New Mexico |
 | `Q1527` | Minnesota |
 | `Q1537` | Wisconsin |
 | `Q1546` | Iowa |
+| `Q1553` | Nebraska |
 | `Q1558` | Kansas |
 | `Q1581` | Missouri |
 | `Q1588` | Louisiana |
 | `Q1603` | Kentucky |
 | `Q1612` | Arkansas |
 | `Q1649` | Oklahoma |
+| `Q16551` | Vermont |
 | `Q173` | Alabama |
 | `Q1860` | English |
 | `Q189210` | web application |
 | `Q30` | United States |
 | `Q35127` | website |
+| `Q724` | Maine |
 | `Q759` | New Hampshire |
 | `Q771` | Massachusetts |
 | `Q779` | Connecticut |
+| `Q782` | Hawaii |
+| `Q797` | Alaska |
 | `Q812` | Florida |
 | `Q816` | Arizona |
 | `Q824` | Oregon |

@@ -1478,10 +1478,11 @@ try {
   {
     const WI_FULL = "https://maps.google.com/?q=Devil's+Lake+State+Park,+S5975+Park+Rd,+Baraboo,+WI+53913&ftid=0x0:0x1&entry=gps";
     const WI_REBUILT = "https://www.google.com/maps?q=Devil's+Lake+State+Park,+S5975+Park+Rd,+Baraboo,+WI+53913";
-    // A state no app covers: Ohio until the change that published it (batch 2
-    // of the state-level launch, written 2026-11-11), Wyoming since, which is
-    // in the launch's last batch.
-    const WY_FULL = "https://maps.google.com/?q=Wyoming+State+Capitol,+200+W+24th+St,+Cheyenne,+WY+82001&ftid=0x0:0x2&entry=gps";
+    // A place no app covers: Ohio until the change that published it (batch 2
+    // of the state-level launch, written 2026-11-11), then Wyoming until the
+    // change that published it (batch 4, 2026-11-12), after which every state
+    // has an app: the District of Columbia since.
+    const DC_FULL = "https://maps.google.com/?q=Lincoln+Memorial,+2+Lincoln+Memorial+Cir+NW,+Washington,+DC+20002&ftid=0x0:0x2&entry=gps";
     const CA_FULL = "https://maps.google.com/?q=Grand+Central+Market,+317+S+Broadway,+Los+Angeles,+CA+90013&ftid=0x0:0x3&entry=gps";
     const CA_REBUILT = "https://www.google.com/maps?q=Grand+Central+Market,+317+S+Broadway,+Los+Angeles,+CA+90013";
     const IL_FULL = "https://maps.google.com/?q=Starved+Rock+Lodge,+2668+E+875th+Rd,+Oglesby,+IL+61348&ftid=0x0:0x4&entry=gps";
@@ -1531,11 +1532,11 @@ try {
     const full = await run(WI_FULL, null, null);
     check("a Google Maps link to a place in Wisconsin opens /wi/ and asks the geocoder nothing",
       handed(full.went) === WI_REBUILT && full.asked.length === 0, JSON.stringify(full));
-    const wyoming = await run(WY_FULL, null, () => /Wyoming/.test(document.getElementById("geo-status").textContent));
-    check("a link to a place in a state no app covers says so, and nothing is searched or selected",
-      !wyoming.went && !wyoming.got.point && wyoming.asked.length === 0 &&
-        /That Google Maps link is to a place in Wyoming, which districtry doesn't cover yet\./.test(wyoming.got.status),
-      JSON.stringify(wyoming));
+    const dc = await run(DC_FULL, null, () => /District of Columbia/.test(document.getElementById("geo-status").textContent));
+    check("a link to a place no app covers says so, and nothing is searched or selected",
+      !dc.went && !dc.got.point && dc.asked.length === 0 &&
+        /That Google Maps link is to a place in the District of Columbia, which districtry doesn't cover yet\./.test(dc.got.status),
+      JSON.stringify(dc));
     const ca = await run(CA_FULL, null, null);
     check("a link to a place in California opens /ca/, whose app answers for the whole state, and asks the geocoder nothing",
       handed(ca.went, "ca") === CA_REBUILT && ca.asked.length === 0, JSON.stringify(ca));

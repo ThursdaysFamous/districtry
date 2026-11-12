@@ -1,0 +1,61 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from ne/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Nebraska",
+ "usSenate": [
+  {
+   "name": "Deb Fischer",
+   "party": "Republican",
+   "url": "https://www.fischer.senate.gov",
+   "office": "448 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-6551"
+  },
+  {
+   "name": "Pete Ricketts",
+   "party": "Republican",
+   "url": "https://www.ricketts.senate.gov",
+   "office": "139 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4224"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Jim Pillen",
+   "url": "https://governor.nebraska.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Joe Kelly",
+   "url": "https://ltgov.nebraska.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Mike Hilgers",
+   "url": "https://ago.nebraska.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Robert B. Evnen",
+   "url": "https://sos.nebraska.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Tom Briese",
+   "url": "https://treasurer.nebraska.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Auditor of Public Accounts",
+   "name": "Mike Foley",
+   "url": "https://auditors.nebraska.gov/",
+   "verified": "2026-11-12"
+  }
+ ],
+ "officersNote": "Nebraska's Public Service Commission, Board of Regents and State Board of Education are elected by district, not statewide, so they are not listed."
+}

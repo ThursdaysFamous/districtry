@@ -53,6 +53,38 @@ from question_page import (METROS, PageError, check_layer, head, load,  # noqa: 
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# THE WORDS BATCH 4'S ENTRIES SHARE (below), defined once rather than pasted
+# thirteen times. Each is a sentence the default would get wrong for these
+# states: no office address on any roster, maps drawn from whole towns or
+# counties, Senate districts built from House pairs or split into halves.
+SHOWS = ("Select any point and the two cards name the <strong>district number</strong> for each\n"
+         "        chamber and the <strong>member</strong> who holds that seat, with %s.")
+GROUND_SPLITS = ("Both are drawn over the same ground and a district can split a county, a "
+                 "city or a ZIP code, so the only way to know which pair covers an address is "
+                 "to put the address on the map.")
+GROUND_PAIRS = ("Each Senate district is made of two whole House districts, and a district can "
+                "split %s or a ZIP code, so the only way to know which pair covers an address "
+                "is to put the address on the map.")
+MAPS_PAIRS = ("An address has one district in each chamber, and because every Senate\n"
+              "      district is two whole House districts, the House district decides the Senate\n"
+              "      one.%s The tables below list both chambers in full, so a reader who knows their\n"
+              "      districts can look up the members without opening the map at all.")
+GROUND_HALVES = ("Each district elects one senator and two representatives, so one district "
+                 "number answers for both chambers, and where a district is split into halves, "
+                 "A and B, each half elects one of the two. A district can cross county lines "
+                 "and split a ZIP code, so the only way to know which one covers an address is "
+                 "to put the address on the map.")
+SHOWS_HALVES = ("Select any point and the two cards name its <strong>district</strong>, the\n"
+                "        <strong>senator</strong> and the <strong>representatives</strong> it elects, with %s.")
+MAPS_HALVES = ("An address has one legislative district, and it answers for both chambers: its\n"
+               "      senator represents every point in it, and so do its two representatives, or, where\n"
+               "      the district is split into halves, the one elected from the reader's half. The tables\n"
+               "      below list both chambers in full, so a reader who knows their district can look up its\n"
+               "      members without opening the map at all.")
+DRAWN_CAN_SPLIT = ("A congressional district is redrawn after each census to hold equal "
+                   "population, so it can split a county or a city, and an address a mile "
+                   "away can sit in a different one.")
+
 # Per instance: the worksheet, and the two pages' wording. `layer` is the id the
 # page's map link switches on and is VERIFIED against the worksheet's layers[].
 # `chambers` is upper house first, because that is the order both a ballot and
@@ -1039,7 +1071,11 @@ INSTANCES = {
             wording=dict(
                 ground="Both are drawn over the same ground and a district can split a "
                        "county, a city or a ZIP code, so the only way to know which pair "
-                       "covers an address is to put the address on the map."),
+                       "covers an address is to put the address on the map.",
+                # Utah's rosters carry no office address, so the default's
+                # "their offices" would be false of its cards.
+                shows=SHOWS % "their party, their e-mail, their telephone where the Legislature\n"
+                              "        lists one, and a link to their own page on its site"),
             chambers=[
                 dict(layer="ut-senate", name="Utah State Senate", short="Senate",
                      holder="Senator", roster="ut-senate-members.json"),
@@ -1075,6 +1111,424 @@ INSTANCES = {
             title="Who is my U.S. representative?",
             layer="us-house", roster="congress-roster.json",
             state="Kansas"),
+    ),
+    # BATCH 4 OF THE STATE-LEVEL LAUNCH (New Mexico, Nebraska, Idaho, Hawaii,
+    # Maine, Montana, Rhode Island, South Dakota, North Dakota, Alaska, Vermont,
+    # Wyoming, Delaware) joined in one go-live change, the one that gave every
+    # state an app, each chamber named from the legislature's own site, or from
+    # Open States' export where the legislature's site could not be read
+    # (Hawaii, Montana). The term sentences are each state constitution's, not
+    # re-read for this change. NONE of these rosters carries an office address,
+    # so every entry states what its cards DO show rather than the default's
+    # "their offices". The six states with one seat in the U.S. House
+    # (Alaska, Delaware, the Dakotas, Vermont, Wyoming) set `at_large`, which
+    # congress_page holds to the roster, and the seven with two or three seats
+    # say a district "can split" a county or a city rather than the default's
+    # "follows neither county lines nor city limits", which is not true of
+    # every map drawn from whole towns or counties.
+    "nm": dict(
+        worksheet="nm/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my New Mexico legislator?",
+            body="the New Mexico Legislature",
+            short="New Mexico Legislature",
+            term="Senators serve four-year terms and representatives two-year terms.",
+            wording=dict(
+                ground=GROUND_SPLITS,
+                shows=SHOWS % "their party, their e-mail, their telephone where the Legislature\n"
+                              "        lists one, and a link to their own page on its site"),
+            chambers=[
+                dict(layer="nm-senate", name="New Mexico Senate", short="Senate",
+                     holder="Senator", roster="nm-senate-members.json"),
+                dict(layer="nm-house", name="New Mexico House of Representatives",
+                     short="House", holder="Representative", roster="nm-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="New Mexico", drawn=DRAWN_CAN_SPLIT),
+    ),
+    # NEBRASKA'S LEGISLATURE IS ONE CHAMBER, the only one in the country, and
+    # its members are elected without a party label, so every default sentence
+    # about two chambers, two cards, both rosters and a member's party would be
+    # false. The roster carries no party and the card names none.
+    "ne": dict(
+        worksheet="ne/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Nebraska legislator?",
+            body="the Nebraska Legislature",
+            short="Nebraska Legislature",
+            term="Senators serve four-year terms.",
+            wording=dict(
+                strong="The {body} is one chamber, elected from {districts} districts.",
+                ground="Each district elects one senator, and a district can split a county, "
+                       "a city or a ZIP code, so the only way to know which one covers an "
+                       "address is to put the address on the map.",
+                shows="Select any point and the card names its <strong>district number</strong> and the\n"
+                      "        <strong>senator</strong> who holds it, with their e-mail, their telephone and a link\n"
+                      "        to their own page on the Legislature's site. Nebraska elects its legislators without\n"
+                      "        a party label, so the card names no party.",
+                beside="it",
+                maps_heading="One chamber, one map",
+                maps="Nebraska is the only state whose legislature has one chamber, so an address has one\n"
+                     "      legislative district and one senator. The table below lists every district, so a reader\n"
+                     "      who knows their district number can look up the senator without opening the map at all.",
+                cta="Find your legislative district →",
+                cta_note="Opens the map with the Legislature layer on.",
+                names="The roster is re-read on a schedule from the Legislature's own published\n"
+                      "      member list and lands",
+                desc="Your Nebraska Legislature district by address or ZIP — the district number "
+                     "and the senator who holds it.",
+                og="Find your Nebraska Legislature district by address or ZIP, and the senator "
+                   "who holds it."),
+            chambers=[
+                dict(layer="ne-legislature", name="Nebraska Legislature", short="Legislature",
+                     holder="Senator", roster="ne-legislature-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Nebraska", drawn=DRAWN_CAN_SPLIT),
+    ),
+    # IDAHO ELECTS BOTH CHAMBERS FROM ONE MAP, like Arizona: each district
+    # elects one senator and two representatives (Seats A and B), so the House
+    # roster record is {"seats": 2, "members": [...]}.
+    "id": dict(
+        worksheet="id/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Idaho legislator?",
+            body="the Idaho Legislature",
+            short="Idaho Legislature",
+            term="Senators and representatives both serve two-year terms.",
+            shared_map=True,
+            wording=dict(
+                strong="The {body} is elected from {districts} districts.",
+                ground="Each district elects one senator and two representatives, so one "
+                       "district number answers for both chambers. A district can cross "
+                       "county lines and split a ZIP code, so the only way to know which "
+                       "one covers an address is to put the address on the map.",
+                shows="Select any point and the two cards name its <strong>district number</strong>, the\n"
+                      "        <strong>senator</strong> and the two <strong>representatives</strong> it elects, with their\n"
+                      "        party, their e-mail and telephone, and a link to their own page on the Legislature's site.",
+                maps_heading="One map, three members",
+                maps="An address has one legislative district, and it answers for both chambers: its\n"
+                     "      senator and its two representatives each represent every point in it. The tables below list\n"
+                     "      both chambers in full, so a reader who knows their district number can look up all three\n"
+                     "      members without opening the map at all.",
+                desc="Your Idaho legislative district by address or ZIP — the district "
+                     "number and the senator and two representatives it elects."),
+            chambers=[
+                dict(layer="id-senate", name="Idaho Senate", short="Senate",
+                     holder="Senator", roster="id-senate-members.json"),
+                dict(layer="id-house", name="Idaho House of Representatives", short="House",
+                     holder="Representative", roster="id-house-members.json",
+                     adapter="multi_member_districts"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Idaho", drawn=DRAWN_CAN_SPLIT),
+    ),
+    "hi": dict(
+        worksheet="hi/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Hawaii legislator?",
+            body="the Hawaii State Legislature",
+            short="Hawaii State Legislature",
+            term="Senators serve four-year terms and representatives two-year terms.",
+            wording=dict(
+                ground="Both are drawn over the same ground and a district can split a ZIP "
+                       "code, so the only way to know which pair covers an address is to put "
+                       "the address on the map.",
+                shows=SHOWS % "their party, their e-mail and a link to their own page on the\n"
+                              "        Legislature's site"),
+            chambers=[
+                dict(layer="hi-senate", name="Hawaii State Senate", short="Senate",
+                     holder="Senator", roster="hi-senate-members.json"),
+                dict(layer="hi-house", name="Hawaii House of Representatives",
+                     short="House", holder="Representative", roster="hi-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Hawaii", drawn=DRAWN_CAN_SPLIT),
+    ),
+    "me": dict(
+        worksheet="me/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Maine legislator?",
+            body="the Maine Legislature",
+            short="Maine Legislature",
+            term="Senators and representatives both serve two-year terms.",
+            wording=dict(
+                ground=GROUND_SPLITS,
+                shows=SHOWS % "their party, their e-mail, their telephone where the Legislature\n"
+                              "        lists one, and a link to their own page where it publishes one"),
+            chambers=[
+                dict(layer="me-senate", name="Maine Senate", short="Senate",
+                     holder="Senator", roster="me-senate-members.json"),
+                dict(layer="me-house", name="Maine House of Representatives",
+                     short="House", holder="Representative", roster="me-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Maine", drawn=DRAWN_CAN_SPLIT),
+    ),
+    # MONTANA'S AND ALASKA'S SENATES ARE BUILT FROM THEIR HOUSES: each Senate
+    # district is two whole House districts, which each instance's
+    # build_legislative_boundaries.py --check holds on the shipped files.
+    "mt": dict(
+        worksheet="mt/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Montana legislator?",
+            body="the Montana Legislature",
+            short="Montana Legislature",
+            term="Senators serve four-year terms and representatives two-year terms.",
+            wording=dict(
+                ground=GROUND_PAIRS % "a county, a city",
+                shows=SHOWS % "their party, their e-mail and a link to their own page on the\n"
+                              "        Legislature's site",
+                maps_heading="Two House districts to a Senate district",
+                maps=MAPS_PAIRS % ""),
+            chambers=[
+                dict(layer="mt-senate", name="Montana Senate", short="Senate",
+                     holder="Senator", roster="mt-senate-members.json"),
+                dict(layer="mt-house", name="Montana House of Representatives",
+                     short="House", holder="Representative", roster="mt-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Montana", drawn=DRAWN_CAN_SPLIT),
+    ),
+    # RHODE ISLAND HAS NO COUNTY GOVERNMENT, and its 39 municipalities are
+    # cities and towns, so its ground sentence names those.
+    "ri": dict(
+        worksheet="ri/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Rhode Island legislator?",
+            body="the Rhode Island General Assembly",
+            short="Rhode Island General Assembly",
+            term="Senators and representatives both serve two-year terms.",
+            wording=dict(
+                ground="Both are drawn over the same ground and a district can split a city, "
+                       "a town or a ZIP code, so the only way to know which pair covers an "
+                       "address is to put the address on the map.",
+                shows=SHOWS % "their party, their e-mail, their telephone where the General\n"
+                              "        Assembly lists one, and a link to their own page on its site"),
+            chambers=[
+                dict(layer="ri-senate", name="Rhode Island Senate", short="Senate",
+                     holder="Senator", roster="ri-senate-members.json"),
+                dict(layer="ri-house", name="Rhode Island House of Representatives",
+                     short="House", holder="Representative", roster="ri-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Rhode Island", drawn=DRAWN_CAN_SPLIT),
+    ),
+    # THE DAKOTAS ELECT BOTH CHAMBERS FROM ONE MAP with a twist: each district
+    # elects one senator and two representatives, but a district split into
+    # halves A and B elects one representative from each half, so the House
+    # roster is keyed by district or half ("26A") and is not `shared_map`,
+    # which holds the two rosters to the same keys.
+    "sd": dict(
+        worksheet="sd/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my South Dakota legislator?",
+            body="the South Dakota Legislature",
+            short="South Dakota Legislature",
+            term="Senators and representatives both serve two-year terms.",
+            wording=dict(
+                strong="The {body} is elected from {districts} districts.",
+                ground=GROUND_HALVES,
+                shows=SHOWS_HALVES % "their party and a link to their own page on the\n"
+                                     "        Legislature's site",
+                maps_heading="One map, three members",
+                maps=MAPS_HALVES,
+                desc="Your South Dakota legislative district by address or ZIP — the "
+                     "district number and the senator and representatives it elects."),
+            chambers=[
+                dict(layer="sd-senate", name="South Dakota Senate", short="Senate",
+                     holder="Senator", roster="sd-senate-members.json"),
+                dict(layer="sd-house", name="South Dakota House of Representatives",
+                     short="House", holder="Representative", roster="sd-house-members.json",
+                     adapter="multi_member_districts"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="South Dakota", at_large=True),
+    ),
+    "nd": dict(
+        worksheet="nd/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my North Dakota legislator?",
+            body="the North Dakota Legislative Assembly",
+            short="North Dakota Legislative Assembly",
+            term="Senators and representatives both serve four-year terms.",
+            wording=dict(
+                strong="The {body} is elected from {districts} districts.",
+                ground=GROUND_HALVES,
+                shows=SHOWS_HALVES % "their party, their e-mail, their telephone where the\n"
+                                     "        Legislative Assembly lists one, and a link to their own page on its site",
+                maps_heading="One map, three members",
+                maps=MAPS_HALVES,
+                desc="Your North Dakota legislative district by address or ZIP — the "
+                     "district number and the senator and representatives it elects."),
+            chambers=[
+                dict(layer="nd-senate", name="North Dakota Senate", short="Senate",
+                     holder="Senator", roster="nd-senate-members.json"),
+                dict(layer="nd-house", name="North Dakota House of Representatives",
+                     short="House", holder="Representative", roster="nd-house-members.json",
+                     adapter="multi_member_districts"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="North Dakota", at_large=True),
+    ),
+    # ALASKA'S SENATE DISTRICTS ARE LETTERED, so its roster is keyed "A" to the
+    # last letter and read through multi_member_districts, which labels a row
+    # "District A".
+    "ak": dict(
+        worksheet="ak/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Alaska legislator?",
+            body="the Alaska State Legislature",
+            short="Alaska State Legislature",
+            term="Senators serve four-year terms and representatives two-year terms.",
+            wording=dict(
+                ground=GROUND_PAIRS % "a borough, a city",
+                shows="Select any point and the two cards name the <strong>district</strong> for each\n"
+                      "        chamber and the <strong>member</strong> who holds that seat, with their party, their\n"
+                      "        e-mail and telephone, and a link to their own page on the Legislature's site.",
+                maps_heading="Two House districts to a Senate district",
+                maps=MAPS_PAIRS % " Senate districts are lettered and House districts numbered."),
+            chambers=[
+                dict(layer="ak-senate", name="Alaska State Senate", short="Senate",
+                     holder="Senator", roster="ak-senate-members.json",
+                     adapter="multi_member_districts"),
+                dict(layer="ak-house", name="Alaska House of Representatives",
+                     short="House", holder="Representative", roster="ak-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Alaska", at_large=True),
+    ),
+    # VERMONT NAMES ITS DISTRICTS AND MOST ELECT MORE THAN ONE MEMBER, in both
+    # chambers: a Senate district for its county or counties ("Addison",
+    # "Chittenden Central"), a House district for a county and a number or a
+    # run of counties ("Chittenden-2", "Orange-Washington-Addison"). The table
+    # prints each name as the Legislature writes it
+    # (build_officeholder_tables.hyphen_named_districts).
+    "vt": dict(
+        worksheet="vt/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Vermont legislator?",
+            body="the Vermont General Assembly",
+            short="Vermont General Assembly",
+            term="Senators and representatives both serve two-year terms.",
+            wording=dict(
+                ground="Each district is named for the county or counties it lies in rather "
+                       "than numbered, many elect more than one member, and the two chambers "
+                       "are drawn separately, so the only way to know which districts cover "
+                       "an address is to put the address on the map.",
+                shows="Select any point and the two cards name the <strong>district</strong> for each\n"
+                      "        chamber and every <strong>member</strong> it elects, with their party and a link to\n"
+                      "        their own page on the Legislature's site.",
+                maps_heading="Two chambers, named districts",
+                maps="An address has one district in each chamber. A Senate district can elect more than one\n"
+                     "      senator and a House district more than one representative, so a reader is represented\n"
+                     "      by every member their two districts elect. The tables below list both chambers in full,\n"
+                     "      district by district, so a reader who knows their districts can look up the members\n"
+                     "      without opening the map at all.",
+                desc="Your Vermont General Assembly districts by address or ZIP — each "
+                     "chamber's district and every member it elects."),
+            chambers=[
+                dict(layer="vt-senate", name="Vermont Senate", short="Senate",
+                     holder="Senator", roster="vt-senate-members.json",
+                     adapter="hyphen_named_districts"),
+                dict(layer="vt-house", name="Vermont House of Representatives",
+                     short="House", holder="Representative", roster="vt-house-members.json",
+                     adapter="hyphen_named_districts"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Vermont", at_large=True),
+    ),
+    "wy": dict(
+        worksheet="wy/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Wyoming legislator?",
+            body="the Wyoming Legislature",
+            short="Wyoming Legislature",
+            term="Senators serve four-year terms and representatives two-year terms.",
+            wording=dict(
+                ground=GROUND_SPLITS,
+                shows=SHOWS % "their party, their e-mail and telephone, and a link to their own\n"
+                              "        page on the Legislature's site"),
+            chambers=[
+                dict(layer="wy-senate", name="Wyoming Senate", short="Senate",
+                     holder="Senator", roster="wy-senate-members.json"),
+                dict(layer="wy-house", name="Wyoming House of Representatives",
+                     short="House", holder="Representative", roster="wy-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Wyoming", at_large=True),
+    ),
+    "de": dict(
+        worksheet="de/metro-worksheet.json",
+        legislature=dict(
+            file="state-legislature.html",
+            title="Who is my Delaware legislator?",
+            body="the Delaware General Assembly",
+            short="Delaware General Assembly",
+            term="Senators serve four-year terms and representatives two-year terms.",
+            wording=dict(
+                ground=GROUND_SPLITS,
+                shows=SHOWS % "their party and a link to their own page on the General\n"
+                              "        Assembly's site"),
+            chambers=[
+                dict(layer="de-senate", name="Delaware Senate", short="Senate",
+                     holder="Senator", roster="de-senate-members.json"),
+                dict(layer="de-house", name="Delaware House of Representatives",
+                     short="House", holder="Representative", roster="de-house-members.json"),
+            ]),
+        congress=dict(
+            file="congress.html",
+            title="Who is my U.S. representative?",
+            layer="us-house", roster="congress-roster.json",
+            state="Delaware", at_large=True),
     ),
 }
 
@@ -1246,15 +1700,17 @@ def legislature_page(tag, inst, worksheet, brand, app_name, landing, metros):
     lede = dict(
         html='<p class="lede"><strong>%s</strong> %s %s</p>'
              % (html.escape(strong), html.escape(ground), html.escape(spec["term"])),
-        cta='    <a class="cta" href="./#layers=%s">Find your %s districts →</a>\n'
-            '    <p class="cta-note">Opens the map with both chambers on. Search your '
+        cta='    <a class="cta" href="./#layers=%s">%s</a>\n'
+            '    <p class="cta-note">%s Search your '
             'address or ZIP, or tap your location.</p>'
-            % (layers, html.escape(spec["short"])))
+            % (layers,
+               html.escape(words.get("cta", "Find your %s districts →" % spec["short"])),
+               html.escape(words.get("cta_note", "Opens the map with both chambers on."))))
     sections = """  <section>
     <h2>What the lookup shows</h2>
     <div class="answer-card">
       <p>%(shows)s</p>
-      <p>Every other district covering the same point is listed beside them, so one click answers
+      <p>Every other district covering the same point is listed beside %(beside)s, so one click answers
         the state question and the county, city and federal ones together.</p>
     </div>
   </section>
@@ -1266,8 +1722,7 @@ def legislature_page(tag, inst, worksheet, brand, app_name, landing, metros):
 
   <section>
     <h2>Where the names come from</h2>
-    <p>Both rosters are re-read on a schedule from the legislature's own published member lists and
-      land as a reviewed pull request; the map names no officeholder it cannot cite. A seat the
+    <p>%(names)s as a reviewed pull request; the map names no officeholder it cannot cite. A seat the
       source does not name is shown as unnamed rather than filled in.</p>
     <div class="disclaimer">
       <strong>Not for legal or official use.</strong> Boundary and roster data come from public
@@ -1277,7 +1732,10 @@ def legislature_page(tag, inst, worksheet, brand, app_name, landing, metros):
     </div>
   </section>
 
-""" % dict(shows=shows, maps_heading=html.escape(maps_heading), maps=maps)
+""" % dict(shows=shows, maps_heading=html.escape(maps_heading), maps=maps,
+           beside=words.get("beside", "them"),
+           names=words.get("names", "Both rosters are re-read on a schedule from the "
+                                    "legislature's own published member lists and\n      land"))
     subtitle = ("%s district lookup — free, by address, ZIP, or a tap on the map."
                 % spec["short"])
     # Under 155 characters, which validate_serp_lengths.py holds every page to:
@@ -1286,7 +1744,8 @@ def legislature_page(tag, inst, worksheet, brand, app_name, landing, metros):
     desc = words.get(
         "desc", "Your {body} districts by address or ZIP — the district number in each "
                 "chamber and the member who holds it.").format(**fmt)
-    og = ("Find your %s districts by address or ZIP, and the %d members who hold them."
+    og = (words["og"].format(total=total, **fmt) if "og" in words else
+          "Find your %s districts by address or ZIP, and the %d members who hold them."
           % (spec["short"], total))
     return spec["file"], spec["title"], subtitle, desc, og, lede, sections, total
 
@@ -1297,12 +1756,24 @@ def congress_page(tag, inst, worksheet, brand, app_name, landing, metros):
     roster = roster_rows(tag, spec["roster"])
     n = len(roster)
     state = spec["state"]
+    # A STATE WITH ONE SEAT IN THE HOUSE (Alaska, Delaware, the Dakotas,
+    # Vermont, Wyoming) is one district, so every sentence below about a
+    # district splitting counties and an address a mile away sitting in another
+    # would be false of it. `at_large` is HELD to the roster: a page claiming
+    # one seat over a roster holding more, or the plain page over a roster
+    # holding one, stops the build.
+    if bool(spec.get("at_large")) != (n == 1):
+        fail("%s/%s: at_large is %s and congress-roster.json holds %d seat(s)"
+             % (tag, spec["file"], bool(spec.get("at_large")), n))
+    if spec.get("at_large"):
+        return at_large_congress_page(tag, spec, roster, state)
     lede = dict(
         html='<p class="lede"><strong>%s elects %d member%s of the U.S. House of '
-             'Representatives.</strong> A congressional district is redrawn after each '
-             'census to hold equal population, so it follows neither county lines nor '
-             'city limits, and an address a mile away can sit in a different one.</p>'
-             % (html.escape(state), n, "" if n == 1 else "s"),
+             'Representatives.</strong> %s</p>'
+             % (html.escape(state), n, "" if n == 1 else "s", html.escape(spec.get(
+                 "drawn", "A congressional district is redrawn after each census to hold "
+                          "equal population, so it follows neither county lines nor city "
+                          "limits, and an address a mile away can sit in a different one."))),
         cta='    <a class="cta" href="./#layers=%s">Find your U.S. House district →</a>\n'
             '    <p class="cta-note">Opens the map with the U.S. House layer on. Search '
             'your address or ZIP, or tap your location.</p>' % spec["layer"])
@@ -1352,6 +1823,65 @@ def congress_page(tag, inst, worksheet, brand, app_name, landing, metros):
     og = ("Find your %s congressional district by address or ZIP, and the "
           "representative who holds it." % state)
     return spec["file"], spec["title"], subtitle, desc, og, lede, sections, n
+
+
+def at_large_congress_page(tag, spec, roster, state):
+    """The congress page of a state with one seat in the House.
+
+    The plain page's lede, its "three different shapes" section and its
+    description all describe a state cut into districts. Here the district is
+    the state, so the page says that and names the seat, and keeps everything
+    else the plain page says: the card's contents, why the senators are not on
+    it, and where the boundary and the name come from.
+    """
+    lede = dict(
+        html='<p class="lede"><strong>%s elects one member of the U.S. House of '
+             'Representatives, at large.</strong> The whole state is one congressional '
+             'district, so every address in it has the same representative.</p>'
+             % html.escape(state),
+        cta='    <a class="cta" href="./#layers=%s">See your U.S. House district →</a>\n'
+            '    <p class="cta-note">Opens the map with the U.S. House layer on. Search '
+            'your address or ZIP, or tap your location.</p>' % spec["layer"])
+    sections = """  <section>
+    <h2>What the lookup shows</h2>
+    <div class="answer-card">
+      <p>Select any point in the state and the card names the <strong>representative</strong> who
+        holds its one seat, with their party, their Washington and district offices, and a link to
+        their House page.</p>
+      <p>Your U.S. senators are not here, and that is not an omission: senators are elected
+        statewide, so every address in the state has the same two and no map can tell them apart.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>One district for the whole state</h2>
+    <p>The number of seats each state holds is set again after each census. While %(state)s holds
+      one, its congressional district is the state itself, so no county or city in it is divided
+      between districts. If a census gives it more than one, the state will be drawn into districts
+      and this page will name them.</p>
+  </section>
+
+  <section>
+    <h2>Where the names come from</h2>
+    <p>The boundary comes from the Census Bureau's own published districts and the roster is
+      re-read on a schedule from the House's member list, landing as a reviewed pull request. The
+      map names no officeholder it cannot cite.</p>
+    <div class="disclaimer">
+      <strong>Not for legal or official use.</strong> Boundary and roster data come from public
+      sources that explicitly disclaim legal precision. Confirm district assignments and
+      officeholders with the relevant government office before relying on them for anything
+      official.
+    </div>
+  </section>
+
+""" % dict(state=html.escape(state))
+    subtitle = ("%s U.S. House lookup — free, by address, ZIP, or a tap on the map."
+                % state)
+    desc = ("Who represents %s in the U.S. House \u2014 the state's one at-large seat, "
+            "and every other district covering a point on the map." % state)
+    og = ("Find who represents %s in the U.S. House, and every other district covering "
+          "your address." % state)
+    return spec["file"], spec["title"], subtitle, desc, og, lede, sections, len(roster)
 
 
 def related_rows(tag, inst, this_file, landing, metros):

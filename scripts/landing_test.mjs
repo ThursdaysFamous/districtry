@@ -407,10 +407,13 @@ try {
   // probe point here is its own bbox's centre, so a build with the filter
   // deleted still lands correctly on the nearest-centre tie-break. Block 1d is
   // what catches that, which is why its instance stubs matter.)
-  // Cheyenne, Wyoming — outside every live instance's bbox, and in the state
-  // launch's last batch. It was Dallas until the change that published Texas
-  // (batch 2 of the state-level launch, written 2026-11-11).
-  const UNCOVERED_POINT = [41.14, -104.8202];
+  // San Juan, Puerto Rico — outside every live instance's bbox and more than
+  // 1,500 km from every outline in fleet-outlines.json, measured 2026-11-12.
+  // It was Dallas until the change that published Texas (batch 2 of the
+  // state-level launch, written 2026-11-11), and Cheyenne, Wyoming until the
+  // change that published Wyoming (batch 4), after which every state has an
+  // app; Puerto Rico has none.
+  const UNCOVERED_POINT = [18.4655, -66.1057];
   // Stub each instance's PAGE, never its data. The routing under test now
   // fetches `<tag>/data/app/metro-outline.json` to settle a contested point,
   // and a `**/${t}/**` glob swallows that too — the outline would come back as
@@ -447,15 +450,19 @@ try {
     ]).catch(() => {});
   }
   // Each case asks for the middle of the app's box, which lies inside the
-  // state for every app but two. Florida's box runs from the panhandle to the
+  // state for every app but three. Florida's box runs from the panhandle to the
   // Keys, and its middle (27.70, -83.81) is open Gulf of Mexico about 70 km
   // off Tampa Bay, outside every outline, so the front page rightly says no
   // app covers it (measured 2026-11-11 at Florida's go-live). Maryland's box
   // wraps the Potomac, and its middle (38.805, -77.195) is in Fairfax County,
   // Virginia, so the front page rightly opens /va/ there (measured 2026-11-12
-  // at Maryland's go-live). Each is asked about its State Capitol or State
-  // House instead, its worksheet's anchor point.
-  const ADDRESS_PROBE = { fl: [30.43817, -84.28164], md: [38.97864, -76.49077] };
+  // at Maryland's go-live). Hawaii's box spans the island chain, and its
+  // middle (20.575, -157.675) is open Pacific about 64 km from the nearest
+  // island, Molokai, so the front page rightly says no app covers it
+  // (measured 2026-11-12 at Hawaii's go-live). Each is asked about its State
+  // Capitol or State House instead, its worksheet's anchor point.
+  const ADDRESS_PROBE = { fl: [30.43817, -84.28164], md: [38.97864, -76.49077],
+                          hi: [21.30742, -157.85743] };
   for (const m of FLEET) {
     const probe = ADDRESS_PROBE[m.tag];
     const lat = probe ? probe[0] : (m.bbox.minLat + m.bbox.maxLat) / 2;
@@ -757,8 +764,10 @@ try {
     const BARE = "1265 Lombardi Ave, Green Bay, WI 54304";
     const FULL = "https://maps.google.com/?q=Lambeau+Field,+1265+Lombardi+Ave,+Green+Bay,+WI+54304&ftid=0x0:0x1&entry=gps";
     const REBUILT = "#q=" + encodeURIComponent("https://www.google.com/maps?q=Lambeau+Field,+1265+Lombardi+Ave,+Green+Bay,+WI+54304");
-    // Ohio until the change that published it (batch 2, 2026-11-11); Wyoming since.
-    const WYOMING = "https://maps.google.com/?q=Wyoming+State+Capitol,+200+W+24th+St,+Cheyenne,+WY+82001&ftid=0x0:0x2&entry=gps";
+    // Ohio until the change that published it (batch 2, 2026-11-11), then
+    // Wyoming until the change that published it (batch 4, 2026-11-12), after
+    // which every state has an app: the District of Columbia since.
+    const UNSERVED = "https://maps.google.com/?q=Lincoln+Memorial,+2+Lincoln+Memorial+Cir+NW,+Washington,+DC+20002&ftid=0x0:0x2&entry=gps";
     const LA_NAMED = "Grand Central Market, 317 S Broadway, Los Angeles, CA 90013";
     const LA = "https://maps.google.com/?q=Grand+Central+Market,+317+S+Broadway,+Los+Angeles,+CA+90013&ftid=0x0:0x3&entry=gps";
     const at = (props) => ({ ...photonFeature(44.5013, -88.0622), properties: props });
@@ -773,9 +782,9 @@ try {
       { name: "an answer in Illinois is another place of its name, and the link goes to /wi/",
         text: FULL, answerFor: (q) => (q === NAMED ? [photonFeature(41.8825, -87.6285)] : []),
         asks: [NAMED], want: "/wi/", hash: REBUILT },
-      { name: "a place in Wyoming, which no app covers, is said to be, and nothing is searched",
-        text: WYOMING, answerFor: () => [], asks: [], want: "/",
-        msg: /^That place is in Wyoming, which districtry doesn't cover yet/ },
+      { name: "a place in the District of Columbia, which no app covers, is said to be, and nothing is searched",
+        text: UNSERVED, answerFor: () => [], asks: [], want: "/",
+        msg: /^That place is in the District of Columbia, which districtry doesn't cover yet/ },
       { name: "a place in Los Angeles opens /ca/, since California's app answers for the whole state",
         text: LA, answerFor: (q) => (q === LA_NAMED ? [photonFeature(34.0508, -118.2489)] : []),
         asks: [LA_NAMED], want: "/ca/", hash: /^#point=34\.05080,-118\.24890$/ },
@@ -847,7 +856,7 @@ try {
     const OTHER = at({ name: "Oakley Drive North", city: "Westmont", state: "Illinois", postcode: "60559" });
     const HOUSE = at({ housenumber: "9", street: "West Oakley Drive Northwest", city: "Westmont", state: "Illinois" });
     const OTHER_HOUSE = at({ housenumber: "9", street: "Oakley Drive North", city: "Westmont", state: "Illinois", postcode: "60559" });
-    const UNCOVERED = { ...photonFeature(...UNCOVERED_POINT), properties: { name: "Oakley Drive", city: "Cheyenne", state: "Wyoming" } };
+    const UNCOVERED = { ...photonFeature(...UNCOVERED_POINT), properties: { name: "Oakley Drive", city: "San Juan", state: "Puerto Rico" } };
     // the same house a few doors on (one place), and in another town
     const HOUSE_NEXT = { ...photonFeature(41.82230, -87.97949), properties: HOUSE.properties };
     const HOUSE_ELSEWHERE = { ...photonFeature(42.04510, -87.69010),
@@ -917,7 +926,7 @@ try {
     await page.route("**/photon.komoot.io/**", photonStub([photonFeature(...UNCOVERED_POINT)]));
     await stubInstances(page);
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
-    await page.fill("#search-input", "Cheyenne, Wyoming");
+    await page.fill("#search-input", "San Juan, Puerto Rico");
     await page.click("#search-button");
     await addressSettled(page);
     check("an uncovered address stays on the landing page",
@@ -967,8 +976,8 @@ try {
         answer: [photonFeature(...UNCOVERED_POINT), LOUISVILLE] },
       { label: "a ZIP code with the list unreadable", typed: "60625", zip: "60625", tag: "il", asked: true,
         unreadable: true, answer: [photonFeature(41.9745, -87.6998)] },
-      { label: "a ZIP code nothing covers", typed: "82001", zip: "82001", tag: null, asked: true,
-        answer: [photonFeature(...UNCOVERED_POINT)], says: /^ZIP code 82001 is outside every place districtry covers/ },
+      { label: "a ZIP code nothing covers", typed: "00901", zip: "00901", tag: null, asked: true,
+        answer: [photonFeature(...UNCOVERED_POINT)], says: /^ZIP code 00901 is outside every place districtry covers/ },
       { label: "a ZIP code nobody knows", typed: "00000", zip: "00000", tag: null, asked: true,
         answer: [], says: /^No matches for ZIP code 00000/ },
     ];

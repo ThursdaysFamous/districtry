@@ -100,6 +100,19 @@ IDS = {
     "Q779": "Connecticut",
     "Q829": "Utah",
     "Q1558": "Kansas",
+    "Q1522": "New Mexico",
+    "Q1553": "Nebraska",
+    "Q1221": "Idaho",
+    "Q782": "Hawaii",
+    "Q724": "Maine",
+    "Q1212": "Montana",
+    "Q1387": "Rhode Island",
+    "Q1211": "South Dakota",
+    "Q1207": "North Dakota",
+    "Q797": "Alaska",
+    "Q16551": "Vermont",
+    "Q1214": "Wyoming",
+    "Q1393": "Delaware",
 }
 
 # metros.json tag -> the jurisdiction item that instance answers for. STATED,
@@ -249,6 +262,23 @@ IDS = {
 # and Q1494 (fl, ga, tn and ms), Q824's carries Q99, Q1227 and Q1223 (ca, nv
 # and wa), and Q1558's carries Q1649, Q1261 and Q1581 (ok, co and mo). Each
 # English label is the bare state name.
+# nm, ne, id, hi, me, mt, ri, sd, nd, ak, vt, wy and de were added at the
+# batch 4 go-live by the same route. Read from Special:EntityData on
+# 2026-11-12, each has P31 = Q35657, P131 = Q30 and its own ISO code in P300
+# (US-NM, US-NE, US-ID, US-HI, US-ME, US-MT, US-RI, US-SD, US-ND, US-AK,
+# US-VT, US-WY, US-DE), and the borders cross-check: Q1522's own P47 carries
+# Q816, Q1261, Q1649, Q1439 and Q829 (this table's az, co, ok, tx and ut),
+# Q1553's carries Q1211, Q1581, Q1261, Q1546, Q1558 and Q1214 (sd, mo, co, ia,
+# ks and wy), Q1221's carries Q1212, Q1214, Q829, Q1227, Q824 and Q1223 (mt,
+# wy, ut, nv, or and wa), Q1387's carries Q771 and Q779 (ma and ct), Q1207's
+# carries Q1527, Q1211 and Q1212 (mn, sd and mt), Q16551's carries Q759, Q771
+# and Q1384 (nh, ma and ny), and Q1393's carries Q1408, Q1400 and Q1391 (nj,
+# pa and md); Q724's carries Q759 (nh), Q1212's carries Q1207, Q1211, Q1214
+# and Q1221 (nd, sd, wy and id), Q1211's carries Q1527, Q1546 and Q1553 (mn,
+# ia and ne), and Q1214's carries Q1261 and Q829 (co and ut). Q782's P47 is
+# empty, Hawaii
+# having no land border, and Q797's names no instance here; their P300 and
+# their labels settle them. Each English label is the bare state name.
 JURISDICTION = {
     "il": "Q1204", "wi": "Q1537", "ia": "Q1546", "mi": "Q1166",
     "ny": "Q1384", "ca": "Q99", "mn": "Q1527", "ky": "Q1603",
@@ -259,6 +289,9 @@ JURISDICTION = {
     "nh": "Q759", "tx": "Q1439", "fl": "Q812", "oh": "Q1397",
     "wa": "Q1223", "ma": "Q771", "co": "Q1261", "md": "Q1391",
     "al": "Q173", "or": "Q824", "ct": "Q779", "ut": "Q829", "ks": "Q1558",
+    "nm": "Q1522", "ne": "Q1553", "id": "Q1221", "hi": "Q782", "me": "Q724",
+    "mt": "Q1212", "ri": "Q1387", "sd": "Q1211", "nd": "Q1207", "ak": "Q797",
+    "vt": "Q16551", "wy": "Q1214", "de": "Q1393",
 }
 
 

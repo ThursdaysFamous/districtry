@@ -97,6 +97,19 @@ STATE_OF_INSTANCE = {
     "ct": "Connecticut",
     "ut": "Utah",
     "ks": "Kansas",
+    "nm": "New Mexico",
+    "ne": "Nebraska",
+    "id": "Idaho",
+    "hi": "Hawaii",
+    "me": "Maine",
+    "mt": "Montana",
+    "ri": "Rhode Island",
+    "de": "Delaware",
+    "sd": "South Dakota",
+    "nd": "North Dakota",
+    "ak": "Alaska",
+    "vt": "Vermont",
+    "wy": "Wyoming",
 }
 
 

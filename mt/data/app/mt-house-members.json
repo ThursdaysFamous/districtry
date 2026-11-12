@@ -1,0 +1,602 @@
+{
+  "1": {
+    "name": "Neil Duram",
+    "party": "Republican",
+    "email": "neil.duram@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/96"
+  },
+  "2": {
+    "name": "Tom Millett",
+    "party": "Republican",
+    "email": "tom.millett@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/241"
+  },
+  "3": {
+    "name": "Debo Powers",
+    "party": "Democratic",
+    "email": "debo.powers@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/236"
+  },
+  "4": {
+    "name": "Lyn Bennett",
+    "party": "Republican",
+    "email": "lyn.bennett@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/230"
+  },
+  "5": {
+    "name": "Braxton Mitchell",
+    "party": "Republican",
+    "email": "braxton.mitchell@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/49"
+  },
+  "6": {
+    "name": "Amy Regier",
+    "party": "Republican",
+    "email": "amy.regier@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/59"
+  },
+  "7": {
+    "name": "Courtenay Sprunger",
+    "party": "Republican",
+    "email": "courtenay.sprunger@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/142"
+  },
+  "8": {
+    "name": "Lukas Schubert",
+    "party": "Republican",
+    "email": "lukas.schubert@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/174"
+  },
+  "9": {
+    "name": "Steve Kelly",
+    "party": "Republican",
+    "email": "steven.kelly@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/182"
+  },
+  "10": {
+    "name": "Terry Falk",
+    "party": "Republican",
+    "email": "terry.falk@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/75"
+  },
+  "11": {
+    "name": "Ed Byrne",
+    "party": "Republican",
+    "email": "ed.byrne@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/226"
+  },
+  "12": {
+    "name": "Tracy Sharp",
+    "party": "Republican",
+    "email": "tracy.sharp@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/225"
+  },
+  "13": {
+    "name": "Linda Reksten",
+    "party": "Republican",
+    "email": "linda.reksten@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/50"
+  },
+  "14": {
+    "name": "Paul Fielder",
+    "party": "Republican",
+    "email": "paul.fielder@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/61"
+  },
+  "15": {
+    "name": "Thedis Crowe",
+    "party": "Democratic",
+    "email": "thedis.crowe@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/185"
+  },
+  "16": {
+    "name": "Tyson Running Wolf",
+    "party": "Democratic",
+    "email": "tyson.runningwolf@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/134"
+  },
+  "17": {
+    "name": "Zack Wirth",
+    "party": "Republican",
+    "email": "zack.wirth@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/86"
+  },
+  "18": {
+    "name": "Llew Jones",
+    "party": "Republican",
+    "email": "llew.jones@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/119"
+  },
+  "19": {
+    "name": "Jane Weber",
+    "party": "Democratic",
+    "email": "jane.weber@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/231"
+  },
+  "20": {
+    "name": "Melissa Nikolakakos",
+    "party": "Republican",
+    "email": "melissa.nikolakakos@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/180"
+  },
+  "21": {
+    "name": "Ed Buttrey",
+    "party": "Republican",
+    "email": "ed.buttrey@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/121"
+  },
+  "22": {
+    "name": "George Nikolakakos",
+    "party": "Republican",
+    "email": "george.nikolakakos@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/77"
+  },
+  "23": {
+    "name": "Eric Tilleman",
+    "party": "Republican",
+    "email": "eric.tilleman@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/272"
+  },
+  "24": {
+    "name": "Steve Fitzpatrick",
+    "party": "Republican",
+    "email": "steve.fitzpatrick@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/16"
+  },
+  "25": {
+    "name": "Steve Gist",
+    "party": "Republican",
+    "email": "steven.gist@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/56"
+  },
+  "26": {
+    "name": "Russ Miner",
+    "party": "Republican",
+    "email": "russel.miner@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/111"
+  },
+  "27": {
+    "name": "Paul Tuss",
+    "party": "Democratic",
+    "email": "paul.tuss@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/115"
+  },
+  "28": {
+    "name": "Eric Albus",
+    "party": "Republican",
+    "email": "eric.albus@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/186"
+  },
+  "29": {
+    "name": "Valerie Moore",
+    "party": "Republican",
+    "email": "valerie.moore@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/156"
+  },
+  "30": {
+    "name": "Morgan Thiel",
+    "party": "Republican",
+    "email": "morgan.thiel@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/157"
+  },
+  "31": {
+    "name": "Frank J. Smith",
+    "party": "Democratic",
+    "email": "frank.smith@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/4"
+  },
+  "32": {
+    "name": "Mike Fox",
+    "party": "Democratic",
+    "email": "michael.fox@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/136"
+  },
+  "33": {
+    "name": "Brandon Ler",
+    "party": "Republican",
+    "email": "brandon.ler@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/102"
+  },
+  "34": {
+    "name": "Jerry Schillinger",
+    "party": "Republican",
+    "email": "jerry.schillinger@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/63"
+  },
+  "35": {
+    "name": "Gary Parry",
+    "party": "Republican",
+    "email": "gary.parry@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/66"
+  },
+  "36": {
+    "name": "Greg Kmetz",
+    "party": "Republican",
+    "email": "greg.kmetz@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/79"
+  },
+  "37": {
+    "name": "Shane Klakken",
+    "party": "Republican",
+    "email": "shane.klakken@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/183"
+  },
+  "38": {
+    "name": "Greg Oblander",
+    "party": "Republican",
+    "email": "greg.oblander@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/69"
+  },
+  "39": {
+    "name": "Kerri Seekins-Crowe",
+    "party": "Republican",
+    "email": "kerri.seekins-crowe@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/103"
+  },
+  "40": {
+    "name": "Mike Vinton",
+    "party": "Republican",
+    "email": "mike.vinton@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/181"
+  },
+  "41": {
+    "name": "Jade Sooktis",
+    "party": "Democratic",
+    "email": "jade.sooktis@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/233"
+  },
+  "42": {
+    "name": "Chip Fitzpatrick",
+    "party": "Democratic",
+    "email": "sidney.fitzpatrick@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/237"
+  },
+  "43": {
+    "name": "Larry Brewster",
+    "party": "Republican",
+    "email": "larry.brewster@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/43"
+  },
+  "44": {
+    "name": "Katie Zolnikov",
+    "party": "Republican",
+    "email": "katie.zolnikov@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/57"
+  },
+  "45": {
+    "name": "Denise Baum",
+    "party": "Democratic",
+    "email": "denise.baum@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/82"
+  },
+  "46": {
+    "name": "Denise Joy",
+    "party": "Democratic",
+    "email": "denise.joy@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/304"
+  },
+  "47": {
+    "name": "James Reavis",
+    "party": "Democratic",
+    "email": "james.reavis@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/175"
+  },
+  "48": {
+    "name": "Curtis Schomer",
+    "party": "Republican",
+    "email": "curtis.schomer@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/232"
+  },
+  "49": {
+    "name": "Sherry Essmann",
+    "party": "Republican",
+    "email": "sherry.essmann@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/109"
+  },
+  "50": {
+    "name": "Anthony Nicastro",
+    "party": "Republican",
+    "email": "anthony.nicastro@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/200"
+  },
+  "51": {
+    "name": "Jodee Etchart",
+    "party": "Republican",
+    "email": "jodee.etchart@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/143"
+  },
+  "52": {
+    "name": "Stacy Zinn",
+    "party": "Republican",
+    "email": "stacy.zinn@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/1840"
+  },
+  "53": {
+    "name": "Nelly Nicol",
+    "party": "Republican",
+    "email": "nelly.nicol@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/112"
+  },
+  "54": {
+    "name": "Lee Deming",
+    "party": "Republican",
+    "email": "lee.deming@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/71"
+  },
+  "55": {
+    "name": "Brad Barker",
+    "party": "Republican",
+    "email": "brad.barker@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/83"
+  },
+  "56": {
+    "name": "Fiona Nave",
+    "party": "Republican",
+    "email": "fiona.nave@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/47"
+  },
+  "57": {
+    "name": "Scott Rosenzweig",
+    "party": "Democratic",
+    "email": "scott.rosenzweig@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/293"
+  },
+  "58": {
+    "name": "Jamie Isaly",
+    "party": "Democratic",
+    "email": "jamie.isaly@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/178"
+  },
+  "59": {
+    "name": "Katie Fire Thunder",
+    "party": "Democratic",
+    "email": "katie.firethunder@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/1841"
+  },
+  "60": {
+    "name": "Alanah Griffith",
+    "party": "Democratic",
+    "email": "alanah.griffith@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/234"
+  },
+  "61": {
+    "name": "Becky Edwards",
+    "party": "Democratic",
+    "email": "becky.edwards@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/177"
+  },
+  "62": {
+    "name": "Josh Seckinger",
+    "party": "Democratic",
+    "email": "joshua.seckinger@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/197"
+  },
+  "63": {
+    "name": "Peter Strand",
+    "party": "Democratic",
+    "email": "peter.strand@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/184"
+  },
+  "64": {
+    "name": "Kelly Kortum",
+    "party": "Democratic",
+    "email": "kelly.kortum@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/60"
+  },
+  "65": {
+    "name": "Brian Close",
+    "party": "Democratic",
+    "email": "brian.close@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/201"
+  },
+  "66": {
+    "name": "Eric Matthews",
+    "party": "Democratic",
+    "email": "eric.matthews@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/73"
+  },
+  "67": {
+    "name": "Jedediah Hinkle",
+    "party": "Republican",
+    "email": "jedediah.hinkle@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/27"
+  },
+  "68": {
+    "name": "Caleb Hinkle",
+    "party": "Republican",
+    "email": "caleb.hinkle@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/67"
+  },
+  "69": {
+    "name": "Ken Walsh",
+    "party": "Republican",
+    "email": "kenneth.walsh@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/68"
+  },
+  "70": {
+    "name": "Shannon Maness",
+    "party": "Republican",
+    "email": "shannon.maness@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/158"
+  },
+  "71": {
+    "name": "Scott DeMarois",
+    "party": "Democratic",
+    "email": "scott.demarois@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/163"
+  },
+  "72": {
+    "name": "Donavon Hawk",
+    "party": "Democratic",
+    "email": "donavon.hawk@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/106"
+  },
+  "73": {
+    "name": "Jennifer Lynch",
+    "party": "Democratic",
+    "email": "jennifer.lynch@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/144"
+  },
+  "74": {
+    "name": "Marc Lee",
+    "party": "Democratic",
+    "email": "marc.lee@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/179"
+  },
+  "75": {
+    "name": "Mark Reinschmidt",
+    "party": "Republican",
+    "email": "mark.reinschmidt@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/1829"
+  },
+  "76": {
+    "name": "John Fitzpatrick",
+    "party": "Republican",
+    "email": "john.fitzpatrick@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/148"
+  },
+  "77": {
+    "name": "Jane Gillette",
+    "party": "Republican",
+    "email": "jane.gillette@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/105"
+  },
+  "78": {
+    "name": "Randyn Gregg",
+    "party": "Republican",
+    "email": "randyn.gregg@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/227"
+  },
+  "79": {
+    "name": "Luke Muszkiewicz",
+    "party": "Democratic",
+    "email": "luke.muszkiewicz@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/176"
+  },
+  "80": {
+    "name": "Melissa Romano",
+    "party": "Democratic",
+    "email": "melissa.romano@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/116"
+  },
+  "81": {
+    "name": "Mary Caferro",
+    "party": "Democratic",
+    "email": "mary.caferro@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/10"
+  },
+  "82": {
+    "name": "Pete Elverum",
+    "party": "Democratic",
+    "email": "pete.elverum@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/223"
+  },
+  "83": {
+    "name": "Jill Cohenour",
+    "party": "Democratic",
+    "email": "jill.cohenour@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/6"
+  },
+  "84": {
+    "name": "Julie Darling",
+    "party": "Republican",
+    "email": "julie.darling@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/38"
+  },
+  "85": {
+    "name": "Kathy Love",
+    "party": "Republican",
+    "email": "kathy.love@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/199"
+  },
+  "86": {
+    "name": "Dave Bedey",
+    "party": "Republican",
+    "email": "david.bedey@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/99"
+  },
+  "87": {
+    "name": "Terry Nelson",
+    "party": "Republican",
+    "email": "terry.nelson@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/307"
+  },
+  "88": {
+    "name": "Greg Overstreet",
+    "party": "Republican",
+    "email": "greg.overstreet@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/202"
+  },
+  "89": {
+    "name": "Mark Thane",
+    "party": "Democratic",
+    "email": "mark.thane@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/72"
+  },
+  "90": {
+    "name": "Curt Cochran",
+    "party": "Republican",
+    "email": "curtis.cochran@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/159"
+  },
+  "91": {
+    "name": "Shelly Fyant",
+    "party": "Democratic",
+    "email": "shelly.fyant@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/228"
+  },
+  "92": {
+    "name": "Connie Keogh",
+    "party": "Democratic",
+    "email": "connie.keogh@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/51"
+  },
+  "93": {
+    "name": "Katie Sullivan",
+    "party": "Democratic",
+    "email": "katie.sullivan@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/53"
+  },
+  "94": {
+    "name": "Marilyn Marler",
+    "party": "Democratic",
+    "email": "marilyn.marler@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/100"
+  },
+  "95": {
+    "name": "Zooey Zephyr",
+    "party": "Democratic",
+    "email": "zooey.zephyr@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/147"
+  },
+  "96": {
+    "name": "Bob Carter",
+    "party": "Democratic",
+    "email": "bob.carter@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/146"
+  },
+  "97": {
+    "name": "Melody Cunningham",
+    "party": "Democratic",
+    "email": "melody.cunningham@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/240"
+  },
+  "98": {
+    "name": "Jonathan Karlen",
+    "party": "Democratic",
+    "email": "jonathan.karlen@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/84"
+  },
+  "99": {
+    "name": "Tom France",
+    "party": "Democratic",
+    "email": "tom.france@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/140"
+  },
+  "100": {
+    "name": "S.J. Howell",
+    "party": "Democratic",
+    "email": "sj.howell@legmt.gov",
+    "url": "https://legislators.legmt.gov/#/legislator/117"
+  }
+}

@@ -143,6 +143,13 @@ FACE_CARRIERS = ["engine/shared/styles-subpage.txt",
                  "md/index.html", "al/index.html",
                  "or/index.html", "ct/index.html",
                  "ut/index.html", "ks/index.html",
+                 "nm/index.html", "ne/index.html",
+                 "id/index.html", "hi/index.html",
+                 "me/index.html", "mt/index.html",
+                 "ri/index.html", "de/index.html",
+                 "sd/index.html", "nd/index.html",
+                 "ak/index.html", "vt/index.html",
+                 "wy/index.html",
                  "index.html", "privacy.html"]
 
 WORKSHEET_PALETTE = [("accent", "brand"), ("accent_deep", "brand-700"),

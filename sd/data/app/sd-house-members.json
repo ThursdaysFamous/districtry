@@ -1,0 +1,537 @@
+{
+  "1": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Nick Fosness",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4839/Detail"
+      },
+      {
+        "name": "Logan Manhart",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4783/Detail"
+      }
+    ]
+  },
+  "2": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "David Kull",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4778/Detail"
+      },
+      {
+        "name": "John Sjaarda",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4820/Detail"
+      }
+    ]
+  },
+  "3": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Al Novstrup",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4796/Detail"
+      },
+      {
+        "name": "Brandei Schaefbauer",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4816/Detail"
+      }
+    ]
+  },
+  "4": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Dylan C. Jordan",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4771/Detail"
+      },
+      {
+        "name": "Kent Roe",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4813/Detail"
+      }
+    ]
+  },
+  "5": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Josephine Garcia",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4752/Detail"
+      },
+      {
+        "name": "Matt Roby",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4812/Detail"
+      }
+    ]
+  },
+  "6": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Aaron Aylward",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4734/Detail"
+      },
+      {
+        "name": "Tim Czmowski",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4742/Detail"
+      }
+    ]
+  },
+  "7": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Roger DeGroot",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4744/Detail"
+      },
+      {
+        "name": "Mellissa Heermann",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4760/Detail"
+      }
+    ]
+  },
+  "8": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Tim Reisch",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4810/Detail"
+      },
+      {
+        "name": "Tim Walburg",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4830/Detail"
+      }
+    ]
+  },
+  "9": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Tesa Schwans",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4818/Detail"
+      },
+      {
+        "name": "Bethany Soye",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4822/Detail"
+      }
+    ]
+  },
+  "10": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Bobbi L. Andera",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4731/Detail"
+      },
+      {
+        "name": "Erin Healy",
+        "party": "Democratic",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4759/Detail"
+      }
+    ]
+  },
+  "11": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Brian Mulder",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4793/Detail"
+      },
+      {
+        "name": "Keri K. Weems",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4831/Detail"
+      }
+    ]
+  },
+  "12": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Amber Arlint",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4732/Detail"
+      },
+      {
+        "name": "Greg Jamison",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4768/Detail"
+      }
+    ]
+  },
+  "13": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "John Hughes",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4764/Detail"
+      },
+      {
+        "name": "Jack R. Kolbeck",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4776/Detail"
+      }
+    ]
+  },
+  "14": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Tony Kayser",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4775/Detail"
+      },
+      {
+        "name": "Taylor Rehfeldt",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4808/Detail"
+      }
+    ]
+  },
+  "15": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Erik Muckey",
+        "party": "Democratic",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4791/Detail"
+      },
+      {
+        "name": "Kadyn Wittman",
+        "party": "Democratic",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4834/Detail"
+      }
+    ]
+  },
+  "16": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Karla J. Lems",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4782/Detail"
+      },
+      {
+        "name": "John Shubeck",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4947/Detail"
+      }
+    ]
+  },
+  "17": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Chris Kassin",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4774/Detail"
+      },
+      {
+        "name": "William Shorma",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4819/Detail"
+      }
+    ]
+  },
+  "18": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Julie Auch",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4733/Detail"
+      },
+      {
+        "name": "Mike Stevens",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4823/Detail"
+      }
+    ]
+  },
+  "19": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jessica Bahmuller",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4735/Detail"
+      },
+      {
+        "name": "Drew Peterson",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4801/Detail"
+      }
+    ]
+  },
+  "20": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jeff Bathke",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4736/Detail"
+      },
+      {
+        "name": "Kaley Nolz",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4795/Detail"
+      }
+    ]
+  },
+  "21": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jim Halverson",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4757/Detail"
+      },
+      {
+        "name": "Marty Overweg",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4799/Detail"
+      }
+    ]
+  },
+  "22": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Lana J. Greenfield",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4755/Detail"
+      },
+      {
+        "name": "Kevin Van Diepen",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4825/Detail"
+      }
+    ]
+  },
+  "23": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Spencer Gosch",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4754/Detail"
+      },
+      {
+        "name": "Scott Moore",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4789/Detail"
+      }
+    ]
+  },
+  "24": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Will Mortenson",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4790/Detail"
+      },
+      {
+        "name": "Mike Weisgram",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4832/Detail"
+      }
+    ]
+  },
+  "25": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jon Hansen",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4758/Detail"
+      },
+      {
+        "name": "Leslie J. Heinemann",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4761/Detail"
+      }
+    ]
+  },
+  "26A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Eric Emery",
+        "party": "Democratic",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4749/Detail"
+      }
+    ]
+  },
+  "26B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Rebecca Reimer",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4809/Detail"
+      }
+    ]
+  },
+  "27": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Liz M. May",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4786/Detail"
+      },
+      {
+        "name": "Peri Pourier",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4804/Detail"
+      }
+    ]
+  },
+  "28A": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Jana Hunt",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4766/Detail"
+      }
+    ]
+  },
+  "28B": {
+    "seats": 1,
+    "members": [
+      {
+        "name": "Travis Ismay",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4767/Detail"
+      }
+    ]
+  },
+  "29": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Terri Jorgenson",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4772/Detail"
+      },
+      {
+        "name": "Kathy Rice",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4811/Detail"
+      }
+    ]
+  },
+  "30": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Tim Goodwin",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4753/Detail"
+      },
+      {
+        "name": "Trish Ladner",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4779/Detail"
+      }
+    ]
+  },
+  "31": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mary J. Fitzgerald",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4750/Detail"
+      },
+      {
+        "name": "Scott Odenbach",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4797/Detail"
+      }
+    ]
+  },
+  "32": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Steve Duffy",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4747/Detail"
+      },
+      {
+        "name": "Nicole Uhre-Balk",
+        "party": "Democratic",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4824/Detail"
+      }
+    ]
+  },
+  "33": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Phil Jensen",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4770/Detail"
+      },
+      {
+        "name": "Curt Massie",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4785/Detail"
+      }
+    ]
+  },
+  "34": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Heather Baxter",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4737/Detail"
+      },
+      {
+        "name": "Mike Derby",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4746/Detail"
+      }
+    ]
+  },
+  "35": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Tina L. Mulally",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4792/Detail"
+      },
+      {
+        "name": "Tony Randolph",
+        "party": "Republican",
+        "url": "https://sdlegislature.gov/Legislators/Profile/4805/Detail"
+      }
+    ]
+  }
+}

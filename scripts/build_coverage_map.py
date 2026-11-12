@@ -191,6 +191,20 @@ AREAS = {
     "ct": {"outline": "ct/data/app/metro-outline.json", "state_outline": None},
     "ut": {"outline": "ut/data/app/metro-outline.json", "state_outline": None},
     "ks": {"outline": "ks/data/app/metro-outline.json", "state_outline": None},
+    # Batch 4, the last thirteen states, joined at its go-live, one tier each.
+    "nm": {"outline": "nm/data/app/metro-outline.json", "state_outline": None},
+    "ne": {"outline": "ne/data/app/metro-outline.json", "state_outline": None},
+    "id": {"outline": "id/data/app/metro-outline.json", "state_outline": None},
+    "hi": {"outline": "hi/data/app/metro-outline.json", "state_outline": None},
+    "me": {"outline": "me/data/app/metro-outline.json", "state_outline": None},
+    "mt": {"outline": "mt/data/app/metro-outline.json", "state_outline": None},
+    "ri": {"outline": "ri/data/app/metro-outline.json", "state_outline": None},
+    "de": {"outline": "de/data/app/metro-outline.json", "state_outline": None},
+    "sd": {"outline": "sd/data/app/metro-outline.json", "state_outline": None},
+    "nd": {"outline": "nd/data/app/metro-outline.json", "state_outline": None},
+    "ak": {"outline": "ak/data/app/metro-outline.json", "state_outline": None},
+    "vt": {"outline": "vt/data/app/metro-outline.json", "state_outline": None},
+    "wy": {"outline": "wy/data/app/metro-outline.json", "state_outline": None},
     # New York joined at the 2026-09-19 go-live. It is a TWO-TIER area and the
     # two geometries are genuinely different: the dashed wash is the whole
     # state, where the county, municipality, village, school-district,

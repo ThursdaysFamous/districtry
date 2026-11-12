@@ -94,6 +94,19 @@ INSTANCES = {
     "ct": ["ct/index.html", "ct/sw.js"],
     "ut": ["ut/index.html", "ut/sw.js"],
     "ks": ["ks/index.html", "ks/sw.js"],
+    "nm": ["nm/index.html", "nm/sw.js"],
+    "ne": ["ne/index.html", "ne/sw.js"],
+    "id": ["id/index.html", "id/sw.js"],
+    "hi": ["hi/index.html", "hi/sw.js"],
+    "me": ["me/index.html", "me/sw.js"],
+    "mt": ["mt/index.html", "mt/sw.js"],
+    "ri": ["ri/index.html", "ri/sw.js"],
+    "de": ["de/index.html", "de/sw.js"],
+    "sd": ["sd/index.html", "sd/sw.js"],
+    "nd": ["nd/index.html", "nd/sw.js"],
+    "ak": ["ak/index.html", "ak/sw.js"],
+    "vt": ["vt/index.html", "vt/sw.js"],
+    "wy": ["wy/index.html", "wy/sw.js"],
 }
 
 # The sub-pages — every published page that is not the app. They compose the

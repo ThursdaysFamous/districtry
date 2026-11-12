@@ -130,7 +130,33 @@
     { "id": "utah", "label": "Utah", "url": "https://districtry.com/ut/", "emoji": "🐝", "explorer_name": "districtry Utah",
       "bbox": { "minLng": -114.06, "minLat": 36.99, "maxLng": -109.04, "maxLat": 42.01 } },
     { "id": "kansas", "label": "Kansas", "url": "https://districtry.com/ks/", "emoji": "🌻", "explorer_name": "districtry Kansas",
-      "bbox": { "minLng": -102.06, "minLat": 36.99, "maxLng": -94.58, "maxLat": 40.01 } }
+      "bbox": { "minLng": -102.06, "minLat": 36.99, "maxLng": -94.58, "maxLat": 40.01 } },
+    { "id": "newmexico", "label": "New Mexico", "url": "https://districtry.com/nm/", "emoji": "🌶️", "explorer_name": "districtry New Mexico",
+      "bbox": { "minLng": -109.07, "minLat": 31.32, "maxLng": -102.99, "maxLat": 37.02 } },
+    { "id": "nebraska", "label": "Nebraska", "url": "https://districtry.com/ne/", "emoji": "🚂", "explorer_name": "districtry Nebraska",
+      "bbox": { "minLng": -104.07, "minLat": 39.98, "maxLng": -95.29, "maxLat": 43.02 } },
+    { "id": "idaho", "label": "Idaho", "url": "https://districtry.com/id/", "emoji": "🥔", "explorer_name": "districtry Idaho",
+      "bbox": { "minLng": -117.26, "minLat": 41.97, "maxLng": -111.03, "maxLat": 49.02 } },
+    { "id": "hawaii", "label": "Hawaii", "url": "https://districtry.com/hi/", "emoji": "🌺", "explorer_name": "districtry Hawaii",
+      "bbox": { "minLng": -160.61, "minLat": 18.85, "maxLng": -154.74, "maxLat": 22.3 } },
+    { "id": "maine", "label": "Maine", "url": "https://districtry.com/me/", "emoji": "🦌", "explorer_name": "districtry Maine",
+      "bbox": { "minLng": -71.1, "minLat": 42.9, "maxLng": -66.87, "maxLat": 47.47 } },
+    { "id": "montana", "label": "Montana", "url": "https://districtry.com/mt/", "emoji": "🦬", "explorer_name": "districtry Montana",
+      "bbox": { "minLng": -116.06, "minLat": 44.34, "maxLng": -104.02, "maxLat": 49.02 } },
+    { "id": "rhodeisland", "label": "Rhode Island", "url": "https://districtry.com/ri/", "emoji": "🌊", "explorer_name": "districtry Rhode Island",
+      "bbox": { "minLng": -71.92, "minLat": 41.08, "maxLng": -71.07, "maxLat": 42.03 } },
+    { "id": "delaware", "label": "Delaware", "url": "https://districtry.com/de/", "emoji": "🐔", "explorer_name": "districtry Delaware",
+      "bbox": { "minLng": -75.8, "minLat": 38.44, "maxLng": -74.97, "maxLat": 39.85 } },
+    { "id": "southdakota", "label": "South Dakota", "url": "https://districtry.com/sd/", "emoji": "🗿", "explorer_name": "districtry South Dakota",
+      "bbox": { "minLng": -104.07, "minLat": 42.46, "maxLng": -96.42, "maxLat": 45.96 } },
+    { "id": "northdakota", "label": "North Dakota", "url": "https://districtry.com/nd/", "emoji": "🚜", "explorer_name": "districtry North Dakota",
+      "bbox": { "minLng": -104.06, "minLat": 45.92, "maxLng": -96.54, "maxLat": 49.02 } },
+    { "id": "alaska", "label": "Alaska", "url": "https://districtry.com/ak/", "emoji": "🐻", "explorer_name": "districtry Alaska",
+      "bbox": { "minLng": -179.25, "minLat": 51.16, "maxLng": -129.96, "maxLat": 71.45 } },
+    { "id": "vermont", "label": "Vermont", "url": "https://districtry.com/vt/", "emoji": "🐄", "explorer_name": "districtry Vermont",
+      "bbox": { "minLng": -73.45, "minLat": 42.71, "maxLng": -71.45, "maxLat": 45.03 } },
+    { "id": "wyoming", "label": "Wyoming", "url": "https://districtry.com/wy/", "emoji": "🤠", "explorer_name": "districtry Wyoming",
+      "bbox": { "minLng": -111.07, "minLat": 40.98, "maxLng": -104.04, "maxLat": 45.02 } }
   ],
   "hover_number_keys": [
     [
@@ -361,7 +387,7 @@
   "negative_point": {
     "lat": 42.15,
     "lng": -116.0,
-    "note": "Owyhee County, Idaho, about 15 km north of the Nevada line — outside Nevada and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer names Idaho here (controls: the State Capitol returns Nevada, and a point in the open Pacific returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. A POINT ON A NEIGHBOUR'S LAND MOVES THE DAY THAT NEIGHBOUR GOES LIVE: Idaho is in the last batch of the state-level launch, after California, Oregon, Utah and Arizona, which is why it was chosen, and the change that makes Idaho live moves this point."
+    "note": "Owyhee County, Idaho, about 17 km north of the Nevada line — outside Nevada and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer names Idaho here (controls: the State Capitol returns Nevada, and a point in the open Pacific returns no state), and none of the state's shipped boundary files contains it. IDAHO'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED IDAHO (batch 4 of the state-level launch, written 2026-11-12), which found it inside Idaho's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Nevada and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Idaho routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served."
   },
   "coverage_key": {
     "outside": "Outside Nevada",

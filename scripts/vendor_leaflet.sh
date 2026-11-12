@@ -78,6 +78,19 @@ INSTANCES=(
   "ct:ct/index.html:ct/scripts/vendor/leaflet"
   "ut:ut/index.html:ut/scripts/vendor/leaflet"
   "ks:ks/index.html:ks/scripts/vendor/leaflet"
+  "nm:nm/index.html:nm/scripts/vendor/leaflet"
+  "ne:ne/index.html:ne/scripts/vendor/leaflet"
+  "id:id/index.html:id/scripts/vendor/leaflet"
+  "hi:hi/index.html:hi/scripts/vendor/leaflet"
+  "me:me/index.html:me/scripts/vendor/leaflet"
+  "mt:mt/index.html:mt/scripts/vendor/leaflet"
+  "ri:ri/index.html:ri/scripts/vendor/leaflet"
+  "de:de/index.html:de/scripts/vendor/leaflet"
+  "sd:sd/index.html:sd/scripts/vendor/leaflet"
+  "nd:nd/index.html:nd/scripts/vendor/leaflet"
+  "ak:ak/index.html:ak/scripts/vendor/leaflet"
+  "vt:vt/index.html:vt/scripts/vendor/leaflet"
+  "wy:wy/index.html:wy/scripts/vendor/leaflet"
 )
 
 wanted=("$@")

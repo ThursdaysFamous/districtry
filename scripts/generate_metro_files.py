@@ -1193,6 +1193,19 @@ INSTANCES = {
     "ct":  {"app": "ct",  "scripts": "ct/scripts",  "docs": "ct",  "worksheet": "ct/metro-worksheet.json"},
     "ut":  {"app": "ut",  "scripts": "ut/scripts",  "docs": "ut",  "worksheet": "ut/metro-worksheet.json"},
     "ks":  {"app": "ks",  "scripts": "ks/scripts",  "docs": "ks",  "worksheet": "ks/metro-worksheet.json"},
+    "nm":  {"app": "nm",  "scripts": "nm/scripts",  "docs": "nm",  "worksheet": "nm/metro-worksheet.json"},
+    "ne":  {"app": "ne",  "scripts": "ne/scripts",  "docs": "ne",  "worksheet": "ne/metro-worksheet.json"},
+    "id":  {"app": "id",  "scripts": "id/scripts",  "docs": "id",  "worksheet": "id/metro-worksheet.json"},
+    "hi":  {"app": "hi",  "scripts": "hi/scripts",  "docs": "hi",  "worksheet": "hi/metro-worksheet.json"},
+    "me":  {"app": "me",  "scripts": "me/scripts",  "docs": "me",  "worksheet": "me/metro-worksheet.json"},
+    "mt":  {"app": "mt",  "scripts": "mt/scripts",  "docs": "mt",  "worksheet": "mt/metro-worksheet.json"},
+    "ri":  {"app": "ri",  "scripts": "ri/scripts",  "docs": "ri",  "worksheet": "ri/metro-worksheet.json"},
+    "de":  {"app": "de",  "scripts": "de/scripts",  "docs": "de",  "worksheet": "de/metro-worksheet.json"},
+    "sd":  {"app": "sd",  "scripts": "sd/scripts",  "docs": "sd",  "worksheet": "sd/metro-worksheet.json"},
+    "nd":  {"app": "nd",  "scripts": "nd/scripts",  "docs": "nd",  "worksheet": "nd/metro-worksheet.json"},
+    "ak":  {"app": "ak",  "scripts": "ak/scripts",  "docs": "ak",  "worksheet": "ak/metro-worksheet.json"},
+    "vt":  {"app": "vt",  "scripts": "vt/scripts",  "docs": "vt",  "worksheet": "vt/metro-worksheet.json"},
+    "wy":  {"app": "wy",  "scripts": "wy/scripts",  "docs": "wy",  "worksheet": "wy/metro-worksheet.json"},
 }
 
 

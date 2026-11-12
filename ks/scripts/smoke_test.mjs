@@ -53,7 +53,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "39.04807,-95.67803"; // Kansas State Capitol, 300 SW 10th Avenue, Topeka, Shawnee County
 const OFFLINE = ["county", "us-house", "ks-senate", "ks-house"];
 const EXPECT_DISTRICT = { "county": "Shawnee County", "us-house": "2", "ks-senate": "19", "ks-house": "57" };
-const NEGATIVE_POINT = "40.20000,-98.50000"; // Webster County, Nebraska, about 20 km north of the Kansas line — outside Kansas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Nebraska here (control: the State Capitol returns Kansas), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does, nor any of the other batch-3 states' outlines. A POINT ON A NEIGHBOUR'S LAND MOVES THE DAY THAT NEIGHBOUR GOES LIVE: Nebraska is in batch 4 of the state-level launch, and the change that makes it live moves this point. Every other neighbour of Kansas is live or goes live in batch 3.
+const NEGATIVE_POINT = "40.20000,-98.50000"; // Webster County, Nebraska, about 22 km north of the Kansas line — outside Kansas and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state layer names Nebraska here (control: the State Capitol returns Kansas), and none of the state's shipped boundary files contains it. NEBRASKA'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED NEBRASKA (batch 4 of the state-level launch, written 2026-11-12), which found it inside Nebraska's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Kansas and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Nebraska routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.
 const APP_NAME = "districtry Kansas";
 const EXPECT_LAYERS = 10;
 // ==== GENERATED:END smoke-config ====
@@ -394,23 +394,28 @@ try {
   //     the real districtry.com, fails in the sandbox and leaves page.url() on
   //     the app, which reads exactly like correct behaviour.
   //
-  //     TWO OF KANSAS'S FOUR NEIGHBOURS ARE LIVE WHOLE-STATE APPS, Missouri
-  //     and Oklahoma, and a third, Colorado, opens in this same batch. A click
-  //     at each capitol must open that app. Each point sits inside its app's
-  //     outline in fleet-outlines.json, which this check is what measures.
+  //     ALL FOUR OF KANSAS'S NEIGHBOURS ARE LIVE WHOLE-STATE APPS: Missouri
+  //     and Oklahoma before it, Colorado in its own batch, and Nebraska since
+  //     the change that published it (batch 4 of the state-level launch). A
+  //     click at each capitol must open that app, and so must a click at the
+  //     negative point, in Webster County, Nebraska, about 22 km north of the
+  //     Kansas line: it was the click that had to stay HERE until Nebraska's
+  //     go-live made it a case, and measured that day (2026-11-12) it lies
+  //     inside Nebraska's outline in fleet-outlines.json and no other, as
+  //     each capitol lies inside its own app's and no other.
+  //     The stays-here check (1a2-ii) went with it, because measured the
+  //     same day on a 0.05-degree grid no ground in this app's gate lies
+  //     more than 2 km from every outline in fleet-outlines.json; the
+  //     negative point stays where it is, since every check that still
+  //     uses it boots or selects it here and none clicks it.
   //     This instance answers its own side from the state outline the wash
   //     retained, with no fetch.
-  //
-  //     A CLICK IN NEBRASKA IS DELIBERATELY NOT A CASE.
-  //     Nothing answers there today, so a click there stays here; but the
-  //     fleet is meant to reach every state, and a "stays here" case there
-  //     would start failing the day it goes live, in a change that is about
-  //     another state. The negative point carries that half instead (1a2-ii).
   {
     const cases = [
       { name: "the Missouri State Capitol", lat: 38.5791, lng: -92.1729, want: "https://districtry.com/mo/" },
       { name: "the Oklahoma State Capitol", lat: 35.4922, lng: -97.5034, want: "https://districtry.com/ok/" },
       { name: "the Colorado State Capitol", lat: 39.73924, lng: -104.9848, want: "https://districtry.com/co/" },
+      { name: "the negative point, in Webster County, Nebraska", lat: 40.2, lng: -98.5, want: "https://districtry.com/ne/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -426,31 +431,6 @@ try {
       check(`a click on ${c.name} from Kansas opens ${c.want} with the point`, !!went, went || page.url());
       await context.close();
     }
-  }
-
-  // 1a2-ii. The half that keeps 1a2 honest: the negative point, in Webster County, Nebraska, about 20 km north of the Kansas line,
-  //     is outside every outline in the fleet, so the click must stay HERE. A route to a sibling would
-  //     be the same lie pointing the other way, and the stub makes it visible:
-  //     if the app navigated, the URL would be the stubbed sibling rather than
-  //     this app.
-  {
-    const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, BASE, async (p) => {
-      await p.route("https://districtry.com/**", (route) =>
-        route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
-    });
-    await page.evaluate(({ n, pt }) => {
-      const [la, ln] = pt.split(",").map(Number);
-      window[n].map.fire("click", { latlng: window.L.latLng(la, ln) });
-    }, { n: EXPORTS_NAME, pt: NEGATIVE_POINT });
-    await page.waitForTimeout(3000);
-    const url = page.url();
-    // Still under BASE means still this app. Asking instead for the URL NOT to
-    // name one of a list of sibling tags needs a new entry each time a state
-    // goes live, and the one it lacked would read as staying here.
-    check("a click at the negative point, outside every app's outline, stays in this app",
-      url.startsWith(BASE), url);
-    await context.close();
   }
 
   // 1b. The search box retries a zero-result query with the unit fragment

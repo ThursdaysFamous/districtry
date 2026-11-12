@@ -132,7 +132,6 @@
 {"type":"Feature","bbox":[-71.7944,44.1674,-71.4131,44.3449],"geometry":{"type":"Point","coordinates":[-71.68089,44.30377]},"properties":{"zip":"03574","layer":"zip-code"}},
 {"type":"Feature","bbox":[-71.5032,44.2121,-71.3488,44.3532],"geometry":{"type":"Point","coordinates":[-71.41418,44.30595]},"properties":{"zip":"03575","layer":"zip-code"}},
 {"type":"Feature","bbox":[-71.5527,44.7817,-71.2151,45.0063],"geometry":{"type":"Point","coordinates":[-71.41113,44.87144]},"properties":{"zip":"03576","layer":"zip-code"}},
-{"type":"Feature","bbox":[-71.3298,44.6065,-70.7971,45.3477],"geometry":{"type":"Point","coordinates":[-71.23535,44.74673]},"properties":{"zip":"03579","layer":"zip-code"}},
 {"type":"Feature","bbox":[-71.854,44.0941,-71.5376,44.2562],"geometry":{"type":"Point","coordinates":[-71.6748,44.1822]},"properties":{"zip":"03580","layer":"zip-code"}},
 {"type":"Feature","bbox":[-71.2666,44.2277,-71.0099,44.4499],"geometry":{"type":"Point","coordinates":[-71.14746,44.30813]},"properties":{"zip":"03581","layer":"zip-code"}},
 {"type":"Feature","bbox":[-71.564,44.5155,-71.316,44.6618],"geometry":{"type":"Point","coordinates":[-71.41418,44.61959]},"properties":{"zip":"03582","layer":"zip-code"}},

@@ -702,11 +702,5 @@
 {"type":"Feature","bbox":[-101.5558,36.9954,-101.0669,37.3888],"geometry":{"type":"Point","coordinates":[-101.38184,37.05518]},"properties":{"zip":"67951","layer":"zip-code"}},
 {"type":"Feature","bbox":[-101.3213,37.1701,-100.9303,37.3881],"geometry":{"type":"Point","coordinates":[-101.03027,37.26531]},"properties":{"zip":"67952","layer":"zip-code"}},
 {"type":"Feature","bbox":[-102.0422,37.0831,-101.7004,37.3599],"geometry":{"type":"Point","coordinates":[-101.90918,37.19533]},"properties":{"zip":"67953","layer":"zip-code"}},
-{"type":"Feature","bbox":[-101.7553,36.9947,-101.4655,37.3885],"geometry":{"type":"Point","coordinates":[-101.64551,37.19533]},"properties":{"zip":"67954","layer":"zip-code"}},
-{"type":"Feature","bbox":[-97.8213,39.9432,-97.6692,40.1036],"geometry":{"type":"Point","coordinates":[-97.77103,39.9968]},"properties":{"zip":"68325","layer":"zip-code"}},
-{"type":"Feature","bbox":[-97.7084,39.9282,-97.5386,40.0748],"geometry":{"type":"Point","coordinates":[-97.6208,39.9968]},"properties":{"zip":"68327","layer":"zip-code"}},
-{"type":"Feature","bbox":[-96.3317,39.974,-96.0483,40.2041],"geometry":{"type":"Point","coordinates":[-96.18259,39.9933]},"properties":{"zip":"68420","layer":"zip-code"}},
-{"type":"Feature","bbox":[-97.9725,39.9727,-97.8009,40.1037],"geometry":{"type":"Point","coordinates":[-97.86012,39.9968]},"properties":{"zip":"68943","layer":"zip-code"}},
-{"type":"Feature","bbox":[-98.2561,39.9431,-97.934,40.1765],"geometry":{"type":"Point","coordinates":[-98.12684,39.9968]},"properties":{"zip":"68978","layer":"zip-code"}},
-{"type":"Feature","bbox":[-100.5345,39.9151,-100.308,40.1185],"geometry":{"type":"Point","coordinates":[-100.33718,39.93733]},"properties":{"zip":"69026","layer":"zip-code"}}
+{"type":"Feature","bbox":[-101.7553,36.9947,-101.4655,37.3885],"geometry":{"type":"Point","coordinates":[-101.64551,37.19533]},"properties":{"zip":"67954","layer":"zip-code"}}
 ]}
