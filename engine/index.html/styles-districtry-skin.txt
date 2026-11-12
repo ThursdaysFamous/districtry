@@ -121,7 +121,10 @@
   .dst-metro-caret { font-size: 0.42em; margin-left: 3px; vertical-align: middle; opacity: 0.6; }
   .dst-metro-menu {
     position: absolute; top: calc(100% + 8px); left: 0; z-index: 900;
-    display: none; flex-direction: column; min-width: 208px; padding: 6px;
+    display: none; flex-direction: column; width: 300px; padding: 6px;
+    /* fifty states: the list below scrolls inside the menu rather than
+       running past the bottom of the screen */
+    max-height: min(560px, calc(100vh - 96px));
     background: var(--panel); border: 1px solid var(--line-strong);
     border-radius: 10px; box-shadow: 0 8px 24px rgba(23, 22, 28, 0.14);
     /* .title-text lowercases everything under it, and these are place names */
@@ -145,14 +148,47 @@
     padding: 3px 9px 6px; font: 600 10px/1 var(--font-body);
     letter-spacing: 0.09em; text-transform: uppercase; color: var(--slate-soft);
   }
+  .dst-metro-filter {
+    flex: none; margin: 0 2px 6px; padding: 8px 10px; min-height: 38px;
+    border: 1px solid var(--line-strong); border-radius: 8px;
+    font: 500 14px var(--font-body); color: var(--ink); background: var(--panel);
+    outline: none; -webkit-appearance: none; appearance: none;
+  }
+  .dst-metro-filter::placeholder { color: var(--slate); opacity: 1; }
+  .dst-metro-filter:focus, .dst-metro-filter:focus-visible { border-color: var(--accent); box-shadow: 0 0 0 3px var(--dst-focus-tint); outline: none; }
+  .dst-metro-list {
+    display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0;
+    overflow-y: auto; overscroll-behavior: contain;
+  }
   .dst-metro-menu a {
-    display: flex; align-items: center; gap: 9px; padding: 8px 9px;
+    display: flex; align-items: center; gap: 10px; padding: 7px 9px; flex: none;
     border-radius: 7px; font: 500 13.5px var(--font-body); color: var(--ink);
     text-decoration: none; white-space: nowrap;
   }
+  .dst-metro-menu a[hidden] { display: none; }
   .dst-metro-menu a:hover,
   .dst-metro-menu a:focus-visible { background: var(--dst-brand-tint-soft); color: var(--accent-deep); }
-  .dst-metro-menu-emoji { font-size: 15px; line-height: 1; }
+  /* the state's two-letter code, in the place the emoji used to sit */
+  .dst-metro-code {
+    flex: none; display: inline-flex; align-items: center; justify-content: center;
+    width: 30px; height: 21px; border-radius: 5px;
+    font: 700 11px/1 var(--font-body); letter-spacing: 0.04em;
+    color: var(--accent-deep); background: var(--dst-brand-tint-soft);
+    border: 1px solid var(--dst-brand-line);
+  }
+  .dst-metro-none { padding: 8px 9px; font: 500 13px var(--font-body); color: var(--slate); }
+  .dst-metro-none[hidden] { display: none; }
+  /* On a phone the menu is a sheet across the screen, starting under the
+     button (its top is set when it opens) and ending above the bottom edge,
+     with the list scrolling inside it and the box staying above the list. */
+  @media (max-width: 767px) {
+    .dst-metro-menu {
+      position: fixed; left: 8px; right: 8px; width: auto;
+      top: var(--dst-metro-top, 56px);
+      max-height: calc(100vh - var(--dst-metro-top, 56px) - 12px);
+    }
+    .dst-metro-menu a { padding: 10px 9px; }
+  }
   .title small, .title .title-tagline { color: var(--slate); }
   .masthead-actions .footer-link-btn {
     color: var(--accent-deep);
@@ -1142,6 +1178,8 @@
   }
   [data-theme="dark"] .dst-metro-menu a:hover,
   [data-theme="dark"] .dst-metro-menu a:focus-visible { background: var(--dst-raised-hover); color: var(--ink); }
+  [data-theme="dark"] .dst-metro-filter { background: var(--dst-sunken); }
+  [data-theme="dark"] .dst-metro-code { color: var(--ink); background: var(--dst-raised); border-color: rgba(236, 233, 244, 0.16); }
   [data-theme="dark"] .masthead .search-extra { background: var(--panel); border-color: var(--line-strong); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55); }
   [data-theme="dark"] .districtry-map-legend { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45); }
   [data-theme="dark"] .districtry-map-legend .dml-glow { box-shadow: 0 0 5px 2.5px #a78bfa; }

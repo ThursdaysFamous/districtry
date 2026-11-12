@@ -722,13 +722,17 @@ def render_masthead_brand(w):
         # back to the front door, and a reader who arrived on an instance has
         # no other route to the list of places. "../" rather than "/" so the
         # link is correct however the instance is mounted.
+        # The switch is a disclosure (a button that shows a panel of links),
+        # not an ARIA menu: since 2026-11-12 the panel holds a box that narrows
+        # the list as a reader types, and a menu role promises arrow-key
+        # navigation among menu items and nothing else.
         wordmark = (
             '        <span class="title-text"><a class="dst-wordmark-link" href="../">%s</a>'
             ' <span class="dst-metro-switch">'
             '<button type="button" class="title-metro dst-metro-btn" aria-expanded="false" '
-            'aria-haspopup="true" aria-label="%s — switch explorer">/ %s'
+            'aria-label="%s — switch state">/ %s'
             '<span class="dst-metro-caret" aria-hidden="true">&#9662;</span></button>'
-            '<span class="dst-metro-menu" role="menu"></span></span></span>'
+            '<span class="dst-metro-menu"></span></span></span>'
             % (e(b["product_name"]), e(b["app_name"]), e(b["instance_tag"]))
         )
     else:
