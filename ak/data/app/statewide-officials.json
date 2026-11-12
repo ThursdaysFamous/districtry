@@ -1,0 +1,36 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from ak/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Alaska",
+ "usSenate": [
+  {
+   "name": "Lisa Murkowski",
+   "party": "Republican",
+   "url": "https://www.murkowski.senate.gov/",
+   "office": "522 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-6665"
+  },
+  {
+   "name": "Dan Sullivan",
+   "party": "Republican",
+   "url": "https://www.sullivan.senate.gov",
+   "office": "706 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-3004"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Mike Dunleavy",
+   "url": "https://gov.alaska.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "url": "https://ltgov.alaska.gov/",
+   "unnamed": "The Lieutenant Governor's own website could not be read when this list was built, because its security certificate is incomplete, so no name is shown until it can be."
+  }
+ ],
+ "officersNote": "The governor and lieutenant governor are the only officers Alaska's voters elect statewide; the attorney general and the other commissioners are appointed by the governor."
+}

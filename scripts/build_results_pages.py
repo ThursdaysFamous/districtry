@@ -640,6 +640,11 @@ def place_page(res, worksheet, metros):
     brand = worksheet["brand"]
     app_name = brand["app_name"]
     landing = next(m["landing_name"] for m in metros if m["tag"] == tag)
+    # The place whose election this is. Results gathered from several offices
+    # are the app's whole place; one publisher's are only the area it counts,
+    # which the app's results layer names (areaName). California's app answers
+    # for the whole state, and its results are San Francisco's alone.
+    area = landing if res.sources else res.opts["areaName"]
     title_e = election_title(idx)
     year = str(idx.get("electionDate") or "")[:4]
     when = long_date(idx.get("electionDate"), tag)
@@ -657,7 +662,7 @@ def place_page(res, worksheet, metros):
         '<p class="lede"><strong>%s results of %s\'s %s %s, %s.</strong> Each race lists '
         'every choice\'s votes and share of the vote. The map colours each precinct by '
         'who got the most votes there.</p>\n    %s'
-        % (status_word, esc(landing), esc(when), esc(election_phrase(idx)),
+        % (status_word, esc(area), esc(when), esc(election_phrase(idx)),
            esc(counted), status_paragraph(res, tag, offices)))
     lede = dict(
         html=lede_html,
@@ -767,10 +772,10 @@ def place_page(res, worksheet, metros):
                 % (status_word, title_e))
     desc = ("%s results of the %s %s in %s: each race's candidates, votes and "
             "share, and every precinct on the map." % (status_word, year,
-                                                      election_phrase(idx), landing))
+                                                      election_phrase(idx), area))
     if len(desc) > 155:
         desc = ("%s %s %s results in %s, race by race, with every precinct on the map."
-                % (status_word, year, election_phrase(idx), landing))
+                % (status_word, year, election_phrase(idx), area))
     og = desc
 
     related = related_rows(tag, landing)

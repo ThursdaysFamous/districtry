@@ -1,0 +1,62 @@
+{
+  "1": {
+    "name": "Tracey Mann",
+    "party": "Republican",
+    "url": "https://mann.house.gov",
+    "capitolOffice": [
+      "344 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2715"
+    ],
+    "districtOffice": [
+      "317 Houston Street, Suite A",
+      "Manhattan, KS 66502",
+      "Phone: 785-370-7277"
+    ]
+  },
+  "2": {
+    "name": "Derek Schmidt",
+    "party": "Republican",
+    "url": "https://schmidt.house.gov",
+    "capitolOffice": [
+      "1223 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6601"
+    ],
+    "districtOffice": [
+      "402 N Broadway St, Suite B",
+      "Pittsburg, KS 66762",
+      "Phone: 620-308-7450"
+    ]
+  },
+  "3": {
+    "name": "Sharice Davids",
+    "party": "Democrat",
+    "url": "https://davids.house.gov",
+    "capitolOffice": [
+      "2435 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2865"
+    ],
+    "districtOffice": [
+      "9200 Indian Creek Parkway, Suite 562",
+      "Overland Park, KS 66210",
+      "Phone: 913-621-0832"
+    ]
+  },
+  "4": {
+    "name": "Ron Estes",
+    "party": "Republican",
+    "url": "https://estes.house.gov",
+    "capitolOffice": [
+      "2234 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6216"
+    ],
+    "districtOffice": [
+      "7701 E. Kellogg, Ste. 510",
+      "Wichita, KS 67207",
+      "Phone: 316-262-8992"
+    ]
+  }
+}

@@ -189,7 +189,7 @@ mirrored by `scripts/mirror_tiger_tiles.py`. The compare screen counts people fr
 blocks under `data/app/population/` (`scripts/build_block_population.py --instance az`;
 7,151,502 people in 107,938 blocks; the congressional map partitions them to within 0.001% of the
 ideal and the legislative map's worst district is 5.415% under it). The ZIP search reads
-`zip-index.json` (`scripts/build_zip_index.mjs`, 419 ZIP codes). Rosters: `congress-roster.json`
+`zip-index.json` (`scripts/build_zip_index.mjs`, 417 ZIP codes). Rosters: `congress-roster.json`
 (`az/scripts/build_congress_roster.py`, from unitedstates/congress-legislators) and
 `az-{senate,house}-members.json` (`az/scripts/build_az_legislature_roster.py`) — count-guarded,
 refreshed weekly by CI as reviewed PRs. `scripts/validate_chamber_rosters.py` holds both chamber

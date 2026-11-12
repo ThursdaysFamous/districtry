@@ -53,7 +53,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "39.16384,-119.76637"; // Nevada State Capitol, 101 North Carson Street, Carson City
 const OFFLINE = ["county", "us-house", "nv-senate", "nv-assembly"];
 const EXPECT_DISTRICT = { "county": "Carson City", "us-house": "2", "nv-senate": "16", "nv-assembly": "40" };
-const NEGATIVE_POINT = "42.15000,-116.00000"; // Owyhee County, Idaho, about 15 km north of the Nevada line — outside Nevada and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer names Idaho here (controls: the State Capitol returns Nevada, and a point in the open Pacific returns no state), none of the state's shipped boundary files contains it, and no outline in fleet-outlines.json does. A POINT ON A NEIGHBOUR'S LAND MOVES THE DAY THAT NEIGHBOUR GOES LIVE: Idaho is in the last batch of the state-level launch, after California, Oregon, Utah and Arizona, which is why it was chosen, and the change that makes Idaho live moves this point.
+const NEGATIVE_POINT = "42.15000,-116.00000"; // Owyhee County, Idaho, about 17 km north of the Nevada line — outside Nevada and inside permalink_gate, so the app answers a selection there and every shipped layer correctly returns nothing. Measured 2026-11-10: TIGERweb's state layer names Idaho here (controls: the State Capitol returns Nevada, and a point in the open Pacific returns no state), and none of the state's shipped boundary files contains it. IDAHO'S OUTLINE HAS COVERED THIS POINT SINCE THE CHANGE THAT PUBLISHED IDAHO (batch 4 of the state-level launch, written 2026-11-12), which found it inside Idaho's outline in fleet-outlines.json and no other, AND THE POINT STAYS: measured that day on a 0.05-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, so there is nowhere left to move it to. It is still outside Nevada and outside every shipped boundary file, which is all the checks that boot on it or select it ask, and a selection the app makes itself never leaves; the click that had to stay here became a Idaho routing case in the same change, and the click-stays-here check went with it, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.
 const APP_NAME = "districtry Nevada";
 const EXPECT_LAYERS = 10;
 // ==== GENERATED:END smoke-config ====
@@ -394,25 +394,28 @@ try {
   //     the real districtry.com, fails in the sandbox and leaves page.url() on
   //     the app, which reads exactly like correct behaviour.
   //
-  //     NONE OF NEVADA'S FIVE NEIGHBOURS IS A LIVE WHOLE-STATE APP. California
-  //     is served only for San Francisco, and Oregon, Idaho, Utah and Arizona
-  //     not at all (Arizona opens in this same batch). So the cases are ground
-  //     far from here, which proves fleet-outlines.json is still read: Chicago,
-  //     and San Francisco City Hall, which must open the city app, measured
-  //     against fleet-outlines.json on 2026-11-10 to sit inside its outline.
+  //     ALL FIVE OF NEVADA'S NEIGHBOURS ARE LIVE WHOLE-STATE APPS: Arizona in
+  //     its own batch, California, which grew from San Francisco to the whole
+  //     state on 2026-11-11, Oregon and Utah in batch 3 of the state-level
+  //     launch, and Idaho since the change that published it (batch 4).
+  //     Chicago proves fleet-outlines.json is still read for ground far from
+  //     here, and San Francisco City Hall must open California's app. The
+  //     negative point, in Owyhee County, Idaho, about 17 km north of the
+  //     Nevada line, was the click that had to stay HERE until Idaho's
+  //     go-live made it a case; measured that day (2026-11-12) it lies inside
+  //     Idaho's outline in fleet-outlines.json and no other.
+  //     The stays-here check (1a2-ii) went with it, because measured the
+  //     same day on a 0.05-degree grid no ground in this app's gate lies
+  //     more than 2 km from every outline in fleet-outlines.json; the
+  //     negative point stays where it is, since every check that still
+  //     uses it boots or selects it here and none clicks it.
   //     This instance answers its own side from the state outline the wash
   //     retained, with no fetch.
-  //
-  //     A CLICK IN A NEIGHBOURING STATE IS DELIBERATELY NOT A CASE. None is
-  //     served today, so a click there stays here; but the fleet is meant to
-  //     reach every state, and a "stays here" case in any of them would start
-  //     failing the day it goes live, in a change that is about another
-  //     state. The negative point carries that half instead (1a2-ii), and the
-  //     change that makes Idaho live moves it.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "San Francisco City Hall", lat: 37.7793, lng: -122.4193, want: "https://districtry.com/ca/" },
+      { name: "the negative point, in Owyhee County, Idaho", lat: 42.15, lng: -116.0, want: "https://districtry.com/id/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -428,32 +431,6 @@ try {
       check(`a click on ${c.name} from Nevada opens ${c.want} with the point`, !!went, went || page.url());
       await context.close();
     }
-  }
-
-  // 1a2-ii. The half that keeps 1a2 honest: the negative point, in Owyhee
-  //     County, Idaho, about 15 km north of the Nevada line, is outside every
-  //     outline in the fleet, so the click must stay HERE. A route to a sibling would
-  //     be the same lie pointing the other way, and the stub makes it visible:
-  //     if the app navigated, the URL would be the stubbed sibling rather than
-  //     this app.
-  {
-    const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, BASE, async (p) => {
-      await p.route("https://districtry.com/**", (route) =>
-        route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
-    });
-    await page.evaluate(({ n, pt }) => {
-      const [la, ln] = pt.split(",").map(Number);
-      window[n].map.fire("click", { latlng: window.L.latLng(la, ln) });
-    }, { n: EXPORTS_NAME, pt: NEGATIVE_POINT });
-    await page.waitForTimeout(3000);
-    const url = page.url();
-    // Still under BASE means still this app. Asking instead for the URL NOT to
-    // name one of a list of sibling tags needs a new entry each time a state
-    // goes live, and the one it lacked would read as staying here.
-    check("a click in Owyhee County, Idaho, outside every app's outline, stays in this app",
-      url.startsWith(BASE), url);
-    await context.close();
   }
 
   // 1b. The search box retries a zero-result query with the unit fragment

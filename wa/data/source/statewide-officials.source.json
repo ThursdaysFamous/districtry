@@ -1,0 +1,52 @@
+{
+ "state": "Washington",
+ "usps": "WA",
+ "officersNote": "Washington's voters also elect the Supreme Court's nine justices statewide. They are not listed here yet.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Bob Ferguson",
+   "url": "https://governor.wa.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Denny Heck",
+   "url": "https://ltgov.wa.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Steve Hobbs",
+   "url": "https://www.sos.wa.gov/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Mike Pellicciotti",
+   "url": "https://tre.wa.gov/"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Pat McCarthy",
+   "url": "https://sao.wa.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Nick Brown",
+   "url": "https://www.atg.wa.gov/"
+  },
+  {
+   "office": "Commissioner of Public Lands",
+   "name": "Dave Upthegrove",
+   "url": "https://www.dnr.wa.gov/"
+  },
+  {
+   "office": "Superintendent of Public Instruction",
+   "name": "Chris Reykdal",
+   "url": "https://ospi.k12.wa.us/"
+  },
+  {
+   "office": "Insurance Commissioner",
+   "name": "Patty Kuderer",
+   "url": "https://www.insurance.wa.gov/"
+  }
+ ]
+}

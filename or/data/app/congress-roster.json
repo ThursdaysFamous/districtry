@@ -1,0 +1,92 @@
+{
+  "1": {
+    "name": "Suzanne Bonamici",
+    "party": "Democrat",
+    "url": "https://bonamici.house.gov",
+    "capitolOffice": [
+      "2231 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-0855"
+    ],
+    "districtOffice": [
+      "12725 SW Millikan Way, Suite 220",
+      "Beaverton, OR 97005",
+      "Phone: 503-469-6010"
+    ]
+  },
+  "2": {
+    "name": "Cliff Bentz",
+    "party": "Republican",
+    "url": "https://bentz.house.gov",
+    "capitolOffice": [
+      "409 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6730"
+    ],
+    "districtOffice": [
+      "14 N. Central Avenue, Suite 112",
+      "Medford, OR 97501",
+      "Phone: 541-776-4646"
+    ]
+  },
+  "3": {
+    "name": "Maxine Dexter",
+    "party": "Democrat",
+    "url": "https://dexter.house.gov",
+    "capitolOffice": [
+      "1207 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-4811"
+    ],
+    "districtOffice": [
+      "911 NE 11th Ave",
+      "Portland, OR 97232",
+      "Phone: 503-231-2300"
+    ]
+  },
+  "4": {
+    "name": "Val T. Hoyle",
+    "party": "Democrat",
+    "url": "https://hoyle.house.gov",
+    "capitolOffice": [
+      "1620 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6416"
+    ],
+    "districtOffice": [
+      "940 Willamette St",
+      "Eugene, OR 97401",
+      "Phone: 541-465-6732"
+    ]
+  },
+  "5": {
+    "name": "Janelle S. Bynum",
+    "party": "Democrat",
+    "url": "https://bynum.house.gov",
+    "capitolOffice": [
+      "1508 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5711"
+    ],
+    "districtOffice": [
+      "502 7th Street, Suite 203",
+      "Oregon City, OR 97045",
+      "Phone: 503-387-8651"
+    ]
+  },
+  "6": {
+    "name": "Andrea Salinas",
+    "party": "Democrat",
+    "url": "https://salinas.house.gov",
+    "capitolOffice": [
+      "403 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5643"
+    ],
+    "districtOffice": [
+      "18861 SW Martinazzi Avenue, #200",
+      "Tualatin, OR 97062",
+      "Phone: 503-385-0906"
+    ]
+  }
+}

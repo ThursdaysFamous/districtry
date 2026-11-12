@@ -1,0 +1,60 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from ct/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Connecticut",
+ "usSenate": [
+  {
+   "name": "Richard Blumenthal",
+   "party": "Democratic",
+   "url": "https://www.blumenthal.senate.gov",
+   "office": "503 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2823"
+  },
+  {
+   "name": "Christopher Murphy",
+   "party": "Democratic",
+   "url": "https://www.murphy.senate.gov/",
+   "office": "136 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4041"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Ned Lamont",
+   "url": "https://portal.ct.gov/governor",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Susan Bysiewicz",
+   "url": "https://portal.ct.gov/ltgovernor",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Attorney General",
+   "name": "William Tong",
+   "url": "https://portal.ct.gov/ag",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Secretary of the State",
+   "name": "Stephanie Thomas",
+   "url": "https://portal.ct.gov/sots",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Erick Russell",
+   "url": "https://portal.ct.gov/ott",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Comptroller",
+   "name": "Sean Scanlon",
+   "url": "https://osc.ct.gov/",
+   "verified": "2026-11-12"
+  }
+ ]
+}

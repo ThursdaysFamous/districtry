@@ -67,6 +67,30 @@ python3 scripts/build_coverage_gaps.py --check --metro arizona --out az/data/app
 python3 scripts/build_coverage_gaps.py --check --metro newjersey --out nj/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro newhampshire --out nh/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro texas --out tx/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro florida --out fl/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro ohio --out oh/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro washington --out wa/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro massachusetts --out ma/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro colorado --out co/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro maryland --out md/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro alabama --out al/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro oregon --out or/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro connecticut --out ct/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro utah --out ut/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro kansas --out ks/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro newmexico --out nm/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro nebraska --out ne/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro idaho --out id/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro hawaii --out hi/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro maine --out me/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro montana --out mt/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro rhodeisland --out ri/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro southdakota --out sd/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro northdakota --out nd/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro alaska --out ak/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro vermont --out vt/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro wyoming --out wy/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro delaware --out de/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro nyc       --out ny/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro sf        --out ca/data/app/coverage-gaps.json
 python3 scripts/validate_gap_counts.py --selftest                 # the claim/label split, both directions, offline
@@ -155,6 +179,30 @@ python3 az/scripts/build_metro_outline.py --check
 python3 nj/scripts/build_metro_outline.py --check
 python3 nh/scripts/build_metro_outline.py --check
 python3 tx/scripts/build_metro_outline.py --check
+python3 fl/scripts/build_metro_outline.py --check
+python3 oh/scripts/build_metro_outline.py --check
+python3 wa/scripts/build_metro_outline.py --check
+python3 ma/scripts/build_metro_outline.py --check
+python3 co/scripts/build_metro_outline.py --check
+python3 md/scripts/build_metro_outline.py --check
+python3 al/scripts/build_metro_outline.py --check
+python3 or/scripts/build_metro_outline.py --check
+python3 ct/scripts/build_metro_outline.py --check
+python3 ut/scripts/build_metro_outline.py --check
+python3 ks/scripts/build_metro_outline.py --check
+python3 nm/scripts/build_metro_outline.py --check
+python3 ne/scripts/build_metro_outline.py --check
+python3 id/scripts/build_metro_outline.py --check
+python3 hi/scripts/build_metro_outline.py --check
+python3 me/scripts/build_metro_outline.py --check
+python3 mt/scripts/build_metro_outline.py --check
+python3 ri/scripts/build_metro_outline.py --check
+python3 sd/scripts/build_metro_outline.py --check
+python3 nd/scripts/build_metro_outline.py --check
+python3 ak/scripts/build_metro_outline.py --check
+python3 vt/scripts/build_metro_outline.py --check
+python3 wy/scripts/build_metro_outline.py --check
+python3 de/scripts/build_metro_outline.py --check
 python3 scripts/build_press_list.py --check                # PRESS_LIST.md vs press-list.json
 python3 scripts/validate_doc_counts.py                    # "N layers" in prose vs the worksheets
 python3 scripts/validate_doc_counts.py --selftest         # pattern C reads the one real "N for <instance>" count and not the four sentences sharing its shape
@@ -243,6 +291,13 @@ python3 scripts/build_legislative_boundaries.py --check         # the cross-laye
 python3 ia/scripts/build_legislative_boundaries.py --check      # the same relation in Iowa (Code 42.3, two House per Senate); broken on all 50 pairings until 2026-09-26
 python3 wi/scripts/build_legislative_boundaries.py --check      # the same relation in Wisconsin (art. IV s. 5, three Assembly per Senate), plus each declared dropped ring's after-answer re-derived from the shipped bytes
 python3 nv/scripts/build_legislative_boundaries.py --check      # the same relation in Nevada (two Assembly per Senate, by a measured pairing rather than by number), shared topology from its first day
+python3 oh/scripts/build_legislative_boundaries.py --check      # the same relation in Ohio (art. XI s. 4, three House per Senate, by a measured table rather than by number)
+python3 md/scripts/build_legislative_boundaries.py --check      # the same relation in Maryland (art. III s. 3, three delegates per Senate district, at large or from subdistricts inside it, by a measured table)
+python3 or/scripts/build_legislative_boundaries.py --check      # the same relation in Oregon (art. IV s. 6, Senate N is House 2N-1 and 2N)
+python3 mt/scripts/build_legislative_boundaries.py --check      # the same relation in Montana (measured: Senate N is House 2N-1 and 2N)
+python3 sd/scripts/build_legislative_boundaries.py --check      # South Dakota: each Senate district is its House district, or its A and B
+python3 nd/scripts/build_legislative_boundaries.py --check      # North Dakota: the same, with District 4 split into 4A and 4B
+python3 ak/scripts/build_legislative_boundaries.py --check      # Alaska (art. VI s. 6): House 1 and 2 make Senate A, through 39 and 40 in T
 python3 wi/scripts/dropped_rings.py --selftest   # the dropped-ring mechanism, fixtures only
 python3 wi/scripts/build_wi_supervisory_districts.py --check-shipped   # every declared dropped ring's AFTER answer, offline
 python3 ms/scripts/build_ms_county_officials.py --check         # Mississippi's supervisors and election commissioners: five of each per county, a board office only where three share it, and a commissioner carrying nothing but a name
@@ -310,6 +365,30 @@ python3 az/scripts/validate_index.py az/index.html
 python3 nj/scripts/validate_index.py nj/index.html
 python3 nh/scripts/validate_index.py nh/index.html
 python3 tx/scripts/validate_index.py tx/index.html
+python3 fl/scripts/validate_index.py fl/index.html
+python3 oh/scripts/validate_index.py oh/index.html
+python3 wa/scripts/validate_index.py wa/index.html
+python3 ma/scripts/validate_index.py ma/index.html
+python3 co/scripts/validate_index.py co/index.html
+python3 md/scripts/validate_index.py md/index.html
+python3 al/scripts/validate_index.py al/index.html
+python3 or/scripts/validate_index.py or/index.html
+python3 ct/scripts/validate_index.py ct/index.html
+python3 ut/scripts/validate_index.py ut/index.html
+python3 ks/scripts/validate_index.py ks/index.html
+python3 nm/scripts/validate_index.py nm/index.html
+python3 ne/scripts/validate_index.py ne/index.html
+python3 id/scripts/validate_index.py id/index.html
+python3 hi/scripts/validate_index.py hi/index.html
+python3 me/scripts/validate_index.py me/index.html
+python3 mt/scripts/validate_index.py mt/index.html
+python3 ri/scripts/validate_index.py ri/index.html
+python3 sd/scripts/validate_index.py sd/index.html
+python3 nd/scripts/validate_index.py nd/index.html
+python3 ak/scripts/validate_index.py ak/index.html
+python3 vt/scripts/validate_index.py vt/index.html
+python3 wy/scripts/validate_index.py wy/index.html
+python3 de/scripts/validate_index.py de/index.html
 
 # --- browser gates: ONE server at the repo root, every instance
 python3 -m http.server 8000 &
@@ -339,6 +418,30 @@ BASE_URL=http://localhost:8000/az/ node az/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/nj/ node nj/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/nh/ node nh/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/tx/ node tx/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/fl/ node fl/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/oh/ node oh/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/wa/ node wa/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/ma/ node ma/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/co/ node co/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/md/ node md/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/al/ node al/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/or/ node or/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/ct/ node ct/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/ut/ node ut/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/ks/ node ks/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/nm/ node nm/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/ne/ node ne/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/id/ node id/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/hi/ node hi/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/me/ node me/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/mt/ node mt/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/ri/ node ri/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/sd/ node sd/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/nd/ node nd/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/ak/ node ak/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/vt/ node vt/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/wy/ node wy/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/de/ node de/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000      node scripts/landing_test.mjs
 BASE_URL=http://localhost:8000      node scripts/page_consistency_test.mjs
 BASE_URL=http://localhost:8000      node scripts/probe_point_transmission.mjs --check
