@@ -1,0 +1,34 @@
+{
+ "state": "Oregon",
+ "usps": "OR",
+ "officersNote": "Oregon has no lieutenant governor; the secretary of state is first in line to succeed the governor. Its voters also elect the Supreme Court and the Court of Appeals statewide; they are not listed here yet.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Tina Kotek",
+   "url": "https://www.oregon.gov/gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Tobias Read",
+   "url": "https://sos.oregon.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Dan Rayfield",
+   "url": "https://www.doj.state.or.us/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Elizabeth Steiner",
+   "url": "https://www.oregon.gov/treasury/",
+   "source": "https://www.oregon.gov/treasury/Pages/About-Treasurer-Steiner.aspx"
+  },
+  {
+   "office": "Commissioner of the Bureau of Labor and Industries",
+   "name": "Christina Stephenson",
+   "url": "https://www.oregon.gov/boli/",
+   "source": "https://www.oregon.gov/boli/about/Pages/default.aspx"
+  }
+ ]
+}

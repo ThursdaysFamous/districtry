@@ -1,0 +1,46 @@
+{
+ "state": "Kansas",
+ "usps": "KS",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Laura Kelly",
+   "url": "https://governor.kansas.gov/",
+   "source": "https://www.kansas.gov/",
+   "note": "governor.kansas.gov answered this project's token and the browser client alike with HTTP 403 on 2026-11-12, so the state's own portal at www.kansas.gov, which names the governor and lists the statewide elected officials, is the page read (read 2026-11-12)."
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "David Toland",
+   "url": "https://governor.kansas.gov/",
+   "note": "governor.kansas.gov answered this project's token and the browser client alike with HTTP 403 on 2026-11-12, and the state portal does not name the lieutenant governor, so no name is shown until a run can read the page; the weekly job names it then."
+  },
+  {
+   "office": "Attorney General",
+   "name": "Kris Kobach",
+   "url": "https://www.ag.ks.gov/",
+   "source": "https://www.kansas.gov/",
+   "note": "www.ag.ks.gov answered this project's token and the browser client alike with HTTP 403 on 2026-11-12, so the state's own portal at www.kansas.gov is the page read (read 2026-11-12)."
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Scott Schwab",
+   "url": "https://sos.ks.gov/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Steven Johnson",
+   "url": "https://www.kansasstatetreasurer.com/"
+  },
+  {
+   "office": "Commissioner of Insurance",
+   "name": "Vicki Schmidt",
+   "match": [
+    "Vicky Schmidt"
+   ],
+   "url": "https://insurance.kansas.gov/",
+   "source": "https://www.kansas.gov/",
+   "note": "insurance.kansas.gov (where insurance.ks.gov forwards) answered this project's token and the browser client alike with HTTP 403 on 2026-11-12, so the state's own portal at www.kansas.gov is the page read; it spells the commissioner's given name Vicky, which is what match carries (read 2026-11-12)."
+  }
+ ]
+}

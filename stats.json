@@ -8,7 +8,7 @@
     "counties_unresearched": 0
   },
   "gap_records": 100,
-  "places": 29,
+  "places": 37,
   "layers": {
     "il": 42,
     "ny": 40,
@@ -38,6 +38,14 @@
     "tx": 12,
     "fl": 10,
     "oh": 10,
-    "wa": 10
+    "wa": 10,
+    "ma": 12,
+    "co": 10,
+    "md": 10,
+    "al": 10,
+    "or": 12,
+    "ct": 12,
+    "ut": 10,
+    "ks": 10
   }
 }

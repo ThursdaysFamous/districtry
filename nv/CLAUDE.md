@@ -180,7 +180,7 @@ tile archives under `data/app/tiles/`, mirrored by `scripts/mirror_tiger_tiles.p
 screen counts people from Census 2020 blocks under `data/app/population/`
 (`scripts/build_block_population.py --instance nv`; 3,104,614 people in 35,249 blocks, and all
 three district maps partition them exactly). The ZIP search reads `zip-index.json`
-(`scripts/build_zip_index.mjs`, 182 ZIP codes). Rosters: `congress-roster.json`
+(`scripts/build_zip_index.mjs`, 180 ZIP codes). Rosters: `congress-roster.json`
 (`nv/scripts/build_congress_roster.py`, from unitedstates/congress-legislators) and
 `nv-{senate,assembly}-members.json` (`nv/scripts/build_nv_legislature_roster.py`) — count-guarded,
 refreshed weekly by CI as reviewed PRs. `scripts/validate_chamber_rosters.py` holds both chamber

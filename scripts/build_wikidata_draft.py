@@ -92,6 +92,14 @@ IDS = {
     "Q812": "Florida",
     "Q1397": "Ohio",
     "Q1223": "Washington",
+    "Q771": "Massachusetts",
+    "Q1261": "Colorado",
+    "Q1391": "Maryland",
+    "Q173": "Alabama",
+    "Q824": "Oregon",
+    "Q779": "Connecticut",
+    "Q829": "Utah",
+    "Q1558": "Kansas",
 }
 
 # metros.json tag -> the jurisdiction item that instance answers for. STATED,
@@ -231,6 +239,16 @@ IDS = {
 # Q1415, Q1603, Q1371 and Q1400 (mi, in, ky, wv and pa). Q1223's P47 names no
 # instance here; its P300 and its label settle it. Each English label is the
 # bare state name.
+# ma, co, md, al, or, ct, ut and ks were added at the batch 3 go-live by the
+# same route. Read from Special:EntityData on 2026-11-12, each has P31 =
+# Q35657, P131 = Q30 and its own ISO code in P300 (US-MA, US-CO, US-MD,
+# US-AL, US-OR, US-CT, US-UT, US-KS), and the borders cross-check: Q771's own
+# P47 carries Q779, Q1384 and Q759 (this table's ct, ny and nh), Q1261's
+# carries Q1558, Q1649, Q829 and Q816 (ks, ok, ut and az), Q1391's carries
+# Q1370, Q1371 and Q1400 (va, wv and pa), Q173's carries Q812, Q1428, Q1509
+# and Q1494 (fl, ga, tn and ms), Q824's carries Q99, Q1227 and Q1223 (ca, nv
+# and wa), and Q1558's carries Q1649, Q1261 and Q1581 (ok, co and mo). Each
+# English label is the bare state name.
 JURISDICTION = {
     "il": "Q1204", "wi": "Q1537", "ia": "Q1546", "mi": "Q1166",
     "ny": "Q1384", "ca": "Q99", "mn": "Q1527", "ky": "Q1603",
@@ -239,7 +257,8 @@ JURISDICTION = {
     "mo": "Q1581", "va": "Q1370", "wv": "Q1371", "ga": "Q1428",
     "pa": "Q1400", "nv": "Q1227", "az": "Q816", "nj": "Q1408",
     "nh": "Q759", "tx": "Q1439", "fl": "Q812", "oh": "Q1397",
-    "wa": "Q1223",
+    "wa": "Q1223", "ma": "Q771", "co": "Q1261", "md": "Q1391",
+    "al": "Q173", "or": "Q824", "ct": "Q779", "ut": "Q829", "ks": "Q1558",
 }
 
 

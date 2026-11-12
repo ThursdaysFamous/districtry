@@ -133,12 +133,22 @@ def verify_officer(rec):
         text = page_text(fetch(url, headers))
     except SystemExit:  # scraper_common's robots refusal exits after saying why
         raise Unreadable("robots.txt refuses this client")
+    if name_on_page(rec, text):
+        return True
     # a challenge answered in the page's place says nothing about the name
     # (measured 2026-11-10: www.sos.state.mn.us served a Radware captcha page
-    # after a few reads). It is never answered or worked around.
+    # after a few reads). It is never answered or worked around. It is asked
+    # only once the name is missing, because a real page can say "captcha"
+    # too: on 2026-11-12 portal.ct.gov/ag served the Attorney General's page,
+    # naming him, with "please fill out the reCAPTCHA" in its newsletter form,
+    # and asking the challenge question first called that page a challenge.
     if len(text) < 8000 and re.search(r"captcha|are you a (?:ro)?bot|verify you are human|"
-                                      r"attention required|just a moment", text):
+                                      r"attention required|just a moment|incapsula incident", text):
         raise Unreadable("a challenge page answered instead of the page")
+    return False
+
+
+def name_on_page(rec, text):
     if any(fold(w) in text for w in [rec["name"]] + list(rec.get("match") or [])):
         return True
     # "Abigail Spanberger" printed as "Abigail D. Spanberger": the given name,

@@ -122,6 +122,14 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro florida --out fl/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro ohio --out oh/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro washington --out wa/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro massachusetts --out ma/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro colorado --out co/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro maryland --out md/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro alabama --out al/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro oregon --out or/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro connecticut --out ct/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro utah --out ut/data/app/coverage-gaps.json
+          python3 scripts/build_coverage_gaps.py --check --metro kansas --out ks/data/app/coverage-gaps.json
           # ny/ and ca/ ship a gaps file too; until 2026-09-02 only three of the
           # five keys were gated here, and drift in the other two surfaced only in
           # the weekly fleet-status notice.
@@ -971,6 +979,14 @@ jobs:
           python3 fl/scripts/build_metro_outline.py --check
           python3 oh/scripts/build_metro_outline.py --check
           python3 wa/scripts/build_metro_outline.py --check
+          python3 ma/scripts/build_metro_outline.py --check
+          python3 co/scripts/build_metro_outline.py --check
+          python3 md/scripts/build_metro_outline.py --check
+          python3 al/scripts/build_metro_outline.py --check
+          python3 or/scripts/build_metro_outline.py --check
+          python3 ct/scripts/build_metro_outline.py --check
+          python3 ut/scripts/build_metro_outline.py --check
+          python3 ks/scripts/build_metro_outline.py --check
 
       # docs/PRESS_LIST.md carries a --check in its own header calling it the
       # drift gate, and until now nothing ran it — a generated file gated in
@@ -1698,6 +1714,21 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 oh/scripts/build_legislative_boundaries.py --check
 
+      # The sixth instance with the relation. Maryland's Constitution (art. III
+      # s. 3) elects three delegates from each of the 47 Senate districts, either
+      # at large or from subdistricts drawn wholly inside it, so the builder
+      # carries the measured table of whole districts and subdistricts and
+      # builds both maps in ONE mapshaper run.
+      - name: MD House units still tile their Senate district exactly
+        if: ${{ !cancelled() }}
+        run: python3 md/scripts/build_legislative_boundaries.py --check
+
+      # The seventh. Oregon's Constitution (art. IV s. 6) makes every Senate
+      # district two House districts, Senate N being House 2N-1 and 2N.
+      - name: OR House districts still tile their Senate district exactly
+        if: ${{ !cancelled() }}
+        run: python3 or/scripts/build_legislative_boundaries.py --check
+
       - name: The dropped-ring mechanism holds to its own fixtures
         if: ${{ !cancelled() }}
         run: python3 wi/scripts/dropped_rings.py --selftest
@@ -2134,6 +2165,14 @@ jobs:
           python3 fl/scripts/validate_index.py fl/index.html
           python3 oh/scripts/validate_index.py oh/index.html
           python3 wa/scripts/validate_index.py wa/index.html
+          python3 ma/scripts/validate_index.py ma/index.html
+          python3 co/scripts/validate_index.py co/index.html
+          python3 md/scripts/validate_index.py md/index.html
+          python3 al/scripts/validate_index.py al/index.html
+          python3 or/scripts/validate_index.py or/index.html
+          python3 ct/scripts/validate_index.py ct/index.html
+          python3 ut/scripts/validate_index.py ut/index.html
+          python3 ks/scripts/validate_index.py ks/index.html
 
 
   browser:
@@ -2318,6 +2357,10 @@ jobs:
           # expectations from the tree, so a new page is covered the day it
           # ships and a correct change cannot fail it.
           BASE_URL=http://localhost:8000        node scripts/page_consistency_test.mjs
+          BASE_URL=http://localhost:8000/or/  node or/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ct/  node ct/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ut/  node ut/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ks/  node ks/scripts/smoke_test.mjs
 
           # shard 2
           BASE_URL=http://localhost:8000/il/  node scripts/smoke_test.mjs
@@ -2369,6 +2412,10 @@ jobs:
           BASE_URL=http://localhost:8000/nc/  node nc/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/ky/  node ky/scripts/smoke_test.mjs
           BASE_URL=http://localhost:8000/ga/  node ga/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/ma/  node ma/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/co/  node co/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/md/  node md/scripts/smoke_test.mjs
+          BASE_URL=http://localhost:8000/al/  node al/scripts/smoke_test.mjs
 
           # shard 5
           BASE_URL=http://localhost:8000/wi/  node wi/scripts/smoke_test.mjs

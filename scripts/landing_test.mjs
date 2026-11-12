@@ -447,12 +447,15 @@ try {
     ]).catch(() => {});
   }
   // Each case asks for the middle of the app's box, which lies inside the
-  // state for every app but one. Florida's box runs from the panhandle to the
+  // state for every app but two. Florida's box runs from the panhandle to the
   // Keys, and its middle (27.70, -83.81) is open Gulf of Mexico about 70 km
   // off Tampa Bay, outside every outline, so the front page rightly says no
-  // app covers it (measured 2026-11-11 at Florida's go-live). Florida is asked
-  // about its State Capitol instead, its worksheet's anchor point.
-  const ADDRESS_PROBE = { fl: [30.43817, -84.28164] };
+  // app covers it (measured 2026-11-11 at Florida's go-live). Maryland's box
+  // wraps the Potomac, and its middle (38.805, -77.195) is in Fairfax County,
+  // Virginia, so the front page rightly opens /va/ there (measured 2026-11-12
+  // at Maryland's go-live). Each is asked about its State Capitol or State
+  // House instead, its worksheet's anchor point.
+  const ADDRESS_PROBE = { fl: [30.43817, -84.28164], md: [38.97864, -76.49077] };
   for (const m of FLEET) {
     const probe = ADDRESS_PROBE[m.tag];
     const lat = probe ? probe[0] : (m.bbox.minLat + m.bbox.maxLat) / 2;
@@ -548,17 +551,38 @@ try {
 
   // --- 1c-quater. an address a rectangle claims and nobody serves ----------
   //
-  // Lawrence, Kansas sits inside Missouri's bbox, so the rectangle pass would
-  // send it to an app with nothing to show there. It is about 55 km from
-  // Missouri's outline, well past the tolerance the page allows a simplified
-  // edge, and inside no other instance's box.
+  // Kingston, Ontario sits inside New York's bbox, so the rectangle pass would
+  // send it to an app with nothing to show there. It is about 12 km from New
+  // York's outline, which follows the international boundary through Lake
+  // Ontario and the St. Lawrence, well past the tolerance the page allows a
+  // simplified edge, and inside no other instance's box.
   //
-  // THIS WAS CLAYTON, MISSOURI UNTIL MISSOURI'S GO-LIVE, and Gary, Indiana
+  // THIS WAS LAWRENCE, KANSAS UNTIL KANSAS'S GO-LIVE (batch 3 of the
+  // state-level launch), Clayton, Missouri until Missouri's, and Gary, Indiana
   // before Indiana's (2026-10-07): each became an address the front door must
-  // OPEN its state's app for, asserted just below. Kansas City, Kansas was not
-  // used: it is about 1 km from Missouri's simplified outline, inside the
-  // page's ~1.5 km allowance, so the test would be deciding a rounding
-  // question rather than this one.
+  // OPEN its state's app for, asserted just below. A Canadian town was chosen
+  // that time so the next go-live cannot move it: no app will serve Ontario.
+  // Cornwall and Niagara Falls, Ontario were not used: each is within about
+  // 2 km of New York's simplified outline, inside or near the page's ~1.5 km
+  // allowance, so the test would be deciding a rounding question rather than
+  // this one.
+  {
+    const ctx = await browser.newContext({ serviceWorkers: "block" });
+    const page = await ctx.newPage();
+    await page.route("**/photon.komoot.io/**", photonStub([photonFeature(44.2312, -76.4860)]));
+    await stubInstances(page);
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+    await page.fill("#search-input", "Kingston, Ontario");
+    await page.click("#search-button");
+    await addressSettled(page);
+    check("Kingston, Ontario stays on the landing page though New York's bbox claims it",
+      new URL(page.url()).pathname === "/", page.url());
+    const msg = await textOrNull(page, "#search-status");
+    check("Kingston, Ontario is told it is outside every covered place", /outside/i.test(msg || ""), JSON.stringify(msg));
+    await ctx.close();
+  }
+  // ...and Lawrence, Kansas, which Missouri's bbox claims as well as Kansas's,
+  // opens Kansas: the outline pass decides.
   {
     const ctx = await browser.newContext({ serviceWorkers: "block" });
     const page = await ctx.newPage();
@@ -568,10 +592,8 @@ try {
     await page.fill("#search-input", "Lawrence, Kansas");
     await page.click("#search-button");
     await addressSettled(page);
-    check("Lawrence, Kansas stays on the landing page though Missouri's bbox claims it",
-      new URL(page.url()).pathname === "/", page.url());
-    const msg = await textOrNull(page, "#search-status");
-    check("Lawrence, Kansas is told it is outside every covered place", /outside/i.test(msg || ""), JSON.stringify(msg));
+    check("Lawrence, Kansas opens /ks/ though Missouri's bbox also claims it",
+      new URL(page.url()).pathname === "/ks/", page.url());
     await ctx.close();
   }
   // ...and Clayton, Missouri, which Illinois's bbox claims as well as

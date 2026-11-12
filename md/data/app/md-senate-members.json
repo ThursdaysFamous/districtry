@@ -1,0 +1,543 @@
+{
+  "1": {
+    "name": "Mike McKay",
+    "party": "Republican",
+    "capitolOffice": [
+      "416 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3565"
+    ],
+    "email": "mike.mckay@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/mckay02"
+  },
+  "2": {
+    "name": "Paul D. Corderman",
+    "party": "Republican",
+    "capitolOffice": [
+      "403 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3903"
+    ],
+    "email": "paul.corderman@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/corderman02"
+  },
+  "3": {
+    "name": "Karen Lewis Young",
+    "party": "Democratic",
+    "capitolOffice": [
+      "3 West Miller Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3575"
+    ],
+    "email": "karen.lewisyoung@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/young04"
+  },
+  "4": {
+    "name": "William G. Folden",
+    "party": "Republican",
+    "capitolOffice": [
+      "414 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3704"
+    ],
+    "email": "william.folden@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/folden02"
+  },
+  "5": {
+    "name": "Justin Ready",
+    "party": "Republican",
+    "capitolOffice": [
+      "315 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3683"
+    ],
+    "email": "justin.ready@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/ready01"
+  },
+  "6": {
+    "name": "Johnny Ray Salling",
+    "party": "Republican",
+    "capitolOffice": [
+      "321 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "johnnyray.salling@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/salling01"
+  },
+  "7": {
+    "name": "J.B. Jennings",
+    "party": "Republican",
+    "capitolOffice": [
+      "323 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3706"
+    ],
+    "email": "jb.jennings@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/jennings"
+  },
+  "8": {
+    "name": "Carl Jackson",
+    "party": "Democratic",
+    "capitolOffice": [
+      "102 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3620"
+    ],
+    "email": "carl.jackson@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/jackson04"
+  },
+  "9": {
+    "name": "Katie Fry Hester",
+    "party": "Democratic",
+    "capitolOffice": [
+      "304 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "katiefry.hester@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/hester01"
+  },
+  "10": {
+    "name": "Benjamin Brooks",
+    "party": "Democratic",
+    "capitolOffice": [
+      "303 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3606"
+    ],
+    "email": "benjamin.brooks@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/brooks02"
+  },
+  "11": {
+    "name": "Shelly Hettleman",
+    "party": "Democratic",
+    "capitolOffice": [
+      "220 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3131"
+    ],
+    "email": "shelly.hettleman@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/hettleman02"
+  },
+  "12": {
+    "name": "Clarence K. Lam",
+    "party": "Democratic",
+    "capitolOffice": [
+      "420 Miller Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3653"
+    ],
+    "email": "clarence.lam@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/lam02"
+  },
+  "13": {
+    "name": "Guy Guzzone",
+    "party": "Democratic",
+    "capitolOffice": [
+      "3 West Miller Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "guy.guzzone@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/guzzone"
+  },
+  "14": {
+    "name": "Craig J. Zucker",
+    "party": "Democratic",
+    "capitolOffice": [
+      "120 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3625"
+    ],
+    "email": "craig.zucker@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/zucker01"
+  },
+  "15": {
+    "name": "Brian J. Feldman",
+    "party": "Democratic",
+    "capitolOffice": [
+      "2 West Miller Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "brian.feldman@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/feldman"
+  },
+  "16": {
+    "name": "Sara Love",
+    "party": "Democratic",
+    "capitolOffice": [
+      "222 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3124"
+    ],
+    "email": "sara.love@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/love02"
+  },
+  "17": {
+    "name": "Cheryl C. Kagan",
+    "party": "Democratic",
+    "capitolOffice": [
+      "2 West Miller Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "Cheryl.Kagan@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/kagan01"
+  },
+  "18": {
+    "name": "Jeff Waldstreicher",
+    "party": "Democratic",
+    "capitolOffice": [
+      "2 East Miller Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3137"
+    ],
+    "email": "jeff.waldstreicher@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/waldstreicher1"
+  },
+  "19": {
+    "name": "Benjamin F. Kramer",
+    "party": "Democratic",
+    "capitolOffice": [
+      "401 Miller Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "Ben.Kramer@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/kramer02"
+  },
+  "20": {
+    "name": "William C. Smith Jr.",
+    "party": "Democratic",
+    "capitolOffice": [
+      "2 East Miller Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "will.smith@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/smith02"
+  },
+  "21": {
+    "name": "Jim Rosapepe",
+    "party": "Democratic",
+    "capitolOffice": [
+      "101 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "jim.rosapepe@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/rosapepe"
+  },
+  "22": {
+    "name": "Alonzo T. Washington",
+    "party": "Democratic",
+    "capitolOffice": [
+      "314 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "alonzo.washington@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/washington02"
+  },
+  "23": {
+    "name": "Ron Watson",
+    "party": "Democratic",
+    "capitolOffice": [
+      "121 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "ron.watson@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/watson04"
+  },
+  "24": {
+    "name": "Joanne C. Benson",
+    "party": "Democratic",
+    "capitolOffice": [
+      "201 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3148"
+    ],
+    "email": "joanne.benson@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/benson"
+  },
+  "25": {
+    "name": "Nick Charles",
+    "party": "Democratic",
+    "capitolOffice": [
+      "202 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3127"
+    ],
+    "email": "nick.charles@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/charles02"
+  },
+  "26": {
+    "name": "C. Anthony Muse",
+    "party": "Democratic",
+    "capitolOffice": [
+      "422 Miller Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3092"
+    ],
+    "email": "anthony.muse@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/muse01"
+  },
+  "27": {
+    "name": "Kevin M. Harris",
+    "party": "Democratic",
+    "capitolOffice": [
+      "302 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3700"
+    ],
+    "email": "kevin.harris@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/harris03"
+  },
+  "28": {
+    "name": "Arthur Ellis",
+    "party": "Democratic",
+    "capitolOffice": [
+      "301 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "arthur.ellis@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/ellis01"
+  },
+  "29": {
+    "name": "Jack Bailey",
+    "party": "Republican",
+    "capitolOffice": [
+      "401 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "jack.bailey@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/bailey01"
+  },
+  "30": {
+    "name": "Shaneka Henson",
+    "party": "Democratic",
+    "capitolOffice": [
+      "203 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3578"
+    ],
+    "email": "shaneka.henson@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/henson02"
+  },
+  "31": {
+    "name": "Bryan W. Simonaire",
+    "party": "Republican",
+    "capitolOffice": [
+      "320 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "bryan.simonaire@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/simonaire"
+  },
+  "32": {
+    "name": "Pamela Beidle",
+    "party": "Democratic",
+    "capitolOffice": [
+      "3 East Miller Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "pamela.beidle@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/beidle01"
+  },
+  "33": {
+    "name": "Dawn Gile",
+    "party": "Democratic",
+    "capitolOffice": [
+      "3 East Miller Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3568"
+    ],
+    "email": "dawn.gile@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/gile01"
+  },
+  "34": {
+    "name": "Mary-Dulany James",
+    "party": "Democratic",
+    "capitolOffice": [
+      "103 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3158"
+    ],
+    "email": "marydulany.james@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/james01"
+  },
+  "35": {
+    "name": "Jason C. Gallion",
+    "party": "Republican",
+    "capitolOffice": [
+      "420 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "jason.gallion@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/gallion01"
+  },
+  "36": {
+    "name": "Stephen S. Hershey Jr.",
+    "party": "Republican",
+    "capitolOffice": [
+      "423 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "steve.hershey@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/hershey"
+  },
+  "37": {
+    "name": "Johnny Mautz",
+    "party": "Republican",
+    "capitolOffice": [
+      "402 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3590"
+    ],
+    "email": "johnny.mautz@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/mautz02"
+  },
+  "38": {
+    "name": "Mary Beth Carozza",
+    "party": "Republican",
+    "capitolOffice": [
+      "316 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "marybeth.carozza@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/carozza02"
+  },
+  "39": {
+    "name": "Nancy J. King",
+    "party": "Democratic",
+    "capitolOffice": [
+      "123 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "nancy.king@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/king"
+  },
+  "40": {
+    "name": "Antonio Hayes",
+    "party": "Democratic",
+    "capitolOffice": [
+      "223 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "antonio.hayes@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/hayes02"
+  },
+  "41": {
+    "name": "Dalya Attar",
+    "party": "Democratic",
+    "capitolOffice": [
+      "122 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3697"
+    ],
+    "email": "dalya.attar@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/attar02"
+  },
+  "42": {
+    "name": "Chris West",
+    "party": "Republican",
+    "capitolOffice": [
+      "322 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3648"
+    ],
+    "email": "chris.west@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/west02"
+  },
+  "43": {
+    "name": "Mary Washington",
+    "party": "Democratic",
+    "capitolOffice": [
+      "104 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "mary.washington@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/washington01"
+  },
+  "44": {
+    "name": "Charles E. Sydnor III",
+    "party": "Democratic",
+    "capitolOffice": [
+      "216 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401",
+      "410-841-3612"
+    ],
+    "email": "charles.sydnor@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/sydnor02"
+  },
+  "45": {
+    "name": "Cory V. McCray",
+    "party": "Democratic",
+    "capitolOffice": [
+      "221 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "cory.mccray@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/mccray02"
+  },
+  "46": {
+    "name": "Bill Ferguson",
+    "party": "Democratic",
+    "capitolOffice": [
+      "H-107 State House",
+      "100 State Circle",
+      "Annapolis, MD 21401"
+    ],
+    "email": "bill.ferguson@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/ferguson"
+  },
+  "47": {
+    "name": "Malcolm Augustine",
+    "party": "Democratic",
+    "capitolOffice": [
+      "214 James Senate Office Building",
+      "11 Bladen Street",
+      "Annapolis, MD 21401"
+    ],
+    "email": "malcolm.augustine@senate.maryland.gov",
+    "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/augustine01"
+  }
+}

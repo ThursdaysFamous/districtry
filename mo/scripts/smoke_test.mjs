@@ -53,7 +53,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "38.57910,-92.17290"; // Missouri State Capitol, 201 W. Capitol Avenue, Jefferson City, Cole County
 const OFFLINE = ["county", "us-house", "mo-senate", "mo-house"];
 const EXPECT_DISTRICT = { "county": "Cole County", "us-house": "3", "mo-senate": "6", "mo-house": "60" };
-const NEGATIVE_POINT = "38.61560,-95.26780"; // Franklin County, Kansas, near Ottawa, about 57 km west of the Missouri line — outside Missouri and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-21: TIGERweb's state and county layers name Kansas and Franklin County here (control: the State Capitol returns Missouri and Cole County), and none of the state's shipped boundary files contains it. MISSOURI HAS NO COAST, SO THIS POINT IS ON A NEIGHBOUR'S LAND AND WILL HAVE TO MOVE: Iowa, Illinois, Kentucky, Tennessee, Arkansas and Oklahoma are live already, so Kansas and Nebraska are the only neighbours left, and the change that makes either one live moves this point to the other, the way Kentucky's go-live moved Indiana's.
+const NEGATIVE_POINT = "40.30000,-95.95000"; // Nemaha County, NEBRASKA, about 30 km from every outline in fleet-outlines.json and west of the Missouri River — outside Missouri and outside every other instance in the fleet, and inside permalink_gate (maxLat 40.80, minLng -96.00) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-12: TIGERweb's state and county layers name Nebraska and Nemaha County (STATE 31) here (control: the State Capitol returns Missouri and Cole County), and no outline in fleet-outlines.json contains it, Kansas's included. THIS POINT WAS IN FRANKLIN COUNTY, KANSAS (38.6156, -95.2678) UNTIL KANSAS'S GO-LIVE (batch 3 of the state-level launch), which put Kansas's outline in the fleet file with the old point inside it, so a click there now opens districtry.com/ks/ and is asserted as a routing case. MISSOURI HAS NO COAST AND NEBRASKA IS THE LAST NEIGHBOUR NO APP SERVES: measured the same day on a 0.05-degree grid, the only ground in this app's gate more than 2 km from every outline is this corner of Nebraska. The change that makes Nebraska live leaves no such ground, so it turns this point into a Nebraska routing case and drops the click-stays-here check, the way Kentucky's and Tennessee's points stayed put once every neighbour was served.
 const APP_NAME = "districtry Missouri";
 const EXPECT_LAYERS = 13;
 // ==== GENERATED:END smoke-config ====
@@ -457,24 +457,28 @@ try {
   //     the real districtry.com, fails in the sandbox and leaves page.url() on
   //     the app, which reads exactly like correct behaviour.
   //
-  //     MISSOURI HAS EIGHT NEIGHBOURS, AND THE FLEET SERVES SIX OF THEM. A
+  //     MISSOURI HAS EIGHT NEIGHBOURS, AND THE FLEET SERVES SEVEN OF THEM. A
   //     click a little way inside each live neighbour must open that
   //     neighbour's app: Bloomfield, Iowa; Carbondale, Illinois; Paducah,
-  //     Kentucky; Union City, Tennessee; Jonesboro, Arkansas; and Miami,
-  //     Oklahoma. Measured against fleet-outlines.json on 2026-10-21, each lies
-  //     inside its own state's outline and no other, 17.3, 26.4, 46.3, 22.2,
-  //     34.0 and 23.0 km from this app's outline. This instance answers its
+  //     Kentucky; Union City, Tennessee; Jonesboro, Arkansas; Miami,
+  //     Oklahoma; and, since Kansas's go-live (batch 3 of the state-level
+  //     launch), Franklin County, Kansas, which was this app's negative point
+  //     until that change put it inside Kansas's outline. Measured against
+  //     fleet-outlines.json on 2026-10-21, the first six each lie inside their
+  //     own state's outline and no other, 17.3, 26.4, 46.3, 22.2, 34.0 and
+  //     23.0 km from this app's outline; the Kansas point was measured inside
+  //     Kansas's outline and no other on 2026-11-12. This instance answers its
   //     own side from the state outline the wash retained, with no fetch,
   //     and since go-live the fleet file carries that outline too, which is
   //     asked first, so a point both draw stays here. Chicago proves the file
   //     is still read for ground far from here.
   //
-  //     KANSAS AND NEBRASKA ARE DELIBERATELY NOT CASES. Nobody serves them
-  //     today, so a click there stays here; but the fleet is meant to reach
-  //     every state, and a "stays here" case in either would start failing the
-  //     day it goes live, in a change that is about another state. The
-  //     negative point carries that half instead (1a2-ii), and it is the one
-  //     thing in this file that must move when Kansas goes live (WATCH.md).
+  //     NEBRASKA IS DELIBERATELY NOT A CASE. Nobody serves it today, so a
+  //     click there stays here; but the fleet is meant to reach every state,
+  //     and a "stays here" case there would start failing the day it goes
+  //     live, in a change that is about another state. The negative point
+  //     carries that half instead (1a2-ii), and it is the one thing in this
+  //     file that must change when Nebraska goes live (WATCH.md).
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
@@ -484,6 +488,7 @@ try {
       { name: "Union City, Tennessee", lat: 36.4243, lng: -89.0570, want: "https://districtry.com/tn/" },
       { name: "Jonesboro, Arkansas", lat: 35.8423, lng: -90.7043, want: "https://districtry.com/ar/" },
       { name: "Miami, Oklahoma", lat: 36.8745, lng: -94.8775, want: "https://districtry.com/ok/" },
+      { name: "Franklin County, Kansas", lat: 38.6156, lng: -95.2678, want: "https://districtry.com/ks/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -501,9 +506,9 @@ try {
     }
   }
 
-  // 1a2-ii. The half that keeps 1a2 honest: the negative point, in Franklin
-  //     County, Kansas, about 57 km west of the Missouri line, is outside every
-  //     outline in the fleet, so the click must stay HERE. A route to a sibling would be
+  // 1a2-ii. The half that keeps 1a2 honest: the negative point, in Nemaha
+  //     County, Nebraska, about 30 km from every outline in the fleet, is
+  //     outside all of them, so the click must stay HERE. A route to a sibling would be
   //     the same lie pointing the other way, and the stub makes it visible: if
   //     the app navigated, the URL would be the stubbed sibling rather than
   //     this app.
@@ -522,7 +527,7 @@ try {
     // Still under BASE means still this app. Asking instead for the URL NOT to
     // name one of a list of sibling tags needs a new entry each time a state
     // goes live, and the one it lacked would read as staying here.
-    check("a click in Kansas, outside every app's outline, stays in this app",
+    check("a click in Nebraska, outside every app's outline, stays in this app",
       url.startsWith(BASE), url);
     await context.close();
   }
@@ -1067,15 +1072,16 @@ try {
   //    62301 and Fort Scott, Kansas 66701.
   //
   //    THE OUT-OF-STATE HALF IS THE ONE THAT DISCRIMINATES. The stub answers
-  //    66067 (Ottawa, Kansas) whatever point is asked, so a regression that
-  //    drops `coverage` shows the block AND renders a Kansas ZIP here, which
+  //    68305 (Auburn, Nebraska) whatever point is asked, so a regression that
+  //    drops `coverage` shows the block AND renders a Nebraska ZIP here, which
   //    is the harm a reader would see. The in-state half is equally
   //    load-bearing: coverage fails OPEN, so a test that only asserted hiding
   //    would also pass on a layer that had stopped working altogether.
   //
-  //    The negative point is the worksheet's own, in Kansas and outside the
-  //    state outline, which is what the coverage test reads. It moves with the
-  //    worksheet the day Kansas goes live, and this check moves with it.
+  //    The negative point is the worksheet's own, in Nebraska and outside the
+  //    state outline, which is what the coverage test reads. It was in Kansas
+  //    until Kansas's go-live moved it, and this check moved with it; the stub
+  //    ring was widened north to 40.5 then so it still holds both points.
   {
     const ZCTA = "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11";
     function zctaBody(zip) {
@@ -1086,7 +1092,7 @@ try {
         features: [{
           attributes: { ZCTA5: zip },
           // a ring around BOTH probe points, so geometry never decides this
-          geometry: { rings: [[[-96, 38], [-91, 38], [-91, 39], [-96, 39], [-96, 38]]] }
+          geometry: { rings: [[[-96.5, 38], [-91, 38], [-91, 40.5], [-96.5, 40.5], [-96.5, 38]]] }
         }]
       });
     }
@@ -1114,7 +1120,7 @@ try {
       const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=zip-code`, async (p) => {
         await p.route("**/data/app/tiles/zip-code.pmtiles", (r) => r.abort());
         await p.route(`**/${ZCTA}/query**`, (r) =>
-          r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("66067") }));
+          r.fulfill({ status: 200, contentType: "application/json", body: zctaBody("68305") }));
       });
       const hidden = await page
         .waitForFunction(() => {
@@ -1124,10 +1130,10 @@ try {
         }, null, { timeout: QUERY_TIMEOUT })
         .then(() => true, () => false);
       const info = await cardText(page, "zip-code");
-      const leaked = /66067/.test(info.text || "");
+      const leaked = /68305/.test(info.text || "");
       const stillOn = await page.evaluate(
         (n) => window[n].state.layersOn["zip-code"] === true, EXPORTS_NAME);
-      check("zip-code hides outside Missouri rather than naming a Kansas ZIP",
+      check("zip-code hides outside Missouri rather than naming a Nebraska ZIP",
         hidden && !leaked && stillOn,
         `hidden=${hidden} leaked=${leaked} layersOn=${stillOn} text=${(info.text || "").slice(0, 90)}`);
       await context.close();

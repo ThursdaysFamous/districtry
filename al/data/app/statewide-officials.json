@@ -1,0 +1,85 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from al/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Alabama",
+ "usSenate": [
+  {
+   "name": "Katie Boyd Britt",
+   "party": "Republican",
+   "url": "https://www.britt.senate.gov/",
+   "office": "416 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-5744"
+  },
+  {
+   "name": "Tommy Tuberville",
+   "party": "Republican",
+   "url": "https://www.tuberville.senate.gov",
+   "office": "455 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-4124"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Kay Ivey",
+   "url": "https://governor.alabama.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Will Ainsworth",
+   "url": "https://ltgov.alabama.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Steve Marshall",
+   "url": "https://www.alabamaag.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Wes Allen",
+   "url": "https://www.sos.alabama.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Young Boozer",
+   "url": "https://treasury.alabama.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Andrew Sorrell",
+   "url": "https://auditor.alabama.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Commissioner of Agriculture and Industries",
+   "name": "Rick Pate",
+   "url": "https://agi.alabama.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Public Service Commission President",
+   "name": "Cynthia Lee Almond",
+   "url": "https://psc.alabama.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Public Service Commissioner, Place 1",
+   "name": "Jeremy H. Oden",
+   "url": "https://psc.alabama.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Public Service Commissioner, Place 2",
+   "name": "Chris V. Beeker III",
+   "url": "https://psc.alabama.gov/",
+   "verified": "2026-11-12"
+  }
+ ],
+ "officersNote": "Alabama's voters also elect the justices of the Supreme Court and the judges of the Court of Civil Appeals and the Court of Criminal Appeals statewide. They are not listed here yet."
+}

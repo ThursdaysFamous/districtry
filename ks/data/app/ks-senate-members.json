@@ -1,0 +1,482 @@
+{
+  "1": {
+    "name": "Craig Bowser",
+    "party": "Republican",
+    "email": "Craig.Bowser@senate.ks.gov",
+    "capitolOffice": [
+      "Room 235-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7379"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_bowser_craig_1/"
+  },
+  "2": {
+    "name": "Marci Francisco",
+    "party": "Democratic",
+    "email": "Marci.Francisco@senate.ks.gov",
+    "capitolOffice": [
+      "Room 134-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7364"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_francisco_marci_1/"
+  },
+  "3": {
+    "name": "Rick Kloos",
+    "party": "Republican",
+    "email": "Rick.Kloos@senate.ks.gov",
+    "capitolOffice": [
+      "Room 418-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7645"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_kloos_rick_1/"
+  },
+  "4": {
+    "name": "David Haley",
+    "party": "Democratic",
+    "email": "David.Haley@senate.ks.gov",
+    "capitolOffice": [
+      "Room 134-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7376"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_haley_david_1/"
+  },
+  "5": {
+    "name": "Jeff Klemp",
+    "party": "Republican",
+    "email": "Jeff.Klemp@senate.ks.gov",
+    "capitolOffice": [
+      "Room 225-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7522"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_klemp_jeff_1/"
+  },
+  "6": {
+    "name": "Pat Pettey",
+    "party": "Democratic",
+    "email": "Pat.Pettey@senate.ks.gov",
+    "capitolOffice": [
+      "Room 125-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7375"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_pettey_pat_1/"
+  },
+  "7": {
+    "name": "Ethan Corson",
+    "party": "Democratic",
+    "email": "Ethan.Corson@senate.ks.gov",
+    "capitolOffice": [
+      "Room 125-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7390"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_corson_ethan_1/"
+  },
+  "8": {
+    "name": "Cindy Holscher",
+    "party": "Democratic",
+    "email": "Cindy.Holscher@senate.ks.gov",
+    "capitolOffice": [
+      "Room 134-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7659"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_holscher_cindy_1/"
+  },
+  "9": {
+    "name": "Beverly Gossage",
+    "party": "Republican",
+    "email": "Beverly.Gossage@senate.ks.gov",
+    "capitolOffice": [
+      "Room 445-S",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7382"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_gossage_beverly_1/"
+  },
+  "10": {
+    "name": "Mike Thompson",
+    "party": "Republican",
+    "email": "Mike.Thompson@senate.ks.gov",
+    "capitolOffice": [
+      "Room 136-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7362"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_thompson_mike_1/"
+  },
+  "11": {
+    "name": "Kellie Warren",
+    "party": "Republican",
+    "email": "Kellie.Warren@senate.ks.gov",
+    "capitolOffice": [
+      "Room 419-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7646"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_warren_kellie_1/"
+  },
+  "12": {
+    "name": "Caryn Tyson",
+    "party": "Republican",
+    "email": "Caryn.Tyson@senate.ks.gov",
+    "capitolOffice": [
+      "Room 123-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-6838"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_tyson_caryn_1/"
+  },
+  "13": {
+    "name": "Tim Shallenburger",
+    "party": "Republican",
+    "email": "Tim.Shallenburger@senate.ks.gov",
+    "capitolOffice": [
+      "Room 341-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7361"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_shallenburger_tim_1/"
+  },
+  "14": {
+    "name": "Michael Fagg",
+    "party": "Republican",
+    "email": "Michael.Fagg@senate.ks.gov",
+    "capitolOffice": [
+      "Room 234-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7678"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_fagg_michael_1/"
+  },
+  "15": {
+    "name": "Virgil Peck",
+    "party": "Republican",
+    "email": "Virgil.Peck@senate.ks.gov",
+    "capitolOffice": [
+      "Room 234-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7742"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_peck_virgil_1/"
+  },
+  "16": {
+    "name": "Ty Masterson",
+    "party": "Republican",
+    "email": "Ty.Masterson@senate.ks.gov",
+    "capitolOffice": [
+      "Room 332-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-2419"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_masterson_ty_1/"
+  },
+  "17": {
+    "name": "Mike Argabright",
+    "party": "Republican",
+    "email": "Mike.Argabright@senate.ks.gov",
+    "capitolOffice": [
+      "Room 235-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7367"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_argabright_mike_1/"
+  },
+  "18": {
+    "name": "Kenny Titus",
+    "party": "Republican",
+    "email": "Kenny.Titus@senate.ks.gov",
+    "capitolOffice": [
+      "Room 124-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7656"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_titus_kenny_1/"
+  },
+  "19": {
+    "name": "Patrick Schmidt",
+    "party": "Democratic",
+    "email": "Patrick.Schmidt@senate.ks.gov",
+    "capitolOffice": [
+      "Room 135-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7372"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_schmidt_patrick_1/"
+  },
+  "20": {
+    "name": "Brenda Dietrich",
+    "party": "Republican",
+    "email": "Brenda.Dietrich@senate.ks.gov",
+    "capitolOffice": [
+      "Room 223-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7648"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_dietrich_brenda_1/"
+  },
+  "21": {
+    "name": "Dinah Sykes",
+    "party": "Democratic",
+    "email": "Dinah.Sykes@senate.ks.gov",
+    "capitolOffice": [
+      "Room 318-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-3245"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_sykes_dinah_1/"
+  },
+  "22": {
+    "name": "Brad Starnes",
+    "party": "Republican",
+    "email": "Brad.Starnes@senate.ks.gov",
+    "capitolOffice": [
+      "Room 124-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7360"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_starnes_brad_1/"
+  },
+  "23": {
+    "name": "Adam Thomas",
+    "party": "Republican",
+    "email": "Adam.Thomas@senate.ks.gov",
+    "capitolOffice": [
+      "Room 225-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7358"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_thomas_adam_1/"
+  },
+  "24": {
+    "name": "Scott Hill",
+    "party": "Republican",
+    "email": "Scott.Hill@senate.ks.gov",
+    "capitolOffice": [
+      "Room 224-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7670"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_hill_scott_1/"
+  },
+  "25": {
+    "name": "Silas Miller",
+    "party": "Democratic",
+    "email": "Silas.Miller@senate.ks.gov",
+    "capitolOffice": [
+      "Room 135-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7391"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_miller_silas_1/"
+  },
+  "26": {
+    "name": "Chase Blasi",
+    "party": "Republican",
+    "email": "Chase.Blasi@senate.ks.gov",
+    "capitolOffice": [
+      "Room 330-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-2497"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_blasi_chase_1/"
+  },
+  "27": {
+    "name": "Joseph Claeys",
+    "party": "Republican",
+    "email": "Joseph.Claeys@senate.ks.gov",
+    "capitolOffice": [
+      "Room 237-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7353"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_claeys_joseph_1/"
+  },
+  "28": {
+    "name": "Mike Petersen",
+    "party": "Republican",
+    "email": "Mike.Petersen@senate.ks.gov",
+    "capitolOffice": [
+      "Room 345-S",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7355"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_petersen_mike_1/"
+  },
+  "29": {
+    "name": "Oletha Faust Goudeau",
+    "party": "Democratic",
+    "email": "Oletha.Faust-Goudeau@senate.ks.gov",
+    "capitolOffice": [
+      "Room 135-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7387"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_faust_goudeau_oletha_1/"
+  },
+  "30": {
+    "name": "Renee Erickson",
+    "party": "Republican",
+    "email": "Renee.Erickson@senate.ks.gov",
+    "capitolOffice": [
+      "Room 445-S",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7476"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_erickson_renee_1/"
+  },
+  "31": {
+    "name": "Stephen Owens",
+    "party": "Republican",
+    "email": "Stephen.Owens@senate.ks.gov",
+    "capitolOffice": [
+      "Room 441-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7377"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_owens_stephen_1/"
+  },
+  "32": {
+    "name": "Larry Alley",
+    "party": "Republican",
+    "email": "Larry.Alley@senate.ks.gov",
+    "capitolOffice": [
+      "Room 441-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7370"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_alley_larry_1/"
+  },
+  "33": {
+    "name": "Tory Marie Blew",
+    "party": "Republican",
+    "email": "ToryMarie.Blew@senate.ks.gov",
+    "capitolOffice": [
+      "Room 224-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7682"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_blew_marie_1/"
+  },
+  "34": {
+    "name": "Michael Murphy",
+    "party": "Republican",
+    "email": "Michael.Murphy@senate.ks.gov",
+    "capitolOffice": [
+      "Room 237-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-6981"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_murphy_michael_1/"
+  },
+  "35": {
+    "name": "TJ Rose",
+    "party": "Republican",
+    "email": "TJ.Rose@senate.ks.gov",
+    "capitolOffice": [
+      "Room 418-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7394"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_rose_tj_1/"
+  },
+  "36": {
+    "name": "Elaine Bowers",
+    "party": "Republican",
+    "email": "Elaine.Bowers@senate.ks.gov",
+    "capitolOffice": [
+      "Room 223-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7389"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_bowers_elaine_1/"
+  },
+  "37": {
+    "name": "Doug Shane",
+    "party": "Republican",
+    "email": "Doug.Shane@senate.ks.gov",
+    "capitolOffice": [
+      "Room 237-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7368"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_shane_doug_1/"
+  },
+  "38": {
+    "name": "Ronald Ryckman",
+    "party": "Republican",
+    "email": "Ron.Ryckman@senate.ks.gov",
+    "capitolOffice": [
+      "Room 236-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7359"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_ryckman_ronald_1/"
+  },
+  "39": {
+    "name": "William Clifford",
+    "party": "Republican",
+    "email": "William.Clifford@senate.ks.gov",
+    "capitolOffice": [
+      "Room 236-E",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7694"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_clifford_william_1/"
+  },
+  "40": {
+    "name": "Rick Billinger",
+    "party": "Republican",
+    "email": "Rick.Billinger@senate.ks.gov",
+    "capitolOffice": [
+      "Room 545-S",
+      "300 SW 10th Ave",
+      "Topeka, KS 66612",
+      "785-296-7399"
+    ],
+    "url": "https://www.kslegislature.gov/b2025_26/legislators/sen_billinger_rick_1/"
+  }
+}

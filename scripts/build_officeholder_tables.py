@@ -608,6 +608,50 @@ def multi_member_districts(data):
     return rows
 
 
+_ORDINAL_WORDS = {
+    "first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5, "sixth": 6,
+    "seventh": 7, "eighth": 8, "ninth": 9, "tenth": 10, "eleventh": 11,
+    "twelfth": 12, "thirteenth": 13, "fourteenth": 14, "fifteenth": 15,
+    "sixteenth": 16, "seventeenth": 17, "eighteenth": 18, "nineteenth": 19,
+}
+
+
+def _ordinal_name_key(name):
+    """'10th Bristol' -> ('bristol', 10) and 'Third Middlesex' -> ('middlesex',
+    3), so a county's districts sort together and in number order; a name with
+    no leading ordinal ('Cape and Islands') sorts by itself, at 0."""
+    first, _, rest = name.partition(" ")
+    low = first.lower()
+    digits = low.rstrip("stndrh")
+    if rest and digits.isdigit() and low[len(digits):] in ("st", "nd", "rd", "th"):
+        return (rest.lower(), int(digits))
+    if rest and low in _ORDINAL_WORDS:
+        return (rest.lower(), _ORDINAL_WORDS[low])
+    return (name.lower(), 0)
+
+
+def named_districts(data):
+    """Massachusetts: every district of both chambers is NAMED for the
+    counties it lies in rather than numbered ("10th Bristol", "Third
+    Middlesex", "Cape and Islands"), each record carrying its full name as
+    `title` and its one member as {"seats": 1, "members": [...]}. One row per
+    seat, labelled with the district's own name and the word District, as the
+    Commonwealth writes it, in county and number order; a seat the roster
+    names nobody for is carried as unnamed."""
+    rows = []
+    for k in sorted(data, key=lambda k: _ordinal_name_key(
+            str((data[k] or {}).get("title") or k) if isinstance(data[k], dict) else k)):
+        rec = data[k] if isinstance(data[k], dict) else {}
+        title = str(rec.get("title") or k)
+        people = [m for m in rec.get("members") or [] if isinstance(m, dict)]
+        seats = int(rec.get("seats", len(people) or 1))
+        if len(people) > seats:
+            fail("District %s lists %d members for %d seats" % (k, len(people), seats))
+        for person in people + [{}] * (seats - len(people)):
+            rows.append(("%s District" % title, person))
+    return rows
+
+
 def _named_district_key(name):
     """'Belknap 9' -> ('belknap', 9), so Belknap 2 sorts before Belknap 10."""
     county, _, number = name.rpartition(" ")
@@ -661,6 +705,7 @@ def nh_house_districts(data):
 ADAPTERS = {
     "nh_house_districts": nh_house_districts,
     "multi_member_districts": multi_member_districts,
+    "named_districts": named_districts,
     "borough_officials": borough_officials,
     "supreme_justices": supreme_justices,
     "appellate_justices": appellate_justices,

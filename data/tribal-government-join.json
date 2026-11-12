@@ -10,6 +10,7 @@
   "Iowa",
   "Kentucky",
   "Louisiana",
+  "Maryland",
   "Michigan",
   "Minnesota",
   "Mississippi",
@@ -28,12 +29,19 @@
   "Wisconsin"
  ],
  "statesNotYetCovered": [
+  "Alabama",
   "Arizona",
   "California",
+  "Colorado",
+  "Connecticut",
   "Florida",
   "Georgia",
+  "Kansas",
+  "Massachusetts",
   "Nevada",
+  "Oregon",
   "Texas",
+  "Utah",
   "Washington"
  ],
  "areas": {

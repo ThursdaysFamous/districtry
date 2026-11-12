@@ -141,6 +141,18 @@ SOURCES = {
     "fl": "fl/data/app/metro-outline.json",
     "oh": "oh/data/app/metro-outline.json",
     "wa": "wa/data/app/metro-outline.json",
+    # Batch 3 (Massachusetts, Colorado, Maryland, Alabama, Oregon,
+    # Connecticut, Utah, Kansas), the same shape. Connecticut's is the
+    # dissolve of its nine planning regions, which the Census draws where
+    # counties were until 2022.
+    "ma": "ma/data/app/metro-outline.json",
+    "co": "co/data/app/metro-outline.json",
+    "md": "md/data/app/metro-outline.json",
+    "al": "al/data/app/metro-outline.json",
+    "or": "or/data/app/metro-outline.json",
+    "ct": "ct/data/app/metro-outline.json",
+    "ut": "ut/data/app/metro-outline.json",
+    "ks": "ks/data/app/metro-outline.json",
 }
 
 # Degrees. 0.002 is about 220 m north-south and 165 m east-west at 42 N.
