@@ -1,0 +1,39 @@
+{
+ "state": "Vermont",
+ "usps": "VT",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Phil Scott",
+   "url": "https://governor.vermont.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "John Rodgers",
+   "url": "https://ltgov.vermont.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Sarah Copeland Hanzas",
+   "url": "https://sos.vermont.gov/secretarys-desk",
+   "match": [
+    "Secretary Copeland Hanzas"
+   ]
+  },
+  {
+   "office": "Attorney General",
+   "name": "Charity Clark",
+   "url": "https://ago.vermont.gov/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Mike Pieciak",
+   "url": "https://www.vermonttreasurer.gov/"
+  },
+  {
+   "office": "Auditor of Accounts",
+   "name": "Doug Hoffer",
+   "url": "https://auditor.vermont.gov/"
+  }
+ ]
+}

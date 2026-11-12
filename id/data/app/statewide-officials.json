@@ -1,0 +1,66 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from id/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Idaho",
+ "usSenate": [
+  {
+   "name": "Mike Crapo",
+   "party": "Republican",
+   "url": "https://www.crapo.senate.gov",
+   "office": "239 Dirksen Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-6142"
+  },
+  {
+   "name": "James E. Risch",
+   "party": "Republican",
+   "url": "https://www.risch.senate.gov",
+   "office": "483 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2752"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Brad Little",
+   "url": "https://gov.idaho.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Scott Bedke",
+   "url": "https://lgo.idaho.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Phil McGrane",
+   "url": "https://sos.idaho.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Raúl Labrador",
+   "url": "https://www.ag.idaho.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Controller",
+   "name": "Brandon Woolf",
+   "url": "https://www.sco.idaho.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Julie Ellsworth",
+   "url": "https://sto.idaho.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Superintendent of Public Instruction",
+   "name": "Debbie Critchfield",
+   "url": "https://www.sde.idaho.gov/",
+   "verified": "2026-11-12"
+  }
+ ]
+}

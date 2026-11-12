@@ -133,12 +133,26 @@ def verify_officer(rec):
         text = page_text(fetch(url, headers))
     except SystemExit:  # scraper_common's robots refusal exits after saying why
         raise Unreadable("robots.txt refuses this client")
+    if name_on_page(rec, text):
+        return True
     # a challenge answered in the page's place says nothing about the name
     # (measured 2026-11-10: www.sos.state.mn.us served a Radware captcha page
-    # after a few reads). It is never answered or worked around.
+    # after a few reads). It is never answered or worked around. It is asked
+    # only once the name is missing, because a real page can say "captcha"
+    # too: on 2026-11-12 portal.ct.gov/ag served the Attorney General's page,
+    # naming him, with "please fill out the reCAPTCHA" in its newsletter form,
+    # and asking the challenge question first called that page a challenge.
+    # "The requested URL was rejected" is an F5 firewall's refusal page, which
+    # ltgov.delaware.gov served in place of its page after a few reads on
+    # 2026-11-12, having served the page itself minutes earlier.
     if len(text) < 8000 and re.search(r"captcha|are you a (?:ro)?bot|verify you are human|"
-                                      r"attention required|just a moment", text):
+                                      r"attention required|just a moment|incapsula incident|"
+                                      r"the requested url was rejected", text):
         raise Unreadable("a challenge page answered instead of the page")
+    return False
+
+
+def name_on_page(rec, text):
     if any(fold(w) in text for w in [rec["name"]] + list(rec.get("match") or [])):
         return True
     # "Abigail Spanberger" printed as "Abigail D. Spanberger": the given name,
@@ -159,15 +173,24 @@ def senators(usps, xml_text):
         if f("state") != usps:
             continue
         party = {"R": "Republican", "D": "Democratic", "I": "Independent"}.get(f("party"), f("party"))
+        # the Senate's list puts a suffix in the first name ("Angus S., Jr."
+        # for Angus S. King, Jr.), so a plain join reads "Angus S., Jr. King"
+        first, suffix = f("first_name"), ""
+        m = re.match(r"^(.*?),\s*(Jr\.|Sr\.|II|III|IV)$", first)
+        if m:
+            first, suffix = m.group(1), m.group(2)
         rec = {
-            "name": "%s %s" % (f("first_name"), f("last_name")),
+            "name": "%s %s%s" % (first, f("last_name"), ", " + suffix if suffix else ""),
+            "_last": f("last_name"),
             "party": party,
             "url": f("website") or None,
             "office": f("address") or None,
             "phone": f("phone") or None,
         }
         out.append({k: v for k, v in rec.items() if v})
-    out.sort(key=lambda r: r["name"].split()[-1])
+    out.sort(key=lambda r: r["_last"])
+    for r in out:
+        r.pop("_last", None)
     return out
 
 

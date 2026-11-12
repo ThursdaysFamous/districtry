@@ -1,0 +1,232 @@
+{
+  "1": {
+    "name": "Scott D. Sandall",
+    "party": "Republican",
+    "email": "ssandall@le.utah.gov",
+    "phone": "cell 435-279-7551",
+    "url": "https://senate.utah.gov/sen/SANDASD/"
+  },
+  "2": {
+    "name": "Chris H. Wilson",
+    "party": "Republican",
+    "email": "cwilson@le.utah.gov",
+    "phone": "work 435-752-7355",
+    "phonesExtra": [
+      "cell 435-770-2861",
+      "home 435-755-7013"
+    ],
+    "url": "https://senate.utah.gov/sen/WILSOCH/"
+  },
+  "3": {
+    "name": "John D. Johnson",
+    "party": "Republican",
+    "email": "jjohnson@le.utah.gov",
+    "phone": "cell 385-272-7428",
+    "url": "https://senate.utah.gov/sen/JOHNSJD/"
+  },
+  "4": {
+    "name": "Calvin R. Musselman",
+    "party": "Republican",
+    "email": "cmusselman@le.utah.gov",
+    "phone": "work 801-773-1777",
+    "phonesExtra": [
+      "cell 801-941-6188"
+    ],
+    "url": "https://senate.utah.gov/sen/MUSSECR/"
+  },
+  "5": {
+    "name": "Ann Millner",
+    "party": "Republican",
+    "email": "amillner@le.utah.gov",
+    "phone": "work 801-900-3897",
+    "url": "https://senate.utah.gov/sen/MILLNA/"
+  },
+  "6": {
+    "name": "Jerry W Stevenson",
+    "party": "Republican",
+    "email": "jwstevenson@le.utah.gov",
+    "phone": "cell 801-678-3147",
+    "phonesExtra": [
+      "home 801-544-5172"
+    ],
+    "url": "https://senate.utah.gov/sen/STEVEJW/"
+  },
+  "7": {
+    "name": "J. Stuart Adams",
+    "party": "Republican",
+    "email": "jsadams@le.utah.gov",
+    "phone": "home 801-538-1035",
+    "url": "https://senate.utah.gov/sen/ADAMSJS/"
+  },
+  "8": {
+    "name": "Todd Weiler",
+    "party": "Republican",
+    "email": "tweiler@le.utah.gov",
+    "phone": "cell 801-599-9823",
+    "url": "https://senate.utah.gov/sen/WEILET/"
+  },
+  "9": {
+    "name": "Jen Plumb",
+    "party": "Democratic",
+    "email": "jplumb@le.utah.gov",
+    "phone": "cell and home 801-870-0228",
+    "url": "https://senate.utah.gov/sen/PLUMBJ/"
+  },
+  "10": {
+    "name": "Luz Escamilla",
+    "party": "Democratic",
+    "email": "lescamilla@le.utah.gov",
+    "phone": "cell 801-550-6434",
+    "url": "https://senate.utah.gov/sen/ESCAML/"
+  },
+  "11": {
+    "name": "Emily Buss",
+    "party": "Forward Party",
+    "email": "ebuss@le.utah.gov",
+    "phone": "cell 801-598-4734",
+    "url": "https://senate.utah.gov/sen/BUSSEM/"
+  },
+  "12": {
+    "name": "Karen Kwan",
+    "party": "Democratic",
+    "email": "kkwan@le.utah.gov",
+    "phone": "cell 385-249-0683",
+    "url": "https://senate.utah.gov/sen/KWANK/"
+  },
+  "13": {
+    "name": "Nate Blouin",
+    "party": "Democratic",
+    "email": "nblouin@le.utah.gov",
+    "phone": "cell 801-597-2409",
+    "url": "https://senate.utah.gov/sen/BLOUIN/"
+  },
+  "14": {
+    "name": "Stephanie Pitcher",
+    "party": "Democratic",
+    "email": "spitcher@le.utah.gov",
+    "phone": "cell 385-272-8032",
+    "url": "https://senate.utah.gov/sen/PITCHS/"
+  },
+  "15": {
+    "name": "Kathleen A. Riebe",
+    "party": "Democratic",
+    "email": "kriebe@le.utah.gov",
+    "phone": "work 385-222-1742",
+    "phonesExtra": [
+      "cell and home 801-599-5753"
+    ],
+    "url": "https://senate.utah.gov/sen/RIEBEK/"
+  },
+  "16": {
+    "name": "Wayne A. Harper",
+    "party": "Republican",
+    "email": "wharper@le.utah.gov",
+    "phone": "home 801-566-5466",
+    "url": "https://senate.utah.gov/sen/HARPEWA/"
+  },
+  "17": {
+    "name": "Lincoln Fillmore",
+    "party": "Republican",
+    "email": "lfillmore@le.utah.gov",
+    "phone": "cell 801-548-0144",
+    "url": "https://senate.utah.gov/sen/FILLML/"
+  },
+  "18": {
+    "name": "Daniel McCay",
+    "party": "Republican",
+    "email": "dmccay@le.utah.gov",
+    "phone": "cell 801-810-4110",
+    "url": "https://senate.utah.gov/sen/MCCAYD/"
+  },
+  "19": {
+    "name": "Kirk A. Cullimore",
+    "party": "Republican",
+    "email": "kcullimore@le.utah.gov",
+    "phone": "cell 385-867-9474",
+    "url": "https://senate.utah.gov/sen/CULLIKA/"
+  },
+  "20": {
+    "name": "Ronald M. Winterton",
+    "party": "Republican",
+    "email": "rwinterton@le.utah.gov",
+    "phone": "cell 435-299-8531",
+    "phonesExtra": [
+      "home 435-722-2729"
+    ],
+    "url": "https://senate.utah.gov/sen/WINTER/"
+  },
+  "21": {
+    "name": "Brady Brammer",
+    "party": "Republican",
+    "email": "bbrammer@le.utah.gov",
+    "phone": "cell and home 801-709-1790",
+    "url": "https://senate.utah.gov/sen/BRAMMB/"
+  },
+  "22": {
+    "name": "Heidi Balderree",
+    "party": "Republican",
+    "email": "hbalderree@le.utah.gov",
+    "phone": "cell 385-910-3237",
+    "url": "https://senate.utah.gov/sen/BALDEH/"
+  },
+  "23": {
+    "name": "Keith Grover",
+    "party": "Republican",
+    "email": "keithgrover@le.utah.gov",
+    "phone": "cell 801-319-0170",
+    "url": "https://senate.utah.gov/sen/GROVEK/"
+  },
+  "24": {
+    "name": "Keven J. Stratton",
+    "party": "Republican",
+    "email": "kstratton@le.utah.gov",
+    "phone": "cell 801-836-6010",
+    "url": "https://senate.utah.gov/sen/STRATKJ/"
+  },
+  "25": {
+    "name": "Michael K. McKell",
+    "party": "Republican",
+    "email": "mmckell@le.utah.gov",
+    "phone": "work 801-798-9000",
+    "phonesExtra": [
+      "cell 801-210-1495"
+    ],
+    "url": "https://senate.utah.gov/sen/MCKELMK/"
+  },
+  "26": {
+    "name": "David P. Hinkins",
+    "party": "Republican",
+    "email": "dhinkins@le.utah.gov",
+    "phone": "work 435-748-2828",
+    "phonesExtra": [
+      "cell 435-749-2828",
+      "home 435-384-5550"
+    ],
+    "url": "https://senate.utah.gov/sen/HINKIDP/"
+  },
+  "27": {
+    "name": "Derrin R. Owens",
+    "party": "Republican",
+    "email": "derrinowens@le.utah.gov",
+    "phone": "cell 435-851-1284",
+    "url": "https://senate.utah.gov/sen/OWENSD/"
+  },
+  "28": {
+    "name": "Evan J. Vickers",
+    "party": "Republican",
+    "email": "evickers@le.utah.gov",
+    "phone": "work 435-586-9651",
+    "phonesExtra": [
+      "cell 435-817-5565",
+      "home 435-586-4399"
+    ],
+    "url": "https://senate.utah.gov/sen/VICKEEJ/"
+  },
+  "29": {
+    "name": "Don L. Ipson",
+    "party": "Republican",
+    "email": "dipson@le.utah.gov",
+    "phone": "cell 435-817-5281",
+    "url": "https://senate.utah.gov/sen/IPSONDL/"
+  }
+}

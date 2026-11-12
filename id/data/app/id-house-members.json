@@ -1,0 +1,667 @@
+{
+  "1": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mark Sauter",
+        "party": "Republican",
+        "email": "MSauter@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1035",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=1"
+      },
+      {
+        "name": "Cornel S. Rasor",
+        "party": "Republican",
+        "email": "CRasor@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1185",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=1"
+      }
+    ]
+  },
+  "2": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Heather Scott",
+        "party": "Republican",
+        "email": "HScott@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1190",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=2"
+      },
+      {
+        "name": "Dale R. Hawkins",
+        "party": "Republican",
+        "email": "DHawkins@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1070",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=2"
+      }
+    ]
+  },
+  "3": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Vito Barbieri",
+        "party": "Republican",
+        "email": "VBar@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1177",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=3"
+      },
+      {
+        "name": "Jordan Redman",
+        "party": "Republican",
+        "email": "JRedman@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1180",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=3"
+      }
+    ]
+  },
+  "4": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Joe Alfieri",
+        "party": "Republican",
+        "email": "JAlfieri@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1065",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=4"
+      },
+      {
+        "name": "Elaine Price",
+        "party": "Republican",
+        "email": "EPrice@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1048",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=4"
+      }
+    ]
+  },
+  "5": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Ron Mendive",
+        "party": "Republican",
+        "email": "RMendive@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1040",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=5"
+      },
+      {
+        "name": "Tony Wisniewski",
+        "party": "Republican",
+        "email": "TWisniewski@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1060",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=5"
+      }
+    ]
+  },
+  "6": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Lori Ann McCann",
+        "party": "Republican",
+        "email": "LMcCann@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1184",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=6"
+      },
+      {
+        "name": "Brandon Mitchell",
+        "party": "Republican",
+        "email": "BMitchell@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1175",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=6"
+      }
+    ]
+  },
+  "7": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Kyle Harris",
+        "party": "Republican",
+        "email": "KHarris@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1133",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=7"
+      },
+      {
+        "name": "Charlie Shepherd",
+        "party": "Republican",
+        "email": "CShepherd@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1067",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=7"
+      }
+    ]
+  },
+  "8": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Robert “Rob” Beiswenger",
+        "party": "Republican",
+        "email": "RBeiswenger@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1181",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=8"
+      },
+      {
+        "name": "Faye Thompson",
+        "party": "Republican",
+        "email": "FThompson@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1054",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=8"
+      }
+    ]
+  },
+  "9": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "John Shirts",
+        "party": "Republican",
+        "email": "JShirts@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1166",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=9"
+      },
+      {
+        "name": "Judy Boyle",
+        "party": "Republican",
+        "email": "JBoyle@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1064",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=9"
+      }
+    ]
+  },
+  "10": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mike Moyle",
+        "party": "Republican",
+        "email": "MMoyle@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1122",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=10"
+      },
+      {
+        "name": "Bruce D. Skaug",
+        "party": "Republican",
+        "email": "BSkaug@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1178",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=10"
+      }
+    ]
+  },
+  "11": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Kent A. Marmon",
+        "party": "Republican",
+        "email": "KMarmon@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1052",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=11"
+      },
+      {
+        "name": "Lucas B. Cayler",
+        "party": "Republican",
+        "email": "LCayler@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1044",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=11"
+      }
+    ]
+  },
+  "12": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jeff J. Cornilles",
+        "party": "Republican",
+        "email": "JCornilles@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1033",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=12"
+      },
+      {
+        "name": "Jaron Crane",
+        "party": "Republican",
+        "email": "JCrane@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1059",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=12"
+      }
+    ]
+  },
+  "13": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Brent Crane",
+        "party": "Republican",
+        "email": "BCrane@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1058",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=13"
+      },
+      {
+        "name": "Steven Tanner",
+        "party": "Republican",
+        "email": "STanner@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1063",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=13"
+      }
+    ]
+  },
+  "14": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Ted Hill",
+        "party": "Republican",
+        "email": "THill@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1124",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=14"
+      },
+      {
+        "name": "Josh Tanner",
+        "party": "Republican",
+        "email": "JTanner@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1057",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=14"
+      }
+    ]
+  },
+  "15": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Steve Berch",
+        "party": "Democratic",
+        "email": "SBerch@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1039",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=15"
+      },
+      {
+        "name": "Dori Healey",
+        "party": "Republican",
+        "email": "DHealey@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1176",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=15"
+      }
+    ]
+  },
+  "16": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Soñia R. Galaviz",
+        "party": "Democratic",
+        "email": "SGalaviz@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1083",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=16"
+      },
+      {
+        "name": "Anne Henderson Haws",
+        "party": "Democratic",
+        "email": "AHendersonHaws@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1075",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=16"
+      }
+    ]
+  },
+  "17": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "John Gannon",
+        "party": "Democratic",
+        "email": "JGannon@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1082",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=17"
+      },
+      {
+        "name": "Megan Egbert",
+        "party": "Democratic",
+        "email": "MEgbert@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1049",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=17"
+      }
+    ]
+  },
+  "18": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Ilana Rubel",
+        "party": "Democratic",
+        "email": "IRubel@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1034",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=18"
+      },
+      {
+        "name": "Brooke Green",
+        "party": "Democratic",
+        "email": "BGreen@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1080",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=18"
+      }
+    ]
+  },
+  "19": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Monica C. Church",
+        "party": "Democratic",
+        "email": "MChurch@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1078",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=19"
+      },
+      {
+        "name": "Chris Mathias",
+        "party": "Democratic",
+        "email": "CMathias@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1076",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=19"
+      }
+    ]
+  },
+  "20": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Joe A. Palmer",
+        "party": "Republican",
+        "email": "JPalmer@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1062",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=20"
+      },
+      {
+        "name": "James Holtzclaw",
+        "party": "Republican",
+        "email": "JHoltzclaw@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1041",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=20"
+      }
+    ]
+  },
+  "21": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "James Petzke",
+        "party": "Republican",
+        "email": "JPetzke@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1043",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=21"
+      },
+      {
+        "name": "Jeff Ehlers",
+        "party": "Republican",
+        "email": "JEhlers@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1072",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=21"
+      }
+    ]
+  },
+  "22": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "John Vander Woude",
+        "party": "Republican",
+        "email": "JVanderWoude@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1037",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=22"
+      },
+      {
+        "name": "Jason A. Monks",
+        "party": "Republican",
+        "email": "JMonks@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1036",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=22"
+      }
+    ]
+  },
+  "23": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Chris Bruce",
+        "party": "Republican",
+        "email": "CBruce@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1055",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=23"
+      },
+      {
+        "name": "Shawn Dygert",
+        "party": "Republican",
+        "email": "SDygert@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1047",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=23"
+      }
+    ]
+  },
+  "24": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Clint Hostetler",
+        "party": "Republican",
+        "email": "CHostetler@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1024",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=24"
+      },
+      {
+        "name": "Steve Miller",
+        "party": "Republican",
+        "email": "SMiller@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1061",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=24"
+      }
+    ]
+  },
+  "25": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Don Hall",
+        "party": "Republican",
+        "email": "DHall@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1188",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=25"
+      },
+      {
+        "name": "David J. Leavitt",
+        "party": "Republican",
+        "email": "DLeavitt@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1182",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=25"
+      }
+    ]
+  },
+  "26": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Mike J. Pohanka",
+        "party": "Republican",
+        "email": "MPohanka@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1174",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=26"
+      },
+      {
+        "name": "Jack Nelsen",
+        "party": "Republican",
+        "email": "JNelsen@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1032",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=26"
+      }
+    ]
+  },
+  "27": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Douglas T. Pickett",
+        "party": "Republican",
+        "email": "DPickett@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1123",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=27"
+      },
+      {
+        "name": "Clay Handy",
+        "party": "Republican",
+        "email": "CHandy@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1074",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=27"
+      }
+    ]
+  },
+  "28": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Richard W. “Rick” Cheatum",
+        "party": "Republican",
+        "email": "RCheatum@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1046",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=28"
+      },
+      {
+        "name": "Dan Garner",
+        "party": "Republican",
+        "email": "DGarner@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1081",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=28"
+      }
+    ]
+  },
+  "29": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Dustin Manwaring",
+        "party": "Republican",
+        "email": "DManwaring@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1079",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=29"
+      },
+      {
+        "name": "Tanya Burgoyne",
+        "party": "Republican",
+        "email": "TBurgoyne@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1031",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=29"
+      }
+    ]
+  },
+  "30": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "David M. Cannon",
+        "party": "Republican",
+        "email": "DCannon@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1086",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=30"
+      },
+      {
+        "name": "Ben G. Fuhriman",
+        "party": "Republican",
+        "email": "BFuhriman@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1038",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=30"
+      }
+    ]
+  },
+  "31": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jerald Raymond",
+        "party": "Republican",
+        "email": "JRaymond@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1183",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=31"
+      },
+      {
+        "name": "Rod Furniss",
+        "party": "Republican",
+        "email": "RFurniss@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1056",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=31"
+      }
+    ]
+  },
+  "32": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Stephanie Jo Mickelsen",
+        "party": "Republican",
+        "email": "SMickelsen@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1042",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=32"
+      },
+      {
+        "name": "Erin M. Bingham",
+        "party": "Republican",
+        "email": "EBingham@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1071",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=32"
+      }
+    ]
+  },
+  "33": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Barbara Ehardt",
+        "party": "Republican",
+        "email": "BEhardt@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1189",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=33"
+      },
+      {
+        "name": "Marco Adam Erickson",
+        "party": "Republican",
+        "email": "MErickson@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1073",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=33"
+      }
+    ]
+  },
+  "34": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Jon O. Weber",
+        "party": "Republican",
+        "email": "JWeber@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1053",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=34"
+      },
+      {
+        "name": "Britt Raybould",
+        "party": "Republican",
+        "email": "BRaybould@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1173",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=34"
+      }
+    ]
+  },
+  "35": {
+    "seats": 2,
+    "members": [
+      {
+        "name": "Michael Leman Veile",
+        "party": "Republican",
+        "email": "MVeile@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1045",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=35"
+      },
+      {
+        "name": "Josh Wheeler",
+        "party": "Republican",
+        "email": "JoshWheeler@house.idaho.gov",
+        "phone": "Statehouse (session only) 208-332-1179",
+        "url": "https://legislature.idaho.gov/legislators/membership/?yr=2026&district=35"
+      }
+    ]
+  }
+}

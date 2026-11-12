@@ -1,0 +1,387 @@
+{
+  "1": {
+    "name": "Tim Melson",
+    "party": "Republican",
+    "email": "tim.melson@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 726",
+      "Montgomery, AL 36130",
+      "(334) 261-0888"
+    ]
+  },
+  "2": {
+    "name": "Tom Butler",
+    "party": "Republican",
+    "email": "senbutler@aol.com",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 730",
+      "Montgomery, AL 36130",
+      "(334) 261-0884"
+    ]
+  },
+  "3": {
+    "name": "Arthur Orr",
+    "party": "Republican",
+    "email": "arthur.orr@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 727",
+      "Montgomery, AL 36130",
+      "(334) 261-0758"
+    ]
+  },
+  "4": {
+    "name": "Garlan Gudger",
+    "party": "Republican",
+    "email": "garlan.gudger@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 722",
+      "Montgomery, AL 36130",
+      "(334) 261-0855"
+    ]
+  },
+  "5": {
+    "name": "Matt Woods",
+    "party": "Republican",
+    "email": "matt.woods@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 737",
+      "Montgomery, AL 36130",
+      "(334) 261-0894"
+    ]
+  },
+  "6": {
+    "name": "Larry Stutts",
+    "party": "Republican",
+    "email": "larry.stutts@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 732",
+      "Montgomery, AL 36130",
+      "(334) 261-0862"
+    ]
+  },
+  "7": {
+    "name": "Sam Givhan",
+    "party": "Republican",
+    "email": "sam.givhan@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 733",
+      "Montgomery, AL 36130",
+      "(334) 261-0867"
+    ]
+  },
+  "8": {
+    "name": "Steve Livingston",
+    "party": "Republican",
+    "email": "steve.livingston@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 731",
+      "Montgomery, AL 36130",
+      "(334) 261-0858"
+    ]
+  },
+  "9": {
+    "name": "Wes Kitchens",
+    "party": "Republican",
+    "email": "wes.kitchens@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 733",
+      "Montgomery, AL 36130",
+      "(334) 261-0876"
+    ]
+  },
+  "10": {
+    "name": "Andrew Jones",
+    "party": "Republican",
+    "email": "andrew.jones@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 735",
+      "Montgomery, AL 36130",
+      "(334) 261-0857"
+    ]
+  },
+  "11": {
+    "name": "Lance Bell",
+    "party": "Republican",
+    "email": "lance.bell@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 733",
+      "Montgomery, AL 36130",
+      "(334) 261-0789"
+    ]
+  },
+  "12": {
+    "name": "Keith Kelley",
+    "party": "Republican",
+    "email": "keith.kelley@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 733",
+      "Montgomery, AL 36130",
+      "(334) 261-0846"
+    ]
+  },
+  "13": {
+    "name": "Randy Price",
+    "party": "Republican",
+    "email": "randyprice.sd13@gmail.com",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 729",
+      "Montgomery, AL 36130",
+      "(334) 261-0874"
+    ]
+  },
+  "14": {
+    "name": "April Weaver",
+    "party": "Republican",
+    "email": "april.weaver@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 733",
+      "Montgomery, AL 36130",
+      "(334) 261-0886"
+    ]
+  },
+  "15": {
+    "name": "Dan Roberts",
+    "party": "Republican",
+    "email": "dan.roberts@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 729",
+      "Montgomery, AL 36130",
+      "(334) 261-0851"
+    ]
+  },
+  "16": {
+    "name": "J. T. 'Jabo' Waggoner",
+    "party": "Republican",
+    "email": "jabo.waggoner@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 726",
+      "Montgomery, AL 36130",
+      "(334) 261-0892"
+    ]
+  },
+  "17": {
+    "name": "Shay Shelnutt",
+    "party": "Republican",
+    "email": "shay.sd17@gmail.com",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 731",
+      "Montgomery, AL 36130",
+      "(334) 261-0794"
+    ]
+  },
+  "18": {
+    "name": "Rodger M. Smitherman",
+    "party": "Democratic",
+    "email": "rodger.smitherman@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 736",
+      "Montgomery, AL 36130",
+      "(334) 261-0870"
+    ]
+  },
+  "19": {
+    "name": "Merika Coleman",
+    "party": "Democratic",
+    "email": "merika.coleman@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 737",
+      "Montgomery, AL 36130",
+      "(334) 261-0793"
+    ]
+  },
+  "20": {
+    "name": "Linda Coleman-Madison",
+    "party": "Democratic",
+    "email": "lcolemanmadison926@yahoo.com",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 737",
+      "Montgomery, AL 36130",
+      "(334) 261-0864"
+    ]
+  },
+  "21": {
+    "name": "Gerald H. Allen",
+    "party": "Republican",
+    "email": "gerald.allen@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 729",
+      "Montgomery, AL 36130",
+      "(334) 261-0889"
+    ]
+  },
+  "22": {
+    "name": "Greg Albritton",
+    "party": "Republican",
+    "email": "Gregalbrittonsenate22@gmail.com",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 727",
+      "Montgomery, AL 36130",
+      "(334) 261-0843"
+    ]
+  },
+  "23": {
+    "name": "Robert Stewart",
+    "party": "Democratic",
+    "email": "robert.stewart@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 738",
+      "Montgomery, AL 36130",
+      "(334) 261-0860"
+    ]
+  },
+  "24": {
+    "name": "Bobby D. Singleton",
+    "party": "Democratic",
+    "email": "bsingle362@gmail.com",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 740",
+      "Montgomery, AL 36130",
+      "(334) 261-0335"
+    ]
+  },
+  "25": {
+    "name": "Will Barfoot",
+    "party": "Republican",
+    "email": "will.barfoot@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 730",
+      "Montgomery, AL 36130",
+      "(334) 261-0895"
+    ]
+  },
+  "26": {
+    "name": "Kirk Hatcher",
+    "party": "Democratic",
+    "email": "kirk.hatcher@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 738",
+      "Montgomery, AL 36130",
+      "(334) 261-9001"
+    ]
+  },
+  "27": {
+    "name": "Jay Hovey",
+    "party": "Republican",
+    "email": "jay.hovey@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 735",
+      "Montgomery, AL 36130",
+      "(334) 261-0865"
+    ]
+  },
+  "28": {
+    "name": "William M. Beasley",
+    "party": "Democratic",
+    "email": "billy.beasley@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 737",
+      "Montgomery, AL 36130",
+      "(334) 261-0868"
+    ]
+  },
+  "29": {
+    "name": "Donnie Chesteen",
+    "party": "Republican",
+    "email": "donnie.chesteen@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 735",
+      "Montgomery, AL 36130",
+      "(334) 261-0879"
+    ]
+  },
+  "30": {
+    "name": "Clyde Chambliss",
+    "party": "Republican",
+    "email": "clyde.chambliss@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 721",
+      "Montgomery, AL 36130",
+      "(334) 261-0872"
+    ]
+  },
+  "31": {
+    "name": "Josh Carnley",
+    "party": "Republican",
+    "email": "josh.carnley@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 735",
+      "Montgomery, AL 36130",
+      "(334) 261-0845"
+    ]
+  },
+  "32": {
+    "name": "Chris Elliott",
+    "party": "Republican",
+    "email": "chris.elliott@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 732",
+      "Montgomery, AL 36130",
+      "(334) 261-0897"
+    ]
+  },
+  "33": {
+    "name": "Vivian Davis Figures",
+    "party": "Democratic",
+    "email": "vivian.figures@alsenate.gov",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 736",
+      "Montgomery, AL 36130",
+      "(334) 261-0871"
+    ]
+  },
+  "34": {
+    "name": "Jack W. Williams",
+    "party": "Republican",
+    "email": "jackwilliams55@icloud.com",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 734",
+      "Montgomery, AL 36130",
+      "(334) 261-0829"
+    ]
+  },
+  "35": {
+    "name": "David Sessions",
+    "party": "Republican",
+    "email": "d.r.sessions@att.net",
+    "capitolOffice": [
+      "11 S Union Street",
+      "Suite 734",
+      "Montgomery, AL 36130",
+      "(334) 261-0882"
+    ]
+  }
+}

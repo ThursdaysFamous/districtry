@@ -1,0 +1,47 @@
+{
+ "state": "Ohio",
+ "usps": "OH",
+ "officersNote": "Ohio's voters also elect the Supreme Court statewide. Its justices are not listed here yet.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Mike DeWine",
+   "url": "https://governor.ohio.gov/",
+   "headers": "browser",
+   "note": "governor.ohio.gov answered this project's token with HTTP 404 and served the browser client its robots.txt (no rule matching the page) and a page naming Governor Mike DeWine (read 2026-11-11)."
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Jim Tressel",
+   "url": "https://governor.ohio.gov/",
+   "headers": "browser",
+   "note": "The Governor's site names the Lieutenant Governor; the same measurement as the Governor's row (read 2026-11-11)."
+  },
+  {
+   "office": "Attorney General",
+   "name": "Andy Wilson",
+   "url": "https://www.ohioattorneygeneral.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Frank LaRose",
+   "url": "https://www.ohiosos.gov/",
+   "source": "https://ohio.gov/government/elected-officials",
+   "headers": "browser",
+   "note": "www.ohiosos.gov answered both this project's token and the browser client with HTTP 403 and a maintenance page, so the state's own list of elected officials at ohio.gov is the page read. ohio.gov answered the token with HTTP 404 and served the browser client its robots.txt (no rule matching the page) and the list (read 2026-11-11)."
+  },
+  {
+   "office": "Auditor of State",
+   "name": "Keith Faber",
+   "url": "https://ohioauditor.gov/",
+   "source": "https://ohio.gov/government/elected-officials",
+   "headers": "browser",
+   "note": "ohioauditor.gov's robots.txt disallows every path to every client, so the Auditor's own site is linked and never read; the state's own list of elected officials at ohio.gov is the page read, with the measurement in the Secretary of State's row (read 2026-11-11)."
+  },
+  {
+   "office": "Treasurer of State",
+   "name": "Robert Sprague",
+   "url": "https://tos.ohio.gov/"
+  }
+ ]
+}

@@ -74,19 +74,11 @@ jobs:
           # workflows that install those two pin it (2026-10-20).
           python-version: "3.14"
 
-      # tippecanoe builds the archives; apt's is 2.49, the version the gate
-      # was measured with
+      # tippecanoe builds the archives: apt's when apt answers, else the same
+      # release built from its source (the script says why)
       - name: Install tippecanoe and the tile readers
         run: |
-          # the runner image's Google Chrome apt source is unused here and once
-          # served a Packages file whose hash did not match its own Release
-          # file, failing every apt-get update (smoke-test.yml records it)
-          sudo find /etc/apt/sources.list.d -maxdepth 1 -type f \
-               \( -name '*.list' -o -name '*.sources' \) \
-               -exec grep -q 'dl\.google\.com' {} \; -print -delete 2>/dev/null || true
-          sudo apt-get update -q
-          sudo apt-get install -y -q tippecanoe
-          tippecanoe --version
+          bash scripts/install_tippecanoe.sh
           pip install -c scripts/requirements.txt shapely numpy mapbox-vector-tile pmtiles
 
       # the app's own reader (engine/index.html/vector-tiles.txt) runs in Node

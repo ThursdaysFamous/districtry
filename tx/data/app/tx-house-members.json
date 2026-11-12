@@ -1,0 +1,1493 @@
+{
+  "1": {
+    "vacant": true,
+    "vacantWhy": "The member list of the Texas House of Representatives names no one for this district.",
+    "sourceUrl": "https://house.texas.gov/members",
+    "asOf": "2026-11-11"
+  },
+  "2": {
+    "name": "Brent Money",
+    "capitolOffice": [
+      "Room E2.414",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0880"
+    ],
+    "url": "https://house.texas.gov/members/4670"
+  },
+  "3": {
+    "name": "Cecil Bell Jr.",
+    "capitolOffice": [
+      "Room E2.708",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0650"
+    ],
+    "url": "https://house.texas.gov/members/2335"
+  },
+  "4": {
+    "name": "Keith Bell",
+    "capitolOffice": [
+      "Room E2.508",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0458"
+    ],
+    "url": "https://house.texas.gov/members/3695"
+  },
+  "5": {
+    "name": "Cole Hefner",
+    "capitolOffice": [
+      "Room E2.610",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0271"
+    ],
+    "url": "https://house.texas.gov/members/3505"
+  },
+  "6": {
+    "name": "Daniel Alders",
+    "capitolOffice": [
+      "Room E2.402",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0584"
+    ],
+    "url": "https://house.texas.gov/members/4395"
+  },
+  "7": {
+    "name": "Jay Dean",
+    "capitolOffice": [
+      "Room GN.11",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0750"
+    ],
+    "url": "https://house.texas.gov/members/3515"
+  },
+  "8": {
+    "name": "Cody Harris",
+    "capitolOffice": [
+      "Room E2.504",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0730"
+    ],
+    "url": "https://house.texas.gov/members/3580"
+  },
+  "9": {
+    "name": "Trent Ashby",
+    "capitolOffice": [
+      "Room E2.806",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0508"
+    ],
+    "url": "https://house.texas.gov/members/2330"
+  },
+  "10": {
+    "name": "Brian Harrison",
+    "capitolOffice": [
+      "Room E1.414",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0516"
+    ],
+    "url": "https://house.texas.gov/members/4085"
+  },
+  "11": {
+    "name": "Joanne Shofner",
+    "capitolOffice": [
+      "Room E1.208",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0592"
+    ],
+    "url": "https://house.texas.gov/members/4755"
+  },
+  "12": {
+    "name": "Trey Wharton",
+    "capitolOffice": [
+      "Room E1.312",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0412"
+    ],
+    "url": "https://house.texas.gov/members/4795"
+  },
+  "13": {
+    "name": "Angelia Orr",
+    "capitolOffice": [
+      "Room E1.220",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0600"
+    ],
+    "url": "https://house.texas.gov/members/4340"
+  },
+  "14": {
+    "name": "Paul Dyson",
+    "capitolOffice": [
+      "Room E2.702",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0698"
+    ],
+    "url": "https://house.texas.gov/members/4475"
+  },
+  "15": {
+    "name": "Steve Toth",
+    "capitolOffice": [
+      "Room E1.404",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0797"
+    ],
+    "url": "https://house.texas.gov/members/2825"
+  },
+  "16": {
+    "name": "Will Metcalf",
+    "capitolOffice": [
+      "Room 1N.12",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0726"
+    ],
+    "url": "https://house.texas.gov/members/2900"
+  },
+  "17": {
+    "name": "Stan Gerdes",
+    "capitolOffice": [
+      "Room E2.604",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0682"
+    ],
+    "url": "https://house.texas.gov/members/4195"
+  },
+  "18": {
+    "name": "Janis Holt",
+    "capitolOffice": [
+      "Room E1.416",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0570"
+    ],
+    "url": "https://house.texas.gov/members/4535"
+  },
+  "19": {
+    "name": "Ellen Troxclair",
+    "capitolOffice": [
+      "Room E1.322",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "512-463-0490"
+    ],
+    "url": "https://house.texas.gov/members/4385"
+  },
+  "20": {
+    "name": "Terry M. Wilson",
+    "capitolOffice": [
+      "Room E2.722",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0309"
+    ],
+    "url": "https://house.texas.gov/members/3525"
+  },
+  "21": {
+    "name": "Dade Phelan",
+    "capitolOffice": [
+      "Room GW.8",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0706"
+    ],
+    "url": "https://house.texas.gov/members/2905"
+  },
+  "22": {
+    "name": "Christian Manuel",
+    "capitolOffice": [
+      "Room E2.412",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0662"
+    ],
+    "url": "https://house.texas.gov/members/4255"
+  },
+  "23": {
+    "name": "Terri Leo Wilson",
+    "capitolOffice": [
+      "Room E2.810",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0502"
+    ],
+    "url": "https://house.texas.gov/members/4290"
+  },
+  "24": {
+    "name": "Greg Bonnen",
+    "capitolOffice": [
+      "Room E2.502",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0729"
+    ],
+    "url": "https://house.texas.gov/members/2875"
+  },
+  "25": {
+    "name": "Cody Vasut",
+    "capitolOffice": [
+      "Room E1.314",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0564"
+    ],
+    "url": "https://house.texas.gov/members/4065"
+  },
+  "26": {
+    "name": "Matt Morgan",
+    "capitolOffice": [
+      "Room E2.802",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0710"
+    ],
+    "url": "https://house.texas.gov/members/4675"
+  },
+  "27": {
+    "name": "Ron Reynolds",
+    "capitolOffice": [
+      "Room 4N.7",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0494"
+    ],
+    "url": "https://house.texas.gov/members/2040"
+  },
+  "28": {
+    "name": "Gary Gates",
+    "capitolOffice": [
+      "Room E2.322",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0657"
+    ],
+    "url": "https://house.texas.gov/members/3920"
+  },
+  "29": {
+    "name": "Jeff Barry",
+    "capitolOffice": [
+      "Room E2.814",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0707"
+    ],
+    "url": "https://house.texas.gov/members/4405"
+  },
+  "30": {
+    "name": "AJ Louderback",
+    "capitolOffice": [
+      "Room E1.418",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0456"
+    ],
+    "url": "https://house.texas.gov/members/4620"
+  },
+  "31": {
+    "name": "Ryan Guillen",
+    "capitolOffice": [
+      "Room 3N.6",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0416"
+    ],
+    "url": "https://house.texas.gov/members/3045"
+  },
+  "32": {
+    "name": "Todd Hunter",
+    "capitolOffice": [
+      "Room 1W.6",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0672"
+    ],
+    "url": "https://house.texas.gov/members/3365"
+  },
+  "33": {
+    "name": "Katrina Pierson",
+    "capitolOffice": [
+      "Room E2.714",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0484"
+    ],
+    "url": "https://house.texas.gov/members/4715"
+  },
+  "34": {
+    "name": "Denise Villalobos",
+    "capitolOffice": [
+      "Room E2.812",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0462"
+    ],
+    "url": "https://house.texas.gov/members/4770"
+  },
+  "35": {
+    "name": "Oscar Longoria",
+    "capitolOffice": [
+      "Room 4N.4",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0645"
+    ],
+    "url": "https://house.texas.gov/members/2485"
+  },
+  "36": {
+    "name": "Sergio Muñoz Jr.",
+    "capitolOffice": [
+      "Room 1N.8",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0704"
+    ],
+    "url": "https://house.texas.gov/members/2060"
+  },
+  "37": {
+    "name": "Janie Lopez",
+    "capitolOffice": [
+      "Room E1.422",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0640"
+    ],
+    "url": "https://house.texas.gov/members/4295"
+  },
+  "38": {
+    "name": "Erin Gámez",
+    "capitolOffice": [
+      "Room E1.510",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0606"
+    ],
+    "url": "https://house.texas.gov/members/4095"
+  },
+  "39": {
+    "name": "Armando \"Mando\" Martinez",
+    "capitolOffice": [
+      "Room 1N.10",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0530"
+    ],
+    "url": "https://house.texas.gov/members/3780"
+  },
+  "40": {
+    "name": "Terry Canales",
+    "capitolOffice": [
+      "Room 4S.4",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0426"
+    ],
+    "url": "https://house.texas.gov/members/2340"
+  },
+  "41": {
+    "name": "R.D. \"Bobby\" Guerra",
+    "capitolOffice": [
+      "Room GN.7",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0578"
+    ],
+    "url": "https://house.texas.gov/members/2325"
+  },
+  "42": {
+    "name": "Richard Peña Raymond",
+    "capitolOffice": [
+      "Room 1W.2",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0558"
+    ],
+    "url": "https://house.texas.gov/members/4215"
+  },
+  "43": {
+    "name": "J. M. Lozano",
+    "capitolOffice": [
+      "Room 1W.4",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0463"
+    ],
+    "url": "https://house.texas.gov/members/2065"
+  },
+  "44": {
+    "name": "Alan Schoolcraft",
+    "capitolOffice": [
+      "Room E1.308",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0602"
+    ],
+    "url": "https://house.texas.gov/members/4745"
+  },
+  "45": {
+    "name": "Erin Zwiener",
+    "capitolOffice": [
+      "Room E2.306",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0647"
+    ],
+    "url": "https://house.texas.gov/members/3710"
+  },
+  "46": {
+    "name": "Sheryl Cole",
+    "capitolOffice": [
+      "Room E2.910",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0506"
+    ],
+    "url": "https://house.texas.gov/members/3625"
+  },
+  "47": {
+    "name": "Vikki Goodwin",
+    "capitolOffice": [
+      "Room E2.318",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0652"
+    ],
+    "url": "https://house.texas.gov/members/3820"
+  },
+  "48": {
+    "name": "Donna Howard",
+    "capitolOffice": [
+      "Room GW.11",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0631"
+    ],
+    "url": "https://house.texas.gov/members/3310"
+  },
+  "49": {
+    "name": "Gina Hinojosa",
+    "capitolOffice": [
+      "Room 4S.2",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0668"
+    ],
+    "url": "https://house.texas.gov/members/3210"
+  },
+  "50": {
+    "name": "James Talarico",
+    "capitolOffice": [
+      "Room E2.902",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0821"
+    ],
+    "url": "https://house.texas.gov/members/3685"
+  },
+  "51": {
+    "name": "Lulu Flores",
+    "capitolOffice": [
+      "Room E2.310",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0674"
+    ],
+    "url": "https://house.texas.gov/members/4150"
+  },
+  "52": {
+    "name": "Caroline Harris Davila",
+    "capitolOffice": [
+      "Room E1.324",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0670"
+    ],
+    "url": "https://house.texas.gov/members/4205"
+  },
+  "53": {
+    "name": "Wes Virdell",
+    "capitolOffice": [
+      "Room E2.304",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0536"
+    ],
+    "url": "https://house.texas.gov/members/4775"
+  },
+  "54": {
+    "name": "Brad Buckley",
+    "capitolOffice": [
+      "Room E2.510",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0684"
+    ],
+    "url": "https://house.texas.gov/members/3585"
+  },
+  "55": {
+    "name": "Hillary Hickland",
+    "capitolOffice": [
+      "Room E1.218",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0630"
+    ],
+    "url": "https://house.texas.gov/members/4520"
+  },
+  "56": {
+    "name": "Pat Curry",
+    "capitolOffice": [
+      "Room E1.512",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0135"
+    ],
+    "url": "https://house.texas.gov/members/4415"
+  },
+  "57": {
+    "name": "Richard Hayes",
+    "capitolOffice": [
+      "Room E1.424",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0556"
+    ],
+    "url": "https://house.texas.gov/members/4165"
+  },
+  "58": {
+    "name": "Helen Kerwin",
+    "capitolOffice": [
+      "Room E1.216",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0538"
+    ],
+    "url": "https://house.texas.gov/members/4575"
+  },
+  "59": {
+    "name": "Shelby Slawson",
+    "capitolOffice": [
+      "Room E2.506",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0628"
+    ],
+    "url": "https://house.texas.gov/members/4055"
+  },
+  "60": {
+    "name": "Mike Olcott",
+    "capitolOffice": [
+      "Room E2.704",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0656"
+    ],
+    "url": "https://house.texas.gov/members/4705"
+  },
+  "61": {
+    "name": "Keresa Richardson",
+    "capitolOffice": [
+      "Room E2.416",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0738"
+    ],
+    "url": "https://house.texas.gov/members/4735"
+  },
+  "62": {
+    "name": "Shelley Luther",
+    "capitolOffice": [
+      "Room E2.404",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0297"
+    ],
+    "url": "https://house.texas.gov/members/4645"
+  },
+  "63": {
+    "name": "Benjamin Bumgarner",
+    "capitolOffice": [
+      "Room E1.310",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0688"
+    ],
+    "url": "https://house.texas.gov/members/4125"
+  },
+  "64": {
+    "name": "Andy Hopper",
+    "capitolOffice": [
+      "Room E2.316",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0582"
+    ],
+    "url": "https://house.texas.gov/members/4555"
+  },
+  "65": {
+    "name": "Mitch Little",
+    "capitolOffice": [
+      "Room E2.420",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0478"
+    ],
+    "url": "https://house.texas.gov/members/4615"
+  },
+  "66": {
+    "name": "Matt Shaheen",
+    "capitolOffice": [
+      "Room GS.6",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0594"
+    ],
+    "url": "https://house.texas.gov/members/2995"
+  },
+  "67": {
+    "name": "Jeff Leach",
+    "capitolOffice": [
+      "Room 1W.3",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0544"
+    ],
+    "url": "https://house.texas.gov/members/2475"
+  },
+  "68": {
+    "name": "David Spiller",
+    "capitolOffice": [
+      "Room E1.302",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0526"
+    ],
+    "url": "https://house.texas.gov/members/4075"
+  },
+  "69": {
+    "name": "James Frank",
+    "capitolOffice": [
+      "Room 1N.9",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0534"
+    ],
+    "url": "https://house.texas.gov/members/2385"
+  },
+  "70": {
+    "name": "Mihaela Plesa",
+    "capitolOffice": [
+      "Room E2.210",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0356"
+    ],
+    "url": "https://house.texas.gov/members/4345"
+  },
+  "71": {
+    "name": "Stan Lambert",
+    "capitolOffice": [
+      "Room E2.818",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0718"
+    ],
+    "url": "https://house.texas.gov/members/3225"
+  },
+  "72": {
+    "name": "Drew Darby",
+    "capitolOffice": [
+      "Room GW.12",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0331"
+    ],
+    "url": "https://house.texas.gov/members/2645"
+  },
+  "73": {
+    "name": "Carrie Isaac",
+    "capitolOffice": [
+      "Room E1.306",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0325"
+    ],
+    "url": "https://house.texas.gov/members/4265"
+  },
+  "74": {
+    "name": "Eddie Morales",
+    "capitolOffice": [
+      "Room E2.406",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0566"
+    ],
+    "url": "https://house.texas.gov/members/4000"
+  },
+  "75": {
+    "name": "Mary E. González",
+    "capitolOffice": [
+      "Room E1.504",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0613"
+    ],
+    "url": "https://house.texas.gov/members/2410"
+  },
+  "76": {
+    "name": "Suleman Lalani",
+    "capitolOffice": [
+      "Room E1.212",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0596"
+    ],
+    "url": "https://house.texas.gov/members/4285"
+  },
+  "77": {
+    "name": "Vincent Perez",
+    "capitolOffice": [
+      "Room E2.312",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0638"
+    ],
+    "url": "https://house.texas.gov/members/4710"
+  },
+  "78": {
+    "name": "Joe Moody",
+    "capitolOffice": [
+      "Room GW.18",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0728"
+    ],
+    "url": "https://house.texas.gov/members/3850"
+  },
+  "79": {
+    "name": "Claudia Ordaz",
+    "capitolOffice": [
+      "Room E2.706",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0622"
+    ],
+    "url": "https://house.texas.gov/members/4015"
+  },
+  "80": {
+    "name": "Don McLaughlin",
+    "capitolOffice": [
+      "Room E2.820",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0194"
+    ],
+    "url": "https://house.texas.gov/members/4655"
+  },
+  "81": {
+    "name": "Brooks Landgraf",
+    "capitolOffice": [
+      "Room E2.602",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0546"
+    ],
+    "url": "https://house.texas.gov/members/3040"
+  },
+  "82": {
+    "name": "Tom Craddick",
+    "capitolOffice": [
+      "Room 1W.9",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0500"
+    ],
+    "url": "https://house.texas.gov/members/2610"
+  },
+  "83": {
+    "name": "Dustin Burrows",
+    "capitolOffice": [
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0542"
+    ],
+    "url": "https://house.texas.gov/members/3055"
+  },
+  "84": {
+    "name": "Carl H. Tepper",
+    "capitolOffice": [
+      "Room E1.316",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0676"
+    ],
+    "url": "https://house.texas.gov/members/4360"
+  },
+  "85": {
+    "name": "Stan Kitzman",
+    "capitolOffice": [
+      "Room E2.606",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0604"
+    ],
+    "url": "https://house.texas.gov/members/4280"
+  },
+  "86": {
+    "name": "John T. Smithee",
+    "capitolOffice": [
+      "Room 1W.10",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0702"
+    ],
+    "url": "https://house.texas.gov/members/4530"
+  },
+  "87": {
+    "name": "Caroline Fairly",
+    "capitolOffice": [
+      "Room E2.816",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0470"
+    ],
+    "url": "https://house.texas.gov/members/4480"
+  },
+  "88": {
+    "name": "Ken King",
+    "capitolOffice": [
+      "Room GW.17",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0736"
+    ],
+    "url": "https://house.texas.gov/members/2455"
+  },
+  "89": {
+    "name": "Candy Noble",
+    "capitolOffice": [
+      "Room E1.508",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0186"
+    ],
+    "url": "https://house.texas.gov/members/3740"
+  },
+  "90": {
+    "name": "Ramon Romero Jr.",
+    "capitolOffice": [
+      "Room 4S.6",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0740"
+    ],
+    "url": "https://house.texas.gov/members/3060"
+  },
+  "91": {
+    "name": "David Lowe",
+    "capitolOffice": [
+      "Room E1.412",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0599"
+    ],
+    "url": "https://house.texas.gov/members/4643"
+  },
+  "92": {
+    "name": "Salman Bhojani",
+    "capitolOffice": [
+      "Room E2.906",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0522"
+    ],
+    "url": "https://house.texas.gov/members/4115"
+  },
+  "93": {
+    "vacant": true,
+    "vacantWhy": "The member list of the Texas House of Representatives names no one for this district.",
+    "sourceUrl": "https://house.texas.gov/members",
+    "asOf": "2026-11-11"
+  },
+  "94": {
+    "name": "Tony Tinderholt",
+    "capitolOffice": [
+      "Room E1.420",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0624"
+    ],
+    "url": "https://house.texas.gov/members/3065"
+  },
+  "95": {
+    "name": "Nicole Collier",
+    "capitolOffice": [
+      "Room 3S.2",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0716"
+    ],
+    "url": "https://house.texas.gov/members/2360"
+  },
+  "96": {
+    "name": "David Cook",
+    "capitolOffice": [
+      "Room E1.402",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0374"
+    ],
+    "url": "https://house.texas.gov/members/3960"
+  },
+  "97": {
+    "name": "John McQueeney",
+    "capitolOffice": [
+      "Room E2.720",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0608"
+    ],
+    "url": "https://house.texas.gov/members/4665"
+  },
+  "98": {
+    "name": "Giovanni Capriglione",
+    "capitolOffice": [
+      "Room E1.506",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0690"
+    ],
+    "url": "https://house.texas.gov/members/2345"
+  },
+  "99": {
+    "name": "Charlie Geren",
+    "capitolOffice": [
+      "Room GW.15",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0610"
+    ],
+    "url": "https://house.texas.gov/members/2945"
+  },
+  "100": {
+    "name": "Venton Jones",
+    "capitolOffice": [
+      "Room E2.208",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "512-463-0586"
+    ],
+    "url": "https://house.texas.gov/members/4275"
+  },
+  "101": {
+    "name": "Chris Turner",
+    "capitolOffice": [
+      "Room 1N.5",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0574"
+    ],
+    "url": "https://house.texas.gov/members/4680"
+  },
+  "102": {
+    "name": "Ana-María Rodríguez Ramos",
+    "capitolOffice": [
+      "Room E2.204",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0454"
+    ],
+    "url": "https://house.texas.gov/members/3735"
+  },
+  "103": {
+    "name": "Rafael Anchía",
+    "capitolOffice": [
+      "Room 1W.5",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0746"
+    ],
+    "url": "https://house.texas.gov/members/2150"
+  },
+  "104": {
+    "name": "Jessica González",
+    "capitolOffice": [
+      "Room E2.808",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0408"
+    ],
+    "url": "https://house.texas.gov/members/3335"
+  },
+  "105": {
+    "name": "Terry Meza",
+    "capitolOffice": [
+      "Room E1.204",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0641"
+    ],
+    "url": "https://house.texas.gov/members/3455"
+  },
+  "106": {
+    "name": "Jared Patterson",
+    "capitolOffice": [
+      "Room E2.608",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0694"
+    ],
+    "url": "https://house.texas.gov/members/3655"
+  },
+  "107": {
+    "name": "Linda Garcia",
+    "capitolOffice": [
+      "Room E2.716",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0244"
+    ],
+    "url": "https://house.texas.gov/members/4485"
+  },
+  "108": {
+    "name": "Morgan Meyer",
+    "capitolOffice": [
+      "Room GN.8",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0367"
+    ],
+    "url": "https://house.texas.gov/members/3075"
+  },
+  "109": {
+    "name": "Aicha Davis",
+    "capitolOffice": [
+      "Room E2.302",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0953"
+    ],
+    "url": "https://house.texas.gov/members/4465"
+  },
+  "110": {
+    "name": "Toni Rose",
+    "capitolOffice": [
+      "Room 4N.5",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0664"
+    ],
+    "url": "https://house.texas.gov/members/2555"
+  },
+  "111": {
+    "name": "Yvonne Davis",
+    "capitolOffice": [
+      "Room 4N.9",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0598"
+    ],
+    "url": "https://house.texas.gov/members/2625"
+  },
+  "112": {
+    "name": "Angie Chen Button",
+    "capitolOffice": [
+      "Room GW.7",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0486"
+    ],
+    "url": "https://house.texas.gov/members/2510"
+  },
+  "113": {
+    "name": "Rhetta Andrews Bowers",
+    "capitolOffice": [
+      "Room E2.214",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0464"
+    ],
+    "url": "https://house.texas.gov/members/3565"
+  },
+  "114": {
+    "name": "John Bryant",
+    "capitolOffice": [
+      "Room 4S.3",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0576"
+    ],
+    "url": "https://house.texas.gov/members/4120"
+  },
+  "115": {
+    "name": "Cassandra Garcia Hernandez",
+    "capitolOffice": [
+      "Room E2.712",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0468"
+    ],
+    "url": "https://house.texas.gov/members/4495"
+  },
+  "116": {
+    "name": "Trey Martinez Fischer",
+    "capitolOffice": [
+      "Room 4S.5",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0616"
+    ],
+    "url": "https://house.texas.gov/members/2835"
+  },
+  "117": {
+    "name": "Philip Cortez",
+    "capitolOffice": [
+      "Room 4N.3",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0269"
+    ],
+    "url": "https://house.texas.gov/members/2365"
+  },
+  "118": {
+    "name": "John Lujan",
+    "capitolOffice": [
+      "Room E2.822",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0714"
+    ],
+    "url": "https://house.texas.gov/members/3145"
+  },
+  "119": {
+    "name": "Elizabeth \"Liz\" Campos",
+    "capitolOffice": [
+      "Room E2.422",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0452"
+    ],
+    "url": "https://house.texas.gov/members/3950"
+  },
+  "120": {
+    "name": "Barbara Gervin-Hawkins",
+    "capitolOffice": [
+      "Room GN.12",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0708"
+    ],
+    "url": "https://house.texas.gov/members/3445"
+  },
+  "121": {
+    "name": "Marc LaHood",
+    "capitolOffice": [
+      "Room E2.804",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0686"
+    ],
+    "url": "https://house.texas.gov/members/4595"
+  },
+  "122": {
+    "name": "Mark Dorazio",
+    "capitolOffice": [
+      "Room E1.406",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0646"
+    ],
+    "url": "https://house.texas.gov/members/4145"
+  },
+  "123": {
+    "name": "Diego M. Bernal",
+    "capitolOffice": [
+      "Room 4N.6",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0532"
+    ],
+    "url": "https://house.texas.gov/members/3110"
+  },
+  "124": {
+    "name": "Josey Garcia",
+    "capitolOffice": [
+      "Room E2.904",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0634"
+    ],
+    "url": "https://house.texas.gov/members/4170"
+  },
+  "125": {
+    "name": "Ray Lopez",
+    "capitolOffice": [
+      "Room GW.4",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0669"
+    ],
+    "url": "https://house.texas.gov/members/3915"
+  },
+  "126": {
+    "name": "Sam Harless",
+    "capitolOffice": [
+      "Room GW.6",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0496"
+    ],
+    "url": "https://house.texas.gov/members/3775"
+  },
+  "127": {
+    "name": "Charles Cunningham",
+    "capitolOffice": [
+      "Room E2.410",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0520"
+    ],
+    "url": "https://house.texas.gov/members/4130"
+  },
+  "128": {
+    "name": "Briscoe Cain",
+    "capitolOffice": [
+      "Room E1.320",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0733"
+    ],
+    "url": "https://house.texas.gov/members/3265"
+  },
+  "129": {
+    "name": "Dennis Paul",
+    "capitolOffice": [
+      "Room GS.2",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0734"
+    ],
+    "url": "https://house.texas.gov/members/3090"
+  },
+  "130": {
+    "name": "Tom Oliverson",
+    "capitolOffice": [
+      "Room E2.408",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0661"
+    ],
+    "url": "https://house.texas.gov/members/3535"
+  },
+  "131": {
+    "name": "Alma A. Allen",
+    "capitolOffice": [
+      "Room 4N.10",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0744"
+    ],
+    "url": "https://house.texas.gov/members/2100"
+  },
+  "132": {
+    "name": "Mike Schofield",
+    "capitolOffice": [
+      "Room E2.418",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0528"
+    ],
+    "url": "https://house.texas.gov/members/3095"
+  },
+  "133": {
+    "name": "Mano DeAyala",
+    "capitolOffice": [
+      "Room E1.318",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0514"
+    ],
+    "url": "https://house.texas.gov/members/4135"
+  },
+  "134": {
+    "name": "Ann Johnson",
+    "capitolOffice": [
+      "Room E2.718",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0389"
+    ],
+    "url": "https://house.texas.gov/members/3985"
+  },
+  "135": {
+    "name": "Jon E. Rosenthal",
+    "capitolOffice": [
+      "Room E2.308",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0722"
+    ],
+    "url": "https://house.texas.gov/members/3635"
+  },
+  "136": {
+    "name": "John H. Bucy lll",
+    "capitolOffice": [
+      "Room GN.9",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0696"
+    ],
+    "url": "https://house.texas.gov/members/3595"
+  },
+  "137": {
+    "name": "Gene Wu",
+    "capitolOffice": [
+      "Room GW.5",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0492"
+    ],
+    "url": "https://house.texas.gov/members/2865"
+  },
+  "138": {
+    "name": "Lacey Hull",
+    "capitolOffice": [
+      "Room E2.212",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0727"
+    ],
+    "url": "https://house.texas.gov/members/3975"
+  },
+  "139": {
+    "name": "Charlene Ward Johnson",
+    "capitolOffice": [
+      "Room E2.320",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0554"
+    ],
+    "url": "https://house.texas.gov/members/4785"
+  },
+  "140": {
+    "name": "Armando Walle",
+    "capitolOffice": [
+      "Room GW.16",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0924"
+    ],
+    "url": "https://house.texas.gov/members/4930"
+  },
+  "141": {
+    "name": "Senfronia Thompson",
+    "capitolOffice": [
+      "Room 3S.6",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0720"
+    ],
+    "url": "https://house.texas.gov/members/4630"
+  },
+  "142": {
+    "name": "Harold V. Dutton Jr.",
+    "capitolOffice": [
+      "Room 3N.5",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0510"
+    ],
+    "url": "https://house.texas.gov/members/2650"
+  },
+  "143": {
+    "name": "Ana Hernandez",
+    "capitolOffice": [
+      "Room 1W.11",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0614"
+    ],
+    "url": "https://house.texas.gov/members/3155"
+  },
+  "144": {
+    "name": "Mary Ann Perez",
+    "capitolOffice": [
+      "Room 1N.7",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0460"
+    ],
+    "url": "https://house.texas.gov/members/2535"
+  },
+  "145": {
+    "name": "Christina Morales",
+    "capitolOffice": [
+      "Room GN.10",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0732"
+    ],
+    "url": "https://house.texas.gov/members/3910"
+  },
+  "146": {
+    "name": "Lauren Ashley Simmons",
+    "capitolOffice": [
+      "Room E2.314",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0518"
+    ],
+    "url": "https://house.texas.gov/members/4765"
+  },
+  "147": {
+    "name": "Jolanda \"Jo\" Jones",
+    "capitolOffice": [
+      "Room E2.908",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0524"
+    ],
+    "url": "https://house.texas.gov/members/4105"
+  },
+  "148": {
+    "name": "Penny Morales Shaw",
+    "capitolOffice": [
+      "Room E2.710",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0620"
+    ],
+    "url": "https://house.texas.gov/members/4035"
+  },
+  "149": {
+    "name": "Hubert Vo",
+    "capitolOffice": [
+      "Room 4N.8",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0568"
+    ],
+    "url": "https://house.texas.gov/members/4900"
+  },
+  "150": {
+    "name": "Valoree Swanson",
+    "capitolOffice": [
+      "Room E1.408",
+      "P.O. Box 12910",
+      "Austin, Texas 78711-2910",
+      "(512) 463-0572"
+    ],
+    "url": "https://house.texas.gov/members/3425"
+  }
+}

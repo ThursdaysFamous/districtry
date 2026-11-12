@@ -1,0 +1,296 @@
+{
+  "1": {
+    "name": "Bob Hallstrom",
+    "email": "bob.hallstrom@leg.ne.gov",
+    "phone": "402-471-2733",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=1"
+  },
+  "2": {
+    "name": "Robert Clements",
+    "email": "robert.clements@leg.ne.gov",
+    "phone": "402-471-2613",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=2"
+  },
+  "3": {
+    "name": "Victor Rountree",
+    "email": "victor.rountree@leg.ne.gov",
+    "phone": "402-471-2627",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=3"
+  },
+  "4": {
+    "name": "R. Brad von Gillern",
+    "email": "brad.vongillern@leg.ne.gov",
+    "phone": "402-471-2621",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=4"
+  },
+  "5": {
+    "name": "Margo Juarez",
+    "email": "margo.juarez@leg.ne.gov",
+    "phone": "402-471-2710",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=5"
+  },
+  "6": {
+    "name": "Machaela Cavanaugh",
+    "email": "machaela.cavanaugh@leg.ne.gov",
+    "phone": "402-471-2714",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=6"
+  },
+  "7": {
+    "name": "Dunixi Guereca",
+    "email": "dunixi.guereca@leg.ne.gov",
+    "phone": "402-471-2721",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=7"
+  },
+  "8": {
+    "name": "Megan Hunt",
+    "email": "megan.hunt@leg.ne.gov",
+    "phone": "402-471-2722",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=8"
+  },
+  "9": {
+    "name": "John Cavanaugh",
+    "email": "john.cavanaugh@leg.ne.gov",
+    "phone": "402-471-2723",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=9"
+  },
+  "10": {
+    "name": "Wendy DeBoer",
+    "email": "wendy.deboer@leg.ne.gov",
+    "phone": "402-471-2718",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=10"
+  },
+  "11": {
+    "name": "Terrell McKinney",
+    "email": "terrell.mckinney@leg.ne.gov",
+    "phone": "402-471-2612",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=11"
+  },
+  "12": {
+    "name": "Merv Riepe",
+    "email": "merv.riepe@leg.ne.gov",
+    "phone": "402-471-2623",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=12"
+  },
+  "13": {
+    "name": "Ashlei Spivey",
+    "email": "ashlei.spivey@leg.ne.gov",
+    "phone": "402-471-2727",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=13"
+  },
+  "14": {
+    "name": "John Arch",
+    "email": "john.arch@leg.ne.gov",
+    "phone": "402-471-2730",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=14"
+  },
+  "15": {
+    "name": "Dave Wordekemper",
+    "email": "dave.wordekemper@leg.ne.gov",
+    "phone": "402-471-2625",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=15"
+  },
+  "16": {
+    "name": "Ben Hansen",
+    "email": "ben.hansen@leg.ne.gov",
+    "phone": "402-471-2728",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=16"
+  },
+  "17": {
+    "name": "Glen Meyer",
+    "email": "glen.meyer@leg.ne.gov",
+    "phone": "402-471-2716",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=17"
+  },
+  "18": {
+    "name": "Christy Armendariz",
+    "email": "christy.armendariz@leg.ne.gov",
+    "phone": "402-471-2618",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=18"
+  },
+  "19": {
+    "name": "Robert Dover",
+    "email": "robert.dover@leg.ne.gov",
+    "phone": "402-471-2929",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=19"
+  },
+  "20": {
+    "name": "John Fredrickson",
+    "email": "john.fredrickson@leg.ne.gov",
+    "phone": "402-471-2622",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=20"
+  },
+  "21": {
+    "name": "Beau Ballard",
+    "email": "beau.ballard@leg.ne.gov",
+    "phone": "402-471-2673",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=21"
+  },
+  "22": {
+    "name": "Mike Moser",
+    "email": "mike.moser@leg.ne.gov",
+    "phone": "402-471-2715",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=22"
+  },
+  "23": {
+    "name": "Jared Storm",
+    "email": "jared.storm@leg.ne.gov",
+    "phone": "402-471-2719",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=23"
+  },
+  "24": {
+    "name": "Jana Hughes",
+    "email": "jana.hughes@leg.ne.gov",
+    "phone": "402-471-2756",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=24"
+  },
+  "25": {
+    "name": "Carolyn Bosn",
+    "email": "carolyn.bosn@leg.ne.gov",
+    "phone": "402-471-2731",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=25"
+  },
+  "26": {
+    "name": "George Dungan",
+    "email": "george.dungan@leg.ne.gov",
+    "phone": "402-471-2610",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=26"
+  },
+  "27": {
+    "name": "Jason Prokop",
+    "email": "jason.prokop@leg.ne.gov",
+    "phone": "402-471-2632",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=27"
+  },
+  "28": {
+    "name": "Jane Raybould",
+    "email": "jane.raybould@leg.ne.gov",
+    "phone": "402-471-2633",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=28"
+  },
+  "29": {
+    "name": "Eliot Bostar",
+    "email": "eliot.bostar@leg.ne.gov",
+    "phone": "402-471-2734",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=29"
+  },
+  "30": {
+    "name": "Myron Dorn",
+    "email": "myron.dorn@leg.ne.gov",
+    "phone": "402-471-2620",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=30"
+  },
+  "31": {
+    "name": "Kathleen Kauth",
+    "email": "kathleen.kauth@leg.ne.gov",
+    "phone": "402-471-2327",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=31"
+  },
+  "32": {
+    "name": "Tom Brandt",
+    "email": "tom.brandt@leg.ne.gov",
+    "phone": "402-471-2711",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=32"
+  },
+  "33": {
+    "name": "Dan Lonowski",
+    "email": "dan.lonowski@leg.ne.gov",
+    "phone": "402-471-2712",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=33"
+  },
+  "34": {
+    "name": "Loren Lippincott",
+    "email": "loren.lippincott@leg.ne.gov",
+    "phone": "402-471-2630",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=34"
+  },
+  "35": {
+    "name": "Dan Quick",
+    "email": "dan.quick@leg.ne.gov",
+    "phone": "402-471-2617",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=35"
+  },
+  "36": {
+    "name": "Rick Holdcroft",
+    "email": "rick.holdcroft@leg.ne.gov",
+    "phone": "402-471-2642",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=36"
+  },
+  "37": {
+    "name": "Stan Clouse",
+    "email": "stan.clouse@leg.ne.gov",
+    "phone": "402-471-2726",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=37"
+  },
+  "38": {
+    "name": "Dave Murman",
+    "email": "dave.murman@leg.ne.gov",
+    "phone": "402-471-2732",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=38"
+  },
+  "39": {
+    "name": "Tony Sorrentino",
+    "email": "tony.sorrentino@leg.ne.gov",
+    "phone": "402-471-2885",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=39"
+  },
+  "40": {
+    "name": "Barry DeKay",
+    "email": "barry.dekay@leg.ne.gov",
+    "phone": "402-471-2801",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=40"
+  },
+  "41": {
+    "name": "Fred Meyer",
+    "email": "fred.meyer@leg.ne.gov",
+    "phone": "402-471-2631",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=41"
+  },
+  "42": {
+    "name": "Mike Jacobson",
+    "email": "mike.jacobson@leg.ne.gov",
+    "phone": "402-471-2729",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=42"
+  },
+  "43": {
+    "name": "Tanya Storer",
+    "email": "tanya.storer@leg.ne.gov",
+    "phone": "402-471-2628",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=43"
+  },
+  "44": {
+    "name": "Teresa Ibach",
+    "email": "teresa.ibach@leg.ne.gov",
+    "phone": "402-471-2805",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=44"
+  },
+  "45": {
+    "name": "Rita Sanders",
+    "email": "rita.sanders@leg.ne.gov",
+    "phone": "402-471-2615",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=45"
+  },
+  "46": {
+    "name": "Danielle Conrad",
+    "email": "danielle.conrad@leg.ne.gov",
+    "phone": "402-471-2720",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=46"
+  },
+  "47": {
+    "name": "Paul Strommen",
+    "email": "paul.strommen@leg.ne.gov",
+    "phone": "402-471-2616",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=47"
+  },
+  "48": {
+    "name": "Brian Hardin",
+    "email": "brian.hardin@leg.ne.gov",
+    "phone": "402-471-2802",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=48"
+  },
+  "49": {
+    "name": "Bob Andersen",
+    "email": "bob.andersen@leg.ne.gov",
+    "phone": "402-471-2725",
+    "url": "https://nebraskalegislature.gov/senators/landing-pages/index.php?District=49"
+  }
+}

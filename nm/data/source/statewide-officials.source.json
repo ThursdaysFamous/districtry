@@ -1,0 +1,47 @@
+{
+ "state": "New Mexico",
+ "usps": "NM",
+ "officersNote": "New Mexico's Public Education Commission is elected by district, not statewide, and its Public Regulation Commission has been appointed since 2023, so neither is listed.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Michelle Lujan Grisham",
+   "url": "https://www.governor.state.nm.us/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Howie Morales",
+   "url": "https://www.ltgov.nm.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Raúl Torrez",
+   "url": "https://nmdoj.gov/",
+   "match": [
+    "Raul Torrez"
+   ]
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Maggie Toulouse Oliver",
+   "url": "https://www.sos.nm.gov/"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Joseph Maestas",
+   "url": "https://www.saonm.org/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Laura Montoya",
+   "url": "https://www.nmto.gov/",
+   "source": "https://www.nm.gov/",
+   "note": "www.nmto.gov could not be reached from this project's build machine on 2026-11-12 (the connection failed before any answer), so the state's own portal at www.nm.gov, which lists every statewide officer, is the page read."
+  },
+  {
+   "office": "Commissioner of Public Lands",
+   "name": "Stephanie Garcia Richard",
+   "url": "https://www.nmstatelands.org/"
+  }
+ ]
+}

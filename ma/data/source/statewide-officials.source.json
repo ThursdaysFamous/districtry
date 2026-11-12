@@ -1,0 +1,41 @@
+{
+ "state": "Massachusetts",
+ "usps": "MA",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Maura Healey",
+   "url": "https://www.mass.gov/orgs/office-of-the-governor",
+   "note": "www.mass.gov answered this project's token and the browser client alike with HTTP 403 on 2026-11-12, so no name is shown until a run can read the page; the weekly job names it then."
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Kim Driscoll",
+   "url": "https://www.mass.gov/orgs/office-of-the-governor",
+   "note": "www.mass.gov answered this project's token and the browser client alike with HTTP 403 on 2026-11-12, so no name is shown until a run can read the page; the weekly job names it then."
+  },
+  {
+   "office": "Attorney General",
+   "name": "Andrea Joy Campbell",
+   "url": "https://www.mass.gov/orgs/office-of-the-attorney-general",
+   "note": "www.mass.gov answered this project's token and the browser client alike with HTTP 403 on 2026-11-12, so no name is shown until a run can read the page; the weekly job names it then."
+  },
+  {
+   "office": "Secretary of the Commonwealth",
+   "url": "https://www.sec.state.ma.us/",
+   "unnamed": "The Secretary's website answers automated readers with a security check, so no name is shown here.",
+   "note": "www.sec.state.ma.us answered this project's token with an Incapsula challenge page on 2026-11-12. A challenge is an access control and is never answered or worked around, so the page is linked and never read."
+  },
+  {
+   "office": "Treasurer and Receiver General",
+   "name": "Deborah B. Goldberg",
+   "url": "https://www.masstreasury.gov/"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Diana DiZoglio",
+   "url": "https://www.mass.gov/orgs/office-of-the-state-auditor",
+   "note": "www.mass.gov answered this project's token and the browser client alike with HTTP 403 on 2026-11-12, so no name is shown until a run can read the page; the weekly job names it then."
+  }
+ ]
+}

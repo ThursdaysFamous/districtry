@@ -234,6 +234,7 @@ html, body { margin: 0; height: 100%; background: var(--paper); font-family: var
 var AREAS = [
   { tag: "il", name: "Illinois", url: "https://districtry.com/il/", file: "il/data/app/metro-outline.json", state: "il/data/app/il-state-outline.json", scope: "97 counties" },
   { tag: "ny", name: "New York", url: "https://districtry.com/ny/", file: "ny/data/app/metro-outline.json", state: "ny/data/app/ny-state-outline.json", scope: "statewide, 5 boroughs in depth" },
+  { tag: "ca", name: "California", url: "https://districtry.com/ca/", file: "ca/data/app/san-francisco-county-outline.json", state: "ca/data/app/ca-state-outline.json", scope: "statewide, San Francisco in depth" },
   { tag: "wi", name: "Wisconsin", url: "https://districtry.com/wi/", file: "wi/data/app/metro-outline.json", state: "wi/data/app/wi-state-outline.json", scope: "all 72 counties" },
   { tag: "ia", name: "Iowa", url: "https://districtry.com/ia/", file: "ia/data/app/metro-outline.json", state: null, scope: "all 99 counties" },
   { tag: "mi", name: "Michigan", url: "https://districtry.com/mi/", file: "mi/data/app/metro-outline.json", state: null, scope: "all 83 counties" },
@@ -255,11 +256,34 @@ var AREAS = [
   { tag: "nv", name: "Nevada", url: "https://districtry.com/nv/", file: "nv/data/app/metro-outline.json", state: null, scope: "all 16 counties and Carson City" },
   { tag: "az", name: "Arizona", url: "https://districtry.com/az/", file: "az/data/app/metro-outline.json", state: null, scope: "all 15 counties" },
   { tag: "nj", name: "New Jersey", url: "https://districtry.com/nj/", file: "nj/data/app/metro-outline.json", state: null, scope: "all 21 counties" },
-  { tag: "nh", name: "New Hampshire", url: "https://districtry.com/nh/", file: "nh/data/app/metro-outline.json", state: null, scope: "all 10 counties" }
+  { tag: "nh", name: "New Hampshire", url: "https://districtry.com/nh/", file: "nh/data/app/metro-outline.json", state: null, scope: "all 10 counties" },
+  { tag: "tx", name: "Texas", url: "https://districtry.com/tx/", file: "tx/data/app/metro-outline.json", state: null, scope: "all 254 counties" },
+  { tag: "fl", name: "Florida", url: "https://districtry.com/fl/", file: "fl/data/app/metro-outline.json", state: null, scope: "all 67 counties" },
+  { tag: "oh", name: "Ohio", url: "https://districtry.com/oh/", file: "oh/data/app/metro-outline.json", state: null, scope: "all 88 counties" },
+  { tag: "wa", name: "Washington", url: "https://districtry.com/wa/", file: "wa/data/app/metro-outline.json", state: null, scope: "all 39 counties" },
+  { tag: "ma", name: "Massachusetts", url: "https://districtry.com/ma/", file: "ma/data/app/metro-outline.json", state: null, scope: "all 14 counties" },
+  { tag: "co", name: "Colorado", url: "https://districtry.com/co/", file: "co/data/app/metro-outline.json", state: null, scope: "all 64 counties" },
+  { tag: "md", name: "Maryland", url: "https://districtry.com/md/", file: "md/data/app/metro-outline.json", state: null, scope: "all 23 counties and Baltimore City" },
+  { tag: "al", name: "Alabama", url: "https://districtry.com/al/", file: "al/data/app/metro-outline.json", state: null, scope: "all 67 counties" },
+  { tag: "or", name: "Oregon", url: "https://districtry.com/or/", file: "or/data/app/metro-outline.json", state: null, scope: "all 36 counties" },
+  { tag: "ct", name: "Connecticut", url: "https://districtry.com/ct/", file: "ct/data/app/metro-outline.json", state: null, scope: "all 9 planning regions" },
+  { tag: "ut", name: "Utah", url: "https://districtry.com/ut/", file: "ut/data/app/metro-outline.json", state: null, scope: "all 29 counties" },
+  { tag: "ks", name: "Kansas", url: "https://districtry.com/ks/", file: "ks/data/app/metro-outline.json", state: null, scope: "all 105 counties" },
+  { tag: "nm", name: "New Mexico", url: "https://districtry.com/nm/", file: "nm/data/app/metro-outline.json", state: null, scope: "all 33 counties" },
+  { tag: "ne", name: "Nebraska", url: "https://districtry.com/ne/", file: "ne/data/app/metro-outline.json", state: null, scope: "all 93 counties" },
+  { tag: "id", name: "Idaho", url: "https://districtry.com/id/", file: "id/data/app/metro-outline.json", state: null, scope: "all 44 counties" },
+  { tag: "hi", name: "Hawaii", url: "https://districtry.com/hi/", file: "hi/data/app/metro-outline.json", state: null, scope: "all 5 counties" },
+  { tag: "me", name: "Maine", url: "https://districtry.com/me/", file: "me/data/app/metro-outline.json", state: null, scope: "all 16 counties" },
+  { tag: "mt", name: "Montana", url: "https://districtry.com/mt/", file: "mt/data/app/metro-outline.json", state: null, scope: "all 56 counties" },
+  { tag: "ri", name: "Rhode Island", url: "https://districtry.com/ri/", file: "ri/data/app/metro-outline.json", state: null, scope: "all 39 cities and towns" },
+  { tag: "de", name: "Delaware", url: "https://districtry.com/de/", file: "de/data/app/metro-outline.json", state: null, scope: "all 3 counties" },
+  { tag: "sd", name: "South Dakota", url: "https://districtry.com/sd/", file: "sd/data/app/metro-outline.json", state: null, scope: "all 66 counties" },
+  { tag: "nd", name: "North Dakota", url: "https://districtry.com/nd/", file: "nd/data/app/metro-outline.json", state: null, scope: "all 53 counties" },
+  { tag: "ak", name: "Alaska", url: "https://districtry.com/ak/", file: "ak/data/app/metro-outline.json", state: null, scope: "all 30 boroughs and census areas" },
+  { tag: "vt", name: "Vermont", url: "https://districtry.com/vt/", file: "vt/data/app/metro-outline.json", state: null, scope: "all 14 counties" },
+  { tag: "wy", name: "Wyoming", url: "https://districtry.com/wy/", file: "wy/data/app/metro-outline.json", state: null, scope: "all 23 counties" }
 ];
-var CITIES = [
-  { tag: "ca", name: "San Francisco", url: "https://districtry.com/ca/", lat: 37.775, lng: -122.45, scope: "1 city", cls: "city-label label-left", anchor: [-9, 7] }
-];
+var CITIES = [];
 var DATA = "#1d5fd6";
 var CARTO_KEY = "cb1_269e_1_18eecdd74aaa4bac77940fa4";
 

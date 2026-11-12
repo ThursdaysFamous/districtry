@@ -1,0 +1,441 @@
+{
+  "1": {
+    "name": "John W. Fonfara",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3705",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-0043"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/john-fonfara/"
+  },
+  "2": {
+    "name": "Douglas McCrory",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3105",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8600"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/doug-mccrory/"
+  },
+  "3": {
+    "name": "Saud Anwar",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3300",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8600"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/saud-anwar/"
+  },
+  "4": {
+    "name": "MD Rahman",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3300",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8600"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/md-rahman/"
+  },
+  "5": {
+    "name": "Derek Slap",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 1000",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-1436"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/derek-slap/"
+  },
+  "6": {
+    "name": "Rick Lopes",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8600"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/rick-lopes/"
+  },
+  "7": {
+    "name": "John A. Kissel",
+    "party": "Republican",
+    "email": "John.A.Kissel@cga.ct.gov",
+    "capitolOffice": [
+      "Room 3400",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-0531"
+    ],
+    "url": "http://www.ctsenaterepublicans.com/senators/john-a-kissel"
+  },
+  "8": {
+    "name": "Paul Honig",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3300",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8600"
+    ],
+    "url": "http://www.senatedems.ct.gov/honig/paul-honig"
+  },
+  "9": {
+    "name": "Matthew L. Lesser",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3300",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-0511"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/matt-lesser/"
+  },
+  "10": {
+    "name": "Gary A. Winfield",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 2500",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-0475"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/gary-winfield/"
+  },
+  "11": {
+    "name": "Martin M. Looney",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3300",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8614"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/martin-m-looney"
+  },
+  "12": {
+    "name": "Christine Cohen",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3200",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8600"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/christine-cohen/"
+  },
+  "13": {
+    "name": "Jan Hochadel",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3300",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8600"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/jan-hochadel/"
+  },
+  "14": {
+    "name": "James J. Maroney",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3300",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8600"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/james-maroney/"
+  },
+  "15": {
+    "name": "Joan V. Hartley",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 1805",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-0006"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/joan-hartley/"
+  },
+  "16": {
+    "name": "Rob Sampson",
+    "party": "Republican",
+    "email": "rob.sampson@cga.ct.gov",
+    "capitolOffice": [
+      "Room 3400",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8800"
+    ],
+    "url": "https://www.ctsenaterepublicans.com/senators/rob-sampson/"
+  },
+  "17": {
+    "name": "Jorge Cabrera",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8600"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/jorge-cabrera/"
+  },
+  "18": {
+    "name": "Heather S. Somers",
+    "party": "Republican",
+    "email": "Heather.Somers@cga.ct.gov",
+    "capitolOffice": [
+      "Room 3501",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8800"
+    ],
+    "url": "https://www.ctsenaterepublicans.com/senators/heather-somers/"
+  },
+  "19": {
+    "name": "Catherine A. Osten",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 2700",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8600"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/cathy-osten/"
+  },
+  "20": {
+    "name": "Martha Marx",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3300",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8600"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/martha-marx/"
+  },
+  "21": {
+    "name": "Jason Perillo",
+    "party": "Republican",
+    "email": "Jason.Perillo@cga.ct.gov",
+    "capitolOffice": [
+      "Room 3400",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8800"
+    ],
+    "url": "https://www.ctsenaterepublicans.com/senators/jason-perillo/"
+  },
+  "22": {
+    "name": "Sujata Gadkar-Wilcox",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8600"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/sujata-gadkar-wilcox/"
+  },
+  "23": {
+    "name": "Herron Gaston",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3300",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8600"
+    ],
+    "url": "https://senatedems.ct.gov/senator/herron-keyon-gaston/"
+  },
+  "24": {
+    "name": "Julie Kushner",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3800",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-0509"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/julie-kushner/"
+  },
+  "25": {
+    "name": "Bob Duff",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3300",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-0414"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/bob-duff/"
+  },
+  "26": {
+    "name": "Ceci Maher",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3300",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8600"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/ceci-maher/"
+  },
+  "27": {
+    "name": "Patricia Billie Miller",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3300",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8600"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/patricia-billie-miller/"
+  },
+  "28": {
+    "name": "Tony Hwang",
+    "party": "Republican",
+    "email": "Tony.Hwang@cga.ct.gov",
+    "capitolOffice": [
+      "Room 3602",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8805"
+    ],
+    "url": "http://www.ctsenaterepublicans.com/senators/tony-hwang/"
+  },
+  "29": {
+    "name": "Mae Flexer",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 1805",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8634"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/mae-flexer/"
+  },
+  "30": {
+    "name": "Stephen G. Harding, Jr.",
+    "party": "Republican",
+    "email": "Stephen.Harding@cga.ct.gov",
+    "capitolOffice": [
+      "Room 3400",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8800"
+    ],
+    "url": "https://www.ctsenaterepublicans.com/senators/stephen-harding/"
+  },
+  "31": {
+    "name": "Henri Martin",
+    "party": "Republican",
+    "email": "Henri.Martin@cga.ct.gov",
+    "capitolOffice": [
+      "Room 3400",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-0529"
+    ],
+    "url": "https://www.ctsenaterepublicans.com/senators/henri-martin/"
+  },
+  "32": {
+    "name": "Eric C. Berthel",
+    "party": "Republican",
+    "email": "Eric.Berthel@cga.ct.gov",
+    "capitolOffice": [
+      "Room 3400",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8800"
+    ],
+    "url": "https://www.ctsenaterepublicans.com/senators/eric-berthel/"
+  },
+  "33": {
+    "name": "Norman Needleman",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Room 3300",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-0428"
+    ],
+    "url": "https://www.senatedems.ct.gov/senator/norm-needleman/"
+  },
+  "34": {
+    "name": "Paul Cicarella",
+    "party": "Republican",
+    "email": "Paul.Cicarella@cga.ct.gov",
+    "capitolOffice": [
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8800"
+    ],
+    "url": "https://ctsenaterepublicans.com/senators/paul-cicarella/"
+  },
+  "35": {
+    "name": "Jeff Gordon",
+    "party": "Republican",
+    "email": "Jeff.Gordon@cga.ct.gov",
+    "capitolOffice": [
+      "Room 3400",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8800"
+    ],
+    "url": "https://www.ctsenaterepublicans.com/senators/jeff-gordon"
+  },
+  "36": {
+    "name": "Ryan Fazio",
+    "party": "Republican",
+    "email": "Ryan.Fazio@cga.ct.gov",
+    "capitolOffice": [
+      "Room 3400",
+      "Legislative Office Building",
+      "300 Capitol Avenue",
+      "Hartford, CT 06106-1591",
+      "860-240-8800"
+    ],
+    "url": "https://www.ctsenaterepublicans.com/senators/ryan-fazio"
+  }
+}

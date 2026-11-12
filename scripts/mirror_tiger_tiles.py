@@ -117,7 +117,12 @@ STATE_FIPS = {"il": "17", "ia": "19", "mi": "26", "wi": "55", "ny": "36", "ca": 
               "mn": "27", "ky": "21", "in": "18", "nc": "37", "ok": "40", "sc": "45",
               "tn": "47", "ar": "05", "ms": "28", "la": "22", "mo": "29",
               "va": "51", "wv": "54", "ga": "13", "pa": "42", "nv": "32", "az": "04",
-              "nj": "34", "nh": "33"}
+              "nj": "34", "nh": "33", "tx": "48", "fl": "12", "oh": "39",
+              "ma": "25", "ct": "09", "md": "24", "al": "01", "or": "41", "co": "08",
+              "ut": "49", "ks": "20", "wa": "53",
+              "nm": "35", "ne": "31", "id": "16", "hi": "15", "me": "23", "mt": "30",
+              "ri": "44", "de": "10", "sd": "46", "nd": "38", "ak": "02", "vt": "50",
+              "wy": "56"}
 # WHO THIS FETCHES AS, and it used to be nobody: the first version shelled out to
 # curl with no -A, so the Census saw `curl/8.x` and nothing read robots.txt.
 # Nothing was breached — measured 2026-09-27 as that client, the host's
@@ -211,6 +216,14 @@ MIRRORS = [
     ("az", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("az", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("az", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("tx", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("tx", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("tx", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("tx", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("fl", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("fl", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("oh", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("oh", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("nj", "municipality", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
     ("nj", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("nj", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
@@ -219,6 +232,69 @@ MIRRORS = [
     ("nh", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("nh", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("nh", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("wa", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("wa", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ma", "municipality", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("ma", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ma", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ma", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ct", "municipality", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("ct", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ct", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ct", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("md", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("md", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("al", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("al", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("co", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("co", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ut", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("ut", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ks", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("ks", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("or", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("or", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("or", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("or", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ca", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("ca", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ca", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ca", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("nm", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("nm", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ne", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("ne", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("id", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("id", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("hi", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("me", "municipality", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("me", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("me", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("me", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("mt", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("mt", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("mt", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("mt", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ri", "municipality", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("ri", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ri", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ri", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("de", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("de", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("sd", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("sd", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("nd", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("nd", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("nd", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ak", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("ak", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("vt", "municipality", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
+    ("vt", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("vt", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("vt", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("wy", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("wy", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("wy", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
 ]
 
 # THE ZIP LAYERS (phase 6b). TIGERweb's ZCTA layer has NO STATE field — a ZCTA
@@ -244,7 +320,7 @@ ZIP_MIRRORS = [
     ("mi", "zip-code", "MI_BBOX_ENVELOPE", (-90.42, 41.69, -82.12, 48.31)),
     ("wi", "zip-code", "WI_BBOX_ENVELOPE", (-93.09, 42.29, -86.04, 47.51)),
     ("ny", "nys-zip-code", "NY_ZCTA_ENVELOPE", (-79.77, 40.47, -71.77, 45.02)),
-    ("ca", "zip-code", "SF_BBOX_ENVELOPE", (-122.62, 37.58, -122.28, 37.96)),
+    ("ca", "zip-code", "CA_BBOX_ENVELOPE", (-124.5, 32.5, -114.1, 42.05)),
     ("mn", "zip-code", "MN_BBOX_ENVELOPE", (-97.30, 43.44, -89.43, 49.44)),
     ("in", "zip-code", "IN_BBOX_ENVELOPE", (-88.10, 37.77, -84.78, 41.77)),
     ("nc", "zip-code", "NC_BBOX_ENVELOPE", (-84.50, 33.60, -75.10, 36.75)),
@@ -262,8 +338,40 @@ ZIP_MIRRORS = [
     ("nv", "zip-code", "NV_BBOX_ENVELOPE", (-120.1, 34.95, -113.95, 42.1)),
     ("az", "zip-code", "AZ_BBOX_ENVELOPE", (-114.9, 31.25, -108.95, 37.1)),
     ("nj", "zip-code", "NJ_BBOX_ENVELOPE", (-75.65, 38.7, -73.8, 41.45)),
+    ("tx", "zip-code", "TX_BBOX_ENVELOPE", (-106.7, 25.78, -93.45, 36.56)),
     ("nh", "zip-code", "NH_BBOX_ENVELOPE", (-72.65, 42.6, -70.45, 45.4)),
+    ("fl", "zip-code", "FL_BBOX_ENVELOPE", (-87.69, 24.34, -79.92, 31.06)),
+    ("oh", "zip-code", "OH_BBOX_ENVELOPE", (-84.88, 38.35, -80.46, 42.38)),
+    ("wa", "zip-code", "WA_BBOX_ENVELOPE", (-124.9, 45.49, -116.86, 49.06)),
+    ("ma", "zip-code", "MA_BBOX_ENVELOPE", (-73.56, 41.13, -69.8, 42.94)),
+    ("ct", "zip-code", "CT_BBOX_ENVELOPE", (-73.78, 40.9, -71.73, 42.11)),
+    ("md", "zip-code", "MD_BBOX_ENVELOPE", (-79.54, 37.83, -74.93, 39.78)),
+    ("al", "zip-code", "AL_BBOX_ENVELOPE", (-88.53, 30.09, -84.83, 35.06)),
+    ("or", "zip-code", "OR_BBOX_ENVELOPE", (-124.76, 41.94, -116.41, 46.35)),
+    ("co", "zip-code", "CO_BBOX_ENVELOPE", (-109.12, 36.94, -101.99, 41.06)),
+    ("ut", "zip-code", "UT_BBOX_ENVELOPE", (-114.11, 36.94, -108.99, 42.06)),
+    ("ks", "zip-code", "KS_BBOX_ENVELOPE", (-102.11, 36.94, -94.53, 40.06)),
+    ("nm", "zip-code", "NM_BBOX_ENVELOPE", (-109.12, 31.27, -102.94, 37.07)),
+    ("ne", "zip-code", "NE_BBOX_ENVELOPE", (-104.12, 39.93, -95.24, 43.07)),
+    ("id", "zip-code", "ID_BBOX_ENVELOPE", (-117.31, 41.92, -110.98, 49.07)),
+    ("hi", "zip-code", "HI_BBOX_ENVELOPE", (-160.66, 18.8, -154.69, 22.35)),
+    ("me", "zip-code", "ME_BBOX_ENVELOPE", (-71.15, 42.85, -66.82, 47.52)),
+    ("mt", "zip-code", "MT_BBOX_ENVELOPE", (-116.11, 44.29, -103.97, 49.07)),
+    ("ri", "zip-code", "RI_BBOX_ENVELOPE", (-71.97, 41.03, -71.02, 42.08)),
+    ("de", "zip-code", "DE_BBOX_ENVELOPE", (-75.85, 38.39, -74.92, 39.9)),
+    ("sd", "zip-code", "SD_BBOX_ENVELOPE", (-104.12, 42.41, -96.37, 46.01)),
+    ("nd", "zip-code", "ND_BBOX_ENVELOPE", (-104.11, 45.87, -96.49, 49.07)),
+    ("ak", "zip-code", "AK_BBOX_ENVELOPE", (-179.3, 51.11, -129.91, 71.5)),
+    ("vt", "zip-code", "VT_BBOX_ENVELOPE", (-73.5, 42.66, -71.4, 45.08)),
+    ("wy", "zip-code", "WY_BBOX_ENVELOPE", (-111.12, 40.93, -103.99, 45.07)),
 ]
+# A STATE row the server cannot answer whole is paged the same way: asked for
+# Texas's 1,016 unified school districts at full detail in one response,
+# TIGERweb returned the same `{"code": 500}` every time (measured 2026-11-11),
+# and answered 250 at a time in about 3 s and 8.5 MB a page. Such a row's query
+# carries orderByFields=OBJECTID, so a page window is stable, and its run counts
+# the state's features first, exactly as a box row's does.
+PAGED_STATE_ROWS = {("tx", "school-district-unified")}
 ZCTA_SERVICE, ZCTA_INDEX, ZCTA_FIELDS = "PUMA_TAD_TAZ_UGA_ZCTA", 11, "ZCTA5"
 PAGE_SIZE = 250
 # IN-STATE ONLY (the operator's choice, 2026-09-27). A box holding a state
@@ -276,10 +384,11 @@ PAGE_SIZE = 250
 # a ZCTA that merely touches the state line shares an edge, not ground. What it
 # costs is stated rather than implied: a reader who clicks OUTSIDE the state
 # gets no ZIP card where the live layer answered one — and since 2026-09-30
-# every ZIP layer mirrored here but San Francisco's hides outside its state
-# anyway, through the app's coverage test against its own state outline, so the
-# archive and the live loader agree there (San Francisco's is ungated on
-# purpose: its box, the city and the inner Bay, reaches no other state). THE
+# every ZIP layer mirrored here hides outside its state anyway, through the
+# app's coverage test against its own state outline, so the archive and the
+# live loader agree there (California's joined on 2026-11-11, when the app grew
+# from San Francisco to the state; until then its box was the city and the
+# inner Bay, which reaches no other state, and it was ungated). THE
 # FILTER changes no answer inside the state (measured 2026-09-27: every dropped
 # ZCTA that touches the state holds 0.00 m2 of it; measured again 2026-10-17 for
 # the eight phase-6d layers, where 87, 75, 103, 116, 64, 110, 96 and 68 dropped
@@ -311,13 +420,22 @@ def fail(msg):
     sys.exit(1)
 
 
+def paged(row):
+    """Is this row's set fetched a page at a time? Every box row is, and the
+    state rows PAGED_STATE_ROWS names."""
+    return row["env"] is not None or (row["tag"], row["layer"]) in PAGED_STATE_ROWS
+
+
 def query_url(row):
     """The query recorded for a layer. A box row's is the query WITHOUT its
     page window; fetch_pages adds resultOffset/resultRecordCount per page."""
     if row["env"] is None:
         where = urllib.parse.quote("STATE='%s'" % STATE_FIPS[row["tag"]])
-        return ("%s%s/MapServer/%d/query?where=%s&outFields=%s&outSR=4326&f=json&geometryPrecision=5"
-                % (SERVICES, row["service"], row["index"], where, row["fields"]))
+        url = ("%s%s/MapServer/%d/query?where=%s&outFields=%s&outSR=4326&f=json&geometryPrecision=5"
+               % (SERVICES, row["service"], row["index"], where, row["fields"]))
+        if paged(row):
+            url += "&orderByFields=OBJECTID"
+        return url
     xmin, ymin, xmax, ymax = row["env"]
     env = json.dumps({"xmin": xmin, "ymin": ymin, "xmax": xmax, "ymax": ymax}, separators=(",", ":"))
     return ("%s%s/MapServer/%d/query?where=%s&geometry=%s&geometryType=esriGeometryEnvelope"
@@ -404,12 +522,12 @@ def read_json(path):
 
 
 def fetch_pages(url, work):
-    """A box row's set, PAGE_SIZE at a time, held to the server's own count."""
+    """A paged row's set, PAGE_SIZE at a time, held to the server's own count."""
     count_path = os.path.join(work, "count.json")
     fetch(url.replace("&f=json", "&f=json&returnCountOnly=true"), count_path)
     want = read_json(count_path).get("count")
     if not isinstance(want, int) or want <= 0:
-        raise RuntimeError("TIGERweb gave no count for the box")
+        raise RuntimeError("TIGERweb gave no count for the set")
     feats, shell, offset = [], None, 0
     while True:
         page = os.path.join(work, "page-%d.json" % offset)
@@ -422,7 +540,7 @@ def fetch_pages(url, work):
         if not got or not payload.get("exceededTransferLimit"):
             break
     if len(feats) != want:
-        raise RuntimeError("the pages hold %d features and the server counts %d in the box" % (len(feats), want))
+        raise RuntimeError("the pages hold %d features and the server counts %d in the set" % (len(feats), want))
     shell = dict(shell)
     shell["features"] = feats
     shell.pop("exceededTransferLimit", None)
@@ -490,7 +608,7 @@ def fetch_as_geojson(row, work):
     url = query_url(row)
     fields = row["fields"]
     raw = os.path.join(work, "esri.json")
-    if row["env"] is None:
+    if not paged(row):
         fetch(url, raw)
         payload = read_json(raw)
         if payload.get("exceededTransferLimit"):
@@ -729,8 +847,9 @@ def refresh(only, force, n_points, seed):
             }
             if row.get("_splice_sha256"):
                 rec[k]["spliced"] = {"file": SPLICES[(tag, layer)][0], "sha256": row["_splice_sha256"]}
-            if row["env"] is not None:
+            if paged(row):
                 rec[k]["page_size"] = PAGE_SIZE
+            if row["env"] is not None:
                 rec[k]["in_state"] = STATE_FIPS[tag]
                 rec[k]["out_of_state_dropped"] = row["_dropped"]
                 with open(path, encoding="utf-8") as fh:

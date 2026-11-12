@@ -1,0 +1,44 @@
+{
+ "state": "Idaho",
+ "usps": "ID",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Brad Little",
+   "url": "https://gov.idaho.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Scott Bedke",
+   "url": "https://lgo.idaho.gov/"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Phil McGrane",
+   "url": "https://sos.idaho.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Raúl Labrador",
+   "url": "https://www.ag.idaho.gov/",
+   "match": [
+    "Raul Labrador"
+   ]
+  },
+  {
+   "office": "State Controller",
+   "name": "Brandon Woolf",
+   "url": "https://www.sco.idaho.gov/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Julie Ellsworth",
+   "url": "https://sto.idaho.gov/"
+  },
+  {
+   "office": "Superintendent of Public Instruction",
+   "name": "Debbie Critchfield",
+   "url": "https://www.sde.idaho.gov/"
+  }
+ ]
+}

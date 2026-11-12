@@ -52,7 +52,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "34.74650,-92.28960"; // the State Capitol, Little Rock, Pulaski County
 const OFFLINE = ["county", "us-house", "ar-senate", "ar-house", "quorum-court", "county-subdivision", "voting-precinct", "ar-court-of-appeals", "ar-circuit-court", "fire-district"];
 const EXPECT_DISTRICT = { "county": "Pulaski County", "us-house": "2", "ar-senate": "14", "ar-house": "74", "quorum-court": "6", "county-subdivision": "Big Rock Township", "voting-precinct": "Precinct 098", "ar-court-of-appeals": "6", "ar-circuit-court": "6th Judicial Circuit", "fire-district": "Little Rock" };
-const NEGATIVE_POINT = "33.40000,-94.40000"; // near New Boston, Bowie County, TEXAS, south of the Red River that forms the state line there — outside Arkansas and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's county layer names Bowie County, Texas at this point (control: the Capitol anchor returns Arkansas), and the Census's ZIP layer answers 75570 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. TEXAS BECAUSE NO INSTANCE SERVES IT and none is planned next; Mississippi and Louisiana, both on the next-states list, were passed over so this point does not have to move when either goes live, and the point sits well west of the Texas–Louisiana line.
+const NEGATIVE_POINT = "33.40000,-94.40000"; // near New Boston, Bowie County, TEXAS, south of the Red River that forms the state line there — outside Arkansas, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-13: TIGERweb's county layer names Bowie County, Texas at this point (control: the Capitol anchor returns Arkansas), and the Census's ZIP layer answers 75570 there, which is the neighbouring-state answer the ZIP layer's coverage test exists to hide. TEXAS'S OUTLINE HAS COVERED THIS POINT SINCE the change that published Texas (batch 2 of the state-level launch, written 2026-11-11), AND THE POINT STAYS: measured that day on a 0.02-degree grid, no ground in this app's gate lies more than 2 km from every outline in fleet-outlines.json, because all six neighbours (Missouri, Tennessee, Mississippi, Louisiana, Texas and Oklahoma) are served. It is still outside Arkansas and outside every shipped boundary file, which is all the checks that boot on it ask, and a selection the app makes itself never leaves, as Illinois's and Indiana's points inside live neighbours already show. The click that must stay here (check 1a2-ii) moved to the Gulf of Mexico, and Texarkana, Texas, which it used to click, became a Texas routing case in 1a2.
 const APP_NAME = "districtry Arkansas";
 const EXPECT_LAYERS = 18;
 // ==== GENERATED:END smoke-config ====
@@ -372,10 +372,12 @@ try {
   //     the real districtry.com, fails in the sandbox and leaves page.url() on
   //     the app, which reads exactly like correct behaviour.
   //
-  //     ARKANSAS HAS NEIGHBOURS THE FLEET SERVES AND NEIGHBOURS IT DOES NOT,
-  //     so both halves are its own. Oklahoma is live, so a click on Sallisaw
-  //     must open that app; Texas is served by nobody, so a click on
-  //     Texarkana, Texas must stay here (1a2-ii below). This instance answers
+  //     EVERY ONE OF ARKANSAS'S NEIGHBOURS IS SERVED since Texas was
+  //     published (batch 2 of the state-level launch, written 2026-11-11), so
+  //     a click on Sallisaw must open Oklahoma's app and a click on
+  //     Texarkana, Texas must open Texas's, and the click that must stay here
+  //     is in the Gulf of Mexico (1a2-ii below). Until then Texas was served
+  //     by nobody and Texarkana was that click. This instance answers
   //     its own side from the coverage rings the wash retained — no fetch.
   //     Chicago proves the file is still read for ground far from here.
   //     Tennessee went live while this instance was being built, so Memphis
@@ -392,7 +394,11 @@ try {
   //     fleet-outlines.json and no other. Louisiana joined the same way in
   //     the change that published it: Farmerville, the Union Parish seat,
   //     lies inside Louisiana's outline and no other, about 26 km from the
-  //     nearest edge.
+  //     nearest edge. Texas joined the same way in the change that published
+  //     it (batch 2 of the state-level launch, written 2026-11-11):
+  //     Texarkana, Texas, about 5 km west of the line and the click 1a2-ii
+  //     used to make as ground nobody served, lies inside Texas's outline
+  //     and no other, measured that day.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
@@ -400,6 +406,7 @@ try {
       { name: "Memphis, Tennessee", lat: 35.1440, lng: -89.9930, want: "https://districtry.com/tn/" },
       { name: "Clarksdale, Mississippi", lat: 34.2001, lng: -90.5709, want: "https://districtry.com/ms/" },
       { name: "Farmerville, Louisiana", lat: 32.7735, lng: -92.4058, want: "https://districtry.com/la/" },
+      { name: "Texarkana, Texas", lat: 33.4300, lng: -94.1000, want: "https://districtry.com/tx/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -417,12 +424,17 @@ try {
     }
   }
 
-  // 1a2-ii. The half that keeps 1a2 honest: Texarkana, Texas sits across
-  //     State Line Avenue from Texarkana, Arkansas and no districtry instance
-  //     covers it, so the click must stay HERE. The point is about 5 km west
-  //     of the line, so the outline's own simplification cannot decide it. A route to a sibling would be the same lie
-  //     pointing the other way, and the stub makes it visible: if the app
-  //     navigated, the URL would be the stubbed sibling rather than this app.
+  // 1a2-ii. The half that keeps 1a2 honest: a point in the Gulf of Mexico,
+  //     about 166 km off the Louisiana coast, is outside every outline in the
+  //     fleet, so the click must stay HERE. It clicked Texarkana, Texas until
+  //     the change that published Texas, which made that a routing case
+  //     above. ALL SIX OF ARKANSAS'S NEIGHBOURS ARE SERVED NOW, so no land
+  //     near this app is unserved, and the sea will never be: measured
+  //     2026-11-11, TIGERweb's state layer names no state at this point and
+  //     the nearest outline in fleet-outlines.json is Louisiana's. A route to
+  //     a sibling would be the same lie pointing the other way, and the stub
+  //     makes it visible: if the app navigated, the URL would be the stubbed
+  //     sibling rather than this app.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     const page = await booted(context, BASE, async (p) => {
@@ -430,14 +442,14 @@ try {
         route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
     });
     await page.evaluate(({ n }) => {
-      window[n].map.fire("click", { latlng: window.L.latLng(33.4300, -94.1000) });
+      window[n].map.fire("click", { latlng: window.L.latLng(27.5, -91.0) });
     }, { n: EXPORTS_NAME });
     await page.waitForTimeout(3000);
     const url = page.url();
     // Still under BASE means still this app. This asked for the URL NOT to
     // name one of a list of sibling tags, and a list needs a new entry each
     // time a state goes live: the tag it lacks reads as staying here.
-    check("a click on Texarkana, Texas stays in this app",
+    check("a click in the Gulf of Mexico, outside every app's outline, stays in this app",
       url.startsWith(BASE), url);
     await context.close();
   }
@@ -969,7 +981,9 @@ try {
   //
   //    The negative point is the worksheet's own, in Bowie County, Texas —
   //    outside the county fabric's dissolve, which is what the coverage test
-  //    reads.
+  //    reads. It has been inside Texas's own outline since Texas was
+  //    published, which changes nothing here: this check boots on the point
+  //    with a permalink, and a permalink boot never leaves the app.
   {
     const ZCTA = "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11";
     function zctaBody(zip) {

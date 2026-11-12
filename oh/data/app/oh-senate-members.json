@@ -1,0 +1,399 @@
+{
+  "1": {
+    "name": "Rob McColley",
+    "party": "Republican",
+    "capitolOffice": [
+      "Statehouse",
+      "1 Capitol Square",
+      "Second Floor",
+      "Room 201",
+      "Columbus, Ohio 43215",
+      "(614) 466-8150"
+    ],
+    "url": "https://www.ohiosenate.gov/members/rob-mccolley"
+  },
+  "2": {
+    "name": "Theresa Gavarone",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "First Floor",
+      "Room 138",
+      "(614) 466-8060"
+    ],
+    "url": "https://www.ohiosenate.gov/members/theresa-gavarone"
+  },
+  "3": {
+    "name": "Michele Reynolds",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "First Floor",
+      "Room 128",
+      "(614) 466-8064"
+    ],
+    "url": "https://www.ohiosenate.gov/members/michele-reynolds"
+  },
+  "4": {
+    "name": "George F. Lang",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "First Floor",
+      "Room 129",
+      "(614) 466-8072"
+    ],
+    "url": "https://www.ohiosenate.gov/members/george-f-lang"
+  },
+  "5": {
+    "name": "Stephen A. Huffman",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Ground Floor",
+      "Room 040",
+      "(614) 466-6247"
+    ],
+    "url": "https://www.ohiosenate.gov/members/stephen-a-huffman"
+  },
+  "6": {
+    "name": "Willis E. Blackshear, Jr.",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Ground Floor",
+      "Room 049",
+      "(614) 466-4538"
+    ],
+    "url": "https://www.ohiosenate.gov/members/willis-e-blackshear-jr"
+  },
+  "7": {
+    "name": "Steve Wilson",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Second Floor",
+      "Room 222",
+      "(614) 466-9737"
+    ],
+    "url": "https://www.ohiosenate.gov/members/steve-wilson"
+  },
+  "8": {
+    "name": "Louis W. Blessing, III",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "First Floor",
+      "Room 143",
+      "(614) 466-8068"
+    ],
+    "url": "https://www.ohiosenate.gov/members/louis-w-blessing-iii"
+  },
+  "9": {
+    "name": "Catherine D. Ingram",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Ground Floor",
+      "Room 056",
+      "(614) 466-5980"
+    ],
+    "url": "https://www.ohiosenate.gov/members/catherine-d-ingram"
+  },
+  "10": {
+    "name": "Kyle Koehler",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Ground Floor",
+      "Room 035",
+      "(614) 466-3780"
+    ],
+    "url": "https://www.ohiosenate.gov/members/kyle-koehler"
+  },
+  "11": {
+    "name": "Paula Hicks-Hudson",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Ground Floor",
+      "Room 057",
+      "Columbus, Ohio 43215",
+      "(614) 466-5204"
+    ],
+    "url": "https://www.ohiosenate.gov/members/paula-hicks-hudson"
+  },
+  "12": {
+    "name": "Susan Manchester",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Ground Floor",
+      "Room 048",
+      "(614) 466-7584"
+    ],
+    "url": "https://www.ohiosenate.gov/members/susan-manchester"
+  },
+  "13": {
+    "vacant": true,
+    "vacantWhy": "The member list of the Ohio Senate lists this seat as vacant.",
+    "sourceUrl": "https://www.ohiosenate.gov/members/directory",
+    "asOf": "2026-11-11"
+  },
+  "14": {
+    "name": "Terry Johnson",
+    "party": "Republican",
+    "capitolOffice": [
+      "Statehouse",
+      "1 Capitol Square",
+      "Second Floor",
+      "Room 226",
+      "Columbus, Ohio 43215",
+      "(614) 466-8082"
+    ],
+    "url": "https://www.ohiosenate.gov/members/terry-johnson"
+  },
+  "15": {
+    "name": "Hearcel F. Craig",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Second Floor",
+      "Room 228",
+      "(614) 466-5131"
+    ],
+    "url": "https://www.ohiosenate.gov/members/hearcel-f-craig"
+  },
+  "16": {
+    "name": "Beth Liston",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Ground Floor",
+      "Room 051",
+      "Columbus, Ohio 43215",
+      "(614) 466-5981"
+    ],
+    "url": "https://www.ohiosenate.gov/members/beth-liston"
+  },
+  "17": {
+    "name": "Shane Wilkin",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Second Floor",
+      "Room 221",
+      "(614) 466-8156"
+    ],
+    "url": "https://www.ohiosenate.gov/members/shane-wilkin"
+  },
+  "18": {
+    "name": "Jerry C. Cirino",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "First Floor",
+      "Room 127",
+      "(614) 644-7718"
+    ],
+    "url": "https://www.ohiosenate.gov/members/jerry-c-cirino"
+  },
+  "19": {
+    "name": "Andrew O. Brenner",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "First Floor",
+      "Room 140",
+      "(614) 466-8086"
+    ],
+    "url": "https://www.ohiosenate.gov/members/andrew-o-brenner"
+  },
+  "20": {
+    "name": "Tim Schaffer",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "First Floor",
+      "Room 137",
+      "(614) 466-8076"
+    ],
+    "url": "https://www.ohiosenate.gov/members/tim-schaffer"
+  },
+  "21": {
+    "name": "Kent Smith",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Second Floor",
+      "Room 223",
+      "Columbus, Ohio 43215",
+      "(614) 466-4857"
+    ],
+    "url": "https://www.ohiosenate.gov/members/kent-smith"
+  },
+  "22": {
+    "name": "Mark Romanchuk",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "First Floor",
+      "Room 132",
+      "(614) 466-7505"
+    ],
+    "url": "https://www.ohiosenate.gov/members/mark-romanchuk"
+  },
+  "23": {
+    "name": "Nickie J. Antonio",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Statehouse",
+      "1 Capitol Square",
+      "Third Floor",
+      "SH-303",
+      "(614) 466-5123"
+    ],
+    "url": "https://www.ohiosenate.gov/members/nickie-j-antonio"
+  },
+  "24": {
+    "name": "Thomas F. Patton",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Ground Floor",
+      "Room 042",
+      "(614) 466-8056"
+    ],
+    "url": "https://www.ohiosenate.gov/members/thomas-f-patton"
+  },
+  "25": {
+    "name": "William P. DeMora",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Statehouse",
+      "1 Capitol Square",
+      "Ground Floor",
+      "Room 052",
+      "Columbus, Ohio 43215",
+      "(614) 466-4583"
+    ],
+    "url": "https://www.ohiosenate.gov/members/william-p-demora"
+  },
+  "26": {
+    "name": "Bill Reineke",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Second Floor",
+      "Room 220",
+      "(614) 466-8049"
+    ],
+    "url": "https://www.ohiosenate.gov/members/bill-reineke"
+  },
+  "27": {
+    "name": "Kristina D. Roegner",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "First Floor",
+      "Room 142",
+      "(614) 466-4823"
+    ],
+    "url": "https://www.ohiosenate.gov/members/kristina-d-roegner"
+  },
+  "28": {
+    "name": "Casey Weinstein",
+    "party": "Democratic",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Ground Floor",
+      "Room 050",
+      "(614) 466-7041"
+    ],
+    "url": "https://www.ohiosenate.gov/members/casey-weinstein"
+  },
+  "29": {
+    "name": "Jane M. Timken",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "First Floor",
+      "Room 134",
+      "(614) 466-0626"
+    ],
+    "url": "https://www.ohiosenate.gov/members/jane-m-timken"
+  },
+  "30": {
+    "name": "Brian M. Chavez",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Ground Floor",
+      "Room 034",
+      "(614) 466-6508"
+    ],
+    "url": "https://www.ohiosenate.gov/members/brian-m-chavez"
+  },
+  "31": {
+    "name": "Al Landis",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Ground Floor",
+      "Room 038",
+      "(614) 466-5838"
+    ],
+    "url": "https://www.ohiosenate.gov/members/al-landis"
+  },
+  "32": {
+    "name": "Sandra O'Brien",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "First Floor",
+      "Room 125",
+      "(614) 466-7182"
+    ],
+    "url": "https://www.ohiosenate.gov/members/sandra-obrien"
+  },
+  "33": {
+    "name": "Al Cutrona",
+    "party": "Republican",
+    "capitolOffice": [
+      "Senate Building",
+      "1 Capitol Square",
+      "Ground Floor",
+      "Room 041",
+      "Columbus, Ohio 43215",
+      "(614) 466-8285"
+    ],
+    "url": "https://www.ohiosenate.gov/members/al-cutrona"
+  }
+}

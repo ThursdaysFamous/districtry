@@ -1,0 +1,85 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from nd/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "North Dakota",
+ "usSenate": [
+  {
+   "name": "Kevin Cramer",
+   "party": "Republican",
+   "url": "https://www.cramer.senate.gov",
+   "office": "313 Hart Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2043"
+  },
+  {
+   "name": "John Hoeven",
+   "party": "Republican",
+   "url": "https://www.hoeven.senate.gov",
+   "office": "338 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2551"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-12",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Kelly Armstrong",
+   "url": "https://www.governor.nd.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Michelle Strinden",
+   "url": "https://www.governor.nd.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Drew Wrigley",
+   "url": "https://attorneygeneral.nd.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Michael Howe",
+   "url": "https://www.sos.nd.gov/about-office",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Thomas Beadle",
+   "url": "https://www.treasurer.nd.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Joshua Gallion",
+   "url": "https://www.nd.gov/auditor/about-us",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Agriculture Commissioner",
+   "name": "Doug Goehring",
+   "url": "https://www.ndda.nd.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Insurance Commissioner",
+   "name": "Jon Godfread",
+   "url": "https://www.insurance.nd.gov/",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Superintendent of Public Instruction",
+   "name": "Levi Bachmeier",
+   "url": "https://www.nd.gov/dpi/state-superintendent",
+   "verified": "2026-11-12"
+  },
+  {
+   "office": "Tax Commissioner",
+   "name": "Brian Kroshus",
+   "url": "https://www.tax.nd.gov/",
+   "verified": "2026-11-12"
+  }
+ ],
+ "officersNote": "North Dakota's voters also elect the three members of the Public Service Commission statewide. They are not listed here yet."
+}

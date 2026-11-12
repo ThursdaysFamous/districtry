@@ -1,0 +1,36 @@
+{
+ "state": "Connecticut",
+ "usps": "CT",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Ned Lamont",
+   "url": "https://portal.ct.gov/governor"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Susan Bysiewicz",
+   "url": "https://portal.ct.gov/ltgovernor"
+  },
+  {
+   "office": "Attorney General",
+   "name": "William Tong",
+   "url": "https://portal.ct.gov/ag"
+  },
+  {
+   "office": "Secretary of the State",
+   "name": "Stephanie Thomas",
+   "url": "https://portal.ct.gov/sots"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Erick Russell",
+   "url": "https://portal.ct.gov/ott"
+  },
+  {
+   "office": "State Comptroller",
+   "name": "Sean Scanlon",
+   "url": "https://osc.ct.gov/"
+  }
+ ]
+}

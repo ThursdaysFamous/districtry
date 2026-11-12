@@ -1,0 +1,32 @@
+{
+ "state": "Utah",
+ "usps": "UT",
+ "officersNote": "Utah has no secretary of state; the lieutenant governor oversees its elections.",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Spencer J. Cox",
+   "url": "https://governor.utah.gov/"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Deidre M. Henderson",
+   "url": "https://ltgovernor.utah.gov/"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Derek Brown",
+   "url": "https://attorneygeneral.utah.gov/"
+  },
+  {
+   "office": "State Auditor",
+   "name": "Tina Cannon",
+   "url": "https://auditor.utah.gov/"
+  },
+  {
+   "office": "State Treasurer",
+   "name": "Marlo M. Oaks",
+   "url": "https://treasurer.utah.gov/"
+  }
+ ]
+}
