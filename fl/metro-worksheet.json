@@ -306,10 +306,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 8,
+      "rank_note": "Tribal land — Florida has 11 pieces held by three nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-12, with the counties measured against this app's own county outlines: the Miccosukee Reservation (310.165 km² in 6 parts, all but 3.0 km² of it in Broward County and the rest in Miami-Dade) and the Miccosukee Off-Reservation Trust Land (20.341 km² in 3 parts, in Hendry, Highlands and Miami-Dade counties); the Seminole Tribe of Florida's Big Cypress Reservation (213.677 km², 174.9 km² of it in Hendry County and the rest in Broward), Brighton Reservation (148.241 km², Glades County), Immokalee Reservation (2.492 km², Collier County), Hollywood Reservation (2.049 km², Broward County), Fort Pierce Reservation (0.245 km², St. Lucie County), Tampa Reservation (0.182 km², Hillsborough County), Coconut Creek Trust Land (0.026 km²) and Seminole (FL) Trust Land (0.004 km²), the last two in Broward County; and the 0.007 km² of the Poarch Creek Off-Reservation Trust Land that lies in Florida, in Escambia County, about 1% of that trust land, whose nation is seated in Alabama. Ranked after municipalities and before the point layers, as Louisiana's and Mississippi's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — Florida has 11 such areas, held by the Miccosukee Tribe of Indians, the Seminole Tribe of Florida and the Poarch Band of Creek Indians.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "The Seminole Tribe of Florida's Tribal Council, its Chairman, its President and Vice-Chairwoman and a representative from each of the Hollywood, Big Cypress and Brighton reservations, from the tribe's own page at semtribe.com, read weekly by scripts/tribal_council_scraper.py and dated on the card. The Miccosukee Tribe's site (miccosukee.com) and the Poarch Band's (pci-nsn.gov) answered this project with an automated challenge page, which is not worked around, so those cards name nobody and say why. The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json); the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Florida — the eleven pieces of land above, in Broward, Collier, Escambia, Glades, Hendry, Highlands, Hillsborough, Miami-Dade and St. Lucie counties. Every other point in the state is on no tribal land the Census draws for a government."
+      }
+    },
+    {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 8,
+      "area_rank": 9,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -327,7 +345,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 9,
+      "area_rank": 10,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -345,7 +363,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -430,6 +448,12 @@
         "min_features": 1007,
         "max_features": 1007,
         "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 11,
+        "max_features": 11,
+        "note": "Florida's tribal land (scripts/build_tribal_areas.py) — seven reservations and four pieces of off-reservation trust land, held by three nations, one of them the Florida sliver of a trust land whose nation is seated in Alabama. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-12; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -449,6 +473,11 @@
         "note": "Florida House roster from the House's own member list and contact pages (flhouse.gov), one record per district, refreshed weekly."
       },
       {
+        "file": "tribal-councils.json",
+        "min_keys": 8,
+        "note": "The Seminole Tribe of Florida's council, from its own page, under the Census AIANNH code of each of the tribe's eight pieces of land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). The Miccosukee Tribe's and the Poarch Band's councils are not carried, and their land says why. Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
@@ -461,7 +490,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-fl-shell-v1",
+    "cache_name": "districtry-fl-shell-v2",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

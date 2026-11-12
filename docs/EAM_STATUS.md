@@ -51,7 +51,7 @@ different thing from one it failed.
 | co | **EAM·** | 64 | 64/64 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
 | ct | **--M·** | — | — | 0 | 0 | — | 12 | all | 7 of 14 levels |
 | de | **EAM·** | 3 | 3/3 § | 0 | 0 | by record | 12 | all | 8 of 14 levels |
-| fl | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
+| fl | **EAM·** | 67 | 67/67 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
 | ga | **EAM·** | 159 | 159/159 § | 754 | 436 | all | 18 | all | 9 of 14 levels |
 | hi | **EAM·** | 5 | 5/5 § | 0 | 0 | by record | 12 | all | 10 of 14 levels |
 | ia | **EAM·** | 99 | 99/99 | 154 | 154 | all | 58 | all | 13 of 14 levels |
@@ -85,7 +85,7 @@ different thing from one it failed.
 | sc | **EAM·** | 46 | 46/46 | 310 | 313 | all | 22 | all | 13 of 14 levels |
 | sd | **EAM·** | 66 | 66/66 § | 0 | 0 | by record | 12 | all | 5 of 14 levels |
 | tn | **EAM·** | 95 | 95/95 § | 605 | 1,063 | all | 23 | all | 10 of 14 levels |
-| tx | **EAM·** | 254 | 254/254 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
+| tx | **EAM·** | 254 | 254/254 § | 0 | 0 | by record | 14 | all | 7 of 14 levels |
 | ut | **EAM·** | 29 | 29/29 § | 0 | 0 | by record | 12 | all | 6 of 14 levels |
 | va | **EAM·** | 95 | 95/95 | 510 | 517 | all | 21 | all | 13 of 14 levels |
 | vt | **EAM·** | 14 | 14/14 § | 0 | 0 | by record | 12 | all | 7 of 14 levels |
@@ -245,14 +245,13 @@ per county, so each one is named under its state below.
 - **Examined by a statewide record:** `fl-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 67 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 - **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `fl-house-districts.json`, `fl-senate-districts.json`, `metro-outline.json`, `fl/data/app/population/`, `state-counties.json`
-- **Covered: no.** 8 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 67 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 103 units at 25,000+ name a governing body; unanswered: Altamonte Springs city, Apopka city, Aventura city, Boca Raton city, Bonita Springs city, Boynton Beach city, Bradenton city, Cape Coral city and 95 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
   - **14. Township or county subdivision boundaries** — open
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Florida has no sub-county general-purpose government — outside a city, town or village the county governs. The 316 sub-county units the Census publishes for Florida are census county divisions: statistical areas, not governments (measured 2026-11-11).
@@ -731,14 +730,13 @@ this instance is in maintenance.
 - **Examined by a statewide record:** `tx-county-officials` accounts for every county in the state, which is what Examined rests on here: 0 of 254 counties are covered one at a time — served by a roster or named individually — and the rest by the record. That is a weaker statement, and it is the honest one while the answer is the same in every county.
 - **Answered by record, not by name.** No county district is drawn yet, so nothing is left silent — the absence is written down. That is the standard's third branch and it is a weaker guarantee than a named seat: the mark will move to names the day the districts ship.
 - **Under a WATCH.md plan (7):** re-checked on a stated cadence rather than by a job — `congress-districts.json`, `coverage-gaps.json`, `metro-outline.json`, `tx/data/app/population/`, `state-counties.json`, `tx-house-districts.json`, `tx-senate-districts.json`
-- **Covered: no.** 8 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
+- **Covered: no.** 7 of the 14 expected levels of government are not answered. Each is a floor: a level listed here may already have a record behind it that does not yet say which level it covers.
   - **4. The county governing body, in every county of the state** — open. 0 of 254 counties name a governing body
   - **6. The governing body of every general-purpose local government above 25,000 people** — open. 0 of 119 units at 25,000+ name a governing body; unanswered: Abilene city, Allen city, Alvin city, Amarillo city, Arlington city, Austin city, Balch Springs city, Baytown city and 111 more
   - **8. Courts whose judges are elected by district** — open (required only where the state has the level)
   - **10. School boards elected by district** — open (required only where the state has the level)
   - **11. Election precincts** — open (required only where the state has the level)
   - **12. Special districts the state's own law creates** — open (required only where the state has the level)
-  - **13. Tribal governments** — open (required only where the state has the level)
   - **14. Township or county subdivision boundaries** — open
 - **Does not apply here (1):** each one below is counted towards Covered by a stated fact rather than by work.
   - **9. Townships or other general-purpose sub-county governments** — Texas has no sub-county general-purpose government — outside a city, town or village the county governs. The 862 sub-county units the Census publishes for Texas are census county divisions: statistical areas, not governments (measured 2026-11-11).

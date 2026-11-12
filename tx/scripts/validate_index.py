@@ -96,7 +96,8 @@ MIN_REGISTER_LAYER = 8
 EXPECT_LAYER_IDS = [
     "tx-senate", "us-house", "tx-house", "county", "school-district-unified",
     "zip-code", "school-district-elementary", "school-district-secondary",
-    "municipality", "police-station", "fire-station", "post-office",
+    "municipality", "tribal-government", "police-station", "fire-station",
+    "post-office",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
@@ -107,6 +108,7 @@ GEOMETRY_FILES = {
     "tx-senate-districts.json": (31, 31),  # The 31 Texas Senate districts, TIGERweb layer 1 (2026 State Legislative Districts - Upper).
     "tx-house-districts.json": (150, 150),  # The 150 Texas House districts, TIGERweb layer 2 (2026 State Legislative Districts - Lower).
     "zip-index.json": (1985, 1985),  # The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound.
+    "tribal-areas.json": (6, 6),  # Texas's tribal land (scripts/build_tribal_areas.py) — three reservations and three pieces of off-reservation trust land, held by three nations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-12; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound.
 }
 
 # file -> minimum key count (officeholder rosters).
@@ -114,6 +116,7 @@ ROSTER_FILES = {
     "congress-roster.json": 38,  # U.S. House (TX) roster, refreshed weekly by update-tx-congress-roster.yml.
     "tx-senate-members.json": 31,  # Texas Senate roster from the Senate's own member pages (senate.texas.gov), one record per district, refreshed weekly.
     "tx-house-members.json": 150,  # Texas House roster from the House's own member pages (house.texas.gov), one record per district, refreshed weekly.
+    "tribal-councils.json": 3,  # The councils of Texas's three nations, each from its own page (the Alabama-Coushatta, the Kickapoo Traditional Tribe of Texas and the Ysleta del Sur Pueblo), keyed by the Census AIANNH code of their land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first.
     "coverage-gaps.json": 0,  # The recorded gaps this instance ships with, rendered by the data-gaps panel.
     "statewide-officials.json": 5,  # The officers Texas elects statewide and its two U.S. senators: state, officers (office, name, the office's own website, the day the name was last checked there) and usSenate. Built weekly by scripts/build_statewide_officials.py from tx/data/source/statewide-officials.source.json, which lists each office, the name and the page that must print it; the build reads robots.txt before every page, refuses to write when a page it read no longer prints the name, keeps the last checked record when a page cannot be read, and takes the senators from senate.gov's own list. Network-first: a name can change.
 }

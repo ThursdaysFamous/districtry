@@ -342,10 +342,28 @@
       }
     },
     {
+      "id": "tribal-government",
+      "label": "Tribal Government",
+      "group": "political",
+      "area_rank": 10,
+      "rank_note": "Tribal land — Texas has 6 pieces held by three nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-12, with the counties measured against this app's own county outlines: the Alabama-Coushatta Reservation (18.521 km²) and the Alabama-Coushatta Off-Reservation Trust Land (18.307 km² in 8 parts), both in Polk County; the Kickapoo (TX) Reservation (1.557 km² in 2 parts) and Off-Reservation Trust Land (0.133 km²), both in Maverick County; and the Ysleta del Sur Pueblo (0.299 km² in 3 parts) and the Ysleta del Sur Off-Reservation Trust Land (12.760 km² in 17 parts), both in El Paso County. Ranked after municipalities and before the point layers, as Louisiana's and Mississippi's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.",
+      "source": {
+        "answers": "Whether this address is on tribal land, and which nation's government answers for it — Texas has 6 such areas, held by the Alabama-Coushatta Tribe of Texas, the Kickapoo Traditional Tribe of Texas and the Ysleta del Sur Pueblo.",
+        "boundary": [
+          {
+            "label": "US Census Bureau TIGERweb AIANNHA, current vintage — federal reservations and off-reservation trust land, shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/AIANNHA/MapServer"
+          }
+        ],
+        "people": "Each nation's council from that nation's own page, read weekly by scripts/tribal_council_scraper.py and dated on the card: the Alabama-Coushatta Tribal Council's seven members (alabama-coushatta.com; the tribe's two chiefs advise the council and are not on it), the Kickapoo Traditional Tribe of Texas's five council members (kickapootexas.org) and the Ysleta del Sur Pueblo's nine, its Governor, Lieutenant Governor, Alguacil, Cacique, War Captain and four council members (ysletadelsurpueblo.org). The government, its seat and its website come from the Bureau of Indian Affairs' tribal leaders directory (data/bia-tribal-governments.json), which lists no website for the Ysleta del Sur Pueblo; the land is joined to the government by this project's own data/tribal-government-join.json.",
+        "applies": "Texas — the six pieces of land above, in El Paso, Maverick and Polk counties. Every other point in the state is on no tribal land the Census draws for a government."
+      }
+    },
+    {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 11,
       "rank_note": "nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest police stations to the point, by straight-line distance, with each one's address.",
@@ -363,7 +381,7 @@
       "id": "fire-station",
       "label": "Fire & EMS Station",
       "group": "safety",
-      "area_rank": 11,
+      "area_rank": 12,
       "rank_note": "nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest fire and EMS stations to the point, by straight-line distance, with each one's address.",
@@ -381,7 +399,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 12,
+      "area_rank": 13,
       "rank_note": "nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers",
       "source": {
         "answers": "The three nearest post offices to the point, by straight-line distance, with each one's address.",
@@ -466,6 +484,12 @@
         "min_features": 1985,
         "max_features": 1985,
         "note": "The ZIP code search index (scripts/build_zip_index.mjs): one Point per ZIP code the app's ZIP layer draws, at the spot inside it on the layer's own ground farthest from every edge, with its extent and its layer, so a ZIP code typed into the search box selects that spot, turns the ZIP layer on and pins it for comparison (ENGINE geocoder-search, showZip). A ZIP code with no spot 75 m clear of every edge is left out, and one that crosses into another app's state is listed by whichever app holds more of it. GENERATED from data/app/tiles/zip-code.pmtiles, with each spot inside metro-outline.json (the outline its coverage test reads); --check rebuilds it from the committed archive and outline. Exact count, because it changes only when the Census Bureau changes its ZIP Code Tabulation Areas, and that wants reading rather than a widened bound."
+      },
+      {
+        "file": "tribal-areas.json",
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Texas's tribal land (scripts/build_tribal_areas.py) — three reservations and three pieces of off-reservation trust land, held by three nations. The floor and the ceiling are equal because that is what the Census publishes inside the state on the current vintage, measured 2026-11-12; a change in either direction is a change in the Census's own map and wants reading rather than a widened bound."
       }
     ],
     "rosters": [
@@ -485,6 +509,11 @@
         "note": "Texas House roster from the House's own member pages (house.texas.gov), one record per district, refreshed weekly."
       },
       {
+        "file": "tribal-councils.json",
+        "min_keys": 3,
+        "note": "The councils of Texas's three nations, each from its own page (the Alabama-Coushatta, the Kickapoo Traditional Tribe of Texas and the Ysleta del Sur Pueblo), keyed by the Census AIANNH code of their land — scripts/build_tribal_areas.py --rosters from data/tribal-councils.json, which scripts/tribal_council_scraper.py re-reads weekly (update-tribal-councils.yml, listed in the Wisconsin worksheet because one root workflow belongs to one instance). Merged onto tribal-areas.json by the layer's loader, so the land stays cache-first and the names network-first."
+      },
+      {
         "file": "coverage-gaps.json",
         "min_keys": 0,
         "note": "The recorded gaps this instance ships with, rendered by the data-gaps panel."
@@ -497,7 +526,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-tx-shell-v3",
+    "cache_name": "districtry-tx-shell-v4",
     "shell_urls": [
       "./",
       "./icons/apple-touch-icon.png",

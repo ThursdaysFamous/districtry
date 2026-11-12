@@ -317,7 +317,7 @@ All 10 counties and every city, town and unincorporated place: school districts,
 
 All 254 counties: cities, towns and villages, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Texas Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Texas district lookup](https://districtry.com/tx/): 12 layers, all 254 counties.
+- [Texas district lookup](https://districtry.com/tx/): 13 layers, all 254 counties.
 - [Who is my U.S. representative?](https://districtry.com/tx/congress.html)
 - [Sources & data layers](https://districtry.com/tx/sources.html)
 - [Who is my Texas legislator?](https://districtry.com/tx/state-legislature.html)
@@ -327,7 +327,7 @@ All 254 counties: cities, towns and villages, school districts, ZIP codes, and t
 
 All 67 counties: cities, towns and villages, school districts, ZIP codes, and the nearest police station, fire station and post office — plus the Florida Senate, House and U.S. House districts, with who holds each seat. Tribal lands are not drawn yet, and county, city and school board officials are not named yet; the Data gaps panel says why.
 
-- [Florida district lookup](https://districtry.com/fl/): 10 layers, all 67 counties.
+- [Florida district lookup](https://districtry.com/fl/): 11 layers, all 67 counties.
 - [Who is my U.S. representative?](https://districtry.com/fl/congress.html)
 - [Sources & data layers](https://districtry.com/fl/sources.html)
 - [Who is my Florida legislator?](https://districtry.com/fl/state-legislature.html)

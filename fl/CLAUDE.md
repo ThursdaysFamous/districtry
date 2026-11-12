@@ -21,8 +21,9 @@ public-domain unitedstates/congress-legislators roster), **Florida Senate** and 
 (40 and 120 districts, TIGERweb's 2026 state legislative districts joined to each chamber's own
 member pages), the TIGERweb fabric drawn from mirrored tile archives — **City, Town or Village**
 (`municipality`, 411 incorporated places), **School District** (67, one per county) and **ZIP
-Code** — and three nearest-N layers from the USGS National Map (**Police Station**, **Fire &
-EMS Station**, **Post Office**).
+Code** — three nearest-N layers from the USGS National Map (**Police Station**, **Fire &
+EMS Station**, **Post Office**) and **Tribal Government** (`tribal-government`, the Census's
+tribal land, joined to the Bureau of Indian Affairs' list and to each nation's own council page).
 
 **COVERAGE IS ONE TIER, THE WHOLE STATE.** Every county is answered by every layer, so
 `metro-outline.json` is the state outline (two rings, 67 counties inside, measured by its
@@ -96,6 +97,23 @@ builder does not read. The Attorney General's site refuses our token and serves 
 client, which the seed records. Supreme Court justices are retained by statewide vote but
 appointed, so they are not listed.
 
+**TRIBAL GOVERNMENT DRAWS THE LAND OF FLORIDA'S TRIBAL NATIONS AND NAMES THE SEMINOLE TRIBE'S
+COUNCIL** (`tribal-areas.json`, `tribal-councils.json`, since 2026-11-12). The Census keeps eleven
+pieces: the Miccosukee Reservation (310.17 km², almost all of it in Broward County) and the
+Miccosukee's trust land (20.34 km²), six Seminole reservations (Big Cypress, Brighton, Immokalee,
+Hollywood, Fort Pierce and Tampa) and two pieces of Seminole trust land, and 0.007 km² of the
+Poarch Band of Creek Indians' trust land in Escambia County, 1.37% of a parcel whose rest is in
+Alabama, where the Band is seated. The Seminole Tribe of Florida has one Tribal Council for all its
+land, read weekly from its own page (www.semtribe.com) by `scripts/tribal_council_scraper.py`: the
+Chairman, the President and Vice-Chairwoman, and the representatives of Hollywood, Big Cypress and
+Brighton, whose reservation the card prints beside their name. **THE MICCOSUKEE AND POARCH CREEK
+CARDS NAME NOBODY**, because both tribes' own sites answered this project with a Cloudflare
+challenge page on 2026-11-12, which is not worked around (`ROSTER_BLOCKED` in
+`scripts/build_tribal_areas.py`, gap `fl-tribal-government`). The card's "(official)" link is the
+Bureau of Indian Affairs' listing, as in every instance: the Miccosukee's (tribe.miccosukee.com)
+had no DNS record that day and the Seminole's (www.seminoletribe.com) failed TLS from this
+project's sandbox (`fl/WATCH.md`).
+
 **There is no build step, no framework, and no server-side code.** The app — styles, engine,
 and layer modules — lives inline in `index.html`. `sw.js` is the service worker;
 `data/app/*.json` are runtime-fetched data files; `data/state/` carries the bootstrap state
@@ -111,7 +129,7 @@ every other instance via `scripts/compose_app.py`.
 - Metro: Florida (`florida`) — https://districtry.com/fl/
 - Geocoders: address Photon (Florida-bounded type-ahead); unbounded Photon (whole-coverage, sibling-instance lookup); POI Nominatim (office-address pin lookup, Florida-bounded, serial >=1s queue)
 - Ground truth: 30.43817,-84.28164 (Florida State Capitol, 400 South Monroe Street, Tallahassee, Leon County) → county Leon County; us-house 2; fl-senate 3; fl-house 9. Negative point 27.00000,-85.50000 (Open water in the Gulf, about 200 km west of Sarasota — outside Florida and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer places it in no state and its ZCTA layer in no ZIP code (controls: the State Capitol returns Florida and ZIP code 32399, and a point in Havana returns no state), none of the state's shipped boundary files contains it, and none of the 25 outlines in fleet-outlines.json does. IT IS FAR OUT TO SEA, SO NO NEIGHBOUR'S GO-LIVE MOVES IT.).
-- Layers: 10 registered (political 3, safety 2, schools 1, geography 4); `registerLayer(` floor 6. Debug namespace `window.FloridaExplorer`.
+- Layers: 11 registered (political 4, safety 2, schools 1, geography 4); `registerLayer(` floor 6. Debug namespace `window.FloridaExplorer`.
 - Scheduled workflows: `update-fl-congress-roster.yml` (Mon 20:47 UTC); `update-fl-legislature-roster.yml` (Wed 20:47 UTC); `fl-validate-sources.yml` (1st of month 22:53 UTC).
 - Source registry: `fl/scripts/validate_sources.py` (machine-checked monthly)
 <!-- ==== GENERATED:END metro-facts ==== -->

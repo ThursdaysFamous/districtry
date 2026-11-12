@@ -209,6 +209,41 @@ NATIONS = {
     # and its consultation contacts) are staff, not officers, and are not read.
     "3075": {"nation": "Rappahannock", "pages": [VA_SOC_LIST], "seats": 2,
              "stateList": "va"},
+    # Texas (read 2026-11-12, each robots.txt with this scraper's client; all
+    # three allow every path). The Alabama-Coushatta Tribe's page says the
+    # tribe "is governed by an elected Tribal Council" of seven, "advised by
+    # our Chiefs"; the two chiefs are not council members and are not carried.
+    # The council's telephone on that page is one number for the whole
+    # council, so it rides no member. The Kickapoo Traditional Tribe of
+    # Texas's page lists each of its five council members twice. The Bureau
+    # lists no website for the Ysleta del Sur Pueblo; the pueblo's own site
+    # says its council is the Governor, the Lieutenant Governor, the Alguacil
+    # and four council members, elected each year, and the Cacique and the War
+    # Captain, appointed for life, and names all nine in its "2026 Tribal
+    # Council" caption.
+    "0050": {"nation": "Alabama-Coushatta",
+             "pages": ["https://www.alabama-coushatta.com/government/"], "seats": 7},
+    "1775": {"nation": "Kickapoo Traditional Tribe of Texas",
+             "pages": ["https://kickapootexas.org/tribal-council/"], "seats": 5},
+    "4755": {"nation": "Ysleta del Sur Pueblo",
+             "pages": ["https://www.ysletadelsurpueblo.org/government/tribal-council"],
+             "seats": 9},
+    # Florida (read 2026-11-12). The Bureau lists www.seminoletribe.com for the
+    # Seminole Tribe of Florida, which failed TLS here; the tribe's own site is
+    # www.semtribe.com, which serves an HTML page at /robots.txt (no rules,
+    # so every path is allowed). Its "Today's Government" page says the
+    # council is "a Chairman, a Vice-Chairman and Council Representatives from
+    # each reservation", and the council page names five. The tribe holds
+    # eight pieces of land, each its own AIANNH code, so the one council is
+    # read once (the fetch is cached by URL) and carried under all eight, as
+    # the Seneca Nation's is. The Miccosukee Tribe's site and the Poarch Band's
+    # cannot be read here; build_tribal_areas.py's ROSTER_BLOCKED says why.
+    **{code: {"nation": "Seminole Tribe of Florida (%s)" % where,
+              "pages": ["https://www.semtribe.com/government/tribal-council"], "seats": 5}
+       for code, where in (("0225", "Big Cypress"), ("0360", "Brighton"),
+                           ("0690", "Coconut Creek"), ("1260", "Fort Pierce"),
+                           ("1475", "Hollywood"), ("1555", "Immokalee"),
+                           ("3665", "Seminole Trust Land"), ("4130", "Tampa"))},
 }
 
 _BLOCK = (r"(?:p|div|h[1-6]|li|ul|ol|td|th|tr|table|section|article|header|footer|"
@@ -1050,6 +1085,88 @@ def p_mattaponi(pages):
     return out
 
 
+def p_alabama_coushatta(pages):
+    # The two chiefs come first, each a name line and then "Principal Chief"
+    # or "second Chief"; the council follows as a name line and then an office
+    # line that begins "Tribal", and "Constitution and By Laws" ends it. Every
+    # pair after the chiefs must carry a "Tribal" office, so a page that adds
+    # a line the parser does not know fails rather than shipping it as a name.
+    ls = pages[0]
+    i = ls.index("second Chief") + 1
+    end = ls.index("Constitution and By Laws", i)
+    block = ls[i:end]
+    if len(block) % 2:
+        raise ValueError("Alabama-Coushatta: the council block is not name/office pairs: %r"
+                         % block)
+    out = []
+    for name, role in zip(block[0::2], block[1::2]):
+        if not role.startswith("Tribal "):
+            raise ValueError("Alabama-Coushatta: %r is not a council office (for %r)"
+                             % (role, name))
+        out.append(_m(name, role))
+    return out
+
+
+def p_kickapoo_tx(pages):
+    # Under the last "TRIBAL COUNCIL" heading each member is a name line and
+    # an office line, and the page prints every pair twice; "Fitness Center"
+    # opens the footer's links. A pair is kept once, in page order.
+    ls = _after(pages[0], "TRIBAL COUNCIL", nth=pages[0].count("TRIBAL COUNCIL") - 1)
+    ls = ls[:ls.index("Fitness Center")]
+    offices = ("Chairman", "Vice Chairman", "Secretary", "Treasurer", "Member")
+    out, seen = [], set()
+    for i in range(0, len(ls) - 1):
+        if ls[i + 1] in offices and ls[i] not in offices:
+            if (ls[i], ls[i + 1]) not in seen:
+                seen.add((ls[i], ls[i + 1]))
+                out.append(_m(ls[i], ls[i + 1]))
+    return out
+
+
+def p_ysleta(pages):
+    # The caption under the "<year> Tribal Council" photograph names the
+    # council left to right as "<office> <name>", one sentence over several
+    # lines, ending at the "Documents" list. Only one such caption may be on
+    # the page, so a page keeping last year's council beside this year's fails.
+    ls = pages[0]
+    heads = [i for i, l in enumerate(ls) if re.match(r"\d{4} Tribal Council$", l)]
+    if len(heads) != 1:
+        raise ValueError("Ysleta del Sur: expected one '<year> Tribal Council' caption, "
+                         "found %r" % [ls[i] for i in heads])
+    block = ls[heads[0] + 1:]
+    block = block[:block.index("Documents")]
+    if block and block[0].rstrip(":").lower() == "left to right":
+        block = block[1:]
+    text = " ".join(block).strip().rstrip(",")
+    return [_m(n, r) for r, n in _sentence_roles(
+        text, ["Councilman", "Councilwoman", "War Captain", "Lt. Governor", "Governor",
+               "Cacique", "Alguacil"])]
+
+
+def p_seminole_fl(pages):
+    # The council is the name/office pairs after the "Tribal Council" heading
+    # whose next-but-one line is "Chairman", ending at "Toggle navigation",
+    # which opens the page's own menu. A representative's office names the
+    # reservation that elects them ("Hollywood Councilman"), which rides the
+    # member as their district, so the card lists it beside the name.
+    ls = pages[0]
+    starts = [i for i, l in enumerate(ls[:-2]) if l == "Tribal Council" and ls[i + 2] == "Chairman"]
+    if len(starts) != 1:
+        raise ValueError("Seminole: expected one council block, found %d" % len(starts))
+    block = ls[starts[0] + 1:]
+    block = block[:block.index("Toggle navigation")]
+    if len(block) % 2:
+        raise ValueError("Seminole: the council block is not name/office pairs: %r" % block)
+    out = []
+    for name, role in zip(block[0::2], block[1::2]):
+        m = re.match(r"(.+?) (Council(?:man|woman))$", role)
+        if m:
+            out.append(_m(name, m.group(2), district=m.group(1)))
+        else:
+            out.append(_m(name, role))
+    return out
+
+
 PARSERS = {
     "0140": p_bad_river, "0170": p_bay_mills, "1125": p_fond_du_lac,
     "1135": p_forest_county, "1370": p_grand_traverse, "1450": p_ho_chunk,
@@ -1062,12 +1179,18 @@ PARSERS = {
     "4015": p_stockbridge, "0525": p_catawba, "2300": p_choctaw,
     "0635": p_chitimacha, "1690": p_jena, "4315": p_tunica_biloxi,
     "9260": p_pamunkey, "9230": p_mattaponi,
+    "0050": p_alabama_coushatta, "1775": p_kickapoo_tx, "4755": p_ysleta,
+    **{code: p_seminole_fl for code in ("0225", "0360", "0690", "1260", "1475", "1555",
+                                        "3665", "4130")},
 }
 STATE_LIST_HEADINGS = {"1825": "Lac du Flambeau Band of Lake", "3885": "Sokaogon Chippewa Community",
                        "3075": "Rappahannock"}
 
+# governor, cacique, captain and alguacil are the Ysleta del Sur Pueblo's
+# council offices (its War Captain and Alguacil are council seats)
 _ROLE_OK = re.compile(r"(chair|president|chief|secretary|treasurer|member|representative|"
-                      r"director|legislator|councilor|council|sergeant|chaplain|leader)", re.I)
+                      r"director|legislator|councilor|council|sergeant|chaplain|leader|"
+                      r"governor|cacique|captain|alguacil)", re.I)
 _ROLE_WORDS = re.compile(r"^(chair|vice|secretary|treasurer|council|member|president|"
                          r"representative|director|legislator|councilor)\b", re.I)
 
@@ -1266,6 +1389,41 @@ def selftest():
     assert mt[1] == _m("Bob Sample", "Assistant Chief",
                        note="the same page's leadership panel names Old Name as assistant chief"), mt
     assert [m["name"] for m in mt[2:]] == ["Cy Person", "Di Person, Jr"], mt
+    # Texas's and Florida's four shapes (names invented): Alabama-Coushatta's
+    # chiefs then "Tribal" offices, Kickapoo's doubled pairs, Ysleta del Sur's
+    # caption sentence, and the Seminole Tribe's reservation in the office
+    ac = p_alabama_coushatta([["Ann Chief", "Principal Chief", "Bob Chief", "second Chief",
+                               "Cy Person", "Tribal Council Chairman",
+                               "Di Person", "Tribal Councilmember",
+                               "Constitution and By Laws", "Click to read."]])
+    assert ac == [_m("Cy Person", "Tribal Council Chairman"),
+                  _m("Di Person", "Tribal Councilmember")], ac
+    try:
+        p_alabama_coushatta([["second Chief", "Cy Person", "Chairman",
+                              "Constitution and By Laws"]])
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("an Alabama-Coushatta office without 'Tribal' must fail")
+    kk = p_kickapoo_tx([["TRIBAL COUNCIL", "Ann Example, Sr., Nameone", "Chairman",
+                         "Ann Example, Sr., Nameone", "Chairman", "Bob Sample", "Member",
+                         "Bob Sample", "Member", "Fitness Center", "Member"]])
+    assert kk == [_m("Ann Example, Sr., Nameone", "Chairman"),
+                  _m("Bob Sample", "Member")], kk
+    ys = p_ysleta([["Tribal Council", "2026 Tribal Council", "Left To Right:",
+                    "Councilman Ann Example Jr., War Captain Bob Sample,",
+                    "Lt. Governor Cy Person, Governor E. Di Person,",
+                    "Cacique Ed Staff, Alguacil Fay Other", "Documents", "Report"]])
+    assert ys == [_m("Ann Example Jr.", "Councilman"), _m("Bob Sample", "War Captain"),
+                  _m("Cy Person", "Lt. Governor"), _m("E. Di Person", "Governor"),
+                  _m("Ed Staff", "Cacique"), _m("Fay Other", "Alguacil")], ys
+    sm = p_seminole_fl([["Tribal Council", "Today's Government", "Tribal Council",
+                         "Ann Example Jr.", "Chairman", "Bob Sample",
+                         "President/Vice-Chairwoman", "Cy Person", "Big Cypress Councilwoman",
+                         "Toggle navigation", "Tribal Council"]])
+    assert sm == [_m("Ann Example Jr.", "Chairman"),
+                  _m("Bob Sample", "President/Vice-Chairwoman"),
+                  _m("Cy Person", "Councilwoman", district="Big Cypress")], sm
     NATIONS["9999"] = {"nation": "Test", "seats": 2}
     try:
         for bad in ([_m("A B", "Chair")],

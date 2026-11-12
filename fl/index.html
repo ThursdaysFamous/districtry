@@ -4612,7 +4612,7 @@ function initFloridaExplorer() {
   // shared carry it. ENGINE permalink reads both a code and a full id.
   var LAYER_CODES = { "us-house": "us", "fl-senate": "fls", "county": "co",
     "school-district-unified": "su", "fl-house": "flh", "zip-code": "zp", "municipality": "mu",
-    "police-station": "ps", "fire-station": "fs", "post-office": "po" };
+    "tribal-government": "tg", "police-station": "ps", "fire-station": "fs", "post-office": "po" };
   // What this app's layers MEAN, from the fleet-wide layer-concepts.json: a
   // reader moving to a sibling app takes the concepts of the layers they have
   // on (`carry=`), and the app they arrive in turns on its own layers for
@@ -4621,7 +4621,7 @@ function initFloridaExplorer() {
     "state-house": ["fl-house"], "county": ["county"], "municipality": ["municipality"],
     "zip-code": ["zip-code"], "school-district-unified": ["school-district-unified"],
     "police-station": ["police-station"], "fire-station": ["fire-station"],
-    "post-office": ["post-office"] };
+    "post-office": ["post-office"], "tribal-government": ["tribal-government"] };
   // Envelope the POI (office-address) geocoder is bounded to. It tracks the
   // reach of the fork's WIDEST layer, not the metro: a card that can name an
   // address outside METRO_BBOX needs that address to be geocodable, and a
@@ -11494,6 +11494,7 @@ function initFloridaExplorer() {
     "fl-house",          // 120 House districts — about three in each Senate district, though no rule nests them, and smaller on average than a county
     "zip-code",          // 1,013 ZIP Code Tabulation Areas inside Florida (1,102 in the app's bounding box), drawn from a tile archive of the ones inside the state; the layer hides outside it
     "municipality",      // 411 incorporated cities, towns and villages, drawn from a tile archive mirrored from TIGERweb
+    "tribal-government", // Tribal land — Florida has 11 pieces held by three nations, MEASURED by scripts/build_tribal_areas.py on 2026-11-12, with the counties measured against this app's own county outlines: the Miccosukee Reservation (310.165 km² in 6 parts, all but 3.0 km² of it in Broward County and the rest in Miami-Dade) and the Miccosukee Off-Reservation Trust Land (20.341 km² in 3 parts, in Hendry, Highlands and Miami-Dade counties); the Seminole Tribe of Florida's Big Cypress Reservation (213.677 km², 174.9 km² of it in Hendry County and the rest in Broward), Brighton Reservation (148.241 km², Glades County), Immokalee Reservation (2.492 km², Collier County), Hollywood Reservation (2.049 km², Broward County), Fort Pierce Reservation (0.245 km², St. Lucie County), Tampa Reservation (0.182 km², Hillsborough County), Coconut Creek Trust Land (0.026 km²) and Seminole (FL) Trust Land (0.004 km²), the last two in Broward County; and the 0.007 km² of the Poarch Creek Off-Reservation Trust Land that lies in Florida, in Escambia County, about 1% of that trust land, whose nation is seated in Alabama. Ranked after municipalities and before the point layers, as Louisiana's and Mississippi's are, so they are drawn above the larger areas around them. Drawn although no district is drawn on this land, by Adam's ruling of 2026-09-30: a government answers for that ground, so a reader who clicks it should be told which one.
     "police-station",    // nearest police stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "fire-station",      // nearest fire and EMS stations by straight-line distance — a point layer, ranked with the other nearest-N layers
     "post-office"        // nearest post offices by straight-line distance — a point layer, ranked with the other nearest-N layers
@@ -16661,6 +16662,139 @@ function initFloridaExplorer() {
   });
 
 
+  /* ---------- 9a. Tribal Government — Florida's tribal land, 11 pieces, three nations.
+   *
+   * Seven reservations and four pieces of off-reservation trust land,
+   * measured 2026-11-12 by scripts/build_tribal_areas.py, with the counties
+   * measured against this app's own county outlines. The Miccosukee Tribe's
+   * reservation (310.165 km², 535 people at the 2020 census, nearly all in
+   * Broward County) and trust land (20.341 km², nobody, in Hendry, Highlands
+   * and Miami-Dade). The Seminole Tribe of Florida's Big Cypress (213.677
+   * km², 239 people, Hendry and Broward), Brighton (148.241 km², 438 people,
+   * Glades), Immokalee (2.492 km², 197 people, Collier), Hollywood (2.049
+   * km², 1,426 people, Broward), Fort Pierce (0.245 km², 52 people, St.
+   * Lucie) and Tampa (0.182 km², nobody, Hillsborough) reservations and its
+   * Coconut Creek and Seminole (FL) trust lands (0.026 and 0.004 km², nobody,
+   * Broward). And 0.007 km² of the Poarch Creek Off-Reservation Trust Land,
+   * in Escambia County, about 1% of a trust land whose nation is seated in
+   * Atmore, Alabama; its population line says the count is for the whole
+   * trust land. The Census draws no tribal subdivision on any of them.
+   *
+   * WHO THE CARD NAMES. The authority for who sits on a nation's council is
+   * that nation's own published list. The Seminole Tribe of Florida's page
+   * names its five (the Chairman, the President and Vice-Chairwoman, and a
+   * representative from each of the Hollywood, Big Cypress and Brighton
+   * reservations, whose reservation the card prints beside the name), and
+   * every one of the tribe's eight pieces of land carries that council. The
+   * Miccosukee Tribe's site and the Poarch Band's answered this project with
+   * an automated challenge page, which is not worked around, so those cards
+   * name nobody and say why. The names and the reasons are read from files
+   * rather than written here: scripts/tribal_council_scraper.py reads the
+   * councils weekly into data/app/tribal-councils.json, which the loader
+   * merges onto the land, and ROSTER_BLOCKED in scripts/build_tribal_areas.py
+   * writes the reason onto the land itself.
+   *
+   * WHY A POLYGON FOR A BODY NOT ELECTED FROM THIS GROUND: by Adam's ruling
+   * of 2026-09-30, a government answers for that ground, so a reader who
+   * clicks it should be told which one.
+   *
+   * PARTIAL COVERAGE: most points in Florida are on no tribal land, so the
+   * layer declares its own emptyNote rather than letting the generic "not
+   * inside any district" stand.
+   *
+   * Built by scripts/build_tribal_areas.py from the Census's AIANNHA service,
+   * the project's own land-to-government join and the Bureau of Indian
+   * Affairs' list of governments, the same reader every instance uses.
+   * ---------- */
+  // THE NAMES ARE A SEPARATE FILE FROM THE LAND, on purpose: the land is
+  // served cache-first and changes about once a decade, while a council
+  // changes at every election, so the names live in tribal-councils.json,
+  // which the service worker serves network-first like every other roster.
+  // A councils file that cannot be read leaves the land answering on its own.
+  var loadFlTribalAreas = makeCached(function () {
+    return Promise.all([
+      fetchJSONWithRetry("data/app/tribal-areas.json", {}, 2),
+      fetchJSONWithRetry("data/app/tribal-councils.json", {}, 2).catch(function () { return null; })
+    ]).then(function (both) {
+      var councils = both[1] || {};
+      both[0].features.forEach(function (f) {
+        var c = councils[f.properties.aiannh];
+        if (!c) return;
+        for (var k in c) {
+          if (Object.prototype.hasOwnProperty.call(c, k)) f.properties[k] = c[k];
+        }
+      });
+      return both[0];
+    });
+  });
+
+  registerPolygonLayer({
+    id: "tribal-government",
+    group: "political",
+    label: "Tribal Government",
+    loader: loadFlTribalAreas,
+    // the tribal-government concept's own colour and width (root layer-concepts.json)
+    style: { color: "#1F6F6B", weight: 2.5, fillColor: "#3E9A95", fillOpacity: 0.3, keepOthersVisible: true },
+    fields: [
+      // The nation as the Bureau of Indian Affairs names it, not the Census's
+      // text for the parcel. findPropCI lowercases the property key, so every
+      // `keys` entry is lowercase while the shipped property is camelCase.
+      { name: "nation", label: "Tribal government", keys: ["nation"], primary: true },
+      { name: "censusName", label: "Land", keys: ["censusname"] },
+      { name: "seat", label: "Seat of government", keys: ["seat"] },
+      { name: "districtsNote", label: "Districts drawn here", keys: ["districtsnote"] },
+      { name: "populationNote", label: "Population", keys: ["populationnote"] },
+      { name: "rosterWhy", label: "Why no names", keys: ["rosterwhy"], when: function (r) { return r && !r.roster; } },
+      { name: "roster", label: "", keys: ["roster"], when: function () { return false; } },
+      { name: "rosterNote", label: "", keys: ["rosternote"], when: function () { return false; } },
+      { name: "rosterPage", label: "", keys: ["rosterpage"], when: function () { return false; } },
+      { name: "url", label: "", keys: ["url"], when: function () { return false; } },
+      { label: "Boundary", value: "US Census Bureau — American Indian/Alaska Native/Native Hawaiian Areas" }
+    ],
+    // The nation's own site, as the Bureau of Indian Affairs publishes it.
+    // LINKED and never fetched here.
+    primaryLink: function (result) {
+      if (result && result.url) {
+        return { label: (result.nation ? String(result.nation) : "The nation") + " (official)",
+                 url: String(result.url) };
+      }
+      return null;
+    },
+    // THE COUNCIL, where the nation's own page names it, merged onto the land
+    // by the loader above, so the card makes no request of its own.
+    people: function (result) {
+      var roster = result && result.roster;
+      if (!roster || !roster.length) return null;
+      var wrap = cardEl("div");
+      wrap.appendChild(renderBodyIntro({
+        title: "Council",
+        note: result.rosterNote ? String(result.rosterNote) : null
+      }));
+      wrap.appendChild(renderPersonRows(roster.map(function (m) {
+        var person = { name: String(m.name) };
+        if (m.role) person.badge = String(m.role);
+        var notes = [];
+        if (m.district) notes.push(String(m.district));
+        if (m.termEnds) notes.push("term ends " + String(m.termEnds));
+        if (m.note) notes.push(String(m.note));
+        if (notes.length) person.note = notes.join(" · ");
+        if (m.phone) person.phone = String(m.phone);
+        if (m.phonesExtra && m.phonesExtra.length) {
+          person.phonesExtra = m.phonesExtra.map(String);
+        }
+        if (m.email) person.email = String(m.email);
+        return person;
+      })));
+      if (result.rosterPage) {
+        wrap.appendChild(renderLinkRow({ links: [{ label: "Where these names come from ↗",
+                                                  url: String(result.rosterPage) }] }));
+      }
+      return wrap;
+    },
+    emptyNote: "This point is not on tribal land. Florida has 11 tribal areas across 3 nations, seven reservations and four pieces of off-reservation trust land, and this point is on none of them."
+  });
+
+
   /* ---------- 10. Post Offices (nearest 3) — USGS National Map ----------
    * structures layer 38, the fleet's shared post-office source: country-wide,
    * public domain ("USGS The National Map"), CORS-open, and f=geojson serves
@@ -18555,7 +18689,7 @@ function initFloridaExplorer() {
   // set 1:1 (as it does for LAYER_AREA_RANK) — extend it with every layer added.
   var LAYER_SIDEBAR_RANK = ["us-house", "fl-senate", "fl-house",
     "school-district-unified",
-    "county", "municipality", "zip-code",
+    "county", "municipality", "zip-code", "tribal-government",
     "police-station", "fire-station", "post-office"];
   (function applySidebarRank() {
     var pos = {};
@@ -19072,10 +19206,11 @@ function initFloridaExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#2F6B3A": "#6FBE7B",
-    "#41B6E6": "#C6EBFD", "#444B54": "#919BA8", "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1",
-    "#4C8F59": "#82DB92", "#6B7280": "#B1BACE", "#88637C": "#DAA7C9", "#8C2E4A": "#F47294",
-    "#A3341F": "#FE8269", "#B0316E": "#FF87B8", "#D06A9C": "#FEBDDA"};
+  var DST_DARK_MAP_COLORS = { "#14181C": "#696F76", "#1B4F8C": "#5CA0F5", "#1F6F6B": "#5DC0BA",
+    "#2F6B3A": "#6FBE7B", "#3E9A95": "#6BE3DC", "#41B6E6": "#C6EBFD", "#444B54": "#919BA8",
+    "#4A2E8C": "#9B7CFD", "#4B2E83": "#9E7BF1", "#4C8F59": "#82DB92", "#6B7280": "#B1BACE",
+    "#88637C": "#DAA7C9", "#8C2E4A": "#F47294", "#A3341F": "#FE8269", "#B0316E": "#FF87B8",
+    "#D06A9C": "#FEBDDA"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
