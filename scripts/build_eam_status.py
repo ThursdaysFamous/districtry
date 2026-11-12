@@ -2950,11 +2950,11 @@ ANSWERS = {
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
-        # Measured 2026-11-11 with scripts/tribal_areas.py --report Texas: the
-        # Census keeps 3 reservations and 3 trust lands in Texas (the
-        # Alabama-Coushatta, the Kickapoo Traditional Tribe and Ysleta del Sur
-        # Pueblo), and the app draws no tribal land yet (tx/WATCH.md).
-        "tribal-government": OPEN,
+        # SHIPPED 2026-11-12: the 3 reservations and 3 trust lands the Census
+        # keeps in Texas (the Alabama-Coushatta, the Kickapoo Traditional Tribe
+        # and Ysleta del Sur Pueblo), each named with its government, and all
+        # three councils named from the nations' own pages.
+        "tribal-government": answers("tribal-government"),
     },
     "fl": {
         "us-house": answers("us-house"),
@@ -2987,11 +2987,13 @@ ANSWERS = {
         "school-boards-by-district": OPEN,
         "precincts": OPEN,
         "special-districts": OPEN,
-        # Measured 2026-11-11 with scripts/tribal_areas.py --report Florida:
-        # the Census keeps 7 reservations (the Miccosukee's and six of the
-        # Seminole Tribe of Florida's) and 4 trust lands in Florida, and the
-        # app draws no tribal land yet (fl/WATCH.md).
-        "tribal-government": OPEN,
+        # SHIPPED 2026-11-12: the 7 reservations and 4 trust lands the Census
+        # keeps in Florida, each named with its government, and the Seminole
+        # Tribe of Florida's council named from its own page; the Miccosukee's
+        # and the Poarch Band's councils are the narrower gap
+        # fl-tribal-government (both sites answered with a challenge page) --
+        # the Louisiana shape.
+        "tribal-government": answers("tribal-government"),
     },
     "oh": {
         "us-house": answers("us-house"),

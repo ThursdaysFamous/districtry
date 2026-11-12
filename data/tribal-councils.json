@@ -1,6 +1,44 @@
 {
  "note": "Who sits on the council of each nation whose land a districtry app draws, read by scripts/tribal_council_scraper.py. Stamped onto the cards by scripts/build_tribal_areas.py --rosters.",
  "councils": {
+  "0050": {
+   "source": "nation",
+   "page": "https://www.alabama-coushatta.com/government/",
+   "pages": [
+    "https://www.alabama-coushatta.com/government/"
+   ],
+   "members": [
+    {
+     "name": "Rick Sylestine",
+     "role": "Tribal Council Chairman"
+    },
+    {
+     "name": "Nita Battise",
+     "role": "Tribal Vice-Chair"
+    },
+    {
+     "name": "Melanie Battise",
+     "role": "Tribal Council Secretary"
+    },
+    {
+     "name": "Crystal Stephenson",
+     "role": "Tribal Council Treasurer"
+    },
+    {
+     "name": "Yolanda Poncho",
+     "role": "Tribal Councilmember"
+    },
+    {
+     "name": "Tina Battise",
+     "role": "Tribal Council Member"
+    },
+    {
+     "name": "Cecilia Flores",
+     "role": "Tribal Council Member"
+    }
+   ],
+   "read": "2026-11-12"
+  },
   "0080": {
    "source": "nation",
    "page": "https://sni.org/about-our-government/council/",
@@ -166,6 +204,39 @@
    ],
    "read": "2026-11-10"
   },
+  "0225": {
+   "source": "nation",
+   "page": "https://www.semtribe.com/government/tribal-council",
+   "pages": [
+    "https://www.semtribe.com/government/tribal-council"
+   ],
+   "members": [
+    {
+     "name": "Marcellus W. Osceola Jr.",
+     "role": "Chairman"
+    },
+    {
+     "name": "Holly Tiger",
+     "role": "President/Vice-Chairwoman"
+    },
+    {
+     "name": "Christopher Osceola",
+     "role": "Councilman",
+     "district": "Hollywood"
+    },
+    {
+     "name": "Mariann Billie",
+     "role": "Councilwoman",
+     "district": "Big Cypress"
+    },
+    {
+     "name": "Larry Howard",
+     "role": "Councilman",
+     "district": "Brighton"
+    }
+   ],
+   "read": "2026-11-12"
+  },
   "0335": {
    "source": "nation",
    "page": "https://boisforte.com/departments/tribal-council/",
@@ -223,6 +294,39 @@
     }
    ],
    "read": "2026-11-10"
+  },
+  "0360": {
+   "source": "nation",
+   "page": "https://www.semtribe.com/government/tribal-council",
+   "pages": [
+    "https://www.semtribe.com/government/tribal-council"
+   ],
+   "members": [
+    {
+     "name": "Marcellus W. Osceola Jr.",
+     "role": "Chairman"
+    },
+    {
+     "name": "Holly Tiger",
+     "role": "President/Vice-Chairwoman"
+    },
+    {
+     "name": "Christopher Osceola",
+     "role": "Councilman",
+     "district": "Hollywood"
+    },
+    {
+     "name": "Mariann Billie",
+     "role": "Councilwoman",
+     "district": "Big Cypress"
+    },
+    {
+     "name": "Larry Howard",
+     "role": "Councilman",
+     "district": "Brighton"
+    }
+   ],
+   "read": "2026-11-12"
   },
   "0525": {
    "source": "nation",
@@ -380,6 +484,39 @@
    ],
    "read": "2026-11-10"
   },
+  "0690": {
+   "source": "nation",
+   "page": "https://www.semtribe.com/government/tribal-council",
+   "pages": [
+    "https://www.semtribe.com/government/tribal-council"
+   ],
+   "members": [
+    {
+     "name": "Marcellus W. Osceola Jr.",
+     "role": "Chairman"
+    },
+    {
+     "name": "Holly Tiger",
+     "role": "President/Vice-Chairwoman"
+    },
+    {
+     "name": "Christopher Osceola",
+     "role": "Councilman",
+     "district": "Hollywood"
+    },
+    {
+     "name": "Mariann Billie",
+     "role": "Councilwoman",
+     "district": "Big Cypress"
+    },
+    {
+     "name": "Larry Howard",
+     "role": "Councilman",
+     "district": "Brighton"
+    }
+   ],
+   "read": "2026-11-12"
+  },
   "1125": {
    "source": "nation",
    "page": "https://www.fdlband.org/government/tribal_council.php",
@@ -447,6 +584,39 @@
    ],
    "read": "2026-11-03",
    "carriedFrom": "2026-11-03"
+  },
+  "1260": {
+   "source": "nation",
+   "page": "https://www.semtribe.com/government/tribal-council",
+   "pages": [
+    "https://www.semtribe.com/government/tribal-council"
+   ],
+   "members": [
+    {
+     "name": "Marcellus W. Osceola Jr.",
+     "role": "Chairman"
+    },
+    {
+     "name": "Holly Tiger",
+     "role": "President/Vice-Chairwoman"
+    },
+    {
+     "name": "Christopher Osceola",
+     "role": "Councilman",
+     "district": "Hollywood"
+    },
+    {
+     "name": "Mariann Billie",
+     "role": "Councilwoman",
+     "district": "Big Cypress"
+    },
+    {
+     "name": "Larry Howard",
+     "role": "Councilman",
+     "district": "Brighton"
+    }
+   ],
+   "read": "2026-11-12"
   },
   "1370": {
    "source": "nation",
@@ -574,6 +744,39 @@
    "read": "2026-11-03",
    "carriedFrom": "2026-11-03"
   },
+  "1475": {
+   "source": "nation",
+   "page": "https://www.semtribe.com/government/tribal-council",
+   "pages": [
+    "https://www.semtribe.com/government/tribal-council"
+   ],
+   "members": [
+    {
+     "name": "Marcellus W. Osceola Jr.",
+     "role": "Chairman"
+    },
+    {
+     "name": "Holly Tiger",
+     "role": "President/Vice-Chairwoman"
+    },
+    {
+     "name": "Christopher Osceola",
+     "role": "Councilman",
+     "district": "Hollywood"
+    },
+    {
+     "name": "Mariann Billie",
+     "role": "Councilwoman",
+     "district": "Big Cypress"
+    },
+    {
+     "name": "Larry Howard",
+     "role": "Councilman",
+     "district": "Brighton"
+    }
+   ],
+   "read": "2026-11-12"
+  },
   "1550": {
    "source": "nation",
    "page": "https://nhbp-nsn.gov/tribal-council/",
@@ -603,6 +806,39 @@
     }
    ],
    "read": "2026-11-10"
+  },
+  "1555": {
+   "source": "nation",
+   "page": "https://www.semtribe.com/government/tribal-council",
+   "pages": [
+    "https://www.semtribe.com/government/tribal-council"
+   ],
+   "members": [
+    {
+     "name": "Marcellus W. Osceola Jr.",
+     "role": "Chairman"
+    },
+    {
+     "name": "Holly Tiger",
+     "role": "President/Vice-Chairwoman"
+    },
+    {
+     "name": "Christopher Osceola",
+     "role": "Councilman",
+     "district": "Hollywood"
+    },
+    {
+     "name": "Mariann Billie",
+     "role": "Councilwoman",
+     "district": "Big Cypress"
+    },
+    {
+     "name": "Larry Howard",
+     "role": "Councilman",
+     "district": "Brighton"
+    }
+   ],
+   "read": "2026-11-12"
   },
   "1610": {
    "source": "nation",
@@ -692,6 +928,36 @@
     }
    ],
    "read": "2026-11-10"
+  },
+  "1775": {
+   "source": "nation",
+   "page": "https://kickapootexas.org/tribal-council/",
+   "pages": [
+    "https://kickapootexas.org/tribal-council/"
+   ],
+   "members": [
+    {
+     "name": "Estavio Elizondo, Sr., Menikapah",
+     "role": "Chairman"
+    },
+    {
+     "name": "Freddie Hernandez, Kisakodita",
+     "role": "Secretary"
+    },
+    {
+     "name": "David Treviño, Wepikaoda",
+     "role": "Treasurer"
+    },
+    {
+     "name": "Kendall R. Scott, Metaa",
+     "role": "Member"
+    },
+    {
+     "name": "Arturo Garza, Mekaka",
+     "role": "Member"
+    }
+   ],
+   "read": "2026-11-12"
   },
   "1815": {
    "source": "nation",
@@ -1757,6 +2023,39 @@
    ],
    "read": "2026-11-10"
   },
+  "3665": {
+   "source": "nation",
+   "page": "https://www.semtribe.com/government/tribal-council",
+   "pages": [
+    "https://www.semtribe.com/government/tribal-council"
+   ],
+   "members": [
+    {
+     "name": "Marcellus W. Osceola Jr.",
+     "role": "Chairman"
+    },
+    {
+     "name": "Holly Tiger",
+     "role": "President/Vice-Chairwoman"
+    },
+    {
+     "name": "Christopher Osceola",
+     "role": "Councilman",
+     "district": "Hollywood"
+    },
+    {
+     "name": "Mariann Billie",
+     "role": "Councilwoman",
+     "district": "Big Cypress"
+    },
+    {
+     "name": "Larry Howard",
+     "role": "Councilman",
+     "district": "Brighton"
+    }
+   ],
+   "read": "2026-11-12"
+  },
   "3680": {
    "source": "nation",
    "page": "https://shakopeedakota.org/government/how-we-operate/",
@@ -1849,6 +2148,39 @@
     }
    ],
    "read": "2026-11-10"
+  },
+  "4130": {
+   "source": "nation",
+   "page": "https://www.semtribe.com/government/tribal-council",
+   "pages": [
+    "https://www.semtribe.com/government/tribal-council"
+   ],
+   "members": [
+    {
+     "name": "Marcellus W. Osceola Jr.",
+     "role": "Chairman"
+    },
+    {
+     "name": "Holly Tiger",
+     "role": "President/Vice-Chairwoman"
+    },
+    {
+     "name": "Christopher Osceola",
+     "role": "Councilman",
+     "district": "Hollywood"
+    },
+    {
+     "name": "Mariann Billie",
+     "role": "Councilwoman",
+     "district": "Big Cypress"
+    },
+    {
+     "name": "Larry Howard",
+     "role": "Councilman",
+     "district": "Brighton"
+    }
+   ],
+   "read": "2026-11-12"
   },
   "4315": {
    "source": "nation",
@@ -2025,6 +2357,52 @@
     }
    ],
    "read": "2026-11-10"
+  },
+  "4755": {
+   "source": "nation",
+   "page": "https://www.ysletadelsurpueblo.org/government/tribal-council",
+   "pages": [
+    "https://www.ysletadelsurpueblo.org/government/tribal-council"
+   ],
+   "members": [
+    {
+     "name": "Fabian Gomez",
+     "role": "Councilman"
+    },
+    {
+     "name": "Rafael Gomez Jr.",
+     "role": "Councilman"
+    },
+    {
+     "name": "Omar Villanueva",
+     "role": "War Captain"
+    },
+    {
+     "name": "E. Michael Silvas",
+     "role": "Governor"
+    },
+    {
+     "name": "Johnny Hisa",
+     "role": "Cacique"
+    },
+    {
+     "name": "Adam Torres",
+     "role": "Lt. Governor"
+    },
+    {
+     "name": "Raul Almanzar",
+     "role": "Alguacil"
+    },
+    {
+     "name": "Raul Candelaria",
+     "role": "Councilman"
+    },
+    {
+     "name": "Andrew Torrez",
+     "role": "Councilman"
+    }
+   ],
+   "read": "2026-11-12"
   },
   "9230": {
    "source": "nation",

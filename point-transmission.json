@@ -289,6 +289,7 @@
         "police-station",
         "post-office",
         "school-district-unified",
+        "tribal-government",
         "us-house",
         "zip-code"
       ]
@@ -1476,6 +1477,7 @@
         "school-district-elementary",
         "school-district-secondary",
         "school-district-unified",
+        "tribal-government",
         "tx-house",
         "tx-senate",
         "us-house",
