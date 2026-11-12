@@ -58,8 +58,19 @@
     btn.type = "button";
     var addr = document.createElement("span");
     addr.className = "sibling-result-addr";
+    /* the state's two-letter code, the badge the state menu shows beside
+       each state (Adam, 2026-11-12: codes rather than the emoji the fleet
+       list used to carry) */
+    var code = metroCode(metro);
+    if (code) {
+      var badge = document.createElement("span");
+      badge.className = "dst-metro-code sibling-result-code";
+      badge.setAttribute("aria-hidden", "true");
+      badge.textContent = code;
+      addr.appendChild(badge);
+    }
     // textContent — never innerHTML — for untrusted geocoder output
-    addr.textContent = (metro.emoji ? metro.emoji + " " : "") + label;
+    addr.appendChild(document.createTextNode(label));
     var hint = document.createElement("span");
     hint.className = "sibling-result-hint";
     hint.textContent = "Open in " + siblingDisplayName(metro) + " →";

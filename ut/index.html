@@ -1260,6 +1260,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     align-items: flex-start;
     gap: 2px;
   }
+  /* the state's code sits in front of the address like a letter, so a
+     long address wraps under it rather than beside it */
+  .sibling-result-code { margin-right: 7px; vertical-align: 1px; }
   .sibling-result-hint {
     font-size: 11.5px;
     font-weight: 600;
@@ -4842,6 +4845,17 @@ function initUtahExplorer() {
   function siblingDisplayName(metro) {
     if (!metro) return "";
     return metro.explorerName || (metro.label + " District Explorer");
+  }
+
+  /* A sibling app's two-letter state code, shown wherever the fleet lists
+     another state: the state menu under the wordmark and the search rows that
+     open another state's app. It is the app's path, which is its tag
+     everywhere in the fleet (districtry.com/il/ is "il"), so it needs no
+     second field kept in step with the url. A url of another shape gives ""
+     and its row carries no code rather than a wrong one. */
+  function metroCode(metro) {
+    var m = /\/([a-z]{2})\/?$/.exec((metro && metro.url) || "");
+    return m ? m[1].toUpperCase() : "";
   }
   /* ==== ENGINE:END brand-names ==== */
 
@@ -9566,8 +9580,19 @@ function initUtahExplorer() {
     btn.type = "button";
     var addr = document.createElement("span");
     addr.className = "sibling-result-addr";
+    /* the state's two-letter code, the badge the state menu shows beside
+       each state (Adam, 2026-11-12: codes rather than the emoji the fleet
+       list used to carry) */
+    var code = metroCode(metro);
+    if (code) {
+      var badge = document.createElement("span");
+      badge.className = "dst-metro-code sibling-result-code";
+      badge.setAttribute("aria-hidden", "true");
+      badge.textContent = code;
+      addr.appendChild(badge);
+    }
     // textContent — never innerHTML — for untrusted geocoder output
-    addr.textContent = (metro.emoji ? metro.emoji + " " : "") + label;
+    addr.appendChild(document.createTextNode(label));
     var hint = document.createElement("span");
     hint.className = "sibling-result-hint";
     hint.textContent = "Open in " + siblingDisplayName(metro) + " →";
@@ -19265,12 +19290,8 @@ function initUtahExplorer() {
       /* and the layers the reader has on travel with them (ENGINE
          metro-portal), as they do when a click crosses a state line */
       if (typeof carryLayersOnLink === "function") carryLayersOnLink(a, m);
-      /* The code is the app's path, which is its tag everywhere in the fleet
-         (districtry.com/il/ is "il"), so it needs no second field kept in
-         step with the url. A url of another shape gets no badge rather than
-         a wrong one. */
-      var tm = /\/([a-z]{2})\/?$/.exec(m.url || "");
-      var code = tm ? tm[1].toUpperCase() : "";
+      /* the state's two-letter code (ENGINE brand-names metroCode) */
+      var code = metroCode(m);
       if (code) {
         var badge = document.createElement("span");
         badge.className = "dst-metro-code";
