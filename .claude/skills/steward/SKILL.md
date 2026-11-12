@@ -67,6 +67,9 @@ python3 scripts/build_coverage_gaps.py --check --metro arizona --out az/data/app
 python3 scripts/build_coverage_gaps.py --check --metro newjersey --out nj/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro newhampshire --out nh/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro texas --out tx/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro florida --out fl/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro ohio --out oh/data/app/coverage-gaps.json
+python3 scripts/build_coverage_gaps.py --check --metro washington --out wa/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro nyc       --out ny/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro sf        --out ca/data/app/coverage-gaps.json
 python3 scripts/validate_gap_counts.py --selftest                 # the claim/label split, both directions, offline
@@ -155,6 +158,9 @@ python3 az/scripts/build_metro_outline.py --check
 python3 nj/scripts/build_metro_outline.py --check
 python3 nh/scripts/build_metro_outline.py --check
 python3 tx/scripts/build_metro_outline.py --check
+python3 fl/scripts/build_metro_outline.py --check
+python3 oh/scripts/build_metro_outline.py --check
+python3 wa/scripts/build_metro_outline.py --check
 python3 scripts/build_press_list.py --check                # PRESS_LIST.md vs press-list.json
 python3 scripts/validate_doc_counts.py                    # "N layers" in prose vs the worksheets
 python3 scripts/validate_doc_counts.py --selftest         # pattern C reads the one real "N for <instance>" count and not the four sentences sharing its shape
@@ -243,6 +249,7 @@ python3 scripts/build_legislative_boundaries.py --check         # the cross-laye
 python3 ia/scripts/build_legislative_boundaries.py --check      # the same relation in Iowa (Code 42.3, two House per Senate); broken on all 50 pairings until 2026-09-26
 python3 wi/scripts/build_legislative_boundaries.py --check      # the same relation in Wisconsin (art. IV s. 5, three Assembly per Senate), plus each declared dropped ring's after-answer re-derived from the shipped bytes
 python3 nv/scripts/build_legislative_boundaries.py --check      # the same relation in Nevada (two Assembly per Senate, by a measured pairing rather than by number), shared topology from its first day
+python3 oh/scripts/build_legislative_boundaries.py --check      # the same relation in Ohio (art. XI s. 4, three House per Senate, by a measured table rather than by number)
 python3 wi/scripts/dropped_rings.py --selftest   # the dropped-ring mechanism, fixtures only
 python3 wi/scripts/build_wi_supervisory_districts.py --check-shipped   # every declared dropped ring's AFTER answer, offline
 python3 ms/scripts/build_ms_county_officials.py --check         # Mississippi's supervisors and election commissioners: five of each per county, a board office only where three share it, and a commissioner carrying nothing but a name
@@ -310,6 +317,9 @@ python3 az/scripts/validate_index.py az/index.html
 python3 nj/scripts/validate_index.py nj/index.html
 python3 nh/scripts/validate_index.py nh/index.html
 python3 tx/scripts/validate_index.py tx/index.html
+python3 fl/scripts/validate_index.py fl/index.html
+python3 oh/scripts/validate_index.py oh/index.html
+python3 wa/scripts/validate_index.py wa/index.html
 
 # --- browser gates: ONE server at the repo root, every instance
 python3 -m http.server 8000 &
@@ -339,6 +349,9 @@ BASE_URL=http://localhost:8000/az/ node az/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/nj/ node nj/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/nh/ node nh/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000/tx/ node tx/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/fl/ node fl/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/oh/ node oh/scripts/smoke_test.mjs
+BASE_URL=http://localhost:8000/wa/ node wa/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000      node scripts/landing_test.mjs
 BASE_URL=http://localhost:8000      node scripts/page_consistency_test.mjs
 BASE_URL=http://localhost:8000      node scripts/probe_point_transmission.mjs --check

@@ -4635,8 +4635,8 @@ function initTennesseeExplorer() {
       bbox: { minLng: -91.52, minLat: 36.96, maxLng: -87.01, maxLat: 42.51 } },
     { id: "nyc", label: "New York", url: "https://districtry.com/ny/", emoji: "🗽", explorerName: "districtry New York",
       bbox: { minLng: -79.82, minLat: 40.43, maxLng: -71.62, maxLat: 45.07 } },
-    { id: "sf", label: "San Francisco", url: "https://districtry.com/ca/", emoji: "🌉", explorerName: "districtry San Francisco",
-      bbox: { minLng: -122.6, minLat: 37.6, maxLng: -122.3, maxLat: 37.95 } },
+    { id: "sf", label: "California", url: "https://districtry.com/ca/", emoji: "🌉", explorerName: "districtry California",
+      bbox: { minLng: -124.49, minLat: 32.52, maxLng: -114.12, maxLat: 42.02 } },
     { id: "wisconsin", label: "Wisconsin", url: "https://districtry.com/wi/", emoji: "🧀", explorerName: "districtry Wisconsin",
       bbox: { minLng: -92.89, minLat: 42.49, maxLng: -86.25, maxLat: 47.31 } },
     { id: "iowa", label: "Iowa", url: "https://districtry.com/ia/", emoji: "🌽", explorerName: "districtry Iowa",
@@ -4680,7 +4680,15 @@ function initTennesseeExplorer() {
     { id: "newjersey", label: "New Jersey", url: "https://districtry.com/nj/", emoji: "🍅", explorerName: "districtry New Jersey",
       bbox: { minLng: -75.57, minLat: 38.78, maxLng: -73.88, maxLat: 41.36 } },
     { id: "newhampshire", label: "New Hampshire", url: "https://districtry.com/nh/", emoji: "🍁", explorerName: "districtry New Hampshire",
-      bbox: { minLng: -72.56, minLat: 42.69, maxLng: -70.57, maxLat: 45.31 } }
+      bbox: { minLng: -72.56, minLat: 42.69, maxLng: -70.57, maxLat: 45.31 } },
+    { id: "texas", label: "Texas", url: "https://districtry.com/tx/", emoji: "⭐", explorerName: "districtry Texas",
+      bbox: { minLng: -106.65, minLat: 25.83, maxLng: -93.5, maxLat: 35.5 } },
+    { id: "florida", label: "Florida", url: "https://districtry.com/fl/", emoji: "🍊", explorerName: "districtry Florida",
+      bbox: { minLng: -87.64, minLat: 24.39, maxLng: -79.97, maxLat: 31.01 } },
+    { id: "ohio", label: "Ohio", url: "https://districtry.com/oh/", emoji: "🌰", explorerName: "districtry Ohio",
+      bbox: { minLng: -84.83, minLat: 38.4, maxLng: -80.51, maxLat: 42.33 } },
+    { id: "washington", label: "Washington", url: "https://districtry.com/wa/", emoji: "🍎", explorerName: "districtry Washington",
+      bbox: { minLng: -124.85, minLat: 45.54, maxLng: -116.91, maxLat: 49.01 } }
   ];
   // FALLBACK district-number key list, fed through extractDistrictNumber
   // (which adds a name-field regex fallback for the layers whose number only
@@ -5338,8 +5346,8 @@ function initTennesseeExplorer() {
   // phone pinch settle within an eighth of a level of where the fingers let go
   // (a half step could jump a quarter), and keeps every zoom an exact binary
   // fraction, so a shared link carries z=13.25 and never a float tail. It must
-  // divide every boot zoom (7.5 statewide, 11 in San Francisco), or Leaflet
-  // rounds the opening view.
+  // divide the boot zoom every app sets (each a whole or half level), or
+  // Leaflet rounds the opening view.
   //
   // zoomSnap 0, which would follow a pinch exactly, was measured too and not
   // taken: a half-second touchpad pinch then moved 0.04 to 0.17 of a level,
@@ -9533,9 +9541,10 @@ function initTennesseeExplorer() {
    * its own state whichever state the launcher chose. A state with no app is
    * named, and nothing is searched.
    *
-   * ONLY A WHOLE STATE'S APP. San Francisco's app carries California's tag
-   * and answers for one city, so an address in California does not say the
-   * place is in it: such a link is searched here as before, and the sibling
+   * ONLY A WHOLE STATE'S APP. An app that carries a state's tag and answers
+   * for one city (San Francisco's did, until California's app grew to the
+   * whole state on 2026-11-11) does not hold every place an address in that
+   * state names: such a link is searched here as before, and the sibling
    * lookup decides by the place's position. It returns false then, and true
    * when it has answered. */
   function metroForTag(tag) {
@@ -15787,8 +15796,7 @@ function initTennesseeExplorer() {
    * (Adam, the same day: "count in traffic"); closing it is not counted.
    *
    * One call per app: registerStatewideOfficials({ outline }) where outline is
-   * the app's widest outline file (the state, or San Francisco's city, whose
-   * readers are told California's officers). The list is
+   * the app's widest outline file, the state's. The list is
    * data/app/statewide-officials.json, built by
    * scripts/build_statewide_officials.py, which reads each state officer's own
    * government page every run and refuses to write when the name is gone; it
@@ -19164,8 +19172,8 @@ function initTennesseeExplorer() {
    * footnote says so. The block files are fetched per county, only for the
    * counties the districts touch, and only when this screen opens. They hold
    * this app's own ground and nobody beyond it, so a district reaching past
-   * that ground (a ZIP code across a state line, a San Francisco Assembly
-   * district reaching into San Mateo County) is not given a share of its own
+   * that ground (a ZIP code across a state line, or a district of a body
+   * that reaches past the app's own outline) is not given a share of its own
    * people, and a compared district that does is compared by area alone.
    *
    * A ROW'S CARD RUNS THE LAYER'S OWN QUERY AT A POINT INSIDE THE DISTRICT
@@ -19268,10 +19276,10 @@ function initTennesseeExplorer() {
   // The population files hold the people of this app's own ground and no
   // one beyond it, so a district reaching past that ground has people the
   // files cannot count. This is the share of a district's area outside the
-  // ground the index names (San Francisco's county with its water, because
-  // its wash is drawn on land and its districts carry the Bay), or else the
-  // outline the app drew its wash with (the state), or 0 while neither has
-  // loaded. A district with more than 1% of its area outside is treated as
+  // ground the index names (none does since 2026-11-11, when San
+  // Francisco's county file went with its app's growth to all of
+  // California), or else the outline the app drew its wash with (the
+  // state), or 0 while neither has loaded. A district with more than 1% of its area outside is treated as
   // reaching past: measured 2026-11-06, no state's congressional or
   // legislative district has more than 0.06% of its area outside its
   // state's outline.

@@ -82,11 +82,18 @@
         "election-precinct",
         "election-results",
         "elementary-attendance-area",
-        "police-station"
+        "municipality",
+        "police-station",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
+        "zip-code"
       ],
       "layers_unexercised": [],
       "atpoint_sites": [
-        "load"
+        "load",
+        "load",
+        "loadZipCodes"
       ],
       "atpoint_hooks_fired": 0,
       "layer_ids": [
@@ -94,18 +101,51 @@
         "ca-assembly",
         "ca-senate",
         "congress",
+        "county",
         "early-voting",
         "election-precinct",
         "election-results",
         "elementary-attendance-area",
         "fire-station",
         "library",
+        "municipality",
         "neighborhood",
         "police-district",
         "police-station",
         "post-office",
+        "school-district-elementary",
+        "school-district-secondary",
+        "school-district-unified",
         "school-site",
         "supervisor-district",
+        "zip-code"
+      ]
+    },
+    "fl": {
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
+        "municipality",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 0,
+      "layer_ids": [
+        "county",
+        "fire-station",
+        "fl-house",
+        "fl-senate",
+        "municipality",
+        "police-station",
+        "post-office",
+        "school-district-unified",
+        "us-house",
         "zip-code"
       ]
     },
@@ -714,6 +754,34 @@
         "zip-code"
       ]
     },
+    "oh": {
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
+        "municipality",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 0,
+      "layer_ids": [
+        "county",
+        "fire-station",
+        "municipality",
+        "oh-house",
+        "oh-senate",
+        "police-station",
+        "post-office",
+        "school-district-unified",
+        "us-house",
+        "zip-code"
+      ]
+    },
     "ok": {
       "layers_sending_point": 0,
       "layers": [],
@@ -920,6 +988,34 @@
         "va-house",
         "va-senate",
         "voting-precinct",
+        "zip-code"
+      ]
+    },
+    "wa": {
+      "layers_sending_point": 0,
+      "layers": [],
+      "layers_holding_hook_but_silent": [
+        "municipality",
+        "school-district-unified",
+        "zip-code"
+      ],
+      "layers_unexercised": [],
+      "atpoint_sites": [
+        "load",
+        "load",
+        "loadZipCodes"
+      ],
+      "atpoint_hooks_fired": 0,
+      "layer_ids": [
+        "county",
+        "fire-station",
+        "municipality",
+        "police-station",
+        "post-office",
+        "school-district-unified",
+        "us-house",
+        "wa-house",
+        "wa-senate",
         "zip-code"
       ]
     },

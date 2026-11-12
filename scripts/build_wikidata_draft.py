@@ -68,7 +68,7 @@ IDS = {
     "Q1546": "Iowa",
     "Q1166": "Michigan",
     "Q1384": "New York",
-    "Q62": "San Francisco",
+    "Q99": "California",
     "Q1527": "Minnesota",
     "Q1603": "Kentucky",
     "Q1415": "Indiana",
@@ -88,6 +88,10 @@ IDS = {
     "Q816": "Arizona",
     "Q1408": "New Jersey",
     "Q759": "New Hampshire",
+    "Q1439": "Texas",
+    "Q812": "Florida",
+    "Q1397": "Ohio",
+    "Q1223": "Washington",
 }
 
 # metros.json tag -> the jurisdiction item that instance answers for. STATED,
@@ -207,6 +211,11 @@ IDS = {
 # same day, P31 = Q35657, P300 = "US-GA", P131 = Q30, and its own P47 carries
 # Q1456, Q1454 and Q1509, which match this table's sc, nc and tn entries. Its
 # English label is the bare string "Georgia".
+# ca moved from Q62 (San Francisco) to Q99 (California) on 2026-11-11, when
+# its app grew from the city to the whole state. Read from Special:EntityData
+# that day, Q99 has P31 = Q35657, P300 = "US-CA", P131 = Q30, and its own
+# P47 carries Q816 and Q1227, which match this table's az and nv entries. Its
+# English label is the bare string "California".
 # pa, nv, az, nj and nh were added at the batch 1 go-live by the same route.
 # Read from Special:EntityData on 2026-11-11, each has P31 = Q35657, P131 =
 # Q30 and its own ISO code in P300 (US-PA, US-NV, US-AZ, US-NJ, US-NH), and
@@ -214,14 +223,23 @@ IDS = {
 # (this table's ny, nj and wv), Q1408's carries Q1384 and Q1400, and Q1227's
 # and Q816's carry each other. Q759's P47 names no instance here; its P300
 # and its label settle it. Each English label is the bare state name.
+# tx, fl, oh and wa were added at the batch 2 go-live by the same route. Read
+# from Special:EntityData on 2026-11-11, each has P31 = Q35657, P131 = Q30 and
+# its own ISO code in P300 (US-TX, US-FL, US-OH, US-WA), and the borders
+# cross-check: Q1439's own P47 carries Q1649, Q1612 and Q1588 (this table's
+# ok, ar and la), Q812's carries Q1428 (ga), and Q1397's carries Q1166,
+# Q1415, Q1603, Q1371 and Q1400 (mi, in, ky, wv and pa). Q1223's P47 names no
+# instance here; its P300 and its label settle it. Each English label is the
+# bare state name.
 JURISDICTION = {
     "il": "Q1204", "wi": "Q1537", "ia": "Q1546", "mi": "Q1166",
-    "ny": "Q1384", "ca": "Q62", "mn": "Q1527", "ky": "Q1603",
+    "ny": "Q1384", "ca": "Q99", "mn": "Q1527", "ky": "Q1603",
     "in": "Q1415", "nc": "Q1454", "ok": "Q1649", "sc": "Q1456",
     "tn": "Q1509", "ar": "Q1612", "ms": "Q1494", "la": "Q1588",
     "mo": "Q1581", "va": "Q1370", "wv": "Q1371", "ga": "Q1428",
     "pa": "Q1400", "nv": "Q1227", "az": "Q816", "nj": "Q1408",
-    "nh": "Q759",
+    "nh": "Q759", "tx": "Q1439", "fl": "Q812", "oh": "Q1397",
+    "wa": "Q1223",
 }
 
 

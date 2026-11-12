@@ -31,6 +31,14 @@
     "height": 630,
     "rendered": "2026-09-13"
   },
+  "fl": {
+    "path": "fl/og-image.png",
+    "label": "fl",
+    "sha256": "66485e70465373df8e053c38ef5d3f73f6b39e3be26787f372ad092031767f0b",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-11-11"
+  },
   "ga": {
     "path": "ga/og-image.png",
     "label": "ga",
@@ -151,6 +159,14 @@
     "height": 630,
     "rendered": "2026-09-13"
   },
+  "oh": {
+    "path": "oh/og-image.png",
+    "label": "oh",
+    "sha256": "0c203a4341d1e62258ee6e6dd2aada3df3658c81ee11a24a9f66261b51ee4adc",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-11-11"
+  },
   "ok": {
     "path": "ok/og-image.png",
     "label": "ok",
@@ -198,6 +214,14 @@
     "width": 1200,
     "height": 630,
     "rendered": "2026-10-29"
+  },
+  "wa": {
+    "path": "wa/og-image.png",
+    "label": "wa",
+    "sha256": "4b3f7b2b1c80e4d6d9a9720174b626f8984e458d2dacedff36c45cfd7ce14d03",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-11-11"
   },
   "wi": {
     "path": "wi/og-image.png",

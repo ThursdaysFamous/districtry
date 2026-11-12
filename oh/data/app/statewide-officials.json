@@ -1,0 +1,61 @@
+{
+ "_comment": "Built by scripts/build_statewide_officials.py from oh/data/source/statewide-officials.source.json and the Senate's list of senators. Do not edit by hand.",
+ "state": "Ohio",
+ "usSenate": [
+  {
+   "name": "Jon Husted",
+   "party": "Republican",
+   "url": "https://www.husted.senate.gov/",
+   "office": "304 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-3353"
+  },
+  {
+   "name": "Bernie Moreno",
+   "party": "Republican",
+   "url": "https://www.moreno.senate.gov",
+   "office": "284 Russell Senate Office Building Washington DC 20510",
+   "phone": "(202) 224-2315"
+  }
+ ],
+ "usSenateSource": "https://www.senate.gov/senators/",
+ "usSenateRead": "2026-11-11",
+ "officers": [
+  {
+   "office": "Governor",
+   "name": "Mike DeWine",
+   "url": "https://governor.ohio.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Lieutenant Governor",
+   "name": "Jim Tressel",
+   "url": "https://governor.ohio.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Attorney General",
+   "name": "Andy Wilson",
+   "url": "https://www.ohioattorneygeneral.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Secretary of State",
+   "name": "Frank LaRose",
+   "url": "https://www.ohiosos.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Auditor of State",
+   "name": "Keith Faber",
+   "url": "https://ohioauditor.gov/",
+   "verified": "2026-11-11"
+  },
+  {
+   "office": "Treasurer of State",
+   "name": "Robert Sprague",
+   "url": "https://tos.ohio.gov/",
+   "verified": "2026-11-11"
+  }
+ ],
+ "officersNote": "Ohio's voters also elect the Supreme Court statewide. Its justices are not listed here yet."
+}

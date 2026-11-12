@@ -54,8 +54,9 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 JOIN = os.path.join(REPO_ROOT, "data", "tribal-government-join.json")
 METROS = os.path.join(REPO_ROOT, "metros.json")
 
-# Which state each instance answers over. ny and ca answer for one city each, so
-# their landing name is not a state and cannot be read as one. Every tag in
+# Which state each instance answers over, stated rather than read off a landing
+# name, because a city instance's landing name is not a state (ca's was San
+# Francisco until its app grew to the whole state on 2026-11-11). Every tag in
 # metros.json must appear here or the gate fails, which is what stops a new
 # instance shipping with no tribal join decision taken either way.
 STATE_OF_INSTANCE = {
@@ -84,6 +85,10 @@ STATE_OF_INSTANCE = {
     "az": "Arizona",
     "nj": "New Jersey",
     "nh": "New Hampshire",
+    "tx": "Texas",
+    "fl": "Florida",
+    "oh": "Ohio",
+    "wa": "Washington",
 }
 
 

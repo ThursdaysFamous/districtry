@@ -52,7 +52,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "35.49230,-97.50340"; // the State Capitol, Oklahoma City, Oklahoma County
 const OFFLINE = ["county", "us-house", "ok-senate", "ok-house", "ok-judicial-district"];
 const EXPECT_DISTRICT = { "county": "Oklahoma County", "us-house": "5", "ok-senate": "48", "ok-house": "99", "ok-judicial-district": "7" };
-const NEGATIVE_POINT = "33.65000,-97.15000"; // near Gainesville, Cooke County, TEXAS, about 15 km south of the Red River — outside Oklahoma and outside every other instance in the fleet, and inside permalink_gate (minLat 33.50) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-09: TIGERweb's state layer names Texas at this point (control: the Capitol anchor returns Oklahoma). TEXAS BECAUSE NO INSTANCE SERVES IT, and on land rather than on the Red River, whose channel the county fabric could place on either side.
+const NEGATIVE_POINT = "34.40000,-103.12000"; // Curry County, NEW MEXICO, about 7 km west of the Texas line south of the panhandle — outside Oklahoma and outside every other instance in the fleet, and inside permalink_gate (minLng -103.15) so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state and county layers name New Mexico and Curry County here (control: the State Capitol returns Oklahoma and Oklahoma County), and no outline in fleet-outlines.json contains it, the nearest being Texas's, 7.0 km east. THIS POINT WAS NEAR GAINESVILLE, COOKE COUNTY, TEXAS (33.65, -97.15) until the change that published Texas (batch 2 of the state-level launch, written 2026-11-11), which put it inside Texas's outline. NEW MEXICO BECAUSE IT IS THE LAST OF THIS APP'S UNSERVED NEIGHBOURS TO GO LIVE: the gate also reaches Kansas and Colorado north of the panhandle, both in batch 3, while New Mexico is in batch 4, so the change that publishes New Mexico moves this point again. It is on land rather than on the Red River, whose channel the county fabric could place on either side.
 const APP_NAME = "districtry Oklahoma";
 const EXPECT_LAYERS = 17;
 // ==== GENERATED:END smoke-config ====
@@ -385,23 +385,27 @@ try {
   //     the app, which reads exactly like correct behaviour.
   //
   //     OKLAHOMA'S OWN CASE IS THE ONE BELOW THAT MATTERS, and it is the
-  //     absence half: four of its six neighbours (Texas, Kansas,
-  //     Colorado, New Mexico) are not covered, so a point just over one of
-  //     those state lines must be selected HERE, where the app says nothing
-  //     answers there, rather than handed to an app with nothing to show.
+  //     absence half: three of its six neighbours (Kansas, Colorado, New
+  //     Mexico) are not covered, so a point just over one of those state
+  //     lines must be selected HERE, where the app says nothing answers
+  //     there, rather than handed to an app with nothing to show.
   //     MISSOURI IS COVERED SINCE ITS GO-LIVE and ARKANSAS SINCE ITS OWN
   //     (2026-10-15), so Fort Smith,
   //     about 4 km over the line, must open that app; the case was added in
-  //     the change that published it. This instance
-  //     is also DARK, so it has no entry in fleet-outlines.json at all and
-  //     answers its own side from the coverage rings the wash retained — no
-  //     fetch. The two positive cases prove the file is still read for
-  //     somebody else's ground.
+  //     the change that published it. TEXAS IS COVERED SINCE THE CHANGE THAT
+  //     PUBLISHED IT (batch 2 of the state-level launch, written 2026-11-11),
+  //     so Wichita Falls, about 15 km south of the Red River and the click
+  //     1a2-ii used to make as ground nobody served, must open Texas's app;
+  //     measured that day it lies inside Texas's outline in
+  //     fleet-outlines.json and no other. This instance answers its own side
+  //     from the coverage rings the wash retained — no fetch. The positive
+  //     cases prove the file is still read for somebody else's ground.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Milwaukee", lat: 43.04, lng: -87.91, want: "https://districtry.com/wi/" },
       { name: "Fort Smith, Arkansas", lat: 35.3859, lng: -94.3985, want: "https://districtry.com/ar/" },
+      { name: "Wichita Falls, Texas", lat: 33.9137, lng: -98.4934, want: "https://districtry.com/tx/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -419,9 +423,11 @@ try {
     }
   }
 
-  // 1a2-ii. The half that keeps 1a2 honest: Wichita Falls, Texas is about
-  //     15 km south of the Red River and no districtry instance covers it, so
-  //     the click must stay HERE. A route to a sibling would be the same lie
+  // 1a2-ii. The half that keeps 1a2 honest: the negative point, in Curry
+  //     County, New Mexico, about 7 km west of the Texas line, is outside
+  //     every outline in the fleet, so the click must stay HERE. It clicked
+  //     Wichita Falls, Texas until the change that published Texas, which made
+  //     that a routing case above. A route to a sibling would be the same lie
   //     pointing the other way, and the stub makes it visible: if the app
   //     navigated, the URL would be the stubbed sibling rather than this app.
   {
@@ -430,13 +436,18 @@ try {
       await p.route("https://districtry.com/**", (route) =>
         route.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>sibling</title>" }));
     });
-    await page.evaluate(({ n }) => {
-      window[n].map.fire("click", { latlng: window.L.latLng(33.9137, -98.4934) });
-    }, { n: EXPORTS_NAME });
+    await page.evaluate(({ n, pt }) => {
+      const [la, ln] = pt.split(",").map(Number);
+      window[n].map.fire("click", { latlng: window.L.latLng(la, ln) });
+    }, { n: EXPORTS_NAME, pt: NEGATIVE_POINT });
     await page.waitForTimeout(3000);
     const url = page.url();
-    check("a click on Wichita Falls, Texas stays in this app",
-      !/districtry\.com\/(il|wi|ia|mi|ny|ca|mn|ky|in|nc)\//.test(url), url);
+    // Still under BASE means still this app. This asked for the URL NOT to
+    // name one of a list of sibling tags, and a list needs a new entry each
+    // time a state goes live: the tag it lacked (tx) would have read as
+    // staying here.
+    check("a click in New Mexico, outside every app's outline, stays in this app",
+      url.startsWith(BASE), url);
     await context.close();
   }
 
@@ -1046,9 +1057,10 @@ try {
   //    load-bearing: coverage fails OPEN, so a test that only asserted hiding
   //    would also pass on a layer that had stopped working altogether.
   //
-  //    The negative point is the worksheet's own, in Cooke County, Texas —
-  //    outside the county fabric's dissolve, which is what the coverage test
-  //    reads.
+  //    The negative point is the worksheet's own, in Curry County, New Mexico
+  //    (it was in Cooke County, Texas until Texas went live) — outside the
+  //    county fabric's dissolve, which is what the coverage test reads. The
+  //    stub still answers a Texas ZIP whatever point is asked.
   {
     const ZCTA = "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11";
     function zctaBody(zip) {
@@ -1059,7 +1071,7 @@ try {
         features: [{
           attributes: { ZCTA5: zip },
           // a ring around BOTH probe points, so geometry never decides this
-          geometry: { rings: [[[-98, 33], [-96, 33], [-96, 36], [-98, 36], [-98, 33]]] }
+          geometry: { rings: [[[-104, 33], [-96, 33], [-96, 36], [-104, 36], [-104, 33]]] }
         }]
       });
     }

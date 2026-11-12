@@ -117,7 +117,7 @@ STATE_FIPS = {"il": "17", "ia": "19", "mi": "26", "wi": "55", "ny": "36", "ca": 
               "mn": "27", "ky": "21", "in": "18", "nc": "37", "ok": "40", "sc": "45",
               "tn": "47", "ar": "05", "ms": "28", "la": "22", "mo": "29",
               "va": "51", "wv": "54", "ga": "13", "pa": "42", "nv": "32", "az": "04",
-              "nj": "34", "nh": "33", "tx": "48"}
+              "nj": "34", "nh": "33", "tx": "48", "fl": "12", "oh": "39", "wa": "53"}
 # WHO THIS FETCHES AS, and it used to be nobody: the first version shelled out to
 # curl with no -A, so the Census saw `curl/8.x` and nothing read robots.txt.
 # Nothing was breached — measured 2026-09-27 as that client, the host's
@@ -215,6 +215,10 @@ MIRRORS = [
     ("tx", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("tx", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("tx", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("fl", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("fl", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("oh", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("oh", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("nj", "municipality", "Places_CouSub_ConCity_SubMCD", 1, "GEOID,NAME,BASENAME,STATE,COUNTY,LSADC,FUNCSTAT"),
     ("nj", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("nj", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
@@ -223,6 +227,12 @@ MIRRORS = [
     ("nh", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("nh", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
     ("nh", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("wa", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("wa", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ca", "municipality", "Places_CouSub_ConCity_SubMCD", 4, "GEOID,NAME,BASENAME,STATE,LSADC,FUNCSTAT"),
+    ("ca", "school-district-unified", "School", 0, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ca", "school-district-elementary", "School", 2, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
+    ("ca", "school-district-secondary", "School", 1, "GEOID,NAME,STATE,LOGRADE,HIGRADE"),
 ]
 
 # THE ZIP LAYERS (phase 6b). TIGERweb's ZCTA layer has NO STATE field — a ZCTA
@@ -248,7 +258,7 @@ ZIP_MIRRORS = [
     ("mi", "zip-code", "MI_BBOX_ENVELOPE", (-90.42, 41.69, -82.12, 48.31)),
     ("wi", "zip-code", "WI_BBOX_ENVELOPE", (-93.09, 42.29, -86.04, 47.51)),
     ("ny", "nys-zip-code", "NY_ZCTA_ENVELOPE", (-79.77, 40.47, -71.77, 45.02)),
-    ("ca", "zip-code", "SF_BBOX_ENVELOPE", (-122.62, 37.58, -122.28, 37.96)),
+    ("ca", "zip-code", "CA_BBOX_ENVELOPE", (-124.5, 32.5, -114.1, 42.05)),
     ("mn", "zip-code", "MN_BBOX_ENVELOPE", (-97.30, 43.44, -89.43, 49.44)),
     ("in", "zip-code", "IN_BBOX_ENVELOPE", (-88.10, 37.77, -84.78, 41.77)),
     ("nc", "zip-code", "NC_BBOX_ENVELOPE", (-84.50, 33.60, -75.10, 36.75)),
@@ -268,6 +278,9 @@ ZIP_MIRRORS = [
     ("nj", "zip-code", "NJ_BBOX_ENVELOPE", (-75.65, 38.7, -73.8, 41.45)),
     ("tx", "zip-code", "TX_BBOX_ENVELOPE", (-106.7, 25.78, -93.45, 36.56)),
     ("nh", "zip-code", "NH_BBOX_ENVELOPE", (-72.65, 42.6, -70.45, 45.4)),
+    ("fl", "zip-code", "FL_BBOX_ENVELOPE", (-87.69, 24.34, -79.92, 31.06)),
+    ("oh", "zip-code", "OH_BBOX_ENVELOPE", (-84.88, 38.35, -80.46, 42.38)),
+    ("wa", "zip-code", "WA_BBOX_ENVELOPE", (-124.9, 45.49, -116.86, 49.06)),
 ]
 # A STATE row the server cannot answer whole is paged the same way: asked for
 # Texas's 1,016 unified school districts at full detail in one response,
@@ -288,10 +301,11 @@ PAGE_SIZE = 250
 # a ZCTA that merely touches the state line shares an edge, not ground. What it
 # costs is stated rather than implied: a reader who clicks OUTSIDE the state
 # gets no ZIP card where the live layer answered one — and since 2026-09-30
-# every ZIP layer mirrored here but San Francisco's hides outside its state
-# anyway, through the app's coverage test against its own state outline, so the
-# archive and the live loader agree there (San Francisco's is ungated on
-# purpose: its box, the city and the inner Bay, reaches no other state). THE
+# every ZIP layer mirrored here hides outside its state anyway, through the
+# app's coverage test against its own state outline, so the archive and the
+# live loader agree there (California's joined on 2026-11-11, when the app grew
+# from San Francisco to the state; until then its box was the city and the
+# inner Bay, which reaches no other state, and it was ungated). THE
 # FILTER changes no answer inside the state (measured 2026-09-27: every dropped
 # ZCTA that touches the state holds 0.00 m2 of it; measured again 2026-10-17 for
 # the eight phase-6d layers, where 87, 75, 103, 116, 64, 110, 96 and 68 dropped

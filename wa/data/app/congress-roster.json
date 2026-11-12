@@ -1,0 +1,151 @@
+{
+  "1": {
+    "name": "Suzan K. DelBene",
+    "party": "Democrat",
+    "url": "https://delbene.house.gov",
+    "capitolOffice": [
+      "2311 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-6311"
+    ],
+    "districtOffice": [
+      "520 112th Ave NE, Suite 400-C",
+      "Bellevue, WA 98004",
+      "Phone: 425-485-0085"
+    ]
+  },
+  "2": {
+    "name": "Rick Larsen",
+    "party": "Democrat",
+    "url": "https://larsen.house.gov",
+    "capitolOffice": [
+      "2163 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2605"
+    ],
+    "districtOffice": [
+      "119 N. Commercial St., Suite 275",
+      "Bellingham, WA 98225",
+      "Phone: 360-733-4500"
+    ]
+  },
+  "3": {
+    "name": "Marie Gluesenkamp Perez",
+    "party": "Democrat",
+    "url": "https://gluesenkampperez.house.gov",
+    "capitolOffice": [
+      "1431 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3536"
+    ],
+    "districtOffice": [
+      "308 S. Pacific Ave., Suite B",
+      "Kelso, WA 98626"
+    ]
+  },
+  "4": {
+    "name": "Dan Newhouse",
+    "party": "Republican",
+    "url": "https://newhouse.house.gov",
+    "capitolOffice": [
+      "460 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5816"
+    ],
+    "districtOffice": [
+      "3100 George Washington Way, #130",
+      "Richland, WA 99354",
+      "Phone: 509-713-7374"
+    ]
+  },
+  "5": {
+    "name": "Michael Baumgartner",
+    "party": "Republican",
+    "url": "https://baumgartner.house.gov",
+    "capitolOffice": [
+      "124 Cannon House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-2006"
+    ],
+    "districtOffice": [
+      "528 E. Spokane Falls Blvd, Suite 115",
+      "Spokane, WA 99202",
+      "Phone: 509-353-2374"
+    ]
+  },
+  "6": {
+    "name": "Emily Randall",
+    "party": "Democrat",
+    "url": "https://randall.house.gov",
+    "capitolOffice": [
+      "1531 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-5916"
+    ],
+    "districtOffice": [
+      "345 6th St., Suite 500",
+      "Bremerton, WA 98337",
+      "Phone: 360-373-9725"
+    ]
+  },
+  "7": {
+    "name": "Pramila Jayapal",
+    "party": "Democrat",
+    "url": "https://jayapal.house.gov",
+    "capitolOffice": [
+      "2346 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-3106"
+    ],
+    "districtOffice": [
+      "2033 6th Ave., Suite 1011",
+      "Seattle, WA 98121",
+      "Phone: 206-674-0040"
+    ]
+  },
+  "8": {
+    "name": "Kim Schrier",
+    "party": "Democrat",
+    "url": "https://schrier.house.gov",
+    "capitolOffice": [
+      "1110 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-7761"
+    ],
+    "districtOffice": [
+      "22500 SE 64th Pl, Suite 226",
+      "Issaquah, WA 98027-7900",
+      "Phone: 425-657-1001"
+    ]
+  },
+  "9": {
+    "name": "Adam Smith",
+    "party": "Democrat",
+    "url": "https://adamsmith.house.gov",
+    "capitolOffice": [
+      "2264 Rayburn House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-8901"
+    ],
+    "districtOffice": [
+      "6811 S. 204th Street, Suite 360",
+      "Kent, WA 98032",
+      "Phone: 425-793-5180"
+    ]
+  },
+  "10": {
+    "name": "Marilyn Strickland",
+    "party": "Democrat",
+    "url": "https://strickland.house.gov",
+    "capitolOffice": [
+      "1724 Longworth House Office Building",
+      "Washington, DC 20515",
+      "Phone: 202-225-9740"
+    ],
+    "districtOffice": [
+      "6000 Main Street SW, Suite 3B",
+      "Lakewood, WA 98499",
+      "Phone: 360-459-8514"
+    ]
+  }
+}

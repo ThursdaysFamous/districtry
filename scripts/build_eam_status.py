@@ -207,7 +207,10 @@ STATE_COUNTIES = {"il": 102, "wi": 72, "ia": 99, "mi": 83, "mn": 87,
                   # county equivalent and whose Board of Supervisors is its
                   # county government. The Census also files it as a place of
                   # 58,639, so it is owed under level 6 as well.
-                  "pa": 67, "nv": 17, "az": 15, "nj": 21, "nh": 10}
+                  "pa": 67, "nv": 17, "az": 15, "nj": 21, "nh": 10,
+                  # Batch 2, added at its go-live (2026-11-11). California
+                  # grew in the same batch and is in NO_COUNTY_TIER below.
+                  "tx": 254, "fl": 67, "oh": 88, "wa": 39}
 
 # County equivalents that are cities, scored under level 6 and not here. The
 # number is STATED and checked: the coverage ring must hold the state's counties
@@ -229,11 +232,21 @@ INDEPENDENT_CITIES = {"va": 38}
 # it statewide, having first MEASURED the tier it was asking to be held to —
 # #1328 records what 57 county front pages outside the city publish, and what
 # they do not. So E and A now use the state's own 62 and C's separate
-# COVERED_COUNTIES entry is no longer a divergence. San Francisco stays a city
-# app, because a consolidated city and county has no county above it.
+# COVERED_COUNTIES entry is no longer a divergence.
+#
+# CALIFORNIA'S ENTRY USED TO READ "San Francisco — a consolidated city and
+# county, so the county tier is the city and there is no frontier", which was
+# true while the app answered for San Francisco alone. It grew to the whole
+# state on 2026-11-11 (Adam's "Grow" of 2026-11-10), so its frontier is now
+# the state's 58 counties, and scoring E and A against them needs a coverage
+# ring this report can read (ring_size) and a county-page adapter that names
+# San Francisco's board, neither of which California has yet. Until that
+# change, E and A are recorded as not scored, with the reason, rather than
+# passed on the old reading.
 NO_COUNTY_TIER = {
-    "ca": "San Francisco — a consolidated city and county, so the county tier "
-          "is the city and there is no frontier.",
+    "ca": "California's app grew from San Francisco to the whole state on "
+          "2026-11-11 and its 58-county frontier is not scored here yet; "
+          "only San Francisco names a county governing body so far.",
 }
 
 
@@ -1433,6 +1446,12 @@ PREFIX_CLASSES = {
             "scripts/build_block_population.py")],
     "tx": [("tx/data/app/population/", "census",
             "scripts/build_block_population.py")],
+    "fl": [("fl/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "oh": [("oh/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+    "wa": [("wa/data/app/population/", "census",
+            "scripts/build_block_population.py")],
 }
 PREFIX_KIND = {rel: kind for rows in PREFIX_CLASSES.values()
                for rel, kind, _ in rows}
@@ -1549,8 +1568,17 @@ OPEN = Entry("open")
 UNSETTLED = Entry("unsettled")
 
 
-CITY_INSTANCE = ("San Francisco is one city, so its city tier is the whole app "
-                 "and the state tiers above it are another app's subject.")
+# CALIFORNIA HAS NO GENERAL-PURPOSE GOVERNMENT BETWEEN ITS COUNTIES AND ITS
+# CITIES. Its county subdivisions are the Census's county divisions, drawn for
+# statistics with no government of their own, and an unincorporated place is
+# governed by its county. (Until 2026-11-11 this table held CITY_INSTANCE,
+# "San Francisco is one city, so its city tier is the whole app and the state
+# tiers above it are another app's subject", which ended when the app grew to
+# the whole state.)
+CA_NO_SUBCOUNTY_GOVERNMENT = (
+    "California has no government between the county and the city: its county "
+    "subdivisions are census county divisions drawn for statistics, and an "
+    "unincorporated place is governed by its county.")
 
 # A STATE WITH NO TRIBAL LAND IS THE STANDARD'S "the state does not have the
 # level" CASE, and this reason is the record it asks for: the fact, and
@@ -2844,6 +2872,112 @@ ANSWERS = {
         # Pueblo), and the app draws no tribal land yet (tx/WATCH.md).
         "tribal-government": OPEN,
     },
+    "fl": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("fl-senate", "fl-house"),
+        "county-boundaries": answers("county"),
+        # No board of county commissioners is named yet (the state-level
+        # launch names the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city council is named yet.
+        "local-government": depth(),
+        # Florida's constitution makes each county one school district, and
+        # TIGER carries the 67 as unified districts and nothing else.
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-11 on TIGERweb's county subdivisions, with Illinois
+        # as the control (1,411 active of 1,695): all 316 of Florida's are
+        # census county divisions (FUNCSTAT S), statistical areas that govern
+        # nobody.
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": na(
+            "Florida has no sub-county general-purpose government — outside a "
+            "city, town or village the county governs. The 316 sub-county units "
+            "the Census publishes for Florida are census county divisions: "
+            "statistical areas, not governments (measured 2026-11-11)."),
+        # Circuit and county judges are elected; no circuit is drawn or judge
+        # named yet.
+        "courts-by-district": OPEN,
+        # School board members are elected from residence districts; no
+        # school board district is drawn yet.
+        "school-boards-by-district": OPEN,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-11 with scripts/tribal_areas.py --report Florida:
+        # the Census keeps 7 reservations (the Miccosukee's and six of the
+        # Seminole Tribe of Florida's) and 4 trust lands in Florida, and the
+        # app draws no tribal land yet (fl/WATCH.md).
+        "tribal-government": OPEN,
+    },
+    "oh": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("oh-senate", "oh-house"),
+        "county-boundaries": answers("county"),
+        # No county commissioner is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or village council is named yet.
+        "local-government": depth(),
+        # TIGER carries Ohio's 612 school districts as unified districts and
+        # nothing on its elementary or secondary layers (measured 2026-11-11).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-11 on TIGERweb's county subdivisions: 1,308 of
+        # Ohio's are active townships (LSADC 44, FUNCSTAT A), general-purpose
+        # governments each electing three trustees and a fiscal officer, and
+        # no township layer is drawn yet (gap oh-townships).
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": OPEN,
+        # Common pleas judges are elected by county and court of appeals
+        # judges by appellate district; neither is drawn or named yet.
+        "courts-by-district": OPEN,
+        # Whether any board elects its members by district has not been
+        # measured for Ohio.
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        "tribal-government": na(
+            "Ohio has no tribal land. The Census publishes no federal or state "
+            "reservation and no off-reservation trust land in the state, "
+            "measured 2026-11-11 with scripts/tribal_areas.py --report."),
+    },
+    "wa": {
+        "us-house": answers("us-house"),
+        "state-legislature": answers("wa-senate", "wa-house"),
+        "county-boundaries": answers("county"),
+        # No county governing body is named yet (the state-level launch names
+        # the legislature first, Adam's plan of 2026-11-10).
+        "county-government": depth(),
+        "municipal-boundaries": answers("municipality"),
+        # No city or town council is named yet.
+        "local-government": depth(),
+        # TIGER carries Washington's 295 school districts as unified districts
+        # and nothing on its elementary or secondary layers (measured 2026-11-11).
+        "school-district-boundaries": answers("school-district-unified"),
+        # Measured 2026-11-11 on TIGERweb's county subdivisions, with Illinois
+        # as the control (1,411 active of 1,695): all 242 of Washington's are
+        # census county divisions (FUNCSTAT S), statistical areas that govern
+        # nobody.
+        "subdivision-boundaries": OPEN,
+        "sub-county-government": na(
+            "Washington has no sub-county general-purpose government — outside a "
+            "city or town limit the county governs. The 242 sub-county units the "
+            "Census publishes for Washington are census county divisions: "
+            "statistical areas, not governments (measured 2026-11-11)."),
+        # Superior court judges are elected by county and Court of Appeals
+        # judges by district within each division; neither is drawn or named
+        # yet.
+        "courts-by-district": OPEN,
+        # Whether any board elects its members by district has not been
+        # measured for Washington.
+        "school-boards-by-district": UNSETTLED,
+        "precincts": OPEN,
+        "special-districts": OPEN,
+        # Measured 2026-11-11 with scripts/tribal_areas.py --report Washington:
+        # the Census keeps 28 reservations and 22 off-reservation trust lands
+        # in Washington, and the app draws no tribal land yet (wa/WATCH.md).
+        "tribal-government": OPEN,
+    },
     # Georgia, added at its go-live: the national tier, every county's board of
     # commissioners named from the Secretary of State's election results, the
     # commission and school board districts the precinct check confirmed, the
@@ -2946,30 +3080,42 @@ ANSWERS = {
         # councils named -- the Wisconsin and Michigan shape.
         "tribal-government": answers("tribal-government"),
     },
+    # CALIFORNIA IS A WHOLE-STATE APP SINCE 2026-11-11. While it answered for
+    # San Francisco alone, the county, city and school-district boundary rows
+    # were "not this app's subject", and the courts, school boards and tribal
+    # rows were the city's own measurements (NO_TRIBAL_LAND_SF,
+    # SF_NO_COURT_DISTRICTS, SF_SCHOOL_BOARDS_AT_LARGE, kept above as the
+    # record of San Francisco). Those three are true of the city and not of
+    # the state, so each row now says what the state app does.
     "ca": {
         "us-house": answers("congress"),
         "state-legislature": answers("ca-senate", "ca-assembly"),
-        "county-boundaries": na(CITY_INSTANCE),
-        # San Francisco's Board of Supervisors is both the county governing body
-        # and the city council, drawn by district and named.
-        "county-government": answers("supervisor-district"),
-        "municipal-boundaries": na(CITY_INSTANCE),
-        # Its city tier is one city, and the same board is its council,
-        # drawn by district and named, so there is no size to measure.
-        "local-government": answers("supervisor-district"),
-        "school-district-boundaries": na(CITY_INSTANCE),
-        # Both of these were left to this app's own thread and both are
-        # settled now, measured 2026-10-01 and written up in ca/WATCH.md.
-        # Neither is an absence anybody has to ask a publisher about: the
-        # level does not exist inside this city, which is the standard's
-        # "a state genuinely lacks a level" case.
-        "subdivision-boundaries": na(CITY_INSTANCE),
-        "courts-by-district": na(SF_NO_COURT_DISTRICTS),
-        "sub-county-government": na(CITY_INSTANCE),
-        "school-boards-by-district": na(SF_SCHOOL_BOARDS_AT_LARGE),
-        "precincts": answers("election-precinct"),
-        "special-districts": answers("bart-director"),
-        "tribal-government": na(NO_TRIBAL_LAND_SF),
+        "county-boundaries": answers("county"),
+        # San Francisco's Board of Supervisors is its county's governing body,
+        # drawn by district and named; no other county's board is named yet.
+        "county-government": Entry("open", ("supervisor-district",)),
+        "municipal-boundaries": answers("municipality"),
+        # The same board is San Francisco's city council; no other city's
+        # council is named yet.
+        "local-government": Entry("open", ("supervisor-district",)),
+        "school-district-boundaries": answers("school-district-unified",
+                                              "school-district-elementary",
+                                              "school-district-secondary"),
+        "subdivision-boundaries": na(CA_NO_SUBCOUNTY_GOVERNMENT),
+        # Superior court judges are elected countywide, and Court of Appeal
+        # justices are retained by the voters of their appellate district:
+        # whether those six districts are owed as drawn lines is left to
+        # California's own thread.
+        "courts-by-district": UNSETTLED,
+        "sub-county-government": na(CA_NO_SUBCOUNTY_GOVERNMENT),
+        # Many California school districts elect trustees by area; none is
+        # drawn yet. San Francisco's two boards are elected at large.
+        "school-boards-by-district": OPEN,
+        # San Francisco's precincts only.
+        "precincts": Entry("open", ("election-precinct",)),
+        "special-districts": Entry("open", ("bart-director",)),
+        # Tribal lands are not drawn yet (owed after the batch-2 launch).
+        "tribal-government": OPEN,
     },
 }
 

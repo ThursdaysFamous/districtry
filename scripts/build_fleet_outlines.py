@@ -27,9 +27,10 @@ whole file is about 18 KB gzipped, and an app fetches it only when a selection
 falls outside its own outline.
 
 WHICH OUTLINE is the ground where an instance answers ANYTHING, which is its
-widest band: the state outline for Illinois, New York and Wisconsin (their
-statewide layers answer across it), the statewide coverage ring for Iowa and
-Michigan, and the city for San Francisco. `SOURCES` is keyed by the instance's
+widest band: the state outline for Illinois, New York, Wisconsin and, since
+it grew from San Francisco on 2026-11-11, California (their statewide layers
+answer across it), and the statewide coverage ring for Iowa, Michigan and the
+states after them. `SOURCES` is keyed by the instance's
 tag and FAILS when metros.json names an instance it does not know, so a new
 state cannot go live with no outline to be handed off to.
 
@@ -58,7 +59,11 @@ METROS = os.path.join(REPO, "metros.json")
 SOURCES = {
     "il": "il/data/app/il-state-outline.json",
     "ny": "ny/data/app/ny-state-outline.json",
-    "ca": "ca/data/app/san-francisco-county-outline.json",
+    # California's widest ground is the state since it grew from San
+    # Francisco on 2026-11-11: the statewide layers answer over the dissolve
+    # of its 58 counties, while the city's own layers answer in San Francisco
+    # alone.
+    "ca": "ca/data/app/ca-state-outline.json",
     "wi": "wi/data/app/wi-state-outline.json",
     "ia": "ia/data/app/metro-outline.json",
     "mi": "mi/data/app/metro-outline.json",
@@ -131,6 +136,11 @@ SOURCES = {
     "az": "az/data/app/metro-outline.json",
     "nj": "nj/data/app/metro-outline.json",
     "nh": "nh/data/app/metro-outline.json",
+    # Batch 2 (Texas, Florida, Ohio, Washington), the same shape.
+    "tx": "tx/data/app/metro-outline.json",
+    "fl": "fl/data/app/metro-outline.json",
+    "oh": "oh/data/app/metro-outline.json",
+    "wa": "wa/data/app/metro-outline.json",
 }
 
 # Degrees. 0.002 is about 220 m north-south and 165 m east-west at 42 N.

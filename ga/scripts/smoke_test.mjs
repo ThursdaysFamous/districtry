@@ -53,7 +53,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 const POINT = "33.74900,-84.38900"; // Georgia State Capitol grounds, 206 Washington Street SW, Atlanta, Fulton County — the west side of the grounds, chosen 123 m from the line between House Districts 58 and 59, which runs east of the Capitol (the Capitol's own address point sits 51 m from it), measured 2026-10-29 against the shipped files
 const OFFLINE = ["county", "us-house", "ga-senate", "ga-house"];
 const EXPECT_DISTRICT = { "county": "Fulton County", "us-house": "5", "ga-senate": "36", "ga-house": "58" };
-const NEGATIVE_POINT = "30.43830,-84.28070"; // Tallahassee, Florida, about 26 km south of the Georgia line — outside Georgia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-10-29: TIGERweb's state layer names Florida here (controls: the State Capitol returns Georgia, and a point in the open Gulf of Mexico returns no state), and none of the state's shipped boundary files contains it. FLORIDA AND ALABAMA ARE THE TWO NEIGHBOURS NO INSTANCE SERVES, so the change that makes Florida live moves this point into Alabama, the way Kentucky's go-live moved Indiana's.
+const NEGATIVE_POINT = "31.40000,-80.90000"; // In the Atlantic Ocean, about 22 km from the nearest point of Georgia's shipped outline — outside Georgia and outside every other instance in the fleet, and inside permalink_gate so the app answers the click and every shipped layer correctly returns nothing. Measured 2026-11-11: TIGERweb's state layer names no state here (controls: the State Capitol returns Georgia, and Tallahassee, the old point, returns Florida), and no outline in fleet-outlines.json contains it, the nearest being Georgia's. THIS POINT WAS IN TALLAHASSEE, FLORIDA (30.4383, -84.2807) until the change that published Florida (batch 2 of the state-level launch, written 2026-11-11), which put it inside Florida's outline. THE OCEAN RATHER THAN ALABAMA, which this note used to name as the next place: Alabama is in batch 3, so a point there would move again within weeks, while no instance will ever serve the ocean. South Carolina's point moved to the Atlantic for the same reason when Georgia went live.
 const APP_NAME = "districtry Georgia";
 const EXPECT_LAYERS = 15;
 // ==== GENERATED:END smoke-config ====
@@ -416,29 +416,36 @@ try {
   //     the real districtry.com, fails in the sandbox and leaves page.url() on
   //     the app, which reads exactly like correct behaviour.
   //
-  //     GEORGIA HAS FIVE NEIGHBOURS, AND THE FLEET SERVES THREE OF THEM. A
+  //     GEORGIA HAS FIVE NEIGHBOURS, AND THE FLEET SERVES FOUR OF THEM. A
   //     click a little way inside each live neighbour must open that
-  //     neighbour's app: Chattanooga, Tennessee; Murphy, North Carolina; and
-  //     Aiken, South Carolina. Measured against fleet-outlines.json on
-  //     2026-10-29, each lies inside its own state's outline and no other,
-  //     6.8, 11.1 and 22.0 km from this app's coverage ring. This instance
+  //     neighbour's app: Chattanooga, Tennessee; Murphy, North Carolina;
+  //     Aiken, South Carolina; and, since the change that published Florida
+  //     (batch 2 of the state-level launch, written 2026-11-11), Tallahassee,
+  //     Florida. Measured against fleet-outlines.json on 2026-10-29, the first
+  //     three each lie inside their own state's outline and no other, 6.8,
+  //     11.1 and 22.0 km from this app's coverage ring; Tallahassee, about
+  //     26 km south of the Georgia line, lies inside Florida's and no other,
+  //     measured 2026-11-11. This instance
   //     answers its own side from the coverage ring the wash retained, with no
   //     fetch; since go-live the fleet file carries Georgia too, and the app
   //     asks its own entry first, so a border point both outlines draw stays
   //     here. Chicago proves the file is still read for ground far from here.
   //
-  //     FLORIDA AND ALABAMA ARE DELIBERATELY NOT CASES. Nobody serves them
-  //     today, so a click there stays here; but the fleet is meant to reach
-  //     every state, and a "stays here" case in either would start failing the
-  //     day it goes live, in a change that is about another state. The
-  //     negative point carries that half instead (1a2-ii), and it is the one
-  //     thing in this file that must move when Florida goes live (WATCH.md).
+  //     ALABAMA IS DELIBERATELY NOT A CASE. Nobody serves it today, so a
+  //     click there stays here; but the fleet is meant to reach every state,
+  //     and a "stays here" case there would start failing the day it goes
+  //     live, in a change that is about another state. The negative point
+  //     carries that half instead (1a2-ii), in the Atlantic since Florida
+  //     went live, where no instance will ever answer. Florida was the same
+  //     kind of exception until then, and Tallahassee was the negative
+  //     point.
   {
     const cases = [
       { name: "Chicago", lat: 41.8825, lng: -87.6285, want: "https://districtry.com/il/" },
       { name: "Chattanooga, Tennessee", lat: 35.0456, lng: -85.3097, want: "https://districtry.com/tn/" },
       { name: "Murphy, North Carolina", lat: 35.0876, lng: -84.0213, want: "https://districtry.com/nc/" },
       { name: "Aiken, South Carolina", lat: 33.5604, lng: -81.7196, want: "https://districtry.com/sc/" },
+      { name: "Tallahassee, Florida", lat: 30.4383, lng: -84.2807, want: "https://districtry.com/fl/" },
     ];
     for (const c of cases) {
       const context = await browser.newContext({ serviceWorkers: "block" });
@@ -456,9 +463,9 @@ try {
     }
   }
 
-  // 1a2-ii. The half that keeps 1a2 honest: the negative point, in
-  //     Tallahassee, Florida, about 26 km south of the Georgia line, is outside
-  //     every outline in the fleet, so the click must stay HERE. A route to a
+  // 1a2-ii. The half that keeps 1a2 honest: the negative point, in the
+  //     Atlantic about 22 km off Georgia's outline, is outside every outline
+  //     in the fleet, so the click must stay HERE. A route to a
   //     sibling would be the same lie pointing the other way, and the stub
   //     makes it visible: if the app navigated, the URL would be the stubbed
   //     sibling rather than this app.
@@ -477,7 +484,7 @@ try {
     // Still under BASE means still this app. Asking instead for the URL NOT to
     // name one of a list of sibling tags needs a new entry each time a state
     // goes live, and the one it lacked would read as staying here.
-    check("a click in Florida, outside every app's outline, stays in this app",
+    check("a click in the Atlantic, outside every app's outline, stays in this app",
       url.startsWith(BASE), url);
     await context.close();
   }
@@ -1010,14 +1017,15 @@ try {
   //
   //    THE OUT-OF-STATE HALF IS THE ONE THAT DISCRIMINATES. The stub answers
   //    32301 (Tallahassee, Florida) whatever point is asked, so a regression
-  //    that drops `coverage` shows the block AND renders a Florida ZIP here,
-  //    which is the harm a reader would see. The in-state half is equally
+  //    that drops `coverage` shows the block AND renders a ZIP from outside
+  //    Georgia here, which is the harm a reader would see. The in-state half is equally
   //    load-bearing: coverage fails OPEN, so a test that only asserted hiding
   //    would also pass on a layer that had stopped working altogether.
   //
-  //    The negative point is the worksheet's own, in Florida and outside the
-  //    state outline, which is what the coverage test reads. It moves with the
-  //    worksheet the day Florida goes live, and this check moves with it.
+  //    The negative point is the worksheet's own, in the Atlantic and outside
+  //    the state outline, which is what the coverage test reads. It was in
+  //    Tallahassee until the change that published Florida moved it, and this
+  //    check moved with it; the stub's ring was widened east to hold it.
   {
     const ZCTA = "PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11";
     function zctaBody(zip) {
@@ -1028,7 +1036,7 @@ try {
         features: [{
           attributes: { ZCTA5: zip },
           // a ring around BOTH probe points, so geometry never decides this
-          geometry: { rings: [[[-85, 30], [-83, 30], [-83, 34.5], [-85, 34.5], [-85, 30]]] }
+          geometry: { rings: [[[-85, 30], [-80.5, 30], [-80.5, 34.5], [-85, 34.5], [-85, 30]]] }
         }]
       });
     }
@@ -1068,7 +1076,7 @@ try {
       const leaked = /32301/.test(info.text || "");
       const stillOn = await page.evaluate(
         (n) => window[n].state.layersOn["zip-code"] === true, EXPORTS_NAME);
-      check("zip-code hides outside Georgia rather than naming a Florida ZIP",
+      check("zip-code hides outside Georgia rather than naming another state's ZIP",
         hidden && !leaked && stillOn,
         `hidden=${hidden} leaked=${leaked} layersOn=${stillOn} text=${(info.text || "").slice(0, 90)}`);
       await context.close();

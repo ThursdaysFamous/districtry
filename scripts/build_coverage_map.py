@@ -175,6 +175,13 @@ AREAS = {
     "az": {"outline": "az/data/app/metro-outline.json", "state_outline": None},
     "nj": {"outline": "nj/data/app/metro-outline.json", "state_outline": None},
     "nh": {"outline": "nh/data/app/metro-outline.json", "state_outline": None},
+    # Batch 2 of the state-level launch joined at its go-live, one tier each
+    # for the same reason. California grew to the whole state in the same
+    # batch and is a two-tier row below, beside New York.
+    "tx": {"outline": "tx/data/app/metro-outline.json", "state_outline": None},
+    "fl": {"outline": "fl/data/app/metro-outline.json", "state_outline": None},
+    "oh": {"outline": "oh/data/app/metro-outline.json", "state_outline": None},
+    "wa": {"outline": "wa/data/app/metro-outline.json", "state_outline": None},
     # New York joined at the 2026-09-19 go-live. It is a TWO-TIER area and the
     # two geometries are genuinely different: the dashed wash is the whole
     # state, where the county, municipality, village, school-district,
@@ -183,11 +190,22 @@ AREAS = {
     # NYPD precincts, school zones) reaches. Drawing only one would overstate
     # the city or understate the state.
     "ny": {"outline": "ny/data/app/metro-outline.json", "state_outline": "ny/data/app/ny-state-outline.json"},
+    # California was a marker below, a city instance, until it grew to the
+    # state on 2026-11-11. It is a TWO-TIER area like New York: the lighter
+    # wash is the whole state, where the statewide layers answer, and the
+    # solid fill is San Francisco, where the city's own layers (supervisors,
+    # precincts, police, attendance areas, BART) reach. The solid file is the
+    # union of the city's supervisor districts, the ring the app's own wash
+    # draws as its full coverage.
+    "ca": {"outline": "ca/data/app/san-francisco-county-outline.json",
+           "state_outline": "ca/data/app/ca-state-outline.json"},
 }
 # tag -> point marker (bbox center — no new hand-typed coordinate, derived
 # from the same bbox METRO_EXPLORERS already carries for the sibling-metro
 # handoff, so a city's marker moves automatically if its bbox is ever tuned).
-CITY_TAGS = ["ca"]
+# Empty since California, the one city instance, grew to the state on
+# 2026-11-11; the marker stays for the next city instance.
+CITY_TAGS = []
 
 DATA_COLOR = "#1d5fd6"
 
@@ -354,6 +372,10 @@ def build():
 
     areas_js = ",\n".join(render_area(m) for m in metros if m["tag"] in AREAS)
     cities_js = ",\n".join(render_city(m) for m in metros if m["tag"] in CITY_TAGS)
+    # No city instance is live since California's app grew to the whole state
+    # on 2026-11-11, so the array is usually empty and prints as "[]" rather
+    # than as a bracket pair around a blank line.
+    cities_js = "\n" + cities_js + "\n" if cities_js else ""
 
     return """<!DOCTYPE html>
 <html lang="en">
@@ -463,9 +485,7 @@ html, body { margin: 0; height: 100%%; background: var(--paper); font-family: va
 var AREAS = [
 %(areas_js)s
 ];
-var CITIES = [
-%(cities_js)s
-];
+var CITIES = [%(cities_js)s];
 var DATA = %(data_color)s;
 var CARTO_KEY = %(carto_key)s;
 

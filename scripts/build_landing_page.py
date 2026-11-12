@@ -158,6 +158,9 @@ INSTANCE_WORKSHEET = {
     "nj": "nj/metro-worksheet.json",
     "nh": "nh/metro-worksheet.json",
     "tx": "tx/metro-worksheet.json",
+    "fl": "fl/metro-worksheet.json",
+    "oh": "oh/metro-worksheet.json",
+    "wa": "wa/metro-worksheet.json",
 }
 FONTFACE = os.path.join(REPO_ROOT, "fonts", "barlow-fontface.css")
 THEME_BOOT = os.path.join(REPO_ROOT, "engine", "shared", "theme-boot.txt")
@@ -395,6 +398,10 @@ CHIP_PLACE = {
     ("il", "police-district.html"): "Chicago",
     ("il", "school-board.html"): "Chicago",
     ("il", "chicago-candidates.html"): "Chicago",
+    # California's app answers for the whole state since 2026-11-11; its
+    # supervisor and election results pages are still San Francisco's alone.
+    ("ca", "supervisor-district.html"): "San Francisco",
+    ("ca", "election-results.html"): "San Francisco",
 }
 
 
@@ -477,10 +484,11 @@ FORWARD_TO = "/il/"
 # hand-typed row: each one is a link when metros.json has an entry for it and
 # plain text when it does not. A metros.json entry whose landing_name is a
 # state ("Illinois") is that state's row. One whose landing_name is a city
-# ("San Francisco") is found through its tag, which is the state's postal code
-# (POSTAL_CODES below), and its row says the city is all that answers there —
-# so California is a link to /ca/ reading "San Francisco only", never a full
-# state and never missing.
+# is found through its tag, which is the state's postal code (POSTAL_CODES
+# below), and its row says the city is all that answers there, so the state is
+# never counted as covered and never missing. California read "San Francisco
+# only" that way until its app grew to the whole state on 2026-11-11; no city
+# instance is live today, and the rule stays for the next one.
 US_STATES_AND_DC = [
     "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
     "Connecticut", "Delaware", "District of Columbia", "Florida", "Georgia",
@@ -883,7 +891,7 @@ def render_states(metros):
 def answer_phrase(metros):
     """How many places answer, said the way a reader counts them: "10 states
     and San Francisco". A city instance is named rather than counted as a state
-    (California is not covered; San Francisco is), and DC is named rather than
+    (its state is not covered; the city is), and DC is named rather than
     counted, because it is not a state.
     """
     states = [m for m in metros
